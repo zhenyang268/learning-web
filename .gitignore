@@ -1,0 +1,21 @@
+# Node
+node_modules/
+dist/
+*.local
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# 环境与密钥
+.env
+.env.*
+
+# 工具缓存
+.vite/
+.eslintcache
+
+# macOS / 编辑器 / WorkBuddy 工作区
+.DS_Store
+.vscode/
+.idea/
+.workbuddy/
