@@ -1,77 +1,82 @@
-# learning-web — 展示平台
+# learning-web — 项目总纲（人读）
 
-> **读者**：人 + 编码 agent ｜ **最后更新**：2026-09-22
-> **本仓是 `learning ← viz ← web` 三层的最外层：统一外壳 + 模块注册，本身不做任何数学计算。**
->
-> **真源约定（不重复维护）**&#8203;
-> - 笔记类模块的契约与管线 → `learning-viz/python/notes_pipeline/DESIGN.md`（子仓内）
-> - 三层职责与样板 → 父仓 `README.md`；协作硬规则 → 父仓 `AGENTS.md`
-> - 进度与 Gate → 父仓 `dev-progress.md`
+> **读者**：人 ｜ **最后更新**：2026-09-22
+> **给 agent 的规约一律在 `AGENTS.md`（本仓入口文件）**，本文不重复。
+> 真源约定见 `AGENTS.md` §0 —— 同一条事实只在一个文件里定义，别处只引用不重述。
+
+> 把父仓 `notebook/*.tex` 转成**可交互的知识图谱与阅读面**：离线单文件 HTML 给「看」，
+> web 外壳给「联」，计算演示按分级判据决定放前端还是走 `learning-viz`。
 
 ---
 
-## 定位
+## 在项目中的位置
 
-**一个外壳，托管多类后端模块。** 这是父仓 `README.md` 所说「`web` 可被多个后端仓复用」的落点。
+父仓 `README.md` 的三层是 `learning ← viz ← web`。本仓是最外层：
 
-| 模块类型 | 数据来源 | 渲染器 | 例子 |
+```
+learning/  ──构建──▶  .so + python 绑定  ──被调用──▶  viz/  ──Flask+契约──▶  web/
+  内容真源              计算实现                      计算后端              外壳 + 渲染
+```
+
+**本仓承载两类东西**：
+
+| 类型 | 数据来源 | 产物 | 例子 |
 |---|---|---|---|
-| 计算模块 | `learning` 出结果 → `viz` 出契约 | `graph` / `plot2d` / 3D | 行星轨道、自动微分 DAG |
-| 内容模块 | `viz` 跑 pandoc 管线 | **`doc`** | 笔记章节（`notebook/*.tex`） |
+| **内容** | `../notebook/*.tex` 经本仓 `build/` 转换 | `dist/graph/<chapter>.html`（单文件、双击即开）+ 阅读面 | 笔记章节、知识图谱 |
+| **计算演示** | 按 `AGENTS.md` §2 四问判据分级：前端 JS 或 `learning-viz` | 正文内联插槽 | 收敛定理反例、Rodrigues 公式 |
 
-两类模块共用同一个外壳、导航、主题。未来的 `408` 仓（TCP 时间轴）复用同一 `timeline` 渲染器。
+两条职责边界（决策 D1 / D6，见 `DESIGN.md`）：
 
-**红线**
-
-- **前端只绘制，不计算。** 契约是纯数据；数值正确性由 `viz` 侧 pytest 保证。
-- **不引 CDN。** KaTeX / 其他依赖由 Vite 打进产物，断网可用。
-- **路由 ID 用笔记代号**（`/#/A1`、`/#/H4.1`），与父仓 `AGENTS.md` 的代号写法一字不差；
-  **不要用 `§NN.N`**（编译后全局编号，插入新 `.tex` 即整体位移）。
+- **笔记的转换链路（`build/`）在本仓** —— standalone 产物是纯静态的，不经 Flask。
+- **计算模块的后端在 `learning-viz`** —— 本仓只做注册与渲染，不重复实现算法。
 
 ---
 
-## 目录
+## 文档导航
 
-```
-src/
-  shell/         # （待写）导航 · 路由 · 主题 · 三栏布局
-  renderers/     # （待写）doc.ts · graph.ts · plot2d.ts
-  viz/           # （待写）插槽实现，如 convergence-thm.ts（只绘制，不计算）
-  modules/       # （待写）注册表：代号 → 端点 + 契约版本 + 渲染器
-public/          # 静态资源（贴图等小文件；大贴图走 Git LFS）
-vite.config.ts   # （待写）dev 时 proxy /api → Flask:5000
-```
-
----
-
-## 三栏布局
-
-| 栏 | 内容 |
+| 文件 | 一句话 |
 |---|---|
-| 左 | 代号树导航 + 进度标记（对齐父仓 `learning-todo/ns-progress.md` 的 L0–L5，**只读展示**，不在 web 里改进度） |
-| 中 | 正文（公式已渲染的 fragment）+ 内联 viz 插槽 |
-| 右 | 上下文面板：前置依赖 · 反向链接 · 教材对照 · 本节挂载的实验 |
-
-> PDF 是线性的；web 的增量价值就在于**把「这一节在整个知识网里的位置」常驻显示**。
+| `AGENTS.md` | **本仓入口**：文档地图与真源、上游依赖解析、四问判据、目录、命令、硬规则、红线、风险 |
+| `DESIGN.md` | 设计：决策记录 D1–D8、数据流、`provenance.json`、契约样例、A1 切片验收判据 |
+| `graph/<chapter>.yaml` | 知识图谱语义边真源（**本仓**，决策 D7） |
+| `../AGENTS.md`（父仓） | 代号体系、符号规范、环境坑、三子仓红线 |
+| `../dev-progress.md` | 进度唯一真源 |
+| `../learning-todo/ns-progress.md` | 数学线关卡与掌握度真源（只读） |
 
 ---
 
 ## 快速开始
 
-环境：**Vite + Vanilla TS**（不上 React/Vue —— 需要 HMR 调 Canvas/WebGL，且单人维护，少一层心智模型）。
-
 ```bash
-npm install
-npm run dev        # 需 learning-viz 的 Flask 同时在 5000 端口
-npm run build
+# 转换单章（Python 走父仓 uv 环境，见 AGENTS.md §6）
+uv run python build/build_html.py --chapter A1
+
+# 出数据供外壳消费
+uv run python build/build_graph.py --chapter A1 --out dist/graph/A1.json
+
+# 外壳（需 learning-viz 的 Flask 在 :5000 提供计算端点）
+npm run dev
 ```
 
-dev/prod 分野：dev 用 Vite proxy 转发 `/api`；prod 由 Flask serve 构建产物。
+**当前状态**：仓骨架 + 文档已落地（2026-09-22）；
+`build/`、`graph/`、`src/` 均为空目录，尚无实现代码。
+开工顺序见 `AGENTS.md` §12，验收判据见 `DESIGN.md` §5。
+
+---
+
+## 三条最容易踩的
+
+1. **`notebook/*.tex` 只读** —— 本仓任何脚本不得写入父仓笔记。
+2. **禁 CDN** —— 产物必须断网可用；公式走构建期 KaTeX 预渲染（`DESIGN.md` D8）。
+3. **代号只到两级**（`A1`、`G1.2`），且**禁止**用 `§NN.N` 全局编号做路由。
 
 ---
 
 ## 与父仓的关系（路径坑）
 
 - 本仓是**独立 git 仓**，有自己的 remote；父仓不跟踪（无 `.gitmodules`、无 gitlink）。
-- 它在 `git worktree` 与新 clone 中**都不出现**，只能按绝对路径访问。
+- 它在 `git worktree` 与新 clone 中**都不出现**，只能按绝对路径访问
+  （通常是 `~/develop/learning/learning-web/`）。
 - **改动须在本仓内提交**；未经明确要求不要 `git push`。
+- 依赖例外：本仓在父仓目录树内，`uv run` / `uv add` 作用于**父仓** `pyproject.toml`
+  （`AGENTS.md` §6 校正 C5）—— 依赖改动属父仓改动，在父仓提交。
