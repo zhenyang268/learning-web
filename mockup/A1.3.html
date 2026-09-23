@@ -1,0 +1,1251 @@
+<!-- learning-web/mockup/A1.3.html —— 小目阅读页样张（mockup，非正式架构） -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>A1.3 三大收敛定理 · learning-web</title>
+        <style>
+                :root {
+                        --bg: #070b16;
+                        --bg2: #0b1120;
+                        --glass: rgba(148, 163, 255, .055);
+                        --glass2: rgba(148, 163, 255, .09);
+                        --line: rgba(148, 163, 255, .14);
+                        --line2: rgba(148, 163, 255, .28);
+                        --tx: #dbe4ff;
+                        --tx2: #8b96c4;
+                        --tx3: #5a6490;
+                        --cyan: #5ee6ff;
+                        --violet: #a78bfa;
+                        --pink: #f472b6;
+                        --green: #4ade80;
+                        --yellow: #facc15;
+                        --red: #f87171;
+                        --math: "STIX Two Math", "Cambria Math", Georgia, serif;
+                        --mono: "SF Mono", ui-monospace, Menlo, monospace;
+                }
+
+                * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box
+                }
+
+                body {
+                        background: var(--bg);
+                        color: var(--tx);
+                        font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+                        min-height: 100vh;
+                        overflow-x: hidden
+                }
+
+                /* 极光背景 */
+                .aurora {
+                        position: fixed;
+                        inset: 0;
+                        z-index: -1;
+                        overflow: hidden
+                }
+
+                .aurora i {
+                        position: absolute;
+                        border-radius: 50%;
+                        filter: blur(90px);
+                        opacity: .5;
+                        animation: drift 26s ease-in-out infinite alternate
+                }
+
+                .aurora i:nth-child(1) {
+                        width: 56vw;
+                        height: 56vw;
+                        left: -18vw;
+                        top: -22vw;
+                        background: radial-gradient(circle, #1d3a8a88, transparent 65%)
+                }
+
+                .aurora i:nth-child(2) {
+                        width: 44vw;
+                        height: 44vw;
+                        right: -14vw;
+                        top: 8vh;
+                        background: radial-gradient(circle, #5b2b8a66, transparent 65%);
+                        animation-delay: -8s
+                }
+
+                .aurora i:nth-child(3) {
+                        width: 40vw;
+                        height: 40vw;
+                        left: 26vw;
+                        bottom: -24vw;
+                        background: radial-gradient(circle, #0e5a6a55, transparent 65%);
+                        animation-delay: -16s
+                }
+
+                @keyframes drift {
+                        to {
+                                transform: translate(6vw, 4vh) scale(1.12)
+                        }
+                }
+
+                /* 顶栏 */
+                header {
+                        position: sticky;
+                        top: 0;
+                        z-index: 50;
+                        display: flex;
+                        align-items: center;
+                        gap: 18px;
+                        padding: 12px 28px;
+                        background: rgba(7, 11, 22, .72);
+                        backdrop-filter: blur(14px);
+                        border-bottom: 1px solid var(--line)
+                }
+
+                .logo {
+                        font-weight: 800;
+                        font-size: 17px;
+                        letter-spacing: .5px;
+                        background: linear-gradient(90deg, var(--cyan), var(--violet));
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        color: transparent
+                }
+
+                .chapters {
+                        display: flex;
+                        gap: 6px;
+                        flex: 1;
+                        overflow-x: auto
+                }
+
+                .chapters b {
+                        min-width: 34px;
+                        text-align: center;
+                        padding: 3px 0;
+                        border-radius: 8px;
+                        font-size: 13px;
+                        color: var(--tx3);
+                        cursor: pointer;
+                        position: relative;
+                        transition: .25s
+                }
+
+                .chapters b:hover {
+                        color: var(--tx);
+                        background: var(--glass2)
+                }
+
+                .chapters b.on {
+                        color: var(--cyan);
+                        background: var(--glass2)
+                }
+
+                .chapters b i {
+                        position: absolute;
+                        left: 6px;
+                        right: 6px;
+                        bottom: 1px;
+                        height: 2px;
+                        border-radius: 2px;
+                        background: linear-gradient(90deg, var(--cyan), var(--violet));
+                        transform-origin: left
+                }
+
+                .search {
+                        color: var(--tx3);
+                        border: 1px solid var(--line);
+                        border-radius: 10px;
+                        padding: 5px 14px;
+                        font-size: 13px;
+                        cursor: pointer
+                }
+
+                .search:hover {
+                        border-color: var(--line2);
+                        color: var(--tx2)
+                }
+
+                /* frontier 横幅 */
+                .frontier {
+                        margin: 22px auto 0;
+                        max-width: 1460px;
+                        padding: 0 28px
+                }
+
+                .frontier .inner {
+                        display: flex;
+                        align-items: center;
+                        gap: 16px;
+                        padding: 13px 20px;
+                        border-radius: 16px;
+                        border: 1px solid transparent;
+                        background: linear-gradient(var(--bg2), var(--bg2)) padding-box, linear-gradient(100deg, #5ee6ff55, #a78bfa44, #f472b633) border-box
+                }
+
+                .frontier .pulse {
+                        width: 9px;
+                        height: 9px;
+                        border-radius: 50%;
+                        background: var(--cyan);
+                        box-shadow: 0 0 12px var(--cyan);
+                        animation: pulse 2s infinite
+                }
+
+                @keyframes pulse {
+                        50% {
+                                opacity: .35
+                        }
+                }
+
+                .frontier b {
+                        color: var(--cyan);
+                        font-weight: 600
+                }
+
+                .frontier span {
+                        color: var(--tx2);
+                        font-size: 13px
+                }
+
+                /* 三栏 */
+                main {
+                        display: grid;
+                        grid-template-columns: 225px minmax(0, 1fr) 285px;
+                        gap: 22px;
+                        max-width: 1460px;
+                        margin: 18px auto 60px;
+                        padding: 0 28px
+                }
+
+                /* 左导航 */
+                nav .box {
+                        background: var(--glass);
+                        border: 1px solid var(--line);
+                        border-radius: 16px;
+                        padding: 14px 10px;
+                        position: sticky;
+                        top: 76px
+                }
+
+                nav h4 {
+                        font-size: 12px;
+                        color: var(--tx3);
+                        padding: 2px 10px 8px;
+                        letter-spacing: 2px
+                }
+
+                nav .node {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 7px 10px;
+                        border-radius: 10px;
+                        font-size: 13.5px;
+                        color: var(--tx2);
+                        cursor: pointer;
+                        transition: .2s
+                }
+
+                nav .node:hover {
+                        background: var(--glass2);
+                        color: var(--tx)
+                }
+
+                nav .node.on {
+                        background: linear-gradient(90deg, rgba(94, 230, 255, .14), rgba(167, 139, 250, .10));
+                        color: var(--tx);
+                        border-left: 2px solid var(--cyan)
+                }
+
+                nav .node .code {
+                        font-family: var(--mono);
+                        font-size: 11.5px;
+                        color: var(--tx3);
+                        width: 38px
+                }
+
+                nav .node.on .code {
+                        color: var(--cyan)
+                }
+
+                nav .m {
+                        margin-left: auto;
+                        font-family: var(--mono);
+                        font-size: 10.5px;
+                        color: var(--tx3)
+                }
+
+                /* 卡片通用 */
+                .card {
+                        background: var(--glass);
+                        border: 1px solid var(--line);
+                        border-radius: 20px;
+                        padding: 26px 30px;
+                        margin-bottom: 26px;
+                        position: relative;
+                        overflow: hidden;
+                        transition: border-color .3s;
+                        animation: rise .7s cubic-bezier(.2, .8, .25, 1) backwards
+                }
+
+                .card:hover {
+                        border-color: var(--line2)
+                }
+
+                .card::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0 0 auto 0;
+                        height: 1px;
+                        background: linear-gradient(90deg, transparent, rgba(94, 230, 255, .5), transparent);
+                        opacity: 0;
+                        transition: .4s
+                }
+
+                .card:hover::before {
+                        opacity: 1
+                }
+
+                @keyframes rise {
+                        from {
+                                opacity: 0;
+                                transform: translateY(22px)
+                        }
+                }
+
+                .card:nth-of-type(2) {
+                        animation-delay: .12s
+                }
+
+                .card:nth-of-type(3) {
+                        animation-delay: .22s
+                }
+
+                /* 页面标题 */
+                .pagehead h1 {
+                        font-size: 27px;
+                        font-weight: 800;
+                        letter-spacing: .5px
+                }
+
+                .pagehead h1 em {
+                        font-style: normal;
+                        background: linear-gradient(90deg, var(--cyan), var(--violet));
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        color: transparent
+                }
+
+                .pagehead .meta {
+                        display: flex;
+                        gap: 14px;
+                        align-items: center;
+                        margin-top: 8px;
+                        font-size: 12.5px;
+                        color: var(--tx3);
+                        font-family: var(--mono)
+                }
+
+                .pagehead .meta a {
+                        color: var(--tx2);
+                        text-decoration: none;
+                        border-bottom: 1px dashed var(--tx3);
+                        cursor: pointer
+                }
+
+                .pagehead .meta a:hover {
+                        color: var(--cyan)
+                }
+
+                .tag {
+                        font-size: 10.5px;
+                        padding: 2px 9px;
+                        border-radius: 20px;
+                        border: 1px solid var(--line2);
+                        color: var(--tx2)
+                }
+
+                .tag.ok {
+                        color: var(--green);
+                        border-color: #4ade8055
+                }
+
+                /* 定理卡头部 */
+                .thead {
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                        flex-wrap: wrap
+                }
+
+                .thead h2 {
+                        font-size: 21px;
+                        font-weight: 700
+                }
+
+                .dot {
+                        width: 9px;
+                        height: 9px;
+                        border-radius: 50%;
+                        background: var(--green);
+                        box-shadow: 0 0 8px var(--green)
+                }
+
+                .mastery {
+                        display: flex;
+                        align-items: center;
+                        gap: 7px;
+                        margin-left: auto;
+                        font-family: var(--mono);
+                        font-size: 12px;
+                        color: var(--tx2)
+                }
+
+                .mastery .bar {
+                        width: 74px;
+                        height: 5px;
+                        border-radius: 3px;
+                        background: var(--glass2);
+                        overflow: hidden
+                }
+
+                .mastery .bar i {
+                        display: block;
+                        height: 100%;
+                        border-radius: 3px;
+                        background: linear-gradient(90deg, var(--cyan), var(--violet))
+                }
+
+                /* tab */
+                .tabs {
+                        display: flex;
+                        gap: 4px;
+                        margin: 18px 0 14px;
+                        border-bottom: 1px solid var(--line);
+                        padding-bottom: 0
+                }
+
+                .tabs button {
+                        background: none;
+                        border: none;
+                        color: var(--tx3);
+                        font-size: 13.5px;
+                        padding: 8px 15px;
+                        cursor: pointer;
+                        border-bottom: 2px solid transparent;
+                        margin-bottom: -1px;
+                        transition: .2s;
+                        font-family: inherit
+                }
+
+                .tabs button:hover {
+                        color: var(--tx)
+                }
+
+                .tabs button.on {
+                        color: var(--cyan);
+                        border-bottom-color: var(--cyan)
+                }
+
+                .pane {
+                        display: none;
+                        animation: fade .35s
+                }
+
+                .pane.on {
+                        display: block
+                }
+
+                @keyframes fade {
+                        from {
+                                opacity: 0;
+                                transform: translateY(6px)
+                        }
+                }
+
+                /* 数学 */
+                .math {
+                        font-family: var(--math);
+                        font-style: italic;
+                        font-size: 16.5px;
+                        color: #eef2ff
+                }
+
+                .statement {
+                        border-left: 3px solid;
+                        border-image: linear-gradient(var(--cyan), var(--violet)) 1;
+                        padding: 12px 18px;
+                        background: rgba(94, 230, 255, .045);
+                        border-radius: 0 14px 14px 0;
+                        font-size: 15.5px
+                }
+
+                .statement .math {
+                        font-size: 18px
+                }
+
+                .dim {
+                        color: var(--tx2);
+                        font-size: 13.5px
+                }
+
+                .sub {
+                        font-size: 11px;
+                        vertical-align: sub
+                }
+
+                .sup {
+                        font-size: 11px;
+                        vertical-align: super
+                }
+
+                .int {
+                        display: inline-block;
+                        font-style: normal;
+                        font-size: 1.25em;
+                        vertical-align: -.12em
+                }
+
+                .arr {
+                        color: var(--violet);
+                        font-style: normal
+                }
+
+                /* 限定词表 */
+                .qhead {
+                        display: flex;
+                        align-items: baseline;
+                        gap: 12px;
+                        margin: 22px 0 10px
+                }
+
+                .qhead h3 {
+                        font-size: 15.5px;
+                        font-weight: 700
+                }
+
+                .qhead span {
+                        font-size: 12px;
+                        color: var(--tx3)
+                }
+
+                table.q {
+                        width: 100%;
+                        border-collapse: separate;
+                        border-spacing: 0 6px;
+                        font-size: 13.5px
+                }
+
+                table.q th {
+                        text-align: left;
+                        font-size: 11.5px;
+                        color: var(--tx3);
+                        font-weight: 500;
+                        padding: 2px 12px;
+                        letter-spacing: 1px
+                }
+
+                table.q td {
+                        background: var(--glass);
+                        padding: 11px 12px;
+                        border-top: 1px solid var(--line);
+                        border-bottom: 1px solid var(--line);
+                        vertical-align: top
+                }
+
+                table.q td:first-child {
+                        border-left: 1px solid var(--line);
+                        border-radius: 12px 0 0 12px;
+                        width: 27%
+                }
+
+                table.q td:last-child {
+                        border-right: 1px solid var(--line);
+                        border-radius: 0 12px 12px 0;
+                        width: 24%
+                }
+
+                table.q tr.qrow {
+                        cursor: pointer;
+                        transition: .2s
+                }
+
+                table.q tr.qrow:hover td {
+                        background: var(--glass2);
+                        border-color: var(--line2)
+                }
+
+                table.q .no {
+                        color: var(--red);
+                        font-weight: 600;
+                        white-space: nowrap
+                }
+
+                table.q .yes {
+                        color: var(--green);
+                        white-space: nowrap
+                }
+
+                table.q .fn {
+                        font-family: var(--math);
+                        font-style: italic;
+                        color: var(--cyan)
+                }
+
+                table.q .caret {
+                        float: right;
+                        color: var(--tx3);
+                        transition: .3s
+                }
+
+                tr.open .caret {
+                        transform: rotate(90deg);
+                        color: var(--cyan)
+                }
+
+                tr.detail td {
+                        background: rgba(94, 230, 255, .04);
+                        border-radius: 12px;
+                        border: 1px solid var(--line)
+                }
+
+                tr.detail .in {
+                        display: flex;
+                        gap: 22px;
+                        flex-wrap: wrap;
+                        padding: 6px 4px
+                }
+
+                tr.detail .in>div {
+                        flex: 1;
+                        min-width: 250px
+                }
+
+                .kv {
+                        font-size: 12.5px;
+                        color: var(--tx2)
+                }
+
+                .kv b {
+                        color: var(--tx);
+                        font-weight: 600
+                }
+
+                /* viz */
+                .viz {
+                        margin-top: 16px;
+                        border: 1px solid var(--line);
+                        border-radius: 16px;
+                        padding: 18px;
+                        background: rgba(0, 0, 0, .25)
+                }
+
+                .viz .vhead {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        margin-bottom: 10px
+                }
+
+                .badge {
+                        font-size: 10px;
+                        padding: 2.5px 9px;
+                        border-radius: 20px;
+                        background: #facc1518;
+                        color: var(--yellow);
+                        border: 1px solid #facc1540;
+                        letter-spacing: .5px
+                }
+
+                .viz canvas {
+                        width: 100%;
+                        height: 230px;
+                        display: block;
+                        border-radius: 10px
+                }
+
+                .slider {
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                        margin-top: 12px;
+                        font-family: var(--mono);
+                        font-size: 13px;
+                        color: var(--tx2)
+                }
+
+                input[type=range] {
+                        flex: 1;
+                        appearance: none;
+                        height: 4px;
+                        border-radius: 2px;
+                        background: linear-gradient(90deg, var(--cyan), var(--violet));
+                        outline: none
+                }
+
+                input[type=range]::-webkit-slider-thumb {
+                        appearance: none;
+                        width: 16px;
+                        height: 16px;
+                        border-radius: 50%;
+                        background: #fff;
+                        border: 3px solid var(--cyan);
+                        cursor: pointer;
+                        box-shadow: 0 0 10px #5ee6ff88
+                }
+
+                .readout {
+                        display: flex;
+                        gap: 26px;
+                        margin-top: 12px;
+                        font-family: var(--mono);
+                        font-size: 13.5px;
+                        flex-wrap: wrap
+                }
+
+                .readout .r b {
+                        display: block;
+                        font-size: 19px;
+                        font-weight: 700
+                }
+
+                .readout .r span {
+                        color: var(--tx3);
+                        font-size: 11px
+                }
+
+                .readout .fail {
+                        color: var(--red)
+                }
+
+                .readout .fail b {
+                        color: var(--red);
+                        text-shadow: 0 0 14px #f8717155
+                }
+
+                /* 反例折叠 */
+                .cx {
+                        margin-top: 12px;
+                        border: 1px solid var(--line);
+                        border-radius: 14px;
+                        overflow: hidden
+                }
+
+                .cx>summary {
+                        padding: 12px 18px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        list-style: none;
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                        transition: .2s
+                }
+
+                .cx>summary::-webkit-details-marker {
+                        display: none
+                }
+
+                .cx>summary:hover {
+                        background: var(--glass2)
+                }
+
+                .cx>summary::before {
+                        content: "▸";
+                        color: var(--tx3);
+                        transition: .3s
+                }
+
+                .cx[open]>summary::before {
+                        transform: rotate(90deg);
+                        color: var(--pink)
+                }
+
+                .cx .body {
+                        padding: 4px 20px 18px;
+                        border-top: 1px solid var(--line)
+                }
+
+                .cx .ico {
+                        color: var(--pink)
+                }
+
+                /* 右栏 */
+                aside .box {
+                        background: var(--glass);
+                        border: 1px solid var(--line);
+                        border-radius: 16px;
+                        padding: 18px;
+                        margin-bottom: 18px;
+                        position: sticky;
+                        top: 76px
+                }
+
+                aside h4 {
+                        font-size: 12px;
+                        color: var(--tx3);
+                        letter-spacing: 2px;
+                        margin-bottom: 12px
+                }
+
+                .chip {
+                        display: inline-block;
+                        margin: 0 6px 8px 0;
+                        padding: 4px 12px;
+                        border-radius: 20px;
+                        font-size: 12.5px;
+                        font-family: var(--mono);
+                        border: 1px solid var(--line2);
+                        color: var(--tx2);
+                        cursor: pointer;
+                        transition: .2s
+                }
+
+                .chip:hover {
+                        color: var(--cyan);
+                        border-color: var(--cyan);
+                        box-shadow: 0 0 12px #5ee6ff22
+                }
+
+                .chip.dep {
+                        border-color: #a78bfa55
+                }
+
+                .chip.dep:hover {
+                        color: var(--violet);
+                        border-color: var(--violet)
+                }
+
+                .ring {
+                        display: flex;
+                        align-items: center;
+                        gap: 16px
+                }
+
+                .ring svg {
+                        transform: rotate(-90deg)
+                }
+
+                .ring .num {
+                        font-family: var(--mono);
+                        font-size: 22px;
+                        font-weight: 700
+                }
+
+                .ring .lbl {
+                        font-size: 12px;
+                        color: var(--tx3)
+                }
+
+                .probe {
+                        display: flex;
+                        gap: 10px;
+                        padding: 9px 4px;
+                        border-bottom: 1px dashed var(--line);
+                        font-size: 13px;
+                        color: var(--tx2);
+                        cursor: pointer;
+                        align-items: flex-start;
+                        transition: .2s
+                }
+
+                .probe:last-child {
+                        border: none
+                }
+
+                .probe:hover {
+                        color: var(--tx)
+                }
+
+                .probe .cb {
+                        min-width: 17px;
+                        height: 17px;
+                        margin-top: 3px;
+                        border: 1.5px solid var(--tx3);
+                        border-radius: 5px;
+                        transition: .25s
+                }
+
+                .probe.done .cb {
+                        background: linear-gradient(135deg, var(--cyan), var(--violet));
+                        border-color: transparent;
+                        box-shadow: 0 0 10px #5ee6ff44
+                }
+
+                .probe.done .txt {
+                        color: var(--tx3);
+                        text-decoration: line-through
+                }
+
+                @media(max-width:1150px) {
+                        main {
+                                grid-template-columns: 1fr
+                        }
+
+                        nav .box,
+                        aside .box {
+                                position: static
+                        }
+                }
+        </style>
+</head>
+
+<body>
+        <div class="aurora"><i></i><i></i><i></i></div>
+
+        <header>
+                <div class="logo">learning-web</div>
+                <div class="chapters" id="chapters"></div>
+                <div class="search">🔍 搜索定理 / 反例…</div>
+        </header>
+
+        <div class="frontier">
+                <div class="inner">
+                        <div class="pulse"></div>
+                        <div><b>今天该学：A1.4 测度论基础</b> <span>— frontier 由掌握度实时算出（mastery&lt;3 且 prereq 全部达标）</span></div>
+                </div>
+        </div>
+
+        <main>
+                <nav>
+                        <div class="box">
+                                <h4>A · 分析</h4>
+                                <div class="node"><span class="code">A1.1</span>黎曼积分的局限<span class="m">L5</span></div>
+                                <div class="node"><span class="code">A1.2</span>收敛与交换<span class="m">L4</span></div>
+                                <div class="node on"><span class="code">A1.3</span>三大收敛定理<span class="m">L3</span></div>
+                                <div class="node"><span class="code">A1.4</span>测度论基础<span class="m">L2</span></div>
+                                <div class="node"><span class="code">A1.5</span>Lᵖ 空间<span class="m">L1</span></div>
+                                <h4 style="margin-top:14px">B · 代数</h4>
+                                <div class="node"><span class="code">B1</span>旋转与四元数<span class="m">L1</span></div>
+                        </div>
+                </nav>
+
+                <section>
+                        <div class="card pagehead" style="padding-bottom:20px">
+                                <h1>A1.3 <em>三大收敛定理</em>（MCT / Fatou / DCT）</h1>
+                                <div class="meta">
+                                        <span>src: A_analysis.tex:41–86</span><a>查看原文 ↗</a>
+                                        <span class="tag ok">✎ reviewed</span><span class="tag">entry-card/v1</span>
+                                        <span>generated_by GLM-5.3 · 2026-09-24</span>
+                                </div>
+                        </div>
+
+                        <!-- ═══════ MCT 定理卡 ═══════ -->
+                        <div class="card">
+                                <div class="thead">
+                                        <span class="dot" title="难度：绿"></span>
+                                        <h2>单调收敛定理 <span class="dim">MCT · Beppo Levi</span></h2>
+                                        <div class="mastery">L3 <span class="bar"><i style="width:60%"></i></span></div>
+                                </div>
+
+                                <div class="tabs" data-card="mct">
+                                        <button
+                                                class="on">陈述</button><button>直觉</button><button>证明骨架</button><button>应用</button>
+                                </div>
+
+                                <div class="pane on">
+                                        <div class="statement">
+                                                <span class="math">0 ≤ f<span class="sub">1</span> ≤ f<span
+                                                                class="sub">2</span> ≤ ⋯，f<span class="sub">n</span>
+                                                        <span class="arr">→</span> f 逐点</span>
+                                                <span class="math" style="float:right"><span class="int">∫</span>f<span
+                                                                class="sub">n</span> dμ <span class="arr">↑</span> <span
+                                                                class="int">∫</span>f dμ（允许 +∞）</span>
+                                        </div>
+                                        <p class="dim" style="margin-top:10px">非负 + 单调升 ⟹ 极限与积分可交换。单调与收敛均可放宽到 a.e.。</p>
+                                </div>
+                                <div class="pane">
+                                        <p>把 <span class="math">(x, n) ↦ f<span class="sub">n</span>(x)</span>
+                                                想成一族离散曲面：沿 n 方向的增量 <span class="math">f<span class="sub">n+1</span> −
+                                                        f<span class="sub">n</span> ≥ 0</span> <b>符号固定、且不依赖 x</b>。</p>
+                                        <p style="margin-top:8px">方向固定 ⟹ 总质量 <span class="math"><span
+                                                                class="int">∫</span>f<span class="sub">n</span></span>
+                                                是单调数列 ⟹ 必有极限；质量只能逐步堆积、<b>无法在取极限时逃逸</b>，逐点极限恰好接住全部质量。</p>
+                                        <p class="dim" style="margin-top:8px">注意：单调是你<b>假设</b>的，MCT 真正说的是<b>回报</b>——单调 ⟹
+                                                可交换。</p>
+                                </div>
+                                <div class="pane">
+                                        <p class="kv">① ≤ 方向：积分单调性白送。<br>② ≥ 方向：任取简单函数 <span class="math">s ≤
+                                                        f</span>，固定 <span class="math">c∈(0,1)</span>，令 <span
+                                                        class="math">E<span class="sub">n</span> = {f<span
+                                                                class="sub">n</span> ≥ c·s}</span> ↑ X；<br>③ <span
+                                                        class="math"><span class="int">∫</span>f<span
+                                                                class="sub">n</span> ≥ c<span class="int">∫</span><span
+                                                                class="sub">Eₙ</span>s</span> → <span
+                                                        class="math">c<span class="int">∫</span>s</span>（测度下连续性 → <span
+                                                        class="chip" style="margin:0">A1.4</span>），对 s 取 sup、令 c→1 收尾。
+                                        </p>
+                                </div>
+                                <div class="pane">
+                                        <p class="kv"><b>级数版（Beppo Levi）</b>：非负项可逐项积分 —— A1.5 Riesz–Fischer 的引擎（快速子列 +
+                                                2<sup>−k</sup> 估计）；下游接 Fubini–Tonelli、H4 蒙特卡洛方差分析。</p>
+                                </div>
+
+                                <div class="qhead">
+                                        <h3>限定词拆解 · 5 条</h3><span>每行可展开 —— 去掉它会怎样 / 能否放宽</span>
+                                </div>
+                                <table class="q">
+                                        <tr>
+                                                <th>限定词</th>
+                                                <th>去掉后</th>
+                                                <th>能否放宽</th>
+                                        </tr>
+                                        <tr class="qrow" data-cx="cx-nonneg">
+                                                <td>② <span class="math">f<span class="sub">n</span> ≥ 0</span>（非负）</td>
+                                                <td><span class="fn">fₙ = −1_[n,∞)</span>，∫fₙ = −∞ ↛ 0 <span
+                                                                class="caret">▸</span></td>
+                                                <td class="no">✗ 不可去 · 锁的是下界</td>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>③ <span class="math">f<span class="sub">n</span> ≤ f<span
+                                                                        class="sub">n+1</span></span>（单调升）</td>
+                                                <td><span class="fn">n·1_(0,1/n)</span>，∫ ≡ 1 ↛ 0 <span
+                                                                class="caret">▸</span></td>
+                                                <td class="no">✗ 不可去 · ≤ 是必要的宽松</td>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>④ 逐点收敛</td>
+                                                <td class="dim">—</td>
+                                                <td class="yes">✓ 可放宽到 a.e.</td>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>⑤ 结论允许 ∞ = ∞</td>
+                                                <td class="dim">平凡等式，无信息</td>
+                                                <td class="yes">✓ 免费午餐，但先确认有界</td>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>① f<sub>n</sub> 可测</td>
+                                                <td class="dim">陈述本身失去意义（积分无定义）</td>
+                                                <td class="no">✗ 前提而非假设</td>
+                                        </tr>
+                                </table>
+
+                                <!-- 反例（限定词②的行内展开目标） -->
+                                <details class="cx" id="cx-nonneg">
+                                        <summary><span class="ico">✗</span><b>反例：去掉「非负」后 MCT 崩溃</b><span class="dim">—
+                                                        负质量从无穷远被抽走，无人接住</span></summary>
+                                        <div class="body">
+                                                <p class="kv">构造 <span class="fn">fₙ = −1_[n,∞)</span>（R 上 Lebesgue）：单调升
+                                                        ✓（−1_[n,∞) ≤ −1_[n+1,∞)），逐点 → 0 ✓，<br>
+                                                        但 <b class="math">∫fₙ = −μ([n,∞)) = −∞</b> 对每个 n 恒成立 ⟹ <b
+                                                                style="color:var(--red)">−∞ ↛ 0 = ∫f</b>。</p>
+                                                <p class="kv" style="margin-top:8px"><b>修补</b>：要求 ∫f₁ &gt; −∞（下方可积），对 fₙ
+                                                        − f₁ ≥ 0 用 MCT。与「递减失效要 ∫f₁ = +∞」是同一个洞的两面。</p>
+                                        </div>
+                                </details>
+
+                                <!-- 反例 viz：bump，档 1 前端直渲 -->
+                                <details class="cx" open>
+                                        <summary><span class="ico">✗</span><b>反例：尖峰挤进零测点</b><span class="dim">— 拖动
+                                                        n，眼见等式不成立</span></summary>
+                                        <div class="body">
+                                                <div class="viz">
+                                                        <div class="vhead"><span class="badge">前端计算 · 未对拍</span><span
+                                                                        class="dim" style="font-size:12.5px">fₙ =
+                                                                        n·1_(0,1/n) · invariant: ∫fₙ ≡ 1.0</span></div>
+                                                        <canvas id="bump"></canvas>
+                                                        <div class="slider"><span
+                                                                        style="color:var(--cyan)">n</span><input
+                                                                        type="range" id="nslider" min="1" max="40"
+                                                                        value="6"><b id="nval"
+                                                                        style="color:var(--cyan)">6</b></div>
+                                                        <div class="readout">
+                                                                <div class="r"><b id="rifn"
+                                                                                style="color:var(--cyan)">1.000</b><span>∫fₙ
+                                                                                dμ</span></div>
+                                                                <div class="r"><b style="color:var(--tx2)">0</b><span>∫f
+                                                                                dμ（逐点极限）</span></div>
+                                                                <div class="r fail"><b>✗ ∫lim ≠ lim∫</b><span>Fatou 严格：0
+                                                                                &lt; 1</span></div>
+                                                                <div class="r"><b id="rsup"
+                                                                                style="color:var(--violet)">2.79</b><span>∫
+                                                                                sup_{k≤n} ≈ 1+ln n（盖子发散）</span></div>
+                                                        </div>
+                                                </div>
+                                                <p class="kv" style="margin-top:12px"><b>关键澄清</b>：没有任何点发散到 ∞ ——
+                                                        是「质量」挤进零测点 {0}。MCT 不适用（不单调）、DCT 不适用（最小盖子 ≈ 1/x 不可积）、Fatou 适用但严格。
+                                                </p>
+                                        </div>
+                                </details>
+                        </div>
+
+                        <!-- ═══════ Fatou / DCT 卡（折叠态示意） ═══════ -->
+                        <div class="card">
+                                <div class="thead"><span class="dot"></span>
+                                        <h2>Fatou 引理 <span class="dim">质量只能丢、不能凭空多</span></h2>
+                                        <div class="mastery">L2 <span class="bar"><i style="width:40%"></i></span></div>
+                                </div>
+                                <div class="statement" style="margin-top:16px">
+                                        <span class="math">f<span class="sub">n</span> ≥ 0 可测 ⟹ <span
+                                                        class="int">∫</span>liminf f<span class="sub">n</span> ≤ liminf
+                                                <span class="int">∫</span>f<span class="sub">n</span></span>
+                                        <span class="dim" style="float:right">拆单调性的 MCT，等式降级为单边</span>
+                                </div>
+                                <details class="cx">
+                                        <summary><span class="ico">◆</span><b>限定词拆解 · 直觉 · 证明（gₙ = inf 构造归还 MCT）</b>
+                                        </summary>
+                                        <div class="body">
+                                                <p class="kv">证明思路即直觉：gₙ = inf_{k≥n} fₖ 人为造出单调升序列，把问题归还给 MCT。严格 ⟺
+                                                        极限过程中丢了质量（两条逃逸路线见 MCT 卡反例）。</p>
+                                        </div>
+                                </details>
+                        </div>
+
+                        <div class="card">
+                                <div class="thead"><span class="dot"
+                                                style="background:var(--yellow);box-shadow:0 0 8px var(--yellow)"></span>
+                                        <h2>控制收敛定理 <span class="dim">DCT · 盖子封死两条逃逸路线</span></h2>
+                                        <div class="mastery">L3 <span class="bar"><i style="width:60%"></i></span></div>
+                                </div>
+                                <div class="statement" style="margin-top:16px">
+                                        <span class="math">f<span class="sub">n</span> → f a.e.，|f<span
+                                                        class="sub">n</span>| ≤ g ∈ L¹ ⟹ <span
+                                                        class="int">∫</span>f<span class="sub">n</span> → <span
+                                                        class="int">∫</span>f 且 ‖f<span class="sub">n</span>−f‖₁ →
+                                                0</span>
+                                </div>
+                                <div class="qhead">
+                                        <h3>限定词拆解 · 6 条</h3><span>「一致」与「可积」缺一不可，「绝对值」第三字不可缺</span>
+                                </div>
+                                <table class="q">
+                                        <tr>
+                                                <th>限定词</th>
+                                                <th>去掉后</th>
+                                                <th>能否放宽</th>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>② 收敛模式 = a.e.</td>
+                                                <td class="dim">逐点太强 · 依测度更弱仍成立</td>
+                                                <td class="yes">✓ a.e. 是刚好够用的强度</td>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>④ |fₙ| ≤ g 对<b>所有 n</b> 一致</td>
+                                                <td><span class="fn">bump</span>：逐个可积≠有统一盖子</td>
+                                                <td class="no">✗ 量词顺序 ∃g∀n 决定生死</td>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>⑤ 绝对值 |·| 而非单边</td>
+                                                <td><span class="fn">fₙ = −n·1_(0,1/n)</span>，∫fₙ ≡ −1 ↛ 0</td>
+                                                <td class="no">✗ 负质量逃向 −∞</td>
+                                        </tr>
+                                        <tr class="qrow">
+                                                <td>③ g ∈ L¹</td>
+                                                <td><span class="fn">1/x vs 1/√x</span>：差一个幂次翻天</td>
+                                                <td class="no">✗ 三种松法全崩</td>
+                                        </tr>
+                                </table>
+                                <details class="cx">
+                                        <summary><span class="ico">▸</span><b>应用：可微渲染的参数求导（Leibniz 法则）— A1.3 到 CG
+                                                        的最短路径</b><span class="chip" style="margin:0 0 0 auto">H4</span>
+                                        </summary>
+                                        <div class="body">
+                                                <p class="kv">差商 + MVT 得 |差商| ≤ g(x)，套 DCT ⟹ d/dt ∫f = ∫∂ₜf。失效场景：1/cosθ
+                                                        奇点、δ 点光源 ⟹ 需重参数化技巧。</p>
+                                        </div>
+                                </details>
+                        </div>
+                </section>
+
+                <aside>
+                        <div class="box">
+                                <h4>掌握度 · 难度</h4>
+                                <div class="ring">
+                                        <svg width="64" height="64">
+                                                <circle cx="32" cy="32" r="26" fill="none"
+                                                        stroke="rgba(148,163,255,.12)" stroke-width="6" />
+                                                <circle cx="32" cy="32" r="26" fill="none" stroke="url(#g)"
+                                                        stroke-width="6" stroke-linecap="round" stroke-dasharray="163"
+                                                        stroke-dashoffset="65" />
+                                                <defs>
+                                                        <linearGradient id="g">
+                                                                <stop offset="0" stop-color="#5ee6ff" />
+                                                                <stop offset="1" stop-color="#a78bfa" />
+                                                        </linearGradient>
+                                                </defs>
+                                        </svg>
+                                        <div>
+                                                <div class="num">L3</div>
+                                                <div class="lbl">能给反例 · 分水岭</div>
+                                                <div class="lbl">难度 ●绿</div>
+                                        </div>
+                                </div>
+                                <h4 style="margin-top:20px">依赖 ◂</h4>
+                                <span class="chip dep">A1.4 测度下连续性</span>
+                                <h4 style="margin-top:6px">被用于 ▸</h4>
+                                <span class="chip">H4 蒙特卡洛积分</span><span class="chip">C6.3 一致可积</span><span
+                                        class="chip">A1.5 Riesz–Fischer</span>
+                                <h4 style="margin-top:14px">检验题 · 2</h4>
+                                <div class="probe" data-p><span class="cb"></span><span class="txt">去掉非负后 MCT
+                                                为何崩？给出具体函数并算出两侧积分</span></div>
+                                <div class="probe" data-p><span class="cb"></span><span class="txt">DCT 的「≤ g」为什么必须对所有 n
+                                                一致？量词顺序差在哪</span></div>
+                        </div>
+                </aside>
+        </main>
+
+        <script>
+                // 顶栏章节块（进度色 = 平均掌握度）
+                const CH = [["A", .55], ["B", .2], ["C", 0], ["D", 0], ["E", 0], ["F", 0], ["G", .1], ["H", 0], ["I", 0], ["J", 0], ["K", 0], ["L", 0], ["M", 0], ["P", 0], ["Q", 0], ["R", 0]];
+                document.getElementById("chapters").innerHTML = CH.map(([c, p], i) =>
+                        `<b class="${i == 0 ? 'on' : ''}">${c}<i style="transform:scaleX(${p})"></i></b>`).join("");
+
+                // 定理卡 tab
+                document.querySelectorAll(".tabs").forEach(t => {
+                        const panes = t.parentElement.querySelectorAll(":scope > .pane");
+                        t.querySelectorAll("button").forEach((b, i) => b.onclick = () => {
+                                t.querySelectorAll("button").forEach(x => x.classList.remove("on"));
+                                panes.forEach(p => p.classList.remove("on"));
+                                b.classList.add("on"); panes[i].classList.add("on");
+                        });
+                });
+
+                // 限定词行点击 → 若有 data-cx 则展开对应反例并滚动过去
+                document.querySelectorAll("tr.qrow[data-cx]").forEach(r => r.onclick = () => {
+                        const d = document.getElementById(r.dataset.cx); d.open = true;
+                        d.scrollIntoView({ behavior: "smooth", block: "center" });
+                });
+
+                // 检验题勾选
+                document.querySelectorAll(".probe").forEach(p => p.onclick = () => p.classList.toggle("done"));
+
+                // ── bump 反例画布：fₙ = n·1_(0,1/n) ──
+                const cv = document.getElementById("bump"), ctx = cv.getContext("2d"), sl = document.getElementById("nslider");
+                function draw() {
+                        const n = +sl.value, W = cv.width = cv.clientWidth * 2, H = cv.height = cv.clientHeight * 2;
+                        document.getElementById("nval").textContent = n;
+                        document.getElementById("rsup").textContent = (1 + Math.log(n)).toFixed(2);
+                        const px = x => 70 + x * (W - 120), py = y => H - 40 - y * (H - 80), xmax = 1.05, ymax = Math.min(n * 1.15, 42);
+                        ctx.clearRect(0, 0, W, H);
+                        // 网格
+                        ctx.strokeStyle = "rgba(148,163,255,.08)"; ctx.lineWidth = 1;
+                        for (let i = 1; i < 6; i++) { ctx.beginPath(); ctx.moveTo(70, py(i * ymax / 6 / ymax * ymax / (ymax / (ymax)) * 0 + (H - 80) * i / 6 * 0 + (H - 40 - (H - 80) * i / 6) - (H - 40) + (H - 40))); ctx.lineTo(W - 50, H - 40 - (H - 80) * i / 6); ctx.stroke(); }
+                        // 坐标轴
+                        ctx.strokeStyle = "rgba(148,163,255,.3)"; ctx.lineWidth = 2;
+                        ctx.beginPath(); ctx.moveTo(70, 20); ctx.lineTo(70, H - 40); ctx.lineTo(W - 50, H - 40); ctx.stroke();
+                        ctx.fillStyle = "rgba(139,150,196,.9)"; ctx.font = "22px SF Mono";
+                        ctx.fillText("0", 60, H - 14); ctx.fillText("1", px(1 / xmax) - 8, H - 14); ctx.fillText("x", W - 42, H - 14);
+                        ctx.fillText("f", 40, 34);
+                        // fₙ 尖峰：x∈(0,1/n) 高 n
+                        const xe = 1 / n / xmax, grad = ctx.createLinearGradient(0, py(n / ymax), 0, H - 40);
+                        grad.addColorStop(0, "rgba(94,230,255,.55)"); grad.addColorStop(1, "rgba(94,230,255,.03)");
+                        ctx.beginPath(); ctx.moveTo(px(0), H - 40);
+                        ctx.lineTo(px(0), py(n / ymax)); ctx.lineTo(px(xe), py(n / ymax)); ctx.lineTo(px(xe), H - 40); ctx.closePath();
+                        ctx.fillStyle = grad; ctx.fill();
+                        ctx.strokeStyle = "#5ee6ff"; ctx.lineWidth = 3; ctx.shadowColor = "#5ee6ff"; ctx.shadowBlur = 14;
+                        ctx.beginPath(); ctx.moveTo(px(0), py(n / ymax)); ctx.lineTo(px(xe), py(n / ymax)); ctx.stroke(); ctx.shadowBlur = 0;
+                        // 极限 f≡0 虚线
+                        ctx.setLineDash([8, 7]); ctx.strokeStyle = "rgba(244,114,182,.8)"; ctx.lineWidth = 2;
+                        ctx.beginPath(); ctx.moveTo(px(0), H - 40); ctx.lineTo(px(1 / xmax), H - 40); ctx.stroke(); ctx.setLineDash([]);
+                        ctx.fillStyle = "#f472b6"; ctx.font = "italic 22px Georgia"; ctx.fillText("f ≡ 0", px(.55 / xmax), H - 52);
+                        ctx.fillStyle = "#5ee6ff"; ctx.fillText("f" + String.fromCharCode(8345), px(xe) + 10, py(n / ymax) + 26);
+                        // 面积标注
+                        ctx.fillStyle = "rgba(219,228,255,.85)"; ctx.font = "20px SF Mono";
+                        ctx.fillText("宽 1/n = " + (1 / n).toFixed(3) + " · 高 n = " + n + " · 面积 ≡ 1", px(.3 / xmax), 52);
+                }
+                sl.oninput = draw; addEventListener("resize", draw); draw();
+        </script>
+</body>
+
+</html>

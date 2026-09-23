@@ -24,6 +24,14 @@
 | **D6** | **笔记的转换链路整体放本仓 `build/`**（含 `filter_codename.py`、`build_graph.py`、`build_html.py`），不再有 `/api/notes/*` | standalone HTML 本就是纯静态产物、不经 Flask；放本仓不必为它拉起后端。**代价**：D1 的口径收窄为「计算模块走 viz」（AGENTS.md §10 Q2） |
 | **D7** | 图谱语义边的真源放**本仓** `graph/<chapter>.yaml` | 与 `build/` 同仓迭代；脱节风险由 `notebook_commit` 校验兜住（AGENTS.md §3.4） |
 | **D8** | 公式走**构建期 KaTeX 预渲染**（Node `katex.renderToString`），产物为静态 HTML | `pandoc --katex` 是客户端渲染且默认指向 CDN，与「离线 + 无闪烁 + 可搜 TeX」三项要求都不符（AGENTS.md §7 公式渲染） |
+| **D9** | `json/` 词条库从三阶段人工流水线改为**全自动生成**（`TASKBOOK.md` 三 pass） | 人工阶段一正是「每问一次开一个 session」太慢的根源；生成物是可重建的构建产物，真源仍锚定 notebook |
+| **D10** | §16.4 规则 5「不重述笔记」改为「生成物可重建：`tex_ref` 区间 + `notebook_commit` 锚定」 | JSON 是 notebook 的 max 版（原文 + 四问预答 + 可交互反例），不重述等于缺数据；可重建性由 pass 2 校验兜底 |
+| **D11** | 语义边从「只能人工标注」改为「LLM 草拟 + 校验兜底（notebook_commit 比对、代号消失即失败、prereq 无环校验）」 | 197 个单元的边人工标注不可扩展；校验兜底把错误限制在可检出范围 |
+| **D12** | web 外壳运行时 fetch `json/`（动态渲染），standalone 快照仍内联数据 | 改 JSON 秒级可见（开发回路）；`file://` 双击即开（分发）——两套产物两套契约 |
+| **D13** | entry-card/v2：`content` 用 KaTeX、`tex_ref` 区间化 `{file, line_start, line_end}`、新增 `generated_by {model, date, reviewed}` 与 `probe` 类型、viz 三档状态机（无/前端直渲/留空待接）、直觉词条可挂 viz | 四问预答要可渲染就要公式与正文；多模型溯源与定向重审需要 `generated_by`；viz 分级避免前端硬啃后端级计算 |
+| **D14** | P 篇（计算必修）特化：四问语义换装（quantifiers→适用条件表、反例→典型误用）、difficulty 从 tex 内嵌【必/熟/知】标记确定性提取、每个【必】小目 ≥1 道 probe、P10 决策树做交互词条 | P 篇是手算训练清单不是定理集，四问结构保留但语义必须适配；【必/熟/知】是比 ns-progress 更细的逐条真源 |
+| **D15** | 无 `\subsubsection` 的文件（A3、D/E/F/L/M 全篇）以**整节为生成单元**（代号 `X#` 不带 `.k`）；subsection 无显式代号的文件（partN、de1–4、lie1–3）按**文件基名 + 全文件流水号**合成两级代号（`de1.1`、`lie2.3`），子目粒度优先 | 197 个单元必须全覆盖且代号只到两级；流水号合成的位移风险与 P 篇同源，由 `notebook_commit` 锚定兜底 |
+| **D16** | LLM 调用走 **`codebuddy` CLI 直连多模型**（`deepseek-v4.1-flash` 批量生成 / `glm-5.3` 评审 / `kimi-k3-2` 仲裁），总控脚本 `build/orchestrate/pipeline.zsh` 在 **WorkBuddy 之外的终端/tmux 运行**；WorkBuddy 会话内**禁止**嵌套执行 `codebuddy -p` | 实测（2026-09-24）：子 agent 通道只有 GLM-5.3（填其他型号名静默回退）；CLI `-p` 直连真实路由但嵌套进沙盒会假死且 `nohup+disown` 进程组必被回收。文件契约 + done 标记 + 外部总控是唯一稳定结构 |
 
 > **D6 与旧的 `learning-viz/python/notes_pipeline/` 方案冲突，以后者为准已废弃。**
 > 该目录及其 `DESIGN.md` 已从 `learning-viz` 移除；`learning-viz` 只保留计算模块的后端

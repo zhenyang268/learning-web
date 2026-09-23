@@ -19,3 +19,13 @@ yarn-error.log*
 .vscode/
 .idea/
 .workbuddy/
+
+# 知识库流水线派生产物（可重建：slicer 确定性生成 / CLI 输出）
+build/slices/
+build/state/
+build/logs/
+build/prompts/gen_*.md
+build/prompts/review_*.md
+build/prompts/fix*.md
+build/prompts/arbitrate_*.md
+!build/prompts/gen_prefix.md
