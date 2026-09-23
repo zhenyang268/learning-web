@@ -28,6 +28,7 @@
 |---|---|---|
 | 笔记内容 | `../notebook/*.tex` | **只读**，构建时快照，产物入本仓 `dist/` |
 | 知识图谱的边与探针 | `graph/<chapter>.yaml`（**本仓**，见 §3.1） | 本仓维护，随 `build/` 一起迭代 |
+| 学习词条占位 | `json/<chapter>/<code>.json`（**本仓**） | 阶段一只追加关键词（`DESIGN.md` §16） |
 | 掌握度状态 | `../learning-todo/ns-progress.md` | **只读** + 生成待粘贴的 diff，不直接写 |
 | 进度与 Gate | `../dev-progress.md` | 只读 |
 | 构建产物 | `dist/` | 本仓生成，**gitignore** |
@@ -163,6 +164,9 @@ learning-web/
     vendored/            # KaTeX JS + CSS + 字体（离线，禁 CDN；见 §7 公式渲染）
   graph/                 # 【Q1 已决】图谱语义边的真源（本仓）
     <chapter>.yaml
+  json/                  # 学习词条占位库（阶段一：只记关键词，DESIGN.md §16）
+    <chapter>/
+      <code>.json        # 一个小目一个文件，如 A1/A1.3.json
   src/
     shell/               # 三栏布局 · 导航 · 路由 · 主题
     renderers/           # doc.ts（KaTeX 正文）· graph.ts · plot2d.ts

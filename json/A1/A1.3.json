@@ -1,0 +1,307 @@
+{
+  "schema": "entry-card/v1",
+  "code": "A1.3",
+  "chapter": "A1",
+  "title": "三大收敛定理（MCT / Fatou / DCT）",
+  "src": { "file": "A_analysis.tex", "line": 41, "anchor": "subsubsection 三大收敛定理" },
+  "notebook_commit": "e089f96",
+  "stage": 1,
+  "updated": "2026-09-23",
+  "entries": [
+    {
+      "id": "A1.3:mct.statement",
+      "type": "statement",
+      "subject": "mct",
+      "title": "MCT 定理陈述",
+      "keywords": [
+        "0 <= f_1 <= f_2 <= ...（非负 + 单调升）",
+        "f_n -> f 逐点（等价 f = sup_n f_n，可取值 +∞）",
+        "结论 ∫ f_n dμ ↑ ∫ f dμ（极限与积分可交换）",
+        "允许 ∫ f = +∞",
+        "又名 Beppo Levi 定理",
+        "单调与收敛均可放宽到 a.e."
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line": 48 },
+      "fill_hint": "以 tex_ref 的 tabular 行为准转写；只补精确假设（可测性、a.e. 放宽、扩充实数处理），不另造结论",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:mct.intuition",
+      "type": "intuition",
+      "subject": "mct",
+      "title": "MCT 直觉：沿 n 的变化方向固定非负",
+      "seed": "用户 2026-09-23 原话：MCT 就是研究以 x、n 为变量的三维曲线 f_n 在 n 上的变化，而 MCT 就是在说这个变化的正负性（方向）固定为正、不依赖 x",
+      "keywords": [
+        "(x, n) ↦ f_n(x) 是一族离散曲面（x 横轴、n 时间轴、f_n(x) 高度）",
+        "沿 n 方向的增量 f_{n+1} − f_n >= 0：符号固定、且不依赖 x（逐点一致地单调）",
+        "方向固定 ⟹ 总质量 ∫ f_n 是单调递增数列 ⟹ 必有极限（= sup，可为 ∞）",
+        "质量只能逐步堆积，无法在取极限时逃逸",
+        "逐点极限 f(x) = sup_n f_n(x) 恰好接住全部质量，所以 ∫lim = lim∫",
+        "对照组：去掉单调性后质量可以逃跑（见 general.bump / general.slide）"
+      ],
+      "fill_hint": "扩成一段直觉文字 + 配图建议：三维柱状/曲面（x 横、n 纵深、高度 f_n(x)），演示 ∫ f_n 截面积逐步增大；可挂 A1.3:general.viz 的 monotone 模式",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:mct.proof",
+      "type": "proof",
+      "subject": "mct",
+      "title": "MCT 证明骨架",
+      "keywords": [
+        "<= 方向：f_n <= f ⟹ ∫ f_n <= ∫ f（积分单调性）",
+        ">= 方向：任取简单函数 s <= f",
+        "截断技巧：固定 c ∈ (0,1)，令 E_n = { x : f_n(x) >= c·s(x) }",
+        "f_n ↑ f ⟹ E_n ↑ X",
+        "∫ f_n >= c·∫_{E_n} s dμ → c·∫ s dμ（用测度下连续性，见 A1.4）",
+        "对 s 取 sup、再令 c → 1 收尾",
+        "c 的作用：容忍 s 的正值部分被 f_n '晚一点'追上，保证 E_n 可测且递增"
+      ],
+      "tex_ref": null,
+      "fill_hint": ".tex 无证明（占位待阶段2补全）。两步写完；显式引用 A1.4 测度下连续性；参考 Rudin Ch.1 / Stein Ch.1",
+      "content": null,
+      "links": ["A1.4"],
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:mct.decreasing",
+      "type": "extension",
+      "subject": "mct",
+      "title": "MCT 递减怎么办",
+      "seed": "用户 2026-09-23：mct 递减怎么办",
+      "keywords": [
+        "f_n ↓ f 逐点、仅非负不够：结论可失效",
+        "反例 f_n = 1_[n,∞)（R 上 Lebesgue）：f_n ↓ 0 但 ∫ f_n ≡ ∞ ↛ 0",
+        "失效根源必然是 ∫ f_1 = ∞（'初始质量'无穷，递减时质量漏走无人接住）",
+        "修补路线1：加 f_1 ∈ L^1，对 f_1 − f_n ↑ f_1 − f 用 MCT",
+        "修补路线2：μ(X) < ∞（此时被常函数控制，实为 DCT 特例）",
+        "同构视角：测度上连续性 A_n ↓ 也要求 μ(A_1) < ∞（A1.4）——同一个坑"
+      ],
+      "tex_ref": null,
+      "fill_hint": "反例完整计算 + 两条修补路线各给理由；与 A1.4 测度上下连续性对照（可数可加的连续性刻画）",
+      "content": null,
+      "links": ["A1.4"],
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:fatou.statement",
+      "type": "statement",
+      "subject": "fatou",
+      "title": "Fatou 引理陈述",
+      "keywords": [
+        "仅需 f_n >= 0 可测（不要求单调、不要求收敛）",
+        "结论 ∫ liminf f_n dμ <= liminf ∫ f_n dμ（单边不等式）",
+        "liminf f_n = sup_n inf_{k>=n} f_k：'最终总成立'的下包络",
+        "不等号可以严格（质量逃逸场景）"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line": 50 },
+      "fill_hint": "以 tex_ref 的 tabular 行为准转写；补 liminf 的定义展开与'为什么只能得到单边'",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:fatou.intuition",
+      "type": "intuition",
+      "subject": "fatou",
+      "title": "Fatou 直觉：质量只能丢、不能凭空多",
+      "keywords": [
+        "非单调世界里质量可以在取极限时逃逸（跑向无穷远 / 挤进零测点）",
+        "但质量不会凭空产生 ⟹ 极限的积分 >= '最终下包络'的积分，方向只能是 ∫liminf <= liminf∫",
+        "Fatou = 拆掉单调性假设的 MCT，代价是结论从等式降级为单边不等式",
+        "证明思路即直觉：g_n = inf_{k>=n} f_k 人为造出单调升序列，归还给 MCT"
+      ],
+      "tex_ref": null,
+      "fill_hint": "一段直觉 + 示意建议：画出'质量逃逸的两种方式'（对应 general.slide / general.bump），说明 Fatou 为何仍成立但严格",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:fatou.proof",
+      "type": "proof",
+      "subject": "fatou",
+      "title": "Fatou 证明骨架",
+      "keywords": [
+        "构造 g_n = inf_{k>=n} f_k（逐点下确界，可测）",
+        "g_n >= 0 且 g_n ↑ liminf f_n",
+        "g_n <= f_n ⟹ ∫ g_n <= ∫ f_n ⟹ lim_n ∫ g_n <= liminf_n ∫ f_n",
+        "对 {g_n} 用 MCT：lim ∫ g_n = ∫ liminf f_n，收尾",
+        "依赖链：测度下连续性 ⟹ MCT ⟹ Fatou"
+      ],
+      "tex_ref": null,
+      "fill_hint": ".tex 无证明（占位待阶段2补全）；强调'化归到 MCT'这一步是全部内容",
+      "content": null,
+      "links": ["A1.4"],
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:fatou.strict",
+      "type": "extension",
+      "subject": "fatou",
+      "title": "Fatou 何时严格不等",
+      "keywords": [
+        "严格 ⟺ 极限过程中丢了一部分质量",
+        "逃逸到无穷远：f_n = 1_[n,n+1]，∫ liminf = 0 < 1 = liminf ∫（见 general.slide）",
+        "挤进零测点：f_n = n·1_(0,1/n)，同样 0 < 1（见 general.bump）",
+        "取等的充分场景：单调升（MCT 正是 Fatou 的取等情形）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "对两个反例分别算出 liminf f_n 与两侧数值；一句话点明 MCT 与 Fatou 的取等关系",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:dct.statement",
+      "type": "statement",
+      "subject": "dct",
+      "title": "DCT 定理陈述",
+      "keywords": [
+        "f_n → f a.e.",
+        "存在可积盖子 g ∈ L^1：|f_n| <= g a.e.（对所有 n 一致）",
+        "结论 ∫ f_n → ∫ f",
+        "附带强化：f ∈ L^1 且 ∫ |f_n − f| → 0（L^1 收敛）",
+        "不要求单调、不要求非负（对比 MCT / Fatou）"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line": 49 },
+      "fill_hint": "以 tex_ref 的 tabular 行为准转写；补结论的 L^1 收敛强化；注明'盖子 g 与 n 无关'是一致性的来源",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:dct.intuition",
+      "type": "intuition",
+      "subject": "dct",
+      "title": "DCT 直觉：盖子封死两条质量逃逸路线",
+      "seed": "ns-progress 2026-09-18 DCT 盖子检验题结清：路线A 逃逸到无穷远 = 1_[n,n+1]（盖子 sup = 1_[1,∞) ∉ L^1）；路线B 挤进零测点 = n·1_(0,1/n)（盖子 sup ≳ 1/x ∉ L^1）；同一机制 = 可积盖子 ⟹ 一致可积 + 紧性",
+      "keywords": [
+        "盖子 g 把所有 f_n 的高度一致压住（与 n 无关）",
+        "质量逃逸只有两条路线，g ∈ L^1 把它们同时封死",
+        "路线A 逃向无穷远：g 可积 ⟹ 尾部 ∫_{|x|>R} g → 0，质量被逼回紧集（紧性/tightness）",
+        "路线B 挤进零测点：尖峰高度被 g 压住，而 g 在零测点附近不能爆得太快（1/x 型不可积）",
+        "同一机制的抽象名：可积盖子 ⟹ 一致可积（uniform integrability，见 C6.3）",
+        "分工视角：MCT 用'单调'锁质量，DCT 用'盖子'锁质量，锁的是同一样东西"
+      ],
+      "tex_ref": null,
+      "fill_hint": "按两条路线展开，各配对应反例的计算（引 general.slide / general.bump 说明'没有盖子时恰好从这里漏'）；结尾指向 C6.3 一致可积作为抽象版",
+      "content": null,
+      "links": ["C6.3"],
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:dct.proof",
+      "type": "proof",
+      "subject": "dct",
+      "title": "DCT 证明骨架",
+      "keywords": [
+        "g + f_n >= 0：用 Fatou ⟹ ∫(g+f) <= liminf ∫(g+f_n) = ∫g + liminf ∫ f_n",
+        "g − f_n >= 0：用 Fatou ⟹ ∫(g−f) <= liminf ∫(g−f_n) = ∫g − limsup ∫ f_n",
+        "两式整理：limsup ∫ f_n <= ∫ f <= liminf ∫ f_n",
+        "夹逼 ⟹ lim ∫ f_n 存在且 = ∫ f",
+        "依赖链：MCT ⟹ Fatou ⟹ DCT",
+        "易错点：liminf(−a_n) = −limsup(a_n)，过负号时上下极限互换"
+      ],
+      "tex_ref": null,
+      "fill_hint": ".tex 无证明（占位待阶段2补全）；按 g±f_n 双 Fatou 路线写全，标注易错点",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:general.bump",
+      "type": "counterexample",
+      "subject": "general",
+      "title": "反例：尖峰挤进零测点",
+      "seed": "用户 2026-09-23：反例对应滑动质量和尖峰零测点。ns-progress 2026-09-15：滑动尖峰 f_n = n·1_(0,1/n)（∫lim ≠ lim∫）；纠正过的误解：没有任何点 f_n(x) → +∞，是质量集中进零测点",
+      "keywords": [
+        "f_n = n·1_(0,1/n)：宽 1/n、高 n、面积恒为 1 的尖峰",
+        "逐点极限 f ≡ 0（每个固定 x 最终落在区间外）",
+        "∫ f_n ≡ 1 ↛ 0 = ∫ f：极限与积分不可交换",
+        "MCT 不适用：数列不单调（f_1 在 (1/2,1) 上为 1，f_2 在该处为 0）",
+        "DCT 不适用：sup_n f_n(x) ≈ 1/x（0 附近），∫_0^1 (1/x) dx = ∞，无可积盖子",
+        "Fatou 适用但严格：∫ liminf = 0 < 1 = liminf ∫",
+        "关键澄清：没有任何点发散到 ∞，是'质量'挤进零测点 {0}"
+      ],
+      "tex_ref": null,
+      "viz": { "module": "convergence-thm", "version": 1, "params_hint": { "mode": "bump", "n_min": 1, "n_max": 40 } },
+      "fill_hint": "阶段2：逐项写出三大定理各自的判定（为何不适用/适用但严格）；阶段3：挂 convergence-thm 模块 bump 模式（契约见 DESIGN.md §4.3）",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:general.slide",
+      "type": "counterexample",
+      "subject": "general",
+      "title": "反例：滑动质量（逃逸到无穷远）",
+      "seed": "用户 2026-09-23：反例对应滑动质量和尖峰零测点。ns-progress 2026-09-18：路线A 逃逸到无穷远 = 1_[n,n+1]（盖子 sup = 1_[1,∞) ∉ L^1）",
+      "keywords": [
+        "f_n = 1_[n,n+1]：单位质量的方块整体滑向 +∞",
+        "逐点极限 f ≡ 0（每个固定 x 最终被方块越过）",
+        "∫ f_n ≡ 1 ↛ 0",
+        "DCT 不适用：sup_n f_n = 1_[1,∞) ∉ L^1，无可积盖子",
+        "MCT 不适用（不单调）；Fatou 适用但严格",
+        "概率语言：依概率收敛到 0 但 L^1 收敛不成立（见 C6.1 四种收敛模式）",
+        "与 bump 的对偶性：一个往'空间无穷远'逃，一个往'测度零集'逃"
+      ],
+      "tex_ref": null,
+      "viz": { "module": "convergence-thm", "version": 1, "params_hint": { "mode": "slide" } },
+      "fill_hint": "与 general.bump 同构展开；注意 DESIGN §4.3 契约样例只列 mode=bump，slide 属阶段3的契约扩展（评估是否升 version）",
+      "content": null,
+      "links": ["C6.1"],
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "三定理关系对照",
+      "keywords": [
+        "推导链：测度下连续性（A1.4）⟹ MCT ⟹ Fatou ⟹ DCT",
+        "条件对比：单调升+非负 / 仅非负 / 不单调但需可积盖子",
+        "结论对比：等式 / 单边不等式（liminf）/ 等式 + L^1 收敛",
+        "分工：每个假设都在封某一条质量逃逸路线（单调锁堆积、盖子锁逃逸）",
+        "MCT = Fatou 的取等情形；DCT = 用盖子替代单调性"
+      ],
+      "tex_ref": null,
+      "fill_hint": "产出一张三列对照表（条件 / 结论 / 封死的逃逸路线 + 失效反例），供前端按表格直接渲染",
+      "content": null,
+      "links": ["A1.4"],
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：convergence-thm",
+      "keywords": [
+        "模块 convergence-thm，契约 v1 见 DESIGN.md §4.3",
+        "分级结论：前端（Q1 无既有实现 / Q2 弱 / Q3 无 ⟹ Q4，见 DESIGN §11.1）",
+        "交互：拖 n 滑块看 f_n 曲线 + ∫ f_n 数值（批量返回，本地 scrub）",
+        "assumptions（nonneg/monotone/dominated）与 verdict 由计算方算，不写死文案",
+        "invariant 自检：bump 模式每条 series 的 integral ≡ 1.0，偏差 > 1e-12 抛错",
+        "扩展方向：mode ∈ { bump, slide, monotone }，monotone 模式演示 MCT 取等情形"
+      ],
+      "tex_ref": null,
+      "viz": { "module": "convergence-thm", "version": 1, "params_hint": { "mode": ["bump", "slide", "monotone"] } },
+      "fill_hint": "阶段3：实现 src/viz/convergence-thm.ts（契约按 §4.3），modules/ 注册表 source=frontend，UI 标'前端计算·未对拍'徽标",
+      "content": null,
+      "status": "seed"
+    },
+    {
+      "id": "A1.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "H4 蒙特卡洛积分收敛性证明依赖 DCT（A_analysis.tex 第121行：DCT 经 MCT 依赖可数可加）",
+        "渲染方程的 MC 估计收敛性 ⟹ CG 侧最实际的理由：有限可加下 MC 渲染没有理论保证",
+        "C6.3 一致可积性 = DCT 盖子的抽象版（依概率 → L^1 的升级条件）",
+        "A1.4 反面对照：有限可加的 Banach 测度上 MCT/Fatou/DCT 全部失效",
+        "A1.5 Riesz–Fischer（L^p 完备性）证明用 MCT 处理快速子列的 ∑|f_k|"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条写一句'谁用了三大定理的哪一条'即可，不展开全文；细节归各目标节点自己的词条文件",
+      "content": null,
+      "links": ["H4", "C6.1", "C6.3", "A1.4", "A1.5"],
+      "status": "seed"
+    }
+  ]
+}

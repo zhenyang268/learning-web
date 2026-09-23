@@ -482,3 +482,82 @@ const data = src === 'frontend'
    静态 HTML 里的类名要靠它上样式。
 5. **若退化为客户端渲染**（不推荐）：保留 `katex.min.js`，接受首屏闪烁与 JS 依赖；
    此时 standalone HTML 更要遵守 `AGENTS.md` §3.1 三条约束。
+
+---
+
+## 16. 学习词条占位库：`json/`（阶段一，2026-09-23 建立）
+
+> **定位**：本目录是「学习过程中产生的关键词占位符」，**不是构建产物、不是第二份笔记内容**。
+> 它由学习会话随手追加（agent 职责：记笔记、记关键词），后期由 AI 补全（阶段二），
+> 再交给 web 前端引用做可视化演示（阶段三）。
+
+### 16.1 三阶段流水线
+
+| 阶段 | 做什么 | 谁做 | 状态 |
+|---|---|---|---|
+| **1 记录** | 学习中出现值得展开的词条 → 往 `json/<chapter>/<code>.json` 追加 entry（只填关键词，`content: null`） | 学习会话 agent | **进行中** |
+| **2 补全** | 按 `keywords` + `fill_hint` 把 `content` 写成完整文本（定理、证明、直觉、反例计算） | AI 批量处理 | 未开始 |
+| **3 可视化** | 前端引用词条渲染（点开代号显示词条列表），`type: "viz"` 的 entry 挂 `viz.module` 接渲染器 | `src/` + `learning-viz` | 未开始 |
+
+**阶段一只许记关键词，不许写 `content`** —— 关键词是「告诉后续 agent 该补什么」的指令，
+现在写满反而把半成品当成品。
+
+### 16.2 目录与文件约定
+
+```
+json/
+  <chapter>/            # 章节代号作目录名，与 notebook 对应：A1、B1、C6、H4…
+    <code>.json         # 一个 \subsubsection（小目）一个文件，如 A1.3.json
+```
+
+- 章节信息真源 = `../notebook/*.tex`（A–R 16 篇 + `partN` + `de1–4` + `lie1–3`）。
+- **代号只到两级**（`AGENTS.md` §1.3）：`A1.3.json` 合法，`A1.3.2.json` 非法。
+- 一个文件 = 笔记里一个小目的全部词条；词条用 `id` 区分（见 16.3）。
+
+### 16.3 词条（entry）schema v1
+
+```json
+{
+  "id": "A1.3:mct.intuition",      // "<code>:<subject>.<slot>"，文件内唯一
+  "type": "intuition",             // 见下表枚举
+  "subject": "mct",                // 同文件内的分组键（mct/fatou/dct/general…）
+  "title": "人读的一句话标题",
+  "seed": "可选：用户原话/会话摘录，保真记录直觉来源",
+  "keywords": ["关键词/短语/公式骨架，逗号列表"],   // 阶段一的核心产出
+  "tex_ref": { "file": "A_analysis.tex", "line": 48 },  // 可选：指向 .tex 真源行
+  "viz": { "module": "convergence-thm", "version": 1 }, // 可选：阶段三挂演示
+  "fill_hint": "给阶段二 AI 的补全指令：补什么、参照什么、注意什么",
+  "links": ["A1.4", "C6.3"],       // 可选：跨词条引用（两级代号）
+  "content": null,                 // 阶段一恒为 null；阶段二填完整文本
+  "status": "seed"                 // seed(阶段一) → drafted(阶段二) → reviewed → published(阶段三)
+}
+```
+
+`type` 枚举（前端按此决定渲染样式，**不自由发挥**）：
+
+| type | 含义 | 例子 |
+|---|---|---|
+| `statement` | 定理/定义的精确陈述 | MCT 条件与结论 |
+| `proof` | 证明骨架 | Fatou 的 g_n = inf 构造 |
+| `intuition` | 直觉/物理图像 | 「沿 n 的变化方向固定非负」 |
+| `extension` | 拓展：假设放宽/加强会怎样 | MCT 递减怎么办 |
+| `counterexample` | 反例 | 尖峰挤零测点、滑动质量 |
+| `comparison` | 多概念对照 | 三定理条件/结论对比表 |
+| `application` | 下游应用 | H4 MC 积分依赖 DCT |
+| `viz` | 演示槽位（阶段三用） | convergence-thm 模块挂点 |
+
+### 16.4 硬规则
+
+1. **JSON 必须机器可读**：每次改动后 `uv run python -m json.tool <file>` 能过（在父仓目录跑，§6 校正 C5）。不追求人的可读性，但追求 schema 一致性。
+2. **阶段一只追加不删改**：`keywords`/`seed`/`fill_hint` 可以补充，已写的不重写 —— 与 `.ipynb` 追加原则同源。
+3. **`content` 在阶段二之前恒为 `null`**，`status` 恒为 `"seed"`。阶段二才改 `drafted`。
+4. **公式写法**：`keywords` 里公式用 ASCII/Unicode 骨架（`∫ f_n dμ`、`f_n ↑ f`），**不写裸 LaTeX**（父仓 `AGENTS.md` 第五节）；需要精确公式时用 `tex_ref` 指回 `.tex`，不抄第二遍。
+5. **不重述笔记内容**：`.tex` 已有的陈述（如三大定理的 tabular）只记 `tex_ref` 行号，`keywords` 记「转写时要补什么」，**不复制原文** —— 第二份等效数据是漂移的起点（§0 真源约定）。
+6. **`seed` 字段保真**：用户口头给出的直觉（哪怕不严格）原样记进 `seed`，阶段二再精修。这是本库最值钱的字段 —— 它记录的是「学的人当时怎么想的」。
+7. **`links` 只用两级代号**；指向的文件可以尚不存在（阶段二/三再建）。
+
+### 16.5 首份样例
+
+`json/A1/A1.3.json`（三大收敛定理，16 个词条：mct 4 + fatou 4 + dct 3 + general 5），
+是 schema 的活文档 —— 新文件照它的结构写。其中 `general.viz` 词条已预留
+`convergence-thm` 模块挂点（契约样例见 §4.3，分级结论见 §11.1），阶段三直接对接。
