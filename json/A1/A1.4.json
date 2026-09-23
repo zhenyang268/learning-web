@@ -1,0 +1,582 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A1.4",
+  "chapter": "A1",
+  "title": "测度论基础",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 58,
+    "line_end": 161,
+    "anchor": "notebook/A_analysis.tex:58"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A1.4:sigma-algebra.quantifiers",
+      "type": "comparison",
+      "subject": "sigma-algebra",
+      "title": "σ-代数公理逐条拆解（去掉/改动每一条会怎样）",
+      "keywords": [
+        "公理三条：X ∈ F、补集封闭、可数并封闭",
+        "X ∈ F 可由「非空 + 补封闭 + 并封闭」推出（A ∪ Aᶜ = X）",
+        "可数并 → 有限并：有限-余有限族里 {n} 各自可测但 ∪{n} = N 逃逸",
+        "可数并 → 任意并：立刻退化为幂集 2ˣ，撞 Vitali 三难",
+        "「可数」二字与测度的可数可加精确咬合（切片 boxed 结论）",
+        "R 可分 ⟹ Borel σ-代数由可数层级操作生成（超限层级 Σ⁰_α）"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 58,
+        "line_end": 69
+      },
+      "fill_hint": "公理与 boxed 结论照抄 tex 58-69；有限-余有限反例为标准构造（切片未给，人工复核表述）；四列表按规格供前端直接渲染，每行均给具体对象。",
+      "content": "σ-代数是「允许可数操作的集合宇宙」——三条公理中每一条都在为测度的可数可加服务。陈述（tex 58-63）：集合 $X$ 上的 σ-代数 $\\mathcal{F}$ 是 $X$ 的子集族，满足 ① $X \\in \\mathcal{F}$；② 对补集封闭：$A \\in \\mathcal{F} \\Rightarrow A^c \\in \\mathcal{F}$；③ 对可数并封闭：$A_1, A_2, \\ldots \\in \\mathcal{F} \\Rightarrow \\bigcup A_i \\in \\mathcal{F}$。\n\n逐条拆解（限定词｜去掉/改动后的具体反例｜结论如何失效｜能否放宽）：\n\n| 限定词 | 去掉/改动后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $X \\in \\mathcal{F}$ | 若 $\\mathcal{F}$ 非空且满足 ②③，取 $A \\in \\mathcal{F}$，则 $A \\cup A^c = X \\in \\mathcal{F}$，①自动恢复；去掉①只允许 $\\mathcal{F} = \\varnothing$（空族空洞满足②③） | 空族上测度无处定义 | ①可由「非空」替代，作用只是排除空壳 |\n| ② 补集封闭 | $\\mathbb{R}$ 的开集族：对可数并封闭，但 $(0,1)$ 的补 $(−\\infty,0] \\cup [1,+\\infty)$ 不是开集 | 开集本是「可测」的自然候选，但不补封闭 ⟹ 连最基本的质量二分 $\\mu(X) = \\mu(A) + \\mu(A^c)$ 都写不出 | 不能去；由 De Morgan，②+③ ⟹ 可数交、可数差封闭，是一体齿轮 |\n| ③ 可数并 → 有限并 | 有限-余有限族 $\\mathcal{F} = \\{A \\subset \\mathbb{R} : A$ 有限或 $A^c$ 有限$\\}$：$A_n = \\{n\\}$ 各自 $\\in \\mathcal{F}$，但 $\\bigcup A_n = \\mathbb{N}$ 自身无限、补集 $\\mathbb{R} \\setminus \\mathbb{N}$ 也无限 ⟹ $\\mathbb{N} \\notin \\mathcal{F}$ | 集合列极限 $A_n \\uparrow A = \\bigcup A_n$ 逃出定义域，$\\mu(A_n) \\to \\mu(A)$ 这类极限语句直接失义 | 不能收紧：有限并（集合代数）撑不起极限操作 |\n| ③ 可数并 → 任意并 | 对任意并封闭时，任何子集 $B = \\bigcup_{x \\in B}\\{x\\}$ 都必须可测 ⟹ $\\mathcal{F} = 2^X$ 幂集（切片原话「立刻退化为幂集」） | 幂集上可数可加 + 平移不变无解（Vitali 集，见 general.vitali）——Lebesgue 测度无法存在 | 不能放宽：任意并直接撞碎测度 |\n\n两侧卡死的含义：「可数」往下降丢极限工具（有限-余有限反例），往上升退化为幂集撞 Vitali——可数恰好是分析取极限所需的最小无穷。切片的补充（tex 65-69）：$\\mathbb{R}$ 可分（存在可数拓扑基），每个开集都是可数个基开集之并，因此 Borel σ-代数完全由可数层级的操作生成（超限层级 $\\Sigma^0_\\alpha$）——「可数」不仅够用而且内外一致。\n\n切片 boxed 结论（tex 148-149）：σ-代数这个看似繁琐的概念，其存在理由正是为可数可加腾出逻辑空间。",
+      "links": [
+        "A1.3",
+        "A1.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:measure.quantifiers",
+      "type": "comparison",
+      "subject": "measure",
+      "title": "测度公理逐条拆解（可数可加的六个限定词）",
+      "keywords": [
+        "μ: F → [0,+∞]，μ(∅)=0 + 可数可加两条公理",
+        "两两不交不可去：[0,1]∪[0,1] 重复计数 1 ≠ 1+1",
+        "可数 → 有限：自然密度 μ({k})=0 但 μ(N)=1",
+        "可数 → 不可数：λ({x})=0 ∀x 强迫 λ ≡ 0",
+        "值域含 ∞ 是特性：λ(R)=∞ 合法",
+        "μ(∅)=0 冗余：μ(∅)=μ(∅⊔∅) 推出，防恒 ∞ 退化",
+        "实质内容全在「可数」二字"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 71,
+        "line_end": 100
+      },
+      "fill_hint": "公理照抄 tex 71-78；表内反例分别指向 general.density / general.uncountable / general.vitali 词条；「μ(∅)=0 冗余」为标准推导（切片未写，人工复核）。与 sigma-algebra.quantifiers 同构，便于前端并排渲染。",
+      "content": "测度定义（tex 71-78）：$\\mu: \\mathcal{F} \\to [0, +\\infty]$，满足 ① $\\mu(\\varnothing) = 0$；② 可数可加性：若 $\\{A_n\\}_{n=1}^\\infty \\subset \\mathcal{F}$ 两两不交，则 $\\mu\\big(\\bigcup_{n=1}^\\infty A_n\\big) = \\sum_{n=1}^\\infty \\mu(A_n)$。\n\n把陈述拆成六个限定词（限定词｜去掉后的具体反例｜结论如何失效｜能否放宽）：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 定义域 = σ-代数（而非幂集） | 在 $2^{\\mathbb{R}}$ 上坚持可数可加 + 平移不变：Vitali 集 $V$ 使 $1 \\le \\sum_q \\mu(V) \\le 3$ 无解（见 general.vitali） | 测度根本不存在（Vitali 三难） | 不能到幂集；可在 σ-代数内部做大（Borel、完备化） |\n| ② 两两不交 | $A_1 = A_2 = [0,1]$：$\\mu(A_1 \\cup A_2) = 1 \\ne 2 = \\mu(A_1)+\\mu(A_2)$【已核验:2|1+1】 | 重叠质量被重复计数，测度不再是「质量」 | 不交条件不可去；有限族可换成容斥 $\\mu(A \\cup B) = \\mu(A)+\\mu(B)-\\mu(A \\cap B)$ |\n| ③ 可数族 → 有限族 | 自然密度（见 general.density）：有限可加成立，但 $\\mathbb{N} = \\bigsqcup_k \\{k\\}$ 时 $\\mu(\\mathbb{N}) = 1 \\ne 0 = \\sum_k \\mu(\\{k\\})$ | MCT/Fatou/DCT、$L^p$ 完备、Fubini 等全部定理从根部断裂（见 general.banach 后果表） | 不能降：有限可加对极限一无所知（切片原话） |\n| ③ 可数族 → 任意族 | 不可数可加（见 general.uncountable）：$\\lambda(\\{x\\}) = 0\\ (\\forall x)$ 强迫 $\\lambda([0,1]) = \\sum_{x \\in [0,1]} 0 = 0 \\ne 1$ | 连续测度全灭，只剩至多可数个原子上的原子测度 | 不能升：连续世界需要恰好这一档强度 |\n| ④ 值域 $[0,+\\infty]$ 含 ∞ | 若强制只取有限值：$\\lambda(\\mathbb{R})$ 无法赋值（区间长度无穷） | Lebesgue 测度只能定义在有界集上 | 不能收紧；$\\infty + a = \\infty$ 的扩充实数约定是特性不是缺陷 |\n| ⑤ $\\mu(\\varnothing)=0$ | $\\mu(\\varnothing) = \\mu(\\varnothing \\sqcup \\varnothing) = 2\\mu(\\varnothing)$ ⟹ $\\mu(\\varnothing) \\in \\{0, \\infty\\}$；若取 ∞ 则单调性强迫 $\\mu \\equiv \\infty$（退化） | （非失效）此公理是冗余的防御性条款 | 可删，但需配「存在 $A$ 使 $\\mu(A) < \\infty$」排除恒 ∞ 退化 |\n\n总结：六条中真正不可动的实质只有 ③ 的「可数」——它是唯一同时满足「强到足以支撑分析，弱到不排除连续测度」的强度（切片 tex 80-81 原话）。",
+      "links": [
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.density",
+      "type": "counterexample",
+      "subject": "general",
+      "title": "反例：自然密度——有限可加、可数可加当场死亡",
+      "keywords": [
+        "μ(A) = lim |A∩{1..n}|/n（极限存在时）——渐近频率",
+        "有限可加成立：不交时计数严格可加再取极限",
+        "μ({k}) = 0（1/n → 0）但 μ(N) = 1（n/n → 1）",
+        "N = ⊔{k} 时 1 ≠ Σ 0 = 0——可数可加死亡",
+        "偶数集密度 1/2、平方数集密度 0",
+        "机制：每个单点渐近不可见，无穷单点累积成满测"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 90,
+        "line_end": 91
+      },
+      "fill_hint": "定义与失效方式照抄 tex 90-91（切片表格第一行）；偶数/平方数密度计算为本条自算（已带待核验标记）；有限可加验证用一行计数恒等式即可，不展开。",
+      "content": "切片三反例之一（tex 90-91）：自然密度 $\\mu(A) = \\lim_n \\frac{|A \\cap \\{1,\\dots,n\\}|}{n}$（极限存在时定义）。直觉：它是「渐近频率」——一个集合在前 $n$ 个自然数中所占的份额。\n\n有限可加成立：若 $A, B$ 不交，则 $|(A \\cup B) \\cap [1,n]| = |A \\cap [1,n]| + |B \\cap [1,n]|$（不交时计数严格可加），除以 $n$ 取极限即得 $\\mu(A \\cup B) = \\mu(A) + \\mu(B)$。\n\n具体数值：\n- 偶数集 $E$：$|E \\cap [1,n]|/n = \\lfloor n/2 \\rfloor / n \\to 1/2$，$n=100$ 时 $= 0.5$【已核验:0.5|sum(1 for k in range(1,101) if k%2==0)/100】。\n- 平方数集 $S = \\{k^2\\}$：$|S \\cap [1,n]| = \\lfloor \\sqrt{n} \\rfloor$，$n=100$ 时占比 $= 0.1$【已核验:0.1|int(100**0.5)/100】，$n=10^6$ 时 $= 0.001$【已核验:0.001|int(1000000**0.5)/1000000】，密度 $\\to 0$。\n\n失效计算：单点 $\\{k\\}$ 的密度 $\\mu(\\{k\\}) \\le 1/n \\to 0$（$n=1000$ 时上界已小到 $0.001$【已核验:0.001|1/1000】），故每个单点密度为 $0$；而全空间 $\\mu(\\mathbb{N}) = n/n \\to 1$【已核验:1|1000/1000】。切片原话：「$\\mu(\\{k\\})=0$ 但 $\\mu(\\mathbb{N})=1$」。可数可加要求\n$$\\mu(\\mathbb{N}) = \\sum_{k=1}^\\infty \\mu(\\{k\\}) = \\sum_{k=1}^\\infty 0 = 0【已核验:0|sum(0 for k in range(1,11))】,$$\n但左边是 $1$——$1 \\ne 0$，可数可加当场死亡。\n\n机制：有限可加只承诺固定有限项的加法；「无穷多个 0 加出 1」是一个极限陈述，恰好是有限可加没有的内容。每个单点的渐近份额都趋 0，但无穷份「趋 0 的份额」累积成满测——质量在极限过程中（对可数分割而言）凭空出现。\n\n修补：无修补——它本来就不是测度。在 $\\mathbb{N}$ 上要真测度请用计数测度 $\\mu^{\\#}(A) = |A|$：$\\mu^{\\#}(\\{k\\}) = 1$、$\\mu^{\\#}(\\mathbb{N}) = \\infty = \\sum 1$，可数可加成立。自然密度在概率中作「渐近频率」使用，但永远不能当测度用。",
+      "links": [
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.degenerate",
+      "type": "counterexample",
+      "subject": "general",
+      "title": "反例：退化测度——0 与 ∞ 的断链",
+      "keywords": [
+        "μ(A) = 0（A 有限）、∞（A 无限）——二值判断",
+        "有限可加成立：有限⊔有限=有限、含无限则并无限",
+        "N = ⊔{k}：μ(N) = ∞ ≠ 0 = Σ μ({k})",
+        "∞ 不从单点累积而来，可数可加断链",
+        "修补 = 计数测度 μ#(A)=|A|（可数可加样板）",
+        "与自然密度对偶：那边 0 vs 1，这边 0 vs ∞"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 93,
+        "line_end": 94
+      },
+      "fill_hint": "定义与失效方式照抄 tex 93-94（切片表格第二行）；有限可加验证为逐情形自算（扩充实数 ∞ 运算是约定，无数值断言）；与 general.density 的对偶写法需保留。",
+      "content": "切片三反例之二（tex 93-94）：退化测度，定义在 $\\mathbb{N}$ 上：$\\mu(A) = 0$（$A$ 有限），$\\mu(A) = \\infty$（$A$ 无限）。直觉：它只回答一个问题——「集合是不是无限」。\n\n有限可加逐情形验证（$A, B$ 不交）：\n- $A, B$ 均有限 ⟹ $A \\cup B$ 有限，$\\mu(A \\cup B) = 0 = 0 + 0$ ✓\n- $A$ 无限 ⟹ $A \\cup B$ 无限，$\\mu(A \\cup B) = \\infty = \\infty + \\mu(B)$（扩充实数约定 $\\infty + 0 = \\infty + \\infty = \\infty$）✓\n\n失效计算（切片原话）：$\\mathbb{N} = \\bigsqcup_k \\{k\\}$，但\n$$\\mu(\\mathbb{N}) = \\infty \\ne 0 = \\sum_{k=1}^\\infty \\mu(\\{k\\}) = \\sum_{k=1}^\\infty 0【已核验:0|sum(0 for k in range(1,11))】.$$\n$\\infty \\ne 0$——可数可加死亡。\n\n机制：可数可加的本质是「整体质量 = 部件质量之和」，而这个集函数给「无限」一个不来自累积的 $\\infty$：部件全零、整体 $\\infty$，加法链完全断开。\n\n修补：换成计数测度 $\\mu^{\\#}(A) = |A|$（切片「关键测度」之一）：$\\mu^{\\#}(\\{k\\}) = 1$、$\\mu^{\\#}(\\mathbb{N}) = \\infty = \\sum_{k=1}^\\infty 1$，可数可加严格成立。退化测度相当于把计数测度的「数个数」坍缩成「是否无限」。\n\n与自然密度对偶（见 general.density）：那边的失效是 $0 \\ne 1$（质量在极限处以有限值凭空出现），这边是 $0 \\ne \\infty$（质量以 $\\infty$ 形式凭空出现）——两个方向的反例说明有限可加与可数可加之间隔着整整一个极限操作。",
+      "links": [
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.banach",
+      "type": "counterexample",
+      "subject": "general",
+      "title": "反例：Banach 测度——三条件全满足，定理全灭",
+      "keywords": [
+        "R 上 Lebesgue 的有限可加扩张：全域定义 + 平移不变 + 有限可加",
+        "三条件全满足，但无任何收敛定理（切片原话）",
+        "MCT 失效演示：f_n = 1_[n,∞) ↓ 0 但 ∫f_n ≡ ∞",
+        "断点：MCT 证明用到下连续性 ⟺ 可数可加",
+        "后果表：MCT/Fatou/DCT、Lᵖ 完备、Fubini、RN、Kolmogorov、BC/SLLN 全灭",
+        "CG 落点：有限可加下 MC 渲染没有理论保证（切片原话）"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 96,
+        "line_end": 121
+      },
+      "fill_hint": "定义与后果表逐行照抄 tex 96-121；MCT 失效演示为本条自造（f_n = 1_[n,∞)，依赖「扩张保持 Lebesgue 值」）；Banach 测度本身依赖选择公理、不可显式构造，人工复核表述。",
+      "content": "切片三反例之三（tex 96-97）：Banach 测度 = $\\mathbb{R}$ 上 Lebesgue 测度的有限可加扩张——定义在全部子集 $2^{\\mathbb{R}}$ 上、平移不变、有限可加。切片原话：「三个条件全满足，但无任何收敛定理」。它证明：只要求有限可加时可以做得「漂亮」——全域定义 + 平移不变 + 可数可加三者中放弃最后一个，前两个全能保住。\n\nMCT 失效的具体演示：取 $f_n = 1_{[n,\\infty)}$。逐点 $f_n(x) \\to 0$（固定 $x$，一旦 $n > x$ 就有 $f_n(x) = 0$）。但 $\\int f_n \\, d\\mu = \\mu([n,\\infty)) = \\infty$（扩张在 Lebesgue 可测集上保持原值，而 $\\lambda([n,\\infty)) = \\infty$）。于是 $\\int f_n \\equiv \\infty \\not\\to 0 = \\int 0$——极限与积分不可交换，MCT（递减版）失效；同理 A1.3 的滑动质量 $f_n = 1_{[n,n+1)}$（$\\int = 1 \\not\\to 0$）在它上面也救不回来。\n\n断点定位：MCT 证明中唯一用到测度性质的一步是测度下连续性 $\\mu(A_i \\cap E_n) \\uparrow \\mu(A_i)$（A1.3:mct.proof），而下连续性 $\\iff$ 可数可加（见本单元 measure.continuity-proof）。Banach 测度只有有限可加 ⟹ 这一步非法，整条链 MCT $\\Rightarrow$ Fatou $\\Rightarrow$ DCT 从根部断掉。\n\n切片后果表（tex 102-118，逐行）：\n- MCT / Fatou / DCT：积分与极限不能交换 → 无法做分析；\n- $L^p$ 完备性（Riesz--Fischer）：泛函分析地基消失；\n- Fubini--Tonelli：累次积分不成立；\n- Radon--Nikodym、Lebesgue 分解：无「密度函数」，条件期望无法定义（→ C4）；\n- Carathéodory 扩张的唯一性：由区间长度构造 Lebesgue 测度时失去确定性；\n- Kolmogorov 相容性定理：无穷维概率空间（布朗运动）的存在性无法保证；\n- Borel--Cantelli、强大数定律、0--1 律：概率渐近理论全部失效。\n\nCG 落点（tex 120-121 原话）：H4 蒙特卡洛积分的收敛性证明依赖 DCT，而 DCT 经 MCT 依赖可数可加。有限可加下 MC 渲染没有理论保证——这是 CG 侧最实际的理由。",
+      "links": [
+        "A1.3",
+        "H4",
+        "C4",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.vitali",
+      "type": "counterexample",
+      "subject": "general",
+      "title": "反例：Vitali 三难——为什么必须放弃「全部子集」",
+      "keywords": [
+        "三难：可数可加 + 平移不变 + 全域定义，不可兼得（选择公理下）",
+        "Vitali 集 V = [0,1) 模有理数等价类的代表元集",
+        "V+q（q ∈ Q∩[−1,1]）两两不交，且 [0,1) ⊆ ∪(V+q) ⊆ [−1,2)",
+        "平移不变 ⟹ 全部同测 m：1 ≤ Σm ≤ 3 无解",
+        "m=0 ⟹ 和为 0；m>0 ⟹ 和为 ∞；都进不了 [1,3]",
+        "出路：放弃全域定义，限制到 σ-代数 + 完备化"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 142,
+        "line_end": 151
+      },
+      "fill_hint": "切片只给三难结论（tex 142-151），完整 Vitali 构造为本条补全（标准内容，人工复核区间估计）；1 与 3 两个数值带待核验标记。",
+      "content": "切片 (4)（tex 142-151）：在选择公理下，$$\\text{可数可加} + \\text{平移不变} + \\text{定义在 } \\mathbb{R} \\text{ 的全部子集上}$$ 三者不可兼得（Banach 测度靠放弃可数可加才同时做到）。本条补全其证明骨架——Vitali 构造。\n\n构造：在 $[0,1)$ 上定义等价 $x \\sim y \\iff x - y \\in \\mathbb{Q}$。每个等价类取一个代表元，全体代表元组成 Vitali 集 $V \\subset [0,1)$。\n\n三步覆盖估计：记 $Q = \\mathbb{Q} \\cap [-1,1]$（可数集）。\n1. 两两不交：$V_q = V + q$。若 $x \\in V_{q_1} \\cap V_{q_2}$（$q_1 \\ne q_2$），则 $x - q_1, x - q_2 \\in V$ 且二者之差 $q_2 - q_1 \\in \\mathbb{Q} \\setminus \\{0\\}$——与 $V$ 中元素两两不等价矛盾。\n2. 下包：$[0,1) \\subseteq \\bigcup_{q \\in Q} V_q$（任 $x \\in [0,1)$：其等价类代表 $v \\in V$，$x - v \\in \\mathbb{Q} \\cap [-1,1]$，故 $x \\in V_{x-v}$）。\n3. 上包：$\\bigcup_{q \\in Q} V_q \\subseteq [-1, 2)$（$v \\in [0,1)$、$q \\in [-1,1]$ ⟹ $v + q \\in [-1,2)$）。\n\n矛盾推导：假设 $\\mu$ 在 $2^{\\mathbb{R}}$ 上可数可加且平移不变。平移不变 ⟹ $\\mu(V_q) = \\mu(V) =: m$ 对所有 $q$。由单调性与可数可加：\n$$1 = \\mu([0,1)) \\le \\sum_{q \\in Q} m \\le \\mu([-1,2)) = 3【已核验:3|2-(-1)】,$$\n其中 $\\mu([0,1)) = 1$【已核验:1|1-0】。但 $Q$ 是可数无穷集：若 $m = 0$ 则和为 $0$【已核验:0|sum(0 for q in range(1000))】（$< 1$，矛盾）；若 $m > 0$ 则和为 $+\\infty$（$> 3$，矛盾）。无解。\n\n出路（切片原话）：我们放弃「全部子集」，把定义域限制为 σ-代数，并做完备化——这正是 sigma-algebra.quantifiers 中「任意并 → 幂集」那一行失败的深层原因。",
+      "links": [
+        "A1.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.uncountable",
+      "type": "counterexample",
+      "subject": "general",
+      "title": "反例：不可数可加太强——只剩原子测度",
+      "keywords": [
+        "任意指标集可加 ⟹ μ(X) = Σ_{x∈X} μ({x})",
+        "非负族无序和收敛 ⟺ 至多可数项非零（切片引理）",
+        "λ({x}) = 0 ∀x ⟹ 被迫 λ ≡ 0——λ(R)=0 荒谬（切片原话）",
+        "正态分布等一切连续型分布被迫退化（C2 整节失效）",
+        "不可数可加只允许至多可数个原子上的测度（切片原话）",
+        "δ 建模、分布理论（A2.5）全部无法表述"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 123,
+        "line_end": 133
+      },
+      "fill_hint": "论证骨架照抄 tex 123-133；正态 ±3σ 数值为自算（带待核验）；「δ 无法表述」的机制一句带过不展开（细节归 A2.5）。",
+      "content": "切片 (2)（tex 123-133）：若对任意指标集可加，则对任意 $X$：$\\mu(X) = \\sum_{x \\in X} \\mu(\\{x\\})$。关键引理（切片原话）：非负实数族的无序求和收敛当且仅当至多可数项非零。\n\n失效计算：Lebesgue 测度满足 $\\lambda(\\{x\\}) = 0$ 对每个 $x$ 成立（单点长度为零）。不可数可加将强迫\n$$\\lambda([0,1]) = \\sum_{x \\in [0,1]} \\lambda(\\{x\\}) = \\sum_{x \\in [0,1]} 0 = 0,$$\n但区间长度应为 $1$【已核验:1|1-0】——切片原话「被迫 $\\lambda(\\mathbb{R}) = 0$——荒谬」。质量在不可数求和下被「稀释」为零：不可数个 0 的无序和仍是 0，而连续体的质量本应来自不可数个点的「密度」累积——不可数可加不许这种累积。\n\n概率版失效：标准正态分布 $N(0,1)$ 满足 $P(\\{x\\}) = 0$ 每点成立（连续型分布的本性），不可数可加 ⟹ $P(\\mathbb{R}) = \\sum_{x} 0 = 0 \\ne 1$。具体地，$\\pm 3\\sigma$ 内本应集中约 $99.73\\%$ 的质量：$\\int_{-3}^{3} \\frac{1}{\\sqrt{2\\pi}} e^{-x^2/2}\\, dx \\approx 0.9973$【已核验:0.997300203937|0.5*(erf(3/sqrt(2))-erf(-3/sqrt(2)))】——不可数可加却判总质量为 0。切片原话：正态分布等一切连续型分布被迫退化（C2 整节失效）；A2.5 的分布理论、狄拉克 δ 建模（点光源）全部无法表述。\n\n结论（切片原话）：不可数可加只允许集中在至多可数个原子上的测度，把连续世界排除在外。它不是「更强所以更好」，而是「强到只剩一种病态样本」。",
+      "links": [
+        "C2",
+        "A2.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:sigma-algebra.intuition",
+      "type": "intuition",
+      "subject": "sigma-algebra",
+      "title": "σ-代数直觉：对可数操作封闭的最小合理宇宙",
+      "keywords": [
+        "σ-代数 = 容许可数操作的「可测宇宙」",
+        "R 可分：Q 可数稠密 ⟹ 开集 = 可数个基开集之并",
+        "Borel σ-代数由可数层级操作生成（超限层级 Σ⁰_α）",
+        "有限并不够：集合列极限逃出定义域",
+        "任意并太多：立刻退化为幂集 2ˣ，撞 Vitali",
+        "boxed：σ-代数的存在理由 = 为可数可加腾出逻辑空间"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 65,
+        "line_end": 69
+      },
+      "fill_hint": "可分性与 boxed 结论照抄 tex 65-69、148-149；有限-余有限与幂集退化两个论证是切片结论的展开；Σ⁰_α 超限层级仅提及不展开。",
+      "content": "把 σ-代数读成「对可数操作封闭的最小合理宇宙」，三条公理就不再是任意规定，而是与测度的可数可加精确咬合的齿轮（切片 tex 65-69 原话：「σ-代数的『可数』二字，正是为可数可加腾出的逻辑空间」）。\n\n假设给了什么：可数并封闭 ⟹ 集合列的极限 $A = \\bigcup A_n$、$A = \\bigcap A_n$ 永远留在宇宙内，「对集合取极限」永远合法；补封闭 ⟹ 任何可测集的「另一半」也可测，$X = A \\sqcup A^c$ 的质量二分永远可写。两者合起来：σ-代数是可数操作（并、交、补、差、极限）的封闭包。\n\n结论为什么因此成立（测度能住进来）：可数可加要处理的是可数不交分割 $\\sqcup A_n$——恰好要求定义域对可数并封闭；$\\mu(X) = \\mu(A) + \\mu(A^c)$ 要求补封闭。σ-代数的公理就是「让可数可加的每个等式两边都有定义」的最低配置。\n\n为什么「可数」恰好——两侧卡死：往下一档（有限并，集合代数）：有限-余有限族里 $\\{n\\}$ 各自可测但 $\\bigcup \\{n\\} = \\mathbb{N}$ 逃逸，极限操作死掉（见 sigma-algebra.quantifiers）。往上一档（任意并）：任何 $B \\subset X$ 都是 $B = \\bigcup_{x \\in B} \\{x\\}$，族立刻等于幂集 $2^X$（切片原话「立刻退化为幂集」），而幂集上可数可加 + 平移不变无解（Vitali 三难）。可数 = 分析取极限的最小无穷。\n\n为什么开集族不够：分析需要的操作（可数并、补、极限）会把开集推出界——$(0,1)$ 的补不是开集。于是取「包含开集的最小 σ-代数」= Borel σ-代数。\n\n可分性的角色（切片原话）：$\\mathbb{R}$ 是可分的（存在可数拓扑基），每个开集都是可数个基开集之并，因此 Borel σ-代数完全由可数层级的操作生成（超限层级 $\\Sigma^0_\\alpha$）——连生成过程都只需要可数操作，「可数」二字内外一致。",
+      "links": [
+        "A1.2",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:measure.intuition",
+      "type": "intuition",
+      "subject": "measure",
+      "title": "测度直觉：可数可加是唯一站得住的强度",
+      "keywords": [
+        "可数可加 = 唯一同时满足两个要求的强度（切片原话）",
+        "强到足以支撑分析：极限工具全保",
+        "弱到不排除连续测度：Lebesgue、正态都活着",
+        "有限可加对极限一无所知（切片原话）",
+        "等价钥匙：A_n ↑ A ⟹ μ(A_n) → μ(A)",
+        "三难图景：有限可加丢定理、可数可加丢全域、不可数可加丢连续"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 80,
+        "line_end": 140
+      },
+      "fill_hint": "骨架照抄 tex 80-81、135-140 的原文语句（引号内逐字）；「假设/结论分开」结构按规格要求；三难图景与 general.compare 呼应但不重复展开表格。",
+      "content": "切片核心断言（tex 80-81 原话）：可数可加是唯一同时满足两个要求的强度——强到足以支撑分析，弱到不排除连续测度。\n\n假设给了什么：允许「分割-求和」穿过可数无穷——把 $X$ 切成可数片，质量逐片累加仍等于整体。关键在「可数」恰是取极限的最小无穷：数列的极限、集合列的极限都是沿可数指标进行的，所以可数分割是「极限语句」能直接消费的最大粒度。\n\n结论为什么因此成立：可数可加 $\\iff$ 集合列连续性（$A_n \\uparrow A \\Rightarrow \\mu(A_n) \\to \\mu(A)$，见 measure.continuity）——测度能跟踪集合的极限。切片原话（tex 135-140）：「这是理解其必要性的钥匙——分析学的一切建立在极限上，而有限可加对极限一无所知」。有限可加只知道固定有限片的加法，对「无穷片累积」与「极限处的质量守恒」完全沉默——两个反例作证：自然密度 $\\mu(\\{k\\}) = 0$ 但 $\\mu(\\mathbb{N}) = 1$（质量凭空出现，见 general.density），退化测度 $\\sum \\mu(\\{k\\}) = 0$ 但 $\\mu(\\mathbb{N}) = \\infty$（见 general.degenerate）。\n\n反方向的天花板：不可数可加会把「每点零测」放大成「全空间零测」（$\\lambda \\equiv 0$），连续世界全灭（见 general.uncountable）。可数可加恰好停在「数列极限所需」的强度上，一步不多。\n\n代价（tex 142-151）：Vitali 三难——可数可加 + 平移不变 + 全域定义不可兼得。我们付出「放弃全部子集」的代价（定义域限制到 σ-代数 + 完备化），换回整套分析机器：MCT $\\Rightarrow$ Fatou $\\Rightarrow$ DCT $\\Rightarrow$ 泛函 $\\Rightarrow$ 概率 $\\Rightarrow$ MC 渲染（H4）。",
+      "links": [
+        "A1.3",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:measure.continuity",
+      "type": "extension",
+      "subject": "measure",
+      "title": "等价形式：测度对集合列的连续性",
+      "keywords": [
+        "A_n ↑ A ⟹ μ(A_n) → μ(A)（下连续性）",
+        "A_n ↓ ∅ ⟹ μ(A_n) → 0（∅ 处上连续）",
+        "⟺ 可数可加（有限可加打底）——理解必要性的钥匙（切片原话）",
+        "上连续需 μ(A₁) < ∞：[n,∞) ↓ ∅ 但 λ ≡ ∞ ↛ 0",
+        "与 A1.3 接口：MCT（示性函数版）⟺ 可数可加",
+        "分析学的一切建立在极限上，连续性 = 测度的极限能力"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 135,
+        "line_end": 140
+      },
+      "fill_hint": "陈述照抄 tex 135-140；切片未写 μ(A₁)<∞ 条件，本条按标准定理（Folland/Stein）补上并与 A1.3:mct.decreasing 互证——需人工复核切片作者是否刻意省略。",
+      "content": "切片 (3)（tex 135-140）：可数可加的等价形式——对集合列的连续性：\n$$A_n \\uparrow A \\implies \\mu(A_n) \\to \\mu(A), \\qquad A_n \\downarrow \\varnothing \\implies \\mu(A_n) \\to 0.$$\n切片原话：「这是理解其必要性的钥匙——分析学的一切建立在极限上，而有限可加对极限一无所知」。\n\n两式各说什么：下连续性 = 「质量的逐步堆积不丢失」——$A_n$ 逐渐涨成 $A$ 时，测度跟着涨到位；上连续性（在 $\\varnothing$）= 「质量的逐步撤离能被察觉」——集合缩到空集时测度必须归零。它们把「测度」与「极限」焊在一起：这正是 MCT 的集合版影子。\n\n严格注记（人工复核点）：第二式（上连续）在一般测度空间需要 $\\mu(A_1) < \\infty$。反例：$A_n = [n, \\infty) \\downarrow \\varnothing$，但 $\\lambda(A_n) = \\infty$ 对每个 $n$ 恒成立，$\\infty \\not\\to 0$——无穷的「初始质量」在递减撤离时无人清点。这与 A1.3 递减 MCT 的反例 $f_n = 1_{[n,\\infty)}$（$\\int f_n \\equiv \\infty \\not\\to 0$）是同一个坑：A1.3:mct.decreasing 明确标注「测度上连续性 $A_n \\downarrow$ 也要求 $\\mu(A_1) < \\infty$（A1.4）——同一个坑」。\n\n接口：A1.3:mct.countable-add 指出 MCT 限制在示性函数上恰是下连续性 $\\iff$ 可数可加——本词条就是那条接缝的 A1.4 侧；证明骨架见 measure.continuity-proof。",
+      "links": [
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:measure.continuity-proof",
+      "type": "proof",
+      "subject": "measure",
+      "title": "证明骨架：可数可加 ⟺ 集合列连续性",
+      "keywords": [
+        "(⇒) 切差 B_n = A_n ∖ A_{n−1}，A = ⊔B_n，部分和恰为 μ(A_N)",
+        "(⇐) E_N = ∪_{n≤N} A_n ↑ A，下连续 + 有限可加 ⟹ 可数可加",
+        "前提配对：有限可加 + 下连续 ⟺ 可数可加",
+        "上连续：对 A₁∖A_n ↑ A₁ 用下连续，需 μ(A₁) < ∞",
+        "依赖链：可数可加 ⟺ 下连续 ⟹ MCT ⟹ Fatou ⟹ DCT",
+        "易错点：上连续忘写 μ(A₁)<∞，[n,∞) 立即翻车"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 135,
+        "line_end": 140
+      },
+      "fill_hint": "切片无证明（tex 135-140 仅陈述）；本骨架为标准内容（Stein Ch.1 / Rudin Ch.1），双向蕴含都要写清；依赖链与 A1.3:mct.countable-add 的接缝已标注。",
+      "content": "定理：设 $\\mu$ 有限可加。则 $\\mu$ 可数可加 $\\iff$ $\\mu$ 下连续（$A_n \\uparrow A \\Rightarrow \\mu(A_n) \\to \\mu(A)$）。\n\n方向一（可数可加 $\\Rightarrow$ 下连续性），四步：\n1. 设 $A_n \\uparrow A$（即 $A_1 \\subseteq A_2 \\subseteq \\cdots$，$A = \\bigcup_n A_n$）。令 $B_1 = A_1$，$B_n = A_n \\setminus A_{n-1}$（$n \\ge 2$）——把「逐层新长出来的部分」切成不交片。理由：σ-代数对差封闭，故 $B_n \\in \\mathcal{F}$。\n2. 望远镜恒等式：$\\{B_n\\}$ 两两不交，$\\bigsqcup_{n=1}^N B_n = A_N$，$\\bigsqcup_{n=1}^\\infty B_n = A$。\n3. 对不交分割用可数可加：$\\mu(A) = \\sum_{n=1}^\\infty \\mu(B_n)$；对前 $N$ 片用有限可加（可数可加的推论，把余下项全取 $\\varnothing$）：$\\sum_{n=1}^N \\mu(B_n) = \\mu(A_N)$。\n4. 级数的定义就是部分和的极限：$\\mu(A) = \\lim_{N \\to \\infty} \\sum_{n \\le N} \\mu(B_n) = \\lim_{N \\to \\infty} \\mu(A_N)$。∎\n\n方向二（有限可加 + 下连续 $\\Rightarrow$ 可数可加），三步：\n1. 设 $A = \\bigsqcup_{n=1}^\\infty A_n$，令 $E_N = \\bigcup_{n \\le N} A_n$。则 $E_N \\uparrow A$。\n2. $E_N$ 是前 $N$ 片的不交并，有限可加给 $\\mu(E_N) = \\sum_{n=1}^N \\mu(A_n)$。\n3. 下连续性给 $\\mu(A) = \\lim_N \\mu(E_N) = \\lim_N \\sum_{n \\le N} \\mu(A_n) = \\sum_{n=1}^\\infty \\mu(A_n)$。∎\n\n上连续性（在 $\\varnothing$）：设 $A_n \\downarrow \\varnothing$ 且 $\\mu(A_1) < \\infty$。令 $B_n = A_1 \\setminus A_n \\uparrow A_1$，下连续给 $\\mu(B_n) \\to \\mu(A_1)$。由有限可加，$\\mu(A_1) = \\mu(A_n) + \\mu(B_n)$（$A_n \\subseteq A_1$ 的不交分割），且减法合法（$\\mu(A_1) < \\infty$ 保证不出现 $\\infty - \\infty$），故 $\\mu(A_n) = \\mu(A_1) - \\mu(B_n) \\to 0$。∎\n\n依赖链与易错点：可数可加 $\\iff$ 下连续 $\\Rightarrow$（经简单函数逼近，A1.3）MCT $\\Rightarrow$ Fatou $\\Rightarrow$ DCT $\\Rightarrow$ H4 蒙特卡洛收敛——这条链的第一环就钉在本定理上。易错点一：上连续忘写 $\\mu(A_1) < \\infty$，$A_n = [n, \\infty)$ 立即翻车（$\\lambda \\equiv \\infty \\not\\to 0$）。易错点二：方向二的证明里有限可加与下连续缺一不可——只给下连续不给有限可加推不出可数可加。",
+      "links": [
+        "A1.3",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:measure.statement",
+      "type": "statement",
+      "subject": "measure",
+      "title": "测度的定义（σ-代数 + 两条公理 = 测度空间）",
+      "keywords": [
+        "三元组 (X, F, μ)：可测空间 + 测度 = 测度空间",
+        "σ-代数 F：X ∈ F、补封闭、可数并封闭",
+        "μ: F → [0,+∞]，μ(∅) = 0",
+        "可数可加：两两不交 ⟹ μ(⊔A_n) = Σμ(A_n)",
+        "值域含 ∞、两两不交、可数族——三个易漏限定词",
+        "μ(∅)=0 可由其余公理推出（排除恒 ∞ 退化）"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 58,
+        "line_end": 78
+      },
+      "fill_hint": "两段定义照抄 tex 58-63、71-78；注意点与冗余性推导为标准内容；数值仅 1+1 一处（带核验）。详细拆解见 measure.quantifiers。",
+      "content": "测度论的地基是一个三元组 $(X, \\mathcal{F}, \\mu)$，分两步搭起来。\n\n第一步（可测结构，tex 58-63）：集合 $X$ 配一个 σ-代数 $\\mathcal{F}$——$X$ 的子集族，满足 $X \\in \\mathcal{F}$、对补集封闭、对可数并封闭。$(X, \\mathcal{F})$ 称可测空间；$\\mathcal{F}$ 中的集合叫可测集，是「允许谈质量」的对象。\n\n第二步（测度，tex 71-78）：$\\mu: \\mathcal{F} \\to [0, +\\infty]$，满足\n$$\\mu(\\varnothing) = 0, \\qquad \\{A_n\\} \\text{ 两两不交} \\implies \\mu\\Big(\\bigsqcup_{n=1}^\\infty A_n\\Big) = \\sum_{n=1}^\\infty \\mu(A_n).$$\n$(X, \\mathcal{F}, \\mu)$ 称测度空间。\n\n三个易漏的限定词：\n- 值域是 $[0, +\\infty]$：$\\mu(A) = \\infty$ 完全合法（如 $\\lambda(\\mathbb{R}) = \\infty$），扩充实数的约定 $\\infty + a = \\infty$ 支撑运算；\n- 两两不交：重叠时等式变成重复计数（$A_1 = A_2 = [0,1]$ 时 $\\mu(\\cup) = 1 \\ne 2$【已核验:2|1+1】）；\n- 可数族：不是有限（自然密度反例）、不是任意（不可数可加强迫 $\\lambda \\equiv 0$）——恰好卡在中间，这是整个体系的灵魂（见 measure.quantifiers）。\n\n冗余性注记：$\\mu(\\varnothing) = \\mu(\\varnothing \\sqcup \\varnothing) = 2\\mu(\\varnothing)$ ⟹ $\\mu(\\varnothing) \\in \\{0, \\infty\\}$；若取 $\\infty$ 则单调性强迫 $\\mu \\equiv \\infty$（一切集合皆无穷测，退化）。故「存在 $A$ 使 $\\mu(A) < \\infty$」时第一条公理自动成立——它是防御性条款而非实质假设。",
+      "links": [
+        "A1.2",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:measure.examples",
+      "type": "extension",
+      "subject": "measure",
+      "title": "关键测度四件套：勒贝格 / 计数 / 狄拉克 / 豪斯多夫",
+      "keywords": [
+        "勒贝格测度：Rⁿ 上的「体积」，λ([a,b)) = b−a",
+        "计数测度：μ#(A) = |A|，可数可加的样板",
+        "狄拉克测度：δ_x(A) = 1_A(x)，CG 点光源建模（切片原话）",
+        "豪斯多夫测度：分形维数的尺子，CG 分形地形（切片原话）",
+        "四个测度 = 四种「质量的分布方式」",
+        "公理相同，世界不同"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 153,
+        "line_end": 159
+      },
+      "fill_hint": "四件套名单照抄 tex 153-159；每条的定义式与数值为本条自算（λ、δ 的数值带核验）；分形维数只给临界指数一句话，展开归 H1/H8。",
+      "content": "切片「关键测度」（tex 153-159）给出四个样板——同一套公理养出的四种「质量分布方式」。\n\n1. 勒贝格测度（Lebesgue measure）$\\lambda$：$\\mathbb{R}^n$ 上的「体积」。在区间上 $\\lambda([a,b)) = b - a$，如 $\\lambda([0,1)) = 1$【已核验:1|1-0】。它由 Carathéodory 扩张从区间长度造出，而扩张的唯一性本身依赖可数可加（见 general.banach 后果表）。A1.2 勒贝格积分构造的主角。\n\n2. 计数测度（counting measure）$\\mu^{\\#}(A) = |A|$：把每个点当质量 1。对任意不交族 $\\mu^{\\#}(\\bigsqcup A_n) = \\sum |A_n|$ 严格成立——最老实的可数可加样板；也是 general.degenerate 退化测度的修补版（「是否无限」→「数个数」）。\n\n3. 狄拉克测度（Dirac measure）$\\delta_x(A) = \\mathbf{1}_A(x)$：全部质量 1 压在单点 $x$ 上。$\\delta_x(X) = 1$、$\\delta_x(X \\setminus \\{x\\}) = 0$——单点零测的连续世界里唯一「看得见的点」。切片原话：在 CG 中用于点光源建模——点光源的辐射恰好是含 $\\delta$ 分量的测度，路径追踪对它的积分就是被积函数在光源点的取值（与 A2.5 的分布理论、δ 建模同一语言）。\n\n4. 豪斯多夫测度（Hausdorff measure）$H^s$：用直径的 $s$ 次幂 $\\delta^s$ 当「$s$ 维尺子」量集合；临界指数 $\\dim_H(E) = \\inf\\{s : H^s(E) = 0\\} = \\sup\\{s : H^s(E) = \\infty\\}$ 给出分形维数。切片原话：用于分形维数（CG 中的分形地形）——噪声地形曲面的分形特征正用这套语言（H1/H8 侧）。\n\n收尾：连续铺开（$\\lambda$）、逐点清点（$\\mu^{\\#}$）、单点集中（$\\delta_x$）、按尺度加权（$H^s$）——公理相同，世界不同。",
+      "links": [
+        "A1.2",
+        "A2.5",
+        "H4",
+        "H1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "三档可加性总对照：有限 / 可数 / 不可数",
+      "keywords": [
+        "三档强度：有限可加 / 可数可加 / 不可数可加",
+        "有限可加：Banach（全域+平移不变）但定理全灭",
+        "可数可加：定理全保，代价是放弃全域定义（Vitali）",
+        "不可数可加：只剩至多可数个原子，连续世界出局",
+        "依赖链：可数可加 ⟺ 连续性 ⟹ MCT ⟹ Fatou ⟹ DCT ⟹ H4",
+        "σ-代数的可数封闭 = 与可数可加咬合的同一枚齿轮"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 83,
+        "line_end": 133
+      },
+      "fill_hint": "表格行照抄 tex 83-133 的三个反例段与后果表（tex 102-118）；依赖链是 A1.3:general.compare 的 A1.4 侧延伸；两端引用核对 A1.3 与 H4。",
+      "content": "本单元的全部内容可以压缩成一张三档对照表——测度公理选哪一档强度，就押上哪一批资产：\n\n| 强度 | 代表对象 | 换到什么 | 付出什么 |\n|---|---|---|---|\n| 有限可加 | 自然密度、退化测度、Banach 测度 | 全域定义 + 平移不变（Banach 三条件全满足） | MCT/Fatou/DCT、$L^p$ 完备性（Riesz--Fischer）、Fubini--Tonelli、Radon--Nikodym 与 Lebesgue 分解、Carathéodory 扩张唯一性、Kolmogorov 相容性、Borel--Cantelli/强大数定律/0-1 律——全部失效（见 general.banach 后果表） |\n| 可数可加 | Lebesgue、计数、狄拉克、豪斯多夫、一切概率测度 | 上表全部定理 + 连续测度存活 | 全域定义（Vitali 三难 ⟹ 定义域限制到 σ-代数 + 完备化，见 general.vitali） |\n| 不可数可加 | 至多可数个原子上的原子测度 | （几乎什么都换不到） | Lebesgue 被迫 $\\equiv 0$、正态分布等一切连续型分布退化（C2 整节失效）、δ 建模与分布理论无法表述（A2.5），见 general.uncountable |\n\n选择判据一句：选测度公理强度 = 选「要定理还是要全域定义」——本笔记（连同整个分析、概率、CG 渲染）全押在可数可加上。\n\n依赖链（A1.3 接缝）：可数可加 $\\iff$ 集合列连续性（measure.continuity-proof）$\\Rightarrow$ MCT $\\Rightarrow$ Fatou $\\Rightarrow$ DCT $\\Rightarrow$ H4 蒙特卡洛渲染收敛。σ-代数一侧的对应物：它的「可数封闭」与测度的「可数可加」是同一枚齿轮的两侧（切片 boxed 结论）——有限-余有限族撑不起极限（sigma-algebra.quantifiers），幂集撞碎 Vitali，可数恰好。",
+      "links": [
+        "A1.3",
+        "H4",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接：谁在花可数可加的钱",
+      "keywords": [
+        "H4：MC 收敛性 ⟸ DCT ⟸ MCT ⟸ 可数可加（切片 120-121 原话）",
+        "A1.2/A1.3：勒贝格积分与三大收敛定理的地基",
+        "C1：概率 = 全空间测度 1 的测度（Kolmogorov 公理化）",
+        "C4：Radon–Nikodym ⟹ 密度与条件期望（失效即无法定义）",
+        "C10.1：Kolmogorov 相容性 ⟹ 布朗运动存在性",
+        "A2.5/H4：狄拉克测度 = 点光源、分布理论的语言"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 120,
+        "line_end": 121
+      },
+      "fill_hint": "每条一句点到即止（规格要求），细节归各目标节点自己的词条文件；切片后果表（tex 102-118）中被点名的 C4/C6.5/C10.1 保持原话引用。",
+      "content": "本单元是整本笔记的承重墙之一——每个下游章节都在花「可数可加」这笔钱（每条一句，谁用了哪块）：\n\n- A1.2 / A1.3（地基）：勒贝格积分的构造与三大收敛定理全部住在可数可加上——MCT（示性函数版）$\\iff$ 可数可加（A1.3:mct.countable-add）。\n- H4（CG 最短路径，切片 tex 120-121 原话）：蒙特卡洛积分的收敛性证明依赖 DCT，而 DCT 经 MCT 依赖可数可加——有限可加下 MC 渲染没有理论保证。\n- C1（概率公理化）：Kolmogorov 把概率定义为全空间测度 1 的测度，测度论即概率论的语法。\n- C2（分布族）：连续型分布依赖「单点零测 + 总质量 1」；不可数可加下正态等全部退化（见 general.uncountable）。\n- C4（条件期望）：Radon--Nikodym 定理给出密度 $d\\nu/d\\mu$；切片后果表原话：有限可加下无「密度函数」，条件期望无法定义（→ C4）。\n- C6.5（渐近理论）：Borel--Cantelli、强大数定律、0-1 律在切片后果表中被点名全灭——它们是可数可加的直系后代。\n- C10.1（布朗运动）：Kolmogorov 相容性定理保证无穷维概率空间（布朗运动）的存在性（切片后果表原话）。\n- A2.5 + H4（点光源）：狄拉克测度 $\\delta_x$ 是点光源的数学模型（切片关键测度原话），分布理论整体用测度语言表述。\n- H1（分形地形）：豪斯多夫测度给分形维数（切片关键测度原话）。",
+      "links": [
+        "A1.2",
+        "A1.3",
+        "A2.5",
+        "C1",
+        "C2",
+        "C4",
+        "C6.5",
+        "C10.1",
+        "H1",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：density-asymptotics（自然密度反例动态化）",
+      "keywords": [
+        "模块 density-asymptotics：|A∩[1,n]|/n 随 n 的曲线",
+        "集合族：偶数 → 1/2、平方数 → 0、质数 → 0、全空间 N → 1",
+        "演示自然密度反例：单点渐近不可见但整体满测",
+        "质数密度单调降（PNT 方向），n=100 时 0.25",
+        "不变式自检：偶数曲线在偶数 n 处恰为 0.5（偏差 > 1e-12 报错）",
+        "判据 Q4：显式可计算序列 ⟹ 前端直渲（档1）"
+      ],
+      "tex_ref": null,
+      "viz": {
+        "module": "density-asymptotics",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "sets": [
+            "evens",
+            "squares",
+            "primes",
+            "all"
+          ],
+          "n_min": 10,
+          "n_max": 10000
+        }
+      },
+      "fill_hint": "模块名为本条新增（规格允许小写短横线新模块）；锚点数值全部带待核验；契约细化（xs/ys 字段）归 learning-web 前端项目，本条只记槽位与需求，不在对话里做演示。",
+      "content": "单元级演示总览：本单元最值得画的是「自然密度反例的渐近过程」——单点密度 $1/n \\to 0$ 与整体密度 $n/n = 1$ 的张力必须动态看才直观（对应 general.density 词条）。\n\n模块 density-asymptotics（前端直渲，档1；判据 Q4：显式简单序列，无需长时程迭代或对拍）：\n- 画 $|A \\cap \\{1,\\dots,n\\}|/n$ 关于 $n$ 的曲线，$A \\in \\{$偶数, 平方数, 质数, 全空间 $\\mathbb{N}\\}$；\n- 锚点数值（$n=100$）：偶数 $= 0.5$【已核验:0.5|sum(1 for k in range(1,101) if k%2==0)/100】、平方数 $= 0.1$【已核验:0.1|int(100**0.5)/100】、质数 $= 0.25$【已核验:0.25|sum(1 for k in range(2,101) if len([i for i in range(2,k) if k%i==0])==0)/100】、全空间 $= 1.0$【已核验:1|100/100】；\n- 叙事：四条曲线中三条滑向 0 或 1/2，只有「全空间」恒为 1——而 $\\mathbb{N} = \\bigsqcup \\{k\\}$、每个 $\\{k\\}$ 密度为 0。观众直观看到「无穷多个 0 累积成 1」为何需要可数可加、有限可加为何接不住；\n- 不变式自检：偶数曲线在偶数 $n$ 处必须恰为 $0.5$（此时 $|E \\cap [1,n]| = n/2$），偏差 $> 10^{-12}$ 抛错；\n- 扩展方向：叠加「前 $n$ 项单点份额 $1/n$」的衰减曲线，同图对照。",
+      "links": [],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:measure.probe1",
+      "type": "probe",
+      "subject": "measure",
+      "title": "检验题：平方数集的自然密度",
+      "keywords": [
+        "平方数集密度：|{k² ≤ n}| = ⌊√n⌋",
+        "n=100/10⁴/10⁶ 三档算占比",
+        "判断密度存在性与数值（= 0）",
+        "用单点 0 vs 整体 1 写出可数可加的失效等式"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 90,
+        "line_end": 91
+      },
+      "fill_hint": "数值全部可由表达式复核；第③问锚定 general.density 词条的核心失效等式。",
+      "content": "取 $A = \\{k^2 : k \\in \\mathbb{N}\\}$（平方数集）。\n\n① 计算 $n = 100$、$n = 10^4$、$n = 10^6$ 时 $|A \\cap \\{1,\\dots,n\\}|/n$ 各是多少？（$0.1$【已核验:0.1|int(100**0.5)/100】、$0.01$【已核验:0.01|int(10000**0.5)/10000】、$0.001$【已核验:0.001|int(1000000**0.5)/1000000】）\n\n② 由此判断 $A$ 的自然密度存在吗？等于多少？（存在，$= 0$：$|A \\cap [1,n]| = \\lfloor \\sqrt{n} \\rfloor$，故 $\\lfloor \\sqrt{n} \\rfloor / n \\to 0$）\n\n③ 自然密度满足有限可加但不满足可数可加——写出 $\\mu(\\{k\\})$ 与 $\\mu(\\mathbb{N})$ 的具体数值，并给出 $\\mathbb{N} = \\bigsqcup_k \\{k\\}$ 上的失效等式与 $\\sum_k \\mu(\\{k\\})$ 的值。（$\\mu(\\{k\\}) = 0$、$\\mu(\\mathbb{N}) = 1$，可数可加要求 $1 = \\sum_{k=1}^\\infty 0 = 0$【已核验:0|sum(0 for k in range(1,11))】——$1 \\ne 0$，可数可加死亡）",
+      "links": [],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.4:sigma-algebra.probe1",
+      "type": "probe",
+      "subject": "sigma-algebra",
+      "title": "检验题：有限-余有限族是 σ-代数吗",
+      "keywords": [
+        "有限-余有限族 F = {A : A 有限或 Aᶜ 有限}",
+        "∪_{k≤2026}{k} ∈ F 但 ∪_{k∈N}{k} = N ∉ F",
+        "N 的补集 R∖N 含 (−∞,0) 全体实数——逃逸证据",
+        "结论：F 是集合代数、不是 σ-代数",
+        "μ(N) 无从定义——集合列极限语句失义"
+      ],
+      "tex_ref": {
+        "file": "A_analysis.tex",
+        "line_start": 58,
+        "line_end": 63
+      },
+      "fill_hint": "反例为标准构造（与 sigma-algebra.quantifiers 第③行同一对象）；②的数值 2026 带核验；④的结论句锚定「可数」二字不可降。",
+      "content": "$\\mathbb{R}$ 上取集族 $\\mathcal{F} = \\{A \\subset \\mathbb{R} : A$ 有限或 $A^c$ 有限$\\}$（有限-余有限族）。\n\n① 验证每个单点 $A_k = \\{k\\}$ 都属于 $\\mathcal{F}$。（单点集有限 ✓）\n\n② $\\bigcup_{k=1}^{2026} A_k \\in \\mathcal{F}$ 吗？它在新定义的计数测度下质量是多少？（$\\in \\mathcal{F}$：$\\{1,\\dots,2026\\}$ 是有限集；计数测度 $\\mu^{\\#} = 2026$【已核验:2026|2026】）\n\n③ $\\bigcup_{k=1}^{\\infty} A_k = \\mathbb{N} \\in \\mathcal{F}$ 吗？给出证据。（$\\notin \\mathcal{F}$：$\\mathbb{N}$ 自身无限，且其补集 $\\mathbb{R} \\setminus \\mathbb{N}$ 含 $(−\\infty, 0)$ 全体实数、也无限——两个入会条件都不满足）\n\n④ 由此判断：$\\mathcal{F}$ 对有限并封闭吗？是 σ-代数吗？（有限并封闭（它是集合代数）✓；但可数并把 $\\{k\\}$ 并成 $\\mathbb{N}$、逃出 $\\mathcal{F}$ ⟹ 不是 σ-代数——$\\mu(\\mathbb{N})$ 无从定义，$A_n \\uparrow A$ 型极限语句整体失义，这正是「可数并封闭」不可降为「有限并封闭」的原因）",
+      "links": [],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,654 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A1.5",
+  "chapter": "A1",
+  "title": "$L^p$ 空间",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 163,
+    "line_end": 178,
+    "anchor": "notebook/A_analysis.tex:163"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A1.5:lp-space.quantifiers",
+      "type": "comparison",
+      "subject": "lp-space",
+      "title": "L^p 定义限定词逐条拆解（去掉/改动每一条会怎样）",
+      "keywords": [
+        "定义 = {f : ∫|f|^p dμ < ∞} 再除以 a.e. 等价（f ~ g ⟺ f = g a.e.）",
+        "① 可测不可去：不可测则积分无定义（Vitali 1_V，A1.4）",
+        "② ∫|f|^p < ∞ 随 p 变：尖峰 x^(-1/2) ∈ L¹∖L²，长尾 1/(1+|x|) ∈ L²∖L¹",
+        "③ p ≥ 1 是范数门槛：p=1/2 时 ‖f+g‖ 可大于 ‖f‖+‖g‖（4 > 2）",
+        "④ p=∞ 必须换定义：∫|f|^∞ 无意义，改用 ess sup",
+        "⑤ 不除以 ~ 则只有半范数：Dirichlet 函数范数为 0 却非零函数"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 164,
+        "line_end": 168
+      },
+      "fill_hint": "五行各挂定点反例词条（②peak-vs-tail ③p-below-one ④p-infinity ⑤zero-norm）；表内数值均已带待核验标记，构建时重算。切片只有 164-168 两行定义，五个限定词是拆解而非新增结论。",
+      "content": "先把切片定义拆开（A_analysis.tex:164-168）：\n\n$$L^p(X,\\mu)=\\left\\{f:\\ \\int |f|^p\\,d\\mu<\\infty\\right\\}\\Big/\\sim,\\qquad f\\sim g\\iff f=g\\ \\text{几乎处处}.$$\n\n这个定义藏着五个限定词，逐条问\"去掉/改动会怎样\"：\n\n| 限定词 | 去掉/改动后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $f$ 可测 | $f=1_V$（Vitali 集的示性函数，A1.4） | 不是结论失效而是**陈述无意义**：Lebesgue 积分只对可测函数定义，$\\int 1_V\\,d\\mu$ 不存在 | 不可去；可放宽为 a.e. 可测（完备测度空间上自动，A1.4） |\n| ② $\\int\\lvert f\\rvert^p\\,d\\mu<\\infty$（对固定的 $p$） | 尖峰 $f(x)=x^{-1/2}1_{(0,1)}$：$\\lVert f\\rVert_1=2$【已核验:2|2*sqrt(1)-2*sqrt(0)】但 $\\int_0^1 x^{-1}dx=\\infty$；长尾 $g(x)=\\frac{1}{1+\\lvert x\\rvert}$：$\\int g^2\\,dx=2$【已核验:2|2*(1-0)】但 $\\int g\\,dx=\\infty$ | membership 随 $p$ 变：$f\\in L^1\\setminus L^2$、$g\\in L^2\\setminus L^1$，$\\mathbb R$ 上两空间互不包含 | 不能统一：换 $p$ 就是换空间（见 lp-space.peak-vs-tail） |\n| ③ $1\\le p<\\infty$（配套范数需要） | $p=\\frac12$，$f=1_{[0,1]}$、$g=1_{[1,2]}$：$\\lVert f+g\\rVert_{1/2}=4$【已核验:4|(1+1)**2】$>\\ 2=\\lVert f\\rVert_{1/2}+\\lVert g\\rVert_{1/2}$【已核验:2|1+1】 | 三角不等式破裂：$\\lVert\\cdot\\rVert_p$ 不再是范数（集合仍是线性空间） | $0<p<1$ 只能给拟范数；$p\\ge 1$ 由 Minkowski 保证（拓展，A2.1，见 lp-space.p-below-one） |\n| ④ $p=\\infty$ 单独一档（本质有界） | $f\\equiv 2$（$[0,1]$ 上）：$\\int_0^1 2^p\\,dx=2^p$（$p=3$ 时 $=8$【已核验:8|2**3】），\"令 $p=\\infty$\"得 $2^\\infty=\\infty$ | 积分型定义在 $p=\\infty$ 处写不出：会错杀明显有界的函数 | 必须换定义 $\\lVert f\\rVert_\\infty=\\mathrm{ess\\,sup}\\lvert f\\rvert$（见 lp-space.p-infinity） |\n| ⑤ 除以 a.e. 等价 $\\sim$ | Dirichlet 函数 $f=1_{\\mathbb Q\\cap[0,1]}$：$\\lVert f\\rVert_p=0$ 但 $f\\not\\equiv 0$ | 正定性崩：$\\lVert f\\rVert=0\\not\\Rightarrow f=0$，只剩半范数、伪度量 | 不可省，但零代价——积分本来就看不见零测集（见 ae-equivalence.zero-norm） |\n\n一句话总结：②③④ 说的是 **$p$ 是定义的一部分**（动 $p$ 就是动空间、动范数结构）；①⑤ 说的是**定义必须落在可测函数的 a.e. 等价类上**才干净。",
+      "links": [
+        "A1.4",
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:l2-hilbert.quantifiers",
+      "type": "comparison",
+      "subject": "l2-hilbert",
+      "title": "L² 内积的限定词逐条拆解（共轭/良定性/完备性）",
+      "keywords": [
+        "⟨f,g⟩ = ∫ f·ḡ dμ（切片原文，复值函数）",
+        "① 共轭不可去：f=i 时无共轭版本 ∫i² = −1 < 0，正定性崩",
+        "② f,g ∈ L² 保证 ∫|fg| < ∞：|fg| ≤ (|f|²+|g|²)/2（Young，P3.2）",
+        "③ 等价类上天然良定：积分看不见零测集",
+        "④ 希尔伯特 = 内积 + 完备；完备性（Riesz–Fischer）是切片外拓展",
+        "⟨f,f⟩ = ‖f‖₂²：诱导范数恰是 L² 范数（L^p 家族独一份）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 176,
+        "line_end": 176
+      },
+      "fill_hint": "四行分别对应 no-conjugate / peak-vs-tail（同一函数复用）/ 动机行（无反例）/ general.apps；② 的 Young 依赖用 links 指 P3.2。评审时确认 ④ 的措辞（完备性是切片外拓展）不被误读为切片断言。",
+      "content": "切片只有一句断言：\"$L^2$ 是希尔伯特空间，内积为 $\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu$\"（A_analysis.tex:176）。把它拆成四个限定词：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 第二因子取共轭 $\\bar g$ | $f=i\\cdot 1_{[0,1]}$：无共轭的 $(f,f)=\\int_0^1 i^2\\,dx=-1$【已核验:-1|-1】 | 正定性崩：内积要求 $\\langle f,f\\rangle\\ge 0$（见 l2-hilbert.no-conjugate） | 实值函数可去（$\\bar g=g$）；复值不可去——量子波函数是复的（F1） |\n| ② $f,g\\in L^2$（良定性） | $f=g=x^{-1/2}1_{(0,1)}\\notin L^2$：$\\int_0^1 fg\\,dx=\\int_0^1 x^{-1}dx=\\infty$（截断 $[10^{-4},1]$ 已达 $\\ln 10^4\\approx 9.21$【已核验:9.21034037198|log(10**4)】） | 内积值不存在：对 $\\infty$ 谈公理是空话 | 不能：由 $\\lvert fg\\rvert\\le\\frac{\\lvert f\\rvert^2+\\lvert g\\rvert^2}{2}$（Young，P3.2）保证，是最低门槛（同一函数见 lp-space.peak-vs-tail） |\n| ③ 定义在 a.e. 等价类上 | $f=1_{\\{0\\}}$ 与 $f'=0$（$[0,1]$ 上）：两者与任何 $g$ 的内积相同 | 不是失效而是动机：积分看不见零测集，等价类上定义**免费** | 天然成立，无需假设 |\n| ④ \"希尔伯特\"= 内积 + 完备 | 切片只给内积；完备性（Riesz–Fischer）不在切片内 | 缺完备性只是内积空间（pre-Hilbert），Cauchy 列可能无极限 | 完备性是标准定理（拓展）：依赖 A1.3 级数版 MCT，链路见 general.apps |\n\n补一行**结构巧合**（不是限定词）：$\\langle f,f\\rangle=\\int\\lvert f\\rvert^2\\,d\\mu=\\lVert f\\rVert_2^2$ —— 内积诱导的范数恰好就是 $L^2$ 自己的范数。这条巧合是 $L^2$ 在全家族中独享的地位，判据见 l2-hilbert.vs-lp。",
+      "links": [
+        "P3.2",
+        "A1.3",
+        "A2.2",
+        "F1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:lp-space.peak-vs-tail",
+      "type": "counterexample",
+      "subject": "lp-space",
+      "title": "反例：L¹ 与 L² 互不包含（尖峰 vs 长尾）",
+      "keywords": [
+        "尖峰 f = x^(−1/2)·1_(0,1)：‖f‖₁ = 2，∫x^(−1) = ∞ ⟹ ∈ L¹∖L²",
+        "长尾 g = 1/(1+|x|)：∫g² = 2，∫g = ∞ ⟹ ∈ L²∖L¹",
+        "R 上 L¹ 与 L² 互不包含：可积 ≠ 平方可积",
+        "p 大惩罚尖峰、p 小惩罚长尾：换 p 就是换空间",
+        "边界幂次两端相反：∫₀¹x^(−a) 收敛 ⟺ a<1；∫₁^∞x^(−a) 收敛 ⟺ a>1",
+        "修补：μ(X) < ∞ 时嵌套恢复 L^∞ ⊆ L² ⊆ L¹（拓展）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 170,
+        "line_end": 174
+      },
+      "fill_hint": "两个函数的全部积分已算出并带核验标记；μ(X)<∞ 嵌套段是拓展（切片没有），已显式标注。与 quantifiers 行②对齐。",
+      "content": "**问题。** \"可积\"（$L^1$）与\"平方可积\"（$L^2$）哪个更强？直觉容易以为一个是另一个的子集——在 $\\mathbb R$ 上两个方向都错。\n\n**函数定义。** Lebesgue 测度、$\\mathbb R$ 上：\n- 尖峰：$f(x)=x^{-1/2}\\cdot 1_{(0,1)}(x)$，只在 $0$ 附近有奇性；\n- 长尾：$g(x)=\\dfrac{1}{1+|x|}$，处处有限但衰减慢。\n\n**逐项计算（尖峰）。**\n- $\\|f\\|_1=\\int_0^1 x^{-1/2}\\,dx=\\left[2\\sqrt{x}\\right]_0^1=2$【已核验:2|2*sqrt(1)-2*sqrt(0)】，故 $f\\in L^1$。\n- $\\int_0^1|f|^2\\,dx=\\int_0^1 x^{-1}\\,dx=\\infty$：截断到 $[10^{-4},1]$ 已积到 $\\ln 10^4\\approx 9.21$【已核验:9.21034037198|log(10**4)】，且截断下界越靠近 $0$ 越大、无上界，故 $f\\notin L^2$。\n\n**逐项计算（长尾）。**\n- $\\int_{\\mathbb R}|g|^2\\,dx=2\\int_0^{\\infty}\\frac{dx}{(1+x)^2}=2\\left[-\\frac{1}{1+x}\\right]_0^{\\infty}=2$【已核验:2|2*(1-0)】，故 $g\\in L^2$。\n- $\\int_{\\mathbb R}|g|\\,dx=2\\int_0^{R}\\frac{dx}{1+x}\\to 2\\ln(1+R)\\to\\infty$（$R=10^4$ 时已达 $2\\ln(1+10^4)\\approx 18.42$【已核验:18.420880734|2*log(1+10**4)】），故 $g\\notin L^1$。\n\n**失效结论。** $f\\in L^1\\setminus L^2$、$g\\in L^2\\setminus L^1$：$\\mathbb R$ 上 $L^1$ 与 $L^2$ **互不包含**，\"可积\"与\"平方可积\"是两种独立资格。\n\n**机制：边界幂次两端相反。** $\\int_0^1 x^{-a}dx<\\infty\\iff a<1$（原点：奇性要够弱），$\\int_1^{\\infty}x^{-a}dx<\\infty\\iff a>1$（无穷远：衰减要够快）。$f$ 的毛病在原点：$|f|^p=x^{-p/2}$，$p<2$ 收敛、$p\\ge 2$ 爆炸；$g$ 的毛病在尾部：$|g|^p\\sim|x|^{-p}$，$p>1$ 收敛、$p\\le 1$ 爆炸。一句话：**大 $p$ 惩罚尖峰，小 $p$ 惩罚长尾**。\n\n**修补条件。** 互不包含是无限测度特有的（拓展）：$\\mu(X)<\\infty$ 时嵌套恢复 $L^{\\infty}\\subseteq L^2\\subseteq L^1$（标准放缩练习，P3.2/A2.1）。判断具体 membership 的办法就是直接算 $\\int|f|^p$、对照边界幂次。",
+      "links": [
+        "A2.1",
+        "P3.2",
+        "C6.1"
+      ],
+      "viz": {
+        "module": "lp-ball",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "view": "norm-vs-p",
+          "examples": [
+            "x^-0.5 on (0,1)",
+            "1/(1+|x|) on R"
+          ],
+          "p_min": 1,
+          "p_max": 4
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:lp-space.p-below-one",
+      "type": "counterexample",
+      "subject": "lp-space",
+      "title": "拓展：p < 1 时三角不等式崩（为什么 p 从 1 起算）",
+      "keywords": [
+        "p=1/2，f=1_[0,1]，g=1_[1,2]（支撑不相交）",
+        "‖f+g‖_(1/2) = (1+1)² = 4 > 2 = ‖f‖+‖g‖",
+        "三角不等式反向破裂：0<p<1 时外层指数 1/p > 1 是凸的",
+        "L^p 仍是线性空间，但只能给拟范数 / 平移不变度量",
+        "p ≥ 1 是 Minkowski 的适用区间（拓展，A2.1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 164,
+        "line_end": 166
+      },
+      "fill_hint": "反例用支撑不相交的示性函数最干净，数值全部可核验。title 带「拓展：」——切片未写 p 范围与范数，此条讲标配范数的边界条件。",
+      "content": "**为什么这条是拓展。** 切片只写了集合 $\\{f:\\int|f|^p\\,d\\mu<\\infty\\}$，没写 $p$ 的范围，也没写范数；但\"$L^p$ 空间\"的标配是范数 $\\|f\\|_p=\\left(\\int|f|^p\\,d\\mu\\right)^{1/p}$，而三角不等式恰好只在 $p\\ge 1$ 成立——这决定了 $p$ 为什么从 1 起算。\n\n**函数定义。** $\\mathbb R$ 上取 $f=1_{[0,1]}$、$g=1_{[1,2]}$（支撑不相交），令 $p=\\frac12$。\n\n**逐项计算。**\n- $\\|f\\|_{1/2}=\\left(\\int_0^1 1^{1/2}\\,dx\\right)^{1/(1/2)}=1^2=1$；同理 $\\|g\\|_{1/2}=1$；合计 $\\|f\\|_{1/2}+\\|g\\|_{1/2}=2$【已核验:2|1+1】。\n- $f+g=1_{[0,2]}$（a.e.；单点 $x=1$ 处取值 2，不影响积分）：$\\|f+g\\|_{1/2}=\\left(\\int_0^2 1^{1/2}\\,dx\\right)^{2}=(1+1)^2=4$【已核验:4|(1+1)**2】。\n\n**失效结论。** 三角不等式要求 $\\|f+g\\|_{1/2}\\le\\|f\\|_{1/2}+\\|g\\|_{1/2}$，即 $4\\le 2$；实际 $4>2$，超出量 $4-2=2$【已核验:2|(1+1)**2-(1+1)】。机制：$0<p<1$ 时外层指数 $1/p>1$ 是凸函数，\"先加再幂\"被放大，不等式方向翻转。\n\n**修补条件。** $p\\ge 1$（Minkowski 不等式的适用区间，拓展见 A2.1）。$0<p<1$ 的 $L^p$ 仍可研究：是线性空间，且 $d(f,g)=\\int|f-g|^p\\,d\\mu$ 给出平移不变度量（不由范数诱导），泛函分析偶尔用到，不在本切片范围。",
+      "links": [
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:lp-space.p-infinity",
+      "type": "counterexample",
+      "subject": "lp-space",
+      "title": "反例：p=∞ 不能套积分定义（本质有界 vs 处处有界）",
+      "keywords": [
+        "L^∞ 换轨道：不用 ∫|f|^∞，用 ess sup = inf{M : μ(|f|>M) = 0}",
+        "f≡2：∫2^p 有限但'代入 p=∞'得 2^∞ = ∞，把有界函数错杀",
+        "1_{0}：处处 sup = 1 ≠ 0 = ess sup，零测尖刺被抹掉",
+        "拓展：‖f‖_p → ‖f‖_∞（p→∞），1_[0,1/2] 的范数 0.933→0.993→1",
+        "'本质'与 a.e. 等价同一思想：测度论的相等不看零测集"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 173,
+        "line_end": 173
+      },
+      "fill_hint": "两个失效（积分退化 / 零测尖刺）各配具体函数；‖f‖_p→‖f‖_∞ 段是拓展，数值链已核验。ess sup 定义式为标准补充（切片只有'本质有界'四字）。",
+      "content": "切片把 $L^{\\infty}$ 单列一档：\"本质有界函数\"（A_analysis.tex:173）。两个问题：为什么不能把 $L^{\\infty}$ 定义成 $\\{f:\\int|f|^{\\infty}\\,d\\mu<\\infty\\}$？\"本质\"二字在防什么？\n\n**失效一：积分定义在 $p=\\infty$ 处退化。** 取 $f\\equiv 2$（$[0,1]$ 上）。对每个有限 $p$：$\\int_0^1 2^p\\,dx=2^p$（$p=3$ 时 $=8$【已核验:8|2**3】），有限。若允许\"令 $p=\\infty$\"：$|f|^{\\infty}=2^{\\infty}=\\infty$，积分恒为 $\\infty$——一个明显有界的函数被踢出\"$L^{\\infty}$\"，定义自杀。所以必须换轨道：\n$$\\|f\\|_{\\infty}=\\mathrm{ess\\,sup}\\,|f|=\\inf\\{M:\\ \\mu(\\{x:|f(x)|>M\\})=0\\}.$$\n\n**失效二：不加\"本质\"会把零测尖刺当真。** 取 $f=1_{\\{0\\}}$（$[0,1]$ 上，仅单点取 1）：\n- 处处上确界：$\\sup_{[0,1]}|f|=1$（在 $x=0$ 取到）；\n- 本质上确界：$\\mu(\\{x:|f(x)|>1/2\\})=\\mu(\\{0\\})=0\\Rightarrow\\mathrm{ess\\,sup}|f|=0$。\n即 $f$ 与零函数在 $L^{\\infty}$ 中是**同一个等价类**（$f\\sim 0$，切片 168 行的 $\\sim$ 干的就是这个）。\"处处有界\"与\"本质有界\"的差距 = 恰好一个零测尖刺。\n\n**拓展：$p\\to\\infty$ 的极限视角。** 有限测度上 $\\|f\\|_p\\xrightarrow{p\\to\\infty}\\|f\\|_{\\infty}$（$f$ 本质有界时）。演示：$f=1_{[0,1/2]}$（$[0,1]$ 上），$\\|f\\|_p=(1/2)^{1/p}$：$p=10$ 时 $\\approx 0.933$【已核验:0.933032991537|0.5**(1/10)】，$p=100$ 时 $\\approx 0.993$【已核验:0.993092495437|0.5**(1/100)】，$p=1000$ 时 $\\approx 0.999$【已核验:0.99930709299|0.5**(1/1000)】，逼向 $\\|f\\|_{\\infty}=1$。所以 ess sup 不是拍脑袋：它是 $\\|\\cdot\\|_p$ 家族的自然极限点。\n\n**修补小结。** $p=\\infty$ 一档的定义分叉是双重必然：积分写不出（失效一）+ 必须与 a.e. 等价相容（失效二）。",
+      "links": [
+        "A1.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:ae-equivalence.zero-norm",
+      "type": "counterexample",
+      "subject": "ae-equivalence",
+      "title": "反例：不商掉 a.e. 等价，范数正定性崩（Dirichlet 函数）",
+      "keywords": [
+        "Dirichlet 函数 1_(Q∩[0,1])：稠密取 1，处处不连续",
+        "μ(Q∩[0,1]) = 0（可数集零测，A1.4）⟹ ‖f‖_p = 0 对一切 p",
+        "f ≠ 0 但范数为 0：正定性崩，‖·‖_p 只是半范数",
+        "连锁：伪度量 → 距离为零的不同点 → 极限不唯一",
+        "修补 = 商掉 ~：[f] = [0]，这一步买回正定性",
+        "/∼ 是切片定义的必要尾巴，不是装饰"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 164,
+        "line_end": 168
+      },
+      "fill_hint": "核心计算一行（示性函数 p 次幂积分 = 支撑测度）；把半范数→伪度量→极限不唯一的连锁写全。μ(Q∩[0,1])=0 是 A1.4 事实引用，非数值断言，故无核验标记。",
+      "content": "切片定义（A_analysis.tex:164-168）末尾拖着一条尾巴：$\\{\\cdots\\}/\\sim$，$f\\sim g\\iff f=g$ 几乎处处。为什么要\"除以\"？因为不除，$\\|f\\|_p=\\left(\\int|f|^p\\,d\\mu\\right)^{1/p}$ 连范数都不是。\n\n**函数定义。** Dirichlet 函数 $f=1_{\\mathbb Q\\cap[0,1]}$：有理点取 $1$（稠密）、无理点取 $0$（也稠密）——处处不连续，且 $f\\not\\equiv 0$。\n\n**逐项计算。** $\\mathbb Q$ 可数；Lebesgue 测度下单点测度为零，可数可加（A1.4）给出 $\\mu(\\mathbb Q\\cap[0,1])=0$。于是对一切 $1\\le p<\\infty$：\n$$\\int_{[0,1]}|f|^p\\,d\\mu=\\mu(\\mathbb Q\\cap[0,1])=0\\quad\\Longrightarrow\\quad\\|f\\|_p=0,$$\n而 $f$ 不是零函数。（更朴素的版本：$f=1_{\\{0\\}}$ 同样 $\\|f\\|_p=0$、$f\\ne 0$ 逐点成立。）\n\n**失效结论。** 范数公理的正定性要求 $\\|f\\|=0\\Rightarrow f=0$；此处破裂，$\\|\\cdot\\|_p$ 降级为**半范数**。连锁后果：距离 $d(f,g)=\\|f-g\\|_p$ 把 $f$ 与 $0$ 算成距离为零的两个不同点（伪度量），\"依范数收敛\"的极限不唯一——A2.1 赋范空间理论的地基是歪的。\n\n**修补条件。** 商掉 $\\sim$：把几乎处处相等的函数**宣布为**同一个元素。商后 $\\|[f]\\|_p=0\\Rightarrow f\\sim 0\\Rightarrow[f]=[0]$，正定性恢复。代价为零：$\\int|f|^p$ 在整个等价类上是常数，一切由积分定义的结构（范数、内积 $\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu$）自动降到等价类上。\n\n**一句话。** $/\\sim$ 是让 $L^p$ 成为赋范空间、让 $L^2$ 成为希尔伯特空间的那一步；它与 $L^{\\infty}$ 的\"本质\"、A1.3 里满篇的 \"a.e.\" 共享同一思想：**测度论的\"相等\"本来就是 a.e. 相等**。",
+      "links": [
+        "A1.4",
+        "A2.1",
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:l2-hilbert.no-conjugate",
+      "type": "counterexample",
+      "subject": "l2-hilbert",
+      "title": "反例：内积必须带共轭（f = i 时 ⟨f,f⟩ = −1）",
+      "keywords": [
+        "f = i·1_[0,1]（常复值函数）",
+        "无共轭：(f,f) = ∫i² = ∫(−1) = −1 < 0，正定性崩",
+        "带共轭：⟨f,f⟩ = ∫|i|² = 1 > 0",
+        "共轭把'平方'变'模方'：⟨f,f⟩ = ∫|f|² = ‖f‖₂² 恒非负",
+        "实函数里共轭隐形；量子波函数是复的（F1），不是学究细节"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 176,
+        "line_end": 176
+      },
+      "fill_hint": "计算两行（i·ī = |i|² = 1 对照 i·i = −1）；结尾接量子归一化（F1）。与 l2-hilbert.probe1 第三问同源，措辞保持一致。",
+      "content": "切片定义内积 $\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu$（A_analysis.tex:176）。为什么第二因子要带共轭 $\\bar g$，而不是直接 $\\int fg\\,d\\mu$？\n\n**函数定义。** 取常复值函数 $f=i\\cdot 1_{[0,1]}$（$i=\\sqrt{-1}$，处处等于 $i$）。\n\n**逐项计算。**\n- 无共轭版本 $(f,g)=\\int fg\\,d\\mu$：$(f,f)=\\int_0^1 i\\cdot i\\,dx=\\int_0^1(-1)\\,dx=-1$【已核验:-1|-1】。\n- 切片版本：$\\langle f,f\\rangle=\\int_0^1 i\\cdot\\bar i\\,dx=\\int_0^1|i|^2\\,dx=\\int_0^1 1\\,dx=1$【已核验:1|1】。\n\n**失效结论。** 内积公理要求 $\\langle f,f\\rangle\\ge 0$ 且 $=0$ 仅当 $f=0$。无共轭版给出 $-1<0$：正定性直接崩溃，顺带破坏共轭对称 $\\langle f,g\\rangle=\\overline{\\langle g,f\\rangle}$。带共轭后 $\\langle f,f\\rangle=\\int|f|^2\\,d\\mu=\\|f\\|_2^2$ **结构性地非负**——共轭把\"平方\"变成\"模方\"，这正是内积诱导的范数恰为 $L^2$ 范数的原因。\n\n**修补条件。** 复值空间必须带共轭，不可放宽；实值空间 $\\bar g=g$ 自动隐形（实变教材写 $\\int fg$ 是特例，不是反例）。量子力学波函数取复值（F1），概率解释 $\\langle\\psi,\\psi\\rangle=\\int|\\psi|^2\\,d\\mu=1$ 全靠这个共轭。",
+      "links": [
+        "F1",
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:lp-space.statement",
+      "type": "statement",
+      "subject": "lp-space",
+      "title": "L^p 空间的定义（含配套范数）",
+      "keywords": [
+        "L^p(X,μ) = {f : ∫|f|^p dμ < ∞} / ∼（切片原文）",
+        "f ∼ g ⟺ f = g 几乎处处；元素是等价类 [f]",
+        "L¹ 绝对可积（概率密度）；L² 平方可积（量子态·信号）；L^∞ 本质有界",
+        "配套范数 ‖f‖_p = (∫|f|^p dμ)^(1/p)，L^∞ 用 ess sup（标准补充）",
+        "约定 1 ≤ p < ∞；p = ∞ 单独一档"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 164,
+        "line_end": 174
+      },
+      "fill_hint": "前两段照抄切片（定义 + itemize），'配套范数'段为标准补充；评审时确认与 A2.1 的分工（那边讲抽象范数公理，这边给具体实例）。",
+      "content": "**定义（切片逐字转写，A_analysis.tex:164-168）。**\n\n$$L^p(X,\\mu)=\\left\\{f:\\ \\int |f|^p\\,d\\mu<\\infty\\right\\}\\Big/\\sim,\\qquad f\\sim g\\iff f=g\\ \\text{几乎处处}.$$\n\n读法：先收\"p 次幂可积\"的可测函数，再把几乎处处相等的函数**视为同一个元素**（商集）。$L^p$ 的元素严格说是等价类 $[f]$，不是某个具体函数。\n\n**三个特例（切片 itemize 转写，171-173 行）。**\n- $L^1$：绝对可积函数——**概率密度函数所在空间**（密度 $p$ 满足 $\\int p\\,d\\mu=1$，见 C2）；\n- $L^2$：平方可积函数——**量子力学的状态空间**、信号处理的核心（有限能量信号，见 F1）；\n- $L^{\\infty}$：本质有界函数（\"本质\"二字的账见 lp-space.p-infinity）。\n\n**配套范数（标准补充，切片未明写）。**\n\n$$\\|f\\|_p=\\left(\\int|f|^p\\,d\\mu\\right)^{1/p}\\ (1\\le p<\\infty),\\qquad\\|f\\|_{\\infty}=\\mathrm{ess\\,sup}\\,|f|.$$\n\n商掉 $\\sim$ 之后 $\\|\\cdot\\|_p$ 才真正满足\"$\\|f\\|=0\\Rightarrow f=0$\"（见 ae-equivalence.zero-norm）；三角不等式（Minkowski）要求 $p\\ge 1$（见 lp-space.p-below-one）。\n\n**适用范围。** $(X,\\mu)$ 是任意测度空间，$f$ 取复值（或实值）可测函数。注意 membership 依赖 $p$：换 $p$ 就是换空间（见 lp-space.peak-vs-tail）。",
+      "links": [
+        "A2.1",
+        "C2",
+        "F1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:lp-space.intuition",
+      "type": "intuition",
+      "subject": "lp-space",
+      "title": "直觉：p 是一把尺子，等价类是测度论的'相等'",
+      "keywords": [
+        "∫|f|^p dμ = p 次总质量：p 大恨尖峰，p 小恨长尾",
+        "L¹ 质量 / L² 能量 / L^∞ 峰值",
+        "假设只管总量：零测集上可以任意坏（/∼ 与'本质'的共同根源）",
+        "商 = 把'积分视角下不可区分'宣布为相等，买回正定性",
+        "p=2 独享乘法拆解 |f|² = f·f̄ ⟹ 内积 ⟹ 几何"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 163,
+        "line_end": 178
+      },
+      "fill_hint": "按「假设给了什么/结论为什么成立」分段（规格要求假设与结论分开写）；尖峰-长尾、商、L² 唯一性各指对应词条不重复展开。",
+      "content": "**总起。** $L^p$ 是用\"第 $p$ 把尺子\"量出来的函数空间：$\\int|f|^p\\,d\\mu$ 把 $|f|$ 在全定义域上的 p 次贡献加总，只问**总量**有限与否。\n\n**假设给了什么。**\n- $\\int|f|^p<\\infty$ 给的是**总量控制**：$|f|$ 可以在一小撮点上很高（尖峰）、也可以在一大片区域上不低（长尾），只要 p 次总量有限。它完全不管逐点行为——零测集上可以任意坏，这正是定义要除以 $\\sim$、$L^{\\infty}$ 要说\"本质\"的共同根源。\n- 尺子的偏好：$p$ 大时 $|f|^p$ 重罚离群值（尖峰贵）；$p$ 小时相对宽容尖峰、重罚拖尾（两个函数实例见 lp-space.peak-vs-tail）。三个身份：$L^1$ = **质量**（概率密度 $\\int p\\,d\\mu=1$），$L^2$ = **能量**（$\\int|f|^2$ 是信号/波函数能量，有限才可归一化，F1），$L^{\\infty}$ = **峰值**（只问最高到哪，零测尖刺不算）。\n\n**结论为什么因此成立（结构回报）。**\n- 总量控制 $\\Rightarrow$ $\\|f\\|_p$ 有限 $\\Rightarrow$ 距离、极限、完备性等度量机器可以开动（A2.1）。\n- 商掉 $\\sim$ = 承认\"积分视角下 $f$ 与 $f+1_{\\{0\\}}$ 不可区分\"，干脆把不可区分**宣布为**相等。这不是损失而是诚实：正定性（$\\|f\\|=0\\Rightarrow f=0$）正是这一步买回来的（见 ae-equivalence.zero-norm）。\n- $p=2$ 特殊在 $|f|^2=f\\cdot\\bar f$ 能**拆成两个因子的乘积**——范数平方升级为内积 $\\langle f,g\\rangle$，空间获得夹角、正交、投影整套几何（见 l2-hilbert.intuition）。其他幂次拆不开，所以只有 $L^2$ 有几何。",
+      "links": [
+        "A2.1",
+        "A2.2",
+        "F1",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:lp-space.proof",
+      "type": "proof",
+      "subject": "lp-space",
+      "title": "证明骨架：定义的良定性（可测 → 等价类 → 范数 → 内积）",
+      "keywords": [
+        "Step1 |f|^p 可测（连续复合）；Step2 ∼ 传递用可数次可加",
+        "Step3 等价类上运算/范数良定：积分对零测集不敏感",
+        "Step4 正定性：μ(|f|≥1/n) ≤ n^p·∫|f|^p = 0，取可数并 ⟹ f=0 a.e.",
+        "Step5 L² 内积良定：|fg| ≤ (|f|²+|g|²)/2（Young，P3.2）",
+        "Minkowski（三角不等式）不在切片内，标注拓展 A2.1"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 164,
+        "line_end": 168
+      },
+      "fill_hint": "五步各给理由，Step 4 的 Markov 型估计是唯一非显然步骤，写全。与 l2-hilbert.proof 分工：这条管定义良定全景，那条验内积公理。",
+      "content": "定义单元的\"证明\" = 验证定义**良定**（well-defined）且结构合法。五步，每步给理由。\n\n**Step 1（对象存在）。** $f$ 可测 $\\Rightarrow|f|^p$ 可测（$t\\mapsto|t|^p$ 连续，可测复合连续仍可测，A1.4）$\\Rightarrow\\int|f|^p\\,d\\mu\\in[0,\\infty]$ 有定义，\"$<\\infty$\"这句话本身有意义。\n\n**Step 2（$\\sim$ 是等价关系）。** 自反、对称显然。传递：设 $f=g$ 在零测集 $N_1$ 外、$g=h$ 在零测集 $N_2$ 外成立，则 $f=h$ 在 $N_1\\cup N_2$ 外成立，而 $\\mu(N_1\\cup N_2)\\le\\mu(N_1)+\\mu(N_2)=0$（可数次可加，A1.4）。\n\n**Step 3（商集上的运算与范数良定）。** 设 $f\\sim f'$、$g\\sim g'$：在 $N_1\\cup N_2$ 外有 $f+g=f'+g'$ 与 $cf=cf'$，故 $f+g\\sim f'+g'$、$cf\\sim cf'$——加法、数乘降到等价类上，$L^p$ 是线性空间。又 $|f|^p=|f'|^p$ a.e. $\\Rightarrow\\int|f|^p\\,d\\mu=\\int|f'|^p\\,d\\mu$（积分对零测集不敏感，A1.2），故 $\\|f\\|_p$ 在等价类上是常数，范数良定。\n\n**Step 4（范数公理；正定性是商的回报）。** 齐次性 $\\|cf\\|_p=|c|\\|f\\|_p$ 显然。正定性：设 $\\|[f]\\|_p=0$，即 $\\int|f|^p\\,d\\mu=0$。由 $|f|\\ge\\frac{1}{n}\\Rightarrow|f|^p\\ge\\frac{1}{n^p}$ 得 $\\mu(\\{|f|\\ge\\frac1n\\})\\le n^p\\int|f|^p\\,d\\mu=0$；取可数并 $\\{|f|>0\\}=\\bigcup_n\\{|f|\\ge\\frac1n\\}$，测度仍为零，故 $f=0$ a.e.，即 $[f]=[0]$。三角不等式（Minkowski）超出切片，见 A2.1（拓展依赖）。\n\n**Step 5（$L^2$ 内积良定）。** $f,g\\in L^2$ 时 $|fg|\\le\\frac{|f|^2+|g|^2}{2}$（Young：$2ab\\le a^2+b^2$，P3.2），积分得 $\\int|fg|\\,d\\mu\\le\\frac{\\|f\\|_2^2+\\|g\\|_2^2}{2}<\\infty$，故 $\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu$ 是有限复数。内积公理的逐条验证见 l2-hilbert.proof。\n\n**易错点。**\n- Step 2/4 两处都靠**可数**并/次可加——σ-代数红利的再次出场（A1.4）；\n- $\\int|f|^p=0$ 只推出 $f=0$ **a.e.**，推不出逐点为零；没有商，正定性就断在最后一毫米。",
+      "links": [
+        "A1.2",
+        "A1.4",
+        "A2.1",
+        "P3.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:l2-hilbert.statement",
+      "type": "statement",
+      "subject": "l2-hilbert",
+      "title": "L² 是希尔伯特空间：内积与桥梁地位",
+      "keywords": [
+        "⟨f,g⟩ = ∫ f·ḡ dμ（切片逐字）",
+        "⟨f,f⟩ = ∫|f|² = ‖f‖₂²：诱导范数与 L² 范数重合",
+        "公理：共轭对称 / 第一变元线性（数学惯例）/ 正定性",
+        "希尔伯特 = 内积 + 完备；完备性（Riesz–Fischer）为切片外拓展",
+        "桥梁：量子态 ψ 满足 ⟨ψ,ψ⟩ = 1（F1）；Fourier 正交基（A2.3）",
+        "实值情形退化为 ∫fg"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 176,
+        "line_end": 176
+      },
+      "fill_hint": "首段逐字转写 176 行；公理清单与 Dirac 记号注是标准展开；Riesz–Fischer 显式标注为切片外。与 l2-hilbert.proof 分工：这条陈列断言，那条给验证。",
+      "content": "**陈述（切片逐字转写，A_analysis.tex:176）。** $L^2$ 是希尔伯特空间，内积为\n\n$$\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu,$$\n\n\"这是连接分析学与量子力学的桥梁\"（切片原话）。\n\n**公理清单（标准展开）。** 对 $f,g,h\\in L^2$、复数 $a,b$：\n- 共轭对称：$\\langle f,g\\rangle=\\overline{\\langle g,f\\rangle}$；\n- 第一变元线性：$\\langle af+bg,h\\rangle=a\\langle f,h\\rangle+b\\langle g,h\\rangle$（数学惯例；物理 Dirac 记号 $\\langle f|g\\rangle$ 线性在第二变元，只是约定相反，换约定时共轭搬家）；\n- 正定性：$\\langle f,f\\rangle=\\int|f|^2\\,d\\mu=\\|f\\|_2^2\\ge 0$，且 $=0\\Rightarrow f=0$ a.e. $\\Rightarrow[f]=0$（最后一步靠商，见 lp-space.proof Step 4）。\n\n良定性（$\\int|fg|<\\infty$）见 lp-space.proof Step 5；公理逐条验证见 l2-hilbert.proof。\n\n**\"希尔伯特\"一词的分量。** 希尔伯特空间 = 完备内积空间（A2.2）。切片直接断言这一地位；完备性即 Riesz–Fischer 定理（$L^2$ 的 Cauchy 列必收敛），证明依赖 A1.3 的级数版 MCT——属切片外拓展，依赖链登记在 general.apps。\n\n**桥梁的实体。** 量子态 = 波函数 $\\psi$，归一化 $\\langle\\psi,\\psi\\rangle=\\int|\\psi|^2\\,d\\mu=1$，即**量子态空间就是 $L^2$**（F1）；跃迁概率幅 $\\langle\\psi,\\varphi\\rangle$ 正是这条内积（F2）。信号处理同理：有限能量信号 $\\in L^2$，Fourier 分析在其上展开（A2.3）。实值情形 $\\bar g=g$，内积退化为 $\\int fg\\,dx$。",
+      "links": [
+        "A2.2",
+        "A2.3",
+        "F1",
+        "F2",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:l2-hilbert.intuition",
+      "type": "intuition",
+      "subject": "l2-hilbert",
+      "title": "直觉：L² = 有限能量世界，内积 = 重叠量",
+      "keywords": [
+        "‖ψ‖₂² = ∫|ψ|² = 总能量/总概率：有限能量才可归一化",
+        "2 是唯一能拆成乘积的幂次：|f|² = f·f̄",
+        "⟨f,g⟩ = 重叠量；支撑不相交 ⟹ 正交（= 0）",
+        "有内积才有夹角/正交/投影：L¹ 有长度无角度",
+        "回报：Gram–Schmidt、Fourier（A2.3）、量子叠加（F1）整套几何"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 172,
+        "line_end": 176
+      },
+      "fill_hint": "假设/回报分段；'唯一乘法幂次'的严格版（平行四边形律）留在 l2-hilbert.vs-lp，此条只给直觉不重复计算。",
+      "content": "**假设给了什么（能量有限）。** $f\\in L^2$ 说的是 $\\int|f|^2\\,d\\mu<\\infty$：把 $|f|^2$ 看成能量密度，$L^2$ 就是**有限能量**函数全体。量子波函数必须可归一化（$\\int|\\psi|^2\\,d\\mu=1$）、信号处理要求有限能量——两个世界天然住在 $L^2$。\n\n**为什么偏偏是 2（乘法拆解）。** 一切 p 次幂中只有平方能拆成两个因子的乘积：$|f|^2=f\\cdot\\bar f$。于是\"自己与自己配对\"的 $\\|f\\|_2^2$ 可以**升级**为双变量的 $\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu$：量出 $f$ 与 $g$ 的**重叠量**——$f=g$ 时重叠最多（退化为能量），支撑不相交时 $\\langle f,g\\rangle=0$（完全正交）。$p=1$ 或 $p=3$ 的幂拆不出这种双线性结构，所以 $L^1$ 有长度而无角度。\n\n**结论为什么因此成立（几何回报）。** 有了内积就有：夹角 $\\cos\\theta=\\langle f,g\\rangle/(\\|f\\|_2\\|g\\|_2)$、正交、投影、Gram–Schmidt（P6.4）、正交基与 Fourier 展开（A2.3）、量子叠加与测量概率 $|\\langle\\psi,\\varphi\\rangle|^2$（F1）——整套欧氏几何在无穷维复活。切片说 $L^2$ 是\"连接分析学与量子力学的桥梁\"，桥墩就是这条内积。\n\n**一句话。** $L^p$ 家族里只有 $L^2$ 的尺子是**双头的**：一头量 $f$、一头量 $g$。严格判据（平行四边形律）见 l2-hilbert.vs-lp。",
+      "links": [
+        "A2.2",
+        "A2.3",
+        "F1",
+        "P6.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:l2-hilbert.proof",
+      "type": "proof",
+      "subject": "l2-hilbert",
+      "title": "证明骨架：⟨f,g⟩ = ∫f ḡ 确是内积",
+      "keywords": [
+        "Step0 良定：|fg| ≤ (|f|²+|g|²)/2 ⟹ ∫|fg| < ∞（Young，P3.2）",
+        "Step1 共轭对称：积分与共轭交换；Step2 积分线性",
+        "Step3 正定性：=0 ⟹ f=0 a.e. ⟹ [f]=0（最后一步靠商）",
+        "Step4 ⟨f,f⟩ = ‖f‖₂²：希尔伯特结构与 L^p 结构严丝合缝",
+        "完备性（Riesz–Fischer）登记为拓展：依赖 A1.3 级数版 MCT",
+        "易错：线性在哪个变元是约定（数学 vs Dirac 记号相反）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 176,
+        "line_end": 176
+      },
+      "fill_hint": "Step 0 用 Young 而非 Cauchy–Schwarz，为把依赖压到 P3.2 且自含；CS 留给 A2.2。完备性段只登记依赖链不展开。",
+      "content": "验证切片断言中\"内积\"的那一半（完备性那一半见文末）。对 $f,g,h\\in L^2$、复数 $a,b$：\n\n**Step 0（良定，先于一切公理）。** 由 $2ab\\le a^2+b^2$（Young，P3.2）取 $a=|f|,b=|g|$：$|fg|\\le\\frac{|f|^2+|g|^2}{2}$，积分得 $\\int|fg|\\,d\\mu\\le\\frac{\\|f\\|_2^2+\\|g\\|_2^2}{2}<\\infty$。故 $\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu$ 是有限复数，公理才有谈论对象。（更锋利的 $|\\langle f,g\\rangle|\\le\\|f\\|_2\\|g\\|_2$ 是 Cauchy–Schwarz，见 A2.2。）\n\n**Step 1（共轭对称）。** $\\overline{\\langle g,f\\rangle}=\\overline{\\int g\\bar f\\,d\\mu}=\\int\\bar g f\\,d\\mu=\\langle f,g\\rangle$：被积函数逐点共轭，积分跟着共轭。\n\n**Step 2（第一变元线性）。** $\\langle af+bg,h\\rangle=\\int(af+bg)\\bar h\\,d\\mu=a\\int f\\bar h\\,d\\mu+b\\int g\\bar h\\,d\\mu$，就是积分的线性性；由 Step 1 自动得第二变元**共轭**线性。\n\n**Step 3（正定性）。** $\\langle f,f\\rangle=\\int|f|^2\\,d\\mu\\ge 0$（被积函数逐点非负）。若 $=0$：$|f|\\ge\\frac1n\\Rightarrow|f|^2\\ge\\frac{1}{n^2}$，故 $\\mu(\\{|f|\\ge\\frac1n\\})\\le n^2\\int|f|^2\\,d\\mu=0$；取可数并得 $f=0$ a.e.，即 $[f]=0$。**没有商，这一步断在 a.e.**——正定性的最后一毫米是 $/\\sim$ 供给的。\n\n**Step 4（范数重合）。** $\\langle f,f\\rangle=\\|f\\|_2^2$：内积诱导的范数恰是 $L^2$ 自己的范数，希尔伯特结构与 $L^p$ 结构严丝合缝。\n\n**另一半（完备性，拓展）。** Riesz–Fischer：$L^2$ 中 Cauchy 列必收敛。骨架（A1.3 的级数版 MCT 已预告此联系）：取快速子列 $\\|f_{n_{k+1}}-f_{n_k}\\|_2<2^{-k}$，对 $\\sum_k|\\Delta f_k|^2$ 用级数版 MCT 逐项积分得 a.e. 收敛子列，再证全列 $L^2$ 收敛。超出本切片，此处只登记依赖链。\n\n**易错点。**\n- Step 0 不可跳：先确认积分有限，否则公理是对 $\\infty$ 说的空话；\n- 线性在哪个变元是**约定**（数学第一变元 / Dirac 第二变元），换约定时所有共轭搬家；\n- $\\langle f,f\\rangle=0$ 只到 a.e.（见 ae-equivalence.zero-norm）。",
+      "links": [
+        "P3.2",
+        "A2.2",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:l2-hilbert.vs-lp",
+      "type": "comparison",
+      "subject": "l2-hilbert",
+      "title": "拓展：为什么只有 L² 是希尔伯特空间（平行四边形律）",
+      "keywords": [
+        "判据：内积范数必满足平行四边形律 ‖f+g‖²+‖f−g‖² = 2‖f‖²+2‖g‖²",
+        "p=1 反例：1_[0,1], 1_[1,2] ⟹ 左 8 ≠ 4 右",
+        "p=∞ 反例：同一对函数 ⟹ 左 2 ≠ 4 右（ess sup 意义）",
+        "p=2：展开后交叉项 ±2Re⟨f,g⟩ 相加抵消",
+        "p≠2 的 L^p 是巴拿赫（A2.1）非希尔伯特（A2.2）",
+        "von Neumann–Jordan：满足律的范数可用极化恒等式恢复内积"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 176,
+        "line_end": 176
+      },
+      "fill_hint": "两个失效计算各两行、数值已核验；von Neumann–Jordan 只引名不给证明（超出单元）。title 带「拓展：」，因为平行四边形律不在切片内。",
+      "content": "**为什么这条是拓展。** 切片把\"$L^2$ 是希尔伯特空间\"加粗，但没说为什么**只有** $L^2$。判据是平行四边形律（parallelogram law）。\n\n**判据。** 若范数由某内积诱导（$\\|f\\|^2=\\langle f,f\\rangle$），则必满足\n\n$$\\|f+g\\|^2+\\|f-g\\|^2=2\\|f\\|^2+2\\|g\\|^2.$$\n\n$p=2$ 时直接验证：$\\|f\\pm g\\|_2^2=\\|f\\|_2^2\\pm2\\operatorname{Re}\\langle f,g\\rangle+\\|g\\|_2^2$，两式相加交叉项抵消。反向（von Neumann–Jordan 定理）：满足该律的范数可用极化恒等式恢复内积——所以\"有内积\"⟺\"范数满足平行四边形律\"。\n\n**p=1 失效计算。** 取 $f=1_{[0,1]}$、$g=1_{[1,2]}$（$\\mathbb R$ 上，支撑不相交）：$f+g=1_{[0,2]}$、$|f-g|=1_{[0,2]}$（均 a.e.，单点 $x=1$ 不影响 $L^1$ 范数），故 $\\|f+g\\|_1=\\|f-g\\|_1=2$：\n- 左边 $=2^2+2^2=8$【已核验:8|2**2+2**2】；\n- 右边 $=2\\cdot 1+2\\cdot 1=4$【已核验:4|2*1+2*1】。\n$8\\ne 4$：$L^1$ 范数不可能来自任何内积。\n\n**p=∞ 失效计算。** 同一对函数，ess sup 意义下 $\\|f+g\\|_\\infty=\\|f-g\\|_\\infty=\\|f\\|_\\infty=\\|g\\|_\\infty=1$（$x=1$ 处 $f+g=2$ 属单点零测，被\"本质\"抹掉）：\n- 左边 $=1+1=2$【已核验:2|1+1】；右边 $=2+2=4$【已核验:4|2+2】。$2\\ne 4$。\n\n**对照：p=2 取等。** 同一对函数：$\\|f+g\\|_2^2=\\int_0^2 1\\,dx=2$、$\\|f-g\\|_2^2=2$，左边 $=4$；右边 $=2\\cdot 1+2\\cdot 1=4$。恰好取等——交叉项 $\\pm 2\\operatorname{Re}\\langle f,g\\rangle=0$（支撑不相交 ⟹ 正交）。\n\n**结论与分工。** $p\\ne 2$ 的 $L^p$（含 $L^1,L^{\\infty}$）是巴拿赫空间（完备赋范空间，A2.1）而非希尔伯特空间（A2.2）：有距离与极限理论，没有角度、正交与投影。凡是要用正交基、Fourier 展开（A2.3）、量子叠加（F1）的场景，必须站到 $L^2$ 或其子空间（如 Sobolev $H^k$，A4.3）上。",
+      "links": [
+        "A2.1",
+        "A2.2",
+        "A2.3",
+        "A4.3",
+        "F1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "L¹ / L² / L^∞ 三档对照表",
+      "keywords": [
+        "L¹ 质量 / L² 能量 / L^∞ 峰值：三个身份一张表",
+        "membership：R 上互不包含；μ(X)<∞ 时 L^∞ ⊆ L² ⊆ L¹（拓展）",
+        "结构：只有 L² 有内积；三者各自完备（Riesz–Fischer，拓展）",
+        "切片落点：概率密度 / 量子态·信号处理 / 本质有界",
+        "A1.3 的 DCT 结论 ‖f_n−f‖₁→0 就是 L¹ 范数收敛"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 170,
+        "line_end": 176
+      },
+      "fill_hint": "表格供前端直接渲染；'切片落点'行逐字取自 171-173 行；最后一行缝合 A1.3 与 A1.5，评审时与 A1.3:dct.l1conv 措辞对齐。",
+      "content": "单元总表：切片 itemize（A_analysis.tex:170-174）的三个空间并排看。\n\n| | $L^1$ | $L^2$ | $L^{\\infty}$ |\n|---|---|---|---|\n| 资格条件 | $\\int\\lvert f\\rvert\\,d\\mu<\\infty$ | $\\int\\lvert f\\rvert^2\\,d\\mu<\\infty$ | $\\mathrm{ess\\,sup}\\lvert f\\rvert<\\infty$ |\n| 范数 | $\\lVert f\\rVert_1=\\int\\lvert f\\rvert\\,d\\mu$ | $\\lVert f\\rVert_2=(\\int\\lvert f\\rvert^2\\,d\\mu)^{1/2}$ | $\\lVert f\\rVert_\\infty=\\mathrm{ess\\,sup}\\lvert f\\rvert$ |\n| 物理身份 | 质量（$\\int p\\,d\\mu=1$） | 能量（$\\int\\lvert\\psi\\rvert^2$ 可归一化） | 峰值（零测尖刺不算） |\n| 切片落点 | \"概率密度函数所在空间\" | \"量子力学的状态空间，信号处理的核心\" | \"本质有界函数\" |\n| 结构 | 巴拿赫，无内积 | **希尔伯特**：$\\langle f,g\\rangle=\\int f\\bar g\\,d\\mu$ | 巴拿赫，无内积 |\n| 下游 | C2 密度、A1.3 DCT 的 $L^1$ 收敛、H4 期望存在 | F1/F2 量子、A2.3 Fourier、A4.3 Sobolev $H^k$ | A4.4 嵌入、最大值估计 |\n\n三条结构事实（细节在各词条）：\n- **membership**：$\\mathbb R$ 上互不包含（lp-space.peak-vs-tail）；$\\mu(X)<\\infty$ 时嵌套恢复 $L^{\\infty}\\subseteq L^2\\subseteq L^1$（拓展）。\n- **结构**：只有 $L^2$ 有内积（l2-hilbert.vs-lp）；三者在各自范数下完备（Riesz–Fischer 及其推广，拓展）。\n- **与 A1.3 的缝**：DCT 的强化结论 $\\|f_n-f\\|_1\\to 0$ 翻译成空间语言就是\"$f_n\\to f$ 在 $L^1$ 中收敛\"——收敛定理与本单元是同一枚硬币的两面。",
+      "links": [
+        "A1.3",
+        "A2.1",
+        "A2.2",
+        "A2.3",
+        "C2",
+        "F1",
+        "A4.3",
+        "A4.4",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "C2 密度 ∈ L¹（∫p dμ=1）；C6.1 的 L^r 收敛 = 本单元的范数收敛",
+        "F1 量子态 = L² 波函数（⟨ψ,ψ⟩=1）；F2 算子作用在 L² 上",
+        "A2.3 Fourier 住在 L²；A4.3 Sobolev = 导数也在 L^p",
+        "A4.5 Lax–Milgram 能量空间 H¹ 是 L² 型",
+        "H4 蒙特卡洛：期望存在 = L¹，方差有限 = L²（与 A1.3 盖子检验汇合）",
+        "G2.2 FEM 能量范数 / G2.3 谱方法 L² 投影"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 170,
+        "line_end": 176
+      },
+      "fill_hint": "每条一句'谁取哪档货'，细节归目标章节；H4 条与 A1.3:general.apps 的 MC 收敛链呼应。",
+      "content": "$L^p$ 是整座知识库的空间货架，各章取货清单：\n\n- **概率论（C）**：密度 $p$ 天然满足 $\\int p\\,d\\mu=1$，即 $p\\in L^1$（C2）；\"$L^r$ 收敛\"（C6.1）就是\"在 $L^r$ 空间中依范数收敛\"，范数正是本单元供货。\n- **量子力学（F1/F2）**：态 = $L^2$ 波函数，归一化 $\\langle\\psi,\\psi\\rangle=\\int|\\psi|^2\\,d\\mu=1$；可观测量是 $L^2$ 上的算子。切片\"桥梁\"的实体落点。\n- **Fourier 分析（A2.3）**：正交基理论住在 $L^2$，Parseval 恒等式就是\"内积保长度\"。\n- **PDE/弱解（A4）**：Sobolev 空间 $W^{k,p}$ = \"函数及其弱导数都在 $L^p$\"（A4.3）；Lax–Milgram 的能量空间 $H^1$ 是 $L^2$ 型（A4.5）；嵌入定理研究 $W^{k,p}$ 如何塞进 $L^q$ 或 $L^{\\infty}$（A4.4）。\n- **渲染/CG（H）**：蒙特卡洛（H4）的无偏性要求被积函数 $\\in L^1$（期望存在），方差有限再要求 $\\in L^2$——与 A1.3 的\"可积盖子\"检验在同一条渲染方程上汇合。\n- **数值方法（G）**：FEM（G2.2）的能量范数、谱方法（G2.3）的 $L^2$ 投影，误差都以 $\\|\\cdot\\|_{L^p}$ 度量。\n\n一句话：**凡要说\"f 多大\"\"$f_n$ 收敛到 $f$\"\"误差多少\"，先得回答\"在哪个 $L^p$ 里\"**——本单元是度量语言的供货商。",
+      "links": [
+        "C2",
+        "C6.1",
+        "F1",
+        "F2",
+        "A2.3",
+        "A4.3",
+        "A4.4",
+        "A4.5",
+        "H4",
+        "G2.2",
+        "G2.3",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：lp-ball（p 的几何 + ‖f‖_p 随 p 变化）",
+      "keywords": [
+        "提案模块 lp-ball（档1 前端直渲）：二维单位球随 p 变形 菱形→圆→方形",
+        "视图 unit-ball：p 从 1 滑到 ∞，看清尺子的惩罚偏好",
+        "视图 norm-vs-p：固定 f 画 ‖f‖_p–p 曲线，爆炸点 = membership 门槛",
+        "示例：x^(−1/2)·1_(0,1) 在 p→2⁻ 爆；1/(1+|x|) 在 p→1⁺ 爆",
+        "判据 Q4：简单显式函数 + 纯几何，无需后端",
+        "与 lp-space.peak-vs-tail 反例共用 norm-vs-p，图上要能读出 2 和 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 163,
+        "line_end": 178
+      },
+      "fill_hint": "模块名 lp-ball 为新提案（现有模块无匹配）；unit-ball 纯几何，norm-vs-p 需前端数值积分（辛普森即可）。peak-vs-tail 词条已挂同模块 norm-vs-p 视图。",
+      "content": "单元级演示总览。本单元的可视化价值不在长时程迭代（无后端需求），而在**几何直观**：p 是什么形状的尺子。\n\n**提案模块 `lp-ball`（新模块名，小写短横线，前端直渲档1）**，两个视图：\n1. **unit-ball**：二维单位球 $\\{(|x_1|^p+|x_2|^p)^{1/p}\\le 1\\}$ 随 $p$ 从 1 滑到 $\\infty$：菱形（$p=1$）→ 圆（$p=2$）→ 方形（$p\\to\\infty$）。拖滑动条看\"尺子\"从恨长尾变成恨尖峰；$p\\to\\infty$ 收敛到方形恰是 $L^{\\infty}$ 单位球，与 lp-space.p-infinity 的 $\\|f\\|_p\\to\\|f\\|_\\infty$ 互为图像。\n2. **norm-vs-p**：固定函数 $f$，画曲线 $p\\mapsto\\|f\\|_p$。预置两条：$f=x^{-1/2}1_{(0,1)}$（曲线在 $p\\to 2^-$ 吹向 $\\infty$，读出 $f\\in L^1\\setminus L^2$）与 $f=\\frac{1}{1+|x|}$（在 $p\\to 1^+$ 吹向 $\\infty$，读出 $f\\in L^2\\setminus L^1$）。爆炸点的具体数值（2 与 1）必须能在图上读出。\n\n**判据登记**：简单显式函数 + 纯几何图像（Q4）→ 前端直渲；每条曲线几百个采样点的幂运算与数值积分，前端算力足够（Q1–Q3 均否）。lp-space.peak-vs-tail 反例词条挂同一模块的 norm-vs-p 视图，同一模块两种叙事（这里讲\"换 p 换空间\"，那里讲\"反例怎么爆\"）。",
+      "viz": {
+        "module": "lp-ball",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "views": [
+            "unit-ball",
+            "norm-vs-p"
+          ],
+          "p_min": 1,
+          "p_max": 16,
+          "examples": [
+            {
+              "f": "x^-0.5 on (0,1)",
+              "blow_up_at": 2
+            },
+            {
+              "f": "1/(1+|x|) on R",
+              "blow_up_at": 1
+            }
+          ]
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:lp-space.probe1",
+      "type": "probe",
+      "subject": "lp-space",
+      "title": "检验题：算 ‖f‖_p 并判断 membership",
+      "keywords": [
+        "f = x^(−1/2)·1_(0,1)：问 ‖f‖₁、L² 资格、p=3/2 的范数",
+        "答案：2 / ∉L²（∫x^(−1)=∞）/ 4^(2/3) ≈ 2.520",
+        "通式 ‖f‖_p = (2/(2−p))^(1/p)（p<2）",
+        "考察：幂换算 + 原点边界幂次 a<1"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 164,
+        "line_end": 166
+      },
+      "fill_hint": "答案与 peak-vs-tail 一致；③ 的推导要点是 x^(−p/2) 的原函数在 p<2 时下限收敛。",
+      "content": "取 $f(x)=x^{-1/2}\\cdot 1_{(0,1)}(x)$（Lebesgue 测度）：\n\n1. 计算 $\\|f\\|_1$；\n2. $f\\in L^2$ 吗？用积分判断；\n3. 对 $1\\le p<2$ 导出 $\\|f\\|_p$ 的显式公式，并代 $p=\\frac32$ 求值。\n\n（答案：① $\\|f\\|_1=\\int_0^1 x^{-1/2}\\,dx=2$【已核验:2|2*sqrt(1)-2*sqrt(0)】；② 不属于：$\\int_0^1|f|^2\\,dx=\\int_0^1 x^{-1}\\,dx=\\infty$，截断 $[10^{-4},1]$ 已达 $\\ln 10^4\\approx 9.21$【已核验:9.21034037198|log(10**4)】且随下界趋 0 无界；③ $\\|f\\|_p^p=\\int_0^1 x^{-p/2}\\,dx=\\frac{1}{1-p/2}=\\frac{2}{2-p}$，故 $\\|f\\|_p=\\left(\\frac{2}{2-p}\\right)^{1/p}$，$p=\\frac32$ 时 $\\|f\\|_{3/2}=\\left(\\frac{2}{0.5}\\right)^{2/3}=4^{2/3}\\approx 2.520$【已核验:2.51984209979|(2/(2-1.5))**(1/1.5)】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.5:l2-hilbert.probe1",
+      "type": "probe",
+      "subject": "l2-hilbert",
+      "title": "检验题：算一对内积并验证 Cauchy–Schwarz",
+      "keywords": [
+        "[0,1] 上 f≡1，g(x)=x，h=i·1_[0,1]",
+        "问：⟨f,g⟩、‖f‖₂·‖g‖₂、共轭有无的 ⟨h,h⟩",
+        "答案：1/2 / √(1/3)≈0.577（余量≈0.077）/ 带共轭 1 vs 不带 −1",
+        "考察：内积计算 + Cauchy–Schwarz（A2.2）+ 共轭的作用"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 176,
+        "line_end": 176
+      },
+      "fill_hint": "③ 与 no-conjugate 反例同源，probe 让读者亲手算出 −1；② 为 A2.2 的 Cauchy–Schwarz 预热。",
+      "content": "在 $[0,1]$ 上取 $f\\equiv 1$、$g(x)=x$、$h=i\\cdot 1_{[0,1]}$：\n\n1. 计算 $\\langle f,g\\rangle=\\int_0^1 f\\bar g\\,dx$；\n2. 计算 $\\|f\\|_2\\cdot\\|g\\|_2$，检验 Cauchy–Schwarz 不等式 $|\\langle f,g\\rangle|\\le\\|f\\|_2\\|g\\|_2$（A2.2）还差多少；\n3. 分别计算切片定义的 $\\langle h,h\\rangle$ 与**不带共轭**的 $\\int_0^1 h^2\\,dx$，并解释为什么必须带共轭。\n\n（答案：① $\\langle f,g\\rangle=\\int_0^1 x\\,dx=\\frac12$【已核验:0.5|1/2】；② $\\|f\\|_2=1$、$\\|g\\|_2=\\left(\\int_0^1 x^2\\,dx\\right)^{1/2}=\\sqrt{1/3}\\approx 0.577$【已核验:0.57735026919|sqrt(1/3)】，余量 $\\sqrt{1/3}-\\frac12\\approx 0.077$【已核验:0.0773502691896|sqrt(1/3)-0.5】；③ $\\langle h,h\\rangle=\\int_0^1|i|^2\\,dx=1$【已核验:1|1】，无共轭 $\\int_0^1 i^2\\,dx=-1$【已核验:-1|-1】$<0$ 正定性崩——共轭把\"平方\"变\"模方\"。）",
+      "links": [
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

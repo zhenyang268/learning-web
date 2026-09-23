@@ -37,13 +37,16 @@ MARK_RE = re.compile(r"【待核验:([^】]+)】")
 SAFE_ENV = {
     "__builtins__": {},
     "sum": sum, "range": range, "abs": abs, "min": min, "max": max,
+    "int": int, "float": float, "round": round, "len": len,
+    "sorted": sorted, "enumerate": enumerate, "zip": zip,
+    "all": all, "any": any, "True": True, "False": False,
     "sqrt": math.sqrt, "pi": math.pi, "e": math.e, "exp": math.exp,
     "log": math.log, "log2": math.log2, "log10": math.log10,
     "sin": math.sin, "cos": math.cos, "tan": math.tan,
     "gamma": math.gamma, "lgamma": math.lgamma, "erf": math.erf,
     "erfc": math.erfc, "factorial": math.factorial, "inf": math.inf,
 }
-SAFE_TOKEN = re.compile(r"^[\w\s+\-*/().,^<>=]+$")
+SAFE_TOKEN = re.compile(r"""^[\w\s+\-*/%^<>=!,:.\[\]()'"~]+$""")
 
 def eval_expr(expr: str):
     e = expr.replace("^", "**")
