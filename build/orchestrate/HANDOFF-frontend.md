@@ -27,7 +27,11 @@ vite.config.ts  tsconfig.json  package.json  index.html
 1. **定理卡四问骨架**（TASKBOOK §8.4）：陈述/直觉/证明/应用分 tab；quantifiers 拆解表默认展开、Markdown 表格渲染；点表行**就地展开**对应反例词条（同文件内按 id 跳转，不换页）；status/generated_by 徽标；content 里的 Markdown（表格/列表/加粗）渲染。
 2. **右栏**（§8.6）：依赖◂/被用于▸——从全库 links 聚合（反向索引在 modules/graph.ts 补全）；chip 点击跳转（目标未生成时显示占位）；probe 检验题可勾选（localStorage 持久化）。
 3. **KaTeX 构建期预渲染**（决策 D8，禁 CDN 禁客户端渲染）：build 期用 Node `katex.renderToString` 把 content 的 $…$/$$…$$ 预渲染进产物；注意 npm 依赖装在本仓（与父仓 uv 的 Python 隔离，node 侧不冲突）。
-4. **viz 档1 模块补齐**（§12.5）：已有 convergence-thm；待做 taylor-approx / unit-circle / gram-schmidt / gauss-integral / sum-telescoping / inequality-decision-tree（交互决策树，P10 flagship）。每个模块硬规则：图上显示「失败的数值」或 invariant 自检（偏差>1e-12 抛错）+ 「前端计算·未对拍」徽标；拖滑块零请求（本地 scrub）。viz 档2（planned-backend）渲染「演示待接入·走 viz 层」占位徽标。
+4. ~~**viz 档1 模块补齐**~~ —— **本条 2026-09-24 由用户收回：viz 层（含 `src/viz/`）由用户本人实现，agent 不碰。**
+   连带影响：`npm run check` 里 `viz-model-check` 与 `dom-harness` 的
+   「viz 档1 全部已注册 / 读数非空 / invariant 徽标」三类断言，在用户补齐模块前会持续 FAIL
+   （实测 H1/H2 各 FAIL 3 项，其余 66 单元全绿）。**agent 改完 web 侧只以
+   `tsc --noEmit` + `dom-harness` 的非 viz 断言为准，不要为了让 check 转绿去写 viz 模块。**
 5. **图谱层**（§8.7）：四类边（prereq/related/application/contrast）线型+颜色区分、可开关；prereq 无环一眼可验；三层缩放（字母块→章节→节点）。
 6. **主题与收口**：CSS 变量、跟随系统暗色；frontier 横幅（mastery<3 且 prereq 达标的拓扑序第一——数据缺 mastery 时隐藏，禁写死）；standalone 快照（dist/ 单文件 HTML：数据内联 + IIFE + 零外部请求，file:// 双击即开）。
 

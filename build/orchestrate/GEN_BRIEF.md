@@ -45,7 +45,8 @@ cd /Users/apple/develop/learning/learning-web && uv run python -c "import json;p
    **不要在 `content` 里写自己数的子区间行号**（如「切片 tex 124-125」）——极易数错且校验器抓不到。
    要写就写切片头部给出的整段区间，或干脆不写行号。
 9. `content` 里不得出现 **KaTeX 环境之外的双反斜杠**（那是 JSON 过度转义；用 §0 的 Python 写法则不会发生）。
-10. `status` 恒为 `"drafted"`；`generated_by` = `{"model": "deepseek-v4.1-flash", "date": "pending", "reviewed": false}`；
+10. `status` 恒为 `"drafted"`；`generated_by` = `{"model": "<你实际使用的模型 ID>", "date": "pending", "reviewed": false}`
+    （deepseek-v4.1-flash 已限额弃用；当前池：glm-5.3 / glm-5.3-flash / glm-5.3-flashx / kimi-k3-2，按派活指令填）；
     文件级 `"updated": "pending"`（由 `build/inject_meta.py` 注入日期）。
 11. `id` = `"<code>:<subject>.<slot>"`，`subject` 用小写英文短横线（`mct` / `donsker` / `ui`）；
     `type` 九选一：`statement` `proof` `intuition` `extension` `counterexample` `comparison` `application` `viz` `probe`。

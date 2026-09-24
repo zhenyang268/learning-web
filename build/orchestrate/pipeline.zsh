@@ -18,6 +18,10 @@
 set -u
 cd "$(dirname $0)/../.."   # learning-web 根目录
 
+# 生成模型可配（deepseek-v4.1-flash 2026-09-24 被限额，默认换 glm-5.3-flashx；
+# 额度恢复后可 GEN_MODEL=deepseek-v4.1-flash zsh pipeline.zsh ... 覆盖）
+GEN_MODEL="${GEN_MODEL:-glm-5.3-flashx}"
+
 PREFIX=build/prompts/gen_prefix.md
 REVIEW_TASK=build/prompts/review_task.md
 BATCHES=build/orchestrate/batches
@@ -25,8 +29,8 @@ DONE=build/state/done
 LOGS=build/logs
 REVIEWS=build/state/review
 ARBIT=build/state/arbitration
-TIMEOUT_SECS=900
-MAXPAR=4
+TIMEOUT_SECS=1800
+MAXPAR=${MAXPAR:-3}
 RETRIES=1        # 每单元自动重试次数（首次失败后再试 1 次）
 mkdir -p "$DONE" "$LOGS" "$REVIEWS" "$ARBIT"
 
@@ -65,6 +69,7 @@ attempt_once() {
 # settle_raw <raw> <out> —— 把 raw 或其提取结果规范化写入 out
 settle_raw() {
   local raw=$1 out=$2 ext="${1%.raw}.extracted"
+  mkdir -p "$(dirname "$out")"   # json/<章节>/ 目录可能不存在（2026-09-24 实测踩坑）
   if [ -f "$ext" ] && [ -s "$ext" ]; then
     pyrun -m json.tool "$ext" > "$out"
   else
@@ -152,7 +157,7 @@ case "$cmd" in
   smoke)
     mkdir -p /tmp/kb_smoke
     printf '输出一个 JSON：{"ping":"pong"}。不要任何其他文字，不要调用任何工具。\n' > /tmp/kb_smoke/p.md
-    run_llm smoke deepseek-v4.1-flash /tmp/kb_smoke/p.md build/state/smoke.json
+    run_llm smoke "$GEN_MODEL" /tmp/kb_smoke/p.md build/state/smoke.json
     cat build/state/smoke.json 2>/dev/null
     ;;
   batch*)
@@ -199,7 +204,7 @@ case "$cmd" in
     pf="build/prompts/fix${round}_$code.md"
     [ -f "$pf" ] || { echo "prompt 不存在，先跑 make_fix $code $round"; exit 1; }
     # 修复成功才覆盖正式产物；失败保持原状
-    if run_llm "fix${round}_$code" deepseek-v4.1-flash "$pf" "$LOGS/fix${round}_$code.json"; then
+    if run_llm "fix${round}_$code" "$GEN_MODEL" "$pf" "$LOGS/fix${round}_$code.json"; then
       pyrun -m json.tool "$LOGS/fix${round}_$code.json" > "json/${code%%.*}/$code.json" \
         && echo "已回写 json/${code%%.*}/$code.json"
     fi
