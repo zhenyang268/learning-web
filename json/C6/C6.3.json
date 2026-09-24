@@ -26,7 +26,7 @@
         "UI 正是「DCT 盖子」扔掉具体形状后剩下的实质"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 133,
         "line_end": 146
       },
@@ -57,7 +57,7 @@
         "修补：对 f_n^α = n^α·1_[0,1/n^α] 看 α < 1 时 UI 恢复"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 135,
         "line_end": 139
       },
@@ -101,7 +101,7 @@
         "切片定位：这是 A1 三大收敛定理那条线索在概率论的收口"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 135,
         "line_end": 146
       },
@@ -132,7 +132,7 @@
         "UI 扔掉了盖子的「形状」只留「质量纪律」——所以更普适"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 140,
         "line_end": 146
       },
@@ -163,7 +163,7 @@
         "依赖链：A1.4 绝对连续性 / A1.3 BCT / Fatou ⟹ Vitali"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 137,
         "line_end": 139
       },
@@ -195,7 +195,7 @@
         "切片「盖子 ⟺ UI」的准确读法：同一分水岭的两种门票，非逻辑等价"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 140,
         "line_end": 146
       },
@@ -226,7 +226,7 @@
         "切片未含速查表，属标准补充（de la Vallée Poussin 判据见 fill_hint）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 135,
         "line_end": 139
       },
@@ -256,7 +256,7 @@
         "答案数值均带待核验标记，供前端折叠"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 135,
         "line_end": 139
       },
@@ -282,7 +282,7 @@
         "三者的共同隐藏依赖：Fatou / 积分绝对连续性（A1.4）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 135,
         "line_end": 146
       },
@@ -313,7 +313,7 @@
         "A1.3 三大收敛定理在概率空间的收口（切片原话）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 140,
         "line_end": 146
       },

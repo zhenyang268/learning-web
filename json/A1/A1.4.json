@@ -26,7 +26,7 @@
         "R 可分 ⟹ Borel σ-代数由可数层级操作生成（超限层级 Σ⁰_α）"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 58,
         "line_end": 69
       },
@@ -58,7 +58,7 @@
         "实质内容全在「可数」二字"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 71,
         "line_end": 100
       },
@@ -88,7 +88,7 @@
         "机制：每个单点渐近不可见，无穷单点累积成满测"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 90,
         "line_end": 91
       },
@@ -118,7 +118,7 @@
         "与自然密度对偶：那边 0 vs 1，这边 0 vs ∞"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 93,
         "line_end": 94
       },
@@ -148,7 +148,7 @@
         "CG 落点：有限可加下 MC 渲染没有理论保证（切片原话）"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 96,
         "line_end": 121
       },
@@ -181,7 +181,7 @@
         "出路：放弃全域定义，限制到 σ-代数 + 完备化"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 142,
         "line_end": 151
       },
@@ -211,7 +211,7 @@
         "δ 建模、分布理论（A2.5）全部无法表述"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 123,
         "line_end": 133
       },
@@ -242,7 +242,7 @@
         "boxed：σ-代数的存在理由 = 为可数可加腾出逻辑空间"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 65,
         "line_end": 69
       },
@@ -273,7 +273,7 @@
         "三难图景：有限可加丢定理、可数可加丢全域、不可数可加丢连续"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 80,
         "line_end": 140
       },
@@ -304,7 +304,7 @@
         "分析学的一切建立在极限上，连续性 = 测度的极限能力"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 135,
         "line_end": 140
       },
@@ -334,7 +334,7 @@
         "易错点：上连续忘写 μ(A₁)<∞，[n,∞) 立即翻车"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 135,
         "line_end": 140
       },
@@ -365,7 +365,7 @@
         "μ(∅)=0 可由其余公理推出（排除恒 ∞ 退化）"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 58,
         "line_end": 78
       },
@@ -396,7 +396,7 @@
         "公理相同，世界不同"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 153,
         "line_end": 159
       },
@@ -429,7 +429,7 @@
         "σ-代数的可数封闭 = 与可数可加咬合的同一枚齿轮"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 83,
         "line_end": 133
       },
@@ -461,7 +461,7 @@
         "A2.5/H4：狄拉克测度 = 点光源、分布理论的语言"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 120,
         "line_end": 121
       },
@@ -537,7 +537,7 @@
         "用单点 0 vs 整体 1 写出可数可加的失效等式"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 90,
         "line_end": 91
       },
@@ -564,7 +564,7 @@
         "μ(N) 无从定义——集合列极限语句失义"
       ],
       "tex_ref": {
-        "file": "A_analysis.tex",
+        "file": "notebook/A_analysis.tex",
         "line_start": 58,
         "line_end": 63
       },

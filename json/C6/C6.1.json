@@ -26,7 +26,7 @@
         "L^p 与 a.s. 互不蕴含（typewriter 与尖峰两反例）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 96,
         "line_end": 104
       },
@@ -59,7 +59,7 @@
         "与 A1.3 滑动质量 1_[n,n+1] 同族：质量在空间上移动而非消失"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 96,
         "line_end": 104
       },
@@ -98,7 +98,7 @@
         "前三种要求 X_n 与 X 同一概率空间；依分布不需要"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 88,
         "line_end": 95
       },
@@ -129,7 +129,7 @@
         "依分布扔掉耦合信息 ⟹ 反向必须补耦合条件（常数极限 = 完全确定的耦合）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 88,
         "line_end": 104
       },
@@ -160,7 +160,7 @@
         "易错点：夹逼要用 x±ε 处 F 的连续性，连续点集在 R 中稠密才收得了口"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 96,
         "line_end": 104
       },
@@ -191,7 +191,7 @@
         "为什么常数特殊：dF = 0 处「形状贴近」强制「位置贴近」"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 103,
         "line_end": 104
       },
@@ -222,7 +222,7 @@
         "L^p ⇏ a.s. 的修补：抽 a.s. 收敛子列"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 96,
         "line_end": 104
       },
@@ -253,7 +253,7 @@
         "答案数值均带待核验标记，供前端折叠"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 96,
         "line_end": 104
       },
@@ -278,7 +278,7 @@
         "反向升级的价格表：UI（C6.3）或常数极限"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 88,
         "line_end": 104
       },
@@ -312,7 +312,7 @@
         "A 篇接口：依测度收敛（A1.4）与 L^p 空间（A1.5）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 96,
         "line_end": 104
       },
@@ -350,7 +350,7 @@
         "iid 正态对照：两张同分布直方图但 |X_n−X| 直方图不动"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 96,
         "line_end": 104
       },

@@ -18,6 +18,7 @@ r"""pass 2 确定性校验：结构合规 + 代号/links 存在性 + 数值【�
      （2026-09-24 加固：此前只回填不比对，声称值写错会静默留下）
 10. keywords 条数须在 3–7（契约 §2 表格）——越界记 MAJ
 11. tex_ref.line_start/line_end 须落在该单元切片行区间内 —— 越界记 MAJ
+12. tex_ref.file 须统一为 notebook/<...> 形式 —— 不符记 MAJ
 退出码：critical=0 时 0，否则 1。
 """
 from __future__ import annotations
@@ -33,6 +34,12 @@ STATE = WEB / "build" / "state"
 SLICES = json.loads((STATE / "slices.json").read_text(encoding="utf-8"))
 VALID_CODES = {u["code"] for u in SLICES["units"]}
 SLICE_RANGE = {u["code"]: (u["line_start"], u["line_end"]) for u in SLICES["units"]}
+SLICE_FILE = {u["code"]: u["file"] for u in SLICES["units"]}
+
+def norm_tex_file(f: str) -> str:
+    """统一成 notebook/<...>.tex 形式（切片清单存裸名，历史产物两种写法混用）。"""
+    return f if f.startswith("notebook/") else f"notebook/{f}"
+
 CODE_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?$")
 ID_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
 TYPES = {"statement", "proof", "intuition", "extension", "counterexample",
@@ -134,8 +141,11 @@ def verify_file(path: Path) -> list[str]:
                                    and isinstance(tr.get("line_start"), int)
                                    and isinstance(tr.get("line_end"), int)):
             errs.append(f"MAJ {code} {eid}: tex_ref 应为 {{file,line_start,line_end}} 或 null")
-        elif tr is not None and slo is not None:
-            if not (slo <= tr["line_start"] <= tr["line_end"] <= shi):
+        elif tr is not None:
+            want = norm_tex_file(SLICE_FILE.get(prefix, ""))
+            if want and tr.get("file") != want:
+                errs.append(f"MAJ {code} {eid}: tex_ref.file 应为 {want}，实为 {tr.get('file')}")
+            if slo is not None and not (slo <= tr["line_start"] <= tr["line_end"] <= shi):
                 errs.append(f"MAJ {code} {eid}: tex_ref {tr['line_start']}-{tr['line_end']}"
                             f" 越出切片区间 {slo}-{shi}")
         for bad in ("difficulty", "mastery"):

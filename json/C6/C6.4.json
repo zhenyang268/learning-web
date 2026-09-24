@@ -26,7 +26,7 @@
         "四行表格 = 四个「条件换结论」的汇率"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 148,
         "line_end": 170
       },
@@ -57,7 +57,7 @@
         "修补：σ-有限空间上逐块使用（每个有限测度块上 Egorov）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 154,
         "line_end": 158
       },
@@ -88,7 +88,7 @@
         "与 A1.3 slide 的家族关系：两个镜像 slide 的叠加"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 159,
         "line_end": 161
       },
@@ -117,7 +117,7 @@
         "失效根源：λ-系只封「补 + 不交并」，交运算从后门溜走"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 162,
         "line_end": 170
       },
@@ -147,7 +147,7 @@
         "配套反例：无穷测度上 1_[n,∞) 击穿（egorov.infinite-measure）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 154,
         "line_end": 158
       },
@@ -176,7 +176,7 @@
         "典型场景：密度函数归一化 ∫p_n = ∫p = 1 天然对账"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 159,
         "line_end": 161
       },
@@ -207,7 +207,7 @@
         "非负条件的作用：f 恰好是正差的盖子"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 159,
         "line_end": 161
       },
@@ -236,7 +236,7 @@
         "函数版变体：验证 E[h|σ(P)] 或积分相等只需在 π-系上验"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 162,
         "line_end": 170
       },
@@ -266,7 +266,7 @@
         "验证成本从 8 降到 2（更一般地从 2^n 降到 |P|）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 166,
         "line_end": 170
       },
@@ -296,7 +296,7 @@
         "答案数值均带待核验标记，供前端折叠"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 148,
         "line_end": 170
       },
@@ -322,7 +322,7 @@
         "与三大定理（A1.3）的分工：兑换的方向各不相同"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 148,
         "line_end": 170
       },
@@ -353,7 +353,7 @@
         "单调类：分布函数定分布（C7.1）、条件期望唯一性（C4）、测度唯一性（C1）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 166,
         "line_end": 170
       },

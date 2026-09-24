@@ -26,7 +26,7 @@
         "展品全部是「无随机性的确定性对象」或最平凡的随机对象"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 110,
         "line_end": 131
       },
@@ -58,7 +58,7 @@
         "与 A1.3 滑动质量 1_[n,n+1] 同族：质量在流窜而非消失"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 116,
         "line_end": 118
       },
@@ -98,7 +98,7 @@
         "E|X_n − 0| = 1 ↛ 0：L^1 判定不过、依概率判定通过（P(|X_n|>ε) = 1/n）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 120,
         "line_end": 121
       },
@@ -140,7 +140,7 @@
         "对照：若 X_n = X（完全耦合），|X_n − X| ≡ 0——耦合方式决定一切"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 123,
         "line_end": 124
       },
@@ -172,7 +172,7 @@
         "「几乎必然」对质量逃逸免疫，「L^1」对耦合自由免疫——各管一段"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 129,
         "line_end": 130
       },
@@ -203,7 +203,7 @@
         "切片未含此定理，属标准补充（Durrett / Royden）"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 116,
         "line_end": 123
       },
@@ -235,7 +235,7 @@
         "切片未含此定理，属标准补充；采样即耦合的渲染视角"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 126,
         "line_end": 131
       },
@@ -265,7 +265,7 @@
         "答案数值均带待核验标记，供前端折叠"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 110,
         "line_end": 131
       },
@@ -289,7 +289,7 @@
         "与 C6.1 层级图配套使用：先背图、再背博物馆"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 111,
         "line_end": 127
       },
@@ -319,7 +319,7 @@
         "Skorokhod/子列工具支撑 C7.3 与 A1.5 的证明内循环"
       ],
       "tex_ref": {
-        "file": "C_partial.tex",
+        "file": "notebook/C_partial.tex",
         "line_start": 110,
         "line_end": 131
       },
