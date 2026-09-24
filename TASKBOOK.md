@@ -1,5 +1,11 @@
-# learning-web 知识库 + 前端 · 实施任务书 v1.3（2026-09-24）
+# learning-web 知识库 + 前端 · 实施任务书 v1.4（2026-09-24）
 
+> **v1.4 变更**（相对 v1.3）：**D16 被 D17 补充**——「WorkBuddy 会话内禁止嵌套 `codebuddy -p`」
+> 对**前台**仍成立，但实测 `codebuddy --bg` 托管后台会话 + transcript 回收在沙盒内可用：
+> pipeline.zsh 新增 `wbsmoke / wbdispatch / wbreview / wbcollect / wbstatus` 命令族，
+> **会话内执行是新的默认通道**；外部终端 `batch_*` 链路保留为备选。
+> 跑法真源：`build/orchestrate/RUNBOOK-cli.md`；进度真源：`build/orchestrate/HANDOFF-json.md`。
+>
 > **v1.3 变更**（相对 v1.2）：§6 再次重写——CLI 直连多模型**已验证可用**
 > （`codebuddy -p --model` 真实路由：deepseek-v4.1-flash / glm-5.3 / kimi-k3-2），
 > v1.2「单模型降级」结论只对**子 agent 通道**成立；执行架构改为 **D16**：

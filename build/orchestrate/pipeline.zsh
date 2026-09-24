@@ -1,21 +1,29 @@
 #!/bin/zsh
-# learning-web 知识库流水线总控（必须在 WorkBuddy 之外的终端/tmux 运行，DESIGN.md D16）
+# learning-web 知识库流水线总控
 #
-# 用法：
+# 【WorkBuddy 沙盒内】用 wb* 命令（codebuddy --bg 派发 + transcript 回收，2026-09-24 实测）：
+#   zsh build/orchestrate/pipeline.zsh wbsmoke               # 冒烟：--bg 链路 + 回收验证
+#   zsh build/orchestrate/pipeline.zsh wbdispatch <batch>    # 派发批内缺口单元（至多 MAXPAR 个 --bg 会话）
+#   zsh build/orchestrate/pipeline.zsh wbreview  <batch>     # 批内 gen 全 ok 后派发评审会话（glm-5.3）
+#   zsh build/orchestrate/pipeline.zsh wbcollect  <batch> [--wait]  # 回收已完成会话的输出并落盘
+#   zsh build/orchestrate/pipeline.zsh wbstatus   <batch>    # 查看批内每单元 gen/review 状态
+#
+# 【WorkBuddy 之外的终端/tmux】用以下前台命令（沙盒里嵌套 -p 会假死，勿用）：
 #   zsh build/orchestrate/pipeline.zsh smoke                 # 冒烟：验证 CLI 链路
-#   zsh build/orchestrate/pipeline.zsh batch0                # 批0：A1 四小目生成+评审，然后停下（检查点①）
-#   zsh build/orchestrate/pipeline.zsh batch1 ... batch4     # 后续批次（每批生成+评审后停下）
+#   zsh build/orchestrate/pipeline.zsh batch_hij 等          # 批生成+评审（每批结束停下，检查点）
 #   zsh build/orchestrate/pipeline.zsh status [batchN]       # 查看某批状态
 #   zsh build/orchestrate/pipeline.zsh fix <code> <round>    # 修复：round ∈ 1,2（修复 prompt 需先用 make_fix 生成）
 #   zsh build/orchestrate/pipeline.zsh make_fix <code>       # 组装修复 prompt（prefix+草稿+评审指令）
 #   zsh build/orchestrate/pipeline.zsh arbitrate <code> "升级理由"   # kimi-k3-2 仲裁
 #
-# 约定：批定义在 build/orchestrate/batches/batchN.tsv，每行 "<code> <model>"。
+# 约定：批定义在 build/orchestrate/batches/<batch>.tsv，每行 "<code> <model>"。
 # 幂等：输出已存在且合法 → 跳过。失败 → done 标记写 fail ec=N，不污染 json/。
+# wb* 命令的会话清单在 build/state/bg/<batch>.manifest.tsv（kind/code/name/shortid/派发时间）。
 # 注意：PY 必须经 pyrun 函数调用（zsh 不对 $PY 变量做分词，直接 $PY 会把
 #       "uv run python" 当成一个命令名——2026-09-24 冒烟实测踩过）。
 
 set -u
+setopt TYPESET_SILENT   # 否则 `local x y`（无初值）会向 stdout 打 x='' 噪点
 cd "$(dirname $0)/../.."   # learning-web 根目录
 
 # 生成模型可配（deepseek-v4.1-flash 2026-09-24 被限额，默认换 glm-5.3-flashx；
@@ -32,7 +40,9 @@ ARBIT=build/state/arbitration
 TIMEOUT_SECS=1800
 MAXPAR=${MAXPAR:-3}
 RETRIES=1        # 每单元自动重试次数（首次失败后再试 1 次）
-mkdir -p "$DONE" "$LOGS" "$REVIEWS" "$ARBIT"
+BGSTATE=build/state/bg
+FALLBACK_MODEL="${FALLBACK_MODEL:-}"   # 非空时给 --bg 会话加 --fallback-model（过载自动降级）
+mkdir -p "$DONE" "$LOGS" "$REVIEWS" "$ARBIT" "$BGSTATE"
 
 # ---------- 基础函数 ----------
 
@@ -150,10 +160,191 @@ review_prompt_for() {  # <code>
   echo "$pf"
 }
 
+# ---------- WorkBuddy 沙盒内：--bg 派发 + transcript 回收 ----------
+
+# unit_product_ok <kind> <code> —— 产物已存在且是合法 JSON？
+unit_product_ok() {
+  local kind=$1 code=$2 f
+  if [ "$kind" = gen ]; then f="json/${code%%.*}/$code.json"; else f="$REVIEWS/$code.json"; fi
+  [ -f "$f" ] && pyrun -m json.tool "$f" >/dev/null 2>&1
+}
+
+# unit_done_ok <kind> <code> —— done 标记或产物任一成立即视为完成（幂等安全垫）
+unit_done_ok() {
+  local kind=$1 code=$2
+  if [ -f "$DONE/${kind}_$code.done" ] && [ "$(cat $DONE/${kind}_$code.done)" = "ok" ]; then
+    return 0
+  fi
+  unit_product_ok "$kind" "$code" && { echo ok > "$DONE/${kind}_$code.done"; return 0; }
+  return 1
+}
+
+# bg_launch <kind> <code> <model> <pf> —— 派发一个 --bg 会话，幂等（已 ok/在跑则跳过）
+bg_launch() {
+  local kind=$1 code=$2 model=$3 pf=$4
+  local name="kb-$kind-$code"
+  unit_done_ok "$kind" "$code" && { echo "[skip] $name（已完成）"; return 1; }
+  if pyrun build/orchestrate/collect_bg.py --probe "$name" >/dev/null 2>&1; then
+    echo "[skip] $name（已在跑）"; return 0   # 占用一个并发槽
+  fi
+  codebuddy rm "$name" >/dev/null 2>&1
+  local out sid
+  out=$(codebuddy --bg --name "$name" -p --model "$model" \
+        ${FALLBACK_MODEL:+--fallback-model "$FALLBACK_MODEL"} \
+        --max-turns 1 --tools "" "$(cat "$pf")" 2>&1)
+  sid=$(print -r -- "$out" | awk '/backgrounded/{print $3}')
+  if [ -z "$sid" ]; then
+    echo "[FAIL] $name 派发失败：$out" | head -3; return 1
+  fi
+  echo "$kind	$code	$name	$sid	$(date +%s)" >> "$BGSTATE/manifest.tsv"
+  echo "[dispatched] $name ($sid, $model)"
+  return 0
+}
+
+# bg_collect_one <kind> <code> —— 回收一个会话的输出并落盘；返回 0=已落盘 2=在跑 1=失败
+bg_collect_one() {
+  local kind=$1 code=$2
+  local name="kb-$kind-$code" raw ext out
+  unit_done_ok "$kind" "$code" && return 0
+  if [ "$kind" = gen ]; then
+    raw="$LOGS/gen_$code.raw"; out="json/${code%%.*}/$code.json"
+  else
+    raw="$LOGS/review_$code.raw"; out="$REVIEWS/$code.json"
+  fi
+  pyrun build/orchestrate/collect_bg.py "$name" "$raw" 2>/dev/null
+  local ec=$?
+  [ $ec -ne 0 ] && return $ec
+  # 提取 + 规范化落盘
+  rm -f "${raw%.raw}.extracted"
+  if pyrun -m json.tool "$raw" >/dev/null 2>&1; then
+    :
+  elif [ "$kind" = gen ] && pyrun build/orchestrate/extract_json.py < "$raw" > "${raw%.raw}.extracted" 2>/dev/null; then
+    :
+  elif [ "$kind" = review ] && pyrun build/orchestrate/strip_fence.py < "$raw" | pyrun -m json.tool > /dev/null 2>&1; then
+    pyrun build/orchestrate/strip_fence.py < "$raw" > "${raw%.raw}.extracted"
+  else
+    echo "[FAIL] $name 输出不是合法 JSON（raw: $(wc -c < "$raw") 字节）"
+    echo "fail ec=1" > "$DONE/${kind}_$code.done"; return 1
+  fi
+  settle_raw "$raw" "$out" && { echo ok > "$DONE/${kind}_$code.done"; echo "[collect] $name -> $out"; return 0; }
+  echo "fail ec=1" > "$DONE/${kind}_$code.done"; return 1
+}
+
+# wb_dispatch_cmd <kind> <batch> —— 派发批内缺口，至多 MAXPAR 个在跑
+wb_dispatch_cmd() {
+  local kind=$1 b=$2
+  local tsv="$BATCHES/$b.tsv"
+  [ -f "$tsv" ] || { echo "批次文件不存在: $tsv"; exit 1; }
+  local slots=$MAXPAR code model pf
+  while read -r code model; do
+    [ -z "$code" ] && continue; [[ "$code" == \#* ]] && continue
+    [ $slots -le 0 ] && break
+    if [ "$kind" = review ]; then
+      unit_done_ok gen "$code" || continue        # gen 没完成不评审
+      pf="$(review_prompt_for "$code")"; model=glm-5.3
+    else
+      pf="$(gen_prompt_for "$code")"
+    fi
+    bg_launch "$kind" "$code" "$model" "$pf" && slots=$((slots-1))
+    # 注意：bg_launch 返回 1 = 已完成跳过（不占槽）；返回 0 = 新派发或已在跑（占槽）
+  done < "$tsv"
+}
+
+# wb_collect_cmd <batch> [--wait] —— 回收批内所有会话；--wait 时阻塞到全部终结或超时
+wb_collect_cmd() {
+  local b=$1 waitflag=${2:-}
+  local tsv="$BATCHES/$b.tsv"
+  [ -f "$tsv" ] || { echo "批次文件不存在: $tsv"; exit 1; }
+  local deadline=$(( SECONDS + TIMEOUT_SECS ))
+  while true; do
+    local pend=0 fail=0 ok=0 code model
+    while read -r code model; do
+      [ -z "$code" ] && continue; [[ "$code" == \#* ]] && continue
+      for kind in gen review; do
+        unit_done_ok "$kind" "$code" && continue
+        # 只回收已派发的（会话存在）；未派发的不算 pending
+        pyrun build/orchestrate/collect_bg.py --probe "kb-$kind-$code" >/dev/null 2>&1
+        local pe=$?
+        [ $pe -eq 3 ] && continue
+        bg_collect_one "$kind" "$code"
+        case $? in
+          0) ok=$((ok+1));;
+          2) pend=$((pend+1));;
+          *) fail=$((fail+1));;
+        esac
+      done
+    done < "$tsv"
+    echo "--- wbcollect $b：本轮落盘 $ok，在跑 $pend，失败 $fail ---"
+    [ "$waitflag" != "--wait" ] && break
+    [ $pend -eq 0 ] && break
+    [ $SECONDS -ge $deadline ] && { echo "超时（${TIMEOUT_SECS}s），仍有 $pend 个在跑；稍后重跑 wbcollect $b --wait"; break; }
+    sleep 15
+  done
+  # 汇总
+  local go=0 ro=0 code model
+  while read -r code model; do
+    [ -z "$code" ] && continue; [[ "$code" == \#* ]] && continue
+    unit_done_ok gen "$code" && go=$((go+1))
+    unit_done_ok review "$code" && ro=$((ro+1))
+  done < "$tsv"
+  echo "=== $b 汇总：gen ok=$go review ok=$ro ==="
+}
+
+# wb_status_cmd <batch>
+wb_status_cmd() {
+  local b=$1
+  local tsv="$BATCHES/$b.tsv"
+  [ -f "$tsv" ] || { echo "批次文件不存在: $tsv"; exit 1; }
+  local code model g r live
+  while read -r code model; do
+    [ -z "$code" ] && continue; [[ "$code" == \#* ]] && continue
+    g="-"; r="-"; live=""
+    unit_done_ok gen "$code" && g=ok
+    [ -f "$DONE/gen_$code.done" ] && [ "$g" = "-" ] && g=$(cat "$DONE/gen_$code.done")
+    unit_done_ok review "$code" && r=ok
+    [ -f "$DONE/review_$code.done" ] && [ "$r" = "-" ] && r=$(cat "$DONE/review_$code.done")
+    pyrun build/orchestrate/collect_bg.py --probe "kb-gen-$code" >/dev/null 2>&1 && live="gen在跑"
+    pyrun build/orchestrate/collect_bg.py --probe "kb-review-$code" >/dev/null 2>&1 && live="$live review在跑"
+    echo "$code: gen=$g review=$r $live"
+  done < "$tsv"
+}
+
 # ---------- 命令分发 ----------
 
 cmd=${1:-help}; shift || true
 case "$cmd" in
+  wbsmoke)
+    mkdir -p /tmp/kb_smoke
+    printf '输出一个 JSON：{"ping":"pong"}。不要任何其他文字，不要调用任何工具。\n' > /tmp/kb_smoke/p.md
+    rm -f build/state/smoke.json "$LOGS/gen_smoke.raw"
+    codebuddy rm kb-gen-smoke >/dev/null 2>&1
+    out=$(codebuddy --bg --name kb-gen-smoke -p --model "$GEN_MODEL" --max-turns 1 --tools "" "$(cat /tmp/kb_smoke/p.md)" 2>&1)
+    print -r -- "$out" | grep backgrounded || { echo "派发失败：$out"; exit 1; }
+    SECONDS=0; ec=2
+    while [ $SECONDS -lt 300 ]; do
+      pyrun build/orchestrate/collect_bg.py kb-gen-smoke "$LOGS/gen_smoke.raw" 2>/dev/null; ec=$?
+      [ $ec -ne 2 ] && break
+      sleep 10
+    done
+    if [ $ec -eq 0 ] && pyrun -m json.tool "$LOGS/gen_smoke.raw" > build/state/smoke.json 2>/dev/null; then
+      echo "wbsmoke 通过："; cat build/state/smoke.json
+    else
+      echo "冒烟失败（ec=$ec）：看 $LOGS/gen_smoke.raw 与 collect_bg.py 输出"; exit 1
+    fi
+    ;;
+  wbdispatch)
+    wb_dispatch_cmd gen "${1:?用法: wbdispatch <batch>}"
+    echo "提示：用 wbcollect ${1} --wait 阻塞等回收；或稍后手动 wbcollect ${1}"
+    ;;
+  wbreview)
+    wb_dispatch_cmd review "${1:?用法: wbreview <batch>}"
+    ;;
+  wbcollect)
+    wb_collect_cmd "${1:?用法: wbcollect <batch> [--wait]}" "${2:-}"
+    ;;
+  wbstatus)
+    wb_status_cmd "${1:?用法: wbstatus <batch>}"
+    ;;
   smoke)
     mkdir -p /tmp/kb_smoke
     printf '输出一个 JSON：{"ping":"pong"}。不要任何其他文字，不要调用任何工具。\n' > /tmp/kb_smoke/p.md
