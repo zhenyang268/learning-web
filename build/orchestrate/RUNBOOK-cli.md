@@ -49,6 +49,10 @@ cd ~/develop/learning/learning-web
 # 0) 冒烟（约 30 秒，验证 --bg 派发 + transcript 回收全链路）：
 zsh build/orchestrate/pipeline.zsh wbsmoke        # 看到 {"ping":"pong"} 即通
 
+# 0.5) 带工具权限的任务会话（前端开发等，产物=文件改动，2026-09-24 冒烟验证）：
+zsh build/orchestrate/pipeline.zsh wbtask <任务名> glm-5.3-flashx build/prompts/fe_<任务名>.md 25
+#   prompt 模板：build/prompts/frontend_task.md；总编排用 MASTER_PROMPT.md
+
 # 1) 逐批循环（以 batch_hij 为例，每轮 3 步）：
 MAXPAR=3 zsh build/orchestrate/pipeline.zsh wbdispatch batch_hij   # 派发缺口单元（至多 MAXPAR 个）
 zsh build/orchestrate/pipeline.zsh wbcollect batch_hij --wait      # 阻塞等回收（落盘 json/）

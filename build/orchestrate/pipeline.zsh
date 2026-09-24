@@ -7,6 +7,8 @@
 #   zsh build/orchestrate/pipeline.zsh wbreview  <batch>     # 批内 gen 全 ok 后派发评审会话（glm-5.3）
 #   zsh build/orchestrate/pipeline.zsh wbcollect  <batch> [--wait]  # 回收已完成会话的输出并落盘
 #   zsh build/orchestrate/pipeline.zsh wbstatus   <batch>    # 查看批内每单元 gen/review 状态
+#   zsh build/orchestrate/pipeline.zsh wbtask <name> <model> <prompt_file> [max_turns]
+#                                                          # 带工具权限的 --bg 任务会话（前端开发等，产物=文件改动）
 #
 # 【WorkBuddy 之外的终端/tmux】用以下前台命令（沙盒里嵌套 -p 会假死，勿用）：
 #   zsh build/orchestrate/pipeline.zsh smoke                 # 冒烟：验证 CLI 链路
@@ -344,6 +346,26 @@ case "$cmd" in
     ;;
   wbstatus)
     wb_status_cmd "${1:?用法: wbstatus <batch>}"
+    ;;
+  wbtask)
+    # 带工具权限的 --bg 任务会话：给「需要读写文件」的任务（如前端开发）用。
+    # 与 wbdispatch 的区别：不禁工具（无 --tools ""），加 -y 跳过权限弹窗（headless 必需），
+    # --max-turns 默认 25。产物是文件改动，不由 wbcollect 落盘——主控用 git status/tsc 验收；
+    # 会话的总结文本用 collect_bg.py 手动回收（命令见派发输出）。
+    name="${1:?用法: wbtask <name> <model> <prompt_file> [max_turns]}"
+    model="${2:?缺 model（如 glm-5.3-flashx / deepseek-v4.1-flash）}"
+    pf="${3:?缺 prompt 文件路径}"
+    mt="${4:-25}"
+    [ -f "$pf" ] || { echo "prompt 文件不存在: $pf"; exit 1; }
+    tname="kb-task-$name"
+    codebuddy rm "$tname" >/dev/null 2>&1
+    out=$(codebuddy --bg --name "$tname" -p --model "$model" -y --max-turns "$mt" "$(cat "$pf")" 2>&1)
+    sid=$(print -r -- "$out" | awk '/backgrounded/{print $3}')
+    [ -z "$sid" ] && { echo "[FAIL] $tname 派发失败：$out" | head -3; exit 1; }
+    echo "task	$name	$tname	$sid	$(date +%s)" >> "$BGSTATE/manifest.tsv"
+    echo "[dispatched] $tname ($sid, $model, max_turns=$mt)"
+    echo "回收总结：uv run python build/orchestrate/collect_bg.py $tname build/logs/task_$name.raw"
+    echo "判活：uv run python build/orchestrate/collect_bg.py --probe $tname（退出码 0=在跑 1=已终结 3=不存在）"
     ;;
   smoke)
     mkdir -p /tmp/kb_smoke

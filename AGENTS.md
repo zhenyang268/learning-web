@@ -22,6 +22,8 @@
 | `build/orchestrate/HANDOFF-json.md` | 知识库生成线**进度真源**（当前 85/318）+ 已知坑清单 | 接手 JSON 生成线时先读 |
 | `build/orchestrate/RUNBOOK-cli.md` | 生成线**执行手册**：会话内 `wb*` 命令（--bg 派发，D17）/ 外部终端 `batch_*`（D16） | 要跑生成/评审/修复时 |
 | `build/orchestrate/HANDOFF-frontend.md` | 前端线接力任务书 | 接手前端时 |
+| `build/orchestrate/MASTER_PROMPT.md` | **主控 prompt**（主 agent=glm-5.3 规划，flash 级模型经 `--bg` 执行 JSON/前端任务） | 开总编排会话时整篇贴入 |
+| `build/prompts/frontend_task.md` | 前端子任务 prompt 模板（配 `wbtask` 用） | 派前端开发任务时 |
 | `../AGENTS.md`（父仓） | 代号体系、符号规范、环境坑、红线 | 任何时候都要遵守 |
 | `../dev-progress.md` | 进度唯一真源 | 判断某个模块是否已解锁 |
 | `../learning-todo/ns-progress.md` | 数学线关卡与掌握度真源 | 读掌握度状态时 |
