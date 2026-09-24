@@ -1,0 +1,461 @@
+{
+  "schema": "entry-card/v2",
+  "code": "H5",
+  "chapter": "H5",
+  "title": "球谐函数在 CG 中的应用",
+  "src": {
+    "file": "H_cg.tex",
+    "line_start": 85,
+    "line_end": 91,
+    "anchor": "H_cg.tex:85"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "H5:sh-conv.quantifiers",
+      "type": "comparison",
+      "subject": "sh-conv",
+      "title": "卷积定理适用条件逐条拆解（去掉/放宽每一条会怎样）",
+      "keywords": [
+        "①核 zonal（旋转不变，只依赖夹角）：去掉后运算本身无定义",
+        "②函数定义在全域 S²：半球/有遮挡域没有群结构",
+        "③带限截断 l≤L 是近似：尖锐核截断出负光照",
+        "④系统对光照线性：非线性算子不能进 SH 域",
+        "⑤归一化约定统一：错一处全错",
+        "⑥低频假设：能量集中在低 l"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 87,
+        "line_end": 89
+      },
+      "fill_hint": "四列表与 sh-conv.ringing / sh-conv.non-zonal 的数值严格对齐（同源数字不许出现两套）；第④行「线性」的例子偏工程口径，人工复核是否替换为更物理的反例",
+      "content": "一句总起：「球面卷积在球谐域变成逐元素乘法」这句话能成立，靠的是六个隐含前提；下表把每个前提拿掉后会发生什么具体化——每行都给真实函数或真实数值，不许「存在反例」式空话。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n| --- | --- | --- | --- |\n| ① 核 zonal（旋转不变，只依赖夹角 $\\omega\\cdot\\mathbf{n}$） | 取核 $g(\\mathbf{n})=n_x$（完全合法的球面函数，但不旋转不变） | 卷积定义 $h(\\mathbf{n})=\\int_{S^2}f(\\omega)\\,g(\\omega^{-1}\\mathbf{n})\\,d\\omega$ 里的 $\\omega^{-1}\\mathbf{n}$ 不再只通过夹角进入：同一对方向 $(\\omega,\\mathbf{n})$ 对应无穷多个旋转路径，$g$ 沿不同路径取不同值，积分不唯一——**运算本身失去定义**，「逐元素乘法」连陈述都写不出（完整分析见 sh-conv.non-zonal） | 不能放宽；一般核只能升级为 $SO(3)$ 群卷积（m（方位指标）通道按 Clebsch–Gordan 耦合），或把核分解成 zonal 核的线性组合逐个处理 |\n| ② 函数定义在整个球面 $S^2$ | 半球环境光：地面遮挡使入射 radiance 在下半球恒为 0，函数在赤道上不连续 | 推导依赖 $SO(3)$ 的群结构，半球没有群结构；硬用全域 SH 展开，不连续处出现 Gibbs 振荡（吉布斯现象），机制与 sh-conv.ringing 完全同构 | 换半球基；或接受「把遮挡低频化」的工程近似，但要明确代价 |\n| ③ 截断到 $l\\le L$ 是安全近似 | 镜面高光 = delta 核 $\\delta^2(\\mathbf{n}-\\hat{z})$（能量集中在一点） | $L=2$ 的截断核在赤道取值 $-3/(8\\pi)\\approx-0.1194$【待核验:-3/(8*math.pi)】：光照算出负数，物理上不可能（完整计算见 sh-conv.ringing） | 加窗（windowed SH，加窗球谐）抑制负值；尖锐核整体换 spherical Gaussians（球面高斯） |\n| ④ 系统对光照线性 | 想先在 SH 域做 tone mapping / clamp，再重建像素 | 非线性算子作用于系数 ≠ 作用于重建信号：对 ③ 里的 $g_2$，逐系数 clamp 与逐像素 clamp 得到不同图像，能量守恒也被破坏 | 线性段内随便用；一切非线性步骤必须在像素域完成 |\n| ⑤ 全程同一套正交归一约定 | 代码库 A 用正交归一实 SH（$Y_1^0=\\sqrt{3/(4\\pi)}\\,z$），代码库 B 用未归一化基（$Y_1^0=z$） | 系数跨库拷贝时 l=1 带增益错 $\\sqrt{3/(4\\pi)}\\approx0.4886$【待核验:math.sqrt(3/(4*math.pi))】 倍，画面亮度整体偏暗近半 | 无法放宽，只能统一约定或在接口显式换算 |\n| ⑥ 低频假设（能量集中在低 l） | 窗外太阳：环境贴图能量集中在很小的立体角内 | 9 系数丢掉大部分能量：重建只剩软底光，高光彻底消失（极点与赤道的数值对比见 sh-conv.ringing） | 提阶到 $L=4$（每通道 $25$ 个系数【已核验:25|(4+1)**2】）；或换高频基 |\n\n总结一句：①②是「定理是否还成立」的边界（违反则连陈述都没有），③④⑤是「工程是否正确」的边界（违反则算出错数），⑥是「表示是否够用」的边界（违反则丢信息）——判断能不能用，从最底层查起。",
+      "links": [
+        "H2",
+        "A2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.ringing",
+      "type": "counterexample",
+      "subject": "sh-conv",
+      "title": "反例：把尖锐核截断到 9 系数——光照算出负数",
+      "keywords": [
+        "delta 核的 l 阶系数 √((2l+1)/(4π)) 永不为零——尖锐核需要全部频带",
+        "截断核闭式 g_L(θ)=∑(2l+1)/(4π)·P_l(cosθ)",
+        "L=2 时赤道处 g₂=−3/(8π)≈−0.119：光照为负，物理不可能",
+        "极点处 g₂(0)=35/(4π)≈2.785：能量溢出成环（Gibbs 振荡）",
+        "总质量守恒 ∫g₂ dω=1，但分布错了——能量对、形状错",
+        "修补：windowed SH 或换 spherical Gaussians"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 87,
+        "line_end": 89
+      },
+      "fill_hint": "全部数值由加法定理闭式算出并已挂待核验标记；与切片 bullet1（l≤2 九系数）和 bullet3（卷积）共同相关，tex_ref 取 87–89",
+      "content": "一句总起：卷积定理是无限频带下的恒等式；把尖锐核截断到 9 个系数去用，重建出的「光照」会出现负数——这是 SH 低通性质最直观的失效展示。\n\n**构造**。模拟点光源/镜面波瓣：取 delta 核 $g(\\mathbf{n})=\\delta^2(\\mathbf{n}-\\hat{z})$，定义为 $\\int_{S^2}g\\,d\\omega=1$、在 $\\hat{z}$（北极）以外处处为零。它的 SH 系数直接算出：$\\hat{g}_l^m=\\overline{Y_l^m(\\hat{z})}$，当 $m\\neq0$ 时为零，而 $|\\hat{g}_l^0|=\\sqrt{(2l+1)/(4\\pi)}$——每个频带都有不可忽略的能量。这就是「尖锐 = 全频带」的定量含义：没有任何截断能保住它。\n\n**截断重建的闭式**。用加法定理 $\\sum_m \\overline{Y_l^m(\\hat z)}Y_l^m(\\mathbf n)=\\frac{2l+1}{4\\pi}P_l(\\cos\\theta)$（θ（theta）为与北极的夹角，$P_l$ 为 Legendre 多项式），截断到 $l\\le L$ 的重建是\n$$g_L(\\theta)=\\sum_{l=0}^{L}\\frac{2l+1}{4\\pi}P_l(\\cos\\theta).$$\n\n**逐项算 $L=2$**。代入 $P_0=1$、$P_1=\\cos\\theta$、$P_2=(3\\cos^2\\theta-1)/2$：\n$$g_2(\\theta)=\\frac{1}{4\\pi}\\Big[1+3\\cos\\theta+\\tfrac{5}{2}(3\\cos^2\\theta-1)\\Big].$$\n\n**失效数值**。赤道方向 $\\theta=\\pi/2$（$\\cos\\theta=0$）：$g_2=\\frac{1-5/2}{4\\pi}=-\\frac{3}{8\\pi}\\approx-0.1194$【待核验:-3/(8*math.pi)】。辐亮度为负是物理不可能的——9 系数表示在这个方向「欠了光」。北极 $\\theta=0$：$g_2=\\frac{1+9+25}{4\\pi}=\\frac{35}{4\\pi}\\approx2.7852$【待核验:35/(4*math.pi)】；真 delta 的峰是无穷高，有限的 2.78 说明能量被挤成了有限高度的环——Gibbs 现象（吉布斯现象）的球面版，与傅里叶方波重构同构（见 A2.3）。\n\n**质量核对（失败在哪）**。由正交性 $\\int_{S^2}P_l\\,d\\omega=0\\ (l\\ge1)$ 得 $\\int_{S^2}g_2\\,d\\omega=1$：总能量一分未丢，丢的是形状。「能量对、分布错」正是 ringing（振铃）的定义。\n\n**修补条件**。①加窗：windowed SH 给系数乘一个随 l 衰减的窗函数，压制肩部振荡，代价是核变糊；②换基：尖锐核改用 spherical Gaussians（球面高斯，指数型紧致）；③认清边界：$l\\le2$ 表示只服务低频漫反射，镜面/高光必须另走一路。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "截断核曲线需要 Legendre 多项式数值递推，且「截断 vs 精确 delta」必须对拍验证负值与质量守恒；现有前端模块无球面极坐标契约",
+        "params_hint": {
+          "L_min": 0,
+          "L_max": 12,
+          "show_negative_region": true
+        }
+      },
+      "links": [
+        "H2",
+        "A2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.non-zonal",
+      "type": "counterexample",
+      "subject": "sh-conv",
+      "title": "反例：核不旋转不变时，逐元素乘法连陈述都写不出",
+      "keywords": [
+        "球面卷积 (f*g)(n)=∫f(ω)g(ω⁻¹n)dω 借 SO(3) 群作用才有定义",
+        "zonal 核 = 只依赖夹角 ⇒ 运算塌缩成一维夹角积分",
+        "非 zonal 反例 g(n)=nₓ：被积值依赖完整旋转路径，积分不唯一",
+        "群卷积下系数按 Clebsch–Gordan 耦合，m 通道混合",
+        "最小演示：f=z 的 l=1 系数 (0,√(4π/3),0) 绕 y 轴转 90° 变 (0,0,√(4π/3))，逐系数标量乘法搬不动质量"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 89,
+        "line_end": 89
+      },
+      "fill_hint": "「卷积定义依赖 SO(3) 群作用」的论述超出切片字面，属对 bullet3 的必要精确化；√(4π/3) 的数值已挂待核验；表示论细节以 lie3.17 为准",
+      "content": "一句总起：「逐元素乘法」对 zonal 核（带状核，旋转不变核）以外的核不是「算不准」，而是**根本没有定义**——这一条是整个卷积定理最硬的边界。\n\n**定义层面怎么崩**。球面上两点没有乘法（$S^2$ 不是群），卷积定义 $(f*g)(\\mathbf{n})=\\int_{S^2}f(\\omega)\\,g(\\omega^{-1}\\mathbf{n})\\,d\\omega$ 里的 $\\omega^{-1}\\mathbf{n}$ 要借旋转群 $SO(3)$ 的作用来理解。核 zonal（$g(\\mathbf n)=\\tilde g(\\mathbf a\\cdot\\mathbf n)$，只依赖与轴 $\\mathbf a$ 的夹角）时，$g(\\omega^{-1}\\mathbf{n})=\\tilde g((\\omega\\mathbf a)\\cdot\\mathbf{n})$ 只通过旋转后的轴进入，积分良好定义。换非 zonal 的核 $g(\\mathbf{n})=n_x$：$g(\\omega^{-1}\\mathbf{n})$ 依赖「从 $\\omega$ 转到 $\\mathbf{n}$ 的那个具体旋转」的多余自由度——绕 $\\mathbf{n}$ 把旋转转一圈，$\\omega^{-1}\\mathbf{n}$ 不变而 $g$ 的取值在变，被积函数不唯一，积分无定义。\n\n**退一步也救不回「逐元素」**。升级成 $SO(3)$ 群卷积（对旋转群积分）总有定义，但系数域里发生的是 $\\hat{h}^l_{mn}=\\sum_{l_1,l_2}\\hat{f}^{l_1}\\hat{g}^{l_2}\\cdot C$（$C$ 为 Clebsch–Gordan 耦合系数）：m（方位指标）通道互相耦合，「乘法」变「矩阵乘法」，计算量与存储同时暴涨。\n\n**最小演示：连旋转都做不到逐元素**。取正交归一实 SH，$f(\\mathbf{n})=z$ 的 l=1 系数为 $(\\hat{f}_1^{-1},\\hat{f}_1^{0},\\hat{f}_1^{1})=(0,\\sqrt{4\\pi/3},0)$，数值 $\\sqrt{4\\pi/3}\\approx2.0467$【待核验:math.sqrt(4*math.pi/3)】。把环境光绕 y 轴转 90°，$z\\mapsto x$，系数变成 $(0,0,\\sqrt{4\\pi/3})$：质量从 m=0 通道整体搬进 m=1 通道。任何「逐系数乘标量」的映射只能把 $(0,c,0)$ 变成 $(0,\\lambda c,0)$——零的位置永远不动，搬不动质量。所以球面上正确的代数哪怕对「旋转」这种卷积特例，也必须是**带内 m 混合**（Wigner D 矩阵，带间块对角，见 lie3.17），而不是逐元素。\n\n**修补**。要用逐元素乘法就把核做成 zonal（余弦波瓣是天然的 zonal 核）；一般核则老实走群卷积，或把核展开成 zonal 基的线性组合、每个 zonal 分量各自乘完再相加。",
+      "links": [
+        "lie3.17",
+        "A2.3",
+        "B2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.statement",
+      "type": "statement",
+      "subject": "sh-conv",
+      "title": "球面卷积定理：SH 域逐元素相乘",
+      "keywords": [
+        "环境光 f 与 zonal 核 g（如余弦波瓣）的球面卷积",
+        "系数级结论 ĥ_l^m = √(4π/(2l+1))·f̂_l^m·ĝ_l^0，增益只依赖 l",
+        "条件：核 zonal、全域 S²、L² 可积、同一归一化约定",
+        "无限频带下是恒等式；截断 l≤2 是工程近似",
+        "球面版的平面卷积定理，9 系数环境光照的理论根据"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 89,
+        "line_end": 89
+      },
+      "fill_hint": "√(4π/(2l+1)) 因子与 A_l 数值均按 L²(S²) 正交归一 / Ramamoorthi–Hanrahan 约定写出，已挂待核验，人工复核与项目代码约定的一致性",
+      "content": "一句总起：切片第三条 bullet 的精确化——球面上的卷积（convolution，滑动加权平均）这个看似昂贵的积分运算，在球谐系数域只是每个系数乘一个只依赖频带 l 的增益。\n\n**设定**。$f:S^2\\to\\mathbb{R}$ 是环境光/入射 radiance；$g:S^2\\to\\mathbb{R}$ 是 zonal 核（带状核）：$g(\\mathbf n)=\\tilde g(\\mathbf a\\cdot\\mathbf n)$，只依赖与固定轴 $\\mathbf a$ 的夹角——漫反射最重要的例子是 clamp 余弦波瓣 $g=\\max(0,\\mathbf n_l\\cdot\\mathbf n)$。卷积定义为\n$$h(\\mathbf{n})=\\int_{S^2}f(\\omega)\\,g(\\omega^{-1}\\mathbf{n})\\,d\\omega.$$\n\n**结论**（$L^2(S^2)$ 正交归一复 SH 约定）。\n$$\\hat{h}_l^m=\\sqrt{\\frac{4\\pi}{2l+1}}\\;\\hat{f}_l^m\\,\\hat{g}_l^0.$$\n逐符号拆解：$\\hat{f}_l^m=\\int \\overline{Y_l^m}\\,f\\,d\\omega$ 是环境光在第 $(l,m)$ 个球面模式上的振幅；$\\hat{g}_l^0$ 是核的第 l 带增益（zonal 保证核只有 m=0 模式）；$\\sqrt{4\\pi/(2l+1)}$ 是归一化配平因子。「逐元素」的含义：指标 $(l,m)$ 各自独立相乘，且核只贡献一个**与 m 无关**的数。\n\n**成立条件**。①核 zonal（否则运算无定义，见 sh-conv.non-zonal）；②$f,g\\in L^2(S^2)$，保证系数与 Parseval 等式存在；③全程同一套归一化约定；④无限频带下是恒等式——工程上截断到 $l\\le L$ 后只是近似，近似质量取决于核的光滑度（尖锐核会翻车，见 sh-conv.ringing）。\n\n**漫反射落点（切片第一条的根据）**。漫反射辐照度 $E(\\mathbf n)=\\int_{H^2}L_{\\mathrm{env}}(\\omega)\\max(0,\\mathbf n\\cdot\\omega)\\,d\\omega$ 恰是「环境光 ⊛ clamp 余弦核」的球面卷积。该核的带增益（Ramamoorthi–Hanrahan 2001）为 $A_0=\\pi$【待核验:math.pi】、$A_1=\\tfrac{2\\pi}{3}$【待核验:2*math.pi/3】、$A_2=\\tfrac{\\pi}{4}$【待核验:math.pi/4】，且奇数 $l\\ge3$ 的增益严格为零（$A_3=0$【待核验:2*math.pi*(5/10-3/6)】）、$l\\ge3$ 整体贡献极小——所以 9 个系数（$l\\le2$）就足以重建漫反射光照。",
+      "links": [
+        "A2.3",
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.intuition",
+      "type": "intuition",
+      "subject": "sh-conv",
+      "title": "直觉：卷积定理 = 球面上的「低通滤波器增益表」",
+      "keywords": [
+        "假设侧：SH 是球面的频率基，l 是频带、m 是朝向简并",
+        "假设侧：zonal = 核没有方向偏好（旋转不变）",
+        "结论侧：对方向失明的滤波器只能按频率调增益，不能区别对待同频不同向",
+        "低通：余弦核增益 l=2 后几乎归零 → 9 系数够漫反射",
+        "与平面傅里叶卷积定理同构，SO(3) 扮演平移群"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 89,
+        "line_end": 89
+      },
+      "fill_hint": "假设与结论分段写（规格要求）；「l 是频率」的说法以 Laplace 特征值 −l(l+1) 为锚，无需额外核验",
+      "content": "一句总起：卷积定理不是计算技巧，而是对称性的必然——「对方向失明的滤波器只能按频率调增益」。\n\n**假设给了什么**。①球谐函数是球面 Laplace 算子的特征函数，特征值 $-l(l+1)$：l（band，频带）就是球面上的「频率」，m（方位指标）是同一频率下的朝向简并——SH 把环境光分解成不同空间频率的球面波（这套分解的出身是球坐标分离变量，见 de3.12）。②核 zonal = 旋转不变 = 核没有「方向偏好」：把环境光和核一起转，卷积结果跟着转，别无其他变化。\n\n**结论为什么因此成立**。卷积就是「用核在球面上滑动加权平均」。一个对方向失明的核，平均时**原理上无法区分**同一频带内不同 m 的模式——它们只是彼此旋转出来的版本（同一不可约表示，见 lie3.17）。于是它对每个模式唯一能做的事就是「按频带调一个增益」，增益与 m 无关：这正是 $\\hat{h}_l^m=(\\text{只依赖 }l\\text{ 的数})\\times\\hat{f}_l^m$。与平面情形完全同构：一维傅里叶卷积定理里 $e^{ikx}$ 是平移算子的特征函数，卷积在频域逐点相乘（A2.3）；球面上 $SO(3)$ 扮演平移群的角色，SH 张成它的不可约表示，zonal 核在每个表示内是标量。\n\n**物理图像**。把 clamp 余弦核想成一盏「很糊的探照灯」扫过环境图：它天然是低通滤波器，增益表 $A_l$ 在 $l=2$ 之后几乎归零（数值见 sh-conv.statement），所以漫反射光照天然是「9 个数的信号」——这就是切片第一条「通常 $l\\le2$、9 个系数」背后的全部物理。",
+      "links": [
+        "A2.3",
+        "lie3.17",
+        "de3.12"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.proof",
+      "type": "proof",
+      "subject": "sh-conv",
+      "title": "证明骨架：加法定理 + Funk–Hecke",
+      "keywords": [
+        "第1步 加法定理：∑ₘ Ȳ_l^m(ω)Y_l^m(n) = (2l+1)/(4π)·P_l(ω·n)",
+        "第2步 Funk–Hecke：zonal 核积分算子在每频带内是标量 λ_l",
+        "第2步的理由：Schur 引理——与一切旋转交换 ⇒ 表示内标量",
+        "第3步 合并：展开、交换积分求和、逐项用 Funk–Hecke",
+        "依赖链：SH 正交性 ⇒ 加法定理 ⇒ Funk–Hecke ⇒ 卷积定理",
+        "易错点：归一化约定、逐元素是按 (l,m) 而非按 l、截断顺序"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 89,
+        "line_end": 89
+      },
+      "fill_hint": "λ_l 的 2π 因子按球面测度约定写出（约定敏感，复核点）；加法定理与 Funk–Hecke 超出切片字面，是 bullet3 陈述的证明骨架，引用 P5.3 与 lie3.17",
+      "content": "一句总起：证明只需两块砖——加法定理（addition theorem）把 zonal 核压进单频带，Funk–Hecke 定理（芬克–赫克定理）说明 zonal 核的积分算子在每频带内是标量；两块拼起来就是卷积定理。\n\n**第 1 步：加法定理**。$\\sum_{m=-l}^{l}\\overline{Y_l^m(\\omega)}\\,Y_l^m(\\mathbf{n})=\\frac{2l+1}{4\\pi}P_l(\\omega\\cdot\\mathbf{n})$。理由：左边作为 $\\mathbf n$ 的函数绕轴 $\\omega$ 旋转不变（zonal），且每一项都落在第 l 频带；而第 l 频带内唯一的 zonal 方向就是 $P_l(\\omega\\cdot\\mathbf n)$，系数由代入 $\\mathbf n=\\omega$、用 $P_l(1)=1$ 定出。\n\n**第 2 步：Funk–Hecke 定理**。对 zonal 核 $g$，$\\int_{S^2}\\tilde g(\\omega\\cdot\\mathbf{n})\\,Y_l^m(\\mathbf{n})\\,d\\omega(\\mathbf{n})=\\lambda_l\\,Y_l^m(\\omega)$，其中 $\\lambda_l=2\\pi\\int_{-1}^{1}\\tilde g(t)P_l(t)\\,dt$（约定敏感，见 fill_hint）。理由：积分算子 $T_g:f\\mapsto g*f$ 与一切旋转交换（核 zonal），由 Schur 引理它在每个不可约表示（第 l 频带）内是标量；标量的值只需对 m=0 模式算一次。\n\n**第 3 步：合并**。把 $f$ 展开成 SH、代入卷积定义、交换积分与求和的次序（$L^2$ 收敛保证合法）、对每项用第 2 步：\n$$\\hat{h}_l^m=\\sqrt{\\frac{4\\pi}{2l+1}}\\;\\hat{f}_l^m\\,\\hat{g}_l^0.$$\n\n**依赖链**：SH 正交性（P5.3 三角正交性的球面版）⇒ 加法定理 ⇒ Funk–Hecke（表示论根源：Schur 引理，见 lie3.17）⇒ 卷积定理 ⇒ 9 系数环境光照与 PRT（本单元 application 词条）。\n\n**易错点**。①归一化约定：实/复 SH、是否带 $\\sqrt{4\\pi}$ 因子，$\\sqrt{4\\pi/(2l+1)}$ 的位置随之移动——跨代码库对接第一件事是对约定（对应 quantifiers 表第⑤行）；②「逐元素」是按 $(l,m)$ 逐元素，每对指标一个乘法，不是「每频带一个数」；③截断顺序：先卷积后截断 ≠ 先截断后卷积，两者差的是 $l>L$ 的尾部能量。",
+      "links": [
+        "P5.3",
+        "lie3.17",
+        "A2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.extension",
+      "type": "extension",
+      "subject": "sh-conv",
+      "title": "拓展：能放宽到哪、为什么不能加强",
+      "keywords": [
+        "放宽1：提高阶数 L=4 → 每通道 25 系数，核越平滑截断越无害",
+        "放宽2：windowed SH 消负值，代价是模糊（方差换偏差）",
+        "放宽3：非 zonal 核 → SO(3) 群卷积，或分解为 zonal 基线性组合",
+        "为什么不能加强：非 zonal 时运算无定义，是 SO(3) 对称性的内禀限制",
+        "为什么不用 SH 做镜面：尖锐信号需全频带 + ringing → 换 SG",
+        "真优势：旋转等变——转光源 = 带内 Wigner D 混合系数"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 89,
+        "line_end": 89
+      },
+      "fill_hint": "全部为切片外围的相邻主题，title 带「拓展：」前缀；A_3=0 等数值已挂待核验；windowed SH 与 SG 只点到为止，不展开成教程",
+      "content": "一句总起：卷积定理的边界两头都能挪——阶数往上提、窗函数往里加、非 zonal 核绕道处理；但「任意核逐元素相乘」这个方向永远堵死，堵死它的是对称性而非技术。\n\n**放宽 1：提高阶数**。$L=4$ 时每通道 $25$ 个系数【已核验:25|(4+1)**2】，对中频核（较宽的高光）通常够用；收敛速度由核的光滑度决定——核越平滑，高阶系数衰减越快，截断越无害。\n\n**放宽 2：加窗（windowed SH）**。给系数乘一个随 l 衰减的窗（Sloan 等 2008），可消去截断核的负值（对照 sh-conv.ringing 的 $-3/(8\\pi)$），代价是引入偏差（模糊）——方差换偏差的经典交易。\n\n**放宽 3：非 zonal 核**。两条路：升级为 $SO(3)$ 群卷积（系数按 Clebsch–Gordan 耦合）；或把核写成 zonal 核的线性组合（旋转遍历一切方向，$L^2$ 核都能这样展开），每个分量各自走逐元素乘法再求和。\n\n**为什么不能加强成「任意核都逐元素」**。见 sh-conv.non-zonal：非 zonal 时卷积运算本身无定义，群卷积下 m 通道必然耦合——这是 $SO(3)$ 对称性的内禀性质（表示论语言：只有表示内标量才能「逐元素」，见 lie3.17），不是等更好的算法。\n\n**为什么不用 SH 做镜面/高频**。尖锐信号需要全频带而系数个数按 $(L+1)^2$ 增长，且截断必出 ringing——经济性崩溃。业界替代：spherical Gaussians（球面高斯，指数型紧致，乘法结构也好）、球面小波。SH 的保留项目是低频 + 旋转等变场景（转光源 = 转系数，带内 Wigner D 混合），这正是 PRT 架构的根。\n\n**跨章对照**：「正交基带限截断 + Gibbs 失效」与切比雪夫逼近（G4.2）、傅里叶级数（A2.3）是同一家族的三兄弟，失效模式可以互相迁移记忆。",
+      "links": [
+        "lie3.17",
+        "A2.3",
+        "G4.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.probe1",
+      "type": "probe",
+      "subject": "sh-conv",
+      "title": "检验：数一遍 9 个系数并算出 RGB 总浮点数",
+      "keywords": [
+        "从 quantifiers 第⑥行改写",
+        "数基函数：1+3+5=9",
+        "RGB 三通道存储量"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 87,
+        "line_end": 87
+      },
+      "fill_hint": "从 quantifiers 表第⑥行改写；答案数值已挂待核验供前端折叠",
+      "content": "取正交归一实 SH，把 $l\\le2$ 的全部基函数逐个写出并数一遍：l=0 共 1 个（常数模式）；l=1 共 3 个（$x,y,z$ 的线性倍数）；l=2 共 5 个（$xy,yz,zx,x^2-y^2,3z^2-1$ 的线性倍数）。①验证每通道系数个数 $1+3+5=9$；②算出环境贴图按 RGB 三通道存储时需要的浮点数总数。\n\n（答案：每通道 9【已核验:9|1+3+5】个；RGB 三通道共 27【已核验:27|3*(2+1)**2】个浮点数）",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:sh-conv.probe2",
+      "type": "probe",
+      "subject": "sh-conv",
+      "title": "检验：算出截断核的负值与极点溢出",
+      "keywords": [
+        "从 quantifiers 第③行改写",
+        "g₂(π/2)=−3/(8π) 为负——违反光照非负",
+        "g₂(0)=35/(4π) 有限——能量被挤成环",
+        "与 sh-conv.ringing 同源同值"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 89,
+        "line_end": 89
+      },
+      "fill_hint": "两处数值与 sh-conv.ringing 同源同值，不许出现第二套",
+      "content": "取 $L=2$ 的截断 delta 核 $g_2(\\theta)=\\frac{1}{4\\pi}\\big[1+3\\cos\\theta+5P_2(\\cos\\theta)\\big]$（$P_2(t)=\\frac{3t^2-1}{2}$）。①算赤道方向 $\\theta=\\pi/2$ 处的值（提示：$P_2(0)=-1/2$），判断它是否违反「光照非负」；②算极点 $\\theta=0$ 处的值（提示：$P_2(1)=1$），与真 delta 核「峰高无穷」对照，说明能量去了哪。\n\n（答案：赤道 $-\\tfrac{3}{8\\pi}\\approx-0.1194$【待核验:-3/(8*math.pi)】，为负值，违反物理；极点 $\\tfrac{35}{4\\pi}\\approx2.7852$【待核验:35/(4*math.pi)】，有限高度说明能量被挤成环——Gibbs 振铃）",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:envlight.application",
+      "type": "application",
+      "subject": "envlight",
+      "title": "应用：环境光照的 9 系数表示",
+      "keywords": [
+        "用途：实时渲染的漫反射环境光项",
+        "代表什么：环境贴图的 l≤2 带限编码，每通道 9 系数、RGB 27 个浮点数",
+        "依赖：卷积定理 + 余弦核低通 + 光照低频假设",
+        "校验：常数环境 L≡1 的漫反射辐照度 = π",
+        "误用：高频环境（小光源）→ 高光消失甚至负光照",
+        "成本：运行时每像素每通道 9 次乘加"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 87,
+        "line_end": 87
+      },
+      "fill_hint": "对应切片 bullet1（line 87）；π 的冒烟测试与 A_l 数值已挂待核验；「l≥3 贡献极小」是 Ramamoorthi–Hanrahan 结论的转述，非本文计算",
+      "content": "一句总起：切片第一条「环境光照表示（通常 $l\\le2$，9 个系数）」是卷积定理的直接红利：漫反射光照天然低频，整个环境贴图可以压成 9 个数。\n\n**代表什么**。把环境贴图 $L_{\\mathrm{env}}$ 投影到 SH 基上取 $l\\le2$：每颜色通道 $(2+1)^2=9$【已核验:9|(2+1)**2】个系数，RGB 三通道共 27【已核验:27|3*(2+1)**2】个浮点数。漫反射辐照度 $E(\\mathbf n)=\\int_{H^2}L_{\\mathrm{env}}(\\omega)\\max(0,\\mathbf n\\cdot\\omega)\\,d\\omega$ 是「环境光 ⊛ clamp 余弦核」的球面卷积，由卷积定理在 SH 域逐系数相乘；核增益在 $l\\ge3$ 几乎归零（数值见 sh-conv.statement），所以 9 系数重建的漫反射误差极小。\n\n**可算的校验**。取常数环境 $L_{\\mathrm{env}}\\equiv1$：任意方向的漫反射辐照度直接积分得 $E=\\int_{H^2}\\cos\\theta\\,d\\omega=\\pi$【待核验:math.pi】；SH 侧只有 $\\hat L_0^0\\neq0$，经增益 $A_0=\\pi$ 算出同一个 $\\pi$——两条路对上，这是「卷积定理 + 9 系数」的最小冒烟测试。\n\n**依赖什么**。卷积定理（本单元核心，sh-conv.statement）；SH 正交性（P5.3 的球面版）；辐射度量学词汇（H7）；系数本身常由环境贴图的蒙特卡洛投影估计（H4）。\n\n**误用与失效**。环境里有小而亮的光源/锐利窗框时能量集中在高 l：9 系数表示下高光彻底消失，且截断核可能算出负光照（完整计算见 sh-conv.ringing）；此时应提阶或换 spherical Gaussians。\n\n**用在哪里**。实时引擎的环境光项（烘焙环境 → 9 系数 → 每像素每通道 9 次乘加）；光照探针（light probe）的低频分量；PRT 架构里「光照可变侧」的载体（见 prt.application）。",
+      "links": [
+        "H2",
+        "H4",
+        "H7",
+        "P5.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:prt.application",
+      "type": "application",
+      "subject": "prt",
+      "title": "应用：预计算辐射传输（PRT）",
+      "keywords": [
+        "用途：静态场景 + 动态低频环境光的实时全局光照",
+        "代表什么：渲染方程线性算子的「传输」部分预计算成 SH 向量/矩阵",
+        "解耦：光照侧系数运行时可换、传输侧离线烘焙",
+        "依赖：线性性 + 场景静态 + 光照低频",
+        "误用：动态几何作废传输；高频硬边阴影装不下",
+        "运行时成本：每点一次系数点积"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 88,
+        "line_end": 88
+      },
+      "fill_hint": "对应切片 bullet2（line 88）；PRT 架构描述以 Sloan et al. 2002 为背景知识（切片只给一行），扩充幅度已尽量克制",
+      "content": "一句总起：切片第二条 PRT（Precomputed Radiance Transfer，预计算辐射传输）把卷积定理从「一次滤波」升级成「一整套架构」：光照可变的部分装进 SH 系数，场景固定的部分离线预计算。\n\n**代表什么**。渲染方程（H2）对入射光是线性的：出射 = 传输算子 T 作用于光照。把光照截断到 SH（$l\\le L$），T 就变成有限维线性映射。最简形式：每个顶点/表面点存一个 SH 传输向量 $\\mathbf T_i\\in\\mathbb{R}^{(L+1)^2}$（编码自遮挡、自传输），运行时该点出射光 $\\propto\\sum_{l,m}\\hat L_l^m\\,T_i^{lm}$——一次点积。含互反射时 T 升级为矩阵，弹射用幂迭代在预计算阶段完成。\n\n**解耦的分工**：光照侧（$\\hat L_l^m$）运行时可换——转环境光 = 带内 Wigner D 混合系数（旋转等变性见 lie3.17）；传输侧（$\\mathbf T_i$）只依赖静态几何，离线算好。实时全局光照的成本由此压到每点一次点积。\n\n**依赖什么**。①渲染方程的线性性（H2）——非线性材质效应装不进这个框架；②光照低频假设（同环境光照表示）；③场景静态——「传输不变」是解耦的前提；④SH 的乘法/旋转结构（本单元卷积定理）。\n\n**误用与失效**。几何动态变化 ⇒ 传输全部作废需重算；高频光照（太阳直射的硬边阴影）⇒ $l\\le2$ 装不下阴影边缘，硬影变糊影；镜面/glossy 传输需要每点矩阵甚至高频基（SG）。\n\n**用在哪里**。Sloan 等 2002 年提出，用于静态大场景的实时漫反射全局光照；思想后裔：探针烘焙、光照贴图 + SH 存储预滤波环境。",
+      "links": [
+        "H2",
+        "H4",
+        "A2.4",
+        "lie3.17"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "单元对照：卷积定理 / 环境光照 / PRT 的分工",
+      "keywords": [
+        "卷积定理是数学引擎",
+        "环境光照 9 系数是数据编码",
+        "PRT 是系统架构",
+        "三层假设层层继承，底层一破三层全破",
+        "判断能不能用从最底层（条件表）查起"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 87,
+        "line_end": 89
+      },
+      "fill_hint": "表格三行分别对应切片三条 bullet；数字一律引用子词条不重复计算",
+      "content": "一张表看清切片三条内容怎么咬合：卷积定理是数学引擎，环境光照表示是数据编码，PRT 是系统架构。\n\n| 条目 | 代表什么 | 依赖什么 | 失效场景（误用） | 用在哪里 |\n| --- | --- | --- | --- | --- |\n| 球面卷积定理 | SH 域逐元素乘法：滤波 = 按频带调增益 | 核 zonal、全域 $S^2$、线性、同一归一化约定 | 非 zonal 核：运算无定义（sh-conv.non-zonal）；截断尖锐核：负光照（sh-conv.ringing） | 一切「环境光被核滤波」的计算 |\n| 环境光照 9 系数 | 环境贴图的 $l\\le2$ 带限编码（每通道 9 数） | 卷积定理 + 余弦核低通 + 光照低频 | 高频环境：高光消失甚至负值（sh-conv.ringing） | 实时漫反射环境光、光照探针 |\n| PRT | 光照–传输解耦的预计算架构 | 线性性 + 静态场景 + 低频光照 + 卷积定理 | 动态几何：传输作废；硬边阴影：频带不够 | 静态场景实时全局光照 |\n\n**读表方式**：三层的假设是层层继承的——PRT 依赖环境光照表示的合法性，后者依赖卷积定理的条件。所以「能不能用」永远从最底层查起（sh-conv.quantifiers 的条件表），底层一破三层全破；反过来，底层成立时上层只是工程选择（几阶、什么窗、什么基）。",
+      "links": [
+        "H2",
+        "A2.3",
+        "lie3.17"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "P5.3：SH 正交性是三角正交性的球面版",
+        "A2.3：平面卷积定理的球面完整类比",
+        "lie3.17：卷积定理的表示论根源",
+        "de3.12：SH 出自球坐标分离变量",
+        "H4：SH 系数的蒙特卡洛估计",
+        "H2/H7：物理骨架",
+        "G4.2：同为正交基截断家族"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 87,
+        "line_end": 89
+      },
+      "fill_hint": "links 全部来自全库代号清单；每条一句即可，细节归目标节点",
+      "content": "每条一句，写清「谁用了本单元的哪一块」：\n\n- **P5.3**（三角正交性）：SH 正交性是它的球面版，加法定理与系数投影的合法性直接落在它身上——P 篇工具被 H 篇调用的典型。\n- **A2.3**（傅里叶分析）：平面卷积定理的球面完整类比；「时域卷积 = 频域乘法」这个思想在球面上二次落地，Gibbs 现象两边同款。\n- **lie3.17**（球谐函数 = $SO(3)$ 不可约表示基）：卷积定理的表示论根源——zonal 核在表示内是标量（Schur 引理），旋转等变性（转光源 = 转系数）也从这来。\n- **de3.12**（分离变量在不同坐标系）：SH 的出身——球坐标下 Laplace 算子分离变量的角向部分。\n- **H4**（蒙特卡洛积分）：实践中 SH 系数本身常用对环境贴图的蒙特卡洛投影估计，估计误差与截断误差（ringing）叠加，别混为一谈。\n- **H2 / H7**（渲染方程 / 辐射度量学）：所有本单元应用的物理骨架；辐照度、radiance 的定义在那边。\n- **G4.2**（切比雪夫逼近）：同属「正交基带限截断」家族，收敛率由光滑度决定、截断出振荡——失效模式可互相迁移。",
+      "links": [
+        "P5.3",
+        "A2.3",
+        "lie3.17",
+        "de3.12",
+        "H4",
+        "H2",
+        "H7",
+        "G4.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H5:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：截断核与 9 系数重建",
+      "keywords": [
+        "面板1：截断核 g_L(θ) 极坐标图，L 可调，负值区标红",
+        "图上必须可见的失败数值：L=2 赤道 −3/(8π)≈−0.119",
+        "面板2：环境贴图 vs l≤2 重建的漫反射对比",
+        "需要 Legendre 数值实现与对拍 → 走后端"
+      ],
+      "tex_ref": {
+        "file": "H_cg.tex",
+        "line_start": 87,
+        "line_end": 89
+      },
+      "fill_hint": "档2：不写 module 等字段；checkpoint 数值与 sh-conv.ringing 同源",
+      "content": "单元级演示需求（当前为档2留空待接）：两个面板。①截断核极坐标图：画 $g_L(\\theta)=\\sum_{l=0}^{L}\\frac{2l+1}{4\\pi}P_l(\\cos\\theta)$，拖动 $L\\in[0,12]$，负值区标红；图上必须能读出失败数值——$L=2$ 时赤道 $g_2=-3/(8\\pi)\\approx-0.1194$【待核验:-3/(8*math.pi)】，同时显示总质量 $\\int g_L\\,d\\omega\\equiv1$（能量守恒、形状崩溃）。②环境贴图 vs 重建对比：左边原始环境贴图，右边 $l\\le2$ 系数重建的漫反射光照，可切换「含高频光源」的环境以展示失效。\n\n走后端的理由：Legendre 多项式递推与「截断 vs 精确」的对拍需要数值实现，前端现有模块无球面极坐标契约。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "截断核曲线需要 Legendre 多项式数值递推，且「截断 vs 精确 delta」必须对拍验证负值与质量守恒；现有前端模块无球面极坐标契约",
+        "params_hint": {
+          "L_min": 0,
+          "L_max": 12,
+          "show_negative_region": true
+        }
+      },
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

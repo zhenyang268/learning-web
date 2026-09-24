@@ -1,0 +1,582 @@
+{
+  "schema": "entry-card/v2",
+  "code": "H8.2",
+  "chapter": "H8",
+  "title": "刚体模拟",
+  "src": {
+    "file": "notebook/H_cg.tex",
+    "line_start": 157,
+    "line_end": 165,
+    "anchor": "notebook/H_cg.tex:157"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "H8.2:linear.quantifiers",
+      "type": "comparison",
+      "subject": "linear",
+      "title": "质心方程限定词逐条拆解（去掉/放宽每一条会怎样）",
+      "keywords": [
+        "陈述拆成 4 个限定词：①m 为常数 ②F 为合外力 ③x′=v 是定义 ④惯性参考系",
+        "①去掉 m 常数 ⟹ 火箭反例：F=0 时错答 v≡v₀，正答 v=v₀m₀/m(t)，t=5 时错 1 对 2",
+        "②F 漏约束力 ⟹ 斜面反例：只留重力得 a=g=9.8，正确 a=g·sin30°=4.9，大了一倍",
+        "④去掉惯性系 ⟹ 转盘反例：需补离心加速度 ω²r=2 m/s²（ω=2 rad/s，r=0.5 m）",
+        "③x′=v 是定义不是假设，恒成立",
+        "总结：实质假设三条——质量不变、力取全、架子不加速"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "四列表每行对应一个具体函数/数值，反例细节归 linear.variable-mass 及本表内联计算；数值均为模型自算，已挂【待核验】；表格供前端直接渲染。",
+      "content": "质心方程 $\\dot{\\mathbf{x}} = \\mathbf{v}$、$m\\dot{\\mathbf{v}} = \\mathbf{F}$ 看起来平淡，但每个符号都压着一条假设。拆成 4 个限定词，逐条去掉看会怎么翻车：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $m$ 为常数 | 火箭 $m(t)=m_0-kt$，外力 $\\mathbf{F}=0$：按切片方程得 $\\dot v = 0$，即 $v\\equiv v_0$；正确的是动量守恒 $m(t)v(t)=m_0v_0$。取 $m_0=1,\\ k=0.1,\\ v_0=1,\\ t=5$：错误答案 $v=1$，正确答案 $v=2$【待核验:1/(1-0.1*5)】 | 速度被算错一倍，质量变化越快错得越狠 | 可以，但方程要改写成动量形式（见 linear.variable-mass） |\n| ② $\\mathbf{F}$ 是**合**外力（含约束力） | 斜面（倾角 $\\theta=30°$）上滑块漏掉支持力 $\\mathbf{N}$：只剩重力得 $a=g=9.8$ m/s²；正确合力沿斜面，$a=g\\sin 30°=4.9$【待核验:9.8*sin(pi/6)】 m/s² | 加速度大了一倍，滑块直接「穿透」斜面 | 不能放宽为「只看主力」——漏一项错一项；工程上可把约束力交给约束求解器（H8.3 的做法） |\n| ③ $\\dot{\\mathbf{x}}=\\mathbf{v}$（速度=位置导数） | 无反例：这是**定义**（$\\mathbf v$ 就是质心速度） | 若 $\\mathbf v$ 与 $\\mathbf x$ 脱钩，方程组不闭合、无从求解 | 不适用放宽；它的作用是把二阶问题降成一阶 ODE 系统 |\n| ④ 惯性参考系 | 转盘（角速度 $\\omega=2$ rad/s）上静止的珠子，$r=0.5$ m：转盘系里它 $\\dot v=0$、合力为 0，方程「成立」；地面系看它做圆周运动，需要向心加速度 $\\omega^2 r = 2$【待核验:2*2*0.5】 m/s²。非惯性系直接用 $m\\dot v=F$ 会漏掉离心/科氏项 | 「力」的账目不平，运动预测全错 | 可以：在非惯性系补伪力，方程形式不变、$\\mathbf F$ 变长 |\n\n总结：实质内容只有三条——**质量不变**（①）、**力取全**（②④）、**定义闭合**（③）。",
+      "links": [
+        "H8.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:linear.variable-mass",
+      "type": "counterexample",
+      "subject": "linear",
+      "title": "反例：去掉「质量为常数」——火箭问题完整计算",
+      "keywords": [
+        "反例设定：m(t)=m₀−kt（燃料匀速烧），F=0，m₀=1 kg，k=0.1 kg/s，v₀=1 m/s",
+        "误用切片方程：m(t)v′=0 ⟹ v′=0 ⟹ v≡1 m/s",
+        "正确：动量守恒 d(mv)/dt=0 ⟹ v(t)=m₀v₀/m(t)",
+        "t=5 时正确 v=2 m/s，误用得 1：误差 100%",
+        "失效机制：d(mv)/dt = m·v′ + ṁ·v，ṁ·v 这一项被切片方程吞掉",
+        "修补：写回动量形式并加质量流项 u(−ṁ)，即火箭推力"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "完整对照误用答案 1 与正确答案 2；【待核验】已挂；修补项 u(−ṁ) 为标准动量定理形式（非切片原文），供修订者按教材（如 Kleppner 动量章）核对。",
+      "content": "一句话：切片方程 $m\\dot{\\mathbf{v}}=\\mathbf{F}$ 隐含 $m$ 为常数；质量随时间变化时直接套用，误差可以精确算出。\n\n**反例设定。** 火箭在无外力太空（$\\mathbf{F}=0$），燃料以恒定速率燃烧：$m(t)=m_0-kt$。取 $m_0=1$ kg、$k=0.1$ kg/s、初速 $v_0=1$ m/s。问 5 秒后速度是多少？\n\n**误用（直接套切片方程）。** $m(t)\\dot v = 0 \\Rightarrow \\dot v = 0 \\Rightarrow v \\equiv 1$ m/s。答：5 秒后速度 1。\n\n**正确（动量守恒）。** 无外力时动量 $m(t)v(t)$ 守恒：\n$$m(t)\\,v(t) = m_0 v_0 \\implies v(t)=\\frac{m_0 v_0}{m(t)}.$$\n$t=5$ 时 $m=0.5$，故 $v = 2$【待核验:1*1/(1-0.1*5)】 m/s。误用答案 1、正确答案 2——误差 100%。且 $t\\to m_0/k=10$ s 时分母趋 0、速度发散：同一堆动量摊到越来越小的质量上。\n\n**失效机制。** $m\\dot v=\\mathbf F$ 是动量定理 $\\frac{d}{dt}(m\\mathbf v)=\\mathbf F$ 在 $m$ 常数时的退化形式。质量变化时乘积法则多出一项：$\\frac{d}{dt}(m v) = m\\dot v + \\dot m\\,v$，切片方程默认 $\\dot m=0$，把这一项吞掉了。\n\n**修补条件。** 写回动量形式，并显式加入以相对速度 $\\mathbf u$ 喷出的质量流：\n$$\\frac{d}{dt}(m\\mathbf v) = \\mathbf F + \\mathbf u\\,(-\\dot m).$$\n$-\\dot m>0$ 是喷出的质量流率，$\\mathbf u(-\\dot m)$ 就是火箭推力。游戏里「吃球变大」的角色、吸入粒子的黑洞吸附，只要质量变化不可忽略，都必须走这条修正路线。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:linear.intuition",
+      "type": "intuition",
+      "subject": "linear",
+      "title": "质心方程直觉：刚体先是一个「点」",
+      "keywords": [
+        "假设给了什么：不变的质量 m、已知的合力 F、不加速的参考架",
+        "结论为何成立：m 常数 ⟹ 动量变化率全由 v 负责 ⟹ m·v′=F",
+        "刚体的一切复杂性推给姿态方程；质心层只剩点粒子力学",
+        "x′=v 把二阶问题降成一阶系统 (x,v) ∈ R⁶，正合数值积分器胃口",
+        "常力解析解 x(t)=x₀+v₀t+Ft²/(2m)：抛物线轨迹"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "按规格把「假设给了什么」与「结论为何因此成立」分开成两段；常力解析解由对切片方程两次积分直推，非新定理。",
+      "content": "**假设给了什么。** 三样东西：一个不变的质量 $m$、一个已知的合力 $\\mathbf F$（重力、接触力、阻力……全部合并）、一个不加速不旋转的参考架（惯性系）。这三样凑齐后，「刚体」在质心层面退化为一个**点粒子**——内部结构、形状、姿态在这两条方程里完全不出现。\n\n**结论为什么因此成立。** $m$ 是常数，所以动量 $\\mathbf p = m\\mathbf v$ 的变化率里只有 $\\mathbf v$ 在变：$\\dot{\\mathbf p} = m\\dot{\\mathbf v}$。而动量定理说 $\\dot{\\mathbf p} = \\mathbf F$。两式一拼就是 $m\\dot{\\mathbf v} = \\mathbf F$——不是新物理，只是动量定理在「质量不变」这个便利条件下的化简。$\\dot{\\mathbf x} = \\mathbf v$ 则纯粹是速度的定义，它的作用是把二阶方程 $\\ddot{\\mathbf x} = \\mathbf F/m$ 降成一阶系统：未知状态 $(\\mathbf x, \\mathbf v)\\in\\mathbb R^6$，右端不含二阶导，正合数值积分器（RK4，见 G1.1）的胃口。\n\n**常力时的形状。** $\\mathbf F$ 恒定时两次积分得解析解\n$$\\mathbf x(t) = \\mathbf x_0 + \\mathbf v_0 t + \\frac{\\mathbf F}{2m}t^2,$$\n正是抛物线（抛体运动）。变化极快的 $\\mathbf F$（碰撞、爆炸脉冲）则交给冲量处理：$\\Delta \\mathbf p = \\int \\mathbf F\\,dt$。",
+      "links": [
+        "G1.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:linear.proof",
+      "type": "proof",
+      "subject": "linear",
+      "title": "质心方程推导骨架与易错点",
+      "keywords": [
+        "第1步：动量定理 d(mv)/dt=F（牛顿第二定律的一般形式）",
+        "第2步：m 常数 ⟹ d(mv)/dt = m·dv/dt（全推导唯一用假设之处）",
+        "第3步：拼接定义 x′=v，凑成一阶系统 d/dt(x,v)=(v,F/m)",
+        "解析解路径：常力两次积分，每次积出一个 1/n 因子",
+        "易错点：m 变时 d(mv)/dt = m·v′ + ṁ·v，第二项常被漏（见 linear.variable-mass）",
+        "依赖链：动量定理 ⟹ 一阶 ODE（de1.9 适定）⟹ 数值推进（G1.1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "三步推导对应切片方程的两个组成部分；存在唯一性引 de1.9、数值推进引 G1.1；易错点第一条与 linear.variable-mass 呼应。",
+      "content": "**推导骨架（三步）。**\n\n1. **出发点是动量定理** $\\frac{d}{dt}(m\\mathbf v) = \\mathbf F$：合力等于动量变化率。这是牛顿第二定律的原始形式，对变质量也成立（此时它**不**等于 $m\\dot{\\mathbf v}=\\mathbf F$！）。\n2. **施加「质量为常数」**：$m$ 与时间无关 $\\Rightarrow \\frac{d}{dt}(m\\mathbf v) = m\\dot{\\mathbf v}$。这是全推导唯一用到假设的地方。\n3. **拼接定义**：$\\dot{\\mathbf x} = \\mathbf v$ 与 $m\\dot{\\mathbf v} = \\mathbf F$ 合写成关于状态 $(\\mathbf x,\\mathbf v)$ 的一阶 ODE 系统 $\\frac{d}{dt}(\\mathbf x,\\mathbf v) = (\\mathbf v, \\mathbf F/m)$。右端光滑时，存在唯一性定理（de1.9）保证轨迹唯一——模拟器每帧「推进」的就是这个系统。\n\n**解析解路径（常力）。** 对 $m\\dot{\\mathbf v}=\\mathbf F$ 积分一次：$\\mathbf v(t) = \\mathbf v_0 + \\frac{\\mathbf F}{m}t$。再对 $\\dot{\\mathbf x}=\\mathbf v$ 积分一次：$\\mathbf x(t) = \\mathbf x_0 + \\mathbf v_0 t + \\frac{\\mathbf F}{2m}t^2$。两次积分各贡献一个幂次与一个 $1/n$ 因子。\n\n**易错点。**\n- **对变质量盲目约去 $m$**：$\\frac{d}{dt}(m\\mathbf v) = m\\dot{\\mathbf v} + \\dot m\\,\\mathbf v$，漏掉 $\\dot m\\,\\mathbf v$ 就是 linear.variable-mass 里那个 100% 误差。\n- **把 $\\dot{\\mathbf x}=\\mathbf v$ 当成「额外假设」**：它是定义，删掉它方程组就缺一条、不闭合。\n- **混合坐标系**：$\\mathbf x,\\mathbf v,\\mathbf F$ 必须写在同一坐标系；世界系最省事。\n\n**依赖链。** 动量定理（物理）⟹ 一阶 ODE（数学结构，de1.9 保证适定）⟹ 数值积分（G1.1）。",
+      "links": [
+        "de1.9",
+        "G1.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:linear.statement",
+      "type": "statement",
+      "subject": "linear",
+      "title": "质心运动方程（牛顿部分）陈述",
+      "keywords": [
+        "x′=v，m·v′=F：六个未知分量的一阶 ODE 系统",
+        "成立条件：m 常数、F 为合外力、惯性参考系",
+        "x′=v 是定义（速度=质心位置的变化率）",
+        "m·v′=F 是动量定理在 m 常数下的退化形式",
+        "常力解析解：x(t)=x₀+v₀t+Ft²/(2m)"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "以切片 159–161 行原式转写，只补符号表与成立条件；不添加切片没有的结论；各条件崩坏均指向同单元反例词条。",
+      "content": "切片给出刚体运动的**质心（线运动）方程**：\n$$\\dot{\\mathbf{x}} = \\mathbf{v}, \\qquad m\\,\\dot{\\mathbf{v}} = \\mathbf{F}.$$\n逐符号拆解：\n- $\\mathbf{x}(t)\\in\\mathbb R^3$：质心位置；$\\mathbf{v}(t)\\in\\mathbb R^3$：质心速度；\n- $m>0$：刚体总质量，**假设为常数**；\n- $\\mathbf{F}$：作用在刚体上的**合**外力（所有外力之和；转动效果由角方程另行处理）。\n\n**成立条件**：① $m$ 为常数；② $\\mathbf F$ 是合外力（含约束力）；③ 参考系为惯性系。第①条崩坏的完整计算见 linear.variable-mass，第②③条见 linear.quantifiers 的斜面行与转盘行。\n\n**结论**：质心像点粒子一样沿 $\\mathbf F$ 决定的轨迹运动；$\\mathbf F=0$ 时匀速直线。这两条方程与姿态方程（angular.statement）合起来，完整描述一个自由刚体的状态演化。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:linear.application",
+      "type": "application",
+      "subject": "linear",
+      "title": "质心方程用在哪里",
+      "keywords": [
+        "物理引擎每帧推进：v ← v + h·F/m，x ← x + h·v（显式欧拉骨架）",
+        "抛体/弹道：常重力下直接用抛物线解析解",
+        "粒子系统与布料质点（H8.3）同构：每个质点一套 m·v′=F",
+        "流体粒子/漂浮物受浮力（H8.1）也走同一模板",
+        "积分技法落点：位移=速度对时间积分 ⟹ P7.2"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "每个落点一句话；「积分技法 ⟹ P 组」按规格挂 P7.2；适定性与推进分别挂 de1.9、G1.1，细节归目标单元词条。",
+      "content": "**在哪里被用。** 切片这两条方程是所有物理模拟器每一帧都在执行的最内层循环：给定合力 $\\mathbf F$，先更新速度再更新位置（显式欧拉骨架），或交给 RK4（G1.1）推进。具体落点：\n- **游戏引擎刚体**：重力 + 接触冲量给出 $\\mathbf F$，质心轨迹由此而来；\n- **抛体与弹道**：常重力下直接用解析解 $\\mathbf x_0+\\mathbf v_0 t+\\frac{\\mathbf F}{2m}t^2$，不需要数值积分；\n- **粒子系统 / 布料质点（H8.3）**：每个质点各配一套 $m\\dot{\\mathbf v}=\\mathbf F$，约束力由求解器补齐——正是 linear.quantifiers ②「力取全」的工程化做法；\n- **流体耦合（H8.1）**：气泡、漂浮物受浮力与阻力，仍是本模板换 $\\mathbf F$。\n\n**被谁服务 / 服务谁。** 位移由速度对时间积分而来（一重积分）——对应 P7.2 的基本积分技术；适定性由 de1.9 保证；推进用 G1.1 的 RK4。本方程是 H8.2 四条中最简单的两条，复杂性全部让位给角运动方程（见 angular.statement）。",
+      "links": [
+        "H8.1",
+        "H8.3",
+        "G1.1",
+        "de1.9",
+        "P7.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:linear.probe1",
+      "type": "probe",
+      "subject": "linear",
+      "title": "检验题：解析解 vs 显式欧拉差多少",
+      "keywords": [
+        "取 m=2，F=(3,0,0)，x₀=0，v₀=0",
+        "问1：精确 x(1) 是多少",
+        "问2：显式欧拉 h=0.5 两步后 x(1) 是多少",
+        "问3：误差为什么恰好是一半"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "三问均可手算；(3) 的「丢一半」对常加速度精确成立，可让学习者用 h=0.25 复验一次（误差比例不变）以加深理解。",
+      "content": "取 $m=2$ kg、$\\mathbf F=(3,0,0)$ N，初始 $\\mathbf x_0=\\mathbf 0$、$\\mathbf v_0=\\mathbf 0$。\n\n**(1)** 用解析解 $\\mathbf x(t)=\\frac{\\mathbf F}{2m}t^2$ 算 $x(1)$。（答案：$0.75$【待核验:3*1**2/(2*2)】 m）\n\n**(2)** 用显式欧拉 $h=0.5$ 推两步（先更新 $v$ 再更新 $x$），算末位置。（答案：第一步 $v=0.75,\\ x=0$；第二步 $v=1.5,\\ x=0.375$【待核验:0.5*0.75】 m）\n\n**(3)** 欧拉误差 $0.375$ m 恰好是精确值的一半——解释这个比例从哪来。（提示：欧拉每步用的是「本步初」的速度，等于用矩形近似抛物线下的面积；对常加速度，这一近似恰好丢掉一半面积。）",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.quantifiers",
+      "type": "comparison",
+      "subject": "angular",
+      "title": "姿态方程限定词逐条拆解（去掉/放宽每一条会怎样）",
+      "keywords": [
+        "陈述拆成 5 个限定词：①R∈SO(3) ②[ω]× 反对称 ③I 在随体系为常数 ④陀螺项 ω×Iω 不可丢 ⑤τ 为对质心的合外力矩",
+        "①数值积分漂移：一步欧拉 det 从 1 变 1.01（见 angular.drift）",
+        "③误用世界系常数张量：绕 z 转 90° 后 I_world 从 diag(1,2,4) 变 diag(2,1,4)，主轴互换",
+        "④丢陀螺项：I=diag(1,2,4)、ω=(1,1,0) 时 z 向角加速度 −0.25 被吞成 0（见 angular.gyro）",
+        "⑤漏力矩：r=(1,0,0) 处 F=(0,0,9.8) 的力矩大小 9.8 N·m",
+        "总结：姿态待在 SO(3)、张量住体坐标、角动量账记全"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "四列表每行配具体数值，反例细节归 angular.drift / angular.gyro；I_world 的 xx 分量与力矩模长为模型自算，已挂【待核验】；表格供前端直接渲染。",
+      "content": "姿态方程 $\\dot R = [\\boldsymbol\\omega]_\\times R$、$I\\dot{\\boldsymbol\\omega} + \\boldsymbol\\omega\\times I\\boldsymbol\\omega = \\boldsymbol\\tau$ 每个记号都压着假设。拆成 5 个限定词：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $R\\in SO(3)$（正交、$\\det=1$） | 显式欧拉积分一步（$\\boldsymbol\\omega=(0,0,1)$，$h=0.1$）：$R_1 = I + 0.1[\\omega]_\\times$ 的 $\\det = 1.01$【待核验:1+0.1*0.1】、第一列范数 $\\sqrt{1.01}\\approx 1.005$【待核验:sqrt(1.01)】——已不是旋转（完整计算见 angular.drift） | 物体被数值「吹胀」，视觉拉伸且惯量算错 | 离散层面不能放宽，但可用保结构格式（投影、四元数、指数映射更新）替代手工修补 |\n| ② $[\\boldsymbol\\omega]_\\times$ 是反对称矩阵 | 若误写成对称矩阵，$\\frac{d}{dt}(RR^{\\mathsf T}) = [\\omega]_\\times + [\\omega]_\\times^{\\mathsf T} \\ne 0$，正交性从第一步起崩 | 姿态矩阵瞬间离开 $SO(3)$ | 不能：反对称正是「旋转的导数仍是旋转」的代数表达 |\n| ③ $I$ 是**随体坐标系**下的常数张量 | 误在世界系用常数 $I$：把 $I_{\\text{body}}=\\mathrm{diag}(1,2,4)$ 的物体绕 $z$ 轴转 $90°$ 后，正确的世界系张量是 $RIR^{\\mathsf T}=\\mathrm{diag}(2,1,4)$——其 $xx$ 分量 $=0^2\\cdot1+1^2\\cdot2+0^2\\cdot4=2$【待核验:0*0*1+1*2+0*0*4】，而误用版本仍给 $\\mathrm{diag}(1,2,4)$：1、2 号主轴已互换却毫无察觉 | 陀螺行为方向错乱 | 可以：在体坐标系解欧拉方程（$I$ 常数），姿态由 $R$ 搬运到世界系——这正是切片方程的设计 |\n| ④ 陀螺项 $\\boldsymbol\\omega\\times I\\boldsymbol\\omega$ 不可丢 | $\\boldsymbol\\omega=(1,1,0)$、$I=\\mathrm{diag}(1,2,4)$、$\\boldsymbol\\tau=0$：真实角加速度 $z$ 分量 $-0.25$，删项后 $=0$（完整计算见 angular.gyro） | 无力矩下角动量守恒被静默破坏，刚体「转错」且误差线性累积 | 仅当 $\\boldsymbol\\omega\\times I\\boldsymbol\\omega=\\mathbf 0$ 才可删，即 $\\boldsymbol\\omega$ 沿主轴（例：$\\boldsymbol\\omega=(0,0,1)$ 对此 $I$） |\n| ⑤ $\\boldsymbol\\tau$ 是对**质心**的合外力矩 | 杠杆 $\\mathbf r=(1,0,0)$ 处受力 $\\mathbf F=(0,0,9.8)$：力矩 $\\boldsymbol\\tau=\\mathbf r\\times\\mathbf F=(0,-9.8,0)$，大小 $9.8$【待核验:abs(0*0-1*9.8)】 N·m。漏算重力对非质心作用点的力矩 ⟹ 明明该翻转的物体静止 | 力矩账目不平，翻滚行为消失 | 「对质心取矩」不能改（对动点取矩要加修正项）；但均质重力场可等效为过质心的单力 + 零力矩 |\n\n总结：两条方程的实质假设是——**姿态必须待在 $SO(3)$ 里**（①②）、**惯性张量住在体坐标架上**（③）、**角动量的账要记全**（④⑤）。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.gyro",
+      "type": "counterexample",
+      "subject": "angular",
+      "title": "反例：删掉陀螺项 ω×Iω（并算出它何时真的可以为零）",
+      "keywords": [
+        "设定：I=diag(1,2,4)，ω=(1,1,0)，τ=0（无力矩自由刚体）",
+        "角动量 L=Iω=(1,2,0)，|L|=√5",
+        "陀螺项 ω×L=(0,0,1)，z 分量=1×2−1×1=1",
+        "正确 ω′=I⁻¹(0,0,−1)=(0,0,−1/4)，误删后 ω′=0",
+        "误删 ⟹ 模拟出的世界系角动量以速率 |ω×L|=1 线性漂移",
+        "可删充要条件：ω∥Iω，例 ω=(0,0,1) 时 ω×Iω=0",
+        "对称陀螺 I=diag(1,1,c) 绕对称轴自转是常见合法删项场景"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "数值链条 L=(1,2,0) → ω×L=(0,0,1) → ω′=(0,0,−1/4) 已全部挂【待核验】；「何时可删」的充要条件 ω∥Iω 为教科书标准结论（Goldstein），供修订者核对；「漂移速率 |ω×L|」的表述方式需人工复核。",
+      "content": "一句话：$\\boldsymbol\\omega\\times I\\boldsymbol\\omega$ 不是「高阶小量」也不是装饰——删掉它，模拟器会在**零力矩**下违反角动量守恒，误差可以精确算出。\n\n**反例设定。** 自由刚体（$\\boldsymbol\\tau = 0$），$I=\\mathrm{diag}(1,2,4)$，当前角速度 $\\boldsymbol\\omega=(1,1,0)$。\n\n**完整计算。**\n1. 角动量（体坐标）：$\\mathbf L = I\\boldsymbol\\omega = (1,\\,2,\\,0)$，模长 $|\\mathbf L|=\\sqrt5\\approx 2.2360679$【待核验:sqrt(5)】。\n2. 陀螺项：$\\boldsymbol\\omega\\times\\mathbf L = (\\omega_y L_z-\\omega_z L_y,\\ \\omega_z L_x-\\omega_x L_z,\\ \\omega_x L_y-\\omega_y L_x) = (0,\\,0,\\,1)$，其中 $z$ 分量 $=1\\cdot 2-1\\cdot 1 = 1$【待核验:1*2-1*1】。\n3. 欧拉方程 $I\\dot{\\boldsymbol\\omega} = \\boldsymbol\\tau - \\boldsymbol\\omega\\times\\mathbf L = (0,0,-1)$，故正确角加速度\n$$\\dot{\\boldsymbol\\omega} = I^{-1}(0,0,-1) = \\Big(0,\\,0,\\,-\\tfrac14\\Big).$$\n4. **误删陀螺项的版本**：$I\\dot{\\boldsymbol\\omega}=\\boldsymbol\\tau \\Rightarrow \\dot{\\boldsymbol\\omega}=\\mathbf 0$。真实的 $z$ 向角加速度 $-0.25$【待核验:-1/4】 rad/s² 被整个吞掉。\n\n**为什么这是守恒律被破坏，而不只是数值误差。** 世界系角动量守恒要求 $d\\mathbf L_{\\text{world}}/dt=0$；但 $\\mathbf L_{\\text{world}} = R\\mathbf L$，求导得 $\\dot{\\mathbf L}_{\\text{world}} = R(\\dot{\\mathbf L} + \\boldsymbol\\omega\\times\\mathbf L)$——体坐标角动量除了自己变化，还要跟着体架旋转。把方程错写成 $I\\dot{\\boldsymbol\\omega}=\\boldsymbol\\tau$ 等于宣称 $\\dot{\\mathbf L}=0$，于是模拟出的 $\\mathbf L_{\\text{world}}$ 以速率 $|\\boldsymbol\\omega\\times\\mathbf L|=1$【待核验:abs(1*2-1*1)】 持续漂移：误差随时间**线性累积**，长动画里刚体会明显「转错」。\n\n**修补条件（何时真的可以删）。** $\\boldsymbol\\omega\\times I\\boldsymbol\\omega=\\mathbf 0 \\iff \\boldsymbol\\omega\\parallel I\\boldsymbol\\omega$，即角速度沿惯性张量的特征方向（主轴）。验证：$\\boldsymbol\\omega=(0,0,1)$ 时 $I\\boldsymbol\\omega=(0,0,4)$，\n$$\\boldsymbol\\omega\\times I\\boldsymbol\\omega = (0\\cdot4-1\\cdot0,\\ 1\\cdot0-0\\cdot4,\\ 0\\cdot2-0\\cdot1) = \\mathbf 0$$【待核验:abs(0*4-1*0)+abs(1*0-0*4)+abs(0*2-0*1)】。\n因此对称陀螺（$I=\\mathrm{diag}(1,1,c)$）绕对称轴的自转可以放心删项；只要存在**横向分量**就不行。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.drift",
+      "type": "counterexample",
+      "subject": "angular",
+      "title": "反例：显式积分让 R 滑出 SO(3)（一步漂移的完整计算）",
+      "keywords": [
+        "设定：ω=(0,0,1) 常值，R₀=I，显式欧拉一步 h=0.1",
+        "R₁=I+0.1[ω]×，det(R₁)=1.01≠1：体积被放大",
+        "第一列范数 √1.01≈1.005≠1：基向量被拉长 0.5%",
+        "连续时间不会这样：d(RRᵀ)/dt=[ω]×+[ω]×ᵀ=0，反对称即守恒机制",
+        "漂移是离散化的锅：每步 O(h²)、N 步累计 O(N·h²)，步长减半只减半不清零",
+        "修补排序：投影回 SO(3)（P6.4）＜ 四元数归一化 ＜ 指数映射/辛格式（G1.2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "一步漂移的 det 与范数计算完整、已挂【待核验】；三条修补路线按实现代价排序；指数映射更新格式与 lie1.10、G1.2 对应，细节归目标单元。",
+      "content": "一句话：$\\dot R = [\\boldsymbol\\omega]_\\times R$ 的右端**保证**了正交性在连续时间里不丢，但**显式离散化**不继承这个保证——一步就能算出 $R$ 离开 $SO(3)$ 的具体数值。\n\n**反例：一步显式欧拉。** 取常值角速度 $\\boldsymbol\\omega=(0,0,1)$、$R_0=I$、步长 $h=0.1$。反对称矩阵\n$$[\\boldsymbol\\omega]_\\times=\\begin{pmatrix}0&-1&0\\\\1&0&0\\\\0&0&0\\end{pmatrix},$$\n显式欧拉一步：\n$$R_1 = R_0 + h[\\boldsymbol\\omega]_\\times R_0 = \\begin{pmatrix}1&-0.1&0\\\\0.1&1&0\\\\0&0&1\\end{pmatrix}.$$\n检验旋转的两个必要条件：\n- 行列式：$\\det R_1 = 1\\cdot 1-(-0.1)(0.1) = 1.01$【待核验:1+0.1*0.1】$\\ne 1$——体积被放大；\n- 列范数：$\\|R_1 e_1\\| = \\sqrt{1^2+0.1^2}=\\sqrt{1.01}\\approx 1.0049875$【待核验:sqrt(1.01)】$\\ne 1$——基向量被拉长 0.5%。\n\n物体每步被「吹胀」一点：$N$ 步后漂移约 $O(Nh^2)$，步长减半只让误差减半、不会清零。渲染上表现为模型逐渐拉伸，物理上表现为惯量计算出错。\n\n**为什么连续时间没这个问题。** 对 $\\dot R=[\\omega]_\\times R$ 直接验证：\n$$\\frac{d}{dt}(RR^{\\mathsf T}) = \\dot R R^{\\mathsf T} + R\\dot R^{\\mathsf T} = [\\omega]_\\times + [\\omega]_\\times^{\\mathsf T} = [\\omega]_\\times - [\\omega]_\\times = 0.$$\n反对称性（angular.quantifiers ②）正是正交性的守恒机制；显式欧拉一步相当于往这个机制里注入了对称误差。\n\n**修补条件（按实现代价排序）。**\n1. 每步把 $R$ **投影回 $SO(3)$**：对列做 Gram--Schmidt 正交化（P6.4），再修正行列式符号；\n2. 改用**四元数**存姿态，每步除以自身模长归一化——游戏引擎的默认做法；\n3. 用**保结构格式**：$R_{n+1}=\\exp(h[\\omega]_\\times)R_n$（指数映射天然落在 $SO(3)$ 内，见 lie1.10），或隐式中点等辛格式（G1.2），从根上不漂移。",
+      "links": [
+        "P6.4",
+        "lie1.10",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.intuition",
+      "type": "intuition",
+      "subject": "angular",
+      "title": "姿态方程直觉：转动的「速度场」与旋转架子上的角动量账本",
+      "keywords": [
+        "假设给了什么：姿态住在 SO(3)、I 在体坐标是常数、τ 已对质心取齐",
+        "结论为何成立：无穷小旋转=反对称矩阵 ⟹ R′=[ω]×R；反对称 ⟹ 正交性免费保持",
+        "[ω]× 就是叉积的矩阵版：[ω]×v=ω×v",
+        "欧拉方程的陀螺项=在旋转账本上记账的坐标项（与惯性力同族），不是新力",
+        "τ=0 时守恒的是 L_world 而非 ω：自由刚体照样翻滚（背景延伸：网球拍定理/Dzhanibekov 效应）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "按「假设给了什么 / 结论为何因此成立」两段展开；建议配图：[ω]× 作用在 v 上即 ω 绕轴旋转 v 的端点；网球拍/Dzhanibekov 为背景延伸已标注，不展开推导。",
+      "content": "**假设给了什么。** 三样：姿态住在 $SO(3)$ 里（$R$ 正交、$\\det=1$，所以不拉伸、不翻转体积）；惯性张量 $I$ 在**体坐标系**里是常数（刚体形状不变，这个常数性正是「体坐标架」存在的意义）；外力矩 $\\boldsymbol\\tau$ 已对质心取齐。\n\n**结论为什么因此成立。** 先看运动学 $\\dot R = [\\boldsymbol\\omega]_\\times R$：$R(t+h)$ 与 $R(t)$ 之差是一小段「继续转」，而无穷小旋转正是反对称矩阵 $h[\\boldsymbol\\omega]_\\times$（$[\\omega]_\\times \\mathbf v = \\boldsymbol\\omega\\times\\mathbf v$，把叉积存成矩阵）。左乘的写法表示 $\\boldsymbol\\omega$ 读的是**体坐标**分量。反对称性立刻给出 $\\frac{d}{dt}(RR^{\\mathsf T}) = [\\omega]_\\times + [\\omega]_\\times^{\\mathsf T} = 0$：姿态永远待在 $SO(3)$，正交性在连续时间是免费的。\n\n再看动力学 $I\\dot{\\boldsymbol\\omega} + \\boldsymbol\\omega\\times I\\boldsymbol\\omega = \\boldsymbol\\tau$：物理只有一条——世界系角动量满足 $\\frac{d}{dt}\\mathbf L_{\\text{world}} = \\boldsymbol\\tau$。但状态 $\\boldsymbol\\omega$、$I$ 都写在**旋转的体架**上：对旋转架求导要多补一项「架子本身的转动」，$\\frac{d}{dt}(R\\mathbf L) = R(\\dot{\\mathbf L} + \\boldsymbol\\omega\\times\\mathbf L)$——这就是 $\\boldsymbol\\omega\\times I\\boldsymbol\\omega$ 的来源。它不是新力，是**在转动的账本上记账产生的坐标项**（与惯性系里的伪力同族）。\n\n**一个反直觉的推论。** $\\boldsymbol\\tau=0$ 时守恒的是 $\\mathbf L_{\\text{world}}$，**不是** $\\boldsymbol\\omega$：体坐标里的 $\\boldsymbol\\omega$ 会自己演化——绕中间主轴的旋转不稳定、绕最大/最小主轴稳定（背景延伸：这是「网球拍定理」，抛起翻转的扳手会侧翻；太空中的 Dzhanibekov 效应是同款现象）。模拟器若删掉陀螺项，就等于宣称 $\\boldsymbol\\omega$ 也守恒——定量失败见 angular.gyro。",
+      "links": [
+        "lie1.4",
+        "lie1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.proof",
+      "type": "proof",
+      "subject": "angular",
+      "title": "姿态方程推导骨架与易错点",
+      "keywords": [
+        "第1步：R(t+h)=exp(h[ω]×)R(t) ⟹ 差商 → [ω]×R（无穷小旋转=反对称）",
+        "第2步：世界系 L_world=R·Iω，对它求导 dL/dt=τ",
+        "第3步：乘积法则 + R′=[ω]×R ⟹ R(İω+ω×Iω)=τ",
+        "第4步：左乘 Rᵀ 搬回体坐标 ⟹ Iω′+ω×Iω=τ",
+        "易错点1：世界系张量 RIRᵀ 不是常数，硬求导会漏掉两处",
+        "易错点2：移项后是 τ−ω×Iω，写成加号则能量凭空产生",
+        "依赖链：指数映射（lie1.10）⟹ 姿态方程 ⟹ 欧拉方程"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "第3步的共轭变形 Rᵀ[ω]×R 是唯一非平凡一步，需保留推导；易错点与 angular.gyro、angular.drift 呼应；推导为教科书标准内容（Goldstein），符号约定供修订者核对。",
+      "content": "**推导骨架（四步）。**\n\n1. **运动学**。刚体约束下，$R(t+h)$ 与 $R(t)$ 之差是一个无穷小旋转：$R(t+h) = \\exp\\big(h[\\boldsymbol\\omega]_\\times\\big)R(t)$（指数映射，lie1.10）。除以 $h$ 取极限，$\\frac{R(t+h)-R(t)}{h}\\to[\\boldsymbol\\omega]_\\times R(t)$，即\n$$\\dot R = [\\boldsymbol\\omega]_\\times R.$$\n理由：$SO(3)$ 的切向量必形如「反对称矩阵 × 当前姿态」，这是李群结构白给的，不需要额外假设。\n\n2. **动力学的物理出发点**。世界系角动量 $\\mathbf L_{\\text{world}} = R\\,\\mathbf L_{\\text{body}}$，其中 $\\mathbf L_{\\text{body}} = I\\boldsymbol\\omega$（$I$ 在体坐标是常数——刚体定义）。角动量定理：$\\frac{d}{dt}\\mathbf L_{\\text{world}} = \\boldsymbol\\tau$。\n\n3. **乘积法则 + 运动学代入**。\n$$\\boldsymbol\\tau = \\dot R\\,\\mathbf L_{\\text{body}} + R\\,\\frac{d}{dt}(I\\boldsymbol\\omega) = [\\boldsymbol\\omega]_\\times R\\,\\mathbf L_{\\text{body}} + R\\,(I\\dot{\\boldsymbol\\omega}).$$\n关键变形：$[\\boldsymbol\\omega]_\\times R\\,\\mathbf L_{\\text{body}} = R\\big(R^{\\mathsf T}[\\boldsymbol\\omega]_\\times R\\big)\\mathbf L_{\\text{body}} = R\\,(\\boldsymbol\\omega\\times\\mathbf L_{\\text{body}})$——反对称矩阵经正交阵共轭仍是同款反对称，对应的向量正是被 $R^{\\mathsf T}$ 搬运回来的叉积。\n\n4. **搬回体坐标**。两边左乘 $R^{\\mathsf T}$：\n$$I\\dot{\\boldsymbol\\omega} + \\boldsymbol\\omega\\times I\\boldsymbol\\omega = \\boldsymbol\\tau.$$\n\n**易错点。**\n- **在世界系硬求导**：$I_{\\text{world}} = RIR^{\\mathsf T}$ 不是常数，$\\dot I_{\\text{world}} = [\\omega]_\\times I_{\\text{world}} - I_{\\text{world}}[\\omega]_\\times$——漏掉这两项等于丢掉陀螺效应。正确做法就是切片方程的设计：在体坐标解，让 $I$ 保持常数。\n- **移项忘变号**：数值实现写 $\\dot{\\boldsymbol\\omega} = I^{-1}(\\boldsymbol\\tau - \\boldsymbol\\omega\\times I\\boldsymbol\\omega)$，右端是**减**号；写成加号则自由刚体越转越快，能量凭空产生。\n- **把 $\\boldsymbol\\omega$ 当守恒量**：守恒的是 $\\mathbf L_{\\text{world}}$，见 angular.intuition；删项的定量后果见 angular.gyro。\n\n**依赖链。** $SO(3)$ 李群结构与指数映射（lie1.4, lie1.10）⟹ 姿态方程 ⟹ 欧拉方程；数值推进交给 G1.1 / G1.2。",
+      "links": [
+        "lie1.4",
+        "lie1.10",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.statement",
+      "type": "statement",
+      "subject": "angular",
+      "title": "姿态方程（转动部分）陈述",
+      "keywords": [
+        "R′=[ω]×R：姿态运动学，R∈SO(3)",
+        "Iω′+ω×Iω=τ：欧拉方程（Euler's equations）",
+        "[ω]× 是 ω 的反对称矩阵表示：[ω]×v=ω×v",
+        "I 对称正定、在体坐标下为常数；τ 为对质心的合外力矩",
+        "与线运动方程合组 18 个标量分量，构成刚体完整状态演化"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "以切片 162–164 行原式转写；[ω]× 的显式矩阵为标准定义补充；四条成立条件各指向同单元反例词条。",
+      "content": "切片给出刚体运动的**姿态（角运动）方程**：\n$$\\dot{R} = [\\boldsymbol{\\omega}]_\\times R, \\qquad I\\,\\dot{\\boldsymbol{\\omega}} + \\boldsymbol{\\omega}\\times I\\,\\boldsymbol{\\omega} = \\boldsymbol{\\tau}.$$\n逐符号拆解：\n- $R(t)\\in SO(3)$：姿态旋转矩阵（列向量 = 体坐标架在世界系下的像）；$\\boldsymbol\\omega\\in\\mathbb R^3$：角速度（体坐标分量）；\n- $[\\boldsymbol\\omega]_\\times$：把叉积写成矩阵——$[\\boldsymbol\\omega]_\\times \\mathbf v = \\boldsymbol\\omega\\times\\mathbf v$，显式为\n$$[\\boldsymbol\\omega]_\\times=\\begin{pmatrix}0&-\\omega_z&\\omega_y\\\\\\omega_z&0&-\\omega_x\\\\-\\omega_y&\\omega_x&0\\end{pmatrix};$$\n- $I$：惯性张量，$3\\times 3$ 对称正定，在**体坐标系**下为常数；$\\boldsymbol\\tau$：对质心的合外力矩。\n\n**成立条件**：① $R\\in SO(3)$ 且数值方法不把它推出流形（否则见 angular.drift）；② $I$ 理解为体坐标常数（世界系版本要写成 $RIR^{\\mathsf T}$）；③ 陀螺项 $\\boldsymbol\\omega\\times I\\boldsymbol\\omega$ 不可丢（否则见 angular.gyro）；④ $\\boldsymbol\\tau$ 为对质心的合力矩。这组方程与线运动方程（linear.statement）合起来，是刚体模拟器的完整状态演化方程。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.application",
+      "type": "application",
+      "subject": "angular",
+      "title": "姿态方程用在哪里",
+      "keywords": [
+        "物理引擎姿态推进：四元数 + 归一化是工业默认（angular.drift 的修补清单）",
+        "角色翻滚、载具侧倾：动力学侧全由欧拉方程驱动",
+        "刚体-柔体耦合：接触力/力矩回传给刚体（H8.3、H8.1）",
+        "机器人与绑定：SE(3) 把线+角合并成单一代数对象（lie1.6）",
+        "技法落点：矩阵指数（lie1.10）、辛积分（G1.2）、变分积分（M7）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "每个落点一句话；指数映射与辛格式分别挂 lie1.10、G1.2；耦合场景挂 H8.1/H8.3，细节归目标单元词条。",
+      "content": "**在哪里被用。** 任何「有朝向的物体」的模拟都离不开这两条方程：\n- **物理引擎（PhysX、Bullet、Jolt 等）**：姿态用四元数存（与 $R$ 等价），每步解欧拉方程得 $\\boldsymbol\\omega$，再用指数映射或其近似推进姿态，随后归一化——正是 angular.drift 修补清单的工业形态；\n- **角色与载具**：车辆转弯的侧倾、角色翻滚动画的物理混合，动力学侧全由 $I\\dot{\\boldsymbol\\omega}+\\boldsymbol\\omega\\times I\\boldsymbol\\omega=\\boldsymbol\\tau$ 驱动；\n- **刚体-柔体耦合**：布料/软体（H8.3）与流体（H8.1）的接触把力和力矩回传给刚体——$\\boldsymbol\\tau$ 的账目记在这里（见 angular.quantifiers ⑤）；\n- **机器人与动画绑定**：$SE(3)$ 刚体变换（lie1.6）把线+角运动合并成单一代数对象，骨骼链就是 $SE(3)$ 元素的复合。\n\n**技法落点。** 姿态推进的核心运算是矩阵指数 $\\exp(h[\\omega]_\\times)$（lie1.10）及其数值近似；保能量、保动量的做法在 G1.2（辛积分器）与 M7（变分积分器）展开；这套 ODE 的数学骨架是线性系统理论（de1.10）在旋转群上的版本。",
+      "links": [
+        "lie1.6",
+        "lie1.10",
+        "G1.2",
+        "M7",
+        "H8.1",
+        "H8.3",
+        "de1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:angular.probe1",
+      "type": "probe",
+      "subject": "angular",
+      "title": "检验题：亲手算一次陀螺项",
+      "keywords": [
+        "I=diag(1,2,4)，τ=0",
+        "问1：ω=(1,1,0) 时算 Iω 与 ω×Iω",
+        "问2：正确 ω′ 与删项后 ω′ 各是多少",
+        "问3：换 ω=(0,0,1) 重算，验证删项何时合法"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 162,
+        "line_end": 164
+      },
+      "fill_hint": "三问均可手算；(3) 与 (1) 的对照即「删项合法性」判据，学习者应能自己说出 ω∥Iω 这一条。",
+      "content": "取 $I=\\mathrm{diag}(1,2,4)$，$\\boldsymbol\\tau=\\mathbf 0$。\n\n**(1)** $\\boldsymbol\\omega=(1,1,0)$：算 $\\mathbf L = I\\boldsymbol\\omega$ 与 $\\boldsymbol\\omega\\times\\mathbf L$。（答案：$\\mathbf L=(1,2,0)$；$\\boldsymbol\\omega\\times\\mathbf L=(0,0,1)$，$z$ 分量 $=1$【待核验:1*2-1*1】）\n\n**(2)** 由欧拉方程算 $\\dot{\\boldsymbol\\omega}$；再把陀螺项删掉重算一遍。（答案：正确 $\\dot{\\boldsymbol\\omega}=(0,0,-0.25)$【待核验:-1/4】；删项后 $(0,0,0)$——每秒差 $0.25$ rad/s 的角加速度）\n\n**(3)** 换 $\\boldsymbol\\omega=(0,0,1)$ 重做 (1)，验证此时删项是合法的。（答案：$\\boldsymbol\\omega\\times I\\boldsymbol\\omega=\\mathbf 0$【待核验:abs(0*4-1*0)+abs(1*0-0*4)+abs(0*2-0*1)】，因为 $\\boldsymbol\\omega$ 恰沿主轴——这就是 angular.gyro 的「修补条件」）",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "四条方程总对照：状态、定律与数值难点",
+      "keywords": [
+        "状态 18 个标量分量：x,v（6）+ R,ω",
+        "x′=v 与 R′=[ω]×R 是运动学（怎么滑）；m·v′=F 与欧拉方程是动力学（怎么被推）",
+        "线：无几何约束、数值平凡；角：必须保 SO(3)、陀螺项每步都算",
+        "F 与 τ 由同一批外力供给：接触力既进 F 又进 τ=Σrᵢ×Fᵢ",
+        "实现顺序：先线后角；角先解决「待在 SO(3)」，再谈格式"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 158,
+        "line_end": 164
+      },
+      "fill_hint": "四行对照表供前端直接渲染；漂移数值引用 angular.drift 的计算；实现顺序段为工程建议，供修订者按经验增删。",
+      "content": "| 方程 | 层次 | 物理定律来源 | 数值难点 | 失效反例 |\n|---|---|---|---|---|\n| $\\dot{\\mathbf x}=\\mathbf v$ | 运动学 | 速度的定义 | 无 | —— |\n| $m\\dot{\\mathbf v}=\\mathbf F$ | 动力学 | 动量定理 | 几乎无（显式欧拉即可，误差 O(h)） | 质量变化（linear.variable-mass） |\n| $\\dot R=[\\boldsymbol\\omega]_\\times R$ | 运动学 | $SO(3)$ 的李群结构 | **保正交**：显式积分漂移出流形 | angular.drift（一步 $\\det=1.01$） |\n| $I\\dot{\\boldsymbol\\omega}+\\boldsymbol\\omega\\times I\\boldsymbol\\omega=\\boldsymbol\\tau$ | 动力学 | 角动量定理 | 陀螺项不可丢；$\\boldsymbol\\omega(t)$ 一般无初等解析解 | angular.gyro（丢项 ⟹ 角动量持续漂移） |\n\n**两层的分工。** 运动学两条只说「状态怎么随时间滑动」（$\\mathbf v$、$\\boldsymbol\\omega$ 是搬运速度）；动力学两条说「搬运速度怎么被力改变」。$\\mathbf F$ 与 $\\boldsymbol\\tau$ 由同一批外力供给——重力给 $\\mathbf F$；接触力既给 $\\mathbf F$ 又给 $\\boldsymbol\\tau = \\sum_i \\mathbf r_i\\times\\mathbf F_i$（$\\mathbf r_i$ 为作用点相对质心的位置），这正是与 H8.3、H8.1 耦合的接口。\n\n**选择判据（实现顺序）。** 只需要位置轨迹 ⟹ 只上线性两条；需要姿态 ⟹ 加角两条，且先解决「待在 $SO(3)$」（投影或四元数），再考虑格式（RK4 够用还是上辛格式，见 G1.1 / G1.2）；$\\boldsymbol\\omega\\times I\\boldsymbol\\omega$ 每步都要算，一次都不能省。",
+      "links": [
+        "G1.1",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "H8.1 流体：刚体-流体双向耦合（浮力→F，阻力矩→τ）",
+        "H8.3 布料/软体：约束求解器的反作用力按力+力矩拆开回传",
+        "lie1.4 / lie1.6：SO(3)、SE(3) 是姿态方程的数学骨架",
+        "G1.1 / G1.2：RK4 推进 vs 辛积分保能量",
+        "M7：变分积分器给刚体离散拉格朗日视角",
+        "de1.9 / de4.7：适定性与「模拟即解 ODE」的宏观视角"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 158,
+        "line_end": 164
+      },
+      "fill_hint": "每条一句话说清「谁用哪部分」，不展开全文；P 组链接按规格挂在积分（P7.2）与对角化（P6.3）上。",
+      "content": "每条一句话说清「谁用了 H8.2 的哪部分」：\n- **H8.1 流体模拟**：刚体与流体双向耦合——流体给刚体浮力与阻力（进 $\\mathbf F$、$\\boldsymbol\\tau$），刚体给流体动边界；刚体侧的运动方程就是本单元四条。\n- **H8.3 布料与软体**：约束求解器算出的接触反作用力要按「力 + 对质心的力矩」拆开回传给刚体——linear.quantifiers ②（力取全）与 angular.quantifiers ⑤（力矩取全）正是接口契约。\n- **lie1.4 / lie1.6**：姿态方程的每一处结构（反对称、指数映射、$SO(3)$ 群）在李群单元有系统版本；$SE(3)$ 把线+角合并，机器人与绑定用它。\n- **G1.1 / G1.2**：RK4 是推进这套 ODE 的通用解；辛积分器解决长时间翻滚的能量漂移。\n- **M7 变分积分器**：刚体的离散拉格朗日视角，天然保动量映射，是 G1.2 的深化。\n- **de1.9 / de4.7**：状态 $(\\mathbf x,\\mathbf v,R,\\boldsymbol\\omega)$ 的 18 维 ODE 适定性由存在唯一性定理背书；「模拟即解微分方程」的宏观视角在 de4.7。\n- **P 组**：质心位移=速度积分（P7.2）；姿态更新的矩阵指数在对角化/特征值工具（P6.3）下可显式计算——标准技法都在 P 篇。",
+      "links": [
+        "H8.1",
+        "H8.3",
+        "lie1.4",
+        "lie1.6",
+        "G1.1",
+        "G1.2",
+        "M7",
+        "de1.9",
+        "de4.7",
+        "P6.3",
+        "P7.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H8.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：刚体转动（后端数值积分）",
+      "keywords": [
+        "档2 planned-backend：陀螺项使一般转动无初等解析解，必须数值积分",
+        "需长时程迭代 + 多格式对拍（显式欧拉 / RK4 / 隐式中点 / 指数映射）",
+        "演示A：网球拍翻转——中间主轴不稳定的 ω 分量交换",
+        "演示B：R 的正交性漂移随步数累积（对拍 angular.drift 的一步解析值）",
+        "演示C：删陀螺项 vs 保留的 ω(t) 轨迹分叉"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 158,
+        "line_end": 164
+      },
+      "fill_hint": "后端实现时优先演示A（最有戏剧性）；angular.drift 的一步解析值可作演示B的第一个校验点；契约建立路径参考 A1.3:general.viz 的演进方式。",
+      "content": "单元级演示总览（规划）。最有价值的三个画面：\n1. **网球拍翻转**：$I=\\mathrm{diag}(1,2,3)$、初速绕中间主轴加微扰，画 $\\omega_2(t)$ 的周期性翻转发散——陀螺项直接后果的活体展示；\n2. **正交性漂移**：显式欧拉 vs 指数映射更新 $R$，横轴步数、纵轴 $\\det R - 1$ 与列范数误差（对数轴）——与 angular.drift 的一步解析值 $1.01$【待核验:1+0.1*0.1】对拍；\n3. **删项对照**：同一初值下 $I\\dot\\omega=\\tau$（误删版）与完整欧拉方程的 $\\|\\boldsymbol\\omega(t)-\\boldsymbol\\omega(0)\\|$ 曲线，前者平线、后者有界振荡。\n\n三者都需要长时程积分与格式对拍，属「后端计算」档（Q1–Q3），不做前端直渲。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "陀螺项下 ω(t) 无初等解析解，需长时程数值积分并多格式对拍；正交性漂移要累计成百上千步才直观，超出前端单帧计算能力。",
+        "params_hint": {
+          "inertia": [
+            1,
+            2,
+            3
+          ],
+          "omega0": [
+            0.05,
+            1.0,
+            0
+          ],
+          "tau": [
+            0,
+            0,
+            0
+          ],
+          "t_end": 30,
+          "integrators": [
+            "explicit-euler",
+            "rk4",
+            "implicit-midpoint",
+            "exp-map"
+          ],
+          "plots": [
+            "omega-components",
+            "orthogonality-drift",
+            "gyro-on-off"
+          ]
+        }
+      },
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

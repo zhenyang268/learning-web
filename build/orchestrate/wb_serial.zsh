@@ -25,6 +25,11 @@ json_ok() {
 }
 
 round=0
+stall=0          # 连续无进展轮数
+stalled=0        # 是否卡住退出（1=卡住，供上层全量驱动判断是否中止）
+prev_done=-1
+MAXROUND=60      # 硬上限，防意外死循环
+MAXSTALL=3       # 连续 3 轮 gap 不减少 → 判定卡住（多半 429），停手不烧额度
 while true; do
   gap=()
   for c in "${codes[@]}"; do json_ok "$c" || gap+=("$c"); done
@@ -33,9 +38,20 @@ while true; do
   if [ ${#gap} -eq 0 ]; then
     echo "=== $batch 全部 gen 落盘 ==="; break
   fi
+  if [ "$done_n" -le "$prev_done" ]; then stall=$((stall+1)); else stall=0; fi
+  prev_done=$done_n
+  if [ $stall -ge $MAXSTALL ]; then
+    echo "!!! 连续 $stall 轮无进展（剩 ${gap[*]}）——疑似 429/系统性故障，停手。缺口留待额度恢复后重跑（幂等）。"
+    stalled=1; break
+  fi
   round=$((round+1))
+  if [ $round -gt $MAXROUND ]; then echo "!!! 达最大轮数 $MAXROUND，停手。"; stalled=1; break; fi
   echo "--- 第 $round 轮，缺口 ${#gap[@]}：${gap[*]} ---"
   MAXPAR=1 GEN_MODEL="$MODEL" zsh build/orchestrate/pipeline.zsh wbdispatch "$batch"
   zsh build/orchestrate/pipeline.zsh wbcollect "$batch" --wait
 done
-echo "=== 驱动结束。下一步（主控）：抽查数学 + inject_meta + verify_kb + commit ==="
+if [ "$stalled" = "1" ]; then
+  echo "=== 驱动卡住退出（exit 2）。缺口幂等，额度恢复后重跑即续。 ==="
+  exit 2
+fi
+echo "=== 驱动结束（exit 0）。下一步（主控）：抽查数学 + inject_meta + verify_kb + commit ==="

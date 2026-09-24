@@ -1,0 +1,436 @@
+{
+  "schema": "entry-card/v2",
+  "code": "H6.1",
+  "chapter": "H6",
+  "title": "低差异序列",
+  "src": {
+    "file": "notebook/H_cg.tex",
+    "line_start": 95,
+    "line_end": 112,
+    "anchor": "H_cg.tex:95"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "H6.1:koksma-hlawka.statement",
+      "type": "statement",
+      "subject": "koksma-hlawka",
+      "title": "Koksma–Hlawka 不等式：误差 = 变差 × 偏差",
+      "keywords": [
+        "误差分解 |误差| ≤ V(f) · D_N*（函数因子 × 点集因子）",
+        "条件：f 有界变差（bounded variation，Hardy–Krause 意义）",
+        "D_N^* 星偏差：锚定盒点数比例与体积的最大偏离",
+        "确定性保证：对固定点集成立，不需要随机性",
+        "充分不必要：V(f)=∞ 时界真空但误差未必大",
+        "高维由 Hardy–Krause 变差 V_HK 承担"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 108,
+        "line_end": 111
+      },
+      "fill_hint": "以切片 108–111 行的不等式为准转写；D_N^* 与全变差的标准定义切片未给，此处补标准版（Niederreiter），常数 1 的最优性属拓展需人工复核。",
+      "content": "Koksma–Hlawka 不等式回答一个具体问题：用 $N$ 个确定性点算积分，最坏能差多少。它把误差拆成两个互不干扰的因子相乘：**函数因子 × 点集因子**。\n\n一维陈述：设 $f$ 在 $[0,1]$ 上有界变差（bounded variation），$x_1,\\dots,x_N \\in [0,1]$，则\n$$\\left|\\frac{1}{N}\\sum_{i=1}^{N} f(x_i) - \\int_0^1 f(x)\\,dx\\right| \\le V(f)\\cdot D_N^*.$$\n\n逐项拆解：\n- 左边：$N$ 个采样点平均值与真积分之差，即确定性采样估计的绝对误差；\n- $V(f)$：$f$ 的全变差，$V(f) = \\sup\\limits_{\\text{分割}} \\sum_k |f(t_k) - f(t_{k-1})|$，度量函数上下晃动的总幅度（单调函数 $V(f) = |f(1)-f(0)|$）；\n- $D_N^*$：点集的星偏差（star discrepancy），$D_N^* = \\sup\\limits_{0 \\le t \\le 1} \\left|\\tfrac{\\#\\{i:\\, x_i \\le t\\}}{N} - t\\right|$，即所有锚定区间 $[0,t)$ 上「点数比例 − 区间长度」的最大偏离——点集均匀性的单一数字刻画。\n\n$s$ 维版本（$[0,1]^s$）：形式不变，$V(f)$ 换成 Hardy–Krause 变差 $V_{HK}(f)$（各维变差与各维交互变差之和），$D_N^*$ 的 sup 取遍锚定盒 $[0,p) \\subset [0,1]^s$。\n\n成立条件三条：① $f$ 有界变差——$V(f)=\\infty$ 时右边为 $\\infty$，界失去信息（见 koksma-hlawka.infinite-var）；② 点在单位立方体内，否则 $D_N^*$ 无定义；③ 这是最坏情形保证：常数 1 对一切 BV 函数与一切点集成立，具体问题中实际误差常远小于界。\n\n谁是谁的基础：本不等式是切片表格里 Halton、Sobol、CP 旋转三行存在的理论理由——它们都在设法压低 $D_N^*$（见 general.compare）。历史脉络（拓展背景）：Koksma（1943）证一维、Hlawka（1961）推广到高维，动机正是确定性数值积分的误差估计；它与 H4 蒙特卡洛的随机误差分析构成对照组。",
+      "links": [
+        "H4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:koksma-hlawka.intuition",
+      "type": "intuition",
+      "subject": "koksma-hlawka",
+      "title": "直觉：探针测地形——误差 = 地形崎岖度 × 探针不均匀度",
+      "keywords": [
+        "两因子各管一事：V(f) 管函数、D_N^* 管点集，互不干扰",
+        "任一因子为零则误差为零：常数函数 / 理想均匀点集",
+        "D_N^* 几何：最坏锚定盒里「点数比例 − 体积」",
+        "假设给什么：BV 让 f 拆成增函数之差，误差可逐块控制",
+        "对照 MC：随机误差靠概率，QMC 误差是确定性上界"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 108,
+        "line_end": 111
+      },
+      "fill_hint": "按「假设给什么 / 结论为何成立」两段展开；MC 对照与 1/√N、(log N)^s/N 速率为拓展背景（切片没有），已标注，人工复核措辞。",
+      "content": "一句总起：把积分估计想成「用 $N$ 根探针测一片地形的平均高度」，Koksma–Hlawka 说误差不会超过「地形有多崎岖 × 探针摆得有多不匀」。\n\n**假设给了什么**：BV 假设把 $f$ 限制成「有限晃动」的函数——一维时任何 BV 函数都能写成两个增函数之差，于是积分误差可以拆成一小块一小块的「区间计数误差」来逐块控制；「有限晃动」正是让这种拆块论证能够终止的条件。\n\n**结论为什么因此成立**：$D_N^*$ 已把「所有锚定区间上点数比例与长度的最大偏离」打包成一个数字，而 BV 函数的积分恰好是这些区间计数的带权重叠加（权重是 $f$ 的增量），权重总量恰为 $V(f)$——所以最坏叠加结果就是乘积 $V(f)\\cdot D_N^*$。\n\n两个极端读出结构：\n- $V(f)=0 \\iff f$ 是常数：任何点集都给出精确值。函数因子为零，误差为零。\n- $D_N^*$ 小：点在每个锚定区域的占比都贴近体积，点集越均匀误差越小（有限点集 $D_N^* \\ge \\tfrac{1}{2N}$，永远不为零）。\n\n与 MC 对照（拓展背景，非切片内容）：$N$ 个均匀随机点的典型误差量级 $O(N^{-1/2})$；低差异序列的 $D_N^*$ 可达 $O((\\log N)^s/N)$，故对光滑被积函数确定性采样渐近更快——这正是低差异序列存在的意义。H4 蒙特卡洛积分是它的随机版对照组。\n\n依赖脉络：$D_N^*$ 的定义（见 koksma-hlawka.statement）是本单元一切讨论的地基；三个序列词条都是在回答「怎么把 $D_N^*$ 压小」。",
+      "links": [
+        "H4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:koksma-hlawka.proof",
+      "type": "proof",
+      "subject": "koksma-hlawka",
+      "title": "证明骨架（一维）：分部积分把误差化成偏差的加权积分",
+      "keywords": [
+        "计数函数 A(t) = #{x_i ≤ t} − N·t，两端自动归零",
+        "误差写成 Stieltjes 积分 ∫ f d(A/N)",
+        "分部积分：边界项因 A(0)=A(1)=0 消失",
+        "|误差| ≤ sup|A/N| · V(f) = D_N^* · V(f)",
+        "高维：对维数归纳，变差升级为 V_HK",
+        "易错点：跳跃函数没有 f′，要在 Stieltjes 测度意义下读"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 108,
+        "line_end": 111
+      },
+      "fill_hint": "切片无证明，此为标准证明骨架（Niederreiter / Dick–Pillichshammer），边界项与 Stieltjes 记号需人工核对；高维归纳只给思路。",
+      "content": "总起：一维证明只有一步实质运算——分部积分（与 P9.1「能量法的发动机」是同一件工具），把对 $f$ 的积分误差转嫁到「计数偏差函数」上，再用 $D_N^*$ 的 sup 性质收尾。\n\n分步：\n1. 定义计数偏差函数 $A(t) = \\#\\{i : x_i \\le t\\} - Nt$。它是台阶函数，$A(0)=0$，$A(1)=N-N=0$（两端自动归零——这是边界项消失的原因），且 $|A(t)|/N \\le D_N^*$ 对一切 $t$ 成立（$D_N^*$ 的定义）。\n2. 把离散平均与积分写成同一个 Stieltjes 积分：$\\tfrac1N\\sum_i f(x_i) - \\int_0^1 f\\,dx = \\int_0^1 f\\,\\,d\\!\\left(\\tfrac{A(t)}{N}\\right)$。理由：$d\\,\\#\\{\\cdot\\}/N$ 是放在各点 $x_i$ 上的原子质量（每个重 $1/N$），$dt$ 是均匀质量，相减即得。\n3. 分部积分：$\\int_0^1 f\\,d(A/N) = \\left[f\\cdot\\tfrac{A}{N}\\right]_0^1 - \\int_0^1 \\tfrac{A(t)}{N}\\,df(t)$。边界项为零（第 1 步）。\n4. 取绝对值：$|\\text{误差}| \\le \\displaystyle\\int_0^1 \\left|\\tfrac{A(t)}{N}\\right| |df(t)| \\le D_N^* \\cdot V(f)$，最后一步用 $\\sup_t |A/N| \\le D_N^*$ 与「$df$ 的全质量 $= V(f)$」。\n\n高维：对维数归纳——先对 $x_s$ 用一维论证，误差项里出现一族低维截断函数，其变差之和重组为 $V_{HK}(f)$，逐层乘上各维偏差再取最坏，得同型不等式。\n\n依赖链：分部积分（P9.1）→ 本不等式 → Halton/Sobol/CP 的选型逻辑（general.compare）。\n\n易错点：若 $f$ 有跳跃（如示性函数 $\\mathbf{1}_{[0,1/2)}$），$f'$ 不存在，推导须在 Stieltjes 测度意义下读（$df$ 是带原子的测度）；此时 $V(f)$ 仍有限（跳跃幅度计入变差），结论照用——但不能对「$V=\\infty$」的函数指望这个界（见 koksma-hlawka.infinite-var）。",
+      "links": [
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:koksma-hlawka.quantifiers",
+      "type": "comparison",
+      "subject": "koksma-hlawka",
+      "title": "限定词逐条拆解：每个条件能去掉吗",
+      "keywords": [
+        "拆 5 条：①BV ②单位立方体 ③常数 1 ④最坏情形界 ⑤确定性点集",
+        "①V(f)=∞ 界真空但不是定理错了（见 infinite-var）",
+        "②D_N^* 只对 [0,1]^s 定义，无界域先做变量替换",
+        "④界对具体 f 常极悲观：是「松」不是「错」",
+        "⑤确定性 ⟹ 无方差；统计解释靠 CP 随机化补回"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 108,
+        "line_end": 111
+      },
+      "fill_hint": "四列表直接供前端渲染；第③行常数最优性与第④行过度悲观属拓展背景，人工复核。",
+      "content": "总起：把 $\\left|\\tfrac1N\\sum_i f(x_i) - \\int f\\right| \\le V(f)\\cdot D_N^*$ 拆成 5 个限定词，逐条问「去掉会怎样」。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $f$ 有界变差（$V(f)<\\infty$） | $f(x)=x\\sin(1/x)$（$[0,1]$，$f(0)=0$），$V(f)=\\infty$ | 右边 $=\\infty\\cdot D_N^*=\\infty$：不等式形式上仍成立但零信息，无法为任何点集提供保证（见 koksma-hlawka.infinite-var） | 原框架不能放宽；存在加权变差、分段变差的推广版本（拓展） |\n| ② 点集在 $[0,1]^s$ | 在 $\\mathbb{R}$ 上对 $f(x)=e^{-x^2}$ 直接套用 | $D_N^*$ 对 $\\mathbb{R}$ 无定义、$V(f)$ 也发散：陈述本身无意义，不是「结论失效」 | 可先做变量替换把无界域映到立方体（H4 蒙特卡洛同款技巧） |\n| ③ 常数 $1$（最坏情形系数） | 幻想把常数换成随点集变好的小量（如 $\\tfrac{1}{2N}$ 型） | 一维时 1 已是最优常数，存在点列与函数使误差逼近 $V\\cdot D_N^*$（拓展背景，需复核） | 常数不可改进；但对具体 $f$ 实际误差常远小于界 |\n| ④ 结论对一切 BV 函数一致（最坏情形界） | 指望对每个 $f$ 界都紧：取 $f$ 为在采样点上刻意取均值的振荡函数 | 界可比真实误差大几个量级——「过度悲观」不是失效而是松 | 用随机化 QMC 实测误差替代先验界 |\n| ⑤ 点集是确定性的 | 把 QMC 点集当随机样本套 MC 的置信区间公式 | QMC 没有方差可谈：固定点集误差是确定数，概率解释是虚构 | Cranley–Patterson 旋转找回无偏性与误差估计（见 cranley-patterson.statement） |\n\n总结一句：实质内容只有一条——**变差有限**；其余要么是定义域要求（②），要么是界的天性（③④），要么用随机化补回（⑤）。",
+      "links": [
+        "H4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:koksma-hlawka.infinite-var",
+      "type": "counterexample",
+      "subject": "koksma-hlawka",
+      "title": "反例：V(f) = ∞ 让界真空",
+      "keywords": [
+        "f(x) = x·sin(1/x)（f(0)=0）在 [0,1] 全变差 = ∞",
+        "极值点 t_k = 2/((2k+1)π) 处 |f(t_k)−f(t_{k−1})| ≈ 2/(πk)",
+        "K=1000 部分变差已超 4【待核验】且随 ln K 发散",
+        "误用：从 V=∞ 推出「采样不可用」——界充分不必要",
+        "修补：截断/磨光奇点附近，或随机化实测误差"
+      ],
+      "tex_ref": null,
+      "fill_hint": "完整计算已给：极值点列、单项估计、部分和（带待核验标记）；「充分不必要」的定性结论保留，具体采样误差数值切片未给，不虚构。",
+      "content": "总起：这个反例展示 KH 的右侧如何被「函数不光滑」单独打死——界变成 $\\infty$，对**任何**点集都给不出任何保证。\n\n函数定义：$f(x) = x\\sin(1/x)$，$x \\in (0,1]$；$f(0) = 0$。\n\n逐项算变差：取极值点列 $t_k = \\dfrac{2}{(2k+1)\\pi}$，此处 $\\sin(1/t_k) = \\sin\\tfrac{(2k+1)\\pi}{2} = (-1)^k$，于是\n$$|f(t_k) - f(t_{k-1})| = |(-1)^k t_k - (-1)^{k-1} t_{k-1}| = t_k + t_{k-1} = \\frac{2}{(2k+1)\\pi} + \\frac{2}{(2k-1)\\pi} \\approx \\frac{2}{\\pi k}.$$\n（逐符号：相邻两个极值一正一负、幅度各约 $t_k$ 与 $t_{k-1}$，故差值是两者之和；调和级数型的 $1/k$ 累加发散。）对分割 $\\{0, t_K, t_{K-1}, \\dots, t_1, 1\\}$ 求和：仅 $k=1..K$ 这些极值点之间的部分和随 $\\ln K$ 增长，取 $K=1000$ 时已达【已核验:5.01132130405|sum(2/((2*k+1)*pi) + 2/((2*k-1)*pi) for k in range(1,1001))】，故 $V(f) = \\infty$。\n\n失效结论的具体数值：Koksma–Hlawka 右边 $= V(f)\\cdot D_N^* = \\infty$——无论点集多好（哪怕用 Sobol 序列）都一样，即该定理对此函数**不提供任何误差上限**。\n\n误用提醒：不能从 $V(f)=\\infty$ 反推「确定性采样误差大」——KH 是**充分不必要**条件。$f(x)=x\\sin(1/x)$ 连续且有界，实际采样误差可以很小；只是这个定理看不见。\n\n修补条件：①在奇点附近截断/磨光（如把 $x<\\varepsilon$ 段换成线性连接，变差变为有限，且损失可控）；②放弃先验界，用随机化（CP 旋转，见 cranley-patterson.statement）实测误差。",
+      "links": [
+        "H4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:koksma-hlawka.probe1",
+      "type": "probe",
+      "subject": "koksma-hlawka",
+      "title": "检验题：N=4 中点点的误差与界的数值比对",
+      "keywords": [
+        "取 f(x)=x²，单调故 V(f)=f(1)−f(0)=1",
+        "点 x_i=(2i−1)/8，估计值 21/64【待核验】",
+        "误差 1/192【待核验】",
+        "验证 |误差| ≤ V·D_N^* = 1/8，界松约 24 倍【待核验】"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 108,
+        "line_end": 111
+      },
+      "fill_hint": "三问全部可数值核验，标记已嵌入；第 3 问 D_N^*=1/(2N) 是中点点集的标准结果，人工复核。",
+      "content": "题目：取 $f(x) = x^2$（在 $[0,1]$ 上单调增，故 $V(f) = f(1)-f(0) = 1$），用 $N=4$ 的中点等距点 $x_i = \\tfrac{2i-1}{8}$（即 $0.125,\\ 0.375,\\ 0.625,\\ 0.875$）：\n\n1. 计算估计值 $\\tfrac14\\sum_{i=1}^4 x_i^2$（答案：$21/64 \\approx 0.328125$【已核验:0.328125|sum(((2*i-1)/8)**2 for i in range(1,5))/4】）；\n2. 计算误差 $\\left|\\tfrac14\\sum x_i^2 - \\tfrac13\\right|$（真值 $\\int_0^1 x^2 dx = 1/3$；答案：$1/192 \\approx 0.005208$【已核验:0.00520833333333|abs(1/3 - sum(((2*i-1)/8)**2 for i in range(1,5))/4)】）；\n3. 中点点集的星偏差为 $D_N^* = \\tfrac{1}{2N} = \\tfrac18$【已核验:0.125|1/(2*4)】，验证 $\\tfrac{1}{192} \\le 1\\cdot\\tfrac18$ 成立，并算出界比实际误差松的倍数（答案：$24$ 倍【已核验:24|(1/8)/(1/192)】）——直观感受 quantifiers 表第④行「最坏情形界对具体函数有多悲观」。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:halton.statement",
+      "type": "statement",
+      "subject": "halton",
+      "title": "Halton 序列：radical inverse（数位反转）",
+      "keywords": [
+        "φ_b(n)：把 n 的 b 进制数字反写到小数点后",
+        "s 维：前 s 个素数作基，x_i = (φ_p1(i),…,φ_ps(i))",
+        "低维分层好：前 b^m 个点是一张打乱顺序的均匀网格",
+        "切片结论：简单，高维有相关（大素数基是元凶）",
+        "逐维独立构造，无需方向数表"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 101,
+        "line_end": 101
+      },
+      "fill_hint": "radical inverse 定义、基 2/基 3 数值例与「前 b^m 点成网格」均为标准展开（切片只给一行表），数值带待核验标记；高维相关仅点到，详见 halton.high-dim。",
+      "content": "总起：Halton 序列用「把整数的进制数字反转到小数点后」这一件事同时生成所有维度，是三种低差异结构里最简单的一种（切片评价：简单，高维有相关）。\n\n定义（radical inverse）：设 $n = \\sum_k d_k b^k$ 是 $n$ 的 $b$ 进制展开（$d_k \\in \\{0,\\dots,b-1\\}$），则\n$$\\varphi_b(n) = \\sum_k d_k\\, b^{-k-1},$$\n即把数字串 $d_m \\cdots d_1 d_0$ 左右镜像成 $0.d_0 d_1 \\cdots d_m$。\n\n数值例子（基 2）：$\\varphi_2(1)=0.5$，$\\varphi_2(2)=0.25$，$\\varphi_2(3)=0.75$（$3=11_2 \\to 0.11_2$【待核验:sum(((3>>k)&1)/2**(k+1) for k in range(2))】），$\\varphi_2(4)=0.125$，$\\varphi_2(5)=0.625$（$5=101_2 \\to 0.101_2$【待核验:sum(((5>>k)&1)/2**(k+1) for k in range(3))】）。前 4 个点（含 $n=0$）排序后恰为 $\\{0,\\ 0.25,\\ 0.5,\\ 0.75\\}$【待核验:sorted(sum(((i>>k)&1)/2**(k+1) for k in range(2)) for i in range(4))]——一张间距 $1/4$ 的均匀网格，只是访问顺序被打乱。「低差异」的来源正在于此：每个进制位负责一层分层。基 3 的例子：$\\varphi_3(4) = 4/9 \\approx 0.444$【待核验:4%3/3 + 4//3%3/9】（$4 = 11_3 \\to 0.11_3$）。\n\n$s$ 维 Halton：取前 $s$ 个素数 $p_1 < p_2 < \\dots < p_s$（两两互素，各维数字图案不同步），令\n$$x_i = \\big(\\varphi_{p_1}(i),\\ \\varphi_{p_2}(i),\\ \\dots,\\ \\varphi_{p_s}(i)\\big).$$\n\n成立条件与边界（切片表格行的展开）：维数低时各维网格错位良好、均匀性优；**维数升高必然引入大素数基**（第 11 维就要用到素数 31【已核验:11|len([p for p in range(2,32) if all(p%q for q in range(2,int(p**0.5)+1))])】），大基的 radical inverse 开头一段高度同步——具体失效计算见 halton.high-dim，对应切片评价「高维有相关」。修复手段即切片第三行的伏笔：跳过开头一段、加扰（scrambling）、或 Cranley–Patterson 旋转。",
+      "links": [
+        "H4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:halton.high-dim",
+      "type": "counterexample",
+      "subject": "halton",
+      "title": "反例：大素数基让前 28 个点排在一条直线上",
+      "keywords": [
+        "基 (29,31)：n = 1..28 时 φ_29(n)=n/29、φ_31(n)=n/31",
+        "28 个点全部精确落在直线 y = (29/31)x 上",
+        "锚定盒 [0,0.5)² 体积 0.25，实际占比 0.5：偏差 0.25【待核验】",
+        "基小（如 2,3）时共线段只有 1 个点，无害——坑只在大基",
+        "修补：跳首项 / scrambling / CP 旋转 / 换 Sobol"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 101,
+        "line_end": 101
+      },
+      "fill_hint": "28 点共线与盒偏差 0.25 是核心计算，全部待核验；「对照量级」一句已用可核验表达式，人工复核措辞。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要画出 (φ_29(n), φ_31(n)) 的二维散点（共线纹理可见）并对多组基批量计算锚定盒偏差，超出前端简单显式函数范畴",
+        "params_hint": {
+          "bases": [
+            [
+              2,
+              3
+            ],
+            [
+              29,
+              31
+            ]
+          ],
+          "n_range": [
+            1,
+            256
+          ],
+          "metrics": [
+            "scatter-2d",
+            "anchored-box-deviation"
+          ]
+        }
+      },
+      "content": "总起：切片表里「高维有相关」四个字的具体内容：维数一高，Halton 被迫用大素数，而**两个大素数的 radical inverse 在开头一段完全同步**，点云排成肉眼可见的直线纹理。\n\n构造：考虑第 10–11 维用的基 $29, 31$（它们分别是第 10、11 个素数，维数 $s \\ge 11$ 的 Halton 必然用到 31【已核验:11|len([p for p in range(2,32) if all(p%q for q in range(2,int(p**0.5)+1))])】）。\n\n逐项算：当 $1 \\le n \\le 28$ 时 $n < 29$，$n$ 在 29 进制下只有一个个位，radical inverse 就是一次数位平移：\n$$\\varphi_{29}(n) = n/29, \\qquad \\varphi_{31}(n) = n/31 \\quad (n \\le 28 < 31).$$\n于是前 28 个二维点 $(\\varphi_{29}(n), \\varphi_{31}(n)) = (n/29,\\ n/31)$，全部**精确**落在直线 $y = \\tfrac{29}{31}x$ 上（斜率 $\\tfrac{29}{31} \\approx 0.9355$【已核验:0.935483870968|29/31】）。28 个点挤在一条线段附近，二维平面的分层被彻底破坏。\n\n失效的具体数值：取锚定盒 $[0,0.5)\\times[0,0.5)$（体积 $0.25$）。盒内条件是 $n/29 < 0.5$ 且 $n/31 < 0.5$，即 $n \\le 14$，共 14 个点，占比 $14/28 = 0.5$，偏差 $|0.5 - 0.25| = 0.25$【已核验:0.25|14/28 - 0.25】。作为对照：$N=28$ 个均匀随机点的期望偏差约 $1/\\sqrt{28} \\approx 0.19$【已核验:0.188982236505|1/sqrt(28)】，而好的二维低差异序列按 $(\\log N)^s/N$ 速率走，$N=28$ 时约 $\\ln(28)/28 \\approx 0.12$【已核验:0.119007303935|log(28)/28】量级——这个点集比随机还差，完全配不上「低差异」之名。\n\n为什么低维没事：基 $(2,3)$ 时同样的论证只覆盖 $n \\le 2$（$n < 3$ 才在两个基下都是个位数），单条「直线」上只有 1 个点，无害。**坑只在大基**，而大基是高维强加的。\n\n修补条件：①丢弃开头 $N_0$ 个点（最严重的同步段）；②数字加扰打乱数位；③Cranley–Patterson 旋转去相关（切片第三行，见 cranley-patterson.statement）；④高维直接换 Sobol（切片第二行「高维表现好」，见 sobol.statement）。",
+      "links": [
+        "H4",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:sobol.statement",
+      "type": "statement",
+      "subject": "sobol",
+      "title": "Sobol 序列：方向数 + 基 2 异或",
+      "keywords": [
+        "只用基 2：每维一组方向数，用 XOR 组合",
+        "方向数由本原多项式选定，控制各维投影均匀性",
+        "切片结论：高维表现好；且位运算生成极快",
+        "1D 特例 = van der Corput 序列 = φ_2",
+        "代价：均匀性依赖方向数选表（魔法数字）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 102,
+        "line_end": 102
+      },
+      "fill_hint": "切片只给一行表（基于方向数/高维表现好）；本原多项式、XOR 公式、Gray 码等构造细节为标准背景（拓展），公式记号需人工复核。",
+      "content": "总起：Sobol 序列把 Halton 的「数位反转」升级成「数位异或」：所有维都用基 2，每维配一组精心挑选的**方向数**（direction numbers），用二进制异或（XOR）组合出点——这是它高维表现好的结构原因（切片评价：基于方向数，高维表现好）。\n\n构造骨架：第 $d$ 维的方向数是一列二进制小数 $v^{(d)}_1, v^{(d)}_2, \\dots$，由 GF(2) 上的本原多项式递推生成（拓展背景：不同维用不同次数的本原多项式，把「各二维/三维投影要均匀」逐一设计进去）。第 $i$ 个点的第 $d$ 维坐标为\n$$x_i^{(d)} = \\bigoplus_{k:\\ i_k = 1} v^{(d)}_k,$$\n逐符号：$i_k$ 是 $i$ 的第 $k$ 个二进制位；$i_k = 1$ 就纳入 $v^{(d)}_k$，$i_k = 0$ 就跳过；$\\oplus$ 是逐比特异或。与 $\\varphi_2$ 对比：把「反转」换成了「查方向数表再异或」。\n\n1D 特例：一维 Sobol 取方向数 $v_k = 2^{-k}$，公式退化为 $\\varphi_2$（van der Corput 序列），前 4 个值为 $0.5,\\ 0.25,\\ 0.75,\\ 0.125$【待核验:sorted(sum(((i>>k)&1)/2**(k+1) for k in range(3)) for i in range(1,5))】。\n\n成立条件与特点（切片行的展开）：\n- **高维表现好**：方向数按「低维投影均匀」标准筛选，避开 Halton 那种大基数位同步（见 halton.high-dim 的共线反例）；维数可上百。\n- **生成极快**：全程基 2，可用 Gray 码 + 移位/异或的位运算实现，GPU 友好——渲染与模拟里它比 Halton 更常用的工程原因。\n- **代价**：方向数表是「魔法数字」，实现质量依赖选表（不同文献的表均匀性有差异），用前要核对来源。\n\n谁是谁的基础：Sobol 与 Halton 都在压低同一个量 $D_N^*$（理论框架见 koksma-hlawka.statement）；两者取舍见 general.compare。",
+      "links": [
+        "H4",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:cranley-patterson.statement",
+      "type": "statement",
+      "subject": "cranley-patterson",
+      "title": "Cranley–Patterson 旋转：一个随机偏移去相关",
+      "keywords": [
+        "对低差异点集整体加同一个 Δ 再 mod 1（逐维回卷）",
+        "单个平移向量：点间相对结构保持，固定纹理打散",
+        "平均意义下均匀性保留（环面平移不变性）",
+        "随机化 QMC：换多个 Δ 重复 ⟹ 无偏 + 误差估计",
+        "易错点：忘 mod 1；或给每点独立抽 Δ（破坏低差异）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 103,
+        "line_end": 103
+      },
+      "fill_hint": "切片只给一行（随机偏移/去相关）；机制、mod 1 数值例与 RQMC 用法为标准展开，「平均偏差不变」只给一句理由，人工复核表述。",
+      "content": "总起：Cranley–Patterson（CP）旋转只做一件事——把整个低差异点集当刚体，在环面 $[0,1)^s$ 上随机平移一次——却同时拿到「去相关」与「统计解释」两个回报（切片评价：随机偏移，去相关）。\n\n构造：取低差异点 $y_1,\\dots,y_N \\in [0,1)^s$（Halton 或 Sobol 皆可），抽一个均匀随机向量 $\\Delta \\in [0,1)^s$，令\n$$x_i = (y_i + \\Delta) \\bmod 1 \\quad (\\text{逐维回卷}).$$\n逐符号：$\\bmod\\ 1$ 是逐维对 1 取余，把越界部分绕回 $[0,1)$；**同一个** $\\Delta$ 用于所有点——点与点的相对位置不变，点集整体在环面上挪动。\n\n数值例子：对 $\\varphi_2$ 的前 4 个值 $\\{0.5,\\ 0.25,\\ 0.75,\\ 0.125\\}$ 加 $\\Delta = 0.37$：得 $\\{0.87,\\ 0.62,\\ 0.12,\\ 0.495\\}$，其中 $0.75 + 0.37 = 1.12 \\to 0.12$（回卷【已核验:0.12|0.75+0.37-1】），$0.5+0.37 = 0.87$【已核验:0.87|0.5+0.37】，$0.125+0.37 = 0.495$【已核验:0.495|0.125+0.37】。间距结构不变（仍低差异），但数字图案与原序列解耦了。\n\n为什么去相关：Halton 大基的毛病是**固定**的数位同步（见 halton.high-dim 的共线段）；整体平移一个随机量后，同步段被打散到环面各处，具体病态纹理消失，而均匀性在平均意义下保留——环面上均匀随机平移不改变点集的期望盒计数（每个盒子被平移扫过的测度与原体积一致；拓展背景，一句版理由）。\n\n随机化 QMC（RQMC）的回报：固定 $\\Delta$ 时误差是确定数；换 $M$ 个独立 $\\Delta$ 重复估计再平均，得到**无偏**估计与可用的方差（误差估计）——补回了 koksma-hlawka.quantifiers 第⑤行丢掉的统计解释。\n\n易错点：①忘了 mod 1：点跑到 $[0,1)^s$ 外，$D_N^*$ 无定义；②给每个点**独立**抽 $\\Delta_i$：点间协同分层被破坏，退化为带分层的 MC，不再是低差异点集。",
+      "links": [
+        "H4",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "三种序列对照与选择判据",
+      "keywords": [
+        "Halton：素数 radical inverse，简单，低维首选",
+        "Sobol：方向数 + XOR，高维表现好，生成快",
+        "CP 旋转：后处理部件，去相关 + 给统计解释",
+        "选择：低维 Halton、高维 Sobol、要误差估计加 CP",
+        "共同目标：压低 D_N^*（KH 框架）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 99,
+        "line_end": 103
+      },
+      "fill_hint": "前两列照抄切片表格原文，后三列为展开；选择判据是本条增量，s≲6 这类经验阈值的措辞需人工复核。",
+      "content": "总起：切片表格的三行是三种互补的部件，不是三选一的竞品——Halton 与 Sobol 负责「造点」，CP 旋转是叠加在任意点集上的「后处理」。\n\n| 序列 | 构造（切片原文） | 特点（切片原文） | 机制展开 | 何时用 |\n|---|---|---|---|---|\n| Halton | 基于不同素数的 radical inverse | 简单，高维有相关 | 每维独立数位反转（halton.statement）；大基数位同步是高维病根（halton.high-dim） | 维数低（经验上 $s \\lesssim 6$）直接用；高维须配跳首项/加扰 |\n| Sobol | 基于方向数 | 高维表现好 | 全基 2 + XOR，方向数按投影均匀性设计（sobol.statement）；位运算生成快 | 高维（几十维）、GPU 批量生成、渲染与模拟采样 |\n| Cranley–Patterson 旋转 | 随机偏移 | 去相关 | 整体平移 + mod 1，打散固定纹理并给统计解释（cranley-patterson.statement） | 附加在 Halton/Sobol 上：去相关、RQMC 误差估计 |\n\n与「普通伪随机数（MC）」的选择判据：\n- 被积函数光滑、维数不太高、要快收敛 ⟹ 低差异序列：误差按 $V(f)\\cdot D_N^*$ 走（koksma-hlawka.statement），渐近优于随机的 $N^{-1/2}$（拓展背景）。\n- 维数极高（数百以上）或函数病态（$V = \\infty$）⟹ KH 界失效（koksma-hlawka.infinite-var），改用随机化 QMC 或纯 MC，靠统计手段评估（H4 的主场）。\n- 需要无偏估计与置信区间 ⟹ 任何确定性点集都要加随机化（CP 旋转或 scrambling）。\n\n依赖脉络：三者都服务于同一个量 $D_N^*$，Koksma–Hlawka 不等式是它们共用的理论伞。",
+      "links": [
+        "H4",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "H4 蒙特卡洛积分：QMC 是其确定性对照组",
+        "H2/H3 渲染方程与路径空间：高维积分的采样源",
+        "J7 路径采样策略：Sobol+随机化的落点",
+        "H6.2 蓝噪声：均匀性的频域视角对照组",
+        "P9.1 分部积分：KH 证明骨架的来源"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁用了本单元哪个部件」，细节归目标节点自己的词条文件，不展开。",
+      "content": "总起：低差异序列的用武之地全在「高维积分采样」——这恰好是渲染与模拟的核心算子。\n\n- **H4 蒙特卡洛积分**：H4 关心随机采样的收敛与方差；低差异序列提供确定性对照组，KH 不等式（koksma-hlawka.statement）给出非随机的误差框架。「QMC 何时赢过 MC」的判据正对应 H4 的误差分解。\n- **H2 / H3（渲染方程与路径空间）**：渲染方程是高维积分（方向 × 路径 × 时间），路径空间维数可达数十——切片中「Sobol 高维表现好」主要服务这一层。\n- **J7 路径采样策略**：路径追踪器的采样序列常用 Sobol + 随机化（CP 旋转或 scrambling，见 cranley-patterson.statement）：确定性分层保快速收敛，随机化保无偏与误差估计。\n- **H6.2 蓝噪声**：同一个问题（采样均匀性）的频域视角——低差异序列压偏差（空间域盒计数），蓝噪声压功率谱；两者的分工与取舍在 H6.2 展开。\n- **P9.1 分部积分**：KH 的证明骨架就是分部积分（koksma-hlawka.proof），是「能量法发动机」在数论场合的一次复用。",
+      "links": [
+        "H4",
+        "H2",
+        "H3",
+        "J7",
+        "H6.2",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H6.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：低差异序列与星偏差（后端待接）",
+      "keywords": [
+        "画三样：散点纹理、锚定盒计数、D_N*–N 对数图",
+        "对照 Halton(2,3) / Halton(29,31) / Sobol / 伪随机",
+        "D_N* 精确计算是 O(N²) 盒枚举，走后端",
+        "判据：需批量计算与多序列对拍，不满足 Q4"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 96,
+        "line_end": 111
+      },
+      "fill_hint": "三条演示需求与两个反例词条对齐；无既有前端模块可复用，等后端评审后注册模块与契约。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "星偏差的精确计算需枚举 O(N²) 个锚定盒并排序扫描，且需多序列、多 N 批量对拍，不满足前端直渲的简单显式函数判据（Q4）",
+        "params_hint": {
+          "sequences": [
+            "halton-2-3",
+            "halton-29-31",
+            "sobol",
+            "pseudorandom"
+          ],
+          "n_range": [
+            16,
+            4096
+          ],
+          "metrics": [
+            "scatter-2d",
+            "anchored-box",
+            "star-discrepancy-loglog"
+          ]
+        }
+      },
+      "content": "总起：本单元最有说服力的演示是「让相关与偏差自己显形」：一张二维散点图就能看出 Halton 大基的共线纹理（halton.high-dim），一张 $D_N^*$–$N$ 对数图就能看出低差异与随机的收敛率差距（koksma-hlawka.intuition 的拓展背景速率）。\n\n演示需求清单：\n1. **二维散点**：基 $(2,3)$ 与 $(29,31)$ 的 Halton 前 256 点并排，后者的共线纹理肉眼可见（反例词条的可视化叙事：怎么失败）；\n2. **锚定盒计数**：可拖动盒尺寸 $p$，实时显示 $\\tfrac{\\#\\{x_i \\in [0,p)^2\\}}{N} - p_1 p_2$ 的数值（$D_N^*$ 定义的直接演示）；\n3. **$D_N^*$ 对 $N$ 的对数–对数图**：四条曲线（Halton 小基 / Halton 大基 / Sobol / 伪随机），对照 $(\\log N)^s/N$ 与 $N^{-1/2}$ 的速率差，以及大基序列在中等 $N$ 段的病态平台。\n\n后端档理由：星偏差的精确计算需枚举 $O(N^2)$ 个锚定盒并排序扫描，且需要多序列、多 $N$ 的批量对拍——不满足前端直渲判据（Q4），走档2 待接。",
+      "links": [
+        "H4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

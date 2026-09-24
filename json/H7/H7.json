@@ -1,0 +1,521 @@
+{
+  "schema": "entry-card/v2",
+  "code": "H7",
+  "chapter": "H7",
+  "title": "辐射度量学",
+  "src": {
+    "file": "notebook/H_cg.tex",
+    "line_start": 118,
+    "line_end": 136,
+    "anchor": "H_cg.tex:118"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "H7:ladder.quantifiers",
+      "type": "comparison",
+      "subject": "ladder",
+      "title": "四量适用条件表：用错量会怎样",
+      "keywords": [
+        "Φ 只答总量，同 100 W 下聚光与裸泡指向性差千倍",
+        "I 只对点源有意义，面源凑近即失效",
+        "E 依赖表面朝向：转 60° 照度恰好减半",
+        "L 前提最弱、信息最全，其余三个量都是它的积分",
+        "量纲是身份证：W、W/sr、W/m²、W/(m²·sr) 各对应一个几何自由度"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 124,
+        "line_end": 127
+      },
+      "fill_hint": "四列表逐行对应切片表格四行；各失效数值已加待核验标记需人工复核；「I≈L·A」近似仅对面源远场正向成立，复核表述边界。",
+      "content": "四个量是同一股能量流在不同几何分辨率上的投影：每往细里走一级就多除一个几何自由度，每个量的定义里都藏着一条适用前提；用错分辨率的量，轻则丢信息、重则算错数值。\n\n| 量 | 适用前提 | 用错后的具体失效 | 能否换用 |\n|---|---|---|---|\n| 通量 Φ（W） | 只问穿过某截面或某源发出的总功率 | 两只灯都是 100 W：聚光灯把能量压进 0.01 sr，裸泡摊到全空间 4π≈12.566 sr【已核验:12.5663706144|4*pi】，同 Φ 下指向性相差 4π/0.01≈1256.6 倍【已核验:1256.63706144|4*pi/0.01】——Φ 完全区分不了这两种灯 | 可由 L 积分回收：Φ=∫∫L cosθ dA dω |\n| 强度 I（W/sr） | 源可视为点（源尺寸远小于距离） | 对 1 m² 均匀面板（L=1）凑近看：面板张的立体角随站位变化，沿不同方向看数值也不同，「一个 I」不再描述它——必须升级为 L | 远场正向看时 I≈L·A=1 W/sr 成立（投影极限） |\n| 照度 E（W/m²） | 给定曲面的朝向（法线） | 正对 100 W/m² 平行光的板转过 60°：E=100·cos60°=50 W/m²【已核验:50|100*cos(pi/3)】——丢掉朝向就错一倍 | E 只是 L 的半球积分，可从 L 算出 |\n| 辐射度 L（W/(m²·sr)） | 无：点×方向处处有定义 | 没有「用错」场景；代价是单位最复杂、初学最易漏 cosθ | 其余三个量都是它对不同自由度的积分 |\n\n总结：L 信息最全、前提最少；Φ 信息最粗。渲染一律以 L 为工作变量，需要粗粒度量时再积分——反方向（从 E 还原 L）在方向分布被抹平后不可能。本单元的定点反例见 radiance.cosine。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.quantifiers",
+      "type": "comparison",
+      "subject": "radiance",
+      "title": "L 的限定词拆解：dA、cosθ、dω 各为什么在那里",
+      "keywords": [
+        "① 投影面积 dA·cosθ 而非 dA：斜看面变小",
+        "② 分母 dω：方向分布量，去掉即变 E 的量纲",
+        "③ 分母 dA：去掉即变 I 的量纲",
+        "④ θ∈(0,π/2)：背面来光被自身遮挡，贡献为零",
+        "量纲 W/(m²·sr) 逐一对应定义里的除数"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 127,
+        "line_end": 127
+      },
+      "fill_hint": "表格五行分别对应定义式五个成分；行①的数值即 radiance.cosine 的主算例；「高估恰好 2 倍」仅对满半球均匀场景成立。",
+      "content": "总起：$L = \\frac{d^2\\Phi}{dA\\cos\\theta\\,d\\omega}$ 的每个因子都在回答「除以什么才算密度」；拆掉任何一个，得到的就不是 L 而是另一个量，或干脆是错数。\n\n| 限定词 | 去掉/改错后的具体失效 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 投影面积 dA cosθ（不是 dA） | 对满上半球均匀 L=1 直接对 dω 积分：∫L dω=2π≈6.2832【已核验:6.28318530718|2*pi】，而真值 E=∫L cosθ dω=π≈3.1416【已核验:3.14159265359|pi】——高估 2π/π=2 倍【已核验:2|2*pi/pi】 | 算出的「照度」随口径漂移，物理量对不上 | 不可去；θ 是方向 ω 与法线的夹角 |\n| ② 分母 dω（每立体角） | 去掉 dω 后量纲从 W/(m²·sr) 变 W/m²——那就是 E | L 的方向分布被压扁，无法进 BRDF | 换掉它=换成 E，不再是场量 |\n| ③ 分母 dA（每面积） | 去掉 dA 后量纲变 W/sr——那是强度 I | 面上分布信息丢失 | 同上，量纲是身份证 |\n| ④ θ∈(0,π/2)（只算正面来向） | 若允许背面方向，cosθ<0，均匀环境会积出负照度；物理上背面来光被板自身遮挡 | 积分域必须取上半球 Ω（共 2π sr【已核验:6.28318530718|2*pi】） | 用 max(cosθ,0) 或限制 Ω 为上半球 |\n| ⑤ 对任意线性光场逐点逐方向有定义 | 无需放宽——已是光场最细粒度描述 | —— | 已是最宽 |\n\n总结一句：定义式的三个除数（投影面积、立体角）分别把 L 锚定在「方向分辨 × 面积分辨」的最细档；漏掉 cosθ 这一条有专门的完整反例计算（见 radiance.cosine）。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.cosine",
+      "type": "counterexample",
+      "subject": "radiance",
+      "title": "反例：漏掉 cosθ 的两次翻车（含完整计算）",
+      "keywords": [
+        "翻车一：满半球 L=1 漏 cosθ 得 2π，真值 π，高估 2 倍",
+        "翻车二：点源 60° 斜照漏 cosθ 得 0.25，真值 0.125",
+        "θ→90° 时 cosθ→0，错误公式不动，相对误差发散",
+        "cosθ 两种身份：定义里的几何投影、积分里的 Lambert 折扣",
+        "渲染方程 ∫f_r·L_i·cosθ dω 的 cosθ 正是它"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 127,
+        "line_end": 127
+      },
+      "fill_hint": "两个算例数值已加待核验标记；错误曲线 2πL(1−cosΘ) 与正确曲线 πL·sin²Θ 在 Θ=90° 处差 2 倍，是图上必须能看出的失败数值；自检公式 E=πL·sin²Θ 需人工复核推导。",
+      "content": "总起：cosθ 是 L 定义里最容易在计算中丢掉的因子；两次典型翻车都恰好错 2 倍起步，掠射时误差发散到无穷。\n\n翻车一（面光源，漏方向余弦）：设满上半球均匀辐射度 L≡1 W/(m²·sr)，求水平面一点收到的照度。球坐标下立体角微元 dω = sinθ dθ dφ（sinθ 是雅可比，同样易漏）。\n\n正确：\n$$E = \\int_\\Omega L\\cos\\theta\\,d\\omega = \\int_0^{2\\pi}\\!d\\varphi \\int_0^{\\pi/2}\\cos\\theta\\sin\\theta\\,d\\theta = 2\\pi\\cdot\\tfrac{1}{2} = \\pi \\approx 3.1416\\ \\mathrm{W/m^2}【已核验:3.14159265359|2*pi*0.5】$$\n\n错误（忘 cosθ）：∫_Ω L dω = 2π·1 ≈ 6.2832【已核验:6.28318530718|2*pi】，高估 2π/π = 2 倍【已核验:2|2*pi/pi】。\n\n翻车二（点光源，漏入射角）：点源 I=1 W/sr，距离 r=2 m，入射角 θ=60°。\n\n正确：E = I cosθ/r² = cos60°/4 = 0.125 W/m²【已核验:0.125|cos(pi/3)/2**2】；\n错误（用 E=I/r²）：0.25 W/m²【已核验:0.25|1/2**2】。\n\n60° 就差一倍；θ→90° 时 cosθ→0 而错误公式纹丝不动，相对误差发散——掠射面上「照度趋于零」是对的，错公式给不出这个。\n\n失效机制：cosθ 在定义里把 dA 换成垂直于光线的投影截面（几何投影）；在积分里它是「斜来光贡献打折」（Lambert 余弦定律）。两处漏掉都是同一块投影几何。\n\n修补：任何「面收到多少功率」的计算，方向项一律写 $d\\Phi = L\\cos\\theta\\,dA\\,d\\omega$；这正是渲染方程 $\\int f_r L_i\\cos\\theta\\,d\\omega$ 中 cosθ 的出处（见 H2）。自检公式：锥角 Θ 以内的均匀亮锥的照度 $E=\\pi L\\sin^2\\Theta$（Θ=90° 时退回 πL，可逐步验算）。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需同图对照正确曲线 E=πL·sin²Θ 与漏 cosθ 的错误曲线 2πL(1−cosΘ)，Θ=90° 处两者差 2 倍；无既有模块覆盖 radiometry 演示，契约待评审定名后再接前端",
+        "params_hint": {
+          "L": 1,
+          "theta_deg_range": [
+            0,
+            90
+          ],
+          "series": [
+            "correct_E",
+            "wrong_E_no_cosine"
+          ]
+        }
+      },
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.probe1",
+      "type": "probe",
+      "subject": "radiance",
+      "title": "检验：从 L 算 E 的两道小题",
+      "keywords": [
+        "题一检验半球积分 ∫cosθ dω = π",
+        "题二检验点源平方反比 E=I cosθ/r²",
+        "追问检验朝向因子 cosθ",
+        "答案数值带待核验标记供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 125,
+        "line_end": 127
+      },
+      "fill_hint": "三小题分别对应 radiance.proof 的半球积分与点源公式；答案表达式已带待核验标记；题干从 quantifiers 表「均匀半球」「点源斜照」两行变来。",
+      "content": "题一：满上半球均匀辐射度 L=2 W/(m²·sr)，求水平面收到的照度 E。（答案：E=πL=2π≈6.2832 W/m²【已核验:6.28318530718|pi*2】）\n\n题二：点源辐射强度 I=2 W/sr，距离 r=3 m，正入射（θ=0），求 E。（答案：E=I/r²=2/9≈0.2222 W/m²【已核验:0.222222222222|2/3**2】）\n\n追问：把题二的板转 60°，E 变为多少？（答案：2·cos60°/9 = 1/9 ≈ 0.1111 W/m²【已核验:0.111111111111|(2*cos(pi/3))/3**2】）",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:photometry.probe1",
+      "type": "probe",
+      "subject": "photometry",
+      "title": "检验：光度转换的数值感",
+      "keywords": [
+        "555 nm 处 V=1 是明视觉曲线的定义峰值",
+        "同功率不同波长，流明数差一倍以上",
+        "V(λ) 是「每瓦换多少流明」的汇率表",
+        "答案数值带待核验标记"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 132,
+        "line_end": 135
+      },
+      "fill_hint": "题二的 V=0.5 是教学假设值非真实表值，人工复核时勿与 V(510)≈0.50 混淆；题一检验 683 常数的直接代入。",
+      "content": "题一：1 W 辐射通量全部集中在 555 nm（此处 V=1），求光通量 Φ_v。（答案：Φ_v = 683×1×1 = 683 lm【已核验:683|683*1*1】）\n\n题二：同样 1 W，但落在某 V(λ)=0.5 的波长上，求 Φ_v。（答案：683×0.5 = 341.5 lm【已核验:341.5|683*0.5】）\n\n结论追问：辐射功率相同、感知亮度减半——说明 V(λ) 是「每瓦换多少流明」的汇率表；渲染器输出的 W 只有经过它（或它的感知近似）才对应人眼感受，这就是物理正确与看起来对分两层的原因。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:ladder.intuition",
+      "type": "intuition",
+      "subject": "ladder",
+      "title": "直觉：雨量计阶梯——每个量是 L 的一次积分",
+      "keywords": [
+        "Φ=房子总接雨量（水表读数）",
+        "I=点源向各方向伸出的单位立体角漏斗",
+        "E=一块地板每平米接的雨，摆放角度要打折",
+        "L=每投影面积每立体角的雨密度，最细粒度",
+        "粗粒度量随时可从 L 积分得到，反之不行"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 124,
+        "line_end": 127
+      },
+      "fill_hint": "雨量类比是扩展讲解，与切片表格四行一一对应；「反之不行」一句是本条核心论点，需保留；积分关系式为自洽补充不新增物理。",
+      "content": "一句总起：把光想成雨，四个量就是四种雨量计，分辨率从粗到细；最细的那只（L）能拼出其余所有，反之不行。\n\nΦ（通量，W）：房子的总接雨量——水表读数。只回答「一共多少」，不回答「哪里、哪个方向」。\n\nI（强度，W/sr）：从点源向每个方向伸出的细漏斗，单位立体角接的雨。只对「点」有意义——面源没有单一的「向某方向的流量」，除非站得足够远（切片备注「点源」的含义）。\n\nE（照度，W/m²）：一块地板每平方米接多少雨。地板怎么摆很重要：斜着放接得少（切片备注「到达表面」+定义里隐含的朝向依赖）。\n\nL（辐射度，W/(m²·sr)）：站在一点朝某个方向望去，穿过垂直于视线的单位投影窗口、单位立体角的雨密度。它是逐点逐方向的场，其余三个量都是它对不同自由度的积分：\n\n$$\\Phi = \\int_A\\!\\int_\\Omega L\\cos\\theta\\,dA\\,d\\omega,\\quad I = \\int_{A_{\\text{源}}} L\\cos\\theta\\,dA\\ (\\text{远场}),\\quad E = \\int_\\Omega L\\cos\\theta\\,d\\omega$$\n\n阶梯结构：每往下走一级，分母多一个几何自由度（时间 → ×立体角 → ×投影面积×立体角），单位就多一个分母因子。渲染取最细的 L 当工作变量，因为粗粒度信息随时可以积分得到；反过来 E 抹平方向分布后，镜面反射再也算不回来（见 radiance.vs-irradiance 的「同一 E、不同 L」）。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.intuition",
+      "type": "intuition",
+      "subject": "radiance",
+      "title": "直觉：为什么核心量是 L 而不是 E 或 Φ",
+      "keywords": [
+        "假设给的是：L 在位置×方向相空间上逐点有定义",
+        "结论因此成立：渲染问的正是「沿某方向多少能量」",
+        "传感器响应 E/Φ 那侧，渲染器解 L，靠 ∫cosθ dω 连接",
+        "分母用投影面积：斜看面变小，除以有效截面才与视角无关",
+        "为「L 沿光线不变」的拓展词条埋线"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 127,
+        "line_end": 127
+      },
+      "fill_hint": "假设/结论分段是规格硬性要求；「六维相空间」为动机性扩展说法，与切片定义不冲突；结尾一句为 radiance.invariance 埋线。",
+      "content": "假设与结论分开看。\n\n假设给了什么：L(x,ω) 在每个点、每个方向都有定义——它是光场在「位置 × 方向」这个六维相空间上的密度。只要在线性光学范围内（不计干涉、偏振的路径合并效应），这个密度完备描述辐射场：给定 L，任何面收到的功率都能算出来。\n\n结论为什么因此成立：渲染要回答的问题是「沿视线方向 ω 有多少能量到达相机像素」。这正是 L 的定义本身——它就是「沿方向」的量。而相机传感器（眼睛、CMOS）响应的是到达像面的总功率，属于 E 或 Φ 那一侧；两边靠 $E=\\int_\\Omega L\\cos\\theta\\,d\\omega$ 这座桥连接。所以渲染器的未知量取 L（最细、无损），显示端取 E/Φ（传感器读数），中间用积分换算。\n\n为什么分母是投影面积 dA cosθ：一小块面斜着朝方向 ω 发光，从 ω 方向看过去它的有效截面是 dA cosθ（投影）。除以有效截面而不是几何面积，得到的密度才「换距离、换角度看都一致」——这也正是它能沿光线不变传播的前提：墙的 radiance 不因你凑近而变，变的只是它对你张的立体角（见 radiance.invariance）。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.proof",
+      "type": "proof",
+      "subject": "radiance",
+      "title": "推导：E=∫L cosθ dω 与均匀半球 E=πL",
+      "keywords": [
+        "第一步：把 L 定义乘回去，cosθ 从分母到分子",
+        "第二步：光场线性，对上半球方向叠加",
+        "第三步：球坐标 dω=sinθ dθ dφ，∫cosθ sinθ dθ=1/2",
+        "结论 πL 是一切 Lambert 场景的自检数值",
+        "漏 cosθ 与漏 sinθ 都恰好错成 2πL"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 127,
+        "line_end": 127
+      },
+      "fill_hint": "切片只给 L 的定义行，本条推导是使定义可用的最小补充；三处数值已带待核验标记；「漏 cosθ 与漏 sinθ 错值相同（都是 2πL₀）」属巧合，人工复核确认。",
+      "content": "总起：从 L 的定义出发三步推得渲染方程里最常用的积分关系；均匀半球时闭式得 E=πL，这是所有 Lambert 场景的自检数值。\n\n第一步（把定义乘回去）：$L = \\frac{d^2\\Phi}{dA\\cos\\theta\\,d\\omega}$ 等价于：面元 dA 从方向锥 dω 收到的功率 $d\\Phi = L\\cos\\theta\\,dA\\,d\\omega$。这一步没有新物理，只是移项；cosθ 从分母跑到分子。\n\n第二步（线性叠加）：光场线性，不同来向互不干扰，对上半球 Ω 所有方向积分：\n\n$$E = \\frac{d\\Phi}{dA} = \\int_\\Omega L(x,\\omega)\\cos\\theta\\,d\\omega,\\qquad \\Omega\\ \\text{共}\\ 2\\pi\\ \\mathrm{sr}【已核验:6.28318530718|2*pi】$$\n\n第三步（均匀半球闭式）：设 $L\\equiv L_0$，球坐标 $d\\omega=\\sin\\theta\\,d\\theta\\,d\\varphi$（sinθ 是立体角的雅可比，最易漏）：\n\n$$E = L_0\\int_0^{2\\pi}\\!d\\varphi\\int_0^{\\pi/2}\\cos\\theta\\sin\\theta\\,d\\theta = L_0\\cdot 2\\pi\\cdot\\tfrac{1}{2} = \\pi L_0【已核验:3.14159265359|2*pi*0.5】$$\n\n依赖链：L 的定义（切片表格第 4 行）→ E 的半球积分 → 渲染方程的积分形式（H2）→ Lambert 面出射度 M=πL。\n\n易错点：①漏 cosθ，得 2πL₀（见 radiance.cosine）；②漏 sinθ（把立体角微元当平面角），得 $2\\pi L_0\\int_0^{\\pi/2}\\cos\\theta\\,d\\theta = 2\\pi L_0$——与漏 cosθ 错值相同，纯属数值巧合，但错误来源不同；③积分域误取全球 4π 而非上半球，得 0 或错值（背面 cosθ<0）。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:ladder.statement",
+      "type": "statement",
+      "subject": "ladder",
+      "title": "四个辐射量：定义、单位与回答的问题",
+      "keywords": [
+        "Φ=dQ/dt，单位 W，只答总量",
+        "I=dΦ/dω，单位 W/sr，备注点源",
+        "E=dΦ/dA，单位 W/m²，备注到达表面",
+        "L=d²Φ/(dA cosθ dω)，W/(m²·sr)，切片标注核心量",
+        "立体角 dω=dA⊥/r²，全球 4π sr、半球 2π sr"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 124,
+        "line_end": 127
+      },
+      "fill_hint": "表格逐行对应切片 tabular 四行，定义式与单位原样转写；「级联关系」与立体角预备是为自洽补充，不新增物理；两个立体角数值已带待核验标记。",
+      "content": "总起：切片表格给出四个量的级联定义——后一个都是对前一个再除以一个几何自由度。\n\n| 量 | 定义 | 单位 | 回答的问题 | 切片备注 |\n|---|---|---|---|---|\n| 辐射通量 | $\\Phi = dQ/dt$ | W | 每秒总共多少辐射能 | —— |\n| 辐射强度 | $I = d\\Phi/d\\omega$ | W/sr | 点源向单位立体角发多少 | 点源 |\n| 辐射照度 | $E = d\\Phi/dA$ | W/m² | 表面每平方米到达多少 | 到达表面 |\n| 辐射度 | $L = \\frac{d^2\\Phi}{dA\\cos\\theta\\,d\\omega}$ | W/(m²·sr) | 每单位投影面积、每单位立体角多少 | 核心量 |\n\n立体角预备：$d\\omega = dA_\\perp/r^2$，即方向锥在半径 r 的球面上截下的面积除以 r²；全空间立体角 4π sr ≈ 12.566【已核验:12.5663706144|4*pi】，上半球 2π sr ≈ 6.2832【已核验:6.28318530718|2*pi】。$d\\Phi/d\\omega$ 里的 dω 指围绕该方向的无限小方向锥。\n\n级联关系（自洽检查）：$\\Phi = \\int I\\,d\\omega = \\int E\\,dA = \\iint L\\cos\\theta\\,dA\\,d\\omega$；I、E、Φ 依次是 L 对投影面积、方向、两者的积分。各量的适用前提与误用反例见 ladder.quantifiers。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.statement",
+      "type": "statement",
+      "subject": "radiance",
+      "title": "辐射度 L 的精确定义",
+      "keywords": [
+        "L(x,ω)=d²Φ/(dA cosθ dω)，W/(m²·sr)",
+        "读法：点 x 沿方向 ω、每投影面积、每立体角的功率",
+        "cosθ 是 ω 与法线夹角：dA 的投影截面",
+        "四个量里前提最弱、信息最全",
+        "其余三量可由它积分恢复"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 127,
+        "line_end": 127
+      },
+      "fill_hint": "定义式与单位严格对应切片 127 行；「发射与接收两侧定义对称」是标准表述的补充说明；逐符号拆解为规格要求的必写项。",
+      "content": "总起：$L(x,\\omega) = \\dfrac{d^2\\Phi}{dA\\cos\\theta\\,d\\omega}$，单位 W/(m²·sr)，切片标注的核心量；读法是「点 x 处、沿方向 ω、每单位投影面积、每单位立体角的功率」。\n\n逐符号拆解：\n\n- $d^2\\Phi$：同时按面积和立体角微分的功率；两个微分意味着 L 是二元函数 $L(x,\\omega)$——它带方向，这一点与 E、Φ 本质不同。\n- $dA$：点 x 处的面元（发光面或接收面均可，两侧定义对称）。\n- $\\cos\\theta$：ω 与该处法线 n 的夹角余弦；$dA\\cos\\theta$ 是 dA 在垂直于 ω 平面上的投影——分母用投影面积而非几何面积，这是 L 区别于一切「每面积」量的地方。\n- $d\\omega$：围绕 ω 的立体角微元。\n\n成立条件：对任意线性光场逐点逐方向有定义；不要求源是点、不要求均匀、不要求到达某个表面——这是四个量里前提最弱、信息最全的。其余三量都可由它积分恢复，所以渲染以 L 为工作变量（H2 的渲染方程整个写在 L 上）。每条限定词为什么不可去，见 radiance.quantifiers。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:photometry.statement",
+      "type": "statement",
+      "subject": "photometry",
+      "title": "光度学转换：从瓦到流明",
+      "keywords": [
+        "Φ_v=683∫Φ_e(λ)V(λ)dλ，W 谱折算成 lm",
+        "V(λ)：明视觉光效率函数，峰值 555 nm 处 V=1",
+        "683 lm/W：555 nm 极大光视效能（1979 年规定）",
+        "同 1 W 在 700 nm 只折约 2.8 lm，差两百多倍",
+        "物理正确（W）与看起来对（lm）分两层"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 132,
+        "line_end": 135
+      },
+      "fill_hint": "公式逐字来自切片 134 行；V(700)≈0.0041 为表值断言，python 无法核验曲线本身，已标注需人工复核；683 常数来历（1979 年国际计量规定）为背景扩展。",
+      "content": "总起：$\\Phi_v = 683\\int_0^\\infty \\Phi_e(\\lambda)\\,V(\\lambda)\\,d\\lambda$ 把物理功率谱折算成人眼感知的「亮」，中间的汇率就是 V(λ)。\n\n逐符号拆解：\n\n- $\\Phi_e(\\lambda)$：光谱辐射通量，单位 W/nm——功率按波长的分布。\n- $V(\\lambda)$：明视觉（亮适应）光效率函数，人眼锥细胞响应的标准化曲线；定义其峰值在 λ=555 nm 处 V=1，向两端衰减（深红 700 nm 处约 0.0041，表值需人工复核）。\n- 683：555 nm 单色光每瓦换 683 lm，即极大光视效能（1979 年国际计量规定的常数），单位 lm/W。\n- $\\Phi_v$：光通量，单位流明 lm。\n\n物理含义：辐射度量学（W 一族）与光度学（lm 一族）差一层人眼谱响应。1 W 在 555 nm 给 683 lm；同样 1 W 落在 700 nm 只给 683×0.0041 ≈ 2.80 lm【已核验:2.8003|683*0.0041】——功率相同、感知差两百多倍。同族换算与辐射层级平行：照度 lux = lm/m²，亮度 nit = cd/m²。\n\n成立条件：公式只对明视觉（较亮环境）成立；暗视觉另有曲线 V′(λ)，峰值移到约 507 nm——换曲线即换汇率表。CG 落点：物理渲染器输出辐射度量；曝光、tone mapping、显示编码阶段才引入 V(λ) 一类的感知折算，「物理正确」与「看起来对」是两层。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.invariance",
+      "type": "extension",
+      "subject": "radiance",
+      "title": "拓展：L 沿光线不变与折射时的 n²L 守恒",
+      "keywords": [
+        "切片外拓展：本条讲定义之外的深层动机",
+        "真空沿光线 L 为常数",
+        "墙不因你走近而变亮：变的是立体角不是 L",
+        "跨折射率界面守恒 L/n²（基本辐射度）",
+        "亮度定理：透镜无法把像做得比物更亮"
+      ],
+      "tex_ref": null,
+      "fill_hint": "明确标注为切片外拓展；n²L 守恒与亮度定理是标准结果（étendue 守恒一族），非切片内容；正式陈述归属 H2/H3，评审时确认摆放位置。",
+      "content": "总起（拓展声明）：切片只给了 L 的定义；本条补「为什么渲染界把 L 当核心量」的深层理由——它是唯一沿传播不变的量。此内容为切片外拓展，仅作动机。\n\n真空/同介质中：沿一条光线 L 是常数。直观后果：一面均匀发光的墙，你凑近或退远，它的 radiance 不变——变的是它对你张的立体角，从而进入眼睛的总功率变。这就是「墙不会因为你走近而显得更亮」的辐射度学解释：亮度感对应 radiance，功率对应 E/Φ。渲染器因此可以沿视线直接查 L，与传播距离无关的部分已被定义吸收。\n\n跨介质（折射率 n 变化）：守恒的是 L/n²（basic radiance，基本辐射度）。后果：任何无源光学系统（透镜、反射镜组合）都无法把表面成像得比原表面更「亮」——亮度定理；étendue（扩展量）守恒是它的几何版本。放大镜放大的是立体角，不是 radiance。\n\n这些陈述的正式版本在 H2/H3 的路径空间叙述中给出；本条只负责把「为什么核心量是 L」这个问题答透。",
+      "links": [
+        "H2",
+        "H3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.vs-irradiance",
+      "type": "comparison",
+      "subject": "radiance",
+      "title": "L 与 E 的分工：问方向还是问总量",
+      "keywords": [
+        "L 依赖 (x,ω)，E 依赖 (x,法线)",
+        "E=∫L cosθ dω：一次半球积分的差",
+        "同一 E 可来自完全不同的 L 分布",
+        "方向敏感表面必须用 L；能量平衡可积成 E",
+        "BRDF 定义在 L 的无穷小比值上，单位 1/sr"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 126,
+        "line_end": 127
+      },
+      "fill_hint": "对比表两列对应切片相邻两行（E 行与 L 行）；「同一 E 不同 L」的平行光构造是本条论点核心；H5 的 irradiance 预计算作为落点一句带过。",
+      "content": "总起：L 与 E 差一次半球积分；选哪个取决于你问「这个方向来的光」还是「这个面总共吃进多少」。\n\n| 维度 | L（辐射度） | E（照度） |\n|---|---|---|\n| 依赖变量 | (x, ω) 点+方向 | (x, 法线朝向) 点+面 |\n| 单位 | W/(m²·sr) | W/m² |\n| 关系 | 基本量 | $E=\\int_\\Omega L\\cos\\theta\\,d\\omega$ |\n| 渲染中的角色 | 渲染方程未知量、BRDF 输入输出 | 传感器读数、表面吸收的总功率 |\n| 信息 | 完整方向分布 | 只剩总量，方向分布被抹平 |\n\n关键对比（同一 E、不同 L）：均匀满半球 $L\\equiv 1$ 给 $E=\\pi$【已核验:3.14159265359|pi*1】；一束单向平行光把 L 集中在一个极窄方向，也能凑出同样的 E。两者照度相同，镜面行为却完全不同：前者从半球各方向反射，后者只在镜像方向有一束——这就是为什么 BRDF 必须定义在 L 上（$f_r = dL_o/(L_i\\cos\\theta\\,d\\omega)$，单位 1/sr），而不能定义在 E 上：E 那一步已经把方向信息扔掉了。\n\n选择判据：着色方向敏感表面（镜面、光泽）→ 全程用 L；只关心能量平衡（漫反射白墙、辐照度缓存、光照贴图）→ 预先积成 E（H5 球谐的 irradiance 预计算正是这次积分的预计算版）。",
+      "links": [
+        "H2",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:radiance.application",
+      "type": "application",
+      "subject": "radiance",
+      "title": "用在哪里：渲染方程与 BRDF 的地基",
+      "keywords": [
+        "渲染方程未知量与被积量都是 L",
+        "BRDF=f_r=dL_o/(L_i cosθ dω)，单位 1/sr",
+        "路径追踪=对 L 的传输路径求积",
+        "MC 估计的对象是 L 的路径积分",
+        "球谐预计算=预先做掉 ∫L cosθ dω"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 127,
+        "line_end": 127
+      },
+      "fill_hint": "每条一句「谁用了 L 的哪个性质」即可，不展开全文；细节归 H2/H3/H4/H5 各自词条文件。",
+      "content": "总起：H7 的四个量里，真正进入后续所有章节的是 L；本条列出它被服务的位置。\n\n- 渲染方程（H2）：$L_o(x,\\omega_o) = L_e(x,\\omega_o) + \\int_\\Omega f_r(x,\\omega_i,\\omega_o)\\,L_i(x,\\omega_i)\\cos\\theta_i\\,d\\omega_i$——未知量与被积量都是 L；cosθ_i 就是本单元推导的那个投影因子（radiance.proof）。\n- BRDF（H2）：$f_r = dL_o/(L_i\\cos\\theta\\,d\\omega)$，定义在 L 的无穷小比值上；没有 L 的「每投影面积每立体角」结构，BRDF 的单位 1/sr 无从谈起。\n- 路径空间（H3）：路径追踪 = 对「连接视点到光源的 L 传输路径」求积；路径空间公式是渲染方程的算子形式。\n- 蒙特卡洛（H4）：渲染器实际估计的是 L 的路径积分；重要性采样、方差分析全部围绕「L 沿哪些方向大」展开。\n- 球谐预计算（H5）：把 $L_i(\\omega)$ 展开成球谐系数，与 cos lobe 卷积预积分成 E——正是 L→E 那次积分的预计算版。\n\n涉及积分技法的对应计算工具见 P 组（P7.2 积分技术、P9.1 分部积分移导数）。",
+      "links": [
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "P7.2",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "单元总表：四量对照与换算链",
+      "keywords": [
+        "从 L 出发：对方向积分得 E，对投影面积积分得 I",
+        "全积得 Φ；光度转换是 W→lm 的谱加权",
+        "自检数值：均匀半球 E=πL；点源 E=I cosθ/r²",
+        "L 最细、Φ 最粗；渲染算 L、显示算 E/Φ"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 124,
+        "line_end": 135
+      },
+      "fill_hint": "表格合并切片四行 + 「从 L 得到」一列（换算链为补充，不新增物理）；自检数值与 radiance.cosine / radiance.probe1 一致，评审时对拍。",
+      "content": "总起：一张表收束本单元——从 L 出发，对方向积分得 E，对投影面积积分得 I，两者都积得 Φ；光度转换是 W→lm 的谱加权。\n\n| 量 | 符号 | 单位 | 定义 | 几何场景 | 从 L 得到 |\n|---|---|---|---|---|---|\n| 辐射通量 | $\\Phi=dQ/dt$ | W | 总功率 | 任意截面/源总量 | $\\Phi=\\iint L\\cos\\theta\\,dA\\,d\\omega$ |\n| 辐射强度 | $I=d\\Phi/d\\omega$ | W/sr | 每立体角 | 点源 | $I=\\int L\\cos\\theta\\,dA$（远场） |\n| 辐射照度 | $E=d\\Phi/dA$ | W/m² | 每面积到达 | 表面接收 | $E=\\int_\\Omega L\\cos\\theta\\,d\\omega$ |\n| 辐射度 | $L=\\frac{d^2\\Phi}{dA\\cos\\theta\\,d\\omega}$ | W/(m²·sr) | 每投影面积每立体角 | 处处（核心量） | ——（基本量） |\n\n自检数值：均匀满半球 L=1 ⟹ E=π【已核验:3.14159265359|pi*1】；漏 cosθ 得 2π（错 2 倍）。点源 I=1 W/sr 在 2 m 正入射 ⟹ E=1/4=0.25 W/m²【已核验:0.25|1/2**2】；转 60° 后 0.125 W/m²【已核验:0.125|cos(pi/3)/2**2】。\n\n光度一行：$\\Phi_v = 683\\int_0^\\infty \\Phi_e(\\lambda)V(\\lambda)\\,d\\lambda$（W→lm，人眼汇率 V(λ)，峰值 555 nm 处 V=1）。\n\n记忆句：L 最细、Φ 最粗；渲染算 L、显示算 E/Φ、中间靠 $\\int L\\cos\\theta\\,d\\omega$ 连接。",
+      "links": [
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "H2 渲染方程与 BRDF：整个方程写在 L 上",
+        "H3 路径空间：被积对象是 L 的传输",
+        "H4 蒙特卡洛：估计 L 的路径积分",
+        "H5 球谐：L 的角向展开与 irradiance 预计算",
+        "光度转换落点在曝光与 tone mapping"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每行一句归属即可，展开归各章词条；最后一行（曝光/tone mapping）暂无对应代号故不进 links，后续若增设色调映射小目再补。",
+      "content": "- H2 渲染方程与 BRDF：整个方程写在 L 上；cosθ 因子来自本单元的投影几何。\n- H3 路径空间公式化：渲染方程的算子形式，路径积分的被积对象是 L 的传输。\n- H4 蒙特卡洛积分：像素值是对 L 的路径积分的 MC 估计；重要性采样策略围绕 L 的方向分布设计。\n- H5 球谐函数：L 的角向基展开；irradiance 预计算 = 预先做掉 ∫L cosθ dω 这一次积分。\n- 光度转换的落点：曝光与 tone mapping 把辐射量折算成感知量；显示器标称的 nits 是光度亮度（cd/m²），不是 W/(m²·sr)。",
+      "links": [
+        "H2",
+        "H3",
+        "H4",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H7:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：cosθ 投影与 E=πL",
+      "keywords": [
+        "模块候选 cosine-projection：L 固定，拖锥角 Θ 看 E(Θ)=πL·sin²Θ 累积",
+        "同图对照错误曲线 2πL(1−cosΘ)（漏 cosθ），Θ=90° 处差 2 倍",
+        "判据：简单显式几何（Q4 档1 合适），但无既有模块实现（Q1）",
+        "槽位先挂 planned-backend，模块契约评审定名后迁前端直渲"
+      ],
+      "tex_ref": null,
+      "fill_hint": "档2 的 rationale 说明为什么还没走档1（模块契约未注册，不得自造未评审模块名）；契约定名后升级为档1 结构（module/version/source/params_hint）。",
+      "content": "单元级演示设计：一个交互图同时服务两条叙事——\n\n1. 为什么成立（直觉侧）：固定 L=1，拖动锥角 Θ（0°→90°），显示累积照度曲线 $E(\\Theta)=\\pi L\\sin^2\\Theta$，从 0 平滑爬到 πL≈3.1416；叠加显示微元贡献 $dE = L\\cos\\theta\\,d\\omega$ 在各 θ 处的大小（θ=0 处贡献最大、θ→90° 处衰减到 0）。\n2. 怎么失败（反例侧）：同图叠错误曲线 $2\\pi L(1-\\cos\\Theta)$（漏 cosθ 的累积），在 Θ=90° 处到达 2π≈6.2832——与正确值 3.1416 恰差 2 倍，图上必须能直接读出这对失败数值。\n\n当前挂 planned-backend：无既有模块可覆盖，等待 cosine-projection 契约评审定名后接前端直渲。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "cosθ 投影与 E=πL 属简单显式几何（Q4，档1 合适），但现有模块清单（convergence-thm 及六个待建名）无一覆盖；不擅自注册未评审的模块名，先留槽位待契约评审后迁档1",
+        "params_hint": {
+          "L": 1,
+          "theta_deg_range": [
+            0,
+            90
+          ],
+          "series": [
+            "correct_E_pi_L_sin2",
+            "wrong_E_no_cosine"
+          ]
+        }
+      },
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
