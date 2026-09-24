@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import sys
 from pathlib import Path
@@ -94,6 +95,11 @@ def check_claim(text_before: str):
         return float(m.group(1).replace(",", ""))
     except ValueError:
         return None
+
+def has_stray_double_backslash(text: str) -> bool:
+    """content 里出现 KaTeX 环境之外的 `\\\\` 基本等于 JSON 过度转义（写成了 \\\\\\\\sqrt）。"""
+    stripped = re.sub(r"\\begin\{[a-zA-Z*]+\}.*?\\end\{[a-zA-Z*]+\}", "", text, flags=re.S)
+    return "\\\\" in stripped
 
 def verify_file(path: Path) -> list[str]:
     errs: list[str] = []
