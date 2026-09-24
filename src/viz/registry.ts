@@ -14,6 +14,7 @@ import { inequalityDecisionTree, validateTree } from './specs/decision';
 import { asymptoticSpecs } from './specs/asymptotic';
 import { mcSpecs } from './specs/mc';
 import { sdeSpecs } from './specs/sde';
+import { cgSpecs } from './specs/cg';
 
 /** 全部声明式规格（供 Node 侧数值校验遍历） */
 export const specs: VizSpec[] = [
@@ -26,6 +27,7 @@ export const specs: VizSpec[] = [
   ...asymptoticSpecs,
   ...mcSpecs,
   ...sdeSpecs,
+  ...cgSpecs,
 ];
 
 /** 非声明式模块（交互以 HTML 为主） */
