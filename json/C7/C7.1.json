@@ -1,0 +1,611 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C7.1",
+  "chapter": "C7",
+  "title": "定义与基本性质",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 194,
+    "line_end": 208,
+    "anchor": "notebook/C_partial.tex:194"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "C7.1:chf.quantifiers",
+      "type": "comparison",
+      "subject": "chf",
+      "title": "特征函数的六条限定词：去掉每一条会怎样",
+      "keywords": [
+        "① 核 e^{itX} 模恒为 1 ⟹ φ 对一切分布存在（矩母函数做不到）",
+        "② |φ|≤1 且 φ(0)=1 只是必要：e^{−t⁴} 两条都满足却不是特征函数",
+        "③ 卷积变乘法需要独立：Y=−X 时乘积给 e^{−1}=0.3679 而真值为 1",
+        "④ 矩-导数公式需要 E|X|^k<∞：Cauchy 的 φ 在 0 处不可导（左右导数 ±0.9995）",
+        "⑤ 连续性定理需要极限在 0 处连续：N(0,n) 的 φ_n → 1_{t=0} 不连续，无弱极限",
+        "⑥ 「局部一致收敛」可放宽为「逐点收敛 + 极限在 0 连续」（Lévy 标准形式）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 195,
+        "line_end": 206
+      },
+      "fill_hint": "六行表的反例分别有独立词条展开（chf.mgf-counterexample / chf.no-independence / chf.moment-counterexample / continuity.limit-fails）；行号覆盖切片定义与性质清单。",
+      "content": "特征函数（characteristic function）的灵魂词条：把定义与五条性质拆成六个限定词，逐条问「去掉会怎样」。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 核取 $e^{itX}$（模恒为 $1$） | 换成矩母函数 $M(t)=\\mathbb E[e^{tX}]$（核 $e^{tX}$ 无界）：标准 Cauchy 的 $M(1)=\\infty$；对数正态 $X=e^{Z}$ 各阶矩都有限（$\\mathbb E X^{k}=e^{k^{2}/2}$）但 $M(t)=\\infty$ 对一切 $t>0$ | 变换根本不存在，谈不上用 | **不能**。加 $i$ 正是为了让核有界——这是特征函数相对矩母函数的全部优势（见 `C7.1:chf.mgf-counterexample`） |\n| ② $\\lvert\\varphi(t)\\rvert\\le1$、$\\varphi(0)=1$ | $g(t)=1+t^{2}$：$g(1)=2>1$，不是特征函数；更隐蔽的是 $h(t)=e^{-t^{4}}$：两条都满足（$h(0)=1$、$\\lvert h\\rvert\\le1$），仍**不是**特征函数——$h''(0)=0$ 会逼出 $\\mathrm{Var}=0$ 即退化 $\\varphi\\equiv1$，但 $h(1)=e^{-1}\\approx0.367879$【已核验:0.367879441171|exp(-1)】 | 两条只是**必要**条件，靠它们筛不掉 $e^{-t^{4}}$ | 不能放宽（是定理推论）；充分条件要加**正定性**（Bochner，见 `C7.1:chf.extension`） |\n| ③ 独立性（$\\varphi_{X+Y}=\\varphi_X\\varphi_Y$） | $Y=-X$（$X\\sim N(0,1)$）：$X+Y\\equiv0$ 故 $\\varphi_{X+Y}\\equiv1$，而乘积 $\\varphi_X(t)\\varphi_Y(t)=e^{-t^{2}/2}\\cdot e^{-t^{2}/2}=e^{-t^{2}}$，在 $t=1$ 处是 $0.367879$【已核验:0.367879441171|exp(-1)】$\\neq1$ | 乘法公式给出完全错误的函数 | **不能去**（这正是它「最有用」也最危险的一条）。相依时须改用联合特征函数 $\\mathbb E[e^{i(sX+tY)}]$ |\n| ④ 矩由导数读出需 $\\mathbb E\\lvert X\\rvert^{k}<\\infty$ | Cauchy：$\\varphi(t)=e^{-\\lvert t\\rvert}$ 在 $0$ 处**不可导**——右导数 $\\approx-0.9995$【已核验:-0.999500166625|(exp(-0.001)-1)/0.001】，左导数 $\\approx+0.9995$【已核验:0.999500166625|(exp(-0.001)-1)/(-0.001)】 | 一阶矩不存在（确实），公式 $\\mathbb E X=(-i)\\varphi'(0)$ 无从使用 | 不能去；反过来「$\\varphi$ 在 $0$ 处 $k$ 阶可导」⟹ $k$ 阶矩存在（偶阶一定，奇阶需额外正则） |\n| ⑤ 连续性定理要求极限 $\\varphi$ 在 $0$ 处连续 | $X_n\\sim N(0,n)$：$\\varphi_n(t)=e^{-nt^{2}/2}\\to\\mathbf 1_{\\{t=0\\}}$（$t\\neq0$ 时 $\\to0$，$t=0$ 时 $=1$），极限**不连续** | 分布列没有弱极限（质量逃逸：$\\mathbb P(\\lvert X_n\\rvert\\le1)=\\mathrm{erf}(1/\\sqrt{2n})\\to0$，$n=100$ 时 $0.0796557$【已核验:0.0796556745541|erf(1/sqrt(200))】） | 不能去；这是「$\\varphi_n\\to\\varphi$」能被翻译回分布收敛的唯一门槛（见 `C7.1:continuity.limit-fails`） |\n| ⑥ 收敛方式「局部一致」 | 切片写的是局部一致；标准 Lévy 形式只需**逐点**收敛 + 极限在 $0$ 连续 | 不会失效（局部一致是更强、更易验证的说法） | **可放宽**：逐点收敛已够（见 `C7.1:chf.extension`） |\n\n**这张表的用法**：每次要用特征函数，先扫六条——①是白送的（所以才用它）、②是免费的自检（算完看 $\\varphi(0)$ 等不等于 $1$）、③④⑤是三个真正的付费项、**⑥是可以少付的**。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.statement",
+      "type": "statement",
+      "subject": "chf",
+      "title": "特征函数的定义与五条基本性质（陈述 + 成立条件）",
+      "keywords": [
+        "定义：φ_X(t) = E[e^{itX}] = ∫ e^{itx} dF_X(x)（分布的反向 Fourier 变换）",
+        "线性变换：φ_{a+bX}(t) = e^{iat} φ_X(bt)",
+        "卷积变乘法：X,Y 独立 ⟹ φ_{X+Y} = φ_X·φ_Y",
+        "有界性：|φ|≤1、φ(0)=1、且在 R 上一致连续",
+        "矩：E X^k = (−i)^k φ^{(k)}(0)（矩由原点处导数读出）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 195,
+        "line_end": 206
+      },
+      "fill_hint": "定义与五条性质按切片 195-206 逐字转写；每条补上成立条件与一句注解（切片只列式子）。",
+      "content": "**定义（切片 195-197 逐字转写）**：对随机变量 $X$（分布函数 $F_X$），其**特征函数**为\n\n$$\\varphi_X(t)=\\mathbb E\\big[e^{itX}\\big]=\\int_{\\mathbb R}e^{itx}\\,dF_X(x),\\qquad t\\in\\mathbb R .$$\n\n逐符号注解：$e^{itX}=\\cos(tX)+i\\sin(tX)$（Euler 公式，见 `P5.2`）模恒为 $1$，故积分**永远存在**——不需要任何矩条件；$\\int\\cdot\\,dF_X$ 是 Lebesgue--Stieltjes 积分，连续型时就是 $\\int e^{itx}f_X(x)dx$。切片原话（199 行）：**特征函数就是分布的（反向）Fourier 变换**，所以 `P5` 的 Euler 公式与 `A2.3` 的 Fourier 分析在这里合流（反向：Fourier 变换常用 $e^{-itx}$，这里用 $e^{+itx}$，只差一个共轭）。\n\n**五条基本性质（切片 202-206 逐条转写 + 条件）**：\n\n1. **线性变换**：$\\varphi_{a+bX}(t)=e^{iat}\\,\\varphi_X(bt)$（$a,b\\in\\mathbb R$）。平移 $a$ 变成乘相位 $e^{iat}$，缩放 $b$ 变成自变量缩放。无条件成立。\n2. **卷积变乘法（切片原话：这是它最有用的一条）**：$X,Y$ **独立** $\\Rightarrow$ $\\varphi_{X+Y}(t)=\\varphi_X(t)\\varphi_Y(t)$。条件：独立性；结论的意义是「和的分布 = 卷积」在 Fourier 侧变成**逐点相乘**——把难算的卷积变成好算的乘法。这是 `C7.3` 整个 CLT 证明的引擎。\n3. **有界性与连续性**：$\\lvert\\varphi_X(t)\\rvert\\le1$，$\\varphi_X(0)=1$，且 $\\varphi_X$ 在 $\\mathbb R$ 上**一致连续**。无条件成立；$\\varphi(0)=1$ 是最好的算错自检（算完代 $t=0$ 看是不是 $1$）。\n4. **矩由导数读出**：$\\mathbb E X^{k}=(-i)^{k}\\varphi_X^{(k)}(0)$。条件：$\\mathbb E\\lvert X\\rvert^{k}<\\infty$（否则导数不存在，见 `C7.1:chf.moment-counterexample`）。$k=1$：$\\mathbb E X=-i\\varphi'(0)$；$k=2$：$\\mathbb E X^{2}=-\\varphi''(0)$（因为 $(-i)^{2}=-1$）。\n5. **一一对应与连续性定理**：$\\varphi_X$ 唯一决定 $F_X$（反演公式），且分布弱收敛 $\\iff$ 特征函数（局部一致）收敛。见 `C7.1:continuity.statement`。\n\n**依赖链**：Euler 公式（`P5.2`）→ 积分的 Lebesgue 理论（`A1`）→ Fourier 分析（`A2.3`）→ 本单元 → `C7.2`（正态算例）→ `C7.3`（CLT）。**谁依赖它**：`C7.3`、`C6.5` 的 Khinchin WLLN 证明、`H4` 的随机游走分析。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "P5.2",
+        "A2.3",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.intuition",
+      "type": "intuition",
+      "subject": "chf",
+      "title": "直觉：单位圆上的「质心」——为什么加 i、为什么独立就变乘法",
+      "keywords": [
+        "假设给了什么：e^{itX} 是单位圆上的点，模恒为 1（有界）",
+        "结论为什么成立：单位圆上随机点的质心仍在单位圆盘内 ⟹ |φ(t)|≤1",
+        "φ(t) 是「分布在第 t 个频率上的 Fourier 分量」：t 大 ⟺ 高频 ⟺ 看细节",
+        "独立 ⟹ 乘积的期望 = 期望的乘积 ⟹ 和的特征函数相乘（卷积变乘法）",
+        "φ(0)=1 因为 e^{0}=1；φ 在 0 附近的形状 = 分布的低频信息 = 矩"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 195,
+        "line_end": 199
+      },
+      "fill_hint": "按规格分「假设给了什么 / 结论为什么因此成立」两段；「质心」图像是 |φ|≤1 的几何版，「频率分解」图像解释为什么导数给矩。",
+      "content": "**假设给了什么。** 核函数 $e^{itX}=\\cos(tX)+i\\sin(tX)$ 是**复平面上单位圆上的一个点**：不管 $X$ 取什么值，它到原点的距离恒为 $1$。所以 $\\varphi_X(t)=\\mathbb E[e^{itX}]$ 是「单位圆上一族随机点的**质心**」——这是它与矩母函数 $\\mathbb E[e^{tX}]$（核无界，可以跑到无穷远）的唯一区别，也是全部优势的来源。\n\n**结论为什么因此成立。**\n\n1. **$\\lvert\\varphi\\rvert\\le1$**：圆盘上若干点的质心仍在圆盘内（凸性）。等号取到当且仅当所有点**重合**——即 $e^{itX}$ 几乎必然为常数，这对应 $X$ 落在某个格点上（如 $\\mathrm{Bernoulli}(1/2)$ 在 $t=2\\pi$ 处 $\\lvert\\varphi\\rvert=1$）。\n2. **$\\varphi(0)=1$**：$t=0$ 时 $e^{i\\cdot0\\cdot X}\\equiv1$，质心就是 $1$ 本身。所以「算完代 $t=0$」是最快的自检。\n3. **卷积变乘法**：独立性使 $\\mathbb E\\big[e^{it(X+Y)}\\big]=\\mathbb E\\big[e^{itX}e^{itY}\\big]=\\mathbb E[e^{itX}]\\,\\mathbb E[e^{itY}]$——**乘积的期望 = 期望的乘积**（独立性的定义式）。几何上：两个独立旋转相乘，其平均等于各自平均的乘积。\n4. **矩在原点**：$t$ 是**频率**。$t$ 小 = 低频 = 分布的大尺度形状；把 $e^{itX}=1+itX-\\frac{t^{2}X^{2}}{2}+\\cdots$ 展开再取期望，逐项系数就是各阶矩——所以 $\\varphi$ 在 $0$ 处的**各阶导数**编码了 $\\mathbb E X^{k}$。$t$ 大 = 高频 = 分布的细节/光滑性（$\\varphi$ 衰减快 ⟺ 密度光滑）。\n\n**一句话图像**：矩母函数是「指数加权的质量」，会爆；特征函数是「单位圆上的质心」，永不爆，代价是它携带的是**频率信息**而不是直接的数值大小——要从频率里读矩，就得求导（`C7.1:chf.statement` 性质 4）。\n\n**与 Fourier 分析的关系（切片 199 行原话）**：$F_X\\mapsto\\varphi_X$ 就是（反向）Fourier 变换，所以 `A2.3` 里「卷积 ↔ 乘积」「光滑性 ↔ 衰减」这组对偶原封不动搬到这里；`P5.2` 的 Euler 公式是这台机器的燃料。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "P5.2",
+        "A2.3"
+      ],
+      "viz": {
+        "module": "unit-circle",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "centroid",
+          "t_range": [
+            0,
+            6.28
+          ],
+          "n_points": 40,
+          "distributions": [
+            "bernoulli",
+            "normal",
+            "cauchy"
+          ],
+          "annotate": "单位圆上随机点的质心 = φ(t)；质心模长恒 ≤ 1"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.proof",
+      "type": "proof",
+      "subject": "chf",
+      "title": "五条性质的推导骨架（每步给理由 + 依赖链 + 易错点）",
+      "keywords": [
+        "线性变换：φ_{a+bX}(t) = E[e^{ita}e^{i(bt)X}] = e^{iat}φ_X(bt)（e^{i(u+v)} 拆分）",
+        "卷积变乘法：独立性 ⟹ E[UV] = E[U]E[U] 用于 U=e^{itX}, V=e^{itY}",
+        "有界：|E[e^{itX}]| ≤ E|e^{itX}| = 1（Jensen/三角不等式）",
+        "一致连续：|φ(t+h)−φ(t)| ≤ E|e^{ihX}−1| = 2E|sin(hX/2)| → 0（DCT）",
+        "矩：对 φ(t)=E[e^{itX}] 在积分号下求导 k 次，需 E|X|^k<∞ 作控制"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 195,
+        "line_end": 206
+      },
+      "fill_hint": "切片只列性质不给证明；以下为标准推导（每步给理由）。一致连续一步的 DCT 与矩一步的「积分号下求导」是两处隐藏依赖，须显式标出。",
+      "content": "切片只列了五条性质、未给证明。下面逐条给推导骨架（每步给理由）。\n\n**① 线性变换（一步）。** $\\varphi_{a+bX}(t)=\\mathbb E\\big[e^{it(a+bX)}\\big]=\\mathbb E\\big[e^{ita}e^{i(bt)X}\\big]=e^{ita}\\mathbb E\\big[e^{i(bt)X}\\big]=e^{iat}\\varphi_X(bt)$。理由：$e^{i(u+v)}=e^{iu}e^{iv}$（`P5.2`）且 $e^{ita}$ 是常数可提出期望。\n\n**② 卷积变乘法（两步）。** 设 $X,Y$ 独立。\n- 步一：$e^{it(X+Y)}=e^{itX}e^{itY}$（同上的指数拆分）。\n- 步二：$\\mathbb E\\big[e^{itX}e^{itY}\\big]=\\mathbb E[e^{itX}]\\,\\mathbb E[e^{itY}]$。理由：**独立的随机变量，其有界可测函数的乘积的期望等于期望的乘积**（独立性的等价刻画之一，见 `C3`）。由于 $|e^{itX}|\\le1$，两个因子都可积，无收敛问题。\n\n**③ 有界性（一步）。** $\\lvert\\varphi(t)\\rvert=\\big\\lvert\\mathbb E[e^{itX}]\\big\\rvert\\le\\mathbb E\\big[\\lvert e^{itX}\\rvert\\big]=1$。理由：复积分的三角不等式（或 Jensen）。\n\n**④ 一致连续（三步，最易漏）。**\n- 步一：$\\lvert\\varphi(t+h)-\\varphi(t)\\rvert=\\big\\lvert\\mathbb E\\big[e^{itX}(e^{ihX}-1)\\big]\\big\\rvert\\le\\mathbb E\\big[\\lvert e^{ihX}-1\\rvert\\big]$。\n- 步二：$\\lvert e^{ihX}-1\\rvert=2\\big\\lvert\\sin(hX/2)\\big\\rvert\\le2$，且 $h\\to0$ 时对每个固定的 $X$ 都 $\\to0$。\n- 步三：由**有界收敛定理**（`A1.3`：被常数 $2$ 盖住 + 逐点收敛 + 有限测度）得 $\\mathbb E[\\lvert e^{ihX}-1\\rvert]\\to0$。关键：右端与 $t$ **无关**——所以是一致连续，不只是连续。\n\n**⑤ 矩与导数（两步）。** 在 $\\mathbb E\\lvert X\\rvert^{k}<\\infty$ 的前提下，\n- 步一：对 $t$ 在积分号下求导 $k$ 次：$\\frac{d^{k}}{dt^{k}}e^{itX}=(iX)^{k}e^{itX}$，其模为 $\\lvert X\\rvert^{k}$ 可积——这就是**控制函数**，由 `A1.3` 的 DCT 型论证允许换序。\n- 步二：代 $t=0$：$\\varphi^{(k)}(0)=\\mathbb E[(iX)^{k}]=i^{k}\\mathbb E X^{k}$，故 $\\mathbb E X^{k}=i^{-k}\\varphi^{(k)}(0)=(-i)^{k}\\varphi^{(k)}(0)$（因 $i^{-1}=-i$）。\n\n**依赖链**：Euler 公式与指数拆分（`P5.2`）→ 独立性的函数刻画（`C3`）→ 有界收敛（`A1.3`）→ 五条性质 → `C7.2`、`C7.3`。\n\n**易错点**：\n\n1. **忘写独立性就用乘法公式**——`C7.1:chf.no-independence` 给出 $Y=-X$ 时乘积为 $e^{-1}$ 而真值为 $1$ 的翻车现场；\n2. **把 $\\lvert\\varphi\\rvert\\le1$ 当成充分条件**——$e^{-t^{4}}$ 满足它却不是特征函数（见 `C7.1:chf.moment-counterexample`）；\n3. **一致连续那一步用「连续」糊过去**——一致性来自右端与 $t$ 无关，必须显式指出；\n4. **矩公式忘条件**：$\\varphi$ 可导 $\\Rightarrow$ 有矩，但有矩 $\\not\\Rightarrow$ $\\varphi$ 在该阶可导的判断要小心；切片写的是「矩由原点处的导数读出」，方向是「导数 ⟹ 矩」需要矩先存在才有导数。",
+      "links": [
+        "C7.1",
+        "C3",
+        "A1.3",
+        "P5.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.vs-mgf",
+      "type": "comparison",
+      "subject": "chf",
+      "title": "分工：特征函数 vs 矩母函数（什么时候谁上）",
+      "keywords": [
+        "矩母函数 M(t)=E[e^{tX}]：有界性问题——重尾时不存在（Cauchy、对数正态）",
+        "特征函数 φ(t)=E[e^{itX}]：核模恒 1，对一切分布存在",
+        "MGF 强的地方：实数参数、凸性、Chernoff 大偏差界直接可用",
+        "φ 强的地方：永不爆、有反演公式、弱收敛 ⟺ φ_n→φ（Lévy）",
+        "选择判据：要指数型尾界 → MGF；要存在性与极限定理 → φ"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 195,
+        "line_end": 199
+      },
+      "fill_hint": "对照表按「存在性 / 能读出什么 / 极限定理 / 典型翻车」四列；两个翻车样本（Cauchy、对数正态）的完整计算归 chf.mgf-counterexample。",
+      "content": "两者是同一台机器（「分布的积分变换」）的两个版本，差别只在核：$e^{tX}$ 还是 $e^{itX}$。\n\n| 维度 | 矩母函数 $M(t)=\\mathbb E[e^{tX}]$ | 特征函数 $\\varphi(t)=\\mathbb E[e^{itX}]$ |\n|---|---|---|\n| 核的模 | $e^{tX}$ **无界** | $\\lvert e^{itX}\\rvert\\equiv1$ **有界** |\n| 存在性 | 只在 $0$ 的邻域可能不存在（Cauchy：$M(1)=\\infty$；对数正态：$t>0$ 全为 $\\infty$） | **对一切分布存在**，无需任何矩条件 |\n| 读矩 | $M^{(k)}(0)=\\mathbb E X^{k}$（无需 $(-i)^{k}$ 因子） | $\\mathbb E X^{k}=(-i)^{k}\\varphi^{(k)}(0)$ |\n| 极限定理 | 弱（无 Lévy 型连续性定理的一般形式） | **强**：$F_n\\Rightarrow F\\iff\\varphi_n\\to\\varphi$（切片 206 行） |\n| 反演 | 无（不能从 $M$ 直接恢复分布） | 有反演公式（唯一决定 $F_X$） |\n| 典型用途 | Chernoff 界、大偏差、 branching 过程 | CLT、稳定分布、极限定理、随机游走 |\n\n**选择判据（两问定选）**：\n\n1. 问「要不要**指数型尾界**」（如 $\\mathbb P(X>a)\\le e^{-\\lambda a}M(\\lambda)$）→ 要，用 MGF；不要，用 $\\varphi$；\n2. 问「分布**重不重尾**」→ 重尾（Cauchy、对数正态、Pareto）MGF 直接不存在，只能用 $\\varphi$。\n\n**为什么课程里更偏爱 $\\varphi$**：它**永不失效**。学 CLT（`C7.3`）时，证明要在完全一般的 iid 二阶矩分布上跑，任何「假设 MGF 存在」的版本都会漏掉大量合法用例；而 $\\varphi$ 的存在性是白送的（本单元限定词①）。**代价**：$\\varphi$ 是复值函数，直观性差，且从 $\\varphi$ 恢复密度要反演（技术活）。\n\n**一句话**：**MGF 是「有用但不一定存在」的工具，$\\varphi$ 是「一定存在但抽象」的工具。** 两者在分布有指数矩时共存，此时 $\\varphi(t)=M(it)$（解析延拓）。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.mgf-counterexample",
+      "type": "counterexample",
+      "subject": "chf",
+      "title": "反例：矩母函数不存在但特征函数存在（Cauchy 与对数正态）",
+      "keywords": [
+        "Cauchy：M(1) = ∫ e^x/(π(1+x²))dx = ∞，黎曼和截断 [0,10] 已达 87.79",
+        "对数正态 X=e^Z：各阶矩都有限（E X^k = e^{k²/2}），但 M(t)=∞ 对一切 t>0",
+        "对数正态发散证据：M(t) 展开项 e^{k²/2}t^k/k!，t=0.1 在 k=10 时已 1.43×10⁵",
+        "两者特征函数都存在：|e^{itX}| ≡ 1 ⟹ |φ(t)| ≤ 1（Cauchy 的 φ(t)=e^{−|t|}）",
+        "修补：改用特征函数；或在有指数矩的子集上用 MGF"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 195,
+        "line_end": 199
+      },
+      "fill_hint": "本章核心反例之一：给两个「MGF 不存在但 CF 存在」的具体分布并算出数值。Cauchy 的发散用截断黎曼和序列（A=5/10/15）演示；对数正态用 MGF 级数项的增长演示（两例均带待核验表达式）。",
+      "content": "**误用现场**：想用矩母函数 $M(t)=\\mathbb E[e^{tX}]$ 做（例如）Chernoff 界或「$M'(0)=\\mathbb E X$」的读数，却没检查 $M$ 是否**存在**。下面两个分布里 $M$ 根本不存在，而特征函数完好无损。\n\n**反例一：标准 Cauchy 分布。** 密度 $f(x)=\\frac{1}{\\pi(1+x^{2})}$。\n\n$$M(1)=\\int_{\\mathbb R}\\frac{e^{x}}{\\pi(1+x^{2})}\\,dx=\\infty .$$\n\n理由：被积函数在 $x\\to+\\infty$ 时像 $e^{x}/x^{2}$，指数压倒多项式，**右半轴的积分已经发散**。数值证据（把右半轴截断到 $[0,A]$ 并取步长 $0.1$ 的黎曼和）：\n\n| 截断 $A$ | $\\sum_{k}\\frac{e^{0.1k}}{\\pi(1+(0.1k)^{2})}\\cdot0.1$ |\n|---|---|\n| $5$ | $\\approx3.49424$【已核验:3.49423951115|sum(exp(k*0.1)/(pi*(1+(k*0.1)**2))*0.1 for k in range(0,50))】 |\n| $10$ | $\\approx87.7880$【已核验:87.7879938202|sum(exp(k*0.1)/(pi*(1+(k*0.1)**2))*0.1 for k in range(0,100))】 |\n| $15$ | $\\approx5162.26$【已核验:5162.25591095|sum(exp(k*0.1)/(pi*(1+(k*0.1)**2))*0.1 for k in range(0,150))】 |\n\n截断每加 $5$，值涨约 $25$ 倍（$\\approx e^{5}/5^{2}$ 的量级）——**发散无疑**。而特征函数 $\\varphi(t)=e^{-\\lvert t\\rvert}$ 处处存在且 $\\lvert\\varphi\\rvert\\le1$（`C7.2` 对照表）。\n\n**反例二：对数正态分布 $X=e^{Z}$，$Z\\sim N(0,1)$。** 这个例子更尖锐：**所有阶矩都有限**，\n\n$$\\mathbb E X^{k}=\\mathbb E[e^{kZ}]=e^{k^{2}/2}\\quad\\big(\\text{如 }\\mathbb E X=e^{0.5}\\approx1.64872\\text{【已核验:1.6487212707|exp(0.5)】},\\ \\mathbb E X^{2}=e^{2}\\approx7.38906\\text{【已核验:7.38905609893|exp(2)】}\\big),$$\n\n但\n\n$$M(t)=\\sum_{k\\ge0}\\frac{\\mathbb E X^{k}}{k!}t^{k}=\\sum_{k\\ge0}\\frac{e^{k^{2}/2}}{k!}t^{k}=\\infty\\quad(\\forall t>0).$$\n\n理由：通项 $\\frac{e^{k^{2}/2}t^{k}}{k!}$ 的增长由 $e^{k^{2}/2}$ 主导（$k^{2}/2$ 压倒 $k\\ln(1/t)+\\ln k!\\approx k\\ln k$），通项**不趋于 $0$**。取 $t=0.1$ 看通项：$k=3$ 时 $\\approx0.015003$【已核验:0.0150028552168|exp(4.5)*0.1**3/factorial(3)】、$k=5$ 时 $\\approx0.022361$【已核验:0.0223614405434|exp(12.5)*0.1**5/factorial(5)】、$k=10$ 时 $\\approx1.42877\\times10^{5}$【已核验:142876.585334|exp(50)*0.1**10/factorial(10)】——**先降后爆**，级数无处收敛。\n\n**为什么特征函数照样存在**：$\\lvert e^{itX}\\rvert\\equiv1$，所以 $\\lvert\\varphi(t)\\rvert\\le\\mathbb E[1]=1$ 恒成立，不管 $X$ 多重尾。**这正是限定词①的价值**：把核从 $e^{tX}$ 换成 $e^{itX}$，存在性从「要碰运气」变成「白送」。\n\n**修补动作**：\n\n1. 需要尾界而 MGF 不存在 → 改用**截尾**变量 $X\\mathbf 1_{\\lvert X\\rvert\\le R}$（此时 MGF 存在），或改用 Markov/切比雪夫型多项式矩界；\n2. 需要极限定理 → 直接用 $\\varphi$（本单元性质 5 与 `C7.3`）；\n3. 判断「能不能用 MGF」的快检：看密度尾部是不是 $e^{-cx^{\\alpha}}$（$\\alpha\\ge1$）。是（如正态、指数）→ MGF 在邻域存在；不是（如对数正态的 $e^{-(\\ln x)^{2}/2}$、Cauchy 的 $x^{-2}$）→ MGF 多半不存在。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C2"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要数值积分扫描截断上限 A（Cauchy 的 M(t) 发散曲线）与通项 e^{k²/2}t^k/k! 随 k 的增长曲线，含大量求和/积分对拍，前端简单显式函数渲染不够。",
+        "params_hint": {
+          "cauchy": {
+            "A_range": "1..20",
+            "step": 0.1
+          },
+          "lognormal": {
+            "t": [
+              0.1,
+              0.01
+            ],
+            "k_range": "1..20"
+          },
+          "show": "截断黎曼和发散曲线 + MGF 级数通项的先降后爆"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.no-independence",
+      "type": "counterexample",
+      "subject": "chf",
+      "title": "反例：不独立时「卷积变乘法」失效（Y=±X 两个现场）",
+      "keywords": [
+        "现场一：Y = −X，X~N(0,1) ⟹ X+Y ≡ 0，真值 φ ≡ 1",
+        "误用乘积：φ_X(t)φ_Y(t) = e^{−t²}，t=1 时 0.367879 ≠ 1",
+        "现场二：Y = X ⟹ X+Y = 2X，真值 e^{−2t²}，t=1 时 0.135335",
+        "误用乘积仍给 e^{−1} = 0.367879，高估 2.718 倍",
+        "修补：必须验证独立；相依时用联合特征函数 E[e^{i(sX+tY)}]"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 203,
+        "line_end": 203
+      },
+      "fill_hint": "切片 203 行那条「这是它最有用的一条」的定点反例；两个现场（反相关、完全正相关）各给完整数值，并给出误用倍数 e ≈ 2.718。",
+      "content": "**误用现场**：切片 203 行写着「$X,Y$ 独立 $\\Rightarrow\\varphi_{X+Y}=\\varphi_X\\varphi_Y$（卷积变乘法，这是它最有用的一条）」。最常见的事故是**把「独立」这条假设默认成立**—— multivariate 数据、同一噪声源驱动的量、时间序列相邻项都不独立。\n\n**现场一（完全负相关，误差最大）**：取 $X\\sim N(0,1)$，令 $Y=-X$。此时 $X+Y\\equiv0$。\n- **真值**：$\\varphi_{X+Y}(t)=\\mathbb E[e^{it\\cdot0}]\\equiv1$。\n- **误用乘积**：$\\varphi_X(t)\\varphi_Y(t)=e^{-t^{2}/2}\\cdot e^{-t^{2}/2}=e^{-t^{2}}$（用到 $\\varphi_{-X}(t)=\\varphi_X(-t)=e^{-t^{2}/2}$，正态特征函数是偶函数）。\n- 在 $t=1$：误用值 $=e^{-1}\\approx0.367879$【已核验:0.367879441171|exp(-1)】，真值 $=1$ —— **把「方差为 0 的退化分布」误判成「方差为 2 的正态」**，错得离谱。\n\n**现场二（完全正相关）**：取 $Y=X\\sim N(0,1)$。此时 $X+Y=2X\\sim N(0,4)$。\n- **真值**：$\\varphi_{2X}(t)=\\varphi_X(2t)=e^{-(2t)^{2}/2}=e^{-2t^{2}}$，在 $t=1$ 为 $e^{-2}\\approx0.135335$【已核验:0.135335283237|exp(-2)】。\n- **误用乘积**：仍是 $e^{-t^{2}}$，在 $t=1$ 为 $0.367879$【已核验:0.367879441171|exp(-1)】。\n- **高估倍数**：$0.367879/0.135335\\approx2.71828$【已核验:2.71828182846|exp(-1)/exp(-2)】——恰好是 $e$，不是巧合：两处差的是方差（误用给 $2$，真值给 $4$），指数上差 $t^{2}$。\n\n**机制**：$\\mathbb E[e^{itX}e^{itY}]=\\mathbb E[e^{itX}]\\mathbb E[e^{itY}]$ 这一步**只在独立时**成立；$\\varphi_{X+Y}$ 真正需要的是 $X+Y$ 的**联合**信息。两个变量完全相关的极端情形下，和的波动是单个变量的 $2$ 倍（方差 $\\times4$），而独立性假设下的方差只有 $2$——**相关性改变的是和的尺度**，这一点在特征函数上表现为指数里的系数。\n\n**修补动作**：\n\n1. **先证独立再用**（`C3`：独立性须验证，不能默认）；\n2. 相依时用**联合特征函数** $\\varphi_{X,Y}(s,t)=\\mathbb E\\big[e^{i(sX+tY)}\\big]$，则 $\\varphi_{X+Y}(t)=\\varphi_{X,Y}(t,t)$——它自动包含协方差信息；\n3. 特例：若 $(X,Y)$ **联合正态**且相关系数 $\\rho$，则 $\\varphi_{X,Y}(s,t)=\\exp\\big(-\\tfrac12(s^{2}+2\\rho st+t^{2})\\big)$，代 $s=t$ 得 $\\varphi_{X+Y}(t)=e^{-(1+\\rho)t^{2}}$：$\\rho=-1$ 时 $\\equiv1$（现场一）、$\\rho=1$ 时 $e^{-2t^{2}}$（现场二）、$\\rho=0$ 时 $e^{-t^{2}}$（独立情形）。**$\\rho$ 连续地把三种情形连起来**，这就是误用的代价量化。",
+      "links": [
+        "C7.1",
+        "C3",
+        "C7.3"
+      ],
+      "viz": {
+        "module": "chf-product",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "product-vs-true",
+          "t_range": [
+            -3,
+            3
+          ],
+          "rho": [
+            -1,
+            -0.5,
+            0,
+            0.5,
+            1
+          ],
+          "annotate": "ρ=0 时两曲线重合；ρ=±1 时在 t=1 处差到 1 vs 0.3679"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.moment-counterexample",
+      "type": "counterexample",
+      "subject": "chf",
+      "title": "反例：φ 在 0 处不可导 ⟹ 无矩；以及 e^{−t⁴} 不是特征函数",
+      "keywords": [
+        "Cauchy：φ(t)=e^{−|t|} 在 0 处左右导数分别为 +0.9995 与 −0.9995（h=10⁻³）",
+        "后果：E X 不存在（公式 E X = −i φ'(0) 无从使用）",
+        "反向陷阱：h(t)=e^{−t⁴} 满足 h(0)=1、|h|≤1，却不是任何分布的特征函数",
+        "证伪：h''(0)=0 ⟹ E X² = 0 ⟹ 退化 ⟹ φ ≡ 1，但 h(1) = e^{−1} = 0.367879",
+        "修补：|φ|≤1 只是必要条件，充分需要正定性（Bochner）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 205,
+        "line_end": 205
+      },
+      "fill_hint": "切片 205 行「矩由原点处的导数读出」的反面：导数不存在即矩不存在。第二部分是「必要条件不充分」的定点反例（e^{−t⁴}），属标准补充。",
+      "content": "**误用现场一：以为「取 $\\varphi'(0)$」总能读出均值。** 切片 205 行的公式 $\\mathbb E X^{k}=(-i)^{k}\\varphi^{(k)}(0)$ 有一个隐含前提：那个导数**存在**。\n\n**反例：标准 Cauchy，$\\varphi(t)=e^{-\\lvert t\\rvert}$。** 在 $t=0$ 处取步长 $h=10^{-3}$ 的差商：\n\n$$\\text{右侧：}\\ \\frac{e^{-h}-1}{h}\\approx-0.9995\\text{【已核验:-0.999500166625|(exp(-0.001)-1)/0.001】},\\qquad\n\\text{左侧：}\\ \\frac{e^{-h}-1}{-h}\\approx+0.9995\\text{【已核验:0.999500166625|(exp(-0.001)-1)/(-0.001)】}.$$\n\n左右极限不相等（一个 $-1$、一个 $+1$），$\\varphi'(0)$ **不存在**。这与事实一致：Cauchy 的 $\\mathbb E\\lvert X\\rvert=\\infty$，均值根本没有定义。图像上 $\\varphi$ 在原点有一个**尖点**（cusp）——尖点正是「矩缺失」在 Fourier 侧的痕迹（对比 `C7.2` 里正态的 $\\varphi(t)=e^{-t^{2}/2}$ 处处光滑，因为正态各阶矩都有限）。\n\n**误用现场二：拿 $\\lvert\\varphi\\rvert\\le1$ 与 $\\varphi(0)=1$ 当充分条件。** 考虑\n\n$$h(t)=e^{-t^{4}} .$$\n\n它满足 $h(0)=1$、$0<\\lvert h(t)\\rvert\\le1$、偶、光滑、在 $\\infty$ 处衰减——看起来比很多真特征函数还乖。但它**不是**任何随机变量的特征函数。反证：\n\n1. 若 $h=\\varphi_X$，由 $h$ 光滑知各阶矩存在，且 $\\mathbb E X^{k}=(-i)^{k}h^{(k)}(0)$；\n2. 展开 $e^{-t^{4}}=1-t^{4}+O(t^{8})$：$h'(0)=0$、$h''(0)=0$；\n3. 于是 $\\mathbb E X=-i\\cdot0=0$，$\\mathbb E X^{2}=(-i)^{2}\\cdot0=0$，故 $\\mathrm{Var}(X)=\\mathbb E X^{2}-(\\mathbb E X)^{2}=0$；\n4. 方差为 $0$ ⟹ $X=\\mathbb E X=0$ 几乎必然 ⟹ $\\varphi_X\\equiv1$；\n5. 但 $h(1)=e^{-1}\\approx0.367879$【已核验:0.367879441171|exp(-1)】$\\neq1$。**矛盾。**\n\n**机制**：$\\lvert\\varphi\\rvert\\le1$、$\\varphi(0)=1$、一致连续都只是**必要**条件。真正刻画特征函数的是**正定性**（positive definiteness）：对任意 $n$、任意 $t_1,\\dots,t_n$ 与复数 $c_1,\\dots,c_n$，\n\n$$\\sum_{j,k}c_j\\overline{c_k}\\,\\varphi(t_j-t_k)\\ \\ge\\ 0 .$$\n\n理由很简单：$\\sum_{j,k}c_j\\overline{c_k}\\varphi(t_j-t_k)=\\mathbb E\\big[\\big\\lvert\\sum_j c_j e^{it_jX}\\big\\rvert^{2}\\big]\\ge0$——它是个模平方的期望。**Bochner 定理**说正定 + $\\varphi(0)=1$ + 连续 ⟺ 特征函数（见 `C7.1:chf.extension`）。\n\n**修补动作**：\n\n- 想构造/验证一个特征函数 → 查正定性，别只看 $\\lvert\\cdot\\rvert\\le1$；\n- 想读矩 → 先确认 $\\varphi$ 在 $0$ 处可导（等价于相应阶矩存在）；有尖点就说明矩爆了（`C6.5` 的 Cauchy 大数律失效与这里是同一件事的两面）。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:continuity.statement",
+      "type": "statement",
+      "subject": "continuity",
+      "title": "一一对应与 Lévy 连续性定理：从 φ 的收敛读回分布的收敛",
+      "keywords": [
+        "一一对应：φ_X 唯一决定 F_X（反演公式），不会两个分布共用一个 φ",
+        "连续性定理：F_n ⇒ F ⟺ φ_n → φ 且 φ 在 0 处连续（此时 φ 必是某分布的 φ）",
+        "「局部一致」可放宽为逐点收敛（Lévy 标准形式）",
+        "用途：把「分布收敛」这种难证的事变成「函数逐点收敛」这种可算的事",
+        "这是 C7.3 CLT 证明的最后一步：φ_n → e^{−t²/2} ⟹ 依分布收敛到 N(0,1)"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 206,
+        "line_end": 206
+      },
+      "fill_hint": "切片 206 行一行的完整展开：拆成「唯一性（反演）」与「连续性定理」两条；局部一致 vs 逐点的校准属标准补充，须人工复核措辞。",
+      "content": "**切片 206 行**只有一句话，但它承载两条定理，是整个 `C7` 的枢纽。\n\n**定理一（一一对应 / 唯一性）。** $\\varphi_X$ 唯一决定 $F_X$：若 $\\varphi_X=\\varphi_Y$ 则 $F_X=F_Y$。证明工具是**反演公式**——在 $F$ 的连续点 $a<b$ 上，\n\n$$F(b)-F(a)=\\lim_{T\\to\\infty}\\frac{1}{2\\pi}\\int_{-T}^{T}\\frac{e^{-ita}-e^{-itb}}{it}\\,\\varphi(t)\\,dt,$$\n\n且若 $\\varphi\\in L^{1}$，则 $X$ 有**连续密度** $f(x)=\\frac{1}{2\\pi}\\int_{\\mathbb R}e^{-itx}\\varphi(t)\\,dt$。理由：这正是 Fourier 反演（`A2.3`）——所以切片说特征函数是「（反向）Fourier 变换」。\n\n**定理二（Lévy 连续性定理，切片原话「两分布弱收敛 $\\iff\\varphi_n\\to\\varphi$（局部一致）」）。** 精确表述：\n\n- **正向**：若 $F_n\\Rightarrow F$，则 $\\varphi_n(t)\\to\\varphi_F(t)$ 且在任何有界区间上**一致**；\n- **反向**：若 $\\varphi_n(t)\\to\\varphi(t)$ 逐点成立，且极限 $\\varphi$ 在 $t=0$ 处**连续**，则 $\\varphi$ 是某个分布的特征函数，且 $F_n\\Rightarrow F$。\n\n**校准（标准补充）**：切片写的「局部一致」比标准形式更强——标准 Lévy 定理只需**逐点**收敛 + 极限在 $0$ 连续；而由正向可知结论自动升级为局部一致，所以两种说法等价。**「极限在 $0$ 处连续」是唯一的付费项**，去掉它定理就崩（见 `C7.1:continuity.limit-fails`）。\n\n**它为什么是 `C7` 的枢纽**：依分布收敛 $F_n\\Rightarrow F$ 直接证很别扭（要在所有连续点上对分布函数）；换成特征函数后变成「$\\varphi_n(t)\\to$ 某个显式函数」——纯分析的计算。`C7.3` 的 CLT 证明正是这样收尾的：算出 $\\big[\\varphi_Y(t/\\sqrt n)\\big]^{n}\\to e^{-t^{2}/2}$，认出右边是 $N(0,1)$ 的特征函数（`C7.2`），由连续性定理即得 $\\sqrt n(\\bar X_n-\\mu)/\\sigma\\xrightarrow{d}N(0,1)$。\n\n**依赖链**：Fourier 反演（`A2.3`）+ 特征函数的基本性质（本单元）→ 连续性定理 → `C7.3` CLT；下游还有 `C6.2` 的 Skorokhod 视角与 `C9.1` 的渐近正态性。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "A2.3",
+        "C6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:continuity.limit-fails",
+      "type": "counterexample",
+      "subject": "continuity",
+      "title": "反例：φ_n → 1_{t=0}（极限在 0 不连续）——分布列没有弱极限",
+      "keywords": [
+        "构造：X_n ~ N(0,n)，φ_n(t) = e^{−n t²/2}",
+        "逐点极限：t=0 时为 1，t≠0 时为 0 ⟹ 极限函数在 0 不连续",
+        "数值：φ_n(0.5) 在 n=10 时 0.286505、n=100 时 3.73×10⁻⁶",
+        "分布侧：P(|X_n| ≤ 1) = erf(1/√(2n)) → 0，n=100 时 0.0796557——质量整体逃逸",
+        "修补：先证极限在 0 处连续（⇔ 分布列胎紧），否则连续性定理不适用"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 206,
+        "line_end": 206
+      },
+      "fill_hint": "切片 206 行「φ_n → φ（局部一致）」里「极限在 0 连续」这条的定点反例；给出 φ 侧与分布侧两侧的数值对拍，说明「逐点极限存在」本身不够。",
+      "content": "**误用现场**：算出 $\\varphi_n(t)\\to g(t)$ 逐点成立，就直接宣布「$X_n$ 依分布收敛到某个 $X$」，却没检查极限 $g$ 在 $t=0$ 处是否连续。\n\n**反例构造**：取 $X_n\\sim N(0,n)$（方差随 $n$ 线性增长）。由 `C7.2` 的公式（$\\varphi_{N(0,\\sigma^{2})}(t)=e^{-\\sigma^{2}t^{2}/2}$）：\n\n$$\\varphi_n(t)=e^{-nt^{2}/2}\\ \\xrightarrow{n\\to\\infty}\\\n\\begin{cases}1,& t=0,\\\\ 0,& t\\neq0,\\end{cases}\\ =\\ g(t).$$\n\n**极限函数在 $0$ 处不连续**（$\\lim_{t\\to0}g(t)=0\\neq g(0)=1$）——连续性定理的前提被破坏。数值上看这个塌缩有多快：\n\n| $n$ | $\\varphi_n(0.5)=e^{-n/8}$ | 分布侧 $\\mathbb P(\\lvert X_n\\rvert\\le1)=\\mathrm{erf}\\big(1/\\sqrt{2n}\\big)$ |\n|---|---|---|\n| $10$ | $\\approx0.286505$【已核验:0.28650479686|exp(-10*0.25/2)】 | $\\mathrm{erf}(1/\\sqrt{20})\\approx0.248$【已核验:0.248170365954|erf(1/sqrt(20))】 |\n| $100$ | $\\approx3.72665\\times10^{-6}$【已核验:3.72665317208e-06|exp(-100*0.25/2)】 | $\\approx0.0796557$【已核验:0.0796556745541|erf(1/sqrt(200))】 |\n\n**分布侧发生了什么**：$X_n$ 的方差 $\\to\\infty$，质量整体**逃逸到无穷远**——任意固定区间 $[-1,1]$ 里的概率 $\\to0$。所以确实**不存在**弱极限分布（若 $F_n\\Rightarrow F$，则 $F$ 必须是真分布函数，而这里 $F\\equiv$ 常数）。这叫分布列**不胎紧**（not tight）：$\\lim_{M\\to\\infty}\\sup_n\\mathbb P(\\lvert X_n\\rvert>M)\\neq0$。\n\n**机制**：$g\\equiv0$（在 $t\\ne0$ 处）不是任何概率分布的特征函数——特征函数必须满足 $\\varphi(0)=1$ 且在 $0$ 连续。「$\\varphi_n$ 逐点收敛」这个事实本身**不保证**极限还是特征函数；连续性定理的反向部分真正说的是「**极限在 $0$ 连续** ⟹ 极限自动是特征函数 ⟹ 分布收敛」。\n\n**修补动作**：\n\n1. 用连续性定理前，**先验极限在 $0$ 连续**（实操：看 $\\varphi_n(t)\\to g(t)$ 是否在 $t=0$ 的邻域一致，或等价地验证 $\\limsup_{t\\to0}\\lvert g(t)-1\\rvert=0$）；\n2. 若 $g$ 在 $0$ 不连续 → 结论是「分布列不胎紧/无弱极限」，而不是「收敛到某个怪东西」；\n3. 与 `C6.2` 的对照：这正是「质量滑向无穷远」（$\\mathbf 1_{[n,n+1]}$ 型）在特征函数侧的样子——**同一件事，两个空间**：测度侧看质量逃逸，Fourier 侧看极限函数在原点断掉。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C6.2",
+        "C6.1"
+      ],
+      "viz": {
+        "module": "chf-collapse",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "variance-blowup",
+          "n_values": [
+            1,
+            4,
+            16,
+            64,
+            256
+          ],
+          "t_range": [
+            -2,
+            2
+          ],
+          "annotate": "φ_n(t)=exp(−n t²/2) 随 n 塌向 1_{t=0}；原点处的尖峰即不连续性"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.extension",
+      "type": "extension",
+      "subject": "chf",
+      "title": "拓展：Bochner 正定性、反演公式细节与「局部一致」的校准",
+      "keywords": [
+        "拓展①：Bochner 定理——正定 + φ(0)=1 + 连续 ⟺ 特征函数",
+        "拓展②：反演公式给出密度 f(x) = (1/2π)∫ e^{−itx} φ(t) dt（需 φ ∈ L¹）",
+        "拓展③：|φ(t₀)| = 1（t₀≠0）⟺ 分布支撑在格点上（如 Bernoulli 的 |φ(2π)|=1）",
+        "拓展④：φ ∈ L¹ ⟹ 密度连续有界；φ 衰减快 ⟺ 密度光滑",
+        "切片未含上述内容，标题带「拓展：」标明超出切片"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 202,
+        "line_end": 206
+      },
+      "fill_hint": "标题带「拓展：」——Bochner 定理与反演细节切片未出现，属标准补充（Feller / Billingsley）；正定性的推导（模平方期望）是本条骨架，人工复核格点判据的陈述。",
+      "content": "**拓展：** 切片只给了性质的清单；下面四条是使用特征函数时真正会用到的补充事实。\n\n**① Bochner 定理（特征函数的完整刻画）。** $\\varphi:\\mathbb R\\to\\mathbb C$ 是某个概率分布的特征函数，当且仅当\n\n1. $\\varphi(0)=1$；\n2. $\\varphi$ 在 $\\mathbb R$ 上连续；\n3. **正定**：$\\sum_{j,k=1}^{m}c_j\\overline{c_k}\\,\\varphi(t_j-t_k)\\ge0$ 对一切 $m$、$t_j$、$c_j\\in\\mathbb C$。\n\n必要性一行就够：$\\sum_{j,k}c_j\\overline{c_k}\\varphi(t_j-t_k)=\\mathbb E\\big[\\big\\lvert\\sum_j c_j e^{it_jX}\\big\\rvert^{2}\\big]\\ge0$（把 $\\varphi$ 的定义代进去，交叉项正好配成模平方）。**正定性 = 模平方非负**，它是 $e^{-t^{4}}$ 那种伪特征函数的照妖镜（见 `C7.1:chf.moment-counterexample`）。\n\n**② 反演公式（从 $\\varphi$ 拿回密度）。** 若 $\\varphi\\in L^{1}(\\mathbb R)$，则 $X$ 有**连续有界**密度\n\n$$f(x)=\\frac{1}{2\\pi}\\int_{\\mathbb R}e^{-itx}\\varphi(t)\\,dt .$$\n\n特例：密度在 $x$ 处的值 $f(x)=\\frac{1}{2\\pi}\\int e^{-itx}\\varphi(t)dt$；$\\varphi_{N(0,1)}(t)=e^{-t^{2}/2}\\in L^{1}$ 反演回来正是 $\\frac{1}{\\sqrt{2\\pi}}e^{-x^{2}/2}$（`C7.2` 会正向算一遍，这里是反向）。\n\n**③ $\\lvert\\varphi(t_0)\\rvert=1$（$t_0\\neq0$）的判据。** 此时分布支撑在某个**格点** $\\{a+kh:k\\in\\mathbb Z\\}$ 上。例：$\\mathrm{Bernoulli}(1/2)$ 的 $\\varphi(t)=\\frac{1+e^{it}}{2}=e^{it/2}\\cos\\frac t2$，$\\lvert\\varphi(2\\pi)\\rvert=\\lvert\\cos\\pi\\rvert=1$【已核验:1|abs(cos(pi))】，而 $\\lvert\\varphi(\\pi)\\rvert=\\lvert\\cos\\frac\\pi2\\rvert\\approx0$【已核验:0|abs(cos(pi/2))】——支撑在 $\\{0,1\\}$ 这个格点上。**用途**：一眼看出分布是不是离散格点型（这也解释了为什么格点分布要「连续性修正」，`C7.3` 的局部 CLT 会用到）。\n\n**④ 光滑性 ↔ 衰减（Fourier 对偶）。** $\\varphi$ 衰减越快，密度越光滑：$\\varphi\\in L^{1}$ ⟹ 密度连续有界；$\\int\\lvert t\\rvert^{k}\\lvert\\varphi(t)\\rvert dt<\\infty$ ⟹ 密度 $k$ 阶连续可微。反之密度光滑 ⟹ $\\varphi$ 快速衰减。例：Cauchy 的 $\\varphi(t)=e^{-\\lvert t\\rvert}$ 只是指数衰减（对应密度有极点结构的重尾）；均匀分布的 $\\varphi(t)=\\frac{\\sin t}{t}$ 只按 $1/t$ 衰减（对应密度**不连续**，在 $\\pm1$ 处跳变）。\n\n**⑤ 一条实用提醒**：$\\varphi$ 的乘积仍是特征函数（独立和），$\\varphi$ 的凸组合仍是特征函数（混合分布）；但 $\\varphi$ 的**逐点乘积**与**幂** $\\varphi^{n}$ 只在对应「独立和」时才有意义——$\\varphi^{2}$ 是 $X_1+X_2$（独立复制）的特征函数，不是 $X^{2}$ 的。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "A2.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.application",
+      "type": "application",
+      "subject": "chf",
+      "title": "应用：特征函数在哪四层被用（含 P 篇入口）",
+      "keywords": [
+        "第一层：算独立和的分布——卷积变乘法（C7.2 正态、C7.3 CLT）",
+        "第二层：证极限定理——Lévy 连续性定理把分布收敛变成函数收敛（C7.3）",
+        "第三层：读矩与判重尾——φ 在原点的可导性 = 矩的存在性（C6.5 Cauchy）",
+        "第四层：随机游走与蒙特卡洛误差——特征函数的 n 次幂给出 n 步分布（H4）",
+        "P 篇入口：Euler 公式（P5.2）、Maclaurin（P7.1）、常用极限（P4.3）、高斯积分（P8.1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 199,
+        "line_end": 206
+      },
+      "fill_hint": "按「在哪一层被用」组织四层；P 篇 links 指向 Euler/Maclaurin/极限/高斯积分四个入口，符合「涉及标准技法时 application 必须指向对应 P 组」的要求。",
+      "content": "**第一层 · 算独立和的分布（本单元性质 2，最直接的用法）。** 卷积难算、乘法好算：$S_n=X_1+\\cdots+X_n$（iid）的特征函数就是 $\\varphi_{S_n}=\\varphi_X^{\\,n}$。典型产物：正态的和还是正态（`C7.2`）、Poisson 的和还是 Poisson、Cauchy 的和还是 Cauchy。图形学里「多次弹射的能量叠加」「多次采样的噪声叠加」都是这一层的实例。\n\n**第二层 · 证极限定理（`C7.3`）。** 这是特征函数**被发明出来**的主要动机之一：CLT 的证明完全靠「$\\varphi_{S_n/\\sqrt n}(t)=\\big[\\varphi_Y(t/\\sqrt n)\\big]^{n}\\to e^{-t^{2}/2}$」+ 连续性定理。没有它，CLT 的证明要痛苦得多。\n\n**第三层 · 读矩、判重尾（`C6.5`）。** $\\varphi$ 在原点可导到第几阶，就等于第几阶矩存在。Cauchy 的 $\\varphi(t)=e^{-\\lvert t\\rvert}$ 在原点有尖点 ⟺ 一阶矩不存在 ⟺ `C6.5` 里大数定律对它失效。**这是「Fourier 侧的尖点」与「分布侧的重尾」之间的字典。**\n\n**第四层 · 随机游走与蒙特卡洛（`H4`、`C9.1`）。** $n$ 步对称随机游走的位置分布由 $\\varphi_{\\text{step}}^{\\,n}$ 给出；返回概率、首达时间的渐近都要估 $\\varphi^{n}$ 的积分。特征函数在这里的角色是「把 $n$ 重卷积换成 $n$ 次幂」——唯一的实用算法。\n\n**P 篇入口（本单元依赖的计算技法）**：\n\n- `P5.2` Euler 公式与复数：$e^{itX}$ 的定义与拆分 $e^{i(u+v)}=e^{iu}e^{iv}$；\n- `P7.1` 必背 Maclaurin 表：$e^{iu}=1+iu-\\frac{u^{2}}{2}+O(u^{3})$ 是 `C7.3` Taylor 步的来源；\n- `P4.3` 常用极限：$\\big(1+\\frac xn\\big)^{n}\\to e^{x}$ 是 `C7.3` 最后一步的来源；\n- `P8.1` 高斯积分：`C7.2` 算正态特征函数时的 $\\int e^{-x^{2}/2}dx=\\sqrt{2\\pi}$。\n\n**它依赖什么 / 谁依赖它**：依赖 `A1`（积分论）、`A2.3`（Fourier 分析）、`C3`（独立性）、`P5.2`；被 `C7.2`、`C7.3`、`C6.5`（Khinchin 版 WLLN）、`H4` 依赖。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C6.5",
+        "H4",
+        "C9.1",
+        "P5.2",
+        "P7.1",
+        "P4.3",
+        "P8.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "常用分布的特征函数速查表（含数值锚点）",
+      "keywords": [
+        "退化 δ_a：e^{iat}（|φ| ≡ 1，唯一 |φ| 恒 1 的情形）",
+        "Bernoulli(1/2)：(1+e^{it})/2，|φ(π)| ≈ 0、|φ(2π)| = 1（格点）",
+        "正态 N(0,1)：e^{−t²/2}；N(μ,σ²)：e^{iμt−σ²t²/2}",
+        "Cauchy(0,1)：e^{−|t|}（原点尖点 ⟺ 无均值）",
+        "均匀 U(−1,1)：sin t / t；Poisson(λ)：exp(λ(e^{it}−1))；指数：1/(1−it)"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 195,
+        "line_end": 206
+      },
+      "fill_hint": "单元级速查表；每行给一个数值锚点（带待核验标记）便于自检；正态行的完整推导在 C7.2，其余为查表事实（人工复核 Uniform/Poisson/指数三行的系数）。",
+      "content": "把常用分布的特征函数摆成一页表。**用法**：算完一个 $\\varphi$，先对照 $\\varphi(0)=1$；再对照「衰减速度」看密度光不光滑；再看原点有没有尖点来判断矩。\n\n| 分布 | $\\varphi(t)$ | 数值锚点 | 特征（看什么） |\n|---|---|---|---|\n| 退化 $\\delta_a$ | $e^{iat}$ | $\\lvert\\varphi\\rvert\\equiv1$ | 唯一模恒为 $1$ 的情形（方差 $0$） |\n| $\\mathrm{Bernoulli}(1/2)$ | $\\frac{1+e^{it}}{2}=e^{it/2}\\cos\\frac t2$ | $\\lvert\\varphi(\\pi)\\rvert=\\lvert\\cos\\frac\\pi2\\rvert\\approx0$【已核验:0|abs(cos(pi/2))】；$\\lvert\\varphi(2\\pi)\\rvert=1$【已核验:1|abs(cos(pi))】 | 格点分布：$t=2\\pi$ 处模回到 $1$ |\n| 正态 $N(0,1)$ | $e^{-t^{2}/2}$ | $\\varphi(1)\\approx0.606531$【已核验:0.606530659713|exp(-0.5)】；$\\varphi(2)\\approx0.135335$【已核验:0.135335283237|exp(-2)】 | 高斯衰减 ⟹ 密度超光滑；见 `C7.2` |\n| 正态 $N(\\mu,\\sigma^{2})$ | $e^{i\\mu t-\\sigma^{2}t^{2}/2}$ | $\\sigma=2,\\mu=0,t=1$：$e^{-2}\\approx0.135335$【已核验:0.135335283237|exp(-2)】 | 平移只加相位 $e^{i\\mu t}$ |\n| $\\mathrm{Cauchy}(0,1)$ | $e^{-\\lvert t\\rvert}$ | 原点左右导数 $\\approx\\pm0.9995$【已核验:-0.999500166625|(exp(-0.001)-1)/0.001】 | 尖点 ⟺ 无均值（`C6.5`） |\n| 均匀 $U(-1,1)$ | $\\frac{\\sin t}{t}$ | $\\varphi(1)\\approx0.841471$【已核验:0.841470984808|sin(1)/1】 | 只按 $1/t$ 衰减 ⟹ 密度在 $\\pm1$ 处**跳变** |\n| $\\mathrm{Poisson}(\\lambda)$ | $\\exp\\big(\\lambda(e^{it}-1)\\big)$ | $\\lambda=1,t=1$：模 $=\\exp(\\cos1-1)\\approx0.631475$【已核验:0.631474515106|exp(cos(1)-1)】 | 周期 $2\\pi$；取值在格点 $\\mathbb Z_{\\ge0}$ 上 |\n| 指数 $\\mathrm{Exp}(1)$ | $\\frac{1}{1-it}$ | 模 $=\\frac{1}{\\sqrt{1+t^{2}}}$，$t=1$ 时 $\\approx0.707107$【已核验:0.707106781187|1/sqrt(2)】 | 按 $1/t$ 衰减；密度在 $0$ 处跳变 |\n\n**三条读表规则**：\n\n1. **$\\lvert\\varphi\\rvert$ 的衰减速度 ↔ 密度的光滑度**：超快衰减（正态 $e^{-t^{2}/2}$）↔ 解析密度；慢衰减（$\\frac{\\sin t}{t}$、$\\frac1{1-it}$）↔ 密度有跳跃；\n2. **原点是否可导 ↔ 矩是否存在**：Cauchy 的尖点是最著名的「无均值」标记；\n3. **$\\lvert\\varphi(t_0)\\rvert=1$（$t_0\\ne0$）↔ 格点分布**：Bernoulli 与 Poisson 都在 $t=2\\pi$ 处回到 $1$。\n\n**与 `C7.2` 的分工**：本表是查表事实；`C7.2` 把正态那一格从积分**推导**一遍（配方 + 高斯积分），其余各格的推导同理。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "C7.1 的下游清单（一条一句）",
+      "keywords": [
+        "C7.2：正态特征函数 e^{−t²/2} 的算例（本单元性质的第一次实战）",
+        "C7.3：CLT 的证明全程在特征函数上跑（Taylor + 幂 + 连续性定理）",
+        "C6.5：Khinchin WLLN 的证明用特征函数绕开方差有限的假设",
+        "H4：n 步随机游走分布 = φ_step 的 n 次幂；蒙特卡洛误差的 Fourier 视角",
+        "C9.1：估计量渐近正态性的证明工具（M-estimator 的标准路线）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 199,
+        "line_end": 206
+      },
+      "fill_hint": "单元级应用词条；每条给出「为什么需要它」而不只说「用到了」；C7.2/C7.3 是紧邻下游，C6.5/H4/C9.1 是跨章下游。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`C7.2` 算例：正态分布**：本单元的定义第一次被真正计算——$\\frac{1}{\\sqrt{2\\pi}}\\int e^{itx}e^{-x^{2}/2}dx=e^{-t^{2}/2}$。它同时验证了性质 3（$\\varphi(0)=1$、$\\lvert\\varphi\\rvert\\le1$）与性质 4（$-\\varphi''(0)=1=\\mathbb E X^{2}$），是「理论对账」的样板。\n- **`C7.3` 中心极限定理**：证明全程跑在特征函数上——标准化（性质 1）→ 原点 Taylor 展开（性质 4）→ 独立性使 $\\varphi$ 相乘并取 $n$ 次幂（性质 2）→ 极限 $e^{-t^{2}/2}$ 由 `C7.2` 认出 → 连续性定理（性质 5）翻译成依分布收敛。**五条性质在一条证明里全部登场。**\n- **`C6.5` 弱大数定律（Khinchin 版）**：要在「方差可能无穷」的情形下证 $\\bar X_n\\xrightarrow{\\mathbb P}\\mu$，Chebyshev 不可用，标准做法就是证 $\\varphi_{\\bar X_n}(t)\\to e^{i\\mu t}$（退化分布的特征函数）再用连续性定理——**特征函数是绕开方差假设的唯一通道**。\n- **`H4` 蒙特卡洛与随机游走**：$n$ 步位置 $=n$ 重卷积 $=\\varphi_{\\text{step}}^{\\,n}$；渲染里多次散射的能量分布、多次采样的和，都在这一层。\n- **`C9.1` 估计量的渐近正态性**：M-估计/最大似然的标准渐近证明用特征函数或等价的 Fourier 工具给出「$\\sqrt n(\\hat\\theta-\\theta)\\Rightarrow N(0,V)$」——与 `C7.3` 同一台机器，只是把 iid 换成三角阵列。\n- **`A2.3` Fourier 分析**：本单元是它在概率空间的投影；反过来，学 Fourier 时的「卷积 ↔ 乘法」对偶在这里有了概率意义。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C6.5",
+        "H4",
+        "C9.1",
+        "A2.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.probe1",
+      "type": "probe",
+      "subject": "chf",
+      "title": "检验题：线性变换、独立性、矩的导数——三题亲手算",
+      "keywords": [
+        "第1题：X~N(0,1)，求 |φ_{2+3X}(1)|",
+        "第2题：X,Y iid N(0,1)，独立 vs Y=−X 时 φ_{X+Y}(1) 各是多少？",
+        "第3题：Bernoulli(1/2) 的 |φ(π)| 与 |φ(2π)|，说明为什么后者等于 1",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 202,
+        "line_end": 205
+      },
+      "fill_hint": "三题分别对应性质 1（线性变换）、性质 2（独立性）、格点判据；第 2 题的陷阱是默认独立，第 3 题的陷阱是以为 |φ| 会单调衰减。",
+      "content": "**第 1 题（线性变换）**：设 $X\\sim N(0,1)$，$Y=2+3X$。(a) 写出 $\\varphi_Y(t)$；(b) 算 $\\lvert\\varphi_Y(1)\\rvert$；(c) 它与 $\\varphi_X(1)$ 相差多少倍？\n**答案**：(a) $\\varphi_Y(t)=e^{2it}\\varphi_X(3t)=e^{2it}e^{-9t^{2}/2}$；(b) $\\lvert\\varphi_Y(1)\\rvert=e^{-9/2}\\approx0.0111090$【已核验:0.0111089965382|exp(-4.5)】；(c) $\\varphi_X(1)=e^{-1/2}\\approx0.606531$【已核验:0.606530659713|exp(-0.5)】，故相差 $e^{-4}\\approx0.0183156$【已核验:0.0183156388887|exp(-4)】倍——缩放 $b=3$ 把 $t$ 放大 $3$ 倍，指数上放大 $9$ 倍。\n\n**第 2 题（独立性是付费项）**：$X,Y$ 都服从 $N(0,1)$。(a) 若独立，$\\varphi_{X+Y}(1)$ 是多少？(b) 若 $Y=-X$，真值是多少？误用乘积公式会得到多少？(c) 两者之比？\n**答案**：(a) $e^{-1}\\approx0.367879$【已核验:0.367879441171|exp(-1)】（方差 $2$）；(b) 真值 $\\varphi_{X+Y}\\equiv1$（$X+Y\\equiv0$），误用乘积得 $e^{-1}\\approx0.367879$【已核验:0.367879441171|exp(-1)】；(c) 真值/误用 $=e\\approx2.71828$【已核验:2.71828182846|1/exp(-1)】。\n\n**第 3 题（格点判据）**：$X\\sim\\mathrm{Bernoulli}(1/2)$，$\\varphi(t)=\\frac{1+e^{it}}{2}=e^{it/2}\\cos\\frac t2$。(a) 算 $\\lvert\\varphi(\\pi)\\rvert$；(b) 算 $\\lvert\\varphi(2\\pi)\\rvert$；(c) 后者等于 $1$ 说明了什么？\n**答案**：(a) $\\lvert\\cos\\frac\\pi2\\rvert\\approx0$【已核验:0|abs(cos(pi/2))】；(b) $\\lvert\\cos\\pi\\rvert=1$【已核验:1|abs(cos(pi))】；(c) 说明分布支撑在格点上（取值 $0,1$，步长 $1$）——一般地，$\\lvert\\varphi(t_0)\\rvert=1$（$t_0\\ne0$）当且仅当分布是格点分布。陷阱：别以为 $\\lvert\\varphi\\rvert$ 会一直衰减，格点分布会周期性回到 $1$。",
+      "links": [
+        "C7.1",
+        "C7.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C7.1:chf.probe2",
+      "type": "probe",
+      "subject": "chf",
+      "title": "检验题：矩的导数与 Cauchy 的尖点",
+      "keywords": [
+        "第1题：φ(t)=e^{−t²/2}，用导数读出 E X、E X²、E X⁴",
+        "第2题：Cauchy 的 φ(t)=e^{−|t|} 在 h=10⁻³ 处的左右差商",
+        "第3题：为什么 h(t)=e^{−t⁴} 不是特征函数？（用 h''(0) 反证）",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 205,
+        "line_end": 205
+      },
+      "fill_hint": "三题对应性质 4（矩-导数）与它的两个反面（不可导、必要条件不充分）；第 3 题要求完整反证链，是本单元最综合的一题。",
+      "content": "**第 1 题（从导数读矩）**：$\\varphi(t)=e^{-t^{2}/2}$ 是标准正态的特征函数。(a) 用 $\\varphi'(0)$ 求 $\\mathbb E X$；(b) 用 $\\varphi''(0)$ 求 $\\mathbb E X^{2}$；(c) 用展开式 $e^{-t^{2}/2}=1-\\frac{t^{2}}2+\\frac{t^{4}}8-\\cdots$ 求 $\\mathbb E X^{4}$。\n**答案**：(a) $\\varphi'(t)=-te^{-t^{2}/2}$，$\\varphi'(0)=0$，$\\mathbb E X=-i\\cdot0=0$；(b) $\\varphi''(0)=-1$，$\\mathbb E X^{2}=(-i)^{2}(-1)=1$【已核验:1|-(-1)】；(c) $t^{4}$ 项系数 $\\frac18$ 对应 $\\frac{\\varphi^{(4)}(0)}{4!}=\\frac18$，故 $\\varphi^{(4)}(0)=\\frac{4!}8=3$【已核验:3|factorial(4)/8】，$\\mathbb E X^{4}=(-i)^{4}\\cdot3=3$（正态四阶矩 $=3\\sigma^{4}$，$\\sigma=1$ 即 $3$）。\n\n**第 2 题（尖点 = 无矩）**：$\\varphi(t)=e^{-\\lvert t\\rvert}$（标准 Cauchy）。(a) 取 $h=10^{-3}$，算右侧差商 $\\frac{\\varphi(h)-\\varphi(0)}{h}$；(b) 算左侧差商 $\\frac{\\varphi(-h)-\\varphi(0)}{-h}$；(c) 结论是什么？\n**答案**：(a) $\\approx-0.9995$【已核验:-0.999500166625|(exp(-0.001)-1)/0.001】；(b) $\\approx+0.9995$【已核验:0.999500166625|(exp(-0.001)-1)/(-0.001)】；(c) 左右极限不等（$\\to-1$ 与 $+1$），$\\varphi'(0)$ 不存在 ⟹ $\\mathbb E X$ 不存在（Cauchy 无均值，`C6.5` 的大数定律对它失效）。\n\n**第 3 题（必要条件不充分）**：$h(t)=e^{-t^{4}}$ 满足 $h(0)=1$ 与 $\\lvert h\\rvert\\le1$。(a) 算 $h'(0)$ 与 $h''(0)$；(b) 若 $h$ 是某 $X$ 的特征函数，由 (a) 推出 $\\mathrm{Var}(X)$ 是多少、$X$ 是什么？(c) 与 $h(1)$ 比较，得到什么矛盾？\n**答案**：(a) 由 $e^{-t^{4}}=1-t^{4}+O(t^{8})$，$h'(0)=0$、$h''(0)=0$；(b) $\\mathbb E X=0$、$\\mathbb E X^{2}=0$ ⟹ $\\mathrm{Var}(X)=0$ ⟹ $X\\equiv0$ a.s. ⟹ $\\varphi\\equiv1$；(c) 但 $h(1)=e^{-1}\\approx0.367879$【已核验:0.367879441171|exp(-1)】$\\ne1$，矛盾，故 $e^{-t^{4}}$ **不是**特征函数。教训：$|\\varphi|\\le1$、$\\varphi(0)=1$ 只是必要条件，充分需要**正定性**（Bochner）。",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

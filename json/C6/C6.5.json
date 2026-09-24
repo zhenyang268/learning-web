@@ -1,0 +1,565 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C6.5",
+  "chapter": "C6",
+  "title": "Borel--Cantelli 与两种大数定律",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 172,
+    "line_end": 190,
+    "anchor": "notebook/C_partial.tex:172"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "C6.5:bc.quantifiers",
+      "type": "comparison",
+      "subject": "bc",
+      "title": "Borel–Cantelli 两条引理的限定词逐条翻车表",
+      "keywords": [
+        "① 可和性 ∑P(A_n)<∞：去掉则独立 A_n 且 P=1/n 时 P(limsup)=1≠0",
+        "② 第一引理不需独立性：方向「可和 ⟹ 有限多次」免费",
+        "③ 第二引理需独立性：常驻事件 A_n≡B，P(B)=1/2 ⟹ P(limsup)=0.5≠1",
+        "④ limsup = ∩_N ∪_{n≥N}：量词读错（∩↔∪）结论从 1 变 0",
+        "⑤ 非独立且 ∑=∞ 时 P(limsup) 可取 [0,1] 任意值（P(B)=0.3 即 0.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 173,
+        "line_end": 179
+      },
+      "fill_hint": "五列表是「用前自检清单」；每行的反例都有独立词条展开（bc.no-independence / bc.divergent），行号取切片 Borel–Cantelli 段。",
+      "content": "Borel--Cantelli（博雷尔–坎泰利）引理是「事件列发生无穷多次」的唯一判据。把它拆成五个限定词，逐条问「去掉会怎样」。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $\\sum_n \\mathbb P(A_n)<\\infty$（概率可和） | $A_n$ 相互独立、$\\mathbb P(A_n)=\\frac1n$（$n\\ge2$）：$\\sum\\frac1n=\\infty$，且 $\\mathbb P\\big(\\bigcap_{k=2}^{N}A_k^{c}\\big)=\\frac1N\\to0$，故 $\\mathbb P(\\limsup A_n)=1$ | 想要的「只有有限多个发生」变成「无穷多个发生」，概率从 $0$ 跳到 $1$ | 不能去。这是第一引理唯一的实质假设；可用 Borel--Cantelli 的推广（$\\sum \\mathbb P(A_n\\mid \\mathcal F_{n-1})<\\infty$ a.s.）替换成条件版 |\n| ② 第一引理**不需要**独立性 | ——（方向「可和 ⟹ 有限多次」对任意事件列成立，包括 C6.2 的打字机序列） | 不会失效；这一条是**免费**的 | 本身就是最弱形式；这是它比第二引理好用的原因 |\n| ③ 第二引理需要**独立性** | 常驻事件族 $A_n\\equiv B$（如 $B=(0,\\tfrac12)\\subset[0,1]$，$\\mathbb P(B)=\\tfrac12$）：$\\sum_n\\mathbb P(A_n)=\\infty$，但 $\\limsup_n A_n=B$，$\\mathbb P=\\tfrac12\\neq1$【已核验:0.5|1/2】 | 从「几乎必然无穷多次」塌到「概率 0.5」，而 $0.5$ 既不是 $0$ 也不是 $1$ | **可放宽**：两两独立（pairwise independence）已足够（见 `C6.5:bc.extension`） |\n| ④ $\\limsup_n A_n=\\bigcap_N\\bigcup_{n\\ge N}A_n$ 里的 $\\bigcap_N$（对**一切** $N$） | 读成 $\\bigcup_N\\bigcap_{n\\ge N}A_n$（「从某处起一直发生」）：独立抛硬币 $A_n=${第 $n$ 次正面}，正确值 $\\mathbb P(\\limsup)=1$，读错后得 $\\mathbb P(\\liminf)=0$ | 概率从 $1$ 变成 $0$ —— 量词方向一错，结论反向 | 不能放宽；$\\limsup$ 的定义是「永远甩不掉」：$\\forall N\\ \\exists n\\ge N$ |\n| ⑤ 结论值只有 $0$ 或 $1$（第二引理） | 非独立时不受此约束：$A_n\\equiv B$ 时 $\\mathbb P(\\limsup)=\\mathbb P(B)$，取 $\\mathbb P(B)=0.3$ 即 $0.3$【已核验:0.3|0.3】 | 「二值性」消失，$[0,1]$ 里每个值都能取到 | 二值性其实来自 Kolmogorov $0$-$1$ 律（尾事件），独立性才是真正的付费项 |\n\n**这张表的用法**：拿到一串事件，先问两句——\n\n1. $\\sum_n\\mathbb P(A_n)$ 收不收敛？收敛 → 立刻写 $\\mathbb P(A_n\\ \\text{i.o.})=0$（免费，不问独立性）；\n2. 发散 → **必须**检查独立性（或两两独立），否则只能停在 $\\mathbb P(\\limsup)\\in[0,1]$ 的未知区。\n\n**它在单元里的位置**：第一引理是「把无穷多次压成零次」的机器，强大数定律的证明（见 `C6.5:slln.statement`）正是靠它把「偏差 $>\\varepsilon$ 无穷多次」判成零概率事件。",
+      "links": [
+        "C6.1",
+        "C6.2",
+        "C6.3",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:bc.statement",
+      "type": "statement",
+      "subject": "bc",
+      "title": "Borel–Cantelli 两条引理：陈述、条件与依赖链",
+      "keywords": [
+        "第一引理（不需独立）：∑P(A_n)<∞ ⟹ P(limsup A_n)=0",
+        "第二引理（需独立）：独立且 ∑P(A_n)=∞ ⟹ P(limsup A_n)=1",
+        "limsup_n A_n = ∩_N ∪_{n≥N} A_n = 「A_n 无穷多次发生」（i.o.）",
+        "第一条只用次可加性；第二条在乘积那一步用独立性",
+        "典型配对：P(A_n)=1/n² 可和（∑=π²/6≈1.6449）vs P(A_n)=1/n 发散"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 173,
+        "line_end": 179
+      },
+      "fill_hint": "两条引理按切片 173-179 逐字转写；依赖链（次可加性 / 1−x≤e^{−x} / 独立性）与「i.o.」记号的注解是增量。",
+      "content": "**陈述（切片 173-179 逐字转写）**。设 $\\{A_n\\}$ 是一列事件，记\n\n$$\\limsup_{n}A_n=\\bigcap_{N}\\bigcup_{n\\ge N}A_n,$$\n\n它表示「无穷多个 $A_n$ 发生」，即 $A_n\\ \\text{i.o.}$（infinitely often）。\n\n- **第一引理（不需要独立性）**：$\\displaystyle\\sum_n\\mathbb P(A_n)<\\infty\\ \\Longrightarrow\\ \\mathbb P(\\limsup_n A_n)=0$，即「几乎必然只有有限多个 $A_n$ 发生」。\n- **第二引理（需要独立性）**：$A_n$ 相互独立且 $\\displaystyle\\sum_n\\mathbb P(A_n)=\\infty\\ \\Longrightarrow\\ \\mathbb P(\\limsup_n A_n)=1$。\n\n**成立条件（逐条）**：\n\n1. 第一引理：**只要** $\\sum_n\\mathbb P(A_n)$ 收敛（作为正项级数）。独立性、相依结构一概不问——它是全库最便宜的一条「几乎必然」结论。\n2. 第二引理：**两个**条件缺一不可——独立性 + 概率和发散。缺独立性见 `C6.5:bc.no-independence`；缺发散性（即 $\\sum<\\infty$）时正确答案是 $0$ 而不是 $1$，两条引理在 $\\sum<\\infty$ 处并不冲突（第二引理的假设根本没满足）。\n\n**两条引理的典型配对**（记这一对就够用）：\n\n| 事件列 | $\\sum_n\\mathbb P(A_n)$ | 独立？ | 结论 |\n|---|---|---|---|\n| $\\mathbb P(A_n)=1/n^{2}$ | $=\\pi^{2}/6\\approx1.64493$【已核验:1.64493406685|pi**2/6】，收敛 | 不需要 | $\\mathbb P(A_n\\ \\text{i.o.})=0$ |\n| $\\mathbb P(A_n)=1/n$（$n\\ge2$） | $=\\infty$（$\\sum_{k=2}^{1000}\\frac1k\\approx6.48547$【已核验:6.48547086055|sum(1/k for k in range(2,1001))】） | 需要独立 | $\\mathbb P(A_n\\ \\text{i.o.})=1$ |\n| $A_n\\equiv B$，$\\mathbb P(B)=\\tfrac12$ | $=\\infty$ | **不独立** | $\\mathbb P(A_n\\ \\text{i.o.})=\\tfrac12$（两条都用不上） |\n\n**依赖链**：第一引理只用**次可加性**（$\\mathbb P(\\bigcup_{n\\ge N}A_n)\\le\\sum_{n\\ge N}\\mathbb P(A_n)$）；第二引理在「$\\mathbb P(\\bigcap A_k^c)=\\prod\\mathbb P(A_k^c)$」这一步用独立性（见 `C6.5:bc.proof`），再用 $1-x\\le e^{-x}$（P 篇常用极限，见 `P4.3`）把乘积压成指数。**谁依赖它**：C6.2 的打字机展品（$\\sum_m 1=\\infty$ 的形态）、`C6.5:wlln` 与 `C6.5:slln` 的证明、A1.5 的子列论证。",
+      "links": [
+        "C6.2",
+        "C6.5",
+        "P4.3",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:bc.no-independence",
+      "type": "counterexample",
+      "subject": "bc",
+      "title": "反例：常驻事件族 A_n≡B——第二引理没有独立性就塌成 1/2",
+      "keywords": [
+        "构造：A_n ≡ B = (0,1/2) ⊂ [0,1]，P(B) = 1/2（完全相关的极端）",
+        "∑_n P(A_n) = ∞（每项 1/2；前 1000 项之和 = 500）",
+        "但 limsup A_n = B：P = 1/2，既不是 0 也不是 1",
+        "换 P(B)=0.3 即得 0.3——非独立时 P(limsup) 可取 [0,1] 任意值",
+        "修补：独立性可放宽到两两独立（pairwise independence）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 177,
+        "line_end": 179
+      },
+      "fill_hint": "切片只说「第二引理需要独立性」；本条给出最朴素的否证（常驻事件族）与完整数值，并把可放宽的方向（两两独立）点明。",
+      "content": "**反例构造（切片 177-179 的第二引理）**：在 $[0,1]$ 上取 $B=(0,\\tfrac12)$，令 $A_n\\equiv B$ 对一切 $n$ —— 事件列是**同一个事件重复无穷多次**，这是「不独立」的最极端形态（$\\mathbb P(A_n\\cap A_m)=\\mathbb P(B)=\\tfrac12\\neq\\tfrac14=\\mathbb P(A_n)\\mathbb P(A_m)$）。\n\n**第一步：发散性满足。** $\\mathbb P(A_n)=\\tfrac12$ 对每项成立，故\n\n$$\\sum_{n=1}^{1000}\\mathbb P(A_n)=500,\\qquad \\sum_{n=1}^{\\infty}\\mathbb P(A_n)=\\infty .$$\n\n**第二步：结论崩溃。** 直接算 $\\limsup$：\n\n$$\\bigcup_{n\\ge N}A_n=B\\quad(\\forall N)\\ \\Longrightarrow\\ \\limsup_n A_n=\\bigcap_N B=B,$$\n\n于是 $\\mathbb P(\\limsup_n A_n)=\\mathbb P(B)=\\tfrac12$【已核验:0.5|1/2】——第二引理许诺的 $1$ 没有得到，第一引理的 $0$ 也没得到，落在中间。\n\n**第三步：说明这不是「差一点」，是任意值。** 同一个构造把 $B$ 换成 $\\mathbb P(B)=0.3$ 的集合，得 $\\mathbb P(\\limsup)=0.3$【已核验:0.3|0.3】；换成 $\\mathbb P(B)=0.9$ 得 $0.9$。**结论值可以是 $[0,1]$ 中任何数**，独立性正是把它钉死在 $0/1$ 两端的东西（Kolmogorov $0$-$1$ 律的影子）。\n\n**机制（一句话）**：独立性保证「一件事失败不会连累下一件」，于是无穷多次机会各自独立兑现；常驻事件族里所有机会是**同一次**机会——要么 $B$ 发生（则无穷多次发生）、要么不发生（则零次），概率就是 $\\mathbb P(B)$。\n\n**修补动作**：\n\n1. 独立性**可放宽到两两独立**——第二引理在两两独立下仍成立（标准补充，见 `C6.5:bc.extension`）；\n2. 完全不独立时，改用条件 Borel--Cantelli（用 $\\sum_n\\mathbb P(A_n\\mid\\mathcal F_{n-1})$ 替 $\\sum_n\\mathbb P(A_n)$）或第二矩法（Chung--Erdős）；\n3. 实用判据：$\\sum\\mathbb P(A_n)=\\infty$ 而结论不是 $1$ 时，**先查独立性**，别急着怪引理。",
+      "links": [
+        "C6.5",
+        "C6.1",
+        "C3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:bc.divergent",
+      "type": "counterexample",
+      "subject": "bc",
+      "title": "反例：独立 A_n 且 P(A_n)=1/n——去掉可和性，0 变 1",
+      "keywords": [
+        "构造：A_n 独立、P(A_n)=1/n（n≥2），∑1/n = ∞",
+        "关键计算：P(∩_{k=2}^{N} A_k^c) = ∏(1−1/k) = 1/N（望远镜相消）",
+        "N=100 时这个概率 = 0.01；N→∞ 时为 0 ⟹ P(至少一个发生)=1",
+        "对照：P(A_n)=1/n² 时 ∑ = π²/6 ≈ 1.6449，第一引理给 P(i.o.)=0",
+        "门槛：1/n^p 在 p>1 可和、p≤1 发散——分水岭就在 p=1"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 175,
+        "line_end": 179
+      },
+      "fill_hint": "切片第一引理（175-176 行）的否证：取最经典的调和级数事件列；∏(1−1/k)=1/N 的望远镜相消是完整计算的核心，数值带待核验标记。",
+      "content": "**反例构造**：取相互独立的事件列 $A_n$（$n\\ge2$），$\\mathbb P(A_n)=\\frac1n$。这是「概率刚好发散得最慢」的临界族。\n\n**第一步：可和性失效。** $\\sum_{n=2}^{\\infty}\\frac1n=\\infty$（调和级数）。数值：$\\sum_{k=2}^{1000}\\frac1k\\approx6.48547$【已核验:6.48547086055|sum(1/k for k in range(2,1001))】，$\\sum_{k=2}^{10^{6}}\\frac1k\\approx13.09$【已核验:13.3927267229|sum(1/k for k in range(2,1000001))】—— 增长极慢，但**确实无界**。\n\n**第二步：直接算「一次都没发生」的概率（独立性只在这里登场）。**\n\n$$\\mathbb P\\Big(\\bigcap_{k=2}^{N}A_k^{c}\\Big)=\\prod_{k=2}^{N}\\Big(1-\\frac1k\\Big)=\\prod_{k=2}^{N}\\frac{k-1}{k}=\\frac{1}{N}.$$\n\n望远镜相消：$\\frac12\\cdot\\frac23\\cdot\\frac34\\cdots\\frac{N-1}{N}=\\frac1N$。数值：$N=100$ 时 $0.01$【已核验:0.01|1/100】；$N=10^{4}$ 时 $10^{-4}$【已核验:0.0001|1/10000】。\n\n**第三步：结论翻转。** 于是 $\\mathbb P\\big(\\bigcup_{k=2}^{N}A_k\\big)=1-\\frac1N\\xrightarrow{N\\to\\infty}1$。更精确地，令 $N\\to\\infty$ 得 $\\mathbb P(\\limsup A_n)=1$——**第一引理想要的 $0$ 变成了 $1$**，且这是第二引理（独立性成立）给出的正确答案。\n\n**对照族（可和侧）**：把概率改成 $\\mathbb P(A_n)=\\frac1{n^{2}}$，则 $\\sum_{n\\ge1}\\frac1{n^{2}}=\\frac{\\pi^{2}}{6}\\approx1.64493$【已核验:1.64493406685|pi**2/6】$<\\infty$，第一引理立刻给 $\\mathbb P(A_n\\ \\text{i.o.})=0$，此时不需要独立性。\n\n**分水岭在哪儿**：对 $\\mathbb P(A_n)=\\frac1{n^{p}}$，$p>1$ 可和（$\\to 0$ 次）、$p\\le1$ 发散（独立时 $\\to$ 无穷多次）。**$p=1$ 是岭脊**，两侧结论完全相反。\n\n**修补动作**：要用「几乎必然只有有限多次」，必须验证 $\\sum\\mathbb P(A_n)<\\infty$；若只有 $\\mathbb P(A_n)\\to0$（如 $1/n$）而无可和性，**什么都推不出**（$\\to0$ 与可和是两件事）。",
+      "links": [
+        "C6.5",
+        "P4.3",
+        "C3"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "核心图是「∏_{k=2}^{N}(1−1/k) = 1/N 的双曲线」及 p>1 / p≤1 两侧 P(limsup) 的 0/1 对照，需要对 N 扫描并叠加临界参数 p 的扫描，属长时程对拍计算。",
+        "params_hint": {
+          "N_range": "2..10000",
+          "p_values": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "show": "P(无事件发生) 曲线 + p 扫描的 0/1 相变"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:bc.intuition",
+      "type": "intuition",
+      "subject": "bc",
+      "title": "直觉：Σ P(A_n) 是「期望发生次数」，可和 ⟹ 次数几乎必然有限",
+      "keywords": [
+        "假设给了什么：一个数列 ∑P(A_n) 的值（收敛或发散）",
+        "结论为什么成立：N=∑1_{A_n} 的期望 = ∑P(A_n)；E N<∞ ⟹ N<∞ a.s.",
+        "第一引理 = Markov 层面的「非负随机变量期望有限则几乎必然有限」",
+        "第二引理 = 独立时次数不塌在有限处：发散的期望被 independence 逼成 ∞",
+        "limsup 的画面：无论把起跑线推到多远，后面总还有一次发生"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 173,
+        "line_end": 179
+      },
+      "fill_hint": "按规格「假设给了什么 / 结论为什么因此成立」分两段写；核心是「次数计数」的随机变量的期望视角，是两条引理共用的图像。",
+      "content": "**假设给了什么。** Borel--Cantelli 的假设只有一个数：正项级数 $\\sum_n\\mathbb P(A_n)$ 的和。它不描述事件怎么排布、不要求独立（第一引理），只报一个**总账**。\n\n**结论为什么因此成立（第一引理）。** 引入计数随机变量\n\n$$N(\\omega)=\\sum_{n=1}^{\\infty}\\mathbf{1}_{A_n}(\\omega)\\in\\{0,1,2,\\dots,\\infty\\},$$\n\n即「$\\omega$ 这一条轨道上一共发生了多少次」。由单调收敛（或非负项求和换序），\n\n$$\\mathbb E[N]=\\sum_{n}\\mathbb E[\\mathbf{1}_{A_n}]=\\sum_n\\mathbb P(A_n).$$\n\n**关键事实**：取非负值的随机变量，若 $\\mathbb E[N]<\\infty$，则 $N<\\infty$ 几乎必然（否则 $\\mathbb E[N]\\ge\\infty\\cdot\\mathbb P(N=\\infty)=\\infty$）。$N<\\infty$ 正是「只有有限多个 $A_n$ 发生」。**所以第一引理就是一句话：期望有限 ⟹ 几乎必然有限**——只是把「期望」换成了 $\\sum\\mathbb P(A_n)$。\n\n**第二引理（独立时反向的一句话）**。$\\mathbb E[N]=\\infty$ **本身**推不出 $N=\\infty$ a.s.（可以偶尔极大、通常为零）；独立性补上的是「各次机会互不遮挡」——$N$ 的方差受控，发散的期望只能在「无穷多次」这一侧兑现。形式推导（$\\prod(1-p_k)\\le e^{-\\sum p_k}$）见 `C6.5:bc.proof`。\n\n**$\\limsup$ 的画面**：$\\bigcap_N\\bigcup_{n\\ge N}A_n$ 读作「无论把起跑线推到多远（$\\bigcap_N$），后面总还能找到一次发生（$\\bigcup_{n\\ge N}$）」。它不是「$A_n$ 最终一直发生」（那是 $\\liminf$），而是「永远甩不掉」。抛硬币的例子里两个都对不上号：$\\limsup=${无穷多次正面} 概率 $1$，$\\liminf=${从某次起全是正面} 概率 $0$。\n\n**一句话记忆**：**可和 = 总账付得起 = 只发生有限次；发散 + 独立 = 账永远付不完 = 无穷多次。**",
+      "links": [
+        "C6.5",
+        "C6.1",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:bc.proof",
+      "type": "proof",
+      "subject": "bc",
+      "title": "证明骨架：第一引理一步、第二引理三步（独立性只在一处登场）",
+      "keywords": [
+        "第一引理：P(limsup) ≤ P(∪_{n≥N} A_n) ≤ ∑_{n≥N} P(A_n) → 0（级数尾和）",
+        "第二引理步一：独立性 ⟹ P(∩_{k=m}^{n} A_k^c) = ∏(1−P(A_k))",
+        "第二引理步二：1−x ≤ e^{−x} ⟹ 乘积 ≤ exp(−∑ P(A_k)) → 0",
+        "第二引理步三：对一切 m 有 P(∪_{k≥m} A_k)=1，取交得 P(limsup)=1",
+        "易错点：把 limsup 写成 ∪_N ∩_{n≥N}；或第二引理忘独立性直接乘"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 175,
+        "line_end": 179
+      },
+      "fill_hint": "切片未给证明；以下为标准路线（Durrett / Williams）。逐步给理由并标出独立性唯一登场的位置；易错点两条来自限定词表③④。",
+      "content": "切片只给结论未给证明；以下为标准路线，分步给理由。\n\n**第一引理（一步，不需独立性）。** 对任意 $N$，\n\n$$\\mathbb P(\\limsup_n A_n)\\ \\le\\ \\mathbb P\\Big(\\bigcup_{n\\ge N}A_n\\Big)\\ \\le\\ \\sum_{n\\ge N}\\mathbb P(A_n).$$\n\n理由：$\\limsup_n A_n\\subseteq\\bigcup_{n\\ge N}A_n$（对一切 $N$ 成立），再用概率的**次可加性**。右端是收敛级数的**尾和**，$N\\to\\infty$ 时 $\\to0$；左端与 $N$ 无关，故 $\\mathbb P(\\limsup A_n)=0$。$\\blacksquare$\n\n**第二引理（三步）。** 设 $A_n$ 独立、$\\sum_n\\mathbb P(A_n)=\\infty$。\n\n- **步一（独立性在这里、且只在这里登场）**：对 $m<n$，\n  $\\mathbb P\\big(\\bigcap_{k=m}^{n}A_k^{c}\\big)=\\prod_{k=m}^{n}\\big(1-\\mathbb P(A_k)\\big)$。\n  理由：独立性等价于指示函数 $\\mathbf 1_{A_k}$ 独立，故期望可分解为乘积。\n- **步二（换指数）**：用 $1-x\\le e^{-x}$（$x\\in[0,1]$），\n  $$\\prod_{k=m}^{n}\\big(1-\\mathbb P(A_k)\\big)\\ \\le\\ \\exp\\Big(-\\sum_{k=m}^{n}\\mathbb P(A_k)\\Big)\\ \\xrightarrow{n\\to\\infty}\\ 0,$$\n  因为 $\\sum_k\\mathbb P(A_k)=\\infty$ 使尾段部分和 $\\to\\infty$。\n- **步三（收口）**：由步一、二，$\\mathbb P\\big(\\bigcap_{k\\ge m}A_k^{c}\\big)=0$，即 $\\mathbb P\\big(\\bigcup_{k\\ge m}A_k\\big)=1$。对**每个** $m$ 都成立，于是\n  $$\\mathbb P(\\limsup_n A_n)=\\mathbb P\\Big(\\bigcap_m\\bigcup_{k\\ge m}A_k\\Big)=\\lim_{m\\to\\infty}\\mathbb P\\Big(\\bigcup_{k\\ge m}A_k\\Big)=1.$$\n  （最后一步用事件的单调递减交的连续性。）$\\blacksquare$\n\n**依赖链**：概率的次可加性与单调连续性（C1 公理层面）→ 独立性定义（C3）→ $1-x\\le e^{-x}$（`P4.3` 常用极限）→ 两条引理。\n\n**易错点**：\n\n1. **把 $\\limsup$ 写成 $\\bigcup_N\\bigcap_{n\\ge N}$**——那是 $\\liminf$（「最终一直发生」），结论会整个反向（抛硬币例：$1$ 变 $0$）；\n2. **第二引理忘独立性直接乘**——常驻事件族 $A_n\\equiv B$ 就是这里的判例（乘出来 $\\prod(1-\\tfrac12)=0$ 而真值是 $\\tfrac12$，见 `C6.5:bc.no-independence`）；\n3. **以为 $\\sum\\mathbb P(A_n)=\\infty$ 单独就够**——不够，见上条；\n4. **第一引理里求尾和时要求「对 $N$ 一致的估计」**——只需尾和 $\\to0$，不要额外去证一致收敛（那是多余动作）。",
+      "links": [
+        "C6.5",
+        "C3",
+        "C1",
+        "P4.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:bc.extension",
+      "type": "extension",
+      "subject": "bc",
+      "title": "拓展：两两独立就够、0-1 律、以及它在 SLLN 里的岗位",
+      "keywords": [
+        "拓展①：第二引理的独立性可放宽到两两独立（标准补充）",
+        "拓展②：limsup 是尾事件 ⟹ 独立情形下由 Kolmogorov 0-1 律只能取 0 或 1",
+        "拓展③：SLLN 用 BC1 把「偏差 > ε 无穷多次」判成零概率",
+        "拓展④：条件版 BC（用 ∑P(A_n | F_{n-1})）用于相依序列",
+        "切片未含上述四条，标题带「拓展：」标明超出切片"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 173,
+        "line_end": 179
+      },
+      "fill_hint": "标题带「拓展：」——四条均为标准教材内容（Durrett / Kallenberg），切片未出现；人工复核两两独立版本的证明细节（第二矩法：用 Var(∑1_{A_k}) ≤ ∑P(A_k) 的界）。",
+      "content": "**拓展：** 切片只给了两条引理本身。下面四条是它在教材里的标准延伸。\n\n**① 独立性可放宽到两两独立。** 第二引理在「两两独立」（pairwise independence，只要求任意两个 $A_i,A_j$ 独立）下仍成立。证明思路是第二矩法：记 $S_n=\\sum_{k\\le n}\\mathbf 1_{A_k}$，则 $\\mathbb E S_n=\\sum_{k\\le n}p_k\\to\\infty$，而两两独立给 $\\mathrm{Var}(S_n)=\\sum_{k\\le n}p_k(1-p_k)\\le\\mathbb E S_n$；由 Chebyshev，\n\n$$\\mathbb P\\big(S_n<\\tfrac12\\mathbb E S_n\\big)\\ \\le\\ \\frac{\\mathrm{Var}(S_n)}{(\\tfrac12\\mathbb E S_n)^{2}}\\ \\le\\ \\frac{4}{\\mathbb E S_n}\\ \\to\\ 0,$$\n\n于是 $S_n\\to\\infty$ 至少沿子列成立，再用单调性（$S_n$ 递增）得 $S_n\\to\\infty$ a.s.，即无穷多次发生。**两两独立就够，但「完全不独立」不行**（常驻事件族）。\n\n**② 为什么结论只能是 $0$ 或 $1$。** $\\limsup_n A_n$ 是**尾事件**（改变有限多个 $A_n$ 不影响它）。由 Kolmogorov $0$-$1$ 律，独立事件列的尾事件概率非 $0$ 即 $1$。所以第二引理的「$=1$」其实是「$>0$」加上 $0$-$1$ 律推出来的——**独立性付了两次费：一次给乘积、一次给二值性**。\n\n**③ 它在强大数定律里的岗位。** SLLN 的标准证明把「$\\bar X_n\\not\\to\\mu$」改写成事件列\n\n$$B_m=\\big\\{|\\bar X_{2^{m}}-\\mu|>\\varepsilon\\big\\}\\quad\\text{（沿倍频子列采样）},$$\n\n用 Chebyshev + 四阶矩估出 $\\sum_m\\mathbb P(B_m)<\\infty$，**第一引理**给出「$B_m$ 只发生有限多次」$\\Rightarrow$ 子列 a.s. 收敛，再用单调性插值补回全列（见 `C6.5:slln.statement`）。**没有 BC1，SLLN 的证明就缺最后一颗螺丝。**\n\n**④ 相依序列的条件版。** 若 $\\sum_n\\mathbb P(A_n\\mid\\mathcal F_{n-1})<\\infty$ a.s.（$\\mathcal F_{n-1}$ 是到 $n-1$ 为止的信息），则 $\\mathbb P(A_n\\ \\text{i.o.})=0$。这是鞅与随机算法收敛性（C4）里的常用形式。**一句话**：把「无条件概率」换成「条件概率」，第一引理依然免费。",
+      "links": [
+        "C6.5",
+        "C6.1",
+        "C4",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:wlln.quantifiers",
+      "type": "comparison",
+      "subject": "lln",
+      "title": "弱大数定律（Khinchin）的限定词逐条翻车表",
+      "keywords": [
+        "① iid（独立性）：X_n≡X 完全相关 ⟹ X̄_n = X，P(|X̄_n−μ|>0.5)=0.6171 恒定",
+        "② E X_1 = μ 有限：Cauchy ⟹ X̄_n ~ Cauchy(0,1)，P(|X̄_n|>1)=0.5 恒定",
+        "③ 结论是依概率（不是 a.s.）：层级图里 a.s. 要另付 SLLN 的价",
+        "④ 不需要方差有限：Pareto(α=3/2) 有均值 3、方差无穷，WLLN 仍成立",
+        "⑤ 结论对象是 X̄_n 本身（不除 σ）：与 CLT 的 √n 尺度分工"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 181,
+        "line_end": 185
+      },
+      "fill_hint": "五列表按限定词逐条给反例；①②两行有独立词条（wlln.cauchy / wlln.correlated），③-⑤是对照性限定词；行号取切片大数定律段。",
+      "content": "**弱大数定律（Khinchin，辛钦）**：$X_n$ 独立同分布、$\\mathbb E X_1=\\mu$ 有限 ⟹ $\\bar X_n\\xrightarrow{\\ \\mathbb P\\ }\\mu$，**不需要方差有限**（切片 181-185）。把陈述拆成五个限定词，逐条问「去掉会怎样」。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **独立**同分布 | 完全相关 $X_n\\equiv X\\sim N(0,1)$（$\\mu=0$）：$\\bar X_n=X$ 恒成立，$\\mathbb P(\\vert\\bar X_n\\vert>0.5)=1-\\mathrm{erf}(0.5/\\sqrt2)\\approx0.6171$【已核验:0.617075077452|1-erf(0.5/sqrt(2))】**与 $n$ 无关** | 样本均值完全不随 $n$ 收缩，收敛彻底失败 | 可放宽到「弱相关」（遍历/混合/$\\rho$-mixing）；不能去掉：等相关 $\\rho$ 使 $\\mathrm{Var}(\\bar X_n)\\to\\sigma^{2}\\rho\\neq0$（见 `C6.5:wlln.correlated`） |\n| ② $\\mathbb E X_1=\\mu$ **有限** | 标准 Cauchy 分布（柯西分布）：样本均值仍服从 $\\mathrm{Cauchy}(0,1)$，$\\mathbb P(\\vert\\bar X_n\\vert>1)=\\tfrac12$【已核验:0.5|1-(2/pi)*(pi/4)】对一切 $n$ | 「均值」这个量本身不存在，$\\bar X_n$ 恒定地**不**收缩 | 不能去。这是 WLLN 的**充要**方向（$E\\vertX\\vert<\\infty$）；重尾但均值存在（如 Pareto $\\alpha=\\tfrac32$）仍可用 |\n| ③ 收敛模式是**依概率** | ——（不是「去掉就失效」，而是「买不到 stronger」）：C6.1 层级图上依概率 $\\not\\Rightarrow$ a.s.，故不能自动升级 | 若误读成 a.s.，WLLN 的证明（Chebyshev 或截尾+特征函数）根本给不出 | **可加强**，但要付 SLLN 的价：另加 BC1 + 截尾/四阶矩（见 `C6.5:slln.statement`） |\n| ④ **不需要**方差有限 | 若误把「$\\mathrm{Var}<\\infty$」当必要条件，会错误排除 $X\\sim$ Pareto($\\alpha=\\tfrac32$)：$\\mathbb E X=3$【已核验:3|1.5*2】有限、$\\mathbb E X^{2}=\\infty$，WLLN 照样成立 | 反向：错杀一批合法用例 | 这就是 Khinchin 版相对「Chebyshev 版」的增量；代价是 Chebyshev 的显式误差界 $\\sigma^{2}/(n\\varepsilon^{2})$ 没了 |\n| ⑤ 结论对象是 $\\bar X_n$ **本身**（不标准化） | 若改问 $\\sqrt n(\\bar X_n-\\mu)$，它**不**趋于 $0$ 而是趋于 $N(0,\\sigma^{2})$（C7.3） | 尺度错了：本定理给的是「位置」，不是「波动」 | 分工明确：LLN 定位置、CLT 定波动（见 `C6.5:slln.vs-wlln`） |\n\n**这张表的用法**：要用「多采样就能逼近」这句话，先查①（独立吗）、②（有均值吗）两条；①②通过，WLLN 立刻可用且**免费**（连方差都不用查）。要误差量级 $\\sigma/\\sqrt n$ 或置信区间，那是 `C7.3` 的活，得再付 $\\sigma^{2}<\\infty$。",
+      "links": [
+        "C6.1",
+        "C6.2",
+        "C6.5",
+        "C7.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:wlln.statement",
+      "type": "statement",
+      "subject": "lln",
+      "title": "弱大数定律（Khinchin）：陈述、两种证明与误差界的代价",
+      "keywords": [
+        "陈述：X_n iid、E X_1 = μ 有限 ⟹ X̄_n → μ 依概率（不需方差有限）",
+        "Chebyshev 版（需方差）：P(|X̄_n−μ|>ε) ≤ σ²/(nε²)，σ=1,ε=0.1,n=10⁴ 时 0.01",
+        "Khinchin 版：截尾 + 特征函数（C7.1）绕开方差，代价是没有显式误差界",
+        "保的是依概率，不是 a.s.：升级要付 SLLN 的价",
+        "CG 意义（切片原话）：蒙特卡洛估计量的「一致性」正是 WLLN"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 181,
+        "line_end": 185
+      },
+      "fill_hint": "陈述按切片 181-185 逐字转写；两种证明的对照是增量（Chebyshev 给显式界但需方差，Khinchin 不需方差但无界）；误差界数值带待核验标记。",
+      "content": "**陈述（切片 181-185 逐字转写）**：设 $X_n$ 独立同分布，$\\mathbb E X_1=\\mu$（有限）。则\n\n$$\\bar X_n=\\frac{1}{n}\\sum_{k=1}^{n}X_k\\ \\xrightarrow{\\ \\mathbb P\\ }\\ \\mu,$$\n\n即**弱大数定律**（WLLN，Khinchin）：对任意 $\\varepsilon>0$，$\\mathbb P(|\\bar X_n-\\mu|>\\varepsilon)\\to0$。**不需要方差有限**（切片原话）。\n\n**成立条件两条**：① 独立同分布；② $\\mathbb E X_1=\\mu$ 有限（等价于 $\\mathbb E|X_1|<\\infty$）。方差有限**不是**条件。\n\n**两种证明的对照（本条增量）**：\n\n| 版本 | 需要 | 核心不等式 | 得到什么 |\n|---|---|---|---|\n| Chebyshev 版 | $\\mathrm{Var}(X_1)=\\sigma^{2}<\\infty$ | $\\mathbb P(\\vert\\bar X_n-\\mu\\vert>\\varepsilon)\\le\\frac{\\mathrm{Var}(\\bar X_n)}{\\varepsilon^{2}}=\\frac{\\sigma^{2}}{n\\varepsilon^{2}}$ | **显式误差界**，一步了事；但把 $\\sigma^{2}=\\infty$ 的分布挡在门外 |\n| Khinchin 版 | 只要 $\\mathbb E\\vertX_1\\vert<\\infty$ | 截尾 $Y_k=X_k\\mathbf 1_{\\vertX_k\\vert\\le n}$ + 特征函数/方差估计 | 结论更强（条件更弱），但**没有**漂亮的显式界 |\n\nChebyshev 界的数值感（$\\sigma=1$）：$\\varepsilon=0.1$、$n=10^{4}$ 时界为 $\\frac{1}{10^{4}\\cdot0.01}=0.01$【已核验:0.01|1/(10000*0.01)】；$n=100$ 时界为 $1$【已核验:1|1/(100*0.01)】——**完全没用**。这提醒一件事：Chebyshev 界是「存在性工具」，不是「工程误差估计」；工程上的 $\\sigma/\\sqrt n$ 来自 `C7.3` 的 CLT。\n\n**它依赖什么 / 谁依赖它**：\n\n- 依赖：独立性（`C3`）、Chebyshev/Markov 不等式（`C6.1` 层级图）、（Khinchin 版还依赖 `C7.1` 的特征函数连续性定理）；\n- 被依赖：**切片原话（187-188 行）**——蒙特卡洛估计量的一致性正是（弱）大数定律 $\\bar X_n\\to I$ 依概率；没有它，$L^{1}$ 收敛 $\\Rightarrow$ 依概率收敛这条链路断了，「多采样就能逼近」就没有理论保证（见 `C9.1`、`H4`）。\n\n**注意结论的粒度**：WLLN 只说「偏差大的概率趋于 $0$」，**不**说「偏差以 $1/\\sqrt n$ 缩小」，也**不**说「每一条轨道都收敛」。后两者分别是 `C7.3` 与 `C6.5:slln.statement` 的内容。",
+      "links": [
+        "C6.1",
+        "C6.5",
+        "C7.1",
+        "C7.3",
+        "C9.1",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:wlln.cauchy",
+      "type": "counterexample",
+      "subject": "lln",
+      "title": "反例：iid 标准 Cauchy——样本均值永不收缩（P(|X̄_n|>1) 恒为 1/2）",
+      "keywords": [
+        "构造：X_n iid 标准 Cauchy，密度 1/(π(1+x²))，均值不存在",
+        "特征函数算法：φ(t)=e^{−|t|}，φ_{X̄_n}(t)=[φ(t/n)]ⁿ = e^{−|t|} ⟹ X̄_n ~ Cauchy(0,1)",
+        "失效数值：P(|X̄_n|>1) = 1/2、P(|X̄_n|>√3) = 1/3、P(|X̄_n|>1/√3) = 2/3，全部与 n 无关",
+        "机制：n 个 Cauchy 的和按 n 倍放大，除以 n 后尺度不变——1/n 收缩被重尾抵消",
+        "修补：需 E|X_1| < ∞；或改用样本中位数（仍一致）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 181,
+        "line_end": 183
+      },
+      "fill_hint": "切片未给大数律反例；本条用标准 Cauchy 补上「为什么必须 E|X_1|<∞」的守门计算。特征函数一步依赖 C7.1 的卷积变乘法与 C7.2 的算例；尾概率用 arctan 的特殊角（π/4、π/3、π/6）以便核验。",
+      "content": "**反例构造**：$X_n$ 独立同分布，服从标准 Cauchy 分布（柯西分布），密度 $f(x)=\\frac{1}{\\pi(1+x^{2})}$。它的「均值」积分 $\\int |x|f(x)dx=\\infty$——$\\mathbb E X_1$ **不存在**，WLLN 的假设②直接落空。\n\n**关键计算：样本均值根本不随 $n$ 收缩。** 用特征函数（$\\mathrm{Cauchy}(0,1)$ 的 $\\varphi(t)=e^{-|t|}$，见 `C7.1`、`C7.2` 的对照表）：由独立性（卷积变乘法）与线性变换性质，\n\n$$\\varphi_{\\bar X_n}(t)=\\Big[\\varphi\\Big(\\frac tn\\Big)\\Big]^{n}=\\Big[e^{-|t|/n}\\Big]^{n}=e^{-|t|}=\\varphi_{X_1}(t).$$\n\n**$\\bar X_n$ 与 $X_1$ 同分布**——$n=1$ 与 $n=10^{6}$ 的样本均值长得一模一样。\n\n**失效数值（全部与 $n$ 无关）**：由 Cauchy 分布函数 $F(x)=\\tfrac12+\\tfrac1\\pi\\arctan x$，\n\n$$\\mathbb P(|\\bar X_n|>a)=1-\\frac{2}{\\pi}\\arctan a .$$\n\n| 门限 $a$ | $\\mathbb P(\\vert\\bar X_n\\vert>a)$ | 数值 |\n|---|---|---|\n| $a=1$ | $1-\\frac2\\pi\\cdot\\frac\\pi4=\\frac12$ | $0.5$【已核验:0.5|1-(2/pi)*(pi/4)】 |\n| $a=\\sqrt3$ | $1-\\frac2\\pi\\cdot\\frac\\pi3=\\frac13$ | $0.333333$【已核验:0.333333333333|1-(2/pi)*(pi/3)】 |\n| $a=1/\\sqrt3$ | $1-\\frac2\\pi\\cdot\\frac\\pi6=\\frac23$ | $0.666667$【已核验:0.666666666667|1-(2/pi)*(pi/6)】 |\n\n取 $n=1,10,10^{6}$，这三行**一个字都不变**：加再多样本，样本均值偏离超过 $1$ 的概率始终是 $50\\%$。\n\n**机制（为什么 $1/n$ 被吃掉）**：$n$ 个 iid Cauchy 的和 $S_n$ 服从 $\\mathrm{Cauchy}(0,n)$（尺度按 $n$ 增长，不是按 $\\sqrt n$）；除以 $n$ 后尺度回到 $1$。**重尾让「最大项」与「总和」同量级**——$S_n$ 里最大的那一项约占总和的固定比例，平均操作无法把它稀释。对比轻尾（如正态）：$S_n\\sim N(0,n)$，除以 $n$ 得 $N(0,1/n)$，尺度 $\\to0$。\n\n**修补动作**：\n\n1. **必须有 $\\mathbb E|X_1|<\\infty$** ——这是 WLLN 的充要门槛（Khinchin 版），Cauchy 恰好站在门槛外；\n2. 若数据是重尾且均值可疑，改用**样本中位数**：Cauchy 的中位数是 $0$，样本中位数仍一致（$\\to0$ 依概率），这是稳健统计的入口；\n3. 截断/稳截均值（trimmed mean）：人为砍掉极端项再取均值。",
+      "links": [
+        "C6.5",
+        "C7.1",
+        "C7.2",
+        "C9.1"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要在同一图上对拍「Cauchy 的 X̄_n 分布恒定」与「正态的 X̄_n 分布收缩（尺度 1/√n）」，涉及大量样本重抽与密度估计，属长时程蒙特卡洛对拍。",
+        "params_hint": {
+          "distributions": [
+            "cauchy",
+            "normal"
+          ],
+          "n_values": [
+            1,
+            10,
+            100,
+            1000
+          ],
+          "reps": 20000,
+          "show": "X̄_n 的经验密度（Cauchy 不变 vs 正态收缩）"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:wlln.correlated",
+      "type": "counterexample",
+      "subject": "lln",
+      "title": "反例：完全相关与等相关——独立性缺失使 Var(X̄_n) 停在不为 0 的地方",
+      "keywords": [
+        "完全相关：X_n ≡ X ~ N(0,1) ⟹ X̄_n = X，Var = 1（不是 1/n）",
+        "偏离数值：P(|X̄_n| > 0.5) = 1 − erf(0.5/√2) ≈ 0.6171，与 n 无关",
+        "等相关 ρ：Var(X̄_n) = σ²(1/n + (n−1)ρ/n) → σ²ρ；ρ=0.25,n=100 ⟹ 0.2575σ²",
+        "误当独立的代价：以为 Var = σ²/n = 0.01σ²，实际低估 25.75 倍",
+        "修补：需独立（或遍历/混合/鞅差等弱相关条件）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 181,
+        "line_end": 183
+      },
+      "fill_hint": "切片未给独立性反例；本条给出两种相关结构（完全相关 / 等相关）的完整方差计算，并把「误用独立公式的偏差倍数」算成具体数值。",
+      "content": "**反例 A（完全相关，最极端）**：取 $X_n\\equiv X$，其中 $X\\sim N(0,1)$（同分布、但完全不独立）。则\n\n$$\\bar X_n=\\frac{1}{n}\\sum_{k=1}^{n}X=X,\\qquad \\mathrm{Var}(\\bar X_n)=1\\ \\ (\\forall n),$$\n\n而不是独立情形的 $\\frac1n$。偏离概率**恒不下降**：$\\mathbb P(|\\bar X_n-0|>0.5)=1-\\mathrm{erf}\\big(0.5/\\sqrt2\\big)\\approx0.6171$【已核验:0.617075077452|1-erf(0.5/sqrt(2))】。样本加多少都是同一个数——「多采样就能逼近」彻底失效。\n\n**反例 B（等相关，更贴近工程）**：设 $\\mathrm{Var}(X_k)=\\sigma^{2}$，两两相关系数 $\\mathrm{Corr}(X_i,X_j)=\\rho$（$i\\neq j$，即 equicorrelation）。展开方差：\n\n$$\\mathrm{Var}(\\bar X_n)=\\frac{1}{n^{2}}\\Big[\\sum_{k}\\sigma^{2}+\\sum_{i\\neq j}\\rho\\sigma^{2}\\Big]\n=\\sigma^{2}\\Big[\\frac1n+\\frac{n-1}{n}\\rho\\Big]\\ \\xrightarrow{n\\to\\infty}\\ \\sigma^{2}\\rho\\ \\neq\\ 0 .$$\n\n**数值（$\\sigma^{2}=1,\\ \\rho=0.25,\\ n=100$）**：真值 $=\\frac1{100}+\\frac{99}{100}\\cdot0.25=0.2575$【已核验:0.2575|1/100+99/100*0.25】。若误用独立公式会写 $\\frac1n=0.01$，**低估 $25.75$ 倍**【已核验:25.75|(1/100+99/100*0.25)*100】。也就是说：样本量从 $100$ 加到 $10^{6}$，真值只从 $0.2575$ 降到约 $0.250003$【已核验:0.25000075|1/1000000+999999/1000000*0.25】——**相关性的地板 $\\rho\\sigma^{2}$ 是采样再多也压不穿的**。\n\n**机制**：$\\mathrm{Var}(\\bar X_n)$ 里交叉项共有 $n(n-1)$ 个，每个贡献 $\\rho\\sigma^{2}/n^{2}$；$n\\to\\infty$ 时交叉项的**总和**趋于 $\\rho\\sigma^{2}$，与对角线项（$\\to0$）不在同一量级。独立性的作用正是让这 $n(n-1)$ 个交叉项**同时为零**。\n\n**修补动作**：\n\n1. 若样本确实独立（iid 抽样、伪随机数发生器质量过关）→ WLLN 直接用；\n2. 若样本来自 MCMC / 时间序列 / 同一批像素（图形学里极易发生）→ 需要**遍历性、$\\alpha$-mixing、或鞅差结构**版本的 LLN（`C4`、`C9.2`）；\n3. 工程自检：算样本均值的方差是否按 $1/n$ 下降——不下降就是相关了（这正是蒙特卡洛里「样本不独立，误差不再 $\\propto1/\\sqrt N$」的数学形状，见 `H4`）。",
+      "links": [
+        "C6.5",
+        "C3",
+        "C9.2",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:slln.vs-wlln",
+      "type": "comparison",
+      "subject": "lln",
+      "title": "分工：弱大数律与强大数律差在哪一格（含 SLLN 限定词表）",
+      "keywords": [
+        "WLLN：iid + E X_1 = μ ⟹ X̄_n → μ 依概率；SLLN：iid + E|X_1|<∞ ⟹ a.s.",
+        "差的是收敛模式（C6.1 层级图），不是矩条件：a.s. ⟹ 依概率 免费",
+        "反向不免费：依概率 ⇏ a.s.（C6.2 打字机），故 SLLN 要另付 BC1 + 截尾",
+        "SLLN 还附赠 L^1 收敛（需 C6.3 的 UI），WLLN 不给",
+        "Kolmogorov 逆定理：X̄_n → 常数 a.s. ⟺ E|X_1| < ∞（条件是充要的）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 183,
+        "line_end": 185
+      },
+      "fill_hint": "对照口径：按「结论模式 / 条件 / 证明工具 / 失效反例」四列；SLLN 的限定词并入同一张表，避免与 wlln.quantifiers 重复（后者已给 WLLN 五行）。",
+      "content": "切片把两条大数定律并排放（183-184 行）。它们的**矩条件其实一样**（都要 $\\mathbb E|X_1|<\\infty$，切片给 WLLN 写的是 $\\mathbb E X_1=\\mu$ 有限），真正的差别在**结论模式**——而模式差一级，证明要付的价完全不同。\n\n| 维度 | 弱大数定律 WLLN（Khinchin） | 强大数定律 SLLN（Kolmogorov） |\n|---|---|---|\n| 假设 | iid，$\\mathbb E X_1=\\mu$ 有限 | iid，$\\mathbb E\\vertX_1\\vert<\\infty$ |\n| 结论 | $\\bar X_n\\xrightarrow{\\mathbb P}\\mu$ | $\\bar X_n\\to\\mu$ **a.s.**（且 $L^{1}$） |\n| 需要方差有限？ | **不需要** | 不需要 |\n| 证明工具 | Chebyshev（有方差时）或 截尾 + 特征函数 | Borel--Cantelli **第一引理** + 截尾/四阶矩 + 倍频子列 |\n| 失效反例 | Cauchy（无均值）：$\\mathbb P(\\vert\\bar X_n\\vert>1)\\equiv\\tfrac12$ | 同左；**外加**所有依概率 $\\not\\Rightarrow$ a.s. 的构造（C6.2 打字机） |\n| 附赠品 | 无 | $L^{1}$ 收敛（需 UI，见 `C6.3`）→ 期望可交换 |\n\n**SLLN 的限定词表**（去掉每条会怎样）：\n\n| 限定词 | 去掉后 | 能否放宽 |\n|---|---|---|\n| iid（独立） | 完全相关 $X_n\\equiv X$：$\\bar X_n=X$，轨道根本不收敛到常数 | 可放宽到遍历/鞅差/混合序列（Kolmogorov SLLN 的推广） |\n| $\\mathbb E\\vertX_1\\vert<\\infty$ | Cauchy：$\\bar X_n$ 永不收敛（见 `C6.5:wlln.cauchy`）；且由 **Kolmogorov 逆定理**，若 $\\bar X_n$ a.s. 收敛到某个常数，则必有 $\\mathbb E\\vertX_1\\vert<\\infty$——**条件是充要的** | 不可放宽（这是硬门槛，与 WLLN 同门槛） |\n| a.s.（而非「依概率」） | 不是「失效」而是「买不到」：C6.1 层级图上 a.s. $\\Rightarrow$ 依概率是免费的，反向要付 BC1 的钱 | 想升级就得付：BC1 + 四阶矩（或截尾 + 方差估计） |\n\n**选择判据（实操）**：\n\n- 只要「估计量一致」（多采样就靠近真值）→ **WLLN 够用**，条件最省；\n- 需要「**每一条**渲染轨迹最终都收敛」「路径追踪跑任意时长都对」→ 要 **SLLN**（a.s. 是轨道命题）；\n- 需要「误差期望也收敛 / 可交换期望」→ 要 SLLN 的 $L^{1}$ 部分，即 UI（`C6.3`）。",
+      "links": [
+        "C6.1",
+        "C6.2",
+        "C6.3",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:slln.statement",
+      "type": "statement",
+      "subject": "lln",
+      "title": "强大数定律（Kolmogorov）：陈述、三步证明骨架与充要性",
+      "keywords": [
+        "陈述：X_n iid、E|X_1| < ∞ ⟹ X̄_n → μ a.s.（且 L^1）",
+        "证明骨架：倍频子列 + Chebyshev + BC1 ⟹ 子列 a.s.，再单调插值补全列",
+        "BC1 的角色：把「偏差 > ε 无穷多次」判成零概率——最后一颗螺丝",
+        "充要性（Kolmogorov 逆）：X̄_n a.s. 收敛到常数 ⟹ E|X_1| < ∞",
+        "CG 意义：轨道级保证，比 WLLN 更强的「跑多久都对」"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 183,
+        "line_end": 185
+      },
+      "fill_hint": "陈述按切片 184 行逐字转写；三步骨架与充要性为标准补充（切片未给证明）；BC1 的角色显式回指本单元 bc.* 词条。",
+      "content": "**陈述（切片 184 行逐字转写）**：设 $X_n$ 独立同分布，$\\mathbb E|X_1|<\\infty$，$\\mathbb E X_1=\\mu$。则\n\n$$\\bar X_n\\ \\longrightarrow\\ \\mu\\quad\\text{a.s.}$$\n\n即**强大数定律**（SLLN，Kolmogorov）。它同时给出 $L^{1}$ 收敛（$\\mathbb E|\\bar X_n-\\mu|\\to0$，需一致可积性，见 `C6.3`）。\n\n**证明骨架（三步，切片未给；标准路线）**：\n\n- **步一（稀疏化到倍频子列）**：只看 $n=2^{m}$。由 Chebyshev，\n  $\\mathbb P\\big(|\\bar X_{2^{m}}-\\mu|>\\varepsilon\\big)\\le\\frac{\\mathrm{Var}(\\bar X_{2^{m}})}{\\varepsilon^{2}}$；若方差有限，这等于 $\\frac{\\sigma^{2}}{2^{m}\\varepsilon^{2}}$，**对 $m$ 可和**。方差无穷时改用截尾 $Y_k=X_k\\mathbf 1_{|X_k|\\le k}$ 并估 $\\sum_m\\mathbb P(\\cdot)<\\infty$（这一步花掉 $\\mathbb E|X_1|<\\infty$ 的全部预算）。\n- **步二（BC1 收口——本单元的核心岗位）**：令 $B_m=\\{|\\bar X_{2^{m}}-\\mu|>\\varepsilon\\}$，由上 $\\sum_m\\mathbb P(B_m)<\\infty$，**Borel--Cantelli 第一引理**（`C6.5:bc.statement`，不需独立性）给出 $\\mathbb P(B_m\\ \\text{i.o.})=0$，即子列 a.s. 收敛。\n- **步三（补回全列）**：对 $2^{m}\\le n<2^{m+1}$，用 $\\bar X_n$ 与 $\\bar X_{2^{m}}$ 的差的控制（单调性/最大不等式）把子列结论插值到全列。\n\n**充要性（Kolmogorov 逆定理，标准补充）**：若 $\\bar X_n$ a.s. 收敛到某个**常数**，则必有 $\\mathbb E|X_1|<\\infty$。所以 SLLN 的条件不是「够用」而是「恰好够」——Cauchy 站在门槛外就是因为它。\n\n**它依赖什么**：$\\mathbb E|X_1|<\\infty$ 的积分尾控制（A1.4 绝对连续性）、**Borel--Cantelli 第一引理**（`C6.5:bc.statement`）、Chebyshev 或截尾估计、一致可积性（`C6.3`，$L^{1}$ 那一半）。\n\n**谁依赖它**：工程上「路径追踪跑到任意时长都收敛」这类**轨道级**断言（见 `H4`）；统计上估计量的强相合（`C9.1`）；鞅的强律（`C4`）。\n\n**与 WLLN 的一句话差别**：WLLN 说「抽 $n$ 个样本，偏差大概率小」——每次抽一批都可能碰上坏批；SLLN 说「**这一条**不断增长的样本序列，终将永远留在 $\\mu$ 附近」。前者是批命题，后者是轨道命题。",
+      "links": [
+        "C6.5",
+        "C6.3",
+        "A1.4",
+        "C9.1",
+        "H4",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "C6.5 总表：BC 两条 + WLLN/SLLN 的条件、结论与失效数值",
+      "keywords": [
+        "四条定理一页总表：条件 / 结论模式 / 典型失效数值 / 谁依赖它",
+        "BC1：∑P(A_n)<∞ ⟹ P(i.o.)=0（免费）",
+        "BC2：+ 独立 + ∑=∞ ⟹ P(i.o.)=1（常驻事件族给 0.5）",
+        "WLLN：iid + 有限均值 ⟹ 依概率（Cauchy 给恒 0.5）",
+        "SLLN：iid + E|X|<∞ ⟹ a.s.（门槛充要）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 173,
+        "line_end": 188
+      },
+      "fill_hint": "单元级对照表，合并切片四段（BC 173-179、LLN 181-185、CG 意义 187-188）；失效数值列全部指向本单元的反例词条，供前端直接渲染。",
+      "content": "本单元一页总表（切片 172-190）。**读法**：左两列是定理与代价，右两列是「欠费时的下场」与本库位置。\n\n| 定理 | 条件（付费项） | 结论 | 失效的具体数值 | 本库位置 |\n|---|---|---|---|---|\n| BC 第一引理 | $\\sum_n\\mathbb P(A_n)<\\infty$（**无**其他条件） | $\\mathbb P(A_n\\ \\text{i.o.})=0$ | 独立 $A_n$、$\\mathbb P=\\frac1n$ 时 $\\mathbb P(\\text{i.o.})=1$（$\\prod(1-\\frac1k)=\\frac1N$，$N=100$ 时 $0.01$） | `C6.5:bc.statement` |\n| BC 第二引理 | 独立 **且** $\\sum\\mathbb P(A_n)=\\infty$ | $\\mathbb P(A_n\\ \\text{i.o.})=1$ | 常驻事件族 $A_n\\equiv B$：$\\mathbb P=\\tfrac12$（不是 $0$ 也不是 $1$） | `C6.5:bc.no-independence` |\n| WLLN（Khinchin） | iid + $\\mathbb E X_1=\\mu$ 有限（**不需**方差有限） | $\\bar X_n\\xrightarrow{\\mathbb P}\\mu$ | Cauchy：$\\mathbb P(\\vert\\bar X_n\\vert>1)\\equiv\\tfrac12$；完全相关：$\\mathbb P(\\vert\\bar X_n\\vert>0.5)\\equiv0.6171$ | `C6.5:wlln.statement` |\n| SLLN（Kolmogorov） | iid + $\\mathbb E\\vertX_1\\vert<\\infty$（**充要**） | $\\bar X_n\\to\\mu$ a.s.（且 $L^{1}$） | 同 Cauchy；门槛外无解（逆定理） | `C6.5:slln.statement` |\n\n**两条纵向脉络**（把它们串起来看）：\n\n1. **BC → SLLN**：BC1 是 SLLN 证明的最后一颗螺丝（把「无穷多次偏差」判成零概率）；没有 BC，只能停在 WLLN。\n2. **WLLN → CLT**：LLN 定**位置**（$\\bar X_n\\to\\mu$），CLT（`C7.3`）定**波动**（$\\sqrt n(\\bar X_n-\\mu)/\\sigma\\Rightarrow N(0,1)$）。蒙特卡洛的「$\\sigma/\\sqrt n$ 误差」出自后者，而「一致性」出自前者——两条各管一段，别混用。\n\n**切片收尾的定位（187-188 行原话）**：蒙特卡洛估计量的一致性正是（弱）大数定律 $\\bar X_n\\to I$ 依概率；没有它，$L^{1}$ 收敛 $\\Rightarrow$ 依概率收敛这条链路断了，「多采样就能逼近」就没有理论保证。**一句话**：`C6.5` 是 `C9.1`/`H4` 的合法性来源，而 `C7.3` 是它们的精度来源。",
+      "links": [
+        "C6.1",
+        "C6.2",
+        "C6.3",
+        "C6.5",
+        "C7.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "C6.5 的下游：谁在消费 BC 与两条大数律",
+      "keywords": [
+        "H4 / C9.1：蒙特卡洛一致性 = WLLN，误差量级 = CLT",
+        "C6.2 打字机：∑P=∞ 的形态由 BC2 解释；子列补救由 BC1 完成",
+        "C7.3：LLN 定位置、CLT 定波动，两层不可互相替代",
+        "C6.3：SLLN 的 L^1 部分需要 UI 门票",
+        "C4：鞅与条件 BC 处理相依序列（MCMC 样本不独立）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 187,
+        "line_end": 188
+      },
+      "fill_hint": "按「谁在消费哪条定理」组织；每条一句，细节归目标单元（H4/C9.1/C7.3/C6.3/C4）；CG 意义用切片 187-188 原话。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **切片原话（187-188 行）· 蒙特卡洛一致性（``H4``、``C9.1``）**：蒙特卡洛估计量的一致性正是（弱）大数定律 $\\bar X_n\\to I$ 依概率；没有它，「多采样就能逼近」没有理论保证。工程翻译：**渲染器敢不敢一直加采样**这件事，合法性由 `C6.5` 背书。\n- **误差量级（``C7.3``）**：`C6.5` 只给「$\\to$」，不给「多快」。$|\\bar X_n-I|\\lesssim\\sigma/\\sqrt n$ 与置信区间全部来自 CLT——路径追踪「采样数翻四倍、噪声减半」的出处在 `C7.3`，不在本单元。\n- **几乎必然的轨道保证（``H4``）**：若要求「这一条无限增长的样本序列终将永远正确」（自适应/渐进式渲染的理论说法），要 SLLN 而非 WLLN——a.s. 是轨道命题。\n- **反例博物馆（``C6.2``）**：打字机序列 $\\sum_m\\mathbb P(X_n=1)=\\sum_m 1=\\infty$ 正是 BC 第二引理的形态；而「依概率 ⟹ 存在 a.s. 子列」的补救靠 BC1（$\\sum_k 2^{-k}<\\infty$）。**博物馆的两件展品（打字机、尖峰）在 `C6.5` 找到各自的解释与解药。**\n- **一致可积性（``C6.3``）**：SLLN 附赠的 $L^{1}$ 收敛需要 UI（Vitali）；$\\mathbb E\\bar X_n\\to\\mu$ 这一步不是白送的。\n- **相依样本（``C4``、``C9.2``）**：MCMC 与时间相关样本不满足独立，需鞅差/遍历版的 LLN 与条件版 BC；本单元的两条 iid 定理在那里被换成各自的推广形式。\n- **收敛层级图（``C6.1``）**：本单元给的是「依概率」与「a.s.」两个格子的**具体来源**——LLN 是层级图最常被调用的一族实例。",
+      "links": [
+        "C6.1",
+        "C6.2",
+        "C6.3",
+        "C6.4",
+        "C6.5",
+        "C7.3",
+        "C9.1",
+        "C9.2",
+        "H4",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.5:bc.probe1",
+      "type": "probe",
+      "subject": "lln",
+      "title": "检验题：BC 的乘积、Cauchy 的 1/2、相关性的 25.75 倍",
+      "keywords": [
+        "第1题：独立 A_n、P=1/n，算 P(∩_{k=2}^{100} A_k^c) 与 ∑_{k=2}^{1000} 1/k",
+        "第2题：n=100 个 iid Cauchy 的 P(|X̄_100| > 1) 是多少？随 n 变化吗？",
+        "第3题：等相关 ρ=0.25、σ²=1、n=100 的 Var(X̄_n)，与独立公式差几倍？",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 173,
+        "line_end": 188
+      },
+      "fill_hint": "三题分别对应 bc.divergent / wlln.cauchy / wlln.correlated；第 2 题的陷阱是「n 越大越好」的直觉，第 3 题的陷阱是直接套 σ²/n。",
+      "content": "**第 1 题（Borel--Cantelli，方向判定）**：$A_n$ 相互独立，$\\mathbb P(A_n)=\\frac1n$（$n\\ge2$）。\n(a) 算 $\\mathbb P\\big(\\bigcap_{k=2}^{100}A_k^{c}\\big)$（一次都没发生的概率）；(b) 算 $\\sum_{k=2}^{1000}\\frac1k$；(c) $\\mathbb P(A_n\\ \\text{i.o.})$ 等于多少？用哪一条引理？\n**答案**：(a) $\\prod_{k=2}^{100}\\frac{k-1}{k}=\\frac1{100}=0.01$【已核验:0.01|1/100】；(b) $\\approx6.48547$【已核验:6.48547086055|sum(1/k for k in range(2,1001))】（发散，但慢）；(c) $=1$，用**第二引理**（独立 + 发散）；若误用第一引理会得到 $0$——正好相反。\n\n**第 2 题（Cauchy，直觉陷阱）**：$X_1,\\dots,X_n$ iid 标准 Cauchy。(a) $n=100$ 时 $\\mathbb P(|\\bar X_{100}|>1)$ 是多少？(b) 把它与 $n=1$、$n=10^{6}$ 比较，说明趋势；(c) $\\mathbb E|X_1|<\\infty$ 成立吗？WLLN 能用吗？\n**答案**：(a) $\\frac12$【已核验:0.5|1-(2/pi)*(pi/4)】；(b) **完全不变**，因为 $\\bar X_n\\sim\\mathrm{Cauchy}(0,1)$ 与 $n$ 无关（特征函数 $[\\varphi(t/n)]^{n}=e^{-|t|}$）；(c) $\\mathbb E|X_1|=\\infty$，WLLN **不可用**。陷阱：别答「$n$ 越大越接近 $0$」——重尾分布里这是错的。\n\n**第 3 题（相关性，误用惩罚）**：$\\mathrm{Var}(X_k)=\\sigma^{2}=1$，两两相关系数 $\\rho=0.25$，$n=100$。(a) 算 $\\mathrm{Var}(\\bar X_{100})$；(b) 若误当独立会算成多少？(c) 低估了多少倍？\n**答案**：(a) $\\frac1{100}+\\frac{99}{100}\\cdot0.25=0.2575$【已核验:0.2575|1/100+99/100*0.25】；(b) $\\frac1{100}=0.01$【已核验:0.01|1/100】；(c) $25.75$ 倍【已核验:25.75|(1/100+99/100*0.25)*100】。陷阱：$n\\to\\infty$ 时 (a) 趋于 $\\rho\\sigma^{2}=0.25$，**采样再多也压不到 $0$**。",
+      "links": [
+        "C6.5",
+        "C6.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
