@@ -79,13 +79,15 @@ attempt_once() {
 }
 
 # settle_raw <raw> <out> —— 把 raw 或其提取结果规范化写入 out
+# ⚠️ 必须 --no-ensure-ascii：默认 ensure_ascii 会把中文转 \uXXXX，
+# verify_kb 的【待核验】原文正则全部失配 → 数值回填被静默跳过（2026-09-24 H4 实测踩坑）。
 settle_raw() {
   local raw=$1 out=$2 ext="${1%.raw}.extracted"
   mkdir -p "$(dirname "$out")"   # json/<章节>/ 目录可能不存在（2026-09-24 实测踩坑）
   if [ -f "$ext" ] && [ -s "$ext" ]; then
-    pyrun -m json.tool "$ext" > "$out"
+    pyrun -m json.tool --no-ensure-ascii "$ext" > "$out"
   else
-    pyrun -m json.tool "$raw" > "$out"
+    pyrun -m json.tool --no-ensure-ascii "$raw" > "$out"
   fi
 }
 

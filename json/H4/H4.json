@@ -1,0 +1,800 @@
+{
+  "schema": "entry-card/v2",
+  "code": "H4",
+  "chapter": "H4",
+  "title": "蒙特卡洛积分",
+  "src": {
+    "file": "notebook/H_cg.tex",
+    "line_start": 69,
+    "line_end": 83,
+    "anchor": "notebook/H_cg.tex:69"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "H4:mc-estimator.quantifiers",
+      "type": "comparison",
+      "subject": "mc-estimator",
+      "title": "估计量限定词逐条拆解（去掉/放宽每一条会怎样）",
+      "keywords": [
+        "①采样分布与除数必须是同一个 p",
+        "②支撑覆盖：p(x) > 0 在 f(x) ≠ 0 处",
+        "③iid：无偏性不需要，方差 1/N 才需要",
+        "④1/N 均值：漏掉则估计随 N 线性爆炸",
+        "⑤∫f²/p < ∞ 只影响速度，不影响无偏",
+        "实质两条：覆盖 + 一致"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "四列表对齐切片 70–72 行估计量公式的每个符号；两行主反例的完整计算见 mc-estimator.support 与 mc-estimator.wrong-p，评审时核对反例数值",
+      "content": "估计量公式 $\\hat I_N = \\frac{1}{N}\\sum_i f(X_i)/p(X_i)$ 拆成 5 个限定词，逐条看去掉会怎样：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ② $p(x)>0$ 于 $f(x)\\neq 0$（支撑覆盖） | $f=1_{[1/2,1]}$，$p=2\\cdot 1_{[0,1/2]}$（合法密度，积分为 1） | 每个样本必落 $[0,1/2]$，$f(X_i)=0$，$\\hat I_N\\equiv 0$ 对一切 $N$，而 $I=1/2$：误差恒为 $1/2$，加样本无济于事 | 不能放宽（硬前提）；可用 MIS 拼支撑互补的策略 |\n| ①③ 采样分布 = 除数 pdf | 实际采 $X\\sim q(x)=2x$（$[0,1]$ 上）却除以 $p=1$ | $f(x)=x$ 时单样本均值 $E_q[X]=\\int_0^1 x\\cdot 2x\\,dx=2/3 \\neq I=1/2$，偏差 $1/6$；$N\\to\\infty$ 收敛到错误值 | 不能放宽 |\n| ④ iid | 所有 $N$ 个样本复制同一个 $X_1$ | 无偏性仍成立（边缘分布仍 $\\sim p$），但方差不再除以 $N$，永不收敛 | 可放宽到弱相关：MCMC（Metropolis–Hastings）样本相关，用有效样本量 ESS < N 修正 |\n| ⑤ $1/N$ 均值 | 忘写 $1/N$ | $S_N=\\sum_i f(X_i)/p(X_i)$ 期望 $=N\\cdot I$，随 $N$ 线性爆炸，根本不是估计 | 不能放宽 |\n| ⑥ $\\int f^2/p < \\infty$ | $f=x^{-3/4}$、$p=1$ 于 $[0,1]$：$I$ 有限但方差 $\\infty$（见 variance.infinite） | 仍无偏、大数定律常仍收敛，但 $1/\\sqrt N$ 速度与 CLT 置信区间全部失效 | 可放宽（收敛可保留，速度无保证） |\n\n总结一句：实质内容两条——「覆盖」（p 在 f 的支撑上不为零）与「一致」（采样与除数同源）；其余要么只影响速度（独立性、有限方差），要么是笔误级错误（1/N）。",
+      "links": [
+        "C8.2",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mc-estimator.support",
+      "type": "counterexample",
+      "subject": "mc-estimator",
+      "title": "反例：采样分布盖不住被积函数（支撑漏洞）",
+      "keywords": [
+        "f = 1_[1/2,1]，p = 2·1_[0,1/2]：p 合法但在 f 的支撑上恒为 0",
+        "每个样本必落 [0,1/2] ⟹ f(X_i) = 0 ⟹ Î_N ≡ 0 对一切 N",
+        "真值 I = 1/2：误差恒为 1/2，永不收敛",
+        "修补：p(x) > 0 wherever f(x) ≠ 0，或用 MIS 拼支撑"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "支撑失效的完整计算；与 mis.naive 同属「MC 出错方式」系列；评审核对 I = 1/2 与恒零论证",
+      "content": "这是估计量公式最硬的前提：采样分布必须「看得到」被积函数的每一寸支撑。\n\n目标积分 $I=\\int_0^1 1_{[1/2,1]}(x)\\,dx = 1/2$【已核验:0.5|1-0.5】。取密度 $p(x)=2\\cdot 1_{[0,1/2]}(x)$，验证归一化：$\\int_0^1 p\\,dx = 2\\times\\frac12 = 1$【已核验:1|2*0.5】，是合法密度。\n\n逐项算：$X_i\\sim p \\Rightarrow P(X_i\\in[0,1/2])=1 \\Rightarrow f(X_i)=0$ 恒成立 $\\Rightarrow f(X_i)/p(X_i)=0 \\Rightarrow \\hat I_N = \\frac1N\\sum_i 0 = 0$。\n\n失效结论数值：$\\hat I_N = 0$ 对一切 $N$，误差 $|\\hat I_N - I| = 1/2$ 恒定——不是收敛慢，而是永不收敛；换更多样本、换随机种子都无效。\n\n变体辨析：若 $p$ 只在孤立点为零而 $f$ 在那里非零，样本以概率 0 打到该点，估计其实安全；危险的是 $p$ 在一整段 $f\\neq 0$ 的区域上为零（本例），此时以正概率漏掉积分质量。\n\n修补条件：$p(x)>0$ wherever $f(x)\\neq 0$。实践中取覆盖全支撑的混合分布，或用 MIS 把支撑互补的策略拼起来——组合支撑只要求 $\\sum_k n_k p_k(x)>0$（见 mis.statement）。渲染对应场景：BSDF 采样采不到「透过窄窗的光」，必须靠光源采样补盲区（H3、J7）。",
+      "links": [
+        "H3",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mc-estimator.wrong-p",
+      "type": "counterexample",
+      "subject": "mc-estimator",
+      "title": "反例：采样分布与除数不一致（静默有偏）",
+      "keywords": [
+        "实际采 X ~ q = 2x（[0,1]），却按 p = 1 均匀假设除",
+        "f = x：I = 1/2，估计期望 = ∫x·2x dx = 2/3",
+        "偏差 1/6：N → ∞ 稳定收敛到错误值 2/3",
+        "无报错无提示，渲染里 = 系统性偏亮/偏暗",
+        "修补：除数 = 实际采样 pdf"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "完整偏差计算（2/3 与 1/6 需 python 复核）；强调「静默失效」与 support 反例「显式失效」的对比",
+      "content": "MC 最危险的失效方式不是爆炸，而是安静地收敛到错误答案。\n\n目标 $I=\\int_0^1 x\\,dx=1/2$【已核验:0.5|1/2】。写代码时以为在均匀采样（除数用 $p=1$），但随机数生成例程实际给出 $X\\sim q(x)=2x$（$[0,1]$ 上的合法密度）。\n\n逐项算单样本期望：$E[\\hat I_1]=E_q[X/1]=\\int_0^1 x\\cdot q(x)\\,dx=\\int_0^1 2x^2\\,dx = 2/3$【已核验:0.666666666667|2/3】。\n\n失效结论数值：偏差 $=2/3-1/2=1/6$【已核验:0.166666666667|2/3 - 1/2】 $\\approx 0.1667$。且大数定律保证 $\\hat I_N\\to 2/3$：样本越多，越自信地错。\n\n一个有启发性的对照：若诚实地用 $q$ 做除数，$g=f/q=x/(2x)=1/2$ 恒定——方差为零（$q$ 恰好 $\\propto f$，正是 mc-estimator.importance 的最优情形）。同一个采样器，除数从 $1$ 改成 $2x$，从「错 1/6」变成「零方差完美估计」。\n\n修补：除数必须就是实际采样用的 pdf，逐行核对采样代码与权重代码的对应关系。渲染工程里 pdf 与采样例程不匹配是路径追踪渲染系统性偏暗/偏亮的经典 bug（H3）。",
+      "links": [
+        "H3",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mc-estimator.statement",
+      "type": "statement",
+      "subject": "mc-estimator",
+      "title": "蒙特卡洛估计量陈述",
+      "keywords": [
+        "Î_N = (1/N)Σᵢ f(X_i)/p(X_i)，X_i iid ~ p",
+        "结论：E[Î_N] = ∫_Ω f dx，对每个 N 无偏",
+        "1/p(X_i) 称重要性权重：纠正采样器偏好",
+        "前提：p 归一化、支撑覆盖、除数与采样同源",
+        "N → ∞ 时 Î_N → I（大数定律，需 ∫f²/p < ∞）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "以切片 70–72 行公式逐符号转写；条件三条对应 quantifiers 表前三行；「≈ 的概率语义」一段是补充说明非切片原文",
+      "content": "切片第一式是渲染算法的核心：把一个积分变成「采样—加权—平均」三步。\n\n$$\\hat I_N = \\frac{1}{N}\\sum_{i=1}^N \\frac{f(X_i)}{p(X_i)}, \\qquad X_i \\sim p$$\n\n逐符号拆解：$X_i$ 是从密度 $p$ 抽出的第 $i$ 个随机样本；$p(X_i)$ 是该样本被抽中的概率密度——越容易被抽到的地方，除完之后贡献打折越多；$f(X_i)/p(X_i)$ 是单样本贡献（重要性权重修正后的值）；$1/N$ 求平均。\n\n成立条件三条：① $p$ 是 $\\Omega$ 上归一化密度（$\\int p\\,dx=1$）；② 支撑覆盖：$f(x)\\neq 0$ 处 $p(x)>0$；③ 除数就是采样实际使用的那个 $p$。三条缺一的失效方式见 quantifiers 表与两条定点反例。\n\n结论两层：无偏性 $E[\\hat I_N]=I$ 对每个 $N$ 成立（只需期望的线性，见 proof）；一致性 $\\hat I_N\\to I$ 当 $N\\to\\infty$（大数定律，速率由方差公式给出，见 variance.statement）。\n\n注：切片写的 $\\approx$ 是工程记号。这个估计量不是近似公式而是随机变量，「误差」必须用概率语言（方差、置信区间）陈述——这正是切片第二条公式（方差）存在的原因。",
+      "links": [
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mc-estimator.intuition",
+      "type": "intuition",
+      "subject": "mc-estimator",
+      "title": "估计量直觉：随机性负责覆盖，权重负责纠偏",
+      "keywords": [
+        "积分 = 随机变量的期望：I = E_p[f/p]，全部魔法在此",
+        "采样器偏好哪里，1/p 就在哪里打折",
+        "假设给两件事（覆盖 + 一致），结论回报无偏 + 收敛",
+        "把样本预算花在 f 大的地方 = 重要性采样",
+        "高维优势：精度只看总样本数，与维度无关（H3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "假设/结论分开写（规格要求）；高维优势与历史背景两句为拓展背景，与 variance.rate 呼应",
+      "content": "假设与结论分开说。**假设给了两件事**：随机性能「可达地」覆盖支撑（$p>0$ 处处采得到），且权重 $1/p$ 精确记录了采样器的偏好强度。**结论为什么因此成立**：期望计算 $E_p\\left[\\frac{f(X)}{p(X)}\\right]=\\int \\frac{f(x)}{p(x)}\\,p(x)\\,dx=\\int f\\,dx$ 中，采样偏好 $p(x)$ 在分子分母恰好相消——剩下的就是纯积分。随机性管「扫到」，权重管「校平」，合起来才无偏。\n\n结构直觉：把积分想成「系统扫描 $\\Omega$ 求和」，MC 换成「随机抽查再校正」。$f/p$ 的含义是「这个点的值 ÷ 被抽中的容易程度」：难抽的地方（$p$ 小）一旦抽中就重罚补偿，容易抽的地方贡献打折——任何采样策略都被拉回同一个无偏估计。\n\n为什么这在高维有戏：确定性网格在 $d$ 维每轴要 $N^{1/d}$ 个点，而随机抽查的精度只看总样本数（见 variance.rate）——维度越高随机越划算。路径空间的维度是几十（每顶点两个参数，H3），这是路径追踪能存在的前提。\n\n背景一句：方法名来自 von Neumann 与 Ulam（曼哈顿计划，以摩纳哥赌城命名）——用随机性计算确定性量。",
+      "links": [
+        "H3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mc-estimator.proof",
+      "type": "proof",
+      "subject": "mc-estimator",
+      "title": "无偏性证明骨架与大数定律接力",
+      "keywords": [
+        "E[Î_N] = (1/N)ΣE[g(X_i)] = E_p[f/p] = ∫(f/p)p = ∫f",
+        "第一步只用线性期望——无偏性不需要独立性",
+        "第二步是密度换元：(f/p)·p 相消",
+        "一致性另需 LLN：iid + Var < ∞",
+        "易错点：无偏与方差衰减是两条定理，前提不同"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "切片无证明，按标准推导补全（Pharr DBG Ch.13 同构）；核对「无偏不需独立」的表述",
+      "content": "两步走，每步标理由。记单样本贡献 $g=f/p$。\n\n**第 1 步（无偏性）**：$E[\\hat I_N]=\\frac1N\\sum_{i=1}^N E[g(X_i)]$【理由：期望的线性，对任意随机变量成立，不需要独立】$=E_p[g(X)]$【理由：同分布】$=\\int_\\Omega \\frac{f(x)}{p(x)}\\,p(x)\\,dx$【理由：密度定义 $E[h(X)]=\\int h\\,p$】$=\\int_\\Omega f\\,dx=I$【理由：$p$ 相消】。\n\n**第 2 步（一致性）**：iid 且 $\\mathrm{Var}[g]<\\infty$ 时，大数定律给 $\\hat I_N\\to I$（a.s.）；定量速率是 $\\mathrm{Var}[\\hat I_N]=\\mathrm{Var}[g]/N$——该推导才真正用到独立性（见 variance.proof）。\n\n依赖链：期望线性（纯代数）→ 密度换元（期望 = 积分，A1.2 勒贝格积分的构造）→ 大数定律（C5 随机过程 / C9.1，其测度论引擎是 A1.3 的收敛定理）。\n\n易错点：无偏性与方差衰减前提不同——前者不要独立、不要有限方差（$\\int f^2/p=\\infty$ 时仍无偏，见 variance.infinite）；后者两者都要。混为一谈会误判「方差无穷 ⟹ 估计错」，实际只是「没有速度保证」。",
+      "links": [
+        "A1.2",
+        "A1.3",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mc-estimator.importance",
+      "type": "extension",
+      "subject": "mc-estimator",
+      "title": "拓展：最优采样分布与重要性采样的边界",
+      "keywords": [
+        "最优 p* = f/I：f/p* ≡ I 常数 ⟹ Var = 0",
+        "Cauchy–Schwarz：∫f²/p ≥ (∫f)²，取等 ⟺ p ∝ f",
+        "不可行：p* 需要 I（正是要求的答案）",
+        "实践：p ∝ f̃，f̃ 是 f 的廉价近似",
+        "f 变号时只能匹配 |f|，方差降不到零"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "Cauchy–Schwarz 下界与取等条件是标准结果（Veach 论文 / DBG Ch.13），非切片内容、按拓展处理；核对取等方向",
+      "content": "公式里那个 $1/p(X_i)$ 不只是纠偏，它定义了一个优化问题：$p$ 选得好，方差可以任意小。\n\n最优性两行证明：Cauchy–Schwarz 给 $(\\int f\\,dx)^2=\\left(\\int \\frac{f}{\\sqrt p}\\cdot\\sqrt p\\,dx\\right)^2 \\le \\left(\\int \\frac{f^2}{p}\\,dx\\right)\\left(\\int p\\,dx\\right)=\\int \\frac{f^2}{p}\\,dx$，故方差公式（variance.statement）中 $\\int f^2/p \\ge I^2$，下界当且仅当 $f/\\sqrt p \\propto \\sqrt p$ 即 $p\\propto f$ 时取到。取 $p^*=f/I$（$f\\ge 0$ 时是合法密度），则 $f/p^*\\equiv I$ 恒定，单样本就是精确答案，$\\mathrm{Var}=0$。\n\n为什么只是理论标杆：构造 $p^*$ 要先归一化 $f$，即先知道 $I$——正是要求的量。所以重要性采样的真实用法是找 $\\tilde f\\approx f$ 且本身可采样的 $p\\propto \\tilde f$：图形学里用「光源亮度 × BRDF 峰形 × 距离衰减」构造 pdf（H2、H3）。\n\n边界：$f$ 变号时只能匹配 $|f|$，$f/p$ 在 $f$ 的零点附近仍会放大，方差降不到零。\n\n本条依赖 variance.statement（$\\int f^2/p$ 是被最小化的目标泛函）。",
+      "links": [
+        "H2",
+        "H3",
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mc-estimator.probe1",
+      "type": "probe",
+      "subject": "mc-estimator",
+      "title": "检验：均匀采样估计 ∫₀¹x dx 的方差与精度",
+      "keywords": [
+        "Var[X] = 1/12（X ~ U(0,1)）",
+        "N = 100 的标准差 ≈ 0.0289",
+        "精度提高 10 倍要 100 倍样本（1/√N 的代价）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 72
+      },
+      "fill_hint": "三问均可 python 直算；(c) 的平方代价是 1/√N 速率的核心体感",
+      "content": "取 $I=\\int_0^1 x\\,dx$（真值 $1/2$【已核验:0.5|1/2】），$p=1$ 均匀采样，单样本贡献 $g(X)=X$。\n\n(a) 算单样本方差：$\\mathrm{Var}[g(X)]=E[X^2]-(E[X])^2=\\frac13-\\frac14=\\frac{1}{12}$【已核验:0.0833333333333|1/12】。\n\n(b) $N=100$ 时 $\\mathrm{Var}[\\hat I_{100}]=\\frac{1}{1200}$，标准差 $=\\sqrt{1/1200}\\approx 0.02886$【已核验:0.0288675134595|sqrt(1/(12*100))】。\n\n(c) 要把标准差压到 $0.001$，需要 $N\\ge 1/(12\\times 10^{-6})\\approx 83333$【已核验:83333.3333333|1/(12*0.001**2)】——精度提高 10 倍，样本要 100 倍：$1/\\sqrt N$ 速率的直接代价。",
+      "links": [
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:variance.quantifiers",
+      "type": "comparison",
+      "subject": "variance",
+      "title": "方差公式适用条件表",
+      "keywords": [
+        "①∫f²/p < ∞：方差有限，否则置信区间全废",
+        "②iid：Var 拆和靠独立性",
+        "③所有样本同一个 p：混用要靠 MIS 分解",
+        "④p 归一化：未归一化 → 有偏，倍数 1/∫p̃",
+        "方差公式回答「多快」，不回答「对不对」"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 74,
+        "line_end": 77
+      },
+      "fill_hint": "条件表对齐切片 74–77 行方差公式的前提；每行的具体计算散见对应反例词条",
+      "content": "方差公式 $\\mathrm{Var}[\\hat I]=\\frac1N\\left(\\int \\frac{f^2}{p}\\,dx - I^2\\right)$ 的适用条件逐条拆：\n\n| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $\\int f^2/p < \\infty$ | $f=x^{-3/4}$、$p=1$ 于 $[0,1]$：$I$ 有限但方差 $\\infty$（见 variance.infinite） | 仍无偏，但 $1/\\sqrt N$ 速度与 CLT 置信区间全部失效，样本均值被偶发巨样本长期拉偏 | 部分可放宽：收敛性常保留，速度无保证 |\n| iid | 全部样本复制同一个 $X_1$ | $\\mathrm{Var}[\\hat I_N]=\\mathrm{Var}[g]$ 不除以 $N$，永不收敛 | 可放宽到弱相关：MCMC + 有效样本量 ESS（C8.2） |\n| 所有样本同一个 $p$ | 两条策略各采一半，方差公式照抄单 $p$ 版 | 公式只对单一 $p$ 成立；多策略须按 MIS 逐技术分解（mis.proof） | 可放宽：MIS 方差分解 |\n| $p$ 归一化 | 用未归一化的 $\\tilde p = 2$（$[0,1]$ 上常数 2）当除数，实际采均匀 | $E[\\hat I]=E[f/2]=I/2$：$f=x$ 时估计 $1/4$ 而真值 $1/2$，恰偏一半 | 不能放宽，但归一化常数已知时可显式修正 |\n\n定位一句：方差公式回答「多快」，不回答「对不对」——「对不对」由无偏性（mc-estimator.statement）负责。",
+      "links": [
+        "C8.2",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:variance.infinite",
+      "type": "counterexample",
+      "subject": "variance",
+      "title": "反例：有限积分、无穷方差（以及修复到零方差）",
+      "keywords": [
+        "f = x^(-3/4) 于 (0,1]，p = 1：I = 4 有限，∫f²/p = ∞",
+        "单样本 x = 10⁻⁴ 时 g = 1000：尾部贡献爆炸",
+        "失效：仍无偏但 Var = ∞，置信区间全废",
+        "修复：p = x^(-3/4)/4（∝ f），反变换 X = U⁴，g ≡ 4，Var = 0",
+        "教训：无穷方差是 (f, p) 配对的属性，换 p 就消失"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 74,
+        "line_end": 77
+      },
+      "fill_hint": "完整计算链：I = 4、∫f²/p = ∞、修复后 Var = 0；反变换 X = U⁴ 推导要保留；评审核对幂积分判别的方向表述",
+      "content": "取 $f(x)=x^{-3/4}$（$(0,1]$ 上，0 处奇点），$p=1$ 均匀采样。\n\n真值端：$I=\\int_0^1 x^{-3/4}\\,dx=\\left[4x^{1/4}\\right]_0^1=4$【已核验:4|4*1**0.25】——积分完全正常。\n\n方差端：$E[g^2]=\\int_0^1 (x^{-3/4})^2\\,dx=\\int_0^1 x^{-3/2}\\,dx$，幂积分判别（指数 $3/2>1$）发散，所以 $\\mathrm{Var}[\\hat I_N]=\\frac1N(\\infty - 4^2)=\\infty$。\n\n失效的具体数值感受：样本 $x=10^{-4}$ 时单样本贡献 $g=(10^{-4})^{-3/4}=10^3=1000$【已核验:1000|(1e-4)**(-0.75)】；$x=10^{-8}$ 时贡献 $10^6$【已核验:1000000|(1e-8)**(-0.75)】。偶发巨样本让样本均值长时间漂移，$\\sqrt{\\mathrm{Var}/N}=\\infty$，没有任何置信区间可用。\n\n修补（重要性采样）：取 $p\\propto f$，即 $p(x)=x^{-3/4}/4$（归一化除数 $=I=4$）。反变换采样：CDF $F(t)=\\int_0^t x^{-3/4}/4\\,dx=t^{1/4}$，故 $X=U^4$（$U$ 均匀）。此时 $g=f(X)/p(X)=4$ 恒定，且 $\\int f^2/p\\,dx=\\int 4x^{-3/4}\\,dx=16$【已核验:16|4*4*1**0.25】$=I^2$，$\\mathrm{Var}=\\frac1N(16-16)=0$。\n\n结论：同一个 $f$，均匀采样方差 $\\infty$、匹配采样方差 $0$——**无穷方差不是被积函数的固有属性，而是 $(f,p)$ 配对的属性**。这是「采样策略决定渲染收敛速度」的数学根源（H3）。",
+      "links": [
+        "H3",
+        "C9.1"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需大量重复采样展示长尾样本与样本均值轨迹的对比（均匀 vs 匹配），统计涨落必须后端批量计算",
+        "params_hint": {
+          "f": "x**-0.75",
+          "domain": [
+            0,
+            1
+          ],
+          "samplers": [
+            "uniform",
+            "inverse-cdf U**4"
+          ],
+          "N_range": [
+            1,
+            10000
+          ],
+          "trials": 200,
+          "plot": "running-mean + sample-scatter"
+        }
+      },
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:variance.statement",
+      "type": "statement",
+      "subject": "variance",
+      "title": "方差公式陈述",
+      "keywords": [
+        "Var[Î_N] = (1/N)(∫ f²/p dx − I²)",
+        "前提：p 归一化 + 支撑覆盖 + iid + ∫f²/p < ∞",
+        "标准差 ~ N^(-1/2)：精度翻倍要 4 倍样本",
+        "∫f²/p = f 与 p 失配的度量",
+        "回答「多快」，与无偏性分工"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 74,
+        "line_end": 77
+      },
+      "fill_hint": "逐符号对齐切片 76 行公式；「用样本方差估计」一段是工程补充非切片内容，需标注",
+      "content": "切片第二式：\n\n$$\\mathrm{Var}[\\hat I] = \\frac{1}{N}\\left(\\int \\frac{f^2}{p}\\,dx - I^2\\right)$$\n\n逐符号拆解：$\\hat I = \\hat I_N$ 是 $N$ 样本估计量；$\\int f^2/p\\,dx$ 是单样本贡献 $g=f/p$ 的二阶矩 $E[g^2]$（推导见 variance.proof：$\\int (f^2/p^2)\\cdot p\\,dx=\\int f^2/p\\,dx$）；减 $I^2=(E[g])^2$ 是「平方减均方」；外面 $1/N$ 来自 iid 样本方差相加后除以 $N^2$。\n\n成立条件：① $p$ 归一化且支撑覆盖（同估计量）；② 样本 iid（方差相加用独立性）；③ $\\int f^2/p<\\infty$，否则方差为 $\\infty$、公式失去数值意义（见 variance.infinite）。\n\n推论（速率）：标准差 $=O(N^{-1/2})$，与维度无关；误差减半需要 4 倍样本。与确定性求积的 $O(N^{-1/d})$ 对照是 MC 在高维称王的原因（见 variance.rate）。\n\n工程用法：$\\int f^2/p$ 实际未知，用样本方差 $\\frac{1}{N-1}\\sum_i (g_i-\\bar g)^2$ 估计之，给出误差棒——渲染器报告的「噪声估计」就是这么来的。",
+      "links": [
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:variance.intuition",
+      "type": "intuition",
+      "subject": "variance",
+      "title": "方差直觉：∫f²/p 是失配惩罚",
+      "keywords": [
+        "就是 Var 定义 E[g²] − (E[g])² 代入 g = f/p",
+        "p 漏掉 f 的高峰 ⟹ f²/p 平方级爆炸",
+        "1/N：独立噪声按 √N 平均抵消",
+        "p = f/I 时两项相等 ⟹ 方差 0（完美匹配）",
+        "全部方差技巧都在削 ∫f²/p 这块面积"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 74,
+        "line_end": 77
+      },
+      "fill_hint": "直觉条目：假设/结论分开 + 失配惩罚读法；配图建议画 f、p、f²/p 三曲线叠放",
+      "content": "一句话：方差公式 = 把 $\\mathrm{Var}$ 定义 $E[g^2]-(E[g])^2$ 里的 $g=f/p$ 展开成积分，展开后的形状暴露了「采样分布该长什么样」。\n\n**假设给了什么**：iid 让 $N$ 个样本的方差相加后除以 $N^2$（得 $1/N$）；同分布让每个 $E[g^2]$ 都等于同一个积分 $\\int f^2/p$。**结论为什么因此成立**：剩下的 $(E[g])^2$ 恰好是无偏性算过的 $I^2$，于是全部信息浓缩进一个泛函 $\\int f^2/p\\,dx$。\n\n失配惩罚的读法：盯着 $f^2$ 与 $p$ 的比值——若 $p$ 在 $f$ 的高峰处很小，$f^2/p$ 出现巨大尖峰（平方级惩罚）。直觉：采样器很少去那里（$p$ 小）⟹ 一旦采到贡献 $f/p$ 巨大，且方差按平方累积。「在错误的地方省样本」被平方惩罚，这逼着采样分布重视 $f$ 的高值区。\n\n完美匹配端点：$p=f/I$ 时 $f^2/p = If$，$\\int f^2/p = I\\int f = I^2=(E[g])^2$，方差为 0——每个样本贡献恒等于 $I$。\n\n几何图像：把 $f^2/p$ 画成曲线，MC 的全部优化（重要性采样、MIS、方差缩减 C9.2）都是在削这条曲线下的面积。",
+      "links": [
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:variance.proof",
+      "type": "proof",
+      "subject": "variance",
+      "title": "方差公式推导骨架",
+      "keywords": [
+        "Var[(1/N)Σg_i] = (1/N²)·N·Var[g] = Var[g]/N（独立性用在此步）",
+        "E[g] = I（无偏性接力）",
+        "E[g²] = ∫(f²/p²)·p = ∫f²/p（pdf 换元）",
+        "易错点：平方会把 p 也平方，再乘 p 剩 f²/p",
+        "依赖 mc-estimator.proof 的一阶矩结果"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 74,
+        "line_end": 77
+      },
+      "fill_hint": "标准推导，三步各标理由；与 mc-estimator.proof 的分工（那里不用独立、这里用）要显式写",
+      "content": "三步。\n\n**第 1 步（拆和）**：$\\mathrm{Var}[\\hat I_N]=\\mathrm{Var}\\left[\\frac1N\\sum_{i=1}^N g(X_i)\\right]=\\frac{1}{N^2}\\sum_{i=1}^N \\mathrm{Var}[g(X_i)]$【理由：独立 ⟹ 协方差全为零，$\\mathrm{Var}(\\Sigma)=\\Sigma\\mathrm{Var}$；无独立性时会出现 $2\\sum_{i<j}\\mathrm{Cov}$ 交叉项】$=\\frac{1}{N^2}\\cdot N\\cdot\\mathrm{Var}[g]=\\frac{\\mathrm{Var}[g]}{N}$【理由：同分布，$N$ 个方差相同】。\n\n**第 2 步（一阶矩）**：$\\mathrm{Var}[g]=E[g^2]-(E[g])^2$，其中 $E[g]=I$——由估计量无偏性（mc-estimator.proof 第 1 步）接力过来，不重算。\n\n**第 3 步（二阶矩）**：$E[g^2]=\\int_\\Omega \\left(\\frac{f(x)}{p(x)}\\right)^2 p(x)\\,dx$【理由：密度换元】$=\\int_\\Omega \\frac{f^2}{p}\\,dx$【理由：$p^2$ 除掉一个 $p$ 剩 $f^2/p$】。\n\n合并三步即得 $\\mathrm{Var}[\\hat I_N]=\\frac1N\\left(\\int \\frac{f^2}{p}\\,dx - I^2\\right)$。\n\n易错点两条：① $\\frac{1}{N^2}\\cdot N$ 写成 $\\frac{1}{N^2}$（忘有 $N$ 个样本）；② 第 3 步换元时忘了平方会把 $p$ 也平方——分子 $f^2$、分母 $p^2$、再乘 $p$，净剩 $f^2/p$ 而不是 $f^2/p^2$。",
+      "links": [
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:variance.rate",
+      "type": "extension",
+      "subject": "variance",
+      "title": "拓展：N^(-1/2) 速率与维度诅咒——MC 存在的理由",
+      "keywords": [
+        "MC 误差 ~ C/√N：与维度 d 无关",
+        "网格求积 N 点误差 O(N^(-1/d))，d 大时崩",
+        "路径空间维度 ~ 2×顶点数（几十维）：网格法不可行",
+        "常数 C = √Var：全部技巧都在压 C",
+        "QMC（H6.1）把速率部分推近 N^(-1)"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 74,
+        "line_end": 77
+      },
+      "fill_hint": "维度对照的 O(N^(-1/d)) 是标准数值分析结论（拓展内容非切片原文）；路径空间维度给量级即可",
+      "content": "方差公式的直接推论：误差（标准差）$\\sim\\sqrt{\\int f^2/p - I^2}\\,/\\sqrt N$，即 $O(N^{-1/2})$，**与维度无关**。\n\n对照确定性方法：$d$ 维上一阶网格求积用 $N$ 个点误差 $O(N^{-1/d})$——维度越高越惨（维度诅咒）：$d=30$ 时 $N^{-1/30}$，样本翻 1000 倍误差几乎不动。\n\n图形学的处境：渲染方程的积分域是路径空间，单条路径积分维度约 $2\\times$ 顶点数（几十维，H3），网格法彻底出局——MC 的维度无关性是唯一活路。这是「蒙特卡洛积分」成为渲染核心的深层原因。\n\n但常数 $C=\\sqrt{\\int f^2/p - I^2}$ 由 $(f,p)$ 决定：整个方差缩减工业（重要性采样、MIS、对偶/控制变量 C9.2、准随机序列 H6.1）都在压这个常数；QMC 甚至能把速率部分推向近 $N^{-1}$。\n\n本条依赖 variance.statement（速率从方差公式读出）。",
+      "links": [
+        "H3",
+        "H6.1",
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:variance.probe1",
+      "type": "probe",
+      "subject": "variance",
+      "title": "检验：∫₀¹x² 的方差与最优采样",
+      "keywords": [
+        "I = 1/3，∫f²/p = 1/5，Var = 4/45",
+        "最优 p = 3x²，反变换 X = U^(1/3)",
+        "匹配采样下方差为 0"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 74,
+        "line_end": 77
+      },
+      "fill_hint": "(a)–(c) 数值需复核；(d) 检查反变换方向（CDF = t³ ⟹ X = U^(1/3)）",
+      "content": "$f(x)=x^2$，$p=1$ 于 $[0,1]$。\n\n(a) $I=\\int_0^1 x^2\\,dx=\\frac13$【已核验:0.333333333333|1/3】。\n\n(b) $\\int f^2/p\\,dx=\\int_0^1 x^4\\,dx=\\frac15$【已核验:0.2|1/5】。\n\n(c) 单样本方差 $\\mathrm{Var}[g]=\\frac15-\\left(\\frac13\\right)^2=\\frac{4}{45}$【已核验:0.0888888888889|1/5 - (1/3)**2】$\\approx 0.0889$。\n\n(d) 最优采样 $p\\propto x^2$：$p(x)=3x^2$（归一化 $\\int_0^1 3x^2\\,dx=1$【已核验:1|3/3】），CDF $F(t)=t^3$，反变换 $X=U^{1/3}$。此时 $g=x^2/(3x^2)=1/3$ 恒定，方差为 0——与 (c) 的 $4/45$ 对照，体会采样分布的威力。",
+      "links": [
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mis.quantifiers",
+      "type": "comparison",
+      "subject": "mis",
+      "title": "MIS 权重条件表（平衡启发式）",
+      "keywords": [
+        "①Σ_j w_j(x) = 1 逐点成立：无偏性的全部所需",
+        "②w_j ≥ 0：非负是无偏所需，稳健所需",
+        "③p_j 必须是各技术实际使用的 pdf",
+        "④组合支撑 Σn_k p_k > 0 覆盖 f",
+        "⑤平衡启发式只是方差选择，不是无偏性要求"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 79,
+        "line_end": 82
+      },
+      "fill_hint": "条件表对齐切片 79–82 行权重公式；关键澄清「无偏只看权重和为 1」要保留",
+      "content": "权重公式 $w_j(x)=\\dfrac{n_j p_j(x)}{\\sum_k n_k p_k(x)}$ 的条件逐条拆：\n\n| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $\\sum_j w_j = 1$（逐点） | 两技术各 1 样本、$f\\equiv 1$、$p_1=p_2=1$，权重忘归一化直接用 $w_j=n_jp_j=1$ | 估计 $=1\\cdot 1+1\\cdot 1=2 \\neq I=1$，偏差 100%（确定性错） | 不能放宽（唯一硬性代数条件） |\n| $p_j$ 真实（与采样代码一致） | 技术 2 声称 $p_2=1$ 实际采 $X\\sim 2x$ | 第二项期望 $=\\int w_2 f\\cdot 2x\\,dx \\neq \\int w_2 f\\,dx$，整体有偏（同 mc-estimator.wrong-p 的静默失效） | 不能放宽 |\n| 组合支撑 $\\sum_k n_k p_k > 0$ 于 $f\\neq 0$ | $p_1,p_2$ 支撑同为 $[0,1/2]$（两条策略同盲），$f$ 在 $[1/2,1]$ 非零 | $f/p_j$ 无定义或估计恒 0（同 mc-estimator.support） | 不能放宽：并集支撑须盖住 $f$ |\n| 平衡启发式 $w\\propto n_jp_j$ | 换成等权 $w=1/2$ 或幂启发式 | 仍无偏（权重和仍为 1），只变方差——等权可能方差 $\\infty$（见 mis.naive） | 可以放宽：任何非负、逐点和为 1 的权重都无偏 |\n\n总结一句：MIS 的无偏性是「免费」的（只要权重和为 1），它真正解决的是**方差**问题——多策略组合时不引入 $f/p_j$ 爆点。",
+      "links": [
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mis.naive",
+      "type": "counterexample",
+      "subject": "mis",
+      "title": "反例：无脑等权组合（无偏但方差无穷）",
+      "keywords": [
+        "f ≡ 1，p₁ = 1（均匀），p₂ = 30x²(1−x)²（Beta(3,3)）",
+        "等权组合：无偏（权重和 = 1）",
+        "但 E[(1/2p₂)²] = (1/4)∫dx/p₂ = ∞：p₂ 在端点 ~ x² 太小",
+        "数值感受：x = 0.001 处单样本贡献 ~1.7×10⁴",
+        "平衡启发式贡献 ≤ 1/4（AM–GM）：有限",
+        "教训：无偏 ≠ 好估计，MIS 的价值全在方差端"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 79,
+        "line_end": 82
+      },
+      "fill_hint": "完整方差对比计算（发散 + AM–GM 上界）；1/30、端点数值、1/4 需复核；这是 MIS 组的定点反例",
+      "content": "场景：$f\\equiv 1$ 于 $[0,1]$，$I=1$。两条策略各采 1 样本：技术 1 均匀 $p_1=1$；技术 2 用 Beta(3,3) 形状 $p_2(x)=30x^2(1-x)^2$（归一化：$\\int_0^1 x^2(1-x)^2\\,dx = B(3,3)=1/30$【已核验:0.0333333333333|gamma(3)*gamma(3)/gamma(6)】）。\n\n误用做法（等权平均）：$\\hat I_{\\text{naive}}=\\frac12\\cdot\\frac{f(X_1)}{p_1(X_1)}+\\frac12\\cdot\\frac{f(X_2)}{p_2(X_2)}$。权重和 $\\frac12+\\frac12=1$，所以**无偏**——第一眼看不出问题。\n\n失效计算：第二项的平方期望 $E\\left[\\left(\\frac{f}{2p_2}\\right)^2\\right]=\\frac14\\int_0^1 \\frac{1}{p_2(x)^2}\\,p_2(x)\\,dx=\\frac14\\int_0^1 \\frac{dx}{p_2(x)}$（密度换元）。而 $\\frac{1}{p_2(x)}=\\frac{1}{30x^2(1-x)^2}$ 在 $x\\to 0$ 处 $\\sim\\frac{1}{30x^2}$，幂积分判别（指数 $2>1$）发散，故 $\\mathrm{Var}=\\infty$。\n\n单样本爆点数值：$x=0.001$ 处 $p_2(0.001)=30\\times 10^{-6}\\times 0.999^2\\approx 2.994\\times 10^{-5}$【已核验:2.994003e-05|30*(0.001)**2*(0.999)**2】，$f/p_2\\approx 3.34\\times 10^4$【已核验:33400.1001335|1/(30*(0.001)**2*(0.999)**2)】，等权后单样本贡献 $\\approx 1.67\\times 10^4$【已核验:16700.0500668|0.5/(30*(0.001)**2*(0.999)**2)】——一个样本就能把平均值踹飞。\n\n平衡启发式修复：$w_1=\\frac{1}{1+p_2}$，$w_2=\\frac{p_2}{1+p_2}$（$n_1=n_2=1$）。技术 2 贡献的平方期望 $=\\int \\frac{w_2^2}{p_2^2}\\,p_2\\,dx=\\int \\frac{p_2}{(1+p_2)^2}\\,dx$，由 AM–GM $(1+p_2)^2\\ge 4p_2$ 得被积函数 $\\le\\frac{1}{4p_1}=\\frac14$，积分 $\\le 1/4$——**有限**。\n\n教训：**无偏 ≠ 好估计**。MIS 的价值全在方差端：谁在那个点可能被采到（$n_jp_j$ 大），就让谁主导贡献，避免小 $p$ 策略强吃大权重。",
+      "links": [
+        "C9.2",
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mis.statement",
+      "type": "statement",
+      "subject": "mis",
+      "title": "MIS 平衡启发式权重陈述",
+      "keywords": [
+        "w_j(x) = n_j p_j(x) / Σ_k n_k p_k(x)（平衡启发式，Veach）",
+        "逐点 Σ_j w_j(x) = 1：无偏性的唯一硬性代数条件",
+        "n_j p_j(x) = 技术 j 落在 x 的期望样本密度",
+        "组合估计量 Σ_j (1/n_j)Σᵢ w_j f/p_j，无偏",
+        "作用：多策略组合不引入方差爆点"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 79,
+        "line_end": 82
+      },
+      "fill_hint": "切片 81 行只有权重式；组合估计量与条件三条是标准补充（Veach 1997 / DBG Ch.13），需标注；核对与 mis.proof 的无偏性表述一致",
+      "content": "切片第三式解决一个问题：手头有多条采样策略（BSDF 采样、光源采样……），各采一部分样本，怎么加权合并才不引入爆点。\n\n$$w_j(x) = \\frac{n_j\\, p_j(x)}{\\sum_k n_k\\, p_k(x)}$$\n\n逐符号拆解：$p_j$ 是第 $j$ 条策略的 pdf；$n_j$ 是该策略的样本数；分子 $n_jp_j(x)$ =「技术 $j$ 的样本落在 $x$ 附近的期望密度」——样本越多、pdf 越大的技术话语权越大；分母把权重归一化到和为 1。\n\n完整组合估计量（切片未写，Veach 标准形式）：$\\hat I=\\sum_j \\frac{1}{n_j}\\sum_{i=1}^{n_j} w_j(x_{j,i})\\,\\frac{f(x_{j,i})}{p_j(x_{j,i})}$，其中 $x_{j,i}\\sim p_j$。\n\n成立条件三条：① 各 $p_j$ 是实际使用的 pdf（与采样代码一致）；② $w_j\\ge 0$ 且逐点 $\\sum_j w_j(x)=1$（平衡启发式自动满足）；③ 组合支撑 $\\sum_k n_k p_k(x)>0$ 于 $f(x)\\neq 0$ 处（至少一条策略覆盖该处）。\n\n结论：$\\hat I$ 无偏（证明见 mis.proof）。权重形状（平衡 vs 幂）不影响无偏、只影响方差——那是另一维度的选择（见 mis.power）。",
+      "links": [
+        "H2",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mis.intuition",
+      "type": "intuition",
+      "subject": "mis",
+      "title": "MIS 直觉：谁能采到，就信谁",
+      "keywords": [
+        "n_j p_j(x) = 技术 j 在 x 的采样密度：话语权 = 可能性",
+        "w_j 大 ⟺ 该技术容易采到 x ⟺ 它的 f/p 不易爆",
+        "小 pdf 处权重自动闭嘴，贡献打折",
+        "假设给真实 pdf + 和为1，结论因 p 相消而成立",
+        "BSDF 采样 vs 光源采样：小光源场景必须 MIS（H2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 79,
+        "line_end": 82
+      },
+      "fill_hint": "假设/结论分开写（规格要求）；BSDF/光源采样分工是标准背景知识（拓展），切片只有公式",
+      "content": "假设与结论分开写。**假设给了什么**：每条策略的真实 pdf $p_j$，且权重按 $n_jp_j$ 归一化——这保证权重逐点和为 1、且权重正比于「该技术采到 $x$ 的可能性」。**结论为什么因此成立**：期望计算里每条技术的 $p_j$ 恰好消掉（$\\frac{w_j f}{p_j}\\cdot p_j = w_j f$），剩下 $f\\sum_j w_j = f$，与样本怎么分配完全无关——无偏是代数必然。\n\n机制直觉：$f/p_j$ 的爆点在「$p_j$ 小而 $f$ 大」的地方——技术 $j$ 不擅长采那里却硬给全额贡献。平衡权重让「不擅长」自动降权：$p_j$ 小 ⟹ $w_j$ 小 ⟹ 贡献打折。每条策略只在自己占优的区域发声。\n\nCG 场景：直接光照积分里，BSDF 采样对光滑表面强、对小点光源弱（采到光源方向的概率 ~ 立体角，小光源立体角极小）；光源采样对面积小的光源强、对粗糙表面弱。小光源 + 光滑表面 = 两者各管一段，MIS 拼起来全程低方差（H2、J7）。\n\n一句话：MIS = 让多条「各有所长」的采样策略在无人手工调权的情况下自动取长补短。",
+      "links": [
+        "H2",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mis.proof",
+      "type": "proof",
+      "subject": "mis",
+      "title": "MIS 无偏性证明骨架",
+      "keywords": [
+        "E[技术 j 项] = (1/n_j)·n_j·∫w_j f/p_j·p_j = ∫w_j f",
+        "Σ_j 求和：∫f·Σw_j = ∫f·1 = I",
+        "只用了线性期望 + Σw_j = 1，不需策略间独立",
+        "易错点：w_j 里的 p_j 必须与采样 pdf 一致，否则相消失败",
+        "易错点：n_j 用实际样本数，只改一头会破坏归一化"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 79,
+        "line_end": 82
+      },
+      "fill_hint": "切片无证明，按 Veach 标准论证补全；两步理由标注完整；核对「权重和为1」的显式验证",
+      "content": "两步。\n\n**第 1 步（逐技术期望）**：技术 $j$ 的贡献是 $\\frac{1}{n_j}\\sum_{i=1}^{n_j}\\frac{w_j(x_{j,i})f(x_{j,i})}{p_j(x_{j,i})}$，取期望：\n\n$E[\\cdot]=\\frac{1}{n_j}\\cdot n_j\\int_\\Omega \\frac{w_j(x)f(x)}{p_j(x)}\\,p_j(x)\\,dx=\\int_\\Omega w_j(x)f(x)\\,dx$\n\n【理由：期望线性；$x_{j,i}\\sim p_j$ 密度换元；$1/n_j$ 与 $n$ 个样本相消——平均的期望不衰减。$p_j$ 在此相消，这正是「pdf 必须真实」被用到的地方】。\n\n**第 2 步（求和）**：$E[\\hat I]=\\sum_j\\int w_j f\\,dx=\\int f\\left(\\sum_j w_j\\right)dx=\\int f\\,dx=I$。\n\n其中权重和的显式验证：$\\sum_j w_j(x)=\\frac{\\sum_j n_j p_j(x)}{\\sum_k n_k p_k(x)}=1$ 对每个 $x$ 逐点成立【纯代数】。\n\n依赖链：本条依赖单策略无偏性的同款换元（mc-estimator.proof）与权重的归一化代数。方差端对接：无偏免费，方差需逐技术分解（每项由该技术的 $\\int (w_j f)^2/p_j$ 型积分控制，对比计算见 mis.naive）。\n\n易错点两条：① 采样代码实际用 $\\tilde p_j$ 而权重写 $p_j$，第 1 步相消不成立（有偏，同 mc-estimator.wrong-p）；② 改变 $n_j$ 时权重与 $1/n_j$ 必须同步更新，只改一头会破坏归一化或期望的 $n_j$ 相消。",
+      "links": [
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mis.power",
+      "type": "extension",
+      "subject": "mis",
+      "title": "拓展：幂启发式（power heuristic）与权重选择的自由度",
+      "keywords": [
+        "幂启发式：w_j ∝ (n_j p_j)^β，β = 2 常用",
+        "仍无偏：权重和仍为 1（无偏只看和，不看形状）",
+        "β = 2：优势技术权重更快吃满，劣势更快归零",
+        "策略实力接近 → 平衡（β=1）；一边倒 → 幂（β=2）",
+        "权重形状是自由参数，全部用于压方差"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 79,
+        "line_end": 82
+      },
+      "fill_hint": "Veach 论文标准拓展（非切片内容，title 已用「拓展：」前缀区分）；β=2 的行为描述要准确",
+      "content": "切片给的是平衡启发式（$\\beta=1$），但无偏性只要求「非负、和为 1」——权重形状是自由参数，全部自由度用于压方差。\n\n幂启发式：$w_j(x)=\\dfrac{(n_jp_j(x))^\\beta}{\\sum_k (n_kp_k(x))^\\beta}$，图形学默认 $\\beta=2$。与平衡式相比：当某技术在 $x$ 处占优（$n_jp_j \\gg n_kp_k$），$\\beta=2$ 使它的权重更快趋近 1、其他更快趋 0——「一边倒时干脆别用弱策略的贡献」，进一步压方差；各策略势均力敌时行为接近平衡式。\n\n选择判据：两条策略在支撑上实力接近 → 平衡启发式（稳健，最坏情形最优）；已知某条在大部分区域明显更优 → 幂启发式 $\\beta=2$（实践中常更优）。Veach 论文的结论：平衡式有最优最坏情形保证，幂式实战常赢——渲染器（如 pbrt）默认 $\\beta=2$。\n\n本条依赖 mis.statement（无偏性只看权重和）与 variance.statement（评判标准是 $\\int f^2/p$ 型泛函）。",
+      "links": [
+        "J7",
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:mis.probe1",
+      "type": "probe",
+      "subject": "mis",
+      "title": "检验：算两组平衡权重并比较贡献",
+      "keywords": [
+        "x = 1/4 处 w₁ = 2/3，w₂ = 1/3",
+        "技术2 贡献 w₂f/p₂ = 1/6",
+        "等权时贡献 1/4：都无偏，差在方差"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 79,
+        "line_end": 82
+      },
+      "fill_hint": "三问均可 python 直算；(c) 引向 mis.naive 的方差对比叙事",
+      "content": "两条策略各 1 个样本：$p_1=1$（$[0,1]$ 均匀），$p_2(x)=2x$（$[0,1]$）。\n\n(a) 在 $x=1/4$ 处：$w_1=\\dfrac{1}{1+1/2}=\\dfrac{2}{3}$【已核验:0.666666666667|1/(1+2*0.25)】，$w_2=\\dfrac{1/2}{3/2}=\\dfrac13$【已核验:0.333333333333|(2*0.25)/(1+2*0.25)】；验证 $w_1+w_2=1$。\n\n(b) $f(x)=x$，技术 2 采到 $x=1/4$ 时贡献 $w_2\\dfrac{f}{p_2}=\\dfrac13\\cdot\\dfrac{1/4}{1/2}=\\dfrac16$【已核验:0.166666666667|(1/3)*(0.25)/(2*0.25)】。\n\n(c) 同点若用等权 $1/2$：贡献 $\\dfrac12\\cdot\\dfrac{1/4}{1/2}=\\dfrac14$——是平衡版的 1.5 倍。两种加权都无偏，差别在方差端（哪一方案权重该大，见 mis.naive）。",
+      "links": [
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "三公式关系对照：对不对 / 多快 / 怎么组合",
+      "keywords": [
+        "估计量式：无偏性（线性期望 + p 相消）",
+        "方差式：速率（iid + ∫f²/p）",
+        "MIS 式：多策略方差控制（Σw = 1 + 各 pdf 真实）",
+        "依赖链：无偏性 → 方差 → MIS，逐层加结构",
+        "共同根基：期望 = 积分（A1.2），收敛靠 LLN（A1.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 70,
+        "line_end": 82
+      },
+      "fill_hint": "总表对齐切片三段（70–72、74–77、79–82）；供前端表格直接渲染",
+      "content": "切片三段公式各管一件事，合起来是渲染方程数值求解的完整契约：\n\n| 公式 | 回答的问题 | 真正用到的结构 | 失效方式（代表反例） |\n|---|---|---|---|\n| $\\hat I_N=\\frac1N\\sum_i \\frac{f(X_i)}{p(X_i)}$ | 对不对（无偏 + 收敛） | 线性期望 + 密度换元（不需要独立） | 支撑漏（mc-estimator.support）/ pdf 错（mc-estimator.wrong-p） |\n| $\\mathrm{Var}[\\hat I]=\\frac1N\\left(\\int\\frac{f^2}{p}-I^2\\right)$ | 多快（误差速率） | 独立拆 Var + 二阶矩换元 | $\\int f^2/p=\\infty$（variance.infinite） |\n| $w_j=\\frac{n_jp_j}{\\sum_k n_kp_k}$ | 多策略怎么组合不失分 | 权重逐点和为 1 + 各 $p_j$ 真实 | 等权组合方差 $\\infty$（mis.naive） |\n\n依赖链：无偏性是地基（只期望线性）；方差公式在其上加 iid 与二阶矩；MIS 在无偏性层面「免费」（任何和为 1 的权重都行），把全部自由度花在方差上。\n\n共同的测度论根基：$E[\\cdot]=\\int \\cdot\\,p\\,dx$ 的换元是勒贝格积分的基本操作（A1.2），而 $\\hat I_N\\to I$ 的严格化是大数定律，其测度论引擎（MCT/DCT）在 A1.3。",
+      "links": [
+        "A1.2",
+        "A1.3",
+        "H2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "H2/H3：渲染方程与路径空间的 MC 求解——主战场",
+        "C9.1/C9.2：估计量理论 + 方差缩减的抽象版",
+        "C8.2：MCMC 把 iid 放宽为马尔可夫链",
+        "H6.1：QMC 低差异序列，速率向 N^(-1) 推",
+        "A1.3：LLN/CLT 的测度论基础",
+        "J7：路径采样策略 = 重要性采样 + MIS 的工程化"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁用本单元的哪个公式」，细节归目标节点；H2 与 H3 是最重的两个落点",
+      "content": "- **H2 渲染方程与 BRDF / H3 路径空间公式化**：渲染方程是第二类积分方程，路径追踪 = 对路径空间积分做 MC 估计；每个顶点处「采 BSDF 还是采光源」就是 MIS 的两条 $p_j$。本单元三公式是路径追踪器的全部数学骨架。\n- **C9.1 估计量理论**：MC 估计量是「无偏估计量 + 均方误差 = 偏差² + 方差」分解的标准实例；$\\mathrm{Var}[\\hat I_N]$ 公式即其中的方差项。\n- **C9.2 方差缩减技术**：对偶变量、控制变量、分层采样都是压 $\\int f^2/p$ 的系统方法；重要性采样即本单元的 $p$ 选取问题的展开。\n- **C8.2 Metropolis–Hastings**：把「iid 采样」放宽为马尔可夫链采样——无偏性论证换成平稳分布论证，方差用有效样本量 ESS 修正（对应 quantifiers 表的「iid 可放宽」行）。\n- **H6.1 低差异序列**：QMC 用确定性「超均匀」点列替换随机数，误差率可逼近 $O(N^{-1}\\log^d N)$；与 MC 构成「随机 ↔ 确定」的光谱。\n- **A1.3 三大收敛定理**：$\\hat I_N\\to I$ 的严格证明（大数定律）依赖测度论收敛定理；$\\int f^2/p<\\infty$ 对应 $g\\in L^1$ 型可积条件。\n- **J7 路径采样策略**：俄罗斯轮盘、下一事件估计、MIS 权重实操 = 本单元理论在真实渲染器里的工程化。",
+      "links": [
+        "H2",
+        "H3",
+        "C9.1",
+        "C9.2",
+        "C8.2",
+        "H6.1",
+        "A1.3",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：MC 收敛与方差（后端对拍）",
+      "keywords": [
+        "档2 planned-backend：随机采样 + 多次重复试验",
+        "演示1：误差 vs N 的 log-log 图（斜率 −1/2 目视可验）",
+        "演示2：均匀 vs 重要性采样同图对比方差",
+        "演示3：无穷方差反例的长尾样本轨迹",
+        "演示4：MIS vs 等权组合的单样本贡献直方图"
+      ],
+      "tex_ref": null,
+      "fill_hint": "四个演示各对应一个词条（variance.rate / mc-estimator.importance / variance.infinite / mis.naive）；后端契约参考 convergence-thm 的字段风格（series + 数值列）",
+      "content": "单元级演示总览。四个演示都需要大量随机采样与重复试验，统计涨落（收敛带、长尾、直方图）必须后端批量计算与对拍，前端单次 scrub 无法呈现，故全部走档2：\n\n1. **速率演示**：$\\hat I_N$ 误差 vs $N$ 的 log-log 图，目视验证斜率 $-1/2$（对应 variance.rate）。\n2. **重要性采样对比**：同一 $f$（如 $x^2$）用均匀 vs $p\\propto f$ 采样，同图对比误差带宽度（对应 mc-estimator.importance）。\n3. **无穷方差长尾**：$f=x^{-3/4}$ 均匀采样的运行均值轨迹长期漂移 vs 匹配采样的平稳轨迹（对应 variance.infinite）。\n4. **MIS vs 等权**：单样本贡献的直方图，等权组合出现 $10^4$ 量级离群值而平衡权重集中在 $I$ 附近（对应 mis.naive）。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要大量随机采样与重复试验（收敛带、log-log 拟合、长尾轨迹、直方图），统计涨落必须后端批量计算与对拍，前端无法单次呈现",
+        "params_hint": {
+          "cases": [
+            "rate-uniform",
+            "importance-match",
+            "infinite-variance-tail",
+            "mis-vs-naive"
+          ],
+          "f": "x**2 | x**-0.75 | 1",
+          "samplers": [
+            "uniform",
+            "inverse-cdf",
+            "mis-balance",
+            "equal-weight"
+          ],
+          "N_range": [
+            1,
+            100000
+          ],
+          "trials": 200,
+          "plots": [
+            "error-vs-N log-log",
+            "running-mean",
+            "sample-histogram"
+          ]
+        }
+      },
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -53,7 +53,7 @@
 | `content` | **完整正文**（这是主交付物！KaTeX 公式 + 中文讲解，直觉先行再形式化；复杂表达式必须拆解注解，不能只丢一个式子）。长度按内容需要，陈述类 2–5 段，反例类必须含完整计算 |
 | `links`（可选） | 相关词条代号，只能用全库代号清单内的 |
 | `viz`（可选） | 三档之一，见下 |
-| `generated_by` | `{ "model": "deepseek-v4.1-flash", "date": "pending", "reviewed": false }`（date 构建时注入；reviewed 由评审流程翻转，你永远写 false） |
+| `generated_by` | `{ "model": "glm-5.3-flashx", "date": "pending", "reviewed": false }`（model 写你实际所属的型号名；date 构建时注入；reviewed 由评审流程翻转，你永远写 false） |
 | `status` | 恒为 `"drafted"` |
 
 `viz` 三档状态机：
