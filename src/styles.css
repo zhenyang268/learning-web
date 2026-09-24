@@ -953,6 +953,74 @@ aside h4 {
   color: var(--tx2);
 }
 
+/* 词条引用（正文里的「（见 mct.nonneg）」等文字引用 → 可点） */
+.ref {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: var(--cyan);
+  border-bottom: 1px dashed rgba(94, 230, 255, .55);
+  transition: .18s;
+}
+
+.ref:hover {
+  color: #9df1ff;
+  border-bottom-color: #9df1ff;
+}
+
+.ref.cross {
+  color: var(--violet);
+  border-bottom-color: rgba(167, 139, 250, .55);
+}
+
+.ref.cross:hover {
+  color: #c4b5fd;
+  border-bottom-color: #c4b5fd;
+}
+
+/* 限定词表：实时渲染出来的真数据表，补 mockup 的语气配色与函数名着色 */
+.qbody {
+  margin-bottom: 4px;
+}
+
+table.q td:nth-child(2) .katex {
+  color: var(--cyan);
+}
+
+table.q td.no {
+  color: var(--red);
+}
+
+table.q td.yes {
+  color: var(--green);
+}
+
+table.q tr.detail td {
+  padding: 0;
+}
+
+table.q tr.detail .in {
+  padding: 14px 16px;
+}
+
+/* 引用定位高亮 */
+.entry.flash {
+  animation: flash 1.2s ease-out;
+}
+
+@keyframes flash {
+  0% {
+    background: rgba(94, 230, 255, .16);
+  }
+
+  100% {
+    background: transparent;
+  }
+}
+
 @media(max-width:1150px) {
   main {
     grid-template-columns: 1fr;

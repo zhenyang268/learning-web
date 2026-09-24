@@ -7,7 +7,7 @@ import { loadState, masteryOf, progressOf } from './modules/state';
 import { renderHeader } from './shell/header';
 import { renderSidebar } from './shell/sidebar';
 import { renderAside } from './shell/aside';
-import { difficultyOf, groupEntries, renderCard } from './renderers/card';
+import { difficultyOf, groupEntries, renderCard, type KbIndex } from './renderers/card';
 import { mountOverlay } from './renderers/overlay';
 import { renderInline } from './renderers/markdown';
 
@@ -83,7 +83,8 @@ function renderReader(file: EntryFile): void {
     </div>`;
   elReader.innerHTML = '';
   elReader.append(head);
-  for (const group of groupEntries(file)) elReader.append(renderCard(group));
+  const index: KbIndex = { codes: new Set(graph.codes) };
+  for (const group of groupEntries(file)) elReader.append(renderCard(file, group, index));
 }
 
 function render(): void {
