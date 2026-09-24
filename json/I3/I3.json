@@ -1,0 +1,477 @@
+{
+  "schema": "entry-card/v2",
+  "code": "I3",
+  "chapter": "I3",
+  "title": "雷诺数",
+  "src": {
+    "file": "notebook/I_fluid.tex",
+    "line_start": 49,
+    "line_end": 66,
+    "anchor": "notebook/I_fluid.tex:49"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "I3:reynolds.quantifiers",
+      "type": "comparison",
+      "subject": "reynolds",
+      "title": "Re 定义的限定词逐条拆解",
+      "keywords": [
+        "定义拆 4 成分：特征速度 U、特征长度 L、运动粘度 ν（nu）、比值＝惯性/粘性",
+        "U、L 是约定不是唯一：绕流取来流速度、管流取截面平均速度",
+        "球取直径 vs 半径：Re 数值差 2 倍，阈值表必须配套同一约定",
+        "μ（mu）误当 ν 用：差一个密度因子，水里差 1000 倍",
+        "比值是量级估计，不是逐点精确力比",
+        "ν 的唯一性由 NS 无量纲化保证（见 reynolds.derivation）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "四列表对齐切片公式行（50-52）的四个成分；球阻力危机临界 ~3×10⁵（按直径约定）为文献值需人工复核；μ/ν 混用的两个数值已带【待核验】",
+      "content": "把 $Re = UL/\\nu$ 当作一条「陈述」拆开，它有四个可单独出错的成分：特征速度 $U$、特征长度 $L$、运动粘度 $\\nu$、以及「比值 = 惯性力/粘性力」这个解读。逐条给出选错或去掉后的具体后果。\n\n| 限定词 | 去掉/选错后的具体例子 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $U$ 取特征速度 | 绕球流动若误取球面速度：粘附条件（no-slip）下球面速度恰为 $0$，得 $Re = 0$，荒谬地宣称「绝对蠕动流」 | 数值完全失真，判型全错 | 不能唯一化，但有约定俗成：绕流取来流速度 $U_\\infty$，管流取截面平均速度 |\n| ② $L$ 取特征长度 | 球取直径 $D$ 还是半径 $R$：数值差 2 倍。球阻力危机临界值 $Re \\approx 3\\times 10^5$ 按**直径**约定；误按半径记录则需写 $1.5\\times 10^5$，描述的是同一物理 | 与文献阈值对比时整套判型错位 | 不能唯一化，但引用任何临界 Re 必须连同 $L$ 的约定一起引用 |\n| ③ 用 $\\mu$ 顶替 $\\nu$ | 水：$U=1$ m/s、$L=0.02$ m。误算 $UL/\\mu = 20$【待核验:1*0.02/1e-3】，正确值 $UL/\\nu = 20000$【待核验:1*0.02/1e-6】，相差 $\\rho_{water} = 1000$ 倍【待核验:1e-3/1e-6】 | 把湍流判成层流（此处恰恰把「湍流」判成「层流」） | 不能放宽：$\\nu$ 是 NS 无量纲化的自然产物（见 reynolds.derivation） |\n| ④ 「比值 = 惯性力/粘性力」 | 这是 NS 无量纲化导出的**量级之比**，不是逐点、逐时刻的精确力之比；在速度梯度剧烈的非均匀区（如尾迹、边界层内）「当地力比」与 $Re$ 可以差很多 | 把它当精确力比会对局部行为过度承诺 | 保持「量级估计」的解读即可，这也是它威力所在 |\n\n总结一句：$U$、$L$ 的选取是「约定」问题（配套阈值表就行），$\\mu$ 与 $\\nu$ 的区分是「对错」问题（差一个密度因子），④的解读决定你不会过度承诺。",
+      "links": [
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.stokes-misuse",
+      "type": "counterexample",
+      "subject": "reynolds",
+      "title": "反例：把 Stokes 流公式用在雨滴上",
+      "keywords": [
+        "Stokes 阻力 F = 6πμaU 只在 Re ≪ 1 成立（区间表第一行的公式化身）",
+        "2 mm 雨滴末速 6.5 m/s：Re ≈ 867，落在「层流可分离」档",
+        "真实阻力 ≈ 4.0×10⁻⁵ N，Stokes 预言 ≈ 2.2×10⁻⁶ N，差 18 倍",
+        "按 Stokes 平衡重力算末速得 121 m/s，为真实值的 18 倍",
+        "修补：Re < 0.1 需 U < 0.75 mm/s，雨滴永远不满足",
+        "教训：区间表第一行是公式的准用证，不是装饰"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "fill_hint": "切片只有 Re≪1 一行（59 行），Stokes 公式与雨滴数据是扩展背景；所有算术已带【待核验】；末速 6.5 m/s 与 C_D≈0.5 为文献典型值，需人工复核",
+      "content": "区间表第一行（$Re \\ll 1$ 蠕动流）有一个著名的「数学化身」：Stokes 阻力公式 $F = 6\\pi\\mu a U$（$a$ 为球半径）。它线性、好算，于是被初学者到处套。下面把一次完整翻车算出来。\n\n**场景**：直径 2 mm 的雨滴（$a = 1$ mm）在空气中以末速 $U \\approx 6.5$ m/s 下落；空气 $\\mu \\approx 1.8\\times 10^{-5}$ Pa·s、$\\nu = \\mu/\\rho \\approx 1.5\\times 10^{-5}$ m²/s【待核验:1.8e-5/1.2】、$\\rho_{air} \\approx 1.2$ kg/m³。\n\n**第一步：算 Re**。特征长度按约定取直径 $L = 2a = 2\\times 10^{-3}$ m：\n$$Re = \\frac{UL}{\\nu} = \\frac{6.5 \\times 2\\times 10^{-3}}{1.5\\times 10^{-5}} \\approx 867【待核验:6.5*2e-3/1.5e-5】$$\n$867$ 落在切片表中「层流，可能出现分离」一档，与「粘性主导」的 $Re \\ll 1$ 相去三四个数量级——Stokes 公式的前提根本不满足。\n\n**第二步：算两种阻力的差距**。\n- Stokes 预言：$F_S = 6\\pi\\mu a U = 6\\pi \\times 1.8\\times 10^{-5} \\times 10^{-3} \\times 6.5 \\approx 2.2\\times 10^{-6}$ N【待核验:6*pi*1.8e-5*1e-3*6.5】\n- 实际（标准阻力公式，取 $C_D \\approx 0.5$）：$F = \\tfrac12 \\rho_{air} U^2 C_D \\cdot \\pi a^2 \\approx 4.0\\times 10^{-5}$ N【待核验:0.5*1.2*6.5**2*0.5*pi*1e-6】\n- 真实阻力约是 Stokes 值的 **18 倍**【待核验:0.5*1.2*6.5**2*0.5*pi*1e-6/(6*pi*1.8e-5*1e-3*6.5)】\n\n**第三步：误用传播成多荒谬的预言**。若坚持用 Stokes 阻力平衡重力求末速：$\\tfrac43\\pi a^3 \\rho_w g = 6\\pi\\mu a U$ 解出 $U = \\dfrac{2\\rho_w g a^2}{9\\mu} \\approx 121$ m/s【待核验:2*1000*9.8*1e-6/(9*1.8e-5)】，约为真实末速的 18 倍【待核验:2*1000*9.8*1e-6/(9*1.8e-5)/6.5】，约为音速的三分之一【待核验:2*1000*9.8*1e-6/(9*1.8e-5)/340】。物理上当然不会发生：大雨滴在高 Re 下被气动压扁、破碎——这正是高 Re 世界「惯性说了算」的表现。\n\n**修补条件**：Stokes 公式只在 $Re \\ll 1$ 时可用。对 2 mm 雨滴，要求 $Re < 0.1$ 需要 $U < 7.5\\times 10^{-4}$ m/s【待核验:0.1*1.5e-5/2e-3】（不到 1 mm/s）——下落的雨滴永远达不到，必须换用高 Re 阻力律（牛顿阻力区 $C_D \\approx 0.4$--$0.5$）。",
+      "links": [
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.threshold",
+      "type": "counterexample",
+      "subject": "reynolds",
+      "title": "反例：把表中阈值当精确临界值",
+      "keywords": [
+        "阈值表是数量级路标，不是精确临界值",
+        "管流转捩（transition）受扰动控制：同一根管临界速度 0.115 ↔ 5 m/s，差 43 倍",
+        "下临界 Re ≈ 2300：低于它扰动衰减；高于它转捩点不定",
+        "极小心实验层流可维持到 Re ~ 10⁵ 量级",
+        "球阻力危机 Re ≈ 3×10⁵（按直径）依赖来流湍流度与表面粗糙度",
+        "数值耗散本身就是扰动，模拟可能人为提前转捩"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 59,
+        "line_end": 62
+      },
+      "fill_hint": "对齐切片表格行（59-62）的「>4000 湍流」；下临界 2300、层流维持上限 10⁵、球阻力危机 3×10⁵、高尔夫球效应均为文献值，需人工复核出处；同一水管的两个速度换算已带【待核验】",
+      "content": "切片表中「$Re > 4000$（管流）湍流」容易被读成精确判据「$Re \\le 4000$ 必层流」。实验历史说明：**转捩点由扰动水平决定，不是普适常数**。\n\n**具体演示（同一根水管）**：$D = 2$ cm、水（$\\nu = 1.0\\times 10^{-6}$ m²/s）。\n- 下临界值：教科书常给 $Re \\approx 2300$（低于它扰动自动衰减，必然层流），对应 $U = 2300\\times 10^{-6}/0.02 = 0.115$ m/s【待核验:2300*1e-6/0.02】；\n- 上限：在极端小心（消除振动、钝化进口）的实验中，层流可维持到 $Re \\sim 10^5$ 量级，对应同管 $U = 5$ m/s【待核验:100000*1e-6/0.02】；\n- 强扰动下 $Re \\approx 2000$ 出头即转捩。\n\n也就是说，同一根管的「临界速度」在 0.115 与 5 m/s 之间摇摆，相差约 43 倍【待核验:100000/2300】。切片表的 4000 是「自然条件下通常已见湍流」的路标值，不是相变温度。\n\n**绕流同样如此（球体阻力危机）**：光滑球的阻力系数在 $Re \\approx 3\\times 10^5$（按直径）附近骤降——层流边界层转捩为湍流、分离点后移、尾迹变窄；高尔夫球表面的凹坑人为触发转捩，把临界 Re 提前约一个量级。同是「球」，阈值可以差好几倍，取决于来流湍流度与表面粗糙度。\n\n**误用后果**：风洞缩比实验只保证 $Re$ 相同、不核对湍流度与表面状态，转捩位置对不上实物，阻力预测可差百分之几十。\n\n**修补条件**：把表中数值当**数量级路标**用：判断时同时看（a）Re 量级、（b）扰动/粗糙度水平；数值模拟里还要记得网格与数值耗散本身就是一种「扰动」，可能人为提前触发转捩。",
+      "links": [
+        "I5",
+        "I6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.intuition",
+      "type": "intuition",
+      "subject": "reynolds",
+      "title": "Re 直觉：两种力的拔河",
+      "keywords": [
+        "惯性项量级 ρU²/L：流体记得自己的动量、想继续直着走",
+        "粘性项量级 μU/L²：把快慢差异抹平的倾向",
+        "两者相除量纲恰好消干净：ρUL/μ = UL/ν = Re",
+        "Re 相同 ⟹ 拔河格局相同：换流体换尺度都不变",
+        "Re ≪ 1 世界近乎时间可逆：细菌停鞭毛立即静止",
+        "Re ≫ 1 世界粘性只剩薄层话语权（边界层）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "纯扩展讲解：按「定义给了什么 / 为什么能度量形态」两段组织，与 reynolds.derivation 的严格推导呼应；无切片外数值",
+      "content": "**定义给了什么**：一条把「流动性格」压缩成单个数字的规则——拿惯性项与粘性项的量级相除。\n\n**这个比值为什么能度量形态**：\n- 惯性项的量级：流体微团以速度 $U$ 运动、在长度 $L$ 内速度明显变化，单位体积惯性力 $\\sim \\rho U\\cdot \\frac{U}{L} = \\rho U^2/L$。它是「流体记得自己的动量、想继续直着走」的倾向。\n- 粘性项的量级：速度梯度 $\\sim U/L$，粘性力 $\\sim \\mu U/L^2$。它是「把快慢差异抹平」的倾向。\n- 相除：$\\dfrac{\\rho U^2/L}{\\mu U/L^2} = \\dfrac{\\rho U L}{\\mu} = \\dfrac{UL}{\\nu} = Re$。量纲恰好消干净——这正是无量纲数的意义：换单位、换流体、换尺度，只要 $Re$ 相同，拔河的胜负格局就相同。\n\n**两个极端的图像**：\n- $Re \\ll 1$：粘性完胜。流体「毫无记性」，力一撤立即停，流动近乎时间可逆。细菌就活在这个世界：鞭毛一停立刻静止，没有「滑行」。\n- $Re \\gg 1$：惯性完胜。动量冲得过头，流线撞上障碍物会脱离壁面、翻卷成涡；粘性只在紧贴壁面的薄层里还有话语权（边界层，见 I6）。\n\n**结论为什么因此成立**：NS 方程里只有这两类项在竞争，它们的量级之比是方程唯一的无量纲组合；所以解的「性格」（是否分离、是否脉动、涡长什么样）由 $Re$ 分档——切片的区间表不过是这张拔河记分牌的读数。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.derivation",
+      "type": "proof",
+      "subject": "reynolds",
+      "title": "推导骨架：无量纲化 NS 方程逼出 Re",
+      "keywords": [
+        "起点：不可压 NS（依赖 I2）",
+        "第1步：u = Uu′、x = Lx′、t = (L/U)t′、p = ρU²p′",
+        "第2步：链式法则 ∇ = ∇′/L、Δ = Δ′/L²，各项量级 U²/L 与 μU/L²",
+        "第3步：全式除 ρU²/L，唯一幸存参数 1/Re = ν/(UL)",
+        "结论：Re 相同 + 几何相似 ⟹ 无量纲解相同（相似律，风洞缩比的根据）",
+        "易错点：μ/(ρUL) 约掉 ρ 别漏；换 L 约定 Re 数值变而方程不变"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "切片无推导，本条按教材标准 NS 无量纲化补全（非原创，见 Kundu/Batcheur 任一流体教材）；依赖 I2 的 NS 形式；Strouhal 数一句为扩展备注",
+      "content": "不从记忆里「背」$Re$，从 NS 方程把它「推」出来。\n\n**起点**（依赖 I2）：不可压 Navier--Stokes 方程\n$$\\rho\\left(\\frac{\\partial \\mathbf{u}}{\\partial t} + (\\mathbf{u}\\cdot\\nabla)\\mathbf{u}\\right) = -\\nabla p + \\mu \\Delta \\mathbf{u}.$$\n\n**第 1 步：定义无量纲变量**。每个量写成「尺度 × 无量纲量」：$\\mathbf{u} = U\\mathbf{u}'$，$\\mathbf{x} = L\\mathbf{x}'$，$t = \\frac{L}{U}t'$，$p = \\rho U^2 p'$。理由：$U$、$L$ 是问题唯一给定的速度/长度尺度；$\\rho U^2$ 是动量流（动压）的量纲，用来归一压强。\n\n**第 2 步：逐项换算导数**。链式法则给 $\\nabla = \\frac{1}{L}\\nabla'$、$\\Delta = \\frac{1}{L^2}\\Delta'$、$\\frac{\\partial}{\\partial t} = \\frac{U}{L}\\frac{\\partial}{\\partial t'}$。于是各项量级：惯性 $(\\mathbf{u}\\cdot\\nabla)\\mathbf{u} \\sim \\frac{U^2}{L}$，粘性 $\\mu\\Delta\\mathbf{u} \\sim \\frac{\\mu U}{L^2}$，压强梯度 $\\sim \\rho \\frac{U^2}{L}$。\n\n**第 3 步：全式除以 $\\rho U^2/L$**：\n$$\\frac{\\partial \\mathbf{u}'}{\\partial t'} + (\\mathbf{u}'\\cdot\\nabla')\\mathbf{u}' = -\\nabla' p' + \\frac{\\mu}{\\rho U L}\\Delta'\\mathbf{u}' = -\\nabla' p' + \\frac{1}{Re}\\Delta'\\mathbf{u}'.$$\n\n**结论**：无量纲方程只剩**一个**参数 $Re$。立刻得到**相似律**（similarity）：几何相似且 $Re$ 相同的两个流动，无量纲解相同——风洞缩比模型测量有效性的全部理论根据。\n\n**依赖链**：NS 方程与 no-slip 边界条件（I2）→ 尺度代换 → $Re$；$Re \\to \\infty$ 粘性项消失退化为 Euler 方程（I1，守恒律的地盘）；$Re \\to 0$ 丢掉惯性项退化为 Stokes 方程（切片表第一行的方程化身，见 reynolds.stokes-misuse）。\n\n**易错点**：\n1. $\\frac{\\mu}{\\rho U L} = \\frac{\\nu}{U L}$：分子分母同除 $\\rho$ 这步别漏，否则 $\\mu$、$\\nu$ 混写（见 reynolds.mu-vs-nu）。\n2. 归一化尺度要全程一致：换 $L$ 的约定，$Re$ 数值变而无量纲方程组不变——所以「临界 $Re$」必须连同约定一起引用（见 reynolds.quantifiers ②）。\n3. 非定常问题若时间尺度不由 $L/U$ 决定（如振荡来流），会多出 Strouhal 数；本切片的稳态视角下只有 $Re$。",
+      "links": [
+        "I1",
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.statement",
+      "type": "statement",
+      "subject": "reynolds",
+      "title": "雷诺数定义与流动区间表",
+      "keywords": [
+        "Re = UL/ν = 惯性力/粘性力（无量纲）",
+        "U 特征速度、L 特征长度、ν = μ/ρ 运动粘度（m²/s）",
+        "Re ≪ 1 蠕动流（Stokes 流）粘性主导",
+        "Re ∼ 10²–10³ 层流，可能出现分离",
+        "管流 Re > 4000 湍流；Re ∼ 10⁶+ 完全湍流",
+        "阈值须与 U、L 约定配套使用"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 50,
+        "line_end": 65
+      },
+      "fill_hint": "公式（50-52）与表格（54-65）逐字转写切片；符号说明与三条使用注意为扩展；无计算",
+      "content": "**雷诺数（Reynolds number）**是流体力学中最重要的无量纲数：一个数给流动形态分档。\n\n**定义**（切片原文）：\n$$Re = \\frac{UL}{\\nu} = \\frac{\\text{惯性力}}{\\text{粘性力}}$$\n\n符号逐个拆：\n- $U$：特征速度（m/s）——绕流取来流速度、管流取截面平均速度；\n- $L$：特征长度（m）——绕球取直径、管流取管径、机翼取弦长；\n- $\\nu = \\mu/\\rho$：运动粘度（kinematic viscosity，m²/s），$\\mu$ 为动力粘度（dynamic viscosity，Pa·s），$\\rho$ 为密度（kg/m³）。\n\n**流动区间表**（切片表格转写）：\n\n| $Re$ 范围 | 流动特征 |\n|---|---|\n| $Re \\ll 1$ | 蠕动流（Stokes 流），粘性主导 |\n| $Re \\sim 10^2$--$10^3$ | 层流，可能出现分离 |\n| $Re > 4000$（管流） | 湍流 |\n| $Re \\sim 10^6+$ | 完全湍流 |\n\n**成立条件 / 使用注意**：① $U$、$L$ 的约定必须与所引阈值配套（见 reynolds.quantifiers）；② 「$>4000$」是管流专属约定，绕球、绕翼的临界值不同；③ 表中数值是数量级路标而非精确临界，转捩受扰动水平控制（见 reynolds.threshold）。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.regimes",
+      "type": "extension",
+      "subject": "reynolds",
+      "title": "区间表逐行展开：每一档能忽略什么",
+      "keywords": [
+        "Re ≪ 1：丢惯性项得 Stokes 方程，线性可叠加、时间可逆",
+        "Re ∼ 10²–10³：分离（separation）出现，d'Alembert 悖论在此被破",
+        "管流 Re > 4000：随机脉动 + 湍流模型（RANS/LES，I5）",
+        "Re ∼ 10⁶+：粘性压缩进 δ/L ∼ Re^(−1/2) 薄层，外壳近理想流",
+        "民航机翼弦长 Re ≈ 8.3×10⁷；游泳者 Re ≈ 10⁶",
+        "同一 NS 方程的四个极限区间，不是四个方程"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 54,
+        "line_end": 65
+      },
+      "fill_hint": "表格四行（59-62）逐行扩展；两个 Re 算例已带【待核验】；δ/L ∼ Re^(−1/2) 为层流边界层（Blasius）量级结论、高尔夫球效应表述已做保守措辞，均需人工复核",
+      "content": "把区间表每一行展开成「能忽略什么、该解什么方程、长什么样」。\n\n**$Re \\ll 1$（蠕动流 / Stokes 流）**：惯性项 $(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}$ 整个丢掉，NS 退化成线性的 Stokes 方程。好处巨大：方程线性可叠加、时间可逆、阻力与速度成正比（$F = 6\\pi\\mu a U$）。典型：细菌游泳（见 probe2）、微流控、悬浮颗粒沉降。反面教训见 reynolds.stokes-misuse（雨滴不属于这一档）。\n\n**$Re \\sim 10^2$--$10^3$（层流，可能出现分离）**：惯性不可忽略但流动仍「有序」。这一档的关键新现象是**分离**（separation）：逆压梯度区流线脱离壁面、卷成涡。d'Alembert 悖论（理想流体预言绕球阻力为零）正是在这里被真实流体的分离打破——理想化模型与现实的分水岭。\n\n**$Re > 4000$（管流湍流）**：流动叠加随机脉动，动量靠湍流涡输运，远比分子粘性高效；沿程阻力不再随 $Re$ 简单变化，工程上用湍流模型（RANS/LES，见 I5）。注意该阈值仅对管流约定（见 reynolds.threshold）。\n\n**$Re \\sim 10^6+$（完全湍流）**：除壁面极薄的粘性底层外处处湍流。粘性影响被压缩进厚度 $\\delta/L \\sim Re^{-1/2}$（层流边界层量级）的薄壳里，外壳几乎就是理想流（见 I6 边界层）。典型算例：民航机翼 $Re \\approx 8.3\\times 10^7$（$U=250$ m/s、$L=5$ m、$\\nu=1.5\\times 10^{-5}$【待核验:250*5/1.5e-5】）；游泳池里的游泳者 $Re \\approx 10^6$（$U=1$ m/s、$L=1$ m、水 $\\nu=10^{-6}$【待核验:1*1/1e-6】）。\n\n**一句话**：不是四个方程，是**同一个 NS 方程的四个极限区间**——$Re$ 从小到大依次把惯性项「拧开」。",
+      "links": [
+        "I1",
+        "I5",
+        "I6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.mu-vs-nu",
+      "type": "comparison",
+      "subject": "reynolds",
+      "title": "两种写法：UL/ν 与 ρUL/μ 何时用哪个",
+      "keywords": [
+        "ν = μ/ρ ⟹ 两形式恒等，但查表数据形式决定用哪个",
+        "运动粘度 ν：m²/s，自扩散量纲；动力粘度 μ：Pa·s，动量输运量纲",
+        "空气的 μ 比水小约 56 倍，ν 反而比水大约 15 倍",
+        "后果：同样 U、L，空气中 Re 比水中小 15 倍",
+        "「空气比水稀所以更易湍流」是错的",
+        "误用 μ 顶替 ν 差一个 ρ 因子（水 1000 倍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "对齐切片公式行中 ν 的写法，展开 ρUL/μ 等价形式；四个粘度常数为文献典型值（比值运算带【待核验】），需人工复核",
+      "content": "切片定义式写作 $Re = UL/\\nu$，文献同样常见 $Re = \\rho U L/\\mu$。两者恒等（因 $\\nu = \\mu/\\rho$），但**用哪个、坑在哪**值得单独一张对照。\n\n| 视角 | $UL/\\nu$（运动粘度形式） | $\\rho UL/\\mu$（动力粘度形式） |\n|---|---|---|\n| 出现场景 | NS 无量纲化的自然产物；空气动力学手册与换算图常直接给 $\\nu$ | 阻力公式 $F \\sim \\mu U a$、润滑与化工计算常给 $\\mu$ |\n| 量纲 | m²/s（「自扩散」量纲） | Pa·s（动量输运量纲） |\n| 依赖密度 | 不依赖（$\\rho$ 已约掉） | 依赖 $\\rho$（变密度/可压缩问题要小心） |\n\n**具体的坑（数值算给你看）**：「空气比水稀」的直觉对 $\\mu$ 成立、对 $\\nu$ **恰好相反**：\n- $\\mu_{air} \\approx 1.8\\times 10^{-5}$ Pa·s，$\\mu_{water} \\approx 1.0\\times 10^{-3}$ Pa·s：水粘约 56 倍【待核验:1.0e-3/1.8e-5】；\n- 但 $\\nu_{air} \\approx 1.5\\times 10^{-5}$ m²/s【待核验:1.8e-5/1.2】，$\\nu_{water} \\approx 1.0\\times 10^{-6}$ m²/s【待核验:1.0e-3/1000】：空气的运动粘度反而大 15 倍【待核验:1.5e-5/1.0e-6】。\n\n后果：同样的 $U$、$L$，物体在空气中的 $Re$ 比在水中**小** 15 倍——「空气里更容易湍流」是错的；风洞与水洞之间的相似换算必须用 $\\nu$。\n\n**选择判据**：查到什么数据就用对应形式，但报告 $Re$ 时声明用的是哪个；若把 $\\mu$ 误代入 $UL/\\square$ 的位置，结果差一个 $\\rho$ 因子（水里是 1000 倍，见 reynolds.quantifiers ③）。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.application",
+      "type": "application",
+      "subject": "reynolds",
+      "title": "用在哪里：求解器选择、相似律与模拟开关",
+      "keywords": [
+        "CFD：低 Re 解 Stokes（线性）、中 Re 解完整 NS、高 Re 配湍流模型",
+        "高 Re = 对流占优：中心差分振荡，需迎风格式/细网格（G2.1）",
+        "相似律：缩比模型保持 Re 需增速或增压/降温降 ν",
+        "CG（H8.1）：特效常直接解 Euler（Re→∞ 极限），数值耗散当粘性",
+        "细菌 10⁻⁵ / 游泳者 10⁶ / 蓝鲸 10⁸：推进策略由 Re 命令",
+        "量级估计手法属于 P3.2 放缩与 P9.3 渐近记号的日常"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 59,
+        "line_end": 62
+      },
+      "fill_hint": "对应切片区间表的消费方；「网格 Reynolds 数约束」与低温/增压风洞的说法需人工复核；跨尺度比值与数量级已带【待核验】",
+      "content": "$Re$ 一处定义、处处开关。按「谁在消费这个数」列出落点。\n\n**1. CFD 求解器/格式选择**：$Re \\ll 1$ 直接解线性 Stokes 方程；中等 $Re$ 解完整 NS；高 $Re$ 必须配湍流模型（RANS/LES，I5）。数值上高 $Re$ 意味着**对流占优**：中心差分会产生振荡，需要迎风格式或足够细的网格（网格 Reynolds 数约束，见 G2.1 有限差分）。\n\n**2. 相似律与实验设计**：风洞/水洞缩比模型有效的理论根据（见 reynolds.derivation 的结论）。几何缩小 $k$ 倍要保持 $Re$，需增速 $k$ 倍，或增压/降温把 $\\nu$ 压下来——大型风洞用高压甚至低温工作正是为此。\n\n**3. CG 流体模拟**（H8.1）：游戏与特效常直接解 Euler 方程（$Re \\to \\infty$ 极限），让数值耗散扮演物理粘性；烟、火、爆炸的视觉形态由惯性主导。要不要显式加粘性项，判据就是目标场景的 $Re$。\n\n**4. 生理与生态尺度感**：细菌 $Re \\sim 10^{-5}$（probe2）、游泳者 $\\sim 10^6$、蓝鲸 $\\sim 10^8$：蓝鲸与细菌的 $Re$ 相差约 $1.7\\times 10^{12}$ 倍【待核验:(10*10/1.0e-6)/(30e-6*2e-6/1.0e-6)】，即约 12 个数量级【待核验:log10((10*10/1.0e-6)/(30e-6*2e-6/1.0e-6))】——推进策略（鞭毛 vs 尾鳍）由 $Re$ 命令，不是由「聪明程度」命令。\n\n**5. 与 P 篇的接口**：$Re$ 的导出本身就是量级估计与渐近分析的范例，手法归 P3.2（放缩盒子）与 P9.3（渐近记号）。",
+      "links": [
+        "I1",
+        "I2",
+        "I5",
+        "I6",
+        "H8.1",
+        "G2.1",
+        "P3.2",
+        "P9.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.probe1",
+      "type": "probe",
+      "subject": "reynolds",
+      "title": "检验题：水管判型与减半流速换不换档",
+      "keywords": [
+        "给定 U、D、ν 计算 Re",
+        "对照切片区间表判型",
+        "Re ∝ U：减半只降数值，跨阈值需除以 5",
+        "反解阈值流速 U = 4000ν/D"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 59,
+        "line_end": 62
+      },
+      "fill_hint": "三问全部可算，答案带【待核验】；阈值取切片的 4000（管流约定）",
+      "content": "水在直径 $D = 2$ cm 的管道中以平均流速 $U = 1$ m/s 流动，$\\nu_{water} = 1.0\\times 10^{-6}$ m²/s。\n（1）计算 $Re$，按切片区间表判型；\n（2）流速减半到 $U = 0.5$ m/s，$Re$ 变为多少？判型会不会改变？\n（3）要恰好压在 $Re = 4000$ 的阈值上，流速应为多少？\n\n答案（供前端折叠）：（1）$Re = 20000$【待核验:1*0.02/1.0e-6】，大于 4000，湍流；（2）$Re = 10000$【待核验:0.5*0.02/1.0e-6】，仍大于 4000，判型不变——$Re \\propto U$，减半只让数值减半，要跨过阈值需除以 5；（3）$U = 4000\\times 10^{-6}/0.02 = 0.2$ m/s【待核验:4000*1.0e-6/0.02】。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:reynolds.probe2",
+      "type": "probe",
+      "subject": "reynolds",
+      "title": "检验题：跨尺度对照（细菌 vs 蓝鲸）",
+      "keywords": [
+        "同一流体 ν 相同，U、L 跨多个数量级",
+        "细菌 Re ≪ 1：蠕动流，世界近乎时间可逆",
+        "蓝鲸 Re ≥ 10⁶：完全湍流",
+        "比值约 10¹²：流动形态由尺度命令"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 59,
+        "line_end": 62
+      },
+      "fill_hint": "跨尺度对照题；数值、比值、数量级均带【待核验】",
+      "content": "细菌（$U = 30\\ \\mu\\text{m/s}$，$L = 2\\ \\mu\\text{m}$）与蓝鲸（$U = 10$ m/s，$L = 10$ m）都在水中运动，$\\nu = 1.0\\times 10^{-6}$ m²/s。分别计算两者的 $Re$，按区间表判型，并求两者之比。\n\n答案（供前端折叠）：细菌 $Re = 6\\times 10^{-5}$【待核验:30e-6*2e-6/1.0e-6】$\\ll 1$，蠕动流——鞭毛一停立即静止，世界近乎时间可逆；蓝鲸 $Re = 10^{8}$【待核验:10*10/1.0e-6】$\\ge 10^6$，完全湍流；比值 $\\approx 1.7\\times 10^{12}$【待核验:(10*10/1.0e-6)/(30e-6*2e-6/1.0e-6)】，约 12 个数量级【待核验:log10((10*10/1.0e-6)/(30e-6*2e-6/1.0e-6))]——同一种水，流动形态由尺度命令。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "单元对照表：Re 区间 × 机制 × 数学模型",
+      "keywords": [
+        "四行区间各连一个数学模型：Stokes / 完整 NS / RANS-LES / Euler+边界层",
+        "可忽略项一列由 NS 量级分析给出（见 reynolds.derivation）",
+        "低 Re 走线性化、高 Re 走无粘：中间档（分离、转捩）最难",
+        "表值为数量级路标：转捩受扰动控制（reynolds.threshold）",
+        "U、L 约定必须配套（reynolds.quantifiers）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 55,
+        "line_end": 64
+      },
+      "fill_hint": "总表整合切片表格四行（59-62）与各词条结论；「可忽略项」一列依据 NS 无量纲化量级分析，无新增数值",
+      "content": "**总起**：本单元只有一个对象 $Re$，但区间表的四行各自连着不同的数学模型。把「读数—机制—可忽略项—方程」拼成一张总表：\n\n| $Re$ 量级 | 主导项 | 可忽略项 | 数学模型 | 典型场景 |\n|---|---|---|---|---|\n| $\\ll 1$ | 粘性 $\\mu U/L^2$ | 惯性 $(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}$ | Stokes 方程（线性、时间可逆） | 细菌、微流控、沉降 |\n| $10^2$--$10^3$ | 相当，惯性渐强 | 无 | 完整 NS（层流） | 低速管流、绕小球 |\n| $> 4000$（管流） | 惯性 + 随机脉动 | 仅近壁薄层粘性 | NS + 湍流模型（RANS/LES） | 自来水管、工业管路 |\n| $\\sim 10^6+$ | 惯性 | 主体区域粘性 | Euler + 边界层修正 | 飞行器、游泳者、鲸 |\n\n**对照要点**：\n- 推导链：NS（I2）→ 无量纲化 → $Re$ → 四行是同一方程的四个极限区间（见 reynolds.derivation、reynolds.regimes）；\n- 失效提醒：表值是数量级路标，转捩受扰动控制（reynolds.threshold）；$U$、$L$ 约定必须配套（reynolds.quantifiers）；\n- 两个极端各有一条「好走的路」：低 $Re$ 走线性化，高 $Re$ 走无粘 + 边界层；中间档（分离、转捩）恰恰是理论与数值都最难的区间。",
+      "links": [
+        "I1",
+        "I2",
+        "I5",
+        "I6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "I1：Re→∞ 极限即 Euler，CG 烟模拟与激波活在这里",
+        "I2：μ、ν 的定义与粘性项来源，Re 的分母由此而来",
+        "I5：区间表后两行的完整展开（RANS/LES）",
+        "I6：高 Re 把粘性压进薄边界层，分离判据在那里",
+        "H8.1：选 NS / Euler+耗散 / Stokes 的判据就是目标 Re",
+        "G2.1：对流占优问题的网格 Reynolds 数约束"
+      ],
+      "tex_ref": null,
+      "fill_hint": "纯链接词条，无计算；各落点以一句「谁用 Re 干什么」为限，细节归目标节点自己的词条文件",
+      "content": "**总起**：$Re$ 是 I 篇的「总开关」，下游几乎每章都在读它的数值来决定路线。\n\n- **I1 守恒律**：$Re \\to \\infty$ 极限即 Euler 方程——CG 烟模拟、可压缩激波都活在无粘近似里；\n- **I2 应力张量与粘性**：$\\mu$、$\\nu$ 的定义与粘性项 $\\mu\\Delta\\mathbf{u}$ 的来源，$Re$ 的分母由此而来；\n- **I5 湍流**：区间表后两行的完整展开，RANS/LES 的分工；\n- **I6 边界层**：高 $Re$ 把粘性压进 $\\delta/L \\sim Re^{-1/2}$ 的薄层，分离判据与阻力估计都在那里；\n- **H8.1 流体模拟**：选择「带粘性 NS / Euler + 数值耗散 / Stokes」的判据就是目标 $Re$；\n- **G2.1 有限差分**：对流占优（高 $Re$）问题的数值稳定性——网格 Reynolds 数约束与迎风格式；\n- **P3.2 / P9.3**：$Re$ 本身是量级估计与渐近分析的产物，放缩与量纲手法在此汇合。",
+      "links": [
+        "I1",
+        "I2",
+        "I5",
+        "I6",
+        "H8.1",
+        "G2.1",
+        "P3.2",
+        "P9.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：Re 计算器与区间判定",
+      "keywords": [
+        "模块 inequality-decision-tree（档1 前端直渲）",
+        "输入 (U, L, ν) 三元组，对数轴标 Re 落点并按区间着色",
+        "预置样例：雨滴 / 细菌 / 游泳者 / 蓝鲸 / 民航机翼",
+        "区间边界 1、10³、4000、10⁶ 与切片表格对应",
+        "判定文案按「区间行」模板给，不写死具体结论"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 55,
+        "line_end": 64
+      },
+      "fill_hint": "档1 依据 Q4：Re = UL/ν 是简单显式函数，前端可算；预置样例参数与 reynolds.stokes-misuse、reynolds.regimes、probe1/probe2 的数值保持一致",
+      "viz": {
+        "module": "inequality-decision-tree",
+        "version": 1,
+        "params_hint": {
+          "inputs": [
+            "U",
+            "L",
+            "nu"
+          ],
+          "boundaries": [
+            1,
+            1000,
+            4000,
+            1000000
+          ],
+          "presets": [
+            {
+              "name": "雨滴",
+              "U": 6.5,
+              "L": 0.002,
+              "nu": 1.5e-05
+            },
+            {
+              "name": "细菌",
+              "U": 3e-05,
+              "L": 2e-06,
+              "nu": 1e-06
+            },
+            {
+              "name": "游泳者",
+              "U": 1,
+              "L": 1,
+              "nu": 1e-06
+            },
+            {
+              "name": "蓝鲸",
+              "U": 10,
+              "L": 10,
+              "nu": 1e-06
+            },
+            {
+              "name": "民航机翼",
+              "U": 250,
+              "L": 5,
+              "nu": 1.5e-05
+            }
+          ]
+        }
+      },
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

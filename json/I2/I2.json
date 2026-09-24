@@ -1,0 +1,497 @@
+{
+  "schema": "entry-card/v2",
+  "code": "I2",
+  "chapter": "I2",
+  "title": "应力张量与粘性",
+  "src": {
+    "file": "notebook/I_fluid.tex",
+    "line_start": 22,
+    "line_end": 47,
+    "anchor": "notebook/I_fluid.tex:22"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "I2:stress.quantifiers",
+      "type": "comparison",
+      "subject": "stress",
+      "title": "应力分解限定词逐条拆解（去掉/放宽每一条会怎样）",
+      "keywords": [
+        "分解 σ = −pI + τ：记法 + 角动量守恒，不是物理假设",
+        "τ 不能任意：9 个未知量对 4 个方程，缺口 5",
+        "σ 对称来自角动量守恒（I1）",
+        "p 的两种取法差 ∝ ∇·u（体积粘性）",
+        "不可压缩 ∇·u = 0 时约定之争自动消解"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 23,
+        "line_end": 25
+      },
+      "fill_hint": "四列表按表格逐行对齐切片 23–25 行的分解式；第④行的 (2μ+3λ)∇·u 数值与 Stokes 假设验证需人工复核。",
+      "content": "总起：$\\sigma = -p\\mathbf{I} + \\boldsymbol{\\tau}$ 不是物理定律，而是「分解约定 + 角动量守恒」的结果；真正承载物理的是 $\\boldsymbol{\\tau}$ 的本构关系（见 newton.statement）。把它拆成 4 个限定词，逐条检验去掉后会怎样。\n\n| 限定词 | 去掉后的具体反例/后果 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 压力部分是各向同性的 $-p\\mathbf{I}$ | 若改成一般张量 $\\sigma = -p\\mathbf{I} + A$（$A \\neq 0$ 常张量）：静止流体 $\\mathbf{u} \\equiv 0$ 中不同朝向截面的牵引 $t = \\sigma n$ 出现切向分量，与「静止流体无方向偏好」矛盾。正确情形：$D = 0 \\Rightarrow \\tau = 0 \\Rightarrow t = -pn$，取 $p = 100$ Pa、$n = e_y$ 得 $t = (0, -100, 0)$ Pa【待核验:-100.0】，纯法向 | 静止流体的帕斯卡性质丢失 | 不能放宽；除非进入微极流体、液晶等有内部结构的介质 |\n| ② τ 由本构关系给出（不是自由未知张量） | 若 τ 任意：对称应力 6 个独立分量 + 速度 3 个分量 = 9 个未知量，守恒律只给 4 个方程（质量 1 + 动量 3），缺口 5 个【待核验:6+3-4】 | 方程组不封闭，根本无法求解 | 不能去掉；可以换成本构（非牛顿） |\n| ③ σ 对称（σ = σᵀ） | 角动量守恒要求 σ 对称；若允许反对称部分，需要偶应力理论（微极/极性介质） | 应力自由度 6 → 9，标准 NS 框架崩 | 对悬浮液、液晶等极性流体可放宽 |\n| ④ p 取热力学压强（或 −⅓tr σ） | 两种取法相差 ∝ ∇·u：tr τ = (2μ + 3λ)∇·u。Stokes 假设 λ = −⅔μ 下取 μ = 1、均匀膨胀 ∇·u = 3 验证：tr τ = 0【待核验:(2*1.0+3*(-2.0/3))*3.0】 | 可压缩流中混淆两者会错一项体积粘性正应力 | 约定问题；不可压缩（∇·u = 0）时两者无差别 |\n\n关键区分：①②③是「分解合法性的来源」（对称性、守恒律），④是「记法约定」。对 CG 与模拟最常用的情形是不可压缩流 $\\nabla\\cdot\\mathbf{u} = 0$，此时 ④ 自动消解、$\\boldsymbol{\\tau} = 2\\mu\\mathbf{D}$。本条只处理分解层；本构层的限定词见 newton.quantifiers。",
+      "links": [
+        "I1",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:newton.quantifiers",
+      "type": "comparison",
+      "subject": "newton",
+      "title": "牛顿本构适用条件表（每条配翻车例子）",
+      "keywords": [
+        "线性：μ 是常数",
+        "各向同性：无内禀方向",
+        "无记忆：τ 只依赖当前 D",
+        "无屈服应力：任意小 τ 都流动",
+        "λ 项仅可压缩流有表现",
+        "血液 n≈0.7：常数 μ 高估切应力约 4 倍"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 27,
+        "line_end": 32
+      },
+      "fill_hint": "以切片 27–32 行公式为骨架产出条件表；血液 n≈0.7 与宾汉示意参数是文献量级/假想值，修订者请核对或替换为权威数据。",
+      "content": "总起：$\\boldsymbol{\\tau} = 2\\mu\\mathbf{D} + \\lambda(\\nabla\\cdot\\mathbf{u})\\mathbf{I}$ 是一条物理假设（本构关系），不是恒等式。它的每个前提都可能被真实流体打破。\n\n| 条件 | 失效的具体例子（带数值） | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| ① 线性：τ 与 D 一次方成正比（μ 是常数） | 血液剪切稀化：$\\mu_{app} = k\\dot{\\gamma}^{\\,n-1}$，取 $n = 0.7$。$\\dot\\gamma$ 从 1 s⁻¹ 到 100 s⁻¹，$\\mu_{app}$ 降到 $100^{-0.3} \\approx 0.251$ 倍【待核验:100.0**(0.7-1.0)】；若冻结 $\\mu = \\mu_{app}(1)$，在 $\\dot\\gamma = 100$ 处切应力算成 100，真实只有 $100^{0.7} \\approx 25.12$【待核验:100.0**0.7】，高估约 4 倍【待核验:100.0**(1.0-0.7)】 | 低剪切区（微血管、滞止区）粘性被系统性高估 | 换幂律 / Carreau 模型 |\n| ② 各向同性：介质无内禀方向 | 液晶、取向聚合物溶液：沿取向方向与垂直方向粘度不同，标量 μ 概括不了 | 剪切应力与剪切方向的对应关系错 | 换各向异性粘度张量 |\n| ③ 无记忆：τ 只依赖当前 D | 粘弹性（聚合物熔体、面团）：应力依赖应变历史，有松弛时间 $\\tau_r$；突然变形后应力缓慢衰减 | 无法描述回弹、应力松弛 | 加松弛项（Maxwell / Oldroyd 模型） |\n| ④ 无屈服应力：任意小的 τ 都产生流动 | 宾汉流体（牙膏、泥浆）：示意参数 $\\tau_y = 5$ Pa、$\\mu_p = 2$ Pa·s。施加 $\\tau = 3$ Pa < $\\tau_y$：牛顿律预测 $\\dot\\gamma = 3/2 = 1.5$ s⁻¹【待核验:3.0/2.0】的持续流动，实际 $\\dot\\gamma = 0$（静止如固体） | 预测「在流」而实际「不流」 | 换 Bingham / Herschel–Bulkley |\n| ⑤ λ 项按 ∇·u 激活 | 不可压缩 $\\nabla\\cdot\\mathbf{u} = 0$ 时 λ 项恒为 0，写不写无差；强激波内 $\\nabla\\cdot\\mathbf{u}$ 大且剧烈变化，体积粘性主导膨胀耗散 | 不可压缩问题里丢 λ 无后果；可压缩强激波里丢 λ 会低估耗散与声衰减 | 不可压缩时直接删项是合法放宽 |\n\n一句话总结：①–④是「这种介质是不是牛顿流体」的问题，⑤是「这个问题里 λ 要不要管」的问题。CG 实时流体模拟（H8.1）几乎总在不可压缩设定下工作，所以 λ 常被直接丢弃。逐条展开见 newton.nonnewton（①④的反例计算）与 newton.lambda（⑤）。",
+      "links": [
+        "I3",
+        "H8.1",
+        "H8.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:stress.rotation",
+      "type": "counterexample",
+      "subject": "stress",
+      "title": "反例：把 ∇u 当应变率（刚体旋转无中生力）",
+      "keywords": [
+        "u = (−ωy, ωx, 0)：刚体旋转场",
+        "∇u ≠ 0 但 D ≡ 0",
+        "误用 τ = 2μ∇u 得 2 Pa 幽灵应力，且张量不对称",
+        "W = ½(∇u − ∇uᵀ) 编码涡量、不产生应力",
+        "本构只允许依赖对称部分"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 32,
+        "line_end": 32
+      },
+      "fill_hint": "三个数值（D=0、涡量=2、误用应力=−2 Pa）都从同一速度场逐项算出，修订者请复核矩阵展开；涡量与 W 的对照指向 I4。",
+      "content": "一句话：把 $\\nabla\\mathbf{u}$ 直接当应变率用（写成 $\\boldsymbol{\\tau} = 2\\mu\\nabla\\mathbf{u}$ 而不做对称化），会在刚体旋转的流体里无中生有出应力。这正是切片强调 $\\mathbf{D} = \\frac{1}{2}(\\nabla\\mathbf{u} + (\\nabla\\mathbf{u})^T)$ 中「对称化」不可删的原因。\n\n具体场：$\\mathbf{u}(x,y) = (-\\omega y,\\ \\omega x,\\ 0)$，取 $\\omega = 1$ s⁻¹——整体绕 z 轴刚性旋转的一杯水（忽略重力）。\n\n逐步计算：\n1. 速度梯度 $\\nabla\\mathbf{u} = \\begin{pmatrix} 0 & -1 & 0 \\\\ 1 & 0 & 0 \\\\ 0 & 0 & 0 \\end{pmatrix}$，显然非零。\n2. 对称部分（应变率）：$D_{xy} = \\frac{1}{2}\\left(\\frac{\\partial u_x}{\\partial y} + \\frac{\\partial u_y}{\\partial x}\\right) = \\frac{1}{2}(-1 + 1) = 0$【待核验:0.5*(-1.0+1.0)】；对角元全为 0。故 $\\mathbf{D} \\equiv 0$。\n3. 反对称部分（自旋张量）：$\\mathbf{W} = \\frac{1}{2}(\\nabla\\mathbf{u} - (\\nabla\\mathbf{u})^T) \\neq 0$；对应涡量 $\\omega_z = \\frac{\\partial u_y}{\\partial x} - \\frac{\\partial u_x}{\\partial y} = 1 - (-1) = 2$ rad/s【待核验:1.0-(-1.0)】。\n\n正确结论：刚体运动不产生形变，粘性应力必须为零。$\\boldsymbol{\\tau} = 2\\mu\\mathbf{D} + \\lambda(\\nabla\\cdot\\mathbf{u})\\mathbf{I} = 0$（此处 $\\nabla\\cdot\\mathbf{u} = 0$）✓。\n\n误用后果：若用 $\\boldsymbol{\\tau} = 2\\mu\\nabla\\mathbf{u}$，取 $\\mu = 1$ Pa·s 得 $\\tau_{xy} = -2$ Pa【待核验:2*1.0*(-1.0)】、$\\tau_{yx} = +2$ Pa——预言一杯整体旋转的水内部有 2 Pa 的切应力（实验上测不到），且应力张量不对称（$\\tau_{xy} \\neq \\tau_{yx}$），连角动量守恒都违反。\n\n修补：本构只允许依赖对称部分 $\\mathbf{D}$；反对称部分 $\\mathbf{W}$ 归涡量管（见 I4）。这也是推导里「各向同性 + $\\sigma$ 对称」两步合力消去 $\\mathbf{W}$ 的原因（见 newton.proof）。",
+      "links": [
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:newton.nonnewton",
+      "type": "counterexample",
+      "subject": "newton",
+      "title": "反例：对非牛顿流体用牛顿律（两笔错账）",
+      "keywords": [
+        "血液幂律 n=0.7：μ_app 降到 0.251 倍",
+        "冻结 μ 高估切应力约 3.98 倍",
+        "宾汉 τ < τ_y 时 γ̇ = 0，牛顿律误算 1.5 s⁻¹",
+        "修补：幂律 / Carreau / Bingham / 粘弹模型"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 34,
+        "line_end": 46
+      },
+      "fill_hint": "血液 n≈0.7 是文献量级、宾汉参数是假想示意值（已注明），数值计算已挂待核验标记；修订时可换更权威参数。",
+      "content": "一句话：对剪切稀化流体用常数 $\\mu$，误差可到数倍；对宾汉流体用牛顿律，会把「静止」算成「流动」。\n\n反例A（血液，幂律——切片表格「剪切稀化」行）：取 $\\mu_{app}(\\dot\\gamma) = k\\dot\\gamma^{\\,n-1}$，$n = 0.7$、$k = 1$（无量纲演示）。$\\dot\\gamma = 1$ s⁻¹ 时 $\\mu_{app} = 1$；$\\dot\\gamma = 100$ s⁻¹ 时 $\\mu_{app} = 100^{-0.3} \\approx 0.251$【待核验:100.0**(0.7-1.0)】。误用：冻结 $\\mu = 1$，在 $\\dot\\gamma = 100$ 处算切应力 $\\tau_{牛顿} = 1 \\times 100 = 100$；真实幂律应力 $\\tau = \\dot\\gamma^{0.7} \\approx 25.12$【待核验:100.0**0.7】。高估倍数 $= 100 / 25.12 \\approx 3.98$【待核验:100.0**(1.0-0.7)】。\n\n反例B（牙膏，宾汉——切片表格「宾汉流体」行）：示意参数 $\\tau_y = 5$ Pa、$\\mu_p = 2$ Pa·s。施加 $\\tau = 3$ Pa：牛顿律预测 $\\dot\\gamma = 3/2 = 1.5$ s⁻¹【待核验:3.0/2.0】的持续流动；宾汉真实响应是 $\\dot\\gamma = 0$（$\\tau < \\tau_y$，像固体一样静止）。施加 $\\tau = 9$ Pa 才开始流动：$\\dot\\gamma = (9 - 5)/2 = 2$ s⁻¹【待核验:(9.0-5.0)/2.0】。\n\n失效机制：牛顿律把「应力 ↦ 应变率」写成过原点的直线；剪切稀化把这条线压弯（低剪更稠），屈服应力把它整体抬高（低应力下直接断流）。两条失效方向相反，但根源相同——$\\mu$ 不是常数。\n\n修补：按介质换本构——幂律 / Carreau（剪切稀化、增稠）、Bingham / Herschel–Bulkley（屈服）、Maxwell / Oldroyd（粘弹性）。选择判据见 nonnewton.classify；软体与泥浆类模拟落点见 H8.3。",
+      "links": [
+        "H8.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:stress.statement",
+      "type": "statement",
+      "subject": "stress",
+      "title": "柯西应力分解 σ = −pI + τ",
+      "keywords": [
+        "σ = −pI + τ：各向同性 + 偏应力",
+        "牵引 t = σn（柯西应力原理）",
+        "σ = σᵀ 来自角动量守恒",
+        "p 可取热力学压强或 −⅓tr σ",
+        "分解是记法，本构才是物理"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 23,
+        "line_end": 25
+      },
+      "fill_hint": "以切片 23–25 行分解式为骨架转写；牵引矢量示例与速算数值（文献值 μ_water）需人工复核。",
+      "content": "柯西应力张量在任意点可分解为「各向同性压强部分 + 粘性偏张量」：\n\n$$\\boldsymbol{\\sigma} = -p\\,\\mathbf{I} + \\boldsymbol{\\tau}$$\n\n逐符号拆解：\n- $\\boldsymbol{\\sigma}$：柯西应力张量（3×3、对称）。物理含义：过该点、法向为 $\\mathbf{n}$ 的截面上的牵引矢量 $\\mathbf{t} = \\boldsymbol{\\sigma}\\mathbf{n}$（单位：Pa = 力/面积）。\n- $-p\\mathbf{I}$：各向同性部分。$\\mathbf{I}$ 是单位张量；无论截面朝向如何，这部分只给大小相同、垂直截面的压力（负号表示压）。$p$ 通常取热力学压强，或按约定 $p = -\\frac{1}{3}\\mathrm{tr}\\,\\boldsymbol{\\sigma}$（此时强制 $\\mathrm{tr}\\,\\boldsymbol{\\tau} = 0$，见 newton.lambda）。\n- $\\boldsymbol{\\tau}$：偏应力张量（粘性应力），负责剪切与拉伸形变；它如何由运动决定，由本构关系给出（牛顿流体见 newton.statement）。\n\n成立条件：\n- $\\boldsymbol{\\sigma} = \\boldsymbol{\\sigma}^T$ 来自角动量守恒（无偶应力介质），不是额外假设（见 I1）。\n- 牵引矢量 $\\mathbf{t} = \\boldsymbol{\\sigma}\\mathbf{n}$ 是柯西应力原理的内容——动量守恒的局部化结果。\n\n速算示例：不可压缩简单剪切流中 $\\tau_{xy} = \\mu\\dot\\gamma$；取水（$\\mu \\approx 1.0\\times10^{-3}$ Pa·s）、$\\dot\\gamma = 100$ s⁻¹，得 $\\tau_{xy} = 0.1$ Pa【待核验:1.0e-3*100.0】。\n\n脉络：本分解是「记法层面」的重排，对一切简单流体成立、不会错；把 $\\boldsymbol{\\tau}$ 与运动联系起来才是物理假设。下游：$\\boldsymbol{\\sigma}$ 代入动量方程 $\\rho\\,D\\mathbf{u}/Dt = \\nabla\\cdot\\boldsymbol{\\sigma} + \\rho\\mathbf{f}$，配合牛顿本构才得到 NS 方程（见 I1、general.apps）。",
+      "links": [
+        "I1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:stress.intuition",
+      "type": "intuition",
+      "subject": "stress",
+      "title": "直觉：把内力拆成「压」与「搓」",
+      "keywords": [
+        "压（−pI）：只改体积，无方向偏好",
+        "搓（τ）：只改形状，不可压缩时无迹",
+        "D 管形变、W 管旋转，应力只认 D",
+        "剪切流 = 一摞卡片滑移的图像",
+        "假设是各向同性分家，结论是压搓独立"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 23,
+        "line_end": 32
+      },
+      "fill_hint": "按「假设给什么 / 结论为何成立」两段组织；「应力只认 D 不认 W」一句是连接反例 stress.rotation 的钩子。",
+      "content": "总起：把流体内部的接触力按「性格」分家——$\\sigma = -p\\mathbf{I} + \\boldsymbol{\\tau}$ 就是按性格分家的账本。\n\n假设给了什么：分解本身只说「任何应力 = 一个纯压张量 + 剩余部分」，这是记法、不含物理；真正的假设是「各向同性介质中，静水压只响应体积变化、偏应力只响应形状变化」——两种响应通道独立。\n\n结论为什么因此成立：\n- $-p\\mathbf{I}$ 像「捏气球」：各方向均匀地压，只改体积、不改形状。静止流体里它就是全部应力。\n- $\\boldsymbol{\\tau}$ 像「搓牌」：层间滑动摩擦，只改形状。不可压缩时它无迹（$\\mathrm{tr}\\,\\boldsymbol{\\tau} = 0$），即纯形状变化、无体积效应。\n- 运动学对偶：$\\nabla\\mathbf{u}$ 拆成 $\\mathbf{D}$（对称，形状变化快慢）+ $\\mathbf{W}$（反对称，整体旋转）。应力只响应 $\\mathbf{D}$、不响应 $\\mathbf{W}$——刚体旋转不是形变，不该产生应力（反例计算见 stress.rotation）。\n\n图像：剪切流 $\\mathbf{u} = (\\dot\\gamma\\,y, 0, 0)$ 像一摞卡片滑移：$-p\\mathbf{I}$ 是把整摞卡片均匀压住的正压力，$\\tau_{xy}$ 是相邻卡片间的滑动摩擦。两者独立、可叠加；压不产生搓，搓也不产生压（各向同性线性介质的性质）。",
+      "links": [
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:newton.statement",
+      "type": "statement",
+      "subject": "newton",
+      "title": "牛顿流体本构关系 τ = 2μD + λ(∇·u)I",
+      "keywords": [
+        "τ = 2μD + λ(∇·u)I",
+        "D = ½(∇u + ∇uᵀ)：应变率张量",
+        "水 μ ≈ 1.0×10⁻³ Pa·s（文献值）",
+        "不可压缩 ⟹ τ = 2μD",
+        "简单剪切 τ_xy = μγ̇"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 27,
+        "line_end": 32
+      },
+      "fill_hint": "以切片 27–32 行为准转写并逐符号拆解；水的 μ 为文献值（约 1.0×10⁻³ Pa·s @ 20 °C），请修订者核对。",
+      "content": "牛顿流体本构关系（线性、各向同性、无记忆流体的应力—应变率关系）：\n\n$$\\boldsymbol{\\tau} = 2\\mu\\,\\mathbf{D} + \\lambda(\\nabla\\cdot\\mathbf{u})\\,\\mathbf{I}, \\qquad \\mathbf{D} = \\frac{1}{2}\\left(\\nabla\\mathbf{u} + (\\nabla\\mathbf{u})^T\\right)$$\n\n逐符号拆解：\n- $\\mathbf{u}$：速度场；$\\nabla\\mathbf{u}$：速度梯度（3×3）。\n- $\\mathbf{D}$：应变率张量 = $\\nabla\\mathbf{u}$ 的对称部分。对角元 $D_{xx} = \\partial u_x/\\partial x$ 是 x 方向的拉伸速率；非对角元 $D_{xy} = \\frac{1}{2}(\\partial u_x/\\partial y + \\partial u_y/\\partial x)$ 是 xy 向剪切速率的一半。\n- $(\\nabla\\mathbf{u})^T$：转置。对称化的意义是剔除刚体旋转——旋转不产生应力（反例见 stress.rotation）。\n- $\\mu$：动力粘度（第一粘性系数），单位 Pa·s。水约 $1.0\\times10^{-3}$ Pa·s（20 °C，文献值）。\n- $\\lambda$：第二粘性系数（与体积粘性 $\\zeta = \\lambda + \\frac{2}{3}\\mu$ 相关），只对可压缩流有表现（见 newton.lambda）。\n- $\\nabla\\cdot\\mathbf{u}$：体积变化率（膨胀率）。\n\n成立条件：介质线性（$\\boldsymbol{\\tau} \\propto \\mathbf{D}$）、各向同性、无记忆、无屈服应力。水、空气与多数简单液体/气体在常规条件下满足；四条逐一被打破的情形见 newton.quantifiers。\n\n常用特例：\n- 不可压缩（$\\nabla\\cdot\\mathbf{u} = 0$）：$\\boldsymbol{\\tau} = 2\\mu\\mathbf{D}$，λ 项消失——I 章分析与 CG 模拟的默认设定。\n- 简单剪切 $\\mathbf{u} = (\\dot\\gamma\\,y, 0, 0)$：$D_{xy} = \\dot\\gamma/2$，故 $\\tau_{xy} = 2\\mu D_{xy} = \\mu\\dot\\gamma$——「卡片摩擦」的干净形式，因子 2 正是为这个形式而设。",
+      "links": [
+        "I1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:newton.intuition",
+      "type": "intuition",
+      "subject": "newton",
+      "title": "直觉：两个比例常数各管一条通道",
+      "keywords": [
+        "μ 管形状变化、λ 管体积变化",
+        "对称化剔除刚体旋转",
+        "因子 2 使 τ_xy = μγ̇ 形式干净",
+        "泊肃叶抛物线剖面：层间拖拽",
+        "粘性把动量从中心运到壁面"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 27,
+        "line_end": 32
+      },
+      "fill_hint": "按「假设给什么 / 结论为何成立」组织；泊肃叶例子与 I3 雷诺数挂钩，勿展开成完整 NS 推导。",
+      "content": "总起：牛顿本构说「应力正比于形变速率」，两个比例常数各管一件事：$\\mu$ 管形状变化、$\\lambda$ 管体积变化。\n\n假设给了什么：① 线性（应力线性响应应变率，小梯度、简单分子）；② 各向同性（介质无内禀方向）；③ 无记忆（应力只看当前应变率）。这三条把「$\\boldsymbol{\\tau}$ 可以是 $\\nabla\\mathbf{u}$ 的什么函数」压缩到只剩两个标量（见 newton.proof 的收敛过程）。\n\n结论为什么因此成立：\n- 形变通道：$\\mathbf{D}$ 的每个分量按 $2\\mu$ 缩放生成对应应力分量。剪切通道：$D_{xy} = \\dot\\gamma/2 \\Rightarrow \\tau_{xy} = \\mu\\dot\\gamma$。\n- 体积通道：$\\nabla\\cdot\\mathbf{u} \\neq 0$ 时，$\\lambda(\\nabla\\cdot\\mathbf{u})\\mathbf{I}$ 给出各向同性的额外正应力——体积粘性，像「膨胀阻尼」。\n- 为什么用 $\\mathbf{D}$ 不用 $\\nabla\\mathbf{u}$：反对称部分 $\\mathbf{W}$ 是刚体旋转，无应力响应（stress.rotation 的具体反例）。为什么有因子 2：$D_{xy} = \\dot\\gamma/2$，$2\\mu \\times \\dot\\gamma/2 = \\mu\\dot\\gamma$，简单剪切下应力正好等于 $\\mu\\dot\\gamma$，形式干净。\n\n几何图像：泊肃叶流 $u(y) = u_{max}(1 - y^2/h^2)$ 的抛物线剖面——中心快、壁面慢，相邻「流层」互相拖拽；壁面处 $|du/dy|$ 最大，壁面切应力最大。粘性正是把动量从中心运到壁面的机制，I3 雷诺数分母里的 $\\mu$ 就从这里进场。",
+      "links": [
+        "I3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:newton.proof",
+      "type": "proof",
+      "subject": "newton",
+      "title": "推导骨架：为什么本构长成 2μD + λ(∇·u)I",
+      "keywords": [
+        "线性 ⟹ τ = A:∇u，81 个分量",
+        "各向同性压缩到 3 个参数",
+        "σ 对称 ⟹ b = c，反对称部分自动消失",
+        "剪切实验定 μ、声衰减定 λ",
+        "易错：直接用 ∇u 不做对称化"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 27,
+        "line_end": 32
+      },
+      "fill_hint": "切片无推导，此为标准本构推导骨架（各向同性四阶张量表示定理的简化版）；每步理由已写明，修订者请对照Batchelor/Gurtin核对参数计数。",
+      "content": "推导骨架（各步给理由）：\n\n第 1 步（最一般形式）：假设 $\\boldsymbol{\\tau}$ 是 $\\nabla\\mathbf{u}$ 的线性函数。线性映射的系数必须是四阶常数张量 $A$：$\\tau_{ij} = A_{ijkl}\\,\\partial u_k/\\partial x_l$，共 $81$ 个分量。理由：输入（$\\nabla\\mathbf{u}$）与输出（$\\boldsymbol{\\tau}$）各带两个指标。\n\n第 2 步（各向同性收敛）：要求 $A$ 在旋转下不变。各向同性四阶张量的一般形式只有 3 个参数：$A = a\\,\\delta_{ij}\\delta_{kl} + b\\,\\delta_{ik}\\delta_{jl} + c\\,\\delta_{il}\\delta_{jk}$。理由：唯一能由 Kronecker δ 拼出的旋转不变四阶张量就这三种排法。\n\n第 3 步（对称性消元）：角动量守恒（I1）给出 $\\sigma = \\sigma^T \\Rightarrow \\tau = \\tau^T$，迫使 $b = c$。得 $\\tau = a(\\nabla\\cdot\\mathbf{u})\\mathbf{I} + b(\\nabla\\mathbf{u} + (\\nabla\\mathbf{u})^T)$。注意：$b = c$ 时反对称部分 $\\mathbf{W}$ 自动消失——刚体旋转不产生应力（呼应 stress.rotation）。\n\n第 4 步（改写与命名）：用 $\\mathbf{D} = \\frac{1}{2}(\\nabla\\mathbf{u} + (\\nabla\\mathbf{u})^T)$ 改写：$\\boldsymbol{\\tau} = 2b\\,\\mathbf{D} + a(\\nabla\\cdot\\mathbf{u})\\mathbf{I}$。记 $\\mu = b$、$\\lambda = a$，即切片公式。\n\n第 5 步（定系数）：简单剪切实验（转筒/毛细管粘度计）定 $\\mu$；均匀膨胀与声衰减实验定 $\\lambda$。两个系数、两类实验，一一对应。\n\n易错点：\n- 跳过对称化直接写 $\\boldsymbol{\\tau} = 2\\mu\\nabla\\mathbf{u}$——刚体旋转立刻翻车（stress.rotation 有完整计算）。\n- 忘记「$\\boldsymbol{\\tau}$ 对称」这一步，会残留一个反对称耦合参数，形式多一个自由度。\n- 各向同性是关键压缩器：没有它，81 个分量缩不完（液晶等各向异性介质正是如此）。\n\n依赖链：角动量守恒（$\\sigma$ 对称，I1）⟹ 分解合法 + $\\mathbf{W}$ 消失；线性 + 各向同性 ⟹ 只剩 $\\mu$、$\\lambda$。",
+      "links": [
+        "I1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:newton.lambda",
+      "type": "extension",
+      "subject": "newton",
+      "title": "拓展：第二粘性系数 λ 与体积粘性 ζ",
+      "keywords": [
+        "tr τ = (2μ + 3λ)∇·u",
+        "体积粘性 ζ = λ + ⅔μ ≥ 0（热力学要求）",
+        "Stokes 假设 λ = −⅔μ（ζ = 0）",
+        "激波与声衰减里 λ 要命",
+        "不可压缩时 λ 隐身"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 29,
+        "line_end": 29
+      },
+      "fill_hint": "切片只出现 λ 符号未解释；本条为切片公式的 λ 项补充物理含义（属允许的扩展讲解，与切片内容以「拓展」区分）。数值验证已挂标记。",
+      "content": "λ 是什么：第二粘性系数，控制「体积变化时的各向同性粘性响应」。切片公式 $\\boldsymbol{\\tau} = 2\\mu\\mathbf{D} + \\lambda(\\nabla\\cdot\\mathbf{u})\\mathbf{I}$ 里它最容易被忽略，也最容易写错符号约定。\n\n关键计算——取 $\\boldsymbol{\\tau}$ 的迹：$\\mathrm{tr}\\,\\boldsymbol{\\tau} = 2\\mu\\,\\mathrm{tr}\\,\\mathbf{D} + 3\\lambda\\,\\nabla\\cdot\\mathbf{u} = (2\\mu + 3\\lambda)\\,\\nabla\\cdot\\mathbf{u}$（用了 $\\mathrm{tr}\\,\\mathbf{D} = \\nabla\\cdot\\mathbf{u}$）。数值验证：$\\mu = 1$、$\\lambda = -2/3$（Stokes 假设）、均匀膨胀 $\\nabla\\cdot\\mathbf{u} = 3$ 时 $\\mathrm{tr}\\,\\boldsymbol{\\tau} = 0$【待核验:(2*1.0+3*(-2.0/3))*3.0】。\n\n体积粘性：定义 $\\zeta = \\lambda + \\frac{2}{3}\\mu$，则平均粘性正应力 $= \\frac{1}{3}\\mathrm{tr}\\,\\boldsymbol{\\tau} = \\zeta\\,\\nabla\\cdot\\mathbf{u}$。热力学第二定律要求 $\\zeta \\geq 0$（膨胀必须耗散能量、不能凭空产能）。\n\nStokes 假设：$\\lambda = -\\frac{2}{3}\\mu$，即 $\\zeta = 0$。单原子气体实测近似成立；多原子气体与强激波中 $\\zeta$ 可显著非零。\n\n何时 λ 要命：激波内部（$\\nabla\\cdot\\mathbf{u}$ 大且剧烈变化，见 I7）、声波吸收衰减、高超音速流动。此时丢掉 λ 会错物理。\n\n何时 λ 无关紧要：不可压缩 $\\nabla\\cdot\\mathbf{u} = 0 \\Rightarrow$ λ 项恒为 0。CG 实时流体（H8.1）与 I 章多数分析都在这个设定下，可直接写 $\\boldsymbol{\\tau} = 2\\mu\\mathbf{D}$。\n\n一句话：不可压缩世界里 λ 隐身；可压缩世界里 λ 是激波与声衰减的隐形耗散通道。",
+      "links": [
+        "I7",
+        "H8.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:nonnewton.classify",
+      "type": "comparison",
+      "subject": "nonnewton",
+      "title": "四类非牛顿流体：偏离牛顿的四个方向",
+      "keywords": [
+        "剪切稀化 n<1：油漆、血液",
+        "剪切增稠 n>1：玉米淀粉水",
+        "宾汉：屈服应力 τ_y，牙膏、泥浆",
+        "粘弹性：有松弛时间，聚合物、面团",
+        "稳态剪切 ⟹ 广义牛顿够用；瞬态回弹 ⟹ 粘弹性"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 34,
+        "line_end": 46
+      },
+      "fill_hint": "表格四行严格对应切片 40–43 行（类型/特征/例子逐字保留），「具体模型」「数值演示」两列是扩写；模型参数为文献量级或假想示意值，修订者请核对。",
+      "content": "总起：牛顿律是「$\\mu$ 为常数」的特例；切片表格的四类非牛顿流体各自在「$\\mu$ 不再是常数」的四个方向上偏离。\n\n| 类型 | 特征（切片原文） | 例子（切片原文） | 具体模型 | 数值演示 |\n|---|---|---|---|---|\n| 剪切稀化 | 粘度随剪切率增大而减小 | 油漆、血液 | $\\mu_{app} = k\\dot\\gamma^{\\,n-1}$，$n < 1$ | $n = 0.7$：$\\dot\\gamma$ 从 1 到 100 s⁻¹，$\\mu_{app}$ 降至 0.251 倍【待核验:100.0**(0.7-1.0)】 |\n| 剪切增稠 | 粘度随剪切率增大而增大 | 玉米淀粉水 | 同上，$n > 1$ | $n = 1.5$：$\\dot\\gamma$ 从 1 到 100 s⁻¹，$\\mu_{app}$ 增至 10 倍【待核验:100.0**(1.5-1.0)】 |\n| 宾汉流体 | 有屈服应力 | 牙膏、泥浆 | $\\tau \\le \\tau_y$ 不流；$\\tau > \\tau_y$ 时 $\\tau = \\tau_y + \\mu_p\\dot\\gamma$ | 示意 $\\tau_y = 5$、$\\mu_p = 2$：$\\tau = 3$ Pa 时 $\\dot\\gamma = 0$；$\\tau = 9$ Pa 时 $\\dot\\gamma = 2$ s⁻¹【待核验:(9.0-5.0)/2.0】 |\n| 粘弹性 | 同时有粘性和弹性 | 聚合物、面团 | Maxwell 型：$\\boldsymbol{\\tau} + \\tau_r\\,\\mathrm{D}\\boldsymbol{\\tau}/\\mathrm{D}t = 2\\mu\\mathbf{D}$ | 单一数字给不出（依赖历史），特征量是松弛时间 $\\tau_r$ |\n\n生活直觉锚点：\n- 油漆：刷的时候（高剪切）稀、挂在墙上（低剪切）稠——剪切稀化让你「好刷不流挂」。\n- 玉米淀粉水：快速拍打像固体、缓慢下沉像液体——剪切增稠让你能「水上漂」。\n- 牙膏：不挤不流（屈服应力）、挤了才成条——宾汉。\n- 面团：按下去慢慢回弹（弹性）+ 形变时耗散（粘性）——粘弹性。\n\n选择判据：只关心稳态剪切 ⟹ 广义牛顿（幂律 / Bingham / Carreau）够用，计算便宜；关心回弹、应力松弛、瞬态 ⟹ 必须粘弹性模型（要解应力演化方程）。CG 软体与布料模拟（H8.3）常用粘弹 + 塑性（屈服）的组合。误用牛顿律的具体错账见 newton.nonnewton。",
+      "links": [
+        "H8.3",
+        "I3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:stress.probe1",
+      "type": "probe",
+      "subject": "stress",
+      "title": "检验题：同一截面上的压与搓",
+      "keywords": [
+        "牵引 t = σn 的三个分量",
+        "同一截面叠出压力与剪切",
+        "对应 quantifiers 表第①行"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 23,
+        "line_end": 25
+      },
+      "fill_hint": "答案括号供前端折叠；切向分量数值依赖 μ_water 文献值，请复核。",
+      "content": "题目：不可压缩简单剪切流（$\\mathbf{u} = (\\dot\\gamma\\,y, 0, 0)$）中取 $p = 100$ Pa、$\\dot\\gamma = 100$ s⁻¹、水 $\\mu = 1.0\\times10^{-3}$ Pa·s。求法向 $\\mathbf{n} = e_y$ 的截面上的牵引矢量 $\\mathbf{t} = \\boldsymbol{\\sigma}\\mathbf{n}$ 的三个分量（单位 Pa），并指出哪个分量来自「压」、哪个来自「搓」。\n\n（答案：$\\boldsymbol{\\sigma} = -p\\mathbf{I} + \\boldsymbol{\\tau}$，其中 $\\tau_{xy} = \\mu\\dot\\gamma = 0.1$【待核验:1.0e-3*100.0】，故 $\\mathbf{t} = (\\tau_{xy},\\ -p,\\ 0) = (0.1,\\ -100,\\ 0)$，法向分量 $-100$【待核验:-100.0】来自压强部分，切向分量 $0.1$ 来自粘性部分。）\n\n考点：把「压 + 搓」在同一条截面上叠出来，检验对分解（quantifiers 表第①行）是否真懂——切向与法向互不干扰。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:newton.probe1",
+      "type": "probe",
+      "subject": "newton",
+      "title": "检验题：泊肃叶壁面切应力与 λ 项判定",
+      "keywords": [
+        "泊肃叶壁面切应力",
+        "|du/dy| = 2u_max/h",
+        "∇·u = 0 ⟹ λ 项为零"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 27,
+        "line_end": 32
+      },
+      "fill_hint": "答案括号供前端折叠；数值已挂待核验标记。",
+      "content": "题目：平面泊肃叶流 $u(y) = u_{max}(1 - y^2/h^2)$，取 $h = 1$ mm、$u_{max} = 0.1$ m/s、水 $\\mu = 1.0\\times10^{-3}$ Pa·s。求壁面 $y = h$ 处切应力的大小（Pa），并说明为什么本构里的 λ 项在此问题中为零。\n\n（答案：$|du/dy|_{wall} = 2u_{max}/h = 200$ s⁻¹【待核验:2*0.1/1e-3】，故 $\\tau_{wall} = \\mu \\times 200 = 0.2$ Pa【待核验:1.0e-3*(2*0.1/1e-3)】；$u_y = u_z = 0$ 且 $\\partial u_x/\\partial x = 0$，故 $\\nabla\\cdot\\mathbf{u} = 0 \\Rightarrow \\lambda$ 项消失。）\n\n考点：剪切率的显式计算（对应 quantifiers 表第⑤行）——不可压缩问题里 λ 项写不写都一样，判断依据就是 $\\nabla\\cdot\\mathbf{u}$ 是否为零。",
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "单元对照：分解层与本构层",
+      "keywords": [
+        "分解层永远合法、本构层可错",
+        "牛顿 ⊂ 广义牛顿 ⊂ 粘弹性（记忆递增）",
+        "∇·u = 0 时 τ = 2μD 是默认设定",
+        "四行对照：分解 / 牛顿 / 广义牛顿 / 粘弹"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 23,
+        "line_end": 46
+      },
+      "fill_hint": "整单元总表：区分「记法不会错」与「物理假设会错」是本条的记忆锚点；供前端按表渲染。",
+      "content": "整单元对照表——核心区分：分解（$\\sigma = -p\\mathbf{I} + \\boldsymbol{\\tau}$）永远合法，本构（$\\boldsymbol{\\tau}$ 等于什么）才是可错的物理假设。\n\n| 层 | 命题 | 性质 | 关键量 | 何时失效 |\n|---|---|---|---|---|\n| 分解层 | $\\boldsymbol{\\sigma} = -p\\mathbf{I} + \\boldsymbol{\\tau}$ | 记法 + 角动量守恒，对一切简单流体成立 | $p$、$\\boldsymbol{\\tau}$ | 极性介质（需偶应力，见 stress.quantifiers ③） |\n| 牛顿本构 | $\\boldsymbol{\\tau} = 2\\mu\\mathbf{D} + \\lambda(\\nabla\\cdot\\mathbf{u})\\mathbf{I}$ | 物理假设：线性 + 各向同性 + 无记忆 | $\\mu$、$\\lambda$ | 非牛顿介质（newton.quantifiers ①–④） |\n| 广义牛顿 | $\\mu_{app} = \\mu_{app}(\\dot\\gamma)$ 或含 $\\tau_y$ | 物理假设：稳态剪切下粘度是剪切率的函数 | $k$、$n$ 或 $\\tau_y$、$\\mu_p$ | 粘弹性主导的瞬态（无记忆假设又被引入） |\n| 粘弹性 | $\\boldsymbol{\\tau} + \\tau_r\\,\\dot{\\boldsymbol{\\tau}} = 2\\mu\\mathbf{D}$ | 物理假设：应力有记忆 | 松弛时间 $\\tau_r$ | 需要更完整多模态模型时 |\n\n两条主线：\n1. 自上而下记忆递增：牛顿无记忆 → 广义牛顿仍是稳态无记忆 → 粘弹性带记忆。计算代价同向递增，所以按问题需要选最低一层。\n2. 可压缩与否决定 λ 的生死：$\\nabla\\cdot\\mathbf{u} = 0$ 时 $\\boldsymbol{\\tau} = 2\\mu\\mathbf{D}$——这是 I 章分析与 CG 模拟（H8.1）的默认设定（见 newton.lambda）。",
+      "links": [
+        "I1",
+        "I3",
+        "H8.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "I1：σ → NS 方程的桥",
+        "I3：Re = ρUL/μ 的 μ 在这里",
+        "I4：W 留给涡量",
+        "I9.2：耗散 Φ = 2μD:D ≥ 0",
+        "H8.1：不可压缩 τ = 2μD",
+        "H8.3：宾汉 + 粘弹模拟软体"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句话点「谁用本单元的哪一块」；耗散数值（10 W/m³）已挂标记待复核；细节归各目标节点的词条文件。",
+      "content": "- I1（守恒律）：$\\boldsymbol{\\sigma}$ 是动量方程 $\\rho\\,D\\mathbf{u}/Dt = \\nabla\\cdot\\boldsymbol{\\sigma} + \\rho\\mathbf{f}$ 的主角；代入牛顿本构（常取 Stokes 假设）才导出 NS 方程。应力分解是「守恒律 → 具体方程」之间的桥。\n- I3（雷诺数）：$Re = \\rho UL/\\mu$，分母的 $\\mu$ 正是本构第一粘性系数。非牛顿流体的 Re 甚至不是唯一确定的（$\\mu$ 随 $\\dot\\gamma$ 变）——这是非牛顿性的一个深层后果。\n- I4（涡量动力学）：$\\nabla\\mathbf{u} = \\mathbf{D} + \\mathbf{W}$，$\\mathbf{W}$ 编码旋转与涡量；本构刻意只用 $\\mathbf{D}$，把 $\\mathbf{W}$ 留给涡量方程（见 stress.rotation 的反例计算）。\n- I9.2（能量稳定格式）：粘性耗散 $\\Phi = 2\\mu\\,\\mathbf{D}\\!:\\!\\mathbf{D} \\geq 0$ 是能量稳定性的来源；简单剪切流 $\\Phi = \\mu\\dot\\gamma^2$，取水 $\\mu = 10^{-3}$、$\\dot\\gamma = 100$ 得 $10$ W/m³【待核验:1.0e-3*100.0**2】。数值格式若不能复现该耗散，能量稳定无从谈起。\n- H8.1（流体模拟）：实时模拟几乎总取不可压缩 $\\Rightarrow \\boldsymbol{\\tau} = 2\\mu\\mathbf{D}$；粘性项隐式求解的稳定性约束也源于这里。\n- H8.3（布料与软体）：宾汉（屈服）与粘弹性模型是泥浆、面团、泡沫类介质模拟的基础。",
+      "links": [
+        "I1",
+        "I3",
+        "I4",
+        "I9.2",
+        "H8.1",
+        "H8.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：viscosity-curves",
+      "keywords": [
+        "四类流体 μ_app(γ̇) 曲线",
+        "宾汉 τ–γ̇ 图有截距 τ_y",
+        "对数轴 γ̇ ∈ [0.01, 1000] s⁻¹",
+        "牛顿水平线作对照",
+        "前端直算，无需后端"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 34,
+        "line_end": 46
+      },
+      "fill_hint": "新模块 viscosity-curves 为本单元提案（现有模块均不合用）；四条曲线均为显式闭式表达式，符合 Q4 前端直算判据，无需后端对拍。",
+      "content": "单元演示总览：一张图看懂「粘度是不是常数」——切片非牛顿表格的可视化。\n\n内容：左右双面板。左：四类流体的表观粘度 $\\mu_{app}(\\dot\\gamma)$ 曲线——牛顿（水平线 $\\mu = $ 常数）、剪切稀化（$k\\dot\\gamma^{\\,n-1}$，$n < 1$，下降）、剪切增稠（$n > 1$，上升）、宾汉在左面板显示为 $\\tau \\le \\tau_y$ 时 $\\mu_{app} \\to \\infty$ 的截止。右：宾汉流动曲线 $\\tau(\\dot\\gamma) = \\tau_y + \\mu_p\\dot\\gamma$ 与牛顿直线 $\\tau = \\mu\\dot\\gamma$ 的对照，宾汉曲线在 $\\tau$ 轴上有截距 $\\tau_y$，低应力段 $\\dot\\gamma \\equiv 0$（不流动）——图上必须能读出「$\\tau = 3$ Pa 时 $\\dot\\gamma = 0$」这个失败数值。\n\n判据：Q4（简单显式函数曲线），全部闭式表达式，前端直算即可。\n\n交互建议：滑块调 $n \\in [0.3, 2.0]$ 与 $\\tau_y$，叠加牛顿水平线作对照；$\\dot\\gamma$ 用对数轴 $[0.01, 1000]$ s⁻¹；参数默认值取 nonnewton.classify 表中的数值（$n = 0.7 / 1.5$、$\\tau_y = 5$、$\\mu_p = 2$）。",
+      "viz": {
+        "module": "viscosity-curves",
+        "version": 1,
+        "params_hint": {
+          "curves": [
+            "newton",
+            "shear-thinning",
+            "shear-thickening",
+            "bingham"
+          ],
+          "gamma_dot_range": [
+            0.01,
+            1000
+          ],
+          "log_axis": true,
+          "k": 1.0,
+          "n_thinning": 0.7,
+          "n_thickening": 1.5,
+          "tau_y": 5.0,
+          "mu_p": 2.0
+        }
+      },
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
