@@ -168,6 +168,8 @@ learning-web/
   json/                  # 学习词条占位库（阶段一：只记关键词，DESIGN.md §16）
     <chapter>/
       <code>.json        # 一个小目一个文件，如 A1/A1.3.json
+  example/               # 多模型流水线演示样例（2026-09-24 起，lie 交互导读）
+    lie/                 # 唯一实例：说明与生成链见 example/lie/README.md，不入正式流水线
   src/
     shell/               # 三栏布局 · 导航 · 路由 · 主题
     renderers/           # doc.ts（KaTeX 正文）· graph.ts · plot2d.ts
