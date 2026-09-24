@@ -1,9 +1,16 @@
 import katex from 'katex';
 
+/** KaTeX 结果按 (tex, displayMode) 记忆化：同一公式在重渲染/跨单元时只排一次版 */
+const mathCache = new Map<string, string>();
+
 /** KaTeX 运行时本地渲染（禁 CDN，零外部请求；字体随 katex 包打包；打包期亦可复用） */
 export function renderMath(tex: string, displayMode: boolean): string {
+  const key = `${displayMode ? 'D' : 'I'}\u0000${tex}`;
+  const hit = mathCache.get(key);
+  if (hit !== undefined) return hit;
+  let out: string;
   try {
-    return katex.renderToString(tex, {
+    out = katex.renderToString(tex, {
       displayMode,
       throwOnError: false,
       strict: 'ignore',
@@ -11,8 +18,10 @@ export function renderMath(tex: string, displayMode: boolean): string {
       errorColor: '#f87171',
     });
   } catch (err) {
-    return `<code class="katex-fail" title="${escapeHtml((err as Error).message)}">${escapeHtml(tex)}</code>`;
+    out = `<code class="katex-fail" title="${escapeHtml((err as Error).message)}">${escapeHtml(tex)}</code>`;
   }
+  mathCache.set(key, out);
+  return out;
 }
 
 export function escapeHtml(s: string): string {

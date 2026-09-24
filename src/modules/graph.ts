@@ -1,4 +1,4 @@
-import type { EntryFile } from '../types';
+import type { UnitMeta } from '../types';
 
 /** 代号比较键：字母 → 章节号 → 小目号（无小目记 0，即节级排在最前） */
 export function codeKey(code: string): [string, number, number] {
@@ -30,9 +30,12 @@ export interface Graph {
 /**
  * 依赖（prereq）= 同章节内排在前面的小目 ∪ links 里排在前面的目标。
  * 只用"更早代号"建边 ⇒ 无环可一眼验证；后置引用进 usedBy，不进 prereq。
+ *
+ * 输入只需要「代号 + 该单元的外链并集」（索引里就有），**不读词条正文** ——
+ * 这是「切到哪个单元才拉哪个单元」能成立的前提。
  */
-export function buildGraph(files: EntryFile[]): Graph {
-  const present = new Set(files.map((f) => f.code ?? '').filter(Boolean));
+export function buildGraphFromMeta(units: UnitMeta[]): Graph {
+  const present = new Set(units.map((u) => u.code).filter(Boolean));
   const codes = [...present].sort(cmpCode);
   const prereq = new Map<string, string[]>();
   const usedBy = new Map<string, string[]>();
@@ -50,15 +53,13 @@ export function buildGraph(files: EntryFile[]): Graph {
     if (list && !list.includes(from)) list.push(from);
   };
 
-  for (const f of files) {
-    const code = f.code;
+  for (const u of units) {
+    const code = u.code;
     if (!code) continue;
-    for (const e of f.entries) {
-      for (const link of e.links ?? []) {
-        if (!present.has(link) || link === code) continue;
-        addUsedBy(code, link);
-        if (cmpCode(link, code) < 0) addPrereq(code, link);
-      }
+    for (const link of u.links) {
+      if (!present.has(link) || link === code) continue;
+      addUsedBy(code, link);
+      if (cmpCode(link, code) < 0) addPrereq(code, link);
     }
     // 同章节递进：序号更小的小目视为前序
     for (const other of codes) {

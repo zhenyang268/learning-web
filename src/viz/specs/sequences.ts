@@ -560,10 +560,93 @@ const taylorModes: VizMode[] = [
   },
 ];
 
+/** P9.3 要的「Taylor 余项界」模式：真误差 vs 解析界 C·|x|^{n+1} */
+function taylorSum(which: 'exp' | 'sin' | 'ln1p', N: number, x: number): number {
+  let s = 0;
+  if (which === 'exp') {
+    for (let k = 0; k <= N; k++) s += Math.pow(x, k) / factorial(k);
+  } else if (which === 'sin') {
+    for (let k = 0; k * 2 + 1 <= N; k++) s += (k % 2 ? -1 : 1) * Math.pow(x, 2 * k + 1) / factorial(2 * k + 1);
+  } else {
+    for (let k = 1; k <= N; k++) s += (k % 2 ? 1 : -1) * Math.pow(x, k) / k;
+  }
+  return s;
+}
+
+const TAYLOR_CASES = [
+  { key: 'exp', label: 'eˣ', x: 0.1, exact: (x: number) => Math.exp(x), sum: (N: number, x: number) => taylorSum('exp', N, x) },
+  { key: 'sin', label: 'sin x', x: 0.5, exact: Math.sin, sum: (N: number, x: number) => taylorSum('sin', N, x) },
+  { key: 'ln1p', label: 'ln(1+x)', x: 0.2, exact: (x: number) => Math.log(1 + x), sum: (N: number, x: number) => taylorSum('ln1p', N, x) },
+];
+
+/** 余项界 C·|x|^{n+1}：eˣ 取 e^{|x|}/(n+1)!，sin 取 1/(n+1)!，ln(1+x) 取 1/(n+1)（交错级数） */
+function taylorBound(kind: string, N: number, x: number): number {
+  if (kind === 'exp') return (Math.exp(Math.abs(x)) * Math.pow(Math.abs(x), N + 1)) / factorial(N + 1);
+  if (kind === 'sin') return Math.pow(Math.abs(x), N + 1) / factorial(N + 1);
+  return Math.pow(Math.abs(x), N + 1) / (N + 1);
+}
+
+const remainderBoundMode: VizMode = {
+  key: 'remainder-bound',
+  label: '余项界 |R_n| ≤ C|x|^{n+1}',
+  n: { min: 1, max: 12, step: 1, init: 3 },
+  draw(n) {
+    const N = Math.max(1, Math.round(n));
+    const curves = TAYLOR_CASES.flatMap((c, i) => {
+      const col = [C.cyan, C.violet, C.pink][i];
+      return [
+        { f: (x: number) => Math.abs(c.exact(x) - c.sum(N, Math.abs(x) < 1e-9 ? 1e-9 : x)), color: col, width: 2.4, glow: true, from: 1e-4, to: c.x * 1.6 },
+        { f: (x: number) => taylorBound(c.key, N, x), color: col, width: 1.8, dash: [5, 4], from: 1e-4, to: c.x * 1.6 },
+      ];
+    });
+    return {
+      view: { x0: 0, x1: 0.85, y1: 0.12 },
+      curves,
+      labels: TAYLOR_CASES.map((c, i) => ({
+        text: c.label,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        x: c.x,
+        y: 0.11 - i * 0.012,
+        color: [C.cyan, C.violet, C.pink][i],
+      })),
+      axis: { x: 'x', y: '误差 / 界' },
+    };
+  },
+  readout(n) {
+    const N = Math.max(1, Math.round(n));
+    return TAYLOR_CASES.map((c) => {
+      const err = Math.abs(c.exact(c.x) - c.sum(N, c.x));
+      const bound = taylorBound(c.key, N, c.x);
+      return {
+        label: `${c.label} @ x=${c.x}：真误差 ${num(err, 5)} / 界 ${num(bound, 5)}`,
+        value: err <= bound ? `${num(bound / Math.max(err, 1e-15), 3)}×` : '界被突破',
+        verdict: (err <= bound ? 'ok' : 'fail') as 'ok' | 'fail',
+      };
+    });
+  },
+  invariant(n) {
+    const N = Math.max(1, Math.round(n));
+    // 严格不等式：三个常用展开在各自取样点上都满足 |R_n| ≤ C|x|^{n+1}
+    const viol = TAYLOR_CASES.map((c) => {
+      const err = Math.abs(c.exact(c.x) - c.sum(N, c.x));
+      return Math.max(0, err - taylorBound(c.key, N, c.x));
+    });
+    return { label: '|R_n| ≤ C|x|^{n+1}（三个展开同时成立）', expected: 0, actual: Math.max(...viol), tol: 1e-15 };
+  },
+  note: (n) => {
+    const N = Math.max(1, Math.round(n));
+    const worst = TAYLOR_CASES.map((c) => {
+      const err = Math.abs(c.exact(c.x) - c.sum(N, c.x));
+      return { l: c.label, r: taylorBound(c.key, N, c.x) / Math.max(err, 1e-15) };
+    }).reduce((a, b) => (b.r > a.r ? b : a));
+    return `阶数 n = ${N}：三个展开的真误差都在界内，最松的是 ${worst.l}（界比真误差大 ${num(worst.r, 3)} 倍）。界只是「不超过」，不是「等于」。`;
+  },
+};
+
 export const taylorApprox: VizSpec = {
   module: 'taylor-approx',
   title: '在收敛半径外拿部分和当函数值（误用）',
-  modes: taylorModes,
+  modes: [...taylorModes, remainderBoundMode],
 };
 
 /* --------------------------------------------------------- P8.4 stirling-approx */

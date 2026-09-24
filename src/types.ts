@@ -98,3 +98,49 @@ export function subjectOf(entry: Entry): string {
 export function isVizFrontend(viz: VizSpec): viz is VizFrontend {
   return typeof (viz as VizFrontend).module === 'string';
 }
+
+/**
+ * 卡片（掌握度单元）的 key。
+ * `general.*` 每个词条自成一张卡，其余按 subject 归并成一张卡。
+ * **首页与索引必须用同一条规则**，否则掌握度会算到两个不同的键上。
+ */
+export function cardKeyOf(code: string, entry: Entry): string {
+  const subject = subjectOf(entry);
+  return subject === 'general' ? entry.id : `${code}:${subject}`;
+}
+
+/**
+ * 单元元数据。索引（`json/index.json`）只带这些字段 ——
+ * 侧栏、依赖图、frontier、掌握度聚合都不需要词条正文，因此**启动不必拉全库**。
+ */
+export interface UnitMeta {
+  /** 相对路径：json/A1/A1.3.json */
+  path: string;
+  code: string;
+  chapter: string;
+  title: string;
+  /** 本单元的卡片 key 列表（掌握度聚合用） */
+  cards: string[];
+  /** 本单元所有词条 links 的并集（依赖图只用它） */
+  links: string[];
+}
+
+export function unitMetaOf(file: EntryFile): UnitMeta {
+  const code = file.code ?? '';
+  const cards: string[] = [];
+  const links = new Set<string>();
+  for (const e of file.entries) {
+    const key = cardKeyOf(code, e);
+    if (code !== 'general') cards.push(key);
+    for (const l of e.links ?? []) links.add(l);
+  }
+  // 去重但保序（cardKeyOf 对同一 subject 会重复产出同一个 key）
+  return {
+    path: file.path,
+    code,
+    chapter: file.chapter ?? code,
+    title: file.title ?? code,
+    cards: [...new Set(cards)],
+    links: [...links],
+  };
+}

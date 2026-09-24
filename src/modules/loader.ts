@@ -1,4 +1,4 @@
-import type { Entry, EntryFile } from '../types';
+import type { Entry, EntryFile, UnitMeta } from '../types';
 
 export interface LoadIssue {
   /** 哪个文件（json/A1/A1.3.json） */
@@ -9,13 +9,9 @@ export interface LoadIssue {
   fatal?: boolean;
 }
 
-export interface LoadResult {
-  files: EntryFile[];
-  issues: LoadIssue[];
-}
-
 const REQUIRED_FILE_FIELDS = ['schema', 'code', 'chapter', 'title'] as const;
-const REQUIRED_ENTRY_FIELDS = ['id', 'type', 'title', 'content'] as const;
+/** 词条必填：id/type 必须是字符串；content 允许缺省，由渲染层给占位 */
+const REQUIRED_ENTRY_FIELDS = ['id', 'type'] as const;
 /** 两级代号：A1.3 / B2 / P10 合法；A1.3.2 非法 */
 const CODE_RE = /^[A-Za-z]\d+(?:\.\d+)?$/;
 
@@ -31,10 +27,28 @@ async function fetchJson(url: string): Promise<unknown> {
   }
 }
 
-export async function loadIndex(): Promise<string[]> {
-  const data = (await fetchJson('json/index.json')) as { files?: unknown };
-  if (!Array.isArray(data.files)) throw new Error('json/index.json 缺少 files 数组');
-  return data.files.filter((f): f is string => typeof f === 'string');
+/**
+ * 只拉索引（几 KB）：含 code/chapter/title/cards/links，
+ * 侧栏、依赖图、frontier、掌握度聚合都够用 —— **启动不再拉全库**。
+ */
+export async function loadIndex(): Promise<UnitMeta[]> {
+  const data = (await fetchJson('json/index.json')) as { units?: unknown };
+  if (!Array.isArray(data.units)) throw new Error('json/index.json 缺少 units 数组');
+  const units: UnitMeta[] = [];
+  for (const raw of data.units) {
+    if (typeof raw !== 'object' || raw === null) continue;
+    const u = raw as Record<string, unknown>;
+    if (typeof u.path !== 'string' || typeof u.code !== 'string') continue;
+    units.push({
+      path: u.path,
+      code: u.code,
+      chapter: typeof u.chapter === 'string' ? u.chapter : u.code,
+      title: typeof u.title === 'string' ? u.title : u.code,
+      cards: Array.isArray(u.cards) ? u.cards.filter((c): c is string => typeof c === 'string') : [],
+      links: Array.isArray(u.links) ? u.links.filter((c): c is string => typeof c === 'string') : [],
+    });
+  }
+  return units;
 }
 
 function validateFile(raw: unknown, path: string, issues: LoadIssue[]): EntryFile | null {
@@ -72,6 +86,9 @@ function validateFile(raw: unknown, path: string, issues: LoadIssue[]): EntryFil
         issues.push({ file: path, field: `${at}.${key}`, message: `词条必填字段缺失或非字符串：${key}` });
       }
     }
+    if (e.title !== undefined && typeof e.title !== 'string') {
+      issues.push({ file: path, field: `${at}.title`, message: 'title 非字符串' });
+    }
     const id = typeof e.id === 'string' ? e.id : '';
     const code = typeof obj.code === 'string' ? obj.code : '';
     if (code && id && !id.startsWith(`${code}:`)) {
@@ -98,24 +115,20 @@ function validateFile(raw: unknown, path: string, issues: LoadIssue[]): EntryFil
   return { ...(obj as unknown as EntryFile), entries, path };
 }
 
-export async function loadAll(paths: string[]): Promise<LoadResult> {
+export interface UnitResult {
+  file: EntryFile | null;
+  issues: LoadIssue[];
+}
+
+/** 拉单个单元（切到哪个才拉哪个）。调用方负责缓存，避免重复请求。 */
+export async function loadUnit(path: string): Promise<UnitResult> {
   const issues: LoadIssue[] = [];
-  const settled = await Promise.all(
-    paths.map(async (path) => {
-      try {
-        return { raw: await fetchJson(path), path };
-      } catch (err) {
-        issues.push({ file: path, field: '<fetch>', message: (err as Error).message });
-        return null;
-      }
-    }),
-  );
-  const files: EntryFile[] = [];
-  for (const item of settled) {
-    if (!item) continue;
-    const file = validateFile(item.raw, item.path, issues);
-    if (file) files.push(file);
+  let raw: unknown;
+  try {
+    raw = await fetchJson(path);
+  } catch (err) {
+    issues.push({ file: path, field: '<fetch>', message: (err as Error).message, fatal: true });
+    return { file: null, issues };
   }
-  files.sort((a, b) => (a.code ?? '').localeCompare(b.code ?? '', undefined, { numeric: true }));
-  return { files, issues };
+  return { file: validateFile(raw, path, issues), issues };
 }

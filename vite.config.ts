@@ -1,27 +1,14 @@
 import { defineConfig, type Plugin, type ViteDevServer } from 'vite';
 import fs from 'node:fs';
 import path from 'node:path';
+import { buildIndex } from './src/modules/kb-index';
 
 const ROOT = import.meta.dirname;
 const JSON_DIR = path.join(ROOT, 'json');
 const OUT_JSON_DIR = path.join(ROOT, 'dist', 'json');
 
-/** 扫描 json/ 下所有 `json/<章节>/<代号>.json`，作为运行时索引。 */
-function scanJsonFiles(): string[] {
-  if (!fs.existsSync(JSON_DIR)) return [];
-  const out: string[] = [];
-  for (const chapter of fs.readdirSync(JSON_DIR)) {
-    const dir = path.join(JSON_DIR, chapter);
-    if (!fs.statSync(dir).isDirectory()) continue;
-    for (const name of fs.readdirSync(dir)) {
-      if (name.endsWith('.json')) out.push(`json/${chapter}/${name}`);
-    }
-  }
-  return out.sort();
-}
-
 function indexPayload(): string {
-  return JSON.stringify({ files: scanJsonFiles(), generated: new Date().toISOString() });
+  return JSON.stringify(buildIndex(JSON_DIR));
 }
 
 function reload(server: ViteDevServer) {
@@ -32,8 +19,11 @@ function reload(server: ViteDevServer) {
 
 /**
  * json/ 是运行时数据（不打进 bundle，改 JSON 秒级刷新）：
- * - dev：中间件即时生成 /json/index.json；监听 json/ 变化触发整页刷新
+ * - dev：中间件即时生成 /json/index.json（**只含元数据**，几 KB）；监听 json/ 变化触发整页刷新
  * - build：把 json/ 原样拷进 dist/json/，并落一份 index.json
+ *
+ * 索引里带 code/chapter/title/cards/links —— 侧栏、依赖图、frontier、掌握度聚合都只吃它，
+ * 于是启动不必拉全库；词条正文由前端在切换单元时按需 fetch。
  */
 function kbJson(): Plugin {
   return {

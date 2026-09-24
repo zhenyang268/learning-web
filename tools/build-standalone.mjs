@@ -4,11 +4,13 @@
  * 约束（DESIGN §9.1）：数据内联 + IIFE + **零外部请求**，file:// 双击即开。
  * 做法：
  *   1. 用 esbuild 把 src/main.ts 打成 IIFE（CSS 导入置空，样式单独内联）；
- *   2. 把 json/ 全部读成 { 路径: 原文 } 内联进一个 fetch shim —— 与 dev 外壳共用同一套
- *      加载逻辑（main.ts 里只有 fetch，不感知数据来自网络还是内存）；
- *   3. KaTeX 的 CSS 与字体（woff2）以 data URI 内联，保证断网/离线也能排版。
+ *   2. 索引（元数据）与各单元原文都内联进一个 fetch shim —— 与 dev 外壳共用同一套加载逻辑
+ *      （main.ts 里只有 fetch，不感知数据来自网络还是内存）；单元正文仍是**按需 JSON.parse**；
+ *   3. KaTeX 的 CSS 与字体（woff2）以 data URI 内联。**每个 @font-face 只留一份 woff2** ——
+ *      原 CSS 为每个字面列了 woff2/woff/ttf 三个 url，全部替成同一个 data URI 会让体积×3
+ *      （实测 0.99 MB → 0.33 MB）。
  *
- * 与 dev 外壳是两套产物：dev 侧仍走 fetch json/（改 JSON 秒级刷新），
+ * 与 dev 外壳是两套产物：dev 侧走 fetch json/（改 JSON 秒级刷新），
  * 本快照是「打包给以后看」的那一份。
  *
  * 用法：node tools/build-standalone.mjs   （或 npm run build:standalone）
@@ -25,39 +27,56 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const JSON_DIR = path.join(ROOT, 'json');
 const OUT = path.join(ROOT, 'dist', 'knowledge.html');
 
-function scanJson() {
-  const out = [];
-  for (const chapter of fs.readdirSync(JSON_DIR)) {
-    const dir = path.join(JSON_DIR, chapter);
-    if (!fs.statSync(dir).isDirectory()) continue;
-    for (const name of fs.readdirSync(dir)) {
-      if (name.endsWith('.json')) out.push(`json/${chapter}/${name}`);
-    }
-  }
-  return out.sort();
+/** 复用生产代码的索引规则（散装 .ts 打成 CJS 再 require） */
+async function requireTs(entry) {
+  const res = await esbuild.build({
+    entryPoints: [path.join(ROOT, entry)],
+    bundle: true,
+    write: false,
+    format: 'cjs',
+    platform: 'node',
+    target: 'es2022',
+    logLevel: 'silent',
+  });
+  const m = { exports: {} };
+  new Function('module', 'exports', 'require', res.outputFiles[0].text)(m, m.exports, require);
+  return m.exports;
 }
 
-/** KaTeX CSS 里的 url(fonts/xxx) → woff2 的 base64 data URI */
+/** KaTeX CSS：每个 @font-face 收敛成**单个** woff2 data URI */
 function inlinedKatexCss() {
   const cssPath = path.join(ROOT, 'node_modules', 'katex', 'dist', 'katex.min.css');
   const fontDir = path.join(ROOT, 'node_modules', 'katex', 'dist', 'fonts');
   if (!fs.existsSync(cssPath)) throw new Error('未找到 katex.min.css；请先 npm install');
-  let css = fs.readFileSync(cssPath, 'utf8');
+  const css = fs.readFileSync(cssPath, 'utf8');
   const cache = new Map();
-  css = css.replace(/url\((["']?)([^"')]+)\1\)/g, (whole, _q, ref) => {
-    if (/^(data:|https?:)/.test(ref)) return whole;
+
+  const dataUri = (ref) => {
     const base = path.basename(ref);
     const woff2 = path.join(fontDir, base.replace(/\.(woff|ttf)$/, '.woff2'));
     const file = fs.existsSync(woff2) ? woff2 : path.join(fontDir, base);
-    if (!fs.existsSync(file)) return whole;
+    if (!fs.existsSync(file)) return null;
     if (!cache.has(file)) {
-      const b64 = fs.readFileSync(file).toString('base64');
-      const mime = file.endsWith('.woff2') ? 'font/woff2' : file.endsWith('.woff') ? 'font/woff' : 'font/ttf';
-      cache.set(file, `data:${mime};base64,${b64}`);
+      cache.set(file, `data:font/woff2;base64,${fs.readFileSync(file).toString('base64')}`);
     }
-    return `url(${cache.get(file)})`;
+    return cache.get(file);
+  };
+
+  let kept = 0;
+  let dropped = 0;
+  const out = css.replace(/@font-face\{[^}]*\}/g, (block) => {
+    const srcMatch = /src:([^;}]*)/.exec(block);
+    if (!srcMatch) return block;
+    const urls = [...srcMatch[1].matchAll(/url\((["']?)([^"')]+)\1\)/g)].map((m) => m[2]);
+    const pick = urls.find((u) => u.endsWith('.woff2')) ?? urls[0];
+    const uri = pick ? dataUri(pick) : null;
+    if (!uri) return block;
+    kept += 1;
+    dropped += Math.max(0, urls.length - 1);
+    return block.replace(srcMatch[0], `src:url(${uri}) format("woff2")`);
   });
-  return css;
+  console.log(`  KaTeX 字体：保留 ${kept} 个 woff2，去掉 ${dropped} 个冗余 url（woff/ttf 回退）`);
+  return out;
 }
 
 async function bundleApp() {
@@ -69,8 +88,7 @@ async function bundleApp() {
     target: 'es2022',
     platform: 'browser',
     logLevel: 'silent',
-    // 样式另行内联；这里把 CSS 导入置空，避免产出多余资产
-    loader: { '.css': 'empty' },
+    loader: { '.css': 'empty' }, // 样式另行内联
     minify: true,
   });
   const js = res.outputFiles.find((f) => !f.path.endsWith('.css')) ?? res.outputFiles[0];
@@ -106,22 +124,25 @@ const page = (title, style, shim, app) => `<!DOCTYPE html>
 `;
 
 async function main() {
-  const files = scanJson();
+  const kbIndex = await requireTs('src/modules/kb-index.ts');
+  const index = kbIndex.buildIndex(JSON_DIR);
+  const units = index.units.map((u) => u.path);
+
   const data = {};
-  for (const p of files) data[p] = fs.readFileSync(path.join(ROOT, p), 'utf8');
-  const index = JSON.stringify({ files });
+  for (const p of units) data[p] = fs.readFileSync(path.join(ROOT, p), 'utf8');
+  const indexJson = JSON.stringify({ units: index.units });
 
   const shim = `
-    // standalone：数据全部内联，fetch 只认内联表；其余一律 404（零外部请求）
+    // standalone：索引 + 单元原文全部内联；fetch 只认内联表，其余一律 404（零外部请求）
     (function () {
+      window.__indexJson = ${JSON.stringify(indexJson)};
       var DATA = ${JSON.stringify(data)};
-      var INDEX = ${index};
-      window.__kbStandalone = { files: INDEX.files.length };
+      window.__kbStandalone = { units: ${index.units.length} };
       window.fetch = function (input) {
         var url = typeof input === 'string' ? input : input.url;
         var clean = String(url).split('?')[0].replace(/^\\.\\//, '');
         var body = null;
-        if (clean === 'json/index.json') body = JSON.stringify(INDEX);
+        if (clean === 'json/index.json') body = window.__indexJson;
         else if (Object.prototype.hasOwnProperty.call(DATA, clean)) body = DATA[clean];
         if (body === null) {
           return Promise.resolve({ ok: false, status: 404, statusText: 'Not Found',
@@ -132,6 +153,7 @@ async function main() {
       };
     })();`;
 
+  console.log('standalone 组装中…');
   const app = await bundleApp();
   const katexCss = inlinedKatexCss();
   const appCss = fs.readFileSync(path.join(ROOT, 'src', 'styles.css'), 'utf8');
@@ -139,10 +161,10 @@ async function main() {
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, page('learning-web · 知识库快照', `${katexCss}\n${appCss}`, shim, app));
 
-  const kb = fs.statSync(OUT).size / 1024;
-  console.log(`standalone 已写入 ${path.relative(ROOT, OUT)}`);
-  console.log(`  单元 ${files.length} 个 · 内联数据 ${(JSON.stringify(data).length / 1024).toFixed(0)} KB`);
-  console.log(`  单文件 ${kb.toFixed(0)} KB（含 KaTeX 字体 base64）`);
+  const mb = (n) => `${(n / 1024 / 1024).toFixed(2)} MB`;
+  console.log(`standalone 已写入 ${path.relative(ROOT, OUT)}（${mb(fs.statSync(OUT).size)}）`);
+  console.log(`  单元 ${index.units.length} 个 · 索引 ${(indexJson.length / 1024).toFixed(1)} KB`);
+  console.log(`  内联数据 ${mb(JSON.stringify(data).length)} · KaTeX CSS ${mb(katexCss.length)} · app ${mb(app.length + appCss.length)}`);
 }
 
 main().catch((e) => {

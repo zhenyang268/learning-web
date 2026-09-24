@@ -59,3 +59,13 @@ export function progressOf(code: string, codes: string[]): number {
   if (!hit.length) return 0;
   return hit.reduce((s, c) => s + masteryOf(c), 0) / (hit.length * 5);
 }
+
+/**
+ * 小目掌握度 = 其下各卡片掌握度的均值（0–5 取整）。
+ * 入参是**卡片 key 列表**，可以直接从索引的 `cards` 字段拿到 ——
+ * 因此算 frontier 不需要加载任何词条正文。
+ */
+export function groupMasteryMean(keys: readonly string[]): number {
+  if (!keys.length) return 0;
+  return Math.round(keys.reduce((s, k) => s + masteryOf(k), 0) / keys.length);
+}
