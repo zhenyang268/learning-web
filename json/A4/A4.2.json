@@ -176,8 +176,8 @@
       ],
       "tex_ref": {
         "file": "notebook/A_analysis.tex",
-        "line_start": 306,
-        "line_end": 307
+        "line_start": 318,
+        "line_end": 323
       },
       "fill_hint": "分段分部积分写全（含 x=0 处边界项相消的一行）；ReLU 那条连接 A4.2.probe1 的数值验证；「0 处取值任意」呼应 a.e. 唯一性",
       "content": "把 A4.1 的直觉（「$|x|$ 的导数应当是符号函数」）用弱导数定义严格兑现。\n\n**候选**：$u(x)=|x|$，$v(x)=\\mathrm{sign}(x)$（约定 $v(0)=0$；由 a.e. 唯一性，此点取值无关紧要）。\n\n**验证**（对任意 $\\varphi\\in C_c^\\infty(\\mathbb R)$，取 $R$ 使 $\\mathrm{supp}\\,\\varphi\\subset[-R,R]$）：分段分部积分——\n\n$$\\int_{-R}^{0}(-x)\\varphi'\\,dx+\\int_{0}^{R}x\\,\\varphi'\\,dx$$\n\n左段：$[-x\\varphi]_{-R}^{0}-\\int_{-R}^0(-1)\\varphi\\,dx=0\\cdot\\varphi(0)-R\\varphi(-R)+\\int_{-R}^0\\varphi\\,dx$；右段：$[x\\varphi]_0^R-\\int_0^R\\varphi\\,dx=0$（$\\varphi(\\pm R)=0$，紧支！）。两段相加，边界项只剩 $x=0$ 处的贡献：左段上边界给出 $-0\\cdot\\varphi(0)=0$，右段下边界给出 $-0\\cdot\\varphi(0)=0$——**$x=0$ 处的边界项因为 $u(0)=0$ 而恰好消失**。合计\n\n$$\\int_{\\mathbb R}|x|\\varphi'\\,dx=\\int_{-R}^0\\varphi\\,dx-\\int_0^R\\varphi\\,dx=-\\int_{\\mathbb R}\\mathrm{sign}(x)\\,\\varphi\\,dx$$\n\n这正是弱导数定义要求的等式（右边带负号）。**$\\mathrm{sign}$ 是 $|x|$ 的弱导数**。$\\square$\n\n**注意边界项的命运**：分部积分的边界项在 $x=0$ 处为 $|0|\\cdot\\varphi(0)=0$——角点处函数值连续（裂缝）救了它。对照 $H$（断崖）：$H$ 在跳点两侧函数值不同，边界项留下 $\\varphi(0)$ 抵消不掉，导数被迫成为 δ。\n\n**同款产品**：斜坡 $\\max(x,0)$（ReLU，机器学习激活函数的数学原型）弱导数是 $H(x)$——斜坡的斜率从 0 跳到 1，跳到 $H$ 这种「积分可配」的函数（$H\\in L^1_{\\text{loc}}$，它自己不可弱导是另一回事）。",

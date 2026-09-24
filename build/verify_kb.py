@@ -6,14 +6,18 @@ r"""pass 2 确定性校验：结构合规 + 代号/links 存在性 + 数值【�
 
 检查项：
   1. json.tool 可解析
-  2. 文件级字段：schema=entry-card/v2、code/chapter/title/src/notebook_commit/entries
-  3. 词条必填字段与 type 枚举（9 种）、id 格式与文件 code 前缀一致
-  4. tex_ref 区间对象；generated_by 三字段；status=drafted
-  5. 禁 difficulty/mastery（模型不许编）
-  6. links 只用全库代号清单（build/state/slices.json）
-  7. viz 三档写法
-  8. 【待核验:expr】重算：python 求值替换为核实值，写回文件；前后值不一致记入纠错日志
+ 2. 文件级字段：schema=entry-card/v2、code/chapter/title/src/notebook_commit/entries
+ 3. 词条必填字段与 type 枚举（9 种）、id 格式与文件 code 前缀一致
+ 4. tex_ref 区间对象；generated_by 三字段；status=drafted
+ 5. 禁 difficulty/mastery（模型不许编）
+ 6. links 只用全库代号清单（build/state/slices.json）
+ 7. viz 三档写法
+ 8. 【待核验:expr】重算：python 求值替换为核实值，写回文件；前后值不一致记入纠错日志
      build/state/verify/corrections.json
+ 9. 【数值一致性】标记前若紧跟 `=`/`≈`/`~` 的断言值，与重算值对照，不符记 CRIT
+     （2026-09-24 加固：此前只回填不比对，声称值写错会静默留下）
+10. keywords 条数须在 3–7（契约 §2 表格）——越界记 MAJ
+11. tex_ref.line_start/line_end 须落在该单元切片行区间内 —— 越界记 MAJ
 退出码：critical=0 时 0，否则 1。
 """
 from __future__ import annotations
@@ -28,11 +32,14 @@ WEB = Path(__file__).resolve().parent.parent
 STATE = WEB / "build" / "state"
 SLICES = json.loads((STATE / "slices.json").read_text(encoding="utf-8"))
 VALID_CODES = {u["code"] for u in SLICES["units"]}
+SLICE_RANGE = {u["code"]: (u["line_start"], u["line_end"]) for u in SLICES["units"]}
 CODE_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?$")
 ID_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
 TYPES = {"statement", "proof", "intuition", "extension", "counterexample",
          "comparison", "application", "viz", "probe"}
 MARK_RE = re.compile(r"【待核验:([^】]+)】")
+# 标记前紧邻的断言值（要求有 =/≈/~ 之类的关系符，避免把 "取 n=10" 里的参数当断言）
+CLAIM_RE = re.compile(r"[=≈≃~]\s*(-?\d[\d,]*(?:\.\d+)?(?:[eE][+-]?\d+)?)\s*[$\s*）)】」。，,]*$")
 
 SAFE_ENV = {
     "__builtins__": {},
@@ -63,6 +70,24 @@ def fmt(v) -> str:
         return str(round(v))
     return f"{v:.12g}"
 
+def close_enough(claimed: float, actual: float) -> bool:
+    """声称值与重算值是否一致。允许 1/100/0.01 三种尺度（把「占比 0.83%」写成 0.83 这种情况放过）。"""
+    for scale in (1.0, 100.0, 0.01):
+        target = actual * scale
+        if abs(claimed - target) <= 1e-2 * max(1.0, abs(target)):
+            return True
+    return False
+
+def check_claim(text_before: str):
+    """从标记前的文本里取断言值。取不到（没有关系符）返回 None。"""
+    m = CLAIM_RE.search(text_before)
+    if not m:
+        return None
+    try:
+        return float(m.group(1).replace(",", ""))
+    except ValueError:
+        return None
+
 def verify_file(path: Path) -> list[str]:
     errs: list[str] = []
     code = path.stem
@@ -82,6 +107,7 @@ def verify_file(path: Path) -> list[str]:
     prefix = data["code"]
     if prefix != code:
         errs.append(f"CRIT {code}: 文件名与 code 字段({prefix})不一致")
+    slo, shi = SLICE_RANGE.get(prefix, (None, None))
     for ent in data["entries"]:
         eid = ent.get("id", "?")
         if not ID_RE.match(eid):
@@ -97,6 +123,9 @@ def verify_file(path: Path) -> list[str]:
             errs.append(f"CRIT {code} {eid}: content 为空")
         if ent.get("status") != "drafted":
             errs.append(f"CRIT {code} {eid}: status 应为 drafted")
+        kw = ent.get("keywords")
+        if isinstance(kw, list) and not (3 <= len(kw) <= 7):
+            errs.append(f"MAJ {code} {eid}: keywords 应 3–7 条，实为 {len(kw)}")
         gb = ent.get("generated_by")
         if not (isinstance(gb, dict) and set(gb) >= {"model", "date", "reviewed"}):
             errs.append(f"CRIT {code} {eid}: generated_by 缺字段")
@@ -105,6 +134,10 @@ def verify_file(path: Path) -> list[str]:
                                    and isinstance(tr.get("line_start"), int)
                                    and isinstance(tr.get("line_end"), int)):
             errs.append(f"MAJ {code} {eid}: tex_ref 应为 {{file,line_start,line_end}} 或 null")
+        elif tr is not None and slo is not None:
+            if not (slo <= tr["line_start"] <= tr["line_end"] <= shi):
+                errs.append(f"MAJ {code} {eid}: tex_ref {tr['line_start']}-{tr['line_end']}"
+                            f" 越出切片区间 {slo}-{shi}")
         for bad in ("difficulty", "mastery"):
             if bad in ent:
                 errs.append(f"CRIT {code} {eid}: 模型不许写 {bad}")
@@ -126,11 +159,12 @@ def verify_file(path: Path) -> list[str]:
     return errs
 
 def settle_numerics(path: Path, corrections: list) -> list[str]:
-    """重算【待核验:expr】并回填。返回错误列表；无标记时不动文件。"""
+    """重算【待核验:expr】并回填，同时对照标记前的断言值。无标记时不动文件。"""
     text = path.read_text(encoding="utf-8")
     if "【待核验:" not in text:
         return []
     errs: list[str] = []
+    mismatches: list = []
 
     def repl(m: re.Match) -> str:
         expr = m.group(1).strip()
@@ -139,7 +173,12 @@ def settle_numerics(path: Path, corrections: list) -> list[str]:
         except Exception as exc:
             errs.append(f"CRIT {path.stem}: 待核验表达式无法求值 {expr!r} ({exc})")
             return m.group(0)
-        # 找标记紧前面的数字断言（如 "=385【待核验:...】"）做一致性对照
+        claimed = check_claim(m.string[:m.start()])
+        if claimed is not None and not close_enough(claimed, val):
+            mismatches.append({"expr": expr, "claimed": claimed, "actual": val})
+            errs.append(f"CRIT {path.stem}: 数值不符 声称 {claimed:g} vs 重算 {fmt(val)}"
+                        f"  ← {expr}")
+        # 回填为核实值
         return f"【已核验:{fmt(val)}|{expr}】"
 
     new_text = MARK_RE.sub(repl, text)
@@ -150,10 +189,11 @@ def settle_numerics(path: Path, corrections: list) -> list[str]:
         except Exception:
             errs.append(f"CRIT {path.stem}: 数值回填后 JSON 失效（不写回）")
             return errs
-        # 记录前后差异（纠错审计）
+        # 记录回填与纠错审计
         before = [(m.start(), m.group(1)) for m in MARK_RE.finditer(text)]
         path.write_text(new_text, encoding="utf-8")
-        corrections.append({"file": str(path.relative_to(WEB)), "markers": len(before)})
+        corrections.append({"file": str(path.relative_to(WEB)), "markers": len(before),
+                            "mismatches": mismatches})
     return errs
 
 def main() -> None:
@@ -178,7 +218,10 @@ def main() -> None:
     maj = [e for e in all_errs if e.startswith("MAJ")]
     for e in all_errs:
         print(e)
-    print(f"\n== {len(files)} 文件：CRIT {len(crit)} · MAJ {len(maj)} · 数值回填 {sum(c['markers'] for c in corrections)} 处 ==")
+    n_mark = sum(c["markers"] for c in corrections)
+    n_bad = sum(len(c["mismatches"]) for c in corrections)
+    print(f"\n== {len(files)} 文件：CRIT {len(crit)} · MAJ {len(maj)} · 数值回填 {n_mark} 处"
+          f"（其中不一致 {n_bad}） ==")
     sys.exit(1 if crit else 0)
 
 if __name__ == "__main__":
