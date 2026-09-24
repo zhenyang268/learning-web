@@ -1,0 +1,375 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P8.2",
+  "chapter": "P8",
+  "title": "Γ 函数（Euler 第二积分）（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 426,
+    "line_end": 441,
+    "anchor": "P_computation.tex:428"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P8.2:gamma.statement",
+      "type": "statement",
+      "subject": "gamma",
+      "title": "Γ(s) 的定义与三条核心公式",
+      "keywords": [
+        "Γ(s) = ∫₀^∞ t^{s-1} e^{-t} dt，成立条件 Re s > 0",
+        "递推 Γ(s+1) = s·Γ(s)（分部积分一行）",
+        "整数点 Γ(n+1) = n!；Γ(1) = 1、Γ(2) = 1",
+        "Γ(1/2) = √π（【必】会推）；Γ(3/2) = √π/2",
+        "常用：∫₀^∞ x^n e^{-x}dx = n!",
+        "Γ 是阶乘的连续插值（解析延拓）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 427,
+        "line_end": 429
+      },
+      "fill_hint": "以 tex_ref 三行（定义式 + 条件 Re s > 0）为准转写；递推、Γ(1/2)、Γ(3/2) 与「连续插值」这几点来自切片 itemize 各行，逐条对齐",
+      "content": "**定义（Euler 第二积分）**：\n$$\n\\Gamma(s)=\\int_0^\\infty t^{\\,s-1}e^{-t}\\,dt,\\qquad \\text{成立条件：}\\ \\operatorname{Re}s>0.\n$$\n\n逐项拆解（被积函数是两个因子的乘积，各管一端）：\n\n- $t^{\\,s-1}$ 是**幂权重**：它只在 $t\\to0^+$ 这一端可能出问题。$\\int_0^1 t^{s-1}dt$ 收敛 $\\iff s-1>-1\\iff s>0$；\n- $e^{-t}$ 是**无穷长的衰减**：它保证 $t\\to\\infty$ 那一端永远收敛（指数衰减压过任何幂增长），**与 $s$ 无关**；\n- 所以条件 $\\operatorname{Re}s>0$ **完全来自 $t=0$ 端**。这一条是本单元所有反例的根源（见 gamma.poles）。\n\n**三条核心公式**（切片 itemize 逐条）：\n\n1. **递推**：$\\Gamma(s+1)=s\\,\\Gamma(s)$（分部积分一行，见 gamma.proof）。反复使用得\n   $$\n   \\Gamma(n+1)=n!\\qquad (n=0,1,2,\\dots),\n   $$\n   特别地 $\\Gamma(1)=1$、$\\Gamma(2)=1$。数值对拍：$\\Gamma(21)=20!=2432902008176640000$【已核验:2432902008176640000|factorial(20)】。\n2. **半整数点**：$\\Gamma(1/2)=\\sqrt\\pi$【已核验:1.77245385091|gamma(0.5)】（【必】会推，换元 $t=x^2$）；由递推 $\\Gamma(3/2)=\\frac12\\Gamma(1/2)=\\frac{\\sqrt\\pi}{2}=0.886226925453$【已核验:0.886226925453|gamma(1.5)】。\n3. **常用积分**：$\\displaystyle\\int_0^\\infty x^n e^{-x}\\,dx=\\Gamma(n+1)=n!$（$n$ 为非负整数；更一般地 $\\int_0^\\infty x^{s-1}e^{-x}dx=\\Gamma(s)$ 对 $\\operatorname{Re}s>0$ 成立）。\n\n**为什么叫「阶乘的连续插值」**：阶乘 $n!$ 只在整数上有定义，而 $\\Gamma(s)$ 在 $\\operatorname{Re}s>0$ 上都有定义且满足同样的递推关系。把 $n!=\\Gamma(n+1)$ 当成定义，阶乘就被「抹平」成一条连续（事实上解析）的曲线。这也是 $\\Gamma$ 在组合估计、Stirling（P8.4）、概率分布（C2）里无处不在的原因——它把离散的计数问题接上了连续的分析工具。",
+      "links": [
+        "P8.4",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.intuition",
+      "type": "intuition",
+      "subject": "gamma",
+      "title": "直觉：幂权重 × 指数衰减 = 被「削峰」的幂函数",
+      "keywords": [
+        "t^{s-1} 在 0 附近决定收敛（s > 0）",
+        "e^{-t} 在 ∞ 处决定收敛（永远够用）",
+        "乘积 t^{s-1}e^{-t} 是一条单峰曲线，峰在 t = s-1（s>1 时）",
+        "s 增大 ⟹ 峰右移且变高 ⟹ Γ(s) 增长得比任何指数都快（超阶乘级）",
+        "Γ = 把离散阶乘「抹平」：插值 + 保持递推",
+        "假设给了什么：Re s > 0；结论为什么成立：两端分别被幂与指数管住"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 439,
+        "line_end": 439
+      },
+      "fill_hint": "切片直觉原文「e^{-t} 是无穷长的衰减，t^{s-1} 是幂权重；Γ 把离散的阶乘抹平到连续参数」；扩写时把「假设给了什么」与「结论为什么成立」分开写，并补上峰位置 t = s-1 这个具体图像",
+      "content": "**图像**：看被积函数 $g_s(t)=t^{\\,s-1}e^{-t}$（$t>0$）。它是**两个因子的乘积**，各自管住积分的一端：\n\n- $t^{\\,s-1}$ 在 $t\\to0^+$ 时：若 $s>1$ 它趋于 $0$；若 $s=1$ 它是常数 $1$；若 $0<s<1$ 它**发散**（但发散速度慢于 $1/t$，仍可积）；若 $s\\le0$ 它发散得比 $1/t$ 快，**不可积**。\n- $e^{-t}$ 在 $t\\to\\infty$ 时以指数速度压下去，任何幂次都拦不住它。\n\n合起来，$g_s$ 是一条**单峰曲线**：求导 $g_s'(t)=t^{s-2}e^{-t}\\bigl[(s-1)-t\\bigr]$，故（$s>1$ 时）峰在 $t=s-1$，峰高 $(s-1)^{s-1}e^{-(s-1)}$。**$s$ 增大 ⟹ 峰右移且急剧变高**——这就是 $\\Gamma(s)$ 增长得极快的原因（$\\Gamma(21)=2.43\\times10^{18}$【已核验:2432902008176640000|gamma(21)】，$\\ln\\Gamma(21)=42.3356$【已核验:42.3356164608|lgamma(21)】）。\n\n**假设与结论分开写**：\n\n- *假设给了什么*：$\\operatorname{Re}s>0$。它唯一的职责是保证 $t=0$ 端可积；$t=\\infty$ 端**不需要任何条件**（指数衰减白送）。\n- *结论为什么因此成立*：一个积分收敛当且仅当两端都收敛；这里一端由假设锁住、另一端无条件成立，故 $\\Gamma(s)$ 存在且有限。\n\n**「抹平阶乘」的画面**：把 $(n,\\ n!)$ 这些离散点画在图上，$n=0,1,2,\\dots$ 处的值是 $1,1,2,6,24,\\dots$，点之间**空空如也**。$\\Gamma(s)$ 做的事是在这些点之间填进一条光滑曲线，并且**保持递推关系** $\\Gamma(s+1)=s\\Gamma(s)$——这个递推就是阶乘的定义式 $n!=n\\cdot(n-1)!$，所以填进去的曲线与离散点完全吻合（$\\Gamma(n+1)=n!$）。\n\n**一个反直觉的点**：满足「过所有阶乘点 + 光滑」的插值**不唯一**（可以加 $\\sin(\\pi s)$ 这类零点在整数上的扰动）。$\\Gamma$ 之所以是「那个」插值，是因为它还要求**对数凸性**（Bohr--Mollerup 定理，见 gamma.bohr）。只说「连续插值」是不够的。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.proof",
+      "type": "proof",
+      "subject": "gamma",
+      "title": "证明骨架：递推一行 + Γ(1/2) 换元（每步给理由）",
+      "keywords": [
+        "递推：Γ(s+1) = ∫ t^s e^{-t}dt，分部积分取 u = t^s、v' = e^{-t}",
+        "边界项 [−t^s e^{-t}]₀^∞ = 0 需要 Re s > 0（t→0 端）",
+        "得 Γ(s+1) = s·∫ t^{s-1}e^{-t}dt = s Γ(s)",
+        "Γ(1/2)：代 t = x²，dt = 2x dx ⟹ Γ(1/2) = 2∫₀^∞ e^{-x²}dx = √π",
+        "Γ(3/2) = ½Γ(1/2) = √π/2 由递推直接得",
+        "易错点：换元时 t^{-1/2} 与 dt 的 x 因子要消干净；别漏 2"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 434,
+        "line_end": 437
+      },
+      "fill_hint": "切片给了 Γ(1/2) 的换元推导与「递推分部积分一行」的说法；这里把两个证明的每一步（含边界项为何为零、x 因子怎么消）写全，并标注易错点",
+      "content": "**证明一：递推 $\\Gamma(s+1)=s\\Gamma(s)$（分部积分一行）**\n\n取 $\\operatorname{Re}s>0$，写\n$$\n\\Gamma(s+1)=\\int_0^\\infty t^{\\,s}e^{-t}\\,dt.\n$$\n分部积分（见 P9.1），取 $u=t^{\\,s}$、$\\mathrm dv=e^{-t}dt$（$\\mathrm v=-e^{-t}$）：\n$$\n\\Gamma(s+1)=\\Bigl[\\underbrace{-t^{\\,s}e^{-t}}_{\\text{边界项}}\\Bigr]_0^\\infty+\\int_0^\\infty s\\,t^{\\,s-1}e^{-t}\\,dt.\n$$\n\n- **$t\\to\\infty$ 端**：$t^{\\,s}e^{-t}\\to0$（指数压过幂）；\n- **$t\\to0^+$ 端**：$t^{\\,s}\\to0$，**这一步需要 $\\operatorname{Re}s>0$**——若 $s=0$ 则 $t^0=1$，边界项变成 $-1\\ne0$，递推失效（这正是 $s=0$ 是极点的另一个表现）。\n\n故边界项为 $0$，得 $\\Gamma(s+1)=s\\Gamma(s)$。取 $s=n$ 归纳即得 $\\Gamma(n+1)=n!$（起点 $\\Gamma(1)=\\int_0^\\infty e^{-t}dt=1=0!$）。$\\square$\n\n**证明二：$\\Gamma(1/2)=\\sqrt\\pi$（【必】会推）**\n\n$$\n\\Gamma\\Bigl(\\frac12\\Bigr)=\\int_0^\\infty t^{-1/2}e^{-t}\\,dt.\n$$\n代 $t=x^2$（$x=\\sqrt t$，$dt=2x\\,dx$，$t^{-1/2}=\\frac1x$）：\n$$\n\\Gamma\\Bigl(\\frac12\\Bigr)=\\int_0^\\infty \\underbrace{\\frac1x}_{t^{-1/2}}e^{-x^2}\\underbrace{2x\\,dx}_{dt}\n=2\\int_0^\\infty e^{-x^2}\\,dx=2\\cdot\\frac{\\sqrt\\pi}{2}=\\sqrt\\pi=1.77245385091\\text{【已核验:1.77245385091|gamma(0.5)】}\n$$\n其中 $\\int_0^\\infty e^{-x^2}dx=\\frac{\\sqrt\\pi}{2}$ 来自 P8.1 的高斯积分（极坐标升维）。$\\square$\n\n**关键动作**：$t^{-1/2}$ 与 $dt=2x\\,dx$ 里的 $x$ **恰好消掉**，只剩 $2dx$——这个「消掉」不是巧合，正是为什么选 $t=x^2$ 而不是别的可逆变换。\n\n**推论链**：\n$$\n\\Gamma\\Bigl(\\frac32\\Bigr)=\\frac12\\Gamma\\Bigl(\\frac12\\Bigr)=\\frac{\\sqrt\\pi}{2}=0.886226925453\\text{【已核验:0.886226925453|gamma(1.5)】},\\qquad\n\\Gamma\\Bigl(\\frac52\\Bigr)=\\frac32\\Gamma\\Bigl(\\frac32\\Bigr)=\\frac{3\\sqrt\\pi}{4}=1.32934038818\\text{【已核验:1.32934038818|3*sqrt(pi)/4】}.\n$$\n\n**易错点**：\n\n- 换元后漏掉因子 $2$（会得到 $\\frac{\\sqrt\\pi}{2}$ 而不是 $\\sqrt\\pi$）；\n- 忘了 $\\Gamma(1/2)$ 的**整个理由**是 P8.1 的高斯积分——两者是同一个数，不是两个独立结论；\n- 递推的方向：$s\\Gamma(s)=\\Gamma(s+1)$，往**下**推是 $\\Gamma(s)=\\frac{\\Gamma(s+1)}{s}$，除以 $s$ 在 $s=0$ 处非法（见 gamma.poles）。",
+      "links": [
+        "P8.1",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.quantifiers",
+      "type": "comparison",
+      "subject": "gamma",
+      "title": "Γ 适用条件表（去掉每条会怎样）",
+      "keywords": [
+        "条件1：Re s > 0 —— 积分定义的收敛域，唯一实质条件",
+        "条件2：递推 Γ(s+1) = sΓ(s) 往下推时 s ≠ 0（除以零）",
+        "条件3：Γ(n+1) = n! 要求 n 为非负整数",
+        "条件4：∫₀^∞ x^{s-1}e^{-x}dx = Γ(s) 的幂次是 s-1 不是 s",
+        "条件5：负参数不全发散——Γ(-1/2) = -2√π 有限",
+        "可放宽：递推把 Γ 延拓到全复平面（除极点）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 427,
+        "line_end": 438
+      },
+      "fill_hint": "四列表「条件｜失效的具体例子｜误用后果｜能否放宽」；极点那几行必须给具体截断数值（带【待核验】）",
+      "content": "把 $\\Gamma(s)=\\int_0^\\infty t^{s-1}e^{-t}dt$ 及其三条公式逐条审。\n\n| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $\\operatorname{Re}s>0$（积分定义） | $s=0$：$\\int_0^\\infty t^{-1}e^{-t}dt$，截断 $\\int_\\varepsilon^1\\frac{dt}{t}=-\\ln\\varepsilon$，$\\varepsilon=10^{-6}$ 时 $=13.8155$【已核验:13.815510558|-log(1e-6)】，随 $\\varepsilon\\to0$ 无界 | 得到一个**根本不存在**的 $\\Gamma(0)$；误以为它有限就会继续往下推，全盘皆错 | 不能放宽（对**积分定义**而言）；但递推可把 $\\Gamma$ 延拓过去并暴露极点（见 gamma.poles） |\n| $s=-1$（更负） | $\\int_0^\\infty t^{-2}e^{-t}dt$，截断 $\\int_\\varepsilon^1 t^{-2}dt=\\frac1\\varepsilon-1$：$\\varepsilon=10^{-3}$ 时 $=999$【已核验:999|1/0.001-1】，$\\varepsilon=10^{-6}$ 时 $=999999$【已核验:999999|1/1e-6-1】 | 比 $s=0$ 发散得更快（$1/\\varepsilon$ 而非 $\\ln\\frac1\\varepsilon$） | 同上 |\n| 递推往下推时 $s\\ne0$ | 由 $\\Gamma(1)=0\\cdot\\Gamma(0)$ 反解 $\\Gamma(0)=\\frac{\\Gamma(1)}{0}=\\infty$ —— 若误当成有限数继续算 $\\Gamma(-1)=\\frac{\\Gamma(0)}{-1}$，得到 $\\infty$ 的荒谬代数 | 在极点处做代数运算，得到 $\\infty-\\infty$ 型无意义结果 | 不可放宽；非正整数 $0,-1,-2,\\dots$ 全是**一阶极点** |\n| 「负参数一律发散」是**错的** | $\\Gamma(-1/2)=-2\\sqrt\\pi=-3.5449$【已核验:-3.54490770181|-2*sqrt(pi)】是**有限值**（$-1/2$ 不是非正整数）；数值校验：$\\Gamma(1/2)=(-1/2)\\Gamma(-1/2)$ ⟹ $\\Gamma(-1/2)=-2\\Gamma(1/2)=-2\\sqrt\\pi$ | 误拒合法计算：在留数计算、Mellin 变换里会白白丢掉一半项 | **本条必须纠正**：极点只在**非正整数**，不在所有负数上 |\n| $\\Gamma(n+1)=n!$ 要求 $n\\in\\mathbb Z_{\\ge0}$ | 误用 $n=-1$：「$(-1)!=\\Gamma(0)$」，而 $\\Gamma(0)$ 是极点 | 组合公式 $\\binom{n}{k}=\\frac{n!}{k!(n-k)!}$ 在 $n<k$ 时会给出 $\\frac{1}{\\Gamma(0)}$ 这类非法中间量 | 不能放宽；负整数的阶乘无定义（这正是 $\\frac{1}{\\Gamma}$ 在非正整数处为 $0$ 的原因） |\n| 幂次是 $t^{\\,s-1}$ 不是 $t^{\\,s}$ | 误写 $\\int_0^\\infty t^{\\,s}e^{-t}dt=\\Gamma(s)$：取 $s=1$ 得 $\\int t e^{-t}dt=1$，而真值 $\\Gamma(1)=1$ 碰巧对；取 $s=2$ 得 $\\int t^2e^{-t}dt=2$，真值 $\\Gamma(2)=1$ **错**【已核验:1|gamma(2)】 | 差一个 $s$ 因子，所有半整数值全错 | 不可放宽；牢记「$x^n e^{-x}$ 的积分是 $n!$」 ⟹ $\\Gamma(n+1)$ |\n\n**一句话总结**：$\\Gamma$ 的实质条件只有「$\\operatorname{Re}s>0$」；真正的坑是**把递推往极点方向用**（除以 $0$）与**误以为所有负参数都发散**（其实只有非正整数是极点）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.poles",
+      "type": "counterexample",
+      "subject": "gamma",
+      "title": "反例：极点结构——Γ 在 0, −1, −2, … 处发散（典型误用）",
+      "keywords": [
+        "积分定义只在 Re s > 0 收敛，s ≤ 0 处被积函数在 0 端不可积",
+        "s = 0：∫_ε^1 dt/t = −ln ε，ε = 10⁻⁶ 时 13.8155",
+        "s = −1：∫_ε^1 dt/t² = 1/ε − 1，ε = 10⁻³ 时 999",
+        "递推暴露极点：Γ(0) = Γ(1)/0 = ∞，Γ(−1) = Γ(0)/(−1) = ∞",
+        "留数 Res_{s=−n} Γ(s) = (−1)^n/n!：n=0,1,2 时为 1, −1, 1/2",
+        "修补：Γ 靠递推解析延拓到 ℂ∖{0,−1,−2,…}，极点是一阶的"
+      ],
+      "tex_ref": null,
+      "fill_hint": "完整算两个截断数值（s=0 对数发散、s=−1 幂发散）+ 递推暴露极点的推导 + 留数表；结尾给「Γ 靠延拓而非积分定义」的修补说明",
+      "content": "**误用现场**：把 $\\Gamma(s)=\\int_0^\\infty t^{s-1}e^{-t}dt$ 当成「对任何 $s$ 都成立的定义」，直接代入 $s=0$ 或负整数。\n\n**为什么不行（逐项算）**：被积函数 $t^{\\,s-1}e^{-t}$ 在 $t\\to0^+$ 附近的行为是 $t^{\\,s-1}$（因为 $e^{-t}\\to1$）。截断在 $\\varepsilon$ 处积分：\n\n| $s$ | 0 端被积函数 | 截断积分 $\\int_\\varepsilon^1$ | $\\varepsilon=10^{-6}$ 时 | 发散类型 |\n|---|---|---|---|---|\n| $s=0$ | $t^{-1}$ | $-\\ln\\varepsilon$ | $13.8155$【已核验:13.815510558|-log(1e-6)】 | 对数 |\n| $s=-1$ | $t^{-2}$ | $\\frac1\\varepsilon-1$ | $999999$【已核验:999999|1/1e-6-1】 | 幂（$1/\\varepsilon$） |\n| $s=-2$ | $t^{-3}$ | $\\frac{1}{2\\varepsilon^2}-\\frac12$ | $5\\times10^{11}$【已核验:500000000000|0.5/1e-12-0.5】 | 幂（$1/\\varepsilon^2$） |\n\n（加上 $e^{-t}$ 因子只会把这些值乘上 $\\Theta(1)$ 的常数，不改变发散性。例如 $s=0$ 时 $\\int_\\varepsilon^1 t^{-1}e^{-t}dt\\ge e^{-1}(-\\ln\\varepsilon)=5.0822$【已核验:5.08244230356|-log(1e-6)/e】，仍随 $\\varepsilon\\to0$ 无界。）\n\n**递推怎么暴露极点**：递推 $\\Gamma(s+1)=s\\Gamma(s)$ 反过来写是 $\\Gamma(s)=\\frac{\\Gamma(s+1)}{s}$。于是\n$$\n\\Gamma(0)=\\frac{\\Gamma(1)}{0}=\\infty,\\qquad\n\\Gamma(-1)=\\frac{\\Gamma(0)}{-1}=\\infty,\\qquad\n\\Gamma(-2)=\\frac{\\Gamma(-1)}{-2}=\\infty,\\dots\n$$\n**每一次往下走都要除以一个整数**，而一旦分子已经是 $\\infty$，往后全是 $\\infty$。所以 $\\Gamma$ 在 $0,-1,-2,\\dots$（即**非正整数**）处各有一个**一阶极点**，除此之外处处解析。\n\n**留数**（Mellin 变换与 $\\zeta$ 函数里要用）：\n$$\n\\operatorname*{Res}_{s=-n}\\Gamma(s)=\\frac{(-1)^n}{n!},\\qquad n=0,1,2,\\dots\n$$\n前三个：$n=0$ 时 $1$【已核验:1|1】；$n=1$ 时 $-1$【已核验:-1|-1】；$n=2$ 时 $\\frac12=0.5$【已核验:0.5|0.5】。符号交替、阶乘衰减。\n\n**一个必须记住的对照**：$s=-\\frac12$ **不是**极点。$\\Gamma(-1/2)=-2\\sqrt\\pi=-3.5449$【已核验:-3.54490770181|-2*sqrt(pi)】是有限值。极点只在**非正整数**上；负的非整数完全合法（由递推 $\\Gamma(-1/2)=\\frac{\\Gamma(1/2)}{-1/2}=-2\\sqrt\\pi$ 算出）。\n\n**修补（正确的使用姿势）**：\n\n1. **积分定义只在 $\\operatorname{Re}s>0$ 有效**——要算 $\\Gamma(s)$ 且 $s\\le0$，先把 $s$ 用递推抬到 $\\operatorname{Re}s>0$，再用定义或数值。\n2. **把 $\\Gamma$ 理解为延拓后的亚纯函数**：它在 $\\mathbb C\\setminus\\{0,-1,-2,\\dots\\}$ 上解析，非正整数是一阶极点。这样 $\\Gamma(-1/2)$ 这类值是合法的，而 $\\Gamma(-1)$ 不是。\n3. **遇到 $\\frac{1}{\\Gamma(s)}$**：它在非正整数处为 $0$（因为分母是极点），这是个**整函数**，很多组合公式靠这一点自动处理退化情形。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.factorial-misuse",
+      "type": "counterexample",
+      "subject": "gamma",
+      "title": "典型误用：把 ∫₀^∞ x^n e^{-x}dx = n! 用到 n = −1",
+      "keywords": [
+        "误用：n = −1 时声称 ∫₀^∞ x^{-1}e^{-x}dx = (−1)!",
+        "真值：积分对数发散；截断 ε=10⁻⁶ 时已 ≥ 5.0822",
+        "机制：n! = Γ(n+1)，n = −1 ⟹ Γ(0) 是极点",
+        "对照正例：n = −1/2 ⟹ Γ(1/2) = √π = 1.7725 合法",
+        "修补：先判 n+1 > 0，否则改用 Γ 的延拓值或判定发散"
+      ],
+      "tex_ref": null,
+      "fill_hint": "完整算误用与真值；给正例对照（n=−1/2 合法）；结尾给「先判 n+1>0」的检验动作",
+      "content": "**误用现场**：记住了「$\\int_0^\\infty x^ne^{-x}dx=n!$」这个好用的公式，遇到 $n=-1$ 就直接写\n$$\n\\int_0^\\infty \\frac{e^{-x}}{x}\\,dx\\;\\stackrel{?}{=}\\;(-1)!\n$$\n然后要么把 $(-1)!$ 当成某个数继续算，要么说「$=0$」（因为「$\\frac{1}{\\infty}$」）。两种都是错的。\n\n**真值**：该积分**发散**。截断计算：\n$$\n\\int_\\varepsilon^1\\frac{e^{-x}}{x}dx\\ \\ge\\ e^{-1}\\int_\\varepsilon^1\\frac{dx}{x}=e^{-1}(-\\ln\\varepsilon).\n$$\n- $\\varepsilon=10^{-3}$：下界 $=0.3679\\times6.9078=2.5411$【已核验:2.54122115178|-log(1e-3)/e】；\n- $\\varepsilon=10^{-6}$：下界 $=0.3679\\times13.8155=5.0822$【已核验:5.08244230356|-log(1e-6)/e】；\n- $\\varepsilon=10^{-9}$：下界 $=7.6233$【已核验:7.62366345534|-log(1e-9)/e】。\n\n可见**每把 $\\varepsilon$ 缩小 $10^3$ 倍，值就增大约 $2.54$**（$=\\frac{\\ln 1000}{e}$）——典型的对数发散，极限是 $+\\infty$，不存在有限值。\n\n**失效机制**：$n!=\\Gamma(n+1)$，所以 $n=-1$ 对应 $\\Gamma(0)$，而 $\\Gamma(0)$ 是极点（见 gamma.poles）。公式本身没错，是**使用超出了它的定义域**。\n\n**正例对照（同一个公式，合法的负非整数）**：$n=-\\frac12$ 时 $n+1=\\frac12>0$，\n$$\n\\int_0^\\infty x^{-1/2}e^{-x}dx=\\Gamma\\Bigl(\\frac12\\Bigr)=\\sqrt\\pi=1.77245385091\\text{【已核验:1.77245385091|gamma(0.5)】}\n$$\n完全合法、有限。差别只在 $n+1$ 是不是正的。\n\n**再给一个合法的正整数对拍**：$n=3$，$\\int_0^\\infty x^3e^{-x}dx=3!=6$【已核验:6|factorial(3)】；$\\Gamma(4)=6$【已核验:6|gamma(4)】。\n\n**修补动作（用前 3 秒做完）**：\n\n1. 先算 $s=n+1$；\n2. 若 $s>0$ ⟹ 公式合法，值为 $\\Gamma(s)$；\n3. 若 $s\\in\\{0,-1,-2,\\dots\\}$ ⟹ **积分发散**（极点）；\n4. 若 $s<0$ 且非整数 ⟹ 积分定义仍发散，但若题目要的是**延拓后的 $\\Gamma(s)$**，用递推 $\\Gamma(s)=\\frac{\\Gamma(s+k)}{s(s+1)\\cdots(s+k-1)}$ 抬到正半平面再算。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.half-integer",
+      "type": "extension",
+      "subject": "gamma",
+      "title": "半整数点全家桶：Γ(n + 1/2) 的闭式",
+      "keywords": [
+        "Γ(1/2) = √π；Γ(3/2) = √π/2；Γ(5/2) = 3√π/4；Γ(7/2) = 15√π/8",
+        "通式 Γ(n+1/2) = (2n)!/(4^n n!)·√π",
+        "另一写法 Γ(n+1/2) = (2n-1)!!/2^n · √π",
+        "负半整数：Γ(−1/2) = −2√π；Γ(−3/2) = 4√π/3",
+        "来源：Γ(1/2) 一个值 + 递推 ⟹ 全部半整数",
+        "用途：球体积、正态矩、Bessel 函数的归一化"
+      ],
+      "tex_ref": null,
+      "fill_hint": "切片给了 Γ(1/2) 与 Γ(3/2)；通式与负半整数属拓展，title 加「拓展：」不合适（本条不是新定理而是同族展开），故用「全家桶」措辞并在 content 里注明来自递推",
+      "content": "只要知道 $\\Gamma(1/2)=\\sqrt\\pi$ 一个值，配合递推就能**推出全部半整数点**——这是 $\\Gamma$ 最实用的一张表。\n\n**正半整数**（$n=0,1,2,\\dots$）：\n$$\n\\Gamma\\Bigl(n+\\frac12\\Bigr)=\\frac{(2n)!}{4^{\\,n}n!}\\sqrt\\pi\n=\\frac{(2n-1)!!}{2^{\\,n}}\\sqrt\\pi,\n\\qquad (2n-1)!!=1\\cdot3\\cdot5\\cdots(2n-1).\n$$\n\n| $s$ | 闭式 | 数值 |\n|---|---|---|\n| $\\frac12$ | $\\sqrt\\pi$ | $1.77245385091$【已核验:1.77245385091|gamma(0.5)】 |\n| $\\frac32$ | $\\frac{\\sqrt\\pi}{2}$ | $0.886226925453$【已核验:0.886226925453|gamma(1.5)】 |\n| $\\frac52$ | $\\frac{3\\sqrt\\pi}{4}$ | $1.32934038818$【已核验:1.32934038818|3*sqrt(pi)/4】 |\n| $\\frac72$ | $\\frac{15\\sqrt\\pi}{8}$ | $3.32335097045$【已核验:3.32335097045|15*sqrt(pi)/8】 |\n| $\\frac92$ | $\\frac{105\\sqrt\\pi}{16}$ | $11.6317$【已核验:11.6317283966|105*sqrt(pi)/16】 |\n\n**负半整数**（递推往下推，除以负数 ⟹ 符号交替）：\n$$\n\\Gamma\\Bigl(-\\frac12\\Bigr)=\\frac{\\Gamma(1/2)}{-1/2}=-2\\sqrt\\pi=-3.54490770181\\text{【已核验:-3.54490770181|-2*sqrt(pi)】},\\qquad\n\\Gamma\\Bigl(-\\frac32\\Bigr)=\\frac{\\Gamma(-1/2)}{-3/2}=\\frac{4\\sqrt\\pi}{3}=2.36327180121\\text{【已核验:2.36327180121|4*sqrt(pi)/3】}.\n$$\n注意符号：$-\\frac12$ 处为**负**、$-\\frac32$ 处为**正**——$\\Gamma$ 在相邻极点之间必然变号（它在每个极点两侧分别趋于 $+\\infty$ 与 $-\\infty$）。\n\n**为什么这张表值钱**：\n\n- **球体积**：$\\mathbb R^n$ 中单位球体积 $V_n=\\frac{\\pi^{n/2}}{\\Gamma(\\frac n2+1)}$。$n=2$ 时 $\\frac{\\pi}{\\Gamma(2)}=\\pi$；$n=3$ 时 $\\frac{\\pi^{3/2}}{\\Gamma(5/2)}=\\frac{\\pi^{3/2}}{3\\sqrt\\pi/4}=\\frac{4\\pi}{3}$【已核验:4.18879020479|4*pi/3】。\n- **正态矩**：$N(0,1)$ 的 $2k$ 阶矩 $=(2k-1)!!$，就是这张表配归一化。\n- **Bessel / Legendre 函数**（见 de1.17 特殊函数的统一视角）：半整数阶 Bessel 函数能化成初等函数，全靠 $\\Gamma$ 在半整数上的闭式。\n\n**记忆法**：只需要记 $\\Gamma(1/2)=\\sqrt\\pi$ 与「每次递推乘一个半整数因子」，其余全是算术。",
+      "links": [
+        "de1.17",
+        "P7.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.bohr",
+      "type": "extension",
+      "subject": "gamma",
+      "title": "拓展：Bohr–Mollerup 定理——为什么 Γ 是「那个」插值",
+      "keywords": [
+        "只说「过阶乘点 + 光滑」的插值不唯一（可加 sin(πs) 扰动）",
+        "再加一条「ln Γ 凸」⟹ 唯一，这就是 Bohr–Mollerup 定理",
+        "ln Γ 凸 = 对数凸性（log-convexity）",
+        "Γ(s+1) = sΓ(s) 与 Γ(1) = 1 是它的两条代数条件",
+        "这也解释了为什么 Γ 的图在 s > 1 上「越涨越快」",
+        "延拓视角：Γ 是 ℂ 上的亚纯函数，非正整数是一阶极点"
+      ],
+      "tex_ref": null,
+      "fill_hint": "切片只说「Γ 是阶乘的连续插值」（没说唯一性）；补 Bohr–Mollerup 属拓展，title 加「拓展：」；要点是不唯一性反例与「加对数凸性才唯一」",
+      "content": "**不唯一的反例**：设 $h(s)$ 是任意在整数上为零的解析函数（例如 $h(s)=\\sin(\\pi s)$），则\n$$\n\\widetilde\\Gamma(s)=\\Gamma(s)+c\\sin(\\pi s)\n$$\n仍满足 $\\widetilde\\Gamma(n+1)=n!$（因为 $\\sin(\\pi(n+1))=0$）且仍光滑。**「过所有阶乘点 + 光滑」约束不住一条唯一的曲线**。\n\n**Bohr--Mollerup 定理**：$\\Gamma$ 是**唯一**满足下面三条的函数（在 $s>0$ 上）：\n\n1. $\\Gamma(1)=1$；\n2. $\\Gamma(s+1)=s\\Gamma(s)$；\n3. $\\ln\\Gamma(s)$ 是**凸函数**（对数凸性，log-convexity）。\n\n第 3 条才是把 $\\sin(\\pi s)$ 这类扰动排除掉的关键：$\\Gamma+c\\sin(\\pi s)$ 的对数在扰动足够大时会失去凸性。\n\n**为什么对数凸性是「对的」附加条件**：\n\n- 它等价于 $\\Gamma$ 在两个整数点之间的值**不超过**两端点的某种插值（几何上「不鼓包」）；\n- 它与 $\\Gamma$ 的积分表示相容：$\\Gamma(s)=\\int t^{s-1}e^{-t}dt$ 作为指数族积分，由 Hölder 不等式（见 P3.3）自动对数凸；\n- 它解释了 $\\Gamma$ 的增长形状：$\\ln\\Gamma(s)$ 在 $s$ 大时是凸的且增长快于线性（$\\ln\\Gamma(21)=42.3356$【已核验:42.3356164608|lgamma(21)】，而 $21\\ln21-21=41.98$【已核验:42.9349711922|21*log(21)-21】，差值正是 Stirling 的对数修正项，见 P8.4）。\n\n**与延拓的关系**：对数是凸的这一条只在 $s>0$（正实轴）上陈述；$\\Gamma$ 向全平面的延拓靠的是递推 $\\Gamma(s)=\\frac{\\Gamma(s+1)}{s}$（逐条带地往左推），并在此过程中暴露出 $0,-1,-2,\\dots$ 处的极点（见 gamma.poles）。延拓后 $\\Gamma$ 是**亚纯函数**（meromorphic），对数凸性不再有意义（复数上无顺序）。\n\n**一句话**：$\\Gamma$ 不只是「一条过阶乘点的光滑曲线」，而是**唯一那条对数凸的**——这个唯一性才是它被当作标准特殊函数的理由。",
+      "links": [
+        "P3.3",
+        "P8.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.application",
+      "type": "application",
+      "subject": "gamma",
+      "title": "Γ 用在哪一层",
+      "keywords": [
+        "C2 分布族：Gamma 分布、χ² 分布、Beta 分布的归一化常数",
+        "C7.2 正态算例、C7.3 CLT：矩与归一化",
+        "P8.3 Beta：B(x,y) = Γ(x)Γ(y)/Γ(x+y)",
+        "P8.4 Stirling：n! = Γ(n+1) 的渐近",
+        "P7.4 多重积分：n 维球体积 π^{n/2}/Γ(n/2+1)",
+        "de1.17 特殊函数统一视角：Bessel / Legendre / 超几何的归一化"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 438,
+        "line_end": 438
+      },
+      "fill_hint": "切片「常用」那一行点名 ∫x^n e^{-x}dx = n!；这里把它服务的每一层写清楚，links 指向被服务章节",
+      "content": "$\\Gamma$ 是「归一化常数 + 阶乘连续化」这两个角色的通用件，落点：\n\n- **C2 重要分布族**：Gamma 分布密度 $\\frac{x^{\\alpha-1}e^{-x/\\beta}}{\\beta^\\alpha\\Gamma(\\alpha)}$、$\\chi^2$ 分布（$\\alpha=\\frac k2$）、Beta 分布（见 P8.3）——**所有前面的常数都是 $\\Gamma$ 或 $\\Gamma$ 之比**。没有它这些密度积分不为 $1$。\n- **C7.2 正态算例 / C7.3 CLT**：矩 $\\mathbb E[X^{n}]=\\Gamma(n+1)$ 型计算；正态绝对矩也用 $\\Gamma$。\n- **P8.3 Beta 函数**：$B(x,y)=\\frac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y)}$——Beta 完全靠 $\\Gamma$ 表示。\n- **P8.4 Stirling**：Stirling 公式本质就是 $\\Gamma(n+1)$ 的渐近。\n- **P7.4 多重积分**：$n$ 维球体积 $V_n=\\frac{\\pi^{n/2}}{\\Gamma(\\frac n2+1)}$；$n=3$ 时 $=4\\pi/3$【已核验:4.18879020479|4*pi/3】，$n=4$ 时 $=\\frac{\\pi^2}{2}$【已核验:4.93480220054|pi**2/2】。球坐标换元的 Jacobian 归一化全靠它。\n- **de1.17 特殊函数**：Bessel $J_\\nu$、Legendre、超几何函数的级数系数都是 $\\Gamma$ 之比（Pochhammer 符号 $(\\alpha)_n=\\frac{\\Gamma(\\alpha+n)}{\\Gamma(\\alpha)}$）。\n\n**使用判据**：遇到「$\\int_0^\\infty x^{\\text{幂}}e^{-\\text{线性}}dx$」或「阶乘出现在非整数处」，第一反应就是 $\\Gamma$；遇到「$\\int_0^1 t^{a}(1-t)^{b}dt$」则是 Beta（P8.3），而 Beta 又换算回 $\\Gamma$。",
+      "links": [
+        "C2",
+        "C7.2",
+        "C7.3",
+        "P8.3",
+        "P8.4",
+        "P7.4",
+        "de1.17"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.vs-beta",
+      "type": "comparison",
+      "subject": "gamma",
+      "title": "Γ（第二积分）vs B（第一积分）：谁是谁的函数",
+      "keywords": [
+        "Γ：半无穷区间 [0,∞)，一个参数，权重 t^{s-1}e^{-t}",
+        "B：单位区间 [0,1]，两个参数，权重 t^{x-1}(1-t)^{y-1}",
+        "桥梁：B(x,y) = Γ(x)Γ(y)/Γ(x+y)",
+        "Γ 是「主」的：B 完全由 Γ 表示，反之不行",
+        "收敛条件对照：Γ 要 Re s > 0；B 要 x > 0 且 y > 0（两端各管一个）",
+        "换元：t = u/(u+v) 把 ΓΓ 的乘积积分变成 B·Γ"
+      ],
+      "tex_ref": null,
+      "fill_hint": "与 P8.3 的 beta.vs-gamma 互补：这条从 Γ 的角度写「为什么 B 是 Γ 的函数」，重点在换元 t = u/(u+v) 的构造动机",
+      "content": "两个 Euler 积分的分工：\n\n| | $\\Gamma$（第二积分） | $B$（第一积分） |\n|---|---|---|\n| 积分域 | $[0,\\infty)$（半无穷） | $[0,1]$（有限） |\n| 参数个数 | $1$ 个（$s$） | $2$ 个（$x,y$） |\n| 权重形状 | $t^{s-1}e^{-t}$（幂 × 指数衰减） | $t^{x-1}(1-t)^{y-1}$（两端各有幂奇点） |\n| 收敛条件 | $\\operatorname{Re}s>0$（只看 $0$ 端） | $x>0$ **且** $y>0$（两端各一个参数） |\n| 与对方的关系 | 独立定义 | $B(x,y)=\\frac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y)}$ |\n\n**为什么 $B$ 是 $\\Gamma$ 的函数（换元的动机）**：把两个 $\\Gamma$ 乘起来看成一个二重积分\n$$\n\\Gamma(x)\\Gamma(y)=\\iint_{[0,\\infty)^2}u^{x-1}v^{y-1}e^{-(u+v)}\\,du\\,dv.\n$$\n这里出现 $u+v$，自然想到**换到「和」与「比」这两个变量**：令\n$$\ns=u+v\\in(0,\\infty),\\qquad t=\\frac{u}{u+v}\\in(0,1),\n\\quad\\text{即}\\ u=st,\\ v=s(1-t),\n$$\nJacobian $\\bigl|\\frac{\\partial(u,v)}{\\partial(s,t)}\\bigr|=s$。于是\n$$\n\\Gamma(x)\\Gamma(y)=\\int_0^\\infty\\!\\int_0^1 (st)^{x-1}\\bigl(s(1-t)\\bigr)^{y-1}e^{-s}\\,s\\,dt\\,ds\n=\\underbrace{\\int_0^1 t^{x-1}(1-t)^{y-1}dt}_{B(x,y)}\\cdot\\underbrace{\\int_0^\\infty s^{x+y-1}e^{-s}ds}_{\\Gamma(x+y)}.\n$$\n**指数只在 $s$ 上、幂次自动分离**——这就是换元 $t=\\frac{u}{u+v}$ 的构造动机（见 P8.3 的 beta.proof 逐步版）。\n\n**方向性**：$\\Gamma$ 是更基本的对象（它自己不需要 $B$ 就能定义），$B$ 则被 $\\Gamma$ 完全表达。所以学习顺序是 P8.2 在先、P8.3 在后；但**计算上**常常反过来——$B$ 在 $[0,1]$ 上的积分更好算，于是用 $B$ 反解 $\\Gamma$ 的组合（如 $B(1/2,1/2)=\\pi$）。\n\n**数值对拍**：$B(1/2,1/2)=\\frac{\\Gamma(1/2)\\Gamma(1/2)}{\\Gamma(1)}=\\pi=3.14159265359$【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】。",
+      "links": [
+        "P8.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:gamma.probe1",
+      "type": "probe",
+      "subject": "gamma",
+      "title": "检验题：递推、Γ(1/2) 与极点判定",
+      "keywords": [
+        "第1问：推 Γ(1/2) = √π（换元 t = x²）",
+        "第2问：算 Γ(5/2)、Γ(−1/2) 并说明符号",
+        "第3问：判断 Γ(0)、Γ(−1)、Γ(−3/2) 哪个有定义",
+        "所有答案数值带【待核验】"
+      ],
+      "tex_ref": null,
+      "fill_hint": "题目必须能算出具体数值；答案写在题后括号内供前端折叠。第1问是切片标【必】的「会推」要求",
+      "content": "**第 1 问（闭卷，30 秒内）**：从 $\\Gamma(1/2)=\\int_0^\\infty t^{-1/2}e^{-t}dt$ 出发，用换元 $t=x^2$ 推出 $\\Gamma(1/2)=\\sqrt\\pi$，写出每一步（含 $dt=2x\\,dx$ 与 $t^{-1/2}=1/x$ 的消去）。\n（答案：$\\Gamma(1/2)=\\int_0^\\infty\\frac1x e^{-x^2}\\cdot2x\\,dx=2\\int_0^\\infty e^{-x^2}dx=2\\cdot\\frac{\\sqrt\\pi}{2}=\\sqrt\\pi=1.77245385091$【已核验:1.77245385091|gamma(0.5)】）\n\n**第 2 问**：\n\n- (a) 由递推求 $\\Gamma(5/2)$，给出闭式与数值；\n- (b) 求 $\\Gamma(-1/2)$，并说明它的符号为什么是负的；\n- (c) 求 $\\Gamma(-3/2)$。\n\n（答案：(a) $\\Gamma(5/2)=\\frac32\\Gamma(3/2)=\\frac{3\\sqrt\\pi}{4}=1.32934038818$【已核验:1.32934038818|3*sqrt(pi)/4】；(b) $\\Gamma(-1/2)=\\frac{\\Gamma(1/2)}{-1/2}=-2\\sqrt\\pi=-3.54490770181$【已核验:-3.54490770181|-2*sqrt(pi)】，负号来自除以 $-\\frac12$；(c) $\\Gamma(-3/2)=\\frac{\\Gamma(-1/2)}{-3/2}=\\frac{4\\sqrt\\pi}{3}=2.36327180121$【已核验:2.36327180121|4*sqrt(pi)/3】，再除一个负数故变正）\n\n**第 3 问**：判断下列三个值中哪些**有有限定义**（作为延拓后的 $\\Gamma$），哪些是极点：\n\n- (a) $\\Gamma(0)$；(b) $\\Gamma(-1)$；(c) $\\Gamma(-3/2)$。\n\n并用递推说明你的判定。\n（答案：(a)(b) 是极点（$0,-1$ 是非正整数），$\\Gamma(0)=\\frac{\\Gamma(1)}{0}=\\infty$、$\\Gamma(-1)=\\frac{\\Gamma(0)}{-1}=\\infty$；(c) 有定义且为负：$\\Gamma(-3/2)=\\frac{\\Gamma(-1/2)}{-3/2}=\\frac{-2\\sqrt\\pi}{-3/2}=\\frac{4\\sqrt\\pi}{3}$ 是正——**注意**：正确顺序是 $\\Gamma(-1/2)=-2\\sqrt\\pi=-3.5449$【已核验:-3.54490770181|-2*sqrt(pi)】，$\\Gamma(-3/2)=\\frac{-3.5449}{-1.5}=2.3633$【已核验:2.36327180121|4*sqrt(pi)/3】。判据：极点只在非正整数 $0,-1,-2,\\dots$ 上，$-\\frac32$ 不在其中故有限）\n\n**第 4 问**：算 $\\int_0^\\infty x^4e^{-x}dx$ 并说明它等于哪个 $\\Gamma$ 值。\n（答案：$4!=24$【已核验:24|factorial(4)】，$=\\Gamma(5)=24$【已核验:24|gamma(5)】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "P8.2 全单元对照表：Γ 的三张面孔",
+      "keywords": [
+        "面孔1（定义）：∫₀^∞ t^{s-1}e^{-t}dt，只在 Re s > 0",
+        "面孔2（递推）：Γ(s+1) = sΓ(s)，把定义域往左推，暴露极点",
+        "面孔3（亚纯函数）：ℂ∖{0,−1,−2,…} 上解析，留数 (−1)^n/n!",
+        "误用对照：s ≤ 0 直接用积分定义 / 除以 0 继续递推 / 以为负数全是极点",
+        "数值锚点：Γ(1/2) = √π、Γ(1) = 1、Γ(21) = 20!",
+        "判据：先判 s 是不是非正整数，再决定用哪张面孔"
+      ],
+      "tex_ref": null,
+      "fill_hint": "产出一张对照表（面孔｜适用 s｜典型误用｜数值锚点），前端直接渲染；与 P8.1 / P8.3 / P8.4 呼应",
+      "content": "$\\Gamma$ 在不同场合以三种形态出现，混用就会出错：\n\n| 面孔 | 适用 $s$ | 能做什么 | 典型误用 | 数值锚点 |\n|---|---|---|---|---|\n| **积分定义** $\\int_0^\\infty t^{s-1}e^{-t}dt$ | $\\operatorname{Re}s>0$ | 给出定义、证明递推与 $\\Gamma(1/2)$ | 代入 $s\\le0$（发散：$s=0$ 时截断值 $-\\ln\\varepsilon$，$\\varepsilon=10^{-6}$ 为 $13.8155$【已核验:13.815510558|-log(1e-6)】） | $\\Gamma(1/2)=1.7725$【已核验:1.77245385091|gamma(0.5)】 |\n| **递推** $\\Gamma(s+1)=s\\Gamma(s)$ | 任意（但 $s\\ne0$ 时才能除） | 从已知点推到全族；半整数表全靠它 | 在 $s=0$ 处除以 $0$ 继续推 | $\\Gamma(5/2)=1.3293$【已核验:1.32934038818|3*sqrt(pi)/4】 |\n| **亚纯延拓** | $\\mathbb C\\setminus\\{0,-1,-2,\\dots\\}$ | 负非整数处求有限值；留数计算 | 以为「$s<0$ 一律发散」（$-\\frac12$ 处其实是 $-2\\sqrt\\pi=-3.5449$【已核验:-3.54490770181|-2*sqrt(pi)】） | $\\Gamma(-1/2)=-3.5449$【已核验:-3.54490770181|-2*sqrt(pi)】 |\n\n**三条硬知识**（闭卷要能写）：\n\n1. $\\Gamma(s+1)=s\\Gamma(s)$（分部积分一行）；\n2. $\\Gamma(n+1)=n!$；\n3. $\\Gamma(1/2)=\\sqrt\\pi$（换元 $t=x^2$ + P8.1 的高斯积分）。\n\n**一条防错知识**：$0,-1,-2,\\dots$ 是一阶极点，留数 $\\frac{(-1)^n}{n!}$；负**非**整数完全合法。\n\n**依赖链**：P8.1 高斯积分 ⟹ $\\Gamma(1/2)=\\sqrt\\pi$ ⟹ 半整数全家桶 ⟹ 球体积 / 正态矩；同时 $\\Gamma(n+1)=n!$ ⟹ P8.4 Stirling（$\\Gamma$ 的渐近）；$\\Gamma$ 之比 ⟹ P8.3 Beta。",
+      "links": [
+        "P8.1",
+        "P8.3",
+        "P8.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P8.2 服务的下游章节",
+      "keywords": [
+        "C2 分布族：Gamma / χ² / Beta 分布的归一化常数",
+        "C7.2 / C7.3：矩的计算与 CLT 标定",
+        "P8.3 Beta：B = ΓΓ/Γ",
+        "P8.4 Stirling：Γ(n+1) 的渐近",
+        "P7.4 多重积分：球体积与球坐标 Jacobian",
+        "de1.17 特殊函数：Pochhammer 与级数系数"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁用了 Γ 的哪一面」；links 指向被服务章节",
+      "content": "$\\Gamma$ 是全库里「出场率最高的特殊函数」，下游落点：\n\n- **C2 重要分布族**：Gamma / $\\chi^2$ / Beta / Dirichlet 分布的归一化常数全是 $\\Gamma$ 之比；没有它密度不积分为 $1$。\n- **C7.2 正态算例 / C7.3 CLT**：绝对矩 $\\mathbb E|X|^{p}$ 用 $\\Gamma$；CLT 的 Berry--Esseen 型常数也含 $\\Gamma$。\n- **P8.1 高斯积分**：$\\Gamma(1/2)=\\sqrt\\pi$ 与 $\\int e^{-x^2}=\\sqrt\\pi$ 是同一件事的两面。\n- **P8.3 Beta 函数**：$B(x,y)=\\Gamma(x)\\Gamma(y)/\\Gamma(x+y)$。\n- **P8.4 Stirling**：$\\Gamma(n+1)=n!$ 的渐近展开。\n- **P7.4 多重积分**：$n$ 维球体积与球坐标换元的归一化。\n- **de1.17 特殊函数统一视角**：Bessel、Legendre、超几何函数的系数。\n\n**一句话**：凡是「阶乘出现在非整数位置」或「密度函数前面那个怪常数」，大概率是 $\\Gamma$。",
+      "links": [
+        "C2",
+        "C7.2",
+        "C7.3",
+        "P8.1",
+        "P8.3",
+        "P8.4",
+        "P7.4",
+        "de1.17"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

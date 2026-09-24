@@ -1,0 +1,377 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P8.3",
+  "chapter": "P8",
+  "title": "Beta 函数（Euler 第一积分）（【熟】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 443,
+    "line_end": 455,
+    "anchor": "P_computation.tex:445"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P8.3:beta.statement",
+      "type": "statement",
+      "subject": "beta",
+      "title": "Beta 函数定义与三条核心公式",
+      "keywords": [
+        "B(x,y) = ∫₀¹ t^{x-1}(1-t)^{y-1}dt，成立条件 x > 0 且 y > 0",
+        "对称：B(x,y) = B(y,x)（换元 t ↦ 1−t）",
+        "与 Γ 的关系（【必】记）：B(x,y) = Γ(x)Γ(y)/Γ(x+y)",
+        "三角积分：∫₀^{π/2} sin^m θ cos^n θ dθ = ½B((m+1)/2, (n+1)/2)",
+        "特例：B(1/2,1/2) = π；B(1,1) = 1",
+        "B 是单位区间上的「双参数权重」"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 444,
+        "line_end": 446
+      },
+      "fill_hint": "以 tex_ref 三行（定义式）为准转写；对称、与 Γ 的关系、三角积分三条来自切片 itemize 各行，逐条对齐（切片的三角积分标【熟】）",
+      "content": "**定义（Euler 第一积分）**：\n$$\nB(x,y)=\\int_0^1 t^{\\,x-1}(1-t)^{\\,y-1}\\,dt,\\qquad \\text{成立条件：}\\ x>0\\ \\text{且}\\ y>0.\n$$\n\n逐项拆解：\n\n- 积分域是**单位区间** $[0,1]$，两个端点 $t=0$ 与 $t=1$ 各有一个幂奇点；\n- $t^{\\,x-1}$ 只在 $t\\to0^+$ 端危险，可积 $\\iff x>0$；\n- $(1-t)^{\\,y-1}$ 只在 $t\\to1^-$ 端危险，可积 $\\iff y>0$；\n- **两个参数各管一端**——这与 $\\Gamma$ 只在一端有奇点（另一端由 $e^{-t}$ 白送）形成对照。\n\n**三条核心公式**（切片 itemize 逐条）：\n\n1. **对称性**：$B(x,y)=B(y,x)$。理由：换元 $t\\mapsto1-t$，积分域仍是 $[0,1]$，两个因子互换，Jacobian 绝对值为 $1$。\n2. **与 $\\Gamma$ 的关系**（切片标【必】记）：\n   $$\n   B(x,y)=\\frac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y)}.\n   $$\n   这是**把 Beta 换算成 $\\Gamma$** 的桥梁，也是实际计算 $B$ 的唯一常用手段（见 beta.proof）。\n3. **三角积分公式**（切片标【熟】）：\n   $$\n   \\int_0^{\\pi/2}\\sin^m\\theta\\,\\cos^n\\theta\\,d\\theta=\\frac12\\,B\\Bigl(\\frac{m+1}{2},\\,\\frac{n+1}{2}\\Bigr).\n   $$\n   来源：代 $t=\\sin^2\\theta$，则 $dt=2\\sin\\theta\\cos\\theta\\,d\\theta$，$t^{x-1}(1-t)^{y-1}dt=2\\sin^{2x-1}\\theta\\cos^{2y-1}\\theta\\,d\\theta$，令 $m=2x-1$、$n=2y-1$ 即得。\n\n**直觉（切片原话展开）**：$B(x,y)$ 是单位区间上的「**双参数权重**」——它给 $[0,1]$ 上每一点 $t$ 配一个权重 $t^{x-1}(1-t)^{y-1}$，$x$ 控制「靠近 $0$ 的权重衰减多快」，$y$ 控制「靠近 $1$ 的权重衰减多快」。它与 $\\Gamma$ 的关系来自把 $e^{-(u+v)}$ 的乘积换元拆解（见 beta.proof）。\n\n**锚点数值**：$B(1/2,1/2)=\\frac{\\Gamma(1/2)\\Gamma(1/2)}{\\Gamma(1)}=\\pi=3.14159265359$【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】；$B(1,1)=\\int_0^1 1\\,dt=1$【已核验:1|1】。",
+      "links": [
+        "P8.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.intuition",
+      "type": "intuition",
+      "subject": "beta",
+      "title": "直觉：把「两个半无穷」对折成「一个单位区间」",
+      "keywords": [
+        "Γ(x)Γ(y) 是 (u,v) ∈ [0,∞)² 上的二重积分，权重 u^{x-1}v^{y-1}e^{-(u+v)}",
+        "换到「和 s = u+v」与「比 t = u/(u+v)」：s ∈ (0,∞)、t ∈ (0,1)",
+        "指数 e^{-s} 只依赖和 ⟹ 两个变量自动分离",
+        "t 部分正是 B(x,y)，s 部分正是 Γ(x+y)",
+        "所以 Γ(x)Γ(y) = B(x,y)·Γ(x+y)：乘积 = 形状 × 尺度",
+        "假设给了什么：x>0, y>0（两端可积）；结论为什么成立：变量分离"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 453,
+        "line_end": 453
+      },
+      "fill_hint": "切片直觉原文「单位区间上的双参数权重；与 Γ 的关系来自把 e^{-(u+v)} 的乘积换元拆解」；扩写时把「和—比」换元的几何图像写清，并分开写假设与结论",
+      "content": "**图像（把方块对折）**：两个 $\\Gamma$ 相乘是一个**第一象限上的二重积分**\n$$\n\\Gamma(x)\\Gamma(y)=\\iint_{[0,\\infty)^2}u^{x-1}v^{y-1}e^{-(u+v)}\\,du\\,dv.\n$$\n被积函数里 $u$ 与 $v$ 各自带一个幂，而指数只通过**和** $u+v$ 出现。这提示换到「和」与「比」这一对坐标：\n\n- $s=u+v$（**尺度**：这一点离原点多远），$s\\in(0,\\infty)$；\n- $t=\\frac{u}{u+v}$（**形状**：这一点在第一象限的哪个方向上），$t\\in(0,1)$。\n\n第一象限的每一点被 $(s,t)$ 唯一确定：$u=st$、$v=s(1-t)$。换元后\n$$\nu^{x-1}v^{y-1}e^{-(u+v)}du\\,dv\n=\\underbrace{t^{x-1}(1-t)^{y-1}dt}_{\\text{形状部分}}\\;\\cdot\\;\n\\underbrace{s^{\\,x+y-1}e^{-s}ds}_{\\text{尺度部分}}\\;\\cdot\\;\\underbrace{s}_{\\text{Jacobian}},\n$$\n**指数只落在尺度上，幂次自动按 $t$ 与 $s$ 分离**——于是积分裂成两个独立因子的乘积：\n$$\n\\Gamma(x)\\Gamma(y)=B(x,y)\\cdot\\Gamma(x+y).\n$$\n\n**怎么读这个等式**：$\\Gamma(x)\\Gamma(y)$ 这个「总面积」= 「**形状因子**」$B(x,y)$$\\times$「**尺度因子**」$\\Gamma(x+y)$。$B$ 只管「$u$ 与 $v$ 怎么分配」，$\\Gamma(x+y)$ 只管「总量多大」。\n\n**假设与结论分开写**：\n\n- *假设给了什么*：$x>0$ 与 $y>0$——它们分别保证 $(u,v)\\to(0,0)$ 时两个幂因子可积（换元后即 $t\\to0$ 与 $t\\to1$ 两端）；\n- *结论为什么因此成立*：变量分离后，两个积分各自收敛，且 $s$ 端的指数衰减无条件收敛，故 $B(x,y)$ 存在且有限，且等于 $\\frac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y)}$。\n\n**一个立刻能验证的推论**：取 $x=y=\\frac12$，则 $B(1/2,1/2)=\\frac{\\Gamma(1/2)^2}{\\Gamma(1)}=\\pi$【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】——也就是 $\\int_0^1\\frac{dt}{\\sqrt{t(1-t)}}=\\pi$（被积函数在两端都是 $\\frac{1}{\\sqrt{\\cdot}}$ 型可积奇点，面积却恰好是 $\\pi$）。这个式子是「$\\pi$ 也能从单位区间里长出来」的漂亮例证。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.proof",
+      "type": "proof",
+      "subject": "beta",
+      "title": "证明骨架：B(x,y) = Γ(x)Γ(y)/Γ(x+y)（每步给理由）",
+      "keywords": [
+        "第1步：把 Γ(x)Γ(y) 写成第一象限上的二重积分",
+        "第2步：换元 u = st、v = s(1−t)，s ∈ (0,∞)、t ∈ (0,1)",
+        "第3步：算 Jacobian |∂(u,v)/∂(s,t)| = s",
+        "第4步：合并幂次 ⟹ t^{x-1}(1-t)^{y-1}·s^{x+y-1}e^{-s}",
+        "第5步：Fubini 分离 ⟹ B(x,y)·Γ(x+y)，解出 B",
+        "易错点：Jacobian 的 s 别漏（少了它 s 的幂次是 x+y−2 而不是 x+y−1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 450,
+        "line_end": 450
+      },
+      "fill_hint": "切片只给了关系式的陈述（标【必】记）没给推导；这里把「和—比」换元五步写全，含 Jacobian 的具体计算与漏 s 的后果",
+      "content": "**证明（五步，每步给理由）**：\n\n1. **写成二重积分**：\n   $$\n   \\Gamma(x)\\Gamma(y)=\\Bigl(\\int_0^\\infty u^{x-1}e^{-u}du\\Bigr)\\Bigl(\\int_0^\\infty v^{y-1}e^{-v}dv\\Bigr)\n   =\\iint_{[0,\\infty)^2}u^{x-1}v^{y-1}e^{-(u+v)}\\,du\\,dv.\n   $$\n   *理由*：被积函数非负（$x,y>0$），Tonelli 保证交换次序合法（见 A1.3）。\n2. **换元**：令\n   $$\n   s=u+v\\in(0,\\infty),\\qquad t=\\frac{u}{u+v}\\in(0,1),\n   \\quad\\text{即}\\quad u=st,\\ v=s(1-t).\n   $$\n   *理由*：这是双射（$s>0$、$0<t<1$ 唯一还原 $u,v>0$），且被积函数的指数部分是 $e^{-(u+v)}=e^{-s}$，只依赖 $s$。\n3. **算 Jacobian**：\n   $$\n   \\frac{\\partial(u,v)}{\\partial(s,t)}=\n   \\begin{vmatrix}t & s\\\\ 1-t & -s\\end{vmatrix}=-st-s(1-t)=-s,\\qquad\n   \\Bigl|\\det\\Bigr|=s.\n   $$\n   *理由*：行列式直接展开；$|\\det|=s$ 意味着 $du\\,dv=s\\,ds\\,dt$。\n4. **代入并整理幂次**：\n   $$\n   u^{x-1}v^{y-1}e^{-(u+v)}du\\,dv\n   =(st)^{x-1}\\bigl(s(1-t)\\bigr)^{y-1}e^{-s}\\cdot s\\,ds\\,dt\n   =\\underbrace{t^{x-1}(1-t)^{y-1}dt}_{\\text{只含 }t}\\cdot\\underbrace{s^{\\,x+y-1}e^{-s}ds}_{\\text{只含 }s}.\n   $$\n   *理由*：$s$ 的幂次是 $(x-1)+(y-1)+1=x+y-1$，**最后那个 $+1$ 来自 Jacobian**。\n5. **分离并解出**：\n   $$\n   \\Gamma(x)\\Gamma(y)=\\Bigl(\\int_0^1 t^{x-1}(1-t)^{y-1}dt\\Bigr)\\Bigl(\\int_0^\\infty s^{\\,x+y-1}e^{-s}ds\\Bigr)=B(x,y)\\cdot\\Gamma(x+y),\n   $$\n   故 $B(x,y)=\\dfrac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y)}$。$\\square$\n\n**依赖链**：Tonelli（A1.3）⟹ 二重换元的 Jacobian（P7.4）⟹ $\\Gamma$ 的定义（P8.2）。**没有用到任何新定理**——$B$ 与 $\\Gamma$ 的关系纯粹是换元的产物。\n\n**对称性的独立证明**（比用 $\\Gamma$ 更直接）：代 $t\\mapsto1-t$：\n$$\nB(x,y)=\\int_0^1 t^{x-1}(1-t)^{y-1}dt=\\int_0^1 (1-\\tau)^{x-1}\\tau^{y-1}d\\tau=B(y,x).\n$$\n（注意 $dt=-d\\tau$ 与上下限互换的两个负号相消。）\n\n**易错点**：\n\n- **漏掉 Jacobian 的 $s$**：若写成 $du\\,dv=ds\\,dt$，$s$ 的幂次会变成 $x+y-2$，于是第二个因子是 $\\Gamma(x+y-1)$ 而不是 $\\Gamma(x+y)$，得到错误公式 $B=\\frac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y-1)}$。校验：$x=y=\\frac12$ 时它会给出 $\\frac{\\pi}{\\Gamma(0)}$，而 $\\Gamma(0)$ 是极点（见 P8.2），立刻暴露错误。\n- **$t$ 的范围是 $(0,1)$ 而不是 $(0,\\infty)$**：$t=\\frac{u}{u+v}$ 天然落在 $(0,1)$。\n- 忘记验证 $x,y>0$：这一步保证换元后两个积分都收敛。",
+      "links": [
+        "A1.3",
+        "P7.4",
+        "P8.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.quantifiers",
+      "type": "comparison",
+      "subject": "beta",
+      "title": "Beta 适用条件表（去掉每条会怎样）",
+      "keywords": [
+        "条件1：x > 0（t = 0 端可积）",
+        "条件2：y > 0（t = 1 端可积）—— 两个参数各管一端",
+        "条件3：Γ(x+y) ≠ 0,∞ ⟹ x+y 不能是非正整数（在 x,y>0 时自动满足）",
+        "条件4：对称性 B(x,y) = B(y,x) 是恒等式，不是假设",
+        "条件5：三角公式要求 m,n > −1（否则端点发散）",
+        "可放宽：x 或 y 可以为 0 吗——不可以，∫dt/t 对数发散"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 444,
+        "line_end": 452
+      },
+      "fill_hint": "四列表「条件｜失效的具体例子｜误用后果｜能否放宽」；x=0 / y=0 那几行必须给截断数值（带【待核验】）",
+      "content": "把 $B(x,y)=\\int_0^1 t^{x-1}(1-t)^{y-1}dt$ 及两条公式逐条审。\n\n| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $x>0$（$t\\to0^+$ 端） | $x=0,\\ y=1$：$\\int_0^1 t^{-1}dt$，截断 $\\int_\\varepsilon^1\\frac{dt}{t}=-\\ln\\varepsilon$，$\\varepsilon=10^{-6}$ 时 $=13.8155$【已核验:13.815510558|-log(1e-6)】 | 积分 $=+\\infty$；若代入 $\\frac{\\Gamma(0)\\Gamma(1)}{\\Gamma(1)}$ 会得到「$\\infty$」，与真值一致但中间步骤非法（$\\Gamma(0)$ 是极点） | 不可放宽；$x>0$ 是硬条件 |\n| $y>0$（$t\\to1^-$ 端） | $x=1,\\ y=0$：由对称性同样是 $\\int_0^1(1-t)^{-1}dt=\\infty$，截断值同为 $13.8155$【已核验:13.815510558|-log(1e-6)】 | 同上；注意对称性保证「$x,y$ 哪个为 $0$ 都一样崩」 | 不可放宽 |\n| 两个条件**不可互相替代** | $x=0.5,\\ y=0$：$t^{-0.5}$ 在 $0$ 端可积，但 $(1-t)^{-1}$ 在 $1$ 端不可积，整体 $=\\infty$ | 「一端收敛」误判为「整体收敛」 | 必须**两条都验**；这是与 $\\Gamma$（只需一条）的关键差别 |\n| $\\Gamma(x+y)$ 不能是极点 | 形式上取 $x=y=-\\frac12$ 使 $x+y=-1$：$\\frac{\\Gamma(-1/2)^2}{\\Gamma(-1)}$ 分子有限（$(-2\\sqrt\\pi)^2=4\\pi=12.5664$【已核验:12.5663706144|12.5663706144】）、分母为极点 ⟹ $0$ | 得到一个「$=0$」的结论，但原积分 $\\int t^{-3/2}(1-t)^{-3/2}dt$ 实为 $+\\infty$ | **本条是陷阱**：$x,y>0$ 已蕴含 $x+y>0$，所以在定义域内不会发生；超出定义域时该式**不能**再用 |\n| 对称性 $B(x,y)=B(y,x)$ 是**结论**不是假设 | 把「$B$ 对称」当成可假设的前提去推别的性质 | 逻辑倒置（对称性由换元 $t\\mapsto1-t$ 证明） | 不适用（恒等式） |\n| 三角公式要求 $m>-1,\\ n>-1$ | $m=-2,\\ n=0$：$\\int_0^{\\pi/2}\\sin^{-2}\\theta\\,d\\theta=\\bigl[-\\cot\\theta\\bigr]_0^{\\pi/2}=\\infty$；公式给出 $\\frac12B(-\\frac12,\\frac12)$，而 $B$ 在 $x=-\\frac12<0$ 处本无定义 | 用公式去算一个发散积分，得到无意义的有限数 | 不可放宽；$m>-1\\iff x=\\frac{m+1}{2}>0$，正是 $x>0$ 的翻版 |\n\n**一句话总结**：$B$ 比 $\\Gamma$ 多一条对称的条件（$x>0$ **且** $y>0$，各管一端）；真正的坑是「一端收敛就以为整体收敛」与「超出定义域还套 $\\frac{\\Gamma\\Gamma}{\\Gamma}$」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.divergence",
+      "type": "counterexample",
+      "subject": "beta",
+      "title": "典型误用：只看一端就下结论（x=0.5, y=0 的翻车）",
+      "keywords": [
+        "误用现场：∫₀¹ t^{-1/2}(1-t)^{-1}dt，以为 0 端可积就整体收敛",
+        "真值：1 端对数发散；截断 ∫₀^{1-ε} 得 −ln ε，ε = 10⁻⁶ 时 13.8155",
+        "机制：两个参数各管一端，必须两条都验",
+        "对照：B(1/2, 1/2) = π = 3.1416 有限（两端都是 −1/2 次，可积）",
+        "修补：算 B 前先分别检查 x > 0 与 y > 0"
+      ],
+      "tex_ref": null,
+      "fill_hint": "完整算误用过程与截断数值；给正例对照（两端都是 −1/2 次时有限）；结尾给「两端各验一次」的检验动作",
+      "content": "**误用现场**：算 $\\int_0^1\\frac{dt}{\\sqrt t\\,(1-t)}$（即 $B(\\tfrac12,0)$）。看到 $t^{-1/2}$ 在 $t=0$ 附近**可积**（因为 $-\\frac12>-1$），就判定整个积分收敛。\n\n**为什么这是错的**：$B(x,y)$ 的**两个端点由两个参数分别负责**。这里 $x=\\frac12>0$（$0$ 端安全），但 $y=0$ ⟹ $1$ 端是 $(1-t)^{-1}$，**不可积**。\n\n**截断算给你看**：\n$$\n\\int_0^{1-\\varepsilon}\\frac{dt}{\\sqrt t\\,(1-t)}\\ \\ge\\ \\int_{1/2}^{1-\\varepsilon}\\frac{dt}{\\sqrt t\\,(1-t)}\n\\ \\ge\\ \\int_{1/2}^{1-\\varepsilon}\\frac{dt}{1-t}\n=-\\ln\\varepsilon-\\ln 2.\n$$\n- $\\varepsilon=10^{-3}$：下界 $=6.9078-0.6931=6.2146$【已核验:6.21460809842|-log(1e-3)-log(2)】；\n- $\\varepsilon=10^{-6}$：下界 $=13.8155-0.6931=13.1224$【已核验:13.1223633774|-log(1e-6)-log(2)】；\n- $\\varepsilon=10^{-9}$：下界 $=20.7233-0.6931=20.0302$【已核验:20.0301186564|-log(1e-9)-log(2)】。\n\n每缩 $10^3$ 倍增约 $6.9$，**对数发散**，积分 $=+\\infty$。\n\n**用 $\\Gamma$ 公式会看到什么**：$B(\\frac12,0)=\\frac{\\Gamma(1/2)\\Gamma(0)}{\\Gamma(1/2)}=\\Gamma(0)=\\infty$（因为 $\\frac{\\Gamma(1/2)}{\\Gamma(1/2)}=1$）。结论一致，但中间出现了极点 $\\Gamma(0)$——**如果不知道 $\\Gamma(0)$ 是极点，就可能把它当有限数消掉，得到错误的有限答案**。这是本条最危险的地方。\n\n**正例对照（两端都是可积奇点）**：$B(1/2,1/2)=\\int_0^1\\frac{dt}{\\sqrt{t(1-t)}}$。两端都是 $-\\frac12$ 次幂，$-\\frac12>-1$，两端都可积，积分**有限**且\n$$\nB\\Bigl(\\frac12,\\frac12\\Bigr)=\\frac{\\Gamma(1/2)\\Gamma(1/2)}{\\Gamma(1)}=\\pi=3.14159265359\\text{【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】}\n$$\n\n**差别在哪**：$-\\frac12$ 次幂的积分 $\\int_0^\\delta t^{-1/2}dt=2\\sqrt\\delta$ 是有限的（幂次 $>-1$）；$-1$ 次幂的积分 $\\int_0^\\delta t^{-1}dt$ 是对数发散的（幂次 $=-1$ 是**临界**）。临界情形总是最容易记错。\n\n**修补动作（用前 5 秒做完）**：\n\n1. 在 $t\\to0^+$ 看 $t^{x-1}$，要求 $x-1>-1$ 即 $x>0$；\n2. 在 $t\\to1^-$ 看 $(1-t)^{y-1}$，要求 $y>0$；\n3. **两条都过**才继续；任一条不过，答案就是 $+\\infty$，不要用 $\\frac{\\Gamma\\Gamma}{\\Gamma}$ 去「算」它。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.trig-misuse",
+      "type": "counterexample",
+      "subject": "beta",
+      "title": "典型误用：三角公式忘了 m,n > −1（算出有限值去描述发散积分）",
+      "keywords": [
+        "误用：对 m = −2, n = 0 用 ½B((m+1)/2, (n+1)/2)",
+        "真值：∫₀^{π/2} sin^{−2}θ dθ = [−cot θ] = ∞",
+        "公式侧：½B(−1/2, 1/2)，x = −1/2 < 0 ⟹ B 无定义",
+        "机制：m > −1 ⟺ x = (m+1)/2 > 0，正是 B 的收敛条件",
+        "修补：先判 m > −1 且 n > −1，再用公式"
+      ],
+      "tex_ref": null,
+      "fill_hint": "给具体 m,n 的误用 + 真值发散的显式计算 + 修补条件；指出「公式给出有限数」是假象",
+      "content": "**误用现场**：要算 $\\int_0^{\\pi/2}\\frac{d\\theta}{\\sin^2\\theta}$（即 $m=-2,\\ n=0$），直接套\n$$\n\\frac12 B\\Bigl(\\frac{m+1}{2},\\frac{n+1}{2}\\Bigr)=\\frac12B\\Bigl(-\\frac12,\\frac12\\Bigr),\n$$\n然后有人继续用 $\\frac{\\Gamma\\Gamma}{\\Gamma}$ 化简，得到一个「有限数」，于是宣称这个积分收敛。\n\n**真值**：\n$$\n\\int_0^{\\pi/2}\\frac{d\\theta}{\\sin^2\\theta}=\\Bigl[-\\cot\\theta\\Bigr]_0^{\\pi/2}=0-(\\underbrace{-\\infty}_{\\theta\\to0^+})=+\\infty.\n$$\n截断看：$\\int_\\varepsilon^{\\pi/2}\\sin^{-2}\\theta\\,d\\theta=\\cot\\varepsilon$，$\\varepsilon=10^{-3}$ 时 $=999.9997$【已核验:999.999666667|1/tan(0.001)】，$\\varepsilon=10^{-6}$ 时 $=999999.9999997$【已核验:1000000|1/tan(1e-6)】——**幂发散**（$1/\\varepsilon$ 型）。\n\n**公式侧发生了什么**：$x=\\frac{m+1}{2}=-\\frac12<0$，$B(-\\frac12,\\frac12)$ **根本没有定义**（见 beta.quantifiers）。若强行用 $\\frac{\\Gamma(-1/2)\\Gamma(1/2)}{\\Gamma(0)}$ 计算，分子 $=-2\\sqrt\\pi\\cdot\\sqrt\\pi=-2\\pi=-6.2832$【已核验:-6.28318530718|-2*pi】、分母 $\\Gamma(0)$ 是极点 ⟹ 形式上给出 $0$，与真值 $+\\infty$ 完全相反。\n\n**失效机制**：三角公式的适用条件是 $m>-1$ 且 $n>-1$（保证两端不发散），它**等价于** $B$ 的 $x>0,\\ y>0$。$m=-2$ 落在条件外，公式的推导（代 $t=\\sin^2\\theta$）在 $t\\to0$ 时会遇到 $t^{-3/2}$ 这种不可积奇点——换元没错，**是积分本身发散**。\n\n**正例对照**（合法使用，$m=2,\\ n=0$）：\n$$\n\\int_0^{\\pi/2}\\sin^2\\theta\\,d\\theta=\\frac12B\\Bigl(\\frac32,\\frac12\\Bigr)\n=\\frac12\\cdot\\frac{\\Gamma(3/2)\\Gamma(1/2)}{\\Gamma(2)}\n=\\frac12\\cdot\\frac{\\frac{\\sqrt\\pi}{2}\\cdot\\sqrt\\pi}{1}=\\frac{\\pi}{4}=0.785398163397\\text{【已核验:0.785398163397|gamma(1.5)*gamma(0.5)/gamma(2)/2】}\n$$\n与直接积分 $\\int_0^{\\pi/2}\\frac{1-\\cos2\\theta}{2}d\\theta=\\frac{\\pi}{4}$ 一致 ✓。\n\n**修补动作**：用三角公式前先检查 $m>-1$ 且 $n>-1$；不满足就直接判定发散（或用 Cauchy 主值等专门的正则化，但那不是普通积分）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.half",
+      "type": "extension",
+      "subject": "beta",
+      "title": "半整数特例全家桶（B 与 π 的各种出现方式）",
+      "keywords": [
+        "B(1/2,1/2) = π（最重要的一条）",
+        "B(3/2,1/2) = B(1/2,3/2) = π/2（对称性）",
+        "B(3/2,3/2) = π/8；B(5/2,1/2) = 3π/8",
+        "来源：全是 Γ(1/2) = √π 加递推",
+        "与 Wallis 积分、单位圆面积、球体积同一族",
+        "校验：B(1,1) = 1（最平凡的锚点）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "切片只给了关系式；半整数特例表是它的直接算术展开（属同族展开，不是新定理）；每行给数值【待核验】",
+      "content": "因为 $\\Gamma(1/2)=\\sqrt\\pi$ 且半整数点都有闭式（见 P8.2 的 gamma.half-integer），所以**两个参数都是半整数时 $B$ 一定是 $\\pi$ 的有理倍数**。这张表在球体积、Wallis 积分、三角积分里反复出现。\n\n| $(x,y)$ | $B(x,y)$ 闭式 | 数值 |\n|---|---|---|\n| $(\\frac12,\\frac12)$ | $\\pi$ | $3.14159265359$【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】 |\n| $(\\frac32,\\frac12)$ | $\\frac{\\pi}{2}$ | $1.57079632679$【已核验:1.57079632679|gamma(1.5)*gamma(0.5)/gamma(2)】 |\n| $(\\frac12,\\frac32)$ | $\\frac{\\pi}{2}$（对称性） | $1.57079632679$【已核验:1.57079632679|gamma(0.5)*gamma(1.5)/gamma(2)】 |\n| $(\\frac32,\\frac32)$ | $\\frac{\\pi}{8}$ | $0.392699081699$【已核验:0.392699081699|gamma(1.5)*gamma(1.5)/gamma(3)】 |\n| $(\\frac52,\\frac12)$ | $\\frac{3\\pi}{8}$ | $1.1780972451$【已核验:1.1780972451|gamma(2.5)*gamma(0.5)/gamma(3)】 |\n| $(1,1)$ | $1$ | $1$【已核验:1|gamma(1)*gamma(1)/gamma(2)】 |\n\n**验算一条**（$(\\frac32,\\frac32)$）：\n$$\nB\\Bigl(\\frac32,\\frac32\\Bigr)=\\frac{\\Gamma(3/2)^2}{\\Gamma(3)}=\\frac{(\\frac{\\sqrt\\pi}{2})^2}{2!}=\\frac{\\pi/4}{2}=\\frac{\\pi}{8}.\n$$\n对应积分 $\\int_0^1\\sqrt{t(1-t)}\\,dt=\\frac{\\pi}{8}$——半圆 $y=\\sqrt{t(1-t)}$（即 $(t-\\frac12)^2+y^2=\\frac14$）下的面积，几何上就是半径 $\\frac12$ 的半圆面积 $\\frac12\\pi(\\frac12)^2=\\frac{\\pi}{8}$ ✓。这是 $B$ 与圆面积的直观联系。\n\n**与 Wallis 积分的关系**：$\\int_0^{\\pi/2}\\sin^{m}\\theta\\,d\\theta$（$n=0$）由三角公式给出 $\\frac12B(\\frac{m+1}{2},\\frac12)$：\n\n- $m=0$：$\\frac{\\pi}{2}$【已核验:1.57079632679|pi/2】；\n- $m=1$：$1$【已核验:1|1】；\n- $m=2$：$\\frac{\\pi}{4}$【已核验:0.785398163397|pi/4】；\n- $m=3$：$\\frac23$【已核验:0.666666666667|gamma(2)*gamma(0.5)/gamma(2.5)/2】。\n\n奇偶分流与 P8.1 的高斯矩完全相同（偶次带 $\\pi$、奇次是有理数）。\n\n**记忆法**：只记 $B(1/2,1/2)=\\pi$，其余靠 $B(x+1,y)=\\frac{x}{x+y}B(x,y)$（由 $\\Gamma$ 递推直接得到）推。",
+      "links": [
+        "P8.2",
+        "P8.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.comb",
+      "type": "extension",
+      "subject": "beta",
+      "title": "整数点：B 就是二项式系数的倒数",
+      "keywords": [
+        "B(n+1, m+1) = n!·m!/(n+m+1)!",
+        "等价写法：1/B(n+1,m+1) = (n+m+1)·C(n+m, n)",
+        "校验：B(4,3) = 3!·2!/6! = 12/720 = 1/60",
+        "于是 ∫₀¹ t^n(1-t)^m dt = 1/((n+m+1)C(n+m,n))",
+        "这是 Beta 分布归一化常数的来源（见 C2）",
+        "也解释了为什么 B(1,1) = 1（0!0!/1! = 1）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "切片只给了一般关系式；整数特化是它的算术展开；给通式、一个具体数值、以及与二项式系数的等价写法",
+      "content": "当两个参数都是**正整数**时，$B$ 完全落在组合学里：\n$$\nB(n+1,\\,m+1)=\\frac{\\Gamma(n+1)\\Gamma(m+1)}{\\Gamma(n+m+2)}=\\frac{n!\\,m!}{(n+m+1)!},\n\\qquad n,m\\in\\mathbb Z_{\\ge0}.\n$$\n\n**等价的「倒数」写法**（更常见）：\n$$\n\\frac{1}{B(n+1,m+1)}=\\frac{(n+m+1)!}{n!\\,m!}=(n+m+1)\\binom{n+m}{n}.\n$$\n所以\n$$\n\\int_0^1 t^{\\,n}(1-t)^{\\,m}dt=\\frac{1}{(n+m+1)\\binom{n+m}{n}}.\n$$\n\n**数值校验**（$n=3,\\ m=2$，即 $B(4,3)$）：\n$$\nB(4,3)=\\frac{3!\\,2!}{6!}=\\frac{6\\cdot2}{720}=\\frac{1}{60}=0.0166667\\text{【已核验:0.0166666666667|factorial(3)*factorial(2)/factorial(6)】}\n$$\n而 $(n+m+1)\\binom{n+m}{n}=6\\binom53=6\\cdot10=60$【已核验:60|6*10】，倒数确为 $\\frac1{60}$ ✓。\n\n**为什么这个形式有用**：\n\n- **Beta 分布**（见 C2）的密度是 $\\frac{t^{\\alpha-1}(1-t)^{\\beta-1}}{B(\\alpha,\\beta)}$，整数参数时归一化常数就是 $\\frac{1}{B}$，直接读成组合数；\n- **Bayes 推断**：Beta--二项共轭时出现的正是这些 $\\frac{n!m!}{(n+m+1)!}$；\n- **有限元**（见 G2.2 / de4.3）：一维单元上 $\\int_0^1 t^n(1-t)^m dt$ 这类积分（ Bernstein 基、形函数积分）全用这条闭式，不用真去积分。\n\n**退化锚点**：$n=m=0$ 时 $B(1,1)=\\frac{0!0!}{1!}=1$，就是 $\\int_0^1 1\\,dt=1$ ✓。\n\n**与 $\\Gamma$ 的分工**：$B$ 在整数点上给**组合数**，在半整数点上给 **$\\pi$ 的有理倍数**——这两个「极端」覆盖了实际计算的绝大多数情形。",
+      "links": [
+        "C2",
+        "G2.2",
+        "P8.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.application",
+      "type": "application",
+      "subject": "beta",
+      "title": "Beta 用在哪一层",
+      "keywords": [
+        "C2 分布族：Beta 分布的归一化常数、Beta–二项共轭",
+        "C7.1 / C9.1 统计：次序统计量的分布、先验–后验",
+        "P7.4 多重积分：球坐标角度部分的积分",
+        "H5 球谐函数：勒让德多项式的正交常数",
+        "G2.2 有限元：单元形函数积分的闭式",
+        "P8.2 Γ：B 完全由 Γ 表示，是 Γ 的「分配器」"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 451,
+        "line_end": 452
+      },
+      "fill_hint": "切片「用途」那一行点名三角积分；这里把 C2 与下游每一层写清楚，links 指向被服务章节",
+      "content": "$B$ 的角色是「**单位区间上的归一化常数**」与「**三角积分的闭式**」，落点：\n\n- **C2 分布族 / C7.1 统计**：Beta 分布 $\\mathrm{Beta}(\\alpha,\\beta)$ 的密度是 $\\frac{t^{\\alpha-1}(1-t)^{\\beta-1}}{B(\\alpha,\\beta)}$；Beta--二项共轭（Bayes 更新）里 $B$ 的比值给出后验归一化。次序统计量（第 $k$ 小的分布）也是 Beta 型。\n- **C9.1 估计量**：Beta 先验下的后验均值、方差全是 $\\frac{B(\\alpha+1,\\beta)}{B(\\alpha,\\beta)}$ 这类比值，靠递推 $\\frac{B(x+1,y)}{B(x,y)}=\\frac{x}{x+y}$ 一行化简。\n- **P7.4 多重积分 / 球体积**：球坐标的角度积分 $\\int_0^{\\pi}\\sin^{n-2}\\phi\\,d\\phi$ 就是 $B$ 的三角形式；$n$ 维球体积 $V_n=\\frac{\\pi^{n/2}}{\\Gamma(\\frac n2+1)}$ 的推导中要用它。\n- **H5 球谐函数 / de1.16 Legendre 方程**：伴随 Legendre 函数的正交归一化常数含 $B$（或等价的 $\\Gamma$ 之比）。\n- **G2.2 有限元 / de4.3**：一维参考单元上 $t^a(1-t)^b$ 型积分的闭式（见 beta.comb）。\n- **P8.2 $\\Gamma$**：$B=\\frac{\\Gamma\\Gamma}{\\Gamma}$——$B$ 是 $\\Gamma$ 的「分配器」，把两个 $\\Gamma$ 的乘积按形状/尺度拆开。\n\n**使用判据**：积分域是 $[0,1]$ 且被积函数是「$t$ 的幂 × $(1-t)$ 的幂」⟹ $B$；被积函数是三角函数幂次在 $[0,\\frac\\pi2]$ 上 ⟹ 先代 $t=\\sin^2\\theta$ 转成 $B$。两种都最终换算回 $\\Gamma$。",
+      "links": [
+        "C2",
+        "C7.1",
+        "C9.1",
+        "P7.4",
+        "H5",
+        "de1.16",
+        "G2.2",
+        "P8.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.vs-gamma",
+      "type": "comparison",
+      "subject": "beta",
+      "title": "B vs Γ：什么时候掏哪个",
+      "keywords": [
+        "积分域 [0,1] ⟹ B；[0,∞) ⟹ Γ",
+        "B 有两个参数各管一端；Γ 只有一个参数管 0 端",
+        "B 对称、Γ 不对称（Γ 没有对称的对象）",
+        "计算路线：B ⟹ 换算成 ΓΓ/Γ ⟹ 用 Γ 的半整数/整数表",
+        "反向：Γ(x)Γ(y) = B(x,y)Γ(x+y)（乘积 = 形状 × 尺度）",
+        "同一个数的两种算法：B(1/2,1/2) = π 与 Γ(1/2)² = π"
+      ],
+      "tex_ref": null,
+      "fill_hint": "与 P8.2 的 gamma.vs-beta 互补：这条从 B 的角度写「选择判据」，重点在使用时的决策顺序",
+      "content": "两者是同一个家族（Euler 第一 / 第二积分），选择顺序很机械：\n\n| 你看到的结构 | 掏哪个 | 理由 |\n|---|---|---|\n| $\\int_0^1 t^{a}(1-t)^{b}dt$ | **$B$** | 有限区间 + 两个幂因子，正是 $B$ 的定义 |\n| $\\int_0^\\infty t^{a}e^{-t}dt$ | **$\\Gamma$** | 半无穷 + 指数衰减，正是 $\\Gamma$ 的定义 |\n| $\\int_0^{\\pi/2}\\sin^m\\theta\\cos^n\\theta\\,d\\theta$ | **$B$**（代 $t=\\sin^2\\theta$） | 三角幂次就是 $B$ 的换元形态 |\n| $\\int_0^\\infty x^{n}e^{-x^2}dx$ | **$\\Gamma$**（代 $t=x^2$） | 换元后半无穷 + 指数 |\n| 组合数、阶乘的非整数化 | **$\\Gamma$** | $n!=\\Gamma(n+1)$ |\n| 区间 $[0,1]$ 上的归一化常数 | **$B$** | Beta 分布 |\n\n**计算路线的方向性**：实际算 $B$ **几乎总是**先换成 $\\Gamma$：\n$$\nB(x,y)\\ \\longrightarrow\\ \\frac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y)}\\ \\longrightarrow\\ \\text{用 }\\Gamma\\text{ 的半整数表 / 整数表求值}.\n$$\n因为 $\\Gamma$ 有 $\\Gamma(1/2)=\\sqrt\\pi$ 与 $\\Gamma(n+1)=n!$ 这两个锚点，而 $B$ 自己没有独立的数值表。\n\n**反向也有用**：$\\Gamma(x)\\Gamma(y)=B(x,y)\\Gamma(x+y)$。当你知道 $B$（比如几何上能算出面积）时，可以反解 $\\Gamma$ 的乘积——$B(1/2,1/2)=\\pi$ 就是这样与 $\\Gamma(1/2)^2=\\pi$ 互相印证的。\n\n**对称性是 $B$ 独有的**：$B(x,y)=B(y,x)$ 来自区间 $[0,1]$ 的「两端对称」；$\\Gamma$ 的区间 $[0,\\infty)$ 只有一端有奇点，没有对应的对称。所以「$B$ 对称」可以当作一条**免费的自检**：算出的 $B(x,y)$ 与 $B(y,x)$ 若不相等，一定算错了。",
+      "links": [
+        "P8.2",
+        "P8.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:beta.probe1",
+      "type": "probe",
+      "subject": "beta",
+      "title": "检验题：B(1/2,1/2) = π 与收敛判定",
+      "keywords": [
+        "第1问：从 ΓΓ/Γ 推出 B(1/2,1/2) = π",
+        "第2问：算 ∫₀^{π/2} sin²θ dθ 与 ∫₀^{π/2} sin³θ dθ",
+        "第3问：判断 B(1/2, 0)、B(1/2, 1/2)、B(3/2, 3/2) 哪个发散",
+        "所有答案数值带【待核验】"
+      ],
+      "tex_ref": null,
+      "fill_hint": "题目必须能算出具体数值；答案写在题后括号内供折叠。P8.3 标【熟】，probe 以「查表能立刻算对」为目标",
+      "content": "**第 1 问**：用 $B(x,y)=\\frac{\\Gamma(x)\\Gamma(y)}{\\Gamma(x+y)}$ 与 $\\Gamma(1/2)=\\sqrt\\pi$、$\\Gamma(1)=1$，算出 $B(1/2,1/2)$，并写出对应的积分式。\n（答案：$B(1/2,1/2)=\\frac{\\sqrt\\pi\\cdot\\sqrt\\pi}{1}=\\pi=3.14159265359$【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】；对应 $\\int_0^1\\frac{dt}{\\sqrt{t(1-t)}}=\\pi$）\n\n**第 2 问**：用三角公式 $\\int_0^{\\pi/2}\\sin^m\\theta\\cos^n\\theta\\,d\\theta=\\frac12B(\\frac{m+1}{2},\\frac{n+1}{2})$ 计算：\n\n- (a) $\\int_0^{\\pi/2}\\sin^2\\theta\\,d\\theta$；\n- (b) $\\int_0^{\\pi/2}\\sin^3\\theta\\,d\\theta$；\n- (c) $\\int_0^{\\pi/2}\\sin^2\\theta\\cos^2\\theta\\,d\\theta$。\n\n（答案：(a) $m=2,n=0$ ⟹ $\\frac12B(\\frac32,\\frac12)=\\frac{\\pi}{4}=0.785398163397$【已核验:0.785398163397|gamma(1.5)*gamma(0.5)/gamma(2)/2】；(b) $m=3$ ⟹ $\\frac12B(2,\\frac12)=\\frac23=0.6667$【已核验:0.666666666667|gamma(2)*gamma(0.5)/gamma(2.5)/2】；(c) $m=n=2$ ⟹ $\\frac12B(\\frac32,\\frac32)=\\frac{\\pi}{16}=0.19635$【已核验:0.196349540849|gamma(1.5)*gamma(1.5)/gamma(3)/2】）\n\n**第 3 问**：判断下列三个是否有限，有限的给出数值：\n\n- (a) $B(\\frac12,0)$；(b) $B(\\frac12,\\frac12)$；(c) $B(\\frac32,\\frac32)$。\n\n并说明判据。\n（答案：(a) 发散（$y=0$，$1$ 端 $(1-t)^{-1}$ 对数发散，截断 $\\varepsilon=10^{-6}$ 时下界 $13.1224$【已核验:13.1223633774|-log(1e-6)-log(2)】）；(b) 有限 $=\\pi=3.1416$【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】；(c) 有限 $=\\frac{\\pi}{8}=0.3927$【已核验:0.392699081699|gamma(1.5)*gamma(1.5)/gamma(3)】。判据：$x>0$ 且 $y>0$）\n\n**第 4 问**：用整数公式算 $\\int_0^1 t^3(1-t)^2dt$。\n（答案：$B(4,3)=\\frac{3!\\,2!}{6!}=\\frac1{60}=0.016667$【已核验:0.0166666666667|factorial(3)*factorial(2)/factorial(6)】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "P8 三个特殊函数对照表",
+      "keywords": [
+        "Γ：半无穷、一个参数、幂 × 指数",
+        "B：单位区间、两个参数、双幂、对称",
+        "Stirling：Γ 在大参数处的渐近（P8.4）",
+        "收敛条件对照：Re s > 0 / x>0 且 y>0 / n→∞",
+        "数值锚点：Γ(1/2) = √π、B(1/2,1/2) = π、20! ≈ 2.43×10¹⁸",
+        "判据：先看积分域，再看参数个数"
+      ],
+      "tex_ref": null,
+      "fill_hint": "产出一张三列对照表（定义域｜收敛条件｜数值锚点｜典型误用），前端直接渲染；与 P8.1 / P8.2 / P8.4 呼应",
+      "content": "P8 里四个小目其实是「一件东西的四个侧面」：\n\n| 对象 | 积分域 / 形态 | 收敛 / 适用条件 | 数值锚点 | 典型误用 |\n|---|---|---|---|---|\n| **高斯积分**（P8.1） | $\\mathbb R$ 或 $[0,\\infty)$，被积函数 $e^{-ax^2}$ | $a>0$ | $\\frac{\\sqrt\\pi}{2}=0.8862$【已核验:0.886226925453|gamma(0.5)/2】 | 漏 Jacobian $r$；硬求初等原函数 |\n| **$\\Gamma$**（P8.2） | $[0,\\infty)$，$t^{s-1}e^{-t}$ | $\\operatorname{Re}s>0$（延拓后除 $0,-1,-2,\\dots$） | $\\Gamma(1/2)=1.7725$【已核验:1.77245385091|gamma(0.5)】 | 在极点处除以 $0$；以为负数全是极点 |\n| **$B$**（P8.3） | $[0,1]$，$t^{x-1}(1-t)^{y-1}$ | $x>0$ **且** $y>0$ | $B(1/2,1/2)=3.1416$【已核验:3.14159265359|gamma(0.5)*gamma(0.5)/gamma(1)】 | 只验一端；超出定义域套 $\\frac{\\Gamma\\Gamma}{\\Gamma}$ |\n| **Stirling**（P8.4） | 渐近式，$n!\\sim\\sqrt{2\\pi n}(\\frac ne)^n$ | $n\\to\\infty$（**比值**趋 1） | $n=20$ 相对误差 $-0.416\\%$ | 把渐近当界；用相对误差当绝对误差 |\n\n**依赖链**：\n$$\n\\text{高斯积分（P8.1）}\\implies \\Gamma(1/2)=\\sqrt\\pi\\ \\text{(P8.2)}\\implies\n\\begin{cases}\nB\\text{ 的半整数表（P8.3)}\\\\\n\\Gamma(n+1)=n!\\implies \\text{Stirling（P8.4)}\n\\end{cases}\n$$\n\n**一句话**：P8.1 给种子（$\\sqrt\\pi$），P8.2 建制（$\\Gamma$），P8.3 是 $\\Gamma$ 的分配器（$B$），P8.4 是 $\\Gamma$ 的远距离行为（Stirling）。",
+      "links": [
+        "P8.1",
+        "P8.2",
+        "P8.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P8.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P8.3 服务的下游章节",
+      "keywords": [
+        "C2 / C7.1 / C9.1：Beta 分布、共轭先验、次序统计量",
+        "P7.4 多重积分：球坐标角度积分",
+        "H5 球谐：伴随 Legendre 的归一化常数",
+        "G2.2 有限元：单元形函数积分闭式",
+        "P8.2 Γ：B 由 Γ 表示",
+        "de1.16 Legendre / de1.17 特殊函数统一视角"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁用了 B 的哪一面」；links 指向被服务章节",
+      "content": "$B$ 的下游落点：\n\n- **C2 分布族**：Beta 分布的归一化常数 $B(\\alpha,\\beta)$。\n- **C7.1 / C9.1 统计**：Beta--二项共轭、次序统计量、后验归一化比值 $\\frac{B(\\alpha+1,\\beta)}{B(\\alpha,\\beta)}$。\n- **P7.4 多重积分**：球坐标角度积分 $\\int\\sin^{n-2}\\phi\\,d\\phi$ 的闭式。\n- **H5 球谐函数 / de1.16 Legendre**：正交归一化常数。\n- **G2.2 有限元 / de4.3**：参考单元上 $t^a(1-t)^b$ 的积分闭式（$\\frac{1}{(a+b+1)\\binom{a+b}{a}}$）。\n- **P8.2 $\\Gamma$**：$B=\\frac{\\Gamma\\Gamma}{\\Gamma}$，是 $\\Gamma$ 的分配器。\n\n**一句话**：凡是 $[0,1]$ 上的幂次积分、或 $[0,\\frac\\pi2]$ 上的三角幂次积分，闭式答案基本就是 $B$（再换算成 $\\Gamma$ 之比）。",
+      "links": [
+        "C2",
+        "C7.1",
+        "C9.1",
+        "P7.4",
+        "H5",
+        "de1.16",
+        "G2.2",
+        "P8.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
