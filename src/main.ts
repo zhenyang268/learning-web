@@ -2,7 +2,7 @@ import 'katex/dist/katex.min.css';
 import './styles.css';
 import type { EntryFile, UnitMeta } from './types';
 import { loadIndex, loadUnit, type LoadIssue } from './modules/loader';
-import { buildGraphFromMeta, frontierOf, type Graph } from './modules/graph';
+import { buildGraphFromMeta, frontierOf, letterOf, type Graph } from './modules/graph';
 import { groupMasteryMean, loadState, progressOf } from './modules/state';
 import { renderHeader } from './shell/header';
 import { renderSidebar } from './shell/sidebar';
@@ -57,14 +57,22 @@ function goTo(code: string): void {
 function refreshChrome(): void {
   const code = currentCode();
   const meta = metaOf(code);
-  const letters = [...new Set(graph.codes.map((c) => c.charAt(0).toUpperCase()))].map((letter) => ({
+  // 字母块按「字母前缀」聚合：de1–de4 → DE、lie1–lie3 → LIE，与单字母的 D / L 章分开
+  const byLetter = new Map<string, string[]>();
+  for (const c of graph.codes) {
+    const L = letterOf(c);
+    const list = byLetter.get(L) ?? [];
+    list.push(c);
+    byLetter.set(L, list);
+  }
+  const letters = [...byLetter.entries()].map(([letter, codes]) => ({
     letter,
-    progress: progressOf(letter, graph.codes),
-    first: graph.codes.find((c) => c.charAt(0).toUpperCase() === letter) ?? letter,
+    progress: codes.reduce((s, c) => s + progressOf(c, graph.codes), 0) / codes.length,
+    first: codes[0] ?? letter,
   }));
   renderHeader(elHeader, {
     letters,
-    current: (meta?.code ?? '').charAt(0).toUpperCase(),
+    current: meta ? letterOf(meta.code) : '',
     errorCount: issues.length + (fatal ? 1 : 0),
     query: searchQuery,
     onSearch: (q) => {
@@ -161,7 +169,7 @@ function renderLoadFailed(meta: UnitMeta): void {
 
 function renderPending(code: string): void {
   const nearest = code
-    ? graph.codes.filter((c) => c.charAt(0).toUpperCase() === code.charAt(0).toUpperCase()).slice(0, 12)
+    ? graph.codes.filter((c) => letterOf(c) === letterOf(code)).slice(0, 12)
     : [];
   elReader.innerHTML = code
     ? `<div class="card pagehead">

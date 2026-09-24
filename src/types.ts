@@ -138,7 +138,8 @@ export function unitMetaOf(file: EntryFile): UnitMeta {
   return {
     path: file.path,
     code,
-    chapter: file.chapter ?? code,
+    // 分组键由代号派生（不信 JSON 的 chapter：de/lie 篇 parent 常为 null）
+    chapter: code.split('.')[0] || file.chapter || code,
     title: file.title ?? code,
     cards: [...new Set(cards)],
     links: [...links],

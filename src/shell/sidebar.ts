@@ -1,5 +1,6 @@
 import type { UnitMeta } from '../types';
 import { escapeHtml } from '../renderers/markdown';
+import { codeKey } from '../modules/graph';
 
 export interface SidebarModel {
   units: UnitMeta[];
@@ -19,13 +20,22 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   const byChapter = new Map<string, UnitMeta[]>();
   for (const u of model.units) {
     if (q && !`${u.code} ${u.title}`.toLowerCase().includes(q)) continue;
-    const chapter = u.chapter || u.code;
+    const chapter = u.chapter || u.code.split('.')[0] || u.code;
     const list = byChapter.get(chapter) ?? [];
     list.push(u);
     byChapter.set(chapter, list);
   }
-
-  const chapters = [...byChapter.entries()];
+  // 章内按代号数值序（避免字典序把 A1.10 排在 A1.2 前）
+  for (const list of byChapter.values()) list.sort((a, b) => {
+    const ka = codeKey(a.code);
+    const kb = codeKey(b.code);
+    return ka[0] === kb[0] ? ka[1] - kb[1] || ka[2] - kb[2] : ka[0] < kb[0] ? -1 : 1;
+  });
+  const chapters = [...byChapter.entries()].sort((a, b) => {
+    const ka = codeKey(a[1][0]?.code ?? a[0]);
+    const kb = codeKey(b[1][0]?.code ?? b[0]);
+    return ka[0] === kb[0] ? ka[1] - kb[1] : ka[0] < kb[0] ? -1 : 1;
+  });
   if (!chapters.length) {
     host.innerHTML = `<div class="box"><p class="dim">${
       q ? `没有匹配「${escapeHtml(model.query ?? '')}」的单元` : '暂无数据'

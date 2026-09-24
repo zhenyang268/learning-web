@@ -1096,6 +1096,33 @@ table.q tr.detail .in {
   margin-top: 10px;
 }
 
+/* 正文里的内联徽标（数值核验标记【已核验:值|表达式】/【待核验:表达式】） */
+.entry .body .badge,
+.entry .emeta .badge,
+table.q td .badge,
+p .badge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 20px;
+  margin: 0 2px;
+  vertical-align: baseline;
+  white-space: nowrap;
+  letter-spacing: .3px;
+}
+
+.badge.warn {
+  background: #facc1518;
+  color: var(--yellow);
+  border: 1px solid #facc1540;
+}
+
+.badge.ok {
+  background: #4ade8018;
+  color: var(--green);
+  border: 1px solid #4ade8040;
+}
+
 /* 不等式决策树（P10 flagship） */
 .chip.on {
   color: var(--cyan);

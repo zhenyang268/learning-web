@@ -12,8 +12,8 @@ export interface LoadIssue {
 const REQUIRED_FILE_FIELDS = ['schema', 'code', 'chapter', 'title'] as const;
 /** 词条必填：id/type 必须是字符串；content 允许缺省，由渲染层给占位 */
 const REQUIRED_ENTRY_FIELDS = ['id', 'type'] as const;
-/** 两级代号：A1.3 / B2 / P10 合法；A1.3.2 非法 */
-const CODE_RE = /^[A-Za-z]\d+(?:\.\d+)?$/;
+/** 两级代号：A1.3 / B2 / P10 / de1.7 / lie3.28 合法（前缀可多字母）；A1.3.2 非法 */
+const CODE_RE = /^[A-Za-z]+\d+(?:\.\d+)?$/;
 
 async function fetchJson(url: string): Promise<unknown> {
   const res = await fetch(url, { cache: 'no-store' });

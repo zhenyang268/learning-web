@@ -1,10 +1,28 @@
 import type { UnitMeta } from '../types';
 
-/** 代号比较键：字母 → 章节号 → 小目号（无小目记 0，即节级排在最前） */
+/**
+ * 代号比较键：字母前缀 → 章节号 → 小目号（无小目记 0，即节级排在最前）。
+ *
+ * **前缀允许多字母**：除了 A–R 的单字母卷，还有 `de1–de4`（拉格朗日/哈密顿篇）、
+ * `lie1–lie3`（李群篇）——它们各有 18/15/15/13 与 16/13/28 个小目。
+ * 前缀统一小写比较，于是 `D1…` < `de1…`、`L…` < `lie1…`，顺序稳定可预期。
+ */
 export function codeKey(code: string): [string, number, number] {
-  const m = /^([A-Za-z])(\d+)(?:\.(\d+))?$/.exec(code);
+  const m = /^([A-Za-z]+)(\d+)(?:\.(\d+))?$/.exec(code);
   if (!m) return [code, Number.MAX_SAFE_INTEGER, 0];
-  return [m[1].toUpperCase(), Number(m[2]), m[3] ? Number(m[3]) : 0];
+  return [m[1].toLowerCase(), Number(m[2]), m[3] ? Number(m[3]) : 0];
+}
+
+/** 侧栏分组键 = 代号去掉 `.k` 后缀（A1.3 → A1、de1.7 → de1、N15 → N15）。
+ *  不信 JSON 的 chapter 字段：de/lie 篇的 parent 常为 null，用代号派生才稳定。 */
+export function groupKeyOf(code: string): string {
+  return code.split('.')[0];
+}
+
+/** 顶栏字母块标签 = 纯字母前缀（大写）；de1 → DE、lie2 → LIE、A1 → A。 */
+export function letterOf(code: string): string {
+  const m = /^([A-Za-z]+)/.exec(code);
+  return (m ? m[1] : code).toUpperCase();
 }
 
 function cmpCode(a: string, b: string): number {

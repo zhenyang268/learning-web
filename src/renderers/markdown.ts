@@ -62,8 +62,30 @@ export function renderInline(src: string, ctx?: RenderCtx): string {
   return out;
 }
 
+/**
+ * 数值核验标记 → 徽标（数据契约红线 4 的两种标记）：
+ *   【已核验:值|表达式】→ 绿色徽标（值已用表达式重算过）
+ *   【待核验:表达式】     → 黄色警示徽标（还没回填 —— 这是**数据侧的缺口**，
+ *                          前端照实标出来，不假装它不存在）
+ * 入参是**已转义**文本；表达式里的 `<` `>` 已变成实体，放进 title 属性是安全的。
+ */
+function verification(escaped: string): string {
+  return escaped
+    .replace(
+      /【已核验[:：]([^|】]+)\|([^】]+)】/g,
+      (_m, v: string, e: string) =>
+        `<span class="badge ok" title="重算表达式 ${e}">已核验 ${v}</span>`,
+    )
+    .replace(
+      /【待核验[:：]([^】]+)】/g,
+      (_m, e: string) =>
+        `<span class="badge warn" title="数值尚未用脚本重算回填">待核验 ${e}</span>`,
+    );
+}
+
 function passText(escaped: string, onText?: (s: string) => string): string {
-  return onText ? onText(escaped) : escaped;
+  const marked = verification(escaped);
+  return onText ? onText(marked) : marked;
 }
 
 function emphasis(escaped: string): string {
