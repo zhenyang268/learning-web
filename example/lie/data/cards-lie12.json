@@ -1,0 +1,188 @@
+{
+  "entries": [
+    {
+      "id": "def-lie-group",
+      "section": "lie1",
+      "type": "statement",
+      "title": "李群（Lie group）",
+      "question": "什么样的对象能同时谈论「连续变化」和「复合运算」，从而允许对对称性做微分？",
+      "content_html": "<p><strong>李群</strong> G 是同时具有<em>群结构</em>与<em>光滑流形结构</em>的对象，并且群乘法与取逆都是光滑映射：</p><div class=\"frm\">G × G → G, (g, h) ↦ gh ； G → G, g ↦ g<sup>−1</sup></div><p>光滑性不是装饰：它使「在单位元处取切空间」成为合法操作 —— 这正是李代数 𝔤 = T<sub>e</sub>G 的来源。群结构给出复合，流形结构给出连续变化，两者相容才能把非线性群问题线性化。</p><p><strong>维度</strong>：李群作为流形的维度（不是群的阶数）。例：SO(2) 维度 1，SO(3) 维度 3。旋转群、规范群、刚体运动群都属于李群。</p>",
+      "links": [
+        "classic-groups",
+        "def-lie-algebra",
+        "so3"
+      ],
+      "tex_ref": "lie1.tex:6-10"
+    },
+    {
+      "id": "classic-groups",
+      "section": "lie1",
+      "type": "comparison",
+      "title": "经典李群（classical Lie groups）",
+      "question": "反复出现的矩阵群家族一共哪八个，各自保全什么量，维度公式从哪来？",
+      "content_html": "<table class=\"tbl\"><tr><th>群</th><th>定义</th><th>维度</th><th>应用</th></tr><tr><td>GL(n,ℝ)</td><td>n×n 可逆实矩阵</td><td>n<sup>2</sup></td><td>一般线性变换</td></tr><tr><td>SL(n,ℝ)</td><td>det A = 1</td><td>n<sup>2</sup> − 1</td><td>保体积变换</td></tr><tr><td>O(n)</td><td>A<sup>T</sup>A = I</td><td>n(n−1)/2</td><td>保距（含反射）</td></tr><tr><td>SO(n)</td><td>A<sup>T</sup>A = I, det A = 1</td><td>n(n−1)/2</td><td>旋转</td></tr><tr><td>U(n)</td><td>A<sup>†</sup>A = I</td><td>n<sup>2</sup></td><td>量子力学</td></tr><tr><td>SU(n)</td><td>A<sup>†</sup>A = I, det A = 1</td><td>n<sup>2</sup> − 1</td><td>规范场论</td></tr><tr><td>Sp(n)</td><td>A<sup>†</sup>A = I, 保辛形式</td><td>n(2n+1)</td><td>哈密顿力学</td></tr><tr><td>SE(n)</td><td>齐次矩阵 [R t; 0<sup>T</sup> 1]，R ∈ SO(n)</td><td>n(n+1)/2</td><td>刚体运动</td></tr></table>",
+      "links": [
+        "def-lie-group",
+        "so2",
+        "so3",
+        "classification"
+      ],
+      "tex_ref": "lie1.tex:12-29"
+    },
+    {
+      "id": "so2",
+      "section": "lie1",
+      "type": "statement",
+      "title": "SO(2)（平面旋转群）",
+      "question": "最简单的连续旋转群长什么样，为什么它和 U(1) 其实是同一个东西？",
+      "content_html": "<p>SO(2) 是平面旋转群，由单个角度参数刻画：</p><table class=\"mtx\"><tr><td>cos θ</td><td>−sin θ</td></tr><tr><td>sin θ</td><td>cos θ</td></tr></table><ul><li>维度 1（一个参数 θ）</li><li>拓扑 S<sup>1</sup>（圆）</li><li>阿贝尔群（交换）</li><li>同构于 U(1)（复数单位圆）：θ ↦ e<sup>iθ</sup></li></ul><p>它也是万有覆盖表里最简单的一行：ℝ → SO(2)，映射 θ ↦ e<sup>iθ</sup> 的核是 ℤ，对应整数圈数；阿贝尔性使两次旋转可以直接把角度相加。</p>",
+      "links": [
+        "so3",
+        "cover-table",
+        "classic-groups"
+      ],
+      "tex_ref": "lie1.tex:33-44"
+    },
+    {
+      "id": "so3",
+      "section": "lie1",
+      "type": "statement",
+      "title": "SO(3)（三维旋转群）",
+      "question": "三维旋转群为什么不是单连通的，「旋转 2π 不等于恒等」究竟指什么？",
+      "content_html": "<p>SO(3) = {R ∈ ℝ<sup>3×3</sup> : R<sup>T</sup>R = I, det R = 1}</p><ul><li>维度 3（三个参数，如欧拉角或轴角）</li><li>拓扑 ℝP<sup>3</sup>（三维实射影空间）</li><li>非阿贝尔群（旋转次序不可交换）</li><li>基本群 π<sub>1</sub>(SO(3)) = ℤ<sub>2</sub>，即旋转 2π 不等于恒等</li></ul><p>ℤ<sub>2</sub> 表示存在无法连续收缩的闭合路径：SO(3) 不单连通，它被 SU(2) 二重覆盖，这一非平凡同伦对应自旋 1/2。局部上 SO(3) 与 SU(2) 共用同一个李代数，差别在整体拓扑。</p>",
+      "links": [
+        "so2",
+        "su2-cover",
+        "cover-table",
+        "topology-table"
+      ],
+      "tex_ref": "lie1.tex:46-57"
+    },
+    {
+      "id": "su2-cover",
+      "section": "lie1",
+      "type": "intuition",
+      "title": "SU(2)（自旋群）与其二重覆盖",
+      "question": "为什么电子自旋要用 SU(2) 而不是 SO(3)，「转 4π 才回家」的几何来自哪里？",
+      "content_html": "<p>SU(2) = {A ∈ ℂ<sup>2×2</sup> : A<sup>†</sup>A = I, det A = 1}，其元素可写成</p><table class=\"mtx\"><tr><td>α</td><td>−β̄</td></tr><tr><td>β</td><td>ᾱ</td></tr></table><p>约束条件 |α|<sup>2</sup> + |β|<sup>2</sup> = 1。</p><ul><li>维度 3；拓扑 S<sup>3</sup>（三维球面）；单连通：π<sub>1</sub>(SU(2)) = 0</li><li>同构于单位四元数群 Sp(1)</li><li>SU(2) →(2:1) SO(3)：二重覆盖，核 {±I}，每个旋转对应 ±A 两个群元素</li></ul><p><strong>物理意义：</strong>电子自旋 1/2 的波函数旋转 2π 后变号，旋转 4π 才回到自身 —— 所以自旋的正确对称群是 SU(2) 而非 SO(3)。</p>",
+      "links": [
+        "so3",
+        "cover-table",
+        "so3-su2"
+      ],
+      "tex_ref": "lie1.tex:59-83"
+    },
+    {
+      "id": "cover-table",
+      "section": "lie1",
+      "type": "comparison",
+      "title": "覆盖映射与万有覆盖群（universal cover）",
+      "question": "给定一个非单连通的李群，补上哪一块能把它拉直成单连通，核又在记录什么？",
+      "content_html": "<p><strong>覆盖映射</strong> φ: G̃ → G 是局部同胚的满同态；<strong>万有覆盖群</strong>是单连通的覆盖群。</p><table class=\"tbl\"><tr><th>群</th><th>万有覆盖</th><th>覆盖映射</th><th>核</th></tr><tr><td>SO(3)</td><td>SU(2) ≅ S<sup>3</sup></td><td>2:1</td><td>{±I} ≅ ℤ<sub>2</sub></td></tr><tr><td>SO(2) ≅ S<sup>1</sup></td><td>ℝ</td><td>θ ↦ e<sup>iθ</sup></td><td>ℤ</td></tr><tr><td>SO(1,3)<sup>+</sup>（Lorentz）</td><td>SL(2,ℂ)</td><td>2:1</td><td>{±I}</td></tr></table><p>核是「多值性」的记账：SO(3) 的每个旋转在 SU(2) 中有两个原像 ±A；SO(2) 的覆盖是实直线 ℝ，核 ℤ 记录绕圈数。</p>",
+      "links": [
+        "su2-cover",
+        "so3",
+        "so2",
+        "topology-table"
+      ],
+      "tex_ref": "lie1.tex:99-115"
+    },
+    {
+      "id": "def-lie-algebra",
+      "section": "lie1",
+      "type": "statement",
+      "title": "李代数（Lie algebra）",
+      "question": "怎样把一个非线性群在单位元附近线性化成可以逐项计算的代数对象？",
+      "content_html": "<p><strong>李代数</strong> 𝔤 是一个向量空间，配备双线性运算 [·,·]: 𝔤 × 𝔤 → 𝔤（李括号），满足：</p><ul><li>反对称：[X, Y] = −[Y, X]</li><li>Jacobi 恒等式：[X, [Y, Z]] + [Y, [Z, X]] + [Z, [X, Y]] = 0</li></ul><p><strong>与李群的关系：</strong>𝔤 = T<sub>e</sub>G（李群在单位元处的切空间），李括号来自向量场的对易子。</p><p>选基 {T<sub>a</sub>}（a = 1, …, dim 𝔤）后 [T<sub>a</sub>, T<sub>b</sub>] = f<sub>ab</sub><sup>c</sup>T<sub>c</sub>，<strong>结构常数</strong> f<sub>ab</sub><sup>c</sup> 完全决定李代数的结构，Jacobi 恒等式正是加在结构常数上的二次约束。</p>",
+      "links": [
+        "def-lie-group",
+        "exp-map",
+        "so3-su2"
+      ],
+      "tex_ref": "lie1.tex:122-144"
+    },
+    {
+      "id": "exp-map",
+      "section": "lie1",
+      "type": "statement",
+      "title": "指数映射（exponential map）",
+      "question": "李代数里的元素怎么回到李群，为什么说群乘法在局部完全由李括号决定？",
+      "content_html": "<p>指数映射把李代数元素送回流形：</p><div class=\"frm\">exp: 𝔤 → G, X ↦ e<sup>X</sup> = ∑<sub>k=0</sub><sup>∞</sup> X<sup>k</sup> / k!</div><p><strong>性质：</strong></p><ul><li>exp(0) = e（单位元）</li><li>exp(tX) 是过单位元的一参数子群</li><li>在单位元附近是局部微分同胚</li><li>一般不是满射（如 SL(2, ℝ)）</li></ul><p><strong>Baker–Campbell–Hausdorff 公式：</strong></p><div class=\"frm\">log(e<sup>X</sup>e<sup>Y</sup>) = X + Y + (1/2)[X, Y] + (1/12)[X, [X, Y]] − (1/12)[Y, [X, Y]] + ⋯</div><p><strong>意义：</strong>群乘法在李代数层面由李括号完全决定（局部）。</p>",
+      "links": [
+        "def-lie-algebra",
+        "so3-su2"
+      ],
+      "tex_ref": "lie1.tex:146-165"
+    },
+    {
+      "id": "so3-su2",
+      "section": "lie1",
+      "type": "comparison",
+      "title": "so(3) 与 su(2)：代数同构、群不同构",
+      "question": "既然 so(3) ≅ su(2) 是李代数同构，为什么 SU(2) 和 SO(3) 不是同一个群？",
+      "content_html": "<table class=\"tbl\"><tr><th></th><th>so(3)</th><th>su(2)</th></tr><tr><td>定义</td><td>A ∈ ℝ<sup>3×3</sup>, A<sup>T</sup> = −A</td><td>A ∈ ℂ<sup>2×2</sup>, A<sup>†</sup> = −A, tr A = 0</td></tr><tr><td>基</td><td>J<sub>1</sub>, J<sub>2</sub>, J<sub>3</sub>（三个反对称实矩阵）</td><td>T<sub>a</sub> = σ<sub>a</sub>/2（由 Pauli 矩阵构造）</td></tr><tr><td>对易关系</td><td>[J<sub>i</sub>, J<sub>j</sub>] = ε<sub>ijk</sub>J<sub>k</sub></td><td>[T<sub>a</sub>, T<sub>b</sub>] = i ε<sub>abc</sub>T<sub>c</sub></td></tr></table><p>Pauli 矩阵：σ<sub>1</sub> = [[0,1],[1,0]]，σ<sub>2</sub> = [[0,−i],[i,0]]，σ<sub>3</sub> = [[1,0],[0,−1]]。</p><p><strong>结论：</strong>𝔰𝔬(3) ≅ 𝔰𝔲(2)（李代数同构），但 SU(2) 与 SO(3) 作为群不同构 —— 拓扑不同：SU(2) ≅ S<sup>3</sup> 单连通，SO(3) ≅ ℝP<sup>3</sup> 的 π<sub>1</sub> = ℤ<sub>2</sub>。量子力学中 [L̂<sub>i</sub>, L̂<sub>j</sub>] = iħ ε<sub>ijk</sub>L̂<sub>k</sub> 正是 𝔰𝔬(3) 的结构（乘以 iħ）。</p>",
+      "links": [
+        "so3",
+        "su2-cover",
+        "def-lie-algebra",
+        "su2-reps"
+      ],
+      "tex_ref": "lie1.tex:169-201"
+    },
+    {
+      "id": "classification",
+      "section": "lie2",
+      "type": "comparison",
+      "title": "半单李代数的分类（Cartan–Killing）",
+      "question": "无穷多李代数里哪些是基本砖块，为什么只需记住四个系列加五个例外？",
+      "content_html": "<p>单李代数：没有非平凡理想；半单李代数：单李代数的直和。复半单李代数由 Dynkin 图完全分类（Cartan–Killing）。</p><table class=\"tbl\"><tr><th>类型</th><th>李代数</th><th>维度</th><th>物理</th></tr><tr><td>A<sub>n</sub></td><td>sl(n+1, ℂ)</td><td>n(n+2)</td><td>SU(n+1)：色、味对称</td></tr><tr><td>B<sub>n</sub></td><td>so(2n+1, ℂ)</td><td>n(2n+1)</td><td>SO(2n+1)：旋转</td></tr><tr><td>C<sub>n</sub></td><td>sp(2n, ℂ)</td><td>n(2n+1)</td><td>Sp(n)：辛对称</td></tr><tr><td>D<sub>n</sub></td><td>so(2n, ℂ)</td><td>n(2n−1)</td><td>SO(2n)：旋转</td></tr></table><table class=\"tbl\"><tr><th>例外</th><th>维度</th><th>出现</th></tr><tr><td>G<sub>2</sub></td><td>14</td><td>八元数自同构群；弦论</td></tr><tr><td>F<sub>4</sub></td><td>52</td><td>例外 Jordan 代数；弦论</td></tr><tr><td>E<sub>6</sub></td><td>78</td><td>大统一理论候选</td></tr><tr><td>E<sub>7</sub></td><td>133</td><td>超引力；弦论</td></tr><tr><td>E<sub>8</sub></td><td>248</td><td>弦论（E<sub>8</sub>×E<sub>8</sub> 杂化弦）；凝聚态</td></tr></table>",
+      "links": [
+        "dynkin",
+        "def-lie-algebra",
+        "su2-reps"
+      ],
+      "tex_ref": "lie2.tex:5-42"
+    },
+    {
+      "id": "dynkin",
+      "section": "lie2",
+      "type": "statement",
+      "title": "Dynkin 图（Dynkin diagram）",
+      "question": "怎样把整套对易关系压成一张只有节点和边的图，边数与箭头各编码了什么？",
+      "content_html": "<p>取 Cartan 子代数 𝔥（极大交换子代数，元素可同时对角化）。根定义为零特征向量：α ∈ 𝔥<sup>*</sup> 使存在 E<sub>α</sub> ≠ 0 满足 [H, E<sub>α</sub>] = α(H)E<sub>α</sub>（∀H ∈ 𝔥），于是 𝔤 = 𝔥 ⊕ ⊕<sub>α ∈ Φ</sub> 𝔤<sub>α</sub>。</p><p><strong>Dynkin 图构造规则：</strong></p><ul><li>每个单根画一个节点；</li><li>两节点间的边数由夹角决定：90° → 0 边，60° → 1 边，45° → 2 边，30° → 3 边；</li><li>不等长的根之间加箭头，箭头指向短根。</li></ul><p><strong>经典系列：</strong>A<sub>n</sub> 是 n 个节点的链；B<sub>n</sub> 与 C<sub>n</sub> 在链末端为双键且箭头方向相反；D<sub>n</sub> 末端分叉成两个节点。</p><p>例外系列 G<sub>2</sub>、F<sub>4</sub>、E<sub>6</sub>、E<sub>7</sub>、E<sub>8</sub> 各有特殊的 Dynkin 图。</p>",
+      "links": [
+        "classification",
+        "def-lie-algebra"
+      ],
+      "tex_ref": "lie2.tex:44-75"
+    },
+    {
+      "id": "su2-reps",
+      "section": "lie2",
+      "type": "application",
+      "title": "su(2) 的不可约表示（irreducible representations）",
+      "question": "同一套角动量代数为什么能同时装下标量、电子与光子，标签 j 对应现实中的什么？",
+      "content_html": "<p>su(2) 的不可约表示由非负整数或半整数 j 标记，维度为 2j + 1：</p><table class=\"tbl\"><tr><th>j</th><th>维度</th><th>对象</th></tr><tr><td>0</td><td>1</td><td>标量</td></tr><tr><td>1/2</td><td>2</td><td>旋量 —— 电子自旋</td></tr><tr><td>1</td><td>3</td><td>向量 —— 光子</td></tr><tr><td>3/2</td><td>4</td><td>Δ 重子</td></tr><tr><td>2</td><td>5</td><td>引力子</td></tr></table><p>一般定理：不可约表示由最高权唯一确定，最高权即某个偏序下最大的权。差别只在 j 取哪个值，代数本身只有一套。</p>",
+      "links": [
+        "so3-su2",
+        "classification",
+        "dynkin"
+      ],
+      "tex_ref": "lie2.tex:79-96"
+    },
+    {
+      "id": "topology-table",
+      "section": "lie2",
+      "type": "comparison",
+      "title": "基本群与高阶同伦群的物理意义",
+      "question": "π<sub>1</sub> 与 π<sub>3</sub> 各自解释哪类物理现象，为什么「绕不回来」可以变成量子数？",
+      "content_html": "<p>基本群 π<sub>1</sub>(X)：闭合路径的同伦类；高阶同伦群 π<sub>n</sub>(X)：S<sup>n</sup> → X 的连续映射的同伦类。</p><table class=\"tbl\"><tr><th>空间</th><th>π<sub>1</sub></th><th>物理意义</th></tr><tr><td>S<sup>1</sup></td><td>ℤ</td><td>绕数（Aharonov–Bohm 效应）</td></tr><tr><td>SO(3) ≅ ℝP<sup>3</sup></td><td>ℤ<sub>2</sub></td><td>自旋 1/2（2π 旋转 ≠ 恒等）</td></tr><tr><td>SU(2) ≅ S<sup>3</sup></td><td>0（单连通）</td><td>万有覆盖</td></tr><tr><td>U(1) ≅ S<sup>1</sup></td><td>ℤ</td><td>磁通量子化、涡旋</td></tr><tr><td>SO(3,1)<sup>+</sup>（Lorentz）</td><td>ℤ<sub>2</sub></td><td>旋量</td></tr></table><table class=\"tbl\"><tr><th>同伦群</th><th>值</th><th>物理意义</th></tr><tr><td>π<sub>2</sub>(S<sup>2</sup>)</td><td>ℤ</td><td>磁单极（'t Hooft–Polyakov）</td></tr><tr><td>π<sub>3</sub>(S<sup>2</sup>)</td><td>ℤ</td><td>Skyrmion（核子模型）</td></tr><tr><td>π<sub>3</sub>(SU(2))</td><td>ℤ</td><td>瞬子（Yang–Mills）</td></tr><tr><td>π<sub>3</sub>(SU(3))</td><td>ℤ</td><td>QCD 真空结构（θ 真空）</td></tr></table>",
+      "links": [
+        "su2-cover",
+        "cover-table",
+        "so3"
+      ],
+      "tex_ref": "lie2.tex:121-155"
+    }
+  ]
+}

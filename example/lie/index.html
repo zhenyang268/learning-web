@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李群 · 交互导读（lie1–lie3）</title>
+<style>
+:root{
+  --bg:#0a0f1e; --bg2:#101830; --panel:rgba(255,255,255,.045);
+  --line:rgba(255,255,255,.10); --txt:#e8ecf8; --dim:#8b93ab;
+  --cyan:#5ee6ff; --violet:#a78bfa; --pink:#f472b6; --green:#4ade80;
+  --amber:#fbbf24; --red:#f87171;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,Consolas,monospace;
+  --math:"STIX Two Math","Cambria Math","Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--txt); line-height:1.65;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 12% -8%, rgba(29,58,138,.32), transparent 62%),
+    radial-gradient(ellipse 800px 520px at 88% -12%, rgba(91,43,138,.22), transparent 62%),
+    radial-gradient(ellipse 760px 520px at 50% 108%, rgba(14,90,106,.16), transparent 62%);
+  background-attachment:fixed;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+/* ---------- 顶栏 ---------- */
+header{border-bottom:1px solid var(--line);backdrop-filter:blur(10px);
+  background:rgba(10,15,30,.62);position:sticky;top:0;z-index:50}
+.hd-in{max-width:1080px;margin:0 auto;padding:14px 22px;display:flex;
+  flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand h1{font-size:19px;font-weight:700;letter-spacing:.4px}
+.brand h1 em{font-style:normal;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .sub{font-size:12.5px;color:var(--dim)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a{font-size:13px;color:var(--dim);text-decoration:none;padding:5px 12px;
+  border:1px solid var(--line);border-radius:999px;transition:.18s}
+nav a:hover{color:var(--cyan);border-color:rgba(94,230,255,.4)}
+
+/* ---------- 通用块 ---------- */
+section{padding:34px 0 10px}
+.sec-tag{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;
+  color:var(--violet);letter-spacing:1.5px;font-weight:600}
+.sec-tag::before{content:"";width:22px;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet))}
+h2{font-size:23px;margin:8px 0 6px;letter-spacing:.3px}
+.lead{color:var(--dim);font-size:14.5px;max-width:780px;margin-bottom:18px}
+.lead strong{color:var(--txt);font-weight:600}
+
+/* 玻璃拟态卡片 */
+.glass{background:linear-gradient(var(--bg2),var(--bg2)) padding-box,
+  linear-gradient(100deg,#5ee6ff4d,#a78bfa3d,#f472b62e) border-box;
+  border:1px solid transparent;border-radius:16px;padding:20px 22px}
+
+/* 徽标 */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;
+  padding:2.5px 10px;border-radius:999px;border:1px solid var(--line);
+  color:var(--dim);white-space:nowrap}
+.badge.warn{color:var(--amber);border-color:rgba(251,191,36,.35)}
+.badge.ok{color:var(--green);border-color:rgba(74,222,128,.35)}
+.badge.src{color:var(--violet);border-color:rgba(167,139,250,.35)}
+
+/* ---------- 交互区布局 ---------- */
+.viz-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+@media(max-width:880px){.viz-grid{grid-template-columns:1fr}}
+canvas{width:100%;display:block;border-radius:12px;background:#070b17;
+  border:1px solid var(--line)}
+.ctrls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 4px}
+.ctrls label{font-size:13px;color:var(--dim);white-space:nowrap}
+input[type=range]{flex:1;min-width:140px;accent-color:var(--violet);height:26px}
+.btn{font-size:12.5px;padding:5px 14px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(94,230,255,.35);background:rgba(94,230,255,.08);
+  color:var(--cyan);transition:.15s;font-family:inherit}
+.btn:hover{background:rgba(94,230,255,.16)}
+.btn.off{border-color:var(--line);color:var(--dim);background:transparent}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{font-size:12px;padding:4px 11px;border:none;background:transparent;
+  color:var(--dim);cursor:pointer;font-family:inherit}
+.seg button.act{background:linear-gradient(90deg,rgba(94,230,255,.18),rgba(167,139,250,.18));
+  color:var(--txt)}
+
+/* 数值面板 */
+.mat{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;
+  font-family:var(--mono);font-size:11.8px;margin-top:10px}
+.mat span{background:rgba(94,230,255,.05);border:1px solid var(--line);
+  border-radius:5px;padding:3px 7px;text-align:right;color:#bfe9ff}
+.inv{margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--dim);
+  display:flex;flex-direction:column;gap:3px}
+.inv b{font-weight:400}
+.inv .ok{color:var(--green)} .inv .bad{color:var(--red);font-weight:600}
+.state-line{font-size:13px;margin-top:10px;padding:8px 12px;border-radius:9px;
+  border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.state-line b{font-family:var(--math);font-size:14.5px}
+
+/* 状态色 */
+.st-home{color:var(--green)} .st-out{color:var(--pink)} .st-mid{color:var(--amber)}
+
+/* ---------- 卡片区 ---------- */
+.grp{margin-top:26px}
+.grp h3{font-size:16px;margin-bottom:4px;display:flex;gap:10px;align-items:baseline}
+.grp h3 .cnt{font-size:12px;color:var(--dim);font-weight:400}
+.grp .note{font-size:12.5px;color:var(--dim);margin-bottom:12px}
+.card{margin-bottom:12px;border-radius:14px;overflow:hidden;
+  background:linear-gradient(var(--bg2),var(--bg2)) padding-box,
+  linear-gradient(120deg,#5ee6ff30,#a78bfa26,#f472b61e) border-box;
+  border:1px solid transparent}
+.card-hd{display:flex;gap:10px;align-items:center;padding:12px 16px;
+  cursor:pointer;user-select:none}
+.card-hd:hover{background:rgba(94,230,255,.05)}
+.card-hd .tid{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;
+  font-family:var(--mono);flex-shrink:0}
+.card-hd .q{font-size:12px;color:var(--dim);margin-left:auto;text-align:right;
+  max-width:46%;flex-shrink:0}
+.card-hd .t{font-size:14.5px;font-weight:600}
+.card-hd .arrow{color:var(--dim);font-size:11px;transition:.2s;flex-shrink:0}
+.card.open .arrow{transform:rotate(90deg)}
+.card-bd{display:none;padding:2px 18px 14px;font-size:14px}
+.card.open .card-bd{display:block}
+.card-bd p{margin:8px 0}
+.card-bd ul{margin:8px 0 8px 20px}
+.card-bd li{margin:4px 0}
+.card-bd .frm{font-family:var(--math);font-size:15px;text-align:center;
+  margin:12px 0;padding:10px 8px;border-radius:10px;
+  background:rgba(94,230,255,.05);border:1px solid rgba(94,230,255,.12);overflow-x:auto}
+.card-bd table.tbl,.card-bd table.mtx{border-collapse:collapse;margin:10px auto;font-size:13.2px}
+.card-bd table.tbl th,.card-bd table.tbl td{border:1px solid var(--line);
+  padding:4.5px 11px;text-align:left}
+.card-bd table.tbl th{background:rgba(94,230,255,.08);color:#cdeeff;font-weight:600}
+.card-bd table.mtx td{padding:3px 10px;text-align:center;font-family:var(--math);font-size:14px}
+.card-bd table.mtx{border-left:2px solid rgba(94,230,255,.5);
+  border-right:2px solid rgba(94,230,255,.5);border-radius:4px}
+.card-bd sup,.card-bd sub{font-size:.72em}
+.card-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:10px;
+  border-top:1px dashed var(--line)}
+.card-meta .badge{font-size:10.5px}
+
+/* type 色板 */
+.t-statement{background:rgba(94,230,255,.13);color:var(--cyan)}
+.t-intuition{background:rgba(167,139,250,.14);color:#c4b0ff}
+.t-comparison{background:rgba(244,114,182,.13);color:#ffa8d4}
+.t-application{background:rgba(74,222,128,.12);color:#86efac}
+.t-counterexample{background:rgba(248,113,113,.13);color:#fca5a5}
+.t-probe{background:rgba(251,191,36,.13);color:#fcd34d}
+
+/* ---------- 页脚 ---------- */
+footer{margin:44px 0 30px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--dim)}
+footer .chain{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 8px}
+.empty-tip{padding:18px;border:1px dashed var(--line);border-radius:12px;
+  color:var(--dim);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-in">
+    <div class="brand">
+      <h1><em>李群</em> · 从旋转到对称</h1>
+      <span class="sub">notebook/li/lie1–lie3 交互导读</span>
+    </div>
+    <nav>
+      <a href="#viz-exp">指数映射</a>
+      <a href="#viz-cover">二重覆盖</a>
+      <a href="#grp-lie1">概念</a>
+      <a href="#grp-lie2">分类与拓扑</a>
+      <a href="#grp-lie3">应用</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ 交互一：指数映射 ============ -->
+<section id="viz-exp">
+  <span class="sec-tag">交互 · exp: g → G</span>
+  <h2>指数映射的具象化：轴角 → 旋转矩阵</h2>
+  <p class="lead">李代数 <strong>so(3) 里的一个元素</strong>（一个轴 ω = θn̂）经过 exp 变成 SO(3) 里的旋转矩阵 R(θ)。
+  右侧矩阵用 <strong>Rodrigues 公式</strong>逐帧计算：
+  R = I + sin θ·[n̂]<sub>×</sub> + (1−cos θ)·[n̂]<sub>×</sub><sup>2</sup>，
+  每帧自检 <strong>R<sup>T</sup>R = I</strong> 与 <strong>det R = 1</strong>。</p>
+  <div class="viz-grid">
+    <div class="glass">
+      <canvas id="cv-exp" width="520" height="390"></canvas>
+      <div class="ctrls">
+        <label>θ</label>
+        <input id="in-theta" type="range" min="0" max="6.2832" step="0.001" value="0.62">
+        <span id="lb-theta" style="font-family:var(--mono);font-size:12.5px;color:var(--cyan);min-width:88px">0.62 rad</span>
+        <button id="bt-play1" class="btn">▶ 播放</button>
+      </div>
+      <div class="ctrls">
+        <div class="seg" id="seg-axis">
+          <button data-ax="x">轴 x</button>
+          <button data-ax="y">轴 y</button>
+          <button data-ax="z" class="act">轴 z</button>
+          <button data-ax="d">斜轴 (1,1,0.5)</button>
+        </div>
+        <span class="badge warn">前端计算 · 未对拍</span>
+        <span class="badge src">invariant 自检</span>
+      </div>
+    </div>
+    <div class="glass">
+      <div style="font-size:13px;color:var(--dim);margin-bottom:2px">R(θ) = exp(θ·n̂<sub>×</sub>) 实时值（Rodrigues 公式）</div>
+      <div class="mat" id="mat-exp"></div>
+      <div class="inv" id="inv-exp"></div>
+      <div class="state-line" id="st-exp"></div>
+      <p style="font-size:12.5px;color:var(--dim);margin-top:12px">
+        把 θ 拉满 2π：R 回到 I（SO(3) 的世界 2π 即复位）——但下一个交互会告诉你，
+        SU(2) 的世界要走 <strong>4π</strong> 才回家。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 交互二：二重覆盖 ============ -->
+<section id="viz-cover">
+  <span class="sec-tag">交互 · SU(2) → SO(3), 2:1</span>
+  <h2>二重覆盖：同一个旋转，两个世界</h2>
+  <p class="lead">四元数 q = (cos(θ/2), sin(θ/2)·n̂) 编码同一个旋转，但 θ 走 <strong>2π</strong> 时
+  R(θ) 已经复位、q 却刚到 <strong>−1</strong>（波函数变号）；θ 走 <strong>4π</strong> q 才回家。
+  这就是 π<sub>1</sub>(SO(3)) = Z<sub>2</sub> 的可交互版本——自旋 1/2 需要 SU(2) 的根源。</p>
+  <div class="viz-grid">
+    <div class="glass">
+      <canvas id="cv-so3" width="460" height="320"></canvas>
+      <div class="state-line" id="st-so3"></div>
+    </div>
+    <div class="glass">
+      <canvas id="cv-su2" width="460" height="320"></canvas>
+      <div class="state-line" id="st-su2"></div>
+    </div>
+  </div>
+  <div class="ctrls" style="margin-top:14px">
+    <label>θ</label>
+    <input id="in-theta2" type="range" min="0" max="12.566" step="0.002" value="1.8">
+    <span id="lb-theta2" style="font-family:var(--mono);font-size:12.5px;color:var(--violet);min-width:88px">1.80 rad</span>
+    <button id="bt-play2" class="btn">▶ 播放</button>
+    <span class="badge warn">前端计算 · 未对拍</span>
+    <span class="badge src">数值对拍 verify_math.py</span>
+  </div>
+  <p style="font-size:12.5px;color:var(--dim)">左：SO(3) 视角（立方体 + R 矩阵作用）。
+  右：SU(2) 视角——q(θ) 在 S<sup>3</sup> 上沿一参数子群（一条大圆）走；
+  S<sup>3</sup> 画不下，这里画的是这条大圆的忠实平面像。q 与 −q 压到同一个 R：这就是「二重」的含义。</p>
+</section>
+
+<!-- ============ 知识卡片 ============ -->
+<section id="cards">
+  <span class="sec-tag">知识卡片 · entry-card</span>
+  <h2>lie1–lie3 知识卡片</h2>
+  <p class="lead">内容由 <strong>deepseek-v4.1-flash</strong> 从笔记原文起草，
+  <strong>GLM-5.3</strong> 逐条评审修正（评审记录见 example/lie/review/）。
+  真源永远是 <strong>notebook/li/lie*.tex</strong>（只读），卡片是可重建的构建产物。</p>
+  <div id="grp-lie1" class="grp">
+    <h3>lie1 · 李群与李代数 <span class="cnt" id="cnt-lie1"></span></h3>
+    <div class="note">定义、经典群、指数映射、覆盖——「李群 ⟷ 李代数 ⟷ 拓扑」三角的第一条边</div>
+    <div id="cards-lie1"></div>
+  </div>
+  <div id="grp-lie2" class="grp">
+    <h3>lie2 · 分类与拓扑 <span class="cnt" id="cnt-lie2"></span></h3>
+    <div class="note">Dynkin 图把全部半单李代数一网打尽；同伦群决定「自旋」这类全局结构</div>
+    <div id="cards-lie2"></div>
+  </div>
+  <div id="grp-lie3" class="grp">
+    <h3>lie3 · 物理与图形学应用 <span class="cnt" id="cnt-lie3"></span></h3>
+    <div class="note">四元数 / Slerp / SE(3) / 球谐 / Noether——CG 与物理共用同一套对称性语言</div>
+    <div id="cards-lie3"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="chain">
+    <span class="badge src">真源 notebook/li/lie1–3.tex（只读）</span>
+    <span class="badge">起草 deepseek-v4.1-flash（CLI 直连）</span>
+    <span class="badge">评审 GLM-5.3</span>
+    <span class="badge">数值核验 uv run python（verify_math.py 全绿）</span>
+    <span class="badge">组装 WorkBuddy 会话 2026-09-24</span>
+  </div>
+  standalone 页面：数据内联 · IIFE · 零外部请求（file:// 双击即开）。
+  本页为 example/ 目录的多模型流水线演示样例，不属于正式知识库（后者见 json/ 与 src/）。
+</footer>
+
+</div>
+
+<script type="application/json" id="cards-data">{"entries":[{"id":"def-lie-group","section":"lie1","type":"statement","title":"李群（Lie group）","question":"什么样的对象能同时谈论「连续变化」和「复合运算」，从而允许对对称性做微分？","content_html":"<p><strong>李群</strong> G 是同时具有<em>群结构</em>与<em>光滑流形结构</em>的对象，并且群乘法与取逆都是光滑映射：</p><div class=\"frm\">G × G → G, (g, h) ↦ gh ； G → G, g ↦ g<sup>−1</sup></div><p>光滑性不是装饰：它使「在单位元处取切空间」成为合法操作 —— 这正是李代数 𝔤 = T<sub>e</sub>G 的来源。群结构给出复合，流形结构给出连续变化，两者相容才能把非线性群问题线性化。</p><p><strong>维度</strong>：李群作为流形的维度（不是群的阶数）。例：SO(2) 维度 1，SO(3) 维度 3。旋转群、规范群、刚体运动群都属于李群。</p>","links":["classic-groups","def-lie-algebra","so3"],"tex_ref":"lie1.tex:6-10"},{"id":"classic-groups","section":"lie1","type":"comparison","title":"经典李群（classical Lie groups）","question":"反复出现的矩阵群家族一共哪八个，各自保全什么量，维度公式从哪来？","content_html":"<table class=\"tbl\"><tr><th>群</th><th>定义</th><th>维度</th><th>应用</th></tr><tr><td>GL(n,ℝ)</td><td>n×n 可逆实矩阵</td><td>n<sup>2</sup></td><td>一般线性变换</td></tr><tr><td>SL(n,ℝ)</td><td>det A = 1</td><td>n<sup>2</sup> − 1</td><td>保体积变换</td></tr><tr><td>O(n)</td><td>A<sup>T</sup>A = I</td><td>n(n−1)/2</td><td>保距（含反射）</td></tr><tr><td>SO(n)</td><td>A<sup>T</sup>A = I, det A = 1</td><td>n(n−1)/2</td><td>旋转</td></tr><tr><td>U(n)</td><td>A<sup>†</sup>A = I</td><td>n<sup>2</sup></td><td>量子力学</td></tr><tr><td>SU(n)</td><td>A<sup>†</sup>A = I, det A = 1</td><td>n<sup>2</sup> − 1</td><td>规范场论</td></tr><tr><td>Sp(n)</td><td>A<sup>†</sup>A = I, 保辛形式</td><td>n(2n+1)</td><td>哈密顿力学</td></tr><tr><td>SE(n)</td><td>齐次矩阵 [R t; 0<sup>T</sup> 1]，R ∈ SO(n)</td><td>n(n+1)/2</td><td>刚体运动</td></tr></table>","links":["def-lie-group","so2","so3","classification"],"tex_ref":"lie1.tex:12-29"},{"id":"so2","section":"lie1","type":"statement","title":"SO(2)（平面旋转群）","question":"最简单的连续旋转群长什么样，为什么它和 U(1) 其实是同一个东西？","content_html":"<p>SO(2) 是平面旋转群，由单个角度参数刻画：</p><table class=\"mtx\"><tr><td>cos θ</td><td>−sin θ</td></tr><tr><td>sin θ</td><td>cos θ</td></tr></table><ul><li>维度 1（一个参数 θ）</li><li>拓扑 S<sup>1</sup>（圆）</li><li>阿贝尔群（交换）</li><li>同构于 U(1)（复数单位圆）：θ ↦ e<sup>iθ</sup></li></ul><p>它也是万有覆盖表里最简单的一行：ℝ → SO(2)，映射 θ ↦ e<sup>iθ</sup> 的核是 ℤ，对应整数圈数；阿贝尔性使两次旋转可以直接把角度相加。</p>","links":["so3","cover-table","classic-groups"],"tex_ref":"lie1.tex:33-44"},{"id":"so3","section":"lie1","type":"statement","title":"SO(3)（三维旋转群）","question":"三维旋转群为什么不是单连通的，「旋转 2π 不等于恒等」究竟指什么？","content_html":"<p>SO(3) = {R ∈ ℝ<sup>3×3</sup> : R<sup>T</sup>R = I, det R = 1}</p><ul><li>维度 3（三个参数，如欧拉角或轴角）</li><li>拓扑 ℝP<sup>3</sup>（三维实射影空间）</li><li>非阿贝尔群（旋转次序不可交换）</li><li>基本群 π<sub>1</sub>(SO(3)) = ℤ<sub>2</sub>，即旋转 2π 不等于恒等</li></ul><p>ℤ<sub>2</sub> 表示存在无法连续收缩的闭合路径：SO(3) 不单连通，它被 SU(2) 二重覆盖，这一非平凡同伦对应自旋 1/2。局部上 SO(3) 与 SU(2) 共用同一个李代数，差别在整体拓扑。</p>","links":["so2","su2-cover","cover-table","topology-table"],"tex_ref":"lie1.tex:46-57"},{"id":"su2-cover","section":"lie1","type":"intuition","title":"SU(2)（自旋群）与其二重覆盖","question":"为什么电子自旋要用 SU(2) 而不是 SO(3)，「转 4π 才回家」的几何来自哪里？","content_html":"<p>SU(2) = {A ∈ ℂ<sup>2×2</sup> : A<sup>†</sup>A = I, det A = 1}，其元素可写成</p><table class=\"mtx\"><tr><td>α</td><td>−β̄</td></tr><tr><td>β</td><td>ᾱ</td></tr></table><p>约束条件 |α|<sup>2</sup> + |β|<sup>2</sup> = 1。</p><ul><li>维度 3；拓扑 S<sup>3</sup>（三维球面）；单连通：π<sub>1</sub>(SU(2)) = 0</li><li>同构于单位四元数群 Sp(1)</li><li>SU(2) →(2:1) SO(3)：二重覆盖，核 {±I}，每个旋转对应 ±A 两个群元素</li></ul><p><strong>物理意义：</strong>电子自旋 1/2 的波函数旋转 2π 后变号，旋转 4π 才回到自身 —— 所以自旋的正确对称群是 SU(2) 而非 SO(3)。</p>","links":["so3","cover-table","so3-su2"],"tex_ref":"lie1.tex:59-83"},{"id":"cover-table","section":"lie1","type":"comparison","title":"覆盖映射与万有覆盖群（universal cover）","question":"给定一个非单连通的李群，补上哪一块能把它拉直成单连通，核又在记录什么？","content_html":"<p><strong>覆盖映射</strong> φ: G̃ → G 是局部同胚的满同态；<strong>万有覆盖群</strong>是单连通的覆盖群。</p><table class=\"tbl\"><tr><th>群</th><th>万有覆盖</th><th>覆盖映射</th><th>核</th></tr><tr><td>SO(3)</td><td>SU(2) ≅ S<sup>3</sup></td><td>2:1</td><td>{±I} ≅ ℤ<sub>2</sub></td></tr><tr><td>SO(2) ≅ S<sup>1</sup></td><td>ℝ</td><td>θ ↦ e<sup>iθ</sup></td><td>ℤ</td></tr><tr><td>SO(1,3)<sup>+</sup>（Lorentz）</td><td>SL(2,ℂ)</td><td>2:1</td><td>{±I}</td></tr></table><p>核是「多值性」的记账：SO(3) 的每个旋转在 SU(2) 中有两个原像 ±A；SO(2) 的覆盖是实直线 ℝ，核 ℤ 记录绕圈数。</p>","links":["su2-cover","so3","so2","topology-table"],"tex_ref":"lie1.tex:99-115"},{"id":"def-lie-algebra","section":"lie1","type":"statement","title":"李代数（Lie algebra）","question":"怎样把一个非线性群在单位元附近线性化成可以逐项计算的代数对象？","content_html":"<p><strong>李代数</strong> 𝔤 是一个向量空间，配备双线性运算 [·,·]: 𝔤 × 𝔤 → 𝔤（李括号），满足：</p><ul><li>反对称：[X, Y] = −[Y, X]</li><li>Jacobi 恒等式：[X, [Y, Z]] + [Y, [Z, X]] + [Z, [X, Y]] = 0</li></ul><p><strong>与李群的关系：</strong>𝔤 = T<sub>e</sub>G（李群在单位元处的切空间），李括号来自向量场的对易子。</p><p>选基 {T<sub>a</sub>}（a = 1, …, dim 𝔤）后 [T<sub>a</sub>, T<sub>b</sub>] = f<sub>ab</sub><sup>c</sup>T<sub>c</sub>，<strong>结构常数</strong> f<sub>ab</sub><sup>c</sup> 完全决定李代数的结构，Jacobi 恒等式正是加在结构常数上的二次约束。</p>","links":["def-lie-group","exp-map","so3-su2"],"tex_ref":"lie1.tex:122-144"},{"id":"exp-map","section":"lie1","type":"statement","title":"指数映射（exponential map）","question":"李代数里的元素怎么回到李群，为什么说群乘法在局部完全由李括号决定？","content_html":"<p>指数映射把李代数元素送回流形：</p><div class=\"frm\">exp: 𝔤 → G, X ↦ e<sup>X</sup> = ∑<sub>k=0</sub><sup>∞</sup> X<sup>k</sup> / k!</div><p><strong>性质：</strong></p><ul><li>exp(0) = e（单位元）</li><li>exp(tX) 是过单位元的一参数子群</li><li>在单位元附近是局部微分同胚</li><li>一般不是满射（如 SL(2, ℝ)）</li></ul><p><strong>Baker–Campbell–Hausdorff 公式：</strong></p><div class=\"frm\">log(e<sup>X</sup>e<sup>Y</sup>) = X + Y + (1/2)[X, Y] + (1/12)[X, [X, Y]] − (1/12)[Y, [X, Y]] + ⋯</div><p><strong>意义：</strong>群乘法在李代数层面由李括号完全决定（局部）。</p>","links":["def-lie-algebra","so3-su2"],"tex_ref":"lie1.tex:146-165"},{"id":"so3-su2","section":"lie1","type":"comparison","title":"so(3) 与 su(2)：代数同构、群不同构","question":"既然 so(3) ≅ su(2) 是李代数同构，为什么 SU(2) 和 SO(3) 不是同一个群？","content_html":"<table class=\"tbl\"><tr><th></th><th>so(3)</th><th>su(2)</th></tr><tr><td>定义</td><td>A ∈ ℝ<sup>3×3</sup>, A<sup>T</sup> = −A</td><td>A ∈ ℂ<sup>2×2</sup>, A<sup>†</sup> = −A, tr A = 0</td></tr><tr><td>基</td><td>J<sub>1</sub>, J<sub>2</sub>, J<sub>3</sub>（三个反对称实矩阵）</td><td>T<sub>a</sub> = σ<sub>a</sub>/2（由 Pauli 矩阵构造）</td></tr><tr><td>对易关系</td><td>[J<sub>i</sub>, J<sub>j</sub>] = ε<sub>ijk</sub>J<sub>k</sub></td><td>[T<sub>a</sub>, T<sub>b</sub>] = i ε<sub>abc</sub>T<sub>c</sub></td></tr></table><p>Pauli 矩阵：σ<sub>1</sub> = [[0,1],[1,0]]，σ<sub>2</sub> = [[0,−i],[i,0]]，σ<sub>3</sub> = [[1,0],[0,−1]]。</p><p><strong>结论：</strong>𝔰𝔬(3) ≅ 𝔰𝔲(2)（李代数同构），但 SU(2) 与 SO(3) 作为群不同构 —— 拓扑不同：SU(2) ≅ S<sup>3</sup> 单连通，SO(3) ≅ ℝP<sup>3</sup> 的 π<sub>1</sub> = ℤ<sub>2</sub>。量子力学中 [L̂<sub>i</sub>, L̂<sub>j</sub>] = iħ ε<sub>ijk</sub>L̂<sub>k</sub> 正是 𝔰𝔬(3) 的结构（乘以 iħ）。</p>","links":["so3","su2-cover","def-lie-algebra","su2-reps"],"tex_ref":"lie1.tex:169-201"},{"id":"classification","section":"lie2","type":"comparison","title":"半单李代数的分类（Cartan–Killing）","question":"无穷多李代数里哪些是基本砖块，为什么只需记住四个系列加五个例外？","content_html":"<p>单李代数：没有非平凡理想；半单李代数：单李代数的直和。复半单李代数由 Dynkin 图完全分类（Cartan–Killing）。</p><table class=\"tbl\"><tr><th>类型</th><th>李代数</th><th>维度</th><th>物理</th></tr><tr><td>A<sub>n</sub></td><td>sl(n+1, ℂ)</td><td>n(n+2)</td><td>SU(n+1)：色、味对称</td></tr><tr><td>B<sub>n</sub></td><td>so(2n+1, ℂ)</td><td>n(2n+1)</td><td>SO(2n+1)：旋转</td></tr><tr><td>C<sub>n</sub></td><td>sp(2n, ℂ)</td><td>n(2n+1)</td><td>Sp(n)：辛对称</td></tr><tr><td>D<sub>n</sub></td><td>so(2n, ℂ)</td><td>n(2n−1)</td><td>SO(2n)：旋转</td></tr></table><table class=\"tbl\"><tr><th>例外</th><th>维度</th><th>出现</th></tr><tr><td>G<sub>2</sub></td><td>14</td><td>八元数自同构群；弦论</td></tr><tr><td>F<sub>4</sub></td><td>52</td><td>例外 Jordan 代数；弦论</td></tr><tr><td>E<sub>6</sub></td><td>78</td><td>大统一理论候选</td></tr><tr><td>E<sub>7</sub></td><td>133</td><td>超引力；弦论</td></tr><tr><td>E<sub>8</sub></td><td>248</td><td>弦论（E<sub>8</sub>×E<sub>8</sub> 杂化弦）；凝聚态</td></tr></table>","links":["dynkin","def-lie-algebra","su2-reps"],"tex_ref":"lie2.tex:5-42"},{"id":"dynkin","section":"lie2","type":"statement","title":"Dynkin 图（Dynkin diagram）","question":"怎样把整套对易关系压成一张只有节点和边的图，边数与箭头各编码了什么？","content_html":"<p>取 Cartan 子代数 𝔥（极大交换子代数，元素可同时对角化）。根定义为零特征向量：α ∈ 𝔥<sup>*</sup> 使存在 E<sub>α</sub> ≠ 0 满足 [H, E<sub>α</sub>] = α(H)E<sub>α</sub>（∀H ∈ 𝔥），于是 𝔤 = 𝔥 ⊕ ⊕<sub>α ∈ Φ</sub> 𝔤<sub>α</sub>。</p><p><strong>Dynkin 图构造规则：</strong></p><ul><li>每个单根画一个节点；</li><li>两节点间的边数由夹角决定：90° → 0 边，60° → 1 边，45° → 2 边，30° → 3 边；</li><li>不等长的根之间加箭头，箭头指向短根。</li></ul><p><strong>经典系列：</strong>A<sub>n</sub> 是 n 个节点的链；B<sub>n</sub> 与 C<sub>n</sub> 在链末端为双键且箭头方向相反；D<sub>n</sub> 末端分叉成两个节点。</p><p>例外系列 G<sub>2</sub>、F<sub>4</sub>、E<sub>6</sub>、E<sub>7</sub>、E<sub>8</sub> 各有特殊的 Dynkin 图。</p>","links":["classification","def-lie-algebra"],"tex_ref":"lie2.tex:44-75"},{"id":"su2-reps","section":"lie2","type":"application","title":"su(2) 的不可约表示（irreducible representations）","question":"同一套角动量代数为什么能同时装下标量、电子与光子，标签 j 对应现实中的什么？","content_html":"<p>su(2) 的不可约表示由非负整数或半整数 j 标记，维度为 2j + 1：</p><table class=\"tbl\"><tr><th>j</th><th>维度</th><th>对象</th></tr><tr><td>0</td><td>1</td><td>标量</td></tr><tr><td>1/2</td><td>2</td><td>旋量 —— 电子自旋</td></tr><tr><td>1</td><td>3</td><td>向量 —— 光子</td></tr><tr><td>3/2</td><td>4</td><td>Δ 重子</td></tr><tr><td>2</td><td>5</td><td>引力子</td></tr></table><p>一般定理：不可约表示由最高权唯一确定，最高权即某个偏序下最大的权。差别只在 j 取哪个值，代数本身只有一套。</p>","links":["so3-su2","classification","dynkin"],"tex_ref":"lie2.tex:79-96"},{"id":"topology-table","section":"lie2","type":"comparison","title":"基本群与高阶同伦群的物理意义","question":"π<sub>1</sub> 与 π<sub>3</sub> 各自解释哪类物理现象，为什么「绕不回来」可以变成量子数？","content_html":"<p>基本群 π<sub>1</sub>(X)：闭合路径的同伦类；高阶同伦群 π<sub>n</sub>(X)：S<sup>n</sup> → X 的连续映射的同伦类。</p><table class=\"tbl\"><tr><th>空间</th><th>π<sub>1</sub></th><th>物理意义</th></tr><tr><td>S<sup>1</sup></td><td>ℤ</td><td>绕数（Aharonov–Bohm 效应）</td></tr><tr><td>SO(3) ≅ ℝP<sup>3</sup></td><td>ℤ<sub>2</sub></td><td>自旋 1/2（2π 旋转 ≠ 恒等）</td></tr><tr><td>SU(2) ≅ S<sup>3</sup></td><td>0（单连通）</td><td>万有覆盖</td></tr><tr><td>U(1) ≅ S<sup>1</sup></td><td>ℤ</td><td>磁通量子化、涡旋</td></tr><tr><td>SO(3,1)<sup>+</sup>（Lorentz）</td><td>ℤ<sub>2</sub></td><td>旋量</td></tr></table><table class=\"tbl\"><tr><th>同伦群</th><th>值</th><th>物理意义</th></tr><tr><td>π<sub>2</sub>(S<sup>2</sup>)</td><td>ℤ</td><td>磁单极（'t Hooft–Polyakov）</td></tr><tr><td>π<sub>3</sub>(S<sup>2</sup>)</td><td>ℤ</td><td>Skyrmion（核子模型）</td></tr><tr><td>π<sub>3</sub>(SU(2))</td><td>ℤ</td><td>瞬子（Yang–Mills）</td></tr><tr><td>π<sub>3</sub>(SU(3))</td><td>ℤ</td><td>QCD 真空结构（θ 真空）</td></tr></table>","links":["su2-cover","cover-table","so3"],"tex_ref":"lie2.tex:121-155"},{"id":"rotation-reps","section":"lie3","type":"comparison","title":"旋转的四种表示（rotation representations）","question":"同一个三维旋转有四种常用表示，什么情况下该用哪一种？","content_html":"<p>同一个三维旋转有四种常用表示，取舍由参数数、奇异性、是否需要插值组合决定。</p><table class=\"tbl\"><tr><td>表示</td><td>参数数</td><td>奇异性</td><td>应用</td></tr><tr><td>旋转矩阵 R ∈ SO(3)</td><td>9（6 约束）</td><td>无</td><td>通用变换</td></tr><tr><td>欧拉角</td><td>3</td><td>有（万向锁）</td><td>动画关键帧</td></tr><tr><td>轴角 (n̂, θ)</td><td>3</td><td>θ = 0 处</td><td>物理模拟</td></tr><tr><td>四元数 q ∈ SU(2)</td><td>4（1 约束）</td><td>无</td><td>插值、组合</td></tr></table><p>矩阵信息冗余（9 个分量只对应 6 个约束）但无奇异，适合通用变换；欧拉角参数最少、便于人工调关键帧，代价是万向锁；轴角物理意义最直白，但 θ = 0 时转轴无定义；四元数多花一个分量买来无奇异与可插值、可组合。</p>","links":["quaternion","gimbal-lock","slerp","se3-screw"],"tex_ref":"lie3.tex:196-209"},{"id":"quaternion","section":"lie3","type":"statement","title":"四元数（quaternion）与 SU(2)","question":"如何用 4 个分量、无奇异且可插值地表示三维旋转？","content_html":"<p>单位四元数（quaternion）是 SU(2) 的元素，用 4 个分量 1 个约束表示三维旋转。</p><div class=\"frm\">q = cos(θ/2) + sin(θ/2)(n̂<sub>x</sub>i + n̂<sub>y</sub>j + n̂<sub>z</sub>k)</div><p><strong>旋转作用：</strong>把向量 v 视为纯虚四元数，则 v′ = q v q<sup>−1</sup>。</p><p><strong>优势四条：</strong></p><ul><li>无万向锁；</li><li>组合旋转 = 四元数乘法，O(1) vs 矩阵乘法 O(27)；</li><li>插值自然（Slerp）；</li><li>归一化便宜（只 4 个分量）。</li></ul><p>其中 θ 与 n̂ 正是轴角表示的转角与转轴，所以四元数是轴角的无奇异封装。</p>","links":["rotation-reps","slerp","gimbal-lock","spin-projection"],"tex_ref":"lie3.tex:211-223"},{"id":"slerp","section":"lie3","type":"statement","title":"球面线性插值（Slerp）","question":"两个旋转之间如何做光滑自然的过渡插值？","content_html":"<div class=\"frm\">Slerp(q<sub>0</sub>, q<sub>1</sub>, t) = sin((1−t)Ω)/sin Ω · q<sub>0</sub> + sin(tΩ)/sin Ω · q<sub>1</sub></div><p>其中 cos Ω = q<sub>0</sub> · q<sub>1</sub>，即四元数点积。</p><p><strong>几何意义：</strong>在 S<sup>3</sup>（单位四元数空间）上沿大圆弧插值。这正是四元数「插值自然」的依据：旋转不在分量上做过渡，而在球面上沿大圆弧走。</p><p>它服务于对照表中四元数的应用一栏——「插值、组合」。</p>","links":["quaternion","rotation-reps"],"tex_ref":"lie3.tex:225-233"},{"id":"gimbal-lock","section":"lie3","type":"counterexample","title":"万向锁（gimbal lock）","question":"欧拉角在什么姿态下会丢失一个自由度，四元数为什么不会？","content_html":"<p>欧拉角在特定姿态下会失去一个自由度，这就是万向锁（gimbal lock）。</p><p>具体机制：以依次绕三个轴转动为例，第一次与第三次旋转的转轴初始互相垂直，与第二次的转轴一起张成 3 个独立方向。当第二次旋转的角度（俯仰角）取 ±90° 时，第一次与第三次的转轴被转到重合方向——两个角改变的是同一种转动，3 个参数只剩 2 个独立自由度，姿态空间在该处出现奇异。</p><p>对照表里欧拉角一栏的奇异性标注正是「有（万向锁）」。</p><p>四元数是 4 参数 1 约束、无奇异，不存在「某两次旋转共轴」这类退化姿态，这正是优势第一条「无万向锁」的含义。</p>","links":["rotation-reps","quaternion","slerp"],"tex_ref":"lie3.tex:203-223"},{"id":"se3-screw","section":"lie3","type":"statement","title":"刚体运动 SE(3) 与螺旋运动（screw motion）","question":"刚体的一般位姿（旋转 + 平移）如何用矩阵与指数映射统一描述？","content_html":"<p>刚体变换用齐次矩阵表示，R ∈ SO(3)、t ∈ ℝ<sup>3</sup>：</p><table class=\"mtx\"><tr><td>R</td><td>t</td></tr><tr><td>0<sup>T</sup></td><td>1</td></tr></table><p>其李代数 se(3) 由旋转块与平移块拼成：</p><table class=\"mtx\"><tr><td>[ω]<sub>×</sub></td><td>v</td></tr><tr><td>0<sup>T</sup></td><td>0</td></tr></table><p><strong>指数映射给出螺旋运动</strong>，结果为：</p><table class=\"mtx\"><tr><td>e<sup>[ω]<sub>×</sub></sup></td><td>Vv</td></tr><tr><td>0<sup>T</sup></td><td>1</td></tr></table><p>其中 V = I + (1−cos θ)/θ<sup>2</sup>·[ω]<sub>×</sub> + (θ−sin θ)/θ<sup>3</sup>·[ω]<sub>×</sub><sup>2</sup>，闭合形式，无需级数截断。</p><p><strong>CG 应用：</strong>骨骼动画的关节变换、相机运动、机器人学。</p>","links":["rotation-reps","quaternion","unified-table"],"tex_ref":"lie3.tex:235-256"},{"id":"spin-projection","section":"lie3","type":"intuition","title":"自旋为何用 SU(2)：投影表示（projective representation）","question":"量子自旋为什么必须用 SU(2) 而不是 SO(3) 描述？","content_html":"<p>量子力学中旋转作用在态空间上，而投影表示允许整体差一个相位。</p><p>关键拓扑事实：π<sub>1</sub>(SO(3)) = ℤ<sub>2</sub>。SO(3) 的投影表示（允许相位）等价于 SU(2) 的普通表示——这就是自旋必须用 SU(2) 而非 SO(3) 的原因。电子自旋 s = 1/2 正是 SU(2) 的 2 维表示。</p><div class=\"frm\">[L̂<sub>i</sub>, L̂<sub>j</sub>] = iħ ε<sub>ijk</sub> L̂<sub>k</sub></div><p>氢原子另有隐藏对称性：除角动量 L 外还有 Runge–Lenz 向量 A，二者共同生成 so(4) ≅ su(2) ⊕ su(2)。由此能级 E<sub>n</sub> 的简并度是 n<sup>2</sup>，而非仅 2l+1。</p>","links":["quaternion","spherical-harmonics","unified-table"],"tex_ref":"lie3.tex:23-40"},{"id":"yang-mills","section":"lie3","type":"application","title":"Yang–Mills 规范场论（gauge theory）","question":"要求局部规范不变，为什么会「逼出」传递相互作用的力粒子？","content_html":"<p><strong>核心思想：</strong>要求拉格朗日量在<strong>局部</strong>规范变换下不变 → 必须引入规范场（联络）→ 规范场就是力。</p><table class=\"tbl\"><tr><td>规范群</td><td>规范场</td><td>力</td><td>粒子</td></tr><tr><td>U(1)</td><td>A<sub>μ</sub>（1 个）</td><td>电磁力</td><td>光子</td></tr><tr><td>SU(2)</td><td>W<sub>μ</sub><sup>a</sup>（3 个）</td><td>弱力</td><td>W<sup>±</sup>, Z<sup>0</sup></td></tr><tr><td>SU(3)</td><td>G<sub>μ</sub><sup>a</sup>（8 个）</td><td>强力</td><td>8 个胶子</td></tr></table><p>标准模型的群结构：G<sub>SM</sub> = SU(3)<sub>C</sub> × SU(2)<sub>L</sub> × U(1)<sub>Y</sub>，其中 SU(3)<sub>C</sub> 为色对称、SU(2)<sub>L</sub> 为弱同位旋、U(1)<sub>Y</sub> 为弱超荷。</p><p><strong>数学结构：</strong>规范场 = 主丛上的联络 A = A<sub>μ</sub><sup>a</sup>T<sub>a</sub>dx<sup>μ</sup>；场强 = 曲率 F = dA + A∧A。</p>","links":["noether","unified-table"],"tex_ref":"lie3.tex:42-89"},{"id":"noether","section":"lie3","type":"application","title":"Noether 定理与矩映射（moment map）","question":"连续对称性凭什么给出守恒量，这个对应怎么写成李群语言？","content_html":"<p><strong>Noether 定理的李群表述：</strong>若作用量 S = ∫L dt 在一参数群 g<sub>ε</sub> 下不变，则</p><div class=\"frm\">Q = (∂L/∂q̇) · δq</div><p>是守恒量。</p><p><strong>矩映射（moment map）：</strong>把对称群的李代数整体映射到相空间上的守恒量，</p><div class=\"frm\">μ: g → C<sup>∞</sup>(M)，X ↦ μ<sub>X</sub>，满足 {μ<sub>X</sub>, f} = X<sub>M</sub>(f)</div><p>其中 X<sub>M</sub> 是 X 在相空间 M 上诱导的向量场。</p><p><strong>三个例子：</strong>平移对称 → 动量 p；旋转对称 → 角动量 L = r × p；时间平移 → 能量 H。</p>","links":["yang-mills","unified-table"],"tex_ref":"lie3.tex:166-188"},{"id":"spherical-harmonics","section":"lie3","type":"application","title":"球谐函数（spherical harmonics）与 SO(3) 表示","question":"球面上的函数（含环境光照）如何用不可约表示的基展开与快速卷积？","content_html":"<p>球谐函数（spherical harmonics）是 SO(3) 不可约表示的基函数：Y<sub>l</sub><sup>m</sup>(θ, φ) 是第 l 个不可约表示（维度 2l+1）的基。</p><p><strong>旋转下的变换：</strong></p><div class=\"frm\">Y<sub>l</sub><sup>m</sup>(R<sup>−1</sup>n̂) = Σ<sub>m′=−l</sub><sup>l</sup> D<sup>l</sup><sub>m′m</sub>(R) Y<sub>l</sub><sup>m′</sup>(n̂)</div><p>D<sup>l</sup><sub>m′m</sub>(R) 是 Wigner D-矩阵，即 (2l+1)×(2l+1) 的酉矩阵。</p><p><strong>渲染应用：</strong>环境光照用球谐系数 L(n̂) ≈ Σ<sub>l=0</sub><sup>L</sup> Σ<sub>m=−l</sub><sup>l</sup> c<sub>l</sub><sup>m</sup>Y<sub>l</sub><sup>m</sup>(n̂) 表示，通常 L = 2（9 个系数）即可表示低频环境光；PRT 把传输算子在球谐基上对角化，实现实时全局光照；球面卷积在球谐域变成逐元素乘法（卷积定理的球面版本）。</p>","links":["spin-projection","unified-table","se3-screw"],"tex_ref":"lie3.tex:258-287"},{"id":"hairy-ball","section":"lie3","type":"counterexample","title":"Hairy ball 定理（毛球定理）","question":"为什么球面上的连续切向量场一定有零点，这对 CG 意味着什么？","content_html":"<p>Hairy ball 定理（毛球定理）：S<sup>2</sup> 上不存在处处非零的连续切向量场。</p><p>具体场景：取封闭球面（拓扑上是亏格 g = 0 的球面，如球状封闭物体），无论怎样铺设切向量，都至少有一个点为 0——这就是球面纹理坐标「至少一个极点」的来历。</p><p><strong>CG 后果三条：</strong></p><ul><li>球面上的纹理坐标必有奇点（至少一个极点）；</li><li>风向 / 毛发方向场在球面上必有零点；</li><li>这解释了为什么地球仪的地图投影必有畸变。</li></ul><p>它属于「拓扑在 CG 中的应用」，笔记把它与参数化、向量场、网格生成并列，原因是拓扑约束而非建模技巧。</p>","links":["unified-table","spherical-harmonics"],"tex_ref":"lie3.tex:351-360"},{"id":"unified-table","section":"lie3","type":"comparison","title":"统一对应表（unified correspondence）","question":"李群、李代数、表示、指数映射这些概念在四个领域里分别是同一件事的哪一面？","content_html":"<p>同一套结构在四个领域反复出现，这张表是李群–李代数–拓扑统一视角的总结。</p><table class=\"tbl\"><tr><td>数学</td><td>物理</td><td>CG</td><td>微分方程</td></tr><tr><td>李群</td><td>对称群</td><td>变换群</td><td>对称性</td></tr><tr><td>李代数</td><td>守恒量代数</td><td>无穷小变换</td><td>降阶生成元</td></tr><tr><td>表示</td><td>粒子分类</td><td>球谐/傅里叶</td><td>特征函数</td></tr><tr><td>指数映射</td><td>时间演化</td><td>旋转插值</td><td>矩阵指数解</td></tr><tr><td>覆盖群</td><td>自旋</td><td>四元数</td><td>多值解</td></tr><tr><td>特征类</td><td>拓扑荷</td><td>网格拓扑</td><td>指标定理</td></tr></table><p>三条主线：李群 ↔（指数映射）李代数；李群 ↔（基本群 / 覆盖）拓扑；李代数 ↔（表示论）物理。</p>","links":["rotation-reps","yang-mills","noether","spherical-harmonics"],"tex_ref":"lie3.tex:389-404"}]}</script>
+<script>
+/* ============================================================
+ * 交互一 + 交互二：全部数学与 Python 核验版逐式对齐
+ * （example/lie/review/verify_math.py，PASS 后才写进这里）
+ * 三条硬约束：数据内联 / IIFE / 无 CDN —— file:// 双击即开
+ * ============================================================ */
+(function(){
+"use strict";
+var PI = Math.PI, TAU = 2*PI, EPS = 1e-10;
+
+/* ---------- 3×3 数学（与 verify_math.py 同构） ---------- */
+function skew(n){ return [0,-n[2],n[1], n[2],0,-n[0], -n[1],n[0],0]; }
+function matAdd(A,B){ var r=new Array(9); for(var i=0;i<9;i++) r[i]=A[i]+B[i]; return r; }
+function matMul(A,B){
+  var r=new Array(9);
+  for(var i=0;i<3;i++) for(var j=0;j<3;j++){
+    var s=0; for(var k=0;k<3;k++) s+=A[i*3+k]*B[k*3+j];
+    r[i*3+j]=s;
+  } return r;
+}
+function rodrigues(n,t){          /* R = I + sinθ·[n]× + (1−cosθ)·[n]×² */
+  var K=skew(n), K2=matMul(K,K), s=Math.sin(t), c=1-Math.cos(t), r=new Array(9);
+  for(var i=0;i<9;i++) r[i]=(i%4===0?1:0)+s*K[i]+c*K2[i];
+  return r;
+}
+function apply3(R,v){ return [R[0]*v[0]+R[1]*v[1]+R[2]*v[2],
+  R[3]*v[0]+R[4]*v[1]+R[5]*v[2], R[6]*v[0]+R[7]*v[1]+R[8]*v[2]]; }
+function invCheck(R){             /* ‖RᵀR−I‖ 与 |det R −1| */
+  var Rt=[R[0],R[3],R[6],R[1],R[4],R[7],R[2],R[5],R[8]];
+  var M=matMul(Rt,R), s=0;
+  for(var i=0;i<9;i++){ var d=M[i]-(i%4===0?1:0); s+=d*d; }
+  var det=R[0]*(R[4]*R[8]-R[5]*R[7])-R[1]*(R[3]*R[8]-R[5]*R[6])+R[2]*(R[3]*R[7]-R[4]*R[6]);
+  return {orth:Math.sqrt(s), det:det-1};
+}
+function quatAxisAngle(n,t){ return [Math.cos(t/2), Math.sin(t/2)*n[0], Math.sin(t/2)*n[1], Math.sin(t/2)*n[2]]; }
+
+/* ---------- 立方体线框绘制 ---------- */
+var CV=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
+var CE=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+function drawCube(ctx,W,H,R,opts){
+  opts=opts||{};
+  var cx=W/2, cy=H/2, sc=Math.min(W,H)*0.26, per=3.6;
+  var P=CV.map(function(v){ var w=apply3(R,v);
+    var k=per/(per-w[2]); return [cx+w[0]*sc*k, cy-w[1]*sc*k, w[2]]; });
+  /* 深度排序线段 */
+  var segs=CE.map(function(e){ var a=P[e[0]],b=P[e[1]];
+    return {a:a,b:b,z:(a[2]+b[2])/2}; }).sort(function(p,q){return p.z-q.z;});
+  segs.forEach(function(s){
+    var f=(s.z+1.2)/2.4, col;
+    if(opts.grad) col="rgba("+Math.round(94+f*(167-94))+","+Math.round(230+f*(139-230))+","+Math.round(255+f*(250-255))+",";
+    else col="rgba(120,170,230,";
+    ctx.strokeStyle=col+(0.35+f*0.6)+")";
+    ctx.lineWidth=1.4+f*1.1;
+    ctx.beginPath(); ctx.moveTo(s.a[0],s.a[1]); ctx.lineTo(s.b[0],s.b[1]); ctx.stroke();
+  });
+  P.forEach(function(p){ ctx.fillStyle="rgba(94,230,255,.9)";
+    ctx.beginPath(); ctx.arc(p[0],p[1],2.2,0,TAU); ctx.fill(); });
+  /* 旋转轴箭头（淡紫） */
+  if(opts.axis){
+    var n=opts.axis, w1=apply3(R,[n[0]*1.7,n[1]*1.7,n[2]*1.7]),
+        w2=apply3(R,[-n[0]*1.7,-n[1]*1.7,-n[2]*1.7]);
+    function pr(w){ var k=per/(per-w[2]); return [cx+w[0]*sc*k, cy-w[1]*sc*k]; }
+    var p1=pr(w1),p2=pr(w2);
+    ctx.strokeStyle="rgba(167,139,250,.85)"; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(p2[0],p2[1]); ctx.lineTo(p1[0],p1[1]); ctx.stroke();
+    var ang=Math.atan2(p1[1]-p2[1],p1[0]-p2[0]);
+    ctx.fillStyle="rgba(167,139,250,.9)";
+    ctx.beginPath(); ctx.moveTo(p1[0],p1[1]);
+    ctx.lineTo(p1[0]-10*Math.cos(ang-.4),p1[1]-10*Math.sin(ang-.4));
+    ctx.lineTo(p1[0]-10*Math.cos(ang+.4),p1[1]-10*Math.sin(ang+.4));
+    ctx.closePath(); ctx.fill();
+    var mp=[(p1[0]+p2[0])/2,(p1[1]+p2[1])/2];
+    ctx.font="12.5px system-ui"; ctx.fillStyle="rgba(196,176,255,.95)";
+    ctx.fillText("n̂ = ("+n.map(function(x){return x.toFixed(2);}).join(", ")+")",mp[0]+10,mp[1]-6);
+  }
+}
+
+/* ---------- 交互一：exp(θn̂) ---------- */
+var AXES={x:[1,0,0],y:[0,1,0],z:[0,0,1],d:(function(){
+  var v=[1,1,.5],L=Math.sqrt(2.25); return [v[0]/L,v[1]/L,v[2]/L];})()};
+var st1={th:0.62, ax:"z", play:false};
+var cvE=document.getElementById("cv-exp"), ctxE=cvE.getContext("2d");
+var inT=document.getElementById("in-theta"), lbT=document.getElementById("lb-theta");
+
+function fmt(x){ return (Math.abs(x)<5e-7?0:x).toFixed(4); }
+function render1(){
+  var n=AXES[st1.ax], R=rodrigues(n,st1.th);
+  ctxE.clearRect(0,0,cvE.width,cvE.height);
+  drawCube(ctxE,cvE.width,cvE.height,R,{grad:true,axis:n});
+  var m=document.getElementById("mat-exp");
+  m.innerHTML=R.map(function(x){return "<span>"+fmt(x)+"</span>";}).join("");
+  var ck=invCheck(R), inv=document.getElementById("inv-exp");
+  var ok=ck.orth<EPS && Math.abs(ck.det)<EPS;
+  inv.innerHTML="<b>‖R<sup>T</sup>R − I‖<sub>F</sub> = "+ck.orth.toExponential(1)+"</b>"+
+    "<b>|det R − 1| = "+Math.abs(ck.det).toExponential(1)+"</b>"+
+    (ok?"<span class='ok'>✓ invariant 达标（阈值 1e-10）</span>"
+       :"<span class='bad'>✗ invariant 超阈，此帧不可信</span>");
+  document.getElementById("st-exp").innerHTML=
+    "θ = <b>"+st1.th.toFixed(3)+"</b> rad（"+(st1.th/PI).toFixed(2)+"π）"+
+    (Math.abs(st1.th-TAU)<1e-3||st1.th<1e-3
+      ?"　<span class='st-home'>R ≈ I：回到恒等 ✓</span>"
+      :"　<span class='st-mid'>旋转中</span>");
+  lbT.textContent=st1.th.toFixed(2)+" rad";
+  inT.value=st1.th;
+}
+inT.addEventListener("input",function(){ st1.th=parseFloat(this.value); render1(); });
+document.getElementById("seg-axis").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b)return;
+  this.querySelectorAll("button").forEach(function(x){x.classList.remove("act");});
+  b.classList.add("act"); st1.ax=b.dataset.ax; render1();
+});
+document.getElementById("bt-play1").addEventListener("click",function(){
+  st1.play=!st1.play; this.textContent=st1.play?"⏸ 暂停":"▶ 播放";
+});
+
+/* ---------- 交互二：SU(2) → SO(3) ---------- */
+var st2={th:1.8, play:false};
+var n2=AXES.z;  /* 覆盖演示固定用 z 轴（SO(2) 一参数子群），叙事最干净 */
+var cvS3=document.getElementById("cv-so3"), ctxS3=cvS3.getContext("2d");
+var cvS4=document.getElementById("cv-su2"), ctxS4=cvS4.getContext("2d");
+var inT2=document.getElementById("in-theta2"), lbT2=document.getElementById("lb-theta2");
+
+function render2(){
+  var R=rodrigues(n2,st2.th), Rred=rodrigues(n2,st2.th%TAU);
+  /* 左：SO(3) 立方体（θ mod 2π —— SO(3) 的世界只认 mod 2π） */
+  ctxS3.clearRect(0,0,cvS3.width,cvS3.height);
+  ctxS3.fillStyle="rgba(139,147,171,.75)"; ctxS3.font="12.5px system-ui";
+  ctxS3.fillText("SO(3)：立方体被 R(θ) 作用",12,20);
+  drawCube(ctxS3,cvS3.width,cvS3.height,Rred,{grad:false,axis:n2});
+  var dI=Math.sqrt((function(){var M=matMul([Rred[0],Rred[3],Rred[6],Rred[1],Rred[4],Rred[7],Rred[2],Rred[5],Rred[8]],Rred),s=0;
+    for(var i=0;i<9;i++){var d=M[i]-(i%4===0?1:0);s+=d*d;} return s;})());
+  var so3home=dI<1e-6;
+  document.getElementById("st-so3").innerHTML="SO(3)：R(θ mod 2π) 离 I 的距离 = <b>"
+    +dI.toExponential(1)+"</b>　"+(so3home
+      ?"<span class='st-home'>θ = "+(st2.th/PI).toFixed(2)+"π 时已复位 ✓（2π 就够）</span>"
+      :"<span class='st-mid'>旋转中</span>");
+
+  /* 右：SU(2) 大圆——q(θ)=(cos θ/2, sin θ/2)，忠实画一参数子群 */
+  var W=cvS4.width,H=cvS4.height,cx=W/2,cy=H/2+8,rr=Math.min(W,H)*0.34;
+  ctxS4.clearRect(0,0,W,H);
+  ctxS4.fillStyle="rgba(139,147,171,.75)"; ctxS4.font="12.5px system-ui";
+  ctxS4.fillText("SU(2)：q(θ) 沿 S³ 上的一参数子群走",12,20);
+  /* 赤道参考 + 端点 */
+  ctxS4.strokeStyle="rgba(255,255,255,.10)"; ctxS4.lineWidth=1;
+  ctxS4.beginPath(); ctxS4.arc(cx,cy,rr,0,TAU); ctxS4.stroke();
+  ctxS4.beginPath(); ctxS4.moveTo(cx-rr-14,cy); ctxS4.lineTo(cx+rr+14,cy); ctxS4.stroke();
+  /* +1 与 −1 标注 */
+  ctxS4.fillStyle="rgba(94,230,255,.95)";
+  ctxS4.beginPath(); ctxS4.arc(cx+rr,cy,4.5,0,TAU); ctxS4.fill();
+  ctxS4.font="12px system-ui";
+  ctxS4.fillText("+1 出发",cx+rr-16,cy-12);
+  ctxS4.fillStyle="rgba(248,113,113,.95)";
+  ctxS4.beginPath(); ctxS4.arc(cx-rr,cy,4.5,0,TAU); ctxS4.fill();
+  ctxS4.fillText("−1 对跖点",cx-rr-14,cy-12);
+  /* 轨迹：q(θ')=(cos θ'/2, sin θ'/2) 显式采样；画布 y 取负 → 逆时针 = 数学正方向。
+     色相按 θ'/4π 从青渐变到紫（4π 一整圈） */
+  var STEPS=Math.max(2,Math.ceil(st2.th/0.02));
+  var px=cx+rr, py=cy;
+  for(var i=1;i<=STEPS;i++){
+    var t1=st2.th*i/STEPS, f=t1/(4*PI);
+    var nx=cx+rr*Math.cos(t1/2), ny=cy-rr*Math.sin(t1/2);
+    ctxS4.strokeStyle="rgba("+Math.round(94+73*f)+","+Math.round(230-91*f)+",255,.92)";
+    ctxS4.lineWidth=3;
+    ctxS4.beginPath(); ctxS4.moveTo(px,py); ctxS4.lineTo(nx,ny); ctxS4.stroke();
+    px=nx; py=ny;
+  }
+  /* 当前点 q 与对照点 −q（同一旋转的另一份四元数：二重覆盖的「二重」） */
+  var q=quatAxisAngle(n2,st2.th);
+  var qx=cx+rr*Math.cos(st2.th/2), qy=cy-rr*Math.sin(st2.th/2);
+  var mx=cx-rr*Math.cos(st2.th/2), my=cy+rr*Math.sin(st2.th/2);
+  ctxS4.fillStyle="rgba(248,113,113,.75)";
+  ctxS4.beginPath(); ctxS4.arc(mx,my,3.8,0,TAU); ctxS4.fill();
+  ctxS4.font="11.5px system-ui";
+  ctxS4.fillStyle="rgba(252,165,165,.85)";
+  ctxS4.fillText("−q（同一个 R）",mx-38,my+18);
+  ctxS4.fillStyle="#fff";
+  ctxS4.beginPath(); ctxS4.arc(qx,qy,5.5,0,TAU); ctxS4.fill();
+  ctxS4.strokeStyle="rgba(255,255,255,.5)"; ctxS4.lineWidth=1.5;
+  ctxS4.beginPath(); ctxS4.arc(qx,qy,10,0,TAU); ctxS4.stroke();
+  /* θ=2π / 4π 刻度 */
+  [[2*PI,cx-rr,cy],[4*PI,cx+rr,cy]].forEach(function(tk){
+    ctxS4.fillStyle=st2.th>=tk[0]-1e-9?"rgba(251,191,36,.95)":"rgba(251,191,36,.35)";
+    ctxS4.beginPath(); ctxS4.arc(tk[1],tk[2],3.2,0,TAU); ctxS4.fill();
+  });
+  /* SU(2) 状态行 */
+  var at2=Math.abs(st2.th-2*PI)<0.01, at4=Math.abs(st2.th-4*PI)<0.01;
+  document.getElementById("st-su2").innerHTML=
+    "SU(2)：q = (<b>"+q.map(function(x){return x.toFixed(3);}).join(", ")
+    +"</b>)　"+(at4?"<span class='st-home'>q = +1：回家 ✓（要 4π）</span>"
+      :at2?"<span class='st-out'>q = −1：刚到对跖点，波函数变号——没回家 ✗</span>"
+      :"<span class='st-mid'>在路上（走 "+(st2.th/(4*PI)*100).toFixed(0)+"% ）</span>");
+  lbT2.textContent=st2.th.toFixed(2)+" rad";
+  inT2.value=st2.th;
+}
+inT2.addEventListener("input",function(){ st2.th=parseFloat(this.value); render2(); });
+document.getElementById("bt-play2").addEventListener("click",function(){
+  st2.play=!st2.play; this.textContent=st2.play?"⏸ 暂停":"▶ 播放";
+});
+
+/* ---------- 动画循环 ---------- */
+var last=performance.now();
+function loop(now){
+  var dt=(now-last)/1000; last=now;
+  if(st1.play){ st1.th=(st1.th+dt*0.9)%TAU; render1(); }
+  if(st2.play){ st2.th=Math.min(4*PI,st2.th+dt*1.1);
+    if(st2.th>=4*PI-1e-4){ st2.play=false;
+      document.getElementById("bt-play2").textContent="▶ 播放"; }
+    render2(); }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+render1(); render2();
+})();
+
+/* ============================================================
+ * 卡片渲染器：读内联 JSON（#cards-data），按 type 着色、分组渲染。
+ * 内容是受控 HTML 子集（prompt 限定标签白名单 + 评审检查）。
+ * ============================================================ */
+(function(){
+"use strict";
+var TYPE_ZH={statement:"陈述",intuition:"直觉",comparison:"对照",application:"应用",
+  counterexample:"反例",probe:"检验"};
+var data=null, raw=document.getElementById("cards-data").textContent;
+try{ data=JSON.parse(raw); }
+catch(e){
+  document.getElementById("cards-lie1").innerHTML=
+    "<div class='empty-tip'>卡片数据 JSON 解析失败："+e.message+"</div>";
+  return;
+}
+var entries=(data&&data.entries)||[];
+if(!entries.length){
+  ["lie1","lie2","lie3"].forEach(function(s){
+    document.getElementById("cards-"+s).innerHTML=
+      "<div class='empty-tip'>卡片数据待注入（flash 生成中）</div>";
+  });
+  return;
+}
+["lie1","lie2","lie3"].forEach(function(sec){
+  var list=entries.filter(function(c){return c.section===sec;});
+  document.getElementById("cnt-"+sec).textContent="（"+list.length+" 张）";
+  var host=document.getElementById("cards-"+sec);
+  if(!list.length){ host.innerHTML="<div class='empty-tip'>该组暂无卡片</div>"; return; }
+  list.forEach(function(c,i){
+    var el=document.createElement("div");
+    el.className="card"+(i<2?" open":"");
+    var ty=c.type||"statement";
+    el.innerHTML=
+      "<div class='card-hd'>"+
+        "<span class='tid t-"+ty+"'>"+(TYPE_ZH[ty]||ty)+"</span>"+
+        "<span class='t'>"+(c.title||c.id)+"</span>"+
+        "<span class='q'>"+(c.question||"")+"</span>"+
+        "<span class='arrow'>▶</span>"+
+      "</div><div class='card-bd'>"+(c.content_html||"")+
+      "<div class='card-meta'>"+
+        "<span class='badge src'>draft: deepseek-v4.1-flash</span>"+
+        "<span class='badge ok'>review: GLM-5.3</span>"+
+        (c.tex_ref?"<span class='badge'>真源 "+c.tex_ref+"</span>":"")+
+        (Array.isArray(c.links)&&c.links.length
+          ?"<span class='badge'>links: "+c.links.join(" · ")+"</span>":"")+
+      "</div></div>";
+    el.querySelector(".card-hd").addEventListener("click",function(){
+      el.classList.toggle("open");
+    });
+    host.appendChild(el);
+  });
+});
+})();
+</script>
+</body>
+</html>

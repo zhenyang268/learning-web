@@ -1,0 +1,157 @@
+{
+  "entries": [
+    {
+      "id": "rotation-reps",
+      "section": "lie3",
+      "type": "comparison",
+      "title": "旋转的四种表示（rotation representations）",
+      "question": "同一个三维旋转有四种常用表示，什么情况下该用哪一种？",
+      "content_html": "<p>同一个三维旋转有四种常用表示，取舍由参数数、奇异性、是否需要插值组合决定。</p><table class=\"tbl\"><tr><td>表示</td><td>参数数</td><td>奇异性</td><td>应用</td></tr><tr><td>旋转矩阵 R ∈ SO(3)</td><td>9（6 约束）</td><td>无</td><td>通用变换</td></tr><tr><td>欧拉角</td><td>3</td><td>有（万向锁）</td><td>动画关键帧</td></tr><tr><td>轴角 (n̂, θ)</td><td>3</td><td>θ = 0 处</td><td>物理模拟</td></tr><tr><td>四元数 q ∈ SU(2)</td><td>4（1 约束）</td><td>无</td><td>插值、组合</td></tr></table><p>矩阵信息冗余（9 个分量只对应 6 个约束）但无奇异，适合通用变换；欧拉角参数最少、便于人工调关键帧，代价是万向锁；轴角物理意义最直白，但 θ = 0 时转轴无定义；四元数多花一个分量买来无奇异与可插值、可组合。</p>",
+      "links": [
+        "quaternion",
+        "gimbal-lock",
+        "slerp",
+        "se3-screw"
+      ],
+      "tex_ref": "lie3.tex:196-209"
+    },
+    {
+      "id": "quaternion",
+      "section": "lie3",
+      "type": "statement",
+      "title": "四元数（quaternion）与 SU(2)",
+      "question": "如何用 4 个分量、无奇异且可插值地表示三维旋转？",
+      "content_html": "<p>单位四元数（quaternion）是 SU(2) 的元素，用 4 个分量 1 个约束表示三维旋转。</p><div class=\"frm\">q = cos(θ/2) + sin(θ/2)(n̂<sub>x</sub>i + n̂<sub>y</sub>j + n̂<sub>z</sub>k)</div><p><strong>旋转作用：</strong>把向量 v 视为纯虚四元数，则 v′ = q v q<sup>−1</sup>。</p><p><strong>优势四条：</strong></p><ul><li>无万向锁；</li><li>组合旋转 = 四元数乘法，O(1) vs 矩阵乘法 O(27)；</li><li>插值自然（Slerp）；</li><li>归一化便宜（只 4 个分量）。</li></ul><p>其中 θ 与 n̂ 正是轴角表示的转角与转轴，所以四元数是轴角的无奇异封装。</p>",
+      "links": [
+        "rotation-reps",
+        "slerp",
+        "gimbal-lock",
+        "spin-projection"
+      ],
+      "tex_ref": "lie3.tex:211-223"
+    },
+    {
+      "id": "slerp",
+      "section": "lie3",
+      "type": "statement",
+      "title": "球面线性插值（Slerp）",
+      "question": "两个旋转之间如何做光滑自然的过渡插值？",
+      "content_html": "<div class=\"frm\">Slerp(q<sub>0</sub>, q<sub>1</sub>, t) = sin((1−t)Ω)/sin Ω · q<sub>0</sub> + sin(tΩ)/sin Ω · q<sub>1</sub></div><p>其中 cos Ω = q<sub>0</sub> · q<sub>1</sub>，即四元数点积。</p><p><strong>几何意义：</strong>在 S<sup>3</sup>（单位四元数空间）上沿大圆弧插值。这正是四元数「插值自然」的依据：旋转不在分量上做过渡，而在球面上沿大圆弧走。</p><p>它服务于对照表中四元数的应用一栏——「插值、组合」。</p>",
+      "links": [
+        "quaternion",
+        "rotation-reps"
+      ],
+      "tex_ref": "lie3.tex:225-233"
+    },
+    {
+      "id": "gimbal-lock",
+      "section": "lie3",
+      "type": "counterexample",
+      "title": "万向锁（gimbal lock）",
+      "question": "欧拉角在什么姿态下会丢失一个自由度，四元数为什么不会？",
+      "content_html": "<p>欧拉角在特定姿态下会失去一个自由度，这就是万向锁（gimbal lock）。</p><p>具体机制：以依次绕三个轴转动为例，第一次与第三次旋转的转轴初始互相垂直，与第二次的转轴一起张成 3 个独立方向。当第二次旋转的角度（俯仰角）取 ±90° 时，第一次与第三次的转轴被转到重合方向——两个角改变的是同一种转动，3 个参数只剩 2 个独立自由度，姿态空间在该处出现奇异。</p><p>对照表里欧拉角一栏的奇异性标注正是「有（万向锁）」。</p><p>四元数是 4 参数 1 约束、无奇异，不存在「某两次旋转共轴」这类退化姿态，这正是优势第一条「无万向锁」的含义。</p>",
+      "links": [
+        "rotation-reps",
+        "quaternion",
+        "slerp"
+      ],
+      "tex_ref": "lie3.tex:203-223"
+    },
+    {
+      "id": "se3-screw",
+      "section": "lie3",
+      "type": "statement",
+      "title": "刚体运动 SE(3) 与螺旋运动（screw motion）",
+      "question": "刚体的一般位姿（旋转 + 平移）如何用矩阵与指数映射统一描述？",
+      "content_html": "<p>刚体变换用齐次矩阵表示，R ∈ SO(3)、t ∈ ℝ<sup>3</sup>：</p><table class=\"mtx\"><tr><td>R</td><td>t</td></tr><tr><td>0<sup>T</sup></td><td>1</td></tr></table><p>其李代数 se(3) 由旋转块与平移块拼成：</p><table class=\"mtx\"><tr><td>[ω]<sub>×</sub></td><td>v</td></tr><tr><td>0<sup>T</sup></td><td>0</td></tr></table><p><strong>指数映射给出螺旋运动</strong>，结果为：</p><table class=\"mtx\"><tr><td>e<sup>[ω]<sub>×</sub></sup></td><td>Vv</td></tr><tr><td>0<sup>T</sup></td><td>1</td></tr></table><p>其中 V = I + (1−cos θ)/θ<sup>2</sup>·[ω]<sub>×</sub> + (θ−sin θ)/θ<sup>3</sup>·[ω]<sub>×</sub><sup>2</sup>，闭合形式，无需级数截断。</p><p><strong>CG 应用：</strong>骨骼动画的关节变换、相机运动、机器人学。</p>",
+      "links": [
+        "rotation-reps",
+        "quaternion",
+        "unified-table"
+      ],
+      "tex_ref": "lie3.tex:235-256"
+    },
+    {
+      "id": "spin-projection",
+      "section": "lie3",
+      "type": "intuition",
+      "title": "自旋为何用 SU(2)：投影表示（projective representation）",
+      "question": "量子自旋为什么必须用 SU(2) 而不是 SO(3) 描述？",
+      "content_html": "<p>量子力学中旋转作用在态空间上，而投影表示允许整体差一个相位。</p><p>关键拓扑事实：π<sub>1</sub>(SO(3)) = ℤ<sub>2</sub>。SO(3) 的投影表示（允许相位）等价于 SU(2) 的普通表示——这就是自旋必须用 SU(2) 而非 SO(3) 的原因。电子自旋 s = 1/2 正是 SU(2) 的 2 维表示。</p><div class=\"frm\">[L̂<sub>i</sub>, L̂<sub>j</sub>] = iħ ε<sub>ijk</sub> L̂<sub>k</sub></div><p>氢原子另有隐藏对称性：除角动量 L 外还有 Runge–Lenz 向量 A，二者共同生成 so(4) ≅ su(2) ⊕ su(2)。由此能级 E<sub>n</sub> 的简并度是 n<sup>2</sup>，而非仅 2l+1。</p>",
+      "links": [
+        "quaternion",
+        "spherical-harmonics",
+        "unified-table"
+      ],
+      "tex_ref": "lie3.tex:23-40"
+    },
+    {
+      "id": "yang-mills",
+      "section": "lie3",
+      "type": "application",
+      "title": "Yang–Mills 规范场论（gauge theory）",
+      "question": "要求局部规范不变，为什么会「逼出」传递相互作用的力粒子？",
+      "content_html": "<p><strong>核心思想：</strong>要求拉格朗日量在<strong>局部</strong>规范变换下不变 → 必须引入规范场（联络）→ 规范场就是力。</p><table class=\"tbl\"><tr><td>规范群</td><td>规范场</td><td>力</td><td>粒子</td></tr><tr><td>U(1)</td><td>A<sub>μ</sub>（1 个）</td><td>电磁力</td><td>光子</td></tr><tr><td>SU(2)</td><td>W<sub>μ</sub><sup>a</sup>（3 个）</td><td>弱力</td><td>W<sup>±</sup>, Z<sup>0</sup></td></tr><tr><td>SU(3)</td><td>G<sub>μ</sub><sup>a</sup>（8 个）</td><td>强力</td><td>8 个胶子</td></tr></table><p>标准模型的群结构：G<sub>SM</sub> = SU(3)<sub>C</sub> × SU(2)<sub>L</sub> × U(1)<sub>Y</sub>，其中 SU(3)<sub>C</sub> 为色对称、SU(2)<sub>L</sub> 为弱同位旋、U(1)<sub>Y</sub> 为弱超荷。</p><p><strong>数学结构：</strong>规范场 = 主丛上的联络 A = A<sub>μ</sub><sup>a</sup>T<sub>a</sub>dx<sup>μ</sup>；场强 = 曲率 F = dA + A∧A。</p>",
+      "links": [
+        "noether",
+        "unified-table"
+      ],
+      "tex_ref": "lie3.tex:42-89"
+    },
+    {
+      "id": "noether",
+      "section": "lie3",
+      "type": "application",
+      "title": "Noether 定理与矩映射（moment map）",
+      "question": "连续对称性凭什么给出守恒量，这个对应怎么写成李群语言？",
+      "content_html": "<p><strong>Noether 定理的李群表述：</strong>若作用量 S = ∫L dt 在一参数群 g<sub>ε</sub> 下不变，则</p><div class=\"frm\">Q = (∂L/∂q̇) · δq</div><p>是守恒量。</p><p><strong>矩映射（moment map）：</strong>把对称群的李代数整体映射到相空间上的守恒量，</p><div class=\"frm\">μ: g → C<sup>∞</sup>(M)，X ↦ μ<sub>X</sub>，满足 {μ<sub>X</sub>, f} = X<sub>M</sub>(f)</div><p>其中 X<sub>M</sub> 是 X 在相空间 M 上诱导的向量场。</p><p><strong>三个例子：</strong>平移对称 → 动量 p；旋转对称 → 角动量 L = r × p；时间平移 → 能量 H。</p>",
+      "links": [
+        "yang-mills",
+        "unified-table"
+      ],
+      "tex_ref": "lie3.tex:166-188"
+    },
+    {
+      "id": "spherical-harmonics",
+      "section": "lie3",
+      "type": "application",
+      "title": "球谐函数（spherical harmonics）与 SO(3) 表示",
+      "question": "球面上的函数（含环境光照）如何用不可约表示的基展开与快速卷积？",
+      "content_html": "<p>球谐函数（spherical harmonics）是 SO(3) 不可约表示的基函数：Y<sub>l</sub><sup>m</sup>(θ, φ) 是第 l 个不可约表示（维度 2l+1）的基。</p><p><strong>旋转下的变换：</strong></p><div class=\"frm\">Y<sub>l</sub><sup>m</sup>(R<sup>−1</sup>n̂) = Σ<sub>m′=−l</sub><sup>l</sup> D<sup>l</sup><sub>m′m</sub>(R) Y<sub>l</sub><sup>m′</sup>(n̂)</div><p>D<sup>l</sup><sub>m′m</sub>(R) 是 Wigner D-矩阵，即 (2l+1)×(2l+1) 的酉矩阵。</p><p><strong>渲染应用：</strong>环境光照用球谐系数 L(n̂) ≈ Σ<sub>l=0</sub><sup>L</sup> Σ<sub>m=−l</sub><sup>l</sup> c<sub>l</sub><sup>m</sup>Y<sub>l</sub><sup>m</sup>(n̂) 表示，通常 L = 2（9 个系数）即可表示低频环境光；PRT 把传输算子在球谐基上对角化，实现实时全局光照；球面卷积在球谐域变成逐元素乘法（卷积定理的球面版本）。</p>",
+      "links": [
+        "spin-projection",
+        "unified-table",
+        "se3-screw"
+      ],
+      "tex_ref": "lie3.tex:258-287"
+    },
+    {
+      "id": "hairy-ball",
+      "section": "lie3",
+      "type": "counterexample",
+      "title": "Hairy ball 定理（毛球定理）",
+      "question": "为什么球面上的连续切向量场一定有零点，这对 CG 意味着什么？",
+      "content_html": "<p>Hairy ball 定理（毛球定理）：S<sup>2</sup> 上不存在处处非零的连续切向量场。</p><p>具体场景：取封闭球面（拓扑上是亏格 g = 0 的球面，如球状封闭物体），无论怎样铺设切向量，都至少有一个点为 0——这就是球面纹理坐标「至少一个极点」的来历。</p><p><strong>CG 后果三条：</strong></p><ul><li>球面上的纹理坐标必有奇点（至少一个极点）；</li><li>风向 / 毛发方向场在球面上必有零点；</li><li>这解释了为什么地球仪的地图投影必有畸变。</li></ul><p>它属于「拓扑在 CG 中的应用」，笔记把它与参数化、向量场、网格生成并列，原因是拓扑约束而非建模技巧。</p>",
+      "links": [
+        "unified-table",
+        "spherical-harmonics"
+      ],
+      "tex_ref": "lie3.tex:351-360"
+    },
+    {
+      "id": "unified-table",
+      "section": "lie3",
+      "type": "comparison",
+      "title": "统一对应表（unified correspondence）",
+      "question": "李群、李代数、表示、指数映射这些概念在四个领域里分别是同一件事的哪一面？",
+      "content_html": "<p>同一套结构在四个领域反复出现，这张表是李群–李代数–拓扑统一视角的总结。</p><table class=\"tbl\"><tr><td>数学</td><td>物理</td><td>CG</td><td>微分方程</td></tr><tr><td>李群</td><td>对称群</td><td>变换群</td><td>对称性</td></tr><tr><td>李代数</td><td>守恒量代数</td><td>无穷小变换</td><td>降阶生成元</td></tr><tr><td>表示</td><td>粒子分类</td><td>球谐/傅里叶</td><td>特征函数</td></tr><tr><td>指数映射</td><td>时间演化</td><td>旋转插值</td><td>矩阵指数解</td></tr><tr><td>覆盖群</td><td>自旋</td><td>四元数</td><td>多值解</td></tr><tr><td>特征类</td><td>拓扑荷</td><td>网格拓扑</td><td>指标定理</td></tr></table><p>三条主线：李群 ↔（指数映射）李代数；李群 ↔（基本群 / 覆盖）拓扑；李代数 ↔（表示论）物理。</p>",
+      "links": [
+        "rotation-reps",
+        "yang-mills",
+        "noether",
+        "spherical-harmonics"
+      ],
+      "tex_ref": "lie3.tex:389-404"
+    }
+  ]
+}
