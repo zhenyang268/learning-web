@@ -1,0 +1,683 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C10.3",
+  "chapter": "C10",
+  "title": "SDE 与 Fokker--Planck",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 394,
+    "line_end": 414,
+    "anchor": "notebook/C_partial.tex:394"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C10.3:sde.quantifiers",
+      "type": "comparison",
+      "subject": "sde",
+      "title": "SDE 与 Fokker–Planck 的七条限定词：逐条拆掉看哪里塌",
+      "keywords": [
+        "系数 Lipschitz + 线性增长：dX=X²dt 的解 X=1/(1−t) 在 t=1 爆破",
+        "Itô 解释：Stratonovich 版 GBM 期望 4.26311 vs Itô 的 2.71828（差 1.5683 倍）",
+        "初值 X₀ 必须 F₀-可测：取 X₀=W₁ 就会预知未来，马氏性丢失",
+        "μ,σ 必须适应：依赖未来则 Itô 积分不成立（见 C10.2）",
+        "σ≠0 才是抛物型：σ≡0 时 FP 退化为一阶对流方程",
+        "散度形式 −∂_x(μp)+½∂_xx(σ²p)：σ 依赖 x 时不能把 σ² 提出导数",
+        "多维要换 σσᵀ：一维公式照抄会丢掉交叉扩散项"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 395,
+        "line_end": 410
+      },
+      "fill_hint": "灵魂词条：把「一般 SDE + GBM + Fokker–Planck」拆成七条限定词；每条失效行都有独立词条展开。",
+      "content": "切片给出三件东西：一般 SDE、GBM 的显式解、Fokker--Planck 方程。它们合起来背着七条限定词。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| **$\\mu,\\sigma$ 局部 Lipschitz $+$ 线性增长** | $dX_t=X_t^{2}dt$（超线性增长）：解 $X_t=\\frac1{1-t}$ | $t=0.9$ 时 $X\\approx10$【已核验:10|1/(1-0.9)】，$t=0.99$ 时 $\\approx100$【已核验:100|1/(1-0.99)】，**$t=1$ 爆破** | 可放宽为局部 Lipschitz $+$ 单调性/Khasminskii 条件（保证不爆破），但**不能去掉** |\n| **Itô 解释**（左端点） | 同一组 $\\mu=0.1,\\sigma=0.3,t=10$：Stratonovich 版解 $X=X_0e^{\\mu t+\\sigma W_t}$ | 期望 $\\approx4.26311$【已核验:4.26311451517|exp((0.1+0.09/2)*10)】 vs Itô 的 $\\approx2.71828$【已核验:2.71828182846|exp(0.1*10)】，**差 $1.5683$ 倍** | 不能去；可**换**，但必须写 $\\circ dW$ 并同步改漂移（见 `C10.2`） |\n| **$X_0$ 是 $\\mathcal F_0$-可测**（不预知未来） | 取 $X_0=W_1$（终点值） | 初值已含未来信息，$(X_t)$ 不再适应、不再是马氏过程 | 可放宽为「$X_0$ 独立于 $W$ 的任意分布」，但不能依赖未来 |\n| **$\\mu,\\sigma$ 适应** | $\\sigma$ 依赖 $W_{t+h}$ | Itô 积分的定义条件被破坏（见 `C10.2:ito.quantifiers` 第 1 行） | 不能去 |\n| **$\\sigma\\not\\equiv0$（真正抛物）** | $\\sigma\\equiv0$：$dX=\\mu\\,dt$ 是 ODE | Fokker--Planck 退化成 $\\partial_tp=-\\partial_x(\\mu p)$（**一阶**方程），密度只平移不变宽 | 可放宽：$\\sigma$ 允许退化（如只在部分方向扩散），但 PDE 类型随之退化 |\n| **散度形式** $-\\partial_x(\\mu p)+\\frac12\\partial_{xx}(\\sigma^{2}p)$ | 写成 $-\\mu\\,\\partial_xp+\\frac12\\sigma^{2}\\partial_{xx}p$（$\\sigma,\\mu$ 依赖 $x$ 时） | OU 例子：正确稳态是 $N(0,\\tfrac12)$（峰值 $\\approx0.5642$【已核验:0.564189583548|sqrt(1/pi)】），错版**没有可归一化的稳态** | $\\mu,\\sigma$ 为常数时两种写法等价；否则**只能**用散度形式 |\n| **一维 vs 多维** | 多维 $dX=\\mu\\,dt+\\sigma\\,dW$（$W$ 是向量，$X$ 是向量） | 一维公式照抄会丢掉 $\\frac12\\sum_{ij}\\partial_i\\partial_j\\big((\\sigma\\sigma^{\\mathsf T})_{ij}p\\big)$ 的交叉项 | 可直接推广（把 $\\sigma^{2}$ 换成 $\\sigma\\sigma^{\\mathsf T}$） |\n\n**这张表怎么用**：写一个 SDE 或它的密度方程之前，先扫七行。\n\n1. 系数增长超线性吗（第 1 行）——超线性就要检查有限时间爆破；\n2. 用的哪种解释（第 2 行）——不写清楚，$\\mu$ 就差 $\\frac12\\sigma\\sigma'$；\n3. 初值独立于未来的噪声吗（第 3 行）；\n4. $\\mu,\\sigma$ 只依赖过去吗（第 4 行）；\n5. 扩散真的存在吗（第 5 行）——$\\sigma\\equiv0$ 时 PDE 降阶；\n6. FP 写的是散度形式吗（第 6 行）——**这是最常被写错的一行**；\n7. 是几维（第 7 行）——多维要换 $\\sigma\\sigma^{\\mathsf T}$。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C10.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.statement",
+      "type": "statement",
+      "subject": "sde",
+      "title": "一般 SDE：积分形式、成立条件与存在唯一性",
+      "keywords": [
+        "dX_t = μ(X_t,t)dt + σ(X_t,t)dW_t（微分形式只是积分形式的简写）",
+        "严格写法：X_t = X_0 + ∫μ ds + ∫σ dW_s，后者是 Itô 积分",
+        "条件：μ,σ 局部 Lipschitz + 线性增长 ⟹ 唯一强解、轨道连续",
+        "μ 是漂移（按 t 走），σ 是扩散（按 √t 抖）：X_t ≈ X_0 + μt ± σ√t",
+        "解是马氏过程 + 半鞅；σ≡0 时退化为 ODE"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 395,
+        "line_end": 398
+      },
+      "fill_hint": "陈述本体覆盖切片 395-398；强调「微分形式是积分形式的简写」，并把存在唯一性条件与漂移/扩散的尺度对比写明。",
+      "content": "**陈述**（切片第一段）。一般（一维）Itô 型 SDE 写作\n\n$$dX_t=\\mu(X_t,t)\\,dt+\\sigma(X_t,t)\\,dW_t .$$\n\n**这句话只是下面这个积分方程的简写**（严格形式）：\n\n$$X_t=X_0+\\int_0^t\\mu(X_s,s)\\,ds+\\int_0^t\\sigma(X_s,s)\\,dW_s ,$$\n\n其中第一个积分是普通（Lebesgue/Riemann）积分，第二个是 `C10.2` 的 **Itô 积分**。**凡是拿不准的时候，就回到这个积分形式。**\n\n**成立条件**（标准背景，切片未逐条列出）：\n\n1. **可测 + 适应**：$\\mu,\\sigma$ 是 $[0,\\infty)\\times\\mathbb R$ 上的可测函数，且 $(X_s)$ 代入后是适应过程；\n2. **局部 Lipschitz**：对每 $T,n$，$|\\mu(x,t)-\\mu(y,t)|+|\\sigma(x,t)-\\sigma(y,t)|\\le K_{T,n}|x-y|$（$|x|,|y|\\le n$）；\n3. **线性增长**：$|\\mu(x,t)|+|\\sigma(x,t)|\\le C(1+|x|)$。\n\n在这些条件下存在**唯一强解**，且轨道连续。第 3 条是为了**防止有限时间爆破**（见 `C10.3:sde.blowup`）。\n\n**$\\mu$ 与 $\\sigma$ 的分工（尺度对比，最实用的一条）**：\n\n$$\\underbrace{\\int_0^t\\mu\\,ds\\sim\\mu t}_{\\text{漂移，按 }t\\ \\text{走}}\\qquad\\text{vs}\\qquad\n\\underbrace{\\int_0^t\\sigma\\,dW_s\\sim\\sigma\\sqrt t}_{\\text{扩散，按 }\\sqrt t\\ \\text{抖}} .$$\n\n- **短时间**（$t\\ll1$）：$\\sqrt t\\gg t$，**噪声主导**——轨道看起来很乱；\n- **长时间**（$t\\gg1$）：$t\\gg\\sqrt t$，**漂移主导**——趋势浮现；\n- 转折量级：$t\\sim(\\sigma/\\mu)^{2}$（$\\mu=0.1,\\sigma=0.3$ 时 $t\\sim9$）。\n\n取 $\\mu=1,\\sigma=1,X_0=0$：$X_t\\sim N(t,\\ t)$，$t=4$ 时 $X_4\\sim N(4,4)$，标准差 $\\approx2$【已核验:2|sqrt(4)】，$\\mathbb P(X_4>6)=1-\\Phi(1)\\approx0.158655$【已核验:0.158655253931|0.5*erfc(1/sqrt(2))】。\n\n**解的两条结构性质**：$(X_t)$ 是**马氏过程**（增量由当前状态决定）也是**半鞅**（漂移 + 鞅）;这两条正是 Fokker--Planck 与 `C4` 的鞅方法能同时适用的原因。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C10.1",
+        "C4"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "SDE 路径需要按步长迭代推进并做多条轨道对拍（Euler–Maruyama），长时程且要统计，前端不适合直渲。",
+        "params_hint": {
+          "model": "gbm",
+          "mu": 0.1,
+          "sigma": 0.3,
+          "x0": 1.0,
+          "t_max": 10.0,
+          "n_steps": 1000,
+          "paths": 200,
+          "show": [
+            "轨道束",
+            "样本均值（应贴近 e^{μt}）",
+            "中位数轨道（贴近 e^{(μ−σ²/2)t}）"
+          ],
+          "annotate": "t=10 时均值 2.71828 与中位数 1.73325 的分野"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.intuition",
+      "type": "intuition",
+      "subject": "sde",
+      "title": "直觉：μ 是「方向盘」，σ 是「抖动的地板」，两者量级不同",
+      "keywords": [
+        "假设给了什么：μ 给确定性趋势（O(t)），σ 给随机抖动（O(√t)）",
+        "结论为什么成立：短时间 √t 主导，长时间 t 主导",
+        "图像：把 SDE 想成「每一步 = 漂移 μΔt + 噪声 σ√Δt·Z」",
+        "离散化必须取 ΔW = √h·Z，取 hZ 会让扩散消失（C10.1）",
+        "与 Fokker–Planck 的对应：轨道语言 ↔ 密度语言"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 395,
+        "line_end": 404
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」分两段；核心图像是「每步 = μh + σ√h·Z」以及两种量级的竞争。",
+      "content": "**假设给了什么。** 两个系数，两种完全不同的量级：\n\n1. **$\\mu$（漂移）**给了「每一步往哪走」：$\\Delta X\\approx\\mu\\,\\Delta t$。$n=t/h$ 步累计 $\\approx\\mu t$——**随 $t$ 线性**；\n2. **$\\sigma$（扩散系数）**给了「每一步抖多远」：$\\Delta X\\approx\\sigma\\,\\Delta W=\\sigma\\sqrt h\\,Z$。$n$ 步独立抖动累计的标准差 $=\\sigma\\sqrt{n}\\sqrt h=\\sigma\\sqrt t$——**随 $\\sqrt t$**。\n\n**结论为什么因此成立（一句话）**：$t$ 与 $\\sqrt t$ 的竞争完全决定了定性行为。\n\n$$X_t\\approx X_0+\\underbrace{\\mu t}_{O(t)}+\\underbrace{\\sigma\\sqrt t\\,Z}_{O(\\sqrt t)} .$$\n\n- $t\\to0$：$\\sqrt t\\gg t$，**噪声压过漂移**，轨道处处粗糙（与 `C10.1` 的自相似一致）；\n- $t\\to\\infty$：$t\\gg\\sqrt t$，**漂移压过噪声**，趋势线浮现（信噪比 $\\propto\\sqrt t$ 增长）；\n- 分界：$\\mu t\\sim\\sigma\\sqrt t\\Rightarrow t\\sim(\\sigma/\\mu)^{2}$。$\\mu=0.1,\\sigma=0.3$ 时 $t\\approx9$【已核验:9|(0.3/0.1)**2】——**十年期的 GBM 恰好在这个量级附近**，这也是金融里「短期看运气、长期看趋势」的定量说法。\n\n**一句话图像**：每一步都是\n\n$$\\Delta X=\\underbrace{\\mu\\,h}_{\\text{方向盘}}+\\underbrace{\\sigma\\sqrt h\\,Z}_{\\text{抖动的地板}},\\qquad Z\\sim N(0,1).$$\n\n**那个 $\\sqrt h$ 不能写成 $h$**（`C10.1`）：写成 $h$ 就得到了一条光滑轨道，扩散系数实际为 $0$，方差不再按 $t$ 增长。$h=10^{-4}$ 时 $\\sqrt h=10^{-2}$ 而 $h=10^{-4}$，**差 $100$ 倍**【已核验:100|sqrt(0.0001)/0.0001】。\n\n**两种语言的对应（本单元的主题）**：\n\n- **SDE（轨道语言）**：描述**一条**轨道怎么走，适合模拟、路径依赖的收益、极值；\n- **Fokker--Planck（密度语言）**：描述**一大群**轨道的密度怎么演化，适合算概率、期望、稳态分布；\n\n两者是**同一件事的两种写法**（切片原话）——就像 `I1` 里拉格朗日描述（追踪质点）与欧拉描述（看密度场）的关系。**这就是本单元与流体章节的接口。**",
+      "links": [
+        "C10.3",
+        "C10.1",
+        "C10.2",
+        "I1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:gbm.statement",
+      "type": "statement",
+      "subject": "gbm",
+      "title": "几何布朗运动：解、推导与 −σ²/2 修正的来历",
+      "keywords": [
+        "dX = μX dt + σX dW 的解 X_t = X_0 exp((μ−σ²/2)t + σW_t)",
+        "推导：对 ln X 用 Itô 引理，f''=−1/x² 给出 −σ²/2 项",
+        "E[X_t] = e^{μt}X_0；中位数/典型轨道 = X_0 e^{(μ−σ²/2)t}",
+        "ln X_t ~ N(ln X_0 + (μ−σ²/2)t, σ²t)：对数正态",
+        "μ=0.1、σ=0.3、t=10：期望 2.71828，典型 1.73325，差 1.5683 倍"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 399,
+        "line_end": 403
+      },
+      "fill_hint": "陈述本体覆盖切片 399-403；给出用 Itô 引理的完整推导、对数正态的分布参数，以及「期望 vs 典型」的数值锚点。",
+      "content": "**陈述**（切片例子）。几何布朗运动（GBM）\n\n$$dX_t=\\mu X_t\\,dt+\\sigma X_t\\,dW_t,\\qquad X_0>0,$$\n\n的解为\n\n$$X_t=X_0\\exp\\Bigl(\\Bigl(\\mu-\\frac{\\sigma^{2}}2\\Bigr)t+\\sigma W_t\\Bigr).$$\n\n**推导（对本单元最重要的一串计算）**：取 $f(x)=\\ln x$，$f'=1/x$、$f''=-1/x^{2}$。用 `C10.2` 的 Itô 引理（注意这里 $f$ 作用在 $X_t$ 上，扩散系数是 $\\sigma X_t$）：\n\n$$d\\ln X_t=\\frac1{X_t}dX_t+\\frac12\\Bigl(-\\frac1{X_t^{2}}\\Bigr)(dX_t)^{2}.$$\n\n代入 $dX_t=\\mu X_tdt+\\sigma X_tdW_t$ 与 $(dX_t)^{2}=\\sigma^{2}X_t^{2}dt$（乘法表：$(dW)^{2}=dt$，其余为 $0$）：\n\n$$d\\ln X_t=\\Bigl(\\mu\\,dt+\\sigma\\,dW_t\\Bigr)-\\frac12\\sigma^{2}dt=\\Bigl(\\mu-\\frac{\\sigma^{2}}2\\Bigr)dt+\\sigma\\,dW_t .$$\n\n**那个 $-\\frac{\\sigma^{2}}2$ 正是二阶项 $\\frac12f''(\\sigma X)^{2}dt=-\\frac12\\sigma^{2}dt$**——与 `C10.2` 的指数鞅完全同源。积分即得解。\n\n**分布**：$\\ln X_t\\sim N\\bigl(\\ln X_0+(\\mu-\\tfrac{\\sigma^{2}}2)t,\\ \\sigma^{2}t\\bigr)$，即 $X_t$ 是**对数正态**。\n\n- **期望**：$\\mathbb E[X_t]=X_0e^{\\mu t}$（对数正态的均值公式）；\n- **中位数 / 典型轨道**：$X_0e^{(\\mu-\\sigma^{2}/2)t}$；\n- **两者之比**：$e^{\\sigma^{2}t/2}$。\n\n**数值锚点**（$X_0=1,\\ \\mu=0.1,\\ \\sigma=0.3,\\ t=10$）：\n\n| 量 | 值 |\n|---|---|\n| 期望 $\\mathbb E[X_{10}]$ | $\\approx2.71828$【已核验:2.71828182846|exp(0.1*10)】 |\n| 中位数 / 典型轨道 | $\\approx1.73325$【已核验:1.73325301787|exp((0.1-0.09/2)*10)】 |\n| 比值（期望 / 典型） | $\\approx1.5683$【已核验:1.56831218549|exp(0.1*10)/exp((0.1-0.09/2)*10)】 |\n| $\\ln X_{10}$ 的标准差 | $\\approx0.948683$【已核验:0.948683298051|0.3*sqrt(10)】 |\n\n**切片点名的那句话**：期望的增长率是 $\\mu$，典型轨道的增长率是 $\\mu-\\frac{\\sigma^{2}}2$——**这个差距不是笔误**（见 `C10.3:gbm.mean-vs-typical`）。\n\n**什么时候用它**：任何「增长率与当前规模成正比」的量（股价、种群、链式反应）；工程上它也是**保证 $X_t>0$** 的最简单模型（加性噪声的 OU/布朗运动会取负值）。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C10.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:gbm.mean-vs-typical",
+      "type": "counterexample",
+      "subject": "gbm",
+      "title": "典型误用：把 E[X_t] 当成「典型轨道」（只有 31.8% 的轨道达到均值）",
+      "keywords": [
+        "误用现场：用 e^{μt} 预测「一条典型轨道」的走势",
+        "μ=0.1、σ=0.3、t=10：期望 2.71828，中位数 1.73325，差 1.5683 倍",
+        "P(X_t > E[X_t]) = 1 − Φ(σ√t/2)：t=1 时 0.4404，t=10 时 0.3176，t=100 时 0.0668",
+        "机制：对数正态右偏，均值被少数暴涨轨道拉高",
+        "这正是 C6 中 a.s. 收敛与 L¹ 收敛方向不同的另一种面孔",
+        "修补：报中位数/分位数而非均值；长期要同时给 μ 与 σ"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 399,
+        "line_end": 403
+      },
+      "fill_hint": "切片点名的「期望 vs 典型」的定量展开；核心数值是 31.8%（t=10 时超过均值的轨道占比）与它随 t 的衰减。",
+      "content": "**误用现场**：算出 $\\mathbb E[X_t]=X_0e^{\\mu t}$ 后，就说「典型轨道按 $e^{\\mu t}$ 增长」——并拿它去做单点预测、去设阈值。\n\n**为什么错**：对数正态是**右偏**的。中位数是 $X_0e^{(\\mu-\\sigma^{2}/2)t}$，比均值小 $e^{\\sigma^{2}t/2}$ 倍。\n\n**算给你看**（$X_0=1,\\ \\mu=0.1,\\ \\sigma=0.3$）：\n\n- $t=10$：期望 $\\approx2.71828$【已核验:2.71828182846|exp(0.1*10)】，典型（中位数）$\\approx1.73325$【已核验:1.73325301787|exp((0.1-0.09/2)*10)】，比值 $\\approx1.5683$【已核验:1.56831218549|exp(0.1*10)/exp((0.1-0.09/2)*10)】；\n- 中位数 / 均值 $=e^{-\\sigma^{2}t/2}\\approx0.6376$【已核验:0.637628151622|exp(-0.09*10/2)】——**中位数只有均值的 $64\\%$**。\n\n**有多少轨道真的达到均值？** $X_t\\ge\\mathbb E[X_t]$ 等价于\n\n$$\\Bigl(\\mu-\\frac{\\sigma^{2}}2\\Bigr)t+\\sigma W_t\\ \\ge\\ \\mu t\\quad\\Longleftrightarrow\\quad W_t\\ \\ge\\ \\frac{\\sigma t}{2}\n\\quad\\Longleftrightarrow\\quad \\frac{W_t}{\\sqrt t}\\ \\ge\\ \\frac{\\sigma\\sqrt t}{2}.$$\n\n故（记 $\\Phi$ 为标准正态分布函数）\n\n$$\\mathbb P\\bigl(X_t\\ge\\mathbb E[X_t]\\bigr)=1-\\Phi\\Bigl(\\frac{\\sigma\\sqrt t}{2}\\Bigr).$$\n\n| $t$ | $\\sigma\\sqrt t/2$ | $\\mathbb P(X_t\\ge\\mathbb E[X_t])$ |\n|---|---|---|\n| $1$ | $\\approx0.15$【已核验:0.15|0.3*sqrt(1)/2】 | $\\approx0.4404$【已核验:0.44038230763|0.5*erfc(0.3*sqrt(1)/2/sqrt(2))】 |\n| $10$ | $\\approx0.4743$【已核验:0.474341649025|0.3*sqrt(10)/2】 | $\\approx0.3176$【已核验:0.317628147999|0.5*erfc(0.3*sqrt(10)/2/sqrt(2))】 |\n| $100$ | $\\approx1.5$【已核验:1.5|0.3*sqrt(100)/2】 | $\\approx0.0668$【已核验:0.0668072012689|0.5*erfc(0.3*sqrt(100)/2/sqrt(2))】 |\n\n**时间越长，「达到均值」的轨道越少**（$t=100$ 时只剩 $6.7\\%$）：均值被越来越少的暴涨轨道撑住，而**绝大多数轨道跑输均值**。\n\n**这正是切片那句「这是 `C6` 中 a.s. 收敛与 $L^{1}$ 收敛方向不同的另一种面孔」**：$\\frac1t\\ln X_t\\to\\mu-\\frac{\\sigma^{2}}2$ a.s.（典型行为），而 $\\frac1t\\ln\\mathbb E[X_t]=\\mu$（$L^{1}$ 行为）——**两个极限不相等**，与 `C10.2:ito.exp-martingale` 里「鞅的期望恒 $1$ 却 a.s.$\\to0$」是同一个现象。\n\n**修补动作**：\n\n1. 报告**中位数与分位数**（$5\\%$/$95\\%$），不要只报均值；\n2. 明确区分「$\\mathbb E[X_t]$」与「$\\exp(\\mathbb E[\\ln X_t])$」——后者才是典型值；\n3. 数值预测时给出区间：$X_t\\in\\bigl[e^{(\\mu-\\sigma^2/2)t\\mp1.96\\sigma\\sqrt t}\\bigr]$。\n\n**判据**：只要 $\\sigma^{2}t\\gg1$（本例 $\\sigma^{2}t=0.9$），「均值」就不再代表典型，必须换分位数说话。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C6.5",
+        "C9.1"
+      ],
+      "viz": {
+        "module": "gbm-mean-vs-typical",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mu": 0.1,
+          "sigma": 0.3,
+          "x0": 1.0,
+          "t_range": [
+            0,
+            15
+          ],
+          "curves": [
+            "exp(mu*t)",
+            "exp((mu-sigma**2/2)*t)"
+          ],
+          "shade": "5%-95% 分位带",
+          "annotate": "两条指数曲线在 t=10 处相差 1.5683 倍；只有 31.8% 的轨道高于均值曲线"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.blowup",
+      "type": "counterexample",
+      "subject": "sde",
+      "title": "拓展：系数超线性增长时解在有限时间爆破（X'=X² 在 t=1 爆炸）",
+      "keywords": [
+        "拓展：dX = X²dt、X_0=1 的解 X_t = 1/(1−t) 在 t=1 爆破",
+        "数值：X(0.5)=2、X(0.9)=10、X(0.99)=100，爆破时间 t*=1",
+        "机制：线性增长条件 |μ(x)| ≤ C(1+|x|) 被破坏",
+        "数值陷阱：显式 Euler 会跨过爆破点给出有限值（伪解）",
+        "修补：加线性增长/单调性条件，或用停时 + 局部化"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 395,
+        "line_end": 398
+      },
+      "fill_hint": "「拓展：」前缀——存在唯一性条件是切片未列的标准背景；失效数值是 X=1/(1−t) 在 t=0.99 达到 100。",
+      "content": "**拓展：** 切片只写了「一般 SDE」四个字。这里给出**为什么必须附加增长条件**，以及失效时的具体样子。\n\n**反例（无扩散，最容易验证）**：取 $\\mu(x)=x^{2}$、$\\sigma\\equiv0$、$X_0=1$：\n\n$$dX_t=X_t^{2}\\,dt\\quad\\Longleftrightarrow\\quad \\dot X=X^{2},\\qquad X_t=\\frac1{1-t}.$$\n\n- $t=0.5$：$X\\approx2$【已核验:2|1/(1-0.5)】；\n- $t=0.9$：$X\\approx10$【已核验:10|1/(1-0.9)】；\n- $t=0.99$：$X\\approx100$【已核验:100|1/(1-0.99)】；\n- $t=1$：**爆破**（$X\\to\\infty$）。\n\n**爆破时间 $t^{*}=1/X_0$**（一般地 $X_0>0$ 时 $t^*=1/X_0$；$X_0=2$ 时 $t^{*}=0.5$【已核验:0.5|1/2】）。\n\n**机制**：标准存在唯一性定理要求 $|\\mu(x)|\\le C(1+|x|)$（**线性增长**）。这里 $|\\mu(x)|=x^{2}$ 增长更快，于是解可以在**有限时间**跑到无穷——定理的「全局解」结论失效，只剩**局部解**（定义在 $[0,t^{*})$ 上）。\n\n**为什么 Lipschitz 也不可少**：取 $\\mu(x)=\\sqrt{|x|}$（不 Lipschitz），$\\dot X=\\sqrt X$、$X_0=0$ 有无穷多解（$X_t\\equiv0$ 与 $X_t=\\frac{t^{2}}4$ 都是）——**唯一性丢失**。所以两条是两件事：\n\n- **局部 Lipschitz** ⟹ 唯一性；\n- **线性增长**（或 Khasminskii 的单调性条件）⟹ 全局存在（不爆破）。\n\n**数值陷阱（实现时最常踩的坑）**：显式 Euler 格式 $X_{n+1}=X_n+h\\,X_n^{2}$ **不会**在 $t=1$ 爆炸，它会跨过爆破点继续给出有限值（甚至因步长过大而震荡/变号）。常见症状：\n\n- $h=0.1$ 时数值解在 $t\\approx1$ 给出 $X\\approx11$ 左右的一个有限值，而真解此时已无穷；\n- 换更小的 $h$，数值解在 $t>1$ 处的行为完全改变（**伪解随步长漂移**）。\n\n**修补动作**：\n\n1. 建模时检查 $|\\mu(x)|+|\\sigma(x)|\\le C(1+|x|)$；不满足就要显式说明「只保证局部解」；\n2. 用**停时局部化**：定义 $\\tau_n=\\inf\\{t:|X_t|\\ge n\\}$，在 $\\tau_n$ 之前解唯一，再讨论 $\\tau_n\\to\\infty$；\n3. 数值上用**自适应步长**或隐式格式，并在 $|X|$ 突增时报警（而不是静默输出）。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "I9.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:fokker-planck.statement",
+      "type": "statement",
+      "subject": "fokker-planck",
+      "title": "Fokker–Planck（前向 Kolmogorov）：转移密度的演化方程",
+      "keywords": [
+        "∂_t p = −∂_x(μp) + ½∂_xx(σ²p)：对流 + 扩散",
+        "p(x,t) 是 X_t 的密度：P(X_t ∈ A) = ∫_A p(x,t)dx",
+        "初值 p(x,0) = δ_{X_0}（或给定的初始密度）",
+        "常系数特例：X_t ~ N(X_0+μt, σ²t)；μ=1、σ=1、t=4 时 N(4,4)",
+        "纯扩散核对拍：σ=1、t=1、x=0 时 p=0.398942，∂_t p = ½∂_xx p = −0.199471",
+        "多维：把 σ² 换成 σσᵀ，加 Σ∂_i∂_j 交叉项"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 405,
+        "line_end": 410
+      },
+      "fill_hint": "陈述本体覆盖切片 405-410；给出方程、初值、常系数特例与热核对拍（两侧同为 −0.199471），并注明多维推广。",
+      "content": "**陈述**（切片第三段）。若 $X_t$ 满足 $dX_t=\\mu(X_t,t)dt+\\sigma(X_t,t)dW_t$，则其**转移密度** $p(x,t)$（即 $\\mathbb P(X_t\\in A)=\\int_Ap(x,t)\\,dx$）满足\n\n$$\\frac{\\partial p}{\\partial t}=-\\frac{\\partial}{\\partial x}\\bigl(\\mu\\,p\\bigr)+\\frac12\\frac{\\partial^{2}}{\\partial x^{2}}\\bigl(\\sigma^{2}p\\bigr).$$\n\n**初值**：$p(\\cdot,0)=\\delta_{X_0}$（点质量）；若 $X_0$ 本身有密度 $p_0$，则 $p(\\cdot,0)=p_0$。**归一化** $\\int p\\,dx=1$ 由方程自动保持（右端是两个全导数项，积分后为零）。\n\n**右端两项的读法**（切片点明）：\n\n- $-\\partial_x(\\mu p)$ —— **对流（advection）**：密度整体以速度 $\\mu$ 平移；\n- $\\frac12\\partial_{xx}(\\sigma^{2}p)$ —— **扩散（diffusion）**：密度被抹平。\n\n**这正是 `I1` 里流体对流扩散方程的形式**——切片原话说「SDE 与抛物型 PDE 是同一件事的两种语言」。\n\n**特例一 · 常系数**（$\\mu,\\sigma$ 常数）：方程化为 $\\partial_tp=-\\mu\\partial_xp+\\frac12\\sigma^{2}\\partial_{xx}p$，解为\n\n$$X_t\\sim N\\bigl(X_0+\\mu t,\\ \\sigma^{2}t\\bigr).$$\n\n例：$X_0=0,\\mu=1,\\sigma=1,t=4$：$X_4\\sim N(4,4)$，标准差 $\\approx2$【已核验:2|sqrt(4)】，$\\mathbb P(X_4>6)=1-\\Phi(1)\\approx0.158655$【已核验:0.158655253931|0.5*erfc(1/sqrt(2))】。\n\n**特例二 · 纯扩散核对拍**（$\\mu=0,\\sigma=1$，$X_0=0$，$t=1$）：$p(x,t)=\\frac1{\\sqrt{2\\pi t}}e^{-x^{2}/(2t)}$。在 $x=0$：\n\n- $p\\approx0.398942$【已核验:0.398942280401|1/sqrt(2*pi)】；\n- $\\partial_tp=p\\bigl(\\frac{x^{2}}{2t^{2}}-\\frac1{2t}\\bigr)\\big|_{x=0}=-\\frac p{2t}\\approx-0.199471$【已核验:-0.199471140201|-1/(2*sqrt(2*pi))】；\n- $\\frac12\\partial_{xx}p=\\frac12\\,p\\bigl(\\frac{x^{2}}{t^{2}}-\\frac1t\\bigr)\\big|_{x=0}=-\\frac p{2t}\\approx-0.199471$【已核验:-0.199471140201|0.5*(-1/sqrt(2*pi))】。\n\n**两侧相等**——这就是方程成立的一个可手算的锚点。\n\n**多维推广**（切片未列）：$dX=\\mu\\,dt+\\sigma\\,dW$（$W$ 为 $m$ 维）时\n\n$$\\partial_tp=-\\sum_i\\partial_i(\\mu_ip)+\\frac12\\sum_{i,j}\\partial_i\\partial_j\\bigl((\\sigma\\sigma^{\\mathsf T})_{ij}p\\bigr).$$\n\n一维里那个 $\\sigma^{2}$ 其实是 $\\sigma\\sigma^{\\mathsf T}$ 的 $1\\times1$ 版本。\n\n**与 `I1` 的定量对应**：对流扩散方程 $\\partial_tu+\\nabla\\cdot(uv)=\\nu\\Delta u$ 即 $\\partial_tu=-\\nabla\\cdot(uv)+\\nu\\Delta u$；与常系数 FP 比对得 $\\nu=\\frac12\\sigma^{2}$，即 $\\sigma=\\sqrt{2\\nu}$。$\\nu=0.5$ 时对应 $\\sigma\\approx1$【已核验:1|sqrt(2*0.5)】。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "I1",
+        "P9.1"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "密度的演化需要数值求解抛物型 PDE（网格推进 + 长时间积分），属于长时程迭代计算，前端不宜直渲。",
+        "params_hint": {
+          "model": "constant-coefficient",
+          "mu": 0.0,
+          "sigma": 1.0,
+          "x_grid": [
+            -6,
+            6
+          ],
+          "n_grid": 400,
+          "t_range": [
+            0,
+            4
+          ],
+          "show": [
+            "p(x,t) 动画",
+            "方差 σ²t 的线性增长",
+            "对流情形的整体平移"
+          ],
+          "annotate": "t=1、x=0 处 p=0.398942，∂_t p = ½∂_xx p = −0.199471"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:fokker-planck.intuition",
+      "type": "intuition",
+      "subject": "fokker-planck",
+      "title": "直觉：密度像一团被水流带着走、同时自己摊开的墨水",
+      "keywords": [
+        "假设给了什么：轨道有漂移 μ 与抖动 σ，后者方差按 σ²t 增长",
+        "结论为什么成立：概率质量守恒 → 通量 = 对流通量 + 扩散通量",
+        "图像：−∂_x(μp) 是整团平移，½∂_xx(σ²p) 是摊开变宽",
+        "通量形式：∂_t p + ∂_x J = 0，J = μp − ½∂_x(σ²p)",
+        "与 I1 的对流扩散方程同一个图像；与 C10.1 的 √t 尺度一致"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 405,
+        "line_end": 410
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」分两段；核心图像是「墨水随流平移 + 自己摊开」，并写出通量形式。",
+      "content": "**假设给了什么。** 轨道层面给了两件事：每条轨道以速度 $\\mu$ 漂移，同时以强度 $\\sigma$ 抖动（`C10.3:sde.intuition`）；抖动的累积方差是 $\\sigma^{2}t$。\n\n**结论为什么因此成立（守恒律图像）。** 把 $p(x,t)$ 想成滴在水里的一团墨水。**概率质量既不会凭空产生也不会消失**，所以 $p$ 的变化只能来自「流进流出」：\n\n$$\\partial_tp+\\partial_xJ=0,\\qquad \\underbrace{J=\\mu\\,p-\\frac12\\partial_x(\\sigma^{2}p)}_{\\text{总通量}} .$$\n\n- **$J_{\\rm adv}=\\mu p$**：墨水被水流整体带走（**对流**），对应 $-\\partial_x(\\mu p)$；\n- **$J_{\\rm diff}=-\\frac12\\partial_x(\\sigma^{2}p)$**：墨水从浓处往淡处摊（**扩散**，Fick 定律：通量与浓度梯度反向），对应 $\\frac12\\partial_{xx}(\\sigma^{2}p)$。\n\n两者相加正是 Fokker--Planck 方程。**「概率守恒」就是那个负号的来历**——这也是 `I1` 守恒律章节的同一个写法：$\\partial_tu+\\nabla\\cdot J=0$。\n\n**为什么扩散系数是 $\\frac12\\sigma^{2}$ 而不是 $\\sigma^{2}$**：因为方差按 $\\sigma^{2}t$ 增长，而热方程 $\\partial_tp=D\\,\\partial_{xx}p$ 的解方差按 $2Dt$ 增长，故 $2D=\\sigma^{2}\\Rightarrow D=\\frac12\\sigma^{2}$。**那个 $\\frac12$ 与 `C10.2` 的 $\\frac12f''dt$、热方程的 $\\frac12\\Delta$ 是同一份账。**\n\n**两句话图像**：\n\n1. **SDE 语言**：一滴墨水的**一个分子**怎么走（随机、粗糙、$\\sqrt t$ 抖）；\n2. **Fokker--Planck 语言**：整团**墨水云**怎么变形（确定性、光滑、抛物型 PDE）。\n\n切片说「SDE 描述单条轨道，Fokker--Planck 描述密度的演化」——**这就是 `I1` 里拉格朗日 vs 欧拉的翻版**，也是为什么学流体的人看 FP 会觉得眼熟。\n\n**什么时候哪种语言更好**：\n\n- 要 **路径依赖**的量（最大值、首次穿越时间、累积量）→ SDE（模拟）；\n- 要 **分布/概率/期望/稳态** → Fokker--Planck（解 PDE，稳态时是椭圆方程，通常更快更准）。",
+      "links": [
+        "C10.3",
+        "C10.1",
+        "I1",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:fokker-planck.proof",
+      "type": "proof",
+      "subject": "fokker-planck",
+      "title": "证明骨架：Itô 引理 + 取期望 + 分部积分（四步）",
+      "keywords": [
+        "第一步：对测试函数 φ 用 Itô 引理，dφ(X) = (μφ' + ½σ²φ'')dt + σφ'dW",
+        "第二步：取期望，鞅项消失，得 d/dt E[φ(X_t)] = E[Lφ]",
+        "第三步：用密度写 E[φ] = ∫φp，再用分部积分把导数从 φ 移到 p 上（P9.1）",
+        "第四步：φ 任意 ⟹ L* 作用在 p 上给出 FP 方程",
+        "依赖链：Itô 引理 → 鞅性 → 分部积分 → 对偶算子 L*",
+        "易错点：σ 依赖 x 时 ½∂_xx 必须作用在 σ²p 上，不能提出 σ²"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 405,
+        "line_end": 410
+      },
+      "fill_hint": "四步骨架；核心是「生成元 L 与其对偶 L*」这一步，以及为什么必须写成散度形式。",
+      "content": "**推导骨架**（四步，每步给理由）。取任意测试函数 $\\varphi\\in C_c^{\\infty}(\\mathbb R)$。\n\n**第一步：对 $\\varphi(X_t)$ 用 Itô 引理**（`C10.2` 的时依赖版）：\n\n$$d\\varphi(X_t)=\\Bigl(\\mu\\,\\varphi'(X_t)+\\tfrac12\\sigma^{2}\\varphi''(X_t)\\Bigr)dt+\\sigma\\varphi'(X_t)\\,dW_t .$$\n\n理由：$f=\\varphi$，$dX=\\mu dt+\\sigma dW$，$(dX)^{2}=\\sigma^{2}dt$，代 `C10.2` 的公式即可。括号里的算子\n\n$$L:=\\mu\\,\\partial_x+\\tfrac12\\sigma^{2}\\partial_{xx}$$\n\n叫**生成元（generator）**。\n\n**第二步：取期望，鞅项消失。** Itô 积分 $\\int_0^t\\sigma\\varphi'\\,dW$ 是鞅（期望 $0$，见 `C10.2`），故\n\n$$\\frac{d}{dt}\\mathbb E\\big[\\varphi(X_t)\\big]=\\mathbb E\\big[(L\\varphi)(X_t)\\big].$$\n\n理由：鞅的期望恒为初值 $0$。**这一步是「随机 → 确定」的转折点**。\n\n**第三步：用密度重写，并分部积分（关键一步，`P9.1`）。** 左端 $=\\frac{d}{dt}\\int\\varphi(x)p(x,t)\\,dx=\\int\\varphi\\,\\partial_tp\\,dx$；右端\n\n$$\\int\\Bigl(\\mu\\varphi'+\\tfrac12\\sigma^{2}\\varphi''\\Bigr)p\\,dx\n=\\int\\varphi\\Bigl[-\\partial_x(\\mu p)+\\tfrac12\\partial_{xx}(\\sigma^{2}p)\\Bigr]dx .$$\n\n理由：$\\varphi$ 紧支（或 $p$ 足够快衰减），分部积分的**边界项为零**；一阶导数移一次、二阶导数移两次，符号分别为 $-$ 与 $+$。**这正是 `P9.1`「分部积分移导数」的用法**，也是 `P9.2` 能量法的同一手法。\n\n**第四步：$\\varphi$ 任意 ⟹ 被积函数相等。**\n\n$$\\partial_tp=-\\partial_x(\\mu p)+\\tfrac12\\partial_{xx}(\\sigma^{2}p)=L^{*}p,$$\n\n其中 $L^{*}$ 是 $L$ 的**对偶（伴随）算子**——所以 Fokker--Planck 又叫「前向 Kolmogorov 方程」，而 $L$ 那条线（对 $\\varphi$ 演化）叫「后向方程」。\n\n**依赖链**：`C10.2` Itô 引理（第一步）→ 鞅性（第二步）→ `P9.1` 分部积分（第三步）→ 变分法基本引理（第四步）。`C10.1` 的 $dW^{2}=dt$ 通过第一步的 $\\frac12\\sigma^{2}$ 进入。\n\n**易错点（四条）**：\n\n1. **把 $\\frac12\\partial_{xx}(\\sigma^{2}p)$ 写成 $\\frac12\\sigma^{2}\\partial_{xx}p$**——$\\sigma$ 依赖 $x$ 时两者不等（见 `C10.3:fokker-planck.divergence-form`）；\n2. **忘掉 $\\mu$ 上的导数**：$-\\partial_x(\\mu p)$ 不是 $-\\mu\\partial_xp$，$\\mu$ 依赖 $x$ 时差一项 $-(\\partial_x\\mu)p$；\n3. **边界项**：$\\varphi$ 必须紧支或 $p$ 在无穷远衰减足够快，否则第三步不合法（有边界的域要加边界条件：吸收壁 $p=0$、反射壁通量 $J=0$）；\n4. **前后向混淆**：前向方程作用在**密度** $p(x,t)$ 上（初值在 $t=0$），后向方程作用在**观测函数**上（终值在 $t=T$）；两者是 $L$ 与 $L^{*}$ 的关系。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "P9.1",
+        "P9.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:fokker-planck.divergence-form",
+      "type": "counterexample",
+      "subject": "fokker-planck",
+      "title": "典型误用：把 FP 写成非散度形式（OU 的稳态直接消失）",
+      "keywords": [
+        "误用现场：写 ∂_t p = −μ∂_x p + ½σ²∂_xx p，把系数提出导数外",
+        "OU 例子 dX = −X dt + dW：正确稳态 N(0,1/2)，峰值 0.5642",
+        "错版总质量按 e^{−t} 衰减：t=1 时只剩 0.367879，概率凭空消失",
+        "错版稳态「解」是 S 型函数，趋于常数 0.8862·C，不可归一化",
+        "机制：−∂_x(μp) = −μ∂_x p − (∂_x μ)p，漏掉的正是 −(∂_x μ)p",
+        "修补：始终写散度形式；μ,σ 为常数时两种写法才等价"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 405,
+        "line_end": 410
+      },
+      "fill_hint": "对应 quantifiers 表第 6 行；失效数值是 OU 稳态峰值 0.5642 与错版总质量 e^{−t} 衰减（t=1 剩 36.79%）。",
+      "content": "**误用现场**：由「对流 + 扩散」的直觉，把 Fokker--Planck 写成\n\n$$\\partial_tp=-\\mu\\,\\partial_xp+\\frac12\\sigma^{2}\\partial_{xx}p\\qquad(\\text{错，除非}\\ \\mu,\\sigma\\ \\text{为常数}) .$$\n\n**为什么错**：正确的**散度形式**是 $-\\partial_x(\\mu p)+\\frac12\\partial_{xx}(\\sigma^{2}p)$。展开对比：\n\n$$-\\partial_x(\\mu p)=-\\mu\\,\\partial_xp\\underbrace{-\\,(\\partial_x\\mu)\\,p}_{\\text{错版漏掉}},\\qquad\n\\frac12\\partial_{xx}(\\sigma^{2}p)=\\frac12\\Bigl[(\\partial_{xx}\\sigma^{2})p+2(\\partial_x\\sigma^{2})\\partial_xp+\\sigma^{2}\\partial_{xx}p\\Bigr].$$\n\n**算例（OU 过程，Ornstein--Uhlenbeck（奥恩斯坦--乌伦贝克））**：$dX_t=-X_t\\,dt+dW_t$（$\\mu(x)=-x$，$\\sigma\\equiv1$）。\n\n**正确版本**：$\\partial_tp=-\\partial_x(-xp)+\\frac12\\partial_{xx}p=\\partial_x(xp)+\\frac12p''$。\n\n- **质量守恒**：$\\frac{d}{dt}\\int p\\,dx=\\bigl[xp+\\frac12p'\\bigr]_{-\\infty}^{\\infty}=0$ ✅；\n- **稳态**：$(xp)+\\frac12p'=0\\Rightarrow p\\propto e^{-x^{2}}$，归一化得 $p(x)=\\frac1{\\sqrt\\pi}e^{-x^{2}}$（即 $N(0,\\tfrac12)$），峰值 $p(0)\\approx0.5642$【已核验:0.564189583548|sqrt(1/pi)】，方差 $\\frac{\\sigma^{2}}{2\\theta}=\\frac12$ ✅。\n\n**错误版本**：$\\partial_tp=+x\\,p'+\\frac12p''$（只写了 $-\\mu p'$，**漏掉 $+p$**）。\n\n- **总质量**（记 $M(t)=\\int p\\,dx$，分部积分并假定边界项为零）：\n  $$\\dot M=\\int xp'\\,dx+\\frac12\\int p''\\,dx=\\underbrace{[xp]_{-\\infty}^{\\infty}}_{=0}-\\int p\\,dx+0=-M\n  \\ \\Longrightarrow\\ M(t)=M(0)e^{-t} .$$\n  $t=1$ 时只剩 $\\approx0.367879$【已核验:0.367879441171|exp(-1)】——**概率凭空消失了 $63.2\\%$**；\n- **稳态**：$\\frac12p''+xp'=0\\Rightarrow p'(x)=Ce^{-x^{2}}$，故 $p(x)=C\\int_0^xe^{-s^{2}}ds+D$。这是个 **S 型函数**：$\\int_0^1e^{-s^{2}}ds\\approx0.746982$【已核验:0.746982147624|sum(exp(-(k*0.0005)**2)*0.0005 for k in range(2000))】，且 $x\\to\\infty$ 时趋于 $\\frac{\\sqrt\\pi}{2}\\approx0.886227$【已核验:0.886226925453|sqrt(pi)/2】——**趋于非零常数，故在 $\\mathbb R$ 上不可归一化**。\n\n**后果**：错版既丢质量又没有稳态概率分布；用它算期望/方差会得到随 $t$ 系统性偏小的数，数值上表现为「密度整体缩小且在边界堆积」。\n\n**修补动作**：\n\n1. **永远写散度形式** $-\\partial_x(\\mu p)+\\frac12\\partial_{xx}(\\sigma^{2}p)$；只有 $\\mu,\\sigma$ 为常数时才允许提出；\n2. 用**通量形式** $J=\\mu p-\\frac12\\partial_x(\\sigma^{2}p)$ 检查：$\\partial_tp+\\partial_xJ=0$，稳态即 $J\\equiv0$——**这是最快的自检**；\n3. 数值上用有限体积（`I9.1`）等守恒格式，因为它在离散层面保住了散度形式，$\\sum p_i$ 严格不变。\n\n**判据**：只要 $\\mu$ 或 $\\sigma$ 依赖 $x$（几乎所有非平凡模型），**必须**用散度形式。",
+      "links": [
+        "C10.3",
+        "P9.1",
+        "I9.1",
+        "I1"
+      ],
+      "viz": {
+        "module": "fp-drift-form",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "model": "ornstein-uhlenbeck",
+          "theta": 1.0,
+          "sigma": 1.0,
+          "x_range": [
+            -3,
+            3
+          ],
+          "curves": [
+            "exp(-x**2)/sqrt(pi)",
+            "erf 型 S 曲线（错版伪稳态，趋于 0.8862）"
+          ],
+          "show_mass": "错版总质量 M(t)=e^{−t}，t=1 时只剩 0.367879",
+          "annotate": "正确稳态峰值 0.5642 且可归一化；错版伪解趋于非零常数、且总质量按 e^{−t} 衰减"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.vs-fokker-planck",
+      "type": "comparison",
+      "subject": "sde",
+      "title": "分工：SDE（轨道） vs Fokker–Planck（密度）——什么时候用哪套",
+      "keywords": [
+        "SDE：描述单条轨道，适合路径依赖量与模拟，成本 ∝ 轨道数",
+        "Fokker–Planck：描述密度演化，适合概率/期望/稳态，成本 ∝ 网格",
+        "维数：SDE 不怕高维（线性于 d），FP 受维数灾难（网格 d 维）",
+        "精度：SDE 统计误差 ~1/√N（C9.1），FP 是确定性的（有离散误差）",
+        "稳态：SDE 要跑很久，FP 令 ∂_t p = 0 解椭圆方程即可",
+        "判据：要路径量 → SDE；要分布/稳态 → FP"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 408,
+        "line_end": 414
+      },
+      "fill_hint": "对照口径按「要什么量」与「维数/成本」展开；把两条语言的分工讲成可执行的判据。",
+      "content": "切片说「**SDE 与抛物型 PDE 是同一件事的两种语言**」。既然是同一件事，就要有选哪种的判据。\n\n| | SDE（轨道语言） | Fokker--Planck（密度语言） |\n|---|---|---|\n| 对象 | 单条轨道 $X_t(\\omega)$ | 密度 $p(x,t)$ |\n| 方程类型 | 随机积分方程 | 确定性抛物型 PDE |\n| 适合求什么 | 路径依赖量：$\\max_{t\\le T}X_t$、首次穿越、累积量 | 分布类量：$\\mathbb P(X_t\\in A)$、期望、方差、**稳态分布** |\n| 成本 | $\\propto$ 轨道数 $\\times$ 步数 | $\\propto$ 网格点数（$m^{d}$） |\n| **维数** | **友好**（成本随 $d$ 线性增长） | **维数灾难**（$d\\ge4$ 基本不可行） |\n| 误差性质 | 统计误差 $\\sim1/\\sqrt N$（见 `C9.1`） | 确定性离散误差（可系统收敛） |\n| 稳态 | 要跑到 $t$ 很大（慢） | 解 $\\partial_tp=0$ 的椭圆方程（快、准） |\n| 实现难度 | Euler--Maruyama 十几行 | 需要 PDE 求解器 + 边界条件 |\n\n**判据（三问定选）**：\n\n1. **要的是路径量还是分布量**？路径依赖（最大值、触及时间）→ 只能 SDE；分布/稳态 → FP 更准更快；\n2. **维数多大**？$d\\le3$ → FP 可行；$d\\ge4$ → 只能 SDE（这与 `C9.1:is.vs-quadrature` 里「维数灾难」是同一道墙）；\n3. **要不要稳态**？要 → FP（令 $\\partial_tp=0$，通量 $J=0$，一维可解析求解）。\n\n**两套语言的翻译表**（记住这四行就能互转）：\n\n| 轨道语言 | 密度语言 |\n|---|---|\n| 漂移 $\\mu$ | 对流项 $-\\partial_x(\\mu p)$ |\n| 扩散 $\\sigma$ | 扩散项 $\\frac12\\partial_{xx}(\\sigma^{2}p)$ |\n| 期望 $\\mathbb E[\\varphi(X_t)]$ | $\\int\\varphi\\,p\\,dx$ |\n| 鞅性 $\\mathbb E[\\text{Itô 积分}]=0$ | 生成元 $L$ 与对偶 $L^{*}$（`P9.1` 的分部积分） |\n\n**常见错位**：\n\n- 用蒙特卡洛（SDE）去估一个**低维**的稳态密度——FP 一步解椭圆方程就够，模拟反而慢 $1/\\sqrt N$；\n- 用 FP 去算**高维**的联合密度——网格直接爆掉，此时只能模拟；\n- 忘了两者的 $\\sigma^{2}$ 对应关系：$\\nu=\\frac12\\sigma^{2}$（$\\nu=0.5$ 对应 $\\sigma\\approx1$【已核验:1|sqrt(2*0.5)】），把流体的扩散系数当成 $\\sigma$ 会差 $\\sqrt2$ 倍。",
+      "links": [
+        "C10.3",
+        "C9.1",
+        "I1",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.langevin",
+      "type": "application",
+      "subject": "sde",
+      "title": "应用：M5 朗之万方程——SDE 的牛顿版与它的 Fokker–Planck",
+      "keywords": [
+        "朗之万：m ẍ = −γẋ + √(2γk_BT) ξ(t) + F(x) 就是 SDE 的牛顿版",
+        "ξ = dW/dt 只是记号：严格写法是 dV = −(γ/m)V dt + (√(2γk_BT)/m) dW",
+        "Fokker–Planck 给出位置与速度的联合密度（Kramers 方程）",
+        "稳态应是 Boltzmann 分布 ∝ e^{−V(x)/k_BT}——这是最硬的自检",
+        "涨落耗散：噪声强度 √(2γk_BT) 与耗散 γ 必须配对，否则稳态错",
+        "下游：分子动力学、被动标量（烟雾）模拟的理论骨架（H8.1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 411,
+        "line_end": 414
+      },
+      "fill_hint": "切片末段「在 CG 中的接口」的展开；给出严格的状态空间形式与「稳态必须是 Boltzmann」这条自检。",
+      "content": "**切片原话**：`M5` 的朗之万方程 $m\\ddot x=-\\gamma\\dot x+\\sqrt{2\\gamma k_BT}\\,\\xi(t)+F(x)$ 就是 SDE 的牛顿版（$\\xi$ 是白噪声，即 $dW/dt$）；其 Fokker--Planck 方程给出位置与速度的联合密度演化。\n\n**严格写法（把二阶 ODE 写成一阶 SDE 系统）**。记 $X=x$、$V=\\dot x$：\n\n$$dX=V\\,dt,\\qquad\ndV=-\\frac{\\gamma}{m}V\\,dt+\\frac{F(X)}{m}\\,dt+\\frac{\\sqrt{2\\gamma k_BT}}{m}\\,dW_t .$$\n\n**$\\xi=dW/dt$ 只是记号**（`C10.1`：$W$ 不可微，白噪声不是函数），真正有意义的是上面的 $dW$ 形式。\n\n**它的 Fokker--Planck（Kramers 方程）**，对联合密度 $p(x,v,t)$：\n\n$$\\partial_tp=-\\partial_x(vp)+\\frac{\\gamma}{m}\\partial_v(vp)-\\frac{F(x)}{m}\\partial_vp+\\frac{\\gamma k_BT}{m^{2}}\\partial_{vv}p .$$\n\n（扩散项系数：$\\frac12\\bigl(\\frac{\\sqrt{2\\gamma k_BT}}{m}\\bigr)^{2}=\\frac{\\gamma k_BT}{m^{2}}$——**那个 $\\frac12$ 又一次出场**。）\n\n**最硬的一条自检**：令 $\\partial_tp=0$，稳态应为 Boltzmann 分布\n\n$$p_{\\rm eq}(x,v)\\ \\propto\\ \\exp\\Bigl(-\\frac{\\frac12mv^{2}+U(x)}{k_BT}\\Bigr),\\qquad F=-U' .$$\n\n**若模拟出的稳态不是它，一定是下面三处之一写错了**：\n\n1. 噪声强度写成 $\\sqrt{\\gamma k_BT}$ 或其他系数（涨落耗散定理要求**正好** $\\sqrt{2\\gamma k_BT}$）；\n2. 把物理（Stratonovich）解释按 Itô 实现（或反之），漂移差 $\\frac12\\sigma\\sigma'$（见 `C10.2`）；\n3. 离散化时 $\\Delta W$ 取成 $hZ$ 而不是 $\\sqrt h\\,Z$（`C10.1`）。\n\n**为什么噪声与耗散必须配对**：$\\gamma$ 越大耗散越强，若噪声不跟着增大，稳态温度就不是 $T$；涨落耗散定理 $\\sigma^{2}=2\\gamma k_BT/m^{2}$（速度方程的扩散系数）正是保证 $\\frac12\\sigma^{2}/\\text{耗散率}=k_BT/m$ 的配方。数量级上：$\\gamma$ 加倍，$\\sigma$ 要乘 $\\sqrt2$【已核验:1.41421356237|sqrt(2)】。\n\n**它在 CG 里的位置**：分子动力学（`M5`）、被动标量/烟雾的随机输运（`H8.1`）、湍流里的随机模型（`I5`）都用这套骨架；`H8.1` 里给速度场加随机扰动时，噪声幅度必须按 $\\sqrt{\\Delta t}$ 缩放，否则数值耗散与理论不符。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C10.1",
+        "M5",
+        "H8.1",
+        "I5"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "朗之万动力学需要长时间积分到平衡并统计速度分布（与 Maxwell–Boltzmann 对拍），属于长时程迭代模拟。",
+        "params_hint": {
+          "m": 1.0,
+          "gamma": 1.0,
+          "kT": 1.0,
+          "dt": 0.001,
+          "n_steps": 200000,
+          "paths": 500,
+          "show": [
+            "速度分布直方图",
+            "Maxwell–Boltzmann 理论曲线",
+            "位置分布 vs e^{−U/kT}"
+          ],
+          "annotate": "涨落耗散配对正确时直方图贴合理论曲线；系数写错则温度整体偏移"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.application",
+      "type": "application",
+      "subject": "sde",
+      "title": "应用：SDE / Fokker–Planck 在哪些层被消费",
+      "keywords": [
+        "第一层：M5 朗之万——分子动力学与被动标量的理论骨架",
+        "第二层：I1 对流扩散——FP 与 ∂_t u + ∇·(uv) = νΔu 同一形式，ν = σ²/2",
+        "第三层：H8.1 流体模拟——随机扰动强度按 √Δt，且与对流扩散格式对拍",
+        "第四层：I5 湍流——随机模型/大涡模拟的闭合项常写成随机输运",
+        "数值层：P9.1/P9.2 的分部积分与能量法是 FP 推导与稳定性分析的工具"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 405,
+        "line_end": 414
+      },
+      "fill_hint": "按「在哪一层被用」组织；每条 links 指向被服务章节并给「为什么需要它」。",
+      "content": "**第一层 · 朗之万与分子动力学（`M5`）**。$m\\ddot x=-\\gamma\\dot x+\\sqrt{2\\gamma k_BT}\\xi+F(x)$ 是 SDE 的牛顿版；其 Fokker--Planck 给出位置--速度联合密度的演化，稳态必须是 Boltzmann 分布（见 `C10.3:sde.langevin`）。**没有 FP，就无法证明模拟的稳态是对的。**\n\n**第二层 · 对流扩散方程（`I1`）**。$\\partial_tu+\\nabla\\cdot(uv)=\\nu\\Delta u$ 与常系数 FP 是同一个方程（$\\nu=\\frac12\\sigma^{2}$）。切片原话：「右边是对流 $+$ 扩散——这正是 I 章流体的对流扩散方程的形式」。这条对应让**流体里的数值扩散分析**与**随机过程里的方差增长**可以互相翻译。\n\n**第三层 · 流体模拟与被动标量（`H8.1`）**。烟雾/染料的输运就是被动标量的对流扩散；加随机扰动（湍流脉动、粒子抖动）时，噪声必须按 $\\sqrt{\\Delta t}$ 缩放；`I9.1` 的有限体积法天然守恒，正是因为它在离散层面保持了 FP 的**散度形式**。\n\n**第四层 · 湍流与随机模型（`I5`）**。大涡模拟的亚格子闭合、随机涡方法常把未解析尺度写成随机输运项——本质就是给确定性方程补一个 $\\sigma\\,dW$，其密度的演化由 FP 给出。\n\n**数值/分析层（`P9.1`、`P9.2`）**：FP 的推导本身要用**分部积分移导数**；FP（作为抛物型 PDE）的稳定性/衰减估计走的是**能量法**流水线。这两件 P 篇工具在本单元同时出场。\n\n**依赖方向**：本单元**依赖** `C10.1`（$dW^{2}=dt$）、`C10.2`（Itô 引理）、`C4`（鞅）、`C6.5`（a.s. vs $L^{1}$ 的分野）、`P9.1`/`P9.2`；**被** `M5`、`H8.1`、`I1`、`I5` 消费。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C10.1",
+        "C4",
+        "C6.5",
+        "P9.1",
+        "P9.2",
+        "M5",
+        "H8.1",
+        "I1",
+        "I5",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.probe1",
+      "type": "probe",
+      "subject": "sde",
+      "title": "检验题：GBM 的期望、中位数与「有多少轨道跑赢均值」",
+      "keywords": [
+        "第 1 题：μ=0.1、σ=0.3、t=10、X_0=1 时 E[X]、中位数、比值",
+        "第 2 题：P(X_t ≥ E[X_t]) 在 t=1/10/100 时各是多少",
+        "第 3 题：ln X_t 的分布参数与 95% 区间",
+        "答案：2.71828 / 1.73325 / 1.5683；0.4404 / 0.3176 / 0.0668"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 399,
+        "line_end": 403
+      },
+      "fill_hint": "从切片「期望 vs 典型」那一句变来的检验题；三问全部可手算，答案带待核验标记。",
+      "content": "**题**：$X_0=1,\\ \\mu=0.1,\\ \\sigma=0.3$ 的几何布朗运动。\n\n1. 求 $t=10$ 时的 $\\mathbb E[X_{10}]$、中位数，以及两者之比；\n2. 求 $\\mathbb P(X_t\\ge\\mathbb E[X_t])$ 在 $t=1,10,100$ 时的值；\n3. 写出 $\\ln X_{10}$ 的分布，并给出 $X_{10}$ 的 $95\\%$ 区间（$\\pm1.96$ 个对数标准差）。\n\n**答案**：\n\n1. $\\mathbb E[X_{10}]=e^{\\mu t}\\approx2.71828$【已核验:2.71828182846|exp(0.1*10)】；中位数 $=e^{(\\mu-\\sigma^{2}/2)t}\\approx1.73325$【已核验:1.73325301787|exp((0.1-0.09/2)*10)】；比值 $=e^{\\sigma^{2}t/2}\\approx1.5683$【已核验:1.56831218549|exp(0.1*10)/exp((0.1-0.09/2)*10)】。\n2. $\\mathbb P=1-\\Phi(\\sigma\\sqrt t/2)$：$t=1$ 时 $\\approx0.4404$【已核验:0.44038230763|0.5*erfc(0.3*sqrt(1)/2/sqrt(2))】；$t=10$ 时 $\\approx0.3176$【已核验:0.317628147999|0.5*erfc(0.3*sqrt(10)/2/sqrt(2))】；$t=100$ 时 $\\approx0.0668$【已核验:0.0668072012689|0.5*erfc(0.3*sqrt(100)/2/sqrt(2))】。**随时间单调下降**。\n3. $\\ln X_{10}\\sim N(0.55,\\ 0.9)$，标准差 $\\approx0.948683$【已核验:0.948683298051|0.3*sqrt(10)】；$95\\%$ 区间为 $\\bigl[e^{0.55-1.96\\cdot0.948683},\\ e^{0.55+1.96\\cdot0.948683}\\bigr]\\approx[0.2699,\\ 11.13]$【已核验:0.269976796064|exp(0.55-1.96*0.3*sqrt(10))】。\n\n**易错点**：\n\n- 第 1 题把中位数写成 $e^{\\mu t}$——那是**均值**；典型轨道按 $e^{(\\mu-\\sigma^{2}/2)t}$ 走；\n- 第 2 题以为概率是 $50\\%$——对数正态右偏，均值在**中位数之上**，故少于一半的轨道达到均值；\n- 第 3 题把 $95\\%$ 区间写成 $e^{(\\mu-\\sigma^2/2)t}\\pm1.96\\sigma\\sqrt t$——**指数内外不能线性相加**，要在对数域加减再指数化。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:sde.probe2",
+      "type": "probe",
+      "subject": "fokker-planck",
+      "title": "检验题：Fokker–Planck 的两侧对拍与散度形式",
+      "keywords": [
+        "第 1 题：μ=0、σ=1 时验证 p=(2πt)^{-1/2}e^{−x²/2t} 满足 FP（x=0,t=1）",
+        "第 2 题：常系数时 X_t ~ N(X_0+μt, σ²t)，μ=1、σ=1、t=4 时 P(X>6)",
+        "第 3 题：OU 的正确稳态密度峰值是多少（0.5642）",
+        "第 4 题：ν=0.5 的对流扩散方程对应多大 σ（√2ν = 1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 405,
+        "line_end": 414
+      },
+      "fill_hint": "从 FP 陈述与散度形式词条变来的检验题；四问覆盖方程验算、分布、稳态与流体对应。",
+      "content": "**题**：\n\n1. 取 $\\mu=0,\\sigma=1,X_0=0$。验证 $p(x,t)=\\frac1{\\sqrt{2\\pi t}}e^{-x^{2}/(2t)}$ 满足 Fokker--Planck 方程：在 $x=0,t=1$ 处分别算出 $\\partial_tp$ 与 $\\frac12\\partial_{xx}p$；\n2. 常系数 $\\mu=1,\\sigma=1,X_0=0$：写出 $X_t$ 的分布，并求 $t=4$ 时 $\\mathbb P(X_4>6)$；\n3. OU 过程 $dX=-X\\,dt+dW$：正确 FP 的稳态密度是什么？在 $x=0$ 处的密度值是多少？\n4. 流体的对流扩散方程 $\\partial_tu+\\nabla\\cdot(uv)=\\nu\\Delta u$ 中 $\\nu=0.5$，对应的随机噪声强度 $\\sigma$ 是多少？\n\n**答案**：\n\n1. $p(0,1)\\approx0.398942$【已核验:0.398942280401|1/sqrt(2*pi)】；$\\partial_tp=-p/(2t)\\approx-0.199471$【已核验:-0.199471140201|-1/(2*sqrt(2*pi))】；$\\frac12\\partial_{xx}p=-p/(2t)\\approx-0.199471$【已核验:-0.199471140201|0.5*(-1/sqrt(2*pi))】。**两侧相等** ✅。\n2. $X_t\\sim N(t,\\ t)$；$t=4$ 时 $X_4\\sim N(4,4)$，$\\mathbb P(X_4>6)=1-\\Phi(1)\\approx0.158655$【已核验:0.158655253931|0.5*erfc(1/sqrt(2))】。\n3. 稳态 $p(x)=\\frac1{\\sqrt\\pi}e^{-x^{2}}$（即 $N(0,\\tfrac12)$），$p(0)\\approx0.5642$【已核验:0.564189583548|sqrt(1/pi)】。若写成非散度形式，总质量按 $M(t)=e^{-t}$ 衰减（$t=1$ 时剩 $\\approx0.367879$【已核验:0.367879441171|exp(-1)】），稳态「解」是趋于常数 $\\frac{\\sqrt\\pi}2\\approx0.886227$【已核验:0.886226925453|sqrt(pi)/2】的 S 型函数，**不可归一化**。\n4. 由 $\\nu=\\frac12\\sigma^{2}$ 得 $\\sigma=\\sqrt{2\\nu}\\approx1$【已核验:1|sqrt(2*0.5)】。**把 $\\nu$ 直接当成 $\\sigma$ 会差 $\\sqrt2$ 倍。**\n\n**易错点**：\n\n- 第 1 题把 $\\partial_{xx}p$ 在 $x=0$ 处算成 $0$——$p$ 是高斯峰，$\\partial_{xx}p=\\bigl(\\frac{x^{2}}{t^{2}}-\\frac1t\\bigr)p$，在 $x=0$ 处是 $-p/t\\ne0$；\n- 第 2 题把方差写成 $\\sigma^{2}t^{2}$——是 $\\sigma^{2}t$（$t=4$ 时方差 $4$、标准差 $2$）；\n- 第 3 题把稳态方差写成 $1$——OU 的稳态方差是 $\\frac{\\sigma^{2}}{2\\theta}=\\frac12$；\n- 第 4 题直接取 $\\sigma=\\nu$——差 $\\sqrt2$ 倍，这是流体与随机过程对接时最常犯的系数错误。",
+      "links": [
+        "C10.3",
+        "I1",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "C10.3 一页总表：SDE × GBM × Fokker–Planck × 流体对应",
+      "keywords": [
+        "一般 SDE：dX = μdt + σdW，条件是 Lipschitz + 线性增长",
+        "GBM：X = X_0 e^{(μ−σ²/2)t + σW_t}，期望 e^{μt} vs 典型 e^{(μ−σ²/2)t}",
+        "Fokker–Planck：∂_t p = −∂_x(μp) + ½∂_xx(σ²p)，散度形式不可拆",
+        "流体对应：ν = σ²/2；对流项 ↔ −∂_x(μp)",
+        "朗之万：二阶 ODE 写成一阶 SDE 系统，稳态必须是 Boltzmann",
+        "三种翻车：解释不一致（差 1.5683 倍）、非散度形式、ΔW 取成 hZ"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 395,
+        "line_end": 414
+      },
+      "fill_hint": "单元级总表；把三块内容（SDE / GBM / FP）与流体接口压成一张卡。",
+      "content": "C10.3 一页总表。切片三段（一般 SDE / GBM / Fokker--Planck + CG 接口）压缩如下。\n\n| 条目 | 内容 | 条件 | 翻车时的具体数值 |\n|---|---|---|---|\n| **一般 SDE** | $dX=\\mu dt+\\sigma dW$（积分形式的简写） | 局部 Lipschitz $+$ 线性增长 | $dX=X^{2}dt$：$X=\\frac1{1-t}$，$t=0.99$ 时 $\\approx100$，$t=1$ 爆破 |\n| **GBM** | $X_t=X_0e^{(\\mu-\\sigma^{2}/2)t+\\sigma W_t}$ | $\\mu,\\sigma$ 常数，Itô 解释 | Stratonovich 版期望 $\\approx4.26311$ vs Itô $\\approx2.71828$（$1.5683$ 倍） |\n| **期望 vs 典型** | $\\mathbb E[X_t]=e^{\\mu t}$，中位数 $=e^{(\\mu-\\sigma^{2}/2)t}$ | $\\sigma>0$ | $t=10$ 时只有 $\\approx31.8\\%$ 的轨道跑赢均值 |\n| **Fokker--Planck** | $\\partial_tp=-\\partial_x(\\mu p)+\\frac12\\partial_{xx}(\\sigma^{2}p)$ | **散度形式**，$\\mu,\\sigma$ 依赖 $x$ 时不可拆 | 拆开后 OU 的总质量按 $e^{-t}$ 衰减（$t=1$ 剩 $\\approx0.367879$）、稳态不可归一化 |\n| **生成元与对偶** | $L=\\mu\\partial_x+\\frac12\\sigma^{2}\\partial_{xx}$，$L^{*}=$ FP 算子 | 分部积分（边界项为零） | — |\n| **流体对应** | $\\nu=\\frac12\\sigma^{2}$，$-\\nabla\\cdot(uv)\\leftrightarrow-\\partial_x(\\mu p)$ | 常系数时直接对应 | $\\nu=0.5\\leftrightarrow\\sigma\\approx1$；把 $\\nu$ 当 $\\sigma$ 差 $\\sqrt2$ 倍 |\n| **朗之万** | $dV=-\\frac\\gamma mVdt+\\frac Fm dt+\\frac{\\sqrt{2\\gamma k_BT}}m dW$ | 涨落耗散配对 $\\sigma^{2}=2\\gamma k_BT/m^{2}$ | 稳态不是 Boltzmann $\\Rightarrow$ 系数或解释写错 |\n\n**单元的两句话**：\n\n1. **SDE 与抛物型 PDE 是同一件事的两种语言**（切片原话）——轨道 vs 密度，像 `I1` 的拉格朗日 vs 欧拉；\n2. **$-\\frac{\\sigma^{2}}2$ 与 $\\frac12\\partial_{xx}$ 是同一份账**——都来自 `C10.1` 的 $dW^{2}=dt$，一个出现在指数上，一个出现在 PDE 里。\n\n**三种翻车，一眼识别**：\n\n- 解释不一致 → 检查有没有写 $\\circ dW$，以及漂移是否补了 $\\frac12\\sigma\\sigma'$；\n- FP 非散度形式 → 检查导数是否作用在 $\\mu p$ 与 $\\sigma^{2}p$ **整体上**；\n- 离散化错幂 → 检查 $\\Delta W$ 是 $\\sqrt h\\,Z$ 还是 $hZ$（必须是 $\\sqrt h\\,Z$）。",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C10.1",
+        "I1",
+        "M5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "C10.3 服务的下游章节（一条一句）",
+      "keywords": [
+        "M5：朗之万方程的严格形式与「稳态 = Boltzmann」这条自检",
+        "I1：对流扩散方程与 FP 同形式，ν = σ²/2 是两套语言的翻译键",
+        "H8.1：烟雾/被动标量的随机扰动强度按 √Δt，且与守恒格式对拍",
+        "I5：湍流的亚格子闭合与随机涡方法写成随机输运项",
+        "I9.1：有限体积法在离散层面保持散度形式，故天然守恒",
+        "P9.1/P9.2：FP 的推导用分部积分，稳定性分析走能量法"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 405,
+        "line_end": 414
+      },
+      "fill_hint": "单元级应用词条；每条给「为什么需要它」，依赖方向分列。",
+      "content": "**下游清单**（按依赖强度排序）。\n\n- **`M5` 朗之万方程**：本单元最直接的下游。$m\\ddot x=-\\gamma\\dot x+\\sqrt{2\\gamma k_BT}\\xi+F$ 的严格写法是 $(X,V)$ 的一阶 SDE 系统；它的 Fokker--Planck（Kramers 方程）给出位置--速度联合密度，稳态必须是 Boltzmann 分布——**这条自检是分子动力学实现正确性的唯一硬标准**。\n- **`I1` 守恒律 / 对流扩散**：$\\partial_tu+\\nabla\\cdot(uv)=\\nu\\Delta u$ 与常系数 FP 同形，翻译键是 $\\nu=\\frac12\\sigma^{2}$。有了它，流体的数值扩散分析可以借用随机过程里「方差按 $\\sigma^{2}t$ 增长」的结论。\n- **`H8.1` 流体模拟**：烟雾、染料等被动标量的输运就是对流扩散加随机扰动；扰动幅度按 $\\sqrt{\\Delta t}$ 缩放；`H8.1` 与 `I9.1` 的守恒格式之所以可信，正因为它们在离散层面保住了 FP 的散度形式。\n- **`I5` 湍流**：亚格子闭合、随机涡方法把未解析尺度写成 $\\sigma\\,dW$，其密度演化由 FP 描述——随机模型的可解性依赖于本单元的语言。\n- **`I9.1` 有限体积法**：FP 是守恒律（$\\partial_tp+\\partial_xJ=0$），有限体积天然守恒；反过来，用非守恒格式离散 FP 会破坏 $\\int p=1$。\n- **`P9.1` / `P9.2`**：FP 的推导靠分部积分移导数，FP（抛物型 PDE）的衰减/稳定性估计走能量法流水线——**P 篇的这两件工具在本单元同时被调用**。\n\n**依赖方向**：本单元**依赖** `C10.1`（$dW^{2}=dt$）、`C10.2`（Itô 引理与指数鞅）、`C4`（鞅）、`C6.5`（a.s. vs $L^{1}$ 的分野）、`P9.1`/`P9.2`。\n\n**一条自检问句**（触发器）：**看到任何「随机 + 演化」的模型，先问两件事**——它的密度满足什么 FP 方程？那个方程的稳态是不是物理上应有的分布（Boltzmann / 均匀分布 / 已知的不变测度）？**第二问能否定回答，几乎总是系数或解释写错了。**",
+      "links": [
+        "C10.3",
+        "C10.2",
+        "C10.1",
+        "C4",
+        "C6.5",
+        "P9.1",
+        "P9.2",
+        "M5",
+        "H8.1",
+        "I1",
+        "I5",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

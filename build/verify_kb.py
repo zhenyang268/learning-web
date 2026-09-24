@@ -46,6 +46,10 @@ ID_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
 TYPES = {"statement", "proof", "intuition", "extension", "counterexample",
          "comparison", "application", "viz", "probe"}
 MARK_RE = re.compile(r"【待核验:([^】]+)】")
+# 畸形标记：标记起点之后 300 字符内（不跨行、不跨下一个标记）找不到 】 收尾
+BAD_MARK_RE = re.compile(r"【(?:待核验|已核验)(?![^【\n]{0,300}】)")
+# 回填后仍残留的未处理标记
+LEFTOVER_RE = re.compile(r"【待核验")
 # 标记前紧邻的断言值（要求有 =/≈/~ 之类的关系符，避免把 "取 n=10" 里的参数当断言）
 CLAIM_RE = re.compile(r"[=≈≃~]\s*(-?\d[\d,]*(?:\.\d+)?(?:[eE][+-]?\d+)?)\s*[$\s*）)】」。，,]*$")
 
@@ -134,6 +138,10 @@ def verify_file(path: Path) -> list[str]:
                 errs.append(f"CRIT {code} {eid}: 缺字段 {k}")
         if not ent.get("content"):
             errs.append(f"CRIT {code} {eid}: content 为空")
+        elif has_stray_double_backslash(ent["content"]):
+            errs.append(f"MAJ {code} {eid}: content 含环境外的双反斜杠（疑似 JSON 过度转义）")
+        if isinstance(ent.get("content"), str) and BAD_MARK_RE.search(ent["content"]):
+            errs.append(f"CRIT {code} {eid}: 数值标记未用 】 收尾（写成 ] / ) 会静默漏过回填）")
         if ent.get("status") != "drafted":
             errs.append(f"CRIT {code} {eid}: status 应为 drafted")
         kw = ent.get("keywords")
@@ -198,6 +206,8 @@ def settle_numerics(path: Path, corrections: list) -> list[str]:
         return f"【已核验:{fmt(val)}|{expr}】"
 
     new_text = MARK_RE.sub(repl, text)
+    if LEFTOVER_RE.search(new_text):
+        errs.append(f"CRIT {path.stem}: 回填后仍残留【待核验】标记（表达式无法求值，或 】 未闭合）")
     if new_text != text:
         # 校验替换后 JSON 仍合法再写回
         try:

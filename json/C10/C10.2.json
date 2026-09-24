@@ -1,0 +1,695 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C10.2",
+  "chapter": "C10",
+  "title": "Itô 积分与 Itô 引理",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 372,
+    "line_end": 392,
+    "anchor": "notebook/C_partial.tex:372"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C10.2:ito.quantifiers",
+      "type": "comparison",
+      "subject": "ito",
+      "title": "Itô 积分与 Itô 引理的六条限定词：逐条拆掉看哪里塌",
+      "keywords": [
+        "H 必须适应：取 H_s=W_1（终点值）则期望变 1 而不是 0，鞅性丢失",
+        "必须取左端点：改右端点得 (W₁²+1)/2，与 Itô 差 t=1",
+        "H 平方可积：H=(1−s)⁻¹ 时方差 1/(1−t)−1，t=0.99 达 99",
+        "极限是 L² 不是逐轨道：与 C10.1 的二次变差同一个承诺等级",
+        "f ∈ C²：f=|x| 时天真套用给 E|W₁|=0，真值 0.7979",
+        "二阶项 ½f''dt 必须留：f=x² 丢掉它则 E[W_t²] 得 0 而不是 t"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 388
+      },
+      "fill_hint": "灵魂词条：把切片的两段（Itô 积分定义 + Itô 引理）拆成六个限定词；每行「会失效」的都有独立词条展开。",
+      "content": "切片给出两件东西：一个**定义**（左端点求和取 $L^{2}$ 极限）与一个**公式**（$df=f'dW+\\frac12f''dt$）。它们合起来背着六个限定词。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| **$H$ 适应**（$H_{t_i}$ 只看 $t_i$ 之前的信息） | 取 $H_s\\equiv W_1$（终点值，非适应）：左端点求和 $=\\sum W_1\\Delta W_i=W_1^{2}$ | 期望 $\\approx1$【已核验:1|1】而不是 $0$——**鞅性当场丢失** | 不能去。「适应」是 Itô 积分定义的一部分 |\n| **取左端点** | 改取右端点：$\\sum W_{t_{i+1}}\\Delta W_i\\to\\frac{W_t^{2}+t}{2}$ | $t=1$ 时给 $\\frac{W_1^{2}+1}{2}$，与 Itô 的 $\\frac{W_1^{2}-1}{2}$ **相差 $1$**；期望从 $0$ 变 $1$ | 不能去——这是**解释的选择**（Itô/Stratonovich），选了就全程一致 |\n| **$H$ 平方可积** $\\mathbb E\\int_0^tH^{2}ds<\\infty$ | $H_s=\\frac1{1-s}$ 于 $[0,1)$：$\\mathrm{Var}\\big[\\int_0^tH\\,dW\\big]=\\frac1{1-t}-1$ | $t=0.99$ 时方差 $\\approx99$【已核验:99|1/(1-0.99)-1】，$\\to\\infty$，积分不再有 $L^{2}$ 极限 | 不能去；可用**局部化**（停时 $\\tau_n$）把爆炸推到 $n\\to\\infty$ |\n| **极限是 $L^{2}$（均方）** | 同 `C10.1`：固定分割谈不上收敛；逐条轨道只保证有子列 | 不能说「每条轨道的黎曼和都趋于积分」 | 可**加强**：$H$ 连续时沿嵌套分割可升级为（一致）轨道收敛 |\n| **$f\\in C^{2}$**（Itô 引理） | $f(x)=|x|$：$f''=2\\delta_0$ 不是函数；天真用 $f''\\equiv0$ 得 $d|W|=\\mathrm{sgn}(W)dW$ | 取期望给 $0$，而真值 $\\mathbb E|W_1|\\approx0.7979$【已核验:0.797884560803|sqrt(2/pi)】 | 可用**局部时**（Tanaka 公式）放宽到凸函数，但要额外加一项 |\n| **必须留 $\\frac12f''dt$** | $f(x)=x^{2}$：丢掉它得 $d(W^{2})=2W\\,dW$，取期望给 $0$ | 真值 $\\mathbb E[W_t^{2}]=t$（$t=1$ 给 $\\approx1$【已核验:1|1】） | **不能去**。这一项完全来自 `C10.1` 的 $dW^{2}=dt$ |\n\n**这张表怎么用**：每次写下一个 $\\int H\\,dW$ 或对 $f(X_t)$ 求微分，先扫六行。\n\n1. $H$ 适应吗（第 1 行）——不适应则连「期望为 $0$」都没有；\n2. 用的是左端点吗（第 2 行）——中点/右端点会差 $t/2$ 或 $t$；\n3. $\\int H^{2}ds$ 有限吗（第 3 行）——无限则 $L^{2}$ 极限不存在；\n4. 你要的是均方还是逐轨道（第 4 行）；\n5. $f$ 是 $C^{2}$ 吗（第 5 行）——$f=|x|$、$f=(x)^{+}$ 都不合格；\n6. 二阶项写上了吗（第 6 行）——**这是初学者 90% 错误的来源**（切片原文语）。\n\n**为什么第 1、2 行必须绑在一起**：左端点保证了 $H_{t_i}$ 只依赖 $t_i$ 以前的轨道，而增量 $W_{t_{i+1}}-W_{t_i}$ 与那段历史独立——**独立性正是 $\\mathbb E\\int H\\,dW=0$ 的唯一来源**，也就是「鞅」这个词在这里的全部内容（接 `C4`）。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C4"
+      ],
+      "viz": {
+        "module": "ito-endpoint-choice",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "quantifier-overview",
+          "t": 1.0,
+          "w_range": [
+            -3,
+            3
+          ],
+          "curves": [
+            "0.5*(w**2-1)",
+            "0.5*w**2",
+            "0.5*(w**2+1)"
+          ],
+          "annotate": "左/中/右端点三条曲线相差 0.5；只有左端点（Itô）期望为 0"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.statement",
+      "type": "statement",
+      "subject": "ito",
+      "title": "Itô 积分的定义与三条基本性质（鞅、等距、线性）",
+      "keywords": [
+        "定义：∫₀ᵗH dW = lim Σ H_{t_i}(W_{t_{i+1}}−W_{t_i})，左端点、L² 极限",
+        "鞅性：E∫₀ᵗH dW = 0（H 适应 + 左端点 ⟹ 与增量独立）",
+        "Itô 等距：E[(∫H dW)²] = E[∫H²ds]，H=W、t=1 时两侧都是 0.5",
+        "线性：(αH+βG) 的积分 = α∫H dW + β∫G dW",
+        "成立条件：H 适应且 E∫₀ᵗH²ds < ∞"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 378
+      },
+      "fill_hint": "陈述本体覆盖切片 373-378；把「左端点」的后果（鞅性与 Itô 等距）写成可验算的两条公式，并给 H=W、t=1 的 0.5 对拍。",
+      "content": "**定义**（切片第一句）。设 $H$ 是**适应**过程（$H_s$ 只依赖 $s$ 以前的轨道），沿分割 $0=t_0<\\cdots<t_n=t$ 取**左端点**值求和，再取 $L^{2}$ 极限：\n\n$$\\int_0^tH_s\\,dW_s\\ :=\\ \\lim_{|\\Pi|\\to0}\\ \\sum_i H_{t_i}\\big(W_{t_{i+1}}-W_{t_i}\\big)\\qquad (L^{2}).$$\n\n**成立条件**：$H$ 适应，且 $\\mathbb E\\int_0^tH_s^{2}\\,ds<\\infty$。\n\n**三条性质**（每条都给理由）：\n\n**性质一 · 鞅性（切片括注）。** $\\displaystyle\\mathbb E\\Big[\\int_0^tH_s\\,dW_s\\Big]=0$。\n\n理由：每一项 $H_{t_i}$ 与增量 $\\Delta W_i$ 独立（左端点 + 独立增量），故 $\\mathbb E[H_{t_i}\\Delta W_i]=\\mathbb E[H_{t_i}]\\cdot\\mathbb E[\\Delta W_i]=0$。取极限即得。更强地，$\\int_0^tH\\,dW$ 是**鞅**（接 `C4`）——**这是选左端点的全部理由**。\n\n**性质二 · Itô 等距。** $\\displaystyle\\mathbb E\\Big[\\Big(\\int_0^tH_s\\,dW_s\\Big)^{2}\\Big]=\\mathbb E\\int_0^tH_s^{2}\\,ds .$\n\n理由：交叉项 $2H_{t_i}H_{t_j}\\Delta W_i\\Delta W_j$ 的期望为 $0$（独立 + 均值 $0$），只剩平方项 $\\mathbb E[H_{t_i}^{2}]\\,\\mathbb E[(\\Delta W_i)^{2}]=\\mathbb E[H_{t_i}^{2}]\\,h_i$，求和取极限得 Riemann 积分。\n\n**现场对拍**（$H_s=W_s$，$t=1$）：\n\n- 左端：$\\int_0^1W\\,dW=\\frac12(W_1^{2}-1)$，平方取期望 $=\\frac14\\mathbb E\\big[(W_1^{2}-1)^{2}\\big]=\\frac14\\cdot2\\approx0.5$【已核验:0.5|0.25*(3-2*1+1)】（用 $\\mathbb E[W_1^{2}]=1$、$\\mathbb E[W_1^{4}]=3$）；\n- 右端：$\\int_0^1\\mathbb E[W_s^{2}]\\,ds=\\int_0^1s\\,ds\\approx0.5$【已核验:0.5|0.5】。\n\n**两侧都是 $0.5$**——这条等距是检验一切 Itô 计算最快的一把尺子。\n\n**性质三 · 线性。** $\\int(\\alpha H+\\beta G)\\,dW=\\alpha\\int H\\,dW+\\beta\\int G\\,dW$。注意**没有**「乘法公式」：对两个 Itô 积分的乘积要用 Itô 引理（见 `C10.2:ito-formula.proof`）。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C4"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "左端点黎曼和的收敛需要生成多条布朗轨道并对不同分割做对拍，才能看出均方收敛（而非逐轨道收敛）。",
+        "params_hint": {
+          "H": "W_s",
+          "t": 1.0,
+          "n_list": [
+            10,
+            100,
+            1000,
+            10000
+          ],
+          "paths": 500,
+          "show": [
+            "每条轨道的黎曼和",
+            "极限 0.5*(W_1^2-1)",
+            "样本均值 ≈0、样本二阶矩 ≈0.5"
+          ],
+          "annotate": "样本二阶矩应收敛到 0.5（Itô 等距）"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.intuition",
+      "type": "intuition",
+      "subject": "ito",
+      "title": "直觉：左端点 ⟹ 独立 ⟹ 「赌徒不能看未来的牌」",
+      "keywords": [
+        "假设给了什么：左端点让 H 与增量独立，于是每项期望为 0",
+        "结论为什么成立：n 项独立零均值相加，方差可加 → Itô 等距",
+        "图像：Itô 积分是「用过去的信息下注」的累计盈亏，所以是鞅",
+        "对比右端点：等于预知下一步涨跌再下注，期望为 t/2 而不是 0",
+        "为什么二阶项必然出现：ΔW ~ √h，平方和留下 t（C10.1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 378
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」分两段；核心图像是「用过去的信息下注」与方差可加给出的等距式。",
+      "content": "**假设给了什么。** 三个假设，各管一件事：\n\n1. **$H$ 适应**给了「$H_{t_i}$ 属于已知信息 $\\mathcal F_{t_i}$」——它是**过去**的函数；\n2. **独立增量**给了「$\\Delta W_i$ 与 $\\mathcal F_{t_i}$ 独立」——**未来**与过去无关；\n3. **$\\mathbb E[\\Delta W_i]=0$** 给了「每一步都是公平赌局」。\n\n三条合起来：$H_{t_i}$ 是赌注大小，$\\Delta W_i$ 是这一步的盈亏，赌注只看过去、盈亏来自未来——**每一步都是公平的**。\n\n**结论为什么因此成立（两条主线）。**\n\n**主线一（代数）：为什么期望是 $0$。**\n\n$$\\mathbb E\\big[H_{t_i}\\Delta W_i\\big]=\\mathbb E\\big[H_{t_i}\\big]\\cdot\\mathbb E\\big[\\Delta W_i\\big]=0 .$$\n\n**独立性是唯一的理由**。取右端点（$H_{t_i}$ 换成 $H_{t_{i+1}}$）时 $H_{t_{i+1}}$ 已经包含了 $\\Delta W_i$ 的信息，两步不再独立，上式崩掉；这正是 $\\frac{W_t^{2}+t}{2}$ 里那个 $+t$ 的由来。\n\n**主线二（方差）：为什么是 Itô 等距。** 写 $M_t=\\int_0^tH\\,dW$。$n$ 项独立零均值相加，**方差可加**：\n\n$$\\mathrm{Var}\\Big[\\sum_iH_{t_i}\\Delta W_i\\Big]=\\sum_i\\mathbb E\\big[H_{t_i}^{2}\\big]\\,\\mathbb E\\big[(\\Delta W_i)^{2}\\big]=\\sum_i\\mathbb E\\big[H_{t_i}^{2}\\big]\\,h_i\\ \\longrightarrow\\ \\int_0^t\\mathbb E[H_s^{2}]\\,ds .$$\n\n**「增量平方 $=$ 时间长度」（即 `C10.1` 的 $dW^{2}=dt$）在这里第二次出场**：它把「$\\Delta W$ 的平方」翻译成「$ds$」，于是左边（随机）等于右边（确定性积分）。\n\n**一句话图像**：把 $\\int_0^tH\\,dW$ 想成**赌徒的累计盈亏曲线**——每步的赌注 $H_{t_i}$ 只能用过去的信息决定，所以这条期望恒为 $0$、是个鞅；若允许 $H$ 偷看下一步（右端点），赌徒就能白赚 $\\frac t2$（$t=1$ 时白赚 $0.5$）。\n\n**为什么二阶项必然出现**：既然 $\\Delta W\\sim\\sqrt h$，那 $f$ 的变化量里 $(\\Delta W)^{2}$ 就是 $h$ 量级，**和 $\\Delta W$ 的一阶项一样都不能丢**；而 $(\\Delta W)^{3}\\sim h^{3/2}$ 求和后 $\\to0$（`C10.1` 的三次变差）。于是 Taylor 只需留到二阶——这就是 $\\frac12f''dt$ 的全部故事（见 `C10.2:ito-formula.intuition`）。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.proof",
+      "type": "proof",
+      "subject": "ito",
+      "title": "证明骨架：从简单过程到 L² 延拓的四步（每步给理由）",
+      "keywords": [
+        "第一步：对简单过程（阶梯）直接求和，交叉项因独立性为 0",
+        "第二步：Itô 等距给出 ‖I(H)‖_{L²} = ‖H‖_{L²(dt×dP)}，即等距嵌入",
+        "第三步：用简单过程稠密 + L² 完备性延拓到一般适应 H",
+        "第四步：鞅性由「有限和是鞅」+ L¹ 收敛传递",
+        "依赖链：独立增量 → 交叉项为 0 → 等距 → 稠密延拓 → 鞅性",
+        "易错点：以为黎曼和逐轨道收敛；把等距当成路径恒等式"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 378
+      },
+      "fill_hint": "四步骨架；重点写清「等距 ⟹ 可延拓」这一步，以及为什么不能主张逐轨道收敛。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：对简单过程直接定义。** 取 $H_s=\\sum_i\\xi_i\\mathbf 1_{(t_i,t_{i+1}]}(s)$，其中 $\\xi_i$ 是 $\\mathcal F_{t_i}$-可测的有界随机变量，定义\n\n$$I(H)=\\sum_i\\xi_i\\,\\Delta W_i .$$\n\n理由：这时不需要任何极限，求和本身就是有限的。\n\n**第二步：算二阶矩（关键一步，交叉项消失）。**\n\n$$\\mathbb E\\big[I(H)^{2}\\big]=\\sum_i\\mathbb E\\big[\\xi_i^{2}(\\Delta W_i)^{2}\\big]+2\\sum_{i<j}\\mathbb E\\big[\\xi_i\\xi_j\\Delta W_i\\Delta W_j\\big].$$\n\n- 交叉项：对 $i<j$，$\\xi_i\\xi_j\\Delta W_i$ 是 $\\mathcal F_{t_j}$-可测的，而 $\\Delta W_j$ 独立于 $\\mathcal F_{t_j}$ 且均值 $0$，故整项为 $0$；\n- 平方项：$\\xi_i$ 与 $\\Delta W_i$ 独立，故 $\\mathbb E[\\xi_i^{2}(\\Delta W_i)^{2}]=\\mathbb E[\\xi_i^{2}]\\cdot(t_{i+1}-t_i)$。\n\n于是得到**Itô 等距**\n\n$$\\mathbb E\\big[I(H)^{2}\\big]=\\mathbb E\\int_0^tH_s^{2}\\,ds .$$\n\n**第三步：延拓。** 简单过程在 $L^{2}\\big(\\Omega\\times[0,t]\\big)$ 中稠密；由第二步，$H\\mapsto I(H)$ 是**等距**线性映射，故唯一地延拓到全体适应平方可积的 $H$。理由：等距映射保持 Cauchy 列，完备性保证极限存在。**这一步是「定义」而不是「证明」**——Itô 积分不是逐点极限，是 $L^{2}$ 完备化出来的对象。\n\n**第四步：鞅性。** 有限和 $M_t^{(n)}=\\sum_{t_i<t}\\xi_i\\Delta W_i$ 是鞅（增量条件期望为 $0$）；由 $L^{2}$ 收敛传递到 $L^{1}$，条件期望可通过极限，故 $M_t=I(H)$ 仍是鞅，且 $\\mathbb E[M_t]=0$。\n\n**依赖链**：独立增量（第一步）$\\to$ 交叉项为 $0$（第二步）$\\to$ 等距与稠密性（第三步）$\\to$ 鞅性（第四步）$\\to$ `C4`。`C10.1` 的 $dW^{2}=dt$ 在第二步把 $(\\Delta W)^{2}$ 换成 $h$。\n\n**易错点（四条）**：\n\n1. **主张逐轨道收敛**。构造只给 $L^{2}$；随机积分**没有**「对每条轨道的黎曼和都收敛」这种性质（$W$ 有界变差 $\\infty$）；\n2. **把 Itô 等距当路径恒等式**。$\\mathbb E[(\\int H dW)^{2}]=\\mathbb E\\int H^{2}ds$ 是**期望**层面的等式，不是 $\\big(\\int H\\,dW\\big)^{2}=\\int H^{2}ds$（后者只在有限变差情形才近似成立）；\n3. **忘记 $H$ 必须适应**。若 $H$ 偷看未来，第二步的交叉项不再是 $0$，等距与鞅性同时失效；\n4. **对两个 Itô 积分求积时套用普通乘法**。**没有**乘法公式：$\\big(\\int H\\,dW\\big)\\big(\\int G\\,dW\\big)$ 要用 Itô 引理处理（见 `C10.2:ito-formula.proof` 的分部积分）。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C4",
+        "C7.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.right-endpoint",
+      "type": "counterexample",
+      "subject": "ito",
+      "title": "典型误用：取右端点（Stratonovich）——∫₀¹W dW 多出 0.5",
+      "keywords": [
+        "误用现场：把端点选择当无关紧要的细节，或用「中点」做数值积分",
+        "左端点（Itô）：(W₁²−1)/2，期望 0（鞅）",
+        "右端点：(W₁²+1)/2，期望 1；中点（Stratonovich）：W₁²/2，期望 0.5",
+        "一般 θ-点：½W_t² + (θ−½)t，相邻端点差 t/2",
+        "机制：右端点的 H_{t_{i+1}} 已含 ΔW_i 的信息，独立性失效",
+        "修补：全程固定一种解释；两套语言互转要加 ½⟨H,W⟩ 项"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 378
+      },
+      "fill_hint": "对应 quantifiers 表第 2 行；失效数值是 t=1 时 0 / 0.5 / 1 三个期望，差 0.5（即 t/2）。",
+      "content": "**误用现场**：写数值积分时用「中点法精度更高」的直觉，把 $H$ 取在 $\\frac{t_i+t_{i+1}}2$；或者在离散化时顺手用 $H_{t_{i+1}}$（因为代码里先更新了路径再取值）。\n\n**为什么错**：端点不是精度问题，是**定义问题**。一般地，取 $\\theta$-点 $t_i^{\\theta}=t_i+\\theta h$：\n\n$$\\sum_iW_{t_i^{\\theta}}\\Delta W_i\\ \\xrightarrow{L^2}\\ \\frac{W_t^{2}}{2}+\\Bigl(\\theta-\\frac12\\Bigr)t .$$\n\n取 $t=1$（$\\mathbb E[W_1^{2}]=1$）：\n\n| 选点 | $\\theta$ | 极限 | 期望 | 是鞅吗 |\n|---|---|---|---|---|\n| 左端点（Itô） | $0$ | $\\frac{W_1^{2}-1}{2}$ | $\\approx0$【已核验:0|(1-1)/2】 | ✅ |\n| 中点（Stratonovich） | $\\frac12$ | $\\frac{W_1^{2}}{2}$ | $\\approx0.5$【已核验:0.5|1/2】 | ❌ |\n| 右端点 | $1$ | $\\frac{W_1^{2}+1}{2}$ | $\\approx1$【已核验:1|(1+1)/2】 | ❌ |\n\n**Itô 与 Stratonovich 相差 $t/2$**：$t=1$ 时差 $\\approx0.5$【已核验:0.5|1/2】；两个极限值本身相差 $1$（右 vs 左）。\n\n**机制（一句话）**：$H_{t_{i+1}}$ 里**已经包含了 $\\Delta W_i$**，于是 $\\mathbb E[H_{t_{i+1}}\\Delta W_i]\\ne0$。具体地 $\\mathbb E[W_{t_{i+1}}\\Delta W_i]=\\mathbb E[\\Delta W_i^{2}]=h$，求和得 $t$——**这 $t$ 就是多出来的那一坨**，它本质上是 `C10.1` 的二次变差。\n\n**连锁后果**（数值上最容易翻车的一条）：若一个 SDE 用 Stratonovich 写成\n\n$$dX_t=\\mu X_t\\,dt+\\sigma X_t\\circ dW_t,$$\n\n翻译成 Itô 时漂移要变成 $\\bigl(\\mu+\\tfrac12\\sigma^{2}\\bigr)X_t$（因为 $\\frac12\\sigma\\partial_x\\sigma=\\frac12\\sigma^{2}$）。取 $\\mu=0.1,\\ \\sigma=0.3,\\ t=10,\\ X_0=1$：\n\n- Itô 版解：$\\mathbb E[X_t]=e^{\\mu t}\\approx2.71828$【已核验:2.71828182846|exp(0.1*10)】；\n- Stratonovich 版解：$X_t=e^{\\mu t+\\sigma W_t}$，$\\mathbb E[X_t]=e^{(\\mu+\\sigma^{2}/2)t}\\approx4.26311$【已核验:4.26311451517|exp((0.1+0.09/2)*10)】；\n- 两者相差 $\\approx1.5683$ 倍【已核验:1.56831218549|exp((0.1+0.09/2)*10)/exp(0.1*10)】。\n\n**同一个 $\\mu,\\sigma$，两种解释给出不同的期望**——不写清楚用哪种，公式就是歧义的。\n\n**修补动作**：\n\n1. **全程固定一种解释**，且写 SDE 时用 $\\circ dW$ 显式标出 Stratonovich；\n2. 两套语言的转换公式：$\\int_0^tH_s\\circ dW_s=\\int_0^tH_s\\,dW_s+\\frac12\\langle H,W\\rangle_t$（对 $H=W$ 即多加 $\\frac t2$）；\n3. 判据：**不能预知未来**的场合（金融、滤波、鞅方法）用 Itô；**由光滑噪声逼近**的物理模型（`M5` 的朗之万方程）用 Stratonovich，然后转成 Itô 再算。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3",
+        "C4"
+      ],
+      "viz": {
+        "module": "ito-vs-stratonovich",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "t": 1.0,
+          "w_range": [
+            -3,
+            3
+          ],
+          "curves": [
+            "0.5*(w**2-1)",
+            "0.5*w**2"
+          ],
+          "fill_between": true,
+          "annotate": "两条抛物线相差 t/2=0.5；图上要能读出这个恒定间隙"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito-formula.statement",
+      "type": "statement",
+      "subject": "ito-formula",
+      "title": "Itô 引理：链式法则的修正版（多出的 ½f''dt 从哪来）",
+      "keywords": [
+        "若 f ∈ C²：df(W_t) = f'(W_t)dW_t + ½f''(W_t)dt",
+        "积分形式：f(W_t) − f(W_0) = ∫f'dW + ½∫f''ds",
+        "多出的 ½f''dt 完全来自二次变差 dW² = dt（C10.1）",
+        "条件：f ∈ C² 且用 Itô 解释；多维/时依赖版本要再加 ∂_t f 项",
+        "算例：f=x² 给 W_t² = 2∫W dW + t（即 ∫W dW = ½(W_t²−t)）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 380,
+        "line_end": 384
+      },
+      "fill_hint": "陈述本体覆盖切片 380-384；给出积分形式、乘法表来源与 f=x² 的算例，并注明时依赖版本是推广。",
+      "content": "**陈述**（切片第二段）。若 $f\\in C^{2}$，则\n\n$$df(W_t)=f'(W_t)\\,dW_t+\\frac12\\,f''(W_t)\\,dt .$$\n\n**积分形式**（更严格的说法，也是实际计算的形式）：\n\n$$f(W_t)-f(W_0)=\\int_0^tf'(W_s)\\,dW_s+\\frac12\\int_0^tf''(W_s)\\,ds .$$\n\n**成立条件**（两条）：$f\\in C^{2}$；积分按 **Itô 解释**（左端点）。\n\n**多出来的那一项从哪来**（一句话）：完全来自 `C10.1` 的**二次变差** $dW^{2}=dt$。Taylor 展开到二阶：\n\n$$df=f'(W)\\,dW+\\frac12f''(W)\\,(dW)^{2}+\\cdots,$$\n\n查乘法表：$(dW)^{2}=dt$、$dW\\,dt=0$、$dt^{2}=0$。于是二阶项**不是高阶无穷小，而是与 $dt$ 同阶**，必须留下。**若照搬普通链式法则，这一项就会丢掉**——切片原话说这是初学者 $90\\%$ 错误的来源。\n\n**乘法表**（`C10.1` 的遗产，这里直接用）：\n\n| $\\times$ | $dW$ | $dt$ |\n|---|---|---|\n| $dW$ | $dt$ | $0$ |\n| $dt$ | $0$ | $0$ |\n\n**算例（切片里的核心用法）**：取 $f(x)=x^{2}$，$f'=2x$、$f''=2$：\n\n$$d(W_t^{2})=2W_t\\,dW_t+\\frac12\\cdot2\\,dt=2W_t\\,dW_t+dt\\quad\\Longleftrightarrow\\quad\n\\int_0^tW_s\\,dW_s=\\frac{W_t^{2}-t}{2}.$$\n\n- 取期望：$\\mathbb E[\\int_0^tW\\,dW]=\\frac12(t-t)=0$ ✅（鞅性对上了）；\n- 若丢了 $+dt$，会得到 $\\int W\\,dW=\\frac12W_t^{2}$，期望 $=\\frac t2\\ne0$ —— **立刻与鞅性矛盾**，这就是最快的自检。\n\n**推广（切片未列，但 `C10.3` 要用）**：若 $f=f(t,x)$ 且 $X$ 满足 $dX_t=\\mu\\,dt+\\sigma\\,dW_t$，则\n\n$$df(t,X_t)=\\Bigl(\\partial_tf+\\mu\\,\\partial_xf+\\tfrac12\\sigma^{2}\\partial_{xx}f\\Bigr)dt+\\sigma\\,\\partial_xf\\,dW_t .$$\n\n比切片版本多出 $\\partial_tf\\,dt$ 一项，且 $\\frac12f''$ 换成 $\\frac12\\sigma^{2}\\partial_{xx}f$。**几何布朗运动（`C10.3`）就是用这一条推出来的。**",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito-formula.intuition",
+      "type": "intuition",
+      "subject": "ito-formula",
+      "title": "直觉：Taylor 到二阶就停，因为三阶及以上求和后恰好归零",
+      "keywords": [
+        "假设给了什么：ΔW ~ √h，所以 (ΔW)² ~ h 与 dt 同阶",
+        "结论为什么成立：Σ(ΔW)² → t，于是二阶项变成 ½∫f''ds",
+        "三阶及以上 → 0（C10.1 的三次变差），所以展开到二阶是精确的",
+        "图像：f(W) 的增量 = 切线项 + 曲率项，曲率项因为抖动大而不能丢",
+        "对照：光滑情形 ΔX ~ h，(ΔX)² ~ h² 求和 → 0，故普通链式法则成立"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 380,
+        "line_end": 384
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」分两段；核心是「抖动 √h 让二阶项从可忽略变成必须记」。",
+      "content": "**假设给了什么。** 还是那一件事：$\\Delta W\\sim\\sqrt h$（`C10.1`）。于是\n\n$$(\\Delta W)^{2}\\sim h\\ (\\text{与}\\ dt\\ \\text{同阶}),\\qquad (\\Delta W)^{3}\\sim h^{3/2},\\qquad \\Delta W\\cdot\\Delta t\\sim h^{3/2}.$$\n\n**结论为什么因此成立。** 把 $f(W_t)$ 的增量按 Taylor 展开并逐项求和（$n=t/h$ 项）：\n\n| Taylor 项 | 单格量级 | 求和后 | 结论 |\n|---|---|---|---|\n| $f'\\,\\Delta W$ | $\\sqrt h$ | $\\sim\\sqrt n\\cdot h=\\sqrt t$（不消失，是**随机**的） | 保留 → $\\int f'\\,dW$ |\n| $\\frac12f''(\\Delta W)^{2}$ | $h$ | $\\sim n\\cdot h=t$（**不消失！**） | 保留 → $\\frac12\\int f''ds$ |\n| $\\frac16f'''(\\Delta W)^{3}$ | $h^{3/2}$ | $\\sim n h^{3/2}=t\\sqrt h\\to0$ | 丢掉 |\n| $f'\\cdot(\\text{高阶})$ | $h^{3/2}$ 以上 | $\\to0$ | 丢掉 |\n\n**关键在第一行与第二行的对比**：普通微积分里，二阶项单格是 $h^{2}$、求和后 $n h^{2}=th\\to0$，所以能丢；这里二阶项单格是 $h$、求和后是 $t$，**与一阶项同样是「活的」**。\n\n**一句话图像**：$f(W_t)$ 的增量 = **切线项**（斜率 $\\times$ 抖动，随机）+ **曲率项**（凹凸 $\\times$ 抖动的平方，累积成确定性的漂移）。$W$ 抖得太厉害（$\\sqrt h$ 级），以至于「抖动的平方」累积起来不再可忽略——**$\\frac12f''dt$ 就是抖动的平方留下的账**。\n\n**为什么恰好是 $\\frac12$**：来自 Taylor 的系数 $\\frac12$（二阶项），不是别的什么修正因子。剩下的 $f''$ 与 $ds$ 分别来自曲率与二次变差。\n\n**自检数值**（$f(x)=x^{2}$，$t=1$）：曲率项贡献 $\\int_0^1\\frac12\\cdot2\\,ds=1$，正好等于 $\\mathbb E[W_1^{2}]=1$。**丢掉它，你就断言 $\\mathbb E[W_1^{2}]=0$**——一个一眼可见的荒谬结论。\n\n**与 `P9.1` 的呼应**：Fokker--Planck 方程的推导正是把这一项用**分部积分**从「函数」搬到「密度」上（见 `C10.3`），得到 $\\frac12\\partial_{xx}(\\sigma^{2}p)$——**同一个 $\\frac12$，换个位置出场**。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3",
+        "P9.1"
+      ],
+      "viz": {
+        "module": "ito-taylor",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "f": "x**2",
+          "t": 1.0,
+          "curves": [
+            "w**2",
+            "w**2 - 1",
+            "0"
+          ],
+          "annotate": "W_t² 与 2∫W dW = W_t²−t 之间恒差 t；那条间隙就是 ½f''dt 的累积"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito-formula.proof",
+      "type": "proof",
+      "subject": "ito-formula",
+      "title": "证明骨架：Taylor + 乘法表 + 三项分别取极限",
+      "keywords": [
+        "第一步：对分割写 Δf = f'ΔW + ½f''(ΔW)² + r_i（Taylor 带余项）",
+        "第二步：Σf'ΔW → ∫f'dW（Itô 积分的定义）",
+        "第三步：Σ½f''(ΔW)² → ½∫f''ds（二次变差 + Riemann 和）",
+        "第四步：余项 Σ|r_i| → 0（三阶变差 → 0，C10.1）",
+        "依赖链：Taylor → C10.1 的二次/三次变差 → Itô 积分定义",
+        "易错点：把 (ΔW)² 直接换成 dt 而不做 Riemann 和的极限；f'' 只连续不够要 C²"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 380,
+        "line_end": 384
+      },
+      "fill_hint": "四步骨架；重点写清第三步「为什么 f'' 可以提出来」（连续性 + 二次变差集中）与第四步余项为何消失。",
+      "content": "**推导骨架**（四步，每步给理由）。取分割 $0=t_0<\\cdots<t_n=t$，记 $\\Delta W_i=W_{t_{i+1}}-W_{t_i}$。\n\n**第一步：每格写 Taylor（带余项）。** 由 $f\\in C^{2}$，存在 $\\xi_i$ 介于 $W_{t_i}$ 与 $W_{t_{i+1}}$ 之间使\n\n$$f(W_{t_{i+1}})-f(W_{t_i})=f'(W_{t_i})\\Delta W_i+\\frac12f''(W_{t_i})(\\Delta W_i)^{2}+r_i,\\qquad\n|r_i|\\le \\omega(|\\Delta W_i|)\\,(\\Delta W_i)^{2},$$\n\n其中 $\\omega$ 是 $f''$ 的连续模。理由：$C^{2}$ 保证余项是 $o((\\Delta W)^{2})$ 且**一致**可控（轨道连续 + 紧性）。\n\n**第二步：一阶项求和。** $f'(W_{t_i})$ 是**适应**的（取左端点！），故\n\n$$\\sum_if'(W_{t_i})\\Delta W_i\\ \\xrightarrow{L^2}\\ \\int_0^tf'(W_s)\\,dW_s$$\n\n正是 Itô 积分的定义。理由：被积函数 $H_s=f'(W_s)$ 适应且连续（故平方可积）。\n\n**第三步：二阶项求和（关键）。** 要证明\n\n$$\\sum_i\\frac12f''(W_{t_i})(\\Delta W_i)^{2}\\ \\xrightarrow{L^2}\\ \\frac12\\int_0^tf''(W_s)\\,ds .$$\n\n理由分两层：\n\n- 由 `C10.1`，$\\sum(\\Delta W_i)^{2}\\to t$（二次变差），且 $f''(W_s)$ 沿轨道连续有界（紧集上），于是 $\\frac12\\sum f''(W_{t_i})(\\Delta W_i)^{2}$ 与 $\\frac12\\sum f''(W_{t_i})\\,h_i$ 之差趋于 $0$；\n- 后者是 $f''(W_s)$ 的 **Riemann 和** $\\to\\frac12\\int_0^tf''(W_s)\\,ds$。\n\n**这就是 $(dW)^{2}=dt$ 被使用的唯一一处**——它把随机和换成确定性的时间积分。\n\n**第四步：余项消失。** $\\sum|r_i|\\le\\max_i\\omega(|\\Delta W_i|)\\cdot\\sum(\\Delta W_i)^{2}$。由轨道一致连续，$\\max_i|\\Delta W_i|\\to0$ 从而 $\\max_i\\omega\\to0$；而 $\\sum(\\Delta W_i)^{2}\\to t$ 有界。故 $\\sum r_i\\to0$。理由：三阶变差 $\\to0$（见 `C10.1:qv.quantifiers` 第 6 行）。\n\n三步相加即得积分形式的 Itô 引理。\n\n**依赖链**：Taylor（第一步）→ Itô 积分定义（第二步）→ `C10.1` 二次变差（第三步）→ `C10.1` 三次变差/一致连续（第四步）。\n\n**易错点（四条）**：\n\n1. **把 $(dW)^{2}$ 直接替换成 $dt$ 就完事**。严格地说要经过第三步的 Riemann 和极限；$f''$ 不连续时这一步不成立；\n2. **$C^{2}$ 不能降到 $C^{1}$**。$f=|x|$ 时 $f''=2\\delta_0$，第三步没有意义，公式要多出一个**局部时**项（见 `C10.2:ito-formula.c1-fail`）；\n3. **忘了时依赖情形的 $\\partial_tf\\,dt$**。$f=f(t,x)$ 时 Taylor 要多一项 $\\partial_tf\\,\\Delta t$；\n4. **对两个随机积分的乘积套普通乘法**。正确做法是 Itô 的分部积分：\n   $d(XY)=X\\,dY+Y\\,dX+dX\\,dY$，其中 $dX\\,dY$ 用乘法表算（若 $dX=\\sigma_1dW$、$dY=\\sigma_2dW$，则 $dX\\,dY=\\sigma_1\\sigma_2\\,dt$）——**这一项就是「多出来的协变差」，与二次变差同源**。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito-formula.drop-second-order",
+      "type": "counterexample",
+      "subject": "ito-formula",
+      "title": "典型误用：照搬普通链式法则（f=x² 时 E[W_t²] 得 0 而不是 1）",
+      "keywords": [
+        "误用现场：写 d(W²) = 2W dW，忘了 +dt（或写作 dt 项丢了）",
+        "f=x²、t=1：正确 E[W_1²]=1，错误给 0，差整整 t",
+        "f=x⁴：正确 E[W_1⁴]=3（6∫₀¹s ds），错误给 0，差 3",
+        "一般地漏掉的是 ½∫₀ᵗf''(W_s)ds，量级与结论同阶而非高阶",
+        "自检：算完取期望，看鞅性（E∫H dW=0）是否还对得上",
+        "修补：写公式前先查乘法表 dW·dW=dt"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 380,
+        "line_end": 384
+      },
+      "fill_hint": "对应 quantifiers 表第 6 行；失效数值是 f=x² 的 1 vs 0 与 f=x⁴ 的 3 vs 0。",
+      "content": "**误用现场**：对 $W_t^{2}$ 求微分时写 $d(W_t^{2})=2W_t\\,dW_t$——普通链式法则的样子一模一样，只是少了 $dt$。\n\n**为什么错**（两步算给你看）。\n\n**第一例：$f(x)=x^{2}$。** 正确版本 $d(W^{2})=2W\\,dW+dt$，积分得\n\n$$W_t^{2}=2\\int_0^tW_s\\,dW_s+t\\quad\\Longrightarrow\\quad \\int_0^tW_s\\,dW_s=\\frac{W_t^{2}-t}{2}.$$\n\n取期望（$t=1$，$\\mathbb E[W_1^{2}]=1$）：\n\n- 正确：$\\mathbb E[W_1^{2}]=1$，且 $\\mathbb E[\\int_0^1W\\,dW]=\\frac12(1-1)=0$ ✅ 与鞅性一致；\n- 错误（丢 $+dt$）：$W_1^{2}=2\\int_0^1W\\,dW$，取期望得 $1=2\\mathbb E[\\int W\\,dW]=0$ —— **得到 $1=0$**。\n\n**这不是「差一点」，是推出矛盾。** 漏掉的量是 $\\int_0^t\\frac12f''ds=\\int_0^t1\\,ds=t$，$t=1$ 时漏掉 $\\approx1$【已核验:1|1】。\n\n**第二例：$f(x)=x^{4}$。** $f'=4x^{3}$、$f''=12x^{2}$，正确版本\n\n$$d(W^{4})=4W^{3}\\,dW+6W^{2}\\,dt\\quad\\Longrightarrow\\quad \\mathbb E[W_t^{4}]=6\\int_0^t\\mathbb E[W_s^{2}]\\,ds=6\\int_0^ts\\,ds=3t^{2}.$$\n\n- 正确：$\\mathbb E[W_1^{4}]=3$【已核验:3|6*0.5】（与高斯四阶矩 $3t^{2}$ 一致 ✅）；\n- 错误（丢二阶项）：$\\mathbb E[W_1^{4}]=0$ ❌。\n\n**漏掉 $3t^{2}$，$t=1$ 时是 $3$**——比结论本身还大（这里结论是 $3$，漏项也是 $3$：**全部结论都来自二阶项**）。\n\n**机制（一句话）**：漏掉的是\n\n$$\\frac12\\int_0^tf''(W_s)\\,ds,$$\n\n它的量级与结论**同阶**（因为 $(\\Delta W)^{2}\\sim dt$），不是高阶小量。普通微积分里能丢，是因为那里 $(\\Delta X)^{2}\\sim dt^{2}$。\n\n**修补动作**：\n\n1. **写微分前先查乘法表**：$dW\\cdot dW=dt$、$dW\\cdot dt=0$、$dt\\cdot dt=0$（见 `C10.1:qv.statement`）；\n2. **算完立刻取期望做鞅性自检**：凡是把一个 Itô 积分写成「随机部分 + 漂移」的形式，随机部分期望必须是 $0$；不为 $0$ 说明二阶项漏了；\n3. 记住两个锚点数值：$\\int_0^tW\\,dW=\\frac{W_t^{2}-t}{2}$（期望 $0$）与 $\\mathbb E[W_t^{4}]=3t^{2}$。",
+      "links": [
+        "C10.2",
+        "C10.1"
+      ],
+      "viz": {
+        "module": "ito-taylor",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "drop-second-order",
+          "f": "x**2",
+          "t_range": [
+            0,
+            3
+          ],
+          "curves": [
+            "t",
+            "0"
+          ],
+          "annotate": "E[W_t²] 的真值是 t（斜率 1），漏掉 ½f''dt 后得到恒为 0 的水平线"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito-formula.c1-fail",
+      "type": "counterexample",
+      "subject": "ito-formula",
+      "title": "典型误用：f 只有 C¹ 也套 Itô 引理（f=|x| 时漏掉局部时，差 0.7979）",
+      "keywords": [
+        "误用现场：f(x)=|x|、max(x,0) 这类只有 C¹ 的函数直接套公式",
+        "f=|x|：f''=2δ₀ 不是函数，天真取 f''≡0 得 d|W|=sgn(W)dW",
+        "取期望给 0，而真值 E|W₁| = √(2/π) ≈ 0.7979，差 0.7979",
+        "机制：二阶导数在 0 处是 2δ₀，累积成局部时 L_t⁰（Tanaka 公式）",
+        "修补：凸函数用 Tanaka/Itô–Meyer 公式补 L 项；或先光滑化再取极限"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 380,
+        "line_end": 384
+      },
+      "fill_hint": "对应 quantifiers 表第 5 行；失效数值是 E|W_1|=0.7979 与天真答案 0 的差（局部时的期望）。",
+      "content": "**误用现场**：金融里的 payoff 是 $(W_T-K)^{+}$，物理里有 $|x|$ 型势——这些都是**凸但非 $C^{2}$** 的函数。$f'$ 在拐点处跳变，$f''$ 是 Dirac（狄拉克）δ。\n\n**为什么错**：Itô 引理的证明（`C10.2:ito-formula.proof` 第三步）要用 $f''$ 的**连续性**把 $\\sum f''(W_{t_i})(\\Delta W_i)^{2}$ 换成 Riemann 和。$f''=2\\delta_0$ 时这一步完全没有意义。\n\n**算给你看**（$f(x)=|x|$，$t=1$）：\n\n- 天真版本：$f'(x)=\\mathrm{sgn}(x)$、$f''\\equiv0$（$x\\ne0$），于是 $d|W_t|=\\mathrm{sgn}(W_t)\\,dW_t$，取期望得 $\\mathbb E|W_1|=0$；\n- 真值：$|W_1|$ 是半正态分布，$\\mathbb E|W_1|=\\sqrt{2/\\pi}\\approx0.7979$【已核验:0.797884560803|sqrt(2/pi)】。\n\n**差 $\\approx0.7979$【已核验:0.797884560803|sqrt(2/pi)-0】——整整一个标准差量级，不是小修正。**\n\n**机制**：$|x|$ 的二阶导数在分布意义下是 $2\\delta_0$，正如二阶项 $\\frac12f''dt$ 会变成\n\n$$\\frac12\\int_0^t2\\delta_0(W_s)\\,ds=:L_t^{0}\\quad(\\text{局部时（local time）}),$$\n\n它衡量「$W$ 在 $0$ 附近逗留了多少时间」。于是正确的公式是 Tanaka 公式（田中公式）\n\n$$|W_t|=\\int_0^t\\mathrm{sgn}(W_s)\\,dW_s+L_t^{0}.$$\n\n取期望得 $\\mathbb E[L_t^{0}]=\\mathbb E|W_t|=\\sqrt{2t/\\pi}$，$t=1$ 时 $\\approx0.7979$【已核验:0.797884560803|sqrt(2/pi)】——**与上面漏掉的量完全一致**。\n\n**修补动作**：\n\n1. **凸函数**用 Itô--Meyer / Tanaka 公式：二阶项换成局部时（在拐点处累积）；\n2. **光滑化**：取 $f_\\varepsilon(x)=\\sqrt{x^{2}+\\varepsilon^{2}}$（$C^{\\infty}$），套 Itô 引理后再令 $\\varepsilon\\to0$，二阶项 $\\frac12\\int f_\\varepsilon''ds$ 收敛到局部时。$\\varepsilon=0.01$ 时 $f_\\varepsilon''(0)=1/\\varepsilon=100$【已核验:100|1/0.01】——**峰的高度按 $1/\\varepsilon$ 发散、宽度按 $\\varepsilon$ 收缩，面积守恒**，这就是 δ 的样子；\n3. **数值上**：$(x)^{+}$ 型的 payoff 在做希腊字母（Delta）对冲时，二阶项在 $x=K$ 处是一个尖峰，**网格必须覆盖它**，否则会系统性低估。\n\n**判断准则**：$f$ 有**拐点/折点**且过程会**反复穿过**该点（$W$ 一定会穿过每个点）→ 不能直接用 $C^{2}$ 版本的 Itô 引理。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.vs-stratonovich",
+      "type": "comparison",
+      "subject": "stratonovich",
+      "title": "分工：Itô vs Stratonovich（差 t/2，各在哪一层被需要）",
+      "keywords": [
+        "Itô：左端点，是鞅，E∫₀ᵗW dW = 0，链式法则要多 ½f''dt",
+        "Stratonovich：中点，保普通链式法则，但不是鞅（期望 t/2）",
+        "t=1：½(W²−1) vs ½W²，值差 0.5，期望差 0.5",
+        "转换：∫H∘dW = ∫H dW + ½⟨H,W⟩_t（H=W 时多 t/2）",
+        "GBM 对照：μ=0.1、σ=0.3、t=10 时期望 2.71828 vs 4.26311（差 1.5683 倍）",
+        "判据：不能预知未来 → Itô；光滑噪声极限 → Stratonovich"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 384
+      },
+      "fill_hint": "对照口径按「端点 ⟹ 是否鞅 ⟹ 链式法则形式」展开；GBM 的 1.5683 倍是把差别落到可查数值的关键。",
+      "content": "两者不是对错关系，是**两种约定**。选哪一个取决于模型从哪来。\n\n| | Itô（本单元） | Stratonovich（中点） |\n|---|---|---|\n| 求和取点 | 左端点 | 中点 |\n| $\\int_0^1W\\,dW$ | $\\frac{W_1^{2}-1}{2}$ | $\\frac{W_1^{2}}{2}$ |\n| 期望（$t=1$） | $\\approx0$【已核验:0|(1-1)/2】 | $\\approx0.5$【已核验:0.5|1/2】 |\n| **是鞅吗** | **✅**（与 `C4` 接得上） | ❌（有 $+\\frac t2$ 的漂移） |\n| 链式法则 | 修正版 $df=f'dW+\\frac12f''dt$ | **普通版** $df=f'\\circ dW$ |\n| 数值实现难度 | 直接用左端点，天然因果 | 需中点（要未来半步）或转成 Itô 再算 |\n| 典型出处 | 金融（不能预知未来）、滤波、鞅方法 | 物理（光滑噪声逼近）、流形上的 SDE |\n\n**差多少（两个数）**：\n\n- 值上：$\\frac12W_t^{2}$ 与 $\\frac12(W_t^{2}-t)$ 相差 $\\frac t2$；$t=1$ 时差 $\\approx0.5$【已核验:0.5|1/2】；\n- 转换公式：$\\displaystyle\\int_0^tH_s\\circ dW_s=\\int_0^tH_s\\,dW_s+\\frac12\\langle H,W\\rangle_t$。对 $H=W$：$\\langle W,W\\rangle_t=t$，故多 $\\frac t2$ ✅ 一致。\n\n**落到 SDE 上（差别有多大）**：$dX=\\mu X\\,dt+\\sigma X\\,dW$（Itô）与 $dX=\\mu X\\,dt+\\sigma X\\circ dW$（Stratonovich）在 $\\mu=0.1,\\sigma=0.3,t=10,X_0=1$ 下：\n\n| | Itô | Stratonovich |\n|---|---|---|\n| 解 | $X_0e^{(\\mu-\\sigma^{2}/2)t+\\sigma W_t}$ | $X_0e^{\\mu t+\\sigma W_t}$ |\n| $\\mathbb E[X_t]$ | $\\approx2.71828$【已核验:2.71828182846|exp(0.1*10)】 | $\\approx4.26311$【已核验:4.26311451517|exp((0.1+0.09/2)*10)】 |\n| 比值 | $1$ | $\\approx1.5683$【已核验:1.56831218549|exp((0.1+0.09/2)*10)/exp(0.1*10)】 |\n\n**判据（两问定选）**：\n\n1. **能否预知未来**？不能（`H$ 只能用过去信息）→ Itô；\n2. **模型是否来自光滑噪声的极限**？（`M5` 的朗之万方程里 $\\xi$ 是物理噪声的白噪声极限）→ 物理上是 Stratonovich，**转成 Itô 后再计算**（漂移加 $\\frac12\\sigma\\partial_x\\sigma$）。\n\n**常见错位**：\n\n- 在 Stratonovich 模型上套 Itô 引理（会漏掉 $\\frac12\\sigma\\sigma'$ 的漂移）；\n- 反过来在 Itô 模型上用普通链式法则（会漏掉 $\\frac12f''dt$）——**这是切片点名的 $90\\%$ 错误**；\n- 数值积分时用中点法却不改漂移项——等价于偷偷换成了 Stratonovich。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3",
+        "C4",
+        "M5"
+      ],
+      "viz": {
+        "module": "ito-vs-stratonovich",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "t": 1.0,
+          "w_range": [
+            -3,
+            3
+          ],
+          "curves": [
+            "0.5*(w**2-1)",
+            "0.5*w**2"
+          ],
+          "mark_gap": 0.5,
+          "annotate": "t=1 时 Itô 与 Stratonovich 的差恒为 0.5（即 t/2）"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.exp-martingale",
+      "type": "application",
+      "subject": "ito",
+      "title": "应用：指数鞅 exp(σW_t − σ²t/2) 与「补 σ²/2」的修正",
+      "keywords": [
+        "X_t = exp(σW_t − σ²t/2) 满足 dX = σX dW，故是鞅且 E[X_t] = X_0",
+        "忘了修正：Y_t = exp(σW_t) 的期望是 e^{σ²t/2}（σ=t=1 时 1.648721，偏 +64.87%）",
+        "σ=2、t=1 时修正因子 e² = 7.389056，量级差得更多",
+        "尖锐之处：X_t 是鞅（期望恒 1）却 a.s. 趋于 0（W_t/t → 0）",
+        "t=1、σ=1 时 X 的标准差 √(e−1) ≈ 1.311，均值被极少数大值撑住",
+        "用途：Girsanov 换测度、金融风险中性定价、指数倾斜重要性采样"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 385,
+        "line_end": 392
+      },
+      "fill_hint": "切片算例的展开；给出「忘了修正」的数值（1.6487 vs 1）与「鞅却 a.s.→0」的尖锐现象，接 C10.3 的期望 vs 典型。",
+      "content": "**切片算例**。令 $X_t=\\exp\\bigl(\\sigma W_t-\\frac{\\sigma^{2}}2t\\bigr)$，取 $f(x)=e^{x}$（$f'=f''=f$），用 Itô 引理：\n\n$$dX_t=X_t\\Bigl(\\sigma\\,dW_t-\\frac{\\sigma^{2}}2dt\\Bigr)+\\frac12X_t\\sigma^{2}dt=X_t\\,\\sigma\\,dW_t .$$\n\n**$dt$ 项恰好抵消**——所以 $X$ 是鞅，$\\mathbb E[X_t]=X_0=1$ 对一切 $t$ 成立。切片说这个「补 $\\frac{\\sigma^{2}}2$ 的修正项」在金融与统计物理里反复出现，原因就在这里：**它是让指数函数变成鞅的唯一配方**。\n\n**忘了修正会错多少**。取 $Y_t=e^{\\sigma W_t}$（漏掉 $-\\frac{\\sigma^{2}}2t$），由 Itô 引理 $dY=\\sigma Y\\,dW+\\frac12\\sigma^{2}Y\\,dt$，取期望：\n\n$$\\mathbb E[Y_t]=e^{\\sigma^{2}t/2}.$$\n\n- $\\sigma=1,\\ t=1$：$\\mathbb E[Y_1]=e^{1/2}\\approx1.64872$【已核验:1.6487212707|exp(0.5)】——而正确的 $X$ 给 $1$，**高估 $\\approx0.64872$【已核验:0.6487212707|exp(0.5)-1】，即 $+64.87\\%$**；\n- $\\sigma=2,\\ t=1$：$\\mathbb E[Y_1]=e^{2}\\approx7.38906$【已核验:7.38905609893|exp(2*2*1/2)】，高估 $6.39$ 倍——**$\\sigma$ 一大，误差是指数级的**。\n\n**更尖锐的现象（值得记）**：$X_t$ 是鞅、期望恒为 $1$，但\n\n$$X_t=\\exp\\Bigl(t\\bigl(\\sigma\\tfrac{W_t}{t}-\\tfrac{\\sigma^{2}}2\\bigr)\\Bigr)\\ \\xrightarrow{\\text{a.s.}}\\ 0,$$\n\n因为 $\\frac{W_t}{t}\\to0$ a.s.（`C6` 的大数律型结论），指数上是 $-\\frac{\\sigma^{2}}2t\\to-\\infty$。**「期望恒为 $1$」与「几乎所有轨道趋于 $0$」同时成立**：均值被极少数极大的轨道撑住。$\\sigma=1,t=1$ 时 $X_1$ 的标准差 $=\\sqrt{\\mathbb E[X_1^{2}]-1}=\\sqrt{e^{1}-1}\\approx1.311$【已核验:1.31083249443|sqrt(exp(1)-1)】——比均值 $1$ 还大。\n\n**这正是 `C10.3` 要讲的「期望 vs 典型」的原型**，也是切片在 `C10.3` 里说「这是 `C6` 中 a.s. 收敛与 $L^{1}$ 收敛方向不同的另一种面孔」的同一个现象。\n\n**它用在哪**：\n\n1. **Girsanov 换测度**：给鞅乘上 $X_t$ 就能「平移漂移」，是风险中性定价与重要性采样的共同骨架（与 `C9.1`/`C9.2` 的指数倾斜同源）；\n2. **金融**：Black--Scholes 里的贴现股价是鞅，正是这个 $X$；\n3. **统计物理**：配分函数型的指数矩母函数 $\\mathbb E[e^{\\sigma W_t}]=e^{\\sigma^{2}t/2}$ 反复出现。\n\n**红线提示**：凡是要「让某个指数型量成为鞅」，第一反应就是**补 $-\\frac{\\sigma^{2}}2t$**；补错了符号（写成 $+\\frac{\\sigma^{2}}2t$）会让期望变成 $e^{-\\sigma^{2}t}$（$\\sigma=t=1$ 时 $\\approx0.367879$【已核验:0.367879441171|exp(-1)】），同样不是鞅。",
+      "links": [
+        "C10.2",
+        "C10.3",
+        "C4",
+        "C9.1",
+        "C9.2",
+        "C6.5"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要模拟大量指数鞅轨道才能同时显示「样本均值≈1」与「绝大多数轨道衰减到 0」，是长时程对拍，前端不适合直渲。",
+        "params_hint": {
+          "sigma": 1.0,
+          "t_max": 5.0,
+          "paths": 200,
+          "show": [
+            "轨道束",
+            "样本均值线（≈1）",
+            "中位数轨道（→0）"
+          ],
+          "annotate": "均值恒 1 而典型轨道 →0：少数极端轨道撑住均值"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.application",
+      "type": "application",
+      "subject": "ito",
+      "title": "应用：Itô 积分与 Itô 引理在哪些层被消费",
+      "keywords": [
+        "第一层：C10.3 的 SDE——解 GBM 全靠 Itô 引理（−σ²/2 就是修正项）",
+        "第二层：C10.3 的 Fokker–Planck——½∂_xx(σ²p) 由 ½f''dt 经分部积分搬来",
+        "第三层：M5 朗之万方程——物理上是 Stratonovich，计算时转 Itô",
+        "第四层：C4 鞅论——Itô 积分是「连续时间鞅」的标准来源",
+        "数值层：P9.1 分部积分是把 Itô 公式搬到密度上的工具"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 392
+      },
+      "fill_hint": "按「在哪一层被用」组织；每条 links 指向被服务/依赖章节并说明「为什么需要它」。",
+      "content": "**第一层 · SDE 求解（`C10.3`）**。几何布朗运动 $dX=\\mu X\\,dt+\\sigma X\\,dW$ 的解\n\n$$X_t=X_0\\exp\\Bigl(\\Bigl(\\mu-\\frac{\\sigma^{2}}2\\Bigr)t+\\sigma W_t\\Bigr)$$\n\n**完全**是用 Itô 引理（对 $\\ln X$）推出来的；指数上那个 $-\\frac{\\sigma^{2}}2$ 就是本单元的二阶项。**没有 Itô 引理，连 GBM 的解都写不出来。**\n\n**第二层 · Fokker--Planck（`C10.3`、`P9.1`）**。对任意测试函数 $\\varphi$ 用 Itô 引理取期望，再用**分部积分**把导数从 $\\varphi$ 移到密度 $p$ 上（这正是 `P9.1` 的能量法发动机），得到\n\n$$\\partial_tp=-\\partial_x(\\mu p)+\\frac12\\partial_{xx}(\\sigma^{2}p).$$\n\n右端第二项里那个 $\\frac12$，就是本单元 $\\frac12f''dt$ 的同一份账。\n\n**第三层 · 朗之万方程与分子动力学（`M5`）**。$m\\ddot x=-\\gamma\\dot x+\\sqrt{2\\gamma k_BT}\\,\\xi(t)+F(x)$ 中 $\\xi$ 是物理白噪声（光滑噪声的极限），严格说是 Stratonovich；转成 Itô 计算时漂移要补 $\\frac12\\sigma\\sigma'$。写错这一项，模拟出的平衡分布就不再是 Boltzmann 分布 $e^{-V/k_BT}$。\n\n**第四层 · 鞅论（`C4`）**。Itô 积分是**连续时间鞅**的标准生成器：$\\int H\\,dW$ 是鞅、$W_t^{2}-t$ 是鞅、指数鞅是鞅。反过来，`C4` 的可选停时与鞅收敛定理给这些积分的极限行为提供语言（`C10.2:ito.exp-martingale` 的「鞅却 a.s.→0」就是一例）。\n\n**下游 · 流体与 CG（`I1`、`H8.1`）**。随机扰动下的被动标量、湍流建模里的随机输运，其密度演化都是 Fokker--Planck 型；`H8.1` 里给速度场加噪声时，若用 Stratonovich 写物理模型却按 Itô 实现（或反之），漂移会差 $\\frac12\\sigma\\sigma'$。\n\n**依赖方向**：本单元**依赖** `C10.1`（$dW^{2}=dt$）、`C4`（鞅的语言）、`C5`（$W$ 的定义）、`P9.1`（分部积分，在 `C10.3` 用上）；**被** `C10.3`、`M5`、`H8.1` 消费。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3",
+        "C4",
+        "C5",
+        "P9.1",
+        "M5",
+        "H8.1",
+        "I1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.probe1",
+      "type": "probe",
+      "subject": "ito",
+      "title": "检验题：∫₀¹W dW 的两个版本与 Itô 等距",
+      "keywords": [
+        "第 1 题：用 f=x² 推出 ∫₀ᵗW dW，并验证期望为 0",
+        "第 2 题：用 Itô 等距算 E[(∫₀¹W dW)²]（答：0.5）",
+        "第 3 题：改用右端点，极限与期望各是多少（答：期望 1）",
+        "第 4 题：H=(1−s)⁻¹ 时 t=0.99 的方差是多少（答：99）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 384
+      },
+      "fill_hint": "从 quantifiers 表第 2、3 行变来的检验题；四问覆盖 Itô 公式、等距、端点与平方可积。",
+      "content": "**题**：\n\n1. 用 Itô 引理（取 $f(x)=x^{2}$）推出 $\\int_0^tW_s\\,dW_s$ 的闭式，并验证它的期望为 $0$；\n2. 用 Itô 等距算 $\\mathbb E\\big[\\big(\\int_0^1W_s\\,dW_s\\big)^{2}\\big]$，再用第 1 题的闭式独立验算一遍；\n3. 若改用**右端点**求和，极限是什么？期望是多少？与 Itô 差多少？\n4. 取 $H_s=\\frac1{1-s}$（$[0,1)$ 上），求 $\\mathrm{Var}\\big[\\int_0^tH\\,dW\\big]$ 在 $t=0.99$ 时的值，并说明积分在 $t\\to1$ 时怎么了。\n\n**答案**：\n\n1. $d(W^{2})=2W\\,dW+dt\\Rightarrow\\int_0^tW\\,dW=\\frac{W_t^{2}-t}{2}$；$\\mathbb E=\\frac12(\\mathbb E[W_t^{2}]-t)=\\frac12(t-t)=0$ ✅。\n2. 等距：$\\int_0^1\\mathbb E[W_s^{2}]ds=\\int_0^1s\\,ds\\approx0.5$【已核验:0.5|0.5】；闭式：$\\frac14\\mathbb E[(W_1^{2}-1)^{2}]=\\frac14(3-2+1)\\approx0.5$【已核验:0.5|0.25*(3-2*1+1)】。两种算法一致 ✅。\n3. 右端点给 $\\frac{W_t^{2}+t}{2}$；$t=1$ 时期望 $\\approx1$【已核验:1|(1+1)/2】；与 Itô 的期望相差 $\\approx1$【已核验:1|(1+1)/2-(1-1)/2】，两个极限值相差 $t=1$。\n4. $\\mathrm{Var}=\\int_0^t(1-s)^{-2}ds=\\frac1{1-t}-1$；$t=0.99$ 时 $\\approx99$【已核验:99|1/(1-0.99)-1】；$t\\to1$ 时方差 $\\to\\infty$，**积分不再有 $L^{2}$ 极限**（只能用停时局部化救）。\n\n**易错点**：\n\n- 第 2 题把 $\\mathbb E[W_s^{2}]$ 写成 $1$（写成 $s$ 才对——$W_s\\sim N(0,s)$）；\n- 第 3 题答「只是精度差别」——不是，两个极限是**不同的随机变量**，差 $t$；\n- 第 4 题答「方差有界所以没问题」——方差随 $t\\to1$ 发散，说明平方可积条件是**硬**的。",
+      "links": [
+        "C10.2",
+        "C10.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:ito.probe2",
+      "type": "probe",
+      "subject": "ito-formula",
+      "title": "检验题：指数鞅的修正项与「忘了补 σ²/2」错多少",
+      "keywords": [
+        "第 1 题：对 X=exp(σW−σ²t/2) 用 Itô 引理，验证 dX = σX dW",
+        "第 2 题：σ=t=1 时 E[e^{W_1}] 是多少（答：1.648721）",
+        "第 3 题：f(x)=x⁴ 时 E[W_1⁴] 是多少，漏掉二阶项会得什么（3 vs 0）",
+        "第 4 题：σ=1、t=1 时指数鞅的标准差是多少（答：1.311）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 380,
+        "line_end": 392
+      },
+      "fill_hint": "从 quantifiers 表第 6 行与切片算例变来的检验题；第 2、4 问给出「期望 vs 典型」的数值。",
+      "content": "**题**：\n\n1. 设 $X_t=\\exp(\\sigma W_t-\\frac{\\sigma^{2}}2t)$，用 Itô 引理写出 $dX_t$ 并验证 $dt$ 项抵消；\n2. $\\sigma=1,\\ t=1$ 时 $\\mathbb E\\big[e^{W_1}\\big]$ 等于多少？与正确的鞅 $X_1$ 的期望相差多少（相对）？\n3. 对 $f(x)=x^{4}$ 用 Itô 引理求 $\\mathbb E[W_1^{4}]$；若漏掉二阶项会得到什么？\n4. $\\sigma=1,\\ t=1$ 时 $X_1$ 的标准差是多少？这个数说明了什么？\n\n**答案**：\n\n1. $f(x)=e^{x}$：$dX=X(\\sigma\\,dW-\\frac{\\sigma^{2}}2dt)+\\frac12X\\sigma^{2}dt=X\\sigma\\,dW$。$dt$ 项为 $-\\frac{\\sigma^{2}}2+\\frac{\\sigma^{2}}2=0$ ✅，故 $X$ 是鞅，$\\mathbb E[X_t]=X_0=1$。\n2. $\\mathbb E[e^{W_1}]=e^{\\sigma^{2}t/2}=e^{0.5}\\approx1.648721$【已核验:1.6487212707|exp(0.5)】；与 $1$ 相比高估 $\\approx0.648721$【已核验:0.6487212707|exp(0.5)-1】，即 $+64.87\\%$。\n3. $d(W^{4})=4W^{3}dW+6W^{2}dt\\Rightarrow\\mathbb E[W_1^{4}]=6\\int_0^1s\\,ds\\approx3$【已核验:3|6*0.5】；漏掉二阶项得 $0$（与高斯四阶矩 $3$ 差整整 $3$）。\n4. $\\mathbb E[X_1^{2}]=e^{\\sigma^{2}t}=e$（一般地 $\\mathbb E[X_t^{2}]=e^{\\sigma^{2}t}$），故 $\\mathrm{sd}=\\sqrt{e-1}\\approx1.311$【已核验:1.31083249443|sqrt(exp(1)-1)】。**标准差比均值（$1$）还大**，说明均值由极少数极大的轨道撑住——这与「$X_t\\to0$ a.s.」并不矛盾，是 `C10.3`「期望 vs 典型」的原型。\n\n**易错点**：\n\n- 第 1 题把 $-\\frac{\\sigma^{2}}2$ 写成 $+\\frac{\\sigma^{2}}2$：$dt$ 项变成 $+\\sigma^{2}$，不抵消，期望变 $e^{-\\sigma^{2}t}$（$\\sigma=t=1$ 时 $\\approx0.367879$【已核验:0.367879441171|exp(-1)】），不是鞅；\n- 第 2 题答「$1$」——那是**补了修正**的 $X_1$；$e^{W_1}$ 本身没补，期望是 $e^{0.5}$；\n- 第 4 题觉得「鞅的期望恒 $1$ 所以取值集中在 $1$ 附近」——恰恰相反，分布越来越偏、越来越尖。",
+      "links": [
+        "C10.2",
+        "C10.3",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "C10.2 一页总表：定义 × 性质 × 公式 × 常见翻车",
+      "keywords": [
+        "Itô 积分：左端点 + L² 极限，条件是 H 适应且平方可积",
+        "鞅性 E∫H dW = 0 与 Itô 等距 E[(∫H dW)²] = E∫H²ds",
+        "Itô 引理：df = f'dW + ½f''dt，条件是 f ∈ C²",
+        "翻车一：端点选错 → 差 t/2（Stratonovich）",
+        "翻车二：漏二阶项 → f=x² 时推出 1=0",
+        "翻车三：f 非 C² → 漏掉局部时（f=|x| 差 0.7979）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 392
+      },
+      "fill_hint": "单元级总表；把两条主线（积分定义 / 引理）与三种翻车压成一张卡。",
+      "content": "C10.2 一页总表。切片两段（Itô 积分 + Itô 引理）展开如下。\n\n| 条目 | 内容 | 条件 | 翻车时的具体数值 |\n|---|---|---|---|\n| **Itô 积分** | $\\int_0^tH\\,dW=\\lim\\sum H_{t_i}\\Delta W_i$（左端点） | $H$ 适应、$\\mathbb E\\int H^{2}ds<\\infty$ | 取右端点：差 $t$；$t=1$ 时 $\\frac{W_1^{2}+1}{2}$ vs $\\frac{W_1^{2}-1}{2}$ |\n| **鞅性** | $\\mathbb E\\int_0^tH\\,dW=0$ | $H$ 适应 + 左端点（独立性） | $H\\equiv W_1$（非适应）：期望变 $1$ 而不是 $0$ |\n| **Itô 等距** | $\\mathbb E[(\\int H dW)^{2}]=\\mathbb E\\int H^{2}ds$ | 同上 | $H=W,t=1$：两侧都是 $0.5$ |\n| **Itô 引理** | $df=f'dW+\\frac12f''dt$ | $f\\in C^{2}$ | $f=|x|$：漏局部时，$\\mathbb E|W_1|=0.7979$ vs $0$ |\n| **二阶项来源** | $\\frac12f''\\,(dW)^{2}=\\frac12f''dt$ | `C10.1` 的二次变差 | $f=x^{2}$：漏掉它推出 $1=0$ |\n| **指数鞅** | $X=e^{\\sigma W-\\sigma^{2}t/2}$，$dX=\\sigma X\\,dW$ | $f=e^{x}\\in C^{2}$ | 忘修正：$\\mathbb E[e^{W_1}]=1.648721$ vs $1$（$+64.87\\%$） |\n\n**单元的两句话**：\n\n1. **左端点 ⟹ 独立 ⟹ 鞅**——Itô 积分的全部设计目标就是「不能预知未来」；\n2. **$\\frac12f''dt$ 完全来自 $dW^{2}=dt$**——随机分析比普通微积分多出来的唯一一项。\n\n**三种翻车，一眼识别**：\n\n- 端点选错 → 检查求和式里是 $H_{t_i}$ 还是 $H_{t_{i+1}}$；\n- 漏二阶项 → 算完取期望，看鞅性是否还对得上（$\\mathbb E[\\text{Itô 积分}]$ 必须为 $0$）；\n- $f$ 不够光滑 → 看 $f$ 有没有折点（$|x|$、$(x)^{+}$），有就要用 Tanaka/局部时。\n\n**与相邻单元**：`C10.1` 给 $dW^{2}=dt$（本单元二阶项的来源）；`C10.3` 用本单元解 SDE 并推出 Fokker--Planck；`C4` 提供鞅的语言。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C10.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "C10.2 服务的下游章节（一条一句）",
+      "keywords": [
+        "C10.3：GBM 的 −σ²/2 与 Fokker–Planck 的 ½∂_xx(σ²p) 都出自本单元",
+        "C10.3 的「期望 vs 典型」：原型就是指数鞅（期望 1，轨道 a.s.→0）",
+        "M5：朗之万方程物理上是 Stratonovich，转 Itô 要补 ½σσ'",
+        "C4：Itô 积分是连续时间鞅的标准来源（W_t²−t、指数鞅）",
+        "H8.1/I1：加随机扰动时若解释不一致，漂移会差 ½σσ'",
+        "C9.1/C9.2：指数倾斜（Girsanov）与重要性采样共用指数鞅的技巧"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 373,
+        "line_end": 392
+      },
+      "fill_hint": "单元级应用词条；每条给「为什么需要它」，依赖方向分列。",
+      "content": "**下游清单**（按依赖强度排序）。\n\n- **`C10.3` SDE 与 Fokker--Planck**：唯一**直接**下游，且被消费两次——(i) 解 GBM 时对 $\\ln X$ 用 Itô 引理，指数上多出 $-\\frac{\\sigma^{2}}2$；(ii) 推导 Fokker--Planck 时对测试函数用 Itô 引理再分部积分（`P9.1`），得到 $\\frac12\\partial_{xx}(\\sigma^{2}p)$。**两个 $\\frac12$ 是同一份账。**\n- **`C4` 鞅论**：Itô 积分是构造连续时间鞅的标准机器（$W_t$、$W_t^{2}-t$、指数鞅）；反过来 `C4` 的可选停时/收敛定理解释这些鞅的极限行为（例如指数鞅 a.s.$\\to0$ 而期望恒 $1$）。\n- **`M5` 朗之万方程**：物理噪声是白噪声极限（Stratonovich），实现时要转成 Itô：漂移补 $\\frac12\\sigma\\sigma'$；漏了它，模拟的平衡分布不再是 Boltzmann 分布。\n- **`C9.1` / `C9.2` 蒙特卡洛**：指数倾斜（exponential tilting）与 Girsanov 换测度共用本单元的指数鞅；重要性采样的「最优提议 $\\propto|f|$」与「把漂移平移掉」是同一思路的两面。\n- **`H8.1` / `I1`**：给流体/烟雾模拟加随机扰动时，写模型的解释与实现的解释必须一致，否则漂移差 $\\frac12\\sigma\\sigma'$，表现为「数值耗散与理论不符」。\n\n**依赖方向**：本单元**依赖** `C10.1`（二次变差 $dW^{2}=dt$）、`C5`（$W$ 的定义）、`C4`（鞅）、`P9.1`（分部积分，在 `C10.3` 用上）。\n\n**一条自检问句**（触发器）：**只要对随机过程做「求导/链式法则」，立刻补一句 $+ \\frac12(\\text{二阶项})$**，然后取期望验证鞅性（随机部分期望必须为 $0$）。两步做完，Itô 类的错误基本绝迹。",
+      "links": [
+        "C10.2",
+        "C10.1",
+        "C10.3",
+        "C4",
+        "C5",
+        "C9.1",
+        "C9.2",
+        "P9.1",
+        "M5",
+        "H8.1",
+        "I1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,597 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C7.3",
+  "chapter": "C7",
+  "title": "中心极限定理（CLT）",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 219,
+    "line_end": 246,
+    "anchor": "notebook/C_partial.tex:219"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C7.3:clt.quantifiers",
+      "type": "comparison",
+      "subject": "clt",
+      "title": "CLT 的七条限定词：逐条拆掉看结论变成什么",
+      "keywords": [
+        "① iid：去掉独立性，完全相关时标准化量的标准差是 √n = 10 而不是 1",
+        "② 同分布：不同分布需改走 Lindeberg 三角阵列（拓展条目）",
+        "③ E X = μ 有限：均值不存在时连「中心化」都无从谈起",
+        "④ 0 < Var = σ² < ∞：Cauchy 的标准化和不收敛，P(|·|≤1) 只有 0.0634510",
+        "⑤ 缩放是 √n 不是 n：误用 n 缩放，P(|·|≤1) 从 0.682689 掉到 0.0796557",
+        "⑥ 结论是依分布收敛（不是依概率、更不是 a.s.）",
+        "⑦ 极限在 0 处连续（Lévy 连续性定理的唯一付费项，C7.1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 221,
+        "line_end": 229
+      },
+      "fill_hint": "七行表把切片 221-222 的一行定理拆开；①④⑤三行各有独立词条展开（no-independence / heavy-tail / wrong-scaling），②③⑥⑦为补充行。",
+      "content": "切片用一个定理陈述给出 CLT（Lévy--Lindeberg）：$X_n$ iid、$\\mathbb EX_1=\\mu$、$\\mathrm{Var}X_1=\\sigma^{2}\\in(0,\\infty)$ ⟹ $\\sqrt n\\frac{\\bar X_n-\\mu}{\\sigma}\\xrightarrow{\\ d\\ }N(0,1)$。这一行里藏着七个限定词，逐条问「去掉会怎样」。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **独立** | $X_i\\equiv Z$（同一个 $\\mathrm{Bernoulli}(1/2)$）：$\\bar X_n=Z$，故 $\\sqrt n\\frac{\\bar X_n-\\mu}{\\sigma}=\\sqrt n\\frac{Z-\\mu}{\\sigma}$，标准差 $=\\sqrt n$，取 $n=100$ 得 $10$【已核验:10|sqrt(100)】而不是 $1$ | 分布随 $n$ 越摊越开，**根本没有极限**；$\\mathbb P(\\lvert\\cdot\\rvert\\le1)$ 真值 $=0$，而 CLT 预测 $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | **不能去**。可弱化为「弱相关」（mixing / 鞅差序列），但每次都要另付一套条件 |\n| ② **同分布** | $X_i$ 独立但方差逐个暴涨（如第 $i$ 个取 $\\pm i$） | 单个变量可能主导整个和，极限不是正态 | **可放宽**：改走 Lindeberg--Feller 三角阵列（见 `C7.3:clt.extension`） |\n| ③ $\\mathbb E X_1=\\mu<\\infty$ | Cauchy 分布：均值无定义，$\\bar X_n-\\mu$ 这个式子本身写不出来 | 中心化无从定义 | 不能去。但**只要一阶矩存在就够**（二阶矩是下一行的要求） |\n| ④ $\\mathrm{Var}X_1=\\sigma^{2}\\in(0,\\infty)$ | Cauchy（$\\sigma^{2}=\\infty$）：$\\bar X_n$ 仍服从 Cauchy，$\\sqrt n\\,\\bar X_n$ 只是把尺度放大 $\\sqrt n$ 倍；$n=100$ 时 $\\mathbb P(\\lvert\\sqrt n\\bar X_n\\rvert\\le1)=\\frac2\\pi\\arctan\\frac1{\\sqrt n}\\approx0.0634510$【已核验:0.0634510348616|(2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,10000))】，而 CLT 预测 $0.682689$，**差 $10.76$ 倍**【已核验:10.7593121787|erf(1/sqrt(2))/((2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,10000)))】 | 标准化量不收敛到任何非退化分布 | **不能去**。方差无穷时极限是别的**稳定分布**（$\\alpha<2$），见 `C7.3:clt.extension` |\n| ⑤ 缩放是 $\\sqrt n$ | 误用 $n$：$n(\\bar X_n-\\mu)/\\sigma$ 的标准差 $=\\sqrt n$，$n=100$ 时 $\\mathbb P(\\lvert\\cdot\\rvert\\le1)=\\mathrm{erf}(1/\\sqrt{200})\\approx0.0796557$【已核验:0.0796556745541|erf(1/sqrt(200))】，而不是 $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | 波动被放大 $\\sqrt n$ 倍，「$\\pm1.96$ 置信区间」完全失效 | 不能改。$\\sqrt n$ 来自 $\\mathrm{Var}(\\bar X_n)=\\sigma^{2}/n$ |\n| ⑥ 结论是**依分布**收敛 | 不要写成 $\\bar X_n-\\mu\\xrightarrow{\\mathbb P}0$ 之外的东西：$\\frac{\\sqrt n(\\bar X_n-\\mu)}{\\sigma}$ 本身**不依概率收敛**（它永远在波动），收敛的是它的**分布函数** | 若误当成 a.s. 收敛，会推出「样本均值 eventually 落在 $\\mu\\pm\\sigma/\\sqrt n$」这种假命题 | 不能加强（见下） |\n| ⑦ 极限特征函数在 $0$ 处连续 | `C7.1` 的 $N(0,n)$ 例：$\\varphi_n\\to\\mathbf 1_{\\{t=0\\}}$ 不连续，无弱极限 | 连续性定理失效，算出的极限函数不对应任何分布 | 不能去。但本定理里极限是 $e^{-t^{2}/2}$，**天然连续**，所以这条白送 |\n\n**这张表怎么用**：拿到一个「用正态近似误差」的场景，先扫七行——**最容易欠费的是①（样本其实相关）与④（分布重尾）**，这两条在渲染与金融数据里都常见，且都不会给出任何肉眼可见的警告。\n\n**依赖（切片明示）**：本定理依赖 `C7.1` 的特征函数三条性质（线性变换、矩-导数、卷积变乘法 + 连续性定理）、`C7.2` 的正态算例（认出 $e^{-t^{2}/2}$）、`P7.1` 的 Maclaurin 表、以及 `P4.3` 的 $\\big(1+\\frac xn\\big)^{n}\\to e^{x}$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C6.5",
+        "P4.3",
+        "P7.1"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要对 n=10..10⁵ 跑大量样本并画标准化和的经验分布 vs N(0,1) 的叠加（含重尾/相关两种失效对照），属长时程蒙特卡洛对拍。",
+        "params_hint": {
+          "modes": [
+            "hist-vs-normal",
+            "tail-failure",
+            "correlated-failure"
+          ],
+          "distributions": [
+            "bernoulli",
+            "uniform",
+            "exponential",
+            "cauchy"
+          ],
+          "n_values": [
+            10,
+            100,
+            1000
+          ],
+          "n_samples": 20000,
+          "show": "标准化和的经验密度 + N(0,1) 密度曲线 + 尾部失效放大图"
+        }
+      }
+    },
+    {
+      "id": "C7.3:clt.no-independence",
+      "type": "counterexample",
+      "subject": "clt",
+      "title": "反例：样本完全相关（标准差是 √n 不是 1，n=100 时差 10 倍）",
+      "keywords": [
+        "构造：X_i ≡ Z（同一个 Bernoulli(1/2)），μ = 0.5、σ = 0.5",
+        "真值：√n(X̄−μ)/σ = √n(Z−0.5)/0.5 只取 ±√n 两值，n=100 即 ±10",
+        "CLT 预测：标准正态 ⟹ P(|·| ≤ 1) ≈ 0.682689，真值是 0",
+        "机制：Var(X̄) = σ² 而不是 σ²/n，因为协方差项全在",
+        "现实现场：同一噪声源驱动的数据、时间序列相邻项、MCMC 的样本（C8.1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 221,
+        "line_end": 222
+      },
+      "fill_hint": "对应 quantifiers 表第①行；失效数值聚焦「标准差 √n=10 vs 1」与「P(|·|≤1) 0 vs 0.682689」，方差展开说明协方差吃掉了 √n。",
+      "content": "**误用现场**：看到「$n$ 个样本求平均」就套 $\\sqrt n(\\bar X_n-\\mu)/\\sigma\\approx N(0,1)$，却没检查这 $n$ 个样本**是否独立**。切片定理的第一个词就是「独立同分布」。\n\n**构造**：令 $X_1=X_2=\\cdots=X_n\\equiv Z$，其中 $Z\\sim\\mathrm{Bernoulli}(1/2)$（$\\mu=0.5$，$\\sigma=0.5$）。则 $\\bar X_n=Z$，于是\n\n$$\\sqrt n\\,\\frac{\\bar X_n-\\mu}{\\sigma}=\\sqrt n\\,\\frac{Z-0.5}{0.5}=\\pm\\sqrt n .$$\n\n**具体数值（$n=100$）**：\n\n| 量 | 真值 | CLT 预测 | 失效数值 |\n|---|---|---|---|\n| 标准化量的标准差 | $\\sqrt{100}=10$【已核验:10|sqrt(100)】 | $1$ | 高估/被高估 $10$ 倍 |\n| 取值集合 | $\\{-10,\\ +10\\}$（各 $1/2$） | 全实轴（连续密度） | 离散 vs 连续，形态完全不同 |\n| $\\mathbb P(\\lvert\\cdot\\rvert\\le1)$ | $0$ | $\\mathrm{erf}(1/\\sqrt2)\\approx0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | 差 $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))-0】 |\n| $\\mathbb P(\\lvert\\cdot\\rvert\\le1.96)$ | $0$ | $\\approx0.950004$【已核验:0.950004209704|erf(1.96/sqrt(2))】 | 差 $0.950004$ |\n\n**机制（方差算给你看）**：\n\n$$\\mathrm{Var}(\\bar X_n)=\\frac1{n^{2}}\\Bigl[\\sum_i\\mathrm{Var}(X_i)+2\\sum_{i<j}\\mathrm{Cov}(X_i,X_j)\\Bigr].$$\n\n独立时协方差全为 $0$，得 $\\sigma^{2}/n$；本例 $X_i\\equiv Z$ 时 $\\mathrm{Cov}(X_i,X_j)=\\mathrm{Var}(Z)=\\sigma^{2}$，故\n\n$$\\mathrm{Var}(\\bar X_n)=\\frac1{n^{2}}\\bigl[n\\sigma^{2}+n(n-1)\\sigma^{2}\\bigr]=\\sigma^{2}\\quad(\\text{不是 }\\sigma^{2}/n).$$\n\n**$\\sqrt n$ 的加速完全被协方差吃掉了**——$n$ 个「样本」其实只携带 $1$ 个样本的信息，方差压根不下降。这就是「$\\sqrt n$ 缩放」的全部来处，也是它失效的方式。\n\n**为什么这条在渲染与统计里最常见**：\n\n1. **MCMC 样本**（`C8.1`、`C8.2`）：样本强相关，方差是 $\\sigma^{2}\\tau_{\\rm int}/n$ 而不是 $\\sigma^{2}/n$；把 $N$ 步 MCMC 当 $N$ 个独立样本报误差，会**低估方差 $\\tau_{\\rm int}$ 倍**；\n2. **时间序列相邻项**、**同一随机数种子驱动的多次估计**、**同一张贴图的相邻像素**（空间相关）——都不是独立样本。\n\n**修补动作**：\n\n- 能用独立样本就用（重要性采样、`H4` 的蒙特卡洛）；不能就**估自相关时间** $\\tau_{\\rm int}$，把 $n$ 换成 $n/\\tau_{\\rm int}$（即「有效样本量」）；\n- 弱相关情形有 CLT 的 mixing 版本与鞅差 CLT，但每次都要另付条件（`C7.3:clt.extension`）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.3",
+        "C8.1",
+        "C8.2",
+        "H4"
+      ]
+    },
+    {
+      "id": "C7.3:clt.heavy-tail",
+      "type": "counterexample",
+      "subject": "clt",
+      "title": "反例：方差无穷（Cauchy 的标准化和不收敛，n=100 时差 10.76 倍）",
+      "keywords": [
+        "构造：X_i iid 标准 Cauchy，φ(t) = e^{−|t|}（C7.1 速查表）",
+        "关键：X̄_n 仍服从标准 Cauchy（特征函数 [e^{−|t|/n}]^n = e^{−|t|}）",
+        "于是 √n X̄_n 的尺度被放大 √n：P(|√n X̄_n| ≤ 1) = (2/π)arctan(1/√n)",
+        "n=100：真值 0.0634510 而 CLT 预测 0.682689，差 10.76 倍",
+        "修补：重尾时极限是 α < 2 的稳定分布，不是正态"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 221,
+        "line_end": 229
+      },
+      "fill_hint": "对应 quantifiers 表第④行；核心是「平均对 Cauchy 无效」的特征函数一行证明 + n=10/100/10000 三档数值对拍，均带待核验。",
+      "content": "**误用现场**：看到「样本量很大」就认为「均值近似正态」，却没检查**方差是否有限**。切片定理写的是 $\\mathrm{Var}X_1=\\sigma^{2}\\in(0,\\infty)$——括号里的 $\\infty$ 是明确排除掉的。\n\n**构造**：$X_i$ iid 标准 Cauchy（密度 $\\frac1{\\pi(1+x^{2})}$）。由 `C7.1` 速查表，$\\varphi_X(t)=e^{-\\lvert t\\rvert}$。\n\n**第一步（Cauchy 对求平均免疫）**：由 `C7.1` 的线性变换性质与卷积变乘法，\n\n$$\\varphi_{\\bar X_n}(t)=\\Bigl[\\varphi_X\\Bigl(\\frac tn\\Bigr)\\Bigr]^{n}=\\Bigl[e^{-\\lvert t\\rvert/n}\\Bigr]^{n}=e^{-\\lvert t\\rvert}=\\varphi_X(t).$$\n\n也就是说 $\\bar X_n$ 与单个 $X_1$ **同分布**——**平均一百个 Cauchy 得到的还是 Cauchy，一点都不集中**。这是与正态最刺眼的对比：$N(0,1)$ 的平均是 $N(0,1/n)$，方差除以 $n$；Cauchy 的平均方差根本不降。\n\n**第二步（标准化后反而更散）**：$\\sqrt n\\,\\bar X_n$ 服从尺度为 $\\sqrt n$ 的 Cauchy，于是\n\n$$\\mathbb P\\bigl(\\lvert\\sqrt n\\,\\bar X_n\\rvert\\le1\\bigr)=\\mathbb P\\Bigl(\\lvert X_1\\rvert\\le\\frac1{\\sqrt n}\\Bigr)=\\frac2\\pi\\arctan\\frac1{\\sqrt n}.$$\n\n**具体数值**：\n\n| $n$ | $\\frac2\\pi\\arctan(1/\\sqrt n)$ | CLT 预测 $\\mathrm{erf}(1/\\sqrt2)$ | 比值 |\n|---|---|---|---|\n| $10$ | $\\approx0.194982$【已核验:0.19498352195|(2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,31623))】 | $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | $\\approx3.501$【已核验:3.50126762154|erf(1/sqrt(2))/((2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,31623)))】 |\n| $100$ | $\\approx0.0634510$【已核验:0.0634510348616|(2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,10000))】 | $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | $\\approx10.76$【已核验:10.7593121787|erf(1/sqrt(2))/((2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,10000)))】 |\n| $10000$ | $\\approx0.00636619$【已核验:0.00636598552987|(2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,1000))】 | $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | $\\approx107.2$【已核验:107.240189117|erf(1/sqrt(2))/((2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,1000)))】 |\n\n**$n$ 越大，正态近似的误差越大**——因为 Cauchy 侧的概率按 $1/\\sqrt n\\to0$ 衰减，而 CLT 预测的是常数 $0.682689$。这不是「收敛慢」，是**结论根本不成立**。\n\n**机制**：CLT 的证明靠 $\\varphi_Y(t)=1-\\frac{t^{2}}2+o(t^{2})$（切片第 2 步），而这一步需要**二阶矩存在**。Cauchy 的 $\\varphi(t)=e^{-\\lvert t\\rvert}=1-\\lvert t\\rvert+o(\\lvert t\\rvert)$ 在原点有尖点，展开的第一项就是 $\\lvert t\\rvert$ 而不是 $-\\frac{t^2}2$——把它代入 $\\big[\\varphi(t/\\sqrt n)\\big]^{n}$ 得 $e^{-\\sqrt n\\lvert t\\rvert}$，随 $n$ **发散**到 $0$（在 $t\\ne0$），正是上表看到的塌缩。\n\n**修补动作**：\n\n1. **先查方差**（或等价地看尾是否比 $1/x^{3}$ 更重）；重尾 ⟹ 极限是 $\\alpha<2$ 的**稳定分布**，不是正态（见 `C7.3:clt.extension`）；\n2. 若必须用正态，先做**截尾/缩尾**（winsorize），但此时结论只对截尾后的变量成立；\n3. _render 里的对应故障_：BRDF 采样若出现重尾（如高光近似下的 $1/\\cos^{k}\\theta$ 型权重），路径平均的误差就不再按 $1/\\sqrt n$ 收敛，`H4` 的误差条会系统性偏窄。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C6.5",
+        "H4"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要大样本蒙特卡洛展示 Cauchy 样本均值直方图不随 n 收缩（并与正态情形并列），属长时程对拍。",
+        "params_hint": {
+          "dists": [
+            "normal",
+            "cauchy"
+          ],
+          "n_values": [
+            10,
+            100,
+            1000
+          ],
+          "show": "样本均值的经验密度：正态随 n 收窄 1/√n，Cauchy 完全不变"
+        }
+      }
+    },
+    {
+      "id": "C7.3:clt.wrong-scaling",
+      "type": "counterexample",
+      "subject": "clt",
+      "title": "反例：把 √n 记成 n（置信区间被放大 √n 倍）",
+      "keywords": [
+        "正确：Var(X̄_n) = σ²/n ⟹ 标准差 σ/√n ⟹ 缩放因子 √n",
+        "误用 n：n(X̄−μ)/σ 的标准差 = √n，n=100 时是 10（不是 1）",
+        "数值：P(|·| ≤ 1) 真值 0.682689，误用 n 缩放后只有 0.0796557",
+        "工程后果：误差条被放大 10 倍 ⟹ 采样预算被高估 100 倍",
+        "记忆锚：要让误差减半，样本数得翻 4 倍（不是 2 倍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 221,
+        "line_end": 243
+      },
+      "fill_hint": "对应 quantifiers 表第⑤行；核心数值是 P(|·|≤1) 的 0.682689 vs 0.0796557，以及「翻四倍减半」的切片原话数值化。",
+      "content": "**误用现场**：记住了「CLT 说样本均值近似正态」，但记错了缩放——把 $\\sqrt n(\\bar X_n-\\mu)/\\sigma$ 写成 $n(\\bar X_n-\\mu)/\\sigma$。这个错在代码里表现为「置信区间宽了 $\\sqrt n$ 倍」，因为不会报错，所以特别难查。\n\n**正确的推导**：由独立性，$\\mathrm{Var}(\\bar X_n)=\\frac1{n^{2}}\\sum_i\\mathrm{Var}(X_i)=\\frac{n\\sigma^{2}}{n^{2}}=\\frac{\\sigma^{2}}n$，故标准差\n\n$$\\mathrm{sd}(\\bar X_n)=\\frac{\\sigma}{\\sqrt n}.$$\n\n要让 $\\bar X_n-\\mu$ 的波动是 $O(1)$ 量级（即不随 $n$ 塌缩也不发散），必须乘 $\\sqrt n$——**这就是缩放因子的唯一来源**。\n\n**失效数值（$\\mu=0,\\ \\sigma=1,\\ n=100$，问 $\\mathbb P(\\lvert\\cdot\\rvert\\le1)$）**：\n\n| 写法 | 该量的标准差 | $\\mathbb P(\\lvert\\cdot\\rvert\\le1)$ |\n|---|---|---|\n| **正确** $\\sqrt n(\\bar X_n-\\mu)/\\sigma$ | $1$ | $\\mathrm{erf}(1/\\sqrt2)\\approx0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 |\n| **误用** $n(\\bar X_n-\\mu)/\\sigma$ | $\\sqrt n=10$【已核验:10|sqrt(100)】 | $\\mathrm{erf}\\bigl(1/\\sqrt{2n}\\bigr)=\\mathrm{erf}(1/\\sqrt{200})\\approx0.0796557$【已核验:0.0796556745541|erf(1/sqrt(200))】 |\n\n**差 $8.57$ 倍**【已核验:8.57050669596|erf(1/sqrt(2))/erf(1/sqrt(200))】——而且方向是「看起来**更不**集中」，容易被误读成「样本质量差」。\n\n**工程后果（这是本条最贵的地方）**：误差条 $\\pm1.96\\,\\sigma/\\sqrt n$ 若写成 $\\pm1.96\\,\\sigma/n$，在 $n=100$ 时被放大 $10$ 倍；反过来说，**为了达到同一精度所需的样本数**被高估 $n$ 倍（$100$ 倍）。对渲染而言就是把采样预算算错两个数量级。\n\n**记忆锚（切片 243-244 行的原话）**：蒙特卡洛估计量的误差 $\\lvert\\bar X_n-I\\rvert\\lesssim\\sigma/\\sqrt n$ 意味着\n\n$$\\frac{\\sigma/\\sqrt{4n}}{\\sigma/\\sqrt n}=\\frac12\\quad\\text{【已核验:0.5|sqrt(100)/sqrt(4*100)】},$$\n\n即**采样数翻 $4$ 倍、噪声才减半**——这就是路径追踪里那条经验法则的出处，也同时是 $\\sqrt n$（而不是 $n$）的最好记忆锚：若是 $1/n$ 速率，翻 $2$ 倍就够了。\n\n**修补动作**：\n\n1. 永远先算 $\\mathrm{sd}(\\bar X_n)=\\sigma/\\sqrt n$，再决定缩放；\n2. 数值自检：把 $n=100$、$\\sigma=1$ 代进去，看你的置信区间半宽是不是 $0.196$（即 $1.96\\times0.1$）——若给出 $0.0196$，就是用了 $n$ 而不是 $\\sqrt n$；\n3. 与 `C6.5` 对账：大数律只说 $\\bar X_n\\xrightarrow{\\mathbb P}\\mu$，**给不出速率**；CLT 给的正是不带速率信息的那部分——$\\sqrt n$ 这个因子说明**速率恰好是 $1/\\sqrt n$**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.3",
+        "C6.5",
+        "H4",
+        "C9.1"
+      ]
+    },
+    {
+      "id": "C7.3:clt.statement",
+      "type": "statement",
+      "subject": "clt",
+      "title": "陈述：Lévy--Lindeberg 中心极限定理（精确表述 + 成立条件）",
+      "keywords": [
+        "切片原文：X_n iid，E X₁ = μ，Var X₁ = σ² ∈ (0,∞) ⟹ √n(X̄_n−μ)/σ ⇒ N(0,1)",
+        "条件是「二阶矩有限且非零」：σ² = 0 退化、σ² = ∞ 都不行",
+        "结论是依分布收敛：∀x, P(√n(X̄−μ)/σ ≤ x) → Φ(x)",
+        "等价写法：X̄_n ≈ N(μ, σ²/n)，误差条 ±1.96 σ/√n",
+        "依赖：C7.1 的特征函数性质 + C7.2 的正特征函数 + 连续性定理"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 221,
+        "line_end": 222
+      },
+      "fill_hint": "切片 221-222 的逐字转写 + 依分布收敛的精确化 + 工程写法；1.96 的来源（erf(1.96/√2)=0.950004）带待核验标记。",
+      "content": "**切片定理（221-222 行逐字转写，记号 $\\xrightarrow{\\ d\\ }$ = 依分布收敛）**：\n\n> **定理（Lévy--Lindeberg）：** $X_n$ 独立同分布，$\\mathbb E X_1=\\mu$，$\\operatorname{Var}X_1=\\sigma^{2}\\in(0,\\infty)$，则\n> $$\\sqrt n\\,\\frac{\\bar X_n-\\mu}{\\sigma}\\ \\xrightarrow{\\ d\\ }\\ N(0,1).$$\n\n**逐符号注解**：\n\n- $\\bar X_n=\\frac1n\\sum_{i=1}^{n}X_i$；\n- 中心化 $\\bar X_n-\\mu$ 消掉位置，缩放 $\\sqrt n/\\sigma$ 把波动调到 $O(1)$；\n- $\\xrightarrow{\\ d\\ }$（依分布收敛）的精确含义：对**每一个** $N(0,1)$ 分布函数的连续点 $x$，\n $$\\mathbb P\\Bigl(\\sqrt n\\tfrac{\\bar X_n-\\mu}{\\sigma}\\le x\\Bigr)\\ \\longrightarrow\\ \\Phi(x)=\\frac12\\Bigl(1+\\mathrm{erf}\\frac{x}{\\sqrt2}\\Bigr).$$\n\n**成立条件（三条，缺一不可）**：\n\n1. **独立同分布**（iid）——独立性保证特征函数相乘，同分布保证每个因子相同；\n2. $\\mathbb E\\lvert X_1\\rvert<\\infty$（从而 $\\mu$ 有定义）；\n3. $0<\\mathrm{Var}X_1=\\sigma^{2}<\\infty$——$\\sigma^{2}=0$ 是退化分布（标准化量恒为 $0$，结论平凡且写法非法），$\\sigma^{2}=\\infty$ 时结论**不成立**（见 `C7.3:clt.heavy-tail`）。\n\n**最常被引用的等价写法（工程形式）**：对大 $n$，\n\n$$\\bar X_n\\ \\approx\\ N\\Bigl(\\mu,\\ \\frac{\\sigma^{2}}n\\Bigr),\\qquad\\text{即}\\qquad \\lvert\\bar X_n-\\mu\\rvert\\lesssim1.96\\frac{\\sigma}{\\sqrt n}\\ \\text{（约 }95\\%\\text{）}.$$\n\n置信半宽的常数来自 $\\mathrm{erf}(1.96/\\sqrt2)\\approx0.950004$【已核验:0.950004209704|erf(1.96/sqrt(2))】——**$1.96$ 这个数字就是这么来的**，不要死记。\n\n**切片在 CG 中的意义（243-245 行原话）**：蒙特卡洛估计量的误差估计 $\\lvert\\bar X_n-I\\rvert\\lesssim\\sigma/\\sqrt n$ 与置信区间**全部来自 CLT**——**这就是路径追踪「采样数翻四倍、噪声减半」的出处**。\n\n**依赖链**：`C7.1`（特征函数五条性质 + Lévy 连续性定理）→ `C7.2`（认出 $e^{-t^{2}/2}$ 是 $N(0,1)$）→ 本定理 → `H4`（蒙特卡洛误差）、`C9.1`（估计量渐近正态）。**被谁依赖**：`C9.1` 的误差量级、`H4` 的置信区间、`C8.1` 的马氏链 CLT（带 $\\tau_{\\rm int}$ 修正）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C6.5",
+        "H4",
+        "C9.1"
+      ]
+    },
+    {
+      "id": "C7.3:clt.proof",
+      "type": "proof",
+      "subject": "clt",
+      "title": "证明骨架：三步（标准化 → Taylor → 取幂），每步给理由",
+      "keywords": [
+        "步 0 标准化：Y_i = (X_i−μ)/σ ⟹ φ_Y(0)=1、φ_Y'(0)=0、φ_Y''(0)=−1",
+        "步 1 Taylor：φ_Y(t) = 1 − t²/2 + o(t²)（用 P7.1 的 e^{iu} 展开）",
+        "步 2 独立 ⟹ 相乘：φ_{S_n/√n}(t) = [φ_Y(t/√n)]^n",
+        "步 3 极限：[1 − t²/(2n) + o(1/n)]^n → e^{−t²/2}（P4.3 的 (1+x/n)^n → e^x）",
+        "步 4 收尾：认出 e^{−t²/2}（C7.2）+ C7.1 连续性定理 ⟹ 依分布收敛",
+        "易错点：o(t²) 要对 t 一致；只展开到二阶是因为只有二阶矩"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 224,
+        "line_end": 230
+      },
+      "fill_hint": "切片 224-230 三步证明的完整骨架（每步给理由）；步 3 的严格化与「o(t²) 一致性」属标准补充，须人工复核措辞。",
+      "content": "切片（224-230 行）把证明写成三步并注明「必须会复述」。下面逐步给理由。\n\n**步 0 · 标准化（切片第 1 步）。** 令 $Y_i=(X_i-\\mu)/\\sigma$，则 $\\mathbb EY_i=0$、$\\mathrm{Var}Y_i=1$，且\n\n$$\\frac{\\sqrt n(\\bar X_n-\\mu)}{\\sigma}=\\frac1{\\sqrt n}\\sum_{i=1}^{n}Y_i=:\\frac{S_n}{\\sqrt n},\\qquad S_n=\\sum_{i=1}^nY_i .$$\n\n由 `C7.1` 性质 4（矩由原点导数读出）：\n\n$$\\varphi_Y(0)=1,\\qquad \\varphi_Y'(0)=i\\,\\mathbb EY=0,\\qquad \\varphi_Y''(0)=i^{2}\\mathbb EY^{2}=-1 .$$\n\n**理由**：$\\varphi'(0)=i\\mathbb EY$、$\\varphi''(0)=i^{2}\\mathbb EY^{2}=-\\mathbb EY^{2}$；这里用到了 $\\mathbb EY^{2}=1<\\infty$（**二阶矩假设的唯一用途**）。\n\n**步 1 · 在 $0$ 处 Taylor 到二阶（切片第 2 步）。** 由 `P7.1` 的 Maclaurin 表 $e^{iu}=1+iu-\\frac{u^{2}}2+O(u^{3})$，取期望得\n\n$$\\varphi_Y(t)=1-\\frac{t^{2}}2+o(t^{2})\\qquad(t\\to0).$$\n\n**理由**：$\\varphi_Y(t)=\\mathbb E[e^{itY}]$，把 $e^{itY}$ 展开逐项取期望，一次项 $it\\,\\mathbb EY=0$、二次项 $-\\frac{t^{2}}2\\mathbb EY^{2}=-\\frac{t^{2}}2$。**为什么只到二阶**：我们只有二阶矩，更高阶的矩可能不存在（如 $\\mathbb EY^{3}=\\infty$），所以三阶及以上的项只能用 $o(t^{2})$ 打包——这正是「只需要二阶矩假设」的原因，也是**不能**加强到更高阶的原因。\n\n**步 2 · 独立性使特征函数相乘（切片第 3 步前半）。** 由 `C7.1` 性质 2 与性质 1：\n\n$$\\varphi_{S_n/\\sqrt n}(t)=\\Bigl[\\varphi_Y\\Bigl(\\frac t{\\sqrt n}\\Bigr)\\Bigr]^{n}.$$\n\n**理由**：独立和的 $\\varphi$ 是 $\\varphi$ 的乘积（$n$ 个相同因子），再除以 $\\sqrt n$ 由线性变换性质把自变量缩放。**这一步是「独立性」这个假设被用掉的地方**，也是 `C7.3:clt.no-independence` 翻车的地方。\n\n**步 3 · 取极限（切片第 3 步后半）。** 把步 1 的展开代 $t/\\sqrt n$：\n\n$$\\varphi_Y\\Bigl(\\frac t{\\sqrt n}\\Bigr)=1-\\frac{t^{2}}{2n}+o\\Bigl(\\frac1n\\Bigr),\\qquad\n\\Bigl[1-\\frac{t^{2}}{2n}+o\\Bigl(\\frac1n\\Bigr)\\Bigr]^{n}\\longrightarrow e^{-t^{2}/2}.$$\n\n**理由**：这正是 `P4.3` 的常用极限 $\\bigl(1+\\frac xn\\bigr)^{n}\\to e^{x}$（取 $x=-t^{2}/2$）;严格化需要对 $n\\log\\bigl(1-\\frac{t^{2}}{2n}+o(\\frac1n)\\bigr)$ 取极限，用到 $\\log(1+u)=u+o(u)$（也是 `P7.1` 的表）。**切片原话**：「$n\\to\\infty$ 那步本质上是 `P4` 的 $(1+\\frac xn)^n\\to e^x$」。\n\n**步 4 · 收尾（切片最后一句）。** 由 `C7.2`，$e^{-t^{2}/2}$ **正是** $N(0,1)$ 的特征函数；它在 $t=0$ 连续且取值 $1$，满足 Lévy 连续性定理（`C7.1`）的前提，故\n\n$$\\frac{S_n}{\\sqrt n}\\ \\xrightarrow{\\ d\\ }\\ N(0,1).$$\n\n**依赖链**：`C7.1` 性质 1/2/4 + 连续性定理 → `C7.2` 的正态算例 → `P7.1` Maclaurin 表 → `P4.3` 的 $e$ 极限 → 本证明。\n\n**易错点**：\n\n1. **$o(t^{2})$ 的一致性**：步 3 里是把 $o(\\cdot)$ 代入 $n$ 次方，需要余项对 $n$ 的一致性控制（标准写法用「$\\varphi_Y(t)=1-\\frac{t^{2}}2+t^{2}\\varepsilon(t)$，$\\varepsilon(t)\\to0$」再夹逼），别把 $o$ 当成可以对 $n$ 随便交换的符号；\n2. **忘了标准化**：若不对 $Y$ 标准化就展开，一次项 $it\\mu$ 不消失，取 $n$ 次方会得到 $e^{i\\sqrt n t\\mu}$ 这种振荡项，极限不存在——**中心化是必须的**；\n3. **认不出 $e^{-t^{2}/2}$**：这是 `C7.2` 存在的理由，见 `C7.3:clt.statement` 的依赖链；\n4. **把结论写成依概率收敛**：$\\frac{S_n}{\\sqrt n}$ 本身不收敛（它永远在波动），收敛的是它的分布。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "P7.1",
+        "P4.3"
+      ]
+    },
+    {
+      "id": "C7.3:clt.intuition",
+      "type": "intuition",
+      "subject": "clt",
+      "title": "直觉：每加一个独立变量就乘一次「略小于 1 的因子」",
+      "keywords": [
+        "假设给了什么：iid + 二阶矩 ⟹ 每个 φ_Y(t/√n) 都略小于 1",
+        "结论为什么成立：乘 n 次的累积效果 = (1 − t²/(2n))^n → e^{−t²/2}",
+        "这就是「为什么到处是指数」：独立累积 ⟹ 乘法 ⟹ 指数",
+        "二阶矩的角色：φ 在 0 处的二阶展开系数 = −σ²/2，决定了极限的唯一形状",
+        "图像：随机游走的 n 步位置 ⟹ 扩散 ⟹ 热核（高斯是热核）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 232,
+        "line_end": 238
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么因此成立」两段 + 切片 232-234 的原话展开；扩散图像与「指数律」的跨章联系属直觉补充。",
+      "content": "**假设给了什么。**\n\n1. **独立**：让「和」在 Fourier 侧变成**乘法**——$\\varphi_{S_n}=\\varphi_Y^{\\,n}$。这是整台机器的燃料。\n2. **同分布 + 零均值单位方差**：让每个因子都**一样**，且都在 $t=0$ 附近有同一个形状 $\\varphi_Y(t)\\approx1-\\frac{t^{2}}2$。\n3. **缩放 $\\sqrt n$**：把自变量压到 $t/\\sqrt n$，于是每个因子偏离 $1$ 的量只有 $O(1/n)$——**许多次微小的偏离**，而不是少数几次大的偏离。这正是极限存在的尺度（也是唯一可能的尺度）。\n\n**结论为什么因此成立。** 切片 232-234 行的原话：\n\n> 每加一个独立变量，在特征函数上就是乘一次「略小于 $1$ 的因子」；乘 $n$ 次的累积效果恰好复现 Gaussian 的 $e^{-t^{2}/2}$——这就是「为什么到处是指数」。\n\n展开成算式就是\n\n$$\\underbrace{\\Bigl(1-\\frac{t^{2}}{2n}\\Bigr)}_{\\text{一个因子}}\\times\\underbrace{\\Bigl(1-\\frac{t^{2}}{2n}\\Bigr)}\\times\\cdots\\times\\underbrace{\\Bigl(1-\\frac{t^{2}}{2n}\\Bigr)}_{n\\ \\text{个}}\n=\\Bigl(1-\\frac{t^{2}}{2n}\\Bigr)^{n}\\ \\xrightarrow{n\\to\\infty}\\ e^{-t^{2}/2}.$$\n\n**这就是「为什么到处是指数」的全部内容**：凡是「许多个小的、独立的、乘性的效应叠加」，极限必然是指数——复利、放射性衰变、$\\bigl(1+\\frac xn\\bigr)^{n}\\to e^{x}$（`P4.3`）、Poisson 极限，与 CLT 是**同一个现象在不同场景的名字**。切片特意点出这一句，就是为了把 CLT 从「一个概率定理」升级为「指数律的一个实例」。\n\n**为什么极限形状只能是 $e^{-t^{2}/2}$（不能是别的）**：二阶矩假设把每个因子的展开钉死为 $1-\\frac{t^{2}}2+o(t^{2})$——**二次**是关键。若方差无穷，展开的第一项可能是 $\\lvert t\\rvert^{\\alpha}$（$\\alpha<2$），极限就变成 $e^{-c\\lvert t\\rvert^{\\alpha}}$（稳定分布），不是 Gaussian（见 `C7.3:clt.heavy-tail` 的 Cauchy，$\\alpha=1$）。\n\n**物理图像（扩散）**：$S_n=Y_1+\\cdots+Y_n$ 是一个 $n$ 步随机游走的位置。每步方差 $1$，$n$ 步后方差 $n$、尺度 $\\sqrt n$——**扩散**：时间 $n$ 走 $\\sqrt n$ 距离。而扩散方程（热方程）的基本解正是 Gaussian（`A2.3` 的热核）。所以 CLT 在物理上是「随机游走的连续极限是热核」这句话的精确版本；$\\frac1{\\sqrt n}$ 的收缩与密度的钟形都来自同一件事。\n\n**与 `C6.5` 的分工**：大数律说「平均会收敛到 $\\mu$」（位置）；CLT 说「围绕 $\\mu$ 的**波动**是 $\\sigma/\\sqrt n$ 且形状是钟形」（形状与尺度）。**两者说的是同一件事的两个方面，CLT 严格更强。**",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "P4.3",
+        "C6.5",
+        "A2.3"
+      ],
+      "viz": {
+        "module": "convergence-thm",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "clt-product",
+          "t_range": [
+            -3,
+            3
+          ],
+          "n_values": [
+            1,
+            4,
+            16,
+            64
+          ],
+          "show": "[1−t²/(2n)]^n 的曲线族逐条逼近 e^{−t²/2}",
+          "annotate": "n 越大越贴近，t=1 处 n=64 已几乎重合"
+        }
+      }
+    },
+    {
+      "id": "C7.3:clt.local",
+      "type": "application",
+      "subject": "clt",
+      "title": "应用：局部 CLT 与中心二项式系数（与 P8.4 Stirling 的互证）",
+      "keywords": [
+        "局部 CLT：格点分布的点概率 ≈ (h/σ√(2πn))·e^{−z²/2}，不只是分布函数",
+        "实例：Bernoulli(1/2)，n=100 ⟹ P(S_n = 50) = C(100,50)/2^100 ≈ 0.0795892",
+        "局部 CLT 近似 √(2/(πn)) = 0.0797885，相对误差 0.25%",
+        "与 P8.4 的接口：C(2n,n) ~ 4ⁿ/√(πn) 正是这条近似在 z=0 的特例",
+        "用途：把「组合数」与「正态密度」两侧的常数一一对上（σ_∞ = 1/2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 232,
+        "line_end": 238
+      },
+      "fill_hint": "局部 CLT 是切片未写的标准补充（标题未加「拓展：」因它挂在切片 CLT 的应用层）；与 P8.4 的中心二项式估计互链是任务书点名的关系，六个数值全部带待核验。",
+      "content": "**从 CLT 到局部 CLT。** 切片给的是**积分（分布函数）版** CLT：$\\mathbb P\\bigl(\\frac{S_n-n\\mu}{\\sigma\\sqrt n}\\le x\\bigr)\\to\\Phi(x)$。**局部版**问的是更细的量：**单点概率**有多大。对格点分布（步长 $h$，如 Bernoulli 的 $h=1$），\n\n$$\\mathbb P(S_n=x)\\ \\approx\\ \\frac{h}{\\sigma\\sqrt{2\\pi n}}\\,\\exp\\Bigl(-\\frac{z^{2}}2\\Bigr),\\qquad z=\\frac{x-n\\mu}{\\sigma\\sqrt n}.$$\n\n**为什么多出 $h/(\\sigma\\sqrt{2\\pi n})$ 这个因子**：它是「宽度为 $h$ 的一个格子」在连续密度下的质量——密度 $=\\frac1{\\sigma\\sqrt n}\\phi(z)$，乘以格宽 $h$ 即得。这也解释了为什么格点分布在用 CLT 时要做**连续性修正**（下方数值）。\n\n**具体算例（$n=100$，$X_i\\sim\\mathrm{Bernoulli}(1/2)$，$\\mu=0.5$，$\\sigma=0.5$，$h=1$）**：\n\n$$\\mathbb P(S_{100}=50)=\\frac{\\binom{100}{50}}{2^{100}}\\approx0.0795892\\text{【已核验:0.0795892373872|factorial(100)/(factorial(50)**2*2**100)】},$$\n\n而局部 CLT（取 $z=0$）给\n\n$$\\frac{1}{0.5\\sqrt{2\\pi\\cdot100}}=\\sqrt{\\frac{2}{100\\pi}}\\approx0.0797885\\text{【已核验:0.0797884560803|sqrt(2/(pi*100))】},$$\n\n**相对误差 $\\approx0.25\\%$**【已核验:0.00250308583984|abs(factorial(100)/(factorial(50)**2*2**100)-sqrt(2/(pi*100)))/(factorial(100)/(factorial(50)**2*2**100))】。\n\n**与 `P8.4` Stirling 的互证（切片 232-234 未写，但这是同一条链条）**：取 $n=2m$、$x=m$（正中项），局部 CLT 给\n\n$$\\frac{\\binom{2m}{m}}{2^{2m}}\\approx\\sqrt{\\frac{2}{\\pi\\cdot2m}}=\\frac1{\\sqrt{\\pi m}},\\qquad\\text{即}\\qquad \\binom{2m}{m}\\sim\\frac{4^{m}}{\\sqrt{\\pi m}},$$\n\n而右边正是 `P8.4` 用 Stirling 算出的**中心二项式估计**。$m=50$ 时 $1/\\sqrt{50\\pi}\\approx0.0797885$【已核验:0.0797884560803|1/sqrt(pi*50)】——与上面局部 CLT 的数是同一个数。**两个方向独立推出同一个常数：Stirling 走的是阶乘的渐近，局部 CLT 走的是和的渐近；它们互证，是本单元与 P 篇之间最实在的一条互链。**\n\n**连续性修正（格点分布的必付项）**：算 $\\mathbb P(S_{100}\\le55)$。\n\n- **精确值**：$\\sum_{k=0}^{55}\\binom{100}{k}2^{-100}\\approx0.864373$【已核验:0.864373487963|sum(factorial(100)/(factorial(k)*factorial(100-k)*2**100) for k in range(0,56))】；\n- **不带修正**（$z=(55-50)/5=1$）：$\\Phi(1)\\approx0.841345$【已核验:0.841344746069|0.5*(1+erf(1/sqrt(2)))】，误差 $\\approx0.0230287$【已核验:0.0230287418945|abs(sum(factorial(100)/(factorial(k)*factorial(100-k)*2**100) for k in range(0,56))-0.5*(1+erf(1/sqrt(2))))】；\n- **带修正**（$z=(55.5-50)/5=1.1$）：$\\Phi(1.1)\\approx0.864334$【已核验:0.864333939054|0.5*(1+erf(1.1/sqrt(2)))】，误差 $\\approx0.0000396$【已核验:3.95489094653e-05|abs(sum(factorial(100)/(factorial(k)*factorial(100-k)*2**100) for k in range(0,56))-0.5*(1+erf(1.1/sqrt(2))))】。\n\n**修正把误差压掉了约 $580$ 倍**【已核验:582.28513013|abs(sum(factorial(100)/(factorial(k)*factorial(100-k)*2**100) for k in range(0,56))-0.5*(1+erf(1/sqrt(2))))/abs(sum(factorial(100)/(factorial(k)*factorial(100-k)*2**100) for k in range(0,56))-0.5*(1+erf(1.1/sqrt(2))))】——因为格点分布的「$\\le55$」实为「$\\le55.5$」，差半个格子正是 $O(1/\\sqrt n)$ 量级的偏差（`C7.1` 的格点判据：格点分布的 $\\lvert\\varphi\\rvert$ 在 $t=2\\pi$ 处回到 $1$，它的离散性必须被单独补偿）。\n\n**依赖方向**：本条依赖 `C7.2`（认出正态密度）、`P8.4`（Stirling，反向互证）、`C7.1`（格点判据）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "P8.4",
+        "C8.1",
+        "P4.3"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要计算二项分布点概率并对拍局部 CLT 近似（含大组合数与 Stirling 近似），属数值对拍计算。",
+        "params_hint": {
+          "mode": "local-clt",
+          "n": 100,
+          "p": 0.5,
+          "show": "C(n,k)/2^n 的柱状图 + 局部 CLT 密度曲线 + 连续性修正前后的误差对比"
+        }
+      }
+    },
+    {
+      "id": "C7.3:clt.vs-lln",
+      "type": "comparison",
+      "subject": "clt",
+      "title": "分工：CLT vs 强大数律（C6.5）——位置 vs 形状与尺度",
+      "keywords": [
+        "大数律：X̄_n → μ（依概率/a.s.），只说位置，不给速率",
+        "CLT：√n(X̄_n−μ)/σ ⇒ N(0,1)，说波动的形状与 σ/√n 的尺度",
+        "CLT 严格更强：它能推出大数律的收敛速度感，反之不行",
+        "共同假设：iid + 一阶矩（LLN）/ 二阶矩（CLT）",
+        "判据：要「对不对」用 LLN，要「误差多大」用 CLT",
+        "马氏版本：C8.1 的遍历定理换掉独立性，方差多一个 τ_int"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 221,
+        "line_end": 245
+      },
+      "fill_hint": "对照按「位置 vs 形状与尺度」展开；「CLT 严格更强但多付一阶矩」是本条的要点，τ_int 一行与 C8.1 互链。",
+      "content": "切片把 CLT 放在 `C7`，把大数律放在 `C6.5`，两者是同一条研究线的两个深度。\n\n| | 弱/强大数律（`C6.5`） | 中心极限定理（本单元） |\n|---|---|---|\n| 结论 | $\\bar X_n\\xrightarrow{\\mathbb P}\\mu$（或 a.s.） | $\\sqrt n\\frac{\\bar X_n-\\mu}{\\sigma}\\Rightarrow N(0,1)$ |\n| 说的是 | **位置**：平均落在哪 | **形状 + 尺度**：围绕位置的波动长什么样 |\n| 需要几阶矩 | $\\mathbb E\\lvert X\\rvert<\\infty$（Khinchin 版只要一阶） | $\\mathbb E X^{2}<\\infty$（**多付一阶**） |\n| 给不给速率 | 不给（只说「会到」） | 给：$\\sigma/\\sqrt n$ |\n| 典型用途 | 一致性（`H4` 的「估计量收敛到真值」） | 误差条、置信区间、样本量规划 |\n| 失效现场 | Cauchy：无均值，大数律失效 | Cauchy：有中位数但无方差，CLT 失效（见 `C7.3:clt.heavy-tail`） |\n\n**谁更强**：CLT 严格更强——由 $\\frac{\\sqrt n(\\bar X_n-\\mu)}{\\sigma}\\Rightarrow N(0,1)$ 立得 $\\bar X_n-\\mu=O_{\\mathbb P}(1/\\sqrt n)\\to0$，即大数律的结论；反之大数律一句也推不出 CLT。**代价是二阶矩**：$X$ 有均值但方差无穷时（如尾为 $1/x^{2.5}$ 的分布），大数律成立而 CLT 不成立。这类分布是两条定理的真正分水岭。\n\n**判据（两问定选）**：\n\n1. 问「估计量**对不对**」（一致性）→ `C6.5`；\n2. 问「**误差多大**、要采多少样」→ 本单元。**渲染里几乎总是第二个问题**——这也是为什么 `H4` 引用的是 CLT 而不是大数律。\n\n**相依样本的对应物（`C8.1`）**：独立性换成马氏性后，两句话都还成立，但 CLT 的方差变成 $\\sigma^{2}\\tau_{\\rm int}/n$（$\\tau_{\\rm int}\\approx2/\\mathrm{gap}$）——**$\\tau_{\\rm int}$ 就是「独立性缺失」的价签**。大数律版本（遍历定理）不付这个价签，所以 MCMC 的常见事故是「用遍历定理保证了收敛，却用独立样本的公式报了误差」。\n\n**共同天花板**：两者都只给极限，都不给有限 $n$ 的**保证**。要有限 $n$ 的界，要么用 Berry--Esseen（见 `C7.3:clt.extension`），要么用 Chernoff 型指数界（那条需要矩母函数，`C7.1` 的限定词①）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.3",
+        "C6.5",
+        "C8.1",
+        "H4",
+        "C9.1"
+      ]
+    },
+    {
+      "id": "C7.3:clt.extension",
+      "type": "extension",
+      "subject": "clt",
+      "title": "拓展：Berry--Esseen 的有限 n 误差界、Lindeberg 条件与「为什么不能加强」",
+      "keywords": [
+        "拓展①：Berry–Esseen：sup_x|F_n(x) − Φ(x)| ≤ C·ρ/(σ³√n)，C ≈ 0.4748",
+        "n=100 的 Bernoulli(1/2)：ρ/σ³ = 1 ⟹ 界 ≈ 0.04748（保守上界）",
+        "拓展②：Lindeberg–Feller 把 iid 放宽到三角阵列（不同分布）",
+        "拓展③：为什么 1/√n 不能改进——格点分布的误差恰是 1/√n 量级",
+        "拓展④：重尾 ⟹ α < 2 稳定分布；这是 CLT 的边界",
+        "切片未含以上内容，标题带「拓展：」标明超出切片"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 221,
+        "line_end": 238
+      },
+      "fill_hint": "「拓展：」前缀——Berry–Esseen / Lindeberg / 最优指数 1/2 / 稳定分布四条切片均未出现；1/√n 最优性来自格点跳跃的 Θ(1/√n)，是「为什么不能加强」的核心论证。",
+      "content": "**拓展：** 切片只给极限陈述（$n\\to\\infty$），没给有限 $n$ 的误差。下面四条是本定理「能放宽到哪 / 为什么不能加强」的标准答案。\n\n**① Berry--Esseen（把 $\\Rightarrow$ 升级成带速率的不等式）。** 设 $\\rho=\\mathbb E\\lvert X_1-\\mu\\rvert^{3}<\\infty$，则\n\n$$\\sup_x\\Bigl\\lvert F_n(x)-\\Phi(x)\\Bigr\\rvert\\ \\le\\ \\frac{C\\,\\rho}{\\sigma^{3}\\sqrt n},\\qquad C\\approx0.4748 .$$\n\n**实例**：$X\\sim\\mathrm{Bernoulli}(1/2)$，$\\mu=0.5$、$\\sigma=0.5$，$\\rho=\\mathbb E\\lvert X-0.5\\rvert^{3}=0.5^{3}=0.125$，故 $\\rho/\\sigma^{3}=0.125/0.125=1$，于是\n\n$$\\sup_x\\lvert F_n(x)-\\Phi(x)\\rvert\\le\\frac{0.4748}{\\sqrt{100}}\\approx0.04748\\text{【已核验:0.04748|0.4748/sqrt(100)】}.$$\n\n注意这是**上界**（保守）；`C7.3:clt.local` 里加了连续性修正后的实际误差只有 $0.0000396$，比上界小三个数量级。**用法**：Berry--Esseen 的价值是**最坏情况保证**，不是实际精度估计。\n\n**② Lindeberg--Feller（放宽「同分布」）。** 允许第 $i$ 个变量的分布随 $n$ 变（三角阵列 $X_{n,1},\\dots,X_{n,n}$），条件是 **Lindeberg 条件**：对每个 $\\varepsilon>0$，\n\n$$\\frac1{s_n^{2}}\\sum_{i}\\mathbb E\\Bigl[(X_{n,i}-\\mu_{n,i})^{2}\\mathbf 1_{\\{\\lvert X_{n,i}-\\mu_{n,i}\\rvert>\\varepsilon s_n\\}}\\Bigr]\\ \\longrightarrow\\ 0,\\qquad s_n^{2}=\\sum_i\\sigma_{n,i}^{2}.$$\n\n含义：**没有任何单个变量能占到总方差的显著份额**（「无主导项」）。它的 Lyapunov 版用三阶矩：$\\sum\\mathbb E\\lvert X_{n,i}-\\mu_{n,i}\\rvert^{3}/s_n^{3}\\to0$。**本单元是它的特例**：同分布时每一项都相同，条件自动满足。\n\n**③ 为什么 $1/\\sqrt n$ 不能改进（这是「不能加强」的硬答案）。** 取格点分布（如 $\\mathrm{Bernoulli}(1/2)$）并把 $x$ 取在跳跃点上：$F_n$ 是有跳跃的阶梯函数，$\\Phi$ 是连续的，在跳跃处两者之差至少是**半个跳跃量**，而跳跃量正是 $\\Theta(1/\\sqrt n)$。所以\n\n$$\\sup_x\\lvert F_n(x)-\\Phi(x)\\rvert=\\Theta\\Bigl(\\frac1{\\sqrt n}\\Bigr)$$\n\n——**指数 $1/2$ 是最优的，无法改进**。（加了连续性修正后误差降到 $O(1/n)$，但那已经不是「同一个 $x$ 处的比较」了。）\n\n**④ 边界：重尾时极限换成稳定分布。** 若方差无穷但尾是正则变化的（$\\mathbb P(\\lvert X\\rvert>x)\\sim L(x)x^{-\\alpha}$，$\\alpha\\in(0,2)$），则适当缩放后的和收敛到**稳定分布**，其特征函数 $\\exp(-c\\lvert t\\rvert^{\\alpha}(1-i\\beta\\,\\mathrm{sgn}(t)\\Phi_\\alpha))$。$\\alpha=2$ 回到 Gaussian（本定理），$\\alpha=1$ 是 Cauchy（`C7.3:clt.heavy-tail` 的自证现场：Cauchy 的平均还是 Cauchy，正是 $\\alpha=1$ 稳定的体现）。**所以 CLT 的适用边界就是「尾比 $x^{-2}$ 轻」**——这是检验「能不能用正态近似误差」的实操判据。\n\n**依赖与复核**：Berry--Esseen 常数 $0.4748$（Shevtsova 2010 的上界）与稳定分布的表述属标准补充，须人工复核；切片均未出现。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C6.5",
+        "P8.4"
+      ]
+    },
+    {
+      "id": "C7.3:clt.application",
+      "type": "application",
+      "subject": "clt",
+      "title": "应用：CLT 在渲染与统计里的四层落地（含 P 篇入口）",
+      "keywords": [
+        "第一层：蒙特卡洛误差条 σ/√n 与置信区间（H4）——切片明示的 CG 意义",
+        "第二层：采样预算「翻四倍减半」的定量依据（路径追踪）",
+        "第三层：估计量渐近正态与误差量级（C9.1）",
+        "第四层：MCMC 的马氏版 CLT，方差带 τ_int（C8.1/C8.2）",
+        "P 篇入口：Maclaurin（P7.1）、(1+x/n)^n→e^x（P4.3）、Stirling（P8.4）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 243,
+        "line_end": 245
+      },
+      "fill_hint": "按「在哪一层被用」四层组织；P 篇 links 指向 P7.1/P4.3/P8.4，符合「涉及标准技法时 application 必须指向对应 P 组」；1.96 的来源带待核验。",
+      "content": "**第一层 · 蒙特卡洛的误差条（`H4`，切片 243-245 行明示）。** 渲染积分 $I=\\int f\\,d\\mu$ 用 $\\bar X_n=\\frac1n\\sum f(X_i)$ 估计。CLT 给出\n\n$$\\lvert\\bar X_n-I\\rvert\\ \\lesssim\\ 1.96\\frac{\\sigma}{\\sqrt n}\\quad(\\text{约 }95\\%,\\ \\text{由 }\\mathrm{erf}(1.96/\\sqrt2)\\approx0.950004\\text{【已核验:0.950004209704|erf(1.96/sqrt(2))】}),$$\n\n**没有 CLT，这条式子没有任何依据**——大数律只保证 $\\bar X_n\\to I$，不保证误差是 $\\sigma/\\sqrt n$ 量级，也不保证误差**分布**是钟形。切片原话：误差估计与置信区间**全部来自 CLT**。\n\n**第二层 · 采样预算（切片原话的另一半）。** 由 $\\sigma/\\sqrt n$ 立刻得到：要让噪声减半，$n$ 必须翻 $4$ 倍；要减到 $1/10$，$n$ 要翻 $100$ 倍。这就是路径追踪里「采样数翻四倍、噪声减半」这句工程经验的数学出处，**也是渲染开销与画质之间那道 $1/\\sqrt n$ 墙的来处**——它是硬的，任何采样策略（除非降低 $\\sigma$ 本身，即方差缩减）都绕不过去。\n\n**第三层 · 估计量的误差量级（`C9.1`）。** 最大似然/M-估计的 $\\sqrt n(\\hat\\theta-\\theta)\\Rightarrow N(0,V)$ 用的是同一台机器（把 iid 换成三角阵列，见 `C7.3:clt.extension`）；$V$ 的估计、Wald 置信区间、假设检验的 $p$ 值全部建在这条渐近正态上。\n\n**第四层 · MCMC（`C8.1`、`C8.2`）。** 马氏链样本不独立，CLT 的方差变成 $\\sigma^{2}\\tau_{\\rm int}/n$，$\\tau_{\\rm int}\\approx2/\\mathrm{gap}$。结论形式不变，**但有效样本量是 $n/\\tau_{\\rm int}$ 而不是 $n$**——这是 MLT 类方法在焦散/窄光源场景下「看起来跑了很多步却仍然脏」的定量解释。\n\n**P 篇入口（本单元依赖的计算技法）**：\n\n- `P7.1` Maclaurin 表：$e^{iu}=1+iu-\\frac{u^{2}}2+O(u^{3})$ —— CLT 证明第 2 步的来源；\n- `P4.3` 常用极限：$\\bigl(1+\\frac xn\\bigr)^{n}\\to e^{x}$ —— 第 3 步的来源（切片明示）；\n- `P8.4` Stirling：局部 CLT 与 $\\binom{2n}{n}\\sim4^{n}/\\sqrt{\\pi n}$ 的互证（见 `C7.3:clt.local`）。\n\n**依赖方向**：`C7.1` + `C7.2` + `P7.1` + `P4.3` → 本单元 → `H4` / `C9.1` / `C8.2`。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "H4",
+        "C9.1",
+        "C8.1",
+        "C8.2",
+        "P7.1",
+        "P4.3",
+        "P8.4"
+      ]
+    },
+    {
+      "id": "C7.3:clt.probe1",
+      "type": "probe",
+      "subject": "clt",
+      "title": "检验题：置信区间、样本量规划与「翻四倍减半」",
+      "keywords": [
+        "第1题：μ=1、σ=2、n=100，求 95% 置信半宽与 P(|X̄−μ| ≤ 0.392)",
+        "第2题：要把误差压到 0.1 以内（95%），n 至少要多少？",
+        "第3题：验证「采样翻四倍、噪声减半」的比值为 1/2",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 243,
+        "line_end": 245
+      },
+      "fill_hint": "三题对应切片 243-245 的工程结论；第 3 题的陷阱是把 1/√n 记成 1/n，答案数值带待核验。",
+      "content": "**第 1 题（置信区间）**：$X_i$ iid，$\\mu=1$、$\\sigma=2$、$n=100$。(a) $\\mathrm{sd}(\\bar X_{100})$ 是多少？(b) $95\\%$ 置信半宽是多少？(c) $\\mathbb P(\\lvert\\bar X_{100}-\\mu\\rvert\\le0.392)$ 约是多少？\n**答案**：(a) $\\sigma/\\sqrt n=2/10=0.2$；(b) $1.96\\times0.2=0.392$；(c) 由 CLT，$\\sqrt n(\\bar X-\\mu)/\\sigma\\approx N(0,1)$，故概率 $=\\mathrm{erf}(1.96/\\sqrt2)\\approx0.950004$【已核验:0.950004209704|erf(1.96/sqrt(2))】。\n\n**第 2 题（样本量规划）**：承第 1 题（$\\sigma=2$），要求 $95\\%$ 置信半宽 $\\le0.1$。(a) 列出不等式；(b) 解出 $n$；(c) 若改成半宽 $\\le0.05$（再严一倍），$n$ 变成多少？\n**答案**：(a) $1.96\\,\\sigma/\\sqrt n\\le0.1$ ⟹ $\\sqrt n\\ge1.96\\times2/0.1=39.2$；(b) $n\\ge39.2^{2}=1536.64$【已核验:1536.64|(1.96*2/0.1)**2】，故取 $n=1537$；(c) 半宽减半 ⟹ $n$ 翻 $4$ 倍，即 $n=6146$（$=4\\times1536.64$，【已核验:6146.56|4*(1.96*2/0.1)**2】$=6146.56$）。**这就是「翻四倍减半」的算术版。**\n\n**第 3 题（为什么是 √n）**：(a) 写出 $\\sigma/\\sqrt{4n}$ 与 $\\sigma/\\sqrt n$ 的比值；(b) 若某人误以为误差按 $\\sigma/n$ 收敛，他会认为噪声减半需要翻几倍？(c) 用第 2 题的数字说明这个错误会让采样预算差多少。\n**答案**：(a) $\\frac{\\sigma/\\sqrt{4n}}{\\sigma/\\sqrt n}=\\frac12$【已核验:0.5|sqrt(100)/sqrt(4*100)】；(b) 他会认为翻 $2$ 倍就够；(c) 在 $n=1537$ 这一档，正确需要 $1537$，错误估算给 $1.96\\times2/0.1/2\\times\\dots$——直接按 $\\sigma/n$ 算会得出 $n\\ge39.2$【已核验:39.2|1.96*2/0.1】，比真值 $1537$ 少 $39$ 倍【已核验:39.2|(1.96*2/0.1)**2/(1.96*2/0.1)】——**采样量差一个半数量级，画面会明显不够收敛。**",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.3",
+        "C7.2",
+        "H4",
+        "C9.1"
+      ]
+    },
+    {
+      "id": "C7.3:clt.probe2",
+      "type": "probe",
+      "subject": "clt",
+      "title": "检验题：局部 CLT、Stirling 互证与重尾失效",
+      "keywords": [
+        "第1题：n=100 的 Bernoulli(1/2)，P(S=50) 精确值 vs 局部 CLT 近似",
+        "第2题：用 Stirling 的 C(2m,m) ~ 4^m/√(πm) 复核同一数值",
+        "第3题：Cauchy 的 √n X̄_n 在 n=100 时 P(|·| ≤ 1) 是多少？CLT 预测是多少？",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 232,
+        "line_end": 238
+      },
+      "fill_hint": "三题对应 quantifiers 表第④行与 clt.local；第 2 题是本单元与 P8.4 互链的核心验证题，答案数值带待核验。",
+      "content": "**第 1 题（局部 CLT）**：$X_i\\sim\\mathrm{Bernoulli}(1/2)$，$n=100$。(a) 精确算 $\\mathbb P(S_{100}=50)$；(b) 用局部 CLT（$h=1,\\ \\sigma=0.5,\\ z=0$）给出近似；(c) 相对误差是多少？\n**答案**：(a) $\\binom{100}{50}2^{-100}\\approx0.0795892$【已核验:0.0795892373872|factorial(100)/(factorial(50)**2*2**100)】；(b) $\\frac{1}{\\sigma\\sqrt{2\\pi n}}=\\sqrt{\\frac2{100\\pi}}\\approx0.0797885$【已核验:0.0797884560803|sqrt(2/(pi*100))】；(c) $\\approx0.25\\%$【已核验:0.00250308583984|abs(factorial(100)/(factorial(50)**2*2**100)-sqrt(2/(pi*100)))/(factorial(100)/(factorial(50)**2*2**100))】。\n\n**第 2 题（与 `P8.4` 互证）**：(a) 用 Stirling 的中心二项式估计 $\\binom{2m}{m}\\sim4^{m}/\\sqrt{\\pi m}$ 写出 $m=50$ 时 $\\binom{100}{50}/2^{100}$ 的近似值；(b) 与第 1 题的局部 CLT 结果比较；(c) 两条路线分别依赖什么？\n**答案**：(a) $\\frac1{\\sqrt{50\\pi}}\\approx0.0797885$【已核验:0.0797884560803|1/sqrt(pi*50)】；(b) **完全相同**——因为 $\\frac1{\\sqrt{\\pi m}}=\\sqrt{\\frac2{\\pi\\cdot2m}}$，即局部 CLT 在正中点的特例；(c) Stirling 路线依赖阶乘的渐近（`P8.4`），局部 CLT 路线依赖和的渐近（本单元）。**两条独立路线给出同一个常数，互为验证。**\n\n**第 3 题（重尾失效）**：$X_i$ iid 标准 Cauchy。(a) 证明 $\\bar X_{100}$ 与 $X_1$ 同分布（提示：用特征函数）；(b) 算 $\\mathbb P(\\lvert\\sqrt{100}\\,\\bar X_{100}\\rvert\\le1)$；(c) 若误用 CLT 会得到多少？差多少倍？\n**答案**：(a) $\\varphi_{\\bar X_{100}}(t)=\\bigl[e^{-\\lvert t\\rvert/100}\\bigr]^{100}=e^{-\\lvert t\\rvert}=\\varphi_{X_1}(t)$——**平均 100 个 Cauchy 完全不集中**；(b) $\\frac2\\pi\\arctan\\frac1{10}\\approx0.0634510$【已核验:0.0634510348616|(2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,10000))】；(c) CLT 预测 $\\mathrm{erf}(1/\\sqrt2)\\approx0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】，**高估 $10.76$ 倍**【已核验:10.7593121787|erf(1/sqrt(2))/((2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,10000)))】。教训：先查方差是否有限。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "P8.4"
+      ]
+    },
+    {
+      "id": "C7.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "单元级对照表：CLT 的三种失效方式 + 一条正确的用法链",
+      "keywords": [
+        "失效一：不独立 ⟹ 方差 σ² 而非 σ²/n（n=100 时标准差 10 倍）",
+        "失效二：方差无穷 ⟹ 极限是 α<2 稳定分布（Cauchy 的 0.0634510 vs 0.682689）",
+        "失效三：缩放写成 n ⟹ 波动被放大 √n 倍（0.682689 → 0.0796557）",
+        "正确用法链：iid → 二阶矩 → √n 缩放 → φ^n → e^{−t²/2} → 认出 N(0,1)",
+        "与 C6.5 的关系：LLN 给位置、CLT 给形状与尺度，CLT 严格更强"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 219,
+        "line_end": 246
+      },
+      "fill_hint": "单元级总表；四行失效率 + 五步用法链 + 三个数值锚点，数值全部带待核验，供前端做总览卡。",
+      "content": "C7.3 一页表：**三种失效方式 + 一条正确用法链 + 数值锚点**。\n\n| 场景 | 假设欠费在哪 | 失效的具体数值 | 症状 |\n|---|---|---|---|\n| 样本相关（$X_i\\equiv Z$、MCMC） | 独立性 | $\\mathrm{sd}=\\sqrt{100}=10$【已核验:10|sqrt(100)】而非 $1$；$\\mathbb P(\\lvert\\cdot\\rvert\\le1)$ 真值 $0$ vs 预测 $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | 「样本越多却越不收敛」 |\n| 重尾（Cauchy、Pareto $\\alpha<2$） | 方差有限 | $n=100$：$\\frac2\\pi\\arctan0.1\\approx0.0634510$【已核验:0.0634510348616|(2/pi)*sum(1e-5/(1+((k+0.5)*1e-5)**2) for k in range(0,10000))】 vs $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】，差 $10.76$ 倍 | 平均不集中，误差条严重偏窄 |\n| 缩放写错（用 $n$ 而非 $\\sqrt n$） | 缩放因子 | $\\mathrm{erf}(1/\\sqrt{200})\\approx0.0796557$【已核验:0.0796556745541|erf(1/sqrt(200))】 vs $0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】 | 置信区间宽 $\\sqrt n$ 倍，采样预算差 $n$ 倍 |\n| 格点分布不做连续性修正 | 离散性 | $\\Phi(1)=0.841345$【已核验:0.841344746069|0.5*(1+erf(1/sqrt(2)))】 vs 精确 $0.864373$，误差 $0.0230287$；修正后误差 $0.0000396$ | 尾部概率系统性偏小 |\n\n**一条正确的用法链（五步，按切片证明的顺序）**：\n\n$$\\underbrace{X_i\\ \\text{iid}}_{\\text{独立}}\\ \\xrightarrow{\\text{标准化}}\\ \\underbrace{\\varphi_Y(t)=1-\\tfrac{t^2}2+o(t^2)}_{\\text{二阶矩}}\\ \\xrightarrow{\\text{相乘}}\\ \\underbrace{\\Bigl[\\varphi_Y\\Bigl(\\tfrac t{\\sqrt n}\\Bigr)\\Bigr]^{n}}_{\\sqrt n\\ \\text{缩放}}\\ \\xrightarrow{\\texttt{P4.3}}\\ \\underbrace{e^{-t^{2}/2}}_{\\texttt{C7.2}\\ \\text{认出}}\\ \\xrightarrow{\\texttt{C7.1}\\ \\text{连续性定理}}\\ N(0,1).$$\n\n**三个数值锚点（背这三个就够自检）**：\n\n1. $\\mathrm{erf}(1/\\sqrt2)\\approx0.682689$【已核验:0.682689492137|erf(1/sqrt(2))】——标准正态落在 $\\pm1\\sigma$ 内的概率；\n2. $\\mathrm{erf}(1.96/\\sqrt2)\\approx0.950004$【已核验:0.950004209704|erf(1.96/sqrt(2))】——$1.96$ 的来源；\n3. $\\frac{\\sigma/\\sqrt{4n}}{\\sigma/\\sqrt n}=0.5$【已核验:0.5|sqrt(100)/sqrt(4*100)】——翻四倍减半。\n\n**与相邻单元的分工**：`C7.1` 给工具（特征函数）、`C7.2` 给目标（$e^{-t^{2}/2}$ 是谁）、本单元给结论（CLT）与使用边界。三者合成一条链，任取一段都不能单独成立。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "C6.5",
+        "C8.1",
+        "P8.4"
+      ]
+    },
+    {
+      "id": "C7.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "C7.3 的下游清单（一条一句）",
+      "keywords": [
+        "H4：蒙特卡洛误差条与置信区间的唯一依据（切片明示）",
+        "C9.1：估计量渐近正态 ⇒ 误差量级与 Wald 区间",
+        "C8.1/C8.2：马氏链 CLT，方差带 τ_int（MCMC 的有效样本量）",
+        "P8.4：局部 CLT 与 Stirling 中心二项式估计互证",
+        "C6.5：大数律的一致性结论在本单元升级为带速率的误差估计"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 243,
+        "line_end": 245
+      },
+      "fill_hint": "单元级应用词条；每条给「为什么需要它」而非只说「用到了」；H4/C9.1 是主下游，P8.4 是互链，C7.1/C7.2 是反向上游。",
+      "content": "**下游清单**（按依赖强度排序）。\n\n- **`H4` 蒙特卡洛**：切片明示的下游。渲染里「像素估计值 $\\pm$ 误差」这条陈述的全部数学内容就是 CLT：$\\lvert\\bar X_n-I\\rvert\\lesssim\\sigma/\\sqrt n$、置信区间、以及「采样翻四倍减半」的预算法则。**没有本单元，`H4` 只剩「估计量是一致的」这一句**——无法回答「要采多少样」这个真正的工程问题。\n- **`C9.1` 估计量的误差量级**：$\\sqrt n(\\hat\\theta-\\theta)\\Rightarrow N(0,V)$ 是本定理在三角阵列上的版本（见 `C7.3:clt.extension`）；Wald 区间、$p$ 值、样本量计算全部挂在这条上。\n- **`C8.1` / `C8.2` MCMC**：遍历定理（大数律版）保证「时间平均收敛」，但**误差**要用马氏版 CLT，方差多乘 $\\tau_{\\rm int}\\approx2/\\mathrm{gap}$。MLT 在焦散/窄光源下的慢混合，其代价就是这里多出来的 $\\tau_{\\rm int}$。\n- **`P8.4` Stirling**：局部 CLT 在中心二项式上与 Stirling 的 $\\binom{2n}{n}\\sim4^{n}/\\sqrt{\\pi n}$ 给出同一个常数（$n=100$ 时 $0.0797885$），两条独立路线互证——这是本单元与 P 篇之间的实在接口。\n- **`C6.5` 大数律**：本单元是它的**升级**——同样的一致性结论，附加了 $\\sigma/\\sqrt n$ 的速率与钟形的波动分布。代价是多付一阶矩（方差有限）。\n- **`C7.1` / `C7.2`（上游）**：反向依赖。本定理的证明跑在特征函数上（性质 1/2/4 + 连续性定理），且靠 `C7.2` 认出极限。\n\n**一条自检问句**（触发器）：**只要看到「用 $n$ 个样本估一个期望值」，就问三件事**——样本独立吗（否则乘 $\\tau_{\\rm int}$）？方差有限吗（重尾要换稳定分布）？误差条写的是 $\\sigma/\\sqrt n$ 还是 $\\sigma/n$（后者差 $\\sqrt n$ 倍）？",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C7.1",
+        "C7.2",
+        "C7.3",
+        "H4",
+        "C9.1",
+        "C8.1",
+        "C8.2",
+        "C6.5",
+        "P8.4"
+      ]
+    }
+  ]
+}
