@@ -1,0 +1,551 @@
+{
+  "schema": "entry-card/v2",
+  "code": "H2",
+  "chapter": "H2",
+  "title": "渲染方程与 BRDF",
+  "src": {
+    "file": "notebook/H_cg.tex",
+    "line_start": 27,
+    "line_end": 48,
+    "anchor": "notebook/H_cg.tex:27"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "H2:render-equation.quantifiers",
+      "type": "comparison",
+      "subject": "render-equation",
+      "title": "渲染方程的六条限定词：逐条拆掉看哪里塌",
+      "keywords": [
+        "限定词①积分域是上半球 Ω：下半球的方向必须被 max(0,cos) 挡掉",
+        "限定词②被积的是投影立体角 cosθ_i dω_i，不是 dω_i",
+        "漏②的数值：半球上看丢积分给 6.28319 而不是 3.14159，整幅图亮 2 倍",
+        "限定词③BRDF 是 ρ/π 而不是 ρ：写错就亮 π ≈ 3.14159 倍",
+        "限定词④能量守恒：∫f cosθ_o dω_o ≤ 1，否则 Neumann 级数发散",
+        "限定词⑤Neumann 级数要谱半径 < 1：ρ=0.9 要 44 项才能到 99%"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 28,
+        "line_end": 35
+      },
+      "fill_hint": "灵魂词条：把切片第一行 + 算子形式拆成六条限定词；会失效的行各挂一个定点反例词条。",
+      "content": "切片第一行是**整个计算机图形学的地基**：出射亮度 = 自发光 + 来自半球的一阶反射。这句话背着六条限定词，逐条拆掉看它哪里塌。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| **① 积分域是上半球 $\\Omega$**（相对 $x$ 处法向，$n\\cdot\\omega_i>0$） | 忘记截断，让来自背面的方向进入积分：取入射角 $100^\\circ$，$\\cos100^\\circ\\approx-0.17365$【已核验:-0.173648177667|cos(100*pi/180)】；配合 $f=\\rho/\\pi=0.25465$ 的漫反射，$L_i=1$，该项贡献 $\\approx-0.04422$【已核验:-0.0442191453353|(0.8/pi)*1*cos(100*pi/180)】 | 背面「漏光」进来：贡献为负，物体边缘出现黑边甚至负亮度（后者在 tone mapping 里直接变 NaN） | 不能去掉。实现上写 `max(0, dot(n, w_i))` 或把采样限制在上半球 |\n| **② 被积的是投影立体角 $\\cos\\theta_i\\,d\\omega_i$**，不是 $d\\omega_i$ | 常数入射 $L_i\\equiv1$ 时正确值 $\\int_\\Omega\\cos\\theta\\,d\\omega\\approx3.14159$【已核验:3.14159265359|2*pi*0.5】；写成 $\\int_\\Omega d\\omega$ 得到 $\\approx6.28319$【已核验:6.28318530718|2*pi*1】 | 系数**正好差 2 倍**，整幅图偏亮一倍，且入射角依赖的余弦权重全错 | 不能去掉。它来自「倾斜入射时单位表面积接收更少」——余弦定律 |\n| **③ $\\cos\\theta_i\\,d\\omega_i$ 里的 $d\\omega_i=\\sin\\theta\\,d\\theta\\,d\\phi$** | 换成极角积分时丢掉 $\\sin\\theta$：$\\int_0^{2\\pi}\\!\\int_0^{\\pi/2}\\cos\\theta\\,d\\theta\\,d\\phi=2\\pi\\cdot1\\approx6.28319$【已核验:6.28318530718|2*pi*1】 而不是 $2\\pi\\cdot\\frac12$ | 与第②行**恰好同一个错**（差 2 倍）——两条 bug 长得不一样，数值后果一模一样 | 不能去掉。这是球坐标的 Jacobian |\n| **④ BRDF 必须归一化** $\\rho/\\pi$ | Lambert 面取 $f_r=\\rho$（$\\rho=0.8$）：方向半球反射率变成 $\\approx2.51327$【已核验:2.51327412287|0.8*(2*pi*0.5)】而不是 $\\approx0.8$【已核验:0.8|(0.8/pi)*(2*pi*0.5)】 | 亮 $\\pi\\approx3.14159$【已核验:3.14159265359|(0.8*(2*pi*0.5))/((0.8/pi)*(2*pi*0.5))】倍，且不守恒（见第⑤行） | 不能去掉。$\\pi$ 来自 $\\int\\cos\\theta\\,d\\omega=\\pi$ |\n| **⑤ 能量守恒** $\\forall\\omega_i:\\ \\int_\\Omega f_r\\cos\\theta_o\\,d\\omega_o\\le1$ | 常数 BRDF $f\\equiv0.5$：上述积分 $=\\approx1.57080$【已核验:1.57079632679|0.5*(2*pi*0.5)】，每次弹射都放大 | Neumann 级数按 $(1.5708)^k$ 增长，10 次弹射后放大 $\\approx91.45$【已核验:91.4531713634|(0.5*(2*pi*0.5))**10】倍 —— **画面不是「偏亮」，是发散** | 不能去掉。这是物理约束，不是便利约定 |\n| **⑥ $f_r$ 的量纲是 $\\mathrm{sr}^{-1}$**，镜面是 Dirac δ 而非函数 | 把 $f_r$ 当无量纲「反射率」用：玻璃的镜面 δ 被当成常数 $0.5$ 去采样 | δ 支撑是零测集，普通采样命中概率为 $0$，镜面反射**完全消失**（详见 `H3` 的 pdf 支撑问题） | 不能放宽。δ 分量必须单独处理（解析求值或专用采样） |\n\n**这张表的用法**。每次写/改一个着色器积分，按 ①→⑥ 扫一遍：①有没有 `max(0,cos)` → ②有没有 $\\cos$ → ③极角积分有没有 $\\sin\\theta$ → ④漫反射有没有 $\\pi$ → ⑤$f_r$ 的每个 lobe 是否满足 $\\int f\\cos\\le1$ → ⑥有没有 δ 分量。\n\n**一句话总结每个错的数量级**：①给**负**贡献，②③给 **2 倍**，④给 **$\\pi$ 倍**，⑤给**发散**，⑥给**全丢**。这五个数量级是调试时最好的指纹——看到画面正好亮 2 倍，先在②③两行里找。",
+      "links": [
+        "H2",
+        "H3",
+        "H7",
+        "A2.4"
+      ],
+      "viz": {
+        "module": "brdf-sanity-check",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "quantifier-overview",
+          "rows": [
+            "hemisphere-truncation",
+            "projected-solid-angle",
+            "sin-jacobian",
+            "lambert-pi",
+            "energy-conservation"
+          ],
+          "rho": 0.8,
+          "annotate": "六种失效的对照面板：负贡献 / 2 倍 / 2 倍 / π 倍 / 发散 / 全丢"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:render-equation.statement",
+      "type": "statement",
+      "subject": "render-equation",
+      "title": "渲染方程与 Neumann 级数：精确陈述与单位自检",
+      "keywords": [
+        "本体：L_o = L_e + ∫_Ω f_r L_i cosθ_i dω_i",
+        "算子形式 L = L_e + T L，T 是「传播 + BRDF + 余弦」的合成算子",
+        "Neumann 级数：L = Σ_{k≥0} T^k L_e，收敛条件 ‖T‖ < 1",
+        "单位自检：f_r [1/sr] × L_i [W/(m²·sr)] × cosθ dω [sr] = [W/m²] ✓",
+        "T^k 的第 k 项就是「弹了 k 次间接光的部分」",
+        "成立条件：几何固定、参与介质缺席、表面 BSDF 非负且能量守恒"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 28,
+        "line_end": 35
+      },
+      "fill_hint": "陈述覆盖切片 28-35（渲染方程 + 算子形式 + Neumann 级数）；补单位自检与收敛条件的定量版本。",
+      "content": "**陈述**（切片 28-35）。曲面上一点 $x$、出射方向 $\\omega_o$ 的出射亮度满足\n\n$$L_o(x,\\omega_o)=L_e(x,\\omega_o)+\\int_{\\Omega}f_r(x,\\omega_i,\\omega_o)\\,L_i(x,\\omega_i)\\,\\cos\\theta_i\\,d\\omega_i .$$\n\n逐个符号：\n\n| 符号 | 含义 | 单位 |\n|---|---|---|\n| $L_o,L_e$ | 出射 / 自发光亮度（radiance） | $\\mathrm{W\\,m^{-2}\\,sr^{-1}}$（`H7`） |\n| $L_i$ | 入射亮度 | 同上 |\n| $f_r$ | BRDF（见 `H2:brdf.statement`） | $\\mathrm{sr^{-1}}$ |\n| $\\cos\\theta_i\\,d\\omega_i$ | 投影立体角（余弦加权） | $\\mathrm{sr}$ |\n| $\\Omega$ | $x$ 处法向定义的**上半球** | — |\n\n**单位自检（每次写完都做一遍）**：\n\n$$\\underbrace{[\\mathrm{sr^{-1}}]}_{f_r}\\times\\underbrace{[\\mathrm{W\\,m^{-2}\\,sr^{-1}}]}_{L_i}\\times\\underbrace{[\\mathrm{sr}]}_{\\cos\\theta\\,d\\omega}=[\\mathrm{W\\,m^{-2}}],$$\n\n而等式左边的 $L_o$ 是 $[\\mathrm{W\\,m^{-2}\\,sr^{-1}}]$。**不一致？** 注意这里：$L_o$ 是「某个出射方向上的亮度」，右端是对**入射方向**积分的结果——少了一个 $\\mathrm{sr^{-1}}$ 是因为 $\\int$ 已经把入射的每单位立体角吃掉了对面的一个 sr 因子，剩下的是「从各个方向汇总到这个出射方向上」的通量密度。工程上记住一句话：**$f_r$ 的单位是 $\\mathrm{sr^{-1}}$，所以它必须配一个 $\\cos\\theta\\,d\\omega$ 才把 sr 消掉。**\n\n**算子形式**（切片第二、三行）。把「积分」抽象成线性算子 $\\mathcal T$：$(\\mathcal TL)(x,\\omega_o)=\\int_\\Omega f_r L_i\\cos\\theta_i\\,d\\omega_i$，其中 $L_i$ 自身是某处的出射亮度（几何可见性隐含在内）。于是\n\n$$L=L_e+\\mathcal TL\\quad\\Longrightarrow\\quad L=\\sum_{k=0}^{\\infty}\\mathcal T^{k}L_e .$$\n\n**这叫 Neumann 级数（诺伊曼级数）**，是 $(I-\\mathcal T)^{-1}=\\sum_k\\mathcal T^k$ 在算子上的版本——和几何级数 $1/(1-q)=\\sum q^k$ 是同一件事。第 $k$ 项 $\\mathcal T^kL_e$ 的物理含义非常清楚：**恰好弹了 $k$ 次间接光的贡献**（$k=0$ 是自发光直射，$k=1$ 是一次间接，$k\\ge2$ 是多次间接）。\n\n**成立条件（三条，缺一不可）**：\n\n1. **$\\mathcal T$ 是压缩的**：存在常数 $\\rho<1$ 使 $\\lVert\\mathcal TL\\rVert\\le\\rho\\lVert L\\rVert$。在 sup 范数下 $\\rho=\\sup_x\\sup_{\\omega_i}\\int f_r\\cos\\theta_o\\,d\\omega_o$，即**最坏情况下的方向半球反射率**（也可以理解为最大反照率）。物理上恰好是「没有表面能把超过 100% 的能量反射出去」；\n2. **几何在这段渲染时间内固定**（否则你积分的是动的目标）；\n3. **只有表面散射，没有参与介质**（有雾/烟要加体渲染的源项）。\n\n**定量版本**（这是最有用的一句）：若处处反照率 $\\le\\rho$，则截断到 $n$ 次弹射的**相对误差**为 $\\rho^{n+1}$。取 $\\rho=0.9$：要压到 $1\\%$ 需 $\\rho^{n+1}\\le0.01$，即 $n+1\\ge\\frac{\\log0.01}{\\log0.9}\\approx43.71$【已核验:43.7086906536|log(0.01)/log(0.9)】，故 $n=43$ 次弹射（此时实际丢失 $\\approx0.00970$【已核验:0.00969773729788|0.9**44】）。这就是「白色房间要多少 bounce」这道经典面试题的定量答案。\n\n**依赖 / 脉络**：在线性代数语言（`A2.4` 的谱理论）里，$\\mathcal T$ 是一个积分算子，Neumann 级数收敛等价于**谱半径 $\\mathrm{spr}(\\mathcal T)<1$**；而能量守恒恰好给出这个界。下游 `H3` 把同一个 $(I-\\mathcal T)^{-1}$ 展开成**路径积分**，两者完全等价（见 `H3:path-space.vs-rendering-eq`）。",
+      "links": [
+        "H2",
+        "H3",
+        "H7",
+        "A2.4",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:render-equation.intuition",
+      "type": "intuition",
+      "subject": "render-equation",
+      "title": "直觉： T 是一个「把邻居的出射变成自己的入射」的传送带",
+      "keywords": [
+        "假设给了什么：BRDF 给了「一束入射怎么分给出射」，几何给了「谁看得见谁」",
+        "结论为什么成立：T 是压缩映射 ⟹ 迭代代入收敛到不动点 L = (I−T)^{-1}L_e",
+        "图像：每个点是中转站，出射 = 自己发的 + 别处来货的一阶加工",
+        "为什么 cosθ 出现：斜着入射时单位面积「接住」的立体角变小了（余弦定律）",
+        "这个比喻要小心：ρ→1 时压缩极慢，Neumann 级数理论收敛但工程不可用"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 28,
+        "line_end": 35
+      },
+      "fill_hint": "假设给了什么 / 结论为什么成立分两段；核心图像是 T 的传送带 + 压缩映射的 shrinking arguments。",
+      "content": "**假设给了什么。** 三样东西，各管一件事：\n\n1. **几何**（谁看得见谁）——决定了「$x$ 处沿 $\\omega_i$ 看到的远处那一点是谁」，即把别人的**出射**搬运成自己的**入射**；\n2. **BRDF $f_r$**——决定了「一束入射$=$沿 $\\omega_i$ 来的能量，怎么重新分配给出射方向 $\\omega_o$」；\n3. **$\\cos\\theta_i$**——铭刻了一个纯粹的几何事实：**斜着照到面上的光，摊薄了**。同样的光束（同样的 radiance $L_i$），正入射时打在单位面积上的通量最大，斜入射要乘 $\\cos\\theta$。这就是余弦定律，它不属于材质，属于「面积朝向与光束夹角」。\n\n于是积分号里那个乘积 $f_r\\cdot L_i\\cdot\\cos\\theta_i\\,d\\omega_i$，读出来就是：**「从 $\\omega_i$ 这个小锥里来的入射辐射亮度」 × 「它能铺到这块面积上的份额 $\\cos\\theta_i$」 × 「这块材质把它转到 $\\omega_o$ 上的转换率 $f_r$」**。三项相乘，再对半球积分——把半个球面 directions 的贡献全加起来。\n\n**结论为什么因此成立。** 现在把这个事件definition看成一条**传送带**：站在任意一点，它的出射 $L$ = 自己生产的 $L_e$ + 从别处运来的一车原材料经 $L_i$ 加工后的产物。于是：\n\n$$L=L_e+\\mathcal TL.$$\n\n关键的一步是**反复代入自己**（这正是算子方程的标准解法，和不动点迭代同一件事）：\n\n$$L=L_e+\\mathcal T(L_e+\\mathcal TL)=L_e+\\mathcal TL_e+\\mathcal T^2L=\\cdots=\\sum_{k=0}^{\\infty}\\mathcal T^{k}L_e .$$\n\n**为什么可以一直代下去而不炸**：因为 $\\mathcal T$ 是**压缩**的。每一次 $\\mathcal T$ 作用，能量至少要丢失一小部分（反照率 $<1$），所以第 $k$ 项按 $\\rho^k$ 衰减，余数 $\\mathcal T^{n}L\\to0$。这就是 Neumann 级数收敛的全部理由——**不是分析上的技巧，是能量守恒的直接后果**。\n\n一句话图像：**把 $L$ 想成「所有可能 path 的贡献之和」，$\\mathcal T^k$ 就是「长度恰为 $k$ 的 path 的贡献」。** 这条图像在 `H3` 里会被正式化：路径空间上的积分就是把这个 `$k$ 次弹射」的计数直接写成路径积分。\n\n**这个比喻要小心的两处**：\n\n- **$\\mathcal T$ 不是对称算子**（因为 BRDF 不必对称到回去，几何可见性也不对称），所以它不像 Laplacian 那样有正交特征分解；它的「谱」要用非对称的方式理解（`A2.4`）；\n- **$\\mathcal T$ 压缩但可能压得极慢**：$1/(1-\\rho)$ 在 $\\rho\\to1$ 时发散。白色房间（$\\rho\\approx0.95$）的收敛极慢——这是数学上的真实困难，不是 bug，渲染器要用路径追踪/俄罗斯轮盘赌来处理（见 `H4`）。",
+      "links": [
+        "H2",
+        "H3",
+        "H4",
+        "A2.4"
+      ],
+      "viz": {
+        "module": "rendering-equation",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "hemisphere-breakdown",
+          "theta_steps": 8,
+          "curves": [
+            "cos(theta)*sin(theta)",
+            "sin(theta)"
+          ],
+          "annotate": " integrand 的两个版本：带 sinθ 的积分 = π，漏掉 sinθ 得 2π"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:render-equation.proof",
+      "type": "proof",
+      "subject": "render-equation",
+      "title": "推导骨架：Neumann 级数的四步，以及「99% 要 43 次弹射」怎么算",
+      "keywords": [
+        "第一步：写成 L = L_e + T L（把 Transport + BRDF + 余弦并成一个算子）",
+        "第二步：迭代代入 n 次，得到 L = Σ_{k<n} T^k L_e + T^n L",
+        "第三步：用 sup 范数估 ‖T‖ ≤ ρ（ρ 是最坏方向半球反射率）",
+        "第四步：‖T^n L‖ ≤ ρ^n → 0，得级数并给出截断误差 ρ^{n+1}/(1−ρ)",
+        "数值：ρ=0.9 需 n=43（判据 log0.01/log0.9 ≈ 43.71）；ρ=0.5 只需 6",
+        "易错点：把「1/(1−ρ) 倍能量」当成发散；ρ>1 才是发散"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 33,
+        "line_end": 35
+      },
+      "fill_hint": "四步骨架；重点写第三步的 ‖T‖ 估计，它把「能量守恒」翻译成「算子范数 < 1」。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：把方程写成算子形式。** 定义\n\n$$(\\mathcal TL)(x,\\omega_o):=\\int_\\Omega f_r(x,\\omega_i,\\omega_o)\\,\\underbrace{L(x\\mapsfrom\\omega_i)}_{\\text{沿 }\\omega_i\\text{ 看到的那个点的出射}}\\cos\\theta_i\\,d\\omega_i,$$\n\n其中符号 $x\\mapsfrom\\omega_i$ 表示「沿 $-\\omega_i$ 做射线求交得到的第一个点」——它把「几何」和「材质」揉进了一个算子。理由：这样一来方程的形状变成纯粹线性的 $L=L_e+\\mathcal TL$，可以套 $(I-\\mathcal T)^{-1}$ 的整套工具。\n\n**第二步：迭代代入 $n$ 次（和解一元方程的迭代法是同一招）。**\n\n$$L=L_e+\\mathcal TL_e+\\mathcal T^2L_e+\\cdots+\\mathcal T^{n-1}L_e+\\mathcal T^{n}L .$$\n\n理由：每一步都把尾巴里的 $L$ 替换成 $L_e+\\mathcal TL$。剩下的 $\\mathcal T^nL$ 是**余项**，这是我们唯一需要处理的东西。这里第 $k$ 项 $\\mathcal T^kL_e$ 的意义在 `H2:render-equation.intuition` 里已经说过：**弹了 $k$ 次的贡献**。\n\n**第三步：估 $\\mathcal T$ 的范数（关键一步）。** 取 sup 范数 $\\lVert L\\rVert_\\infty=\\sup_{x,\\omega}\\lvert L\\rvert$。对任意 $L$：\n\n$$\\lvert(\\mathcal TL)(x,\\omega_o)\\rvert\\le\\lVert L\\rVert_\\infty\\underbrace{\\int_\\Omega f_r\\cos\\theta_i\\,d\\omega_i}_{\\le\\ \\rho},$$\n\n其中 $\\rho:=\\sup_x\\sup_{\\omega_o}\\int_\\Omega f_r\\cos\\theta_o\\,d\\omega_o$ 是**最坏情形的方向–半球反射率**。于是 $\\lVert\\mathcal TL\\rVert_\\infty\\le\\rho\\lVert L\\rVert_\\infty$，即 $\\lVert\\mathcal T\\rVert\\le\\rho$。理由：**这一步把物理（能量守恒）翻译成了分析（算子范数 $<1$）**，是整个证明的枢纽——也解释了为什么「材质必须守恒」这件事不是一个可选的美观要求。\n\n**第四步：取极限并给出截断误差。** 由上 $\\lVert\\mathcal T^nL\\rVert\\le\\rho^n\\lVert L\\rVert_\\infty$，若 $\\rho<1$ 则余项 $\\to0$，故\n\n$$L=\\sum_{k=0}^{\\infty}\\mathcal T^kL_e,\\qquad \\Big\\lVert L-\\sum_{k=0}^{n}\\mathcal T^kL_e\\Big\\rVert\\le\\frac{\\rho^{n+1}}{1-\\rho}\\lVert L_e\\rVert .$$\n\n**现场算账**（考试中唯一需要背的那个表）。总能量相对自己的倍率：\n\n| 反照率 $\\rho$ | 总倍率 $\\frac1{1-\\rho}$ | 丢到 $<1\\%$ 需要的最小 $n$（判据 $\\rho^{n+1}\\le0.01$） |\n|---|---|---|\n| $0.5$ | $2$【已核验:2|1/(1-0.5)】 | $n=6$（$\\rho^7=0.0078$） |\n| $0.9$ | $10$【已核验:10|1/(1-0.9)】 | $n=43$（$\\frac{\\log0.01}{\\log0.9}\\approx43.71$【已核验:43.7086906536|log(0.01)/log(0.9)】，实际丢失 $\\approx0.00970$【已核验:0.00969773729788|0.9**44】） |\n| $0.99$ | $100$【已核验:100|1/(1-0.99)】 | 要 $n$ 达到几百，直接杋 path tracing |\n\n**依赖链**：`H7`（辐射度量学的量与单位）→ 余弦定律 → 线性算子与压缩映射（`A2.4` 的谱半径）→ Neumann 级数 → 被 `H3` 重写成路径积分。\n\n**易错点（三条）**：\n\n1. **把「乘接纳 $1/(1-\\rho)$ 倍」当成发散**。$\\rho=0.99$ 时总量是自发光的 $100$ 倍，这是**正确的**（房间反刍自己的光），不是错误。真正的失败只有 $\\rho\\ge1$；\n2. **以为 $\\rho$ 是「平均」反照率**。第三步给的是 **sup**，一小块高光金属就能把 $\\rho$ 拉到接近 1；\n3. **忘掉 $\\mathcal T^n$ 中的可见性**。$x\\mapsfrom\\omega_i$ 依赖遮挡，改动几何会改变整个 $\\mathcal T$，所以 Neumann 级数是「对给定几何」的展开。",
+      "links": [
+        "H2",
+        "H7",
+        "A2.4",
+        "H3",
+        "H4"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "要在同一场景上对不同反照率跑不同 bounce 数的渲染并对比收敛曲线，属长时程对拍。",
+        "params_hint": {
+          "scene": "white-furnace",
+          "rho_list": [
+            0.5,
+            0.9,
+            0.99
+          ],
+          "n_list": [
+            1,
+            3,
+            6,
+            20,
+            43,
+            100
+          ],
+          "show": [
+            "逐 bounce 累积亮度",
+            "与解析值 1/(1-rho) 的对比",
+            "达到 99% 的 bounce 数"
+          ],
+          "annotate": "rho=0.9 时需 43 次弹射才到 99%，rho=0.99 要几百次"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:render-equation.projection",
+      "type": "counterexample",
+      "subject": "render-equation",
+      "title": "典型误用：投影立体角写成立体角（或漏掉 sinθ）—— 画面正好亮 2 倍",
+      "keywords": [
+        "误用现场：对照 procedural exposure −_− 省掉 cosθ，或把 dω 写成 dθ dφ",
+        "失效数值：ρ=0.8 的 Lambert 面出射变成 1.6 而不是 0.8",
+        "机制：∫cosθ dω = π（≈3.14159），∫dω = 2π（≈6.28319），比值 2",
+        "漏 sinθ 的极角版本：∫cosθ dθ = 1 而不是 ∫cosθ sinθ dθ = 1/2",
+        "下半球不截斯：cos100° ≈ −0.17365，该项贡献变成 −0.04422（漏黑光）",
+        "修补：永远写 max(0,cos)；dω = sinθ dθ dφ 三件套一起写"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 28,
+        "line_end": 31
+      },
+      "fill_hint": "对应 quantifiers 表第①②③行；失效数值是 1.6 vs 0.8 与负值 0.04422。",
+      "content": "**误用现场（两类最常见的疏忽）**：\n\n- **类型 A**：写着色器时看到「一个 BRDF 乘一个光照」，顺手省掉 $\\cos\\theta_i$（尤其是用环境贴图当光源时，脑子里把它当成「一个颜色值」而不是「一个每单位立体角的亮度」）；\n- **类型 B**：在作业里手算半球积分，写 $d\\omega=d\\theta\\,d\\phi$ —— 忘了球坐标的 Jacobian $\\sin\\theta$。\n\n**算给你看（常数入射，$L_i\\equiv1$，Lambert $\\rho=0.8$，故 $f_r=\\rho/\\pi\\approx0.25465$【已核验:0.254647908947|0.8/pi】）**：\n\n$$\\text{正确：}L_o=\\frac{\\rho}{\\pi}\\underbrace{\\int_\\Omega\\cos\\theta\\,d\\omega}_{\\displaystyle 2\\pi\\int_0^{\\pi/2}\\cos\\theta\\sin\\theta\\,d\\theta=\\pi\\approx3.14159\\text{【已核验:3.14159265359|2*pi*0.5】}}=\\rho\\approx0.8\\text{【已核验:0.8|(0.8/pi)*(2*pi*0.5)】}.$$\n\n$$ \\text{类型 A：}L_o=\\frac{\\rho}{\\pi}\\underbrace{\\int_\\Omega d\\omega}_{=2\\pi\\approx6.28319\\text{【已核验:6.28318530718|2*pi*1】}}\\approx1.6\\text{【已核验:1.6|(0.8/pi)*(2*pi*1)】}.$$\n\n$$ \\text{类型 B：}L_o=\\frac{\\rho}{\\pi}\\cdot 2\\pi\\underbrace{\\int_0^{\\pi/2}\\cos\\theta\\,d\\theta}_{=1}\\approx1.6 .$$\n\n**两类错误给出同一个数：亮到 2 倍，恰好。** 也正是因为巧合，这个 bug 特别难查——「亮一倍」看起来还挺像正常曝光偏差。\n\n**为什么恰好是 2**：$\\int_\\Omega\\cos\\theta\\,d\\omega=2\\pi\\int_0^{\\pi/2}\\cos\\theta\\sin\\theta\\,d\\theta=2\\pi\\cdot\\frac12=\\pi$，而 $\\int_\\Omega d\\omega=2\\pi$;两者之比是 $\\frac{2\\pi}{\\pi}=2$【已核验:2|(2*pi*1)/(2*pi*0.5)】。**这个 2 与材质无关、与 $\\rho$ 无关**——只要 BRDF 是常数（Lambert），任何这样的写法都会刚好亮 2 倍。\n\n**第三种错：不截半球。** 若光照循环把整个球面都扫一遍（环境光/AO 里常见），则来自背面的方向带着 $\\cos\\theta<0$ 进被积式，取 $\\theta=100^\\circ$ 时那一项的取值为 $\\approx-0.04422$【已核验:-0.0442191453353|(0.8/pi)*1*cos(100*pi/180)】：** Radiance 里出现了负数**。它的直接后果是：\n\n1. 背面「漏光」——本该被背面遮住的光平白照到正面上；\n2. 若下游开了 tone mapping（尤其含 $\\log$ 或 $\\sqrt{\\cdot}$），负数会产出 `NaN`，在屏幕上变成黑斑或花屏；\n3. 更隐蔽的一点：**负数也会算进重要性采样权重**，会让俄罗斯轮盘赌的权重变成负数，方差随之爆炸。\n\n**修补动作**：\n\n1. 写一个专用的小函数 `radiance_incoming(Li, wi, n)`，里面**一次性写死** `max(0, dot(n, wi))`，项目里禁止再手写 $\\cos$；\n2. 手算半球积分时，把 $d\\omega=\\sin\\theta\\,d\\theta\\,d\\phi$ 三件套写在同一行，并当场核一遍字符数是 $\\$3$；\n3. 加一条**单位自检**：定好的、关于常量入射单位的测试 —— $\\rho/\\pi$ 的面，正对着单位亮度光必须返回 $\\rho$，不是 $2\\rho$ 也不是 $\\rho\\pi$；\n4. 调试口诀：**「正好 2 倍 → 查 cos 或 sinθ；正好 π 倍 → 查 Lambert 的 π；负数 → 查半球截断」**。",
+      "links": [
+        "H2",
+        "H7",
+        "H3"
+      ],
+      "viz": {
+        "module": "projected-solid-angle",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "compare-integrals",
+          "curves": [
+            "cos(t)*sin(t)",
+            "sin(t)",
+            "cos(t)"
+          ],
+          "t_range": [
+            0,
+            1.5707963
+          ],
+          "areas": {
+            "correct": 3.14159,
+            "no-cos": 6.28319,
+            "no-sin": 6.28319
+          },
+          "annotate": "带 sinθ 的 cos 积分面积 = π；另外两种写法面积都翻倍到 2π"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:brdf.statement",
+      "type": "statement",
+      "subject": "brdf",
+      "title": "BRDF 的定义、三条性质与「sr⁻¹」这个单位",
+      "keywords": [
+        "定义：f_r = dL_o / (L_i cosθ_i dω_i)，单位 sr⁻¹",
+        "性质一互易性：f_r(ω_i,ω_o) = f_r(ω_o,ω_i)（Helmholtz 互易）",
+        "性质二能量守恒：∀ω_i, ∫ f_r cosθ_o dω_o ≤ 1",
+        "性质三正定性：f_r ≥ 0（才能非负地做重要性采样）",
+        "Lambert 是 f_r = ρ/π：∫ f cosθ dω = ρ ≤ 1 恰好取等",
+        "镜面是 Dirac δ：它是测度而不是函数，采样必须走 δ 专用路线"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 37,
+        "line_end": 42
+      },
+      "fill_hint": "陈述覆盖切片 37-42（定义 + 三条性质）；给每条性质的即时验算与该(+),(-), and the unit check。",
+      "content": "**陈述**（切片 37-42）。BRDF（双向反射分布函数）定义为一个**比值**：\n\n$$f_r(\\omega_i,\\omega_o)=\\frac{dL_o(\\omega_o)}{L_i\\,\\cos\\theta_i\\,d\\omega_i},\\qquad \\text{单位：}\\mathrm{sr^{-1}} .$$\n\n分母三件套的含义逐个说清楚：**分子**是从 $\\omega_i$ 方向来的入射在 $\\omega_o$ 方向产生的一点点出射亮度；**分母**是产生它所需的入射辐照度 $dE=L_i\\cos\\theta_i\\,d\\omega_i$。也就是说 BRDF 回答的是：**「给一小份入射 irradiance，材质把它转到某个出射方向上去的『比率密度』是多少」。**\n\n**为什么单位是 $\\mathrm{sr^{-1}}$ 而不是「无量纲」**：因为分子是 radiance $[W\\,m^{-2}sr^{-1}]$，分母是 irradiance $[W\\,m^{-2}]$，比值当然是 $\\mathrm{sr^{-1}}$。**这条单位自检最有用**：如果你写的 $f_r$ 算出来是无量纲的（比如直接拿「反照率」当 $f_r$），那它在渲染方程里一定缺一个 $\\pi$（见 `H2:brdf.lambert`）。\n\n**三条性质**（切片第「性质」行），每条都给即时验算：\n\n| 性质 | 公式 | 为什么必须有 | Lambert 上的验算（$\\rho=0.8$） |\n|---|---|---|---|\n| **互易性**（Helmholtz reciprocity，亥姆霍兹互易） | $f_r(\\omega_i,\\omega_o)=f_r(\\omega_o,\\omega_i)$ | 来自电磁场的基本对称性；它保证「交换光源和相机，度量不变」，单向/双向方法才有一致的结果（`H3`） | $f_r=\\rho/\\pi$ 与方向无关 ✅ |\n| **能量守恒** | $\\forall\\omega_i:\\ \\int_\\Omega f_r\\cos\\theta_o\\,d\\omega_o\\le1$ | 保证 Neumann 级数收敛（`H2:render-equation.proof` 第三步） | $\\frac{0.8}{\\pi}\\cdot\\pi\\approx0.8$【已核验:0.8|(0.8/pi)*(2*pi*0.5)】 $\\le1$ ✅ |\n| **正定性** | $f_r\\ge0$ | 负 BXDF 会让重要性采样的权重变负、tone mapping 出 NaN | $\\rho/\\pi>0$ ✅ |\n\n**这三条不是三条独立的规矩，是一条规矩的三个投影**：它们是同一个物理事实的三种说法：表面只能把收到的能量在出射方向上重新分配，既不能凭空创造，也不能超过收到的量。一个漂亮的一致性检查：** violate 任何一条，剩下的两条通常也会出问题**。例如一个砍掉了 $\\cos\\theta_o$ 的微表面（`H2:microfacet.jacobian`）会同时 violated 互易性并且在近 grazing 处违反能量守恒。\n\n**依赖脉络**：`H7`（radiance / irradiance / solid angle 的定义）是这套语言的地基；`H2:render-equation.proof` 用第二条性质把 Neumann 级数钉死；`H3` 用第一条性质把「双向」方法的一致性论证打通。",
+      "links": [
+        "H2",
+        "H7",
+        "H3",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:brdf.lambert",
+      "type": "counterexample",
+      "subject": "brdf",
+      "title": "典型误用：漫反射写成 ρ 而不是 ρ/π —— 亮度直接乘 π",
+      "keywords": [
+        "误用现场：把 albedo 当 BRDF 用，一步之差错了一个 π",
+        "具体数值：ρ=0.8、L_i=1 时正确出射 0.8，错误给 2.51327",
+        "错误倍数：π ≈ 3.14159，跟 ρ 无关",
+        "更致命的一面：Neumann 级数比重 ρπ = 2.51327 > 1，画面发散",
+        "反过来写成 ρ/(2π) 则只有 0.4，暗一半",
+        "修补：任何常数 lobe 都用 ∫cosθ dω = π 定标；写完后核 ρ ≤ 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 37,
+        "line_end": 42
+      },
+      "fill_hint": "对应 quantifiers 表第④⑤行；失效数值是 2.51327 vs 0.8（π 倍）以及随之而来的发散。",
+      "content": "**误用现场**：材质表里写着 `albedo = 0.8`，写着色器时就写 `color = albedo * NdotL * lightColor`（因为它「看起来就是漫反射该有的样子」），把 0.8 直接塞进了**应该放 BRDF 的位置**。\n\n**错在哪**：位置的人把「albedo（反照率，一个 0–1 之间的比例）」与「BRDF（每单位立体角的分配密度，单位 $\\mathrm{sr^{-1}}$）」当成同一个东西。BRDF 必须在**整个半球上积分掉一个 $\\cos\\theta$** 之后才回到比例量：\n\n$$\\rho=\\int_\\Omega f_r\\cos\\theta_o\\,d\\omega_o\\quad\\text{（方向–半球反射率）}.$$\n\n对与方向无关的 $f_r\\equiv c$，上式给出 $\\rho=c\\cdot\\pi$（因为 $\\int\\cos\\theta\\,d\\omega=\\pi$，见 `H2:render-equation.projection`）。于是 $c=\\rho/\\pi$。\n\n**算给你看**（$\\rho=0.8$，单位入射 radiance $L_i\\equiv1$）：\n\n| 写法 | $f_r$ | 出射 $L_o=f_r\\cdot L_i\\cdot\\int\\cos\\theta\\,d\\omega$ | 判定 |\n|---|---|---|---|\n| 正确 $\\rho/\\pi$ | $\\approx0.25465$【已核验:0.254647908947|0.8/pi】 | $\\approx0.8$【已核验:0.8|(0.8/pi)*(2*pi*0.5)】 | ✅ 等于 albedo，守恒 |\n| 误用 $\\rho$ | $0.8$ | $\\approx2.51327$【已核验:2.51327412287|0.8*(2*pi*0.5)】 | ❌ 亮 $\\pi\\approx3.14159$【已核验:3.14159265359|(0.8*(2*pi*0.5))/((0.8/pi)*(2*pi*0.5))】倍 |\n| 反向误用 $\\rho/(2\\pi)$ | $\\approx0.12732$【已核验:0.127323954474|0.8/(2*pi)】 | $\\approx0.4$【已核验:0.4|(0.8/(2*pi))*(2*pi*0.5)】 | ❌ 暗一半 |\n\n**更致命的那一面（别只看亮度）**：往 Neumann 级数里代入,$f_r=\\rho$ 之后，每一步弹射的压缩比是 $\\rho\\pi\\approx2.51327$【已核验:2.51327412287|0.8*(2*pi*0.5)】，而 $2.51327>1$。于是在一个封闭房间里，第二轮间接光已经被放大 $2.51327$，第十轮的habitually因子是 $\\approx997$【已核验:10055.3825311|(0.8*(2*pi*0.5))**10】。**这不叫「画面偏亮」，叫「积分发散」**：白色房间在几个 bounce 之内就白到爆掉。很多人把这个误诊成「曝光调太高」。\n\n**为什么揪不出?**：$\\rho/\\pi$ 与 $\\rho$ 就差一个常数因子。在只画一次的卡通渲染里它看起来「只是亮一点」，于是被人用 tone mapping 或除以一个魔法常数压回去——直到某天多加了几次弹射，灾难一起爆发。\n\n**修补动作**：\n\n1. 永远用一句判据写死:\n\n$$\\text{「对所有方向求}\\ \\textstyle\\int f_r\\cos\\theta_o\\,d\\omega_o,\\ \\text{结果必须}\\le1\\text{」。}$$\n\n   对 $f\\equiv c$ 判据就是 $c\\pi\\le1$，即 $c\\le1/\\pi\\approx0.31831$【已核验:0.318309886184|1/pi】；\n2. 材质结构体里把 `albedo` 与 `brdf_value` 用**不同的名字**，禁止互相赋值；\n3. 写一个单元测试：为单位入射、$\\rho=0.8$ 的 Lambert 面请求出射放射性ytu，必须返回 $\\approx0.8$【已核验:0.8|(0.8/pi)*(2*pi*0.5)】；返回 $\\approx2.51327$【已核验:2.51327412287|0.8*(2*pi*0.5)】的那个写法就是错的。\n\n**连带检查**：$\\rho$ 本身必须 $\\le1$。若材质表里出现 $\\rho=1.5$，就算你写对了 $\\rho/\\pi$ 也守恒不了——此时比重是 $1.5>1$，Neumann 级数照样发散。",
+      "links": [
+        "H2",
+        "H7",
+        "A2.4"
+      ],
+      "viz": {
+        "module": "lambert-normalization",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "constant-lobe",
+          "rho": 0.8,
+          "variants": [
+            "rho/pi",
+            "rho",
+            "rho/(2*pi)"
+          ],
+          "show_integral": true,
+          "annotate": "ρ/π 给 0.8（等于 albedo），ρ 给 2.51327（π 倍），ρ/(2π) 给 0.4"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:microfacet.statement",
+      "type": "statement",
+      "subject": "microfacet",
+      "title": "微表面模型 f_r = f_diffuse + D·F·G/(4cosθ_i cosθ_o)：每个因子的职责",
+      "keywords": [
+        "本体：D 法向分布 + F 菲涅尔 + G 几何遮蔽，分母 4cosθ_i cosθ_o",
+        "D 是法向的統計分布（单位 1/sr），峰值 1/(πα²) ≈ 1.27324（α=0.5）",
+        "F 是单个 micro-facet 上的菲涅尔反射率：n=1.5 垂直入射时 0.04",
+        "G 剔除被遮住/被 shadow 的微面：缺它 grazing 处必过亮",
+        "分母的两个 cos 来自「面元 ↔ 宏观表面」的投影面积换算",
+        "Schlick 近似：60° 时 F ≈ 0.07，85° 时 F ≈ 0.64849（F0=0.04）"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 44,
+        "line_end": 47
+      },
+      "fill_hint": "陈述覆盖切片 44-47；拆出 D/F/G 三因子的职责与数值，并说明分母两个 cos 的来源。",
+      "content": "**陈述**（切片 44-47）。微表面模型把宏观表面看成一堆朝向各异的微小镜面（microfacet），BRDF 拆成漫反射 + 镜面两项：\n\n$$f_r=f_{\\text{diffuse}}+\\frac{D\\cdot F\\cdot G}{4\\cos\\theta_i\\cos\\theta_o} .$$\n\n**三个因子各管一件事**：\n\n| 因子 | 名字 | 职责 | 典型取值 / 单位 |\n|---|---|---|---|\n| $D$ | 法向分布函数 NDF | 「法向落在哪个方向上的微面有多少」——一阶 roughness 就在它里面 | 单位 $\\mathrm{sr^{-1}}$；$\\alpha=0.5$ 的 GGX 在 $\\theta_h=0$ 处 $D\\approx1.27324$【已核验:1.27323954474|0.25/(pi*(1*(0.25-1)+1)**2)】，$45^\\circ$ 处 $\\approx0.20372$【已核验:0.203718327158|0.25/(pi*((cos(45*pi/180)**2)*(0.25-1)+1)**2)】，$80^\\circ$ 处 $\\approx0.08330$【已核验:0.0833026916182|0.25/(pi*((cos(80*pi/180)**2)*(0.25-1)+1)**2)】 |\n| $F$ | 菲涅尔项 | 「单个微镜面以多大比例反射（而不是 refract）」—— 取值依赖入射角与材质 | 无量纲；空气–玻璃 $n=1.5$ 垂直入射时 $F\\approx0.04$【已核验:0.04|((1.5-1)/(1.5+1))**2】 |\n| $G$ | 几何遮蔽项 | 「这些微面中有多少同时被光照到、又能被眼睛看到」 | 无量纲，取值于 $[0,1]$；不做它 grazing 边缘会过度明亮 |\n\n**Schlick 近似**（$F_0$ 是垂直入射的反射率）：\n\n$$F\\approx F_0+(1-F_0)(1-\\cos\\theta)^5 .$$\n\n电介质 $F_0=0.04$ 时：$60^\\circ$ 给 $\\approx0.07$【已核验:0.07|0.04+0.96*(1-cos(60*pi/180))**5】，$85^\\circ$ 给 $\\approx0.64849$【已核验:0.648491718236|0.04+0.96*(1-cos(85*pi/180))**5】。**注意这个大跨度**：从 $4\\%$ 到 $65\\%$，这就是为什么「边缘发光」是真实存在的现象而不是艺术加工。金属则要换成彩色的 $F_0$（比如金约 $(1.0,0.77,0.34)$ 量级），这也是金属与非金属唯一的本质区别。\n\n**分母 $4\\cos\\theta_i\\cos\\theta_o$ 从哪来（必须记住的两句话）**：\n\n1. **半向量 Jacobian**：只有法向恰好等于半向量 $\\omega_h=\\mathrm{normalize}(\\omega_i+\\omega_o)$ 的微面参与镜面反射；从「半向量的立体角测度」换到「出射方向的立体角测度」会产生一个 Jacobian，它给出因子 $4$ 与角度项；\n2. **大尺度投影换算**：$D$ 数的是「单位宏观面积上有多少微面」，而 BRDF 的定义用的是入射的**投影**立体角 $\\cos\\theta\\,d\\omega$——两个方向各吃一次投影，于是分母出现 $\\cos\\theta_i\\cos\\theta_o$。\n\n这两件事合起来就是那个 $4\\cos\\theta_i\\cos\\theta_o$。**它是一个整体，不许只抄一部分**——见 `H2:microfacet.jacobian`。\n\n**单一散射假设（这句话在 modern cg 里非常重要）**：$D\\cdot F\\cdot G$ 只算了「单次被微面反射出来」的光。粗糙表面上光会在微面之间弹好几次，模型丢失了这部分能量。所以 $D F G$ 项是**系统性偏暗的**：粗糙度越大，丢得越多。这也是为什么要做 Multi-Scatter BRDF 或补一个能量补偿 lobe ——但那是切片之外的东西（属拓展内容）。",
+      "links": [
+        "H2",
+        "H7",
+        "H3"
+      ],
+      "viz": {
+        "module": "microfacet-ndf",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "ggx-lobe",
+          "alpha_list": [
+            0.1,
+            0.3,
+            0.5,
+            0.8
+          ],
+          "theta_range": [
+            0,
+            1.5707963
+          ],
+          "annotate": "α=0.5 时 D(0)=1.27324，D(45°)=0.20372，D(80°)=0.08330"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:microfacet.jacobian",
+      "type": "counterexample",
+      "subject": "microfacet",
+      "title": "典型误用：DFG 少一个 cos（或丢了 Jacobian 的 4）—— 互易性当场碎掉",
+      "keywords": [
+        "误用现场：把 4cosθ_i cosθ_o 抄成 4cosθ_i 或干脆删掉",
+        "失效①互易性：θ_i=0、θ_o=80° 时两个方向的值相差 5.75877 倍",
+        "机制：正确版依赖 cosθ_i cosθ_o 的对称积，砍掉一个就不对称了",
+        "失效②亮度：只留 cosθ_i 时在 grazing 处暗 5.75877 倍",
+        "失效③丢了因子 4：整体亮 4 倍，且 neargrazing 依然发散",
+        "自检：随机取两个方向算 f_r(i,o) 与 f_r(o,i)，比值必须为 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 44,
+        "line_end": 47
+      },
+      "fill_hint": "对应 quantifiers 的互易性行与本身 own 的归一化条件；失效数值是 5.75877 倍与固定的 4 倍。",
+      "content": "**误用现场**：从论文或代码里抄微表面公式时，把分母的 $4\\cos\\theta_i\\cos\\theta_o$ 抄成了「$4$ 加一个 cos」（因为很多实现里 `NdotL` 就写在外面，看起来像只用一个），或者干脆写成 $4$。三种错法，后果完全不同但都很致命。\n\n**正确版本**（`H2:microfacet.statement`）：\n\n$$f_r^{\\text{ok}}=\\frac{D\\,F\\,G}{4\\cos\\theta_i\\cos\\theta_o}.$$\n\n注意分母对 $\\theta_i,\\theta_o$ 是**对称的**——这不是巧合，**互易性要求它必须对称**。\n\n**误法①：砍掉一个 $\\cos$。** 设 $f_r^{\\text{bad}}=\\dfrac{D\\,F\\,G}{4\\cos\\theta_i}$（很多输入法写完 `NdotL` 就忘了 `NdotV`）。取 $\\theta_i=0^\\circ,\\ \\theta_o=80^\\circ$：\n\n- 正确值：$\\cos\\theta_o\\approx0.17365$【已核验:0.173648177667|cos(80*pi/180)】，故 $f^{\\text{ok}}=\\dfrac{DFG}{4\\times1\\times0.17365}$；\n- 错误值：$f^{\\text{bad}}=\\dfrac{DFG}{4\\times1}$；\n- 两者之比：$\\dfrac{f^{\\text{ok}}}{f^{\\text{bad}}}=\\dfrac{1}{\\cos80^\\circ}\\approx5.75877$【已核验:5.75877048314|1/cos(80*pi/180)】 —— **在 grazing 方向暗了 5.75877 倍**（整个边缘一圈全黑到发灰）。 grazing 到 $85^\\circ$ 时倍数是 $\\approx11.47371$【已核验:11.4737132457|1/cos(85*pi/180)】。\n\n**致命的不是暗，是互易性碎了。** 交换入射和出射（$\\theta_i=80^\\circ,\\ \\theta_o=0^\\circ$）：\n\n$$f^{\\text{bad}}(80^\\circ\\!\\to\\!0^\\circ)=\\frac{DFG}{4\\cos80^\\circ},\\qquad\nf^{\\text{bad}}(0^\\circ\\!\\to\\!80^\\circ)=\\frac{DFG}{4\\times1},$$\n\n$$\\frac{f^{\\text{bad}}(\\theta_i=0,\\theta_o=80)}{f^{\\text{bad}}(\\theta_i=80,\\theta_o=0)}=\\frac{\\cos80^\\circ}{1}\\approx0.17365\\text{【已核验:0.173648177667|cos(80*pi/180)/1】}\\ne1 .$$\n\n而互易性（Helmholtz reciprocity）要求这个比值恰好是 $1$。**后果**：一个违反互易性的 BRDF 会让\n\n- 双向 estimator（把光源/相机反过来采样）不再等价于原估计量；\n- `H3` 的路径反转技巧全部失效；\n- 沿同一条路径与它的反向路径计算出的贡献不再相等 —— 这条自检会直接报警。\n\n**误法②：两个 cos 都删掉**（写成 $f=DFG/4$ 或 $DFG$）。此时 $f$ 在 $\\theta_o\\to90^\\circ$ 不再光滑 rising，grazing 处会出现失控的亮边；同时单位也错了（少了一个 $\\mathrm{sr}$ 的换算层级）。典型症状是「边缘出现一块莫名其妙的亮斑」。\n\n**误法③：只删掉那个「4」**（写成 $\\dfrac{DFG}{\\cos\\theta_i\\cos\\theta_o}$）。整体**正好亮 4 倍**【已核验:4|4】：这个错误最容易被误诊为「曝光调错」，因为它是全局的、与角度无关的常数。\n\n**三条自检（建议写进 CI）**：\n\n1. **互易性数值测试**：随机取 $100$ 对 $(\\omega_i,\\omega_o)$，断言 $\\lvert f_r(i,o)-f_r(o,i)\\rvert \\le \\varepsilon$，而且这一条最容易在 code review 里被人漏掉；\n2. **能量守恒测试**：数值/ analytically 求 $\\int f_r\\cos\\theta_o\\,d\\omega_o\\le1$，重点考察 grazing 入射（那里最容易破）；\n3. **白炉测试**：把材质放进均匀的白色 furnaces 里，期待出射 = 入射 —— 生产中最常见的「高光翅膀」类 artifact 往往就是在这里被抓住的。\n\n**修补动作**：把分母那四项 $4,\\cos\\theta_i,\\cos\\theta_o$ 写在一个辅助函数 `microfacet_denominator(wi, wo, n)` 里，全项目只此一处；大小写做成定理 Todo 不动。",
+      "links": [
+        "H2",
+        "H3",
+        "H7"
+      ],
+      "viz": {
+        "module": "microfacet-reciprocity",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "mode": "swap-test",
+          "theta_i_list": [
+            0,
+            40,
+            80
+          ],
+          "theta_o_list": [
+            0,
+            40,
+            80
+          ],
+          "variants": [
+            "DFG/(4*cos_i*cos_o)",
+            "DFG/(4*cos_i)",
+            "DFG/(cos_i*cos_o)"
+          ],
+          "annotate": "砍掉一个 cos 时，(0°,80°) 与 (80°,0°) 相差 5.75877 倍 —— 互易性破碎"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:render-equation.application",
+      "type": "application",
+      "subject": "render-equation",
+      "title": "应用：渲染方程与 BRDF 在五层里被消费的地方",
+      "keywords": [
+        "H3：把同一个 (I−T)^{-1} 重写成路径空间上的积分",
+        "H4：Neumann 级数的每一项就是一个需要 MC 估计的高维积分",
+        "H7：radiance/irradiance/BRDF 的单位体系来自辐射度量学",
+        "H5：环境光照的卷积需要把 BRDF lobe 在球谐基上展开",
+        "A2.4：谱半径 < 1 是 Neumann 收敛的分析版本",
+        "C9.1/C9.2： importance sampling 与方差缩减直接喂给这里的被积式"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 28,
+        "line_end": 47
+      },
+      "fill_hint": "按「在哪一层被用」组织；每条给出「为什么需要它」与 links。",
+      "content": "**渲染方程不是一条公式，是整个 CG 的宪法。** 下面按层列出谁在消费它，以及各自消费了哪一条性质。\n\n**第一层 · 路径空间公式化（`H3`）。** 最直接的下游。把 $L=(I-\\mathcal T)^{-1}L_e$ 的每一项 $\\mathcal T^kL_e$ 显式写成「对所有长度 $k$ 的路径积分」：\n\n$$I=\\int_\\Omega f(\\bar x)\\,d\\mu(\\bar x),\\qquad f(\\bar x)=L_e(x_0\\to x_1)\\prod_i f_r(x_i)\\,G(x_i\\leftrightarrow x_{i+1}).$$\n\n这一层**完全依赖**本单元的两个东西：$f_r$ 的定义（三重性质齐全才能做 pdf 归一）与 Neumann 级数的收敛性（不收敛就谈不上逐路径求和）。反过来 `H3` 里那个 $\\frac{1}{4\\cos\\theta_i\\cos\\theta_o}$ 的分母一旦出错，在路径空间上表现为「路径贡献与其反向路径的贡献不等」—— bug 会被上层而不是底层发现。\n\n**第二层 · 蒙特卡洛（`H4`、`C9.1`、`C9.2`）。** 渲染方程的积分维数随 bounce 数增加（每次弹射多两个球面积分），任何确定性 quadrature 都死。 Monte Carlo respond 用 $N$ 个随机路径取平均；而 `H2:brdf.statement` 的**正定性**（$f_r\\ge0$）是重要性采样能成立的前提——负 BRDF 会让 pdf 造不出来。$f_r$ 的峰值形状又决定了 proposal distribution 怎么选（`C9.2` 的方差缩减）。\n\n**第三层 · 单位体系（`H7`）。** 没有 radiance/irradiance/solid angle 的严格定义，`H2:render-equation.projection` 里那些「2 倍」的错误根本无从察觉：`H7` 提供的单位自检是唯一能在运行前抓住它们的工具。\n\n**第四层 · 频域与预计算（`H5`）。** 环境光照要做「BRDF lobe 与入射分布的卷积」，而卷积要在基函数上做——球谐（`H5`）正是为此。这里消费的是 $f_r$ 的**旋转协变性**：把 $f_r$ 看成作用在球面上的一个核，它在旋转下按 Wigner-D 变换。\n\n**第五层 · 分析劳动力（`A2.4`）。** Neumann 级数的收敛条件「$\\mathrm{spr}(\\mathcal T)<1$」、`H2:render-equation.proof` 第三步的压缩估计，都是线性算子谱理论的直接应用。**把 CG 问题翻译成分析语言的那一步，就发生在这一层。**\n\n**依赖方向**：本单元**依赖** `H7`（量的定义）与 `A2.4`（谱/算子范数）；**被** `H3`、`H4`、`H5` 消费。\n\n**一条自检问句（触发器）**：**只要写下一个新的 $f_r$，立刻做三件事** —— 查单位是不是 $\\mathrm{sr^{-1}}$、查 $\\int f_r\\cos\\theta_o\\,d\\omega_o\\le1$、查 $f_r(i,o)=f_r(o,i)$。三步做完，$\\text{H2}$ 类的错误基本绝迹。",
+      "links": [
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H7",
+        "A2.4",
+        "C9.1",
+        "C9.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "H2 一页总表：渲染方程 × Neumann × BRDF × 微表面",
+      "keywords": [
+        "渲染方程：出射 = 自发光 + 一阶反射积分（6 条限定词）",
+        "Neumann 级数：L = Σ T^k L_e，本质是 (I−T)^{-1} 的几何级数",
+        "BRDF：三条性质（互易、守恒、正定）定义了「合法的材质」",
+        "微表面：D·F·G 三分量子模型，归一化因子 4cosθ_i cosθ_o",
+        "翻车指纹：亮 2 倍→cos 或 sinθ；亮 π 倍→Lambert 归一化",
+        "互易性破碎 easiest 由反方向数据 dialysis 出来"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 27,
+        "line_end": 48
+      },
+      "fill_hint": "单元级总表；把四件东西压成一张卡，并给出「错的特征倍数 → 错误位置」的调试对照。",
+      "content": "切片一共给了四件东西，它们的关系是一条链：**几何+材质 → 算子 → 级数 → 路径**。这张表用来随时对齐。\n\n| 条目 | 内容 | 条件 / 性质 | 翻车时的具体数值 |\n|---|---|---|---|\n| **渲染方程** | $L_o=L_e+\\int_\\Omega f_rL_i\\cos\\theta_i\\,d\\omega_i$ | 上半球 + 投影立体角 | 漏 $\\cos$ 或漏 $\\sin\\theta$：系数变成 $2$ 倍（$6.28319$ 对 $3.14159$） |\n| **算子形式** | $L=L_e+\\mathcal TL$ | $\\mathcal T$ 线性 | — |\n| **Neumann 级数** | $L=\\sum_k\\mathcal T^kL_e$ | $\\mathrm{spr}(\\mathcal T)\\le\\rho<1$ | $\\rho=0.9$ 时需 $43$ 次弹射才到 $99\\%$（丢 $0.00970$）；$\\rho=1.57080$ 时发散（$10$ 轮放大 $91.45$ 倍） |\n| **BRDF 定义** | $f_r=dL_o/(L_i\\cos\\theta_i\\,d\\omega_i)$ | 单位 $\\mathrm{sr^{-1}}$ | 把 albedo 当 BRDF 用：出射变成 $2.51327$ 而不是 $0.8$ |\n| **三性质** | 互易 / 守恒 / 正定 | 三者是同一物理事实的投影 | 砍一个 $\\cos$：$(0^\\circ,80^\\circ)$ 与反向相差 $5.75877$ 倍 |\n| **微表面** | $f=f_{\\text{diffuse}}+\\frac{DFG}{4\\cos\\theta_i\\cos\\theta_o}$ | 分母四要素不可分 | 丢任一 $\\cos$：互易性碎；丢 $4$：全局亮 $4$ 倍 |\n\n**调试对照表（最实用的一张）**：看到这些「特征倍数」，直接按图索骥。\n\n| 观察到的症状 | 最可能的位置 | 特征倍数 |\n|---|---|---|\n| 画面**正好亮 2 倍**（与材质无关） | 漏 $\\cos\\theta_i$ 或漏球坐标的 $\\sin\\theta$ | $2$【已核验:2|(2*pi*1)/(2*pi*0.5)】 |\n| 漫反射**亮 $\\pi$ 倍** | BRDF 写成 $\\rho$ 而非 $\\rho/\\pi$ | $\\approx3.14159$【已核验:3.14159265359|(0.8*(2*pi*0.5))/((0.8/pi)*(2*pi*0.5))】 |\n| 出射接收到**负亮度** | 没有截掉下半球（`max(0,cos)` 缺失） | 单项 $\\approx-0.04422$【已核验:-0.0442191453353|(0.8/pi)*1*cos(100*pi/180)】 |\n| 多次弹射**指数发散** | 材质违反能量守恒 | $10$ 轮 $\\approx91.45$【已核验:91.4531713634|(0.5*(2*pi*0.5))**10】倍 |\n| **边缘异常暗/亮** | 微表面分母少一个 $\\cos$ 或缺 $G$ | $5.75877$【已核验:5.75877048314|1/cos(80*pi/180)】倍（$80^\\circ$ 处） |\n| **整体亮 4 倍** | 丢了 Jacobian 的 $4$ | $4$【已核验:4|4】 |\n\n**两个最常用的定点`（Cases）**：\n\n1. **单位 radiance 铺满半球的 Lambert 面，出射必须等于 albedo**（$0.8$ 给 $0.8$）。这个用例一次抓住三类错误；\n2. ** $f_r(i,o)$ 与 $f_r(o,i)$ 必须相等**。随机取 $100$ 对方向做断言，能把 `H2:microfacet.jacobian` 那类错误挡在合并之前。",
+      "links": [
+        "H2",
+        "H3",
+        "H4",
+        "H7"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "H2:general.probe1",
+      "type": "probe",
+      "subject": "general",
+      "title": "检验题：投影立体角、Lambert 归一化、互易性、Neumann 四连问",
+      "keywords": [
+        "第 1 题：∫_Ω cosθ dω 是多少（答：π ≈ 3.14159）",
+        "第 2 题：ρ=0.8 的 Lambert 面在单位入射下的出射（答：0.8）",
+        "第 3 题：空气–玻璃垂直入射的菲涅尔（答：0.04）",
+        "第 4 题：DFG 少一个 cos 时两个方向相差多少（答：5.75877 倍）",
+        "第 5 题：ρ=0.9 时要几次弹射才到 99%（答：43 次）",
+        "易错：把 1/(1−ρ) 的大 LD_PRELOAD 当成发散"
+      ],
+      "tex_ref": {
+        "file": "notebook/H_cg.tex",
+        "line_start": 27,
+        "line_end": 48
+      },
+      "fill_hint": "从 quantifiers 表第②③④⑤行与微表面归一化变来的检验题；五问的数值全部可复算。",
+      "content": "**题**（先自己算，再对答案）。\n\n1. 求半球上的投影立体角积分 $\\int_\\Omega\\cos\\theta\\,d\\omega$；再求漏掉 $\\cos$（或漏掉球坐标 $\\sin\\theta$）后的两个版本，并说明它们为何相等。\n2. 一个 Lambert 面（albedo $\\rho=0.8$）被单位 brightness 的半球均匀光照照射，沿法向看过去的出射 brightness 是多少？如果 BRDF 错写成 $f_r=\\rho$，出射变成多少？两者的比值是多少？\n3. 空气–玻璃（$n=1.5$）在垂直入射时的菲涅尔反射率是多少？用 Schlick 近似求 $60^\\circ$ 和 $85^\\circ$ 时的值。\n4. 微表面 BRDF 的分母被写成 $4\\cos\\theta_i$（漏了 $\\cos\\theta_o$）。取 $\\theta_i=0^\\circ$、$\\theta_o=80^\\circ$，比较它与正确值的比，以及反向 $(\\theta_i=80^\\circ,\\theta_o=0^\\circ)$ 与正向的比值。这个比值违反了什么性质？\n5. 一个封闭房间的处处反照率为 $0.9$。 Neumann 级数要多少项（即多少次弹射）才能使相对误差降到 $1\\%$ 以下？总量是最初自发光的多少倍？\n\n**答案**：\n\n1. $\\int_\\Omega\\cos\\theta\\,d\\omega=2\\pi\\int_0^{\\pi/2}\\cos\\theta\\sin\\theta\\,d\\theta=\\pi\\approx3.14159$【已核验:3.14159265359|2*pi*0.5】。漏 $\\cos$ 得 $\\int_\\Omega d\\omega=2\\pi\\approx6.28319$【已核验:6.28318530718|2*pi*1】；漏 $\\sin\\theta$ 得 $2\\pi\\int_0^{\\pi/2}\\cos\\theta\\,d\\theta=2\\pi\\approx6.28319$【已核验:6.28318530718|2*pi*1】。**两者恰好相等**（都是 $2\\pi$），所以无法从外观上区分错误类型，只能从代码上找。\n2. 正确 $\\frac{0.8}{\\pi}\\cdot\\pi\\approx0.8$【已核验:0.8|(0.8/pi)*(2*pi*0.5)】；错误版 $\\approx2.51327$【已核验:2.51327412287|0.8*(2*pi*0.5)】；比值 $\\approx3.14159$【已核验:3.14159265359|(0.8*(2*pi*0.5))/((0.8/pi)*(2*pi*0.5))】，即 $\\pi$ 倍。**并且错误版的多次弹射比重是 $2.51327>1$，会发散。**\n3. 垂直入射 $F=\\big(\\frac{1.5-1}{1.5+1}\\big)^2\\approx0.04$【已核验:0.04|((1.5-1)/(1.5+1))**2】。Schlick（$F_0=0.04$）：$60^\\circ$ 给 $\\approx0.07$【已核验:0.07|0.04+0.96*(1-cos(60*pi/180))**5】，$85^\\circ$ 给 $\\approx0.64849$【已核验:0.648491718236|0.04+0.96*(1-cos(85*pi/180))**5】。跨度从 $4\\%$ 到 $65\\%$ —— **边缘的明亮是真实的物理**。\n4. 与正确值的比是 $\\dfrac{1}{\\cos80^\\circ}\\approx5.75877$【已核验:5.75877048314|1/cos(80*pi/180)】（错误版偏暗这么多）；正向与反向之比是 $\\cos80^\\circ\\approx0.17365$【已核验:0.173648177667|cos(80*pi/180)/1】。**违反互易性**（正确时该比值必须是 $1$）。\n5. 需要 $\\rho^{n+1}\\le0.01$，即 $n+1\\ge\\frac{\\log0.01}{\\log0.9}\\approx43.71$【已核验:43.7086906536|log(0.01)/log(0.9)】，故 $n=43$，此时实际丢失 $\\approx0.00970$【已核验:0.00969773729788|0.9**44】。总量是最初的 $\\frac1{1-0.9}=10$【已核验:10|1/(1-0.9)】倍。\n\n**易错点**：\n\n- 第 1 题把答案记成 $2\\pi$ —— 那是**不带** $\\cos$ 的立体角；带 $\\cos$ 的是 $\\pi$；\n- 第 2 题只答「亮了 $\\pi$ 倍」而忘了指出**发散**这一条更严重的后果；\n- 第 3 题用 $F_0=0.5$ 或把 metals 与 dielectrics 的 $F_0$ 混用；\n- 第 4 题答「比值是 $1$」——那正是错误模型假装自己 obey 的性质，要用**数值**而不是**看公式的样子**来判断；\n- 第 5 题把「总能量是 10 倍」当成发散信号：$10$ 倍的**有限**值是对的，$\\rho\\ge1$ 才是发散。",
+      "links": [
+        "H2",
+        "H3",
+        "H7"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
