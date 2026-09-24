@@ -445,7 +445,10 @@ function wireMastery(card: HTMLElement, group: EntryGroup): void {
 function mountVizSlots(card: HTMLElement, vizEntries: Entry[]): void {
   const slot = card.querySelector('.vizslot') as HTMLElement;
   for (const e of vizEntries) {
+    // 每个 viz 独占一个容器：mountViz 内部会用 innerHTML 覆写宿主，
+    // 若把整个 .vizslot 交给它，同一张卡里的第二个 viz 会把第一个冲掉。
     const holder = document.createElement('div');
+    holder.className = 'vizitem';
     holder.innerHTML = `<div class="vhead" style="margin-top:16px">
         <span class="dim">${escapeHtml(e.title ?? e.id)}</span>
         ${
@@ -455,6 +458,6 @@ function mountVizSlots(card: HTMLElement, vizEntries: Entry[]): void {
         }
       </div>`;
     slot.append(holder);
-    if (e.viz) mountViz(slot, e.viz);
+    if (e.viz) mountViz(holder, e.viz);
   }
 }

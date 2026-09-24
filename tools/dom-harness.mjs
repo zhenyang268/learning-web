@@ -254,17 +254,28 @@ async function runUnit(bundleJs, code) {
   p('显示 status 徽标', allText.includes('drafted'));
   p('显示 generated_by', /glm|deepseek|kimi/.test(allText));
 
-  // viz：档1 必须有实现（不能是「尚未注册」占位），档2 必须是 planned 占位
-  const vizPlaceholders = reader.querySelectorAll('.vizslot .viz').length;
+  // viz：档1 必须有实现（不能是「尚未注册」占位），档2 必须是 planned 占位，
+  // 且**每个 viz 词条都要有自己的渲染体**（否则同一张卡里后面的会把前面的冲掉）
+  const vizRendered = reader.querySelectorAll('.vizslot .vizitem .viz').length;
   const unregistered = allText.match(/尚未在前端注册/g)?.length ?? 0;
+  const mountFailures = allText.match(/模块挂载失败/g)?.length ?? 0;
+  const plannedEntries = vizFront.length + vizPlanned.length;
+  if (plannedEntries) {
+    p('每个 viz 词条都有独立渲染体',
+      vizRendered === plannedEntries,
+      `渲染 ${vizRendered} / 应有 ${plannedEntries}`);
+    p('无「模块挂载失败」占位', mountFailures === 0, `${mountFailures} 处`);
+  }
   if (vizFront.length) {
     p(`viz 档1 全部已注册（${vizFront.map((e) => e.viz.module).join(',')}）`,
       unregistered === 0, `未注册 ${unregistered} 处`);
-    p('viz 有实际渲染体', vizPlaceholders > 0, `viz=${vizPlaceholders}`);
+    p('viz 有实际渲染体', vizRendered > 0, `viz=${vizRendered}`);
   }
   if (vizPlanned.length) {
     p('viz 档2 渲染「演示待接入」占位',
-      allText.includes('演示待接入') || allText.includes('planned'));
+      allText.includes('演示待接入') || allText.includes('planned'),
+      `vizPlanned=${vizPlanned.map((e) => e.id).join(',')} 槽位=${reader.querySelectorAll('.vizslot .vhead').length}` +
+        ` 文案=${(allText.match(/.{0,10}待接入.{0,10}/g) ?? []).join('|')}`);
   }
 
   // 零外部请求

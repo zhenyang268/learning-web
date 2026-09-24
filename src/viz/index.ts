@@ -1,21 +1,10 @@
 import type { VizSpec } from '../types';
 import { isVizFrontend } from '../types';
-import { convergenceThm } from './convergence-thm';
+import { registry } from './registry';
 import { escapeHtml } from '../renderers/markdown';
 
-export interface VizHandle {
-  destroy?(): void;
-}
-
-export interface VizModule {
-  label: string;
-  mount(host: HTMLElement, hint: Record<string, unknown>): VizHandle | void;
-}
-
-/** 档1 模块注册表：module 名 → 实现。未注册的一律降级为占位，不白屏。 */
-const registry: Record<string, VizModule> = {
-  'convergence-thm': convergenceThm,
-};
+export type { VizHandle, VizModule, VizSpec as VizSpecKit } from './kit';
+export { specs, implementedModules, validateTree } from './registry';
 
 function placeholder(host: HTMLElement, title: string, detail: string): void {
   host.innerHTML = `
@@ -28,7 +17,7 @@ function placeholder(host: HTMLElement, title: string, detail: string): void {
     </div>`;
 }
 
-export function mountViz(host: HTMLElement, viz: VizSpec): VizHandle | void {
+export function mountViz(host: HTMLElement, viz: VizSpec): unknown {
   if (!isVizFrontend(viz)) {
     const planned = viz as { status: string; rationale?: string };
     placeholder(

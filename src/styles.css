@@ -1021,6 +1021,78 @@ table.q tr.detail .in {
   }
 }
 
+/* 不等式决策树（P10 flagship） */
+.chip.on {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  background: rgba(94, 230, 255, .1);
+}
+
+.dt {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dt-q {
+  font-weight: 700;
+  font-size: 14.5px;
+}
+
+.dt-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dt-card {
+  border: 1px solid var(--line2);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: var(--glass2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dt-tool {
+  color: var(--cyan);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.dt-formula {
+  font-family: var(--math);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--violet);
+}
+
+.dt-misuse {
+  font-size: 13.5px;
+  color: var(--tx2);
+  line-height: 1.7;
+}
+
+.dt-misuse b {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.dt-trace {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+
+/* 一个词条里挂多个 viz 时，各自独立成块 */
+.vizitem + .vizitem {
+  border-top: 1px dashed var(--line);
+  margin-top: 14px;
+  padding-top: 4px;
+}
+
 @media(max-width:1150px) {
   main {
     grid-template-columns: 1fr;
