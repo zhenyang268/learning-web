@@ -111,6 +111,14 @@ zsh build/orchestrate/pipeline.zsh status batch_hij # 查状态
    ```
 5. **派发前残留会话**：同名 `--bg` 会话已终结时直接重派可能报 session 冲突，
    pipeline 派发前会自动 `codebuddy rm <name>`；手动派发时也请先 rm。
+6. **headless 权限策略**（官方文档口径，当前未踩但改写法时必踩）：`-p` 无 TTY，
+   凡需授权的工具调用会被直接阻断。本流水线用 `--max-turns 1 --tools ""`（禁工具、纯文本输出）
+   绕开了整件事；**若未来让子任务自己写文件**，必须显式给 `-y` 或 `--permission-mode auto/dontAsk`，
+   并注意 auto 分类器连续 3 次拿不到判定会直接中止 run。
+7. **`codebuddy logs <name>` 只在会话存活期可用**：会话结束后 `logs`/`rm` 可能报
+   `Session not found`，但 transcript 仍在磁盘上——所以回收一律走 collect_bg.py，
+   不要依赖 `codebuddy logs`（官方文档说日志落 `~/.codebuddy/logs/`，本发行版实际在
+   `~/.workbuddy/logs/` 且 `-p --bg` 组合下恒 0 字节，以实测为准）。
 
 ## 5. 进度对账（一条命令）
 
