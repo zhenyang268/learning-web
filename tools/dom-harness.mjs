@@ -211,7 +211,9 @@ async function runUnit(bundleJs, code) {
       p('限定词表带 class=q', qTable?.classList.contains('q') === true);
       const heads = [...(qTable?.querySelectorAll('thead th') ?? [])].map(textOf);
       const cols = heads.length;
-      p('限定词表列数合理（3–4 列）', cols >= 3 && cols <= 4, `cols=${cols} ${heads.join(' | ')}`);
+      // 列数随数据形态：标准形 4 列、博物馆 3 列、方差缩减 5 列（多一列「技术」）。
+      // 渲染器本来就按数据出列，这里只防「被竖线切坏」这类结构错误。
+      p('限定词表列数合理（3–6 列）', cols >= 3 && cols <= 6, `cols=${cols} ${heads.join(' | ')}`);
       const trs = [...(qTable?.querySelectorAll('tbody tr') ?? [])];
       const widths = trs.map((tr) => tr.querySelectorAll('td').length);
       p('表头列数与每行单元格数一致',

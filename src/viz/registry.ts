@@ -12,6 +12,8 @@ import { integralSpecs } from './specs/integrals';
 import { stochasticSpecs } from './specs/stochastic';
 import { inequalityDecisionTree, validateTree } from './specs/decision';
 import { asymptoticSpecs } from './specs/asymptotic';
+import { mcSpecs } from './specs/mc';
+import { sdeSpecs } from './specs/sde';
 
 /** 全部声明式规格（供 Node 侧数值校验遍历） */
 export const specs: VizSpec[] = [
@@ -22,6 +24,8 @@ export const specs: VizSpec[] = [
   ...integralSpecs,
   ...stochasticSpecs,
   ...asymptoticSpecs,
+  ...mcSpecs,
+  ...sdeSpecs,
 ];
 
 /** 非声明式模块（交互以 HTML 为主） */
