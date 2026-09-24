@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && npm run build:standalone",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:standalone": "node tools/build-standalone.mjs",
+    "check:viz": "node tools/viz-model-check.mjs",
+    "check": "tsc --noEmit && npm run check:viz && node tools/dom-harness.mjs --all"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

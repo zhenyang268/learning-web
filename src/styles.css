@@ -1021,6 +1021,25 @@ table.q tr.detail .in {
   }
 }
 
+/* 尚未生成的单元：chip 与整页占位 */
+.chip.pending {
+  color: var(--tx3);
+  border-style: dashed;
+  border-color: var(--line2);
+}
+
+.chip.pending:hover {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
+
+.pendinglist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
 /* 不等式决策树（P10 flagship） */
 .chip.on {
   color: var(--cyan);

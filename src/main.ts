@@ -9,7 +9,7 @@ import { renderSidebar } from './shell/sidebar';
 import { renderAside } from './shell/aside';
 import { difficultyOf, groupEntries, renderCard, type KbIndex } from './renderers/card';
 import { mountOverlay } from './renderers/overlay';
-import { renderInline } from './renderers/markdown';
+import { renderInline, escapeHtml } from './renderers/markdown';
 
 const elHeader = document.getElementById('header')!;
 const elFrontier = document.getElementById('frontier')!;
@@ -24,9 +24,7 @@ let issues: LoadIssue[] = [];
 let fatal: string | null = null;
 
 function currentCode(): string {
-  const hash = location.hash.replace(/^#\/?/, '');
-  if (hash && files.some((f) => f.code === hash)) return hash;
-  return files[0]?.code ?? '';
+  return location.hash.replace(/^#\/?/, '');
 }
 
 function goTo(code: string): void {
@@ -100,17 +98,40 @@ function render(): void {
     current: (file?.code ?? '').charAt(0).toUpperCase(),
     errorCount: issues.length + (fatal ? 1 : 0),
   });
-  const empty = !file;
-  if (empty) {
-    elReader.innerHTML = `<div class="card"><h1>暂无数据</h1><p class="dim">${
-      fatal ? `数据索引读取失败：${fatal}` : 'json/ 下没有可渲染的词条文件。'
-    }</p></div>`;
-    elAside.innerHTML = '';
-    elFrontier.innerHTML = '';
-  }
+
   // 浮层无条件挂载：即使一个文件都渲染不出来也要把问题说清楚（绝不白屏）
   mountOverlay(elOverlay, { issues, fatal, onReload: () => void boot() });
-  if (empty) return;
+
+  if (!file) {
+    // 三种情况分开说：整库没数据 / 索引失败 / 只有这一份**尚未生成**（链接指向断点）
+    const nearest = code
+      ? graph.codes
+          .filter((c) => c.charAt(0).toUpperCase() === code.charAt(0).toUpperCase())
+          .slice(0, 12)
+      : [];
+    elReader.innerHTML = code
+      ? `<div class="card pagehead">
+           <h1>${escapeHtml(code)} <em>尚未生成</em></h1>
+           <div class="meta">
+             <span class="tag">pending</span>
+             <span>json/${escapeHtml(code.split('.')[0])}/${escapeHtml(code)}.json 不存在</span>
+           </div>
+           <p class="kv">该单元还没被生成线产出。已生成同章单元：</p>
+           <div class="pendinglist">${
+             nearest.length
+               ? nearest.map((c) => `<button class="chip" data-goto="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('')
+               : '<span class="dim">本章暂无已生成单元</span>'
+           }</div>
+         </div>`
+      : `<div class="card"><h1>暂无数据</h1><p class="dim">${
+          fatal ? `数据索引读取失败：${escapeHtml(fatal)}` : 'json/ 下没有可渲染的词条文件。'
+        }</p></div>`;
+    elAside.innerHTML = '';
+    elFrontier.innerHTML = '';
+    renderSidebar(elSidebar, { files, current: code, masteryOf: masteryByCode });
+    return;
+  }
+
   renderFrontier();
   renderSidebar(elSidebar, { files, current: code, masteryOf: masteryByCode });
   renderReader(file);
@@ -145,6 +166,14 @@ async function boot(): Promise<void> {
       field: 'prereq',
       message: `依赖图存在环，拓扑排序失败：${graph.cycles.join(' / ')}`,
     });
+  }
+  // 首次进入（无 hash）落到 frontier 算出来的那一个，而不是写死第一章
+  if (!location.hash && files.length) {
+    const next = frontierOf(graph, masteryByCode) ?? files[0]?.code;
+    if (next) {
+      location.hash = `#/${next}`;
+      return; // hashchange 会触发 render
+    }
   }
   render();
 }

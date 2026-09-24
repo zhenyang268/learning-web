@@ -300,7 +300,51 @@ async function runErrorPath(bundleJs, code) {
   check('坏 JSON 时其余文件仍渲染', bd.getElementById('reader').children.length > 0);
 }
 
+/* ------------------------------------------- standalone 单文件快照验收 */
+
+/**
+ * dist/knowledge.html 是「双击即开」的单文件快照（DESIGN §9.1）：
+ * 数据内联 + IIFE + 零外部请求。这里在 jsdom 里真加载一遍，确认它不是空壳。
+ */
+async function runStandalone() {
+  const file = path.join(ROOT, 'dist', 'knowledge.html');
+  if (!fs.existsSync(file)) {
+    console.log('\n8) standalone 快照 —— 未生成（跳过；npm run build:standalone）');
+    return;
+  }
+  console.log('\n8) standalone 单文件快照 dist/knowledge.html');
+  const html = fs.readFileSync(file, 'utf8');
+  const inlineFiles = (html.match(/"json\/[A-Za-z0-9.]+\/[A-Za-z0-9.]+\.json":/g) ?? []).length;
+
+  check('无 <script src> / <link href>（零外部请求）',
+    !/<(script|link)[^>]*(src|href)=/.test(html));
+  check('无外部 url() 引用（字体已 base64 内联）',
+    !/url\((?!data:|#)/.test(html));
+  check('数据已内联', inlineFiles >= 1, '内联 ' + inlineFiles + ' 个单元');
+
+  const dom = new JSDOM(html, {
+    url: `file://` + file,
+    runScripts: 'dangerously',
+    pretendToBeVisual: true,
+  });
+  await new Promise((r) => setTimeout(r, 300));
+  const d = dom.window.document;
+  const reader = d.getElementById('reader');
+  check('快照能渲染出阅读区（file:// 双击可用）', reader.children.length > 0);
+  check('快照无致命浮层',
+    !textOf(d.getElementById('overlay-root')).includes('数据索引读取失败'));
+  check('快照顶栏字母块非空', d.querySelectorAll('#header .chapters b').length > 0);
+  check('快照左栏节点数 == 内联单元数',
+    d.querySelectorAll('#sidebar .node').length === inlineFiles,
+    'nodes=' + d.querySelectorAll('#sidebar .node').length + ' inline=' + inlineFiles);
+  check('快照首屏不是空页',
+    textOf(reader.querySelector('.pagehead h1')).length > 0,
+    textOf(reader.querySelector('.pagehead h1')).slice(0, 40));
+  dom.window.close();
+}
+
 /* ------------------------------------------------------------ 主流程 */
+
 
 async function main() {
   const argv = process.argv.slice(2);
@@ -334,6 +378,8 @@ async function main() {
     summary.push({ code, dp, df });
     if (multi) console.log(`${df ? '✗' : '✓'} ${code.padEnd(8)} PASS ${dp}  FAIL ${df}`);
   }
+
+  await runStandalone();
 
   if (!multi) {
     console.log(`\n${'-'.repeat(52)}`);

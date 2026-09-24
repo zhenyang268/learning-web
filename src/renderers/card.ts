@@ -85,9 +85,14 @@ function texLabel(entry: Entry): string {
     : `${file}:${t.line_start}`;
 }
 
-function linkChips(entry: Entry): string {
+/** links → chip。目标单元**尚未生成**时标 pending（不静默跳到一个不存在的位置）。 */
+function linkChips(entry: Entry, codes: Set<string>): string {
   return (entry.links ?? [])
-    .map((l) => `<button class="chip" data-goto="${escapeHtml(l)}">${escapeHtml(l)}</button>`)
+    .map((l) =>
+      codes.has(l)
+        ? `<button class="chip" data-goto="${escapeHtml(l)}">${escapeHtml(l)}</button>`
+        : `<button class="chip pending" data-goto="${escapeHtml(l)}" title="该单元尚未生成（json 里还没有 ${escapeHtml(l)}）">${escapeHtml(l)} ·待生成</button>`,
+    )
     .join('');
 }
 
@@ -170,7 +175,7 @@ function makeRefTools(file: EntryFile, index: KbIndex): RefTools {
 
 /* ------------------------------------------------------------------ 卡片 */
 
-function entryBlock(entry: Entry, ctx: RenderCtx): string {
+function entryBlock(entry: Entry, ctx: RenderCtx, codes: Set<string>): string {
   const g = entry.generated_by;
   const gen = g ? `${g.model ?? '?'}${g.date ? ` · ${g.date}` : ''}${g.reviewed ? ' · 已审' : ''}` : '';
   const tex = texLabel(entry);
@@ -185,7 +190,7 @@ function entryBlock(entry: Entry, ctx: RenderCtx): string {
         ${entry.status ? `<span class="tag${entry.status === 'reviewed' || entry.status === 'published' ? ' ok' : ''}">${escapeHtml(entry.status)}</span>` : ''}
         ${gen ? `<span class="dim mono">${escapeHtml(gen)}</span>` : ''}
         ${tex ? `<span class="dim mono">${escapeHtml(tex)}</span>` : ''}
-        ${linkChips(entry)}
+        ${linkChips(entry, codes)}
       </div>
       ${entry.seed ? `<blockquote class="seed">${renderInline(entry.seed, ctx)}</blockquote>` : ''}
       <div class="body">${body}</div>
@@ -261,7 +266,8 @@ export function renderCard(file: EntryFile, group: EntryGroup, index: KbIndex): 
       .map(({ type }, i) => {
         const entries = type === '__more' ? more : byType.get(type) ?? [];
         return `<div class="pane${i === 0 ? ' on' : ''}" data-pane="${i}">${
-          entries.map((e) => entryBlock(e, ctx)).join('') || '<p class="dim">该类型暂无词条</p>'
+          entries.map((e) => entryBlock(e, ctx, index.codes)).join('') ||
+          '<p class="dim">该类型暂无词条</p>'
         }</div>`;
       })
       .join('')}`
@@ -272,7 +278,7 @@ export function renderCard(file: EntryFile, group: EntryGroup, index: KbIndex): 
 
   enhanceQuantTable(card, group.entries.find(isQuantifiers), tools);
   wireTabs(card);
-  wireRefs(card, file, ctx);
+  wireRefs(card, file, ctx, index.codes);
   wireMastery(card, group);
   mountVizSlots(card, vizEntries);
 
@@ -354,26 +360,31 @@ function wireTabs(card: HTMLElement): void {
 }
 
 /** 同文件词条引用 → 卡内定位；若引用出现在限定词表某行，则在该行下**就地展开**词条 */
-function wireRefs(card: HTMLElement, file: EntryFile, ctx: RenderCtx): void {
+function wireRefs(card: HTMLElement, file: EntryFile, ctx: RenderCtx, codes: Set<string>): void {
   card.addEventListener('click', (ev) => {
     const node = (ev.target as HTMLElement).closest<HTMLElement>('[data-ref]');
     if (node?.dataset.ref) {
-      openRef(card, file, ctx, node);
+      openRef(card, file, ctx, codes, node);
       return;
     }
     const row = (ev.target as HTMLElement).closest<HTMLTableRowElement>('tr.qrow');
-    if (row?.dataset.cx) expandRow(file, ctx, row);
+    if (row?.dataset.cx) expandRow(file, ctx, codes, row);
   });
 }
 
 /** 展开体（反例词条）用与卡片同一套 ctx 渲染，它内部的引用同样可点 */
-function entryHtml(entry: Entry, ctx: RenderCtx): string {
+function entryHtml(entry: Entry, ctx: RenderCtx, codes: Set<string>): string {
   return `
     <div class="entry" data-id="${escapeHtml(entry.id)}">
       <div class="emeta">
         <span class="tag">${escapeHtml(entry.type)}</span>
         ${entry.status ? `<span class="tag">${escapeHtml(entry.status)}</span>` : ''}
-        ${entry.viz && isVizFrontend(entry.viz) ? `<span class="tag">viz · ${escapeHtml(entry.viz.module)}</span>` : ''}
+        ${
+          entry.viz && isVizFrontend(entry.viz)
+            ? `<span class="tag">viz · ${escapeHtml(entry.viz.module)}</span>`
+            : ''
+        }
+        ${linkChips(entry, codes)}
       </div>
       <div class="body">${
         entry.content?.trim()
@@ -383,7 +394,12 @@ function entryHtml(entry: Entry, ctx: RenderCtx): string {
     </div>`;
 }
 
-function expandRow(file: EntryFile, ctx: RenderCtx, row: HTMLTableRowElement): void {
+function expandRow(
+  file: EntryFile,
+  ctx: RenderCtx,
+  codes: Set<string>,
+  row: HTMLTableRowElement,
+): void {
   const next = row.nextElementSibling as HTMLElement | null;
   if (next?.classList.contains('detail')) {
     row.classList.remove('open');
@@ -398,15 +414,21 @@ function expandRow(file: EntryFile, ctx: RenderCtx, row: HTMLTableRowElement): v
   const tr = document.createElement('tr');
   tr.className = 'detail';
   const cols = row.querySelectorAll('td').length || 4;
-  tr.innerHTML = `<td colspan="${cols}"><div class="in">${entryHtml(entry, ctx)}</div></td>`;
+  tr.innerHTML = `<td colspan="${cols}"><div class="in">${entryHtml(entry, ctx, codes)}</div></td>`;
   row.after(tr);
 }
 
-function openRef(card: HTMLElement, file: EntryFile, ctx: RenderCtx, node: HTMLElement): void {
+function openRef(
+  card: HTMLElement,
+  file: EntryFile,
+  ctx: RenderCtx,
+  codes: Set<string>,
+  node: HTMLElement,
+): void {
   const id = node.dataset.ref ?? '';
   const row = node.closest<HTMLTableRowElement>('tr.qrow');
   if (row) {
-    expandRow(file, ctx, row);
+    expandRow(file, ctx, codes, row);
     return;
   }
   const target = card.querySelector<HTMLElement>(`.entry[data-id="${CSS.escape(id)}"]`);
