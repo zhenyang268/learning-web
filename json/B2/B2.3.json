@@ -1,0 +1,362 @@
+{
+  "schema": "entry-card/v2",
+  "code": "B2.3",
+  "chapter": "B2",
+  "title": "黎曼几何",
+  "src": {
+    "file": "notebook/B_algebra.tex",
+    "line_start": 111,
+    "line_end": 133,
+    "anchor": "notebook/B_algebra.tex:111"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "B2.3:metric.quantifiers",
+      "type": "comparison",
+      "subject": "metric",
+      "title": "「每个切空间上的内积，光滑地依赖于点」限定词逐条拆解",
+      "keywords": [
+        "①正定：g(v,v)>0 对 v≠0——去掉就是伪黎曼（闵可夫斯基）",
+        "②对称：g_ij = g_ji（二次型不是交错型）",
+        "③非退化：det(g_ij)≠0，否则逆 g^ij 不存在",
+        "④光滑：g_ij 是坐标的光滑函数——测地线 ODE 的存在唯一性靠它",
+        "数值锚点：闵可夫斯基 v=(1,1,0,0) 给 g(v,v)=0（光锥）",
+        "B2.2 的切空间 + 每点一个内积 = 黎曼度量"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 112,
+        "line_end": 115
+      },
+      "fill_hint": "切片 112-115 行定义 + g = g_ij dx^i⊗dx^j；反例行（闵可夫斯基）为拓展，标注 E3。",
+      "content": "切片定义：黎曼度量 $g$ = 每个切空间上的内积，光滑地依赖于点（$g=g_{ij}\\,dx^i\\otimes dx^j$）。四个限定词逐条拆：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **正定**：$g(v,v)>0$（$v\\ne0$） | 闵可夫斯基度量 $ds^2=-dt^2+dx^2+dy^2+dz^2$（伪黎曼）：取 $v=(1,1,0,0)$，$g(v,v)=-1\\cdot1+1\\cdot1=0$【已核验:0|-1*1+1*1】——非零向量「长度为零」（光锥方向）；取 $v=(2,1,0,0)$：$g(v,v)=-3$【已核验:-3|-2*2+1*1】——「长度为负」（类时） | 距离、角度、Cauchy-Schwarz、完备性理论全部失效；测地线不再是局部最短 | **可以放宽**（狭义/广义相对论正是伪黎曼，E3），但那是另一套工具箱；本单元按正定走 |\n| ② **对称** $g_{ij}=g_{ji}$ | 换成交错形式 $\\omega=dp\\wedge dq$（辛形式） | 辛几何（D3 哈密顿力学）是好数学，但它度量「面积」不度量「长度」——不是度量 | 不是放宽而是换对象 |\n| ③ **非退化** $\\det(g_{ij})\\ne0$ | 度量矩阵在某点奇异：某个方向「称不出重量」 | 逆 $g^{ij}$ 不存在 ⟹ Christoffel 公式（切片）分母爆炸，$\\Gamma$ 无定义 | 需要假设；退化点是奇点 |\n| ④ **光滑依赖点** | $g_{ij}(x)$ 有跳跃间断 | 测地线方程是 ODE（de1.9 存在唯一性），系数不光滑 ⟹ 解在间断面上碎掉 | 不可去；至少连续，标准取光滑 |\n\n**例子速查**（都是「$\\mathbb{R}^n$ 里的 $g_{ij}$ 矩阵」）：\n\n- 平面直角坐标：$g=\\mathrm{diag}(1,1)$——$g_{ij}=\\delta_{ij}$；\n- 平面极坐标：$g=\\mathrm{diag}(1,r^2)$——同一个几何、不同的坐标（B2.1 参数化不变性的度量版）；\n- 半径 $R$ 球面：$g=R^2\\,\\mathrm{diag}(1,\\sin^2\\theta)$。\n\n**与 B2.2/B2.1 的关系**：B2.1 的第一基本形式 $I=E\\,du^2+2F\\,du\\,dv+G\\,dv^2$ 正是「曲面的诱导度量」——黎曼度量是把 $I$ 从「$\\mathbb{R}^3$ 里称出来的」抽象成「自带出厂」的：绝妙定理（$K$ 只依赖 $I$）保证了这个抽象不丢信息。B2.2 的每个切空间 $T_pM$ 现在配上了内积 $g_p$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B2.1",
+        "B2.2",
+        "E3"
+      ]
+    },
+    {
+      "id": "B2.3:christoffel-not-curvature.counterexample",
+      "type": "counterexample",
+      "subject": "christoffel-not-curvature",
+      "title": "反例：极坐标平面 Γ≠0 却完全平坦——Γ 不是曲率",
+      "keywords": [
+        "极坐标 g = diag(1, r²)：Γ^r_φφ = −r、Γ^φ_rφ = 1/r（r=2 时 −2 与 0.5）",
+        "直角坐标同一张平面：Γ ≡ 0",
+        "Γ 依赖坐标选择（不是张量）；曲率张量 R 才是不变量",
+        "平面 R≡0：无论什么坐标都消不掉的是 0",
+        "判据：换坐标能把 Γ 变零 ⟹ 坐标效应；R≠0 ⟹ 真弯曲"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 117,
+        "line_end": 120
+      },
+      "fill_hint": "切片给出 Γ 公式但未做此对照；本条用切片公式在极坐标下完整计算，是「坐标效应 vs 真弯曲」的定点反例。",
+      "content": "**目标**：检验「Christoffel 符号非零 ⟹ 空间弯曲」这一常见误读。取最平坦的空间——欧氏平面，但用**极坐标**。\n\n**第一步：极坐标下的度量**。$ds^2=dr^2+r^2d\\varphi^2$，即 $g_{rr}=1$、$g_{\\varphi\\varphi}=r^2$、$g_{r\\varphi}=0$；逆 $g^{rr}=1$、$g^{\\varphi\\varphi}=1/r^2$。唯一的非零导数：$\\partial_r g_{\\varphi\\varphi}=2r$。\n\n**第二步：代入切片的 Christoffel 公式** $\\Gamma^k_{ij}=\\tfrac12g^{kl}(\\partial_j g_{il}+\\partial_i g_{jl}-\\partial_l g_{ij})$：\n\n$$\\Gamma^r_{\\varphi\\varphi}=\\tfrac12 g^{rr}\\big(\\partial_\\varphi g_{\\varphi r}+\\partial_\\varphi g_{\\varphi r}-\\partial_r g_{\\varphi\\varphi}\\big)=\\tfrac12\\cdot1\\cdot(0+0-2r)=-r,$$\n\n$$\\Gamma^\\varphi_{r\\varphi}=\\Gamma^\\varphi_{\\varphi r}=\\tfrac12 g^{\\varphi\\varphi}\\,\\partial_r g_{\\varphi\\varphi}=\\tfrac12\\cdot\\tfrac{1}{r^2}\\cdot 2r=\\tfrac1r,$$\n\n数值锚点：$r=2$ 时 $\\Gamma^r_{\\varphi\\varphi}=-2$【已核验:-2|-1*(2)】、$\\Gamma^\\varphi_{r\\varphi}=0.5$【已核验:0.5|0.5*(1/2**2)*2*2】。其余分量全为零。\n\n**第三步：对照直角坐标**。同一张平面用 $(x,y)$：$g_{ij}=\\delta_{ij}$ 常数 ⟹ 一切偏导为零 ⟹ $\\Gamma\\equiv0$。\n\n**失效结论**：同一张（平坦的！）平面，直角坐标 $\\Gamma=0$、极坐标 $\\Gamma\\ne0$——**$\\Gamma$ 的值依赖坐标选择，不是几何量（不是张量）**。「极坐标里 $\\Gamma^r_{\\varphi\\varphi}=-r$」说的不是空间弯了，而是「极坐标网格本身在收缩/张开的坐标系里，坐标向量 $\\partial_\\varphi$ 的长度 $r$ 随位置变化」——$\\Gamma$ 的本职工作是**补偿坐标系的加速**（测地线方程 $\\ddot x^k+\\Gamma^k_{ij}\\dot x^i\\dot x^j=0$ 里，$\\Gamma$ 项把「坐标的假加速度」扣掉，剩下的才是真加速度）。\n\n**真弯曲的判定（曲率张量的职责）**：把切片的曲率公式 $R^l_{ijk}=\\partial_j\\Gamma^l_{ik}-\\partial_k\\Gamma^l_{ij}+\\Gamma^m_{ik}\\Gamma^l_{mj}-\\Gamma^m_{ij}\\Gamma^l_{mk}$ 代入极坐标的 $\\Gamma$：逐项计算可得 $R\\equiv0$——**尽管 $\\Gamma\\ne0$，所有 $R$ 分量为零**（平面的三角形内角和恒为 $\\pi$，几何上当然平坦）。$\\Gamma$ 的非张量性（坐标变换下的多余项）恰好在这组差分与乘积中抵消，$R$ 成为真张量：**在任何坐标系里算 $R$ 都得同一组数**。\n\n**判据表**：\n\n| 观察 | 结论 |\n|---|---|\n| 某坐标系里 $\\Gamma=0$ | 该坐标系是「惯性系」（局部），不代表空间平 |\n| $\\Gamma\\ne0$ | 可能只是坐标效应（本例），也可能真弯 |\n| $R\\equiv0$（某个坐标算出） | 空间平坦（任何坐标都一样）——真不变量 |\n| $R\\ne0$ | 真弯曲，任何坐标变换都消不掉 |\n\n**修补条件**：想知道「弯不弯」，永远算 $R$（或其缩并），不要看 $\\Gamma$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B2.1",
+        "B2.4"
+      ]
+    },
+    {
+      "id": "B2.3:christoffel.statement",
+      "type": "statement",
+      "subject": "christoffel",
+      "title": "Christoffel 符号：陈述、极坐标完整推导、「不是张量」注记",
+      "keywords": [
+        "公式（切片）：Γ^k_ij = ½ g^kl(∂_j g_il + ∂_i g_jl − ∂_l g_ij)",
+        "读法：用度量的导数造出「坐标加速度补偿器」",
+        "极坐标完整推导：只有 ∂_r g_φφ = 2r 非零 → 两个非零 Γ",
+        "Γ 不是张量：直角坐标零、极坐标非零（同一平面）",
+        "它出现在测地线方程与曲率公式里，但本身不是几何量"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 117,
+        "line_end": 120
+      },
+      "fill_hint": "切片 117-120 行公式转写 + 极坐标推导；「不是张量」的完整论证在 christoffel-not-curvature 词条。",
+      "content": "**陈述（切片原文）**：\n\n$$\\Gamma^k_{ij}=\\frac{1}{2}g^{kl}\\Big(\\frac{\\partial g_{il}}{\\partial x^j}+\\frac{\\partial g_{jl}}{\\partial x^i}-\\frac{\\partial g_{ij}}{\\partial x^l}\\Big).$$\n\n**怎么读这个公式**：$g^{kl}$ 是度量矩阵的逆（升指标）；括号里是度量一阶导数的三种排列组合。三种角色：\n\n- $\\Gamma^k_{ij}$ 带**三个指标、两个下标对称**（$\\Gamma^k_{ij}=\\Gamma^k_{ji}$）；\n- 它回答：「沿着 $i$ 方向走时，$j$ 方向的坐标基向量 $\\partial_j$ 会向 $k$ 方向偏转多少」——**坐标基的变化率**；\n- 只依赖 $g$（及其一阶导）——所以一旦度量给定，$\\Gamma$ 没有自由度。\n\n**极坐标完整推导（标准手算例）**：$g=\\mathrm{diag}(1,r^2)$，唯一非零导数 $\\partial_r g_{\\varphi\\varphi}=2r$：\n\n| 分量 | 计算 | 结果 |\n|---|---|---|\n| $\\Gamma^r_{\\varphi\\varphi}$ | $\\tfrac12\\cdot1\\cdot(0+0-2r)$ | $-r$（$r=2$ 时 $-2$【已核验:-2|0.5*1*(0+0-2*2)】） |\n| $\\Gamma^\\varphi_{r\\varphi}$ | $\\tfrac12\\cdot\\tfrac1{r^2}\\cdot2r$ | $\\tfrac1r$（$r=2$ 时 $0.5$【已核验:0.5|0.5*(1/2**2)*2*2】） |\n| 其余 | 无导数可用 | $0$ |\n\n直觉核对：$\\Gamma^r_{\\varphi\\varphi}=-r$ 就是「匀角速度圆周运动的向心加速度」——极坐标下走圆需要向内拉，这正是坐标系的「假加速度」，测地线方程里由 $\\Gamma$ 补偿。\n\n**「不是张量」注记**：同一平面，直角坐标 $\\Gamma\\equiv0$、极坐标 $\\Gamma\\ne0$——张量在坐标变换下按固定规律变换，零张量只能变成零；$\\Gamma$ 变换时多出一项（二阶导数项），所以它不是张量（完整对照见 christoffel-not-curvature 词条）。**尽管如此它不可少**：测地线方程与曲率公式都以 $\\Gamma$ 为原料——$\\Gamma$ 像「势」，$R$ 像「场强」：势不唯一（可换规范/坐标），场强不变。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.2"
+      ]
+    },
+    {
+      "id": "B2.3:geodesic.statement",
+      "type": "statement",
+      "subject": "geodesic",
+      "title": "测地线方程：陈述 + 极坐标径向射线的完整验证",
+      "keywords": [
+        "方程（切片）：d²x^k/dt² + Γ^k_ij (dx^i/dt)(dx^j/dt) = 0",
+        "读法：坐标加速度 + Γ 补偿项 = 0——「自加速度为零」",
+        "直角坐标 Γ=0 ⟹ x''=0：直线（校准案例）",
+        "极坐标径向射线 r(t)=t：两个方程逐项验证通过",
+        "局部最短性：测地线局部使长度取最小（一点边界条件）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 127,
+        "line_end": 130
+      },
+      "fill_hint": "切片 127-130 行公式转写；径向射线验证为本条补充，逐项可复核。",
+      "content": "**陈述（切片原文）**：测地线方程\n\n$$\\frac{d^2x^k}{dt^2}+\\Gamma^k_{ij}\\frac{dx^i}{dt}\\frac{dx^j}{dt}=0.$$\n\n**读法**：左边第一项是坐标加速度；第二项是「坐标系的假加速度」（$\\Gamma$ 补偿）。合起来为零 = **自由粒子在自己看来没有加速度**——广义相对论的「自由落体」方程正是这个形式（质量不出现：几何决定运动）。\n\n**校准案例（欧氏平面 + 直角坐标）**：$\\Gamma\\equiv0$ ⟹ $\\ddot x=0,\\ddot y=0$——匀速直线，$x(t)=x_0+v_xt$。✓\n\n**完整验证（极坐标 + 径向射线）**：取 $r(t)=t$（单位速率沿射线外走）、$\\varphi(t)=\\varphi_0$（角度不变），即 $\\dot r=1$、$\\dot\\varphi=0$、$\\ddot r=\\ddot\\varphi=0$。代入方程（用 christoffel-not-curvature 词条算出的 $\\Gamma^r_{\\varphi\\varphi}=-r$、$\\Gamma^\\varphi_{r\\varphi}=\\tfrac1r$，其余为零）：\n\n- $r$ 方程（$k=r$）：$\\ddot r+\\Gamma^r_{rr}\\dot r^2+2\\Gamma^r_{r\\varphi}\\dot r\\dot\\varphi+\\Gamma^r_{\\varphi\\varphi}\\dot\\varphi^2=0+0+0+(-r)\\cdot0=0$ ✓；\n- $\\varphi$ 方程（$k=\\varphi$）：$\\ddot\\varphi+2\\Gamma^\\varphi_{r\\varphi}\\dot r\\dot\\varphi+\\Gamma^\\varphi_{\\varphi\\varphi}\\dot\\varphi^2=0+2\\cdot\\tfrac1r\\cdot1\\cdot0+0=0$ ✓。\n\n两条方程同时满足——**径向射线是测地线**（直线不过原点时 $\\varphi(t)$ 会变化，仍是测地线但验证更长；径向已足够演示方法）。\n\n**局部最短性（一句话版）**：给定起点与初速度，测地线局部上使长度最短——「拉紧的绳子在曲面上的平衡形态」。注意只是**局部**：球面上走超过 $\\pi R$ 的大圆劣弧变优弧，不再是全局最短（更长的同大圆路径也是测地线）。这正对应 B1.2 指数映射的 $\\|\\omega\\|<\\pi$ 门槛——旋转的 log 主值与球面测地线的最短弧是同一件事在两处的表现（$SO(3)$ 上的双不变度量）。\n\n**依赖链**：度量 $g$ →（求导）→ $\\Gamma$ →（代数）→ 测地线方程（二阶 ODE，de1.9 保证局部解存在唯一：给定起点与初速度，测地线唯一）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.2",
+        "de1.9",
+        "D1"
+      ]
+    },
+    {
+      "id": "B2.3:geodesic.intuition",
+      "type": "intuition",
+      "subject": "geodesic",
+      "title": "直觉：测地线 = 「拉直的绳子」，坐标只负责记账",
+      "keywords": [
+        "假设给了什么：度量 g（每个方向的「每米多少米」）",
+        "结论为什么成立：自由粒子的自加速度为零；Γ 扣除坐标的假加速度",
+        "球面上：大圆 = 测地线（航线走大圆省油）",
+        "赤道验证：Γ^θ_φφ 在 θ=π/2 处为零 ⟹ 赤道是大圆",
+        "绳子隐喻：两端拉紧，张力沿切向，无法向分量"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 127,
+        "line_end": 130
+      },
+      "fill_hint": "直觉词条；赤道是大圆的 Γ 验证用到球面 Γ（sphere-curvature 词条算过），此处只引结论。",
+      "content": "**假设给了什么**：一张带度量的曲面/空间——「长度」有了定义（B2.1 的 $I$、B2.3 的 $g$）。没有外力、没有摩擦，只有几何。\n\n**结论为什么因此成立**：测地线是「**尽可能直**」的路径。三种直觉互相印证：\n\n1. **绳子**：把一根绳子沿曲面两端拉紧——张力只能沿绳的切向（绳没有抗弯刚度），于是绳在各点的「弯」全部来自曲面本身的弯。平衡形态 = 测地线；\n2. **自由粒子**：在曲面上无外力滑行的粒子，自己感觉不到加速度（失重）。坐标里的表观加速度（如极坐标的向心项 $\\Gamma^r_{\\varphi\\varphi}\\dot\\varphi^2=-r\\dot\\varphi^2$）是**记账方式的假象**，测地线方程用 $\\Gamma$ 把它扣除——扣完为零就是「没推没拉」；\n3. **最短局部**：两点间（足够近时）最省长度的路——测地线局部最短。\n\n**球面案例（航线的真相）**：球面的测地线是**大圆**（圆心在球心的圆，如赤道、所有经线）。飞机走洲际航线不飞「地图上的直线」（等矩形投影里的水平线），而是走大圆——地图是失真的（B2.1 绝妙定理：球面 $K=1/R^2>0$ 摊不平），地图上的直线不是球面的直线。**赤道为何是大圆（$\\Gamma$ 验证）**：球面 $g=R^2(d\\theta^2+\\sin^2\\theta\\,d\\varphi^2)$ 的 $\\Gamma^\\theta_{\\varphi\\varphi}=-\\sin\\theta\\cos\\theta$ 在赤道 $\\theta=\\tfrac\\pi2$ 处为零（$\\sin\\tfrac\\pi2\\cos\\tfrac\\pi2=0$【已核验:0|sin(pi/2)*cos(pi/2)】）——沿赤道走时「向南/北的假加速度」消失，纯东向运动自洽。\n\n**与欧氏直觉的断裂**：平面上「直」=「方向不变」；曲面上的「直」只能意味着「尽可能直」——两条初始平行的测地线在正曲率空间会**聚拢**（球面上两条相邻经线在赤道平行、在北极相交），负曲率会**散开**（双曲面）。平行性的这种漂移正是曲率张量 $R$ 量化的对象：绕一圈回路回来方向转了多少 = $R$ 的积分。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B2.1",
+        "E3"
+      ]
+    },
+    {
+      "id": "B2.3:sphere-curvature.extension",
+      "type": "extension",
+      "subject": "sphere-curvature",
+      "title": "拓展：用切片公式算球面——Γ、测地线、K 的完整手算",
+      "keywords": [
+        "球面度量 g = R²(dθ² + sin²θ dφ²)（B2.1 第一基本形式）",
+        "Γ^θ_φφ = −sinθcosθ（赤道处 0）、Γ^φ_θφ = cotθ（赤道处 0）",
+        "赤道是大圆的完整测地线方程验证",
+        "K = 1/R²：R=2 时 0.25；地球 2.4637×10⁻⁸ km⁻²",
+        "对照极坐标平面：同样是 Γ≠0，球面 R≠0——真弯曲"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 117,
+        "line_end": 130
+      },
+      "fill_hint": "拓展词条（切片未含球面计算）；全部用切片的公式手算，数值可复核。K=1/R² 的曲率张量完整计算较长，此处按标准结果引用并给数值锚点。",
+      "content": "把切片的三个公式（$\\Gamma$、$R$、测地线）全部在球面上走一遍——这是检验「真的会用黎曼工具箱」的标准手算。\n\n**度量**（半径 $R$ 的球面，$\\theta$ 纬度余角、$\\varphi$ 经度）：$g_{\\theta\\theta}=R^2$、$g_{\\varphi\\varphi}=R^2\\sin^2\\theta$（B2.1 球面 $I$ 的重排）。\n\n**第一步：Christoffel 符号**（唯一非零导数 $\\partial_\\theta g_{\\varphi\\varphi}=2R^2\\sin\\theta\\cos\\theta$）：\n\n$$\\Gamma^\\theta_{\\varphi\\varphi}=\\tfrac12\\cdot\\tfrac1{R^2}\\cdot(-2R^2\\sin\\theta\\cos\\theta)=-\\sin\\theta\\cos\\theta,\\qquad \\Gamma^\\varphi_{\\theta\\varphi}=\\tfrac12\\cdot\\tfrac{1}{R^2\\sin^2\\theta}\\cdot 2R^2\\sin\\theta\\cos\\theta=\\cot\\theta.$$\n\n锚点：赤道 $\\theta=\\tfrac\\pi2$ 处 $\\Gamma^\\theta_{\\varphi\\varphi}=-\\sin\\tfrac\\pi2\\cos\\tfrac\\pi2=0$【已核验:0|-sin(pi/2)*cos(pi/2)】、$\\Gamma^\\varphi_{\\theta\\varphi}=\\cos\\tfrac\\pi2/\\sin\\tfrac\\pi2=0$【已核验:0|cos(pi/2)/sin(pi/2)】——**赤道上两个 $\\Gamma$ 都归零**；北极附近 $\\theta\\to0$：$\\Gamma^\\varphi_{\\theta\\varphi}=\\cot\\theta\\to\\infty$（坐标系在极点退化，经线汇聚——坐标奇点，不是几何奇点）。\n\n**第二步：赤道是大圆（测地线验证）**。走赤道：$\\theta(t)=\\tfrac\\pi2$、$\\varphi(t)=\\omega t$。代入测地线方程：\n\n- $\\theta$ 方程：$\\ddot\\theta+\\Gamma^\\theta_{\\varphi\\varphi}\\dot\\varphi^2=0+(-\\sin\\tfrac\\pi2\\cos\\tfrac\\pi2)\\omega^2=0$ ✓；\n- $\\varphi$ 方程：$\\ddot\\varphi+2\\Gamma^\\varphi_{\\theta\\varphi}\\dot\\theta\\dot\\varphi=0+0=0$ ✓。\n\n赤道是测地线（大圆）；一般大圆同理。\n\n**第三步：曲率**。把上述 $\\Gamma$ 代入切片曲率公式，唯一非零独立分量给（标准结果，计算约一页）：\n\n$$K=\\frac{1}{R^2}.$$\n\n锚点：$R=2$ 的球 $K=\\tfrac14=0.25$【已核验:0.25|1/2**2】；地球（$R=6371$ km）$K=1/R^2\\approx2.4637\\times10^{-8}\\ \\mathrm{km}^{-2}$【已核验:2.46368279039e-08|1/6371**2】——与 B2.1（绝妙定理词条）用 $I$ 算出的完全一致：**两条路（外蕴的 $I,II$ 公式 / 内蕴的 $\\Gamma,R$ 公式）殊途同归**，这正是绝妙定理的现场演示。\n\n**与极坐标平面对照（本单元反例的收尾）**：\n\n| | 极坐标平面 | 球面 |\n|---|---|---|\n| $\\Gamma$ | $\\ne0$（$-r$、$1/r$） | $\\ne0$（$-\\sin\\theta\\cos\\theta$、$\\cot\\theta$） |\n| $R$ | $\\equiv0$（平坦） | $\\ne0$（$K=1/R^2$） |\n| 判定 | 坐标效应（可换直角坐标消掉 $\\Gamma$） | 真弯曲（任何坐标都消不掉） |\n\n$\\Gamma$ 非零在两种情形长得一样——**只有 $R$ 分得清「坐标的弯」与「空间的弯」**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B2.1",
+        "E3"
+      ]
+    },
+    {
+      "id": "B2.3:curvature-tensor.statement",
+      "type": "statement",
+      "subject": "curvature-tensor",
+      "title": "黎曼曲率张量：陈述与读法",
+      "keywords": [
+        "公式（切片）：R^l_ijk = ∂_j Γ^l_ik − ∂_k Γ^l_ij + Γ^m_ik Γ^l_mj − Γ^m_ij Γ^l_mk",
+        "读法一：绕无穷小平行四边形一圈，向量的净偏转",
+        "读法二：先 j 后 k 与先 k 后 j 的不可交换差",
+        "Γ 的非张量性在差分中抵消 ⟹ R 是真张量（坐标不变量）",
+        "平面 R≡0、球面 K=1/R²（2 维只有一个独立分量）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 122,
+        "line_end": 125
+      },
+      "fill_hint": "切片 122-125 行公式转写；两种读法为标准注解。",
+      "content": "**陈述（切片原文）**：黎曼曲率张量\n\n$$R^l_{ijk}=\\partial_j\\Gamma^l_{ik}-\\partial_k\\Gamma^l_{ij}+\\Gamma^m_{ik}\\Gamma^l_{mj}-\\Gamma^m_{ij}\\Gamma^l_{mk}.$$\n\n**怎么读**：\n\n1. **对称差读法**：前两项是「先沿 $j$ 求导再沿 $k$」与反序的差（$\\partial_j\\Gamma-\\partial_k\\Gamma$），后两项是乘积层面的同款交换差。整个张量在度量**平移不变**（$\\Gamma$ 为常数）或坐标「惯性」（$\\Gamma=0$）时为零——它量的是**交换两个方向的次序时多出来的旋转**；\n2. **平行移动读法**：把一个向量沿无穷小平行四边形（先走 $j$ 边再 $k$ 边 vs 先 $k$ 再 $j$）平行移动一整圈，回来的向量与出发时差一个线性变换——$R$ 就是这个「绕圈税」的无穷小版本。平面上绕圈回来分毫不差（$R=0$）；球面上绕三角形一圈回来方向偏转 = 角盈（$\\int K\\,dA$，Gauss–Bonnet）；\n3. **张量性（重点）**：$\\Gamma$ 不是张量（christoffel-not-curvature 词条），但 $\\Gamma$ 在坐标变换中的「多余项」在上述差分组合中**恰好抵消**——$R$ 是真张量，任何坐标系算出同一组数。这就是「空间到底弯不弯」有了客观答案。\n\n**维数速查**：$n$ 维空间 $R$ 有 $\\tfrac{n^2(n^2-1)}{12}$ 个独立分量；2 维只有 1 个独立分量 = 高斯曲率 $K$（球面 $1/R^2$，平面 $0$）——所以曲面论（B2.1）一个数 $K$ 就够，高维必须用完整张量。\n\n**缩并与下游**：$\\mathrm{Ric}_{ij}=R^l_{ilj}$（缩并）、标量曲率 $\\mathcal{R}=g^{ij}\\mathrm{Ric}_{ij}$——广义相对论的爱因斯坦方程 $G_{ij}=8\\pi T_{ij}$ 左边正是 $\\mathrm{Ric}$ 的组合（E3 的舞台是伪黎曼版本）。**依赖链**：$g\\to\\Gamma\\to R$，每一步确定性给出，无自由参数。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "E3",
+        "B2.1"
+      ]
+    },
+    {
+      "id": "B2.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "四件套总对照：g / Γ / R / 测地线",
+      "keywords": [
+        "g：输入（度量，张量，内蕴底座）",
+        "Γ：坐标加速度补偿器（不是张量——直角/极坐标对照）",
+        "R：真弯曲（张量，坐标不变，绕圈税）",
+        "测地线：自加速度为零的路径（解是几何对象）",
+        "依赖链：g → Γ → R 与 g → Γ → 测地线方程",
+        "判据：弯不弯看 R，永远不要看 Γ"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 112,
+        "line_end": 133
+      },
+      "fill_hint": "整单元压缩表；各行有对应词条支撑。",
+      "content": "本单元四件套总对照：\n\n| 对象 | 一句话 | 张量？ | 平面（极坐标） | 球面（$R$） |\n|---|---|---|---|---|\n| 度量 $g=g_{ij}dx^i\\otimes dx^j$ | 每个切空间的内积（输入） | 是 | $\\mathrm{diag}(1,r^2)$ | $R^2\\,\\mathrm{diag}(1,\\sin^2\\theta)$ |\n| Christoffel $\\Gamma^k_{ij}$ | 坐标加速度补偿器 | **否**（坐标效应） | $-r$、$1/r$（直角坐标下全零） | $-\\sin\\theta\\cos\\theta$、$\\cot\\theta$ |\n| 曲率 $R^l_{ijk}$ | 绕圈税/真弯曲 | 是（不变量） | $\\equiv0$ | $K=1/R^2$（$R=2$ 时 $0.25$【已核验:0.25|1/2**2】） |\n| 测地线方程 | $\\ddot x^k+\\Gamma^k_{ij}\\dot x^i\\dot x^j=0$：自加速度为零 | 方程（解=几何对象） | 径向射线（=直线） | 大圆（赤道验证过） |\n\n**三条使用守则**：\n\n1. **弯不弯，只看 $R$**——$\\Gamma\\ne0$ 可能只是坐标的事（极坐标平面反例）；$R\\ne0$ 才是真弯曲，任何坐标消不掉；\n2. **$g$ 是唯一的输入**——$\\Gamma$、$R$、测地线全部由 $g$ 确定性导出（求导 + 代数），没有额外自由度。「给一个几何」=「给一个 $g$」；\n3. **内蕴哲学的完成**——B2.1 的绝妙定理说 $K$ 只依赖 $I$；本单元把 $I$ 抽象成 $g$、把 $K$ 推广成 $R$：曲面论升格为「任意度量空间上的几何」，不再需要 ambient $\\mathbb{R}^3$（广义相对论：时空的 $g$ 直接是引力）。**局部工具（$g,\\Gamma,R$）+ 整体对账（Gauss–Bonnet、de Rham：Q10）**= B2.2「局部 vs 整体」的几何版分工。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B2.1",
+        "B2.2",
+        "Q10",
+        "E3"
+      ]
+    },
+    {
+      "id": "B2.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "单元下游应用与跨章链接（含切片 CG 行）",
+      "keywords": [
+        "切片原文：网格上的测地线计算、测地线距离（形状匹配）、黎曼优化",
+        "形状匹配：两网格对应点的测地距离 → 等距嵌入/对齐",
+        "黎曼优化：参数落在流形上（SO(n)、正定矩阵锥）的梯度法",
+        "物理：广义相对论（伪黎曼时空）、拉格朗日力学的测地线化",
+        "links：H1、G5、lie3.20、D1、E3"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 132,
+        "line_end": 132
+      },
+      "fill_hint": "切片 132 行 CG 应用 + 下游跨章；细节归目标节点。",
+      "content": "切片第 132 行：「在 CG 中：网格上的测地线计算、测地线距离（形状匹配）、黎曼优化」。逐条展开 + 跨章下游：\n\n- **测地线距离（形状匹配）**：两个网格的相似度用「对应点间的测地距离矩阵」比较——欧氏距离受姿态摆放影响，**测地距离是内蕴量**（B2.1 绝妙定理的工程红利：弯一弯、摆一摆都不变）。骨架动画的测地权重、形状检索的 IsoMap 降维都是这一族；\n- **网格测地线计算**：离散曲面（H1）上解测地线方程的离散版（fast marching / 图上最短路近似）——纹理的「等距线」、网格上画曲线；\n- **黎曼优化（G5）**：约束优化里参数常落在流形上——$SO(n)$ 上的姿态配准、正定对称矩阵锥上的协方差估计、球面上的超球面向量。梯度法必须「贴着流形走」：梯度由 $g$ 升指标、迭代沿测地线推进（「流形上的牛顿法」）——正是本单元测地线方程的算法化；\n- **物理**：广义相对论 = 伪黎曼时空（E3）+ 测地线方程 = 自由落体；拉格朗日力学（D1）的「最小作用量」与测地线「局部最短」是同一哲学（作用量度量下的测地线）；\n- **曲面上的对称性（lie3.20）**：等距变换群 = 度量 $g$ 的自同构群——李群方法回到几何舞台。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "H1",
+        "G5",
+        "lie3.20",
+        "D1",
+        "E3"
+      ]
+    },
+    {
+      "id": "B2.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：geodesic-compare（大圆 vs 地图直线，需后端）",
+      "keywords": [
+        "场景一：地球仪上两城市间的大圆航线（测地线）",
+        "对照：等矩形地图上连接同样两城市的『直线』投回球面后的弯曲",
+        "场景二：极坐标网格中直线 r(t),φ(t) 的坐标曲线 + Γ 数值",
+        "不变式自检：大圆弧长 ≤ 对照路径长（偏差 > 1e-12 报错）",
+        "判据 Q1/Q3：需 3D 交互与测地线数值对拍 ⟹ 档2"
+      ],
+      "tex_ref": null,
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要 3D 地球仪交互与测地线数值积分对拍（Q1 无既有 3D 部件、Q3 需参考实现对拍），前端直渲撑不起。",
+        "params_hint": {
+          "scenes": [
+            "great-circle",
+            "polar-grid"
+          ],
+          "cities": [
+            "beijing",
+            "paris"
+          ],
+          "radius": 6371,
+          "tol": 1e-12
+        }
+      },
+      "fill_hint": "只记槽位与需求；契约细化归 learning-web 前端项目。",
+      "content": "单元级演示总览：本单元最值得画的是「**直线的暴政**」——你以为的直线（地图上）不是测地线（球面上），两条线并排看到破直觉。\n\n模块 geodesic-compare（档2，planned-backend）：\n\n- **great-circle 场景**：3D 地球仪上标两个城市，画两条件路线：大圆（测地线，测地线方程数值积分）与「等矩形地图直线」投回球面的路径。显示两条的弧长——大圆更短（锚点：赤道上走 $\\tfrac\\pi2$ 弧长 $=R\\cdot\\tfrac\\pi2$，$R=6371$ km 时 $\\approx10007.5$ km【已核验:10007.543398|6371*pi/2】）；\n- **polar-grid 场景**：2D 极坐标网格上画一条不过原点的直线（真测地线），同屏显示它的 $(r(t),\\varphi(t)$ 坐标轨迹（弯的！）与 $\\Gamma^r_{\\varphi\\varphi}=-r$、$\\Gamma^\\varphi_{r\\varphi}=1/r$ 在当前位置的数值（$r=2$ 处 $-2$ 与 $0.5$【已核验:0.5|0.5*(1/2**2)*2*2】）——「空间是直的、坐标是弯的」具象化（christoffel-not-curvature 词条的动态版）；\n- **不变式自检**：大圆路径长度必须 $\\le$ 对照路径长度（局部最短性），偏差 $>10^{-12}$ 抛错；极坐标场景中直线的欧氏总长必须与 $\\int\\sqrt{\\dot r^2+r^2\\dot\\varphi^2}\\,dt$ 一致。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": []
+    },
+    {
+      "id": "B2.3:riemann.probe1",
+      "type": "probe",
+      "subject": "riemann",
+      "title": "检验题：Γ、K、闵可夫斯基各算一遍",
+      "keywords": [
+        "① 极坐标 r=2：Γ^r_φφ 与 Γ^φ_rφ（答案 −2 与 0.5）",
+        "② 验证 r(t)=t+1（径向射线）满足测地线方程",
+        "③ 球 R=2 与地球的 K（答案 0.25 与 2.4637×10⁻⁸）",
+        "④ 闵可夫斯基：v=(2,1,0,0) 与 v=(1,1,0,0) 的 g(v,v)（−3 与 0）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 117,
+        "line_end": 130
+      },
+      "fill_hint": "数值全部可由表达式复核；①锚定 christoffel-not-curvature、④锚定 metric.quantifiers。",
+      "content": "① 极坐标平面 $g=\\mathrm{diag}(1,r^2)$：算 $r=2$ 处的 $\\Gamma^r_{\\varphi\\varphi}$ 与 $\\Gamma^\\varphi_{r\\varphi}$。（$-2$【已核验:-2|0.5*1*(0+0-2*2)】与 $0.5$【已核验:0.5|0.5*(1/2**2)*2*2】）\n\n② 验证径向射线 $r(t)=t+1$、$\\varphi(t)=\\varphi_0$ 满足测地线方程（$\\dot r=1,\\dot\\varphi=0,\\ddot r=\\ddot\\varphi=0$，代入两个方程逐项算）。（$r$ 方程：$0+(-r)\\cdot0=0$ ✓；$\\varphi$ 方程：$0+2\\cdot\\tfrac1r\\cdot1\\cdot0=0$ ✓——是测地线）\n\n③ 半径 2 的球面 $K$ 是多少？地球（$R=6371$ km）呢？（$\\tfrac14$【已核验:0.25|1/2**2】；$1/6371^2\\approx2.4637\\times10^{-8}\\ \\mathrm{km}^{-2}$【已核验:2.46368279039e-08|1/6371**2】）\n\n④ 闵可夫斯基度量 $g=\\mathrm{diag}(-1,1,1,1)$：算 $v=(2,1,0,0)$ 与 $v=(1,1,0,0)$ 的 $g(v,v)$，判断正定性在哪里失效。（$-4+1=-3$【已核验:-3|-2*2+1*1】（类时，负）；$-1+1=0$【已核验:0|-1*1+1*1】（光锥方向，非零向量长度为零）——正定性死亡，这是伪黎曼而非黎曼）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "E3",
+        "B2.1"
+      ]
+    }
+  ]
+}

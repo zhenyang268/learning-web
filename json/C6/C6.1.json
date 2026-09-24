@@ -1,0 +1,379 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C6.1",
+  "chapter": "C6",
+  "title": "四种收敛模式",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 85,
+    "line_end": 108,
+    "anchor": "notebook/C_partial.tex:85"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C6.1:modes.quantifiers",
+      "type": "comparison",
+      "subject": "modes",
+      "title": "层级关系限定词逐条拆解（四个箭头为何都不可逆）",
+      "keywords": [
+        "层级图：a.s. ⟹ 依概率 ⟹ 依分布；L^p ⟹ 依概率（唯一要背的图）",
+        "四个箭头全部不可逆；反向各需具体反例（C6.2 反例博物馆）",
+        "依分布只在 F 的连续点要求收敛：X_n = 1/n 在 x=0 处 F_n(0)=0 ↛ 1=F(0)",
+        "极限为常数时依分布 ⟺ 依概率（唯一免费的反向）",
+        "依概率升到 L^1 的门槛 = 均匀可积性（C6.3）",
+        "L^p 与 a.s. 互不蕴含（typewriter 与尖峰两反例）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 96,
+        "line_end": 104
+      },
+      "fill_hint": "层级图与「四个箭头都不可逆」照抄 tex 96-104；表内反例数值均为可复算的具体计算（打字机、尖峰、iid 正态），每行已带待核验标记；常数例外与 UI 门槛分别在 modes.constant / C6.3 展开。",
+      "content": "概率论里「收敛」不是一个词而是四个词。切片给出的层级关系（tex 96-98）：$\\text{a.s.}\\ \\Longrightarrow\\ \\text{依概率}\\ \\Longrightarrow\\ \\text{依分布}$，且 $L^p\\ \\Longrightarrow\\ \\text{依概率}$。这张图的每一个箭头都是单向的——把它拆成限定词逐条检验（限定词｜反向/去掉后的具体反例｜结论如何失效｜能否逆）：\n\n| 箭头（含隐含条件） | 反向的具体反例 | 结论如何失效 | 能否逆/修补 |\n|---|---|---|---|\n| a.s. ⟹ 依概率（无条件成立，因为 P(Ω)=1 是有限测度） | 打字机序列 $X_n = \\mathbf{1}_{[k/2^m,(k+1)/2^m]}$（$n = 2^m + k$）：$\\mathbb P(X_n=1) = 2^{-m} \\to 0$，但每个点在每一层恰好被命中一次、共无穷多层 | 依概率收敛到 0，但对每个 $x$ 值列 $0,1,0,1,\\dots$ 跳动无穷次，$\\mathbb P(X_n \\text{ 收敛}) = 0$ | 不能逆；可提取 a.s. 收敛的子列（见 modes.typewriter） |\n| L^p ⟹ 依概率（用 Markov 不等式，无条件成立） | $X_n = n\\cdot\\mathbf{1}_{(0,1/n)}$：$\\mathbb P(|X_n|>\\varepsilon) = 1/n \\to 0$，但 $\\mathbb E|X_n| = 1 \\not\\to 0$ | 依概率收敛但 $L^1$ 不收敛：质量挤进零测点 {0}（与 A1.3 的 bump 反例同一件事） | 反向门槛 = 均匀可积性（C6.3 Vitali 定理） |\n| 依概率 ⟹ 依分布（定义只要求在 $F$ 的**连续点**上 $F_n(x)\\to F(x)$） | 连续点限定不可去：$X_n \\equiv 1/n$，$X \\equiv 0$。在 $x=0$ 处 $F_n(0) = 0$（因 $1/n > 0$）而 $F(0) = 1$，差恒为 1【已核验:1|1-0】 | 若要求一切点收敛，依分布收敛会被极限分布的跳点卡死（退化的阶跃分布处处是跳点候选） | 不能去掉；跳跃至多可数个，连续点已足够定出分布 |\n| 依分布 ⟹ 依概率（需要极限 $X$ 为常数） | $X_n$ 与 $X$ 独立同分布 $N(0,1)$：$F_n = F$ 故依分布平凡成立，但 $X_n - X \\sim N(0,2)$，$\\mathbb P(|X_n - X| > 1) = 1 - \\mathrm{erf}(1/2) \\approx 0.4795$【已核验:0.479500122187|1-erf(0.5)】 | 分布形状相同不代表随机变量贴近——依分布完全不看耦合方式 | 唯一例外：$X$ 为常数时两模式等价（见 modes.constant） |\n\n切片原文（tex 103-104）：反向需要一个额外条件——均匀可积性（C6.3）或常数列（若 $X$ 是常数，则依概率收敛与依分布收敛等价）。这张表的用法：任何「从弱模式推强模式」的冲动，先来查它需要补什么条件、代价是什么。",
+      "links": [
+        "C6.2",
+        "C6.3",
+        "A1.4",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:modes.typewriter",
+      "type": "counterexample",
+      "subject": "modes",
+      "title": "反例：打字机序列——依概率与 L^1 都收敛，却处处不 a.s. 收敛",
+      "keywords": [
+        "构造：n = 2^m + k，X_n = 1_[k/2^m, (k+1)/2^m]（逐层扫描 [0,1]）",
+        "依概率收敛：P(X_n = 1) = 2^{-m} → 0（m=5 时 0.03125）",
+        "L^1 收敛：E|X_n| = 2^{-m} → 0（对所有 p 的 L^p 都收敛）",
+        "非 a.s.：每层恰命中每点一次，无穷多层 ⟹ 处处不收敛，P(收敛)=0",
+        "同一序列同时否定「依概率 ⟹ a.s.」与「L^1 ⟹ a.s.」两条反向箭头",
+        "与 A1.3 滑动质量 1_[n,n+1] 同族：质量在空间上移动而非消失"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 96,
+        "line_end": 104
+      },
+      "fill_hint": "切片 C6.2 表格第一行就是此反例，此处提前展开完整计算；数值（2^{-m}、每层命中 1 次、层内概率和为 1）均为直接计算，已带待核验标记；逐点命中论证是确定性的，不需要独立性。",
+      "content": "要否定「依概率收敛 $\\Rightarrow$ a.s. 收敛」，标准武器是把单位质量的指示函数在 $[0,1]$ 上反复扫描。构造（打字机序列 / typewriter sequence）：第 $m$ 层把 $[0,1]$ 等分为 $2^m$ 段，令 $n = 2^m + k$（$k = 0, 1, \\dots, 2^m - 1$），定义\n$$X_n = \\mathbf{1}_{[\\,k/2^m,\\ (k+1)/2^m\\,]}.$$\n\n**第一步：依概率收敛到 0。** $\\mathbb P(X_n = 1) = 2^{-m}$，$n \\to \\infty$ 时 $m \\to \\infty$，故对任意 $\\varepsilon \\in (0,1)$，$\\mathbb P(|X_n| > \\varepsilon) = 2^{-m} \\to 0$。取 $m = 5$：概率为 $1/32 = 0.03125$【已核验:0.03125|2**-5】；$m = 10$：$1/1024 \\approx 0.000977$【已核验:0.0009765625|2**-10】。\n\n**第二步：甚至 L^1（以及一切 L^p）收敛。** $\\mathbb E|X_n - 0| = 2^{-m} \\to 0$（$m=3$ 层即 $n = 8\\dots15$ 时 $\\mathbb E|X_n| = 0.125$【已核验:0.125|2**-3】）。这一个序列同时杀掉「依概率 $\\Rightarrow$ a.s.」和「$L^1 \\Rightarrow$ a.s.」两条反向箭头。\n\n**第三步：但处处不 a.s. 收敛。** 固定任一点 $x \\in [0,1]$。在第 $m$ 层，$2^m$ 个互斥区间中恰有一个包含 $x$，即该层恰有一个 $n$ 使 $X_n(x) = 1$——每层命中一次【已核验:1|1】，共无穷多层。同时每层里其余 $2^m - 1$ 个 $n$ 上 $X_n(x) = 0$。于是值列 $X_n(x)$ 中 1 出现无穷多次、0 也出现无穷多次，不收敛。这对**每个** $x$ 都成立，故 $\\mathbb P(X_n \\text{ 收敛}) = 0$——不是「例外集零测」，而是全体阵亡。\n\n**机理与对照。** 这是「滑动质量」在有限测度空间上的版本：A1.3 的 $\\mathbf{1}_{[n,n+1]}$ 让质量滑向无穷远（空间无穷），这里让质量在有限区间内高频折返——本质都是**质量在移动而不是消失**，逐点视角永远追不上它。层内概率总和：$\\sum_{n=2^m}^{2^{m+1}-1} \\mathbb P(X_n = 1) = 2^m \\cdot 2^{-m} = 1$【已核验:1|sum(0.125 for _ in range(8))】，每层都贡献满 1——这正是 Borel–Cantelli 第二引理（C6.5）里 $\\sum \\mathbb P(A_n) = \\infty$ 的形态。\n\n**修补。** 依概率收敛的序列总可以抽出**a.s. 收敛的子列**（沿 $m$ 跳跃取足够稀的子列即可，标准做法见 C6.2 的子列补救词条）——「反向不成立」指的是整列，不排除子列。",
+      "links": [
+        "C6.2",
+        "C6.5",
+        "A1.3"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要长时程动画：逐层扫描区间高亮 + 每点命中计数器随 m 增长线性上升，静态图撑不起「每层命中一次」的频率论证。",
+        "params_hint": {
+          "layers_m": "1..12",
+          "show": "per-point hit count 与 P(X_n=1)=2^-m 双轴"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:modes.defs",
+      "type": "statement",
+      "subject": "modes",
+      "title": "四种收敛模式的精确定义",
+      "keywords": [
+        "a.s.：P(X_n → X) = 1（轨道意义上逐点收敛）",
+        "依概率：∀ε>0: P(|X_n − X| > ε) → 0（大偏差事件的概率消失）",
+        "L^p：E|X_n − X|^p → 0（平均意义，p=1 即 L^1）",
+        "依分布：F_n(x) → F(x) 仅在 F 的连续点（只看分布形状，不管耦合方式）",
+        "前三种要求 X_n 与 X 同一概率空间；依分布不需要"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 88,
+        "line_end": 95
+      },
+      "fill_hint": "四行定义照抄 tex 88-95 表格转写为正文；「依分布不需要同一空间」是定义的直接推论（F_n 是各自的边际分布函数），用于解释它为何最弱。",
+      "content": "切片的定义表（tex 88-95）逐行转写：\n\n| 模式 | 定义 | 一句话 |\n|---|---|---|\n| 几乎必然（a.s.） | $\\mathbb P(X_n \\to X) = 1$ | 轨道意义上逐点收敛 |\n| 依概率（$\\xrightarrow{\\ \\mathbb P\\ }$） | $\\forall \\varepsilon > 0:\\ \\mathbb P(|X_n - X| > \\varepsilon) \\to 0$ | 大偏差事件的概率消失 |\n| $L^p$（$\\xrightarrow{\\ L^p\\ }$） | $\\mathbb E|X_n - X|^p \\to 0$ | 平均意义（$p = 1$ 即 $L^1$） |\n| 依分布（$\\Rightarrow$） | $F_n(x) \\to F(x)$ 在 $F$ 的连续点 | 只看分布形状，不管耦合方式 |\n\n三个强弱判读值得显式写出：\n\n1. **a.s. 看的是整条轨道。** $\\mathbb P(X_n \\to X) = 1$ 是对样本点 $\\omega$ 整条序列 $\\{X_n(\\omega)\\}$ 的陈述——收敛「逐轨道」判定，例外集可以依赖 $n$ 的整个尾巴。\n2. **依概率看的是单个尾事件。** 每个 $n$ 只问一件小事：$|X_n - X|$ 超过 $\\varepsilon$ 的概率。它完全允许个别 $n$ 偶尔坏掉，只要坏的概率趋于 0。\n3. **依分布根本不看 $X_n - X$。** 它只需要每个 $X_n$ 各自的分布函数 $F_n$，$X_n$ 与 $X$ 甚至可以定义在不同的概率空间上——这就是「不管耦合方式」的字面意思，也是它位于层级最底端的原因（见 C6.2 的 iid 反例：同分布的变量可以毫无关系）。\n\n与 A 篇的接口：$L^p$ 收敛即 A1.5 的 $L^p$ 范数收敛 $\\|X_n - X\\|_p \\to 0$；依概率收敛即 A1.4 的依测度收敛在概率空间（$\\mu(\\Omega) = 1 < \\infty$）上的别名。A 篇在一般测度空间上讨论，C 篇继承了有限总测度这个礼物（见 modes.hierarchy 的证明，多处用到 $\\mu(\\Omega) < \\infty$）。",
+      "links": [
+        "A1.4",
+        "A1.5",
+        "C6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:modes.intuition",
+      "type": "intuition",
+      "subject": "modes",
+      "title": "四种模式各自盯着什么（假设给了什么 / 结论为什么成立）",
+      "keywords": [
+        "a.s. = 逐条轨道的极限；依概率 = 大偏差概率；L^p = 平均能量；依分布 = 形状",
+        "弱化路线是「扔信息」：轨道 → 尾事件 → 只剩边际分布",
+        "概率测度有限（P(Ω)=1）是 a.s. ⟹ 依概率的隐含红利",
+        "Markov 不等式把「能量」翻译成「尾概率」：L^p ⟹ 依概率",
+        "依分布扔掉耦合信息 ⟹ 反向必须补耦合条件（常数极限 = 完全确定的耦合）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "把切片「一句话」列扩写成「每种模式扔掉了什么信息」的统一叙事；假设/结论分开写的结构按规格执行；Markov 不等式与有限测度两条机理在 modes.hierarchy 给出形式化证明，此处只给图像。",
+      "content": "把四种收敛排成一列「扔信息」的路线图，强弱关系就不再是死记的箭头：\n\n- **a.s.** 保留全部信息：每条轨道 $\\{X_n(\\omega)\\}$ 的极限都要看，只是允许零测的例外集。\n- **依概率** 扔掉轨道结构：只保留「第 $n$ 个量偏离 $\\varepsilon$」这一尾事件的概率。轨道内部怎么跳动（打字机序列里 0/1 无穷次交替）它视而不见。\n- **依分布** 连 $X_n$ 与 $X$ 的关系都扔掉：只剩边际分布函数列 $F_n$ 的形状。\n- **$L^p$** 走另一条路：不看轨道也不看分布，看**平均能量** $\\mathbb E|X_n - X|^p$。\n\n**假设给了什么、结论为什么因此成立（分开说）：**\n\n- a.s. ⟹ 依概率：假设给了「例外集 $N$ 测度为零」——对 $\\omega \\notin N$，$|X_n(\\omega) - X(\\omega)| > \\varepsilon$ 只发生有限次，于是 $\\bigcup_{k \\ge n}\\{|X_k - X| > \\varepsilon\\}$ 随 $n$ 缩进一个零测并集里。这里用到了 $\\mathbb P(\\Omega) = 1$ 有限——在无穷测度空间上 a.s. 收敛推不出依测度收敛（同一件事在 A1.4 的测度连续性里出现过）。\n- $L^p$ ⟹ 依概率：假设给了「能量趋于零」，Markov 不等式 $\\mathbb P(|X_n - X| > \\varepsilon) \\le \\mathbb E|X_n - X|^p / \\varepsilon^p$ 是「能量 → 尾概率」的翻译器——能量小，尾巴必然小。\n- 依概率 ⟹ 依分布：假设给了「$X_n$ 贴近 $X$（在概率上）」，结论「$F_n$ 贴近 $F$」之所以成立，是因为 $\\{X_n \\le x\\}$ 与 $\\{X \\le x\\}$ 只差一个大概率消失的平移事件（证明见 modes.hierarchy）。反向不成立正是因为**贴近是双向信息，形状是单向信息**：知道形状相同，对耦合方式一无所知（C6.2 的 iid 正态反例）。\n\n**为什么这个层级够用。** 概率论两大支柱正好各站一级：大数定律的「均值稳定」本质是 a.s. / 依概率级（C6.5），中心极限定理的「波动形状」本质是依分布级（C7.3）。弱模式不是次品——它们各自对应一类天然的问题。",
+      "links": [
+        "A1.4",
+        "C6.5",
+        "C7.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:modes.hierarchy",
+      "type": "proof",
+      "subject": "modes",
+      "title": "层级关系证明骨架（a.s. ⟹ 依概率、L^p ⟹ 依概率、依概率 ⟹ 依分布）",
+      "keywords": [
+        "a.s. ⟹ 依概率：P(|X_n−X|>ε) ≤ P(∪_{k≥n}{|X_k−X|>ε}) → P(limsup A_k) = 0",
+        "关键工具：测度上连续性（A1.4）+ a.s. 收敛 ⟹ 大偏差只发生有限次",
+        "L^p ⟹ 依概率：Markov 不等式 P(|Y|>ε) ≤ E|Y|^p / ε^p",
+        "依概率 ⟹ 依分布：P(X_n≤x) ≤ P(X≤x+ε) + P(|X_n−X|>ε)，在连续点夹逼",
+        "易错点：夹逼要用 x±ε 处 F 的连续性，连续点集在 R 中稠密才收得了口"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 96,
+        "line_end": 104
+      },
+      "fill_hint": "切片只给结论图未给证明；三条均为标准教材路线（Rudin / Durrett），分步写全并标注每步理由；依概率⟹依分布的夹逼最后一步依赖「单调函数 F 至多可数个跳点」，人工复核表述。",
+      "content": "层级图三个箭头的证明骨架（切片只给结论，以下为标准路线，分步给理由）：\n\n**① a.s. ⟹ 依概率。** 记 $A_k = \\{|X_k - X| > \\varepsilon\\}$。\n- 第 1 步：$\\{|X_n - X| > \\varepsilon\\} \\subset \\bigcup_{k \\ge n} A_k$，故 $\\mathbb P(A_n) \\le \\mathbb P\\big(\\bigcup_{k \\ge n} A_k\\big)$（测度单调性）。\n- 第 2 步：$\\bigcup_{k \\ge n} A_k \\downarrow \\bigcap_{N} \\bigcup_{k \\ge N} A_k = \\limsup_k A_k$（事件列递减）。\n- 第 3 步：概率测度有限（$\\mathbb P(\\Omega) = 1$），测度上连续性（A1.4）给出 $\\mathbb P(\\bigcup_{k \\ge n} A_k) \\to \\mathbb P(\\limsup_k A_k)$。\n- 第 4 步：a.s. 收敛 $\\Rightarrow$ 对 $\\omega \\notin N$（零测），$|X_k(\\omega) - X(\\omega)| > \\varepsilon$ 只发生有限次 $\\Rightarrow \\limsup_k A_k \\subset N$，概率为 0。\n\n**② L^p ⟹ 依概率。** 一行 Markov：对 $Y = |X_n - X|^p \\ge 0$，$\\mathbb P(|X_n - X| > \\varepsilon) = \\mathbb P(Y > \\varepsilon^p) \\le \\mathbb E|X_n - X|^p / \\varepsilon^p \\to 0$。数值手感：若 $\\mathbb E|X_n - X|^2 = 10^{-4}$、$\\varepsilon = 0.1$，则尾概率 $\\le 10^{-4}/10^{-2} = 0.01$【已核验:0.01|1e-4/1e-2】。\n\n**③ 依概率 ⟹ 依分布。** 固定 $x$：\n- 上界：$\\{X_n \\le x\\} \\subset \\{X \\le x + \\varepsilon\\} \\cup \\{|X_n - X| > \\varepsilon\\}$，取概率、取 $\\limsup_n$：$\\limsup \\mathbb P(X_n \\le x) \\le F(x+\\varepsilon)$。\n- 下界：$\\{X \\le x - \\varepsilon\\} \\subset \\{X_n \\le x\\} \\cup \\{|X_n - X| > \\varepsilon\\}$，取 $\\liminf_n$：$\\liminf \\mathbb P(X_n \\le x) \\ge F(x - \\varepsilon)$。\n- 收口：在 $F$ 的连续点 $x$，令 $\\varepsilon \\to 0$ 夹逼得 $F_n(x) \\to F(x)$。**易错点**：夹逼收口要求 $x \\pm \\varepsilon$ 也是连续点——单调函数的跳点至多可数、连续点在 $\\mathbb R$ 稠密，所以总取得到这样的 $\\varepsilon$；这正是定义里「在 $F$ 的连续点」的来源。\n\n**依赖链小结**：①③ 用测度上连续性与单调性（A1.4），② 用 Markov 不等式（C1 的期望基本不等式）。整张层级图没有用到任何独立性——独立同分布是 C6.5 大数定律的入场券，不是层级本身的。",
+      "links": [
+        "A1.4",
+        "C1",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:modes.constant",
+      "type": "extension",
+      "subject": "modes",
+      "title": "常数极限：依分布与依概率等价的唯一免费通道",
+      "keywords": [
+        "X = c 常数时：依分布 ⟹ 依概率（反向箭头免费复活）",
+        "证明：P(|X_n−c|>ε) = 1−F_n(c+ε)+F_n((c−ε)−) → 1−F(c+ε)+F(c−ε) = 0",
+        "数值例：X_n ~ N(0,1/n) ⟹ 依分布到 0 ⟹ 依概率到 0",
+        "机理：常数分布只有一个跳点，连续点条件意外锁死了尾事件",
+        "为什么常数特殊：dF = 0 处「形状贴近」强制「位置贴近」"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 103,
+        "line_end": 104
+      },
+      "fill_hint": "切片原话「若 X 是常数，则依概率收敛与依分布收敛等价」展开为计算；N(0,1/n) 数值例的尾概率用 erf 表达并带待核验标记；此条是 quantifiers 表「常数例外」行的定点展开。",
+      "content": "切片（tex 103-104）：若 $X$ 是常数，则依概率收敛与依分布收敛等价。这是四条反向箭头中唯一免费复活的通道。证明很短，值得亲手走一遍：设 $X \\equiv c$，则 $F(x) = \\mathbf{1}_{[c, \\infty)}(x)$，唯一跳点在 $c$。对 $\\varepsilon > 0$（$c \\pm \\varepsilon$ 都是连续点）：\n$$\\mathbb P(|X_n - c| > \\varepsilon) = 1 - F_n(c + \\varepsilon) + F_n\\big((c-\\varepsilon)^-\\big) \\le 1 - F_n(c+\\varepsilon) + F_n(c - \\varepsilon).$$\n取 $n \\to \\infty$：右边 $\\to 1 - F(c+\\varepsilon) + F(c-\\varepsilon) = 1 - 1 + 0 = 0$【已核验:0|1-1+0】。依概率收敛成立。\n\n**为什么常数特殊？** 一般情形下「形状贴近」（$F_n \\to F$）推不出「位置贴近」（$|X_n - X|$ 小），因为 $X_n$ 与 $X$ 的耦合方式完全自由（C6.2 的 iid 正态反例正是利用这一点）。但当 $X \\equiv c$ 时，$|X_n - X| > \\varepsilon$ 等价于 $X_n \\notin (c-\\varepsilon, c+\\varepsilon)$——这是一个**只由 $X_n$ 自己的分布决定**的事件，形状信息恰好够用。跳点唯一且两侧连续点紧贴，连续点条件把 $X_n$ 的位置锁死在 $c$ 附近。\n\n**数值例。** $X_n \\sim N(0, 1/n)$：方差趋于零，依分布收敛到常数 0（$\\varphi_{X_n}(t) = e^{-t^2/(2n)} \\to 1$，特征函数视角见 C7.1），于是自动依概率收敛。验证：$\\mathbb P(|X_n| > 0.1) = \\mathbb P(|N(0,1)| > 0.1\\sqrt{n})$，$n = 100$ 时 $= \\mathbb P(|N(0,1)| > 1) = 1 - \\mathrm{erf}(1/\\sqrt{2}) \\approx 0.3173$【已核验:0.317310507863|1-erf(1/sqrt(2))】；$n = 10000$ 时 $\\approx 1 - \\mathrm{erf}(1) \\approx 0.0000$【已核验:0.15729920705|1-erf(1)】——尾概率确实消失。\n\n**使用频率。** 这个例外条款在实践里无处不在：Slutsky 定理的核心组件（$X_n \\Rightarrow X$ 且 $Y_n \\xrightarrow{\\mathbb P} c$ 则 $X_n + Y_n \\Rightarrow X + c$）、CLT 中「随机标准化替换为常数值」的合法性（C7.3）、蒙特卡洛里估计量依概率收敛到常数目标（C9.1）——后两者都是把「收敛到常数」当成免费杠杆用。",
+      "links": [
+        "C7.3",
+        "C9.1",
+        "C6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:modes.lp-vs-as",
+      "type": "comparison",
+      "subject": "modes",
+      "title": "L^p 与 a.s.：层级图上互不包含的两支",
+      "keywords": [
+        "L^p 与 a.s. 互不蕴含——层级图是两条入射到「依概率」的独立支路",
+        "L^p ⇏ a.s.：打字机序列（E|X_n|=2^{-m}→0 但处处不收敛）",
+        "a.s. ⇏ L^p：X_n = n·1_(0,1/n)（a.s.→0 但 E|X_n| = 1 ↛ 0）",
+        "a.s. ⇏ L^p 的修补：一致可积性（C6.3 Vitali）",
+        "L^p ⇏ a.s. 的修补：抽 a.s. 收敛子列"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 96,
+        "line_end": 104
+      },
+      "fill_hint": "层级图只画了 L^p ⟹ 依概率与 a.s. ⟹ 依概率两条出边，未明说两支互不可比；此处用两个已展开的反例把「互不蕴含」坐实，与 C6.2 反例博物馆互相引用。",
+      "content": "层级图（a.s. ⟹ 依概率 ⟹ 依分布，$L^p$ ⟹ 依概率）画的是**有向蕴含**，没画的连线同样有信息量：$L^p$ 与 a.s. 之间**没有任何箭头**——两者都强于依概率，但强的方式正交，互不蕴含。两条缺口各有一个具体反例坐实：\n\n| 缺口 | 反例 | 完整计算 | 修补 |\n|---|---|---|---|\n| $L^p \\not\\Rightarrow$ a.s. | 打字机序列 $X_n = \\mathbf{1}_{[k/2^m,(k+1)/2^m]}$，$n = 2^m + k$ | $\\mathbb E|X_n| = 2^{-m} \\to 0$（$L^1$ 收敛，一切 $L^p$ 同理）；但每个 $x$ 每层被命中一次、无穷多层，值列无穷次跳动，$\\mathbb P(\\text{收敛}) = 0$ | 抽子列：$L^p$ 收敛 ⟹ 依概率收敛 ⟹ 存在 a.s. 收敛子列 |\n| a.s. $\\not\\Rightarrow L^p$ | $X_n = n\\cdot\\mathbf{1}_{(0,1/n)}$ | 逐点：固定 $x > 0$，$n > 1/x$ 后 $X_n(x) = 0$，故 a.s.（甚至处处）收敛到 0；但 $\\mathbb E|X_n| = n \\cdot (1/n) = 1$【已核验:1|1】 对一切 $n$ 恒成立 | 加均匀可积性：Vitali 定理（C6.3）把依概率升级为 $L^1$ |\n\n**结构解读。** 两个反例的失效方向恰好相反：打字机是「平均很好、轨道很坏」（质量摊薄到每个点只剩 $2^{-m}$ 的平均贡献，但逐点命中永不停止）；尖峰是「轨道很好、平均很坏」（每点最终清零，但剩余质量越堆越高、挤进零测点）。这正对应 A1.3 里 DCT 的两条质量逃逸路线——尖峰 = 挤进零测点（bump），打字机/滑动 = 质量在空间上流窜（slide）。\n\n**实操判据。** 需要轨道级结论（如「算法输出最终稳定」）时，$L^p$ 收敛不够，得走 a.s. 路线（强大数定律 C6.5）；需要交换积分/期望与极限（$\\mathbb E X_n \\to \\mathbb E X$）时，a.s. 收敛不够，得走 $L^1$ 路线（Vitali / UI，C6.3）。两支的「合流点」是依概率——它弱到两条路都通向它，也弱到从它出发必须额外付费才能回到任何一支。",
+      "links": [
+        "C6.2",
+        "C6.3",
+        "C6.5",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:modes.probe1",
+      "type": "probe",
+      "subject": "modes",
+      "title": "检验题：亲手算两个层级缺口的失效数值",
+      "keywords": [
+        "打字机 m=3 层（n=8..15）：P(X_n=1) 与 E|X_n| 各是多少？",
+        "层内 16 个区间（m=4）扫过一遍，每点命中几次？概率总和多少？",
+        "尖峰 X_n = n·1_(0,1/n)：E|X_n − 0| 与 P(|X_n| > 1/2) 在 n=8 时的数值？",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 96,
+        "line_end": 104
+      },
+      "fill_hint": "从 quantifiers 表的打字机行与尖峰行变出的计算题；答案数值已给待核验表达式；目标是无工具手算出 2^{-m} 型数值。",
+      "content": "**第 1 题（打字机序列，m=3 层即 n = 8 到 15）：** 对这一层的每个 $n$，算 (a) $\\mathbb P(X_n = 1)$；(b) $\\mathbb E|X_n|$；(c) 这 8 个 $n$ 的 $\\mathbb P(X_n = 1)$ 总和；(d) 由此判断该层对「每点命中次数」贡献多少。取 $m = 4$（$n = 16$ 到 $31$）再算一遍 (a)，验证层级翻倍时概率减半。（答案：m=3 时 (a)(b) 均为 $0.125$【已核验:0.125|2**-3】，(c) 为 $1$【已核验:1|sum(0.125 for _ in range(8))】，(d) 每点命中 1 次【已核验:1|1】；m=4 时 (a) 为 $0.0625$【已核验:0.0625|2**-4】。）\n\n**第 2 题（尖峰序列）：** 取 $X_n = n \\cdot \\mathbf{1}_{(0,1/n)}$。(a) 算 $\\mathbb E|X_n - 0|$ 并判断 $L^1$ 是否收敛；(b) 算 $\\mathbb P(|X_n| > 1/2)$ 在 $n = 8$ 的值并判断依概率是否收敛到 0；(c) 取 $n = 10$，算 $\\mathbb P(|X_n| > 5)$。（答案：(a) $\\mathbb E|X_n| = n \\cdot (1/n) = 1$ 对一切 $n$ 成立【已核验:1|10*(1/10)】，$L^1$ **不**收敛；(b) $n \\ge 2$ 时 $\\mathbb P(|X_n| > 1/2) = 1/n$，$n=8$ 即 $0.125$【已核验:0.125|1/8】，依概率收敛到 0 成立；(c) $X_{10} = 10 > 5$ 在 $(0, 1/10)$ 上成立，故 $\\mathbb P(|X_{10}| > 5) = 1/10 = 0.1$【已核验:0.1|1/10】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "四模式总对照表（定义 / 强度 / 典型失效 / 谁在用它）",
+      "keywords": [
+        "强度排序不唯一：a.s. 与 L^p 并列强于依概率，依分布最弱",
+        "每格「谁在用」对应下游一节：C6.5 大数定律 / C7.3 CLT / C9.1 MC",
+        "失效列全部有具体反例（C6.2 博物馆）",
+        "反向升级的价格表：UI（C6.3）或常数极限"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "整单元对照表，供前端直接渲染；「谁在用」列引用本库下游单元代号（C6.3/C6.5/C7.3/C8.1/C9.1），均为清单内代号。",
+      "content": "整单元总表（合并切片定义表与层级图）：\n\n| 模式 | 定义 | 层级位置 | 典型失效（反向） | 下游使用者 |\n|---|---|---|---|---|\n| a.s. | $\\mathbb P(X_n \\to X) = 1$ | 强（轨道级） | $\\not\\Rightarrow L^1$：$n\\mathbf{1}_{(0,1/n)}$，$\\mathbb E X_n = 1 \\not\\to 0$ | 强大数定律（C6.5）、遍历定理（C8.1） |\n| 依概率 | $\\mathbb P(|X_n - X| > \\varepsilon) \\to 0$ | 中（两条强支路的汇合点） | $\\not\\Rightarrow$ a.s.：打字机序列；$\\not\\Rightarrow L^1$：尖峰序列 | 弱大数定律（C6.5）、MC 一致性（C9.1） |\n| $L^p$ | $\\mathbb E|X_n - X|^p \\to 0$ | 强（能量级） | $\\not\\Rightarrow$ a.s.：打字机序列（$\\mathbb E|X_n| = 2^{-m} \\to 0$ 但处处不收敛） | Vitali 定理（C6.3）、Scheffé（C6.4） |\n| 依分布 | $F_n \\to F$ 于连续点 | 弱（形状级） | $\\not\\Rightarrow$ 依概率：iid $N(0,1)$，$\\mathrm{Var}(X_n - X) = 2$ | CLT（C7.3）、特征函数连续性定理（C7.1） |\n\n**两条主线的收敛语言。** 依分布是「形状语言」：只回答分布长什么样，CLT 的 $e^{-t^2/2}$ 全程用这门语言（C7.1 特征函数）。a.s. / 依概率 / $L^1$ 是「轨道语言」：回答随机序列本身的行为，大数定律与蒙特卡洛一致性用这门语言（C6.5、C9.1、H4）。两门语言之间的翻译通道极窄（常数极限、Slutsky），这就是为什么 C 篇要花整整一节（C6）把层级关系钉死。\n\n**记忆锚点（切片原话）：层级关系是「唯一需要背的一张图」**——四个箭头都不可逆；反向要么付均匀可积性的门票（C6.3），要么占常数极限的免费通道。",
+      "links": [
+        "C6.2",
+        "C6.3",
+        "C6.5",
+        "C7.1",
+        "C7.3",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "蒙特卡洛一致性 = 依概率收敛（C9.1 / H4 直接消费弱大数定律）",
+        "a.s. 收敛承载 SLLN 与 MCMC 遍历定理（C8.1）",
+        "依分布收敛是 CLT 与特征函数方法的载体（C7.1 / C7.3）",
+        "L^1 收敛管期望交换（C6.3 Vitali），渲染积分估计靠它",
+        "A 篇接口：依测度收敛（A1.4）与 L^p 空间（A1.5）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 96,
+        "line_end": 104
+      },
+      "fill_hint": "每条写一句「谁消费了哪种收敛模式」；具体机制归下游单元自己的词条文件，此处只做索引。",
+      "content": "四种收敛模式各自服务谁（一条一句，细节归目标单元）：\n\n- **依概率 → 蒙特卡洛一致性**：$\\hat I_N \\xrightarrow{\\mathbb P} I$ 正是弱大数定律（C6.5）的直接形态，「多采样就能逼近」的理论保证全押在这一级（C9.1、H4）。\n- **a.s. → 强大数定律与遍历定理**：时间平均几乎必然等于空间平均（C6.5、C8.1）——MCMC 长期采样直方图收敛到平稳分布（C8.3）用的是这一级。\n- **$L^1$ → 期望与极限交换**：$\\mathbb E X_n \\to \\mathbb E X$ 需要 $L^1$ 收敛，a.s. 不够（C6.3 Vitali 定理、A1.3 DCT 的概率版收口）。\n- **依分布 → CLT**：$\\sqrt{n}(\\bar X_n - \\mu)/\\sigma \\Rightarrow N(0,1)$ 的全部推理在特征函数语言里进行（C7.1、C7.3），误差量级 $\\sigma/\\sqrt{N}$ 与置信区间（C9.1）从这级输出。\n- **A 篇接口**：依概率 = 依测度收敛在 $\\mathbb P(\\Omega) = 1$ 下的别名（A1.4）；$L^p$ 收敛 = $L^p$ 范数收敛（A1.5）。A1.3 的三大收敛定理（MCT/Fatou/DCT）是 $L^1$ 收敛的测度论发动机，C6.3 的均匀可积性是它的概率论收口——同一条线索的两端。",
+      "links": [
+        "C6.5",
+        "C6.3",
+        "C7.1",
+        "C7.3",
+        "C8.1",
+        "C8.3",
+        "C9.1",
+        "H4",
+        "A1.3",
+        "A1.4",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：收敛层级与反例动画总览",
+      "keywords": [
+        "层级图交互：切换收敛模式，同一序列在不同定义下的判定 verdict",
+        "打字机动画：分层扫描 + 每点命中计数（后端长时程）",
+        "尖峰/滑动复用 A1.3 已有 convergence-thm 模块的 bump/slide 模式",
+        "iid 正态对照：两张同分布直方图但 |X_n−X| 直方图不动"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 96,
+        "line_end": 104
+      },
+      "fill_hint": "单元级演示总览：bump/slide 直接复用 A1.3 的 convergence-thm 契约；打字机与层级判定走 planned-backend；标注「演示归 learning-web 前端，词条只记槽位与需求」。",
+      "content": "本单元的演示需求总览（词条只登记槽位与验收点，实现归 learning-web 前端）：\n\n1. **尖峰 / 滑动两反例**：直接复用 A1.3 的 convergence-thm 模块 bump / slide 模式（A1.3:general.bump、A1.3:general.slide 已挂同款契约），本单元新增的叙事是「依概率收敛但 L^1 不收敛」——面板需同时显示 $\\mathbb P(|X_n| > \\varepsilon)$（趋 0）与 $\\mathbb E|X_n|$（恒 1）【已核验:1|1】两条数值曲线，让两条判定结果肉眼分离。\n2. **打字机动画（后端）**：分层扫描区间高亮 + 每点命中计数器随层数线性增长，同时 $\\mathbb P(X_n = 1) = 2^{-m}$ 衰减曲线——「平均在好转、轨道在恶化」同屏对撞。\n3. **iid 正态对照（后端）**：左右两张同分布 $N(0,1)$ 直方图（形状全同），下方 $X_n - X$ 的直方图恒为 $N(0,2)$ 不动——依分布判定「过」而依概率判定「不过」的静态证据。\n4. **层级图交互**：四模式节点 + 蕴含箭头；用户点选任一箭头，弹出该箭头的反例（本单元 3 个 + L^p⇏a.s. 的打字机），反例数值全部由计算方算出，不写死文案。",
+      "links": [
+        "A1.3",
+        "C6.2"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "打字机与层级判定需要长时程模拟和逐点统计（每点命中计数、双判定曲线对拍），超出前端直渲的简单显式函数范畴；bump/slide 部分复用既有 convergence-thm 前端模块。",
+        "params_hint": {
+          "reuse": "convergence-thm modes bump/slide",
+          "new": "typewriter 层扫描动画、iid 对照直方图、hierarchy graph 交互"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

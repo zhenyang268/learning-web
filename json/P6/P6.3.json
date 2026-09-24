@@ -1,0 +1,311 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P6.3",
+  "chapter": "P6",
+  "title": "特征值与二次型（【必】／【熟】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 327,
+    "line_end": 336,
+    "anchor": "notebook/P_computation.tex:327"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P6.3:eigen.quantifiers",
+      "type": "comparison",
+      "subject": "eigen",
+      "title": "适用条件表：对称性——本单元每条结论的隐含前提",
+      "keywords": [
+        "Sylvester 顺序主子式判据只对对称阵：非对称反例 [[1,10],[0,1]]",
+        "x^TAx 只看 A 的对称部分",
+        "特征值可以是复数：旋转矩阵 [[0,−1],[1,0]] 的 λ=±i",
+        "正定=碗 的图像依赖对称",
+        "2×2/3×3 手算是切片的硬要求"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 328,
+        "line_end": 332
+      },
+      "fill_hint": "切片给「特征值求法、二次型配方、正定三等价、碗直觉」；对称性前提在切片里是隐含的（正定/二次型的标准定义域是对称阵），条件表把每条隐含前提配非对称失效数值，【待核验】表达式可与 numpy 对拍。",
+      "content": "本单元的结论大多在**对称矩阵**的世界里成立（正定与二次型的标准定义域）。逐条拆解隐含前提（每行给失效数值）：\n\n| 条件／限定 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| Sylvester 判据（顺序主子式全正 $\\iff$ 正定）**只对对称阵** | $A=\\begin{pmatrix}1&10\\\\0&1\\end{pmatrix}$（非对称）：顺序主子式 $\\Delta_1=1>0$、$\\Delta_2=\\det=1\\cdot1-10\\cdot0=1>0$【已核验:1|1*1-10*0】，但取 $x=(1,-1)$：$x^TAx=1-10+1=-8<0$【已核验:-8|1**2+10*1*(-1)+(-1)**2】——不正定 | 把非对称阵误判成正定（「碗」其实有负方向） | 不能：判据的证明依赖对称性；非对称阵请先取对称部分（见下行） |\n| 二次型 $x^TAx$ 中 $A$ 自动只看**对称部分** $\\tfrac{A+A^{T}}2$ | 同上 $A$：$x^TAx= x_1^2+10x_1x_2+x_2^2$，与对称阵 $\\begin{pmatrix}1&5\\\\5&1\\end{pmatrix}$ 完全相同（其 $\\det=1-25=-24$【已核验:-24|1*1-5*5】，特征值一正一负） | 写二次型时对 $A$ 的反对称部分做无用工 | 自动成立（反对称部分在 $x^TAx$ 里恒为零），但判正定必须在对称部分上判 |\n| 特征值未必是实数（非对称时） | 旋转矩阵 $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$：$\\det(A-\\lambda I)=\\lambda^2+1=0$，$\\lambda=\\pm i$（纯虚）——平面上没有任何实方向被「纯伸缩」 | 手算预期「两个实根」落空 | 对称阵（更一般：正规阵）才保证实特征值＋正交特征向量（A2.4 谱定理） |\n| 「正定＝碗」的图像依赖对称 | 同 Sylvester 反例：$x_1^2+10x_1x_2+x_2^2$ 的曲面在 $x=(1,-1)$ 方向下探（值 $-8$） | 把鞍面当碗做优化（G5） | 先对称化，再画碗 |\n| 特征方程 $\\det(A-\\lambda I)=0$ 本身对**任意方阵**无条件成立 | ——（上侧行即由它解出 $\\lambda=\\pm i$） | —— | 这一条最宽：先解出来，再谈实的还是复的 |\n\n总结一句：**求特征值的方程无条件；谈正定/配平方和/碗，先检查（或先取）对称**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:eigen.misuse",
+      "type": "counterexample",
+      "subject": "eigen",
+      "title": "典型误用：非对称阵套 Sylvester 判据（完整计算）",
+      "keywords": [
+        "[[1,10],[0,1]]：顺序主子式全正（1、1）",
+        "x=(1,−1) 处 x^TAx=−8<0：鞍面不是碗",
+        "对称部分 [[1,5],[5,1]] 特征值 6、−4",
+        "修补：判正定前先对称化",
+        "numpy 对拍：eig([[1,10],[0,1]]) 与 eig([[1,5],[5,1]])"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 330,
+        "line_end": 331
+      },
+      "fill_hint": "切片「正定性三等价（【必】记结论）」隐含对称前提；非对称反例的完整失效计算，数值带【待核验】。",
+      "content": "反例：$A=\\begin{pmatrix}1&10\\\\0&1\\end{pmatrix}$（上三角、非对称）。误用 Sylvester 判据的完整翻车过程：\n\n1. 算顺序主子式：$\\Delta_1=a_{11}=1>0$；$\\Delta_2=\\det A=1\\cdot1-10\\cdot0=1>0$【已核验:1|1*1-10*0】。「全正」——误判：正定。\n2. 直接验定义（正定 $\\iff x^TAx>0$ 对一切 $x\\ne0$）：取 $x=(1,-1)^T$：\n$$x^TAx=x_1^2+10x_1x_2+x_2^2=1-10+1=-8<0$$\n【已核验:-8|1**2+10*1*(-1)+(-1)**2】——**负值**，不是正定。曲面在 $(1,-1)$ 方向下探，是鞍面不是碗。\n3. 找病灶：$x^TAx$ 只依赖对称部分 $S=\\tfrac{A+A^T}{2}=\\begin{pmatrix}1&5\\\\5&1\\end{pmatrix}$（反对称部分 $\\begin{pmatrix}0&5\\\\-5&0\\end{pmatrix}$ 是「纯旋转片」，在 $x^TAx$ 里恒贡献 $0$）。判 $S$：$\\det S=1\\cdot1-5\\cdot5=-24<0$【已核验:-24|1*1-5*5】——顺序主子式**不全正**（$\\Delta_2=-24$），一正一负两个特征值（$6$ 与 $-4$【已核验:6|1+5】【已核验:-4|1-5】），不正定。Sylvester 判据在对称阵上立刻说了真话。\n\n失效机制：非对称阵的「顺序主子式」不再是「碗的剖面」——判据的证明（高斯消元与配方的一一对应）每一步都用了 $a_{ij}=a_{ji}$。\n\n修补条件：判正定前先做两件事——①检查 $A$ 是否对称；②不对称则换成 $S=\\tfrac{A+A^T}{2}$（$x^TAx\\equiv x^TSx$），对 $S$ 用三等价。数值对拍：`numpy.linalg.eig([[1,10],[0,1]])` 给特征值 $1,1$（甚至全正！），但 `eig([[1,5],[5,1]])` 给 $6,-4$——再次说明非对称阵的特征值与二次型的正定性**脱钩**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:eigen.statement",
+      "type": "statement",
+      "subject": "eigen",
+      "title": "特征值求法（切片逐字）：det(A−λI)=0 再解 (A−λI)v=0",
+      "keywords": [
+        "第一步：解 det(A−λI)=0 得 λ",
+        "第二步：解 (A−λI)v=0 得特征向量",
+        "2×2/3×3 手算必须熟（切片原话）",
+        "特征向量差非零倍数不唯一",
+        "2×2 口诀：λ₁λ₂=det，λ₁+λ₂=迹"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 328,
+        "line_end": 328
+      },
+      "fill_hint": "切片第一条 item 逐字转写；2×2 口诀（迹与 det）是特征多项式 $(\\lambda-\\lambda_1)(\\lambda-\\lambda_2)$ 展开的直接读出。",
+      "content": "切片原文：特征值：解 $\\det(A-\\lambda I)=0$ 得 $\\lambda$，再解 $(A-\\lambda I)v=0$（$2\\times2$／$3\\times3$ 手算必须熟）。\n\n两步流程：\n\n1. **特征方程** $\\det(A-\\lambda I)=0$：$n\\times n$ 阵给出 $n$ 次多项式，解出 $n$ 个根（含重数；可能是复数——见 quantifiers 表旋转矩阵例）；\n2. **回代解向量**：对每个 $\\lambda$，解 $(A-\\lambda I)v=0$——**齐次**方程，解空间是一整个方向（$v$ 与 $cv$ 算同一个特征向量，约定取单位长度）。\n\n$2\\times2$ 口诀（由 $\\det(A-\\lambda I)=\\lambda^2-(\\operatorname{tr}A)\\lambda+\\det A$）：\n$$\\lambda_1+\\lambda_2=\\operatorname{tr}A=a+d,\\qquad \\lambda_1\\lambda_2=\\det A=ad-bc$$\n例（$A=\\begin{pmatrix}4&1\\\\1&4\\end{pmatrix}$）：迹 $8$、$\\det=4\\cdot4-1\\cdot1=15$【已核验:15|4*4-1*1】，猜 $\\lambda=3,5$（和 $8$ 积 $15$）。全程验证见 eigen.worked-example。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:eigen.intuition",
+      "type": "intuition",
+      "subject": "eigen",
+      "title": "直觉：特征值＝各主方向的伸缩率；正定＝碗（切片原文）",
+      "keywords": [
+        "Av=λv：变换只伸缩、不偏转的方向",
+        "特征值=该方向的伸缩率（切片原话）",
+        "正定=碗：所有方向都往上翘",
+        "与 A2 谱定理、H1 Laplace 谱同层（切片原话）",
+        "假设/结论分开写"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 332,
+        "line_end": 334
+      },
+      "fill_hint": "切片原文「直觉：正定＝『碗』；特征值＝各主方向的伸缩率——与 A2 谱定理、H1 的 Laplace 谱是同一件事的三个层次」。展开为假设/结论分开的直觉叙述。",
+      "content": "切片原话：**正定＝「碗」；特征值＝各主方向的伸缩率——与 A2 谱定理、H1 的 Laplace 谱是同一件事的三个层次。**\n\n**假设给了什么**：$Av=\\lambda v$ 的方向 $v$（特征向量）是变换的「不动方向」——$A$ 作用上去不偏转，只把长度乘 $\\lambda$。对称阵保证存在**一整组互相垂直**的主方向（谱定理，A2.4）。\n\n**结论为什么因此成立**：\n\n- **特征值＝伸缩率**：在主方向坐标系里，$A$ 的动作就是逐轴拉伸（$\\lambda_1$ 倍、$\\lambda_2$ 倍……）——复杂矩阵动作被「转个坐标系」化简成对角阵（$A=PDP^T$ 的几何含义）；\n- **正定＝碗**：二次型 $x^TAx$ 在主方向坐标下 $=\\lambda_1y_1^2+\\lambda_2y_2^2+\\dots$——所有 $\\lambda_i>0$ 意味着每个方向都向上翘，曲面 $z=x^TAx$ 是一口碗（G5 优化的局部极小判据）；任何一个 $\\lambda_j<0$ 就是一个下探的鞍向（eigen.misuse 的 $-8$）。\n\n「三个层次」：本单元是**矩阵层**（手算 $2\\times2$／$3\\times3$）；A2.4 是**算子层**（无穷维谱定理）；H1 是**几何层**（网格 Laplacian 的谱＝离散振动频率——形状分析、谱聚类）。同一句话（找主方向＋伸缩率）换三种介质。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:eigen.worked-example",
+      "type": "proof",
+      "subject": "eigen",
+      "title": "手算全程：[[4,1],[1,4]] 的特征对（numpy 可对拍）",
+      "keywords": [
+        "特征方程 (4−λ)²−1=0 → λ=3,5",
+        "回代：(A−3I)v=0 → v=(1,−1)；(A−5I)v=0 → v=(1,1)",
+        "验证 Av=λv 四个元素",
+        "每步给理由",
+        "numpy 对拍：eig([[4,1],[1,4]])"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 328,
+        "line_end": 328
+      },
+      "fill_hint": "切片要求「2×2/3×3 手算必须熟」；本条是完整手算示范，全部数值带【待核验】（与 numpy.linalg.eig 对拍）。",
+      "content": "取 $A=\\begin{pmatrix}4&1\\\\1&4\\end{pmatrix}$（对称）。两步流程全程：\n\n**第 1 步（特征方程）**：\n$$\\det(A-\\lambda I)=\\begin{vmatrix}4-\\lambda&1\\\\1&4-\\lambda\\end{vmatrix}=(4-\\lambda)^2-1=0$$\n（用 $2\\times2$ 公式 $ad-bc$，P6.1。）解出 $(4-\\lambda)=\\pm1$，即 $\\lambda=3$ 或 $\\lambda=5$。代入验根：$(4-3)^2-1=0$【已核验:0|(4-3)**2-1】、$(4-5)^2-1=0$【已核验:0|(4-5)**2-1】。（与口诀对账：和 $=8=$ 迹，积 $=15=\\det$【已核验:15|4*4-1*1】。）\n\n**第 2 步（回代解向量）**：\n\n- $\\lambda=3$：$A-3I=\\begin{pmatrix}1&1\\\\1&1\\end{pmatrix}$，$(A-3I)v=0\\Rightarrow v_1+v_2=0\\Rightarrow v=(1,-1)$（方向）；\n- $\\lambda=5$：$A-5I=\\begin{pmatrix}-1&1\\\\1&-1\\end{pmatrix}$，$v_1=v_2\\Rightarrow v=(1,1)$。\n\n两个特征向量内积 $1\\cdot1+(-1)\\cdot1=0$【已核验:0|1*1+(-1)*1】——**自动正交**（对称阵的馈赠，谱定理的 $2\\times2$ 版）。\n\n**验证 $Av=\\lambda v$**（四元素）：\n\n- $A(1,-1)^T=(4\\cdot1+1\\cdot(-1),\\ 1\\cdot1+4\\cdot(-1))=(3,-3)=3(1,-1)$【已核验:3|4*1+1*(-1)】【已核验:-3|1*1+4*(-1)】；\n- $A(1,1)^T=(4\\cdot1+1\\cdot1,\\ 1\\cdot1+4\\cdot1)=(5,5)=5(1,1)$【已核验:5|4*1+1*1】【已核验:5|1*1+4*1】。\n\n易错点：①解出 $\\lambda$ 后**别停**——切片要求连特征向量一起手算；②$(A-\\lambda I)v=0$ 是齐次方程，解是方向不是单个点；③验算环节（$Av=\\lambda v$）是「手算必须熟」的自检按钮，`numpy.linalg.eig([[4,1],[1,4]])` 对拍。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:quadratic-form.statement",
+      "type": "statement",
+      "subject": "quadratic-form",
+      "title": "二次型配方：x^TAx 配成平方和（与 P2 配方同源）",
+      "keywords": [
+        "x^TAx（A 对称）配成平方和",
+        "切片原文「与 P2 配方同源」",
+        "主方向坐标下 = λ₁y₁²+λ₂y₂²",
+        "配方系数即消元倍数",
+        "数值例 [[4,1],[1,4]]"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 329,
+        "line_end": 329
+      },
+      "fill_hint": "切片原文「二次型配方：x^TAx 配成平方和（与 P2 配方同源）」；数值例与「同源」的对账为本条展开。",
+      "content": "切片原文：二次型配方：$\\mathbf{x}^TA\\mathbf{x}$ 配成平方和（与 P2 配方同源）。\n\n**目标**：把交叉项全消掉，写成纯平方的加权和：\n$$\\mathbf{x}^TA\\mathbf{x}=d_1y_1^2+d_2y_2^2+\\dots$$\n\n数值例（$A=\\begin{pmatrix}4&1\\\\1&4\\end{pmatrix}$，二次型 $q=4x_1^2+2x_1x_2+4x_2^2$）：\n\n- **P2 配方路线**：$q=4\\left(x_1+\\tfrac{x_2}{4}\\right)^2+\\left(4-\\tfrac14\\right)x_2^2=4\\left(x_1+\\tfrac{x_2}{4}\\right)^2+\\tfrac{15}{4}x_2^2$（先吃掉交叉项，余项系数 $4-1/4=3.75$【已核验:3.75|4-1/4】）；\n- **主方向路线**（eigen.worked-example 的特征向量坐标 $y$）：$q=3y_1^2+5y_2^2$。\n\n两条路线的关系（「同源」的含意）：配方＝**逐轴**的高斯消元（每次吃掉一个交叉项），特征值＝**一次性**转到全部主方向；配方得到的权 $\\left(4,\\tfrac{15}{4}\\right)$ 与特征值 $(3,5)$ 不同但**符号结构相同**（都全正）——因为配方是「不完全的旋转」（只做剪切）。判定正定只看符号，两条路都够用；要「最干净的平方和」（各方向解耦）就得用特征向量。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:positive-definite.statement",
+      "type": "statement",
+      "subject": "positive-definite",
+      "title": "正定性三等价（切片逐字【必】记结论）",
+      "keywords": [
+        "特征值全正 ⟺ 顺序主子式全正（Sylvester）⟺ 存在 Cholesky A=LL^T",
+        "前提：A 对称",
+        "三块仪表：谱/消元/分解",
+        "切片标注【必】记结论",
+        "数值例 [[2,1],[1,2]]"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 330,
+        "line_end": 331
+      },
+      "fill_hint": "切片原文「正定性三等价（【必】记结论）：特征值全正 ⟺ 顺序主子式全正（Sylvester）⟺ 存在 Cholesky 分解 A=LL^T」。逐字转写＋数值例（对称前提见 quantifiers 表）。",
+      "content": "切片原文（【必】记结论）：\n\n$$\\text{特征值全正}\\iff\\text{顺序主子式全正（Sylvester）}\\iff\\text{存在 Cholesky 分解 }A=LL^T$$\n\n前提：$A$ **对称**（正定性的定义域；非对称翻车例见 eigen.misuse）。三块「仪表」：\n\n- **特征值全正**（谱仪表）：$A=PDP^T$ 的 $D$ 对角全正——每个主方向都向上翘（碗）；\n- **顺序主子式全正**（消元仪表）：$\\Delta_1=a_{11}>0$，$\\Delta_2=\\begin{vmatrix}a_{11}&a_{12}\\\\a_{21}&a_{22}\\end{vmatrix}>0$，……逐个左上角块——配方每次剩下的「余项系数」全正；\n- **Cholesky $A=LL^T$**（分解仪表）：存在下三角 $L$（对角元为正）使 $A=LL^T$——$A$ 是某个「无旋转的变换」的转置乘积，正定性白送（$x^TAx=\\lVert L^Tx\\rVert^2\\ge0$，等号只在 $L^Tx=0$ 即 $x=0$ 时成立）。\n\n数值例（$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$）：$\\Delta_1=2>0$、$\\Delta_2=2\\cdot2-1\\cdot1=3>0$【已核验:3|2*2-1*1】——正定。验证另两块仪表：特征值 $1,3$（迹 $4$ 积 $3$【已核验:4|2+2】【已核验:3|2*2-1*1】）全正；Cholesky 见 positive-definite.derivation。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:positive-definite.derivation",
+      "type": "proof",
+      "subject": "positive-definite",
+      "title": "Cholesky 手算：[[2,1],[1,2]]=LL^T（数值全程）",
+      "keywords": [
+        "L=[[√2,0],[1/√2,√(3/2)]]",
+        "待定系数逐元素解出 L",
+        "验证 LL^T=[[2,1],[1,2]]",
+        "对角元公式 l²=Δᵢ/Δᵢ₋₁（余项系数）",
+        "numpy 对拍：cholesky([[2,1],[1,2]])"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 330,
+        "line_end": 331
+      },
+      "fill_hint": "切片三等价只点名「存在 Cholesky 分解」；本条是 2×2 待定系数手算全程（切片的「2×2/3×3 手算必须熟」精神），数值带【待核验】。",
+      "content": "求 $A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$ 的 Cholesky 分解 $A=LL^T$（$L$ 下三角、对角为正）。待定系数全程：\n\n1. 设 $L=\\begin{pmatrix}l_{11}&0\\\\l_{21}&l_{22}\\end{pmatrix}$，则\n$$LL^T=\\begin{pmatrix}l_{11}^2&l_{11}l_{21}\\\\l_{11}l_{21}&l_{21}^2+l_{22}^2\\end{pmatrix}\\stackrel{!}{=}\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$$\n\n2. 逐元素解：$l_{11}=\\sqrt2$（取正根）；$l_{21}=\\tfrac{1}{l_{11}}=\\tfrac{1}{\\sqrt2}$；$l_{22}=\\sqrt{2-l_{21}^2}=\\sqrt{2-\\tfrac12}=\\sqrt{\\tfrac32}$【已核验:1.5|2-1/2】。\n\n3. 验证：$l_{11}^2=\\sqrt2\\cdot\\sqrt2=2$【已核验:2|sqrt(2)*sqrt(2)】；$l_{11}l_{21}=\\sqrt2\\cdot\\tfrac{1}{\\sqrt2}=1$【已核验:1|sqrt(2)*(1/sqrt(2))】；$l_{21}^2+l_{22}^2=\\tfrac12+\\tfrac32=2$【已核验:2|(1/sqrt(2))**2+sqrt(3/2)**2】——四元素（含对称）全部复原 $A$。（可 `numpy.linalg.cholesky([[2,1],[1,2]])` 对拍。）\n\n结构注解：$l_{11}^2=\\Delta_1$，$l_{11}^2l_{22}^2=\\Delta_2$（顺序主子式）——**Cholesky 能走通 $\\iff$ 每步开方的被开方数为正 $\\iff$ 顺序主子式全正**。这就是三等价中后两环的焊接点；而 $x^TAx=\\lVert L^Tx\\rVert^2$ 把它焊回第一环（特征值全正）。\n\n易错点：$L$ 对角元**约定取正**（负根也满足 $LL^T=A$，会破坏唯一性）；$A=LL^T$ 不是 $L^TL$（后者是另一个乘积顺序）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：谱的三个层次落地（A2 与 H 章）",
+      "keywords": [
+        "A2.4 谱定理：本单元的无穷维母体",
+        "A2.2 希尔伯特空间：正定核/内积",
+        "H1 Laplace 谱：网格振动频率与形状分析",
+        "H8.2 惯量张量：主轴与主转动惯量",
+        "P2.2 配方、G5 Hessian 判据（同源下游）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 328,
+        "line_end": 334
+      },
+      "fill_hint": "按用户规则 P6 的 application links 指向 A2（泛函）与 H 章（CG）；P2.2（切片「与 P2 配方同源」）与 G5（Hessian 正定）为切片/标准关联，一并列入。",
+      "content": "切片点名的「三个层次」与工程落点：\n\n- **A2.4（有界线性算子与谱理论）**：谱定理——对称算子的「特征向量正交＋可对角化」；本单元的手算是它的 $2\\times2$／$3\\times3$ 切片；PDE 算子的谱＝固有频率（de2.10 分离变量的本质）；\n- **A2.2（希尔伯特空间）**：正定矩阵定义内积 $\\langle x,y\\rangle=x^TAy$——正定性（三等价）就是「内积公理」的矩阵版；再生核（RKHS）的正定核判据同源；\n- **H1（离散微分几何）**：网格 Laplacian 的特征值/特征向量＝离散振动模态——形状匹配、谱聚类、几何深度学习的底座；\n- **H8.2（刚体模拟）**：惯量张量 $I$ 对称正定，特征向量＝刚体的主轴、特征值＝主转动惯量——$\\tau=I\\alpha$ 在主轴坐标系里解耦；\n- **P2.2（配方）**：切片明说「与 P2 配方同源」——二次型配方就是多项式配方的矩阵记法；\n- **G5（优化）**：Hessian 正定 $\\iff$ 局部极小（碗底）——三等价给出三种判法（谱/主子式/Cholesky），牛顿法的可行性检查用后者最便宜。\n\n选择判据：手算小矩阵 → 特征方程全程（eigen.worked-example）；快速判正定 → 顺序主子式（不用解特征方程）；数值/优化代码 → Cholesky 试分解（成功即正定，顺便白得一个解 $Ax=b$ 的快捷通道）。",
+      "links": [
+        "A2.4",
+        "A2.2",
+        "H1",
+        "H8.2",
+        "P2.2",
+        "G5",
+        "de2.10"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "本单元对照表：特征值／配方／正定三仪表",
+      "keywords": [
+        "特征方程：无条件（方阵即可），λ 可复",
+        "配方：消交叉项，与 P2 同源",
+        "正定三等价：谱/主子式/Cholesky",
+        "对称是正定话题的入场券",
+        "选择判据按尺寸给"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 328,
+        "line_end": 334
+      },
+      "fill_hint": "单元级对照表，按切片四条 item 整理，供前端按表格渲染。",
+      "content": "按切片四条 item 整理：\n\n| 工具 | 输入要求 | 输出 | 什么时候用 |\n|---|---|---|---|\n| 特征方程 $\\det(A-\\lambda I)=0$＋回代 | 任意方阵（对称保证实 $\\lambda$＋正交特征向量） | 特征对 $(\\lambda_i,v_i)$ | $2\\times2$／$3\\times3$ 手算（切片硬要求）、谱分析 |\n| 二次型配方 | 对称 $A$ | 平方和（权全同号结构） | 判符号、消交叉项（与 P2.2 同源） |\n| Sylvester 顺序主子式 | 对称 $A$ | 正定 yes/no | 最快的正定判据（不解方程） |\n| Cholesky $LL^T$ | 对称正定 $A$ | 分解本身 | 数值代码、优化（G5）——分解成功＝正定证书 |\n\n三条依赖链：P6.1（$\\det$）→ 特征方程；P2（配方）→ 二次型配方；三等价内部：主子式 ↔ Cholesky 由「每步开方数为正」焊接（positive-definite.derivation）。\n\n一句话分工：**要方向和伸缩率 → 特征对；只要「是不是碗」→ 主子式；要在代码里用 → Cholesky**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.3:eigen.probe1",
+      "type": "probe",
+      "subject": "eigen",
+      "title": "检验：特征对全流程、正定判定、构反例",
+      "keywords": [
+        "[[3,1],[1,3]]：λ=2,4，特征向量正交",
+        "[[2,1],[1,2]] 正定（主子式 2、3）",
+        "构反例：顺序主子式全正但不正定",
+        "三问覆盖手算/判据/对称前提",
+        "答案数值带待核验（numpy 可对拍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 328,
+        "line_end": 331
+      },
+      "fill_hint": "【必】小目检验题；第 3 问直接从 quantifiers 表「Sylvester 只对对称」行变问句，答案数值带核验表达式。",
+      "content": "三问（numpy 可对拍）：\n\n1. 手算 $\\begin{pmatrix}3&1\\\\1&3\\end{pmatrix}$ 的特征值与特征向量，并验证两个特征向量正交。\n2. 只用顺序主子式判定 $\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$ 是否正定；再写出它的 Cholesky 下三角阵。\n3. 构造一个 $2\\times2$ 矩阵：顺序主子式全正、但**不**正定。它违反了三等价的哪条隐含前提？\n\n（答案：第 1 问特征方程 $(3-\\lambda)^2-1=0$，$\\lambda=2,4$【已核验:0|(3-2)**2-1】【已核验:0|(3-4)**2-1】；$\\lambda=2$：$v=(1,-1)$（验 $3\\cdot1+1\\cdot(-1)=2$【已核验:2|3*1+1*(-1)】）；$\\lambda=4$：$v=(1,1)$（验 $3\\cdot1+1\\cdot1=4$【已核验:4|3*1+1*1】）；正交性 $1\\cdot1+(-1)\\cdot1=0$【已核验:0|1*1+(-1)*1】。第 2 问 $\\Delta_1=2>0$、$\\Delta_2=2\\cdot2-1\\cdot1=3>0$【已核验:3|2*2-1*1】→ 正定；$L=\\begin{pmatrix}\\sqrt2&0\\\\1/\\sqrt2&\\sqrt{3/2}\\end{pmatrix}$（验证 $(1/\\sqrt2)^2+(\\sqrt{3/2})^2=2$【已核验:2|(1/sqrt(2))**2+sqrt(3/2)**2】）。第 3 问例 $\\begin{pmatrix}1&10\\\\0&1\\end{pmatrix}$：$\\Delta_1=\\Delta_2=1$ 全正【已核验:1|1*1-10*0】，但 $x=(1,-1)$ 处 $x^TAx=1-10+1=-8<0$【已核验:-8|1**2+10*1*(-1)+(-1)**2】；违反的前提＝**对称性**（Sylvester/Cholesky/碗都只对对称阵承诺。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

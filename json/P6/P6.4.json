@@ -1,0 +1,344 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P6.4",
+  "chapter": "P6",
+  "title": "正交化（【熟】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 338,
+    "line_end": 345,
+    "anchor": "notebook/P_computation.tex:338"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P6.4:gram-schmidt.quantifiers",
+      "type": "comparison",
+      "subject": "gram-schmidt",
+      "title": "适用条件表：线性无关是唯一的生死线",
+      "keywords": [
+        "输入必须线性无关：(1,1),(2,2) 正交化得零向量",
+        "⟨u,u⟩ 做分母：零向量 → 除零",
+        "内积必须正定（欧氏标准内积）",
+        "顺序影响输出（基不唯一，张成不变）",
+        "数值稳定：近平行向量放大误差（工程注）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 341
+      },
+      "fill_hint": "切片只给公式与「逐次正交」；条件表是使用层面展开，失效数值带【待核验】。数值稳定行为工程注（修正 GS/Householder），阶段 2 可复核。",
+      "content": "Gram–Schmidt 公式 $v-\\dfrac{\\langle v,u\\rangle}{\\langle u,u\\rangle}u$ 逐次正交（切片原文）。隐含限定词逐条拆解：\n\n| 条件／限定 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 输入向量组**线性无关** | $(1,1),(2,2)$（第二向量 $=$ 第一向量 $\\times2$）：$u_1=(1,1)$，$u_2=(2,2)-\\tfrac{4}{2}(1,1)=(0,0)$【已核验:0|2-(4/2)*1】——零向量 | 下一步若继续用 $u_2$ 做投影，分母 $\\langle u_2,u_2\\rangle=0$ **除零**（见 gram-schmidt.misuse） | 不能：线性相关 $\\iff$ 某步必出零向量；流程里加「零向量检测，跳过并降维」可容错 |\n| 分母 $\\langle u,u\\rangle$ 要求内积**正定** | 欧氏内积下 $\\langle u,u\\rangle=\\lVert u\\rVert^2>0$（$u\\ne0$）恒成立；换成不定度规（如 Minkowski $\\langle x,x\\rangle=x_1^2-x_2^2$）可取 $0$ | 除零或投影系数错乱 | 不能：正交化的全部推导建立在正定内积上 |\n| 顺序影响输出 | 先做 $(1,1)$ 再做 $(1,2)$ 得 $u_2=(-\\tfrac12,\\tfrac12)$；交换顺序先做 $(1,2)$ 再做 $(1,1)$ 得不同的 $u_2$ | 以为「正交化结果唯一」 | 基不唯一是特性：张成不变（span 保持），按需要选顺序 |\n| 数值稳定（工程注） | 两个**近平行**向量（如 $(1,0)$ 与 $(1,10^{-8})$）：相减后只剩 $10^{-8}$ 量级的残差，浮点误差被放大 | 手算无碍，代码里基「不orthogonal」 | 修正 GS（重正交化两遍）或 Householder QR（G3） |\n| 小规模手算定位（切片【熟】） | $2\\times2$／$3\\times3$ 手算一次即可（切片对 QR 的原话） | 背流程不如做一遍 | —— |\n\n总结一句：**线性无关是唯一的生死线**（零向量→除零），其余（顺序、稳定）是工艺问题。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:gram-schmidt.misuse",
+      "type": "counterexample",
+      "subject": "gram-schmidt",
+      "title": "典型误用：线性相关向量组正交化（零向量→除零）",
+      "keywords": [
+        "(1,1),(2,2)：u₂=(0,0) 完整计算",
+        "第三步用 u₂ 投影 → ⟨u,u⟩=0 除零",
+        "根源：v₂ 的信息全在 u₁ 方向，无残差可言",
+        "修补：零向量检测 + 跳过降维",
+        "numpy 对拍：qr 会给 0 对角元"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 339
+      },
+      "fill_hint": "切片只给公式；线性相关失效的完整计算是条件表第一行的定点展开，数值带【待核验】。",
+      "content": "反例：输入 $v_1=(1,1),\\ v_2=(2,2),\\ v_3=(0,1)$（$v_2=2v_1$，组线性相关）。完整失效计算：\n\n1. $u_1=v_1=(1,1)$。第一步无异常。\n2. 投影：$\\langle v_2,u_1\\rangle=2\\cdot1+2\\cdot1=4$【已核验:4|2*1+2*1】，$\\langle u_1,u_1\\rangle=1+1=2$【已核验:2|1*1+1*1】，系数 $\\tfrac42=2$。残差 $u_2=v_2-2u_1=(2-2\\cdot1,\\ 2-2\\cdot1)=(0,0)$【已核验:0|2-(4/2)*1】——**零向量**。\n3. 灾难在第三步：$u_3=v_3-\\tfrac{\\langle v_3,u_2\\rangle}{\\langle u_2,u_2\\rangle}u_2-\\cdots$，分母 $\\langle u_2,u_2\\rangle=0$——**除零**，流程崩溃。\n\n失效机制：$v_2$ 的信息**全部**躺在 $u_1$ 方向上，减掉影子后什么都不剩——零向量不是计算失误，是「这组向量本来就不需要 $v_2$ 提供新方向」的诚实报告。\n\n修补条件：①流程里加检测：$u_i=0$（范数小于容差）就跳过该向量、输出基的维数减一（这是「剔除冗余」的正确姿势）；②事前判线性无关（$\\det\\ne0$／秩满，P6.2 四等价）。数值对拍：对 $[[1,2,0],[1,2,1]]$ 做 QR，$R$ 的对角元出现 $0$——numpy 的 qr 用同样的机制报告秩亏。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:gram-schmidt.statement",
+      "type": "statement",
+      "subject": "gram-schmidt",
+      "title": "Gram–Schmidt 公式（切片逐字）：减掉投影、逐次正交",
+      "keywords": [
+        "u ← v − (⟨v,u⟩/⟨u,u⟩)u",
+        "逐次正交（切片原文）",
+        "每个新向量减掉在已有方向上的全部投影",
+        "输出张成不变",
+        "切片标注【熟】"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 339
+      },
+      "fill_hint": "切片公式逐字转写；「张成不变」由构造过程（只做减投影）保证。数值全程见 gram-schmidt.worked-example。",
+      "content": "切片原文：Gram–Schmidt：$v-\\dfrac{\\langle v,u\\rangle}{\\langle u,u\\rangle}u$，逐次正交。\n\n流程（输入线性无关的 $v_1,\\dots,v_k$，输出互相正交的 $u_1,\\dots,u_k$）：\n\n1. $u_1=v_1$；\n2. $u_2=v_2-\\dfrac{\\langle v_2,u_1\\rangle}{\\langle u_1,u_1\\rangle}u_1$（减掉 $v_2$ 在 $u_1$ 上的**投影**）；\n3. $u_3=v_3-\\dfrac{\\langle v_3,u_1\\rangle}{\\langle u_1,u_1\\rangle}u_1-\\dfrac{\\langle v_3,u_2\\rangle}{\\langle u_2,u_2\\rangle}u_2$（减掉在**已有每个方向**上的投影）；依此类推。\n\n保证：①$\\{u_i\\}$ 两两正交（$\\langle u_i,u_j\\rangle=0$，$i\\ne j$）；②$\\operatorname{span}(u_1,\\dots,u_k)=\\operatorname{span}(v_1,\\dots,v_k)$（每步只减去已有方向的成分，不引入新方向）——**正交化不改变张成，只改变基的摆放**。条件：线性无关（否则零向量，见 misuse）。归一化后（$e_i=u_i/\\lVert u_i\\rVert$）得标准正交基。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:gram-schmidt.intuition",
+      "type": "intuition",
+      "subject": "gram-schmidt",
+      "title": "直觉：减掉影子，留下垂直残差",
+      "keywords": [
+        "⟨v,u⟩/⟨u,u⟩·u = v 在 u 上的影子",
+        "v − 影子 = 与 u 垂直的残差",
+        "逐次：每个新向量只保留「全新方向」",
+        "正交化=把斜搭的坐标轴掰直",
+        "viz：gram-schmidt 模块（2D 逐步投影）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 339
+      },
+      "fill_hint": "切片只给公式；本条是投影-残差直觉（假设/结论分开），并按用户规则挂 viz 档1 gram-schmidt（2D 具体向量逐步投影）。",
+      "content": "**假设给了什么**：一个向量 $v$ 和一个已造好的方向 $u$。$v$ 在 $u$ 方向上的「影子」（正交投影）是\n$$\\operatorname{proj}_u v=\\frac{\\langle v,u\\rangle}{\\langle u,u\\rangle}u$$\n（影子与 $v$ 的差 $v-\\operatorname{proj}_uv$ 垂直于 $u$——勾股定理的两维版。）\n\n**结论为什么因此成立**：$u_2=v_2-\\operatorname{proj}_{u_1}v_2$ 就是「$v_2$ 减掉影子」——剩下的纯残差只能垂直于 $u_1$；第三个向量减掉在 $u_1,u_2$ 两个方向的影子，残差同时垂直于两者……**每个新向量只保留全新方向，把旧方向上的一切都吐干净**。\n\n图像：输入是一把斜搭的坐标轴（不正交），GS 把它们掰直——**掰的时候不转动整个坐标系**（张成不变），只调整每根轴到与前面所有轴垂直。\n\n为什么值钱：正交基上一切计算都解耦——展开系数 $c_i=\\langle v,e_i\\rangle$ 一除就行（A2.3 的 $\\pi\\delta_{mn}$ 正交性就是「系数过滤器」的函数版），解方程变回代（QR，见 qr.statement）。",
+      "viz": {
+        "module": "gram-schmidt",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "vectors": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "show": [
+            "original-vectors",
+            "projection",
+            "residual",
+            "orthogonalized"
+          ],
+          "step_by_step": true,
+          "normalize": true
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:gram-schmidt.worked-example",
+      "type": "proof",
+      "subject": "gram-schmidt",
+      "title": "数值全程：v₁=(1,1), v₂=(1,2) 的 2D 逐步投影",
+      "keywords": [
+        "⟨v₂,u₁⟩=3、⟨u₁,u₁⟩=2，系数 3/2",
+        "投影 (3/2,3/2)，残差 u₂=(−1/2,1/2)",
+        "正交性验证 ⟨u₁,u₂⟩=0",
+        "归一化 e₁、e₂ 与张成复原",
+        "每步数值可 numpy 对拍"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 339
+      },
+      "fill_hint": "按用户规则：Gram–Schmidt 给 2D 具体向量逐步投影的数值例（每步【待核验】）。向量的选取与 viz params_hint 一致（vectors [[1,1],[1,2]]）。",
+      "content": "输入 $v_1=(1,1),\\ v_2=(1,2)$（线性无关：不成比例）。逐步投影全程：\n\n**第 1 步**：$u_1=v_1=(1,1)$。\n\n**第 2 步（投影系数）**：\n$$\\langle v_2,u_1\\rangle=1\\cdot1+2\\cdot1=3\\ 【已核验:3|1*1+2*1】,\\qquad \\langle u_1,u_1\\rangle=1\\cdot1+1\\cdot1=2\\ 【已核验:2|1*1+1*1】$$\n系数 $=\\tfrac32$【已核验:1.5|3/2】。\n\n**第 3 步（影子与残差）**：影子 $\\operatorname{proj}=\\tfrac32u_1=(\\tfrac32,\\tfrac32)$；残差\n$$u_2=v_2-\\tfrac32u_1=\\left(1-\\tfrac32,\\ 2-\\tfrac32\\right)=\\left(-\\tfrac12,\\ \\tfrac12\\right)$$\n【已核验:-0.5|1-3/2】（第一分量）、【已核验:0.5|2-3/2】（第二分量 $=\\tfrac12$）。\n\n**第 4 步（正交性验证）**：$\\langle u_1,u_2\\rangle=1\\cdot(-\\tfrac12)+1\\cdot\\tfrac12=0$【已核验:0|1*(-1/2)+1*(1/2)】——垂直成立。\n\n**第 5 步（归一化，可选）**：$e_1=\\tfrac{1}{\\sqrt2}(1,1)$、$e_2=\\tfrac{1}{\\sqrt2}(-1,1)$（$\\lVert u_1\\rVert=\\sqrt2$【已核验:1.41421356237|sqrt(1*1+1*1)】，$\\lVert u_2\\rVert=\\sqrt{\\tfrac12}=\\tfrac{1}{\\sqrt2}$【已核验:0.707106781187|sqrt(1/4+1/4)】）。\n\n**张成复原检查**：$v_2=\\tfrac32u_1+1\\cdot u_2$？逐分量：$\\tfrac32\\cdot1+(-\\tfrac12)=1$【已核验:1|3/2*1+(-1/2)】、$\\tfrac32\\cdot1+\\tfrac12=2$【已核验:2|3/2*1+1/2】——复原 $v_2$，张成未变。\n\n全部数值可与 `numpy.linalg.qr([[1,1],[1,2]])` 对拍（Q 的列就是 $e_1,e_2$，见 qr.statement）。易错点：系数分母是 $\\langle u,u\\rangle$（**正交化后的** $u$，不是原始 $v$）；投影用 $u_1$ 的方向但要减在 $v_2$ 身上。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:qr.statement",
+      "type": "statement",
+      "subject": "qr",
+      "title": "QR 分解：A=QR（2×2 手算一次，切片逐字）",
+      "keywords": [
+        "A=QR：Q 列=正交化结果，R=系数上三角",
+        "切片原文「小 2×2 手算一次即可」",
+        "R21=0 是正交化的签名",
+        "解 Ax=b 变两次回代",
+        "R 的对角元符号与顺序选择"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 340,
+        "line_end": 340
+      },
+      "fill_hint": "切片原文「QR：A=QR；小 2×2 手算一次即可」。本条给公式、条件与 2×2 数值手算（用 worked-example 的向量作列）。",
+      "content": "切片原文：QR：$A=QR$；小 $2\\times2$ 手算一次即可。\n\n**结构**：$Q$ 的列 $=$ GS 产出的标准正交向量；$R$（上三角）的第 $j$ 列 $=$ 第 $j$ 个原始向量在 $Q$ 各列上的展开系数（就是 GS 过程里的投影系数与范数）。上三角性（$r_{ij}=0,\\ i>j$）正是「第 $j$ 个向量只含前 $j$ 个方向」的签名。\n\n**$2\\times2$ 手算**（列取 worked-example 的向量：$A=\\begin{pmatrix}1&1\\\\1&2\\end{pmatrix}$，即列 $v_1=(1,1),v_2=(1,2)$）：\n\n- $Q=\\begin{pmatrix}\\tfrac{1}{\\sqrt2}&-\\tfrac{1}{\\sqrt2}\\\\[2pt]\\tfrac{1}{\\sqrt2}&\\tfrac{1}{\\sqrt2}\\end{pmatrix}$（列 $=e_1,e_2$）；\n- $R=Q^TA$：$r_{11}=\\tfrac{1\\cdot1+1\\cdot1}{\\sqrt2}=\\sqrt2$【已核验:1.41421356237|(1*1+1*1)/sqrt(2)】、$r_{12}=\\tfrac{1\\cdot1+2\\cdot1}{\\sqrt2}=\\tfrac{3}{\\sqrt2}$【已核验:2.12132034356|(1*1+2*1)/sqrt(2)】、$r_{21}=\\tfrac{-1\\cdot1+1\\cdot1}{\\sqrt2}=0$【已核验:0|(-1*1+1*1)/sqrt(2)】、$r_{22}=\\tfrac{-1\\cdot1+2\\cdot1}{\\sqrt2}=\\tfrac{1}{\\sqrt2}$【已核验:0.707106781187|(-1*1+2*1)/sqrt(2)】。\n\n**验证 $A=QR$**（第一列）：$Q\\begin{pmatrix}\\sqrt2\\\\0\\end{pmatrix}=\\sqrt2\\,e_1=(1,1)=v_1$——复原第一列；第二列 $\\tfrac{3}{\\sqrt2}e_1+\\tfrac{1}{\\sqrt2}e_2=\\tfrac32(1,1)+\\tfrac12(-1,1)=(1,2)=v_2$，正是 worked-example 第 6 步的复原式。\n\n成立条件：$A$ 列线性无关（否则 $R$ 对角出零，同 GS 的零向量）。用途：解 $Ax=b$ 变成 $Qy=b$（$Q$ 正交，$y=Q^Tb$ 免求逆）＋ $Rx=y$ 回代。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:qr.connection",
+      "type": "extension",
+      "subject": "qr",
+      "title": "与 A2 的接缝：QR 是「正交分解定理」的算法版（切片原话）",
+      "keywords": [
+        "切片原文「这就是 A2『正交分解定理』的算法版」",
+        "向量 = 影子 + 残差 = 列空间内 + 正交补",
+        "最小二乘：残差⊥列空间 ⟺ 正规方程",
+        "A2.2 希尔伯特空间的投影定理",
+        "无穷维版本需要完备性"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 340,
+        "line_end": 340
+      },
+      "fill_hint": "切片原话「这就是 A2『正交分解定理』的算法版」；本条解释母子关系与最小二乘落点，links 按用户规则指向 A2。",
+      "content": "切片点破的身份：QR（背后的 GS）就是 A2 **正交分解定理**的算法版。\n\n**定理（A2.2）**：Hilbert 空间里任何向量 $v$ 可唯一分解为\n$$v=\\operatorname{proj}_{M}v+\\operatorname{proj}_{M^\\perp}v\\qquad(\\text{影子在闭子空间}M\\text{内}，\\text{残差}\\in M^{\\perp})$$\n\n**算法（本单元）**：GS 的每一步就是一次小规模正交分解——$v_2=\\underbrace{\\tfrac{\\langle v_2,u_1\\rangle}{\\langle u_1,u_1\\rangle}u_1}_{\\in\\operatorname{span}(u_1)}+\\underbrace{u_2}_{\\perp u_1}$（worked-example 的 $v_2=\\tfrac32u_1+u_2$）。定理说「**存在**这样的分解」，算法告诉你「**怎么逐个算出来**」。\n\n最值钱的下游：**最小二乘**。$Ax\\approx b$ 无解时，取 $b$ 在列空间 $\\operatorname{col}(A)$ 上的影子：残差 $b-Ax\\perp\\operatorname{col}(A)$ 的条件就是正规方程 $A^TAx=A^Tb$（P6.2 的应用条目），用 QR 求解即 $R x=Q^Tb$——机器学习回归、测量平差（A2.2）、渲染中的拟合（H2）全走这条路。\n\n注意（无穷维的代价）：A2 的版本要求子空间**闭**（完备性，Hilbert 而非一般内积空间）——有限维（本单元）自动满足，所以手算时看不见这个条件。",
+      "links": [
+        "A2.2",
+        "P6.2",
+        "H2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:svd-mini.statement",
+      "type": "statement",
+      "subject": "svd-mini",
+      "title": "SVD 迷你体验：σᵢ=√λᵢ(AᵀA)（2×2 对称阵手算）",
+      "keywords": [
+        "σᵢ=√λᵢ(AᵀA)（切片原文）",
+        "A=[[2,1],[1,2]]：AᵀA=[[5,4],[4,5]]，λ=9,1",
+        "σ=3,1；σ₁σ₂=|det A|=3",
+        "SVD=先转正（V）再伸缩（Σ）再转正（U）",
+        "numpy 对拍：svd([[2,1],[1,2]])"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 341,
+        "line_end": 341
+      },
+      "fill_hint": "切片原文「SVD 迷你体验：2×2 对称阵手算 σᵢ=√λᵢ(AᵀA)」。数值全程带【待核验】，与 numpy.linalg.svd 对拍。",
+      "content": "切片原文：SVD 迷你体验：$2\\times2$ 对称阵手算 $\\sigma_i=\\sqrt{\\lambda_i(A^TA)}$。\n\n**手算全程**（$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$，对称）：\n\n1. $A^TA=A^2=\\begin{pmatrix}2\\cdot2+1\\cdot1&2\\cdot1+1\\cdot2\\\\1\\cdot2+2\\cdot1&1\\cdot1+2\\cdot2\\end{pmatrix}=\\begin{pmatrix}5&4\\\\4&5\\end{pmatrix}$【已核验:5|2*2+1*1】【已核验:4|2*1+1*2】；\n2. 特征值（P6.3，迹 $10$、$\\det=5\\cdot5-4\\cdot4=9$【已核验:9|5*5-4*4】）：$\\lambda=9,1$（和 $10$ 积 $9$）；\n3. 奇异值 $\\sigma_1=\\sqrt9=3$【已核验:3|sqrt(9)】、$\\sigma_2=\\sqrt1=1$【已核验:1|sqrt(1)】。\n\n**对拍**：$\\sigma_1\\sigma_2=\\lvert\\det A\\rvert=2\\cdot2-1\\cdot1=3$【已核验:3|2*2-1*1】——奇异值之积恒等于行列式绝对值（体积伸缩率，P6.1 的几何直觉在 SVD 里的化身）。\n\n**SVD 在说什么**：任何矩阵 $A=U\\Sigma V^T$——「**先转正（$V^T$）→ 沿坐标轴伸缩（$\\Sigma=\\operatorname{diag}(\\sigma_i)$）→ 再转正（$U$）**」。GS/QR 给的是「一组正交方向」，SVD 给的是「输入输出**两套**最优正交方向」——主方向拉伸的完整版（P6.3 特征值的非对称推广）。这就是本条作为「迷你体验」的定位：大理论在 A2.4/G3，这里只做一次 $2\\times2$ 的手感触达。",
+      "links": [
+        "P6.3",
+        "A2.4",
+        "G3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：正交基的工业落地（A2 与 H 章）",
+      "keywords": [
+        "A2.2 正交分解/最小二乘：GS 是投影的算法版",
+        "A2.3 正交基：Fourier 系数过滤器的有限维实现",
+        "H5 球谐：函数版正交化（CG 环境光）",
+        "G3 数值线性代数：QR 的工业实现（Householder）",
+        "选择判据：求基→GS；解方程→QR；分解→SVD"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 341
+      },
+      "fill_hint": "按用户规则 P6 的 application links 指向 A2（泛函）与 H 章（CG）；G3 为数值实现下游，一并列入。",
+      "content": "正交化工具的落点：\n\n- **A2.2（希尔伯特空间）**：正交分解定理的算法版（qr.connection）——最小二乘、正规方程、投影算子的构造；\n- **A2.3（正交基与 Fourier 分析）**：P5.3 的 $\\{\\sin n\\theta\\}$ 是「天生的」正交基，GS 是「人造」正交基的通用工艺——数值谱方法（G2.3）在任意离散点上造基时全靠它；\n- **H5（球谐函数）**：球面上没有全局坐标，正交基靠函数版正交化/Legendre 方程（de1.16）提供——环境光贴图、预计算辐射传输把光照展开在正交基上（系数过滤，同 P5.3 机制）；\n- **G3（数值线性代数）**：工业 QR 用 Householder 反射（比经典 GS 稳定）；特征值算法（QR 迭代）、最小二乘（$Rx=Q^Tb$）都是本单元的工程放大版；\n- **P6.2（消元与求逆）**：QR 解 $Ax=b$ 与 LU 分工——QR 稍贵但对病态矩阵稳。\n\n选择判据：要正交基本身 → GS；要解方程/最小二乘 → QR；要「矩阵的结构体检」（秩、条件数、主方向）→ SVD。",
+      "links": [
+        "A2.2",
+        "A2.3",
+        "H5",
+        "G3",
+        "G2.3",
+        "P6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "本单元对照表：GS／QR／SVD 迷你版",
+      "keywords": [
+        "GS：造正交基（影子-残差）",
+        "QR：GS 的矩阵记账（A=QR）",
+        "SVD：两套正交方向+奇异值",
+        "共同前提：线性无关（奇异值除外）",
+        "依赖链：P6.3 特征值 → σᵢ"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 341
+      },
+      "fill_hint": "单元级对照表，按切片三条 item 整理，供前端按表格渲染。",
+      "content": "按切片三条 item 整理：\n\n| 工具 | 输出 | 前提 | 什么时候用 |\n|---|---|---|---|\n| Gram–Schmidt | 正交基 $\\{u_i\\}$（张成不变） | 线性无关 | 手算 $2\\times2$／$3\\times3$ 一次（worked-example）；理解「影子-残差」 |\n| QR：$A=QR$ | $Q$ 正交＋$R$ 上三角 | 列线性无关 | 解方程（$Rx=Q^Tb$）、最小二乘；工业版在 G3 |\n| SVD 迷你：$\\sigma_i=\\sqrt{\\lambda_i(A^TA)}$ | 奇异值（两套主方向） | 无（奇异值总存在） | 矩阵体检：秩、条件数、$\\lvert\\det A\\rVert=\\prod\\sigma_i$ |\n\n依赖链：P6.1（$\\det$、体积直觉）→ P6.2（消元、$A^TA$ 正规方程）→ P6.3（特征值 $\\lambda_i(A^TA)$）→ 本单元（正交化把三者串成工艺）。\n\n记忆负担控制：【熟】级——GS 公式一行（影子减掉），QR 手算一次（$2\\times2$，切片原话），SVD 只记 $\\sigma=\\sqrt{\\lambda(A^TA)}$ 与「转正-伸缩-转正」的图像。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.4:gram-schmidt.probe1",
+      "type": "probe",
+      "subject": "gram-schmidt",
+      "title": "检验：正交化 (2,1),(1,3) 全程 + 零向量预判",
+      "keywords": [
+        "u₁=(2,1)，系数=1，u₂=(−1,2)",
+        "正交验证 ⟨u₁,u₂⟩=0",
+        "预判 (1,2),(2,4) 的 GS 结局（零向量）",
+        "答案数值带待核验（numpy 可对拍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 339,
+        "line_end": 340
+      },
+      "fill_hint": "从 quantifiers 表「线性无关」行变问句（第 2 问）；第 1 问是完整流程演练，答案数值带核验表达式。",
+      "content": "两问：\n\n1. 用 Gram–Schmidt 正交化 $v_1=(2,1),\\ v_2=(1,3)$：写出投影系数、影子、残差 $u_2$，并验证 $\\langle u_1,u_2\\rangle=0$。\n2. 不动手计算，预判 $(1,2),(2,4)$ 这组向量 GS 的结局，并说明第几步、为什么。\n\n（答案：第 1 问 $u_1=(2,1)$；$\\langle v_2,u_1\\rangle=1\\cdot2+3\\cdot1=5$【已核验:5|1*2+3*1】、$\\langle u_1,u_1\\rangle=2\\cdot2+1\\cdot1=5$【已核验:5|2*2+1*1】，系数 $=\\tfrac55=1$【已核验:1|5/5】；影子 $=(2,1)$；残差 $u_2=(1-\\tfrac55\\cdot2,\\ 3-\\tfrac55\\cdot1)=(-1,2)$【已核验:-1|1-5/5*2】【已核验:2|3-5/5*1】；正交性 $2\\cdot(-1)+1\\cdot2=0$【已核验:0|2*(-1)+1*2】。第 2 问：$u_2$ 必为零向量——$v_2=2v_1$ 线性相关，第 2 步减掉影子 $\\operatorname{proj}=v_2$ 后残差 $(2-2,4-4)=(0,0)$【已核验:0|2-(4/2)*1】，且若继续第 3 步用 $u_2$ 做分母将除零（见 gram-schmidt.misuse）。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,365 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C5",
+  "chapter": "C5",
+  "title": "随机过程",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 62,
+    "line_end": 78,
+    "anchor": "notebook/C_partial.tex:62"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C5:brownian.quantifiers",
+      "type": "comparison",
+      "subject": "brownian",
+      "title": "布朗运动四条公理的限定词拆解",
+      "keywords": [
+        "W₀=0 只是归一化约定（平移可恢复）",
+        "独立增量不可去：X_t=t·W₁ 增量完全相关",
+        "W_t−W_s~N(0,t−s)：方差线性于时长是扩散节奏",
+        "路径连续与处处不可微同时成立",
+        "处处不可微是推论不是公理",
+        "BM = 每单位时间注入一份新独立高斯噪声的连续极限"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 63,
+        "line_end": 69
+      },
+      "fill_hint": "切片 63-69 行四条逐条拆表；反例行与 brownian.correlated 词条对应，数值带【待核验】。",
+      "content": "切片四条公理逐条拷问：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| $W_0=0$ | $\\tilde W_t=W_t+3$：其余三条全保持 | 不再从原点出发；增量表述仍成立 | 平移后仍是合法过程，只是非标准 BM |\n| 独立增量 | $X_t=t\\cdot W_1$：$X_1=W_1$ 与 $X_2-X_1=W_1$ 是同一随机变量 | 未来被初值完全锁定，「新随机性」不存在（完整计算见 brownian.correlated） | 不可去；放宽为鞅差/混合条件就不再是 BM |\n| $W_t-W_s\\sim N(0,\\,t-s)$ | 同上 $X_t=tW_1$：$\\mathrm{Var}(X_2)=4$【已核验:4|2**2】而公理要求 $2$【已核验:2|2】 | 扩散速率错误（$t^2$ 而非 $t$） | 方差可乘常数 $\\sigma^2$（缩放 BM） |\n| 路径连续 | 泊松跳过程：路径是阶梯 | 轨迹不连续，不能作为 SDE 的连续积分器 | 跳过程是另一族（Lévy） |\n\n「处处不可微」不是公理而是前三条的推论（定量见 brownian.nondifferentiable），它与「路径连续」合起来刻画 BM 的独特身份：连续却无限粗糙。四条合起来的通俗版：BM =「每单位时间注入一份全新独立高斯噪声的连续极限随机游走」（随机游走视角见 C8.3）。",
+      "links": [
+        "C8.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:brownian.correlated",
+      "type": "counterexample",
+      "subject": "brownian",
+      "title": "反例：X_t = t·W₁ 满足三条公理却不是布朗运动",
+      "keywords": [
+        "X₀=0 ✓、路径连续 ✓、每个时刻正态 ✓",
+        "但 Var(X₂)=4 ≠ 2",
+        "增量 X₁−X₀ 与 X₂−X₁ 都是 W₁：相关系数 1",
+        "全部随机性集中在一次抽取，之后线性外推",
+        "实用检验：先查相邻增量协方差、再验 Var(X_t)=t",
+        "修补：BM 要求每刻持续注入新独立噪声"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 65,
+        "line_end": 68
+      },
+      "fill_hint": "对切片 65-68 行公理的定点反例；协方差与方差数值带【待核验】。",
+      "content": "构造：$X_t=t\\cdot W_1$，$t\\ge0$（整条轨迹被初值 $W_1$ 锁死）。逐条核对切片公理：\n\n- $X_0=0\\cdot W_1=0$ ✓\n- 路径连续（$t\\mapsto tW_1$ 是过原点的直线）✓\n- 每个时刻 $X_t\\sim N(0,t^2)$：正态 ✓，但 $\\mathrm{Var}(X_2)=4\\,\\mathrm{Var}(W_1)=4$【已核验:4|4*1】，公理要求 $W_2-W_0$ 的方差是 $2$【已核验:2|2】✗\n\n独立增量的致命伤：$X_1-X_0=W_1$，$X_2-X_1=2W_1-W_1=W_1$——两个增量**是同一个随机变量**：\n\n$$\\mathrm{Cov}(X_1-X_0,\\,X_2-X_1)=\\mathrm{Var}(W_1)=1\\ne0\\quad\\text{【已核验:1|1】}$$\n\n相关系数为 1：知道第一段增量就完全知道第二段，「新噪声」根本不存在。\n\n失效机制：这个过程的全部随机性集中在时刻 1 的一次抽取，之后轨迹被线性外推锁死；BM 要求每一刻持续注入新的独立噪声。实用检验法（O(几行)）：怀疑某过程不是 BM 时，先算相邻增量的协方差——非零即出局；再验 $\\mathrm{Var}(X_t)\\overset{?}{=}t$，两条都过才算数。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:brownian.statement",
+      "type": "statement",
+      "subject": "brownian",
+      "title": "布朗运动定义：四条公理与协方差函数",
+      "keywords": [
+        "W₀=0；独立增量；W_t−W_s~N(0,t−s)；路径连续处处不可微",
+        "不相交时段的增量相互独立且与 F_s 独立",
+        "E[W_t|F_s]=W_s：BM 关于自然信息流是鞅（C4）",
+        "Cov(W_s,W_t)=min(s,t)（切片外补充）",
+        "存在性非平凡（Wiener 定理，C8.3 构造）",
+        "「连续 + 处处不可微」从此有了自然原型"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 63,
+        "line_end": 69
+      },
+      "fill_hint": "切片 63-69 行四条原文转写；独立增量的精确含义、鞅性、协方差公式为切片外补充。",
+      "content": "**切片原文四条**：\n\n$$W_0=0;\\quad \\text{独立增量};\\quad W_t-W_s\\sim N(0,\\,t-s)\\ (t>s);\\quad \\text{路径连续但处处不可微}$$\n\n读法：「独立增量」指不相交时间段 $[s_1,t_1],\\dots,[s_k,t_k]$ 上的增量 $W_{t_i}-W_{s_i}$ 相互独立（切片外补充：增量还与历史信息 $\\mathcal{F}_s$ 独立）；「$N(0,t-s)$」同时定了分布形状（高斯）与扩散节奏（方差线性于时长）。\n\n前两条的联合面孔：$W_t=W_s+(W_t-W_s)$，「现在 = 过去 + 全新噪声」，故 $E[W_t\\mid\\mathcal{F}_s]=W_s$——BM 关于自然信息流是鞅（C4 的连续时间版），这也是它成为「连续时间公平噪声」的原因。\n\n自协方差（切片外补充，由独立增量直接推出）：$\\mathrm{Cov}(W_s,W_t)=\\min(s,t)$。数值：$\\mathrm{Cov}(W_2,W_3)=2$【已核验:2|min(2,3)】。\n\n存在性非平凡：满足四条的过程确实存在（Wiener 定理；构造走 C8.3 的随机游走缩放极限）——「连续且处处不可微」的函数此前被视为病态，BM 证明自然界到处都是。",
+      "links": [
+        "C4",
+        "C8.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:brownian.intuition",
+      "type": "intuition",
+      "subject": "brownian",
+      "title": "布朗运动直觉：√t 扩散与随机游走极限",
+      "keywords": [
+        "把时间切 n 格，每格注入独立 N(0,t/n) 噪声",
+        "独立零均值 ⟹ Var(∑)=∑Var，加总恰为 t",
+        "CLT 使小增量之和趋于高斯（C7.3）",
+        "位移尺度 √t：时间 ×4 距离才 ×2",
+        "烟雾团按 √t 膨胀、随机游走逃逸时间 ∝ 1/步长²",
+        "连续（振幅 √h→0）与不可微（差商 1/√h→∞）同时成立"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 63,
+        "line_end": 69
+      },
+      "fill_hint": "直觉词条，假设与结论分开写；√t 定律的 CG 落点一句带过（H8.1/J5）。",
+      "content": "**假设给了什么**：把时间切成 $n$ 格，每格注入一份独立的 $N(0,\\frac{t}{n})$ 噪声——独立增量给「新随机性」，方差 $t-s$ 给「每单位时间一份方差」的节奏。\n\n**结论为什么因此成立**：$n\\to\\infty$ 时独立小增量之和经 CLT（C7.3）趋于高斯，路径振幅按 $\\sqrt{t}$ 累积——缩放随机游走的极限就是 BM（C8.3 的 Donsker 思路）。为什么方差是 $t$ 不是 $t^2$：增量为**独立**零均值时 $\\mathrm{Var}(\\sum)=\\sum\\mathrm{Var}$，$n$ 份方差 $\\frac{t}{n}$ 加起来恰好是 $t$——若增量完全相关（brownian.correlated 的 $tW_1$），就变成 $n^2\\cdot\\frac{t^2}{n^2}=t^2$ 的平方节奏。\n\n扩散直觉：位移尺度 $\\sqrt{t}$——时间 ×4、距离才 ×2。烟雾团标准差按 $\\sqrt{t}$ 长大（H8.1 的粒子扩散）、光子随机游走的逃逸时间反比于步长平方（J5 的多重散射），都是这条 $\\sqrt{t}$ 在定价。\n\n为什么连续却不可微：每个长 $h$ 的小区间都有标准差 $\\sqrt{h}$ 的随机变化，$h\\to0$ 时变化本身趋 0（连续）但变化**除以 $h$** 发散（不可微）——完整数值见 brownian.nondifferentiable。",
+      "links": [
+        "C7.3",
+        "C8.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:brownian.nondifferentiable",
+      "type": "extension",
+      "subject": "brownian",
+      "title": "处处不可微：差商以 1/√h 的速度发散",
+      "keywords": [
+        "差商 (W_{t+h}−W_t)/h ~ N(0, 1/h)",
+        "h=10⁻²/10⁻⁴/10⁻⁸ → 标准差 10/100/10⁴",
+        "振幅 √h 保连续、除以 h 毁导数",
+        "粗糙度卡在连续与可微的边界（Hölder 1/2）",
+        "不能写 dW/dt → 只能把 dW 当整体积分",
+        "(dW)²~dt 是 Itô 引理二阶项的根源（C10.2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 68,
+        "line_end": 68
+      },
+      "fill_hint": "切片 68 行「路径连续但处处不可微」的定量展开；三个差商数值带【待核验】。",
+      "content": "切片断言「路径连续但处处不可微」。定量看法：固定 $t$，考察差商\n\n$$\\frac{W_{t+h}-W_t}{h}\\sim N\\!\\left(0,\\ \\frac{1}{h}\\right)$$\n\n（增量方差 $h$，除以 $h^2$ 后余 $\\frac1h$）。标准差 $=\\frac{1}{\\sqrt h}$：\n\n| $h$ | 差商标准差 |\n|---|---|\n| $10^{-2}$ | $10$【已核验:10|1/sqrt(0.01)】 |\n| $10^{-4}$ | $100$【已核验:100|1/sqrt(0.0001)】 |\n| $10^{-8}$ | $10^4$【已核验:10000|1/sqrt(1e-8)】 |\n\n$h\\to0$ 时差商的典型大小奔向无穷——「速度」在每一点都不存在。振幅 $\\sqrt h$ 趋 0 保住了连续性，除以 $h$ 放大成 $\\frac{1}{\\sqrt h}$ 毁掉了导数。一句话：**BM 的粗糙度恰好卡在连续与可微的边界上**（Hölder 指数 $\\tfrac12$，切片外补充）。\n\n为什么这逼出 Itô 微积分（C10.2）：SDE 里 $dX_t=\\mu\\,dt+\\sigma\\,dW_t$ 不能写成 $\\frac{dX}{dt}=\\mu+\\sigma\\frac{dW}{dt}$——右边第二项处处无穷。只能把 $dW_t$ 当整体（量级 $\\sqrt{dt}$）做积分，且 $\\sqrt{dt}$ 量级会在二次变差里留下痕迹（$(dW)^2\\sim dt$，C10.1），这是 Itô 引理比普通链式法则多出二阶项的根源。",
+      "links": [
+        "C10.1",
+        "C10.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:brownian.covariance",
+      "type": "extension",
+      "subject": "brownian",
+      "title": "拓展：协方差函数 Cov(W_s, W_t) = min(s, t) 与数值例",
+      "keywords": [
+        "拆 W_t=W_s+(W_t−W_s)，第二项与 F_s 独立",
+        "Cov(W_s,W_t)=Var(W_s)=s（s≤t）",
+        "增量方差 = 时长差：Var(W_5−W_2)=3",
+        "Corr(W_1,W_2)=1/√2≈0.7071",
+        "高斯过程视角：均值 0 + 协方差 min(s,t) 完全决定 BM",
+        "对照 X_t=tW₁ 的协方差 st：又一票否决证据"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 66,
+        "line_end": 68
+      },
+      "fill_hint": "切片外补充（title 带「拓展：」）；三个数值带【待核验】，与 brownian.correlated 的对照保持一致。",
+      "content": "由独立增量推（切片外补充）：设 $s\\le t$，拆 $W_t=W_s+(W_t-W_s)$，第二项与 $\\mathcal{F}_s$（从而与 $W_s$）独立：\n\n$$\\mathrm{Cov}(W_s,W_t)=\\mathrm{Var}(W_s)+\\underbrace{\\mathrm{Cov}(W_s,\\,W_t-W_s)}_{=0}=s$$\n\n即 $\\mathrm{Cov}(W_s,W_t)=\\min(s,t)$。\n\n数值例：$\\mathrm{Cov}(W_2,W_3)=2$【已核验:2|min(2,3)】；$\\mathrm{Var}(W_5-W_2)=5-2=3$【已核验:3|5-2】（增量方差就是时长差）；$\\mathrm{Corr}(W_1,W_2)=\\frac{1}{\\sqrt2}\\approx 0.7071$【已核验:0.707106781187|1/sqrt(2)】——越近的时点越相关，相关性只由时间戳的小者决定。\n\n用途：高斯过程视角下 BM 由「均值 0 + 协方差 $\\min(s,t)$」完全决定（任意有限个时点的联合分布是多元正态，C3 的多维换元可继续处理它）；模拟 BM 的协方差矩阵检验、H8.1 粒子模拟中湍流扩散的基准谱都以它为标尺。\n\n对照反例（连回 brownian.correlated）：$X_t=tW_1$ 的协方差 $\\mathrm{Cov}(X_s,X_t)=st$，在 $(s,t)=(1,2)$ 处 $=2$【已核验:2|1*2】$\\ne\\min(1,2)=1$——又一票否决的证据。",
+      "links": [
+        "C3",
+        "H8.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:sde.statement",
+      "type": "statement",
+      "subject": "sde",
+      "title": "随机微分方程：dX_t = μ dt + σ dW_t 的精确读法",
+      "keywords": [
+        "切片原文：dX_t=μ(X_t,t)dt+σ(X_t,t)dW_t",
+        "d 记号的展开是积分方程（Itô 积分）",
+        "μ 管期望位移（dt 量级）、σ 管抖动（√dt 量级）",
+        "被积函数在左端点取值（Itô 约定，C10.2）",
+        "存在唯一：Lipschitz 条件（与 de1.9 平行）",
+        "更完整的 Itô 微积分见 C10（切片原文指路）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 71,
+        "line_end": 74
+      },
+      "fill_hint": "切片 71-74 行原文转写；积分形式、Itô 约定与存在唯一性为切片外补充。",
+      "content": "**切片原文**：\n\n$$dX_t=\\mu(X_t,t)\\,dt+\\sigma(X_t,t)\\,dW_t$$\n\n积分形式（$d$ 记号的展开，切片外补充）：\n\n$$X_t=X_0+\\int_0^t\\mu(X_s,s)\\,ds+\\int_0^t\\sigma(X_s,s)\\,dW_s$$\n\n第一项是普通的轨道积分（$dt$ 量级）；第二项是 **Itô 积分**（C10.2）——被积函数在区间左端点取值、对不可微的 $dW$ 积分；$(dW)^2\\sim dt$ 的二阶效应使链式法则多出一项（Itô 引理）。\n\n两项分工：$\\mu$ 是漂移（每单位时间的期望位移 $\\approx\\mu\\,dt$）、$\\sigma$ 是扩散强度（位移标准差 $\\approx\\sigma\\sqrt{dt}$）。$\\sigma$ 不出现在期望里却主导方差——噪声的价格由 $\\sqrt{dt}$ 定（量级直觉见 sde.intuition）。\n\n存在唯一性（Itô 条件，切片外补充）：$\\mu,\\sigma$ 关于 $x$ Lipschitz、关于 $t$ 可测即够——与 ODE 的 Picard--Lindelöf（de1.9）完全平行。切片原文指明：更完整的 Itô 微积分见 C10。",
+      "links": [
+        "C10.2",
+        "C10.3",
+        "de1.9"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:sde.intuition",
+      "type": "intuition",
+      "subject": "sde",
+      "title": "SDE 直觉：漂移车道与扩散车道，噪声比趋势大三个量级",
+      "keywords": [
+        "μ dt 车道：位移 ∝ 时间，光滑可预测",
+        "σ dW_t 车道：位移 ∝ √dt，粗糙随机",
+        "dt=10⁻⁶ 时 √dt=10⁻³：噪声比趋势大 1000 倍",
+        "Euler–Maruyama 强收敛阶只有 1/2（G1.1 对照）",
+        "马尔可夫性：μ,σ 只依赖当前状态与时间",
+        "分布层面常可解析（Fokker–Planck，C10.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 71,
+        "line_end": 74
+      },
+      "fill_hint": "直觉词条，假设与结论分开写；收敛阶 1/2 与 RK4 对照为切片外补充，引 G1.1。",
+      "content": "把 SDE 读成「宏观趋势 + 微观抖动」两条车道：$\\mu\\,dt$ 车道里位移与时间成正比（光滑、可预测）；$\\sigma\\,dW_t$ 车道里位移与 $\\sqrt{dt}$ 成正比（粗糙、随机）。\n\n**假设给了什么**：$\\mu,\\sigma$ 只依赖当前状态与时间（马尔可夫性——未来只看现在）；噪声永远全新独立（继承自 BM 的独立增量公理）。**结论为什么因此成立**：短时间尺度上两种效应可加、长时间尺度上由 Itô 积分累积，得到解过程——一般没有显式解，但分布层面的性质（Fokker--Planck 方程，C10.3）常可解析。\n\n量级感（最实用的直觉）：$dt=10^{-6}$ 时 $\\sqrt{dt}=10^{-3}$——**噪声比趋势大三个数量级**。这解释了为什么 SDE 数值格式（Euler--Maruyama，切片外补充）的强收敛阶只有 $\\tfrac12$ 而非 1：格式误差被 $\\sqrt{dt}$ 量级卡死，ODE 的高阶技巧（RK4，G1.1）对强收敛无效。\n\nCG 直觉：烟雾粒子的位置 = 重力/浮力漂移 + 分子碰撞抖动；朗之万方程（langevin.application）正是把「碰撞」抽象成 $dW$ 后的 SDE。",
+      "links": [
+        "C10.3",
+        "G1.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:langevin.application",
+      "type": "application",
+      "subject": "langevin",
+      "title": "CG 落点：粒子模拟/烟雾与朗之万方程",
+      "keywords": [
+        "烟雾粒子：漂移 + 分子碰撞 → BM 轨迹采样",
+        "粒子云密度满足扩散方程（Fokker–Planck 特例）",
+        "粒子云按 √t 膨胀",
+        "朗之万：摩擦 −γV dt + 热噪声 √(2γk_BT) dW",
+        "涨落-耗散配平 → 稳态 Maxwell–Boltzmann",
+        "links: H8.1 / M5 / C10.1 / C10.3"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "fill_hint": "切片 76 行两个应用的展开；朗之万标准形式与涨落-耗散为切片外补充，引 M5 与 C10。",
+      "content": "切片原文点名两个应用。\n\n**布朗运动（粒子模拟、烟雾）**：烟雾粒子受分子碰撞的净效应 = 漂移 + 扩散。粒子系综的密度 $\\rho(x,t)$ 满足扩散方程 $\\partial_t\\rho=D\\,\\Delta\\rho$（Fokker--Planck 的无漂移特例，C10.3）——单粒子走 BM 轨迹、粒子云按 $\\sqrt{t}$ 膨胀（brownian.intuition 的 $\\sqrt t$ 定律）。H8.1 的烟雾/流体视觉模拟在粒子层面采样的就是这类过程。\n\n**朗之万方程（分子动力学）**：$m\\,dV_t=-\\gamma V_t\\,dt+\\sqrt{2\\gamma k_BT}\\,dW_t$（摩擦 + 热噪声，切片外补充的标准形式，M5）。噪声幅度由涨落-耗散关系与摩擦系数锁定：耗散（$-\\gamma V\\,dt$）与涨落（$dW$ 强度）必须配平，稳态才收敛到 Maxwell--Boltzmann 分布——温度越高噪声越大（$T$ 待在 $\\sqrt{2\\gamma k_BT}$ 里）。\n\n路径总览：渲染侧 H8.1 流体/粒子视觉；物理侧 M5 朗之万、I5 湍流的随机建模；理论侧 C10.1–C10.3 的 Itô 机器（二次变差 → Itô 积分 → Fokker--Planck）。本单元是入口牌——切片原文已指路：更完整的 Itô 微积分见 C10。",
+      "links": [
+        "C10.1",
+        "C10.3",
+        "H8.1",
+        "M5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:general.probe1",
+      "type": "probe",
+      "subject": "general",
+      "title": "检验：增量分布、尾概率与病态过程的协方差",
+      "keywords": [
+        "Var(W_4)=4、Var(W_5−W_2)=3",
+        "P(W_2−W_1>1)=1−Φ(1)≈0.1587",
+        "X_t=t·W₁ 的 Cov(X_1,X_2)=2 ≠ min=1",
+        "答案数值折叠在括号里"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 63,
+        "line_end": 69
+      },
+      "fill_hint": "三问分别对应公理 3/尾概率/反例协方差；【待核验】构建时重算（erf 形式与 C7.2 数值约定一致）。",
+      "content": "三道检验题：\n\n(1) 求 $\\mathrm{Var}(W_4)$ 与 $\\mathrm{Var}(W_5-W_2)$。（$4$【已核验:4|4】；$5-2=3$【已核验:3|5-2】）\n\n(2) 增量 $W_2-W_1\\sim N(0,1)$，求 $P(W_2-W_1>1)$。（$1-\\Phi(1)=\\frac12\\big(1-\\mathrm{erf}(\\tfrac{1}{\\sqrt2})\\big)\\approx 0.1587$【已核验:0.158655253931|0.5*(1-erf(1/sqrt(2)))】）\n\n(3) 过程 $X_t=t\\cdot W_1$：计算 $\\mathrm{Cov}(X_1,X_2)$，并判断它是否布朗运动。（$\\mathrm{Cov}(X_1,X_2)=\\mathrm{Cov}(W_1,2W_1)=2$【已核验:2|2*1】，而 BM 要求 $\\min(1,2)=1$；且增量 $X_1-X_0=W_1$ 与 $X_2-X_1=W_1$ 完全相关——独立增量不成立，不是 BM。）",
+      "links": [
+        "C7.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C5:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：布朗路径模拟与公理体检面板",
+      "keywords": [
+        "多路径生成：逐步独立高斯增量",
+        "检验面板 1：Var(W_t) 对 t 的直线",
+        "检验面板 2：相邻增量散点图（应无相关）",
+        "对照组：X_t=t·W₁ 的病态路径",
+        "长时程迭代计算 → 走后端批量生成",
+        "viz 档 2：planned-backend"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 63,
+        "line_end": 69
+      },
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "布朗路径需逐步迭代生成（每步独立高斯增量）并检验 √t 扩散与增量无关性，属长时程计算，宜后端批量产路径再前端 scrub。",
+        "params_hint": {
+          "n_steps": 2000,
+          "n_paths": 5,
+          "horizon": 1.0,
+          "checks": [
+            "var_scaling",
+            "increment_independence"
+          ],
+          "contrast_process": "t*W1"
+        }
+      },
+      "fill_hint": "单元级演示总览（档 2 留空待接）：后端批量生成路径与两个统计检验的数值，前端只做 scrub 与对照展示；不写 module 字段。",
+      "content": "演示设计：拖时间轴同时观察 5 条布朗路径与对照组 $X_t=t\\cdot W_1$（brownian.correlated 的病态过程）——后者一眼看上去「太光滑」，5 条路径共用同一个 $W_1$ 形状。\n\n两个统计体检面板（由计算方算，不写死文案）：(1) $\\mathrm{Var}(W_t)$ 对 $t$ 的散点应落在直线 $y=t$ 上，对照组落在 $y=t^2$ 上；(2) 相邻增量 $(W_{i+1}-W_i,\\,W_{i+2}-W_{i+1})$ 的散点图应无相关（BM），对照组全部压在对角线上（相关系数 1）。\n\ninvariant 自检：每条路径用 $\\mathcal{N}(0,\\Delta t)$ 独立增量累加生成，$\\mathrm{Var}(W_T)$ 的蒙特卡洛估计与 $T$ 的偏差超过 3 倍标准误即抛错。粗粒度差商（$\\frac{W_{t+h}-W_t}{h}$ 随 $h\\to0$ 发散，见 brownian.nondifferentiable）可作为第三面板的候选。",
+      "links": [
+        "C10.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

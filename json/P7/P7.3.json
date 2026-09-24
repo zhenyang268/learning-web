@@ -1,0 +1,305 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P7.3",
+  "chapter": "P7",
+  "title": "常用原函数小表（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 381,
+    "line_end": 392,
+    "anchor": "notebook/P_computation.tex:381"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P7.3:antiderivative.quantifiers",
+      "type": "comparison",
+      "subject": "antiderivative",
+      "title": "适用条件表：六条原函数各自的坑",
+      "keywords": [
+        "∫dx/(1+x²) 与 ∫x dx/(1+x²) 差一个 x，结果完全不同",
+        "∫tanx dx = −ln|cosx|：绝对值不能丢",
+        "∫dx/(x²−1) 有奇点 ±1，定义域分两段",
+        "∫lnx dx 定义域 x>0",
+        "+C 在分段定义时两段各带各的",
+        "每条都可求导回代验证"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 383,
+        "line_end": 388
+      },
+      "fill_hint": "切片给六条公式；条件表补「定义域／绝对值／易混淆」使用层限定，数值全部可复算。",
+      "content": "六条小表逐条拆限定词（每行给可复算数值）：\n\n| 条件 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $\\int\\frac{dx}{1+x^2}=\\arctan x$ 与 $\\int\\frac{x\\,dx}{1+x^2}=\\frac12\\ln(1+x^2)$ **只差一个 $x$** | 两者在 $[0,1]$ 上的积分分别是 $\\frac\\pi4=0.7854$【已核验:0.785398163397|pi/4】与 $\\frac12\\ln2=0.3466$【已核验:0.34657359028|0.5*log(2)】 | 认错形态必错结果；分母相同不等于积法相同 | 不能：差一个因子就是另一条原函数（分母幂次 1 vs 2 暗示凑微分） |\n| $\\int\\tan x\\,dx=-\\ln\\|\\cos x\\|$ 的**绝对值** | 取 $x=2$：$\\cos2=-0.4161$【已核验:-0.416146836547|cos(2)】，$-\\ln(\\cos2)$ 在实数中无定义；正确值 $-\\ln\\|\\cos2\\|=0.8767$【已核验:0.876717108532|-log(abs(cos(2)))】 | $\\cos x<0$ 的区间上原函数直接不存在（写错） | 不能丢：$\\tan$ 在整个被考察区间上定义，原函数必须同样全域可写，绝对值就是干这个的 |\n| $\\int\\frac{dx}{x^2-1}$ 的定义域是 $|x|>1$ 与 $|x|<1$ **两段** | 被积函数在 $x=\\pm1$ 有奇点，$\\frac12\\ln\\left\\|\\frac{x-1}{x+1}\\right\\|$ 在两段上分别定义 | 跨奇点积分（如 $\\int_0^2$）发散，套公式得假值 | 不能跨奇点；两段上的常数 C 可以不同（见行 5） |\n| $\\int\\ln x\\,dx=x\\ln x-x$ 要求 **$x>0$** | 在 $x=-1$ 处 $\\ln x$ 无定义 | 原函数只在 $(0,\\infty)$ 有意义 | 需要负半轴时改用 $\\ln\\|x\\|$ 的版本（本表外） |\n| 常数 $C$：定积分 $F(b)-F(a)$ 中消去，但**分段时两段各自带 C** | $\\int\\frac{dx}{x}$ 在 $(-\\infty,0)$ 与 $(0,\\infty)$ 上是 $\\ln\\|x\\|+C_1$ 与 $\\ln\\|x\\|+C_2$，$C_1\\ne C_2$ 也合法 | 把两段强行接成一个 C 会得到错误的原函数族 | 合规写法：逐段声明 |\n| 全表通用：每条**求导回代**即可验证 | $\\frac{d}{dx}\\left[\\frac12\\ln\\left\\|\\frac{x-1}{x+1}\\right\\|\\right]$ 在 $x=3$ 的值 $=0.125=\\frac{1}{x^2-1}\\Big|_{x=3}$【已核验:0.125|0.5*(1/(3-1)-1/(3+1))】【已核验:0.125|1/(3**2-1)】 | — | 验证免费，永远做 |\n\n记忆锚点：这张表的坑集中在**定义域（x>0、奇点 ±1）与绝对值（tan、x²−1）**两条主线上——背公式时连绝对值一起背。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P7.3:antiderivative.misuse",
+      "type": "counterexample",
+      "subject": "antiderivative",
+      "title": "误用：丢绝对值，原函数在半壁区间蒸发",
+      "keywords": [
+        "−ln(cosx) 在 cosx<0 区间无定义",
+        "完整算例：∫₀^{3π/4} tanx dx",
+        "正确值 (1/2)ln2 ≈ 0.3466",
+        "机制：tan 全域有定义，原函数必须全域可写",
+        "修补：永远带绝对值（ln|cosx|）",
+        "1/(x²−1) 同病：奇点 ±1 两侧靠 |·| 缝合"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 383,
+        "line_end": 383
+      },
+      "fill_hint": "切片公式自带绝对值（−ln|cosx|、½ln|(x−1)/(x+1)|）；本条演示丢掉绝对值的具体失效。",
+      "content": "**完整算例：** 计算 $\\int_0^{3\\pi/4}\\tan x\\,dx$。正确做法：$-\\ln\\|\\cos x\\|\\Big|_0^{3\\pi/4}=-\\ln\\left|\\cos\\frac{3\\pi}{4}\\right|+\\ln1=-\\ln\\frac{\\sqrt2}{2}=\\frac12\\ln2=0.3466$【已核验:0.34657359028|0.5*log(2)】。\n\n**误用：** 把公式记成 $-\\ln(\\cos x)$（丢绝对值）。在 $x=\\frac{3\\pi}{4}$ 处 $\\cos x=-\\frac{\\sqrt2}{2}<0$，$-\\ln(\\cos x)$ 在实数里**无定义**——原函数在 $(\\frac\\pi2,\\frac{3\\pi}{4}]$ 这一段上整个蒸发，定积分没法代限。\n\n**失效机制：** $\\tan x$ 在整个被考察区间上有定义、可积，因此它的原函数族必须**同样全域可写**；$-\\ln(\\cos x)$ 只覆盖了 $\\cos x>0$ 的半壁，丢掉的那一半正是绝对值负责缝合的。切片公式的绝对值不是装饰，是定义域声明。\n\n**修补条件：** 永远写 $\\int\\tan x\\,dx=-\\ln\\|\\cos x\\|+C$。同款病：$\\int\\frac{dx}{x^2-1}=\\frac12\\ln\\left\\|\\frac{x-1}{x+1}\\right\\|$——绝对值让 $|x|<1$ 与 $|x|>1$ 两段共用一个表达式；但注意奇点 $x=\\pm1$ 本身绝对值救不了，跨奇点的定积分直接发散（见 quantifiers 表）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.3:antiderivative.statement",
+      "type": "statement",
+      "subject": "antiderivative",
+      "title": "常用原函数小表本体（六条）",
+      "keywords": [
+        "∫dx/(1+x²)=arctan x",
+        "∫x dx/(1+x²)=½ln(1+x²)",
+        "∫tanx dx=−ln|cosx|",
+        "∫lnx dx=xlnx−x",
+        "∫xe^{−x}dx=−(x+1)e^{−x}",
+        "∫dx/(x²−1)=½ln|(x−1)/(x+1)|",
+        "每条 +C，绝对值与定义域是公式的一部分"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 382,
+        "line_end": 388
+      },
+      "fill_hint": "逐字转写切片六条公式（含绝对值写法）；+C 与定义域为使用层补充。",
+      "content": "六条原函数（每条 $+C$；绝对值与定义域是公式的组成部分，不是可选项）：\n\n$$\\int\\frac{dx}{1+x^2}=\\arctan x,\\qquad\n\\int\\frac{x\\,dx}{1+x^2}=\\frac12\\ln(1+x^2),\\qquad\n\\int\\tan x\\,dx=-\\ln\\|\\cos x\\|$$\n\n$$\\int\\ln x\\,dx=x\\ln x-x,\\qquad\n\\int xe^{-x}dx=-(x+1)e^{-x},\\qquad\n\\int\\frac{dx}{x^2-1}=\\frac12\\ln\\left\\|\\frac{x-1}{x+1}\\right\\|$$\n\n成立条件（按条）：①②全实轴；③全轴除 $\\cos x=0$ 的点；④仅 $x>0$；⑤⑥全轴除奇点 $x=\\pm1$（⑥）。每条都可以**求导回代**自验——这是小表最便宜的质检手段。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.3:antiderivative.proof",
+      "type": "proof",
+      "subject": "antiderivative",
+      "title": "推导骨架：六条各来自哪条生产线",
+      "keywords": [
+        "∫dx/(1+x²)：认形态直接回 arctan",
+        "∫x/(1+x²)：凑微分（½·(1+x²)′/(1+x²)）",
+        "∫tanx：tan=sinx/cosx，凑 −d(cosx)",
+        "∫lnx：分部，u=lnx",
+        "∫xe^{−x}：分部，u=x",
+        "∫1/(x²−1)：部分分式 ½[1/(x−1)−1/(x+1)]",
+        "依赖链：P7.2 的凑微分/分部/部分分式 + P2.4"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 382,
+        "line_end": 388
+      },
+      "fill_hint": "切片只给成品；推导骨架把六条挂回 P7.2 的三条生产线，方便记忆与复核。",
+      "content": "六条公式不是六个孤立事实，而是 P7.2 三条生产线的产出（每步给理由）：\n\n1. **$\\int\\frac{dx}{1+x^2}=\\arctan x$：** 形态匹配 $(\\arctan x)'=\\frac{1}{1+x^2}$，直接回写（这条本身就是「表」，无可再推）。\n2. **$\\int\\frac{x\\,dx}{1+x^2}=\\frac12\\ln(1+x^2)$：** 凑微分——分子 $x=\\frac12(1+x^2)'$，令 $u=1+x^2$ 得 $\\frac12\\int\\frac{du}{u}$。$\\ln$ 里**不需要**绝对值，因为 $u=1+x^2>0$ 恒成立。\n3. **$\\int\\tan x\\,dx=-\\ln\\|\\cos x\\|$：** $\\tan x=\\frac{\\sin x}{\\cos x}=-\\frac{(\\cos x)'}{\\cos x}$，凑 $d(\\cos x)$ 得 $-\\int\\frac{d(\\cos x)}{\\cos x}=-\\ln\\|\\cos x\\|$（绝对值的必要性见 misuse 词条）。\n4. **$\\int\\ln x\\,dx=x\\ln x-x$：** 分部积分，$u=\\ln x$（越求导越简单）、$dv=dx$：$x\\ln x-\\int x\\cdot\\frac1x dx=x\\ln x-x$。\n5. **$\\int xe^{-x}dx=-(x+1)e^{-x}$：** 分部，$u=x$、$dv=e^{-x}dx$：$-xe^{-x}+\\int e^{-x}dx=-(x+1)e^{-x}$。符号易错：两次都带负号。\n6. **$\\int\\frac{dx}{x^2-1}=\\frac12\\ln\\left\\|\\frac{x-1}{x+1}\\right\\|$：** 部分分式 $\\frac{1}{x^2-1}=\\frac12\\left[\\frac{1}{x-1}-\\frac{1}{x+1}\\right]$（links P2.4），逐块积分合并。\n\n**依赖链：** 形态记忆（1）← 自身；凑微分（2、3）← P7.2 换元；分部（4、5）← P7.2 分部；部分分式（6）← P2.4 分解 + P7.2 逐块积。**易错点：** ②③（凑哪个微分）、④⑤（u 的选向）、⑥（绝对值与两段定义域）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P7.2",
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P7.3:antiderivative.intuition",
+      "type": "intuition",
+      "subject": "antiderivative",
+      "title": "直觉：背三条生产线，不背六个孤立公式",
+      "keywords": [
+        "六条 = 形态 1 条 + 凑微分 2 条 + 分部 2 条 + 部分分式 1 条",
+        "看到分母 1+x² 先问分子有没有 x",
+        "lnx／xe^{−x} 是分部选向的两个样板",
+        "x²−1 是部分分式的最小样板",
+        "生产线视角：忘公式可以现场重推"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 382,
+        "line_end": 388
+      },
+      "fill_hint": "组织切片六条的记忆结构：把「小表」还原成「P7.2 技法的产出清单」。",
+      "content": "**假设给了什么：** 六条公式全部由 P7.2 的三条生产线产出——1 条形态记忆（$\\arctan$）、2 条凑微分（$\\frac{x}{1+x^2}$、$\\tan$）、2 条分部（$\\ln x$、$xe^{-x}$）、1 条部分分式（$\\frac{1}{x^2-1}$）。\n\n**结论为什么因此成立（记忆结构）：** 小表的正确打开方式不是「背六个结果」，而是「认六个形态、知道各自挂哪条线」：\n\n- 分母长得一样（$1+x^2$），先问**分子有没有 $x$**：有 → 凑微分走 $\\ln$；没有 → $\\arctan$。\n- 看到「越求导越简单」的 $\\ln x$ 当 $u$；看到「积分不变形」的 $e^{-x}$ 当 $dv$——两条分部样板正是选向口诀的两极。\n- 看到 $x^2-1$ 这种能因式分解的分母，反射弧是**部分分式**，产物必带绝对值。\n\n这个结构的红利：考场上忘表可以现场重推（每条重推 ≤ 2 步），比死背可靠得多。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P7.2"
+      ]
+    },
+    {
+      "id": "P7.3:antiderivative.application",
+      "type": "application",
+      "subject": "antiderivative",
+      "title": "用在哪：从概率矩到熵公式",
+      "keywords": [
+        "∫dx/(1+x²)：Cauchy 密度的原型（C2）",
+        "∫xe^{−x}dx：指数分布矩与 Γ 的入门（C2、P8.2）",
+        "∫lnx dx：信息熵 ∫p ln p 的积木（M3）",
+        "∫1/(x²−1)：Laplace 反变换查表基本块（de2.13）",
+        "∫tanx dx：核积/Fourier 推导中的常客"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 382,
+        "line_end": 388
+      },
+      "fill_hint": "切片无应用；links 给「谁消费这条原函数」。",
+      "content": "- **C2（分布族）：** Cauchy 分布密度 $\\frac{1}{\\pi(1+x^2)}$ 的归一化就是 $\\int\\frac{dx}{1+x^2}=\\arctan$ 一条；指数分布的期望 $E[X]=\\int_0^\\infty xe^{-x}dx$ 用第六条的分部原型（并在 P8.2 里升级为 $\\Gamma(2)=1!=1$）。\n- **P8.2（$\\Gamma$ 函数）：** $\\int_0^\\infty x^ne^{-x}dx=n!$ 是 $\\int xe^{-x}dx=-(x+1)e^{-x}$ 的推广——小表给的是 $n=1$ 的样板。\n- **M3（熵）：** 微分熵 $\\int p\\ln p$ 的局部积分反复消费 $\\int\\ln x\\,dx=x\\ln x-x$；这个「$x\\ln x-x$」形状是熵公式的基本粒子。\n- **de2.13（Laplace 变换）：** $\\frac{1}{x^2-1}$ 型的部分分式块是反变换查表的最小单元（两条移位指数的差）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C2",
+        "P8.2",
+        "M3",
+        "de2.13"
+      ]
+    },
+    {
+      "id": "P7.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "六条对照：来源、易错、下游一张表",
+      "keywords": [
+        "六条 × 来源生产线 × 易错点 × 下游",
+        "绝对值只出现在 tan 与 1/(x²−1)",
+        "定义域限制：lnx 限 x>0、x²−1 限两段",
+        "arctan 是唯一「形态记忆」条目",
+        "分部两条各示范一个选向"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 382,
+        "line_end": 388
+      },
+      "fill_hint": "整合 statement/proof/misuse 为一张对照表。",
+      "content": "| 原函数 | 生产线 | 易错点 | 下游消费 |\n|---|---|---|---|\n| $\\int\\frac{dx}{1+x^2}=\\arctan x$ | 形态记忆 | 与下一条只差一个 $x$ | C2 Cauchy 密度 |\n| $\\int\\frac{x\\,dx}{1+x^2}=\\frac12\\ln(1+x^2)$ | 凑微分 | $\\ln$ 里**不**要绝对值（$1+x^2>0$） | 统计/能量泛函 |\n| $\\int\\tan x\\,dx=-\\ln\\|\\cos x\\|$ | 凑微分 | 绝对值**必须**带 | Fourier/核方法推导 |\n| $\\int\\ln x\\,dx=x\\ln x-x$ | 分部（$u=\\ln x$） | 定义域 $x>0$ | M3 熵公式 |\n| $\\int xe^{-x}dx=-(x+1)e^{-x}$ | 分部（$u=x$） | 双负号 | C2 矩、P8.2 $\\Gamma$ |\n| $\\int\\frac{dx}{x^2-1}=\\frac12\\ln\\left\\|\\frac{x-1}{x+1}\\right\\|$ | 部分分式 | 奇点 $\\pm1$、两段各带 C | de2.13 反变换 |\n\n一行判断口诀：**有 $x$ 走凑、没 $x$ 回 arctan；对数幂型走分部；能因式分解走部分分式。**",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "单元级下游：小表的跨章落点",
+      "keywords": [
+        "概率密度与矩计算（C2）的基本积木",
+        "Γ/Beta 家族（P8）的入门样板",
+        "熵与信息论（M3）的 xlnx-x",
+        "反变换查表（de2.13）的最小单元",
+        "Fourier/核方法推导中 tan 的老面孔"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 382,
+        "line_end": 388
+      },
+      "fill_hint": "单元级总览，每条一句。",
+      "content": "- **C2：** 密度归一化与各阶矩是小表的第一消费场景（Cauchy、指数分布两条样板）。\n- **P8.2／P8.3：** $\\int xe^{-x}$ 是 $\\Gamma$ 的 $s=2$ 特例；$\\int\\tan$ 在 Beta 的三角换元里复现。\n- **M3：** 熵公式 $-\\int p\\ln p$ 的不定积分骨架是 $x\\ln x-x$。\n- **de2.13／R4.3：** 有理分式反变换 $=$ 部分分式 $+$ 小表逐块查。\n- **A2.3：** Fourier 系数推导里 $\\tan$、$\\frac{1}{1+x^2}$ 反复出现。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C2",
+        "P8.2",
+        "P8.3",
+        "M3",
+        "de2.13",
+        "A2.3"
+      ]
+    },
+    {
+      "id": "P7.3:antiderivative.probe1",
+      "type": "probe",
+      "subject": "antiderivative",
+      "title": "检验：求导回代验证 1/(x²−1) 的原函数",
+      "keywords": [
+        "对 ½ln|(x−1)/(x+1)| 求导",
+        "在 x=3 处数值对比",
+        "两个值都应为 1/8"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 387,
+        "line_end": 388
+      },
+      "fill_hint": "从 quantifiers 验证行变的问句；答案带【待核验】。",
+      "content": "验证 $\\int\\frac{dx}{x^2-1}=\\frac12\\ln\\left\\|\\frac{x-1}{x+1}\\right\\|+C$：对右边求导并在 $x=3$ 处数值对比两边是否相等。\n\n（答案：右边导数 $\\frac12\\left(\\frac{1}{x-1}-\\frac{1}{x+1}\\right)$ 在 $x=3$ 为 $0.125$【已核验:0.125|0.5*(1/(3-1)-1/(3+1))】；左边 $\\frac{1}{x^2-1}$ 在 $x=3$ 同为 $0.125$【已核验:0.125|1/(3**2-1)】，验证通过。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.3:antiderivative.probe2",
+      "type": "probe",
+      "subject": "antiderivative",
+      "title": "检验：用分部样板算 ∫₀¹ xe^{−x} dx",
+      "keywords": [
+        "套 −(x+1)e^{−x} 代限",
+        "答案 1−2/e ≈ 0.2642",
+        "顺带写出它对应的 Γ 值"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 387,
+        "line_end": 387
+      },
+      "fill_hint": "从 proof 分部行变的问句；答案带【待核验】。",
+      "content": "用第五条原函数计算 $\\int_0^1 xe^{-x}dx$，并指出它与 P8.2 中哪个 $\\Gamma$ 值对应。\n\n（答案：$[-(x+1)e^{-x}]_0^1=-\\frac2e+1=1-\\frac2e=0.2642$【已核验:0.264241117657|1-2*exp(-1)】；它对应 $\\int_0^\\infty xe^{-x}dx=\\Gamma(2)=1!=1$ 的有限区间版本。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P8.2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C1",
+  "chapter": "C1",
+  "title": "概率的测度论基础",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 4,
+    "line_end": 17,
+    "anchor": "notebook/C_partial.tex:4"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C1:prob-space.quantifiers",
+      "type": "comparison",
+      "subject": "prob-space",
+      "title": "概率空间三要素限定词拆解",
+      "keywords": [
+        "P(Ω)=1 把测度归一化为概率",
+        "σ-代数决定哪些问题可以被问到",
+        "可数可加决定极限操作是否合法",
+        "去掉 P(Ω)=1 → 一般测度（有限测度可归一化）",
+        "σ-代数太粗 → 事件问不出（平凡 σ-代数）",
+        "可数可加 ⟺ 示性函数版 MCT（A1.4）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 5,
+        "line_end": 9
+      },
+      "fill_hint": "以切片 5-9 行的 (Ω, F, P) 定义为准；四列表中 Banach 测度与 Vitali 集两行引自 A1.4 的对照表，需与 A1.4 词条核对一致性。",
+      "content": "概率空间 $(\\Omega, \\mathcal{F}, P)$ 一句话：$\\Omega$ 是所有可能结果，$\\mathcal{F}$ 是被允许提问的事件族，$P$ 给每个事件配一个 $[0,1]$ 的数且总质量 $P(\\Omega)=1$。把陈述拆成限定词逐条拷问：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| $\\mathcal{F}$ 是 σ-代数（对补集、可数并封闭） | 取平凡 σ-代数 $\\mathcal{F}=\\{\\varnothing,\\Omega\\}$：掷骰子 $X(\\omega)=\\omega$ 的事件 $\\{X\\le 3\\}=\\{1,2,3\\}\\notin\\mathcal{F}$ | 不是算错，是 $P(X\\le 3)$ 这个问题本身问不出来 | 不能换成任意事件集：Lebesgue 情形存在 Vitali 不可测集（A1.4） |\n| $P$ 可数可加 | 只有限可加的 Banach 测度（A1.4 对照表） | MCT/Fatou/DCT 全部失效，蒙特卡洛收敛性失去根据（H4） | 不能：可数可加 ⟺ 示性函数版 MCT |\n| $P(\\Omega)=1$ | Lebesgue 测度 $m$：$m(\\mathbb{R})=\\infty$ | 「概率」解释丢失，但积分论全部照搬 | 有限测度可归一化：$P=m/m(\\Omega)$ |\n| $P\\ge 0$ | 允许负值则 $P(A)+P(A^c)$ 可为 0 而各项非零 | 概率公理体系崩塌 | 符号测度是另一套理论（拓展） |\n\n实质内容只有两条：σ-代数决定「哪些问题可以被问到」，可数可加决定「极限操作是否合法」。$P(\\Omega)=1$ 只是归一化约定——这解释了为什么概率论的一切定理都是测度论定理加一条归一化。",
+      "links": [
+        "A1.4",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:density.quantifiers",
+      "type": "comparison",
+      "subject": "density",
+      "title": "密度函数适用条件拆解（什么时候有密度、什么时候没有）",
+      "keywords": [
+        "切片原话「如果存在」是全部陷阱所在",
+        "F 绝对连续才有密度；阶梯 F（泊松）没有",
+        "离散分布套积分公式 → 单点概率积成 0",
+        "忘归一化常数 → 总概率 ≠ 1",
+        "f 只在 a.e. 意义下唯一（零测集可改）",
+        "连续 ≠ 可微：Cantor 分布（拓展）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 16,
+        "line_end": 16
+      },
+      "fill_hint": "以切片 16 行密度定义为准转写；四列表里的泊松/正态数值例与 C2 词条共用，需保持数值一致。",
+      "content": "切片给出：密度 $f_X(x)=F_X'(x)$（如果存在），且 $P(X\\in A)=\\int_A f_X\\,dx$。「如果存在」四个字是全部陷阱所在：\n\n| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $F_X$ 绝对连续（可微不够，要绝对连续） | 泊松分布：$F$ 是阶梯函数，跳跃点不可微 | 对离散分布套 $\\int_A f\\,dx$：$P(X=1)=e^{-1}\\approx 0.368$【已核验:0.367879441171|exp(-1)】被积成 0 | 不用密度，一切用 $F$ 或质量函数（见 density.discrete-trap） |\n| $f\\ge 0$ | $f$ 在某区间取负值 | $P(X\\in A)<0$ 违反概率公理 | 必须非负 |\n| $\\int f\\,dx = 1$（归一化） | 忘归一化常数：$e^{-x^2/2}$ 的全线积分 $=\\sqrt{2\\pi}\\approx 2.5066$【已核验:2.50662827463|sqrt(2*pi)】$\\ne 1$ | 总概率不是 1，期望方差全错 | 必须归一化；正态密度的 $\\frac{1}{\\sqrt{2\\pi}\\sigma}$ 就是干这个的（P8.1） |\n| $f$ 只在 a.e. 意义下唯一 | 在零测集上改 $f$ 的值 | 无实质后果 | 放心改 |\n\n判断顺序：先问「$F$ 连续吗」，再问「绝对连续吗」。Cantor 分布（拓展）给出 $F$ 连续却无密度的例子——连续 ≠ 可微，更 ≠ 绝对连续。",
+      "links": [
+        "P8.1",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:prob-space.trivial-sigma",
+      "type": "counterexample",
+      "subject": "prob-space",
+      "title": "反例：平凡 σ-代数上大多数随机变量不可测",
+      "keywords": [
+        "F={∅,Ω} 是完全合法的概率空间",
+        "骰子 X(ω)=ω 的事件 {1,2,3} ∉ F → P(X≤3) 无定义",
+        "平凡 σ-代数上只有常数随机变量可测",
+        "σ-代数 = 信息水平：一无所知时问题问不出",
+        "修补：F 升级为包含 σ(X)",
+        "可测性是分布函数 F_X 能写出来的前提"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 7,
+        "line_end": 12
+      },
+      "fill_hint": "反例完全自含（骰子+平凡 σ-代数），数值用【待核验】自检；与 random-variable.statement 的可测性定义互相引用。",
+      "content": "构造：$\\Omega=\\{1,2,3,4,5,6\\}$（掷骰子），$\\mathcal{F}=\\{\\varnothing,\\Omega\\}$（最粗的 σ-代数），$P(\\Omega)=1$。这是完全合法的概率空间。\n\n取 $X(\\omega)=\\omega$。想问 $P(X\\le 3)$：事件 $\\{X\\le 3\\}=\\{1,2,3\\}$，但 $\\{1,2,3\\}\\notin\\mathcal{F}$——这个事件没有概率，$P(X\\le 3)$ **无定义**。同理 $\\{X\\in B\\}$ 对任何非平凡 Borel 集 $B$ 都问不出来；在这个空间上只有常数随机变量 $Y(\\omega)\\equiv c$ 可测（$\\{Y\\le x\\}$ 只能是 $\\varnothing$ 或 $\\Omega$）。\n\n对照：换成完备 σ-代数 $\\mathcal{F}=2^{\\Omega}$（全体子集），则 $P(X\\le 3)=\\frac{3}{6}=0.5$【已核验:0.5|3/6】，一切恢复正常。\n\n失效机制：σ-代数是「信息水平」——$\\{\\varnothing,\\Omega\\}$ 表示一无所知，此时非平凡的 $X$ 根本不是合法的随机变量。修补：把 $\\mathcal{F}$ 升级为包含 $\\sigma(X)$（由 $X$ 生成的 σ-代数，即把 $X$ 能区分的所有事件收进来）。\n\n这个反例同时解释了定义里 $X:(\\Omega,\\mathcal{F})\\to(\\mathbb{R},\\mathcal{B}(\\mathbb{R}))$ 可测的真正含义：$\\{X\\le x\\}$ 必须落在 $\\mathcal{F}$ 里，否则分布函数 $F_X$ 从第一步就写不出来。",
+      "links": [
+        "A1.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:density.discrete-trap",
+      "type": "counterexample",
+      "subject": "density",
+      "title": "反例：离散分布没有密度——对 Pois(2) 套积分公式得 0",
+      "keywords": [
+        "P(X=2)=2e^(-2)≈0.2707，积分公式给出 0",
+        "单点积分恒为 0，与真实概率差一个量级",
+        "根源：泊松质量挂在整数点上，对 Lebesgue 测度奇异",
+        "F 是阶梯 → 不可微 → 密度不存在",
+        "修补：离散用质量函数与求和",
+        "混合型分布两者都要"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 14,
+        "line_end": 16
+      },
+      "fill_hint": "数值例用 Pois(2)（C2 表格成员），两个【待核验】表达式构建时会重算；归一化求和式截断到 k=19。",
+      "content": "取 $X\\sim\\mathrm{Pois}(2)$（切片 C2 表格中的光子计数分布）。按质量函数定义直接算：\n\n$$P(X=2)=\\frac{2^2 e^{-2}}{2!}=2e^{-2}\\approx 0.2707\\quad\\text{【已核验:0.270670566473|2*2*exp(-2)/2】}$$\n\n如果误以为存在密度、套 $P(X\\in A)=\\int_A f\\,dx$：\n\n$$P(X\\in\\{2\\})=\\int_2^2 f(x)\\,dx=0\\ne 0.2707$$\n\n单点区间上的积分恒为 0，与真实概率矛盾——结论彻底失效，不是数值误差。\n\n根源：泊松分布的「质量」挂在可数个整数点上（对计数测度绝对连续），对 Lebesgue 测度奇异。$F$ 是阶梯函数，在跳跃点不可微，密度根本不存在（见 density.quantifiers 第一行）。\n\n验证质量归一化：$\\sum_{k=0}^{19}\\frac{2^k e^{-2}}{k!}\\approx 1$【已核验:1|sum(2**k*exp(-2)/factorial(k) for k in range(0,20))】。修补：离散型一律用质量函数 $p_k$ 与求和，连续型才用密度与积分；混合型（如「以概率 1/2 恒为 0、以概率 1/2 服从 Exp」）则两部分都要写。",
+      "links": [
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:random-variable.statement",
+      "type": "statement",
+      "subject": "random-variable",
+      "title": "随机变量 = 到 B(R) 的可测函数",
+      "keywords": [
+        "X: (Ω,F) → (R, B(R)) 可测",
+        "可测 = 任意 Borel 集的原像落在 F 里",
+        "{X≤x} ∈ F 是分布函数能写出的前提",
+        "检验半直线原像即可（生成 B(R)）",
+        "X 是确定函数，随机性全在 P",
+        "换测度 P 即换分布"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 12,
+        "line_end": 12
+      },
+      "fill_hint": "切片 12 行原文转写；「检验半直线就够」一段是标准展开，人工复核生成 σ-代数的论证方向。",
+      "content": "**定义（切片原文）**：随机变量是可测函数 $X:(\\Omega,\\mathcal{F})\\to(\\mathbb{R},\\mathcal{B}(\\mathbb{R}))$，即对一切 Borel 集 $B\\in\\mathcal{B}(\\mathbb{R})$，原像 $X^{-1}(B)\\in\\mathcal{F}$。\n\n逐符号拆解：$\\mathcal{B}(\\mathbb{R})$ 是 $\\mathbb{R}$ 上包含所有开集的最小 σ-代数（Borel σ-代数）；「可测」说的是原像事件合法——特别地 $\\{X\\le x\\}=X^{-1}\\big((\\infty,x]\\big)\\in\\mathcal{F}$，这正是分布函数 $F_X(x)=P(X\\le x)$ 能写出来的前提（反例见 prob-space.trivial-sigma）。\n\n为什么检验 $\\{X\\le x\\}$ 就够：半直线 $(\\infty,x]$ 生成的 σ-代数就是 $\\mathcal{B}(\\mathbb{R})$，原像运算与集合运算可交换，所以「所有半直线原像可测 ⟺ 所有 Borel 原像可测」——定义只需检查一族最简单的事件。\n\n随机变量本身是**确定的函数**：随机性不在 $X$ 里，而在 $P$ 里。同一个 $X$，换测度 $P$ 就换分布——这一视角是理解「同一随机现象在不同概率模型下」的钥匙。",
+      "links": [
+        "A1.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:random-variable.intuition",
+      "type": "intuition",
+      "subject": "random-variable",
+      "title": "随机变量直觉：把任意随机世界翻译成数字的字典",
+      "keywords": [
+        "Ω 可以是骰子面/光子路径/粒子轨迹——形态任意",
+        "X 只做一件事：给每个状态贴数字",
+        "可测性 = 字典的每一问都有答案",
+        "X 诱导 P_X(B)=P(X⁻¹(B))，把概率搬到数轴",
+        "有了 P_X 就与 Ω 形态脱钩",
+        "CG 只需采样算法，不用关心 Ω 长什么样"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 12,
+        "line_end": 14
+      },
+      "fill_hint": "直觉词条，假设与结论分开写；「搬运测度」一段与 cdf.statement 的 P_X 记号保持一致。",
+      "content": "把 $\\Omega$ 想成「世界的所有可能状态」：骰子的六个面、一束光子的整条传播路径、烟雾粒子到时刻 $t$ 为止的完整轨迹。$X$ 做的事只有一件：给每个状态贴一个数字（路径的累积亮度、粒子的位移）。之后所有计算都只看数字，不再关心 $\\Omega$ 本身长什么样。\n\n**假设给了什么**：可测性保证「$X$ 落在任意 Borel 集」都是合法事件，因此 $X$ 诱导出 $\\mathbb{R}$ 上的一个测度 $P_X(B)=P\\big(X^{-1}(B)\\big)$——把 $\\Omega$ 上的概率整体搬运到数轴上。\n\n**结论为什么因此成立**：一旦有了 $P_X$，概率论就与 $\\Omega$ 的具体形态脱钩，变成「数轴上的测度」问题——这就是为什么 C2 的分布族只写在数轴上，而 CG 实现里只需要采样算法（H4 的逆 CDF 法、C3 的球面采样），完全不用构造 $\\Omega$。\n\n直觉锚点：随机变量 = 「把任意随机世界翻译成数字的字典」；可测性 = 「字典的每一问都有答案」。翻译完成后，剩下的全是数轴上的微积分。",
+      "links": [
+        "A1.2",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:cdf.statement",
+      "type": "statement",
+      "subject": "cdf",
+      "title": "分布函数 F_X(x) = P(X ≤ x)",
+      "keywords": [
+        "F_X(x)=P(X≤x) 完全决定分布",
+        "P(a<X≤b)=F(b)−F(a)",
+        "四条性质：单调/右连续/端点 0 与 1",
+        "右连续 ⟺ P 的下连续性（可数可加化身）",
+        "F 对离散/连续/混合/奇异一视同仁",
+        "比密度更基本的对象"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 14,
+        "line_end": 14
+      },
+      "fill_hint": "切片 14 行原文转写；四条标准性质为切片外补充（已在正文标注），端点极限与右连续的推导引 A1.4。",
+      "content": "**定义（切片原文）**：$F_X(x)=P(X\\le x)$，$x\\in\\mathbb{R}$。\n\n$F_X$ 完全决定 $X$ 的分布：对 $a<b$，$P(a<X\\le b)=F_X(b)-F_X(a)$。数值例（骰子）：$F_X(4.5)=\\frac{4}{6}\\approx 0.6667$【已核验:0.666666666667|4/6】。\n\n标准性质（切片外补充，供查阅）：单调不减；右连续；$\\lim_{x\\to-\\infty}F_X(x)=0$；$\\lim_{x\\to+\\infty}F_X(x)=1$。反过来，任何满足这四条的函数都是某个随机变量的 CDF——$F$ 是「合法分布」的完整清单。\n\n三条性质分别对应概率公理：单调 ⟺ 非负性（$P(a<X\\le b)\\ge 0$）；端点极限 ⟺ $P(\\varnothing)=0$ 与 $P(\\Omega)=1$；右连续 ⟺ $P$ 的下连续性（$\\{X\\le x_n\\}\\downarrow\\{X\\le x\\}$，可数可加的化身，A1.4）。\n\n$F$ 是比密度更基本的对象：它对离散、连续、混合、奇异分布一视同仁（见 density.quantifiers）——密度只是「$F$ 绝对连续时的导数」这个特例。",
+      "links": [
+        "A1.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:cdf.intuition",
+      "type": "intuition",
+      "subject": "cdf",
+      "title": "CDF 直觉：把整个概率空间压成一条从 0 爬到 1 的单调曲线",
+      "keywords": [
+        "F(x) 读作「X 落在 x 左边的总质量」",
+        "一切区间概率由 F 加减读出",
+        "阶梯 = 离散；光滑 = 连续（斜率即密度）",
+        "楼梯没有斜率 → 密度不存在的几何面孔",
+        "≤ vs < 在跳跃点差一个整 p_k",
+        "逆 CDF 采样 u → F⁻¹(u)（H4）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 14,
+        "line_end": 16
+      },
+      "fill_hint": "直觉词条；「≤ vs <」的骰子数值例用【待核验】自检；逆 CDF 一句指向 H4 不展开。",
+      "content": "$F_X(x)$ 读作「$X$ 落在 $x$ 左边的总质量」——一条从 0 爬到 1 的单调曲线，把整个概率空间压缩成一维。\n\n为什么这个压缩不丢信息：概率只依赖「$X$ 落在哪些区间」，而一切区间概率都能从 $F$ 用加减读出（$P(a<X\\le b)=F(b)-F(a)$）。CG 里重要性采样的逆 CDF 法（$u\\mapsto F^{-1}(u)$，H4）用的就是这条曲线。\n\n阶梯 vs 光滑：离散分布的 $F$ 是楼梯（每阶高度 $p_k$，如泊松），连续分布的 $F$ 光滑上升（其斜率就是密度 $f_X=F_X'$）。楼梯没有斜率——这就是「密度不存在」的几何面孔（density.discrete-trap）。\n\n为什么定义用 $\\le$ 而不是 $<$：约定使 $F$ 右连续。离散情形 $P(X\\le x)$ 与 $P(X<x)$ 在跳跃点相差整整一个 $p_k$：骰子 $P(X\\le 3)=\\frac{3}{6}=0.5$【已核验:0.5|3/6】而 $P(X<3)=\\frac{2}{6}\\approx 0.333$【已核验:0.333333333333|2/6】——两种约定必须固定其一，否则离散分布的读数永不安定。",
+      "links": [
+        "H4",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "本单元四对象对照表（P / X / F / f 各管什么）",
+      "keywords": [
+        "P 管世界、X 管翻译、F 管读数、f 管微分",
+        "四个对象中只有 F 对所有分布类型都存在",
+        "σ-代数太粗 → 问题问不出",
+        "可测性是 X 的入场券",
+        "f 的「如果存在」是最常被忽略的限定词"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 5,
+        "line_end": 16
+      },
+      "fill_hint": "单元级总表，供前端直接渲染；最后一行结论（只有 F 普遍存在）是本单元的组织原则。",
+      "content": "| 对象 | 回答的问题 | 关键陷阱 | 相邻单元 |\n|---|---|---|---|\n| $(\\Omega,\\mathcal{F},P)$ | 在哪个世界上谈概率 | σ-代数太粗则问题问不出（trivial-sigma） | A1.4 |\n| 随机变量 $X$ | 怎么把世界变成数字 | 可测性是入场券 | A1.2 |\n| 分布函数 $F_X$ | 数字上的概率怎么读 | $\\le$ vs $<$（右连续约定） | C6.1 |\n| 密度 $f_X$ | 连续情形的微元质量 | 「如果存在」——离散/奇异没有（discrete-trap） | C2、P8.1 |\n\n一句话分工：$P$ 管世界、$X$ 管翻译、$F$ 管读数、$f$ 管微分。四者中只有 $F$ 对所有分布类型都存在——拿到任何分布，先抓 $F$，再谈别的。",
+      "links": [
+        "A1.2",
+        "A1.4",
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "C1 在知识库里的落点：C 篇与测度论的接缝",
+      "keywords": [
+        "概率空间 = 测度空间 + P(Ω)=1",
+        "随机变量 = 可测函数（A1.2）",
+        "期望 = 勒贝格积分 ∫X dP",
+        "C6 收敛模式 = 随机变量序列的收敛",
+        "H4 蒙特卡洛收敛性依赖可数可加",
+        "有限可加下 MC 渲染无理论保证"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 4,
+        "line_end": 17
+      },
+      "fill_hint": "每条一句「谁用了 C1 的哪个对象」；Banach 测度行与 A1.4 的表对应，落点引用保持一致。",
+      "content": "C1 是 C 篇与测度论的接缝：概率空间 = 测度空间 + $P(\\Omega)=1$；随机变量 = 可测函数（A1.2 的语言原样搬来）；期望 = 勒贝格积分 $E[X]=\\int X\\,dP$。\n\n落点：C2 的每个分布族都是「密度/质量函数」的实例；C6 的每种收敛模式都是「随机变量序列」的收敛（依概率 = 依测度，C6.1）；H4 蒙特卡洛的收敛性证明依赖可数可加——每个词条的数学地基都在本单元。\n\n反面对照：A1.4 的 Banach 测度表说明——若只有有限可加，本单元的一切都会塌掉。这不是学院派的讲究，而是 MC 渲染合法性的地基（A_analysis.tex 第 121 行：DCT 经 MCT 依赖可数可加）。",
+      "links": [
+        "A1.2",
+        "A1.4",
+        "C2",
+        "C6.1",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C1:general.probe1",
+      "type": "probe",
+      "subject": "general",
+      "title": "检验：骰子空间上亲手把四个对象各算一遍",
+      "keywords": [
+        "F_X(4.5) 与 P(2<X≤5)",
+        "平凡 σ-代数上 X 还可测吗",
+        "Exp(2) 的尾概率 P(X>1)",
+        "答案数值折叠在括号里"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 5,
+        "line_end": 16
+      },
+      "fill_hint": "三问分别对应 F 读数、可测性、密度公式；答案【待核验】表达式构建时重算。",
+      "content": "三道可算出数值的检验题（答案在括号里折叠）：\n\n(1) $\\Omega=\\{1,\\dots,6\\}$ 均匀，$X(\\omega)=\\omega$。求 $F_X(4.5)$ 与 $P(2<X\\le 5)$。（$F_X(4.5)=\\frac{4}{6}\\approx 0.6667$【已核验:0.666666666667|4/6】；$P(2<X\\le 5)=\\frac{3}{6}=0.5$【已核验:0.5|3/6】）\n\n(2) 同一 $X$，若 $\\mathcal{F}=\\{\\varnothing,\\Omega\\}$，$X$ 还是随机变量吗？（不是：$\\{X\\le 4.5\\}=\\{1,2,3,4\\}\\notin\\mathcal{F}$，不可测。）\n\n(3) $X\\sim\\mathrm{Exp}(2)$（密度 $2e^{-2x}$，$x\\ge 0$）。用切片的密度公式求 $P(X>1)$。（$e^{-2}\\approx 0.1353$【已核验:0.135335283237|exp(-2)】）",
+      "links": [
+        "C2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A2.2",
+  "chapter": "A2",
+  "title": "希尔伯特空间",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 190,
+    "line_end": 203,
+    "anchor": "notebook/A_analysis.tex:190"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A2.2:orthogonal-decomp.quantifiers",
+      "type": "comparison",
+      "subject": "orthogonal-decomp",
+      "title": "正交分解定理限定词逐条拆解",
+      "keywords": [
+        "陈述拆成 3 个限定词：①M 是子空间 ②M 闭 ③H 完备，结论 H=M⊕M⊥",
+        "②去掉「闭」⟹ 崩：M=多项式在 L²[0,1] 稠密不闭，M⊥={0}，H≠M⊕M⊥",
+        "③去掉「完备」⟹ 投影可能不存在：最小化序列柯西但极限逃逸",
+        "M⊥ 自动闭（正交补永远闭，不用假设）",
+        "②能局部修补：M 闭 ⟺ M=(M⊥)⊥；不闭时只能分解到闭包 M̄",
+        "结论的实操价值：任何 x 可写成 m+(x−m)，x−m⊥M ⟹ 最近点唯一"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 199,
+        "line_end": 199
+      },
+      "fill_hint": "四列表；多项式反例完整计算放在 nonclosed-m.counterexample；完备性失效只给机制（最小化序列无极限），不展开",
+      "content": "正交分解定理：若 $M$ 是希尔伯特空间 $H$ 的**闭**子空间，则 $H = M \\oplus M^\\perp$。把限定词逐条拆开：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $M$ 是线性子空间 | $M$ = 两个点 $\\{e_1,e_2\\}$：不是子空间，$M^\\perp$ 定义虽可但 $M\\oplus M^\\perp$ 覆盖不了 $H$（如 $e_1+e_2$ 不在其中） | 分解的存在性靠子空间结构（投影的凸性论证） | 必需 |\n| ② $M$ **闭** | $M$ = 多项式全体 $\\subset L^2[0,1]$：稠密不闭，$M^\\perp=\\{0\\}$，$M\\oplus M^\\perp=M\\ne L^2[0,1]$（完整论证见 nonclosed-m.counterexample） | 到 $M$ 的最近点不存在（只能逼近不能达到），分解失败 | 可放宽为：对闭包 $\\overline M$ 分解；$M$ 闭 $\\Leftrightarrow M=(M^\\perp)^\\perp$ |\n| ③ $H$ **完备** | 内积空间 $C[0,1]$（$L^2$ 内积）：某 $M$ 上的最小化序列柯西但极限（$L^2$ 中的元素）不连续、逃出空间 | 投影存在性的证明第一步就死：柯西列不收敛 | 完备化后即可（这正是「希尔伯特 = 完备内积空间」定义的理由） |\n\n注意 $M^\\perp$ 本身**自动是闭子空间**（$\\{x:\\langle x,m\\rangle=0\\ \\forall m\\in M\\}$ 是闭集的交），所以分解的右边永远是「闭 + 闭」的搭积木。定理的全部内容就是左边那个 $M$ 必须也闭。",
+      "links": [
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:cauchy-schwarz.quantifiers",
+      "type": "comparison",
+      "subject": "cauchy-schwarz",
+      "title": "柯西–施瓦茨不等式限定词拆解",
+      "keywords": [
+        "陈述：|⟨x,y⟩| ≤ ‖x‖‖y‖，只需内积空间（不要完备！）",
+        "①不需要完备性：C[0,1] 上照样成立——完备是希尔伯特的定义，不是 C-S 的前提",
+        "②等号成立 ⟺ x,y 线性相关（比例常数 λ=⟨x,y⟩/‖y‖²）",
+        "③y=0 时按约定 0 ≤ 0 成立，不需单独处理",
+        "去掉「正定」只留半内积：‖x‖ 变半范数，不等式仍真但退化",
+        "误用警告：C-S 是「一个不等号」的精确刻画，盲目套用会丢掉等号条件里的结构性信息"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 194,
+        "line_end": 194
+      },
+      "fill_hint": "强调「C-S 不需要完备」——这是初学者最常见的过度假设；等号条件给出最佳逼近的比例常数，连接正交分解",
+      "content": "柯西–施瓦茨（Cauchy–Schwarz）不等式 $|\\langle x,y\\rangle| \\le \\|x\\|\\,\\|y\\|$ 的限定词拆解：\n\n| 限定词 | 去掉/改动后的情形 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 空间是**内积空间**（只需这样！） | 只赋范不行：没有内积就没有 $\\langle x,y\\rangle$，不等式无从谈起（范数层面对应的是 Hölder，见 A1.5/P3.1） | 陈述对象消失 | 必须 |\n| ② 不要求完备 | 无反例可给——**C-S 在任意内积空间成立**，包括不完备的 $C[0,1]$ | —— | 这是最常被多加的假设：希尔伯特空间定义里的完备与 C-S 无关 |\n| ③ 内积正定 | 半内积（$\\langle x,x\\rangle=0$ 允许 $x\\ne0$）下不等式仍成立，但 $\\|x\\|$ 变半范数 | 退化但不翻车 | 可放宽 |\n| ④（取等刻画）$\\le$ 可否为 $<$ | 线性相关时取等：$x=\\lambda y$ 给出 $|\\lambda|\\|y\\|^2=\\|x\\|\\|y\\|$ | 把 $\\le$ 写成 $<$ 会在 $x=\\lambda y$ 处翻车 | 取等 $\\Leftrightarrow$ 线性相关；等号条件里的 $\\lambda=\\langle x,y\\rangle/\\|y\\|^2$ 正是投影系数 |\n\nC-S 是整个希尔伯特空间理论的第一块承重墙：内积连续性（$|\\langle x,y\\rangle-\\langle x_n,y\\rangle|\\le\\|x-x_n\\|\\|y\\|$）、投影存在性、A4.5 Lax–Milgram 的有界性验证，第一步全是它。",
+      "links": [
+        "A1.5",
+        "P3.1",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:parallelogram.counterexample",
+      "type": "counterexample",
+      "subject": "parallelogram",
+      "title": "反例：‖·‖₁ 在 R² 上不满足平行四边形法则（8≠4）",
+      "keywords": [
+        "平行四边形法则：‖x+y‖²+‖x−y‖²=2‖x‖²+2‖y‖² 是「范数来自内积」的判据",
+        "R² 取 x=(1,0), y=(0,1)，范数 ‖·‖₁=|x₁|+|x₂|",
+        "左边：‖(1,1)‖₁²+‖(1,−1)‖₁²=4+4=8",
+        "右边：2·1+2·1=4，8≠4，失效",
+        "结论：ℓ¹ 范数不可能由任何内积诱导；L¹、L^∞、C[0,1] sup 范数同理",
+        "修补：范数来自内积 ⟺ 满足平行四边形法则（Jordan–von Neumann 定理）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 195,
+        "line_end": 195
+      },
+      "fill_hint": "数值 8 与 4 带核验；结尾点明判据的实操用法：拿到一个范数先验平行四边形，再谈内积/正交/投影",
+      "content": "平行四边形法则\n\n$$\\|x+y\\|^2+\\|x-y\\|^2=2\\|x\\|^2+2\\|y\\|^2$$\n\n是内积诱导范数的**指纹**。拿它检验 $\\mathbb{R}^2$ 上的 $\\ell^1$ 范数 $\\|x\\|_1=|x_1|+|x_2|$：\n\n取 $x=(1,0)$、$y=(0,1)$。\n\n- 左边：$x+y=(1,1)$，$\\|x+y\\|_1=2$；$x-y=(1,-1)$，$\\|x-y\\|_1=2$。左边 $=2^2+2^2=8$【已核验:8|(abs(1)+abs(1))**2+(abs(1)+abs(0-1))**2】。\n- 右边：$\\|x\\|_1=\\|y\\|_1=1$，右边 $=2\\cdot1+2\\cdot1=4$。\n\n$8 \\ne 4$：平行四边形法则失效，且失效得非常具体——$\\ell^1$ 的「单位球是方块」，方块的对称性结构无法与内积几何兼容。\n\n失效机制：内积几何中 $\\|x+y\\|^2=\\|x\\|^2+2\\langle x,y\\rangle+\\|y\\|^2$，交叉项 $\\langle x,y\\rangle$ 在「$+y$」与「$-y$」两次计算中正负抵消，才有平行四边形恒等式。$\\ell^1$ 的范数不是二次型，没有可以抵消的交叉项，恒等式自然崩。\n\n修补/判据（Jordan–von Neumann）：范数 $\\|\\cdot\\|$ 来自某个内积 $\\Leftrightarrow$ 它满足平行四边形法则。实操含义：拿到一个空间，先验平行四边形——$L^2$、$H^k$（A4.3）通过，可以谈正交、投影、正交基；$L^1$、$L^\\infty$、$C[0,1]$（sup 范数）不通过，希尔伯特空间的整套机器（A2.2、A2.3）在它们上面**没有定义**，只能退回巴拿赫空间的一般理论。",
+      "links": [
+        "A4.3",
+        "P3.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:nonclosed-m.counterexample",
+      "type": "counterexample",
+      "subject": "nonclosed-m",
+      "title": "反例：M 不闭时 H ≠ M ⊕ M⊥（多项式子空间）",
+      "keywords": [
+        "M = 多项式全体 ⊂ L²[0,1]：线性子空间、不闭",
+        "Weierstrass ⟹ 多项式一致逼近连续函数 ⟹ M 在 L² 中稠密",
+        "稠密 ⟹ M⊥={0}：正交于 M 即正交于全空间",
+        "M ⊕ M⊥ = M ⊕ {0} = M ≠ L²[0,1]：正交分解失败",
+        "具体例子：f(x)=eˣ 无法写成「多项式 + 与所有多项式正交的部分」",
+        "修补：用闭包 M̄=L² 分解（平凡）；或选真正闭的 M（如 {u: u(0)=0} 类条件定义的闭子空间）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 199,
+        "line_end": 199
+      },
+      "fill_hint": "M⊥={0} 的论证要完整：⟨g,p⟩=0 ∀多项式 p ⟹ 由稠密性 ⟨g,g⟩=0 ⟹ g=0；结尾强调「闭」不是技术装饰而是存在性条件",
+      "content": "取 $H=L^2[0,1]$，$M$ = 全体多项式。$M$ 是线性子空间，但**不闭**。\n\n第一步（$M$ 稠密）：由 Weierstrass 逼近定理，连续函数可被多项式一致逼近；一致逼近 $\\Rightarrow$ $L^2$ 逼近（$\\|f-p\\|_2 \\le \\|f-p\\|_\\infty \\cdot \\sqrt{1}$，区间长度为 1）。而连续函数在 $L^2[0,1]$ 中稠密（简单函数 → 连续函数的标准两步）。所以 $\\overline M = L^2[0,1] \\ne M$——$M$ 稠密但不闭，例如 $f(x)=e^x$ 是多项式序列的 $L^2$ 极限，却不是多项式。\n\n第二步（$M^\\perp=\\{0\\}$）：设 $g\\in L^2$ 与所有多项式正交。多项式稠密 $\\Rightarrow$ 存在 $p_n\\to g$（$L^2$）。内积连续性（C-S：$|\\langle g,p_n-g\\rangle|\\le\\|g\\|\\|p_n-g\\|$）给出\n\n$$\\|g\\|^2=\\langle g,g\\rangle=\\lim_n\\langle g,p_n\\rangle=0$$\n\n（每个 $\\langle g,p_n\\rangle=0$，因为 $p_n$ 是多项式）。故 $g=0$，即 $M^\\perp=\\{0\\}$。\n\n第三步（分解失败）：$M\\oplus M^\\perp = M \\oplus \\{0\\} = M \\ne L^2[0,1]$。拿 $f=e^x$ 来看：它到 $M$ 没有**最近点**（距离 $\\inf_{p\\in M}\\|f-p\\|=0$ 可逼近但达不到——达到就意味着 $f$ 本身是多项式），投影不存在。\n\n修补条件：定理要求 $M$ **闭**。闭子空间的判据（Hilbert 空间中）：$M=\\overline M$，等价地 $M=(M^\\perp)^\\perp$。不闭的 $M$ 只能对闭包分解；对多项式这个例子，闭包是全空间，分解退化为平凡。",
+      "links": [
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:cauchy-schwarz.statement",
+      "type": "statement",
+      "subject": "cauchy-schwarz",
+      "title": "柯西–施瓦茨不等式陈述",
+      "keywords": [
+        "任意内积空间：|⟨x,y⟩| ≤ ‖x‖‖y‖",
+        "取等 ⟺ x,y 线性相关",
+        "等价形式：|⟨x,y⟩|² ≤ ⟨x,x⟩⟨y,y⟩（判别式版）",
+        "内积关于两个变元连续（由 C-S 直接推出）",
+        "有限维版就是 (Σaᵢbᵢ)² ≤ Σaᵢ²·Σbᵢ²；积分版是 P3 的第一件套"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 194,
+        "line_end": 194
+      },
+      "fill_hint": "切片一行转写；补等号条件与连续性推论；有限维/积分版对照放在 keywords，正文一句带过",
+      "content": "在任何内积空间中，\n\n$$|\\langle x,y\\rangle| \\le \\|x\\|\\,\\|y\\|$$\n\n其中 $\\|x\\|=\\sqrt{\\langle x,x\\rangle}$ 是内积诱导的范数。取等当且仅当 $x,y$ 线性相关。\n\n两个直接推论：\n\n1. **内积的连续性**：$|\\langle x,y\\rangle-\\langle x',y'\\rangle| \\le \\|x\\|\\|y-y'\\|+\\|x-x'\\|\\|y'\\|$，故 $x_n\\to x, y_n\\to y \\Rightarrow \\langle x_n,y_n\\rangle\\to\\langle x,y\\rangle$——极限可以穿进内积。\n2. **夹角有定义**：C-S 保证 $\\langle x,y\\rangle/(\\|x\\|\\|y\\|)\\in[-1,1]$，可以定义 $\\cos\\theta$；正交（$\\langle x,y\\rangle=0$，即 $\\theta=90°$）因此是良定义的。\n\n有限维形式 $(\\sum a_ib_i)^2 \\le (\\sum a_i^2)(\\sum b_i^2)$ 与积分形式 $|\\int fg| \\le \\|f\\|_2\\|g\\|_2$ 都是同一件事的化身；在放缩体系里的位置见 P3.1 基础四件套。",
+      "links": [
+        "P3.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:cauchy-schwarz.proof",
+      "type": "proof",
+      "subject": "cauchy-schwarz",
+      "title": "C-S 证明骨架（一行二次型判别式）",
+      "keywords": [
+        "核心构造：对任意 λ，0 ≤ ‖x−λy‖²（正定性）",
+        "展开：‖x‖²−2λ⟨x,y⟩+λ²‖y‖² ≥ 0，关于 λ 的二次函数非负",
+        "判别式 ≤ 0 ⟹ ⟨x,y⟩² ≤ ‖x‖²‖y‖²",
+        "取等分析：λ*=⟨x,y⟩/‖y‖² 时 ‖x−λ*y‖=0 ⟹ 线性相关",
+        "依赖链：只用正定性 + 双线性，不用完备性",
+        "易错点：y=0 需单独处理（除以 ‖y‖²）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "证明分步给理由；λ* 就是投影系数这一点要显式写出（连接 orthogonal-decomp）",
+      "content": "证明骨架（$y\\ne0$，$y=0$ 时两边为零显然）：\n\n**第 1 步（构造非负量）**：对任意 $\\lambda\\in\\mathbb{R}$，正定性给出 $\\|x-\\lambda y\\|^2 \\ge 0$。\n\n**第 2 步（展开成二次函数）**：双线性展开\n\n$$\\|x\\|^2-2\\lambda\\langle x,y\\rangle+\\lambda^2\\|y\\|^2 \\ge 0 \\quad \\text{对一切 } \\lambda$$\n\n左边是 $\\lambda$ 的开口向上二次函数，处处非负。\n\n**第 3 步（判别式）**：二次函数无实根（或重根）$\\Rightarrow$ 判别式 $\\Delta \\le 0$：\n\n$$4\\langle x,y\\rangle^2-4\\|x\\|^2\\|y\\|^2 \\le 0 \\Rightarrow |\\langle x,y\\rangle| \\le \\|x\\|\\,\\|y\\|$$\n\n**取等分析**：$\\Delta=0$ 当且仅当存在 $\\lambda^*=\\langle x,y\\rangle/\\|y\\|^2$ 使 $\\|x-\\lambda^*y\\|^2=0$，即 $x=\\lambda^* y$——线性相关。注意 $\\lambda^*$ 正是 $x$ 在 $y$ 方向上的投影系数：C-S 的取等条件与投影公式是同一件事。\n\n依赖链：只用内积公理（正定性 + 双线性），**不用完备性、不用维数**——所以 C-S 在一切内积空间成立。易错点：除以 $\\|y\\|^2$ 前忘了排除 $y=0$；复内积空间需先取 $\\lambda$ 的相位（把 $\\langle x,y\\rangle$ 化实），骨架不变。",
+      "links": [
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:cauchy-schwarz.intuition",
+      "type": "intuition",
+      "subject": "cauchy-schwarz",
+      "title": "C-S 直觉：投影不可能比原向量长",
+      "keywords": [
+        "x 在 y 方向的投影长度 = |⟨x,y⟩|/‖y‖",
+        "投影是 x 的「影子」，影子不超过本体：|⟨x,y⟩|/‖y‖ ≤ ‖x‖",
+        "整理即 C-S；等号 = 影子与本体重合 = 共线",
+        "假设给了什么：正定性（长度非负）+ 双线性（投影可展开）",
+        "结论为什么成立：勾股定理 x = 投影 + 垂直残差，残差长度平方 ≥ 0"
+      ],
+      "tex_ref": null,
+      "fill_hint": "假设与结论分开写；「影子不超过本体」是全部内容；结尾连 P3.1 的 Cauchy–Schwarz 放缩",
+      "content": "几何图像一行说清：$\\dfrac{|\\langle x,y\\rangle|}{\\|y\\|}$ 是 $x$ 在 $y$ 方向上的**投影长度**（影子），$\\|x\\|$ 是本体。影子不可能比本体长：\n\n$$\\frac{|\\langle x,y\\rangle|}{\\|y\\|} \\le \\|x\\| \\iff |\\langle x,y\\rangle| \\le \\|x\\|\\,\\|y\\|$$\n\n**假设给了什么**：正定性（每个向量有非负长度）与双线性（投影可以按分量展开）。**结论为什么因此成立**：把 $x$ 分解为「$y$ 方向的分量 $\\lambda y$ + 垂直残差 $x-\\lambda y$」，勾股定理 $\\|x\\|^2=\\|\\lambda y\\|^2+\\|x-\\lambda y\\|^2 \\ge \\|\\lambda y\\|^2$——多出来的 $\\|x-\\lambda y\\|^2$ 就是影子与本体之间的差。等号 = 残差为零 = 共线。\n\n这也解释了 C-S 在放缩体系中的地位：它是「用一个方向的尺度去控制另一个方向」的万能插头，P3.1 把它列为放缩四件套之首；A4.5 验证 Lax–Milgram 有界性时 $|B(u,v)|\\le\\|\\nabla u\\|\\|\\nabla v\\|$ 也是原样插入。",
+      "links": [
+        "P3.1",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:orthogonal-decomp.statement",
+      "type": "statement",
+      "subject": "orthogonal-decomp",
+      "title": "正交分解定理陈述",
+      "keywords": [
+        "M 闭子空间 ⟹ H = M ⊕ M⊥",
+        "每个 x 分解 x = m + (x−m)，m∈M 唯一，x−m ∈ M⊥",
+        "m 是 M 中离 x 最近的点（最佳逼近元）",
+        "M⊥ = {y: ⟨y,m⟩=0 ∀m∈M} 自动闭",
+        "正交投影算子 P: x ↦ m 满足 P²=P、‖Px‖≤‖x‖",
+        "这是最小二乘、法线估计、球谐投影的严格基础"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 199,
+        "line_end": 199
+      },
+      "fill_hint": "切片一行（H=M⊕M⊥）+ CG 应用句照抄；补最近点刻画与投影算子性质",
+      "content": "若 $M$ 是希尔伯特空间 $H$ 的闭子空间，则\n\n$$H = M \\oplus M^\\perp$$\n\n即每个 $x\\in H$ 有**唯一**分解 $x=m+(x-m)$，其中 $m\\in M$、$x-m\\in M^\\perp$。\n\n三个等价刻画：\n\n1. **最近点**：$m$ 是 $M$ 中离 $x$ 最近的元素，$\\|x-m\\|=\\inf_{m'\\in M}\\|x-m'\\|$，且最近点唯一。\n2. **投影算子**：$P:x\\mapsto m$ 是线性算子，满足 $P^2=P$（幂等）、$\\|Px\\|\\le\\|x\\|$（压缩）、$\\ker P=M^\\perp$、$\\mathrm{ran}\\,P=M$。\n3. **变分形式**：$m$ 是 $\\min_{m'\\in M}\\|x-m'\\|$ 这个最小二乘问题的解。\n\n切片点名的应用：CG 中的最小二乘拟合、法线估计、球谐函数投影，全部是「在某个闭子空间里找最近点」——本定理保证这个点存在且唯一。",
+      "links": [
+        "H5",
+        "H1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:orthogonal-decomp.proof",
+      "type": "proof",
+      "subject": "orthogonal-decomp",
+      "title": "正交分解证明骨架（平行四边形法则证柯西）",
+      "keywords": [
+        "第1步：取最小化序列 mₙ∈M 使 ‖x−mₙ‖→d=inf",
+        "第2步：对 x−mₙ 与 x−mₘ 用平行四边形法则 ⟹ {mₙ} 柯西",
+        "第3步：M 闭 + H 完备 ⟹ mₙ→m∈M",
+        "第4步：垂直性：若 ⟨x−m, m₀⟩≠0 沿 m₀ 方向微调可缩短距离，矛盾",
+        "第5步：唯一性：两个分解之差落在 M∩M⊥={0}",
+        "平行四边形法则是第2步的唯一引擎——赋范空间没有它，最近点可能不存在"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每步给理由；强调第 2 步平行四边形与第 3 步完备各挡一种失效（对照 parallelogram.counterexample 与 quantifiers 第③行）",
+      "content": "证明骨架（存在性是难点，唯一性两行）：\n\n**第 1 步（最小化序列）**：令 $d=\\inf_{m'\\in M}\\|x-m'\\|$，取 $m_n\\in M$ 使 $\\|x-m_n\\|\\to d$。\n\n**第 2 步（柯西性）**：对 $x-m_n$、$x-m_m$ 用平行四边形法则：\n\n$$\\|2x-m_n-m_m\\|^2+\\|m_m-m_n\\|^2=2\\|x-m_n\\|^2+2\\|x-m_m\\|^2$$\n\n注意 $\\frac{m_n+m_m}{2}\\in M$（子空间！），故 $\\|2x-m_n-m_m\\|=2\\|x-\\frac{m_n+m_m}{2}\\|\\ge 2d$。代入整理：\n\n$$\\|m_n-m_m\\|^2 \\le 2\\|x-m_n\\|^2+2\\|x-m_m\\|^2-4d^2 \\to 0$$\n\n（右边两项都趋于 $2d^2$）。$\\{m_n\\}$ 柯西。**这一步只用平行四边形法则**——巴拿赫空间（如 $L^1$）没有它，最近点存在性就无从谈起。\n\n**第 3 步（极限回家）**：$H$ 完备且 $M$ 闭 $\\Rightarrow$ $m_n\\to m\\in M$，且 $\\|x-m\\|=d$。\n\n**第 4 步（垂直性）**：若存在 $m_0\\in M$ 使 $\\langle x-m,m_0\\rangle \\ne 0$，考察 $m_t=m+t\\,m_0\\in M$：\n\n$$\\|x-m_t\\|^2=\\|x-m\\|^2-2t\\langle x-m,m_0\\rangle+t^2\\|m_0\\|^2$$\n\n取 $t=\\langle x-m,m_0\\rangle/\\|m_0\\|^2$（小量）使一阶项压过二阶项，得 $\\|x-m_t\\|<\\|x-m\\|=d$，与 $d$ 是下确界矛盾。故 $x-m\\in M^\\perp$。\n\n**第 5 步（唯一性）**：若 $x=m_1+n_1=m_2+n_2$，则 $m_1-m_2=n_2-n_1\\in M\\cap M^\\perp$，与自己正交的向量只能为零。\n\n依赖链：内积（平行四边形）+ 完备 + 闭 —— 三个假设各挡一种死法（见 quantifiers 词条）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:hilbert.intuition",
+      "type": "intuition",
+      "subject": "hilbert",
+      "title": "希尔伯特空间直觉：有角度的完备空间",
+      "keywords": [
+        "巴拿赫 = 有尺子（范数）；希尔伯特 = 有尺子 + 有量角器（内积）",
+        "内积 ⟨x,y⟩ = 长度 × 夹角余弦：一次测量同时编码两个信息",
+        "诱导范数 ‖x‖=√⟨x,x⟩：量角器免费送尺子",
+        "完备：投影存在性的保证（最小化序列极限不逃逸）",
+        "「垂直」是希尔伯特空间独有的概念——正交、投影、最近点全靠它",
+        "平行四边形法则检验一把范数是否真的来自量角器"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 191,
+        "line_end": 194
+      },
+      "fill_hint": "尺子/量角器的比喻贯穿；连接 parallelogram.counterexample（不是每个范数都配量角器）",
+      "content": "把 A2.1 与本单元串起来：巴拿赫空间给了你一把**尺子**（范数，能量长度、能谈收敛）；希尔伯特空间在此基础上加了一个**量角器**（内积，能谈角度、能谈垂直）。\n\n$\\langle x,y\\rangle$ 是一次测量同时读出两个信息：$\\langle x,y\\rangle=\\|x\\|\\|y\\|\\cos\\theta$。$\\theta=90°$ 时取零——这就是正交。诱导范数 $\\|x\\|=\\sqrt{\\langle x,x\\rangle}$ 说明量角器免费附送尺子（自乘即长度）；反过来不成立（平行四边形反例：$\\ell^1$ 有尺子无量角器）。\n\n为什么完备也是定义的一部分：投影存在性的证明要「最小化序列取极限」（orthogonal-decomp.proof 第 3 步），量角器本身管不了极限逃逸。所以定义「完备的内积空间」两个部件各司其职：内积负责**找方向**（垂直、投影公式），完备负责**让极限到家**。\n\nCG 里的对应：最小二乘拟合是在多项式/球谐张成的子空间里找最近点；法线估计是在切平面上做投影。这些算法能跑，是因为背后有个定理保证「最近点存在且唯一」——本单元就是那个定理。",
+      "links": [
+        "A2.1",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用：最小二乘、法线估计、球谐投影",
+      "keywords": [
+        "最小二乘拟合：数据点在拟合子空间上的正交投影（法方程 AᵀAx=Aᵀb）",
+        "法线估计：局部点云到最优平面的投影残差方向",
+        "球谐投影：环境光在 L²(S²) 的球谐基上的展开系数 = 正交投影（H5/PRT）",
+        "A2.3 正交基：把投影变成逐系数计算",
+        "A4.3 H^k 是希尔伯特空间：Lax–Milgram 的舞台",
+        "P6.4 正交化（Gram–Schmidt）：怎么把一组基修成正交基"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 201,
+        "line_end": 203
+      },
+      "fill_hint": "切片 CG 句展开成三条机制各一句；links 遵守 P 篇规则指向 P6.4",
+      "content": "切片点名：「最小二乘拟合、法线估计、球谐函数投影都是这个定理的应用」。逐条看机制：\n\n- **最小二乘拟合**：超定方程 $Ax=b$ 无解时，法方程 $A^{\\mathrm T}Ax=A^{\\mathrm T}b$ 的解正是 $b$ 在 $A$ 列空间上的正交投影——「最近点存在唯一」翻译成「法方程恒可解」。这是 CG 里所有拟合（曲线拟合、表面重建）的骨架。\n- **法线估计**：点云局部到「最优平面」的距离平方和最小化，最优平面是数据在低维子空间上的投影，法线 = 投影残差的主方向（PCA，见 A2.4 的特征分解应用）。\n- **球谐投影**：环境光照函数在 $L^2(S^2)$ 的球谐基（A2.3 的经典正交基表）上展开，系数 $\\langle f,Y_l^m\\rangle$ 就是正交投影的坐标——PRT 预计算的数学内核（H5）。\n\n工具链衔接：投影坐标要逐个算，需要正交基（A2.3）；基哪里来，Gram–Schmidt（P6.4）；无限维舞台上的存在唯一性，Lax–Milgram（A4.5，$H^k$ 是希尔伯特空间）。",
+      "links": [
+        "A2.3",
+        "A2.4",
+        "A4.3",
+        "A4.5",
+        "P6.4",
+        "H5",
+        "H1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.2:cauchy-schwarz.probe1",
+      "type": "probe",
+      "subject": "cauchy-schwarz",
+      "title": "检验：C-S 数值与平行四边形失效各算一遍",
+      "keywords": [
+        "第一问：R³ 中 x=(1,2,2), y=(2,−1,2)，验证 |⟨x,y⟩| ≤ ‖x‖‖y‖（恰好取等）",
+        "第二问：ℓ¹ 范数下 x=(1,0), y=(0,1) 的平行四边形两边 8 与 4",
+        "取等条件验证：x 与 y 是否成比例"
+      ],
+      "tex_ref": null,
+      "fill_hint": "取等例子故意设计成 x=y/2 的比例（y=2x），答案带核验标记",
+      "content": "两问，都能算出数值：\n\n1. 在 $\\mathbb{R}^3$ 中取 $x=(1,2,2)$、$y=(2,4,4)$。计算 $\\langle x,y\\rangle$、$\\|x\\|_2$、$\\|y\\|_2$，验证 C-S 两边相等（取等），并检查 $x,y$ 是否线性相关。（$\\langle x,y\\rangle=1\\cdot2+2\\cdot4+2\\cdot4=18$【已核验:18|1*2+2*4+2*4】，$\\|x\\|=3$【已核验:3|sqrt(1+4+4)】，$\\|y\\|=6$【已核验:6|sqrt(4+16+16)】，$3\\times6=18$ 取等，且 $y=2x$ 线性相关）\n\n2. 在 $\\ell^1$ 范数下取 $x=(1,0)$、$y=(0,1)$，计算平行四边形法则左边 $\\|x+y\\|_1^2+\\|x-y\\|_1^2$ 与右边 $2\\|x\\|_1^2+2\\|y\\|_1^2$，差是多少？（左边 $8$【已核验:8|(abs(1)+abs(1))**2+(abs(1)+abs(0-1))**2】，右边 $4$，差 $4$【已核验:4|8-4】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

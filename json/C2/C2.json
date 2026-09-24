@@ -1,0 +1,383 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C2",
+  "chapter": "C2",
+  "title": "重要分布族",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 19,
+    "line_end": 35,
+    "anchor": "notebook/C_partial.tex:19"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C2:general.quantifiers",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分布族表格的参数与归一化限定词总表",
+      "keywords": [
+        "每行分布 = 密度/质量 + 参数域 + 支撑 + 归一化",
+        "a<b、σ>0、λ>0、α,β>0、κ≥0 各有失效方式",
+        "忘支撑是最常见的坑（见 support.counterexample）",
+        "泊松是质量函数不是密度",
+        "归一化常数各有来路：高斯积分/Γ/Beta/球面积分",
+        "拿到密度先验三件事：参数域、支撑、积分=1"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 25,
+        "line_end": 31
+      },
+      "fill_hint": "切片表格 25-31 行逐行拆「参数约束 + 归一化」；E/Var 数值为切片外补充并全部带【待核验】。",
+      "content": "切片表格的每一行都是一个密度/质量函数。逐行拆「参数约束 + 归一化」两类限定词，并给失效计算：\n\n| 分布 | 参数约束 | 违反后的具体失效 | 归一化常数怎么来的 |\n|---|---|---|---|\n| $U(a,b)$ | $a<b$ | $a\\ge b$ 时 $\\frac{1}{b-a}\\le 0$ 或无意义——负「密度」违反公理 | $\\int_a^b\\frac{dx}{b-a}=1$；$E=\\frac{a+b}{2}$、$\\mathrm{Var}=\\frac{(b-a)^2}{12}$（切片外补充）。$U(0,10)$：$E=5$、$\\mathrm{Var}\\approx 8.333$【已核验:8.33333333333|(10-0)**2/12】 |\n| $N(\\mu,\\sigma^2)$ | $\\sigma>0$ | $\\sigma=0$ 退化为点质量（δ 分布，普通密度不存在） | $\\frac{1}{\\sqrt{2\\pi}\\sigma}$，来自 $\\int e^{-u^2/2}du=\\sqrt{2\\pi}$（P8.1） |\n| $\\mathrm{Exp}(\\lambda)$ | $\\lambda>0$，支撑 $[0,\\infty)$ | 忘支撑全线积分发散（见 support.counterexample） | $\\int_0^\\infty \\lambda e^{-\\lambda x}dx=1$；截断验证 $L=10$：$\\int_0^{10}2e^{-2x}dx=1-e^{-20}\\approx 1$【已核验:0.999999997939|1-exp(-2*10)】 |\n| $\\mathrm{Pois}(\\lambda)$ | $\\lambda>0$，定义在 $\\mathbb{N}$ 上 | 把 $\\frac{\\lambda^k e^{-\\lambda}}{k!}$ 当密度对 $dx$ 积分 → 全部概率为 0（C1 density.discrete-trap） | $\\sum_k\\frac{\\lambda^k}{k!}=e^{\\lambda}$，乘 $e^{-\\lambda}$ 恰好抵消 |\n| Beta$(\\alpha,\\beta)$ | $\\alpha,\\beta>0$，支撑 $[0,1]$ | $\\alpha=0$：$x^{-1}$ 在 0 附近不可积 | $B(\\alpha,\\beta)=\\frac{\\Gamma(\\alpha)\\Gamma(\\beta)}{\\Gamma(\\alpha+\\beta)}$（P8.2/P8.3） |\n| von Mises--Fisher | $\\kappa\\ge 0$（球面上） | $\\kappa<0$：归一化积分发散（拓展） | $C(\\kappa)$ 由球面积分定义；$\\kappa=0$ 退化为球面均匀，$C(0)=\\frac{1}{4\\pi}$（拓展） |\n| GGX | $\\alpha>0$（半球上） | $\\alpha\\to 0$ 趋于镜面 δ，不再是普通函数 | $\\frac{\\alpha^2}{\\pi}$，对半球 $\\cos\\theta\\in[0,1]$ 归一（H2） |\n\n共同纪律：拿到任何密度先验三件事——参数域、支撑、总积分等于 1。三者中「支撑」最常被忘（见 support.counterexample）。",
+      "links": [
+        "P8.1",
+        "P8.2",
+        "P8.3",
+        "H2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:support.counterexample",
+      "type": "counterexample",
+      "subject": "support",
+      "title": "反例：忘掉支撑——U(0,2) 密度写 1/2 全线积分发散",
+      "keywords": [
+        "表格简写 1/(b−a) 隐含区间外为 0",
+        "误用版 ∫(−10,10) 1/2 dx = 10 ≠ 1 立刻报警",
+        "带支撑重算 = 1，自检通过",
+        "P(1<X<3)：正确 1/2 vs 忘支撑的荒谬 1",
+        "同样的坑在 Exp 与 Beta 原样复发",
+        "修补：写密度永远带示性函数 1_[a,b]"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "fill_hint": "以切片 25 行均匀分布行为素材的完整失效计算；数值全部带【待核验】。",
+      "content": "切片表格里 $U(a,b)$ 的密度写作 $\\frac{1}{b-a}$——这隐含「只在 $[a,b]$ 上取值，区间外为 0」。把这句话丢掉会怎样？\n\n误用版：$f(x)=\\frac12$ 对所有 $x\\in\\mathbb{R}$（「$U(0,2)$ 的密度是 1/2」）。归一化检查立刻报警：$\\int_{-10}^{10}\\frac12\\,dx=10$【已核验:10|(10-(-10))/2】，总质量早就爆表——这不是密度。\n\n正确版：$f(x)=\\frac12\\cdot\\mathbf{1}_{[0,2]}(x)$。重算同一截断：$\\int_{-10}^{10}f\\,dx=\\int_0^2\\frac12\\,dx=1$【已核验:1|(2-0)/2】，自检通过。\n\n带支撑算概率：$P(1<X<3)=\\int_1^{2}\\frac12\\,dx=\\frac12$【已核验:0.5|(2-1)/2】；若忘支撑写成 $\\int_1^3\\frac12\\,dx=1$——「概率为 1」的荒谬结论（$X<3$ 明明不是必然事件）。\n\n失效机制：密度必须整体可积且只在支撑上非零；表格里的简写默认了示性函数。同样的坑在 $\\mathrm{Exp}(\\lambda)$（支撑 $[0,\\infty)$，负半轴必须为 0）与 Beta（支撑 $[0,1]$）上原样复发。修补：写密度永远带 $\\mathbf{1}$，做积分永远先求「支撑 ∩ 积分区域」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:normal.statement",
+      "type": "statement",
+      "subject": "normal",
+      "title": "正态分布 N(μ, σ²)：密度、归一化与标准参数",
+      "keywords": [
+        "f(x)=1/(√(2π)σ)·e^((x−μ)²/(2σ²))",
+        "归一化常数来自高斯积分（P8.1）",
+        "μ 管中心、σ 管胖瘦",
+        "E=μ、Var=σ²（切片外补充）",
+        "标准正态 N(0,1) 由平移缩放得到",
+        "erf 数值自检归一化"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 26,
+        "line_end": 26
+      },
+      "fill_hint": "切片 26 行原文转写 + 归一化来源；erf 自检式与 P8.1 的高斯积分词条数值保持一致。",
+      "content": "**密度（切片原文）**：\n\n$$f(x)=\\frac{1}{\\sqrt{2\\pi}\\,\\sigma}\\,e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$$\n\n三个部件各司其职：指数上的 $(x-\\mu)^2$ 决定「钟形」——离 $\\mu$ 越远衰减越快；$\\sigma$ 在指数分母里控制胖瘦——$\\sigma$ 大则衰减慢、分布散；前面的 $\\frac{1}{\\sqrt{2\\pi}\\sigma}$ 是归一化常数，把总质量修成 1，它来自高斯积分 $\\int_{-\\infty}^{\\infty}e^{-u^2/2}du=\\sqrt{2\\pi}\\approx 2.5066$【已核验:2.50662827463|sqrt(2*pi)】（P8.1 的招牌技巧）。\n\n标准参数（切片外补充）：$E[X]=\\mu$、$\\mathrm{Var}(X)=\\sigma^2$。$\\mu=0,\\sigma=1$ 称标准正态 $N(0,1)$；任意 $N(\\mu,\\sigma^2)$ 由 $X=\\mu+\\sigma Z$（$Z\\sim N(0,1)$）平移缩放得到——这正是 C3 换元公式的现成练习题。\n\n归一化数值自检（截断到 $|x|\\le 10$）：$\\int_{-10}^{10}f\\,dx=\\mathrm{erf}\\big(\\tfrac{10}{\\sqrt2}\\big)\\approx 1$【已核验:1|erf(10/sqrt(2))】。",
+      "links": [
+        "P8.1",
+        "C3",
+        "C7.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:normal.intuition",
+      "type": "intuition",
+      "subject": "normal",
+      "title": "正态直觉：为什么钟形无处不在",
+      "keywords": [
+        "密度只含 (x−μ)² → 对称、只看距离",
+        "对称 ⟹ E=μ（奇函数积分为 0）",
+        "二次指数衰减 ⟹ 各阶矩全有限",
+        "CLT：独立微小扰动之和渐近正态（C7.3）",
+        "CG 噪声建模默认正态（表格应用栏）",
+        "σ 翻倍：高度减半、宽度加倍、面积仍 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 26,
+        "line_end": 26
+      },
+      "fill_hint": "直觉词条，假设与结论分开写；CLT 只引 C7.3 不展开证明。",
+      "content": "钟形曲线的每个特征都有概率含义。\n\n**假设给了什么**：密度只含 $(x-\\mu)^2$——到中心距离的平方。所以等概率线关于 $\\mu$ 对称，远近只看距离、不看方向。\n\n**结论为什么因此成立**：对称 ⟹ $E[X]=\\mu$（$(x-\\mu)e^{-(x-\\mu)^2/2\\sigma^2}$ 是奇函数，积分为 0）；指数二次衰减 ⟹ 各阶矩全部有限，Tail 事件概率极小。\n\n为什么它无处不在：中心极限定理（C7.3）说大量独立微小扰动之和渐近正态——所以「噪声」建模默认正态（切片应用栏的「噪声」即此），CG 里传感器噪声、像素抖动采样都从 $N(0,\\sigma^2)$ 抽样。\n\n与 P8.1 的依赖：没有 $\\int e^{-x^2}dx=\\sqrt{\\pi}$ 就没有归一化常数，正态分布根本「不存在」——它是本表格中对计算工具依赖最深的一行。\n\n缩放直觉：$\\sigma$ 翻倍，曲线高度除以 2、宽度乘 2，面积仍为 1——归一化常数里 $\\sigma$ 待在分母正是为此。",
+      "links": [
+        "P8.1",
+        "C7.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:exponential.memoryless",
+      "type": "extension",
+      "subject": "exponential",
+      "title": "拓展：指数分布的期望、方差与无记忆性",
+      "keywords": [
+        "E=1/λ、Var=1/λ²（分部积分，P9.1）",
+        "无记忆性 P(X>s+t|X>s)=P(X>t)",
+        "数值验证 λ=2,s=1,t=2：两边都是 e^(−4)",
+        "光子自由程逐段独立推进的理论根据",
+        "连续分布中无记忆性唯一刻画 Exp",
+        "CG 落点：参与介质逐段采样（J5）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 27,
+        "line_end": 27
+      },
+      "fill_hint": "切片 27 行（Exp + 光子自由程）的标准展开，标题带「拓展：」；数值验证两组【待核验】。",
+      "content": "切片表格给 $\\mathrm{Exp}(\\lambda)$ 密度 $\\lambda e^{-\\lambda x}$、应用「光子自由程」。补充三个标准量（切片外内容）：\n\n期望与方差：$E[X]=\\frac{1}{\\lambda}$、$\\mathrm{Var}(X)=\\frac{1}{\\lambda^2}$（分部积分，移导数技巧见 P9.1）。数值例 $\\lambda=2$：$E=0.5$【已核验:0.5|1/2】、$\\mathrm{Var}=0.25$【已核验:0.25|(1/2)**2】。\n\n无记忆性：$P(X>s+t\\mid X>s)=P(X>t)$。数值验证 $\\lambda=2,s=1,t=2$：左边 $=\\frac{e^{-2\\cdot 3}}{e^{-2\\cdot 1}}=e^{-4}\\approx 0.0183$【已核验:0.0183156388887|exp(-2*3)/exp(-2*1)】，右边 $=e^{-2\\cdot 2}=e^{-4}$【已核验:0.0183156388887|exp(-2*2)】——相等。\n\nCG 含义（对应「光子自由程」）：光子在均匀介质中已直线飞行 $s$ 未碰撞，再飞 $t$ 仍不碰撞的概率与历史无关——所以自由程采样可以逐段独立进行，这是参与介质体积渲染（J5）逐段推进的理论根据。无记忆性在连续分布中唯一刻画指数分布（离散时间的对应是几何分布）。",
+      "links": [
+        "J5",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:poisson.statement",
+      "type": "statement",
+      "subject": "poisson",
+      "title": "泊松分布 Pois(λ)：质量函数与 E=Var=λ",
+      "keywords": [
+        "P(X=k)=λ^k e^(−λ)/k!，定义在 ℕ 上",
+        "归一化 = e^λ 的 Maclaurin 展开乘 e^(−λ)",
+        "E=Var=λ（切片外补充）",
+        "光子计数/散粒噪声：稀有事件叠加",
+        "B(n,p) 在 n→∞、p→0、np→λ 的极限",
+        "质量函数不是密度（C1 已演示误用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 28,
+        "line_end": 28
+      },
+      "fill_hint": "切片 28 行转写；二项极限与 E=Var=λ 为切片外补充，数值例带【待核验】。",
+      "content": "**质量函数（切片原文）**：$P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}$，$k=0,1,2,\\dots$\n\n它定义在可数集 $\\mathbb{N}$ 上——是质量函数不是密度（C1 的 density.discrete-trap 已演示误用后果）。归一化：$\\sum_{k\\ge0}\\frac{\\lambda^k}{k!}=e^{\\lambda}$，乘 $e^{-\\lambda}$ 恰好抵消——整张表就是 $e^{\\lambda}$ 的 Maclaurin 展开（P7.1）。\n\n标准量（切片外补充）：$E[X]=\\mathrm{Var}(X)=\\lambda$。数值例 $\\mathrm{Pois}(2)$：$P(X=0)=e^{-2}\\approx 0.1353$【已核验:0.135335283237|exp(-2)】、$P(X=1)=2e^{-2}\\approx 0.2707$【已核验:0.270670566473|2*exp(-2)】。\n\n应用栏「光子计数、散粒噪声」的机制（拓展）：单位时间到达的光子数是大量独立稀有事件的叠加，二项 $B(n,p)$ 在 $n\\to\\infty,\\ p\\to 0,\\ np\\to\\lambda$ 下的极限就是泊松——这就是 $E=\\lambda$ 的来源，也是低光量噪声（散粒噪声）用泊松建模的理由。",
+      "links": [
+        "P7.1",
+        "C1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:poisson.probe1",
+      "type": "probe",
+      "subject": "poisson",
+      "title": "检验：Pois(2) 的累积概率与归一化尾部",
+      "keywords": [
+        "P(X≤1)=3e^(−2)",
+        "Σ k=0..5 的部分和离 1 差多少",
+        "答案数值折叠在括号里"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 28,
+        "line_end": 28
+      },
+      "fill_hint": "两问均可由质量函数直接求和；【待核验】表达式构建时重算。",
+      "content": "两道检验题（$X\\sim\\mathrm{Pois}(2)$）：\n\n(1) 求 $P(X\\le 1)$。（$e^{-2}(1+2)=3e^{-2}\\approx 0.406$【已核验:0.40600584971|3*exp(-2)】）\n\n(2) 数值验证归一化：计算 $\\sum_{k=0}^{5}\\frac{2^k e^{-2}}{k!}$，尾部还剩多少？（部分和 $\\approx 0.9834$，尾部 $\\approx 0.0166$【已核验:0.0165636084806|1-sum(2**k*exp(-2)/factorial(k) for k in range(0,6))】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:beta.statement",
+      "type": "statement",
+      "subject": "beta",
+      "title": "Beta 分布：密度、B(α,β) 归一化与参数形状语义",
+      "keywords": [
+        "f=x^(α−1)(1−x)^(β−1)/B(α,β)，支撑 [0,1]",
+        "B(α,β)=Γ(α)Γ(β)/Γ(α+β)（P8.2/P8.3）",
+        "α 管 0 端、β 管 1 端",
+        "α=β=1 退化为 U(0,1)",
+        "E=α/(α+β)（切片外补充）",
+        "Beta(2,3): E=0.4"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 31,
+        "line_end": 31
+      },
+      "fill_hint": "切片 31 行转写；形状语义与 E 公式为切片外补充，数值例带【待核验】。",
+      "content": "**密度（切片原文）**：$f(x)=\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}$，支撑 $[0,1]$。\n\n分母 $B(\\alpha,\\beta)$ 是 Beta 函数（P8.3 的 Euler 第一积分）：$B(\\alpha,\\beta)=\\int_0^1 x^{\\alpha-1}(1-x)^{\\beta-1}dx=\\frac{\\Gamma(\\alpha)\\Gamma(\\beta)}{\\Gamma(\\alpha+\\beta)}$（P8.2）。它就是归一化常数——分子单独积分正好得 $B(\\alpha,\\beta)$，除掉它恢复总质量 1。\n\n参数的形状语义：$\\alpha$ 管 0 端、$\\beta$ 管 1 端。$\\alpha>1$ 时 0 端密度为 0（质量被推离 0），$\\alpha<1$ 时 0 端发散但可积（发散 ≠ 不可积，临界幂次对照见 C1/A1 的积分判据）。$\\alpha=\\beta=1$ 退化为 $U(0,1)$——均匀分布是 Beta 族的成员（切片外补充）。\n\n标准量（切片外补充）：$E[X]=\\frac{\\alpha}{\\alpha+\\beta}$。数值例：$\\mathrm{Beta}(2,3)$ 的 $E=0.4$【已核验:0.4|2/(2+3)】；$\\mathrm{Beta}(1,1)$ 的 $E=0.5$【已核验:0.5|1/(1+1)】。",
+      "links": [
+        "P8.2",
+        "P8.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:beta.application",
+      "type": "application",
+      "subject": "beta",
+      "title": "Beta 分布用在哪里：共轭先验与 P8 积分的直接消费方",
+      "keywords": [
+        "共轭先验：先验 Beta(α,β) × 二项似然 → Beta(α+s, β+f)",
+        "后验解析可写，不用数值积分",
+        "一切计算压在 B(α,β)=Γ(α)Γ(β)/Γ(α+β) 上",
+        "B(2,3)=1/12≈0.0833",
+        "自适应采样/方向约束建模的落点",
+        "links: P8.2 / P8.3 / C8.2 / C9.1"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 31,
+        "line_end": 31
+      },
+      "fill_hint": "应用栏「共轭先验」展开；贝叶斯更新规则与 B(2,3) 数值为切片外补充，需人工复核。",
+      "content": "应用栏「共轭先验」（贝叶斯统计）：对二项/伯努利似然，Beta 先验乘以似然仍是 Beta——$\\mathrm{Beta}(\\alpha,\\beta)$ 先验在看到 $s$ 次成功、$f$ 次失败后更新为 $\\mathrm{Beta}(\\alpha+s,\\beta+f)$，参数直接相加，后验解析可写、无需数值积分（切片外补充的标准结果）。\n\n依赖链：一切计算压在 $B(\\alpha,\\beta)=\\frac{\\Gamma(\\alpha)\\Gamma(\\beta)}{\\Gamma(\\alpha+\\beta)}$ 上——即 P8.2 的 Γ 函数与 P8.3 的 Beta 积分。数值例：$B(2,3)=\\frac{1!\\,2!}{4!}=\\frac{1}{12}\\approx 0.0833$【已核验:0.0833333333333|gamma(2)*gamma(3)/gamma(5)】。\n\nCG/统计侧落点：「基于历史样本更新分布」的场合——重要性采样密度的自适应建模（C8.2 的自适应马尔可夫链）、有支撑约束的估计量误差建模（C9.1）——常用 Beta 族；切片把它列进表格，正因为它是 P8 积分工具最直接的消费方之一。",
+      "links": [
+        "P8.2",
+        "P8.3",
+        "C8.2",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:sphere-dists.statement",
+      "type": "statement",
+      "subject": "sphere-dists",
+      "title": "两个 CG 专属分布：von Mises–Fisher 与 GGX",
+      "keywords": [
+        "VMF: C(κ)e^(κμ·x) 定义在球面 S² 上",
+        "κ=0 退化为球面均匀（C(0)=1/(4π)，拓展）",
+        "GGX: α²/(π(cos²θ(α²−1)+1)²) 定义在半球上",
+        "概率元是立体角 dω 而非 dx",
+        "GGX 峰值 D(0)=1/(πα²)，α=0.5 时≈1.2732",
+        "接口：H2 微表面 BRDF、H4 方向采样"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 29,
+        "line_end": 30
+      },
+      "fill_hint": "切片 29-30 两行合并为一条（同为「定义在方向上」的分布）；GGX 峰值数值带【待核验】。",
+      "content": "**von Mises--Fisher（切片原文）**：$f(x)=C(\\kappa)\\,e^{\\kappa\\,\\mu\\cdot x}$，定义在球面 $S^2$ 上。参数 $\\mu$ 是平均方向（单位向量）、$\\kappa\\ge 0$ 是集中度：$\\kappa=0$ 时 $e^0\\equiv 1$ 退化为球面均匀分布（此时 $C(0)=\\frac{1}{4\\pi}$，即球面积的倒数，切片外补充）；$\\kappa$ 越大越向 $\\mu$ 集中。归一化常数 $C(\\kappa)$ 由球面积分定义。\n\n**GGX（切片原文）**：$D(\\cos\\theta)=\\frac{\\alpha^2}{\\pi\\big(\\cos^2\\theta(\\alpha^2-1)+1\\big)^2}$，定义在 $\\cos\\theta\\in[0,1]$（半球）上。$\\alpha$ 小则集中于 $\\theta=0$（近镜面），$\\alpha$ 大则拖尾到掠射角。峰值 $D(\\theta=0)=\\frac{1}{\\pi\\alpha^2}$，$\\alpha=0.5$ 时 $\\approx 1.2732$【已核验:1.27323954474|1/(pi*0.5**2)】。\n\n共同点：两者都定义在「方向」上而非数轴上——概率元是立体角 $d\\omega$ 而非 $dx$，归一化对球面/半球积分（对照 C3 球面采样的 $\\sin\\theta\\,d\\theta\\,d\\phi$）。这是它们与表格前几行（数轴分布）的本质区别，也是接口所在：GGX 是微表面法线分布 $D$，进入 BRDF 公式还要乘几何项与菲涅尔项（H2）；VMF 是「球面上的正态类比」，用于方向数据建模与采样（H4）。",
+      "links": [
+        "H2",
+        "H4",
+        "C3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "表格「应用」栏逐行接到知识库",
+      "keywords": [
+        "U→采样基础（逆 CDF，H4）",
+        "N→CLT（C7.3）与噪声",
+        "Exp→光子自由程（J5 参与介质）",
+        "Pois→光子计数/散粒噪声",
+        "VMF→方向统计（H4）；GGX→微表面 BRDF（H2）",
+        "Beta→共轭先验（P8.2/P8.3/C9.1）",
+        "正态与 Beta 两行完全压在 P8 积分工具上"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 25,
+        "line_end": 31
+      },
+      "fill_hint": "单元级应用总表，每行一句「谁消费这个分布」；links 用全库代号。",
+      "content": "把切片表格「应用」栏逐行接到知识库：\n\n| 分布 | 应用栏原文 | 落点 |\n|---|---|---|\n| $U(a,b)$ | 随机采样基础 | 均匀随机数是一切采样的原料；逆 CDF 法 $u\\mapsto F^{-1}(u)$（H4） |\n| $N(\\mu,\\sigma^2)$ | 中心极限定理、噪声 | C7.3 的 CLT；传感器/抖动噪声建模 |\n| $\\mathrm{Exp}(\\lambda)$ | 光子自由程 | 无记忆性 ⟹ 逐段独立推进（J5 参与介质） |\n| $\\mathrm{Pois}(\\lambda)$ | 光子计数、散粒噪声 | 低光量噪声模拟；$B(n,p)$ 稀有事件极限（poisson.statement） |\n| von Mises--Fisher | 方向统计 | 球面方向建模与采样（H4） |\n| GGX | 微表面 BRDF | H2 的 $D$ 项，物理渲染的默认法线分布 |\n| Beta | 共轭先验 | P8.2/P8.3 的直接消费方；贝叶斯更新（C9.1） |\n\n纵深依赖：正态与 Beta 两行完全压在 P8 的积分工具上（P8.1 高斯积分、P8.2 Γ 函数、P8.3 Beta 函数）；CG 三行（Exp/VMF/GGX）分别服务 J5、H4、H2。",
+      "links": [
+        "H2",
+        "H4",
+        "J5",
+        "C7.3",
+        "P8.1",
+        "P8.2",
+        "P8.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C2:general.probe1",
+      "type": "probe",
+      "subject": "general",
+      "title": "检验：期望方差的数值操练（含 B(10,0.3)）",
+      "keywords": [
+        "B(10,0.3): E=3、Var=2.1",
+        "U(0,10): E=5、Var=100/12",
+        "Exp(2) 区间概率 e^(−1)−e^(−2)",
+        "答案数值折叠在括号里"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 25,
+        "line_end": 31
+      },
+      "fill_hint": "第 (1) 问的二项分布是表格外的标准计算练习（用户指定），已在题面标注；全部答案带【待核验】。",
+      "content": "三道数值检验题：\n\n(1) 二项分布 $B(10,0.3)$（表格外的标准计算练习）：求 $E[X]$ 与 $\\mathrm{Var}(X)$。（$E=np=3$【已核验:3|10*0.3】；$\\mathrm{Var}=np(1-p)=2.1$【已核验:2.1|10*0.3*(1-0.3)】，标准差 $\\approx 1.449$【已核验:1.44913767462|sqrt(10*0.3*0.7)】）\n\n(2) $X\\sim U(0,10)$：求 $E[X]$、$\\mathrm{Var}(X)$ 与 $P(X\\le 3)$。（$E=5$【已核验:5|(0+10)/2】；$\\mathrm{Var}=\\frac{100}{12}\\approx 8.333$【已核验:8.33333333333|(10-0)**2/12】；$P=0.3$【已核验:0.3|3/10】）\n\n(3) $X\\sim\\mathrm{Exp}(2)$：求 $P(0.5<X<1)$。（$e^{-1}-e^{-2}\\approx 0.2325$【已核验:0.232544157935|exp(-2*0.5)-exp(-2*1)】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

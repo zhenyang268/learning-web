@@ -1,0 +1,342 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A3",
+  "chapter": "A3",
+  "title": "微分学的高阶推广：微分形式",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 267,
+    "line_end": 296,
+    "anchor": "notebook/A_analysis.tex:267"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A3:stokes.quantifiers",
+      "type": "comparison",
+      "subject": "stokes",
+      "title": "广义 Stokes 定理限定词逐条拆解",
+      "keywords": [
+        "陈述拆成 3 个限定词：①M 是定向带边界流形 ②ω 是具紧支的光滑 (n−1)-形式 ③∂M 取诱导定向",
+        "①去掉定向 ⟹ 积分符号无法确定：左右两边可以同时差一个负号，等式失效",
+        "①边界不「好」（角点/尖刺）⟹ 诱导定向与积分测度出问题，需推广理论",
+        "③定向选反 ⟹ 一边变号：负号不是错误而是信息（定向就是「内外之辨」）",
+        "②ω 不够光滑/不紧支 ⟹ 边界积分可能发散或 dω 不存在",
+        "n=1,2,3 分别兑付：微积分基本定理、Green/Stokes、Gauss——「一个公式统一四个定理」"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 286,
+        "line_end": 296
+      },
+      "fill_hint": "四列表；定向那一行是初学者最陌生的限定词，配「内外之辨」一句；四定理兑换表放 stokes.unification",
+      "content": "广义 Stokes 定理 $\\int_{\\partial M}\\omega=\\int_M d\\omega$ 的限定词拆解：\n\n| 限定词 | 去掉/改动后的具体情形 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $M$ **定向**流形 | 莫比乌斯带不可定向：无法整体一致地定义「正法向」，带定向的积分无从谈起 | 陈述对象（带符号积分）不存在 | 不可去；但可对非定向流形上的「密度」积分（无符号版，CG 中面积分常走这条路） |\n| ① $M$ **带边界**且边界良好 | 边界有尖刺/分形：诱导定向在坏点无定义 | 需逐块光滑拼接再相加 | 可放宽到分段光滑边界（piecewise smooth），工程几何全部够用 |\n| ② $\\omega$ 光滑（$C^\\infty$ 或足够 $C^1$）具紧支 | $\\omega$ 不可微：$d\\omega$ 不存在（或只在分布意义存在，A2.5） | 右边没有定义 | 可放宽到 $C^1$；更弱需分布理论 |\n| ③ $\\partial M$ 取**诱导定向** | 定向选反：左边变号，等式差一个负号 | 表面看是「错误」，实为定向规则被破坏 | 诱导定向（外法向先行约定）是唯一使等式成立的选择——它本身就是定理的一部分 |\n\n每个限定词都在回答同一个问题：**「带符号的积分」要成立，谁必须先就位**——方向（①③）与可微性（②）。全部就位后，这一个公式按维数兑现四个经典定理（见 stokes.unification 词条的兑换表）。",
+      "links": [
+        "A2.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:wedge.counterexample",
+      "type": "counterexample",
+      "subject": "wedge",
+      "title": "反例视角：楔积的反交换性（dx∧dx=0）不是装饰",
+      "keywords": [
+        "反交换性：dx∧dy=−dy∧dx，特例 dx∧dx=0",
+        "对照：普通张量积 dx⊗dx≠0——对称积不归零",
+        "数值实验：旋转向量场 P=−y, Q=x 的 1-形式 ω=−y dx+x dy",
+        "dω=(∂Q/∂x−∂P/∂y)dx∧dy=(1−(−1))dx∧dy=2 dx∧dy",
+        "若楔积对称（∧=⊗）：交叉项 ∂Q/∂x 与 ∂P/∂y 相加而非相减，dω 会错成 (1+1)dx∧dy=… 而旋度 2 被破坏",
+        "格林公式验证：∮_{单位圆}−y dx+x dy = 2·面积 = 2π ✓"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 272,
+        "line_end": 277
+      },
+      "fill_hint": "标题写反例视角：论证「去掉反交换 ⟹ 旋度公式被毁」；2 与 2π 数值带核验；这是 wedge 结构的「负结果」证明",
+      "content": "楔积的反交换性 $dx\\wedge dy=-dy\\wedge dx$（从而 $dx\\wedge dx=0$）常被当成技术细节，它是**旋度公式的正确性来源**。做一个「去掉反交换」的思想实验：\n\n**基准计算（正确版本）**：旋转向量场 $(-y,x)$ 对应 1-形式 $\\omega=-y\\,dx+x\\,dy$。外微分：\n\n$$d\\omega=d(-y)\\wedge dx+d(x)\\wedge dy=(-dy)\\wedge dx+dx\\wedge dy=dy\\wedge dx+dx\\wedge dy$$\n\n等等——分项写清楚：$d(-y)=-dy$，故 $d(-y)\\wedge dx=-dy\\wedge dx=+dx\\wedge dy$；$d(x)\\wedge dy=dx\\wedge dy$。合计\n\n$$d\\omega=2\\,dx\\wedge dy$$\n\n其中系数 $2=\\partial Q/\\partial x-\\partial P/\\partial y=1-(-1)$【已核验:2|1-(-1)】，正是二维旋度。Green 公式兑现：\n\n$$\\oint_{\\partial(\\text{单位圆盘})}(-y\\,dx+x\\,dy)=\\int_{\\text{圆盘}}2\\,dx\\,dy=2\\pi$$\n\n【已核验:6.28318530718|2*pi】（圆盘面积 $\\pi$ 的 2 倍），与直接参数化 $x=\\cos t,y=\\sin t$ 的线积分 $\\int_0^{2\\pi}(\\sin^2t+\\cos^2t)dt=2\\pi$【已核验:6.28318530718|2*pi】吻合。\n\n**破坏实验（把 ∧ 换成对称积 ⊗）**：楔积的反对称性使 $dy\\wedge dx=-dx\\wedge dy$，两股交叉导数（$\\partial Q/\\partial x$ 与 $\\partial P/\\partial y$）以**相减**的方式组合成旋度。若换成对称积，交叉项以相等方式叠加，得到的将是 $\\partial Q/\\partial x+\\partial P/\\partial y$ 型的量（散度的镜像），旋度消失——Green/Stokes 公式的左端（环流）与右端对不上，整套对应崩塌。\n\n**机制总结**：反交换性 ⟹ 「有向面积元」自带正负号 ⟹ 微分形式的积分**带符号**（顺时针/逆时针、内/外）⟹ 边界上的环流才能等于内部的（带符号的）旋度总和。对称积丢失方向信息，只能给无符号面积，配不上 Stokes。",
+      "links": [
+        "E1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:ladder.statement",
+      "type": "statement",
+      "subject": "forms-ladder",
+      "title": "k-形式阶梯（0/1/2/3 形式与向量分析的对应）",
+      "keywords": [
+        "0-形式：标量函数 f",
+        "1-形式：P dx+Q dy+R dz（对应向量场）",
+        "2-形式：P dy∧dz+Q dz∧dx+R dx∧dy（对应通量）",
+        "3-形式：f dx∧dy∧dz（对应体密度）",
+        "三维空间里 k-形式与 n−k 重对偶（霍奇对偶）：场 ↔ 通量 ↔ 密度",
+        "「对应向量场/通量/体密度」是切片原话——阶梯每一层对应一种物理量类型"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 269,
+        "line_end": 272
+      },
+      "fill_hint": "切片四行照抄成表；补「为什么止于 3：dx∧dy∧dz∧(任何)=0（三维里 4 个基方向必有重复）」一句",
+      "content": "三维空间中的 k-形式阶梯（切片原文的表）：\n\n| k | 形式 | 物理对应 |\n|---|---|---|\n| 0 | 标量函数 $f$ | 势、温度、密度场 |\n| 1 | $\\omega=P\\,dx+Q\\,dy+R\\,dz$ | 向量场（力场、速度场——沿线的量） |\n| 2 | $\\omega=P\\,dy\\wedge dz+Q\\,dz\\wedge dx+R\\,dx\\wedge dy$ | 通量（穿过面的量） |\n| 3 | $\\omega=f\\,dx\\wedge dy\\wedge dz$ | 体密度（占满体的量） |\n\n阶梯的层级 $k$ 回答「这个量沿什么维度的对象积累」：0-形式在点上取值，1-形式沿**曲线**积分（做功），2-形式沿**曲面**积分（通量），3-形式沿**立体**积分（总质量）。为什么止于 3：$dx\\wedge dy\\wedge dz\\wedge(\\text{任何基})=0$——三维空间里取 4 个基方向必有重复，而重复方向被反交换性消灭。\n\n同一物理对象可以换层登记：向量场既可以当 1-形式（做功视角）也可以当 2-形式（通量视角），两个视角由霍奇对偶连接——这正是 Maxwell 方程用形式语言写起来最短的原因（E2）。",
+      "links": [
+        "E1",
+        "E2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:exterior-derivative.statement",
+      "type": "statement",
+      "subject": "exterior-derivative",
+      "title": "外微分 d：一个算子三副面孔（梯度/旋度/散度）",
+      "keywords": [
+        "d 把 k-形式升为 (k+1)-形式：一个统一算子",
+        "0→1：df=(∂f/∂x)dx+(∂f/∂y)dy+(∂f/∂z)dz（梯度）",
+        "1→2：d(P dx+Q dy+R dz) 的系数 = 旋度（三个偏差组合）",
+        "2→3：d(P dy∧dz+…) 的系数 = 散度 ∂P/∂x+∂Q/∂y+∂R/∂z",
+        "向量分析的三个「各自发明」的算子 = d 在阶梯各层的同一张脸",
+        "d²=0 统一「梯度的旋度为零」与「旋度的散度为零」"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 274,
+        "line_end": 281
+      },
+      "fill_hint": "切片四个 item 照抄；1→2 的系数展开写全（(∂R/∂y−∂Q/∂z)dy∧dz 等三项）——这是三条对应里最值得手工验算的一条",
+      "content": "外微分 $d$ 是唯一的主角：它把 $k$-形式变成 $(k+1)$-形式，规则是逐系数求导再加楔积。在三维的阶梯上它呈现三副面孔（切片原文）：\n\n**0→1（梯度）**：$f\\mapsto df=\\dfrac{\\partial f}{\\partial x}dx+\\dfrac{\\partial f}{\\partial y}dy+\\dfrac{\\partial f}{\\partial z}dz$。\n\n**1→2（旋度）**：$\\omega=P\\,dx+Q\\,dy+R\\,dz$，则\n\n$$d\\omega=\\left(\\frac{\\partial R}{\\partial y}-\\frac{\\partial Q}{\\partial z}\\right)dy\\wedge dz+\\left(\\frac{\\partial P}{\\partial z}-\\frac{\\partial R}{\\partial x}\\right)dz\\wedge dx+\\left(\\frac{\\partial Q}{\\partial x}-\\frac{\\partial P}{\\partial y}\\right)dx\\wedge dy$$\n\n三个系数正是旋度 $\\nabla\\times(P,Q,R)$ 的三个分量。\n\n**2→3（散度）**：$\\eta=P\\,dy\\wedge dz+Q\\,dz\\wedge dx+R\\,dx\\wedge dy$，则\n\n$$d\\eta=\\left(\\frac{\\partial P}{\\partial x}+\\frac{\\partial Q}{\\partial y}+\\frac{\\partial R}{\\partial z}\\right)dx\\wedge dy\\wedge dz$$\n\n系数即散度 $\\nabla\\cdot(P,Q,R)$。\n\n向量分析里三个「互不相干」的算子（grad/curl/div），在形式语言里是**同一个 d 站在阶梯的不同层**——这就是切片标题「微分学的高阶推广」的含义：不是发明新算子，而是把求导这件事本身推广到任何 $k$-形式上。",
+      "links": [
+        "E1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:d2-zero.statement",
+      "type": "statement",
+      "subject": "d2-zero",
+      "title": "d²=0：两次外微分必归零",
+      "keywords": [
+        "陈述：对任何形式 ω，d(dω)=0",
+        "化身一：梯度的旋度为零（∇×∇f=0）",
+        "化身二：旋度的散度为零（∇·(∇×F)=0）",
+        "机制：混合偏导可交换（∂²/∂x∂y=∂²/∂y∂x）+ 楔积反交换 ⟹ 成对抵消",
+        "余闭(α=dβ) ⟹ 闭(dα=0)：自动满足「闭」条件——同调论的入口（Q10）",
+        "d²=0 是 de Rham 复形的定义性质：im d ⊂ ker d"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 281,
+        "line_end": 281
+      },
+      "fill_hint": "切片一行（d²=0 含两个经典化身）展开；「闭 vs 余闭」的一句对照连 Q10；手工验算放 d2-zero.proof",
+      "content": "**陈述**：外微分满足 $d^2=0$——任何形式微分两次必然归零。切片指出它统一两条经典恒等式：\n\n- **梯度的旋度为零**：$\\nabla\\times(\\nabla f)=0$，即 $d(df)=0$（0-形式升两次）；\n- **旋度的散度为零**：$\\nabla\\cdot(\\nabla\\times F)=0$，即 $d(d\\omega)=0$（1-形式升两次）。\n\n**为什么成立（机制）**：展开 $d(d\\omega)$ 时出现形如 $\\frac{\\partial^2 f}{\\partial x\\,\\partial y}$ 的混合偏导成对出现，而偏导可交换（$\\frac{\\partial^2}{\\partial x\\partial y}=\\frac{\\partial^2}{\\partial y\\partial x}$，Clairaut 定理），楔积反交换（$dx\\wedge dy=-dy\\wedge dx$）——**对称遇上反对称，逐对抵消**（手工验算见 d2-zero.proof）。\n\n**术语与后门**：$d\\omega=0$ 称 $\\omega$ **闭**；$\\omega=d\\beta$ 称**余闭/恰当**（exact）。$d^2=0$ 说明恰当 ⟹ 闭；**反方向不总成立**——闭而不恰当的形式刻画了区域的拓扑洞（de Rham 上同调，Q10）。这一道缝隙是「分析的恒等式」通往「拓扑的不变量」的门。",
+      "links": [
+        "Q10",
+        "Q9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:d2-zero.proof",
+      "type": "proof",
+      "subject": "d2-zero",
+      "title": "d²=0 手工验算：f=x²y 一步到位",
+      "keywords": [
+        "取 f=x²y（0-形式），算 df，再算 d(df)",
+        "df=(2xy)dx+(x²)dy",
+        "d(df)=d(2xy)∧dx+d(x²)∧dy=(2y dy+2x dx)∧dx+2x dx∧dy",
+        "dx∧dx=0 与 dy∧dx=−dx∧dy ⟹ 只剩 −2x dx∧dy+2x dx∧dy=0",
+        "每一项都配对消掉：混合偏导对称 + 楔积反对称",
+        "通用证明就是把这个算术做成指标运算"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 281,
+        "line_end": 281
+      },
+      "fill_hint": "分步给理由；最后一句把特例到一般的桥点出来；数值锚点：在任意点（如 (3,1)）系数恒为零",
+      "content": "以 $f=x^2y$ 为例手工验算 $d^2=0$（每步给理由）：\n\n**第 1 步（第一次外微分，梯度面孔）**：\n\n$$df=\\frac{\\partial(x^2y)}{\\partial x}dx+\\frac{\\partial(x^2y)}{\\partial y}dy=(2xy)\\,dx+(x^2)\\,dy$$\n\n在点 $(3,1)$ 处系数为 $2\\cdot3\\cdot1=6$【已核验:6|2*3*1】与 $3^2=9$【已核验:9|3**2】。\n\n**第 2 步（第二次外微分，旋度面孔）**：对 1-形式 $df=(2xy)dx+(x^2)dy$ 逐系数求导加楔积：\n\n$$d(df)=d(2xy)\\wedge dx+d(x^2)\\wedge dy$$\n\n展开：$d(2xy)=2y\\,dy+2x\\,dx$，$d(x^2)=2x\\,dx$，故\n\n$$d(df)=(2y\\,dy+2x\\,dx)\\wedge dx+(2x\\,dx)\\wedge dy=2y\\,dy\\wedge dx+\\underbrace{2x\\,dx\\wedge dx}_{=0}+2x\\,dx\\wedge dy$$\n\n**第 3 步（反交换性收尾）**：$dy\\wedge dx=-dx\\wedge dy$，于是\n\n$$d(df)=(-2x+2x)\\,dx\\wedge dy=0$$\n\n$-2x+2x=0$ 在任何点成立（如 $x=3$ 处 $-6+6=0$【已核验:0|-6+6】）。\n\n**机制读法**：第 2 步里成对出现的系数 $2x$ 来自两个混合偏导 $\\frac{\\partial^2 f}{\\partial x\\partial y}=\\frac{\\partial^2 f}{\\partial y\\partial x}=2x$（对称），而楔积给它们**相反的符号**（反对称）——对称 × 反对称 = 逐对清零。一般证明就是把这套算术写成指标运算：$d(d\\omega)$ 的每项含 $\\partial_i\\partial_j$ 对指标 $(i,j)$ 反对称化，而混合偏导对 $(i,j)$ 对称，卷积必为零。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:stokes.statement",
+      "type": "statement",
+      "subject": "stokes",
+      "title": "广义 Stokes 定理陈述",
+      "keywords": [
+        "核心公式：∫_{∂M} ω = ∫_M dω（切片 boxed）",
+        "M：n 维定向带边界流形；ω：(n−1)-形式；∂M：诱导定向",
+        "内容：边界上的积累 = 内部旋源的积累（一次外微分的总量）",
+        "统一四个定理：微积分基本定理(n=1)、Green(n=2)、经典 Stokes(n=2 曲面)、Gauss(n=3)",
+        "它是「积分学的基本定理」的最终形态：局部导数 ↔ 全局边界"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 283,
+        "line_end": 286
+      },
+      "fill_hint": "boxed 公式照抄；定性读法一句（边界=内部）；四定理兑换表放 stokes.unification 不重复",
+      "content": "**广义 Stokes 定理**：设 $M$ 是 $n$ 维定向带边界的流形，$\\omega$ 是其上的 $(n-1)$-形式，则\n\n$$\\boxed{\\ \\int_{\\partial M}\\omega=\\int_M d\\omega\\ }$$\n\n其中 $\\partial M$（$M$ 的边界）取诱导定向。\n\n**定性读法**：左端是「$\\omega$ 沿边界一周的积累」（环流/通量），右端是「$\\omega$ 的旋源（$d\\omega$）在内部的总量」。等式说：**绕边界一圈数到的东西 = 内部全部旋源的总和**——边界完全感知内部，不多不少。\n\n它被切片称为「微积分基本定理的高阶推广」：一维情形 $\\int_a^b F'(x)dx=F(b)-F(a)$ 正是 $\\int_{\\partial[a,b]}F=\\int_{[a,b]}dF$——边界 $\\partial[a,b]=\\{b\\}-\\{a\\}$ 上的积累等于内部导数的积分。牛顿–莱布尼茨公式在 $n$ 维的正确写法，就是这条。",
+      "links": [
+        "P1.1",
+        "E1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:stokes.unification",
+      "type": "comparison",
+      "subject": "stokes",
+      "title": "一个公式统一四个定理（兑换表）",
+      "keywords": [
+        "n=1：微积分基本定理 ∫_a^b F′dx=F(b)−F(a)",
+        "n=2：Green 公式 ∮P dx+Q dy=∬(∂Q/∂x−∂P/∂y)dxdy",
+        "n=2（三维曲面）：经典 Stokes 定理（环流=旋度通量）",
+        "n=3：散度定理/高斯定理 ∯F·dS=∭∇·F dV",
+        "统一代价：语言升级（形式+楔积+外微分），换来「梯度/旋度/散度是同一个 d」",
+        "每个定理的「名字不同」只是因为历史上在不同维数被独立发现"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 288,
+        "line_end": 296
+      },
+      "fill_hint": "切片四行兑换表照抄 + 每行标注「M 与 ω 各取什么」；结尾一句「语言升级换统一」",
+      "content": "切片的四定理统一清单，逐行标明 $M$、$\\omega$ 各取什么：\n\n| 维数 | 定理 | $M$ | $\\omega$ | 等式的样子 |\n|---|---|---|---|---|\n| $n=1$ | 微积分基本定理 | 区间 $[a,b]$ | 0-形式 $F$ | $F(b)-F(a)=\\int_a^bF'dx$ |\n| $n=2$ | Green 公式 | 平面区域 $D$ | $\\omega=P\\,dx+Q\\,dy$ | $\\oint_{\\partial D}\\omega=\\iint_D(\\partial_xQ-\\partial_yP)\\,dxdy$ |\n| $n=2$（曲面） | 经典 Stokes 定理 | 三维中的曲面 $S$ | 1-形式 $\\mathbf F\\cdot d\\mathbf l$ | $\\oint_{\\partial S}\\mathbf F\\cdot d\\mathbf l=\\iint_S(\\nabla\\times\\mathbf F)\\cdot d\\mathbf S$ |\n| $n=3$ | 散度定理（Gauss） | 立体 $V$ | 2-形式（通量型） | $\\oint_{\\partial V}\\mathbf F\\cdot d\\mathbf S=\\iiint_V(\\nabla\\cdot\\mathbf F)\\,dV$ |\n\n四行是**同一句话的四次兑付**：边界积累 = 内部旋源总和。历史上它们在不同年代、不同维数被独立发现，各自带着独立的名字与记号；形式语言（楔积+外微分）把「求导」统一成 $d$、把「积分对象」统一成形式、把「定理」统一成一条——代价是先学会一套新语言，回报是从此只有**一个**定理需要记，以及 $d^2=0$ 这样的深层结构自动浮现（上同调的入口，Q10）。\n\n物理侧（E1/E2）：Maxwell 四条方程在形式语言里压成两条（$dF=0$、$d{\\star}F=J$），就是这个统一在电磁学里的直接红利。",
+      "links": [
+        "E1",
+        "E2",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:stokes.intuition",
+      "type": "intuition",
+      "subject": "stokes",
+      "title": "直觉：微小方块的边界互相抵消，只剩外圈",
+      "keywords": [
+        "把 M 切成微小方块，每个方块上 Stokes = 一阶 Taylor 近似",
+        "相邻方块公共边的积分恰好互相抵消（方向相反）",
+        "全部抵消后只剩下「没人跟它配对」的外边界 = ∂M",
+        "边界积累 = 内部旋源总和的物理直觉：转圈数了边界就够了",
+        "假设给了什么：定向（抵消需要「相反方向」有定义）+ 光滑（Taylor 近似可用）",
+        "同款直觉：格林公式的「小旋涡叠加」、高斯定理的「小源汇叠加」"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 283,
+        "line_end": 288
+      },
+      "fill_hint": "「切方块 → 内边抵消 → 剩外圈」三步是全部内容；假设与结论分开写；抵消依赖定向这件事回连 quantifiers",
+      "content": "为什么「边界一圈的积累」会等于「内部旋源的总和」？三步图像：\n\n**第 1 步（微元上显然）**：把 $M$ 切成微小的方块。在单个方块上，$\\omega$ 沿边界的积累 $\\approx$ $d\\omega$ 在方块内的积分（误差是高阶小量）——这一步本质是一元微积分基本定理（每条边上的积分用一阶 Taylor/中值近似），局部无魔法。\n\n**第 2 步（内边抵消）**：把所有方块的贡献**加起来**。任意两个相邻方块有一段公共边，但它们在这段边上取**相反的行进方向**（各自绕自己的方块转）——同一段路走了两次、方向相反，积分精确抵消。全部内边界两两配对清零。\n\n**第 3 步（只剩外圈）**：没有配对对象的边恰好组成 $\\partial M$（外边界）。于是\n\n$$\\sum_{\\text{方块}}(\\text{边界积分})=\\sum_{\\text{方块}}(\\text{内部旋源})\\ \\Longrightarrow\\ \\int_{\\partial M}\\omega=\\int_M d\\omega$$\n\n**假设给了什么**：定向（第 2 步「相反方向」必须有定义——这就是 quantifiers 里定向不可去的原因）；光滑（第 1 步的 Taylor 近似可用）。**结论为什么因此成立**：抵消是**精确的**（不是近似），所以令方块趋于无穷小、误差消失后等式无残留。\n\n同一个图像的三件马甲：Green 公式 = 小旋涡叠加后只剩外圈环流；Gauss = 内部源汇相加后只剩外表面通量；一维 FT = 无数小区间首尾相接后只剩两端点。**抵消**是积分学的第一生产力（P1.1 差分法/telescoping 的高维化身）。",
+      "links": [
+        "P1.1",
+        "E1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:forms.application",
+      "type": "application",
+      "subject": "forms",
+      "title": "应用：DEC 网格物理模拟与守恒律离散保持",
+      "keywords": [
+        "切片 CG 句：离散外微分（DEC）用于网格物理模拟、守恒律的离散保持、网格参数化",
+        "DEC 核心：网格的棱/面/体当 k-形式的家，外微分 = 关联矩阵（边界算子）",
+        "d²=0 在离散世界自动成立：边界算子的平方=零矩阵（Q9.1 链复形）",
+        "守恒律的离散保持：Stokes 逐格子精确成立 ⟹ 无数值耗散的伪造源",
+        "流体模拟（H8.1）与几何处理（H1）的落点；M6 是 DEC 的专题条目"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 296,
+        "line_end": 296
+      },
+      "fill_hint": "切片 CG 句展开：DEC 三件事各一句机制；d²=0 离散版连 Q9.1（链与边界算子）；links 按清单",
+      "content": "切片的 CG 落点：「离散外微分（DEC）用于网格上的物理模拟、守恒律的离散保持、网格参数化。」机制：\n\n- **DEC 的核心构造**：不把函数塞在网格顶点上就完事，而是让 $k$-形式**各得其所**——0-形式住顶点、1-形式住棱（边上积分后的流量）、2-形式住面（通量）、3-形式住体（密度）。外微分 $d$ 变成**关联矩阵**（记录哪条棱属于哪个面、带什么符号），它正是拓扑学里的边界算子（Q9.1）。\n\n- **$d^2=0$ 免费获得**：边界算子满足「边的边界为零、面的边界是棱圈」，矩阵语言即 $\\partial^2=0$——连续世界的恒等式在网格上**精确**成立（不是近似），结构无漂移。\n\n- **守恒律的离散保持**：流体/电磁模拟里最怕数值格式自己制造或湮灭质量/能量。DEC 把 Stokes 定理逐格子**精确**兑现（边界流量 = 内部源），守恒律在离散层面恒等成立——「数值物理」与「物理」用同一套代数（H8.1 流体模拟、I9 有限体积法的天然守恒是同一哲学）。\n\n- **网格参数化**：参数化的可积性障碍（角度/面积畸变）用闭形式与 $d^2=0$ 的语言描述最干净；上同调类的离散版本（Q9.2 Betti 数）直接算出网格的洞结构（H1）。\n\n专题条目：M6（离散外微分）是 DEC 的完整展开；lie3.21 是群结构视角的补充。",
+      "links": [
+        "M6",
+        "H1",
+        "H8.1",
+        "I9.1",
+        "Q9.1",
+        "Q9.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A3:stokes.probe1",
+      "type": "probe",
+      "subject": "stokes",
+      "title": "检验：旋度系数与 Green 公式数值验证",
+      "keywords": [
+        "第一问：ω=−y dx+x dy 的 dω 系数（二维旋度）",
+        "第二问：单位圆盘上 ∫dω 与 ∮_{单位圆}ω 两边对照（都=2π）",
+        "第三问：f=x²y 在 (3,1) 的 df 系数"
+      ],
+      "tex_ref": null,
+      "fill_hint": "答案全部带核验；第二问用参数化直接算线积分与面积分对拍——Stokes 的最小完整算例",
+      "content": "三问（全部可算出数值）：\n\n1. 1-形式 $\\omega=-y\\,dx+x\\,dy$ 的外微分系数 $\\frac{\\partial Q}{\\partial x}-\\frac{\\partial P}{\\partial y}$（$P=-y,Q=x$）是多少？（$1-(-1)=2$【已核验:2|1-(-1)】）\n\n2. Green 公式两边对拍：单位圆盘上 $\\iint 2\\,dxdy$ 是多少？参数化 $x=\\cos t,y=\\sin t$ 直接算线积分 $\\int_0^{2\\pi}[(-\\sin t)(-\\sin t)+(\\cos t)(\\cos t)]dt$ 是多少？（面积分 $=2\\cdot\\pi=2\\pi$【已核验:6.28318530718|2*pi】，线积分 $=\\int_0^{2\\pi}(\\sin^2t+\\cos^2t)dt=2\\pi$【已核验:6.28318530718|2*pi】，两边相等 ✓）\n\n3. $f=x^2y$ 在点 $(3,1)$ 处 $df$ 的两个偏导系数是多少？（$2xy=6$【已核验:6|2*3*1】，$x^2=9$【已核验:9|3**2】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

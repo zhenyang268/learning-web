@@ -1,0 +1,373 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A4.4",
+  "chapter": "A4",
+  "title": "嵌入定理",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 359,
+    "line_end": 386,
+    "anchor": "notebook/A_analysis.tex:359"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A4.4:sobolev-embedding.quantifiers",
+      "type": "comparison",
+      "subject": "sobolev-embedding",
+      "title": "Sobolev 嵌入限定词逐条拆解（含各维数值表）",
+      "keywords": [
+        "陈述拆成 4 个限定词：①Ω⊂R^n 有界 ②边界「足够好」 ③1≤p<n ④临界公式 1/p*=1/p−1/n",
+        "①有界性去掉 ⟹ 嵌入失效（Poincaré 同死：整条 u≡常数在无界域上失控）",
+        "②边界足够好（Lipschitz 型）：裂尖/外尖域上常数 C 爆炸甚至嵌入失效",
+        "③p<n 是兑换窗口；p>n 时兑换成 Hölder 连续 C^{0,α}，α=1−n/p；p=n 恰好是临界死区（见 critical-failure 反例）",
+        "④临界公式数值表：n=3,p=2⟹p*=6；n=2,p=2⟹p*=∞ 临界；n=1⟹p*=∞（一维免费）",
+        "切片口号：「多一个导数的可积性，换一个更好的空间；损失的额度由维数 n 决定」"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 359,
+        "line_end": 365
+      },
+      "fill_hint": "四列表 + p* 数值表（n=3,p=2→6 等带核验）；p<n / p=n / p>n 三档窗口预告后面三条反例/定理词条",
+      "content": "Sobolev 嵌入：设 $\\Omega\\subset\\mathbb R^n$ 有界、边界「足够好」，$1\\le p<n$，则 $W^{1,p}(\\Omega)\\hookrightarrow L^{p^*}(\\Omega)$，$\\tfrac1{p^*}=\\tfrac1p-\\tfrac1n$。逐条拆：\n\n| 限定词 | 去掉/失效后的情形 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $\\Omega$ **有界** | $\\Omega=\\mathbb R^n$：整条平移函数 $u(\\cdot-k e_1)$ 拉成无界序列，$L^{p^*}$ 范数不失控但任何紧性全灭（Rellich 的死因，见 rellich-noncompact 反例） | 嵌入「连续但非紧」；Poincaré 直接失效（poincare-unbounded 反例） | 无界域需加条件（零边界/归一化）分块处理 |\n| ② 边界**足够好**（如 Lipschitz） | 裂尖域（inward cusp）：常数 $C$ 随域恶化而爆炸；病态域上嵌入可失效 | 兑换汇率由域的几何决定 | Lipschitz 是工程与 PDE 的默认安全线 |\n| ③ $1\\le p<n$ | $p>n$：窗口换了——$W^{1,p}\\hookrightarrow C^{0,\\alpha}$（$\\alpha=1-\\tfrac np$），兑换的不是可积性而是**连续性**（函数自动等于其连续代表）；$p=n$：临界，见下 | 三档窗口，各兑各的货币 | —— |\n| ④ 临界公式 $\\tfrac1{p^*}=\\tfrac1p-\\tfrac1n$ | 算错汇率：$n=3,p=2$ 时 $p^*=6$【已核验:6|1/(1/2-1/3)】，$n=2,p=1$ 时 $p^*=2$【已核验:2|1/(1/1-1/2)】 | 汇率记错则后续所有兑换失效 | 公式本身是维数记账的守恒律 |\n\n**切片的读法**（原话）：「多『一个』导数的可积性，换一个『更好』的空间；**损失的额度由维数 $n$ 决定**。$n=1$ 时 $p^*=\\infty$：一维情形 $W^{1,p}\\hookrightarrow C$，所以一维『光滑性』几乎是免费的——这也是为什么一维 ODE 理论比 PDE 简单得多。」——维数是汇率：$n$ 越大，一份导数能兑换的增益越少（$p^*$ 越接近 $p$），高维更难「买」正则性。\n\n三档窗口总表（后面词条各管一档）：\n\n| 档位 | 结论 | 关键词 |\n|---|---|---|\n| $p<n$（次临界） | $W^{1,p}\\hookrightarrow L^{p^*}$，可积性升级 | 本条 + p* 汇率 |\n| $p=n$（临界） | $W^{1,n}\\hookrightarrow L^q$ 对一切 $q<\\infty$，但 $\\not\\hookrightarrow L^\\infty$ | critical-failure 反例（log log 函数） |\n| $p>n$（超临界） | $W^{1,p}\\hookrightarrow C^{0,\\alpha}$，$\\alpha=1-\\tfrac np$ | 连续代表，Hölder 模 |\n",
+      "links": [
+        "A4.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:critical-failure.counterexample",
+      "type": "counterexample",
+      "subject": "critical-failure",
+      "title": "反例：p=n 临界时 W^{1,n} ↛ L^∞（log(1/|x|) 无界却导数可积）",
+      "keywords": [
+        "构造 u(x)=log(1/|x|) 于 B(0,1/2)⊂R²（p=n=2 临界）",
+        "梯度：∇u=−x/|x|²，|∇u|=1/|x|",
+        "‖∇u‖²_{L²}=∫(1/r²)·r dr dθ = 2π∫_0^{1/2} dr/r = 2π ln2 ≈ 4.355 有限",
+        "但 u 本身无界：x→0 时 log(1/|x|)→∞ ⟹ u∉L^∞",
+        "结论：一个导数的平方可积性买不来有界性——临界兑换恰好差一口气",
+        "同款奇性在 PDE 里叫「临界指数问题」：恰好够用的估计在最紧处失效（切片：这正是临界指数问题难的原因）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 359,
+        "line_end": 365
+      },
+      "fill_hint": "极坐标完整计算 2πln2 带核验；「差一口气」的机制解释（对数恰是 p=n 的兑换临界亏盈）；连切片「临界指数问题」原话",
+      "content": "临界嵌入的失效算例：$n=2$、$p=2$（$p=n$），考察\n\n$$u(x)=\\log\\tfrac1{|x|}\\quad\\text{于}\\ B(0,\\tfrac12)=\\{x:|x|<\\tfrac12\\}\\subset\\mathbb R^2$$\n\n**第一步（导数能量有限）**：$\\nabla u=-\\dfrac{x}{|x|^2}$，模长 $|\\nabla u(x)|=\\dfrac1{|x|}=\\dfrac1r$。极坐标（$dx=r\\,dr\\,d\\theta$）：\n\n$$\\|\\nabla u\\|_{L^2}^2=\\int_0^{2\\pi}\\int_0^{1/2}\\frac1{r^2}\\,r\\,dr\\,d\\theta=2\\pi\\int_0^{1/2}\\frac{dr}{r}=2\\pi\\ln2\\approx4.355$$\n\n【已核验:4.35517218061|2*pi*log(2)】——对数积分 $\\int dr/r$ 在 $r\\to0$ 处**恰好收敛**（幂函数 $\\int dr/r^{1+\\epsilon}$ 才发散）。所以 $u\\in W^{1,2}(B(0,1/2))$（$u$ 本身：$\\int(\\ln\\tfrac1r)^2r\\,dr$ 有限，对数增长打不过 $r$ 权重）。\n\n**第二步（函数无界）**：$r\\to0$ 时 $\\log\\tfrac1r\\to+\\infty$——$u$ 在原点附近无界，$u\\notin L^\\infty$。\n\n**合起来**：\n\n$$u\\in W^{1,2},\\quad u\\notin L^\\infty\\quad\\Longrightarrow\\quad W^{1,2}\\not\\hookrightarrow L^\\infty$$\n\n梯度平方可积，函数却可以无界——**临界档位（$p=n$）的兑换恰好差一口气**：对数是「比任何幂都慢」的增长，$p=n$ 时兑换剩余刚好买不动 $L^\\infty$，只买得到「对一切 $q<\\infty$ 都 $\\in L^q$」。\n\n**机制与后果**：切片原话——「临界指数处嵌入恰好不紧，这正是**临界指数问题**难的原因」（紧性一侧见 rellich-noncompact 反例）。PDE 里所有「指标刚好卡线」的难题（Yamabe 问题、临界 Sobolev 方程、临界 NS）都是这个 log 算例的远亲：**能量估计恰好够，紧性恰好不够**，解可能在临界点集中/爆破。Sobolev 嵌入的汇率表在 $p=n$ 行写着「此路不通向 $L^\\infty$」，不是定理偷懒，是数学事实。",
+      "links": [
+        "A4.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:rellich-noncompact.counterexample",
+      "type": "counterexample",
+      "subject": "rellich-noncompact",
+      "title": "反例：临界指数处紧性死亡（集中序列）",
+      "keywords": [
+        "构造（n=2,p=1,p*=2）：u_λ(x)=λ^{(n−p)/p}ρ(λx)=λ^{1/2}?——按 n=2,p=1 标度 u_λ=λ·ρ(λx)? 用标度公式 u_λ(x)=λ^{(n−p)/p}ρ(λx)",
+        "标度守恒：‖∇u_λ‖_{L^p}=‖∇ρ‖_{L^p} 与 ‖u_λ‖_{L^{p*}}=‖ρ‖_{L^{p*}} 都恒定",
+        "支撑缩到原点 ⟹ u_λ→0 几乎处处，但范数不降 ⟹ 任何子列不能强收敛到 0",
+        "结论：W^{1,p} 单位球在 L^{p*} 中不紧——q=p* 那一档紧性恰好失效",
+        "切片原话：「q<p* 的严格不等号不能改成等号」",
+        "后果：变分法在临界指标丢掉「极小化序列可取收敛子列」这根拐杖（Q5 直接方法的命门）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 369,
+        "line_end": 375
+      },
+      "fill_hint": "标度计算完整给出（换元 x→x/λ 两处）；「范数守恒+支撑缩点 ⟹ 无强收敛子列」的逻辑链是本条主体；连切片「临界指数问题难的原因」",
+      "content": "紧嵌入（Rellich–Kondrachov）说：有界 $\\Omega$ 上 $p<n$ 时 $W^{1,p}\\hookrightarrow\\hookrightarrow L^q$（$1\\le q<p^*$），**$q<p^*$ 的严格不等号不能改成等号**（切片原话）。反例用「集中序列」：\n\n**构造**（$n=2$、$p=1$、$p^*=2$；取固定 $\\rho\\in C_c^\\infty(B_1)$、$\\rho\\not\\equiv0$）：\n\n$$u_\\lambda(x)=\\lambda^{(n-p)/p}\\rho(\\lambda x)=\\lambda^{1}\\rho(\\lambda x)\\qquad(\\lambda\\to\\infty)$$\n\n（一般标度 $u_\\lambda=\\lambda^{(n-p)/p}\\rho(\\lambda x)$，指数 $(n-p)/p$ 是为守恒梯度范数选定的。）\n\n**两笔守恒账**（换元 $y=\\lambda x$，$dx=\\lambda^{-n}dy$）：\n\n1. 梯度：$\\nabla u_\\lambda=\\lambda^{(n-p)/p}\\cdot\\lambda\\,(\\nabla\\rho)(\\lambda x)$，\n$$\\|\\nabla u_\\lambda\\|_{L^p}^p=\\lambda^{n-p}\\cdot\\lambda^p\\cdot\\lambda^{-n}\\int|\\nabla\\rho|^pdy=\\|\\nabla\\rho\\|_{L^p}^p\\ \\text{恒定}$$\n2. 临界范数：$\\|u_\\lambda\\|_{L^{p^*}}^{p^*}=\\lambda^{p^*(n-p)/p}\\lambda^{-n}\\|\\rho\\|_{L^{p^*}}^{p^*}$，由 $\\tfrac{p^*}{p}=\\tfrac np-1$（临界公式变形）可验指数为零：$\\|u_\\lambda\\|_{L^{p^*}}=\\|\\rho\\|_{L^{p^*}}$ **恒定**。\n\n（$n=2,p=1$ 代入：$p^*=2$，检查指数 $2\\cdot(2-1)/1-2=0$【已核验:0|2*(2-1)/1-2】✓。）\n\n**死亡机制**：$\\lambda\\to\\infty$ 时 $\\mathrm{supp}\\,u_\\lambda\\subset B(0,1/\\lambda)$ 缩成一点 ⟹ $u_\\lambda\\to0$ **几乎处处**。若紧嵌入在 $q=p^*$ 成立，$\\{u_\\lambda\\}$（梯度范数一致有界，$W^{1,p}$ 有界集）应有 $L^{p^*}$ 强收敛子列；极限只能是一直收缩到的 $0$（a.e. 极限），但\n\n$$\\|u_\\lambda\\|_{L^{p^*}}\\equiv\\|\\rho\\|_{L^{p^*}}>0\\quad\\text{不趋于 0}$$\n\n矛盾——**任何子列都不强收敛**。$W^{1,p}$ 单位球在临界 $L^{p^*}$ 里不相对紧。\n\n**几何解释**：能量（梯度范数）守恒的方式是「把质量挤进越来越小的球」——$L^{p^*}$ 范数看不见集中，紧性看得见（紧集不许质量无限集中）。$q<p^*$ 时次临界范数对集中更宽容（$\\|u_\\lambda\\|_{L^q}\\to0$，指数账 $q(n-p)/p-n<0$），所以收敛子列存活。\n\n**后果**（切片）：「临界指数处嵌入恰好不紧，这正是**临界指数问题**难的原因」——变分法直接方法（Q5）靠「有界序列⟹紧性⟹收敛子列」三步走，临界指标下第三步塌方，极小化序列可以整团质量溜走（爆破/集中），存在性论证必须另想办法。",
+      "links": [
+        "Q5",
+        "A4.6"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:poincare-unbounded.counterexample",
+      "type": "counterexample",
+      "subject": "poincare-unbounded",
+      "title": "反例：Ω 无界时 Poincaré 失效（长坡道函数）",
+      "keywords": [
+        "构造 u_R(x)=min(1,x,R−x) 于 (0,R)：山形坡道，W^{1,2} 合法",
+        "‖∇u_R‖²_{L²}=2（两段斜率 ±1、各长 1 的坡）恒定",
+        "‖u_R‖²_{L²}≈R−2 随 R→∞",
+        "比值 ‖u_R‖/‖∇u_R‖≈√(R/2)→∞：任何常数 C 被 R=4C²+2 击败",
+        "机制：无界域上「常数函数」能量为零但范数巨大——梯度控制不住平台",
+        "修补：有界域（定理前提）或零边界（W_0^{1,p}，靠边界把平台两头按住）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 377,
+        "line_end": 383
+      },
+      "fill_hint": "完整计算 ‖∇u_R‖²=2 与 ‖u_R‖²≈R−2 带核验；机制行「平台免费搭车」是本质；两条修补路径各一句（有界域/W₀）",
+      "content": "Poincaré 不等式 $\\|u-u_\\Omega\\|_{L^p}\\le C\\|\\nabla u\\|_{L^p}$（及其 $W_0^{1,p}$ 版 $\\|u\\|_{L^p}\\le C\\|\\nabla u\\|_{L^p}$）在 $\\Omega$ **无界**时失效。算例（一维）：\n\n**构造（长坡道）**：在 $(0,R)$ 上\n\n$$u_R(x)=\\min(1,\\ x,\\ R-x)$$\n\n——两端各长 1 的斜坡（斜率 $\\pm1$），中间是高度 1 的平台。$u_R$ 分片线性、连续，弱导数存在（A4.2：斜坡函数合法）。\n\n**两笔账**：\n\n1. 梯度能量：$\\nabla u_R$ 只在两个斜坡段非零（各长 1、斜率绝对值 1）：\n$$\\|\\nabla u_R\\|_{L^2}^2=\\int_0^11\\,dx+\\int_{R-1}^R1\\,dx=2\\quad\\text{恒定}$$\n【已核验:2|1+1】\n2. 函数能量：平台占 $(1,R-1)$，高度 1：\n$$\\|u_R\\|_{L^2}^2\\approx(R-2)\\cdot1\\ \\text{随 }R\\text{ 增长}$$\n（$R=10$ 时 $\\|u_R\\|^2=\\int_0^{10}u_R^2\\,dx=8+2\\times\\tfrac13=\\tfrac{26}{3}\\approx8.667$【已核验:8.66666666667|8+2/3】。）\n\n**失效**：比值 $\\dfrac{\\|u_R\\|_{L^2}}{\\|\\nabla u_R\\|_{L^2}}\\approx\\sqrt{\\tfrac R2}\\to\\infty$。要 Poincaré $\\|u\\|\\le C\\|\\nabla u\\|$ 成立，$C$ 须 $\\ge\\sqrt{R/2}$ 对一切 $R$——不存在有限常数。任何候选 $C$ 取 $R>2C^2+2$【待核验型依赖】即被击破。\n\n**机制**：梯度只看见**变化**，看不见**平台**——$u_R$ 的能量（梯度范数）全部花在两个短坡上，而范数（$L^2$）被平台无限放大。有界域上平台长度封顶（$\\le|\\Omega|$），比值有界；无界域上平台免费搭车，失控。均值版 $\\|u-u_\\Omega\\|$ 也救不了它吗？对 $u_R$ 均值 $u_\\Omega\\approx\\tfrac{R/2-1}{R}\\approx\\tfrac12$，偏差仍在平台上有 $\\tfrac12$ 的高度、$R$ 的长度——同样发散；真正的修补是**有界域**（定理前提）或**零边界条件**（$W_0^{1,p}$：$u_R$ 在端点为 0 但平台照样存在……注意 $W_0^{1,p}(0,\\infty)$ 整体上此例仍毁掉无界域的常数；$W_0^{1,p}$ 版 Poincaré 的正确舞台是有界 $\\Omega$）。$H^1(\\mathbb R^n)$ 上的对应事实：只有**平移不变**的估计 $\\|u\\|_{L^{p^*}}\\le C\\|\\nabla u\\|_{L^p}$（Sobolev 嵌入，无常数项问题）存活——「平台」被 $p^*>p$ 的更强范数惩罚。",
+      "links": [
+        "A4.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:sobolev-embedding.statement",
+      "type": "statement",
+      "subject": "sobolev-embedding",
+      "title": "Sobolev 嵌入定理陈述（三档窗口）",
+      "keywords": [
+        "主式：Ω⊂R^n 有界、边界足够好、1≤p<n ⟹ W^{1,p}↪L^{p*}，1/p*=1/p−1/n",
+        "超临界档：p>n ⟹ W^{1,p}↪C^{0,α}，α=1−n/p（变成连续函数，切片原话）",
+        "临界档：p=n ⟹ W^{1,n}↪L^q（一切 q<∞）但不 ↪ L^∞",
+        "读法（切片）：多一个导数的可积性换更好的空间，汇率由 n 决定",
+        "n=1 特例：p*=∞，一维光滑性几乎免费（ODE 比 PDE 简单的原因）",
+        "记号 ↪：连续嵌入（存在 C 使 ‖u‖_Y ≤ C‖u‖_X）；↪↪：紧嵌入"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 359,
+        "line_end": 367
+      },
+      "fill_hint": "切片主式+括号照抄；三档窗口表化；n=1 那段切片原文（「一维光滑性几乎免费」）必须保留",
+      "content": "**Sobolev 嵌入定理**：设 $\\Omega\\subset\\mathbb R^n$ 有界、边界「足够好」，$1\\le p<n$，则\n\n$$W^{1,p}(\\Omega)\\hookrightarrow L^{p^*}(\\Omega),\\qquad\\frac1{p^*}=\\frac1p-\\frac1n$$\n\n（$p>n$ 时 $W^{1,p}\\hookrightarrow C^{0,\\alpha}$，$\\alpha=1-\\tfrac np$——切片原话：「变成了连续函数」。）\n\n记号：$X\\hookrightarrow Y$ 指**连续嵌入**——恒等映射连续，即存在 $C$ 使 $\\|u\\|_Y\\le C\\|u\\|_X$；$X\\hookrightarrow\\hookrightarrow Y$（双箭头）指**紧嵌入**（Rellich 词条）。\n\n三档窗口总表：\n\n| 档位 | 兑换 | 反例标尺 |\n|---|---|---|\n| $p<n$ | 一份 $L^p$ 导数 → $L^{p^*}$ 可积性（$p^*>p$，赚差价） | 集中序列（紧性反例） |\n| $p=n$ | 一切 $L^q$（$q<\\infty$），但 $L^\\infty$ 买不到 | $\\log\\tfrac1{|x|}$（临界反例） |\n| $p>n$ | $C^{0,\\alpha}$ 连续性（$\\alpha=1-\\tfrac np$；Hölder 模） | 连续代表唯一 |\n\n**切片的读法**（原话）：「多『一个』导数的可积性，换一个『更好』的空间；损失的额度由维数 $n$ 决定。$n=1$ 时 $p^*=\\infty$：一维情形 $W^{1,p}\\hookrightarrow C$，所以一维『光滑性』几乎是免费的——这也是为什么一维 ODE 理论比 PDE 简单得多。」",
+      "links": [
+        "A4.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:rellich.statement",
+      "type": "statement",
+      "subject": "rellich",
+      "title": "紧嵌入（Rellich–Kondrachov）陈述",
+      "keywords": [
+        "主式：有界 Ω 上 p<n 时 W^{1,p}(Ω) ↪↪ L^q(Ω)，1≤q<p*（严格小于！）",
+        "「紧」的含义：W^{1,p} 的有界集映成 L^q 的相对紧集（单位球可被有限个 ε 球覆盖）",
+        "紧 ⟹ 可取收敛子列——变分法直接方法要的那一步（切片原话）",
+        "q<p* 不能改等号：临界处恰好不紧（rellich-noncompact 反例）",
+        "这是「拿存在性」的机器：有界性估计 + 紧性 = 收敛子列 = 极限存在"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 369,
+        "line_end": 375
+      },
+      "fill_hint": "切片主式+「紧是全部重点」段照抄；「相对紧=有限 ε 球覆盖」给一句度量翻译；反例指向专属词条",
+      "content": "**紧嵌入（Rellich–Kondrachov）**：有界 $\\Omega$ 上，$p<n$ 时\n\n$$W^{1,p}(\\Omega)\\hookrightarrow\\hookrightarrow L^q(\\Omega)\\qquad(1\\le q<p^*)$$\n\n「紧」的度量含义：$W^{1,p}$ 的有界集被映成 $L^q$ 中的**相对紧集**——可被有限个 $\\varepsilon$-球覆盖；等价地，其中任何序列都有 $L^q$ 收敛子列。\n\n**切片原话**：「『紧』是这里的全部重点：有界集映成相对紧集 $\\Longrightarrow$ 可取收敛子列（见 Q5：这就是变分法直接方法要的那一步）。$q<p^*$ 的严格不等号不能改成等号——临界指数处嵌入恰好不紧，这正是**临界指数问题**难的原因。」\n\n使用模板（变分法直接方法，Q5）：极小化序列 $\\{u_n\\}$ 有界（靠泛函强制性）$\\Rightarrow$ 由紧嵌入抽 $L^q$ 收敛子列 $u_{n_k}\\to u$ $\\Rightarrow$ 下半连续性把极小值传给 $u$——三步拿到极小元存在性。第二、三步之间的桥就是本定理；临界指标下（$q=p^*$）桥塌（集中序列反例）。\n\nPDE 侧的同一台机器（A4.6）：时间离散/磨光逼近的解序列靠**能量估计**有界、靠**紧嵌入**取极限——「先验估计+紧性」流水线的紧性环节全由本定理供货。",
+      "links": [
+        "Q5",
+        "A4.6"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:poincare.statement",
+      "type": "statement",
+      "subject": "poincare",
+      "title": "Poincaré 不等式陈述（均值版与 W₀ 版）",
+      "keywords": [
+        "均值版：‖u−u_Ω‖_{L^p} ≤ C‖∇u‖_{L^p}，u_Ω=Ω 上的平均",
+        "W₀ 版（切片「特别地」）：‖u‖_{L^p} ≤ C‖∇u‖_{L^p}，u∈W_0^{1,p}",
+        "常数 C 只依赖 Ω 与 p，不依赖 u",
+        "核心推论（切片）：H₀¹ 上 ‖∇u‖_{L²} 本身就是等价范数——「强制性」的来源",
+        "无界域失效（poincare-unbounded 反例）；u≡常数是均值版减去 u_Ω 的原因"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 377,
+        "line_end": 383
+      },
+      "fill_hint": "切片两条式子照抄；「为什么减 u_Ω」一句（常数梯度为零却范数非零——先扣掉均值再控制）；等价范数推论连接 A4.5 强制性",
+      "content": "**Poincaré 不等式**：\n\n$$\\|u-u_\\Omega\\|_{L^p}\\le C\\,\\|\\nabla u\\|_{L^p}\\qquad u_\\Omega=\\frac1{\\Omega|}\\int_\\Omega u$$\n\n**特别地**（零边界版）：\n\n$$\\|u\\|_{L^p}\\le C\\|\\nabla u\\|_{L^p}\\qquad(u\\in W_0^{1,p})$$\n\n两版的分工：均值版对**所有** $u\\in W^{1,p}$ 成立——先扣掉均值（常数函数 $u\\equiv c$ 梯度为零但 $\\|u\\|_{L^p}$ 非零，是唯一漏网者，减去 $u_\\Omega$ 恰好堵住这个洞）；零边界版免扣除——$W_0^{1,p}$ 的函数「被边界按住」，常数中只有 $0$ 合法（$H_0^k$ 闭包定义的回报，A4.3）。\n\n**核心推论**（切片原话）：「后一式说明在 $H_0^1$ 上 $\\|\\nabla u\\|_{L^2}$ **本身就是等价范数**——它是下面『强制性』的来源。」即 $\\|u\\|_{L^2}\\le C\\|\\nabla u\\|_{L^2}$ 使梯度范数与完整 $H^1$ 范数互相控制：弱形式的双线性形式 $B(u,u)=\\|\\nabla u\\|^2$ 从此能压住 $\\alpha\\|u\\|_{H^1}^2$（A4.5 Lax–Milgram 的强制条件，就是这里造出来的）。\n\n**边界条款**：$\\Omega$ 有界不可去（长坡道反例：无界域上平台免费搭车，比值 $\\to\\infty$）；常数 $C$ 只依赖 $\\Omega,p$。",
+      "links": [
+        "A4.3",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:sobolev-embedding.intuition",
+      "type": "intuition",
+      "subject": "sobolev-embedding",
+      "title": "直觉：导数库存是硬通货，维数是汇率",
+      "keywords": [
+        "假设给了什么：一份 L^p 导数（W^{1,p} 库存）",
+        "结论为什么成立：导数限制振荡——振荡被压制后函数值更均匀，可积性升级",
+        "汇率表：n 越大汇率越差（p* 越接近 p）——高维里一份导数买得少",
+        "n=1 汇率最优：p*=∞，光滑性免费（ODE 世界观）",
+        "集中是唯一的漏网手法：能量挤进小球躲过范数检查（紧性反例的机制）",
+        "PDE 读法：证能量估计（攒库存）→ 用嵌入兑换正则性（A4.6 链条）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 365,
+        "line_end": 367
+      },
+      "fill_hint": "「库存/汇率/兑换」的会计比喻贯穿；「导数限制振荡」是机制核心一句；n=1 免费与高维昂贵对照收尾",
+      "content": "把 Sobolev 嵌入读成一份**汇率表**：你手里有 1 份 $L^p$ 导数（$W^{1,p}$ 库存），可以兑换 $L^{p^*}$ 可积性（$p^*>p$，纯赚）或 $C^{0,\\alpha}$ 连续性（$p>n$ 时）。汇率由维数 $n$ 定：$\\tfrac1{p^*}=\\tfrac1p-\\tfrac1n$，$n$ 越大 $p^*$ 越接近 $p$——**高维里一份导数买得少**。\n\n**为什么导数能兑换**（机制）：导数限制振荡。$\\|\\nabla u\\|_{L^p}$ 有界意味着 $u$ 不能疯狂抖动（高频小幅的抖动会被梯度看见——对照微分算子无界的方向，那里振荡被放大，这里反过来振荡被计价）。振荡被压制 ⟹ 函数值更「均匀铺开」⟹ 峰值被面积摊薄 ⟹ 更高的可积性。一维最直观：$|u(x)-u(0)|\\le\\int|u'|\\le\\|u'\\|_{L^1}$，导数直接给函数值的逐点封顶——所以 $n=1$ 时 $p^*=\\infty$，「光滑性几乎免费」。\n\n**为什么高维汇率差**：$n$ 维里一点周围的邻域体积随半径按 $r^n$ 增长，梯度信息要「覆盖」的体量指数级增长——同样一份导数，摊到更多维度上，兑换力被稀释。\n\n**唯一的漏网手法**：集中（concentration）——把全部能量挤进越来越小的球，$L^{p^*}$ 范数守恒而支撑消失（紧性反例）。这就是为什么临界档（$p=n$、$q=p^*$）处处漏水：**恰好够用的估计挡不住恰好最省的逃逸**。\n\n**PDE 的用法**（A4.6 链条的中段）：先证能量估计（攒 $W^{1,p}$ 库存），再用嵌入兑换 $L^{p^*}$ 或 $C^{0,\\alpha}$（花库存买正则性），最后叠加正则性定理迭代升级——「弱解自动变成经典解」。",
+      "links": [
+        "A4.6",
+        "A2.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:poincare.intuition",
+      "type": "intuition",
+      "subject": "poincare",
+      "title": "Poincaré 直觉：梯度是天花板，边界是地锚",
+      "keywords": [
+        "均值版直觉：知道梯度与均值 ⟹ 函数被夹在均值 ± C·梯度范数内",
+        "一维原型：u(x)=u(a)+∫u′，|u(x)−u(a)|≤‖u′‖₁——积分是梯度的累积",
+        "W₀ 版直觉：边界值为零 + 梯度有界 ⟹ 中间涨不起来（两端锚定）",
+        "为什么 H₀¹ 上梯度是等价范数：函数大小完全由梯度供血，无免费成分",
+        "「强制性」翻译：B(u,u)=‖∇u‖² ≥ α‖u‖²——双线性形式压得住范数，Lax–Milgram 才有唯一性",
+        "物理对应：膜的势能（梯度平方）控制位移幅度（函数平方）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 379,
+        "line_end": 383
+      },
+      "fill_hint": "一维原型一行积分不等式是全部直觉的种子；「地锚」比喻讲 W₀ 版；强制性一段连接 A4.5（本条的最终去处）",
+      "content": "**一维原型（种子）**：$u(x)=u(a)+\\int_a^xu'(t)dt$，故\n\n$$|u(x)-u(a)|\\le\\int|u'|\\le\\|u'\\|_{L^1}$$\n\n函数值的波动被导数的总量封顶——**梯度是振幅的天花板**。Poincaré 不等式是这行微积分事实的高维推广（乘 $L^p$ 版本 + 域几何常数）。\n\n**均值版**：知道均值 $u_\\Omega$ 与梯度范数后，函数被夹在 $u_\\Omega\\pm C\\|\\nabla u\\|_{L^p}$ 的管子里——「减 $u_\\Omega$」是先扔掉梯度管不着的那一个自由度（常数函数）。\n\n**$W_0$ 版（地锚版）**：边界值为零相当于把函数两端**锚在地上**——中间想涨起来，全靠梯度爬升；梯度被控制，涨幅就被控制。长坡道反例（poincare-unbounded）反证：没有边界锚（或域无界、锚离得太远），平台可以免费搭车。\n\n**最终去处（切片原话）**：「后一式说明在 $H_0^1$ 上 $\\|\\nabla u\\|_{L^2}$ **本身就是等价范数**——它是下面『强制性』的来源。」翻译成 Lax–Milgram 的语言：$B(u,u)=\\|\\nabla u\\|_{L^2}^2\\ge\\alpha\\|u\\|_{H^1}^2$——双线性形式把范数压在地上，方程的解才不可能「漂移」（唯一性）。物理图像：膜的弹性势能（梯度平方）完全控制位移幅度（函数平方）——能量守恒与位移控制是同一句话的两种说法。",
+      "links": [
+        "A4.5",
+        "Q5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照总表：嵌入/紧性/Poincaré 三件套分工",
+      "keywords": [
+        "Sobolev 嵌入：库存→货币兑换（正则性/可积性升级），换的是「解的性质」",
+        "Rellich 紧性：有界集→收敛子列，换的是「取极限的资格」（存在性机器）",
+        "Poincaré：梯度→范数控制，换的是「强制性」（唯一性与稳定性的机器）",
+        "三条共用前提：Ω 有界（无界域各有一条死法）",
+        "三条共同死角：临界指标（p=n、q=p*）",
+        "A4.5/A4.6/Q5 三处消费现场各领一件"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 359,
+        "line_end": 386
+      },
+      "fill_hint": "总表 + 「三件套各换一种资格」的收束；三处消费现场与三条反例一一对应；这是 A4.4 的单元级综述",
+      "content": "本单元三条定理的分工总表：\n\n| 定理 | 给出什么 | 换来什么资格 | 消费现场 | 无界域/临界死法 |\n|---|---|---|---|---|\n| Sobolev 嵌入 $W^{1,p}\\hookrightarrow L^{p^*}$ | 库存→货币的兑换率 | 解的**性质**（可积性/连续性升级） | A4.6 正则性提升 | $p=n$ 时 $L^\\infty$ 兑不到（log 反例） |\n| Rellich 紧性 $\\hookrightarrow\\hookrightarrow L^q$（$q<p^*$） | 有界集→相对紧集 | 取**极限**的资格（存在性机器） | Q5 变分法直接方法、A4.6 紧性论证 | $q=p^*$ 处不紧（集中序列反例） |\n| Poincaré $\\|u\\|\\le C\\|\\nabla u\\|$（$W_0^{1,p}$） | 梯度→范数的控制 | **强制性**（唯一性/稳定性机器） | A4.5 Lax–Milgram 强制条件 | 无界域平台搭车（长坡道反例） |\n\n三条的公共前提是 $\\Omega$ **有界**（各有一条无界域死法），公共死角是**临界指标**（兑换、紧性、控制在 $p=n$ / $q=p^*$ 处同时漏水——「临界指数问题难」的完整含义）。\n\n记忆口诀：**嵌入买性质、紧性买极限、Poincaré 买唯一**。A4.5（Lax–Milgram）领走 Poincaré（强制性），A4.6（正则性链条）领走嵌入与紧性，Q5（变分法）领走紧性——三件套在不同车间按需领取。",
+      "links": [
+        "A4.5",
+        "A4.6",
+        "Q5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用：变分法、正则性、数值收敛",
+      "keywords": [
+        "Q5 变分法直接方法：强制性（Poincaré）+ 紧性（Rellich）+ 下半连续 = 极小元存在",
+        "A4.6 正则性链：f∈H^k → u∈H^{k+2} → 嵌入兑换 C^{2,α}（经典解）",
+        "G2.2 FEM：误差估计与收敛率全用嵌入定标（H¹→L² 的收敛阶）",
+        "Rellich 的拓扑背景见 Q5 末（切片接口句）",
+        "几何分析：曲率流/极小曲面里临界嵌入失守 = 爆破分析的第一现场"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 377,
+        "line_end": 386
+      },
+      "fill_hint": "出口清单式；切片接口句（Q5 末的拓扑背景）照抄提及；临界嵌入失守在几何流的爆破一行点到",
+      "content": "三件套的出口：\n\n- **Q5 变分法直接方法**：$J(u)=\\tfrac12\\|\\nabla u\\|^2-\\int fu$ 的极小化序列——有界性靠 Poincaré（强制性：$J(u)\\ge\\tfrac{\\alpha}2\\|u\\|^2-\\tfrac1{2\\alpha}\\|f\\|^2$ 型下界）、收敛子列靠 Rellich、极小值传递靠凸性/下半连续。存在性的三根支柱本单元供两根。Rellich–Kondrachov 的拓扑背景见 Q5 末（切片接口句）。\n- **A4.6 正则性提升**：$f\\in H^k\\Rightarrow u\\in H^{k+2}$，$k$ 足够大时 Sobolev 嵌入把 $H^{k+2}$ 兑换成 $C^{2,\\alpha}$——「弱解自动变成经典解」的最后一跳用的是本单元的汇率表。\n- **G2.2 有限元**：误差估计（Céa 引理 $\\|u-u_h\\|_{H^1}\\le C\\inf_{v_h}\\|u-v_h\\|_{H^1}$）与插值理论全程使用嵌入定标；收敛率分析是嵌入不等式的离散版。\n- **几何分析**：极小曲面/曲率流的爆破分析第一现场就是临界嵌入失守——集中序列（本单元反例）是「能量不灭而图形塌缩」的标准模型，Q10 同伦观点之外的另一条「临界 = 难」战线。\n- **物理/工程**：弹性体的位移场 $u\\in H^1$、其应力 $\\sigma\\in L^2$——Poincaré 型估计是「刚度有限 ⟹ 位移有限」的数学原文。",
+      "links": [
+        "Q5",
+        "A4.6",
+        "G2.2",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.4:embedding.probe1",
+      "type": "probe",
+      "subject": "embedding",
+      "title": "检验：p* 汇率与临界梯度积分各算一遍",
+      "keywords": [
+        "第一问：n=3, p=2 的 p*；n=4, p=2 的 p*；n=2, p=1 的 p*",
+        "第二问：log(1/r) 的 ‖∇u‖²_{L²(B(0,1/2))}=2πln2 的数值",
+        "第三问：H₀¹(0,1) 中 u(x)=x(1−x) 的 ‖∇u‖ 与 ‖u‖ 比值（Poincaré 的具体兑现）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "答案全部带核验；第三问 ‖∇u‖²=1/3、‖u‖²=1/30、比值 √10——Poincaré 常数 C≥√10 才压得住这个 u",
+      "content": "三问：\n\n1. 临界公式 $\\tfrac1{p^*}=\\tfrac1p-\\tfrac1n$ 算汇率：$n=3,p=2$ 时 $p^*=6$【已核验:6|1/(1/2-1/3)】；$n=4,p=2$ 时 $p^*=4$【已核验:4|1/(1/2-1/4)】；$n=2,p=1$ 时 $p^*=2$【已核验:2|1/(1-1/2)】——维数升、汇率降。\n\n2. 临界反例的数值：$u=\\log\\tfrac1r$ 于 $B(0,\\tfrac12)$，$\\|\\nabla u\\|_{L^2}^2=2\\pi\\ln2$ 是多少？它为何**有限**？（$\\approx4.355$【已核验:4.35517218061|2*pi*log(2)】；对数积分 $\\int_0^{1/2}\\tfrac{dr}{r}$ 收敛——「比任何幂都慢」的对数恰好过线，但只买得起 $L^q\\ (q<\\infty)$、买不起 $L^\\infty$）\n\n3. Poincaré 的具体兑现：$u(x)=x(1-x)$ 于 $(0,1)$（$u\\in H_0^1$）。$\\|\\nabla u\\|_{L^2}^2=\\int_0^1(1-2x)^2dx=\\tfrac13$【已核验:0.333333333333|1/3】，$\\|u\\|_{L^2}^2=\\int_0^1x^2(1-x)^2dx=\\tfrac1{30}$【已核验:0.0333333333333|1/30】，比值 $\\|u\\|/\\|\\nabla u\\|=\\sqrt{10}\\approx3.162$【已核验:3.16227766017|sqrt(10)】——Poincaré 常数 $C$ 必须 $\\ge\\sqrt{10}$ 才能覆盖这个 $u$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

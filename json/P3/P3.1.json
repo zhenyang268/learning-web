@@ -1,0 +1,867 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P3.1",
+  "chapter": "P3",
+  "title": "基础四件套（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 163,
+    "line_end": 181,
+    "anchor": "P_computation.tex:163"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P3.1:amgm.statement",
+      "type": "statement",
+      "subject": "amgm",
+      "title": "AM–GM 不等式（均值不等式）",
+      "keywords": [
+        "两个非负数：\\frac{a+b}{2} \\ge \\sqrt{ab}（a,b >= 0）",
+        "取等 \\iff a = b",
+        "n 元版（【熟】）：\\frac{x_1+\\cdots+x_n}{n} \\ge (x_1\\cdots x_n)^{1/n}",
+        "n 元版取等 \\iff x_1 = \\cdots = x_n",
+        "名字：Arithmetic Mean ≥ Geometric Mean",
+        "非负是硬条件，负数时结论可以直接反向"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 166,
+        "line_end": 167
+      },
+      "fill_hint": "严格按 tex_ref 那一句转写（含 a,b ≥ 0 与证明提示）；n 元版是切片自带的【熟】条目，不算新增内容",
+      "content": "**一句话**：两个非负数的算术平均不小于几何平均——$$\n\\frac{a+b}{2}\\ge\\sqrt{ab},\\qquad a,b\\ge 0.\n$$\n\n逐项拆解：\n\n- 左边 $\\frac{a+b}{2}$ 叫**算术平均**（arithmetic mean，AM），就是普通平均；\n- 右边 $\\sqrt{ab}$ 叫**几何平均**（geometric mean，GM）；\n- 不等号方向是「$\\ge$」：平均（AM）在上、几何平均（GM）在下；\n- 条件 $a,b\\ge0$ 不是装饰：它保证 $\\sqrt{ab}$ 是实数、且保证下面 $(\\sqrt a-\\sqrt b)^2$ 这个证明动作合法。\n\n**取等条件**：$\\frac{a+b}{2}=\\sqrt{ab}\\iff a=b$。等号只在两个数相等时取到，这一点比不等式本身更常用——求最小值时你真正要找的是「能不能让各项相等」。\n\n**$n$ 元版**（切片标【熟】）：对 $x_1,\\dots,x_n\\ge0$，\n$$\n\\frac{x_1+\\cdots+x_n}{n}\\ge (x_1\\cdots x_n)^{1/n},\n$$\n取等 $\\iff x_1=\\cdots=x_n$。二元版是 $n=2$ 的特例。\n\n数值感受一下：取 $(x_1,x_2,x_3)=(1,2,4)$，算术平均 $=\\frac{7}{3}=2.3333$【已核验:2.33333333333|(1+2+4)/3】，几何平均 $=8^{1/3}=2.0$【已核验:2|8**(1/3)】，不取等因为三个数不全相等。",
+      "links": [
+        "P3.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:amgm.intuition",
+      "type": "intuition",
+      "subject": "amgm",
+      "title": "AM–GM 直觉：周长固定的矩形中正方形面积最大",
+      "keywords": [
+        "周长为 2(a+b) 的矩形，面积 = ab",
+        "正方形（a=b）时面积最大 = ((a+b)/2)^2",
+        "几何图像：固定和 ⟹ 乘积有上界，上界在最「均」处取到",
+        "「均」是关键词：越平均乘积越大，越极端乘积越小",
+        "对偶读法：固定乘积 ⟹ 和有下界（求和的最小值问题）",
+        "同一个不等式的两种用法：积定和最小 / 和定积最大"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 168,
+        "line_end": 168
+      },
+      "fill_hint": "切片给的直觉原文是「周长固定的矩形中正方形面积最大」，扩写时把「和定」与「积定」两种用法都写出来，这是实际做题时的两种掏法",
+      "content": "**图像**：拿一根长为 $2(a+b)$ 的绳子围矩形，边长取 $a$ 和 $b$。矩形面积是 $ab$，而 AM–GM 说的是\n$$\nab\\le\\left(\\frac{a+b}{2}\\right)^2,\n$$\n即**在周长固定的所有矩形里，正方形（$a=b$）面积最大**。把 $a$ 拉长、$b$ 压扁，面积就掉下来——极端情况 $b\\to0$ 时面积 $\\to0$。\n\n这个图像给了两个可操作的推论：\n\n1. **和定，积有最大值**：$a+b=S$ 固定 $\\implies ab\\le (S/2)^2$，最大值在 $a=b=S/2$。这是「面积最大」的读法。\n2. **积定，和有最小值**：$ab=P$ 固定 $\\implies a+b\\ge 2\\sqrt P$，最小值在 $a=b=\\sqrt P$。这是「最省料」的读法，也是求 $\\min\\bigl(x+\\frac1x\\bigr)$ 那类题的标准手法。\n\n**为什么「均」是关键词**：$\\sqrt{ab}$ 对两个变量是对称且「齐次」的，把 $a$ 增大 $\\delta$、$b$ 减小 $\\delta$，和不变但积变小（因为 $(a+\\delta)(b-\\delta)=ab+\\delta(b-a)-\\delta^2$，在 $a=b$ 处一阶项为 $0$、二阶项 $-\\delta^2<0$）。所以「最均」就是极值点。\n\n**假设与结论要分开**：这里条件是「$a,b\\ge0$」（外加隐含的「$a+b$ 或 $ab$ 有一个固定」这个使用场景），结论是「积不超过平均的平方」。很多人把「两个量相等时取等」当成条件去凑，那是反的——**相等是结论告诉你的取等位置，不是你能假设的前提**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:amgm.proof",
+      "type": "proof",
+      "subject": "amgm",
+      "title": "AM–GM 证明：$(\\sqrt a-\\sqrt b)^2\\ge0$ 展开",
+      "keywords": [
+        "核心一步：平方非负 $(\\sqrt a-\\sqrt b)^2 \\ge 0$",
+        "展开：a - 2\\sqrt{ab} + b >= 0 ⟹ (a+b)/2 >= \\sqrt{ab}",
+        "取等 \\iff \\sqrt a = \\sqrt b \\iff a = b",
+        "依赖：实数平方非负、平方根在 a,b >= 0 时有定义",
+        "易错点：先开方还是先移项——必须先有 a,b >= 0",
+        "n 元版不能用这一步直接推（要凸性/归纳，见 amgm.ngeneral）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 167,
+        "line_end": 167
+      },
+      "fill_hint": "切片只写了一句「$(\\sqrt a-\\sqrt b)^2\\ge0$ 展开即得」，这里把展开的每一步写全，并标注依赖（实数平方非负 + 开方有定义）",
+      "content": "**证明（两行）**：\n\n1. 由 $a,b\\ge0$，$\\sqrt a,\\sqrt b$ 都有定义；实数的平方非负，故\n   $$\n   (\\sqrt a-\\sqrt b)^2\\ge0.\n   $$\n2. 展开左边：\n   $$\n   (\\sqrt a-\\sqrt b)^2 = a - 2\\sqrt a\\sqrt b + b = a - 2\\sqrt{ab} + b \\ge 0,\n   $$\n   移项得 $a+b\\ge 2\\sqrt{ab}$，两边除以 $2$ 即 $\\frac{a+b}{2}\\ge\\sqrt{ab}$。$\\square$\n\n**取等等价链**：等号成立 $\\iff(\\sqrt a-\\sqrt b)^2=0\\iff\\sqrt a=\\sqrt b\\iff a=b$（最后一步也用到 $a,b\\ge0$）。\n\n**依赖链**：整个证明只依赖两件事——\n\n- 实数的平方非负（这是 $\\mathbb R$ 作为**有序域**的性质，复数里没有）；\n- $a,b\\ge0$ 使 $\\sqrt{\\cdot}$ 有定义且 $\\sqrt a\\sqrt b=\\sqrt{ab}$ 成立（$a,b$ 一正一负时 $\\sqrt a\\sqrt b=\\sqrt{ab}$ 会出错）。\n\n**易错点**：\n\n- 不要先写 $\\frac{a+b}{2}\\ge\\sqrt{ab}$ 再平方去证——那是循环论证的方向颠倒；正确方向是从**已知非负的量**（平方）出发推出结论。\n- $n$ 元版**不能**照抄这一步（$n\\ge3$ 时没有「一个平方」可用），要走凸性（Jensen，见 P3.3）或归纳法。\n- 若 $a,b$ 允许为负，$\\sqrt{ab}$ 可能无定义（$ab<0$），此时不等式**根本说不出话**——见 amgm.negative。",
+      "links": [
+        "P3.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:amgm.quantifiers",
+      "type": "comparison",
+      "subject": "amgm",
+      "title": "AM–GM 适用条件表（去掉每条会怎样）",
+      "keywords": [
+        "限定词1：a >= 0（或 b >= 0）—— 去掉后 \\sqrt{ab} 可能无定义",
+        "限定词2：b >= 0（对称性，两条实为一条「同号且非负」）",
+        "限定词3：取等条件 a = b —— 误把它当「可以随便取等」就翻车",
+        "限定词4：n 元版要求全部 x_i >= 0（一个负数就全崩）",
+        "限定词5：是「>=」不是「<=」（记反方向是最常见误用）",
+        "可放宽：a,b 可为 0（退化情形仍成立，0 >= 0）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 166,
+        "line_end": 166
+      },
+      "fill_hint": "产出「条件｜失效的具体例子｜误用后果｜能否放宽」四列表，每行必须给具体数值，禁止写「存在反例」",
+      "content": "把 $\\frac{a+b}{2}\\ge\\sqrt{ab}$ 拆成限定词，逐条问「去掉会怎样」。\n\n| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $a\\ge0$ | $a=b=-1$：$\\frac{a+b}{2}=-1$，$\\sqrt{ab}=\\sqrt{1}=1$，得 $-1\\ge1$ **假** | 得到一个方向相反的界，据此求最小值会给出**比真值大**的错误下界 | 不能放宽为「$ab\\ge0$」；只能放宽为「$a,b$ 同号且非负」（见下行） |\n| $b\\ge0$ | $a=-2,\\ b=-\\tfrac12$：$\\frac{a+b}{2}=-1.25$，$\\sqrt{ab}=1$，$-1.25\\ge1$ **假** | 同上；且 $ab=1>0$ 让你误以为「积为正就安全」 | 与上一条是同一条：**两数都非负**不可拆 |\n| 用在 $x+\\frac1x$ 上时要求 $x>0$ | $x=-1$：$x+\\frac1x=-2$，但按 AM–GM 得 $\\ge2$ | 声称「最小值为 $2$」，而真值在负半轴上是 $-2$【已核验:-2|-1+1/(-1)】，函数在 $(-\\infty,0)$ 无下界 | 可放宽：先判符号，令 $t=-x>0$ 得 $x+\\frac1x=-(t+\\frac1t)\\le-2$ |\n| 方向是 $\\ge$（AM 在上） | 记成 $\\frac{a+b}{2}\\le\\sqrt{ab}$：取 $a=1,b=4$ 得 $2.5\\le2$ **假** | 所有极值方向反了：把「最大值」当「最小值」 | 不可放宽，这是定理内容本身 |\n| $n$ 元版要求**全部** $x_i\\ge0$ | $(x_1,x_2,x_3)=(-1,-1,4)$：算术平均 $=\\frac23=0.6667$【已核验:0.666666666667|(-1-1+4)/3】，几何平均 $=((-1)(-1)\\cdot4)^{1/3}=4^{1/3}=1.5874$【已核验:1.58740105197|4**(1/3)】，得 $0.6667\\ge1.5874$ **假** | 偶数个负号会让乘积变正、骗过检查，结论照样崩 | 不能放宽；负数的「均值不等式」要整体换工具 |\n| 允许 $a=0$ 或 $b=0$ | $a=0,b=4$：$2\\ge0$ 成立 | 无不良后果，是合法退化情形 | **本来就可放宽**：$\\ge$ 允许取 $0$，不需要「$>0$」 |\n\n**一句话总结**：AM–GM 唯一实质条件是「所有参与的量非负」，其余（取等、方向）是使用时的操作细节；非负性一旦破掉，不等式不是「变弱」而是**方向反转或失去意义**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:amgm.negative",
+      "type": "counterexample",
+      "subject": "amgm",
+      "title": "典型误用：对带负数的量用 AM–GM",
+      "keywords": [
+        "误用现场：求 f(x) = x + 1/x 的最小值时不分 x 的符号",
+        "x = -1 时真值 -2，AM–GM 声称 >= 2",
+        "x = -2 时真值 -2.5，仍 < 2",
+        "机制：AM–GM 的取等位置 x = 1 在正半轴，负半轴上根本取不到",
+        "修补：先定符号，令 t = -x > 0，得 x + 1/x <= -2",
+        "函数在负半轴无下界（x -> 0^- 时 -> -∞），「最小值」问题本身无解"
+      ],
+      "tex_ref": null,
+      "fill_hint": "完整写出误用过程与真值对比（含【待核验】数值），最后给修补条件与「问题本身无解」的结论",
+      "content": "**误用现场**：求 $f(x)=x+\\dfrac1x$ 的最小值。常见做法是「由 AM–GM，$x+\\frac1x\\ge 2\\sqrt{x\\cdot\\frac1x}=2$，所以最小值是 $2$」。\n\n**为什么这是错的**：AM–GM 要求 $x$ 与 $\\frac1x$ **都非负**，即 $x>0$。若题目没限定 $x>0$，这一步就非法。\n\n**逐项算给你看**：\n\n- $x=-1$：$f(-1)=-1+\\frac1{-1}=-2$【已核验:-2|-1+1/(-1)】。而误用给出的结论是 $f\\ge2$，与 $-2$ 直接矛盾。\n- $x=-2$：$f(-2)=-2-\\frac12=-2.5$【已核验:-2.5|-2+1/(-2)】，比 $-2$ 更小。\n- $x\\to0^-$：$f(x)\\to-\\infty$。所以 $f$ **在整个定义域 $\\mathbb R\\setminus\\{0\\}$ 上没有最小值**，只有正半轴上的局部最小值 $2$（在 $x=1$ 取到）。\n\n**失效机制**：AM–GM 给出的界 $2$ 是在**取等位置 $x=\\frac1x$ 即 $x=1$** 处达到的，这个位置在正半轴。负半轴上两个加项都是负的，不等式方向事实上反转：令 $t=-x>0$，则\n$$\nf(x)=-\\Bigl(t+\\frac1t\\Bigr)\\le -2,\n$$\n等号在 $t=1$（即 $x=-1$）取到——**负半轴上是最大值 $-2$，不是最小值**。\n\n**修补条件（三条，按优先级）**：\n\n1. 先用题设确认变量符号；若 $x>0$，AM–GM 合法，最小值 $2$。\n2. 若 $x<0$，令 $t=-x>0$ 再用，得到的是**上界** $-2$。\n3. 若符号未定，先回答「有没有最小值」：这里没有（$x\\to0^-$ 发散到 $-\\infty$），此时任何「最小值 $=2$」的断言都是错的。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:amgm.ngeneral",
+      "type": "extension",
+      "subject": "amgm",
+      "title": "n 元版：为什么它不能照抄二元的证明",
+      "keywords": [
+        "n 元：\\frac{\\sum x_i}{n} >= (\\prod x_i)^{1/n}，取等 \\iff 全相等",
+        "二元证明（一个平方）在 n >= 3 失效，要用凸性或归纳",
+        "标准路线1：对 ln 用 Jensen（ln 凹 ⟹ Jensen 反向）",
+        "标准路线2：Cauchy 归纳法（2^k 归纳 + 反向补齐）",
+        "加权版：\\sum \\lambda_i x_i >= \\prod x_i^{\\lambda_i}（\\sum\\lambda_i=1）",
+        "加权版是 PDE 里真正用的形态（带权放缩）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 169,
+        "line_end": 169
+      },
+      "fill_hint": "切片只给了 n 元版的陈述（标【熟】）没给证明；这里补两条证明路线与加权版，并说明为什么二元证法推不上去",
+      "content": "**陈述**（切片 $n$ 元版，标【熟】）：$x_1,\\dots,x_n\\ge0\\implies$\n$$\n\\frac{x_1+\\cdots+x_n}{n}\\ge (x_1\\cdots x_n)^{1/n},\n\\qquad\\text{取等}\\iff x_1=\\cdots=x_n.\n$$\n\n**为什么二元证法推不上去**：二元证明靠的是「一个平方 $(\\sqrt a-\\sqrt b)^2\\ge0$」。当 $n\\ge3$ 时没有对应的单项平方能把 $\\sum x_i$ 与 $\\prod x_i$ 同时串起来——这是初学者最容易「以为照抄就行」的地方。\n\n**路线 1（最短，用 Jensen）**：$\\ln$ 在 $(0,\\infty)$ 上是**凹**函数，把 Jensen（见 P3.3）用在凹函数上方向反转：\n$$\n\\ln\\frac{x_1+\\cdots+x_n}{n}\\ \\ge\\ \\frac{\\ln x_1+\\cdots+\\ln x_n}{n}=\\ln\\bigl((x_1\\cdots x_n)^{1/n}\\bigr),\n$$\n再由 $\\ln$ 单调递增即得结论。取等条件来自 Jensen 的取等（凹函数要求所有 $x_i$ 相等）。\n\n**路线 2（Cauchy 归纳）**：先对 $n=2^k$ 用二元版反复二分归纳，再对任意 $n$ 补若干个「算术平均」把它们凑到 $2^k$ 个，最后开方收尾。这条路线不用凸性，但步骤长。\n\n**加权版**（实际最常用）：$\\lambda_i>0,\\ \\sum_{i}\\lambda_i=1\\implies$\n$$\n\\sum_i \\lambda_i x_i\\ \\ge\\ \\prod_i x_i^{\\lambda_i},\n$$\n取等 $\\iff$ 所有（权重为正的）$x_i$ 相等。PDE 与估计里掏出来的几乎是这一版：因为它允许你给「坏项」小权重、给「好项」大权重。\n\n数值校验（$n=3$，$(1,2,4)$）：算术平均 $2.3333$、几何平均 $2.0$【已核验:2|8**(1/3)】，差 $0.3333$，不取等；若把三个数换成 $(2,2,2)$ 则两边都是 $2$，取等。",
+      "links": [
+        "P3.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:amgm.application",
+      "type": "application",
+      "subject": "amgm",
+      "title": "AM–GM 用在哪一层",
+      "keywords": [
+        "求和的最小值 / 积的最大值（最优化第一反应）",
+        "Young 不等式的 p=q=2 退化形态就是 AM–GM",
+        "PDE 能量估计里把 a^2 + b^2 放成 2ab 会用它的反向组合",
+        "概率：EY >= e^{E ln Y}（Jensen 版）、熵的界",
+        "数值分析：迭代法步长选取、条件数估计",
+        "CG 落点：BRDF 归一化常数的下界估计"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条写一句「谁在用什么」，不展开成教程；links 指向被服务的章节",
+      "content": "AM–GM 是「最优化第一反应」级的工具，落点按层级排：\n\n- **本组内部**：Young 不等式在 $p=q=2$ 时退化成 $ab\\le\\frac{a^2}{2}+\\frac{b^2}{2}$，而 $2ab\\le a^2+b^2$ 正是 AM–GM 用在 $a^2,b^2$ 上的结果（见 young.statement）。所以 AM–GM 是 Young 的**种子**。\n- **PDE 能量估计（A4.6 / P9.2）**：能量法里要把 $\\int|\\nabla u|^2$ 与 $\\int|u|^2$ 配成完全平方，AM–GM 给出「交叉项不超过两个平方项的均值」这个基本动作。\n- **概率论（C1 / C7.1）**：对正随机变量 $Y$，$\\mathbb E Y\\ge e^{\\mathbb E\\ln Y}$——这是 AM–GM 的 Jensen 形式，用来比较算术平均与几何平均型的估计量。\n- **渲染（H2）**：BRDF 的归一化常数、以及「能量守恒 $\\le1$」这类断言的初等证明，常是 AM–GM 的加权版。\n- **数值分析（G5 优化 / G3 数值线性代数）**：步长与条件数的界、以及「两个正量之和固定时积最大」这类参数选取。\n\n**使用判据**：看到「积固定求和最小」或「和固定求积最大」，且**所有量非负** ⟹ 掏 AM–GM。看到加权需求 ⟹ 掏加权版。看到 $ab$ 与 $a^p,b^q$ 混在一起 ⟹ 该掏 Young 了（见 general.compare）。",
+      "links": [
+        "P3.3",
+        "A4.6",
+        "P9.2",
+        "C1",
+        "C7.1",
+        "H2",
+        "G5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:amgm.probe1",
+      "type": "probe",
+      "subject": "amgm",
+      "title": "检验题：AM–GM 的取等与符号陷阱",
+      "keywords": [
+        "两问：正数情形验证取等；负数情形验证结论反转",
+        "答案数值均带【待核验】",
+        "从 quantifiers 表「x + 1/x 要求 x > 0」一行变来"
+      ],
+      "tex_ref": null,
+      "fill_hint": "题目必须能算出具体数值；答案写在题后括号内供前端折叠",
+      "content": "**第 1 问**：取 $a=1,\\ b=4$，验证 AM–GM：算术平均 $=\\dfrac{1+4}{2}$，几何平均 $=\\sqrt{1\\cdot4}$，两者相差多少？取等需要什么条件？\n（答案：$2.5$ 与 $2$，相差 $0.5$【已核验:2.5|(1+4)/2】与【已核验:2|sqrt(1*4)】；取等需要 $a=b$，此处 $1\\ne4$ 故严格不等）\n\n**第 2 问**：设 $f(x)=x+\\dfrac1x$。\n\n- (a) 在 $x>0$ 上，用 AM–GM 求最小值，并写出取等点；\n- (b) 计算 $f(-1)$ 与 $f(-2)$，说明「最小值为 $2$」这个断言错在哪；\n- (c) $f$ 在 $\\mathbb R\\setminus\\{0\\}$ 上有没有最小值？为什么？\n\n（答案：(a) 最小值 $2$，在 $x=1$；(b) $f(-1)=-2$【已核验:-2|-1+1/(-1)】、$f(-2)=-2.5$【已核验:-2.5|-2+1/(-2)】，断言错在没限制 $x>0$ 就用了 AM–GM；(c) 没有，$x\\to0^-$ 时 $f(x)\\to-\\infty$，负半轴上实为最大值 $-2$）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.statement",
+      "type": "statement",
+      "subject": "cs",
+      "title": "Cauchy–Schwarz 不等式（柯西–施瓦茨）",
+      "keywords": [
+        "(\\sum a_i b_i)^2 <= (\\sum a_i^2)(\\sum b_i^2)",
+        "取等 \\iff 两向量共线（a = \\lambda b 或 b = 0）",
+        "积分版：(\\int fg)^2 <= \\int f^2 \\int g^2",
+        "积分版要求 f, g \\in L^2",
+        "向量写法：|\\langle x,y\\rangle| <= \\|x\\|\\|y\\|",
+        "是 Hölder 的 p=q=2 特例"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 170,
+        "line_end": 173
+      },
+      "fill_hint": "按 tex_ref 三行转写（离散版 + 取等条件 + 积分版）；积分版那句「即 L^2 内积的 Cauchy 不等式（见 A2）」要展开成 f,g ∈ L^2",
+      "content": "**离散版**：对实数（或复数）序列 $a_i,b_i$，\n$$\n\\Bigl(\\sum_i a_i b_i\\Bigr)^2\\ \\le\\ \\Bigl(\\sum_i a_i^2\\Bigr)\\Bigl(\\sum_i b_i^2\\Bigr).\n$$\n\n**向量版**（同一件事的内积写法）：$|\\langle \\mathbf a,\\mathbf b\\rangle|\\le\\|\\mathbf a\\|\\,\\|\\mathbf b\\|$，其中 $\\|\\mathbf a\\|^2=\\sum a_i^2$。\n\n**取等条件**：等号成立 $\\iff$ 两向量**共线**，即存在 $\\lambda$ 使 $\\mathbf a=\\lambda\\mathbf b$（或 $\\mathbf b=\\mathbf 0$）。这一条比不等式本身更容易被用错，见 cs.equality。\n\n**积分版**：若 $f,g\\in L^2$（即 $\\int f^2<\\infty,\\ \\int g^2<\\infty$），\n$$\n\\Bigl(\\int f g\\Bigr)^2\\ \\le\\ \\int f^2\\ \\int g^2,\n$$\n取等 $\\iff$ 在 a.e. 意义下 $f=\\lambda g$。这就是 $L^2$ 内积 $\\langle f,g\\rangle=\\int fg$ 上的 Cauchy 不等式（见 A2.2），也是 Hölder 不等式 $p=q=2$ 的特例（见 P3.3）。\n\n**为什么要求 $L^2$**：右边若有一个积分是 $+\\infty$，不等式退化成「$\\le\\infty$」没有信息；左边 $\\int fg$ 的收敛性恰恰由 C–S 保证——所以 $f,g\\in L^2\\implies fg\\in L^1$ 本身就是 C–S 的一个推论。",
+      "links": [
+        "A2.2",
+        "P3.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.intuition",
+      "type": "intuition",
+      "subject": "cs",
+      "title": "C–S 直觉：投影 ≤ 全长",
+      "keywords": [
+        "\\langle a,b\\rangle = \\|a\\|\\|b\\|\\cos\\theta，|\\cos\\theta| <= 1",
+        "内积 = 一个向量在另一个方向上的投影长度 × 另一个的长度",
+        "投影不可能超过被投影向量自身 ⟹ |内积| <= \\|a\\|\\|b\\|",
+        "取等 \\iff \\cos\\theta = \\pm1 \\iff 共线（夹角 0 或 \\pi）",
+        "假设给了什么：内积结构 + 范数由内积诱导",
+        "结论为什么成立：夹角的有界性被内积结构锁住"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 172,
+        "line_end": 172
+      },
+      "fill_hint": "切片直觉原文「投影 ≤ 全长；取等 ⟺ 两向量共线」；扩写时把「假设给了什么」与「结论为什么成立」分开写",
+      "content": "**图像**：内积的几何定义是 $\\langle\\mathbf a,\\mathbf b\\rangle=\\|\\mathbf a\\|\\|\\mathbf b\\|\\cos\\theta$，其中 $\\theta$ 是夹角。把它改写一下：\n$$\n\\langle\\mathbf a,\\mathbf b\\rangle=\\underbrace{\\|\\mathbf a\\|\\cos\\theta}_{\\text{\\mathbf a 在 \\mathbf b 方向上的投影（带符号）}}\\cdot\\|\\mathbf b\\|.\n$$\n投影的长度**不可能超过被投影向量自身的长度**（斜边不短于直角边），即 $\\bigl|\\|\\mathbf a\\|\\cos\\theta\\bigr|\\le\\|\\mathbf a\\|$，于是 $|\\langle\\mathbf a,\\mathbf b\\rangle|\\le\\|\\mathbf a\\|\\|\\mathbf b\\|$。\n\n**假设与结论分开写**：\n\n- *假设给了什么*：一个内积空间结构（双线性/共轭线性、正定、对称）——「夹角」这个概念是由内积**定义**出来的，不是额外假设。\n- *结论为什么因此成立*：$|\\cos\\theta|\\le1$ 是纯几何事实，C–S 说的是「内积这个代数运算被几何的夹角有界性锁住」。所以在**任何**内积空间（不只是 $\\mathbb R^n$）里都成立，包括 $L^2$、包括无穷维——这就是积分版为什么也对。\n\n**取等的几何**：$|\\cos\\theta|=1\\iff\\theta=0$ 或 $\\pi\\iff$ 两向量共线。注意是**共线**（同向或反向），不是「正交」。正交时 $\\cos\\theta=0$，左边是 $0$，不等式严格成立（除非有零向量）。这是 cs.equality 要打的靶子。\n\n**为什么这条不等式这么值钱**：它把「两个量的乘积之和」用一个「平方和的乘积」控制住，从而把交叉项（最难处理的东西）换成两个可分别估计的量——这正是能量估计、方差估计、相关性界的一切来源。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.proof",
+      "type": "proof",
+      "subject": "cs",
+      "title": "C–S 证明：二次式判别式 ≤ 0",
+      "keywords": [
+        "构造 Q(t) = \\sum (a_i - t b_i)^2 >= 0 对一切 t",
+        "Q(t) 是 t 的二次式：\\|b\\|^2 t^2 - 2\\langle a,b\\rangle t + \\|a\\|^2",
+        "恒非负 ⟹ 判别式 \\Delta = 4\\langle a,b\\rangle^2 - 4\\|a\\|^2\\|b\\|^2 <= 0",
+        "取等 ⟹ 存在 t 使 Q(t) = 0 ⟹ a_i = t b_i 共线",
+        "b = 0 时单独处理（平凡情形）",
+        "易错点：忘记先排除 \\|b\\| = 0"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 171,
+        "line_end": 171
+      },
+      "fill_hint": "切片给的证明提示是「\\sum(a_i-tb_i)^2>=0 作为 t 的二次式其判别式 <=0」，把二次式展开、判别式计算、取等回推三步写全",
+      "content": "**证明（四步）**：\n\n1. **构造恒非负的量**：对任意实数 $t$，\n   $$\n   Q(t)=\\sum_i (a_i-tb_i)^2\\ \\ge\\ 0,\n   $$\n   因为它是平方之和。\n2. **展开成 $t$ 的二次式**：\n   $$\n   Q(t)=\\sum b_i^2\\,t^2-2\\sum a_ib_i\\,t+\\sum a_i^2\n   =\\|\\mathbf b\\|^2t^2-2\\langle\\mathbf a,\\mathbf b\\rangle t+\\|\\mathbf a\\|^2.\n   $$\n3. **用判别式**：若 $\\|\\mathbf b\\|>0$，$Q$ 是开口向上的二次函数且**恒非负**，故它与 $t$ 轴至多相切，判别式 $\\le0$：\n   $$\n   \\Delta=4\\langle\\mathbf a,\\mathbf b\\rangle^2-4\\|\\mathbf a\\|^2\\|\\mathbf b\\|^2\\le0\n   \\ \\implies\\ \\langle\\mathbf a,\\mathbf b\\rangle^2\\le\\|\\mathbf a\\|^2\\|\\mathbf b\\|^2.\n   $$\n   若 $\\|\\mathbf b\\|=0$（即 $\\mathbf b=\\mathbf 0$），则 $\\langle\\mathbf a,\\mathbf b\\rangle=0$，不等式平凡成立。\n4. **取等回推**：取等 $\\iff$ 判别式 $=0\\iff$ 存在 $t_0$ 使 $Q(t_0)=0\\iff$ 每个平方项都为 $0\\iff a_i=t_0b_i$（共线）。\n\n**依赖链**：只用到了「实数平方非负」与「二次函数判别式判据」——**没有用到维数**，所以 $\\mathbb R^n$、$L^2$、任意内积空间都照搬（积分版只需把 $\\sum$ 换成 $\\int$，取等改述为 a.e. 共线）。\n\n**易错点**：\n\n- 必须先排除 $\\|\\mathbf b\\|=0$ 再用判别式（否则二次项系数为零，不是二次式）。\n- 判别式算错符号是最常见的算术失误：这里 $-2\\langle a,b\\rangle$ 是 $t$ 的系数，$B^2-4AC$ 里的 $B=-2\\langle a,b\\rangle$。\n- 复内积情形要取 $t$ 为复数或改用 $|\\langle a,b\\rangle|^2$ 的版本，不能照抄实数推导。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.quantifiers",
+      "type": "comparison",
+      "subject": "cs",
+      "title": "C–S 适用条件表（去掉每条会怎样）",
+      "keywords": [
+        "条件1：有限和版本要求 \\sum a_i^2, \\sum b_i^2 有限（无穷和需收敛）",
+        "条件2：积分版要求 f, g \\in L^2（一个不在 L^2 就无信息）",
+        "条件3：取等 ⟺ 共线，不是「正交」也不是「各分量相等」",
+        "条件4：复情形要加共轭 \\sum a_i \\bar b_i",
+        "条件5：左边是 |内积|，漏掉绝对值在复/带符号情形翻车",
+        "可放宽：可数无穷和（由有限和 + 极限过渡）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 170,
+        "line_end": 173
+      },
+      "fill_hint": "四列表：条件｜失效的具体例子｜误用后果｜能否放宽；每行给具体向量或具体函数，禁止「存在反例」",
+      "content": "把 $\\bigl(\\sum a_ib_i\\bigr)^2\\le\\bigl(\\sum a_i^2\\bigr)\\bigl(\\sum b_i^2\\bigr)$ 与积分版拆开逐条审。\n\n| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 求和项数有限（或两个平方和都收敛） | $a_i=b_i=1$（无穷多个）：$\\sum a_ib_i=\\infty$，$\\sum a_i^2=\\infty$，写成 $\\infty\\le\\infty\\cdot\\infty$ 无意义 | 用无穷和去做有限估计，得到无信息的 $\\infty$ | 可放宽到**可数无穷和**，但需先证明两个平方和收敛（由有限和取极限，见 A1.5） |\n| 积分版要求 $f,g\\in L^2$ | $f=g=x^{-1/2}$ 在 $(0,1)$：$\\int fg=\\int x^{-1}\\,dx=\\infty$（黎曼和 $\\sum_{k}\\frac{1}{x_k}\\Delta x\\approx\\ln N$，$N=10^{4}$ 时约为 $9.21$【已核验:9.21034037198|log(10000)】，随 $N\\to\\infty$ 发散），而 $\\int f^2=\\int x^{-1}=\\infty$ | 右边 $\\infty$，界是空的；且「$fg\\in L^1$」这个常用推论取不到 | 不能放宽；这是 Hölder 的一般要求（P3.3） |\n| 取等 $\\iff$ **共线** | $\\mathbf a=(1,0),\\ \\mathbf b=(0,1)$：$\\bigl(\\sum a_ib_i\\bigr)^2=0$，右边 $=1\\cdot1=1$【已核验:0|(1*0+0*1)**2】与【已核验:1|(1+0)*(0+1)】 | 误以为正交或「对应分量相等」时取等 ⟹ 把非紧的界当成最优常数 | 不可放宽，这是定理内容 |\n| 左边在复/带符号情形必须是 $|\\cdot|$ | 复向量 $\\mathbf a=(1,i),\\ \\mathbf b=(1,-i)$：$\\sum a_i b_i$（不加共轭）$=1\\cdot1+i\\cdot(-i)=2$，而 $\\|a\\|\\|b\\|=\\sqrt2\\sqrt2=2$，看似取等；但正确内积是 $\\sum a_i\\bar b_i=1+i\\cdot i=0\\le2$ | 用错内积定义会得到错误的「取等」判断 | 不可放宽：复内积必须共轭（见 A2.2） |\n| 积分版取等是 **a.e. 共线** | $[0,1]$ 上 $f\\equiv1,\\ g(x)=x$：$\\int fg=\\frac12=0.5$，界 $=\\sqrt{1\\cdot\\frac13}=0.5774$【已核验:0.57735026919|sqrt(1*(1/3))】 | 以为界是紧的（$0.5$ vs $0.5774$，差 $0.0774$），据此写「最优常数」就错 | 不可放宽；真正取等要 $f=\\lambda g$ a.e.，例如 $f=x,\\ g=2x$ 时两边都是 $\\frac23$【已核验:0.666666666667|sqrt((1/3)*(4/3))】 |\n\n**一句话总结**：C–S 的硬条件只有「两边都在 $L^2$（或平方和有限）」，真正的坑在**取等条件**（共线，不是正交）与**复情形的共轭**。",
+      "links": [
+        "A2.2",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.equality",
+      "type": "counterexample",
+      "subject": "cs",
+      "title": "典型误用：C–S 等号条件用错（正交 ≠ 取等）",
+      "keywords": [
+        "误用说法：「两向量正交时 C–S 取等」—— 错，正交时左边 = 0，最不取等",
+        "具体数值：a=(1,0), b=(0,1)：左边 0，右边 1",
+        "积分版误用：f=1, g=x on [0,1]：0.5 vs 0.5774，界不紧",
+        "真正取等例：f=x, g=2x：两边都 = 2/3",
+        "后果：把非紧的界当最优常数写进能量估计",
+        "修补：用前先检查是否存在 \\lambda 使 f = \\lambda g a.e."
+      ],
+      "tex_ref": null,
+      "fill_hint": "两个具体数值反例（离散正交 + 积分非共线）+ 一个真正取等的正例，全部带【待核验】；结尾给「用前先查共线」的检验动作",
+      "content": "**最常见的误用**：听到「取等 $\\iff$ 两向量共线」，做题时却记成「两向量正交时取等」或「对应分量成比例的对偶版」。正交恰恰是**最不取等**的情形。\n\n**离散反例（正交）**：取 $\\mathbf a=(1,0),\\ \\mathbf b=(0,1)$。\n\n- 左边：$\\bigl(\\sum a_ib_i\\bigr)^2=(1\\cdot0+0\\cdot1)^2=0$【已核验:0|(1*0+0*1)**2】；\n- 右边：$\\bigl(\\sum a_i^2\\bigr)\\bigl(\\sum b_i^2\\bigr)=1\\cdot1=1$【已核验:1|(1+0)*(0+1)】；\n- 不等式是 $0\\le1$，**严格**成立，离取等最远。\n\n**积分反例（不共线，界不紧）**：在 $[0,1]$ 上取 $f\\equiv1,\\ g(x)=x$。\n\n- $\\int fg=\\int_0^1 x\\,dx=\\frac12=0.5$；\n- $\\int f^2=1$，$\\int g^2=\\frac13$，故界为 $\\sqrt{1\\cdot\\frac13}=0.5774$【已核验:0.57735026919|sqrt(1*(1/3))】；\n- $0.5<0.5774$，**差 $0.0774$**，界不是最优的。\n\n**误用后果**：能量估计里如果把这个 $0.5774$ 当作「最佳常数」写进最终不等式，得到的估计会比真实最优常数**松约 $15\\%$**（相对差距 $\\frac{0.5774-0.5}{0.5}=0.1547$【已核验:0.154700538379|(sqrt(1/3)-0.5)/0.5】）。在需要尖锐常数的场合（例如判断某能量是否真的一致有界，或 Gronwall 里指数上的常数）这会直接改变结论。\n\n**真正取等的正例**：$f(x)=x,\\ g(x)=2x$（共线，$\\lambda=\\frac12$）。\n\n- $\\int fg=\\int_0^1 2x^2dx=\\frac23$；\n- 界 $=\\sqrt{\\frac13\\cdot\\frac43}=\\sqrt{\\frac49}=\\frac23$【已核验:0.666666666667|sqrt((1/3)*(4/3))】，两边相等 ✓。\n\n**修补动作**：每次用 C–S 后，若打算声称「常数最优」，必须回答一句：*是否存在 $\\lambda$ 使 $f=\\lambda g$（a.e.）？* 答不上来就不能说最优。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.integral",
+      "type": "extension",
+      "subject": "cs",
+      "title": "积分版与 $L^2$ 内积：为什么它在无穷维也成立",
+      "keywords": [
+        "L^2 内积 \\langle f,g\\rangle = \\int fg，范数 \\|f\\|_2 = (\\int f^2)^{1/2}",
+        "C–S 在 L^2 上成立 ⟹ fg \\in L^1（两个 L^2 函数相乘一定可积）",
+        "取等：f = \\lambda g a.e.",
+        "同一证明搬过去：把 \\sum 换成 \\int，判别式论证不变",
+        "推论：L^2 是内积空间，进而有正交投影（A2.2）",
+        "注意：L^1 里没有内积，C–S 无对应物（改用 Hölder）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 173,
+        "line_end": 173
+      },
+      "fill_hint": "切片一句「即 L^2 内积的 Cauchy 不等式（见 A2）」；这里展开 L^2 内积结构、fg ∈ L^1 推论、并点明 L^1 没有内积所以要 Hölder",
+      "content": "**积分版**：$f,g\\in L^2$ 时，\n$$\n\\Bigl(\\int f g\\Bigr)^2\\le\\int f^2\\ \\int g^2,\n\\qquad\\text{取等}\\iff f=\\lambda g\\ \\text{a.e.}\n$$\n\n**为什么证明能照搬**：有限和的证明只用到「平方非负」与「判别式」，把 $\\sum_i$ 换成 $\\int$，$\\sum(a_i-tb_i)^2\\ge0$ 变成 $\\int(f-tg)^2\\ge0$，其余一字不改。这说明 C–S 是**内积空间的性质**，与「是 $\\mathbb R^n$ 还是函数空间」无关。\n\n**最重要的推论**：若 $f,g\\in L^2$，则 $fg\\in L^1$，且 $\\|fg\\|_1\\le\\|f\\|_2\\|g\\|_2$。这条在 PDE 里天天用——它解释了为什么「两个平方可积的东西乘起来是可积的」，从而能量估计里的 $\\int |\\nabla u|\\,|u|$ 这类交叉项是**有意义的**。\n\n**$L^2$ 的内积结构**（见 A2.2）：$\\langle f,g\\rangle=\\int fg$ 使 $L^2$ 成为希尔伯特空间（Hilbert space），于是有正交、投影、Parseval 恒等式（见 A2.3 傅里叶分析）。C–S 在这里的角色是「保证内积有限」，它是整栋楼的地基。\n\n**边界提醒**：$L^1$ **没有**内积（$\\int fg$ 对 $f,g\\in L^1$ 未必有限），所以 $L^1$ 上不存在 C–S 的对应物。要在 $L^p$ 里做「乘积可积」的判断，正确工具是 Hölder（见 P3.3），C–S 只是它的 $p=q=2$ 一角。",
+      "links": [
+        "A2.2",
+        "A2.3",
+        "P3.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.application",
+      "type": "application",
+      "subject": "cs",
+      "title": "C–S 用在哪一层",
+      "keywords": [
+        "希尔伯特空间：内积有限 + 正交投影（A2.2）",
+        "傅里叶分析：Parseval、Bessel 不等式的地基（A2.3）",
+        "概率：|Cov(X,Y)| <= \\sigma_X \\sigma_Y、相关系数 \\in [-1,1]",
+        "PDE 能量估计：控制交叉项 \\int |\\nabla u||u|",
+        "MC 渲染：方差分析、重要性采样权重的有界性（H4）",
+        "几何处理：法向/曲率估计里的点积控制（H1）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁用了 C–S 的哪一面」；links 指向被服务章节，不展开成教程",
+      "content": "C–S 是「凡有内积处必有它」的工具，落点：\n\n- **A2.2 希尔伯特空间**：C–S 保证 $\\langle f,g\\rangle$ 有限，从而 $L^2$ 真是一个内积空间；正交投影、最佳逼近都建立在它之上。\n- **A2.3 傅里叶分析**：Parseval 恒等式与 Bessel 不等式是 C–S 在正交基上的直接推论；Fourier 系数的有界性要靠它。\n- **A4.6 / P9.2 能量估计**：把交叉项 $\\int|\\nabla u||u|$ 放成 $\\|\\nabla u\\|_2\\|u\\|_2$，这是能量法流水线的标准一步。\n- **C3 / C7.1 概率**：$|\\mathrm{Cov}(X,Y)|\\le\\sigma_X\\sigma_Y$，相关系数 $\\rho\\in[-1,1]$——就是 C–S 用在中心化随机变量上。\n- **H4 蒙特卡洛积分**：方差 $\\mathrm{Var}$ 与协方差的控制、重要性采样权重 $\\frac{p}{q}$ 的有界性判断，都要 C–S。\n- **H1 离散微分几何**：法向、曲率估计里的点积 $(\\mathbf n\\cdot\\mathbf v)$ 上界。\n\n**使用判据**：出现「两个函数（或向量）乘积的积分/求和」，且你能把两者各自配成 $L^2$（或 $\\ell^2$）范数 ⟹ 掏 C–S。若其中一个只能在 $L^p$、$p\\ne2$ 里控制 ⟹ 换 Hölder（见 general.compare 与 P3.3）。",
+      "links": [
+        "A2.2",
+        "A2.3",
+        "A4.6",
+        "P9.2",
+        "C3",
+        "C7.1",
+        "H4",
+        "H1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:cs.probe1",
+      "type": "probe",
+      "subject": "cs",
+      "title": "检验题：共线才取等（数值对拍）",
+      "keywords": [
+        "三小问：正交对、非共线对、共线对",
+        "所有数值带【待核验】",
+        "从 quantifiers 表「取等 ⟺ 共线」一行变来"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每问都能算出具体数值；答案写在括号内供折叠",
+      "content": "**第 1 问**：取 $\\mathbf a=(1,0),\\ \\mathbf b=(0,1)$，分别算 $\\bigl(\\sum a_ib_i\\bigr)^2$ 与 $\\bigl(\\sum a_i^2\\bigr)\\bigl(\\sum b_i^2\\bigr)$，判断这是否取等情形。\n（答案：$0$ 与 $1$【已核验:0|(1*0+0*1)**2】与【已核验:1|(1+0)*(0+1)】；不取等，两向量正交而非共线）\n\n**第 2 问**：在 $[0,1]$ 上取 $f\\equiv1,\\ g(x)=x$，算 $\\int fg$ 与 $\\sqrt{\\int f^2\\int g^2}$，两者相差多少？相对差距是多少？\n（答案：$0.5$ 与 $0.5774$【已核验:0.57735026919|sqrt(1*(1/3))】，相差 $0.0774$，相对差距 $15.47\\%$【已核验:0.154700538379|(sqrt(1/3)-0.5)/0.5】）\n\n**第 3 问**：在 $[0,1]$ 上取 $f(x)=x,\\ g(x)=2x$，验证取等，并说明为什么第 2 问不取等而这一问取等。\n（答案：$\\int fg=\\frac23$，界 $=\\sqrt{\\frac13\\cdot\\frac43}=\\frac23$【已核验:0.666666666667|sqrt((1/3)*(4/3))】；因为 $g=2f$ 共线，而第 2 问中 $x$ 与 $1$ 不共线）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.statement",
+      "type": "statement",
+      "subject": "young",
+      "title": "Young 不等式（杨氏不等式）",
+      "keywords": [
+        "ab <= a^p/p + b^q/q（a,b >= 0，1/p + 1/q = 1）",
+        "p, q 互为共轭指数（conjugate exponents）",
+        "p = q = 2 时退化为 ab <= a^2/2 + b^2/2（即 2ab <= a^2 + b^2）",
+        "取等 \\iff a^p = b^q",
+        "要求 1 < p < \\infty（p=1 时 q=\\infty 是极限情形）",
+        "PDE 能量估计的头号工具"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 174,
+        "line_end": 178
+      },
+      "fill_hint": "按 tex_ref 两行转写（陈述 + 条件 + 取等）；切片称它是「PDE 能量估计的头号工具」，这句话要在 application 里兑现",
+      "content": "**陈述**：$a,b\\ge0$，$1<p<\\infty$，$\\dfrac1p+\\dfrac1q=1$（$q=\\frac{p}{p-1}$ 叫 $p$ 的**共轭指数**，conjugate exponent）时，\n$$\nab\\ \\le\\ \\frac{a^p}{p}+\\frac{b^q}{q},\n\\qquad\\text{取等}\\iff a^p=b^q.\n$$\n\n逐项拆解：\n\n- 左边是一个**乘积** $ab$，右边是两个**幂**的加权和，权重正好是 $\\frac1p$ 与 $\\frac1q$ 且加起来等于 $1$；\n- 共轭关系 $\\frac1p+\\frac1q=1$ 是硬性条件，见 young.conjugate；\n- $p=q=2$ 时退化为 $ab\\le\\frac{a^2}{2}+\\frac{b^2}{2}$，即 $2ab\\le a^2+b^2$——这正是 AM–GM 用在 $a^2,b^2$ 上的结果，所以 Young 是 AM–GM 的**指数家族推广**。\n\n**取等条件** $a^p=b^q$：这是使用它时最需要记住的一条。给定 $a$，取 $b=a^{p/q}=a^{p-1}$ 就取等（因为 $b^q=a^{p}$）。\n\n**为什么它是 PDE 的头号工具**：能量估计里的典型动作是「把交叉项 $\\int|\\nabla u|\\,|u|$ 拆成 $\\varepsilon\\int|\\nabla u|^2+C_\\varepsilon\\int|u|^2$」——这正是带 $\\varepsilon$ 的 Young（见 young.epsilon）。没有它，交叉项无法被吸收进能量本身。",
+      "links": [
+        "P9.2",
+        "A4.6"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.intuition",
+      "type": "intuition",
+      "subject": "young",
+      "title": "Young 直觉：Cauchy–Schwarz 的「指数家族」版",
+      "keywords": [
+        "C–S / AM–GM 只处理 2 次（平方），Young 处理任意 p 次",
+        "几何：把矩形面积 ab 塞进两个「幂函数下的面积」里",
+        "a^p/p 是 x ↦ x^{p-1} 曲线下的面积，b^q/q 是反函数下的面积",
+        "Young 等号 = 矩形刚好填满两块面积（反函数互为镜像）",
+        "直觉：乘积 → 两个可分配权重的幂，权重由 1/p + 1/q = 1 定",
+        "假设给了什么：共轭关系；结论为什么成立：凸性/凹性"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 177,
+        "line_end": 177
+      },
+      "fill_hint": "切片直觉原文「Cauchy–Schwarz 的『指数家族』版」；扩写时给「反函数曲线下面积」这个几何图像，并分开写假设与结论",
+      "content": "**图像（矩形的两种填法）**：看 $a^p/p$ 与 $b^q/q$ 这两个量。函数 $y=x^{p-1}$ 在 $[0,a]$ 下的面积是 $\\int_0^a x^{p-1}dx=\\frac{a^p}{p}$；它的反函数 $x=y^{q-1}$ 在 $[0,b]$ 下（对 $y$ 积分）的面积是 $\\frac{b^q}{q}$。这两个面积拼起来**总是**不小于以 $a,b$ 为边的矩形面积 $ab$——这正是 Young 不等式。等号在矩形刚好被两块填满时取到，即 $b=a^{p-1}$（等价于 $a^p=b^q$）。\n\n**为什么叫「指数家族」**：\n\n- $p=q=2$：矩形 vs 两个三角形（$y=x$ 下的面积），就是 $2ab\\le a^2+b^2$；\n- $p=3,\\ q=\\frac32$：右边变成三次与 $\\frac32$ 次的面积；\n- C–S 与 AM–GM 只覆盖 $p=2$ 这一格，Young 覆盖整条 $p\\in(1,\\infty)$。\n\n**假设与结论分开写**：\n\n- *假设给了什么*：$a,b\\ge0$（保证幂有定义且单调）+ $\\frac1p+\\frac1q=1$（保证两条曲线互为反函数，这是几何图像的成立前提）。\n- *结论为什么因此成立*：因为 $y=x^{p-1}$ 的反函数恰好是 $y=x^{q-1}$，两块面积互补地覆盖矩形——共轭关系就是「互为反函数」的代数写法。\n\n**为什么 PDE 需要整条家族**：能量估计里出现的幂次由方程的结构决定（例如 $\\int|u|^{p}$ 这种非线性项），你没法要求它永远是 $2$ 次，所以必须有一个「任意 $p$ 次」的乘积放缩工具。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.proof",
+      "type": "proof",
+      "subject": "young",
+      "title": "Young 证明：$\\ln$ 的凹性 + Jensen",
+      "keywords": [
+        "ln 是凹函数（二阶导数 -1/x^2 < 0）",
+        "关键变形：\\ln(ab) = \\frac1p\\ln a^p + \\frac1q\\ln b^q",
+        "对凹函数用 Jensen（方向反转）：加权平均的 ln >= ln 的加权平均",
+        "即 \\ln(ab) <= \\ln(a^p/p + b^q/q)，再由 ln 单调得结论",
+        "取等：Jensen 取等 ⟺ a^p = b^q",
+        "依赖链：Jensen（P3.3）⟹ Young；Young ⟹ Hölder"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 175,
+        "line_end": 176
+      },
+      "fill_hint": "切片给的证明提示是「ln 是凹函数，ln(ab) = (1/p)ln a^p + (1/q)ln b^q <= ln(a^p/p + b^q/q)」；把每一步（尤其最后一步是 Jensen 的凹函数版本）写全",
+      "content": "**证明（四步）**：\n\n1. **$\\ln$ 是凹函数**：$(\\ln x)''=-\\frac1{x^2}<0$ 在 $(0,\\infty)$ 上成立。\n2. **把 $\\ln(ab)$ 写成加权平均的形式**（这一步是全部技巧所在）：\n   $$\n   \\ln(ab)=\\ln a+\\ln b=\\frac1p\\ln a^p+\\frac1q\\ln b^q,\n   $$\n   其中用到的正是 $\\frac1p+\\frac1q=1$：$\\frac1p\\ln a^p=\\frac1p\\cdot p\\ln a=\\ln a$。\n3. **对凹函数用 Jensen**（见 P3.3；凹函数时不等号**反向**）：\n   $$\n   \\frac1p\\ln a^p+\\frac1q\\ln b^q\\ \\le\\ \\ln\\!\\Bigl(\\frac{a^p}{p}+\\frac{b^q}{q}\\Bigr).\n   $$\n   这就是切片里那一行——它的本质是「凹函数在加权平均处的值不低于加权平均的函数值」。\n4. **合并 + 去掉 $\\ln$**：由 $\\ln$ 严格单调递增，\n   $$\n   \\ln(ab)\\le\\ln\\!\\Bigl(\\frac{a^p}{p}+\\frac{b^q}{q}\\Bigr)\\ \\implies\\ ab\\le\\frac{a^p}{p}+\\frac{b^q}{q}.\n   $$\n\n**取等**：Jensen 对**严格凹**函数取等 $\\iff$ 所有取值点相同，即 $a^p=b^q$。\n\n**依赖链**：Jensen（P3.3）$\\implies$ Young $\\implies$ Hölder（P3.3）$\\implies$ $L^p$ 的对偶（A1.5）。Young 在这条链上处在中间，是「凸性」通往「$L^p$ 估计」的必经关口。\n\n**易错点**：\n\n- 第 3 步的方向：凹函数的 Jensen 是 $\\varphi(\\sum\\lambda_i x_i)\\ge\\sum\\lambda_i\\varphi(x_i)$。凸函数时方向相反，记反了就得到错误的不等式。\n- $a$ 或 $b$ 为 $0$ 时 $\\ln$ 无定义，需单独处理（此时不等式平凡成立：$0\\le$ 右边）。\n- 不要把 $q$ 写成 $\\frac{p}{p-1}$ 之后忘记验证 $\\frac1p+\\frac1q=1$——这是最常见的代数失误（见 young.conjugate）。",
+      "links": [
+        "P3.3",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.quantifiers",
+      "type": "comparison",
+      "subject": "young",
+      "title": "Young 适用条件表（去掉每条会怎样）",
+      "keywords": [
+        "条件1：a, b >= 0（负数时幂次可能无定义或不等式反向）",
+        "条件2：1/p + 1/q = 1（共轭；不共轭则结论失效）",
+        "条件3：1 < p < \\infty（p=1 时 q=\\infty，p<1 时无凸性）",
+        "条件4：取等 a^p = b^q（不是 a = b！）",
+        "条件5：是 <= 不是 >=（方向记反直接崩）",
+        "可放宽：p=q=2 时退化为 AM–GM，可单独记"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 174,
+        "line_end": 174
+      },
+      "fill_hint": "四列表：条件｜失效的具体例子｜误用后果｜能否放宽；共轭指数那几行必须给具体 (p,q,a,b) 数值",
+      "content": "把 $ab\\le\\frac{a^p}{p}+\\frac{b^q}{q}$ 逐条审。\n\n| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $a,b\\ge0$ | $a=b=-1$，$p=q=2$：左边 $ab=1$，右边 $\\frac{(-1)^2}{2}+\\frac{(-1)^2}{2}=1$，此处碰巧取等；换成 $p=3,q=\\frac32$、$a=b=-1$：左边 $ab=1$【已核验:1|(-1)*(-1)】，右边 $\\frac{a^p}{p}+\\frac{b^q}{q}=\\frac{(-1)^3}{3}+\\frac{(-1)^{3/2}}{3/2}$ 中 $(-1)^{3/2}$ **在实数域无定义** —— 不是「不等式失效」，而是「式子根本无法陈述」 | 奇数幂保号、分数幂无定义 ⟹ 不等式在负数上根本说不出话 | 不可放宽；负数情形没有 Young 的对应物 |\n| $\\frac1p+\\frac1q=1$（共轭） | 取 $p=q=1$（不共轭，$1+1\\ne1$），$a=b=2$：左边 $ab=4$，右边 $\\frac{2}{1}+\\frac{2}{1}=4$，取等；换成 $a=b=3$：左边 $9$，右边 $6$，得 $9\\le6$ **假**【已核验:9|3*3】与【已核验:6|3**1/1+3**1/1】 | $p=q=1$ 时 Young 变成 $ab\\le a+b$，仅对 $a,b$ 较小成立，是个**假不等式** | 不可放宽；共轭关系就是定理 |\n| $1<p<\\infty$ | $p=\\frac12<1$：$q=\\frac{p}{p-1}=-1$ 是负数，$\\frac{b^q}{q}$ 无意义 | 公式退化出负指数与负权重 | 端点 $p=1$ 对应 $q=\\infty$，需改用 $\\|\\cdot\\|_\\infty$ 的极限形式单独陈述 |\n| 取等 $\\iff a^p=b^q$ | 误记成 $a=b$：取 $p=3,q=\\frac32,\\ a=2,\\ b=4$，此时 $a\\ne b$ 但 $a^3=8=b^{1.5}$，**确实取等**（两边都是 $8$【已核验:8|2*4】与【已核验:8|2**3/3+4**1.5/1.5】） | 用「$a=b$」去找取等点会找不到，进而误判界不紧 | 不可放宽；$p=2$ 时 $a^p=b^q$ 才退化成 $a=b$ |\n| 方向是 $\\le$ | 记反成 $ab\\ge\\frac{a^p}{p}+\\frac{b^q}{q}$：取 $p=q=2,\\ a=3,\\ b=1$，左边 $3$，右边 $5$【已核验:3|3】与【已核验:5|3**2/2+1**2/2】，得 $3\\ge5$ **假** | 所有放缩方向反转，能量估计直接崩 | 不可放宽 |\n| $a=0$ 或 $b=0$ | $a=0,b=5$：$0\\le\\frac{5^q}{q}$ 成立 | 无不良后果 | **本来就允许**（$\\ge0$ 而非 $>0$） |\n\n**一句话总结**：Young 的实质条件是「$a,b\\ge0$ + $p,q$ 共轭 + $1<p<\\infty$」，其中最容易被偷换的是**共轭**（常见于把 $q$ 误取成 $p$ 或忘了 $q=\\frac{p}{p-1}$）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.conjugate",
+      "type": "extension",
+      "subject": "young",
+      "title": "共轭指数取值的具体验证（三组 $(p,q)$ 对拍）",
+      "keywords": [
+        "共轭关系 1/p + 1/q = 1 ⟺ q = p/(p-1)",
+        "(p,q) = (2,2)：退化为 2ab <= a^2 + b^2",
+        "(p,q) = (3, 3/2)：取等需 b = a^2",
+        "(p,q) = (4, 4/3)：取等需 b = a^3",
+        "数值：a=2,b=1 时三组右边分别 5 / 3.3333 / 4.75",
+        "取等验证：p=3, a=2, b=4 时两边都 = 8"
+      ],
+      "tex_ref": null,
+      "fill_hint": "三组共轭指数各给一组 (a,b) 的具体左右两边数值（带【待核验】），并给一组取等验证；这是本单元最应该动手算的地方",
+      "content": "共轭关系 $\\frac1p+\\frac1q=1$ 等价于 $q=\\frac{p}{p-1}$。下面用三组具体取值把 $ab\\le\\frac{a^p}{p}+\\frac{b^q}{q}$ 逐格算出来。\n\n**($p,q)=(2,2)$**：$\\frac12+\\frac12=1$ ✓。\n\n- 取 $(a,b)=(3,1)$：左边 $ab=3$，右边 $\\frac{3^2}{2}+\\frac{1^2}{2}=4.5+0.5=5$【已核验:5|3**2/2+1**2/2】，$3\\le5$ ✓（不紧）。\n- 取等：需 $a^2=b^2$ 即 $a=b$，取 $(1,1)$：两边都是 $1$【已核验:1|1*1】与【已核验:1|1**2/2+1**2/2】 ✓。\n- 退化形式：$2ab\\le a^2+b^2$，就是 AM–GM。\n\n**($p,q)=(3,\\tfrac32)$**：$\\frac13+\\frac{2}{3}=1$ ✓（注意 $q=\\frac{p}{p-1}=\\frac32$）。\n\n- 取 $(a,b)=(2,1)$：左边 $ab=2$，右边 $\\frac{2^3}{3}+\\frac{1^{3/2}}{3/2}=\\frac83+\\frac23=\\frac{10}{3}=3.3333$【已核验:3.33333333333|2**3/3+1**1.5/1.5】，$2\\le3.3333$ ✓。\n- 取等：需 $a^3=b^{3/2}$，即 $b=a^2$。取 $(a,b)=(2,4)$：左边 $ab=8$，右边 $\\frac{8}{3}+\\frac{4^{1.5}}{1.5}=\\frac83+\\frac{8}{1.5}=2.6667+5.3333=8$【已核验:8|2**3/3+4**1.5/1.5】 ✓ 精确取等。\n\n**($p,q)=(4,\\tfrac43)$**：$\\frac14+\\frac34=1$ ✓。\n\n- 取 $(a,b)=(2,1)$：左边 $ab=2$，右边 $\\frac{2^4}{4}+\\frac{1^{4/3}}{4/3}=4+0.75=4.75$【已核验:4.75|2**4/4+1**(4/3)/(4/3)】，$2\\le4.75$ ✓。\n- 取等：需 $a^4=b^{4/3}$ 即 $b=a^3$。取 $(a,b)=(2,8)$：左边 $16$，右边 $\\frac{16}{4}+\\frac{8^{4/3}}{4/3}=4+\\frac{16}{4/3}=4+12=16$【已核验:16|2**4/4+8**(4/3)/(4/3)】 ✓。\n\n**观察**：$p$ 越大，同一个 $(a,b)$ 下右边越大（取 $(a,b)=(2,1)$ 时 $2.5\\to3.3333\\to4.75$，变化来自 $a^p$ 项随 $p$ 增长），界越松。**所以选 $p$ 的原则是「尽量贴合你手头能控制的幂次」**——能量估计里通常 $p=2$，因为能量本身是 $L^2$ 的。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.epsilon",
+      "type": "extension",
+      "subject": "young",
+      "title": "带 $\\varepsilon$ 的 Young：PDE 里真正掏出来的形态",
+      "keywords": [
+        "ab <= \\varepsilon a^2 + b^2/(4\\varepsilon)（\\varepsilon > 0 任意）",
+        "来历：对 a' = \\sqrt{2\\varepsilon}a, b' = b/\\sqrt{2\\varepsilon} 用 p=q=2 的 Young",
+        "\\varepsilon 的作用：把交叉项的系数压到任意小，代价是另一项常数变大",
+        "取等：b = 2\\varepsilon a",
+        "数值：\\varepsilon=0.1, a=3, b=2 时 6 <= 10.9",
+        "「吸收进左边」是能量法的关键动作"
+      ],
+      "tex_ref": null,
+      "fill_hint": "这是 Young 在 PDE 里的实际形态（切片标它是「能量估计头号工具」）；给推导、取等条件、一组数值验证，并解释 \\varepsilon 的战略作用",
+      "content": "**形态**（推导自 $p=q=2$ 的 Young）：对任意 $\\varepsilon>0$，\n$$\nab\\ \\le\\ \\varepsilon a^2+\\frac{b^2}{4\\varepsilon},\n\\qquad\\text{取等}\\iff b=2\\varepsilon a.\n$$\n\n**怎么来的**：把 $p=q=2$ 的 Young $a'b'\\le\\frac{(a')^2}{2}+\\frac{(b')^2}{2}$ 用在缩放后的变量上，取 $a'=\\sqrt{2\\varepsilon}\\,a$、$b'=\\frac{b}{\\sqrt{2\\varepsilon}}$：\n$$\nab=a'b'\\le\\frac{2\\varepsilon a^2}{2}+\\frac{b^2/(2\\varepsilon)}{2}=\\varepsilon a^2+\\frac{b^2}{4\\varepsilon}.\n$$\n缩放不改变乘积 $a'b'=ab$，这就是 $\\varepsilon$ 能自由取的原因。\n\n**数值验证**：$\\varepsilon=0.1$、$a=3$、$b=2$：左边 $ab=6$，右边 $0.1\\cdot9+\\frac{4}{0.4}=0.9+10=10.9$【已核验:10.9|0.1*9+4/(4*0.1)】，$6\\le10.9$ ✓。取等情形：$b=2\\varepsilon a=0.6$，左边 $3\\cdot0.6=1.8$，右边 $0.9+\\frac{0.36}{0.4}=0.9+0.9=1.8$【已核验:1.8|0.1*9+0.36/(0.4)】 ✓。\n\n**为什么 $\\varepsilon$ 是战略性的**：能量估计的典型局面是\n$$\n\\frac{d}{dt}E(t)+\\|\\nabla u\\|_2^2\\ \\le\\ \\underbrace{C\\|\\nabla u\\|_2\\|u\\|_2}_{\\text{交叉项}},\n$$\n左边已经有一个 $\\|\\nabla u\\|_2^2$，右边也出现 $\\|\\nabla u\\|_2$。取 $a=\\|\\nabla u\\|_2$、$b=C\\|u\\|_2$、$\\varepsilon=\\frac12$，交叉项被放成 $\\frac12\\|\\nabla u\\|_2^2+\\frac{C^2}{2}\\|u\\|_2^2$，其中第一项**恰好被左边的 $\\|\\nabla u\\|_2^2$ 吸收掉一半**，剩下的 $\\frac{C^2}{2}\\|u\\|_2^2$ 归到能量 $E$ 那一边——然后交给 Gronwall（见 P3.3）。**这一整套动作就叫「吸收」**，是能量法的发动机。\n\n**代价**：$\\varepsilon$ 越小，另一项的常数 $\\frac{1}{4\\varepsilon}$ 越大。所以 $\\varepsilon$ 不是越小越好，而是「刚好能把交叉项吸收进左边」即可。",
+      "links": [
+        "P9.2",
+        "A4.6",
+        "P3.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.application",
+      "type": "application",
+      "subject": "young",
+      "title": "Young 用在哪一层（PDE 能量估计的头号工具）",
+      "keywords": [
+        "Hölder 不等式的证明基石（P3.3）",
+        "L^p 空间的对偶性（A1.5）",
+        "能量法流水线：交叉项吸收（P9.2 / A4.6）",
+        "Sobolev 嵌入里的插值不等式（A4.4）",
+        "Navier–Stokes 非线性项 (u·∇)u 的估计（I1 / I5）",
+        "数值：有限元误差分析里的 Young 分裂（G2.2 / de4.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 178,
+        "line_end": 178
+      },
+      "fill_hint": "切片点名「PDE 能量估计的头号工具」，这里把它服务的每一层写清楚；links 指向被服务章节",
+      "content": "Young 是「把一个乘积换成两个幂」的通用兑换机，落点：\n\n- **P3.3 Hölder**：Hölder $\\int|fg|\\le\\|f\\|_p\\|g\\|_q$ 的标准证明就是先归一化再逐点用 Young 积分——Young 是 Hölder 的**点态版本**。\n- **A1.5 $L^p$ 空间**：$L^p$ 的对偶是 $L^q$（$\\frac1p+\\frac1q=1$），这个对偶关系的技术核心就是 Young（保证配对 $\\int fg$ 有限）。\n- **A4.6 / P9.2 能量估计**：如 young.epsilon 所述，交叉项的「吸收」动作全靠它。这是切片点名的头号用途。\n- **A4.4 嵌入定理**：Sobolev 与 Gagliardo–Nirenberg 插值不等式的证明里，Young 用来在中间导数阶之间分配幂次。\n- **I1 / I5 流体**：Navier–Stokes 的非线性项 $(u\\cdot\\nabla)u$ 与涡量拉伸项的估计，典型的乘积结构，掏 Young。\n- **G2.2 / de4.3 有限元**：误差分析里把 $a\\,b$ 型的残差项分裂成两个可分别用逼近论估计的项。\n\n**使用判据**：出现两个量的**乘积**，而你手里能分别控制它们的 $p$ 次与 $q$ 次（$p,q$ 共轭）⟹ 掏 Young。若只出现平方 ⟹ 用它的 $p=q=2$ 退化版（AM–GM）。若需要调节系数 ⟹ 用带 $\\varepsilon$ 版。",
+      "links": [
+        "P3.3",
+        "A1.5",
+        "A4.6",
+        "P9.2",
+        "A4.4",
+        "I1",
+        "I5",
+        "G2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:young.probe1",
+      "type": "probe",
+      "subject": "young",
+      "title": "检验题：共轭指数与取等条件（动手算）",
+      "keywords": [
+        "三问：验证共轭、算三组数值、验证非 a=b 的取等",
+        "所有数值带【待核验】",
+        "从 quantifiers 表「取等 ⟺ a^p = b^q」一行变来"
+      ],
+      "tex_ref": null,
+      "fill_hint": "题目可算出具体数值；答案写在括号内供折叠",
+      "content": "**第 1 问**：对 $p=3$ 与 $p=4$，分别写出共轭指数 $q$ 并验证 $\\frac1p+\\frac1q=1$。\n（答案：$p=3\\Rightarrow q=\\frac32$，$\\frac13+\\frac23=1$【已核验:1|1/3+2/3】；$p=4\\Rightarrow q=\\frac43$，$\\frac14+\\frac34=1$【已核验:1|1/4+3/4】）\n\n**第 2 问**：取 $(a,b)=(2,1)$，对 $(p,q)=(2,2)$、$(3,\\frac32)$、$(4,\\frac43)$ 三组共轭指数，分别算出 $\\frac{a^p}{p}+\\frac{b^q}{q}$，并说明三组都满足 $ab=2\\le$ 该值。\n（答案：$2.5$【已核验:2.5|2**2/2+1**2/2】、$3.3333$【已核验:3.33333333333|2**3/3+1**1.5/1.5】、$4.75$【已核验:4.75|2**4/4+1**(4/3)/(4/3)】）\n\n**第 3 问**：取 $p=3,\\ q=\\frac32$。找出一组 $a\\ne b$ 但取等的 $(a,b)$，并算出两边的值。\n（答案：$(a,b)=(2,4)$：左边 $ab=8$，右边 $\\frac{2^3}{3}+\\frac{4^{3/2}}{3/2}=8$【已核验:8|2**3/3+4**1.5/1.5】；取等条件是 $a^3=b^{3/2}$ 即 $b=a^2$，不是 $a=b$）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:triangle.statement",
+      "type": "statement",
+      "subject": "triangle",
+      "title": "三角不等式",
+      "keywords": [
+        "实数版：|a + b| <= |a| + |b|",
+        "向量/范数版：\\|x + y\\| <= \\|x\\| + \\|y\\|",
+        "取等 \\iff a,b 同号（或 x,y 同向共线）",
+        "反向版：\\bigl||a| - |b|\\bigr| <= |a - b|",
+        "积分版：|\\int f| <= \\int |f|、\\|f+g\\|_p <= \\|f\\|_p + \\|g\\|_p（Minkowski）",
+        "是范数公理之一，不是「某个不等式」"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 179,
+        "line_end": 180
+      },
+      "fill_hint": "切片一句给了实数版与向量版两式；这里补取等条件、反向版与「它是范数公理」这层定位",
+      "content": "**实数版**：$|a+b|\\le|a|+|b|$。\n**向量／范数版**：$\\|\\mathbf x+\\mathbf y\\|\\le\\|\\mathbf x\\|+\\|\\mathbf y\\|$。\n\n**取等条件**：\n\n- 实数：$|a+b|=|a|+|b|\\iff ab\\ge0$（同号或有一个为 $0$）；\n- 向量：$\\iff\\mathbf x,\\mathbf y$ 同向共线（$\\mathbf x=\\lambda\\mathbf y,\\ \\lambda\\ge0$）。\n\n数值对拍：$a=3,b=-5$：$|a+b|=2$，$|a|+|b|=8$，$2\\le8$【已核验:2|abs(3+(-5))】与【已核验:8|abs(3)+abs(-5)】，不取等（异号）；$a=3,b=5$：$|8|=8=3+5$✓ 取等。\n\n**反向版**（同样常用）：$\\bigl||a|-|b|\\bigr|\\le|a-b|$。$a=3,b=-5$：$\\bigl|3-5\\bigr|=2$，$|a-b|=|8|=8$，$2\\le8$【已核验:2|abs(abs(3)-abs(-5))】与【已核验:8|abs(3-(-5))】✓。反向版是证明「绝对值函数连续」「范数连续」的标准工具。\n\n**定位**：三角不等式不是一条孤立的技巧，而是**范数定义里的第三条公理**（正定、齐次、三角）。凡是带 $\\|\\cdot\\|$ 的东西——$L^p$ 范数、算子范数、矩阵范数——都自动满足它；反过来，Minkowski 不等式 $\\|f+g\\|_p\\le\\|f\\|_p+\\|g\\|_p$ 就是 $L^p$ 满足三角不等式的具体证明（见 A1.5）。\n\n**积分版**：$\\bigl|\\int f\\bigr|\\le\\int|f|$——这是三角不等式的连续类比，也是「绝对值可以放进积分号里、方向朝外」这一常用动作的根据。",
+      "links": [
+        "A1.5",
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:triangle.quantifiers",
+      "type": "comparison",
+      "subject": "triangle",
+      "title": "三角不等式的适用条件表",
+      "keywords": [
+        "实数版无条件（绝对值本身定义保证）",
+        "向量版要求 \\|\\cdot\\| 真是范数（自定义的「范数」要先验三条公理）",
+        "取等 ⟺ 同号/同向，误记成「任意两向量」就翻车",
+        "反向版 |a|-|b| 需外层绝对值，漏掉则方向可能反",
+        "L^p 版（Minkowski）要求 p >= 1，p < 1 时失效",
+        "积分版要求 f 可积（\\int|f| < \\infty）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 179,
+        "line_end": 180
+      },
+      "fill_hint": "四列表：条件｜失效的具体例子｜误用后果｜能否放宽；p < 1 那行要给出能算的具体数值",
+      "content": "| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 实数版：无条件 | 无（$|\\cdot|$ 的定义本身保证它） | — | 已是极简形式 |\n| 向量版要求 $\\|\\cdot\\|$ 是**范数** | 在 $\\mathbb R^2$ 上定义 $\\|(x,y)\\|=\\sqrt{|x|}+\\sqrt{|y|}$（这不是范数，不齐次）：取 $\\mathbf x=(1,0),\\ \\mathbf y=(0,1)$，$\\|\\mathbf x+\\mathbf y\\|=2$，$\\|\\mathbf x\\|+\\|\\mathbf y\\|=2$ 取等；取 $\\mathbf x=(1,0),\\ \\mathbf y=(-1,0)$：$\\|\\mathbf x+\\mathbf y\\|=0$，$\\|\\mathbf x\\|+\\|\\mathbf y\\|=2$，此处仍成立但齐次性已破 | 用「看起来像长度」的量当范数做估计，后续所有范数工具（谱半径、算子范数）全部失效 | 不可放宽；用前先验三条公理（见 A2.1） |\n| 取等 $\\iff$ 同号／同向 | $\\mathbf x=(1,0),\\ \\mathbf y=(-1,0)$：$\\|\\mathbf x+\\mathbf y\\|=0$，$\\|\\mathbf x\\|+\\|\\mathbf y\\|=2$，严格不等 | 误以为「任意两向量都取等」会在几何估计里得到虚假的紧界 | 不可放宽 |\n| $L^p$ 版（Minkowski）要求 $p\\ge1$ | $p=\\frac12$，在两点集上取 $f=(1,0),\\ g=(0,1)$：$\\|f+g\\|_{1/2}=(1+1)^2=4$，$\\|f\\|_{1/2}+\\|g\\|_{1/2}=1+1=2$，得 $4\\le2$ **假**【已核验:4|(1+1)**2】与【已核验:2|1+1】 | $p<1$ 时 $\\|\\cdot\\|_p$ 不是范数，据此做「三角」放缩直接给出错误方向 | 不可放宽；$p\\ge1$ 是 Minkowski 的硬条件（见 A1.5） |\n| 积分版要求 $\\int|f|<\\infty$ | $f(x)=\\frac1x$ 在 $(0,1)$：$\\int|f|=\\infty$，$\\bigl|\\int f\\bigr|$ 也无定义（$\\pm\\infty$） | 得到 $\\infty\\le\\infty$ 的空结论 | 不能放宽；$f\\in L^1$ 是前提 |\n| 反向版外层必须有 $\\bigl|\\,|a|-|b|\\,\\bigr|$ | 写成 $|a|-|b|\\le|a-b|$ 后把它当对称式用：$a=1,b=5$ 时 $|a|-|b|=-4\\le4$ ✓，但反着写 $|b|-|a|=4\\le4$ 也碰巧对；$a=1,b=-5$：$|a|-|b|=-4$，$|a-b|=6$ ✓ | 漏掉外层绝对值会得到单向的、不可交换的不等式 | 不可省略 |\n\n**一句话总结**：三角不等式在实数与真范数上是白给的；真正的坑是「把不是范数的量当范数用」和「$p<1$ 时误用 Minkowski」。",
+      "links": [
+        "A1.5",
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "基础四件套对照表：什么时候掏哪个",
+      "keywords": [
+        "AM–GM：两个非负量、和定求积最大 / 积定和最小",
+        "C–S：两个 L^2 量相乘的积分或求和，控制交叉项",
+        "Young：任意共轭幂次的乘积，PDE 吸收动作",
+        "三角：把 |a+b| 拆开，或把 \\|f+g\\| 拆开",
+        "退化链：Young(p=q=2) = AM–GM；Hölder(p=q=2) = C–S",
+        "选择判据：先看幂次是不是 2，再看能不能配成内积"
+      ],
+      "tex_ref": null,
+      "fill_hint": "产出一张四列对照表（适用结构 / 取等条件 / 典型误用 / 退化关系），前端直接渲染；与 P9.4 的决策树呼应",
+      "content": "四件套的分工与退化关系：\n\n| 不等式 | 处理的结构 | 取等条件 | 典型误用 | 退化关系 |\n|---|---|---|---|---|\n| **AM–GM** | 两个（或 $n$ 个）非负量：和 ↔ 积 | 所有量全相等 | 对带负数的量用（见 amgm.negative） | Young 在 $p=q=2$ 的退化形式 |\n| **Cauchy–Schwarz** | 两个 $L^2$／$\\ell^2$ 量的内积 $\\int fg$、$\\sum a_ib_i$ | 共线（$f=\\lambda g$ a.e.） | 把正交当取等、把不紧的界当最优（见 cs.equality） | Hölder 在 $p=q=2$ 的特例 |\n| **Young** | 乘积 $ab$，右边是可分配的幂 $a^p,b^q$ | $a^p=b^q$（**不是** $a=b$） | 共轭指数取错、误记 $p=1$ 可用 | 是 Hölder 的点态版本；$\\varepsilon$ 版是 PDE 形态 |\n| **三角不等式** | $|a+b|$、$\\|f+g\\|$ 的拆分 | 同号 / 同向共线 | 把非范数量当范数、$p<1$ 用 Minkowski | 范数公理本身，不是「技巧」 |\n\n**选择判据（从上往下问）**：\n\n1. 你手头是不是只有**平方**（$L^2$ 能量）？→ C–S 或 AM–GM。\n2. 是不是出现**非 2 次的幂**（$L^p$、非线性项）？→ Young（配共轭指数）。\n3. 需不需要把系数**调小以便吸收**？→ 带 $\\varepsilon$ 的 Young。\n4. 是不是要把**和拆成两项分别估计**？→ 三角不等式。\n5. 以上都不贴合（例如三个因子、或需要凸性）→ 上 P3.2 放缩盒子或 P3.3 进阶。\n\n**退化链一览**（记住这两条能省一半记忆量）：\n$$\n\\text{Young}(p{=}q{=}2)=2ab\\le a^2+b^2=\\text{AM--GM},\\qquad\n\\text{Hölder}(p{=}q{=}2)=\\text{Cauchy--Schwarz}.\n$$",
+      "links": [
+        "P3.2",
+        "P3.3",
+        "P9.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "四件套服务的下游章节",
+      "keywords": [
+        "A1.5 L^p：Hölder/Minkowski 的地基是 Young 与 C–S",
+        "A2.2 / A2.3 希尔伯特与傅里叶：C–S 保证内积有限",
+        "A4.6 / P9.2 能量法：Young 吸收 + Gronwall 收尾",
+        "C3 / C7.1 概率：协方差界、方差分解",
+        "H4 蒙特卡洛、H2 BRDF：放缩与归一化",
+        "I1 / I5 流体：非线性项估计"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁用了这四件套的哪一面」；links 指向被服务章节",
+      "content": "四件套是全库 links 的汇聚点之一——几乎每个「估计」类结论底下都站着它们：\n\n- **A1.5 $L^p$ 空间**：Hölder 与 Minkowski 的证明依赖 Young 与 C–S；$L^p$ 对偶 $(L^p)^*=L^q$ 的共轭关系来自 Young。\n- **A2.2 / A2.3**：C–S 保证 $L^2$ 内积有限 ⟹ 正交投影、Parseval 可用 ⟹ 傅里叶分析成立。\n- **A4.6 / P9.2 能量法**：Young（带 $\\varepsilon$）吸收交叉项，再由 Gronwall（P3.3）收尾，这是 PDE 先验估计的标准流水线。\n- **C3 / C7.1 概率**：$|\\mathrm{Cov}|\\le\\sigma_X\\sigma_Y$ 是 C–S；熵与矩的界里是 Jensen（P3.3）。\n- **H4 / H2 渲染**：MC 方差分析用 C–S，BRDF 归一化与能量守恒用 AM–GM 与放缩盒子（P3.2）。\n- **I1 / I5 流体**：$(u\\cdot\\nabla)u$ 这类非线性乘积项由 Young / Hölder 处理。\n\n**一句话**：凡是在证明里出现「估计」「控制」「有界」四个字的地方，先问一句「这里的放缩是四件套里的哪一个」。",
+      "links": [
+        "A1.5",
+        "A2.2",
+        "A2.3",
+        "A4.6",
+        "P9.2",
+        "C3",
+        "C7.1",
+        "H4",
+        "H2",
+        "I1",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：inequality-decision-tree（不等式决策树）",
+      "keywords": [
+        "模块 inequality-decision-tree，档1 前端直渲",
+        "交互：选一个待放缩结构 → 高亮应掏的不等式 → 显示取等条件",
+        "AM–GM 演示：拖动 a（和固定 2S）看矩形面积 ab 在 a=b 处最大",
+        "C–S 演示：转动向量夹角，看 |cos\\theta| <= 1 与取等（共线）位置",
+        "Young 演示：拖 p 看两条曲线 x^{p-1} 与其反函数围出的两块面积 vs 矩形 ab",
+        "待接后端：给定具体函数自动算出界值与真实最优常数的对比"
+      ],
+      "tex_ref": null,
+      "viz": {
+        "module": "inequality-decision-tree",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "modes": [
+            "amgm-rectangle",
+            "cs-projection",
+            "young-area"
+          ],
+          "amgm": {
+            "sum_fixed": 4,
+            "a_range": [
+              0.05,
+              3.95
+            ]
+          },
+          "cs": {
+            "theta_range": [
+              0,
+              6.283185307179586
+            ],
+            "norm_a": 1,
+            "norm_b": 1
+          },
+          "young": {
+            "p_range": [
+              1.2,
+              6
+            ],
+            "a": 2,
+            "b": 4
+          }
+        }
+      },
+      "fill_hint": "档1（Q4：简单显式函数 + 几何图像）。三个模式分别演示四件套里的三条（三角不等式是公理，不需演示）。图上必须能读出取等的数值位置",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "content": "本单元的可视化总览，档1（前端直渲），模块 `inequality-decision-tree`。三个模式一一对应四件套的几何图像：\n\n- `amgm-rectangle`：固定 $a+b=4$，拖动 $a$ 看矩形面积 $ab$ 随 $a$ 变化，峰值出现在 $a=b=2$（面积 $4$），两端趋于 $0$——把「和定积最大」画出来。\n- `cs-projection`：固定 $\\|\\mathbf a\\|=\\|\\mathbf b\\|=1$，转动夹角 $\\theta$，同时显示 $\\langle a,b\\rangle=\\cos\\theta$ 与界 $1$；取等只在 $\\theta=0,\\pi$（共线）出现，$\\theta=\\pi/2$ 时左边为 $0$——专治「以为正交时取等」。\n- `young-area`：拖动 $p$（$1.2$ 到 $6$），画出 $y=x^{p-1}$ 与其反函数 $y=x^{q-1}$ 下方两块面积 $\\frac{a^p}{p}$、$\\frac{b^q}{q}$，与矩形 $ab$ 对比；$b=a^{p-1}$ 时两块刚好填满矩形（取等）。\n\n三角不等式是范数公理，不设演示模式。三个模式都要能在图上**读出取等位置的数值**，而不只是看形状。"
+    }
+  ]
+}

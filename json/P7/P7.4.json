@@ -1,0 +1,338 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P7.4",
+  "chapter": "P7",
+  "title": "多重积分（【熟】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 394,
+    "line_end": 401,
+    "anchor": "notebook/P_computation.tex:394"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P7.4:mult-int.quantifiers",
+      "type": "comparison",
+      "subject": "mult-int",
+      "title": "适用条件表：换元、极坐标、球坐标与交换次序",
+      "keywords": [
+        "换元公式要求变换可逆（J≠0；J=0 只许出现在测度零点）",
+        "|J| 是面积/体积缩放因子，忘乘 J 必错",
+        "极坐标 J=r；原点 r=0 处 J=0 但测度零不碍事",
+        "球坐标 J=r²sinθ 要求 θ∈[0,π]（sinθ≥0）",
+        "交换次序需 Fubini/Tonelli 条件：非负免查、变号要绝对可积",
+        "条件积分交换次序可得 π/4 vs −π/4"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 398
+      },
+      "fill_hint": "切片给「换元公式 + 极坐标 J=r + 球坐标 J=r²sinθ + 交换次序直觉→Fubini–Tonelli」；条件表补使用层限定，数值可复算。",
+      "content": "多重积分四件套的限定词逐行拆解（每行给失效数值）：\n\n| 条件 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 换元公式 $\\iint f\\,dx\\,dy=\\iint f\\,\\|J\\|\\,du\\,dv$ 要求变换**局部可逆**（$J\\ne0$） | 极坐标在原点 $r=0$ 处 $J=0$ | 原点被压成一条射线——但 $\\{0\\}$ 是测度零集，积分值不受影响 | 能放宽：$J=0$ 允许出现在**测度零**的点上，不破坏公式 |\n| $\\|J\\|$ 是**面积/体积缩放因子**，换元必须乘回 | 单位圆盘面积：正确 $\\iint_{x^2+y^2\\le1}dxdy=\\int_0^{2\\pi}\\!\\!\\int_0^1 r\\,dr\\,d\\theta=\\pi=3.1416$【已核验:3.14159265359|pi】；忘乘 $r$ 得 $\\int_0^{2\\pi}\\int_0^1dr\\,d\\theta=2\\pi=6.2832$【已核验:6.28318530718|2*pi】 | 面积整整大出一倍 | 不能：忘 $r$ 是极坐标第一杀手 |\n| 球坐标 $J=r^2\\sin\\theta$ 要求 $\\theta\\in[0,\\pi]$ | 把 $\\theta$ 范围错当 $[0,2\\pi]$，$\\sin\\theta$ 变号会把体积算成 0（正负半程相消） | 体积凭空消失一半甚至全部 | 不能乱扩：主值范围 $r\\ge0$、$\\theta\\in[0,\\pi]$、$\\varphi\\in[0,2\\pi)$ 保证 $J\\ge0$ |\n| 交换积分次序需要 **Fubini–Tonelli 条件** | 条件收敛经典反例 $\\int_0^1\\!\\!\\int_0^1\\frac{x^2-y^2}{(x^2+y^2)^2}dy\\,dx=\\frac\\pi4=0.7854$【已核验:0.785398163397|pi/4】，交换后 $=-\\frac\\pi4$【已核验:-0.785398163397|-pi/4】 | 两个次序给出**不同**数值，任取一个都是错 | 非负被积函数（Tonelli）可免查交换；变号函数必须先验 $\\iint\\|f\\|<\\infty$ |\n| 换元后**积分区域同步改写** | 圆盘写成 $r\\in[0,1],\\theta\\in[0,2\\pi]$ 是对的；把 $\\theta$ 写成 $[0,\\pi]$ | 只扫半圆，少一半区域 | 区域描述与新变量一一对应，不可省 |\n\n总结：多重积分的坑集中在「**缩放因子**」（$J$）与「**交换合法性**」（Fubini 条件）两点；前者是算错，后者是原理性翻车（见 links A1.3）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A1.3",
+        "P6.1"
+      ]
+    },
+    {
+      "id": "P7.4:mult-int.statement",
+      "type": "statement",
+      "subject": "mult-int",
+      "title": "换元公式与两种坐标的 J（极坐标 r、球坐标 r²sinθ）",
+      "keywords": [
+        "∬f dxdy = ∬f|J| du dv",
+        "J=∂(x,y)/∂(u,v)（Jacobian 行列式）",
+        "与 P6 行列式是同一条",
+        "极坐标 J=r（必记）",
+        "球坐标 J=r²sinθ（必记，用一次推一次）",
+        "极坐标升维是 P8.1 高斯积分的发动机"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 397
+      },
+      "fill_hint": "逐字转写切片三条；「用一次推一次」是切片对球坐标 J 的原始态度。",
+      "content": "换元公式（多重积分的骨架）：\n$$\\iint f(x,y)\\,dx\\,dy=\\iint f\\big(x(u,v),y(u,v)\\big)\\,\\big|J\\big|\\,du\\,dv,\\qquad J=\\frac{\\partial(x,y)}{\\partial(u,v)}$$\n$J$ 是 Jacobian 行列式——与 P6 的行列式是同一条（见 links P6.1）。\n\n**两个必背特例（切片标注：用一次推一次）：**\n- 极坐标：$x=r\\cos\\theta,\\ y=r\\sin\\theta\\Rightarrow J=r$；\n- 球坐标：$x=r\\sin\\theta\\cos\\varphi,\\ y=r\\sin\\theta\\sin\\varphi,\\ z=r\\cos\\theta\\Rightarrow J=r^2\\sin\\theta$。\n\n成立条件：变换在积分区域内连续可微且（除测度零集外）$J\\ne0$；换元后**区域与被积函数都要同步改写**。P8.1 的高斯积分 $\\iint e^{-(x^2+y^2)}dxdy$ 正是靠 $J=r$ 一步落地（见 links P8.1）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.1",
+        "P8.1"
+      ]
+    },
+    {
+      "id": "P7.4:mult-int.proof",
+      "type": "proof",
+      "subject": "mult-int",
+      "title": "推导骨架：2×2 与 3×3 的 Jacobian 行列式",
+      "keywords": [
+        "极坐标：det[[cosθ,−r sinθ],[sinθ,r cosθ]]=r(cos²θ+sin²θ)=r",
+        "球坐标：3×3 行列式按第三列展开=r²sinθ",
+        "恒等式 cos²+sin²=1 是 r 的来源",
+        "行列式展开是 P6.1 的手艺",
+        "θ∈[0,π] 保证 sinθ≥0，J 非负免绝对值"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 397
+      },
+      "fill_hint": "切片给结论 J=r、J=r²sinθ；推导骨架用 P6.1 行列式展开，与切片「与 P6 的行列式是同一条」呼应。",
+      "content": "**极坐标 $J=r$ 的两行推导：**\n$$J=\\det\\begin{pmatrix}\\frac{\\partial x}{\\partial r}&\\frac{\\partial x}{\\partial\\theta}\\\\\\frac{\\partial y}{\\partial r}&\\frac{\\partial y}{\\partial\\theta}\\end{pmatrix}=\\det\\begin{pmatrix}\\cos\\theta&-r\\sin\\theta\\\\\\sin\\theta&r\\cos\\theta\\end{pmatrix}=r\\cos^2\\theta+r\\sin^2\\theta=r$$\n关键一步是 $\\cos^2\\theta+\\sin^2\\theta=1$（links P5.1）。\n\n**球坐标 $J=r^2\\sin\\theta$ 的推导：** 对\n$$\\begin{pmatrix}\\sin\\theta\\cos\\varphi&r\\cos\\theta\\cos\\varphi&-r\\sin\\theta\\sin\\varphi\\\\\\sin\\theta\\sin\\varphi&r\\cos\\theta\\sin\\varphi&r\\sin\\theta\\cos\\varphi\\\\\\cos\\theta&-r\\sin\\theta&0\\end{pmatrix}$$\n按第三行（$\\cos\\theta$、$-r\\sin\\theta$、0）展开成三个 2×2 行列式，合并三角平方和（links P5.1）得 $J=r^2\\sin\\theta$。\n\n**取值约定：** $r\\ge0$、$\\theta\\in[0,\\pi]$、$\\varphi\\in[0,2\\pi)$，使 $\\sin\\theta\\ge0$，于是 $|J|=J$ 无需绝对值处理。\n\n**易错点：** ①把 $J$ 写成 $\\frac{\\partial(r,\\theta)}{\\partial(x,y)}$（反向了——公式要求的是 $\\frac{\\partial(x,y)}{\\partial(u,v)}$）；②三维漏乘一个 $r$（$r^2$ 的一个因子来自纬线周长 $2\\pi r\\sin\\theta$，见 intuition 词条）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.1",
+        "P5.1"
+      ]
+    },
+    {
+      "id": "P7.4:mult-int.intuition",
+      "type": "intuition",
+      "subject": "mult-int",
+      "title": "直觉：|J| 是格子的面积缩放倍数",
+      "keywords": [
+        "换元=把均匀格网换成会变形的格网",
+        "|J|(u₀,v₀)=格子在 (u₀,v₀) 处被拉伸的倍数",
+        "极坐标格子：弧长 rΔθ × 径向 Δr → 面积元 r dr dθ",
+        "球坐标：纬圈周长 2πr sinθ × r dθ × dr",
+        "积分=数格子，格子变了几倍就得补几倍",
+        "这就是 dxdy 与 du dv 之间的汇率"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 396
+      },
+      "fill_hint": "切片给公式；直觉词条解释 |J| 在几何上是什么，假设（变换光滑）与结论（乘 |J| 补偿）分开写。",
+      "content": "**假设给了什么：** 换元 $(u,v)\\mapsto(x,y)$ 是一个光滑的变形网——把 $(u,v)$ 平面上的均匀方格网，铺到 $(x,y)$ 平面上变成大小不匀的曲边格。\n\n**结论为什么因此成立：** 积分的本质是「数格子」。格子换了地方、也换了大小，每一点的格子被拉伸了 $|J(u_0,v_0)|$ 倍——数格时必须**按当地倍数补偿**，这正是\n$$dx\\,dy=|J|\\,du\\,dv$$\n的几何含义：$|J|$ 是两种坐标格子之间的**汇率**。\n\n**两个必背汇率的几何直读：**\n- 极坐标格子是「小环片」：弧长 $\\approx r\\,\\Delta\\theta$，径向厚度 $\\Delta r$，面积 $\\approx r\\,\\Delta r\\,\\Delta\\theta$——离原点越远同角度的格子越大，汇率就是 $r$；\n- 球坐标格子是「小瓦片」：纬线方向长度 $\\approx r\\sin\\theta\\,\\Delta\\varphi$，经线方向 $\\approx r\\,\\Delta\\theta$，径向 $\\Delta r$，体积 $\\approx r^2\\sin\\theta\\,\\Delta r\\,\\Delta\\theta\\,\\Delta\\varphi$——两极处格子缩成零（$\\sin\\theta\\to0$），赤道处最肥。\n\n忘乘 $|J|$ 的代偿直觉：格子被拉伸了却按原价数，必然算错（单位圆盘面积差一倍，见 quantifiers 表）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.4:mult-int.order-swap",
+      "type": "extension",
+      "subject": "mult-int",
+      "title": "交换积分次序：直觉与 Fubini–Tonelli 的接口",
+      "keywords": [
+        "切片原话：交换次序的直觉 → Fubini–Tonelli（A1 收敛定理表成员）",
+        "算例：∫₀¹∫_y¹ e^{x²} dxdy 原次序积不出",
+        "交换后 ∫₀¹ x e^{x²} dx = (e−1)/2",
+        "交换能救「积不出」的死局",
+        "合法性：非负（Tonelli）免查；变号要绝对可积"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 398,
+        "line_end": 398
+      },
+      "fill_hint": "切片一句话点出 Fubini–Tonelli；本条给一个「交换救场」的完整算例（e^{x²} 无初等原函数是 P7.2 quantifiers 已出场的事实）。",
+      "content": "切片的直觉：**先积谁后积谁，本质是问「同一堆质量按行数还是按列数」**——理论上应当相等，这正是 Fubini–Tonelli 定理（A1 收敛定理表的成员，见 links A1.3）。\n\n**交换救场的完整算例：** $I=\\int_0^1\\!\\!\\int_y^1 e^{x^2}\\,dx\\,dy$。内层 $\\int e^{x^2}dx$ 没有初等原函数（links P7.2 的凑微分条件不满足）——死局。画出区域 $\\{0\\le y\\le x\\le1\\}$ 交换次序：\n$$I=\\int_0^1\\!\\!\\int_0^x e^{x^2}\\,dy\\,dx=\\int_0^1 x\\,e^{x^2}\\,dx=\\frac{e-1}{2}=0.8591\\ \\text{【已核验:0.85914091423|(exp(1)-1)/2】}$$\n内层对 $y$ 积分把 $e^{x^2}$ 当常数，白得一个 $x$，凑微分 $\\frac12(e^{x^2})'$ 恰好闭合。\n\n**合法性检查（这条算例免费通过）：** 被积函数 $e^{x^2}\\ge0$，Tonelli 定理直接允许交换、连绝对可积都不用查。**变号函数没有这个豁免**：条件收敛的反例里两个次序分别给出 $\\frac\\pi4$ 与 $-\\frac\\pi4$【已核验:0.785398163397|pi/4】【已核验:-0.785398163397|-pi/4】（见 quantifiers 表），先验 $\\iint|f|<\\infty$ 才许交换。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A1.3",
+        "P7.2"
+      ]
+    },
+    {
+      "id": "P7.4:mult-int.misuse",
+      "type": "counterexample",
+      "subject": "mult-int",
+      "title": "误用：忘乘 J 与乱交换次序",
+      "keywords": [
+        "忘乘 r：单位圆盘面积 2π vs 真值 π，差一倍",
+        "条件收敛积分交换次序：π/4 vs −π/4",
+        "前者是「算错」，后者是「原理性翻车」",
+        "修补：背汇率（J）；交换前查非负或绝对可积"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 398
+      },
+      "fill_hint": "两个误用完整计算；反例函数 (x²−y²)/(x²+y²)² 是 Fubini 失效的经典样本，数值可复算。",
+      "content": "**误用一（忘乘 $J$，算错型）：** 单位圆盘面积。正确 $\\int_0^{2\\pi}\\!\\!\\int_0^1 r\\,dr\\,d\\theta=\\pi=3.1416$【已核验:3.14159265359|pi】；忘乘 $r$ 得 $\\int_0^{2\\pi}\\int_0^1 dr\\,d\\theta=2\\pi=6.2832$【已核验:6.28318530718|2*pi】——整整一倍。修补：把「极坐标=乘 $r$」焊死成肌肉记忆（球坐标同理乘 $r^2\\sin\\theta$）。\n\n**误用二（乱交换次序，原理型）：** 经典反例 $f(x,y)=\\frac{x^2-y^2}{(x^2+y^2)^2}$（原点外定义）。逐次积分存在但不相等：\n$$\\int_0^1\\!\\!\\int_0^1\\frac{x^2-y^2}{(x^2+y^2)^2}\\,dy\\,dx=\\frac\\pi4=0.7854\\ \\text{【已核验:0.785398163397|pi/4】},\\qquad\n\\int_0^1\\!\\!\\int_0^1\\frac{x^2-y^2}{(x^2+y^2)^2}\\,dx\\,dy=-\\frac\\pi4\\ \\text{【已核验:-0.785398163397|-pi/4】}$$\n两个次序各给出一个数，且互为相反——「交换不变」在此**失效**。根源：$\\iint|f|\\,dxdy=+\\infty$（条件收敛），Fubini 的前提不满足。\n\n**修补条件：** ①被积函数非负 → Tonelli 允许直接交换（连无穷都允许）；②变号 → 先验证 $\\iint|f|<\\infty$ 再交换；③两者都不满足 → 交换是非法操作，任何顺序算出的数都不代表「二重积分」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A1.3"
+      ]
+    },
+    {
+      "id": "P7.4:mult-int.application",
+      "type": "application",
+      "subject": "mult-int",
+      "title": "用在哪：高斯积分、体积与期望值",
+      "keywords": [
+        "P8.1 高斯积分：平方升维后靠极坐标 J=r 落地",
+        "球坐标 J=r²sinθ：球体积、球谐归一化（H5）",
+        "蒙特卡洛重要性采样：径向密度的 r 权重（H4）",
+        "概率期望 E[h(X)] 是二重积分→C3 多维分布",
+        "流体的守恒体积分在柱/球坐标下改写（I1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 398
+      },
+      "fill_hint": "切片无应用；links 给消费方。",
+      "content": "- **P8.1（高斯积分）：** $\\iint e^{-(x^2+y^2)}dxdy\\xrightarrow{\\text{极坐标}}\\int_0^{2\\pi}\\int_0^\\infty e^{-r^2}r\\,dr\\,d\\theta$——$J=r$ 是整个平方技巧能落地的原因。\n- **H5（球谐函数）：** 单位球面上的归一化 $\\int|Y_l^m|^2\\,d\\Omega=1$，面积元 $\\sin\\theta\\,d\\theta\\,d\\varphi$ 正是球坐标 $J$ 去掉 $r^2$ 的版本。\n- **H4（蒙特卡洛）：** 径向衰减的密度采样（如高斯）用极坐标分解时，$r$ 权重直接进入重要性分布的设计。\n- **C3（多维分布）：** $E[h(X,Y)]=\\iint h\\,p\\,dxdy$ 的计算里换元（极坐标处理径向密度）是常规动作。\n- **I1（守恒律）：** 柱/球几何里的质量、动量守恒体积分一律按相应 $J$ 改写。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P8.1",
+        "H5",
+        "H4",
+        "C3",
+        "I1"
+      ]
+    },
+    {
+      "id": "P7.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "坐标选择对照：直角、极、球",
+      "keywords": [
+        "被积函数含 x²+y² 或区域是圆盘 → 极坐标",
+        "含 x²+y²+z² 或球对称 → 球坐标",
+        "J 对照：1 / r / r²sinθ",
+        "交换次序是「另一维度的武器」，与换元互补",
+        "三个 J 都可现场推（行列式），但 r 与 r²sinθ 值得背"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 398
+      },
+      "fill_hint": "整合三条为选择判据表。",
+      "content": "| 坐标 | $J$ | 什么时候用 | 记忆锚点 |\n|---|---|---|---|\n| 直角 $(x,y,z)$ | 1 | 无对称性、区域是矩形/盒 | 默认 |\n| 极 $(r,\\theta)$ | $r$ | 被积函数含 $x^2+y^2$、区域是圆盘/环 | 离轴越远格子越大 |\n| 球 $(r,\\theta,\\varphi)$ | $r^2\\sin\\theta$ | 含 $x^2+y^2+z^2$、球对称区域 | 两极缩零、赤道最肥 |\n| 交换次序 | — | 内层积不出、区域需重描述 | 与换元是两套互补的武器 |\n\n判断顺序：**先看对称性选坐标系（定 $J$），再看内层可积性决定是否交换次序**。两者都解决不了时才上数值（links H4）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "H4"
+      ]
+    },
+    {
+      "id": "P7.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "单元级下游：多重积分的跨章落点",
+      "keywords": [
+        "P8 欧拉积分全家（极坐标是发动机之一）",
+        "A1.3 Fubini–Tonelli 的实算场景",
+        "H5 球谐归一化的面积元",
+        "H4 蒙特卡洛的换元采样",
+        "I 流体/F 量子中的一切体积分"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 395,
+        "line_end": 398
+      },
+      "fill_hint": "单元级总览，每条一句。",
+      "content": "- **P8.1：** 高斯积分的极坐标一步，是「全分析最有名的技巧」的引擎室。\n- **A1.3：** 交换次序的合法性判定（Tonelli 免查条款）在本单元的算例中实体化。\n- **H5：** 球谐、渲染中的半球积分都以 $\\sin\\theta\\,d\\theta\\,d\\varphi$ 为基本面积元。\n- **H4／C3：** 重要性采样与多维期望是 $J$ 的日常应用场。\n- **I1／F2：** 守恒律的体积分、量子期望值 $\\langle\\psi|A|\\psi\\rangle$ 全部生存在多重积分的世界里。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P8.1",
+        "A1.3",
+        "H5",
+        "H4",
+        "C3",
+        "I1",
+        "F2"
+      ]
+    },
+    {
+      "id": "P7.4:mult-int.probe1",
+      "type": "probe",
+      "subject": "mult-int",
+      "title": "检验：极坐标算高斯圆盘积分",
+      "keywords": [
+        "∬_{x²+y²≤1} e^{−(x²+y²)} dxdy",
+        "换元后内层凑微分",
+        "答案 π(1−e^{−1})"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 397,
+        "line_end": 397
+      },
+      "fill_hint": "从 application 的高斯行变的问句；答案带【待核验】。",
+      "content": "用极坐标计算 $\\iint_{x^2+y^2\\le1}e^{-(x^2+y^2)}\\,dx\\,dy$（写出换元后的三件套：区域、被积函数、$J$）。\n\n（答案：$\\int_0^{2\\pi}\\!\\!\\int_0^1 e^{-r^2}r\\,dr\\,d\\theta=2\\pi\\cdot\\frac{1-e^{-1}}{2}=\\pi(1-e^{-1})=1.9859$【已核验:1.9858653038|pi*(1-exp(-1))】；其中 $\\int_0^1re^{-r^2}dr$ 靠凑微分 $u=r^2$ 完成。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.4:mult-int.probe2",
+      "type": "probe",
+      "subject": "mult-int",
+      "title": "检验：球坐标验证单位球体积",
+      "keywords": [
+        "∫∫∫ r²sinθ dr dθ dφ",
+        "答案 4π/3",
+        "J 因子缺一不可"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 397,
+        "line_end": 397
+      },
+      "fill_hint": "从 quantifiers 球坐标行变的问句；答案带【待核验】。",
+      "content": "用球坐标（$r\\in[0,1]$、$\\theta\\in[0,\\pi]$、$\\varphi\\in[0,2\\pi)$）计算单位球体积，并指出三个 $J$ 因子各对应哪个几何方向。\n\n（答案：$\\int_0^{2\\pi}\\!\\!\\int_0^\\pi\\!\\!\\int_0^1 r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi=\\frac13\\cdot2\\cdot2\\pi=\\frac{4\\pi}3=4.1888$【已核验:4.18879020479|4*pi/3】；$r^2$ 中一个 $r$ 来自径向拉伸、一个来自纬圈周长 $\\propto\\sin\\theta$，$\\sin\\theta$ 保证两极处格子收缩为零。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,771 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P3.3",
+  "chapter": "P3",
+  "title": "进阶（【熟】· 记结论 $+$ 用法）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 201,
+    "line_end": 214,
+    "anchor": "P_computation.tex:201"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P3.3:jensen.statement",
+      "type": "statement",
+      "subject": "jensen",
+      "title": "Jensen 不等式（詹森不等式）",
+      "keywords": [
+        "\\varphi 凸 \\implies \\varphi(\\mathbb E X) \\le \\mathbb E \\varphi(X)",
+        "\\varphi 凹时方向反转：\\varphi(\\mathbb E X) \\ge \\mathbb E \\varphi(X)",
+        "取等 \\iff X 是常数 a.s. 或 \\varphi 在 X 的取值域上是仿射的",
+        "要求 X 可积、\\varphi(X) 可积（否则右边无意义）",
+        "\\varphi 必须定义在包含 X 值域的凸集上",
+        "离散版：\\varphi(\\sum \\lambda_i x_i) \\le \\sum \\lambda_i \\varphi(x_i)"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 204,
+        "line_end": 204
+      },
+      "fill_hint": "按 tex_ref 一行转写；切片只给了凸的情形与一句直觉，这里补凹的版本、取等条件与可积性前提",
+      "content": "**陈述**：$\\varphi$ 是凸函数（convex function），$X$ 是随机变量（或一般测度空间上的可测函数），则\n$$\n\\varphi(\\mathbb E X)\\ \\le\\ \\mathbb E\\,\\varphi(X).\n$$\n若 $\\varphi$ 是**凹**函数（concave，如 $\\ln$、$\\sqrt{\\cdot}$），方向反转：\n$$\n\\varphi(\\mathbb E X)\\ \\ge\\ \\mathbb E\\,\\varphi(X).\n$$\n\n**离散版**（同一件事，权重 $\\lambda_i\\ge0$、$\\sum_i\\lambda_i=1$）：\n$$\n\\varphi\\Bigl(\\sum_i\\lambda_i x_i\\Bigr)\\ \\le\\ \\sum_i\\lambda_i\\varphi(x_i).\n$$\n\n**逐项拆解**：\n\n- 左边是「先平均、再作用 $\\varphi$」；右边是「先作用 $\\varphi$、再平均」；\n- 凸函数时**先平均更省钱**（值更小），凹函数时相反；\n- 成立的**前提**有三条：$X$ 可积（$\\mathbb E\\lvert X\\rvert<\\infty$）、$\\varphi(X)$ 可积（否则右边是 $\\infty-\\infty$ 或无定义）、$\\varphi$ 定义在包含 $X$ 值域的**凸集**上。\n\n**取等条件**：$\\varphi$ 严格凸时取等 $\\iff X$ 是常数 a.s.；$\\varphi$ 仿射（既凸又凹）时恒取等。\n\n**为什么它是「进阶」的第一条**：AM–GM、Young、Hölder、Minkowski、KL 散度非负、熵的界——**全部是 Jensen 的特例**。它不是一个和它们并列的工具，而是它们的**共同祖先**。",
+      "links": [
+        "P3.1",
+        "P3.2",
+        "M3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:jensen.intuition",
+      "type": "intuition",
+      "subject": "jensen",
+      "title": "Jensen 直觉：凸函数的弦在图形上方",
+      "keywords": [
+        "两点 x_1, x_2 的凸组合落在弦的下方（弦在图形上方）",
+        "\\mathbb E X 是 X 所有取值的「加权平均」，落在值域内部",
+        "\\varphi(\\mathbb E X) 是曲线上的点；\\mathbb E\\varphi(X) 是弦上对应高度的点",
+        "凸 = 曲线在弦下 ⟹ 曲线上的点 <= 弦上的点",
+        "极端化直觉：把 X 拉得越分散，两边的差距越大",
+        "假设给了什么：凸性 + 权重和为 1；结论：平均值处的函数值最小"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 205,
+        "line_end": 205
+      },
+      "fill_hint": "切片直觉原文「凸函数的弦在图形上方」，扩写时把「\\mathbb E X 落在值域内部、\\mathbb E\\varphi(X) 是弦上的高度」这个对应讲清楚",
+      "content": "**图像**：在 $\\varphi$ 的图像上取两点 $\\bigl(x_1,\\varphi(x_1)\\bigr)$、$\\bigl(x_2,\\varphi(x_2)\\bigr)$，连成一条**弦**。凸函数的定义就是：曲线在这条弦的**下方**。\n\n现在把 $X$ 取成以各 $\\frac12$ 的概率取 $x_1,x_2$：\n\n- $\\mathbb E X=\\frac{x_1+x_2}{2}$，它落在 $x_1$ 与 $x_2$ **之间**（这正是「平均」的含义，也正是需要值域为凸集的原因）；\n- $\\varphi(\\mathbb E X)$ 是曲线在中间点上的高度；\n- $\\mathbb E\\varphi(X)=\\frac{\\varphi(x_1)+\\varphi(x_2)}{2}$ 是**弦**在中间点上的高度。\n\n曲线在弦下 $\\implies\\varphi(\\mathbb E X)\\le\\mathbb E\\varphi(X)$。\n\n**假设与结论分开写**：\n\n- *假设给了什么*：凸性（曲线的弯曲方向）+ 权重非负且和为 $1$（保证「平均」真的落在值域里）。\n- *结论为什么因此成立*：凸性把「平均」这个操作与「函数值」这个操作的大小关系**锁死**了——先平均再取值一定更小。\n\n**分散度直觉**：把 $x_1,x_2$ 拉得越开（$X$ 越分散），弦与曲线的缝隙越大，两边的差距越大。取 $\\varphi(x)=x^2$、$X$ 取 $\\pm a$ 各半：$\\varphi(\\mathbb E X)=0$，$\\mathbb E\\varphi(X)=a^2$。差距正好是**方差** $\\mathrm{Var}(X)=a^2$——所以 Jensen 的「缝隙」普遍就是方差型量，这是它在统计里无处不在的原因。\n\n**反面提醒**：凹函数（$\\ln$、$\\sqrt{\\cdot}$）时弦在曲线**下方**，方向反转。忘记这一点是 Jensen 的头号误用（见 jensen.direction）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:jensen.proof",
+      "type": "proof",
+      "subject": "jensen",
+      "title": "Jensen 证明：支撑线（次梯度）论证",
+      "keywords": [
+        "核心工具：凸函数在每点有支撑线 \\varphi(y) >= \\varphi(x) + s(y-x)",
+        "取 x = \\mathbb E X，s 为该点的次梯度",
+        "两边取期望：\\mathbb E\\varphi(X) >= \\varphi(\\mathbb E X) + s(\\mathbb E X - \\mathbb E X) = \\varphi(\\mathbb E X)",
+        "依赖：凸函数的一阶刻画（支撑线存在性）",
+        "可微时 s = \\varphi'(\\mathbb E X)；不可微时用次梯度",
+        "易错点：支撑线存在性需要 \\varphi 定义在开凸集上"
+      ],
+      "tex_ref": null,
+      "fill_hint": "切片未给证明；用支撑线版（最短且能解释取等条件），分步写，标注依赖与易错点",
+      "content": "**证明（三步，支撑线版）**：\n\n1. **支撑线存在**（凸性的一阶刻画）：$\\varphi$ 凸且定义在凸集 $I$ 上，则对任意 $x_0\\in I$ 的内部，存在斜率 $s$（可微时 $s=\\varphi'(x_0)$；不可微时取次梯度）使\n   $$\n   \\varphi(y)\\ \\ge\\ \\varphi(x_0)+s\\,(y-x_0),\\qquad\\forall y\\in I.\n   $$\n   几何上就是「$x_0$ 处的切线（支撑线）不高于曲线」。\n2. **代入随机元并取期望**：取 $x_0=\\mathbb E X$（由值域凸，$\\mathbb E X\\in I$），令 $y=X$：\n   $$\n   \\varphi(X)\\ \\ge\\ \\varphi(\\mathbb E X)+s\\,(X-\\mathbb E X)\\quad\\text{a.s.}\n   $$\n   两边取期望（$\\mathbb E$ 保持不等号，因为它是正线性泛函）：\n   $$\n   \\mathbb E\\varphi(X)\\ \\ge\\ \\varphi(\\mathbb E X)+s\\,\\underbrace{(\\mathbb E X-\\mathbb E X)}_{=0}=\\varphi(\\mathbb E X).\n   $$\n3. **收尾**：即 $\\varphi(\\mathbb E X)\\le\\mathbb E\\varphi(X)$。$\\square$\n\n**取等**：要求第 2 步的不等式 a.s. 取等。$\\varphi$ 严格凸时，支撑线只在 $y=x_0$ 处接触曲线，故要求 $X=\\mathbb E X$ a.s.，即 $X$ 为常数。\n\n**依赖链**：凸性的一阶刻画（支撑线存在性）$\\implies$ Jensen $\\implies$ Young（P3.1）$\\implies$ Hölder（本单元）$\\implies$ $L^p$ 对偶（A1.5）。\n\n**易错点**：\n\n- 支撑线存在性要求 $x_0$ 在定义域**内部**；若 $\\mathbb E X$ 落在边界上（如 $X\\ge0$ 且 $\\mathbb E X=0$），需单独论证。\n- 取期望这一步要求 $\\varphi(X)$ 与 $X$ **都可积**，否则 $\\mathbb E\\varphi(X)$ 可能是 $\\infty-\\infty$。\n- 若 $\\varphi$ 凹，支撑线改成「支撑线在曲线上方」，方向反转——不要照抄。",
+      "links": [
+        "P3.1",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:jensen.quantifiers",
+      "type": "comparison",
+      "subject": "jensen",
+      "title": "Jensen 适用条件表",
+      "keywords": [
+        "条件1：\\varphi 凸（凹则方向反转）",
+        "条件2：X 可积（\\mathbb E|X| < \\infty）",
+        "条件3：\\varphi(X) 可积（否则右边无意义）",
+        "条件4：\\varphi 定义在凸集上（值域不能断开）",
+        "条件5：权重 \\lambda_i >= 0 且和为 1（离散版）",
+        "可放宽：条件可放宽到一般概率测度、条件期望版"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 204,
+        "line_end": 204
+      },
+      "fill_hint": "四列表：条件｜失效的具体例子｜误用后果｜能否放宽；每行给具体函数/具体分布并算出数值",
+      "content": "| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $\\varphi$ **凸** | 取凹函数 $\\varphi(x)=\\sqrt x$，$X$ 取 $1,9$ 各半：$\\varphi(\\mathbb EX)=\\sqrt5=2.2361$，$\\mathbb E\\varphi(X)=\\frac{1+3}{2}=2$【已核验:2|((1)**0.5+9**0.5)/2】，得 $2.2361\\le2$ **假** | 方向记反：对凹函数套凸版本会得到错误的界 | 不是失效，是**要用凹的版本**（方向反转） |\n| $X$ 可积（$\\mathbb E\\lvert X\\rvert<\\infty$） | $X$ 为 Cauchy 分布（$\\mathbb E\\lvert X\\rvert=\\infty$）：$\\mathbb EX$ 无定义，$\\varphi(\\mathbb EX)$ 无从谈起 | 整个陈述无意义（不是结论变弱） | 不可放宽 |\n| $\\varphi(X)$ 可积 | $\\varphi(x)=x^2$，$X$ 取 $n$ 的概率为 $\\frac{6}{\\pi^2n^2}$（$n\\ge1$）：$\\mathbb E X=\\infty$，$\\mathbb E\\varphi(X)=\\infty$，不等式成为 $\\infty\\le\\infty$ | 得到无信息的 $\\infty\\le\\infty$ | 允许两边同为 $\\infty$，但此时结论无内容 |\n| $\\varphi$ 定义在**凸集**上 | $\\varphi$ 只定义在 $\\{0,1\\}$ 上（离散集，非凸），$X$ 取 $0,1$ 各半：$\\mathbb EX=\\frac12\\notin$ 定义域 | $\\varphi(\\mathbb EX)$ 无定义 | 不可放宽；这正是「凸集」条件的用途 |\n| 离散版权重 $\\lambda_i\\ge0$、$\\sum\\lambda_i=1$ | 取 $\\lambda_1=2,\\lambda_2=-1$（和为 $1$ 但有负权重），$\\varphi(x)=x^2$、$x_1=0,x_2=1$：左边 $\\varphi(-1)=1$，右边 $2\\cdot0+(-1)\\cdot1=-1$，得 $1\\le-1$ **假**【已核验:1|(2*0-1*1)**2】与【已核验:-1|2*0**2-1*1**2】 | 负权重让「平均」跑到值域外，且右侧可变成负数 | 不可放宽；负权重需要 $\\varphi$ 额外的结构 |\n| 取等 $\\iff X$ 为常数 | $\\varphi(x)=x^2$、$X$ 取 $\\pm1$ 各半：$0$ 与 $1$【已核验:0|0】与【已核验:1|(1+1)/2】，严格不等 | 声称取等会得到假的尖锐常数 | 不可放宽 |\n\n**一句话总结**：Jensen 的实质条件是「$\\varphi$ 凸 + 平均落在定义域内 + 两边可积」，操作上最容易翻车的是**凸/凹方向**与**负权重**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:jensen.direction",
+      "type": "counterexample",
+      "subject": "jensen",
+      "title": "典型误用：凹凸方向记反（$\\ge$ 还是 $\\le$）",
+      "keywords": [
+        "误用：对 \\varphi(x)=x^2 写成 \\varphi(\\mathbb E X) >= \\mathbb E\\varphi(X)",
+        "X 取 \\pm1 各半：得 0 >= 1，假",
+        "反向误用：对 \\ln 用凸版本，得 \\ln(\\mathbb E X) >= \\mathbb E\\ln X，假",
+        "具体分布：X 取 1, 3 各半，\\ln(\\mathbb EX)=0.6931，\\mathbb E\\ln X=0.5493",
+        "后果：AM–GM 与 KL 散度非负的证明方向全反",
+        "修补：先看二阶导数符号，或记住「\\mathbb E\\varphi(X) 是弦的高度」"
+      ],
+      "tex_ref": null,
+      "fill_hint": "给出凸/凹两个方向各自的具体数值反例（含【待核验】），并写清后果与自检动作",
+      "content": "**误用一：对凸函数写反方向**。取 $\\varphi(x)=x^2$（**凸**，$\\varphi''=2>0$），$X$ 以各 $\\frac12$ 取 $\\pm1$。\n\n- $\\mathbb EX=0$，故 $\\varphi(\\mathbb EX)=0$；\n- $\\mathbb E\\varphi(X)=\\frac{1+1}{2}=1$【已核验:1|(1+1)/2】；\n- 正确结论是 $0\\le1$；若写成 $\\varphi(\\mathbb EX)\\ge\\mathbb E\\varphi(X)$ 得 $0\\ge1$，**假**。\n\n**误用二：对凹函数套凸版本**。取 $\\varphi(x)=\\ln x$（**凹**，$\\varphi''=-\\frac1{x^2}<0$），$X$ 以各 $\\frac12$ 取 $1$ 与 $3$。\n\n- $\\mathbb EX=2$，$\\ln(\\mathbb EX)=\\ln2=0.6931$【已核验:0.69314718056|log(2)】；\n- $\\mathbb E\\ln X=\\frac{\\ln1+\\ln3}{2}=\\frac{1.0986}{2}=0.5493$【已核验:0.549306144334|(log(1)+log(3))/2】；\n- 正确（凹）结论是 $\\ln(\\mathbb EX)\\ge\\mathbb E\\ln X$，即 $0.6931\\ge0.5493$ ✓；\n- 若误套凸版本得 $0.6931\\le0.5493$，**假**，差 $0.1438$【已核验:0.143841036226|log(2)-(log(1)+log(3))/2】。\n\n**后果（为什么这条最要命）**：\n\n- **AM–GM 的证明**（P3.1）靠的正是「$\\ln$ 凹 $\\implies$ 方向反转」。方向记反会得到 $\\frac{x_1+\\cdots+x_n}{n}\\le(x_1\\cdots x_n)^{1/n}$，与真结论**完全相反**。\n- **Young 不等式**（P3.1）的证明也是 Jensen 的凹版本。记反会得到 $ab\\ge\\frac{a^p}{p}+\\frac{b^q}{q}$。\n- **KL 散度非负**（M3）来自 $\\ln$ 凹，记反会得 $\\mathrm{KL}\\le0$，与「散度非负」直接矛盾。\n\n**自检动作（两步）**：\n\n1. 先算二阶导数：$\\varphi''\\ge0$ 是凸（$\\le$），$\\varphi''\\le0$ 是凹（$\\ge$）。\n2. 记图像口诀：**凸函数的弦在上**（所以弦的高度 $\\mathbb E\\varphi(X)$ 在右边、更大）；凹函数的弦在下。",
+      "links": [
+        "P3.1",
+        "M3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:jensen.application",
+      "type": "application",
+      "subject": "jensen",
+      "title": "Jensen 用在哪一层（它是所有不等式的祖先）",
+      "keywords": [
+        "P3.1：AM–GM 的 n 元版与 Young 都是 Jensen 的凹版本",
+        "P3.2：e^x >= 1+x 是 Jensen 在单点分布的支撑线版",
+        "M3 信息论：KL 散度非负、熵的上界",
+        "C9.1 统计：Rao–Blackwell、EM 算法的单调性",
+        "C7.1：\\mathbb E X^2 >= (\\mathbb E X)^2（方差非负）",
+        "A1.5：Minkowski 不等式的证明也走凸性路线"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁在用 Jensen 的哪一面」；重点是把它与 P3.1/P3.2 的继承关系讲清",
+      "content": "Jensen 不是与四件套并列的第五条工具，而是它们的**共同祖先**：\n\n- **P3.1 AM–GM（$n$ 元版）**：对凹函数 $\\ln$ 用 Jensen，方向反转即得。所以 AM–GM 是「$\\ln$ 凹」这一个事实的推论。\n- **P3.1 Young**：证明的关键一步 $\\frac1p\\ln a^p+\\frac1q\\ln b^q\\le\\ln\\bigl(\\frac{a^p}{p}+\\frac{b^q}{q}\\bigr)$ 正是 Jensen 的凹版本。\n- **P3.2 $e^x\\ge1+x$**：是 Jensen 在**单点分布**上的退化——凸函数的支撑线在图形下方。\n- **C7.1 / C3 概率**：$\\mathbb EX^2\\ge(\\mathbb EX)^2$（即 $\\mathrm{Var}(X)\\ge0$）是 $\\varphi(x)=x^2$ 的 Jensen；$\\lvert\\mathbb EX\\rvert\\le\\mathbb E\\lvert X\\rvert$ 是 $\\varphi(x)=\\lvert x\\rvert$ 的 Jensen。\n- **M3 信息论**：$\\mathrm{KL}(p\\|q)=\\int p\\ln\\frac pq\\ge0$ 由 $-\\ln$ 凸（或 $\\ln$ 凹）得出；熵的上界（均匀分布熵最大）也是 Jensen。\n- **C9.1 统计**：Rao–Blackwell 定理（条件期望降低方差）、EM 算法每步似然不降，底层都是 Jensen。\n\n**使用判据**：看到一个「先平均再作用函数」与「先作用函数再平均」的比较 ⟹ 掏 Jensen，然后**立刻检查凹凸**。若 $\\varphi=\\ln$ 或 $\\sqrt{\\cdot}$，方向要反。",
+      "links": [
+        "P3.1",
+        "P3.2",
+        "C3",
+        "C7.1",
+        "C9.1",
+        "M3",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:jensen.probe1",
+      "type": "probe",
+      "subject": "jensen",
+      "title": "检验题：Jensen 的方向（凸 vs 凹对拍）",
+      "keywords": [
+        "两问：凸函数 x^2 与凹函数 ln 各算一组",
+        "所有数值带【待核验】",
+        "从 quantifiers 表「\\varphi 凸」一行变来"
+      ],
+      "tex_ref": null,
+      "fill_hint": "题目可算出具体数值；答案写在括号内供折叠",
+      "content": "**第 1 问**：$X$ 以各 $\\frac12$ 取 $\\pm1$，取 $\\varphi(x)=x^2$。分别算 $\\varphi(\\mathbb EX)$ 与 $\\mathbb E\\varphi(X)$，写出正确的不等号方向，并指出两者之差等于什么统计量。\n（答案：$0$ 与 $1$【已核验:0|0】与【已核验:1|(1+1)/2】；方向是 $\\le$，即 $0\\le1$；差 $=1=\\mathrm{Var}(X)$）\n\n**第 2 问**：$X$ 以各 $\\frac12$ 取 $1$ 与 $3$，取 $\\varphi(x)=\\ln x$。分别算 $\\ln(\\mathbb EX)$ 与 $\\mathbb E\\ln X$，写出正确的不等号方向。若误用凸版本会得到什么错误结论？\n（答案：$\\ln2=0.6931$【已核验:0.69314718056|log(2)】与 $\\frac{\\ln1+\\ln3}{2}=0.5493$【已核验:0.549306144334|(log(1)+log(3))/2】；$\\ln$ 是凹函数，正确方向是 $\\ge$，即 $0.6931\\ge0.5493$；误用凸版本会得到 $0.6931\\le0.5493$，**假**）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.statement",
+      "type": "statement",
+      "subject": "holder",
+      "title": "Hölder 不等式（赫尔德不等式）",
+      "keywords": [
+        "\\int |fg| <= \\lVert f\\rVert_p \\lVert g\\rVert_q，1/p + 1/q = 1",
+        "Cauchy–Schwarz 是 p = q = 2 的特例",
+        "要求 1 <= p <= \\infty，q 为共轭指数",
+        "取等 \\iff |f|^p 与 |g|^q 成比例（a.e.）",
+        "有限和版：\\sum |a_i b_i| <= (\\sum|a_i|^p)^{1/p}(\\sum|b_i|^q)^{1/q}",
+        "推论：f \\in L^p, g \\in L^q \\implies fg \\in L^1"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 206,
+        "line_end": 206
+      },
+      "fill_hint": "按 tex_ref 一行转写；切片点明「Cauchy–Schwarz 是其 p=q=2 特例」，这里补取等条件、端点情形与 fg \\in L^1 推论",
+      "content": "**陈述**：$1\\le p\\le\\infty$，$q$ 为共轭指数（$\\frac1p+\\frac1q=1$，$q=\\frac{p}{p-1}$；$p=1$ 时 $q=\\infty$），则\n$$\n\\int\\lvert fg\\rvert\\ \\le\\ \\lVert f\\rVert_p\\,\\lVert g\\rVert_q,\n\\qquad\n\\lVert f\\rVert_p=\\Bigl(\\int\\lvert f\\rvert^p\\Bigr)^{1/p}.\n$$\n\n**有限和版**：$\\sum_i\\lvert a_ib_i\\rvert\\le\\bigl(\\sum_i\\lvert a_i\\rvert^p\\bigr)^{1/p}\\bigl(\\sum_i\\lvert b_i\\rvert^q\\bigr)^{1/q}$。\n\n**取等条件**：$\\lvert f\\rvert^p$ 与 $\\lvert g\\rvert^q$ 成比例（a.e.），即存在 $\\lambda\\ge0$ 使 $\\lvert f\\rvert^p=\\lambda\\lvert g\\rvert^q$ a.e.；$p=q=2$ 时退化为「共线」，正是 Cauchy–Schwarz 的取等条件（见 P3.1）。\n\n**与 Cauchy–Schwarz 的关系**（切片点名的）：取 $p=q=2$，$\\frac12+\\frac12=1$，本式即 $\\int\\lvert fg\\rvert\\le\\lVert f\\rVert_2\\lVert g\\rVert_2$，平方后就是 C–S。**所以 C–S 不是另一条定理，而是 Hölder 在这一格上的样子。**\n\n**推论（最实用的一条）**：$f\\in L^p,\\ g\\in L^q\\implies fg\\in L^1$。这解释了 PDE 里「两个不同次可积的函数乘起来仍可积」——例如 $u\\in L^4$、$\\nabla u\\in L^2$ 时，$\\lvert u\\rvert^2\\lvert\\nabla u\\rvert$ 的可积性要靠 $\\frac{2}{4}+\\frac12=1$ 的共轭配对。\n\n**端点**：$p=1,q=\\infty$ 时成为 $\\int\\lvert fg\\rvert\\le\\lVert f\\rVert_1\\lVert g\\rVert_\\infty$，这一条最好记也最好用。",
+      "links": [
+        "P3.1",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.intuition",
+      "type": "intuition",
+      "subject": "holder",
+      "title": "Hölder 直觉：C–S 的「换指数」版",
+      "keywords": [
+        "C–S 固定用 2 次范数；Hölder 允许一对共轭的 p, q",
+        "共轭 = 两个「尺度」互补：1/p + 1/q = 1",
+        "直觉：把乘积 |fg| 的负担在 f 与 g 之间按 p:q 分配",
+        "p -> 1（q -> \\infty）：一端承担全部可积性、另一端只要求有界",
+        "取等：|f|^p 与 |g|^q 成比例 = 负担分配得「刚刚好」",
+        "假设给了什么：共轭；结论为什么成立：Young 的点态分配"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 206,
+        "line_end": 206
+      },
+      "fill_hint": "把「共轭 = 负担分配」这个直觉讲清；并说明 p 越极端，界越松（配合 holder.conjugate 的数值）",
+      "content": "**图像**：$\\int\\lvert fg\\rvert$ 这个量要被两个可分别估计的东西控制住。C–S 的做法是「两边都用 $2$ 次」；Hölder 允许你说「$f$ 我只能在 $L^p$ 里控制、$g$ 我只能在 $L^q$ 里控制」，只要 $\\frac1p+\\frac1q=1$ 就仍然成立。\n\n**「共轭 = 负担分配」**：把 $\\frac1p$ 与 $\\frac1q$ 看成两个**份额**，和为 $1$。$p$ 越小（份额越大），$f$ 承担的可积性要求越轻；同时 $q$ 必须越大（$g$ 要求越强）。\n\n- $p=q=2$：两人各担一半——这就是 C–S 的「对称」；\n- $p=1,\\ q=\\infty$：$f$ 只需 $L^1$，$g$ 必须**本质有界**（$\\lVert g\\rVert_\\infty$）；\n- $p=3,\\ q=\\frac32$：不对称的分配，用于处理一个「很可积」、另一个「不太可积」的情形。\n\n**假设与结论分开写**：\n\n- *假设给了什么*：$f\\in L^p$、$g\\in L^q$、且 $p,q$ 共轭（份额和为 $1$）。\n- *结论为什么因此成立*：逐点地，$\\lvert f(x)\\rvert\\lvert g(x)\\rvert$ 由 Young 不等式（P3.1）分配成 $\\frac{\\lvert f\\rvert^p}{p}+\\frac{\\lvert g\\rvert^q}{q}$（归一化之后），积分即得。份额和为 $1$ 正是 Young 的权重要求。\n\n**取等的含义**：$\\lvert f\\rvert^p$ 与 $\\lvert g\\rvert^q$ 成比例，就是「负担分配得刚刚好，没有一边浪费」。数值上这意味着界是紧的（见 holder.conjugate 的对拍）。",
+      "links": [
+        "P3.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.proof",
+      "type": "proof",
+      "subject": "holder",
+      "title": "Hölder 证明：归一化 + 逐点 Young",
+      "keywords": [
+        "步骤1：若 \\|f\\|_p 或 \\|g\\|_q 为 0 或 \\infty，平凡处理",
+        "步骤2：归一化 F = |f|/\\|f\\|_p, G = |g|/\\|g\\|_q，使 \\|F\\|_p = \\|G\\|_q = 1",
+        "步骤3：逐点用 Young：F G <= F^p/p + G^q/q",
+        "步骤4：积分得 \\int FG <= 1/p + 1/q = 1，乘回范数",
+        "依赖：Young 不等式（P3.1）",
+        "易错点：归一化前必须先排除 0 与 \\infty"
+      ],
+      "tex_ref": null,
+      "fill_hint": "切片未给证明；用「归一化 + Young」这条标准路线，四步写全并标注易错点",
+      "content": "**证明（四步）**：\n\n1. **平凡的端点**：若 $\\lVert f\\rVert_p=0$（即 $f=0$ a.e.）或 $\\lVert g\\rVert_q=0$，左边为 $0$，成立；若某个范数为 $\\infty$，右边是 $\\infty$，结论无信息但也「成立」。以下设两个范数都在 $(0,\\infty)$ 内。\n2. **归一化**：令\n   $$\n   F=\\frac{\\lvert f\\rvert}{\\lVert f\\rVert_p},\\qquad G=\\frac{\\lvert g\\rvert}{\\lVert g\\rVert_q},\n   $$\n   则 $\\lVert F\\rVert_p=1$、$\\lVert G\\rVert_q=1$，而要证的是 $\\int FG\\le1$。\n3. **逐点用 Young**（见 P3.1）：对每个 $x$，\n   $$\n   F(x)G(x)\\ \\le\\ \\frac{F(x)^p}{p}+\\frac{G(x)^q}{q}.\n   $$\n4. **积分**：\n   $$\n   \\int FG\\le\\frac1p\\underbrace{\\int F^p}_{=1}+\\frac1q\\underbrace{\\int G^q}_{=1}=\\frac1p+\\frac1q=1.\n   $$\n   乘回 $\\lVert f\\rVert_p\\lVert g\\rVert_q$ 即得 $\\int\\lvert fg\\rvert\\le\\lVert f\\rVert_p\\lVert g\\rVert_q$。$\\square$\n\n**取等回推**：要求第 3 步 a.e. 取等，由 Young 的取等条件（P3.1）即 $\\lvert f\\rvert^p$ 与 $\\lvert g\\rvert^q$ 成比例 a.e.。\n\n**依赖链**：Young（P3.1）$\\implies$ Hölder $\\implies$ Minkowski（$\\lVert f+g\\rVert_p\\le\\lVert f\\rVert_p+\\lVert g\\rVert_p$）$\\implies$ $L^p$ 是赋范空间（A1.5）。\n\n**易错点**：\n\n- **必须先归一化再逐点用 Young**——直接对 $\\lvert f\\rvert\\lvert g\\rvert$ 用 Young 会得到 $\\frac{1}{p}\\int\\lvert f\\rvert^p+\\frac1q\\int\\lvert g\\rvert^q$，这不是 $\\lVert f\\rVert_p\\lVert g\\rVert_q$ 的形式（量纲都不对）。\n- 第 1 步的端点处理不能省：范数为 $0$ 时归一化会除以零。\n- $p=\\infty$ 的端点要单独写（用本质 supremum 的定义），不能套 $q=\\frac{p}{p-1}$。",
+      "links": [
+        "P3.1",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.quantifiers",
+      "type": "comparison",
+      "subject": "holder",
+      "title": "Hölder 适用条件表",
+      "keywords": [
+        "条件1：1/p + 1/q = 1（共轭；不共轭则结论失效）",
+        "条件2：1 <= p <= \\infty（p < 1 时 \\|.\\|_p 不是范数）",
+        "条件3：f \\in L^p、g \\in L^q（否则右边为 \\infty，无信息）",
+        "条件4：积分版要求 f, g 可测",
+        "条件5：取等 |f|^p 与 |g|^q 成比例（不是 f = g）",
+        "可放宽：可推广到三因子 1/p + 1/q + 1/r = 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 206,
+        "line_end": 206
+      },
+      "fill_hint": "四列表：条件｜失效的具体例子｜误用后果｜能否放宽；共轭那行必须给具体函数在 [0,1] 上的数值",
+      "content": "| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $\\frac1p+\\frac1q=1$（共轭） | 在 $[0,1]$ 上取 $f=g=x$，用**不共轭**的 $p=q=1$：左边 $\\int fg=\\int_0^1x^2dx=\\frac13=0.3333$，右边 $\\lVert f\\rVert_1\\lVert g\\rVert_1=\\frac12\\cdot\\frac12=0.25$【已核验:0.333333333333|1/3】与【已核验:0.25|0.5*0.5】，得 $0.3333\\le0.25$ **假** | 给出一个比真值还小的「上界」，据此做的可积性断言是错的 | 不可放宽；共轭就是定理 |\n| $1\\le p\\le\\infty$ | $p=\\frac12<1$：$q=\\frac{p}{p-1}=-1$ 是负数，$\\lVert g\\rVert_{-1}$ 无定义 | 公式直接退化出无意义的量 | 端点 $p=1,q=\\infty$ 可用（但需单独陈述） |\n| $f\\in L^p$、$g\\in L^q$ | 在 $(0,1)$ 上 $f=g=x^{-1/2}$：$p=q=2$ 时 $\\int fg=\\int x^{-1}dx=\\infty$，右边 $\\lVert f\\rVert_2^2=\\infty$，成为 $\\infty\\le\\infty$ | 界为空，推不出 $fg\\in L^1$ | 不能放宽；但可**换一对 $p,q$** 使两边都有限 |\n| 可测性 | $f$ 取 Vitali 集的示性函数（不可测，见 A1.4）：$\\lVert f\\rVert_p$ 无定义 | 陈述无意义（不是结论变弱） | 不可放宽 |\n| 取等 $\\iff\\lvert f\\rvert^p\\propto\\lvert g\\rvert^q$ | 误记成「$f=g$ 时取等」：在 $[0,1]$ 上 $f=x,\\ g=1-x$，取 $p=q=2$：左边 $\\int x(1-x)=\\frac16=0.1667$，右边 $\\sqrt{\\frac13\\cdot\\frac13}=\\frac13=0.3333$【已核验:0.166666666667|1/6】与【已核验:0.333333333333|(1/3)**0.5*(1/3)**0.5】，$f\\ne g$ 但也不取等 | 用「$f=g$」判断紧度会出错 | 不可放宽；$p=2$ 时条件才是「共线」 |\n| 有限和版维数任意 | 无穷维且 $\\ell^p$ 范数发散时同第 3 行 | 同第 3 行 | 可放宽到可数无穷和（需 $\\ell^p$ 收敛，见 A1.5 / A2.1） |\n\n**一句话总结**：Hölder 的硬条件是「$p,q$ 共轭且 $1\\le p\\le\\infty$」+「两边范数有限」；实操上最容易犯的是**取了一对不共轭的指数**（尤其是顺手写成 $p=q$）。",
+      "links": [
+        "A1.4",
+        "A1.5",
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.conjugate",
+      "type": "counterexample",
+      "subject": "holder",
+      "title": "典型误用：取了不共轭的指数（附同一组数据的三档对拍）",
+      "keywords": [
+        "反例：f=g=x on [0,1]，p=q=1（不共轭）得 0.3333 <= 0.25，假",
+        "同一组数据的合法对拍：p=q=2 取等 0.3333；p=3,q=3/2 得界 0.3420",
+        "p=q=2 取等的原因：|f|^2 与 |g|^2 成比例（f=g）",
+        "第二组：f=x, g=1-x：0.1667 vs 0.3333(p=2) vs 0.3420(p=3)",
+        "结论：p 越偏离「贴合数据」的那一对，界越松",
+        "修补：先由已知可积性定 p，再算 q = p/(p-1)"
+      ],
+      "tex_ref": null,
+      "fill_hint": "必须自己算实：给不共轭失效的具体数值 + 同一组数据上三档合法指数的界（带【待核验】），并解释取等为何出现在 p=q=2",
+      "content": "**反例（不共轭直接失效）**：在 $[0,1]$ 上取 $f(x)=g(x)=x$，用 $p=q=1$（注意 $\\frac11+\\frac11=2\\ne1$，**不共轭**）：\n\n- 左边：$\\int_0^1\\lvert fg\\rvert=\\int_0^1x^2\\,dx=\\frac13=0.3333$；\n- 右边：$\\lVert f\\rVert_1\\lVert g\\rVert_1=\\frac12\\cdot\\frac12=0.25$【已核验:0.333333333333|1/3】与【已核验:0.25|0.5*0.5】；\n- 断言 $0.3333\\le0.25$ **假**，右边比左边还小 $0.0833$。\n\n**误用后果**：如果你靠这一步断言「$\\int fg\\le0.25$」，后续所有「$\\le0.25$」的估计都是错的——而且错得很隐蔽，因为 $0.25$ 与 $0.3333$ 同量级，看数字不会觉得可疑。\n\n**同一组数据的合法三档对拍**（这才是应该记住的对照）：仍取 $f=g=x$，左边恒为 $\\frac13=0.3333$。\n\n| $(p,q)$ | $\\lVert f\\rVert_p$ | $\\lVert g\\rVert_q$ | 界 | 是否取等 |\n|---|---|---|---|---|\n| $(2,2)$ | $(1/3)^{1/2}=0.5774$ | $0.5774$ | $0.3333$【已核验:0.333333333333|(1/3)**0.5*(1/3)**0.5】 | **取等** |\n| $(3,\\frac32)$ | $(1/4)^{1/3}=0.6300$ | $(1/2.5)^{2/3}=0.5429$ | $0.3420$【已核验:0.341995189335|(1/4)**(1/3)*(1/2.5)**(2/3)】 | 不取等，松 $0.0087$ |\n| $(1,\\infty)$ | $\\frac12$ | $1$ | $0.5$【已核验:0.5|0.5*1】 | 不取等，松 $0.1667$ |\n\n**为什么 $p=q=2$ 取等**：取等条件是 $\\lvert f\\rvert^p\\propto\\lvert g\\rvert^q$；这里 $f=g$，在 $p=q=2$ 时即 $x^2\\propto x^2$ ✓，而 $p=3,q=\\frac32$ 时要求 $x^3\\propto x^{3/2}$，不成立。\n\n**第二组（$f=x,\\ g=1-x$，两者不共线）**：左边 $\\int_0^1x(1-x)dx=\\frac16=0.1667$。\n\n- $p=q=2$：界 $=\\sqrt{\\frac13\\cdot\\frac13}=\\frac13=0.3333$【已核验:0.166666666667|1/6】与【已核验:0.333333333333|(1/3)**0.5*(1/3)**0.5】；\n- $p=3,\\ q=\\frac32$：界 $=0.3420$【已核验:0.341995189335|(1/4)**(1/3)*(1/2.5)**(2/3)】；\n- 两者都不取等（差 $0.1667$ 与 $0.1753$），说明**数据本身不贴合任何一对指数时，换 $p$ 也救不回紧度**。\n\n**修补动作**：\n\n1. 先由你**能控制的可积性**定 $p$（例如已知 $u\\in L^4$ 就取 $p=4$）；\n2. 再算 $q=\\frac{p}{p-1}$ 并**验证** $\\frac1p+\\frac1q=1$；\n3. 特别警惕顺手写成 $p=q$——只有 $p=q=2$ 是合法的「相等」情形。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.vs-cs",
+      "type": "comparison",
+      "subject": "holder",
+      "title": "Hölder 与 Cauchy–Schwarz 的分工",
+      "keywords": [
+        "C–S = Hölder 在 p=q=2 的特例，不是并列定理",
+        "C–S 只在内积空间（L^2）有意义；Hölder 在任意 L^p",
+        "C–S 的取等是「共线」，Hölder 是「|f|^p \\propto |g|^q」",
+        "L^1 没有内积 ⟹ C–S 无对应物，必须用 Hölder 的 (1,\\infty)",
+        "选择判据：两端都是 2 次 ⟹ C–S；出现非 2 次 ⟹ Hölder",
+        "记忆法：只需记 Hölder，C–S 令 p=2 即得"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 206,
+        "line_end": 206
+      },
+      "fill_hint": "切片明确点名「Cauchy–Schwarz 是其 p=q=2 特例」；这条把两者的分工与选择判据写成对照表",
+      "content": "**关系**：Hölder$\\big|_{p=q=2}=$Cauchy–Schwarz。所以它们**不是并列的定理**，而是一般与特例。\n\n| 维度 | Cauchy–Schwarz | Hölder |\n|---|---|---|\n| 适用空间 | 内积空间（$L^2$、$\\ell^2$、$\\mathbb R^n$） | 任意 $L^p$（$1\\le p\\le\\infty$） |\n| 形式 | $\\bigl(\\int fg\\bigr)^2\\le\\int f^2\\int g^2$ | $\\int\\lvert fg\\rvert\\le\\lVert f\\rVert_p\\lVert g\\rVert_q$ |\n| 取等 | $f=\\lambda g$（共线） | $\\lvert f\\rvert^p\\propto\\lvert g\\rvert^q$ |\n| $L^1$ 情形 | **无对应物**（$L^1$ 无内积） | 可用 $(p,q)=(1,\\infty)$ |\n| 典型用途 | 能量估计、方差/协方差、傅里叶 | 非线性项、$L^p$ 对偶、嵌入定理 |\n\n**为什么不能只用 C–S**：$L^1$ 上没有内积，$\\int fg$ 对两个 $L^1$ 函数可能发散，C–S 无从谈起；而 Hölder 的 $(1,\\infty)$ 配对照样给出 $\\int\\lvert fg\\rvert\\le\\lVert f\\rVert_1\\lVert g\\rVert_\\infty$。反过来，为什么不能只用 Hölder：因为 C–S 那格（$p=q=2$）**最常用且最好算**，值得单独背下来。\n\n**选择判据（一句话）**：两端都能配成 $2$ 次（能量、方差、内积）⟹ 用 C–S；出现任何非 $2$ 次（$L^p$ 非线性项、$\\lVert\\cdot\\rVert_\\infty$ 配对）⟹ 用 Hölder。\n\n**与 Young 的分工**：Young 是**点态**的（$ab\\le\\frac{a^p}{p}+\\frac{b^q}{q}$），Hölder 是**积分**的。证明 Hölder 要用 Young，但用的时候通常是反过来的——先用 Hölder 得到积分估计，需要调系数时再回到 Young 的 $\\varepsilon$ 版（见 P3.1 的 young.epsilon）。",
+      "links": [
+        "P3.1",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.application",
+      "type": "application",
+      "subject": "holder",
+      "title": "Hölder 用在哪一层",
+      "keywords": [
+        "A1.5 L^p：Minkowski 的证明、L^p 对偶 (L^p)^* = L^q",
+        "A4.4 嵌入定理：Sobolev 与插值不等式的证明",
+        "I1 / I5 流体：(u·∇)u 三因子 Hölder（1/2+1/3+1/6=1）",
+        "A4.6 能量估计：非 2 次的非线性项",
+        "H4 蒙特卡洛：估计量与权重乘积的可积性",
+        "C7.1 概率：\\mathbb E|XY| <= \\|X\\|_p\\|Y\\|_q（含 p=1,q=\\infty 的有界情形）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁在用 Hölder 的哪一对指数」；重点给三因子版在流体里的具体配对",
+      "content": "Hölder 的落点：\n\n- **A1.5 $L^p$ 空间**：Minkowski 不等式（$\\lVert f+g\\rVert_p\\le\\lVert f\\rVert_p+\\lVert g\\rVert_p$）的证明要先用 Hölder；$L^p$ 的对偶 $(L^p)^*=L^q$ 也是 Hölder 的直接推论。\n- **A4.4 嵌入定理**：Gagliardo–Nirenberg 插值 $\\lVert D^ju\\rVert_{L^p}\\le C\\lVert D^mu\\rVert_{L^r}^{a}\\lVert u\\rVert_{L^q}^{1-a}$ 的证明核心就是 Hölder 配指数。\n- **A4.6 / P9.2 能量估计**：非线性项（如 $\\lvert u\\rvert^{p-1}u$）与测试函数的配对，需要非 $2$ 次的 Hölder。\n- **I1 / I5 流体**：Navier–Stokes 的三线性项 $\\int(u\\cdot\\nabla)v\\cdot w$ 用**三因子 Hölder**：要求 $\\frac1p+\\frac1q+\\frac1r=1$。标准配对是 $\\frac16+\\frac12+\\frac13=1$，即 $\\int\\lvert(u\\cdot\\nabla)v\\cdot w\\rvert\\le\\lVert u\\rVert_{L^6}\\lVert\\nabla v\\rVert_{L^2}\\lVert w\\rVert_{L^3}$；若 $w$ 有界也可取 $\\frac12+\\frac12+\\frac1\\infty=1$（$\\lVert w\\rVert_{L^\\infty}$ 直接提出）。**具体配对由可用的 Sobolev 嵌入决定（例如 $H^1\\hookrightarrow L^6$ 在三维给出那个 $L^6$），这是流体估计里最需要现场算的一步**。\n- **C7.1 概率**：$\\mathbb E\\lvert XY\\rvert\\le\\lVert X\\rVert_p\\lVert Y\\rVert_q$；$p=1,q=\\infty$ 给出「有界因子可以直接提出来」。\n- **H4 蒙特卡洛**：估计量 $f\\cdot\\frac{p}{q}$（重要性采样）的可积性由 Hölder 保证。\n\n**三因子版**（记住这个推广）：$\\frac1p+\\frac1q+\\frac1r=1\\implies\\int\\lvert fgh\\rvert\\le\\lVert f\\rVert_p\\lVert g\\rVert_q\\lVert h\\rVert_r$。",
+      "links": [
+        "A1.5",
+        "A4.4",
+        "A4.6",
+        "P9.2",
+        "I1",
+        "I5",
+        "C7.1",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:holder.probe1",
+      "type": "probe",
+      "subject": "holder",
+      "title": "检验题：共轭指数与 Hölder 界的紧度",
+      "keywords": [
+        "两问：验证 p=q=1 失效；算 p=2 与 p=3 的界",
+        "所有数值带【待核验】",
+        "从 quantifiers 表「共轭」一行变来"
+      ],
+      "tex_ref": null,
+      "fill_hint": "题目可算出具体数值；答案写在括号内供折叠",
+      "content": "**第 1 问**：在 $[0,1]$ 上取 $f=g=x$。用 $p=q=1$ 计算 $\\int\\lvert fg\\rvert$ 与 $\\lVert f\\rVert_1\\lVert g\\rVert_1$，判断 Hölder 是否成立。\n（答案：$\\frac13=0.3333$ 与 $0.25$【已核验:0.333333333333|1/3】与【已核验:0.25|0.5*0.5】，$0.3333\\le0.25$ **不成立**；原因是 $p=q=1$ 不共轭，$\\frac11+\\frac11=2\\ne1$）\n\n**第 2 问**：同一组 $f=g=x$，分别用 $(p,q)=(2,2)$ 与 $(3,\\frac32)$ 计算 Hölder 的右边，并判断哪一对取等、为什么。\n（答案：$(2,2)$ 得 $0.3333$【已核验:0.333333333333|(1/3)**0.5*(1/3)**0.5】，与左边 $\\frac13$ **取等**；$(3,\\frac32)$ 得 $0.3420$【已核验:0.341995189335|(1/4)**(1/3)*(1/2.5)**(2/3)】，不取等。取等条件是 $\\lvert f\\rvert^p\\propto\\lvert g\\rvert^q$：$p=2$ 时 $x^2\\propto x^2$ 成立，$p=3$ 时要求 $x^3\\propto x^{3/2}$ 不成立）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.statement",
+      "type": "statement",
+      "subject": "gronwall",
+      "title": "Gronwall 不等式（格朗沃尔）",
+      "keywords": [
+        "u' <= \\beta u + f，u(0) = u_0 ⟹ u(t) <= e^{\\beta t}u_0 + \\int_0^t e^{\\beta(t-s)}f(s)ds",
+        "\\beta 为常数（可放宽为 \\beta(t) \\in L^1）",
+        "f 可积（不要求 f >= 0）",
+        "u 绝对连续（或 C^1），u' 存在 a.e.",
+        "直觉：微分不等式 -> 积分不等式的出厂设置",
+        "NS 唯一性证明的收尾工具"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 207,
+        "line_end": 210
+      },
+      "fill_hint": "按 tex_ref 三行转写（陈述 + 证明提示 + 直觉）；补上 u 的正则性、\\beta 与 f 的条件、f 不需非负这几点",
+      "content": "**陈述**：设 $u$ 在 $[0,T]$ 上绝对连续（$C^1$ 当然够），$\\beta$ 为常数，$f$ 可积，且\n$$\nu'(t)\\ \\le\\ \\beta\\,u(t)+f(t)\\ \\text{ a.e.},\\qquad u(0)=u_0,\n$$\n则对 $t\\in[0,T]$，\n$$\nu(t)\\ \\le\\ e^{\\beta t}u_0+\\int_0^t e^{\\beta(t-s)}f(s)\\,ds.\n$$\n\n**逐项拆解**：\n\n- 左边 $u'(t)$ 是**微分不等式**（只知道导数被控制）；\n- 右边第一项 $e^{\\beta t}u_0$ 是初值经指数放大后的贡献；\n- 右边第二项 $\\int_0^t e^{\\beta(t-s)}f(s)ds$ 是**卷积**（Duhamel 形式）：$s$ 时刻的源项 $f(s)$ 被传播了 $t-s$ 这么久，衰减/放大因子是 $e^{\\beta(t-s)}$。\n\n**条件的细节**：\n\n- $u$ 只需**绝对连续**（absolutely continuous），不要求 $C^1$——因为证明里要对 $u'$ 积分，绝对连续正是「微积分基本定理成立」的准确条件；\n- $f$ 只需**可积**（$f\\in L^1$），**不要求 $f\\ge0$**。$f$ 为负时界更小；\n- $\\beta$ 可以为负（此时 $e^{\\beta t}$ 衰减），公式照样成立；\n- $\\beta$ 可放宽为 $\\beta(t)\\in L^1$，此时 $e^{\\beta t}$ 换成 $e^{\\int_0^t\\beta(\\tau)d\\tau}$（见 gronwall.quantifiers）。\n\n**为什么它这么值钱**：PDE 与 ODE 的先验估计最后一步几乎总是「得到一个微分不等式，然后套 Gronwall」。它把「局部的导数信息」升级为「全局的函数值上界」——这是存在唯一性、稳定性、连续依赖性三类证明的共同收尾动作。",
+      "links": [
+        "de1.9",
+        "de1.11",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.intuition",
+      "type": "intuition",
+      "subject": "gronwall",
+      "title": "Gronwall 直觉：微分不等式的出厂设置",
+      "keywords": [
+        "积分因子 e^{-\\beta t} 把「自反馈项 \\beta u」吸收掉",
+        "u' - \\beta u <= f ⟹ (e^{-\\beta t}u)' <= e^{-\\beta t}f",
+        "积分因子就是齐次方程的解的倒数",
+        "卷积项 = 源项在历史上每个时刻的贡献各自传播到 t",
+        "\\beta > 0：指数放大（误差增长）；\\beta < 0：指数衰减（稳定）",
+        "假设给了什么：导数被 u 自身与源项控制；结论：u 的整体上界"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 211,
+        "line_end": 211
+      },
+      "fill_hint": "切片直觉原文「微分不等式 -> 积分不等式的出厂设置」；把积分因子的来历与卷积项的含义讲清",
+      "content": "**核心动作**：把不等式写成 $u'-\\beta u\\le f$，左边是「变化率减去自反馈」。要消掉 $-\\beta u$ 这一项，就乘**积分因子** $e^{-\\beta t}$：\n$$\ne^{-\\beta t}\\bigl(u'-\\beta u\\bigr)=\\frac{d}{dt}\\Bigl(e^{-\\beta t}u\\Bigr)\\ \\le\\ e^{-\\beta t}f(t).\n$$\n（验证乘积求导：$\\frac{d}{dt}(e^{-\\beta t}u)=e^{-\\beta t}u'-\\beta e^{-\\beta t}u=e^{-\\beta t}(u'-\\beta u)$ ✓）\n\n**积分因子的来历**：齐次方程 $v'=\\beta v$ 的解是 $v=e^{\\beta t}$，积分因子正是它的**倒数** $e^{-\\beta t}$——和一阶线性 ODE 的解法完全一样，Gronwall 只是把等号换成了不等号。\n\n**卷积项的含义**：从 $0$ 积分到 $t$ 得\n$$\ne^{-\\beta t}u(t)-u_0\\le\\int_0^te^{-\\beta s}f(s)ds\n\\ \\implies\\ u(t)\\le e^{\\beta t}u_0+\\int_0^te^{\\beta(t-s)}f(s)ds.\n$$\n第二项读作：$s$ 时刻的源 $f(s)$ 先被 $e^{-\\beta s}$ 折现，再整体被 $e^{\\beta t}$ 放大，净效果就是乘 $e^{\\beta(t-s)}$——**传播了 $t-s$ 这么长时间**。这正是 Duhamel 原理（见 de2.7 热方程）的同一结构。\n\n**假设与结论分开写**：\n\n- *假设给了什么*：$u'$ 被「$u$ 自己」（系数 $\\beta$）与「外部源」（$f$）控制住，外加一个初值 $u_0$。\n- *结论为什么因此成立*：自反馈项被积分因子吸收后，剩下的就只是一个纯粹的积分——于是「局部的导数界」变成了「全局的函数值界」。\n\n**$\\beta$ 的符号**：$\\beta>0$ 时 $e^{\\beta t}$ 指数增长（误差被放大，对应不稳定）；$\\beta<0$ 时衰减（对应稳定）。稳定性理论（de1.11）里 $\\beta$ 的符号就是全部结论。",
+      "links": [
+        "de1.9",
+        "de1.11",
+        "de2.7"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.proof",
+      "type": "proof",
+      "subject": "gronwall",
+      "title": "Gronwall 证明：乘积分因子后两边积分",
+      "keywords": [
+        "步骤1：移项 u' - \\beta u <= f",
+        "步骤2：乘积分因子 e^{-\\beta t}（>0，不等号方向不变）",
+        "步骤3：认出左边是 (e^{-\\beta t}u)'",
+        "步骤4：从 0 到 t 积分，用 u(0) = u_0",
+        "步骤5：乘 e^{\\beta t} 解出 u(t)",
+        "易错点：\\beta 依赖 t 时积分因子要换成 e^{-\\int_0^t \\beta}"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 211,
+        "line_end": 211
+      },
+      "fill_hint": "切片给的证明提示是「乘积分因子 e^{-\\beta t} 后两边积分」；把五步写全，每步给理由，并标注易错点",
+      "content": "**证明（五步）**：\n\n1. **移项**：由 $u'\\le\\beta u+f$ 得\n   $$\n   u'(t)-\\beta u(t)\\le f(t).\n   $$\n2. **乘积分因子**：$e^{-\\beta t}>0$ 恒成立，故**不等号方向不变**：\n   $$\n   e^{-\\beta t}\\bigl(u'(t)-\\beta u(t)\\bigr)\\le e^{-\\beta t}f(t).\n   $$\n3. **认出全导数**（这一步是全部技巧）：\n   $$\n   \\frac{d}{dt}\\Bigl(e^{-\\beta t}u(t)\\Bigr)=e^{-\\beta t}u'(t)-\\beta e^{-\\beta t}u(t)=e^{-\\beta t}\\bigl(u'(t)-\\beta u(t)\\bigr),\n   $$\n   故第 2 步即 $\\frac{d}{dt}\\bigl(e^{-\\beta t}u(t)\\bigr)\\le e^{-\\beta t}f(t)$。\n4. **从 $0$ 到 $t$ 积分**（$u$ 绝对连续保证了这一步合法）：\n   $$\n   e^{-\\beta t}u(t)-e^{0}u(0)\\le\\int_0^te^{-\\beta s}f(s)\\,ds,\n   \\qquad u(0)=u_0.\n   $$\n5. **解出 $u(t)$**：两边乘 $e^{\\beta t}>0$，\n   $$\n   u(t)\\le e^{\\beta t}u_0+e^{\\beta t}\\int_0^te^{-\\beta s}f(s)ds=e^{\\beta t}u_0+\\int_0^te^{\\beta(t-s)}f(s)ds.\\ \\square\n   $$\n\n**依赖链**：乘积求导法则 + 微积分基本定理（对绝对连续函数成立）+ 指数函数恒正。没有用到任何高级工具——这就是为什么它「出厂设置」级的可靠。\n\n**易错点**：\n\n- **$\\beta$ 依赖 $t$ 时**：积分因子必须换成 $e^{-\\int_0^t\\beta(\\tau)d\\tau}$，此时第 3 步的求导会多出 $\\beta(t)$ 项，正好对上；直接套 $e^{-\\beta t}$ 是错的（见 gronwall.counterexample）。\n- **不等号方向**：乘的是 $e^{-\\beta t}>0$，方向**不变**；但最后一步若不小心乘了负数就会翻向。\n- **$u_0$ 项不能丢**：舍掉 $e^{\\beta t}u_0$ 会得到「$u(0)=0$ 时才成立」的错误公式。\n- **$f$ 不必非负**：证明里没有用到 $f\\ge0$，不要自己加上这个条件。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.quantifiers",
+      "type": "comparison",
+      "subject": "gronwall",
+      "title": "Gronwall 适用条件表",
+      "keywords": [
+        "条件1：u 绝对连续（C^1 够用；仅连续不够）",
+        "条件2：\\beta 常数（可放宽为 \\beta(t) \\in L^1）",
+        "条件3：f \\in L^1（不要求 f >= 0）",
+        "条件4：不等号方向是 u' <= \\beta u + f（>= 时方向反）",
+        "条件5：初始条件 u(0) = u_0（缺失则界里没有 u_0 项）",
+        "条件6：\\beta 可为负（公式仍成立，指数衰减）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 207,
+        "line_end": 210
+      },
+      "fill_hint": "四列表：条件｜失效的具体例子｜误用后果｜能否放宽；每行给具体函数与具体数值",
+      "content": "| 条件（限定词） | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $u$ 绝对连续（$u'\\in L^1$ 且 $u(t)-u(0)=\\int u'$） | Cantor 函数 $c(t)$：连续、a.e. 导数为 $0$，但 $c(1)-c(0)=1\\ne\\int_0^1c'=0$ | 第 4 步「积分还原函数值」失效，结论可以完全错误 | 不可放宽到「仅连续」；可放宽到绝对连续（PDE 弱解情形常用） |\n| $\\beta$ 为常数 | $\\beta(t)=2t$（非常数），$u'=2tu,\\ u_0=1,\\ f\\equiv0$：真解 $u(t)=e^{t^2}$，$u(1)=e=2.7183$【已核验:2.71828182846|exp(1)】；若误取 $\\beta=\\beta(0)=0$ 套常数公式得 $u(1)\\le1$，**假** | 给出的上界小于真值，唯一性/稳定性结论直接崩 | **可放宽**：换成 $e^{\\int_0^t\\beta(\\tau)d\\tau}$ 与 $e^{\\int_s^t\\beta(\\tau)d\\tau}$ 即成立 |\n| $f\\in L^1$（可积） | $f(s)=\\frac1s$ 在 $(0,1)$：$\\int_0^1f=\\infty$，卷积项发散，界为 $\\infty$ | 界为空，得不到任何有限上界 | 不可放宽；但可先在 $[\\varepsilon,t]$ 上用再令 $\\varepsilon\\to0$ |\n| 不等号方向是 $\\le$ | 若实际是 $u'\\ge\\beta u+f$ 却套 Gronwall：取 $u=e^{2t}$，$u'=2u$，取 $\\beta=1,f=0$，则 $u'\\ge\\beta u$ 成立，而 Gronwall 会给出 $u(t)\\le e^{t}u_0=e^t$，但真值 $u(1)=e^2=7.3891>e=2.7183$【已核验:7.38905609893|exp(2)】与【已核验:2.71828182846|exp(1)】，**假** | 上界变成错误的（小于真值）的上界 | 不可放宽；$\\ge$ 方向要用「反向 Gronwall」或改用下界版本 |\n| $u(0)=u_0$ 已知 | 漏掉初值项，写成 $u(t)\\le\\int_0^te^{\\beta(t-s)}f(s)ds$：取 $\\beta=1,f\\equiv0,u_0=1$，正确界是 $e^{t}$，漏掉后给 $0$，而真值 $u(1)=e=2.7183$【已核验:2.71828182846|exp(1)】 | 断言 $u(1)\\le0$，荒谬 | 不可省略 |\n| $f$ **不需**非负 | 误加条件「$f\\ge0$」后放弃使用：$f(s)=-1$ 时界为 $e^{\\beta t}u_0-\\frac{e^{\\beta t}-1}{\\beta}$，完全合法且更紧 | 白白丢掉适用场景 | **本来就不需要**，不要自己加 |\n| $\\beta$ 可为负 | $\\beta=-1,f\\equiv0,u_0=1$：界为 $e^{-t}$，$u(1)\\le e^{-1}=0.3679$【已核验:0.367879441171|exp(-1)】✓ | 无不良后果 | 本来就允许 |\n\n**一句话总结**：Gronwall 的硬条件是「$u$ 绝对连续 + $f$ 可积 + 不等号方向正确」；$\\beta$ 可以放宽到 $L^1$ 函数，$f$ 不需要非负，但**初值项与卷积项都不能丢**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.numeric",
+      "type": "extension",
+      "subject": "gronwall",
+      "title": "数值验证：取 $\\beta=1,\\ f(s)=s,\\ u_0=1,\\ t=1$",
+      "keywords": [
+        "卷积项解析值 \\int_0^1 e^{1-s}s ds = e - 2 = 0.718282",
+        "黎曼和 N=10000 得 0.718232（与解析值差 5e-5）",
+        "界 = e + (e-2) = 2e - 2 = 3.436564",
+        "等号情形：取 u' = \\beta u + f 时 u(1) = 3.436564，界是紧的",
+        "严格不等情形：u(t) = e^t 满足 u' = u <= u + t，u(1) = 2.718282 < 3.436564",
+        "黎曼和对拍：sum(exp(1-k/10000)*(k/10000)/10000 for k in range(10000))（N=10000 左端点）"
+      ],
+      "tex_ref": null,
+      "fill_hint": "本单元最该动手算的一条：给解析值 + 黎曼和（带【待核验】）+ 等号与严格不等两例的数值",
+      "content": "取一组具体数值把 Gronwall 的界算出来，验证它**确实是上界、且在等号情形是紧的**。\n\n**参数**：$\\beta=1$，$f(s)=s$，$u_0=1$，$t=1$。\n\n**第 1 步：算卷积项**（解析值）。\n$$\n\\int_0^1e^{1-s}s\\,ds\n=\\int_0^1e^{w}(1-w)\\,dw\\quad(w=1-s)\n=e-2=0.718282.\n$$\n【已核验:0.718281828459|exp(1)-2】\n\n**第 1 步（数值积分对拍）**：用黎曼和（$N=10000$，左端点）\n$$\n\\sum_{k=0}^{9999}e^{1-k/10000}\\cdot\\frac{k}{10000}\\cdot\\frac1{10000}=0.718232,\n$$\n【已核验:0.718231826194|sum(exp(1-k/10000)*(k/10000)/10000 for k in range(10000))】\n与解析值 $0.718282$ 相差 $5.0\\times10^{-5}$【已核验:5.00022652347e-05|abs((exp(1)-2)-sum(exp(1-k/10000)*(k/10000)/10000 for k in range(10000)))】，符合左端点黎曼和的 $O(\\frac1N)$ 误差。\n\n**第 2 步：算界**。\n$$\nu(1)\\ \\le\\ e^{1}\\cdot1+\\bigl(e-2\\bigr)=2e-2=3.436564.\n$$\n【已核验:3.43656365692|exp(1)+exp(1)-2】\n\n**第 3 步：等号情形（界是紧的）**。取 $u$ 满足**等号** $u'=u+s$、$u(0)=1$，其解正是\n$$\nu(t)=e^{t}\\cdot1+\\int_0^te^{t-s}s\\,ds,\n\\qquad u(1)=3.436564.\n$$\n【已核验:3.43656365692|exp(1)+exp(1)-2】——与界**完全相等**，说明 Gronwall 的界不能改进（在所有满足微分不等式的函数中，取等号的那一个就达到界）。\n\n**第 4 步：严格不等情形**。取 $u(t)=e^{t}$（即 $u'=u$），它满足 $u'=u\\le u+t$（因为 $t\\ge0$），$u(0)=1=u_0$。此时\n$$\nu(1)=e=2.718282\\ <\\ 3.436564=\\text{界}.\n$$\n【已核验:2.71828182846|exp(1)】与【已核验:3.43656365692|exp(1)+exp(1)-2】——严格不等，差 $0.718282$ 恰好就是卷积项（因为这个例子里「没用满」的那部分正是 $f$ 的贡献）。\n\n**结论**：这一组数值同时验证了三件事——①卷积项算对了；②界确实是上界；③等号情形取等，所以**界是最优的**。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.counterexample",
+      "type": "counterexample",
+      "subject": "gronwall",
+      "title": "典型误用：漏掉卷积项与 $\\beta$ 依赖 $t$ 时套常数公式",
+      "keywords": [
+        "误用1：漏掉 \\int e^{\\beta(t-s)}f(s)ds，把 u' <= \\beta u + f 当 u' <= \\beta u",
+        "数值：\\beta=1, f=s, u_0=1, t=1：真值 3.436564，漏掉后给 2.718282",
+        "误用2：\\beta(t) = 2t 时套常数公式，取 \\beta = \\beta(0) = 0 得 u(1) <= 1",
+        "正确：\\beta(t) 版用 e^{\\int_0^t \\beta} 与 e^{\\int_s^t \\beta}",
+        "误用3：不等号方向是 >= 时仍套 Gronwall",
+        "修补：用前先确认 \\beta 是不是常数、f 是不是真的可以忽略"
+      ],
+      "tex_ref": null,
+      "fill_hint": "三个误用各给具体数值（带【待核验】）；第二个要写出正确的 \\beta(t) 版公式",
+      "content": "**误用一：漏掉卷积项**。看到 $u'\\le\\beta u+f$ 就当 $u'\\le\\beta u$ 处理，给出 $u(t)\\le e^{\\beta t}u_0$。\n\n取 $\\beta=1$、$f(s)=s$、$u_0=1$、$t=1$，并取等号情形的解（$u'=u+s$）：\n\n- 真值：$u(1)=e+(e-2)=3.436564$【已核验:3.43656365692|exp(1)+exp(1)-2】；\n- 漏掉卷积项的断言：$u(1)\\le e^{1}\\cdot1=2.718282$【已核验:2.71828182846|exp(1)】；\n- $3.436564\\le2.718282$ **假**，断言比真值小 $0.718282$（正好是卷积项 $e-2$）。\n\n**后果**：在唯一性证明里，这一步通常是「两个解的差 $w$ 满足 $w'\\le Cw+\\eta$」，漏掉 $\\eta$ 项会得出 $w\\equiv0$ 之外的错误结论，或者反过来让「误差估计」少掉一个必须保留的项。\n\n**误用二：$\\beta$ 依赖 $t$ 时套常数公式**。取 $\\beta(t)=2t$、$f\\equiv0$、$u_0=1$，真实微分不等式 $u'=2tu$。\n\n- 真解：$u(t)=e^{t^2}$，故 $u(1)=e=2.718282$【已核验:2.71828182846|exp(1)】；\n- 若误取 $\\beta=\\beta(0)=0$ 套常数公式：$u(1)\\le e^{0}\\cdot1=1$，$2.718282\\le1$ **假**；\n- 若取 $\\beta=\\max_{[0,1]}\\beta(t)=2$：$u(1)\\le e^{2}=7.389056$【已核验:7.38905609893|exp(2)】，成立但**松了 $2.7$ 倍**。\n\n**正确做法（$\\beta(t)$ 版）**：\n$$\nu(t)\\le e^{\\int_0^t\\beta(\\tau)d\\tau}u_0+\\int_0^te^{\\int_s^t\\beta(\\tau)d\\tau}f(s)\\,ds.\n$$\n代入 $\\beta(\\tau)=2\\tau$、$f\\equiv0$、$t=1$：$\\int_0^12\\tau\\,d\\tau=1$，得 $u(1)\\le e^{1}=2.718282$【已核验:2.71828182846|exp(1)】——**正好取等**，因为这里本来就是等号情形。\n\n**误用三：不等号方向**。若实际是 $u'\\ge\\beta u+f$ 却套 Gronwall（它给的是**上界**）：取 $u=e^{2t}$、$\\beta=1$、$f\\equiv0$，则 $u'=2u\\ge u$ 成立，Gronwall 会「给出」$u(1)\\le e^{1}=2.718282$，而真值 $u(1)=e^2=7.389056$【已核验:7.38905609893|exp(2)】与【已核验:2.71828182846|exp(1)】，**假**。\n\n**修补动作**：用 Gronwall 之前确认三件事——①$\\beta$ 是不是常数（不是就用 $\\beta(t)$ 版）；②$f$ 是不是真的可以忽略（不能就保留卷积项）；③不等号方向是不是 $\\le$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.application",
+      "type": "application",
+      "subject": "gronwall",
+      "title": "Gronwall 用在哪一层（NS 唯一性的收尾工具）",
+      "keywords": [
+        "de1.9 存在唯一性：两解之差 w 满足 w' <= Cw，得 w ≡ 0",
+        "de1.11 稳定性：\\beta < 0 时指数衰减",
+        "A4.6 / P9.2 能量法：能量不等式 E' <= CE + f 的最后一步",
+        "I5 湍流 / NS 唯一性：两个弱解之差的能量估计收尾",
+        "I9.2 能量稳定格式：离散 Gronwall（时间步进版）",
+        "de4.2 数值稳定性：误差递推 e_{n+1} <= (1+C\\Delta t)e_n + C\\Delta t^2"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 212,
+        "line_end": 212
+      },
+      "fill_hint": "切片点名「NS 唯一性证明的收尾工具」；把每个应用写成「谁在哪一步用 Gronwall」，并给出离散版",
+      "content": "Gronwall 是「先验估计的最后一步」，落点：\n\n- **de1.9 存在唯一性**：设 $u,v$ 是两个解，令 $w=u-v$，由 Lipschitz 条件得 $w'\\le L\\lvert w\\rvert$、$w(0)=0$，套 Gronwall（$f\\equiv0$、$u_0=0$）得 $w(t)\\le0$，即 $w\\equiv0$ —— **唯一性就是这样证的**。\n- **de1.11 稳定性**：$\\beta<0$ 时界为 $e^{\\beta t}u_0$，$t\\to\\infty$ 时趋于 $0$，即渐近稳定；$\\beta>0$ 时指数增长，即不稳定。$\\beta$ 的符号就是稳定性的判据。\n- **A4.6 / P9.2 能量法**：能量估计流水线是「对方程乘 $u$ 积分 → 分部积分（P9.1）→ Young 吸收交叉项 → 得到 $E'(t)\\le CE(t)+f(t)$ → **套 Gronwall**」。所以 Gronwall 是这条流水线的**最后一道工序**，前面的 Young、Hölder 都在为它做准备。\n- **I5 湍流 / NS 唯一性**：两个 Leray–Hopf 弱解之差的能量不等式，最后一步就是 Gronwall（切片点名的用途）。\n- **I9.2 能量稳定格式**：时间离散后有**离散 Gronwall**：$e_{n+1}\\le(1+C\\Delta t)e_n+C\\Delta t^{p+1}\\implies e_n\\le e^{CT}\\bigl(e_0+C\\Delta t^{p}\\bigr)$——这就是「格式收敛阶」的证明收尾。\n- **de4.2 数值稳定性**：误差递推的控制同样走 Gronwall 或其离散版。\n\n**使用判据**：当你得到任何形如「$X'(t)\\le aX(t)+b(t)$」的关系（$X$ 可以是能量、误差、两解之差）⟹ 立刻掏 Gronwall。若 $t$ 是离散的 ⟹ 用离散版。",
+      "links": [
+        "de1.9",
+        "de1.11",
+        "A4.6",
+        "P9.2",
+        "P9.1",
+        "I5",
+        "I9.2",
+        "de4.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:gronwall.probe1",
+      "type": "probe",
+      "subject": "gronwall",
+      "title": "检验题：Gronwall 的界（含数值积分）",
+      "keywords": [
+        "三问：算卷积项、算界、判断漏掉卷积项的后果",
+        "所有数值带【待核验】，含黎曼和表达式",
+        "从 quantifiers 表「漏掉卷积项」一行变来"
+      ],
+      "tex_ref": null,
+      "fill_hint": "题目可算出具体数值；答案写在括号内供折叠",
+      "content": "**第 1 问**：取 $\\beta=1$、$f(s)=s$、$t=1$，计算 $\\int_0^1e^{1-s}s\\,ds$ 的解析值，并用 $N=10000$ 的左端点黎曼和给出数值对拍。\n（答案：解析值 $e-2=0.718282$【已核验:0.718281828459|exp(1)-2】；黎曼和 $0.718232$【已核验:0.718231826194|sum(exp(1-k/10000)*(k/10000)/10000 for k in range(10000))】，差 $5.0\\times10^{-5}$）\n\n**第 2 问**：接上，取 $u_0=1$、$t=1$，写出 Gronwall 给出的上界；再对满足**等号** $u'=u+s$、$u(0)=1$ 的解算出 $u(1)$，判断界是否紧。\n（答案：界 $=e+(e-2)=2e-2=3.436564$【已核验:3.43656365692|exp(1)+exp(1)-2】；等号解 $u(1)=3.436564$，**取等**，故界最优）\n\n**第 3 问**：若有人漏掉卷积项、只写 $u(1)\\le e^{1}u_0$，在第 2 问的等号情形下会得到什么错误结论？\n（答案：得到 $u(1)\\le2.718282$【已核验:2.71828182846|exp(1)】，而真值 $3.436564$，断言**假**，比真值小 $0.718282=e-2$）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "进阶三件套对照：Jensen / Hölder / Gronwall 的分工",
+      "keywords": [
+        "Jensen：先平均 vs 后平均（凸性工具，是祖先）",
+        "Hölder：两个 L^p 函数乘积的积分（指数配对工具）",
+        "Gronwall：微分不等式升级为积分不等式（收尾工具）",
+        "依赖链：Jensen ⟹ Young ⟹ Hölder；Gronwall 独立（只靠微积分基本定理）",
+        "选择判据：看输入是「期望/平均」「乘积积分」还是「导数不等式」",
+        "Gronwall 不依赖前两者，但需要它们准备出 E' <= CE + f 的形式"
+      ],
+      "tex_ref": null,
+      "fill_hint": "产出三列对照表（处理结构 / 关键条件 / 典型误用）+ 依赖链；与 P9.4 决策树呼应",
+      "content": "三条工具处理的是**完全不同的输入结构**，按输入类型选即可：\n\n| 工具 | 处理的结构 | 关键条件 | 典型误用 | 在链条上的位置 |\n|---|---|---|---|---|\n| **Jensen** | $\\varphi(\\mathbb EX)$ vs $\\mathbb E\\varphi(X)$（先/后平均） | $\\varphi$ 凸（凹则反向）、$X$ 与 $\\varphi(X)$ 可积 | 凹凸方向记反 | **祖先**：AM–GM、Young 都是它的特例 |\n| **Hölder** | $\\int\\lvert fg\\rvert$（两个 $L^p$ 函数相乘） | $p,q$ 共轭、$1\\le p\\le\\infty$、两范数有限 | 取了不共轭的指数 | 由 Young 推出；推出 $L^p$ 对偶与 Minkowski |\n| **Gronwall** | $u'\\le\\beta u+f$（导数被自身与源控制） | $u$ 绝对连续、$f\\in L^1$、方向为 $\\le$ | 漏卷积项、$\\beta(t)$ 时套常数公式 | **收尾**：能量法流水线的最后一步 |\n\n**依赖链**（这条链值得背下来）：\n$$\n\\text{凸性（Jensen）}\\implies\\text{Young}\\implies\\text{H\\\"older}\\implies\\text{Minkowski}\\implies L^p\\ \\text{是赋范空间}.\n$$\nGronwall **不在这条链上**——它只依赖微积分基本定理。但它与前两者**协同**：能量估计先用 Young/Hölder 把交叉项吸收掉，得到 $E'\\le CE+f$，再交给 Gronwall 收尾。\n\n**选择判据（按输入类型）**：\n\n1. 输入含「期望 / 平均 / 概率权重」⟹ Jensen（先查凹凸）。\n2. 输入是「两个函数的乘积的积分」，且能各自配 $L^p$ 范数 ⟹ Hölder（先查共轭）。\n3. 输入是「导数不等式」⟹ Gronwall（先查 $\\beta$ 是不是常数）。\n\n**与 P3.1 / P3.2 的关系**：P3.1 是「两个量的乘积」，P3.2 是「单个初等函数的放缩」，本单元是「结构性的三类」。真实证明里通常**先用 P3.2 化简函数，再用 P3.1/Hölder 处理乘积，最后用 Gronwall 收尾**。",
+      "links": [
+        "P3.1",
+        "P3.2",
+        "P9.4",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "进阶三件套服务的下游章节",
+      "keywords": [
+        "A1.5 L^p 与 A2.1 赋范空间：Hölder ⟹ Minkowski ⟹ 完备性",
+        "A4.4 嵌入定理、A4.6 能量估计、P9.2 能量法流水线",
+        "de1.9 / de1.11 唯一性与稳定性：Gronwall",
+        "I5 湍流、I9.2 能量稳定格式：Gronwall 连续版与离散版",
+        "M3 信息论、C9.1 统计：Jensen",
+        "C7.1 / C6.5 概率：Hölder 与 Jensen 的组合"
+      ],
+      "tex_ref": null,
+      "fill_hint": "每条一句「谁用了三件套的哪一件」；links 指向被服务章节",
+      "content": "三件套的下游工位：\n\n- **A1.5 $L^p$ / A2.1 赋范空间**：Hölder $\\implies$ Minkowski $\\implies$ $\\lVert\\cdot\\rVert_p$ 真是范数 $\\implies$ $L^p$ 是 Banach 空间；Riesz–Fischer 完备性定理的证明也走这条路。\n- **A4.4 嵌入定理 / A4.6 能量估计 / P9.2 能量法**：Hölder 配指数 + Young 吸收交叉项 + Gronwall 收尾，是 PDE 先验估计的完整流水线。\n- **de1.9 存在唯一性 / de1.11 稳定性**：Gronwall 是唯一性证明的收尾动作；$\\beta$ 的符号决定稳定性。\n- **I5 湍流 / I9.2 能量稳定格式**：NS 弱解唯一性的收尾用连续 Gronwall；数值格式的稳定性用离散 Gronwall。\n- **M3 信息论 / C9.1 统计**：Jensen 给出 KL 散度非负、熵的界、Rao–Blackwell、EM 单调性。\n- **C7.1 / C6.5 概率**：Hölder 处理矩的存在性，Jensen 处理期望与凸函数的关系。\n\n**一句话**：P3 全组（P3.1 四件套 + P3.2 放缩盒 + P3.3 进阶）是**一切证明的工具箱**；分析里任何「估计」类结论，向下追都能追到 P3 的某一格。",
+      "links": [
+        "A1.5",
+        "A2.1",
+        "A4.4",
+        "A4.6",
+        "P9.2",
+        "de1.9",
+        "de1.11",
+        "I5",
+        "I9.2",
+        "M3",
+        "C9.1",
+        "C7.1",
+        "C6.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P3.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：Gronwall 界的数值对拍（档2 留空待接）",
+      "keywords": [
+        "档2 planned-backend：需要数值积分与 ODE 求解，前端算不了",
+        "交互1：拖 \\beta（含负值）看 e^{\\beta t} 从增长切到衰减",
+        "交互2：选不同 f（0 / s / sin s / 常数）看卷积项曲线",
+        "交互3：画出「界曲线」与「等号解曲线」重合（说明界紧），再画一个严格不等的 u",
+        "必须能读出 t=1 处的三个数值：u_0 项、卷积项、总和",
+        "Jensen / Hölder 的演示已在 P3.1 的 inequality-decision-tree 覆盖"
+      ],
+      "tex_ref": null,
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要对 \\int_0^t e^{\\beta(t-s)}f(s)ds 做数值积分并同时求解 ODE（等号解），且要让 \\beta 连续可调并实时重算，前端直渲精度与交互都撑不住",
+        "params_hint": {
+          "beta_range": [
+            -2,
+            2
+          ],
+          "f_options": [
+            "zero",
+            "identity",
+            "sin",
+            "constant"
+          ],
+          "t_max": 3,
+          "u0": 1,
+          "show": [
+            "bound_curve",
+            "equality_solution",
+            "strict_solution",
+            "u0_term",
+            "convolution_term"
+          ]
+        }
+      },
+      "fill_hint": "档2（Q1 需数值积分 + Q2 需 ODE 求解）。图上必须显示 t=1 处的三个数值（e^{\\beta}·u_0、卷积项、总和），并能切换 \\beta 正负看稳定性",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "content": "Gronwall 的数值对拍演示，档2（留空待接后端）。演示要回答三个问题，每个都必须显示**数值**而不只是形状：\n\n1. **\\beta 的符号决定稳定性**：拖 $\\beta$ 从 $2$ 到 $-2$，看 $e^{\\beta t}u_0$ 这一项从指数增长翻转为指数衰减；$\\beta=1$、$t=1$ 时为 $2.718282$【已核验:2.71828182846|exp(1)】，$\\beta=-1$ 时为 $0.367879$【已核验:0.367879441171|exp(-1)】。\n2. **卷积项有多大**：切换 $f$ 为 $0$、$s$、$\\sin s$、常数 $1$，看 $\\int_0^te^{\\beta(t-s)}f(s)ds$ 的曲线；$f(s)=s$、$\\beta=1$、$t=1$ 时为 $0.718282$【已核验:0.718281828459|exp(1)-2】。\n3. **界是紧的**：同图画出「界曲线」与「等号解 $u'= \\beta u+f$ 的解」——两者**完全重合**（$t=1$ 时同为 $3.436564$【已核验:3.43656365692|exp(1)+exp(1)-2】）；再画一条严格不等的解（如 $u=e^t$，在 $t=1$ 处为 $2.718282$）落在界曲线下方。\n\nJensen 与 Hölder 的几何图像已由 P3.1 的 `inequality-decision-tree`（弦在上方、共轭指数分配）覆盖，本单元不重复设模式。"
+    }
+  ]
+}

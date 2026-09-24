@@ -1,0 +1,348 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P2.1",
+  "chapter": "P2",
+  "title": "乘法公式族（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 89,
+    "line_end": 103,
+    "anchor": "notebook/P_computation.tex:89"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P2.1:mult-formulas.statement",
+      "type": "statement",
+      "subject": "mult-formulas",
+      "title": "乘法公式族（五条 + 条件）",
+      "keywords": [
+        "(a±b)²、平方差、(a±b)³、立方和差、三项平方",
+        "恒等式：对一切实数（复数）成立，无条件",
+        "是一切配方的基础（切片备注）",
+        "三项平方=向量 ‖a+b‖² 的代数版",
+        "每条一组代入验证（49、9999、125、35、9）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 99
+      },
+      "fill_hint": "切片五条公式逐字转写 + 每条一组代入值；用途备注并入 application。",
+      "content": "五条公式（实数或复数上的**恒等式**——分配律的推论，无附加条件）：\n\n$$(a\\pm b)^2=a^2\\pm 2ab+b^2$$\n$$(a+b)(a-b)=a^2-b^2$$\n$$(a\\pm b)^3=a^3\\pm3a^2b+3ab^2\\pm b^3$$\n$$a^3\\pm b^3=(a\\pm b)(a^2\\mp ab+b^2)$$\n$$(a+b+c)^2=a^2+b^2+c^2+2ab+2bc+2ca$$\n\n用途（切片备注列）：①\"一切配方的基础\"（P2.2）；②平方差 → 有理化、差分分解（P2.5）；③④是二项式 $n=3$ 特例 + 逆向的立方和差分解（P2.3）；⑤\"向量 $\\|\\mathbf{a}+\\mathbf{b}\\|^2$ 的代数版\"（A2.2/P6.3）。\n\n**代入验证**（每条一组）：$(3+4)^2=49=9+24+16$【已核验:49|3**2+2*3*4+4**2】；$101\\times99=9999=10000-1$【已核验:9999|101*99】；$(2+3)^3=125=8+36+54+27$【已核验:125|2**3+3*4*3+3*2*9+3**3】；$2^3+3^3=35=(2+3)(4-6+9)$【已核验:35|2**3+3**3】【已核验:35|(2+3)*(4-6+9)】；$(1+1+1)^2=9=3+6$【已核验:9|1+1+1+2+2+2】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.2",
+        "P2.3",
+        "P2.5"
+      ]
+    },
+    {
+      "id": "P2.1:mult-formulas.quantifiers",
+      "type": "comparison",
+      "subject": "mult-formulas",
+      "title": "适用条件表（恒等式的'条件'长在误用形态上）",
+      "keywords": [
+        "平方差要求'一项同、一项反号'",
+        "立方和差中间项符号与外层反号",
+        "交叉项 2ab 不能丢（正交才消失）",
+        "三项展开有三个交叉项（ab、bc、ca）",
+        "逆向使用（分解）要求右侧恰好匹配"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 99
+      },
+      "fill_hint": "恒等式本体无条件，'限定词'全在使用场景；每行配具体数字。",
+      "content": "乘法公式族是恒等式——对一切实数（复数）成立；真正的\"条件\"是使用场景的限定词：\n\n| 条件/限定词 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 平方差要求\"一项同、一项反号\" | 把 $(a+b)(a+b)$ 当平方差用：$3\\times3$ 结构上 $(3+4)(3+4)=49\\ne 9-16=-7$【已核验:-7|3*3-4*4】 | 符号错 | 恒等式不能改写；认结构 $(a-b)(a+b)$ |\n| 立方和差中间项符号相反（$\\mp$ 配 $\\pm$） | $a^3+b^3$ 拆成 $(a+b)(a^2+ab+b^2)$：给 $95\\ne35$（见 misuse-cube） | 系数全错 | — |\n| 交叉项 $2ab$ 不能丢 | $(a+b)^2\\stackrel{?}{=}a^2+b^2$：$49\\ne25$（见 misuse-square） | 丢交叉项 | 只有 $a\\perp b$（正交）时 $2ab$ 项才为零 |\n| 三项展开要 3 个交叉项 | $(a+b+c)^2$ 只写 $a^2+b^2+c^2$：$(1+1+1)^2=9\\ne3$【已核验:3|1+1+1】 | 丢 $2ab+2bc+2ca$ | — |\n| 逆向使用（因式分解）要求右侧恰好匹配 | $x^2+4$ 在实数上不能用平方差分解 | 强拆出错 | 复数上 $x^2+4=(x+2i)(x-2i)$（R1） |",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.1:mult-formulas.misuse-square",
+      "type": "counterexample",
+      "subject": "mult-formulas",
+      "title": "典型误用：(a+b)² = a²+b²（丢交叉项）",
+      "keywords": [
+        "(3+4)²=49 而 3²+4²=25，差 24=2ab",
+        "线性代数高频：‖a+b‖²=‖a‖²+‖b‖² 仅当正交",
+        "概率同款：Var(X+Y) 相加仅当协方差为零",
+        "修补：展开前先问'正交/独立吗'"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 95
+      },
+      "fill_hint": "丢交叉项的完整计算 + 两个跨章同构坑（正交、协方差）。",
+      "content": "**具体计算**：$(3+4)^2=49$，而 $a^2+b^2=9+16=25$【已核验:25|3**2+4**2】，差 $24=2\\times3\\times4$ 恰是交叉项【已核验:24|2*3*4】。\n\n**高频场景一（线性代数）**：$\\|\\mathbf{a}+\\mathbf{b}\\|^2=\\|\\mathbf{a}\\|^2+\\|\\mathbf{b}\\|^2$ **当且仅当 $\\mathbf{a}\\perp\\mathbf{b}$**（勾股定理）：正交时交叉项 $2\\mathbf{a}\\cdot\\mathbf{b}=0$ 才消失。数值：$\\mathbf{a}=(1,0)$、$\\mathbf{b}=(0,1)$：$\\|(1,1)\\|^2=2=1+1$ ✓；$\\mathbf{b}=(1,0)$：$\\|(2,0)\\|^2=4\\ne1+1=2$【已核验:2|4-2】。这正是 A2.2 希尔伯特空间里\"正交 = 平方可加\"的全部内容。\n\n**高频场景二（概率）**：$\\mathrm{Var}(X+Y)=\\mathrm{Var}X+\\mathrm{Var}Y$ 仅当协方差为零（独立**不够**，要不相关）——同一个坑的随机变量版。\n\n**修补**：展开前先问\"$a$、$b$ 正交/独立吗\"；不确定就老实展开（交叉项写着，不丢）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A2.2",
+        "C2"
+      ]
+    },
+    {
+      "id": "P2.1:mult-formulas.misuse-cube",
+      "type": "counterexample",
+      "subject": "mult-formulas",
+      "title": "典型误用：立方和差中间项符号（95 vs 35）",
+      "keywords": [
+        "2³+3³=35；正确分解 5×7=35",
+        "符号错版 (a+b)(a²+ab+b²)=95，近三倍",
+        "自检锚点：代 a=b，错误版给 6a³≠2a³",
+        "记忆：立方'和'中间取负，'差'取正"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 98,
+        "line_end": 98
+      },
+      "fill_hint": "立方和差符号误用的完整计算 + a=b 自检锚点。",
+      "content": "**具体计算**：$2^3+3^3=35$【已核验:35|2**3+3**3】。正确分解 $(a+b)(a^2-ab+b^2)=5\\times(4-6+9)=5\\times7=35$【已核验:35|(2+3)*(4-6+9)】；错误符号版 $(a+b)(a^2+ab+b^2)=5\\times(4+6+9)=95$【已核验:95|5*(4+6+9)】——错出近三倍。\n\n**失效机制**：外层 $\\pm$ 与中间 $\\mp$ 必须反号——立方**和**的中间项取 $-$，立方**差**取 $+$。\n\n**自检锚点（代 $a=b$）**：$a^3+a^3=2a^3$ 应等于 $(a+a)(a^2-a^2+a^2)=2a\\cdot a^2$ ✓；错误版给 $(2a)(3a^2)=6a^3$ ✗。另一个锚点：展开 $(a+b)^3$ 取 $a=b=1$：$(1+1)^3=8=1+3+3+1$ ✓【已核验:8|1+3*1+3*1+1】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.3"
+      ]
+    },
+    {
+      "id": "P2.1:mult-formulas.intuition",
+      "type": "intuition",
+      "subject": "mult-formulas",
+      "title": "几何直觉：面积拼图 + 计数直觉",
+      "keywords": [
+        "(a+b)² 切块：a²、b²、两块 ab——交叉项是面积",
+        "平方差 = 大正方形挖小正方形",
+        "三次式是三维切块的体积",
+        "计数：n 个括号各挑一项，交叉项=混合挑选方式",
+        "五条公式全是二项式定理的 n=2,3 特例"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 99
+      },
+      "fill_hint": "两条直觉线（几何切块 + 计数挑选），与切片'二项式 n=3 特例'备注衔接。",
+      "content": "**假设给了什么**：两个数 $a,b$ 与乘法。**结论为什么成立**（几何线）：$(a+b)^2$ 是边长 $a+b$ 的正方形，切块后是 $a^2$ + $b^2$ + **两个** $ab$ 矩形——交叉项 $2ab$ 是\"两块矩形\"的面积，不是抽象符号；$(a+b)(a-b)$ 是\"长 $a+b$、宽 $a-b$\"的矩形，割补成大正方形 $a^2$ 挖掉小正方形 $b^2$；三次式对应三维切块的体积（$a^3$、$3a^2b$…各是长方体块）。\n\n**计数线**：$(a+b)^n$ 展开是\"从 $n$ 个括号里各挑一项\"的计数（P1.4 二项式定理）；交叉项 = \"有的挑 $a$、有的挑 $b$\"的混合方式数。切片备注原话：三次公式是\"二项式 $n=3$ 特例\"——五条公式全部是二项式定理在 $n=2,3$ 的特例，计数直觉统一它们。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.4"
+      ]
+    },
+    {
+      "id": "P2.1:mult-formulas.proof",
+      "type": "proof",
+      "subject": "mult-formulas",
+      "title": "推导骨架（展开 + 计数双证）",
+      "keywords": [
+        "代数证：分配律两次 + 交换律合并 ab",
+        "平方差的交叉项对消= telescoping 的微缩版",
+        "计数证：C(3,1)=3、C(3,2)=3 即系数",
+        "三项展开 9 项合并：对角 3 + 交叉 3 对",
+        "易错点：三项式的 ca 对最容易漏"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 99
+      },
+      "fill_hint": "双证骨架；三项平方的 9 项合并逐步写。",
+      "content": "**代数证**：$(a+b)^2=(a+b)(a+b)=a^2+ab+ba+b^2=a^2+2ab+b^2$（分配律两次，交换律合并 $ab=ba$）。平方差：$(a+b)(a-b)=a^2-ab+ab-b^2=a^2-b^2$——交叉项对消，是 P1.1 telescoping 在代数里的微缩版。\n\n**计数证**（$\\binom{2}{1}=2$、$\\binom{3}{1}=\\binom{3}{2}=3$）：$(a+b)^3$ 中 $a^2b$ 的系数 = \"挑一个括号给 $b$、其余两个给 $a$\"的方式数 $\\binom{3}{1}=3$ ✓；$ab^2$ 同理 $\\binom{3}{2}=3$ ✓。\n\n**三项平方**：$(a+b+c)^2$ 展开有 $9$ 项（3 个括号两两相乘），合并同类项：对角 $a^2,b^2,c^2$ 各一项；$ab$ 型各两项（$ab$ 与 $ba$）→ $2ab+2bc+2ca$。\n\n**易错点**：三项式的交叉项是三对——$ab$、$bc$、**$ca$**（首尾那对最容易漏）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.4"
+      ]
+    },
+    {
+      "id": "P2.1:mult-formulas.application",
+      "type": "application",
+      "subject": "mult-formulas",
+      "title": "乘法公式族的下游",
+      "keywords": [
+        "配方的基础（P2.2 每一步都是逆向用 (a±b)²）",
+        "平方差 → 有理化（P2.5）与差分分解",
+        "三项平方 → 内积展开/二次型（P6.3、A2.2）",
+        "(a+b)²≥4ab ⟺ (a-b)²≥0：AM-GM 的 n=2 版",
+        "反向分解 → 因式分解（P2.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 99
+      },
+      "fill_hint": "切片备注列的落点展开；links 按全库代号。",
+      "content": "切片备注列的落点：\n\n- **\"一切配方的基础\"**：P2.2 的每一步配方都是**逆向**用 $(a\\pm b)^2$。\n- **平方差** → 有理化（P2.5 乘共轭）与差分分解（$f(k+1)^2-f(k)^2=(f(k+1)-f(k))(f(k+1)+f(k))$，P1.1 的近亲）。\n- **三项平方 = 内积展开**：$\\|\\mathbf{a}+\\mathbf{b}\\|^2=\\|\\mathbf{a}\\|^2+2\\mathbf{a}\\cdot\\mathbf{b}+\\|\\mathbf{b}\\|^2$——P6.3 二次型矩阵（对角元与 $2a_{ij}$）与 A2.2 范数平行四边形恒等式的代数底座。\n- **放缩接口**：$(a+b)^2\\ge4ab$（因 $(a-b)^2\\ge0$）即 AM–GM 的 $n=2$ 版——P3 基础四件套与放缩盒子的出发点（$a=3,b=1$：$16\\ge12$，差恰 $(a-b)^2=4$【已核验:12|4*3*1】【已核验:4|(3-1)**2】）。\n- **逆向**：因式分解（P2.3）全部以这些恒等式的反向为原子操作。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.2",
+        "P2.5",
+        "P2.3",
+        "P6.3",
+        "A2.2",
+        "P3.1"
+      ]
+    },
+    {
+      "id": "P2.1:mult-formulas.probe1",
+      "type": "probe",
+      "subject": "mult-formulas",
+      "title": "检验：平方差速算 + 三项展开",
+      "keywords": [
+        "102×98=(100+2)(100-2)=9996",
+        "(x+2y+3)² 六项展开",
+        "x=y=1 处数值和 36=(1+2+3)²",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 99
+      },
+      "fill_hint": "【必】小目检验题；答案数值已带核验标记。",
+      "content": "①用平方差心算 $102\\times98$；②展开 $(x+2y+3)^2$，并在 $x=y=1$ 处验证数值和等于 $(1+2+3)^2$。\n\n（答案：①$(100+2)(100-2)=10000-4=9996$【已核验:9996|102*98】；②$x^2+4y^2+9+4xy+12y+6x$，$x=y=1$ 处 $1+4+9+4+12+6=36$【已核验:36|1+4+9+4+12+6】$=(1+2+3)^2=36$【已核验:36|(1+2+3)**2】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "五条公式分工对照（公式｜方向｜典型场景）",
+      "keywords": [
+        "(a±b)²：正向展开/逆向配方",
+        "平方差：正向速算/逆向分解",
+        "立方和差：逆向为主",
+        "三项平方：正向，通向内积/二次型",
+        "方向口诀：'和的平方'想配方，'平方差结构'想有理化"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 89,
+        "line_end": 103
+      },
+      "fill_hint": "整单元对照表（方向感是记忆主体）。",
+      "content": "| 公式 | 主要使用方向 | 典型场景 |\n|---|---|---|\n| $(a\\pm b)^2$ | 正向展开 / 逆向配方 | 配方（P2.2）、放缩 $(a-b)^2\\ge0$ |\n| $(a+b)(a-b)$ | 正向速算 / 逆向分解 | 有理化（P2.5）、因式分解（P2.3） |\n| $(a\\pm b)^3$ | 正向 | 三次展开（查表频率低） |\n| $a^3\\pm b^3$ | **逆向**为主 | 分解、极限约零因子 |\n| $(a+b+c)^2$ | 正向 | 内积/二次型（P6.3）、对称式转换（P2.3） |\n\n方向选择口诀：看到\"和的平方\"想配方（逆向）；看到\"平方差结构\"（一同一反）想有理化/分解。逆向比正向难——分解是\"猜 + 验证\"（P2.3 的试根/十字相乘），展开是机械操作。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P2.1 的服务对象",
+      "keywords": [
+        "P2.2/P2.3/P2.5 全以它为原子操作",
+        "P6.3 二次型与 A2.2 范数：n 维推广",
+        "P3.1 不等式：(a±b)²≥0 型放缩的起点"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 89,
+        "line_end": 103
+      },
+      "fill_hint": "单元级下游一览。",
+      "content": "P2.1 是 P2 节乃至整个计算层的\"字母表\"：P2.2（配方）、P2.3（因式分解）、P2.5（有理化）全部以它为原子操作；线性代数（P6.3 二次型）与泛函（A2.2 范数）把它推广到 $n$ 维；不等式（P3.1）的 $(a\\pm b)^2\\ge0$ 放缩也从这里出发。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.2",
+        "P2.3",
+        "P2.5",
+        "P6.3",
+        "A2.2",
+        "P3.1"
+      ]
+    },
+    {
+      "id": "P2.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：square-dissection（面积拼图看交叉项）",
+      "keywords": [
+        "(a+b)² 切块着色：a²、b²、两块 ab",
+        "反例叙事：关掉交叉块，面积 49→25（a=3,b=4）",
+        "拖 a、b 滑块实时切块",
+        "判据 Q4：简单几何图像 ⟹ 前端直渲"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 95,
+        "line_end": 96
+      },
+      "fill_hint": "档1 新模块 square-dissection（清单外新名，小写短横线合法）；契约细节由前端另行记录。",
+      "content": "单元级演示叙事：**面积拼图**。交互：拖 $a$、$b$ 滑块，$(a+b)^2$ 的正方形切块着色——$a^2$（一色）、$b^2$（一色）、两块 $ab$（同色高亮为\"交叉项 $2ab$\"）。反例叙事：关掉交叉块后面积极速跳变（$a=3,b=4$：$49\\to25$【已核验:49|3**2+2*3*4+4**2】【已核验:25|3**2+4**2】），\"丢交叉项\"的后果直接可见——与 misuse-square 词条联动。切换到 $(a+b)(a-b)$ 模式看割补（大正方形挖小正方形）。判据 Q4：简单显式 + 几何图像 ⟹ 前端直渲。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "module": "square-dissection",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "a": 3,
+          "b": 4,
+          "formula": [
+            "(a+b)^2",
+            "(a+b)(a-b)"
+          ],
+          "modes": [
+            "dissect",
+            "drop-cross-term"
+          ]
+        }
+      }
+    }
+  ]
+}

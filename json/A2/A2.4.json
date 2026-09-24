@@ -1,0 +1,383 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A2.4",
+  "chapter": "A2",
+  "title": "有界线性算子与谱理论",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 229,
+    "line_end": 246,
+    "anchor": "notebook/A_analysis.tex:229"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A2.4:bounded-operator.quantifiers",
+      "type": "comparison",
+      "subject": "bounded-operator",
+      "title": "有界算子定义逐条拆解（线性 / 一致有界 / C 与 x 无关）",
+      "keywords": [
+        "陈述拆成 3 个限定词：①T 线性 ②‖Tx‖≤C‖x‖ 对一切 x ③常数 C 与 x 无关（一致）",
+        "①去掉线性 ⟹ 范数控制无意义：T(x)=‖x‖x 满足 |T(x)|≤‖x‖² 非线性，理论全部失效",
+        "③是隐藏最深的一条：C 只能依赖 T，不能依赖 x——微分算子正是栽在这里",
+        "有界 ⟺ 连续（线性算子的专属等价！非线性映射没有）",
+        "算子范数 ‖T‖=sup_{‖x‖=1}‖Tx‖：最小可行的 C",
+        "无限维新现象：线性 + 定义在全空间 ≠ 有界（有限维自动有界）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 232,
+        "line_end": 232
+      },
+      "fill_hint": "四列表；③的反例指向 unbounded-operator.counterexample（微分算子）；「有界⟺连续」是线性专属要显式说",
+      "content": "算子定义：$T:H\\to H$ 线性且有界（$\\|Tx\\|\\le C\\|x\\|$）。拆成限定词逐条检验：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 线性 $T(ax+by)=aTx+bTy$ | $T(x)=\\|x\\|x$：$\\|T(x)\\|=\\|x\\|^2$，在单位球上有界但完全非线性；谱、特征值、对角化全无定义 | 后续所有理论的对象消失 | 必需（非线性分析是另一套机器） |\n| ② 控制不等式本身 | 稠定无界算子（如微分算子，见下条反例）：$\\|DT\\|$ 在单位球上无上界 | 「小输入 → 小输出」断裂，方程 $Tu=f$ 的适定性崩塌 | 可在稠密子空间上定义（无界算子理论），代价巨大 |\n| ③ **C 与 x 无关**（一致） | 微分算子 $D:C^1[0,1]\\to C[0,1]$（sup 范数）：$x_n(t)=\\sin(nt)$ 满足 $\\|x_n\\|_\\infty=1$ 但 $\\|Dx_n\\|_\\infty=n\\to\\infty$——每个固定的 $n$ 都有各自的局部常数，但没有任何一个 C 管住所有 $x_n$（完整计算见 unbounded-operator.counterexample） | 逐点有界但非一致有界；单位球被映成无界集 | 不可去；这正是「有界」的定义内容 |\n| （对比）有限维 | $\\mathbb{R}^n$ 上线性算子 = 矩阵，自动 $\\|Tx\\|\\le\\|T\\|_{\\text{矩阵}}\\|x\\|$ | —— | 有限维免检；无界是无限维特产 |\n\n两个配套事实：**有界 $\\Leftrightarrow$ 连续**（线性算子专属的等价——非线性映射可以连续但不 Lipschitz）；**算子范数** $\\|T\\|=\\sup_{\\|x\\|=1}\\|Tx\\|$ 是使不等式成立的最小 $C$，它让「算子们」自己构成一个赋范空间（A2.1 的回归）。",
+      "links": [
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:spectral-finite.quantifiers",
+      "type": "comparison",
+      "subject": "spectral-finite",
+      "title": "有限维谱定理限定词逐条拆解",
+      "keywords": [
+        "陈述拆成 3 个限定词：①T 自伴（⟨Tx,y⟩=⟨x,Ty⟩）②有限维 ③T 作用在内积空间",
+        "①去掉自伴 ⟹ 崩：旋转矩阵 [[0,−1],[1,0]] 特征值 ±i 全是虚数（见 rotation.counterexample）",
+        "②去掉有限维 ⟹ 谱可以连续：位置算子谱=整个实轴，没有特征向量（见 spectral-infinite.extension）",
+        "③自伴的矩阵版 = Hermite（A=Aᴴ）：实对角 + 可酉对角化",
+        "结论三件套：特征值全实 + 特征向量正交 + 可对角化 T=ΣλₖPₖ",
+        "自伴不可放宽为「正规」（那是对角化的更弱条件，谱仍可复）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 235,
+        "line_end": 236
+      },
+      "fill_hint": "四列表；①②的反例各有专属词条；「实特征值」的物理意义（测量值是实数，F2）在结尾一句",
+      "content": "有限维谱定理：自伴算子可以对角化，特征值全为实数，特征向量构成正交基。逐条拆：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $T$ **自伴** $\\langle Tx,y\\rangle=\\langle x,Ty\\rangle$ | 平面旋转 $90°$ 的矩阵 $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$：$\\langle Te_1,e_2\\rangle=1\\ne-1=\\langle e_1,Te_2\\rangle$，特征值为 $\\pm i$（见 rotation.counterexample 完整计算） | 特征值逃出实轴；特征向量不复正交（甚至不存在实特征向量）；「测量值是实数」的物理保障消失 | 可放宽到正规算子（$TT^*=T^*T$）仍有酉对角化，但特征值可复；自伴 ⟺ 「实数版的正规」 |\n| ② **有限维** | 位置算子 $\\hat x$ 在 $L^2(\\mathbb{R})$：谱 = 整个实轴，没有任何特征向量（见 spectral-infinite.extension） | 「对角化 = 数特征值」的心智模型失效；谱从点集变成连续统 | 无限维需要谱定理的积分形式（投影值测度） |\n| ③ 作用在（内积空间）$H$ | 双线性形式/二次型没有「特征值」陈述（虽有广义特征问题） | 陈述对象错位 | 必须 |\n\n结论的三件套在量子力学里就是「可观测量公理」（F2）：自伴 ⟹ 测量值（特征值）是实数、态可分解为特征态的正交叠加。CG 里则对应 PCA（协方差矩阵自伴 ⟹ 主轴正交）与网格 Laplacian 的振动模式分解。",
+      "links": [
+        "F2",
+        "P6.3",
+        "H1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:unbounded-operator.counterexample",
+      "type": "counterexample",
+      "subject": "unbounded-operator",
+      "title": "反例：微分算子无界（‖xₙ‖=1 但 ‖Dxₙ‖=n）",
+      "keywords": [
+        "构造 D: C¹[0,1] → C[0,1]，两者都配 sup 范数，D 是线性算子",
+        "取 xₙ(t)=sin(nt)：‖xₙ‖_∞=1 对一切 n",
+        "Dxₙ(t)=n·cos(nt)，‖Dxₙ‖_∞=n：n=5 时 5，n=10 时 10",
+        "任何候选常数 C 被 n=⌈C⌉+1 击败 ⟹ 不存在一致的 C",
+        "机制：高频小幅振荡——函数本身小，导数大；微分放大高频",
+        "CG 关联：为什么「可微渲染」里对高频几何（法线贴图）求导会数值爆炸"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 232,
+        "line_end": 232
+      },
+      "fill_hint": "完整计算 n=5/10 的数值；结尾连接：PDE 里 Δ 天然无界 ⟹ 弱形式必须移导数（A4.5），这是泛函→PDE 的关键一跳",
+      "content": "考察微分算子 $D:\\ C^1[0,1]\\to C[0,1]$，$Dx=x'$，两边都配 sup 范数。$D$ 是线性算子，定义域 $C^1[0,1]$ 在 $C[0,1]$ 中稠密——它「差一点」就是合法算子，只差有界性。\n\n**失效计算**：取 $x_n(t)=\\sin(nt)$。\n\n- 函数本身：$\\|x_n\\|_\\infty=1$，对一切 $n$ 成立（正弦峰值就是 1）；\n- 导数：$Dx_n(t)=n\\cos(nt)$，$\\|Dx_n\\|_\\infty=n$。$n=5$ 时 $\\|Dx_5\\|_\\infty=5$【已核验:5|5】，$n=10$ 时 $\\|Dx_{10}\\|_\\infty=10$【已核验:10|10】。\n\n于是比值 $\\dfrac{\\|Dx_n\\|}{\\|x_n\\|}=n\\to\\infty$：对任何候选常数 $C$，取 $n=\\lceil C\\rceil+1$ 即击破 $\\|Tx\\|\\le C\\|x\\|$。**不存在一致的 C**——微分算子无界。\n\n失效机制：$\\sin(nt)$ 是「高频小幅」振荡——函数值始终在 $[-1,1]$ 内，但每单位自变量振荡 $n$ 次，斜率必然达到 $n$。微分是**高频放大器**，单位球（有界函数集）被它映成无界集。\n\n下游后果（这条反例是整个 PDE 弱解理论的起点）：Laplace 算子 $\\Delta$ 同样无界，不能直接在 $L^2$ 上做「解 $-\\Delta u=f$」的算子运算；出路是把导数「搬」到测试函数那边（分部积分，A4.5 弱形式），让 $\\nabla u$ 只需平方可积而非有界。CG 侧同理：可微渲染对高频法线贴图求导的数值爆炸，本质就是微分算子的无界性在离散世界的显形。",
+      "links": [
+        "A4.5",
+        "A4.2",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:rotation.counterexample",
+      "type": "counterexample",
+      "subject": "rotation",
+      "title": "反例：非自伴算子，特征值 ±i 逃出实轴",
+      "keywords": [
+        "构造 R=[[0,−1],[1,0]]（平面旋转 90°）",
+        "自伴检验：⟨Re₁,e₂⟩=1 ≠ −1=⟨e₁,Re₂⟩，非自伴",
+        "特征方程 λ²+1=0 ⟹ λ=±i：虚数特征值",
+        "实平面上没有特征向量：旋转 90° 后没有任何方向保持不动",
+        "对照自伴：对称矩阵 [[0,1],[1,0]] 特征值 ±1 实数、特征向量 (1,±1) 正交",
+        "机制：自伴 ⟺「不藏虚部」；反对称部分 (R−Rᵀ)/2 是虚谱的来源"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 235,
+        "line_end": 235
+      },
+      "fill_hint": "两个矩阵的完整谱计算对照；数值：特征多项式判别式 −4；结尾连 F2（可观测量必须自伴）",
+      "content": "考察平面旋转 $90°$ 的矩阵\n\n$$R=\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$$\n\n**第一步（非自伴）**：$\\langle Re_1,e_2\\rangle=\\langle e_2,e_2\\rangle=1$，而 $\\langle e_1,Re_2\\rangle=\\langle e_1,-e_1\\rangle=-1$。$1\\ne-1$，自伴性 $\\langle Tx,y\\rangle=\\langle x,Ty\\rangle$ 失效（等价地：$R^{\\mathrm T}=-R\\ne R$，$R$ 是反对称矩阵）。\n\n**第二步（谱逃逸）**：特征方程\n\n$$\\det(R-\\lambda I)=\\lambda^2+1=0\\ \\Rightarrow\\ \\lambda=\\pm i$$\n\n判别式 $=0-4=-4<0$【已核验:-4|0-4】，特征值 $\\lambda=\\pm i$ 是纯虚数——「特征值全为实数」的结论崩溃。\n\n**几何机制**：旋转 $90°$ 把每个向量都转离原方向，实平面上**没有任何实特征向量**（要想有，除非允许复化：特征向量 $(1,\\mp i)$）。谱定理承诺的「正交特征向量基」在 $\\mathbb{R}^2$ 里干脆不存在。\n\n**对照组（自伴）**：换成对称矩阵 $S=\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$。$S^{\\mathrm T}=S$ 自伴；特征方程 $\\lambda^2-1=0$ 给 $\\lambda=\\pm1$（实数），特征向量 $(1,1)/\\sqrt2$、$(1,-1)/\\sqrt2$ 正交——谱定理三件套（实谱、正交特征向量、可对角化）全部兑现。\n\n物理落点：量子力学里可观测量必须自伴（F2），正是为了保证测量值（特征值）是实数；旋转/演化算子（非自伴）产生相位 $e^{\\pm i\\theta}$ 而非测量值。CG 落点：协方差矩阵天然对称（自伴的有限维化身），PCA 的主轴才两两正交。",
+      "links": [
+        "F2",
+        "P6.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:bounded-operator.statement",
+      "type": "statement",
+      "subject": "bounded-operator",
+      "title": "有界线性算子定义",
+      "keywords": [
+        "T: H→H 线性：T(ax+by)=aTx+bTy",
+        "有界：存在 C 使 ‖Tx‖≤C‖x‖ 对一切 x∈H",
+        "等价：有界 ⟺ 连续 ⟺ 在一点连续（线性算子专属）",
+        "算子范数 ‖T‖=sup_{‖x‖=1}‖Tx‖=inf{C}",
+        "例子：积分算子有界（Af)(x)=∫k(x,y)f(y)dy；矩阵在有限维自动有界；微分算子无界"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 232,
+        "line_end": 232
+      },
+      "fill_hint": "切片一行转写；「有界⟺连续」给两行证明提示；例子三类各一句",
+      "content": "**算子**：$T:H\\to H$，线性且有界（$\\|Tx\\|\\le C\\|x\\|$）。\n\n- **线性**：$T(ax+by)=aTx+bTy$——保加法与数乘；\n- **有界**：存在与 $x$ 无关的常数 $C$，使 $\\|Tx\\|\\le C\\|x\\|$ 对**一切** $x$ 成立。最小的这样的 $C$ 定义为**算子范数**\n\n$$\\|T\\|=\\sup_{\\|x\\|=1}\\|Tx\\|=\\sup_{x\\ne0}\\frac{\\|Tx\\|}{\\|x\\|}$$\n\n线性算子的专属福利：**有界 $\\Leftrightarrow$ 连续 $\\Leftrightarrow$ 在原点连续**（由线性，$\\|Tx-Ty\\|=\\|T(x-y)\\|\\le C\\|x-y\\|$，Lipschitz 自动到手）。非线性映射没有这个等价。\n\n三类代表：有限维矩阵自动有界；积分算子 $(Kf)(x)=\\int k(x,y)f(y)\\,dy$ 在核有界时有界（$\\|Kf\\|\\le \\sup|k|\\cdot\\mu\\cdot\\|f\\|$ 型估计）；微分算子**无界**（见专属反例词条）——PDE 的主角恰恰是那个不安分的。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:bounded-operator.intuition",
+      "type": "intuition",
+      "subject": "bounded-operator",
+      "title": "直觉：有界 = 误差不放大器",
+      "keywords": [
+        "T 是机器：输入 x 输出 Tx；‖T‖ = 最大放大倍数",
+        "有界 ⟹ 输入误差 ε 至多放大成 Cε 的输出误差：数值稳定性的原型",
+        "‖T‖<1 ⟹ 压缩：迭代必收敛（Neumann 级数/不动点）",
+        "无界 = 存在高频输入被无限放大：微分放大振荡",
+        "假设给了什么：线性（机器行为一致）+ 范数（误差可量化）",
+        "CG 落点：渲染方程的辐射传输算子，收敛性靠压缩性（Neumann 级数，H3/H4）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 232,
+        "line_end": 232
+      },
+      "fill_hint": "「放大倍数」比喻贯穿；连接渲染方程的 Neumann 级数收敛（H3/H4 links）",
+      "content": "把算子想成一台**确定性放大器**：输入 $x$，输出 $Tx$。线性说机器对一切输入一视同仁（叠加原理）；$\\|T\\|$ 就是这台机器的**最大放大倍数**——单位能量进去，至多出来 $\\|T\\|$ 单位能量。\n\n**假设给了什么**：线性 + 范数（A2.1 的尺子）。**结论为什么因此成立**：有界性 $\\|Tx\\|\\le\\|T\\|\\|x\\|$ 意味着输入端的误差 $\\delta$ 经过机器至多变成 $\\|T\\|\\delta$——误差**不会失控**。这是所有数值稳定性的原型：迭代格式、离散格式的稳定性分析，本质都是在证相关算子一致有界。\n\n两个极端：\n\n- $\\|T\\|<1$（**压缩**）：迭代 $x_{n+1}=Tx_n+f$ 的误差逐次乘以 $\\|T\\|$，几何衰减，收敛有保证（Neumann 级数 $\\sum T^k$ 收敛）。渲染方程的辐射传输算子正是靠逃逸概率 < 1 拿到压缩性（H3、H4 的级数展开）。\n- 无界：存在一列单位向量被放大到任意倍——微分算子对 $\\sin(nt)$ 的 $n$ 倍放大（专属反例）。数值上表现为「网格越细结果越炸」。\n\n一句话：算子理论 = 研究无穷维机器的放大倍数；谱理论（下述）= 问这台机器内在的「共振频率」。",
+      "links": [
+        "A2.1",
+        "H3",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:spectral-finite.statement",
+      "type": "statement",
+      "subject": "spectral-finite",
+      "title": "谱定理（有限维）陈述",
+      "keywords": [
+        "自伴算子 T=⟨Tx,y⟩=⟨x,Ty⟩ 可对角化",
+        "三件套：特征值全实数 + 特征向量构成正交基 + T=ΣλₖPₖ（谱分解）",
+        "矩阵语言：A=Aᴴ ⟺ 存在酉矩阵 U 使 U*AU=对角",
+        "实对称矩阵是实内积空间的自伴特例",
+        "特征值 = 主增益，特征向量 = 主方向：PCA 的全部数学"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 234,
+        "line_end": 236
+      },
+      "fill_hint": "切片两行照抄；补谱分解形式 T=ΣλₖPₖ（Pₖ 是到特征子空间的正交投影——回连 A2.2）",
+      "content": "**自伴算子（Hermitian）**：$\\langle Tx,y\\rangle=\\langle x,Ty\\rangle$ 对一切 $x,y$ 成立（实空间即对称矩阵 $A^{\\mathrm T}=A$，复空间即 $A^{\\mathrm H}=A$）。\n\n**谱定理（有限维）**：自伴算子可以对角化——\n\n1. 特征值**全为实数**；\n2. 不同特征值的特征向量**自动正交**（$\\lambda_1\\ne\\lambda_2$ 时 $\\langle Tx,y\\rangle=\\lambda_1\\langle x,y\\rangle$ 与 $=\\lambda_2\\langle x,y\\rangle$ 强制 $\\langle x,y\\rangle=0$）；\n3. 特征向量构成**正交基**，且\n\n$$T=\\sum_k\\lambda_k P_k$$\n\n其中 $P_k$ 是到第 $k$ 个特征子空间的正交投影（A2.2 正交分解的直和化）——**谱分解**：算子 = 主方向上的纯缩放之和。\n\n一句话总结：自伴算子是「只有缩放没有旋转」的算子，谱分解就是把机器拆成一排单向放大器。PCA、振动模式、量子测量值（F2）全部是这条定理的化身。",
+      "links": [
+        "A2.2",
+        "F2",
+        "P6.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:spectral-finite.intuition",
+      "type": "intuition",
+      "subject": "spectral-finite",
+      "title": "直觉：谱 = 机器的共振频率 / 主方向",
+      "keywords": [
+        "假设给了什么：自伴（无旋转分量）+ 内积（角度可定义）",
+        "结论为什么成立：无旋转 ⟹ 存在不变的主方向，沿这些方向机器只做缩放",
+        "特征值 = 该方向上的增益；最大的 λmax = 机器的「性格」",
+        "鼓面振动模式 = Laplacian 的特征函数：形状的固有频率（切片 CG 句）",
+        "PCA：协方差矩阵最大的几个特征方向 = 数据最主要的变异方向",
+        "「听音辨鼓」：谱含着形状/数据的指纹"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 238,
+        "line_end": 242
+      },
+      "fill_hint": "假设与结论分开写；切片 CG 两行（Laplacian→形状分析、PCA→降维/法线估计）作为落地案例展开一句",
+      "content": "**假设给了什么**：自伴性——算子不含「旋转」分量（对照 rotation 反例：纯旋转矩阵一个实特征向量都没有）；内积结构——「方向」「正交」有定义。\n\n**结论为什么因此成立**：一个只缩放不旋转的机器，必然存在一组**不变的主方向**：沿这些方向输入输出同向，比例就是特征值。正交性来自自伴与不同特征值的张力（见 statement 词条的两行推导）；「构成基」说明主方向张满全空间——任何输入都能拆成主方向上的分量，逐个缩放，再叠回来。这就是 $T=\\sum\\lambda_kP_k$ 的几何读法。\n\n两个切片点名的落地：\n\n- **网格 Laplacian 的谱 → 振动模式 → 形状分析（H1）**：把网格当鼓面，$\\Delta$ 的特征函数是鼓面的固有振动模式，特征值是固有频率。低频模式描形状的宏观轮廓（全局形变），高频模式描细节（噪声）——谱截断 = 形状的光滑化/压缩，形状检索用低频谱当指纹。\n- **协方差矩阵特征分解 → PCA → 降维、法线估计**：协方差矩阵天然自演（对称），最大特征方向 = 点云最「胖」的方向；法线估计 = 取最小特征值的特征方向（垂直于最平坦平面）。\n\n一句话：谱是机器/形状/数据的**指纹**——拿到 $\\{\\lambda_k\\}$ 就拿到它的全部缩放性格。",
+      "links": [
+        "H1",
+        "P6.3",
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:spectral-infinite.extension",
+      "type": "extension",
+      "subject": "spectral-infinite",
+      "title": "无限维谱：位置算子谱 = 整条实轴（无特征向量）",
+      "keywords": [
+        "切片原文：自伴算子的谱可能是连续的，例如位置算子 x̂ 在 L²(R) 上谱是整个实数轴",
+        "位置算子：(x̂f)(x)=x·f(x)，自伴性直接验证（乘实值函数）",
+        "特征方程 xf=λf ⟹ f 支撑在 {λ} 单点集 ⟹ 测度零 ⟹ f=0（L² 中）",
+        "结论：x̂ 没有任何特征向量，但每个实数都在谱里（近似特征向量/Weyl 列）",
+        "「谱」比「特征值集合」宽：有限维两者重合，无限维分家",
+        "量子对应：位置测量值可取任意实数——连续谱的物理原型（F2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 237,
+        "line_end": 238
+      },
+      "fill_hint": "以切片两行原文为锚展开；特征方程三行推导完整；「近似特征向量」给一个具体函数（集中在 x≈λ 的波包）",
+      "content": "切片原文：「谱定理（无限维）：自伴算子的谱可能是连续的。例如位置算子 $\\hat x$ 在 $L^2(\\mathbb{R})$ 上的谱是整个实数轴。」展开这句话：\n\n**位置算子**：$(\\hat x f)(x)=x\\,f(x)$（乘以自变量）。自伴性：$\\langle\\hat x f,g\\rangle=\\int x\\,f\\bar g=\\langle f,\\hat x g\\rangle$（乘的是实值函数，对称自动成立）。\n\n**特征方程三行推导**：设 $\\hat x f=\\lambda f$，即 $(x-\\lambda)f(x)=0$ 对 a.e. $x$。于是 $f$ 只能在 $x=\\lambda$ 这**一个点**上非零——但单点集的 Lebesgue 测度为零，$L^2$ 中支撑在零测集上的函数就是零元。所以 $f=0$：**对任何 $\\lambda$ 都不存在（非零）特征向量**。\n\n**但谱仍是全实轴**：取集中在 $x\\approx\\lambda$ 附近的波包 $f_\\epsilon(x)=\\frac{1}{\\sqrt{\\epsilon}}\\rho\\left(\\frac{x-\\lambda}{\\epsilon}\\right)$（$\\rho$ 是 $L^2$ 归一的光滑鼓包），则 $\\|f_\\epsilon\\|_2=\\|\\rho\\|_2=1$，而\n\n$$\\|(\\hat x-\\lambda)f_\\epsilon\\|_2^2=\\int(x-\\lambda)^2\\epsilon^{-1}\\rho^2\\!\\left(\\tfrac{x-\\lambda}{\\epsilon}\\right)dx=\\epsilon^2\\int u^2\\rho^2(u)\\,du\\to0$$\n\n（换元 $u=(x-\\lambda)/\\epsilon$，$dx=\\epsilon\\,du$）。即存在**近似特征向量**：$\\lambda$ 虽无真特征向量，却有「几乎不被移动」的单位向量——每个实数都在谱中，谱是连续统 $\\mathbb{R}$。\n\n**概念分家**：有限维里「谱 = 特征值集合」；无限维里谱更大（特征值只是其中的「点谱」部分，连续部分要靠近似特征向量描述）。这就是为什么无限维谱定理要用**投影值测度**的积分语言 $T=\\int\\lambda\\,dE(\\lambda)$，而不是求和 $\\sum\\lambda_kP_k$——求和变积分，正是离散变连续。\n\n物理对应（F2）：位置测量可取任意实数值，正是连续谱的原型；动量算子 $-i\\,d/dx$ 的谱同样是全实轴（平面波 $e^{ikx}$ 是广义特征函数，不在 $L^2$ 中）。",
+      "links": [
+        "F2",
+        "F3",
+        "de3.8"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照：有限维谱 vs 无限维谱",
+      "keywords": [
+        "有限维：谱 = 特征值有限集；对角化 = 求特征向量",
+        "无限维：谱可离散（紧算子）、可连续（位置算子）、可混合",
+        "点谱（真特征向量）vs 连续谱（只有近似特征向量）",
+        "谱分解形式：ΣλₖPₖ vs ∫λdE(λ)（求和变积分）",
+        "共同不变量：自伴 ⟹ 谱 ⊂ 实轴（两维都成立，无反例）",
+        "数值视角：G3 数值线性代数 = 有限维谱定理的算法化；谱方法 G2.3 = 无限维谱的截断"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 235,
+        "line_end": 238
+      },
+      "fill_hint": "对照表 + 每行一句；「求和变积分」是本条记忆锚点；links 按规则挂 P 组（P6.3 特征值）",
+      "content": "把本单元的谱理论按维度对照：\n\n| | 有限维 | 无限维 |\n|---|---|---|\n| 谱的形状 | 有限点集（$n$ 个特征值） | 可数点集 / 连续统 / 混合（位置算子：整个 $\\mathbb{R}$） |\n| 特征向量 | 必存在（自伴时构成正交基） | 可以一个都没有（$\\hat x f=\\lambda f \\Rightarrow f=0$） |\n| 谱分解 | $T=\\sum_k\\lambda_kP_k$ | $T=\\int\\lambda\\,dE(\\lambda)$（求和变积分） |\n| 自伴 ⟹ 实谱 | ✓ | ✓（对一切维数成立的不变量） |\n| 计算入口 | P6.3 特征值与二次型、G3 数值线性代数 | G2.3 谱方法（截断到有限维再算） |\n\n不变的那一行最重要：**自伴 ⟹ 谱落在实轴**，与维数无关——它是量子可观测量公理（F2）的数学内容。变的那一行最需要警惕：有限维训练出来的「找特征值就完事」心智模型，在无限维必须升级为「点谱 + 连续谱」的全谱观（spectral-infinite.extension）。\n\n无穷维矩阵视角的延伸（切片末句指引）：微分算子的矩阵表示、矩阵指数与 Taylor、若尔当型的推广，见 de3 系列词条。",
+      "links": [
+        "P6.3",
+        "G3",
+        "G2.3",
+        "F2",
+        "de3.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用：形状分析、PCA、谱方法",
+      "keywords": [
+        "网格 Laplacian 谱 → 振动模式 → 形状分析（H1 离散微分几何）",
+        "协方差矩阵特征分解 → PCA → 降维、法线估计（P6.3/G3 计算入口）",
+        "谱方法 G2.3：在特征基上解 PDE",
+        "量子可观测量 F2：自伴 ⟹ 实测量值；位置算子连续谱",
+        "弱解前置：Δ 无界 ⟹ 必须移导数（A4.5）——本单元最重要的「负结果」应用"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 238,
+        "line_end": 245
+      },
+      "fill_hint": "切片 CG 两行展开 + 无界性那一条（它不是应用而是必然后果，放最后压轴）；links 全部合规",
+      "content": "本单元的出口清单：\n\n- **形状分析（H1）**：网格 Laplacian $\\Delta$ 的谱 $\\to$ 振动模式：低频 = 宏观形状、高频 = 细节噪声；谱截断做光滑化，低频谱做形状指纹。\n- **PCA（P6.3、G3）**：协方差矩阵（自伴）特征分解 $\\to$ 主成分降维；法线估计取最小特征方向。数值实现归 G3（幂迭代、SVD）。\n- **谱方法（G2.3）**：PDE 在正交基上展开（A2.3）后，算子近似对角化——本单元谱分解的计算版。\n- **量子力学（F2/F3）**：可观测量 = 自伴算子，测量值 = 特征值（实数）；位置/动量算子是连续谱原型。\n- **通往弱解的桥（A4.5）**：微分算子无界（本单元反例）$\\Rightarrow$ PDE 不能硬解，必须移导数造弱形式——泛函分析的「负结果」直接逼出了 PDE 现代理论。",
+      "links": [
+        "H1",
+        "P6.3",
+        "G3",
+        "G2.3",
+        "F2",
+        "F3",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.4:bounded-operator.probe1",
+      "type": "probe",
+      "subject": "bounded-operator",
+      "title": "检验：对角算子范数与旋转矩阵谱各算一遍",
+      "keywords": [
+        "第一问：ℓ² 上对角算子 T=diag(1,1/2,1/3,…)，算 ‖Te₁‖、‖Te₅‖、‖T‖",
+        "第二问：验证 R=[[0,−1],[1,0]] 的特征多项式 λ²+1 与特征值 ±i",
+        "第三问：D x_n=sin(nt) 的 ‖Dx₁₀‖_∞"
+      ],
+      "tex_ref": null,
+      "fill_hint": "答案数值带核验；第一问答案 ‖T‖=1（e₁ 达到）——上确界可达与否可与位置算子对照",
+      "content": "三问：\n\n1. $\\ell^2$ 上对角算子 $T=\\mathrm{diag}(1,\\tfrac12,\\tfrac13,\\ldots)$（即 $T(x_1,x_2,\\ldots)=(x_1,\\tfrac{x_2}{2},\\tfrac{x_3}{3},\\ldots)$）。计算 $\\|Te_1\\|$、$\\|Te_5\\|$，以及算子范数 $\\|T\\|=\\sup_{\\|x\\|=1}\\|Tx\\|$。（$\\|Te_1\\|=1$【已核验:1|1】，$\\|Te_5\\|=1/5=0.2$【已核验:0.2|1/5】，$\\|T\\|=1$：对角算子的范数 = 对角元上确界，$e_1$ 达到）\n\n2. 验证旋转矩阵 $R=\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$ 的特征多项式是 $\\lambda^2+1$（判别式 $-4$【已核验:-4|0-4】），特征值为 $\\lambda=\\pm i$——非自伴算子的谱逃出实轴。\n\n3. 微分算子反例的数值：$x_{10}(t)=\\sin(10t)$ 满足 $\\|x_{10}\\|_\\infty=1$，$\\|Dx_{10}\\|_\\infty$ 是多少？它比任何候选常数 $C=5$ 大多少倍？（$\\|Dx_{10}\\|_\\infty=10$【已核验:10|10】，是 $C=5$ 的 2 倍【已核验:2|10/5】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

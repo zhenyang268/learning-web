@@ -1,0 +1,299 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C3",
+  "chapter": "C3",
+  "title": "多维分布与独立性",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 37,
+    "line_end": 49,
+    "anchor": "notebook/C_partial.tex:37"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C3:independence.quantifiers",
+      "type": "comparison",
+      "subject": "independence",
+      "title": "独立性等价刻画的限定词拆解",
+      "keywords": [
+        "独立 ⟺ 联合密度分解 ⟺ 联合 CDF 分解",
+        "密度版需要联合密度存在；混合型只能退回 CDF/测度定义",
+        "推广到 n 元需所有子集独立，两两独立不够",
+        "等式 a.e. 成立即可（零测集无妨）",
+        "独立性是联合分布的性质，不是边缘的性质",
+        "同一对边缘可配独立或依赖的联合"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 38,
+        "line_end": 38
+      },
+      "fill_hint": "以切片 38 行等价链为准拆限定词；XOR 反例行指向 independence.counterexample 词条。",
+      "content": "切片给出一行等价刻画：$X,Y$ 独立 $\\iff f_{X,Y}(x,y)=f_X(x)f_Y(y)\\iff F_{X,Y}(x,y)=F_X(x)F_Y(y)$。拆限定词：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| 等式对**所有** $(x,y)$ 成立 | 只在个别点乘积成立无意义（单点测度为 0） | 零测集上的偏差不影响独立性判定 | a.e. 版本即够 |\n| 密度版需要联合密度**存在** | 混合型分布（以概率 1/2 恒为 0、以概率 1/2 连续）无联合密度 | $f_{X,Y}$ 写不出来 | 必须退回 CDF 版或测度定义 $P(X\\in A,Y\\in B)=P(X\\in A)P(Y\\in B)$ |\n| 推广到 $n$ 个变量需**所有子集**独立 | XOR 构造：两两独立但整体不独立（见 independence.counterexample） | 联合分布与熵算错（幸运的是 $\\mathrm{Var}(\\sum)=\\sum\\mathrm{Var}$ 仍成立） | 两两独立是严格弱条件，不能互相替代 |\n| $X,Y$ 定义在同一概率空间 | — | — | — |\n\n注意方向：独立 ⟹ 联合密度可分解；分解 ⟹ 边缘可积分回来。**独立性是联合分布的性质，不是单个边缘的性质**——同一对边缘分布，配独立联合或依赖联合都合法（这正说明「查独立」不能只看边缘）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:jacobian.quantifiers",
+      "type": "comparison",
+      "subject": "jacobian",
+      "title": "换元公式的限定词拆解（双射 / J≠0 / 联合密度）",
+      "keywords": [
+        "g 必须双射：U=X+Y 单独不可逆 → 须补第二维",
+        "J=0 的例外集零测即可（极坐标原点 r=0）",
+        "逐片可微：折点集零测，逐片套公式",
+        "必须用联合密度代入，误用边缘会被归一化检查抓到",
+        "实操顺序：双射 → 逆 → J → 代入 → ∫f=1 自检"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 40,
+        "line_end": 44
+      },
+      "fill_hint": "以切片 40-44 行换元公式为准；四列表每行给具体失效方式，自检纪律与 polar.independence 示范呼应。",
+      "content": "换元公式 $f_{U,V}(u,v)=f_{X,Y}(g^{-1}(u,v))\\cdot|J|$ 的限定词逐条拷问：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| $g$ 是双射（可逆） | $U=X+Y$（二维压到一维）：$f_U$ 必须对所有原像求和（卷积），$\\lvert J\\rvert$ 公式无从写起 | 公式不适用 | 维数必须守恒：想用公式就把 $(U,V)$ 补成二维双射，如 $(U,V)=(X+Y,\\,X-Y)$ |\n| $J=\\det\\frac{\\partial(x,y)}{\\partial(u,v)}\\ne 0$ | 极坐标 $x=r\\cos\\theta,\\ y=r\\sin\\theta$ 的 $J=r$ 在 $r=0$ 处为 0 | 原点是单点、Lebesgue 测度为 0，密度在零测集上可随意改 | 例外集零测即可，公式照用 |\n| $g$ 可微 | 折线变换在折点不可微 | 折点集零测 | 逐片套公式再拼接 |\n| 代入的是**联合**密度 $f_{X,Y}$ | 误用边缘密度 $f_X$ | 换元后总质量 $\\ne 1$，立刻被归一化检查抓到 | 必须联合 |\n\n实操顺序：先验 $g$ 双射 → 写出 $g^{-1}$ → 算 $J$ → 代入 → 用 $\\iint f_{U,V}\\,du\\,dv=1$ 自检（完整示范见 polar.independence）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:independence.counterexample",
+      "type": "counterexample",
+      "subject": "independence",
+      "title": "拓展：反例——两两独立不推出整体独立（XOR 构造）",
+      "keywords": [
+        "两枚公平硬币 X,Y 独立，Z=X·Y",
+        "三对两两概率都是 1/4 = 1/2×1/2",
+        "但 P(X=1,Y=1,Z=1)=1/4 ≠ 1/8",
+        "XYZ≡1 恒成立：三个变量被一个等式锁死",
+        "Var(求和) 在两两独立下仍成立（协方差逐对为 0）",
+        "修补：整体独立要求所有子集分解"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 38,
+        "line_end": 38
+      },
+      "fill_hint": "切片只写了二元独立；本条是「推广到 n 元」的边界反例，title 带「拓展：」。数值用【待核验】自检。",
+      "content": "构造（经典 XOR）：掷两枚公平硬币，$X,Y$ 独立取 $\\pm1$ 各半，令 $Z=X\\cdot Y$（两枚同面时 $Z=1$，否则 $Z=-1$）。\n\n逐项验证两两独立：\n\n$$P(X=1,Y=1)=\\tfrac14,\\quad P(X=1,Z=1)=\\tfrac14,\\quad P(Y=1,Z=1)=\\tfrac14$$\n\n（例：$X=1$ 时 $Z=Y$，故 $\\{X=1,Z=1\\}=\\{X=1,Y=1\\}$，概率 $\\frac14$。）三对乘积检验全部通过：$\\frac14=\\frac12\\times\\frac12$ ✓。\n\n但整体不独立：\n\n$$P(X=1,Y=1,Z=1)=P(X=1,Y=1)=\\tfrac14\\ne\\tfrac18$$\n\n若三者独立，右边应为 $\\frac12\\cdot\\frac12\\cdot\\frac12=\\frac18=0.125$【已核验:0.125|0.5*0.5*0.5】，而实际是 $\\frac14=0.25$【已核验:0.25|0.5*0.5】。根源：$Z=1$ 强制 $X,Y$ 同号，三个变量被 $XYZ\\equiv 1$ 一个等式锁死——知道任意两个就确定第三个。\n\n失效后果：把两两独立当独立，联合分布与熵全部算错；幸运的是 $\\mathrm{Var}(X+Y+Z)=\\mathrm{Var}(X)+\\mathrm{Var}(Y)+\\mathrm{Var}(Z)$ 在两两独立下仍成立（协方差逐对为 0 就够）。修补：整体独立要求**所有子集**的联合分布分解，不能只验证子集大小 $\\le 2$ 的。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:independence.not-invariant",
+      "type": "counterexample",
+      "subject": "independence",
+      "title": "反例：独立性不是变换不变的——线性变换破坏独立",
+      "keywords": [
+        "X,Y iid U(0,1)，(U,V)=(X+Y, X−Y)",
+        "P(U<0.5)=P(V>0.5)=0.125，独立预测联合 0.015625",
+        "实际 P(U<0.5,V>0.5)=0：两事件互斥",
+        "协方差 Cov(U,V)=Var(X)−Var(Y)=0：不相关 ≠ 独立",
+        "iid 正态 + 正交变换则保持独立（高斯独有）",
+        "CG 教训：变量替换后必须重新推导联合分布"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 46,
+        "line_end": 46
+      },
+      "fill_hint": "直接演示切片 46 行「关键洞察：独立性不是变换不变的」；三个数值全部【待核验】。",
+      "content": "切片「关键洞察」的直接演示。取 $X,Y\\overset{\\text{iid}}{\\sim}U(0,1)$（独立），线性变换 $(U,V)=(X+Y,\\,X-Y)$（可逆，$J$ 为常数）。\n\n算两个事件的概率：$P(U<0.5)$：区域 $\\{x+y<0.5\\}$ 在单位正方形内是直角三角形，面积 $\\frac12\\cdot0.5\\cdot0.5=0.125$【已核验:0.125|0.5*0.5*0.5】；$P(V>0.5)$：区域 $\\{x-y>0.5\\}$ 同为面积 $0.125$【已核验:0.125|0.5*0.5*0.5】。\n\n若 $U,V$ 独立，应有 $P(U<0.5,V>0.5)=0.125\\times0.125=0.015625$【已核验:0.015625|0.125*0.125】。但 $U<0.5\\Rightarrow x+y<0.5\\Rightarrow x<0.5$，而 $V>0.5\\Rightarrow x-y>0.5\\Rightarrow x>0.5$——两事件**互斥**，联合概率为 $0$【已核验:0|0】，与独立预测差了一个量级。\n\n机制：线性组合把 $X,Y$ 的信息搅在一起，支撑从正方形变成菱形，边界耦合产生依赖。注意本例 $\\mathrm{Cov}(U,V)=\\mathrm{Var}(X)-\\mathrm{Var}(Y)=0$——协方差为零却仍不独立，是「不相关 ≠ 独立」的活标本。对照：若 $X,Y$ iid 标准正态，同样的正交变换 $(\\frac{X+Y}{\\sqrt2},\\frac{X-Y}{\\sqrt2})$ **保持**独立——高斯的旋转对称性独有（polar.independence 是同一现象的极坐标版）。\n\nCG 教训：对采样变量做替换（球面采样、重要性采样重参数化）后，必须**重新**推导联合分布，不能沿用旧的独立性——漏掉这一步就是偏差 bug。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:independence.statement",
+      "type": "statement",
+      "subject": "independence",
+      "title": "独立性的三种等价表述（密度 / CDF / 测度）",
+      "keywords": [
+        "密度分解 f_XY=f_X·f_Y；CDF 分解 F_XY=F_X·F_Y",
+        "母定义：P(X∈A, Y∈B)=P(X∈A)P(Y∈B) 对一切 Borel 集",
+        "两链等价：矩形上积分 ↔ CDF 分解 ↔ 分布唯一",
+        "有密度先查分解式最快；无密度退回 CDF/测度",
+        "独立时 f_(Y|X)=f_Y、E[Y|X]=E[Y]（C4 特例）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 38,
+        "line_end": 38
+      },
+      "fill_hint": "切片 38 行原文转写 + 测度母定义（C1 语言）；两条链的等价性论证方向需人工复核。",
+      "content": "**切片原文的等价链**：\n\n$$X,Y\\ \\text{独立}\\iff f_{X,Y}(x,y)=f_X(x)\\,f_Y(y)\\iff F_{X,Y}(x,y)=F_X(x)\\,F_Y(y)$$\n\n测度论母定义（两条链的共同来源）：对一切 Borel 集 $A,B$，$P(X\\in A,\\ Y\\in B)=P(X\\in A)\\,P(Y\\in B)$（C1 的语言）。密度版与 CDF 版都是它在「联合密度存在」时的等价改写。\n\n为什么两条链等价：密度分解 ⟹ 对矩形 $(-\\infty,x]\\times(-\\infty,y]$ 积分得 CDF 分解；反之 CDF 分解 ⟹ 由 CDF 决定的二维分布唯一（与 C1「$F$ 完全决定分布」同理），故分布本身就是乘积测度。\n\n使用判据：有联合密度先查分解式（最快）；没有密度（离散/混合/奇异）退回 CDF 或测度定义。独立的一个重要推论：条件量退化为无条件量——$f_{Y|X}=f_Y$、$E[Y|X]=E[Y]$（C4 条件期望的重要特例），独立性的全部「红利」都从这条来。",
+      "links": [
+        "C1",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:jacobian.statement",
+      "type": "statement",
+      "subject": "jacobian",
+      "title": "换元公式：新密度 = 旧密度 × |J|",
+      "keywords": [
+        "f_UV(u,v)=f_XY(g⁻¹(u,v))·|J|",
+        "J=det ∂(x,y)/∂(u,v)：从新变量回到旧变量",
+        "算了反方向雅可比就取倒数",
+        "一维对照 f_U(u)=f_X(h⁻¹(u))|dx/du|",
+        "自检纪律：∫∫ f_UV = 1",
+        "|J| 取绝对值因为面积没有负的"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 40,
+        "line_end": 44
+      },
+      "fill_hint": "切片 40-44 行原文转写；「反方向雅可比取倒数」与一维对照是易错点提示，需保留。",
+      "content": "**切片原文**：设 $(U,V)=g(X,Y)$，则\n\n$$f_{U,V}(u,v)=f_{X,Y}\\big(g^{-1}(u,v)\\big)\\cdot|J|,\\qquad J=\\det\\frac{\\partial(x,y)}{\\partial(u,v)}$$\n\n读法：新密度 = 旧密度（在原像点取值）× 面积微元的伸缩比 $|J|$。注意 $J$ 是**从新变量回到旧变量**的雅可比（$\\frac{\\partial(x,y)}{\\partial(u,v)}$，切片原文如此）；若你顺手算的是 $\\frac{\\partial(u,v)}{\\partial(x,y)}$，取绝对值后求倒数即可。\n\n一维对照（记忆锚点）：$U=h(X)$ 单调时 $f_U(u)=f_X(h^{-1}(u))\\left|\\frac{dx}{du}\\right|$——「密度 × 长度微元伸缩」，二维只是把导数换成行列式。$|J|$ 取绝对值，因为面积微元没有负的。\n\n自检纪律：算完必须验证 $\\iint f_{U,V}\\,du\\,dv=1$；不满足说明 $g$ 不是双射（漏了原像求和）或 $|J|$ 方向取反（各坑清单见 jacobian.quantifiers）。完整示范见 polar.independence。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:jacobian.intuition",
+      "type": "intuition",
+      "subject": "jacobian",
+      "title": "雅可比直觉：概率质量守恒 ÷ 面积伸缩 = 新密度",
+      "keywords": [
+        "f·dxdy 是小矩形里的概率，不是「高度」",
+        "g 把小矩形拉扯成小平行四边形",
+        "双射 = 每块质量恰好搬运一次",
+        "概率守恒 ÷ 新面积 = 公式",
+        "CG：立体角 ↔ 面积的 cosθ/r² 因子是同一雅可比"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 41,
+        "line_end": 44
+      },
+      "fill_hint": "直觉词条，假设与结论分开写；CG 落点一句带过（H3/H7），不展开成渲染教程。",
+      "content": "密度不是「高度」而是「面密度」：$f_{X,Y}(x,y)\\,dx\\,dy$ 是小矩形 $dx\\times dy$ 里的概率。变量替换 $g$ 把这块小矩形拉扯成一块小平行四边形，面积从 $dx\\,dy$ 变成 $|J|\\,du\\,dv$——概率总量不变，所以新面密度 = 概率 ÷ 新面积 = $f\\cdot\\frac{dx\\,dy}{du\\,dv}$，而 $\\frac{dx\\,dy}{du\\,dv}$ 正是 $|J|$。\n\n**假设给了什么**：$g$ 双射保证每块概率质量恰好被搬运一次（不多算、不漏算）；可微保证局部近似成平行四边形（非线性只在二阶小量里作祟）。\n\n**结论为什么因此成立**：概率守恒 + 面积伸缩的局部线性化，两者相除就是公式——没有别的魔法。\n\nCG 直觉：路径追踪里从「立体角」变量换到「面积」变量（几何项 $\\frac{\\cos\\theta}{r^2}$，H3/H7）本质就是同一个雅可比伸缩——渲染方程换测量单位时概率必须重新配平，漏乘 $|J|$ 就是 bug。",
+      "links": [
+        "H3",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:polar.independence",
+      "type": "extension",
+      "subject": "polar",
+      "title": "关键洞察的完整计算：标准正态极坐标变换后 R 与 Θ 独立",
+      "keywords": [
+        "f(r,θ)=r·e^(−r²/2)·(1/2π) 可分离",
+        "可分离 ⟹ R⊥Θ，Θ~U(0,2π)",
+        "R²=X²+Y²~Exp(1/2)，E[R²]=2",
+        "各向同性 ⟹ 信息只剩半径、方向变均匀",
+        "非各向同性时密度不可分离、R 与 Θ 立刻耦合",
+        "Box–Muller 与球面均匀采样的理论核心"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 46,
+        "line_end": 46
+      },
+      "fill_hint": "切片 46 行「若 (X,Y) 标准正态则 R,Θ 独立」的完整推导；E[R²]=2 带【待核验】。",
+      "content": "切片「关键洞察」：标准正态做极坐标变换后 $R,\\Theta$ 独立——完整算一遍。\n\n设 $X,Y\\overset{\\text{iid}}{\\sim}N(0,1)$，联合密度 $f(x,y)=\\frac{1}{2\\pi}e^{-(x^2+y^2)/2}$。极坐标 $x=r\\cos\\theta,\\ y=r\\sin\\theta$，雅可比 $\\left|\\det\\frac{\\partial(x,y)}{\\partial(r,\\theta)}\\right|=r$。代入换元公式：\n\n$$f_{R,\\Theta}(r,\\theta)=\\frac{1}{2\\pi}e^{-r^2/2}\\cdot r,\\qquad r\\ge0,\\ \\theta\\in[0,2\\pi)$$\n\n关键一步：这个联合密度**可分离**——$\\big(\\tfrac{1}{2\\pi}\\big)\\times\\big(r\\,e^{-r^2/2}\\big)$，只依赖 $\\theta$ 的因子乘只依赖 $r$ 的因子。由独立性的分解判据（independence.statement）得 $R\\perp\\Theta$，且 $\\Theta\\sim U(0,2\\pi)$、$R$ 有密度 $r e^{-r^2/2}$（$r\\ge0$）。\n\n衍生结论（切片外补充）：$R^2=X^2+Y^2\\sim\\mathrm{Exp}(\\tfrac12)$（速率 $\\tfrac12$），故 $E[R^2]=2$【已核验:2|2】——标准正态两个分量各贡献方差 1，自洽。\n\n一般情况为何失效：若 $(X,Y)$ 非各向同性（两分量方差不同、或边缘不同分布），$f$ 里 $x^2+y^2$ 的对称性被破坏，密度不可分离，$R,\\Theta$ 立刻耦合。所以切片说独立性「可能被破坏**或创造**」：各向同性把 $X,Y$ 的信息压缩得只剩「半径」，方向变均匀——变换创造独立性；反过来见 independence.not-invariant（变换破坏独立性）。CG 落点：这是 Box--Muller 正态采样与球面均匀采样（sphere-sampling.application）的理论核心。",
+      "links": [
+        "C2",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:sphere-sampling.application",
+      "type": "application",
+      "subject": "sphere-sampling",
+      "title": "球面均匀采样为什么是 θ=arccos(1−2u₁)、φ=2πu₂",
+      "keywords": [
+        "球面均匀概率元 (1/4π)·sinθ dθ dφ",
+        "u₁=(1−cosθ)/2 ⟹ sinθ dθ=2 du₁，雅可比恰好抵消",
+        "代换后密度 = du₁du₂：均匀",
+        "错误线性映射 θ=(π/2)u₁ → 极点被低估、亮度偏差",
+        "逆变换采样（H4）+ 雅可比配平的标准应用",
+        "路径追踪变量替换同一机制（H3/J7）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 48,
+        "line_end": 48
+      },
+      "fill_hint": "切片 48 行 CG 配方的验证计算；sinθdθ=2du₁ 与三点数值带【待核验】。",
+      "content": "切片原文的 CG 配方：$\\theta=\\arccos(1-2u_1)$、$\\phi=2\\pi u_2$，$u_1,u_2\\sim U(0,1)$ 独立——用它得到**球面上均匀**的方向。验证一遍为什么必须是这个映射：\n\n球面均匀分布的概率元是立体角 $\\frac{1}{4\\pi}\\sin\\theta\\,d\\theta\\,d\\phi$。令 $u_1=\\frac{1-\\cos\\theta}{2}$，则 $du_1=\\frac{\\sin\\theta}{2}d\\theta$，即 $\\sin\\theta\\,d\\theta=2\\,du_1$【已核验:2|2】。代入：\n\n$$\\frac{1}{4\\pi}\\sin\\theta\\,d\\theta\\,d\\phi=\\frac{1}{4\\pi}\\cdot 2\\,du_1\\cdot 2\\pi\\,du_2=du_1\\,du_2$$\n\n——$\\theta$ 方向的密度 $\\propto\\sin\\theta$ 恰好被这个映射的雅可比 $\\frac{2}{\\sin\\theta}$ 抵消，$(u_1,u_2)$ 上是均匀的：配方正确。\n\n若错误地取 $\\theta=\\frac{\\pi}{2}u_1$（线性映射），雅可比是常数，采样密度 $\\propto\\sin\\theta$ 不均匀——极点方向被系统性低估，产生亮度偏差（这正是 C9.1「有偏估计量」的典型来源：代码能跑、结果错）。\n\n这套「逆 CDF + 雅可比配平」就是逆变换采样（H4）在方向变量上的标准应用；路径追踪的变量替换（面积 ↔ 立体角，H3）与重要性采样密度选择（H4、J7）复用同一机制。",
+      "links": [
+        "H3",
+        "H4",
+        "J7",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C3:general.probe1",
+      "type": "probe",
+      "subject": "general",
+      "title": "检验：E[R²]、三角形概率与球面映射三点",
+      "keywords": [
+        "E[R²]=E[X²]+E[Y²]=2",
+        "P(X+Y<0.5) 的三角形面积",
+        "θ=arccos(1−2u) 在 u=0, 0.5, 1 三点的值",
+        "答案数值折叠在括号里"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 38,
+        "line_end": 48
+      },
+      "fill_hint": "三问分别对应 polar.independence、not-invariant 的支撑直觉、sphere-sampling 映射；【待核验】构建时重算。",
+      "content": "三道检验题：\n\n(1) $X,Y\\overset{\\text{iid}}{\\sim}N(0,1)$，$R=\\sqrt{X^2+Y^2}$。计算 $E[R^2]$。（$=E[X^2]+E[Y^2]=2$【已核验:2|1+1】）\n\n(2) $X,Y\\overset{\\text{iid}}{\\sim}U(0,1)$。计算 $P(X+Y<0.5)$。（三角形面积 $=0.5\\times0.5\\times0.5=0.125$【已核验:0.125|0.5*0.5*0.5】）\n\n(3) 验证球面采样映射：由 $u_1=\\frac{1-\\cos\\theta}{2}$ 推出 $\\sin\\theta\\,d\\theta=2\\,du_1$，并计算 $\\theta=\\arccos(1-2u_1)$ 在 $u_1=0,\\,0.5,\\,1$ 三点的值。（$\\theta=\\pi,\\ \\frac{\\pi}{2},\\ 0$；其中 $\\frac{\\pi}{2}\\approx 1.5708$【已核验:1.57079632679|pi/2】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

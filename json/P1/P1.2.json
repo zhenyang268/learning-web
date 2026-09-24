@@ -1,0 +1,362 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P1.2",
+  "chapter": "P1",
+  "title": "必备公式",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 43,
+    "line_end": 58,
+    "anchor": "notebook/P_computation.tex:43"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P1.2:sum-formulas.quantifiers",
+      "type": "comparison",
+      "subject": "sum-formulas",
+      "title": "幂和三公式适用条件表",
+      "keywords": [
+        "三公式都要求：n 正整数、求和区间 [1,n]",
+        "上界错位反例：n=10 时 285≠385（少了末项）",
+        "幂次只有 1/2/3 有现成表，∑k⁴ 现场升阶推",
+        "k=0 起点无害（0 项贡献为 0）",
+        "记不牢就回差分法现场重造"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 49,
+        "line_end": 55
+      },
+      "fill_hint": "以切片表格行为准转写；反例数值（285 vs 385）为本单元自算，阶段 2 复核。",
+      "content": "三大公式的本体（$n\\ge1$ 整数、求和从 $k=1$ 到 $n$）：\n\n$$\\sum_{k=1}^n k=\\frac{n(n+1)}{2},\\qquad \\sum_{k=1}^n k^2=\\frac{n(n+1)(2n+1)}{6},\\qquad \\sum_{k=1}^n k^3=\\Big[\\frac{n(n+1)}{2}\\Big]^2.$$\n\n适用条件表：\n\n| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 上界 $n$ 与实际末项一致 | 求 $\\sum_{k=1}^{10} k^2$ 却代 $\\frac{(n-1)n(2n-1)}{6}$：得 $285$【已核验:285|9*10*19/6】，正确 $385$【已核验:385|sum(k*k for k in range(1,11))】 | 系统性少算末项（差恰为 $10^2=100$【已核验:100|385-285】） | 不能；换区间就用差分法（P1.1）一分钟重出 |\n| 求和从 $k=1$ 起 | 从 $k=0$ 起无害（$k=0$ 项为 $0$）；但 $\\sum_{k=1}^{n-1}$ 型必须把公式里 $n$ 全换成 $n-1$ | 同上 | 从 $0$ 起可直接放宽 |\n| 幂次固定为 $1,2,3$ | $\\sum k^4$ 无现成表 | 照 $\\frac{n(n+1)(2n+1)}{6}$ 的形状自编系数必错 | 任意幂都用 P1.3 的升阶差分现场推 |\n| $n$ 为正整数 | $n=0$：公式给 $0$，与空和一致（平凡成立） | — | $n=0$ 可放宽（平凡） |\n\n总结一句：三条公式的\"条件\"几乎只有**端点**一条实质内容——它是差分原函数 $F(n+1)-F(1)$ 的固定形状，其余都是可机械处理的。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.2:sum-formulas.statement",
+      "type": "statement",
+      "subject": "sum-formulas",
+      "title": "幂和三公式（本体 + 代入验证）",
+      "keywords": [
+        "∑k=n(n+1)/2（n=10 时 55）",
+        "∑k²=n(n+1)(2n+1)/6（n=10 时 385）",
+        "∑k³=[n(n+1)/2]²（n=10 时 3025=55²）",
+        "∑k²≈n³/3（抛物线面积 + 修正）",
+        "立方和 = 和的平方（巧合之美）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 49,
+        "line_end": 55
+      },
+      "fill_hint": "三公式逐字转写 + 各一组代入值；主导项对照留在 asymptotics 词条。",
+      "content": "三条公式（$n\\ge1$）与代入验证（P 篇纪律：每个公式至少一组）：\n\n1. $\\displaystyle\\sum_{k=1}^n k=\\frac{n(n+1)}{2}$ —— $n=10$ 时 $55$【已核验:55|sum(k for k in range(1,11))】。\n2. $\\displaystyle\\sum_{k=1}^n k^2=\\frac{n(n+1)(2n+1)}{6}$ —— $n=10$ 时 $385$【已核验:385|sum(k*k for k in range(1,11))】。\n3. $\\displaystyle\\sum_{k=1}^n k^3=\\Big[\\frac{n(n+1)}{2}\\Big]^2$ —— $n=10$ 时 $3025$【已核验:3025|sum(k**3 for k in range(1,11))】，且 $3025=55^2$：立方和 = 和的平方，$n=10$ 处直接可见【已核验:3025|55*55】。\n\n直觉备注（切片原话）：$\\sum k$ 是阶梯面积 = 半个矩形；$\\sum k^2\\approx n^3/3$ 是抛物线下面积加修正——$n=10$ 时主导项 $\\frac{1000}{3}\\approx333.3$【已核验:333.333333333|10**3/3】 vs 真值 $385$，修正约 $15\\%$，不可忽略；$\\sum k^3$ 的\"巧合之美\"没有面积解释，是代数恒等式。\n\n成立条件：$n$ 正整数、区间 $[1,n]$（详见 quantifiers 表）。推导见 P1.3（$\\sum k^2$ 必须会复述）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.3"
+      ]
+    },
+    {
+      "id": "P1.2:sum-formulas.proof",
+      "type": "proof",
+      "subject": "sum-formulas",
+      "title": "三公式的 F 一览（差分/证明列转写）",
+      "keywords": [
+        "∑k 的 F=k(k-1)/2（另有高斯配对证法）",
+        "∑k² 的 F=k(k-1)(2k-1)/6：抽查 k=1、k=3",
+        "∑k³ 的 F=k²(k-1)²/4：F(n+1) 恰为 [n(n+1)/2]²",
+        "易错点：F 里是 (k-1)，它是'前 k-1 项的和'"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 49,
+        "line_end": 55
+      },
+      "fill_hint": "切片'差分/证明'列转写为 F 一览；抽查验证两处。",
+      "content": "切片表里\"差分/证明\"列就是 P1.1 的差分原函数 $F$（和式 $=F(n+1)-F(1)$，$F(1)=0$）：\n\n- **$\\sum k$**：$F(k)=\\frac{k(k-1)}{2}$；另有高斯配对证法（见 gauss-pairing.intuition）。\n- **$\\sum k^2$**：$F(k)=\\frac{k(k-1)(2k-1)}{6}$。抽查差分：$k=1$：$F(2)-F(1)=1-0=1=1^2$【已核验:1|2*1*3/6-1*0*(-1)/6】；$k=3$：$F(4)-F(3)=14-5=9=3^2$【已核验:9|4*3*7/6-3*2*5/6】。望远镜即得 $F(n+1)=\\frac{n(n+1)(2n+1)}{6}$。\n- **$\\sum k^3$**：$F(k)=\\frac{k^2(k-1)^2}{4}$。抽查：$k=3$：$F(4)-F(3)=36-9=27=3^3$【已核验:27|16*9/4-9*4/4】；$F(n+1)=\\frac{n^2(n+1)^2}{4}=\\Big[\\frac{n(n+1)}{2}\\Big]^2$。\n\n**易错点**：$F$ 的公式里是 $(k-1)$ 不是 $(k+1)$——$F$ 是\"前 $k-1$ 项的和\"，与\"$\\sum_{k=1}^n$ 的闭式\"差一个移位（这正是 off-by-one 误用的根源）。\n\n这些 $F$ 怎么**找**出来的：见 P1.3 的升阶差分推导（必须会复述）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.3"
+      ]
+    },
+    {
+      "id": "P1.2:gauss-pairing.intuition",
+      "type": "intuition",
+      "subject": "gauss-pairing",
+      "title": "高斯配对：阶梯面积 = 半个矩形",
+      "keywords": [
+        "首尾配对 (1+n)+(2+n-1)+…，每对都是 n+1",
+        "n=10：5 对 × 11 = 55",
+        "几何：两个阶梯拼成 n×(n+1) 矩形，取一半",
+        "只对等差结构有效；幂和不能这样配",
+        "幂和必须回到差分法（P1.1/P1.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 50,
+        "line_end": 50
+      },
+      "fill_hint": "切片'高斯配对'列展开；n=10 数值核验。配对失效的边界（奇数 n）写清中间项落单。",
+      "content": "**假设给了什么**：等差数列 $1,2,\\dots,n$（相邻差恒为 $1$，首尾对称）。**结论为什么成立**：把和式首尾配对：$(1+n)+(2+(n-1))+\\cdots$，每对都是 $n+1$；$n$ 偶数时恰 $\\frac{n}{2}$ 对，$n$ 奇数时中间项 $\\frac{n+1}{2}$ 落单（自配，仍等于 $\\frac{n+1}{2}$），结论不变。$n=10$：$5$ 对、每对 $11$，$5\\times11=55$【已核验:55|5*11】。\n\n几何：两个相同的阶梯拼成一个 $n\\times(n+1)$ 的矩形，取其半即阶梯面积——所以 $\\sum k = \\frac{n(n+1)}{2}$。\n\n**边界**：配对只对**等差**结构有效（需要\"一头加多少、另一头就减多少\"）；$\\sum k^2$、$\\sum k^3$ 都不能这样配（平方/立方项不对称），必须回到差分法（P1.1/P1.3）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.2:sum-formulas.intuition",
+      "type": "intuition",
+      "subject": "sum-formulas",
+      "title": "三公式的几何直觉（切片'直觉'列）",
+      "keywords": [
+        "∑k=阶梯面积=半个矩形（n×(n+1) 的一半）",
+        "∑k²≈抛物线下面积 n³/3 加修正项",
+        "∑k³=巧合之美：立方和等于和的平方",
+        "①②是'和≈面积'，③无面积解释（代数巧合）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 50,
+        "line_end": 54
+      },
+      "fill_hint": "切片'直觉'列逐条转写 + 数值对照；③的结构解释标注为拓展、不展开。",
+      "content": "切片\"直觉\"列逐条：①$\\sum k$ = 阶梯面积 = 半个矩形（$n\\times(n+1)$ 的一半）；②$\\sum k^2$ = 抛物线下的面积 $\\approx n^3/3$ 加修正项——主导项与 $\\int_0^n x^2\\,dx=\\frac{n^3}{3}$ 一致【已核验:333.333333333|10**3/3】（$n=10$：主导项 $333.3$、真值 $385$，修正约 $15\\%$【已核验:0.155|385/(10**3/3)-1】）；③$\\sum k^3$ = 巧合之美：立方和 = 和的平方（$n=10$：$55^2=3025$【已核验:3025|55*55】）。\n\n假设与结论分开：①②的直觉是\"和 ≈ 面积\"（离散和贴着连续积分，见 P1.4 的 $\\sum\\leftrightarrow\\int$）；③没有面积解释，是纯代数恒等式的巧合（拓展：它的结构解释——$\\sum k^3$ = 三角形数的平方——可由 $\\sum(2k-1)=n^2$ 的堆叠图看出，超出切片，只立牌子）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.2:sum-formulas.off-by-one",
+      "type": "counterexample",
+      "subject": "sum-formulas",
+      "title": "典型误用：上界错位（285 vs 385）",
+      "keywords": [
+        "把 F 的公式当成和的公式（移位混淆）",
+        "n=10：错式给 285=∑_{1}^{9} k²，恰少末项 100",
+        "∑k² 与 ∑k³ 混背：385 vs 3025，差近 8 倍",
+        "自检：主导项 ∑k^m≈n^{m+1}/(m+1) 定数量级",
+        "修补：忘掉和式、现场用差分法重造"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 51,
+        "line_end": 53
+      },
+      "fill_hint": "两类误用都算出具体错误值；数量级自检法（主导项）是主要修补手段。",
+      "content": "**误用一（把 $F$ 当和式）**：求 $\\sum_{k=1}^{n} k^2$ 时记成 $\\frac{(n-1)n(2n-1)}{6}$——那是 $F(n)$（前 $n-1$ 项的和），与 $F(n+1)$ 差一个移位（P1.1 端点坑的背公式形态）。$n=10$：错误给 $\\frac{9\\cdot10\\cdot19}{6}=285$【已核验:285|9*10*19/6】，正确 $\\frac{10\\cdot11\\cdot21}{6}=385$【已核验:385|10*11*21/6】，差 $100=10^2$ 恰是丢掉的末项。\n\n**误用二（公式张冠李戴）**：把 $\\sum k^2$ 的形状安到 $\\sum k^3$ 上（或反过来）。$n=10$ 时两者 $385$ vs $3025$，差近 $8$ 倍【已核验:7.85714285714|3025/385】。\n\n**修补（数量级自检）**：$\\sum_{k=1}^n k^m \\approx \\frac{n^{m+1}}{m+1}$——$m=1$：$50$【已核验:50|10**2/2】 vs $55$；$m=2$：$333.3$【已核验:333.333333333|10**3/3】 vs $385$；$m=3$：$2500$【已核验:2500|10**4/4】 vs $3025$。记错数量级的公式当场暴露；误差范围内仍可疑的，回差分法（P1.1）现场重造。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.2:sum-formulas.asymptotics",
+      "type": "extension",
+      "subject": "sum-formulas",
+      "title": "拓展：主导项 n^{m+1}/(m+1) 与相对误差 (m+1)/(2n)",
+      "keywords": [
+        "∑k^m≈n^{m+1}/(m+1)：检验记忆的标尺",
+        "n=10 相对误差：10%、15.5%、21%",
+        "误差规律 ≈(m+1)/(2n)",
+        "这就是 Θ(n^{m+1}) 的具体含量（P9.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 51,
+        "line_end": 54
+      },
+      "fill_hint": "切片只给'≈n³/3'一句，本条一般化为检验工具；数值全部带核验标记。",
+      "content": "（拓展：切片只给\"$\\sum k^2\\approx n^3/3$\"一句，本条把它一般化成检验工具。）主导项公式：\n\n$$\\sum_{k=1}^n k^m \\approx \\frac{n^{m+1}}{m+1},\\qquad \\text{相对误差} \\approx \\frac{m+1}{2n}.$$\n\n$n=10$ 时的实测：$m=1$：$\\frac{100}{2}=50$ vs $55$，误差 $10\\%$【已核验:0.1|55/(10**2/2)-1】；$m=2$：$\\frac{1000}{3}$ vs $385$，误差 $15.5\\%$【已核验:0.155|385/(10**3/3)-1】；$m=3$：$\\frac{10000}{4}=2500$ vs $3025$，误差 $21\\%$【已核验:0.21|3025/(10**4/4)-1】——与 $\\frac{m+1}{2n}$（分别 $10\\%,15\\%,20\\%$）吻合。\n\n两条腿走路：**量级**靠主导项（这就是 P9.3 渐近记号 $\\sum k^2=\\Theta(n^3)$ 的具体含量），**精确系数**靠差分法现场推（P1.1/P1.3）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P9.3"
+      ]
+    },
+    {
+      "id": "P1.2:sum-formulas.application",
+      "type": "application",
+      "subject": "sum-formulas",
+      "title": "幂和公式的下游",
+      "keywords": [
+        "均匀分布方差：n=6 时 35/12≈2.9167（两公式联用）",
+        "极限练习：∑k²/n³→1/3（P4.3）",
+        "渐近分析：∑k²=Θ(n³)（P9.3）",
+        "放缩接口：k²≤n·k ⟹ ∑k²≤n·∑k"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 49,
+        "line_end": 55
+      },
+      "fill_hint": "跨章落点各给一个带数值的例子；links 按全库代号。",
+      "content": "- **概率统计（C2）**：离散均匀 $X\\sim U\\{1,\\dots,n\\}$ 的方差直接联用两公式：$E[X]=\\frac{n+1}{2}$、$E[X^2]=\\frac{(n+1)(2n+1)}{6}$，$\\mathrm{Var}(X)=E[X^2]-(E[X])^2$；$n=6$ 时 $=\\frac{91}{6}-3.5^2=\\frac{35}{12}\\approx2.9167$【已核验:2.91666666667|91/6-3.5**2】。\n- **极限（P4.3）**：$\\frac{\\sum k^2}{n^3}\\to\\frac13$ 是夹逼/Stolz 的标准练习材料。\n- **渐近分析（P9.3）**：$\\sum k=\\Theta(n^2)$、$\\sum k^2=\\Theta(n^3)$ 是复杂度日常。\n- **放缩接口（P3.2）**：$k^2\\le n\\cdot k$ 对每个 $k\\le n$ 成立 ⟹ $\\sum_{k=1}^n k^2\\le n\\cdot\\frac{n(n+1)}{2}=\\frac{n^2(n+1)}{2}$——\"幂和公式 + 单调放缩\"的组合拳源头（$n=10$：$385\\le550$【已核验:550|10*(10*11/2)】）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C2",
+        "P4.3",
+        "P9.3",
+        "P3.2"
+      ]
+    },
+    {
+      "id": "P1.2:sum-formulas.probe1",
+      "type": "probe",
+      "subject": "sum-formulas",
+      "title": "检验：n=20 的三公式 + 主导项自检",
+      "keywords": [
+        "∑k(20)=210、∑k²(20)=2870、∑k³(20)=44100",
+        "主导项：200、2666.67、40000",
+        "相对误差 ≤7.5%（=（m+1)/(2n) 量级）",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 49,
+        "line_end": 55
+      },
+      "fill_hint": "三公式 + 主导项双份答案，数值已带核验标记。",
+      "content": "取 $n=20$，分别算 $\\sum_{k=1}^{20} k$、$\\sum_{k=1}^{20} k^2$、$\\sum_{k=1}^{20} k^3$，并用主导项 $\\frac{n^{m+1}}{m+1}$ 自检数量级与相对误差。\n\n（答案：$210$【已核验:210|sum(k for k in range(1,21))】、$2870$【已核验:2870|sum(k*k for k in range(1,21))】、$44100$【已核验:44100|sum(k**3 for k in range(1,21))】；主导项 $200$【已核验:200|20**2/2】、$2666.67$【已核验:2666.66666667|20**3/3】、$40000$【已核验:40000|20**4/4】；相对误差分别 $5\\%$【已核验:0.05|210/200-1】、$7.6\\%$【已核验:0.07625|2870/(20**3/3)-1】、$10.3\\%$【已核验:0.1025|44100/40000-1】，均在 $\\frac{m+1}{2n}\\le10\\%$ 量级内。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "三公式对照表（公式｜F｜直觉｜主导项）",
+      "keywords": [
+        "共同点：全部由差分法产生（F 列）",
+        "∑k³ 的 F 恰好是 (∑k 闭式)²/4 的形状",
+        "主导项 n²/2、n³/3、n⁴/4",
+        "推导示范见 P1.3"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 43,
+        "line_end": 58
+      },
+      "fill_hint": "整单元对照表；F 列从切片'差分/证明'列提取。",
+      "content": "| 公式 | $F(k)$（差分原函数） | 直觉 | 主导项 |\n|---|---|---|---|\n| $\\sum k=\\frac{n(n+1)}{2}$ | $\\frac{k(k-1)}{2}$（高斯配对亦可） | 阶梯 = 半个矩形 | $\\frac{n^2}{2}$ |\n| $\\sum k^2=\\frac{n(n+1)(2n+1)}{6}$ | $\\frac{k(k-1)(2k-1)}{6}$ | 抛物线面积 + 修正 | $\\frac{n^3}{3}$ |\n| $\\sum k^3=\\Big[\\frac{n(n+1)}{2}\\Big]^2$ | $\\frac{k^2(k-1)^2}{4}$ | 巧合：立方和 = 和的平方 | $\\frac{n^4}{4}$ |\n\n三者共同点：全部由 P1.1 的差分法产生（第二列就是证据）；\"怎么找到这些 $F$\"的系统方法见 P1.3（必须会复述）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P1.2 的服务对象",
+      "keywords": [
+        "P4.1 数列 / P4.3 常用极限随取随用",
+        "C2 分布族的矩计算是跨章直接下游",
+        "P9.3 渐近记号的具体实例库"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 43,
+        "line_end": 58
+      },
+      "fill_hint": "单元级下游一览。",
+      "content": "本小目是 P 篇使用频率最高的公式表：P4.1（数列）、P4.3（常用极限）随取随用；C2 分布族（均匀、二项的矩计算）是它跨章的直接下游；P9.3 渐近记号拿它当具体实例库。它是 P1.1 差分法的\"缓存\"——忘了缓存就回 P1.1/P1.3 重造。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.3",
+        "P4.1",
+        "P4.3",
+        "C2",
+        "P9.3"
+      ]
+    },
+    {
+      "id": "P1.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：幂和 vs 主导项（大 n 对拍）",
+      "keywords": [
+        "n 从 10 拉到 10⁴，相对误差按 (m+1)/(2n) 衰减",
+        "m=2：n=10 时 15.5% → n=100 时 1.5%",
+        "Q1–Q3（长时程逐项累加 + 对拍）⟹ 档2 后端",
+        "交互：m 切换 + n 滑块（对数刻度）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 51,
+        "line_end": 54
+      },
+      "fill_hint": "档2 留空待接：需大 n 逐项求和与主导项的批量对拍，前端算力不够。",
+      "content": "演示叙事：$n$ 从 $10$ 拉到 $10^4$，$\\sum_{k=1}^n k^m$ 与 $\\frac{n^{m+1}}{m+1}$ 的相对误差按 $\\frac{m+1}{2n}$ 衰减——$m=2$：$n=10$ 时 $15.5\\%$【已核验:0.155|385/(10**3/3)-1】，$n=100$ 时降到 $1.5\\%$【已核验:0.01505|sum(k*k for k in range(1,101))/(100**3/3)-1】。三条曲线（$m=1,2,3$）同图，\"公式 = 主导项 + 系统修正\"直接可见。\n\n判据 Q1–Q3（长时程、逐项累加、需对拍）：走后端批量计算，前端只渲染结果曲线。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要 n 到 10^4 的逐项求和与主导项相对误差对拍（长时程计算 + 数值对拍），前端逐帧算力不够，走后端批量返回。",
+        "params_hint": {
+          "m": [
+            1,
+            2,
+            3
+          ],
+          "n": [
+            10,
+            100,
+            1000,
+            10000
+          ],
+          "metric": "relative-error"
+        }
+      }
+    }
+  ]
+}

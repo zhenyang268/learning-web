@@ -1,0 +1,258 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P5.4",
+  "chapter": "P5",
+  "title": "常用三角积分（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 296,
+    "line_end": 303,
+    "anchor": "notebook/P_computation.tex:296"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P5.4:half-angle.quantifiers",
+      "type": "comparison",
+      "subject": "half-angle",
+      "title": "适用条件表：不定积分的 +C、弧度制与降幂前提",
+      "keywords": [
+        "不定积分必须 +C：忘掉在定积分处侥幸、在变上限处翻车",
+        "x 以弧度计",
+        "sin²x=(1−cos2x)/2 的 2 倍频不能写成 cos x",
+        "sinxcosx 原函数不唯一（差常数）",
+        "公式本体无条件（恒等式族）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "切片只有三条原函数公式（无证明、无条件语）；条件表是使用层面展开，失效数值带【待核验】。",
+      "content": "切片的三条原函数公式是**恒等式族**（对一切实 $x$ 成立），真正的「条件」在使用层面。逐条拆解：\n\n| 条件／限定 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 不定积分必须带 $+C$ | $\\int\\sin^2x\\,dx=\\tfrac x2-\\tfrac{\\sin2x}{4}$ 少写 $C$：直接代入数值时侥幸没事，一旦做变上限求导 $\\tfrac{d}{dt}\\int_0^t$ 或拼接两段积分就出错 | 原函数族被当成单个函数 | 不能省；$C$ 是「同斜率曲线族」的标记 |\n| $x$ 以弧度计 | $\\int_0^{30}\\sin^2x\\,dx$ 若把 30 当「度」会全错（30 弧度 $\\approx 4.8$ 圈）【已核验:4.77464829276|30/(2*pi)】 | 数值全错 | 不能：$\\tfrac x2$ 的系数 $\\tfrac12$ 由弧度制下的降幂恒等式决定 |\n| 降幂时倍频必须是 $2x$ | 误写 $\\sin^2x=\\tfrac{1-\\cos x}{2}$：在 $x=\\tfrac\\pi2$ 处右边 $=0.5$【已核验:0.5|(1-cos(pi/2))/2】，左边 $\\sin^2\\tfrac\\pi2=1$【已核验:1|sin(pi/2)**2】 | 整条积分公式跟着错 | 不能：见 half-angle.misuse 的完整计算 |\n| $\\sin x\\cos x$ 的原函数不唯一 | $\\tfrac{\\sin^2x}{2}$、$-\\tfrac{\\cos^2x}{2}$、$-\\tfrac{\\cos2x}{4}$ 三个答案互相差常数 | 两个「正确答案」对不上引起恐慌 | 这是特性不是 bug：差常数＝同一原函数族 |\n| 定积分优先用周期性 | $\\int_0^{2\\pi}\\sin^2=\\pi$ 不必逐段算 | —— | 放宽：区间 $[a,a+2\\pi]$ 任意平移结论不变（P5.3） |\n\n总结一句：三条公式的推导前提都是 P5.1 的降幂恒等式（$2x$ 倍频），其余坑全在「$+C$／弧度」两处惯例。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:half-angle.misuse",
+      "type": "counterexample",
+      "subject": "half-angle",
+      "title": "典型误用：降幂忘倍频（sin²x≠(1−cos x)/2）",
+      "keywords": [
+        "正确：sin²x=(1−cos2x)/2，倍频 2x",
+        "x=π/2 处：错误式 0.5，真值 1",
+        "错误公式积分出 x/2−sin(x)/2 的错答案",
+        "修补：背「平方降一次、频率翻一倍」",
+        "忘 +C 的隐患：变上限求导"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "切片只给正确公式；误用例是使用层面展开（对拍 P5.1 降幂恒等式），数值带【待核验】。",
+      "content": "误用：把降幂恒等式的倍频 $2x$ 写成 $x$——$\\sin^2x=\\dfrac{1-\\cos x}{2}$（**错**）。完整失效计算：\n\n1. 在 $x=\\tfrac\\pi2$ 处对拍：错误式右边 $=\\tfrac{1-\\cos(\\pi/2)}{2}=\\tfrac{1-0}{2}=0.5$【已核验:0.5|(1-cos(pi/2))/2】；真值 $\\sin^2(\\tfrac\\pi2)=1$【已核验:1|sin(pi/2)**2】——差一倍。\n2. 正确版对拍：$\\tfrac{1-\\cos(2\\cdot\\tfrac\\pi2)}{2}=\\tfrac{1-\\cos\\pi}{2}=\\tfrac{1-(-1)}{2}=1$【已核验:1|(1-cos(pi))/2】。吻合。\n3. 传染到积分：错误公式会积出 $\\int\\sin^2x\\,dx=\\tfrac x2-\\tfrac{\\sin x}{2}+C$（错），而定积分 $\\int_0^{2\\pi}$ 会算出 $\\pi-0=\\pi$ 之外的多余振荡项——与 P5.3 正交性给的 $\\pi$ 对不上账。\n\n记忆锚点：**平方降一次、频率翻一倍**（$\\sin^2x\\to$ 直流 $\\tfrac12$ ＋ 倍频 $\\tfrac{\\cos2x}{2}$）。\n\n次生误用：忘写 $+C$。在「代入上下限」的定积分里侥幸无事，但一旦原函数被拿去做变上限求导或与其他原函数拼接，族参数错位就爆雷。修补：不定积分出口必检 $+C$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:half-angle.statement",
+      "type": "statement",
+      "subject": "half-angle",
+      "title": "常用三角积分三公式（切片逐字）",
+      "keywords": [
+        "∫sin²x dx = x/2 − sin2x/4 + C",
+        "∫cos²x dx = x/2 + sin2x/4 + C",
+        "∫sinx cosx dx = sin²x/2 + C",
+        "切片标注【必】",
+        "全部来自 P5.1 降幂恒等式"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "切片公式逐字转写（补上教科书惯例的 +C）。三条公式的推导见 half-angle.proof。",
+      "content": "常用三角积分（切片标注【必】，公式逐字，补 $+C$）：\n\n$$\\int\\sin^2x\\,dx=\\frac x2-\\frac{\\sin2x}{4}+C,\\qquad \\int\\cos^2x\\,dx=\\frac x2+\\frac{\\sin2x}{4}+C$$\n$$\\int\\sin x\\cos x\\,dx=\\frac{\\sin^2x}{2}+C$$\n\n成立条件：$x$ 以弧度计（系数 $\\tfrac12,\\tfrac14$ 全部由弧度制下的降幂恒等式决定，见 quantifiers 表）。结构一眼读出：平方函数的原函数 = 「线性项 $\\tfrac x2$」＋「倍频振荡项」——线性项是均值 $\\tfrac12$ 的累积，振荡项是交流分量的原函数。\n\n注意 $\\int\\sin x\\cos x\\,dx$ 有一族等价答案：$\\tfrac{\\sin^2x}{2}$、$-\\tfrac{\\cos^2x}{2}$、$-\\tfrac{\\cos2x}{4}$（互相只差常数），切片采用 $\\tfrac{\\sin^2x}{2}$（凑微分 $\\sin x\\,dx=-d\\cos x$ 的另一面：$\\cos x\\,dx=d\\sin x$，一眼出结果）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:half-angle.intuition",
+      "type": "intuition",
+      "subject": "half-angle",
+      "title": "直觉：平方＝直流 1/2 ＋ 倍频振荡",
+      "keywords": [
+        "sin²x = 1/2 − (1/2)cos2x：均值抬到 1/2",
+        "原函数的 x/2 项＝直流的累积",
+        "−sin2x/4 项＝倍频交流的原函数",
+        "图像：抬高的水面上漂二倍频波",
+        "假设：降幂恒等式；结论：积分一次化完"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "P5.1 double-angle.extension「平方 → 直流 + 二倍频」的积分版直觉；假设/结论分开写。",
+      "content": "**假设给了什么**：P5.1 的降幂恒等式 $\\sin^2x=\\tfrac{1-\\cos2x}{2}$、$\\cos^2x=\\tfrac{1+\\cos2x}{2}$——平方函数被拆成「**直流分量** $\\tfrac12$ ＋ **二倍频**振荡」。\n\n**结论为什么因此成立**：积分是线性运算，直流 $\\tfrac12$ 积出线性项 $\\tfrac x2$（均值匀速累积），倍频 $\\tfrac{\\cos2x}{2}$ 积出 $\\tfrac{\\sin2x}{4}$（频率翻倍、幅度除以 $2\\times2=4$）。图像：一条以斜率 $\\tfrac12$ 缓慢上升的直线（水面）上，漂着一个小幅二倍频波纹。\n\n这个「直流＋倍频」图像同时解释：\n\n- 为什么 $\\sin^2$ 与 $\\cos^2$ 的原函数只差一个符号（交流分量反相，直流相同）；\n- 为什么 $\\int_0^{2\\pi}\\sin^2=\\pi$（振荡项整圈归零，只剩直流 $\\tfrac12\\times2\\pi$，见 half-angle.definite）；\n- 为什么信号处理里说「整流后的正弦波含直流与二次谐波」——同一恒等式的工程方言。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:half-angle.proof",
+      "type": "proof",
+      "subject": "half-angle",
+      "title": "推导骨架：降幂一次，积分一行",
+      "keywords": [
+        "sin²x=(1−cos2x)/2（P5.1 反解）",
+        "逐项积分：x/2 − sin2x/4",
+        "sinxcosx=½sin2x（P5.1 倍角）或凑微分",
+        "cos² 平行推导",
+        "易错点：倍频 2x、+C"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "切片无证明；推导按 P5.1 依赖链写全（降幂→逐项积分），第三条给两条路线。",
+      "content": "推导骨架（每步给理由）：\n\n**第一条** $\\int\\sin^2x\\,dx$：\n\n1. 降幂（P5.1 倍角公式反解）：$\\sin^2x=\\dfrac{1-\\cos2x}{2}$。（理由：$\\cos2x=1-2\\sin^2x$ 移项除 2。）\n2. 逐项积分：$\\displaystyle\\int\\frac{1-\\cos2x}{2}dx=\\frac x2-\\frac{\\sin2x}{4}+C$。（理由：线性性；$\\int\\cos(kx)dx=\\tfrac{\\sin(kx)}{k}$，链式法则补偿 $k=2$。）\n\n**第二条** $\\int\\cos^2x\\,dx$：同款，降幂 $\\cos^2x=\\tfrac{1+\\cos2x}{2}$，得 $\\tfrac x2+\\tfrac{\\sin2x}{4}+C$。\n\n**第三条** $\\int\\sin x\\cos x\\,dx$，两条路线：\n\n- 路线 A（倍角）：$\\sin x\\cos x=\\tfrac{\\sin2x}{2}$（P5.1 倍角公式），积分得 $-\\tfrac{\\cos2x}{4}+C$——与 $\\tfrac{\\sin^2x}{2}+C$ 差常数 $\\tfrac14$（用 $\\sin^2x=\\tfrac{1-\\cos2x}{2}$ 对账即知）；\n- 路线 B（凑微分）：$\\cos x\\,dx=d(\\sin x)$，故积分 $=\\tfrac{\\sin^2x}{2}+C$（切片采用的答案）。\n\n易错点：①降幂后频率是 $2x$ 不是 $x$（见 half-angle.misuse 的 0.5 vs 1 对拍）；②出口补 $+C$；③两条路线答案不同属正常（差常数）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:half-angle.definite",
+      "type": "application",
+      "subject": "half-angle",
+      "title": "定积分套餐：整圈只留直流（与 P5.3 对账）",
+      "keywords": [
+        "∫_0^{2π} sin² = π，∫_0^{2π} cos² = π",
+        "∫_0^{π/2} sin² = π/4（Wallis 型区间）",
+        "∫_0^{2π} sinxcosx = 0（奇对称/整周期）",
+        "振荡项整圈归零，只剩 ½×区间长",
+        "正弦的 RMS = √(1/2)≈0.7071"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "由切片三条原函数代上下限得到的定积分族（数值均带【待核验】）；与 P5.3 的 m=n 行对账。",
+      "content": "把切片三条原函数代入常用区间，得到一套「免思考定积分」：\n\n- 整周期：$\\displaystyle\\int_0^{2\\pi}\\sin^2x\\,dx=\\Big[\\tfrac x2-\\tfrac{\\sin2x}{4}\\Big]_0^{2\\pi}=\\pi$【已核验:3.14159265359|2*pi/2-sin(2*2*pi)/4】；同法 $\\int_0^{2\\pi}\\cos^2x\\,dx=\\pi$【已核验:3.14159265359|2*pi/2+sin(2*2*pi)/4】。\n- 半周期：$\\displaystyle\\int_0^{\\pi}\\sin^2x\\,dx=\\tfrac\\pi2$【已核验:1.57079632679|pi/2-sin(2*pi)/4】（振荡项在 $\\pi$ 处也归零）。\n- 四分之一周期：$\\displaystyle\\int_0^{\\pi/2}\\sin^2x\\,dx=\\tfrac\\pi4$【已核验:0.785398163397|(pi/2)/2-sin(pi)/4】（此时 $\\sin^2$ 与 $\\cos^2$ 的积分相等，因为图形关于 $x=\\tfrac\\pi4$ 互换）。\n- 交叉项：$\\displaystyle\\int_0^{2\\pi}\\sin x\\cos x\\,dx=\\Big[\\tfrac{\\sin^2x}{2}\\Big]_0^{2\\pi}=0$【已核验:0|sin(2*pi)**2/2-sin(0)**2/2】（首尾同值；也是 P5.3 sin–cos 正交性的 $m=n=1$ 行）。\n\n机制总结：**整圈（或半圈）上振荡项自动归零，定积分只剩「均值 $\\tfrac12\\times$ 区间长」**——这就是为什么这些结果全是 $\\pi$ 的有理倍数、一个三角函数值都不剩。\n\n工程方言：正弦信号的有效值（RMS）$=\\sqrt{\\tfrac1{2\\pi}\\int_0^{2\\pi}\\sin^2}=\\sqrt{\\tfrac12}\\approx0.7071$【已核验:0.707106781187|sqrt(1/2)】——交流电「220V 有效值」的数学来源。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：Fourier 系数、能量积分、RMS",
+      "keywords": [
+        "A2.3 Fourier 系数：∫f·sin nx 逐项积分的收尾查表",
+        "P5.3 正交性的 m=n 行",
+        "de2.10 分离变量：能量/范数计算",
+        "信号 RMS：√(1/2)",
+        "de1.5 强迫振动：功率与共振幅度"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "应用落点由 P5 组定位（Fourier 前置）与公式性质（RMS）推定；跨章代号在清单内。",
+      "content": "这三条积分是「积分收尾查表」的常客：\n\n- **A2.3 Fourier 系数**：系数公式 $b_n=\\tfrac1\\pi\\int f(\\theta)\\sin(n\\theta)d\\theta$ 在 $f$ 本身是三角多项式时，逐项积分的最后一步全是本单元的三条公式（配合 P5.3 把别项清零）；\n- **P5.3 正交性**：$m=n$ 行 $\\int_0^{2\\pi}\\sin^2(m\\theta)=\\pi$ 就是本单元「整周期套餐」的换频版（$x\\mapsto m\\theta$，区间换成 $m$ 个整周期）；\n- **de2.10 分离变量法**：波动/热方程的解 $u=\\sum b_n\\sin\\tfrac{n\\pi x}{L}$ 的能量 $\\int u^2$ 展开后靠正交性＋本套餐收尾——模态能量逐个记账；\n- **de1.5 强迫振动**：稳态响应 $R\\sin(\\omega t+\\varphi)$ 的平均功率 $\\tfrac12 R^2$（$\\sin\\cos$ 整周期归零、$\\sin^2$ 均值 $\\tfrac12$ 的直接应用）；\n- **信号/CG**：RMS 度量、BRDF 采样中的 $\\cos^2\\theta$ 权重积分（H2 渲染方程的 Lambert 项族）。\n\n选择判据：见到 $\\sin^2,\\cos^2,\\sin\\cdot\\cos$——先降幂（P5.1），再查本表；区间是 $\\pi$ 的整倍数时直接用「均值×区间长」心算。",
+      "links": [
+        "P5.1",
+        "P5.3",
+        "A2.3",
+        "de2.10",
+        "de1.5",
+        "H2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "三条公式对照与 P5 组内的位置",
+      "keywords": [
+        "sin²/cos²：只差振荡项符号",
+        "sinxcosx：凑微分最快",
+        "上游：P5.1 降幂/倍角",
+        "下游：P5.3 正交性、Fourier 系数",
+        "记忆法：直流 ½ + 倍频，整圈只留直流"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "单元级对照表，供前端渲染；结构行呼应 half-angle.intuition 的直流+倍频图像。",
+      "content": "三条公式对照：\n\n| 被积函数 | 原函数 | 直流 | 倍频项 | 最快路线 |\n|---|---|---|---|---|\n| $\\sin^2x$ | $\\tfrac x2-\\tfrac{\\sin2x}{4}+C$ | $\\tfrac12$ | $-\\tfrac{\\cos2x}{2}$ 积分而来 | 降幂 |\n| $\\cos^2x$ | $\\tfrac x2+\\tfrac{\\sin2x}{4}+C$ | $\\tfrac12$ | $+\\tfrac{\\cos2x}{2}$ 积分而来 | 降幂 |\n| $\\sin x\\cos x$ | $\\tfrac{\\sin^2x}{2}+C$ | $0$ | 纯倍频 $\\tfrac{\\sin2x}{2}$ | 凑微分（或倍角） |\n\n在 P5 组内的位置（依赖链一行）：P5.1 和角/倍角/降幂 → **本单元（把降幂结果积分掉）** → P5.3 正交性（打包成 $\\delta_{mn}$ 表）→ A2.3 Fourier 系数。\n\n记忆法：三条共用一个图像——「平方＝直流 $\\tfrac12$＋倍频」；定积分在 $\\pi$ 的整数倍区间上永远只剩「均值×区间长」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.4:half-angle.probe1",
+      "type": "probe",
+      "subject": "half-angle",
+      "title": "检验：四个定积分心算（含一个均值陷阱）",
+      "keywords": [
+        "∫_0^π sin²x dx = π/2",
+        "∫_0^{π/2} sinx cosx dx = 1/2",
+        "陷阱：∫_0^{2π} sin²x 与 ∫_0^{2π} cos²x 谁大",
+        "考察：均值×区间长 + +C 意识",
+        "答案数值带待核验"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 297,
+        "line_end": 299
+      },
+      "fill_hint": "【必】小目检验题；从 quantifiers 表「定积分优先用周期性」行与 misuse 行变问句，答案数值带核验表达式。",
+      "content": "用心算（「均值×区间长」）完成：\n\n1. $\\displaystyle\\int_0^{\\pi}\\sin^2x\\,dx=$ ？\n2. $\\displaystyle\\int_0^{\\pi/2}\\sin x\\cos x\\,dx=$ ？\n3. $\\displaystyle\\int_0^{2\\pi}\\sin^2x\\,dx$ 与 $\\displaystyle\\int_0^{2\\pi}\\cos^2x\\,dx$ 谁大？\n4. 顺带写出 $\\int\\sin^2x\\,dx$ 的完整原函数（几项？常数项是什么？）。\n\n（答案：第 1 问 $\\tfrac\\pi2$——均值 $\\tfrac12\\times$ 区间长 $\\pi$【已核验:1.57079632679|pi/2-sin(2*pi)/4】。第 2 问 $\\tfrac12$——$\\big[\\tfrac{\\sin^2x}{2}\\big]_0^{\\pi/2}=\\tfrac12$【已核验:0.5|sin(pi/2)**2/2-sin(0)**2/2】。第 3 问**相等**，都是 $\\pi$【已核验:3.14159265359|2*pi/2-sin(2*2*pi)/4】【已核验:3.14159265359|2*pi/2+sin(2*2*pi)/4】——两者均值同为 $\\tfrac12$。第 4 问 $\\tfrac x2-\\tfrac{\\sin2x}{4}+C$：两项＋积分常数 $C$，缺 $C$ 不算对。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

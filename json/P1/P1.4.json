@@ -1,0 +1,565 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P1.4",
+  "chapter": "P1",
+  "title": "常用技巧",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 72,
+    "line_end": 85,
+    "anchor": "notebook/P_computation.tex:72"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P1.4:split-cancel.statement",
+      "type": "statement",
+      "subject": "split-cancel",
+      "title": "裂项相消（公式 + 条件）",
+      "keywords": [
+        "1/(k(k+1))=1/k-1/(k+1) ⟹ ∑=n/(n+1)",
+        "更复杂的用待定系数拆成同类差",
+        "条件：真分式、分母可分解为线性因子",
+        "步长>1 时首尾各留 s 项（不是只剩两项）",
+        "n=10 验证：10/11≈0.9091"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "fill_hint": "切片裂项条目转写 + 步长 2 的推广（proof 词条承接）。",
+      "content": "**本体**（切片）：\n\n$$\\frac{1}{k(k+1)}=\\frac{1}{k}-\\frac{1}{k+1}\\quad\\Longrightarrow\\quad\\sum_{k=1}^n\\frac{1}{k(k+1)} = 1-\\frac{1}{n+1} = \\frac{n}{n+1}.$$\n\n**成立条件**：①真分式（分子次数低于分母）；②分母可分解为线性因子之积（更复杂的用**待定系数**拆成同类差，见 proof）；③相邻因子差为 $1$ 时\"只剩两项\"，步长 $s$ 时首尾各留 $s$ 项（见 proof 的 $\\frac{1}{k(k+2)}$ 例）。\n\n**代入验证**：$n=10$：$\\frac{10}{11}\\approx0.9091$【已核验:0.909090909091|sum(1/(k*(k+1)) for k in range(1,11))】，与闭式一致【已核验:0.909090909091|10/11】。这是 P1.1 差分法在分式上的形态：$\\frac{1}{k}$ 就是那个 $F$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1"
+      ]
+    },
+    {
+      "id": "P1.4:split-cancel.proof",
+      "type": "proof",
+      "subject": "split-cancel",
+      "title": "待定系数拆法（推导骨架）",
+      "keywords": [
+        "设 A/k+B/(k+1)，通分比对分子定系数",
+        "代点法：x=0 定 A、x=-1 定 B（P2.4 同款）",
+        "步长 2 例：1/(k(k+2))=½(1/k-1/(k+2))",
+        "步长 s ⟹ 首尾各留 s 项，别套'只剩两项'",
+        "n=10 验证：0.6629"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "fill_hint": "待定系数骨架 + 步长 2 的四项残差例（数值核验）。",
+      "content": "**待定系数骨架**：设 $\\frac{1}{k(k+1)}=\\frac{A}{k}+\\frac{B}{k+1}$，通分比对分子：$1=A(k+1)+Bk$。代点 $k=0$：$A=1$；代点 $k=-1$：$B=-1$（代点法与 P2.4 部分分式同源）。相消即得 $\\sum=\\frac{n}{n+1}$。\n\n**步长推广**（切片\"更复杂的用待定系数拆成同类差\"的展开）：$\\frac{1}{k(k+2)}=\\frac{1}{2}\\left(\\frac{1}{k}-\\frac{1}{k+2}\\right)$。求和时差分步长是 $2$：$\\frac{1}{k}$ 与 $\\frac{1}{k+2}$ 错两位才对上，中间隔项消不干净——**首尾各留两项**：\n\n$$\\sum_{k=1}^n\\frac{1}{k(k+2)} = \\frac{1}{2}\\left(1+\\frac{1}{2}-\\frac{1}{n+1}-\\frac{1}{n+2}\\right).$$\n\n数值：$n=10$：$\\frac{1}{2}\\left(\\frac{3}{2}-\\frac{1}{11}-\\frac{1}{12}\\right)\\approx0.6629$【已核验:0.662878787879|sum(1/(k*(k+2)) for k in range(1,11))】。\n\n**易错点**：步长 $>1$ 时误用\"只剩两项\"直觉：$\\frac{1}{2}(1-\\frac{1}{12})\\approx0.4583$【已核验:0.458333333333|0.5*(1-1/12)】——漏掉 $\\frac{1}{2}$ 与 $\\frac{1}{n+1}$ 两项，错出约 $31\\%$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.4",
+        "P1.1"
+      ]
+    },
+    {
+      "id": "P1.4:split-cancel.quantifiers",
+      "type": "comparison",
+      "subject": "split-cancel",
+      "title": "裂项适用条件表",
+      "keywords": [
+        "真分式条件：分子次数低于分母",
+        "分母必须可分解（x²+1 裂不开）",
+        "步长 s 留 2s……首尾各 s 项",
+        "系数解出后要回代验证"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "fill_hint": "条件表；'步长 s' 行与 proof 词条的四项残差数值互证。",
+      "content": "| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 真分式（分子次数 < 分母） | $\\frac{k}{k+1}$ 直接裂项：应先写成 $1-\\frac{1}{k+1}$ | 系数对不上 | 先多项式除法降次（P2.4 第 0 步） |\n| 分母可分解为线性因子 | $\\frac{1}{k^2+1}$：实数上不可分解 | 裂不开 | 走 $\\arctan$（P2.4 基本块） |\n| 相邻差分才\"只剩两项\" | $\\frac{1}{k(k+2)}$ 求和后留四项：$n=10$ 时正确值 $0.6629$【已核验:0.662878787879|sum(1/(k*(k+2)) for k in range(1,11))】，\"只剩两项\"直觉给 $0.4583$【已核验:0.458333333333|0.5*(1-1/12)】 | 漏项 | 步长 $s$ ⟹ 首尾各留 $s$ 项 |\n| 系数解要回代验证 | $A$ 符号算反：整体差一个负号（同 P2.4 的系数误用） | 结果变号 | 通分比对纪律（P2.4） |",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.4:split-cancel.probe1",
+      "type": "probe",
+      "subject": "split-cancel",
+      "title": "检验：裂项求和",
+      "keywords": [
+        "∑1/(k(k+1)) 到 n=9 与 n=100",
+        "n=9：9/10=0.9",
+        "n=100：100/101≈0.9901",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "fill_hint": "【必】小目检验题；答案数值已带核验标记。",
+      "content": "用裂项相消算 $\\sum_{k=1}^{9}\\frac{1}{k(k+1)}$；再用闭式（不必逐项）算 $\\sum_{k=1}^{100}\\frac{1}{k(k+1)}$。\n\n（答案：$\\frac{9}{10}=0.9$【已核验:0.9|sum(1/(k*(k+1)) for k in range(1,10))】；$\\frac{100}{101}\\approx0.9901$【已核验:0.990099009901|100/101】——差分法（P1.1）视角：$F(k)=\\frac{1}{k}$，$\\sum=\\frac{1}{1}-\\frac{1}{n+1}$。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.4:geometric-sum.statement",
+      "type": "statement",
+      "subject": "geometric-sum",
+      "title": "等比求和（公式 + 成立条件 q≠1）",
+      "keywords": [
+        "∑_{k=0}^{n-1} q^k=(1-q^n)/(1-q)，条件 q≠1",
+        "|q|<1 时无穷版=1/(1-q)",
+        "错位相减是标准证明（乘 q 错开一位）",
+        "验证：q=2,n=5 → 31；q=1/2 无穷 → 2",
+        "q^k 本身就是差分：q^k=(q^{k+1}-q^k)/(q-1)"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "fill_hint": "切片等比条目转写；推导两句内嵌（错位相减细节见 shift-subtract）。",
+      "content": "**本体**（切片）：\n\n$$\\sum_{k=0}^{n-1} q^k = \\frac{1-q^n}{1-q}\\ (q\\ne1);\\qquad |q|<1\\ \\text{时无穷版}\\ \\sum_{k=0}^{\\infty} q^k = \\frac{1}{1-q}.$$\n\n**成立条件**：①$q\\ne1$（$q=1$ 时和为 $n$，公式分母为零，见 misuse）；②无穷版额外要求 $|q|<1$（否则部分和不收敛）。\n\n**推导**（错位相减，见 shift-subtract）：$S=1+q+\\cdots+q^{n-1}$，两边乘 $q$ 错开一位，相减得 $(1-q)S=1-q^n$。差分法视角：$q^k=\\frac{q^{k+1}-q^k}{q-1}$——$F(k)=\\frac{q^k}{q-1}$ 就是原函数（P1.1 又一次统一）。\n\n**代入验证**：$q=2$、$n=5$：$\\frac{1-32}{-1}=31=1+2+4+8+16$【已核验:31|(1-2**5)/(1-2)】【已核验:31|sum(2**k for k in range(5))】；$q=\\frac12$ 无穷版：$\\frac{1}{1-1/2}=2$【已核验:2|1/(1-0.5)】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1"
+      ]
+    },
+    {
+      "id": "P1.4:geometric-sum.misuse",
+      "type": "counterexample",
+      "subject": "geometric-sum",
+      "title": "典型误用：q=1 忘条件 & 无穷版忘 |q|<1",
+      "keywords": [
+        "q=1、n=5：公式给 0/0 无意义，真实和=5",
+        "q=2 无穷版：公式给 -1，部分和 1,3,7,… 递增",
+        "正项加出负数 = 显然荒谬的信号",
+        "q→1 极限给 n，但 q=1 点要单独处理"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "fill_hint": "两类误用各算出具体错误值（0/0、-1 vs 1023）；修补条件写明。",
+      "content": "**误用一（有限版忘 $q\\ne1$）**：$q=1$、$n=5$：公式给 $\\frac{1-1^5}{1-1}=\\frac{0}{0}$ 无意义；真实和 $=5$【已核验:5|sum(1 for k in range(5))】。取极限 $q\\to1$ 时 $\\frac{1-q^n}{1-q}\\to n$（洛必达/P4.3 的 $\\frac{0}{0}$ 型），但 $q=1$ 这一点必须单独处理——公式本身在除零处无定义。\n\n**误用二（无穷版忘 $|q|<1$）**：$q=2$：公式给 $\\frac{1}{1-2}=-1$【已核验:-1|1/(1-2)】，而部分和 $1,3,7,15,\\dots$ 严格递增（$n=10$ 时已 $1023$【已核验:1023|sum(2**k for k in range(10))】）——**正项加出负数**是当场可见的荒谬信号。\n\n**修补**：用无穷版前先验证 $|q|<1$。这个条件是\"几何衰减 ⟹ 可求和\"的第一课，在级数收敛（R3 幂级数收敛半径）、渲染方程 Neumann 展开（H2）里反复以同构形态出现。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "R3",
+        "H2"
+      ]
+    },
+    {
+      "id": "P1.4:geometric-sum.application",
+      "type": "application",
+      "subject": "geometric-sum",
+      "title": "等比级数的下游",
+      "keywords": [
+        "R3 幂级数：收敛半径的统治逻辑",
+        "H2 渲染方程 Neumann 级数 ∑T^n",
+        "de2.10 分离变量后模态按 e^(-λt) 几何衰减",
+        "P5.2 Euler 公式与几何级数接头",
+        "凡'迭代衰减固定因子'场景都回到它"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "fill_hint": "跨章落点各一句；links 按全库代号。",
+      "content": "等比级数是\"收敛\"的原型：R3 幂级数的收敛半径由同一 $|q|<1$ 逻辑统治；H2 渲染方程的 Neumann 级数 $\\sum_{k\\ge0}T^k$（多次弹射的贡献）收敛 ⟺ 算子范数衰减因子 $<1$；de2.10 分离变量后每个模态的时间衰减 $e^{-\\lambda_k t}$ 在等步长采样下就是几何序列；P5.2 的 Euler 公式把 $e^{ix}$ 展开后与几何级数接头。凡\"每次迭代衰减一个固定因子\"的场景——弹射、阻尼、迭代算法——都回到这条公式。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "R3",
+        "H2",
+        "de2.10",
+        "P5.2"
+      ]
+    },
+    {
+      "id": "P1.4:geometric-sum.probe1",
+      "type": "probe",
+      "subject": "geometric-sum",
+      "title": "检验：等比求和（含 q=1 边界）",
+      "keywords": [
+        "q=3、n=5：(1-3⁵)/(1-3)=121",
+        "q=1、n=5：公式除零失效，真实和=5",
+        "q=1/3 无穷版：3/2",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "fill_hint": "【必】小目检验题，含 q=1 边界；答案数值已带核验标记。",
+      "content": "①用公式算 $\\sum_{k=0}^{4} 3^k$；②说明 $q=1$、$n=5$ 时公式为什么失效、真实和是多少；③算 $\\sum_{k=0}^{\\infty}\\left(\\frac13\\right)^k$。\n\n（答案：①$\\frac{1-3^5}{1-3}=\\frac{-242}{-2}=121$【已核验:121|(1-3**5)/(1-3)】，与逐项直加一致【已核验:121|sum(3**k for k in range(5))】；②分母 $1-q=0$（除零），真实和 $=5$【已核验:5|sum(1 for k in range(5))】；③$\\frac{1}{1-1/3}=\\frac32=1.5$【已核验:1.5|1/(1-1/3)】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.4:shift-subtract.statement",
+      "type": "statement",
+      "subject": "shift-subtract",
+      "title": "错位相减：等差 × 等比",
+      "keywords": [
+        "求 ∑k·q^k：写 S、乘 q 错位相减，化归等比",
+        "S=q(1-q^n)/(1-q)² - n·q^{n+1}/(1-q)",
+        "无穷版 ∑k·q^k=q/(1-q)²（|q|<1）",
+        "条件 q≠1；q=1 时退化为 ∑k（P1.2）",
+        "验证：q=1/2 无穷版=2，n=5 部分和 1.78125"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 78,
+        "line_end": 78
+      },
+      "fill_hint": "切片错位相减条目完整化（含闭式与无穷版，切片只给方法名）；数值验证。",
+      "content": "**本体**（切片：等差 × 等比，如 $\\sum k q^k$——写 $S$，乘 $q$ 错位相减，化归等比）：\n\n$$S=\\sum_{k=1}^n k q^k,\\qquad qS=\\sum_{k=1}^n k q^{k+1}.$$\n\n两式错一位相减（$S$ 的第 $k$ 项对上 $qS$ 的第 $k-1$ 项）：\n\n$$S-qS = (q+q^2+\\cdots+q^n) - n q^{n+1}\\quad\\Longrightarrow\\quad S=\\frac{q(1-q^n)}{(1-q)^2}-\\frac{n q^{n+1}}{1-q}.$$\n\n$|q|<1$ 时令 $n\\to\\infty$：$\\sum_{k=1}^{\\infty} k q^k = \\frac{q}{(1-q)^2}$（差分加权版：$\\frac{q}{1-q}$ 是\"平均每项\"，再除 $\\frac{1}{1-q}$ 次……直观读法：期望 $=\\frac{1}{1-q}$ 项几何分布求和）。\n\n**成立条件**：$q\\ne1$（$q=1$ 时就是 $\\sum k=\\frac{n(n+1)}{2}$，P1.2）；无穷版要求 $|q|<1$（自动保证 $n q^{n+1}\\to0$）。\n\n**代入验证**：$q=\\frac12$ 无穷版：$\\frac{1/2}{(1/2)^2}=2$【已核验:2|sum(k*0.5**k for k in range(1,200))】；有限 $n=5$ 部分和 $=1.78125$【已核验:1.78125|sum(k*0.5**k for k in range(1,6))】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.2"
+      ]
+    },
+    {
+      "id": "P1.4:shift-subtract.probe1",
+      "type": "probe",
+      "subject": "shift-subtract",
+      "title": "检验：错位相减（逐项直加对拍）",
+      "keywords": [
+        "∑_{k=1}^4 k·3^k",
+        "直加：3+18+81+324=426",
+        "公式：3(1-81)/4 + 4·243/2 = 426",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 78,
+        "line_end": 78
+      },
+      "fill_hint": "错位相减检验题；答案用直加与公式双份核对。",
+      "content": "用错位相减求 $\\sum_{k=1}^{4} k\\cdot 3^k$，并逐项直加验证。\n\n（答案：直加 $1\\cdot3+2\\cdot9+3\\cdot27+4\\cdot81=3+18+81+324=426$【已核验:426|sum(k*3**k for k in range(1,5))】；公式 $S=\\frac{3(1-3^4)}{(1-3)^2}-\\frac{4\\cdot3^5}{1-3}=-60+486=426$【已核验:426|3*(1-3**4)/(1-3)**2-4*3**5/(1-3)】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.4:binomial.statement",
+      "type": "statement",
+      "subject": "binomial",
+      "title": "二项式定理（公式 + 计数含义）",
+      "keywords": [
+        "(1+x)^n=∑C(n,k)x^k（n 非负整数）",
+        "计数：n 个小括号各挑 x 或 1",
+        "推论（x=1）：∑C(n,k)=2^n",
+        "n=10 验证：系数和 1024、C(10,3)=120",
+        "P2.1 的 n=2,3 特例推广"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 79,
+        "line_end": 80
+      },
+      "fill_hint": "切片二项式条目转写 + 计数解释 + 两组代入值。",
+      "content": "**本体**（切片）：$(1+x)^n=\\sum_k\\binom{n}{k}x^k$（$n$ 非负整数；一般形式 $(a+b)^n$ 平移即得——P2.1 的 $n=2,3$ 公式正是它的特例）。\n\n**计数解释**（切片原话）：$n$ 个小括号各挑 $x$ 或 $1$——$x^k$ 项的系数是\"从 $n$ 个括号里选 $k$ 个挑 $x$\"的方式数 $\\binom{n}{k}$。\n\n**推论**（$x=1$，切片）：$\\sum_k\\binom{n}{k}=2^n$——每个括号独立二选一，共 $2^n$ 种。验证：$n=10$：$1024$【已核验:1024|2**10】，与逐项系数和一致【已核验:1024|sum(factorial(10)/(factorial(k)*factorial(10-k)) for k in range(11))】。\n\n**代入验证**：$\\binom{10}{3}=\\frac{10!}{3!\\,7!}=120$【已核验:120|factorial(10)/(factorial(3)*factorial(7))】；$(1+1)^{10}=2^{10}=1024$ ✓。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1"
+      ]
+    },
+    {
+      "id": "P1.4:binomial-sum.extension",
+      "type": "extension",
+      "subject": "binomial-sum",
+      "title": "组合和技巧：k·C(n,k)=n·C(n-1,k-1)（先挑队长）",
+      "keywords": [
+        "计数：'选 k 人并指定队长'两种数法",
+        "∑k·C(n,k)=n·2^{n-1}",
+        "n=10 验证：5120",
+        "二项分布期望 E[X]=np 的组合来源"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 81,
+        "line_end": 81
+      },
+      "fill_hint": "切片组合和条目展开；数值验证 + 概率落点。",
+      "content": "**计数论证**（切片原话：先挑一个当队长）：左边 $k\\binom{n}{k}$ 数\"从 $n$ 人选 $k$ 人**并指定队长**\"的方案；右边 $n\\binom{n-1}{k-1}$ 数\"先挑队长（$n$ 种）、再从剩下 $n-1$ 人选其余 $k-1$ 人\"。两边同数，故\n\n$$k\\binom{n}{k}=n\\binom{n-1}{k-1}.$$\n\n**求和推论**：$\\sum_{k=1}^n k\\binom{n}{k} = n\\sum_{k=1}^n\\binom{n-1}{k-1} = n\\cdot 2^{n-1}$。验证：$n=10$：$10\\times512=5120$【已核验:5120|sum(k*factorial(10)/(factorial(k)*factorial(10-k)) for k in range(1,11))】【已核验:5120|10*2**9】。\n\n这是二项分布期望 $E[X]=np$（$p=\\frac12$ 时 $=\\frac n2$）的组合来源——概率（C2）与计数在这里接头。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "C2",
+        "P1.4"
+      ]
+    },
+    {
+      "id": "P1.4:binomial.probe1",
+      "type": "probe",
+      "subject": "binomial",
+      "title": "检验：二项式展开与组合和",
+      "keywords": [
+        "C(10,3)=120",
+        "∑C(10,k)=1024",
+        "∑k·C(10,k)=5120（队长计数）",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 79,
+        "line_end": 81
+      },
+      "fill_hint": "【必】小目检验题；三问覆盖定理、推论、组合和。",
+      "content": "①$(1+x)^{10}$ 展开中 $x^3$ 的系数是多少？②$\\sum_{k=0}^{10}\\binom{10}{k}$ 是多少？③用队长计数求 $\\sum_{k=1}^{10} k\\binom{10}{k}$。\n\n（答案：①$120$【已核验:120|factorial(10)/(factorial(3)*factorial(7))】；②$1024$【已核验:1024|2**10】；③$10\\cdot2^{9}=5120$【已核验:5120|10*2**9】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.4:sum-int.statement",
+      "type": "statement",
+      "subject": "sum-int",
+      "title": "∑ ↔ ∫（黎曼和 + 积分放缩界）",
+      "keywords": [
+        "(1/n)∑f(k/n)→∫₀¹f（黎曼和）",
+        "f 递减非负：∫₁^{n+1}f ≤ ∑f(k) ≤ f(1)+∫₁^n f",
+        "验证：H₁₀=2.929 夹在 ln11=2.398 与 1+ln10=3.303 之间",
+        "f=x² 黎曼和：n=10 时 0.385→1/3",
+        "条件：①可积 ②递减非负（放缩方向）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 82,
+        "line_end": 84
+      },
+      "fill_hint": "切片两条转写 + 各一组验证数值。",
+      "content": "**本体**（切片两条）：\n\n① **离散趋连续**（黎曼和）：$\\frac1n\\sum_k f\\!\\left(\\frac kn\\right)\\to\\int_0^1 f$（$n\\to\\infty$）。\n\n② **反向用于估计**（积分放缩界）：$f$ 递减非负时\n\n$$\\int_1^{n+1}f\\le\\sum_{k=1}^n f(k)\\le f(1)+\\int_1^n f.$$\n\n**成立条件**：①$f$ 黎曼可积（A1.1）；②$f$ **递减非负**（放缩方向依赖递减；递增时两个不等号反向）。\n\n**代入验证**：①$f=x^2$：$n=10$：$\\frac{1}{10}\\sum_{k=1}^{10}\\left(\\frac{k}{10}\\right)^2=0.385\\to\\frac13$【已核验:0.385|sum((k/10)**2 for k in range(1,11))/10】；②$f(x)=\\frac1x$：$H_{10}=2.9290$【已核验:2.92896825397|sum(1/k for k in range(1,11))】，夹在 $\\ln 11=2.3979$【已核验:2.3978952728|log(11)】与 $1+\\ln 10=3.3026$【已核验:3.30258509299|1+log(10)】之间 ✓。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A1.1"
+      ]
+    },
+    {
+      "id": "P1.4:sum-int.proof",
+      "type": "proof",
+      "subject": "sum-int",
+      "title": "放缩界推导（分步 + 图像）",
+      "keywords": [
+        "区间 [k,k+1] 上 f(k+1)≤f(x)≤f(k)（递减）",
+        "积分后对 k 求和，两端各给一个界",
+        "图像：柱状图夹在曲线与阶梯之间",
+        "H₁₀ 数值夹逼验证"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 82,
+        "line_end": 84
+      },
+      "fill_hint": "放缩界的完整推导；数值例（调和数）核验。",
+      "content": "分步（$f$ 递减非负）：\n\n1. 在区间 $[k,k+1]$ 上，递减性给 $f(k+1)\\le f(x)\\le f(k)$，积分得 $f(k+1)\\le\\int_k^{k+1}f\\le f(k)$。\n2. **下界**：$\\int_k^{k+1}f\\le f(k)$ 对 $k=1,\\dots,n$ 相加：$\\int_1^{n+1}f\\le\\sum_{k=1}^n f(k)$。\n3. **上界**：把 $f(k)\\le\\int_{k-1}^{k}f$ 用在 $k\\ge2$ 上、$f(1)$ 单独保留：$\\sum_{k=1}^n f(k)\\le f(1)+\\int_1^n f$。\n\n**图像**：柱状图（每柱高 $f(k)$）夹在\"曲线整体\"与\"曲线左移一格\"之间——上界 = 第一根柱子 + 曲线下面积，下界 = 曲线下面积。\n\n**数值例**（$f=\\frac1x$，$n=10$）：$\\ln 11=2.3979$【已核验:2.3978952728|log(11)】$\\le H_{10}=2.9290$【已核验:2.92896825397|sum(1/k for k in range(1,11))】$\\le 1+\\ln 10=3.3026$【已核验:3.30258509299|1+log(10)】✓——这就是 $H_n=\\ln n+O(1)$（欧拉常数）的来源。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P4.2",
+        "P9.3"
+      ]
+    },
+    {
+      "id": "P1.4:sum-int.probe1",
+      "type": "probe",
+      "subject": "sum-int",
+      "title": "检验：黎曼和逼近（含偏差方向）",
+      "keywords": [
+        "n=4 右端点黎曼和估计 ∫₀¹x²dx",
+        "值：30/64=0.46875（高估）",
+        "右端点+递增 ⟹ 高估",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 82,
+        "line_end": 84
+      },
+      "fill_hint": "从条件表'递减'行变问句（递增方向）；答案数值已带核验标记。",
+      "content": "用 $n=4$ 的右端点黎曼和 $\\frac14\\sum_{k=1}^4\\left(\\frac{k}{4}\\right)^2$ 估计 $\\int_0^1 x^2\\,dx=\\frac13$，并说明偏差来自哪一侧、为什么。\n\n（答案：$\\frac14\\times\\left(\\frac{1}{16}+\\frac{4}{16}+\\frac{9}{16}+\\frac{16}{16}\\right)=\\frac{30}{64}=0.46875$【已核验:0.46875|sum((k/4)**2 for k in range(1,5))/4】，高估约 $40.6\\%$【已核验:0.40625|0.46875/(1/3)-1】——右端点采样 + $x^2$ 递增 ⟹ 每根柱子都盖过曲线。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "六技巧选择判据表",
+      "keywords": [
+        "幂和→差分法；分式→裂项；q^k→等比",
+        "等差×等比→错位相减；组合数→二项式+队长",
+        "单调函数量级→∑↔∫ 放缩",
+        "通用兜底：能找到 F 就回 P1.1"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 72,
+        "line_end": 85
+      },
+      "fill_hint": "整单元六技巧对照表（选择判据）。",
+      "content": "| 被求和对象 | 用哪个 | 关键条件 |\n|---|---|---|\n| 多项式 $k^m$ | 差分法/升阶（P1.1–P1.3） | $m$ 非负整数 |\n| $\\frac{1}{k(k+c)}$ 型分式 | 裂项相消 | 真分式、可分解；步长 $s$ 留 $2s$ 项 |\n| $q^k$ | 等比公式 | $q\\ne1$；无穷版 $|q|<1$ |\n| $k q^k$（等差×等比） | 错位相减 | 同上 |\n| $\\binom{n}{k}$、$k\\binom{n}{k}$ | 二项式定理 + 队长计数 | $n$ 非负整数 |\n| 单调 $f(k)$ 的量级 | $\\sum\\leftrightarrow\\int$ 放缩 | 递减非负 |\n\n通用兜底：只要能找到差分原函数 $F$，一切回到 P1.1；上表是\"常见 $f$ 的 $F$ 速查\"。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P1.4 的服务对象",
+      "keywords": [
+        "等比/错位相减 → 级数收敛（R3、de2.10）、Neumann 展开（H2）",
+        "二项式/组合和 → 概率（C2）",
+        "∑↔∫ → 积分定义（A1.1）、数值积分（P7.4）、极限（P4.2）",
+        "裂项 → 部分分式（P2.4）的前置手感"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 72,
+        "line_end": 85
+      },
+      "fill_hint": "单元级下游一览。",
+      "content": "本小目是工具杂烩层：等比与错位相减服务级数收敛理论（R3、de2.10 分离变量的模态衰减）与渲染方程 Neumann 展开（H2）；二项式与组合和服务概率分布（C2 二项分布的矩）；$\\sum\\leftrightarrow\\int$ 服务黎曼积分定义（A1.1）、数值积分（P7.4）与极限计算（P4.2）；裂项相消是 P2.4 部分分式的离散前置。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "R3",
+        "de2.10",
+        "H2",
+        "C2",
+        "A1.1",
+        "P7.4",
+        "P4.2",
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P1.4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：黎曼和收敛 + 调和数夹逼（大 n 对拍）",
+      "keywords": [
+        "(1/n)∑f(k/n)→∫：n=4 高估 0.46875 → n=256 时 0.3352",
+        "调和数被 ln 夹逼且误差 → 常数",
+        "Q1–Q3（长时程累加 + 对拍）⟹ 档2 后端",
+        "f 切换 x² 与 1/x"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 82,
+        "line_end": 84
+      },
+      "fill_hint": "档2 留空待接；两个叙事共用后端批量计算。",
+      "content": "两条叙事：\n\n1. **黎曼和收敛**：柱状图贴曲线——$f=x^2$ 右端点和从 $n=4$ 的 $0.46875$ 降到 $n=256$ 的 $0.3352$【已核验:0.335289001465|sum((k/256)**2 for k in range(1,257))/256】，滑向 $\\frac13\\approx0.3333$。\n2. **夹逼动态**：$f=1/x$ 的柱状和（$H_n$）被 $\\ln(n+1)$ 与 $1+\\ln n$ 两条曲线夹住，间隙收敛到欧拉常数附近——\"夹逼\"从静止不等式变成动画。\n\n判据 Q1–Q3（长时程逐项累加、需与闭式对拍）：走后端批量计算。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "黎曼和收敛与调和数夹逼都需要大 n（数百到数千）逐项累加并与闭式对拍，前端逐帧算力不够，走后端批量返回。",
+        "params_hint": {
+          "f": [
+            "x^2",
+            "1/x"
+          ],
+          "n": [
+            4,
+            16,
+            64,
+            256
+          ],
+          "show": [
+            "bars",
+            "squeeze-bounds"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,330 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P2.3",
+  "chapter": "P2",
+  "title": "因式分解与多项式（【熟】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 116,
+    "line_end": 122,
+    "anchor": "notebook/P_computation.tex:116"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P2.3:vieta.statement",
+      "type": "statement",
+      "subject": "vieta",
+      "title": "韦达定理（公式 + 条件）",
+      "keywords": [
+        "x₁+x₂=-b/a，x₁x₂=c/a（a≠0）",
+        "来源：比较系数 a(x-x₁)(x-x₂) 的展开",
+        "条件：a≠0；Δ≥0 才有实根对（复数上恒成立）",
+        "重根按重数计（(x-3)² 的'两根'都是 3）",
+        "验证：x²-5x+6 根 2,3——和 5、积 6"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 119,
+        "line_end": 119
+      },
+      "fill_hint": "切片韦达条目转写 + 比较系数来源 + 代入验证。",
+      "content": "**本体**（切片，二次）：$ax^2+bx+c=0$（$a\\ne0$）的两根 $x_1,x_2$ 满足\n\n$$x_1+x_2=-\\frac ba,\\qquad x_1x_2=\\frac ca.$$\n\n**来源**（比较系数）：$ax^2+bx+c=a(x-x_1)(x-x_2)=a\\left(x^2-(x_1+x_2)x+x_1x_2\\right)$（P2.1 平方差展开的同族操作）——一次项系数是根之和的**负** $a$ 倍，常数项是根之积的 $a$ 倍。\n\n**成立条件**：$a\\ne0$；实数语境下要有实根对（$\\Delta\\ge0$），$\\Delta<0$ 时定理在**复数**上仍成立；重根按重数计。\n\n**代入验证**：$x^2-5x+6=0$ 的根是 $2,3$（两因子都为零，积为零【已核验:0|(2**2-5*2+6)*(3**2-5*3+6)】）；$x_1+x_2=5=-\\frac{-5}{1}$ ✓、$x_1x_2=6=\\frac{6}{1}$ ✓。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1",
+        "P2.2"
+      ]
+    },
+    {
+      "id": "P2.3:vieta.proof",
+      "type": "proof",
+      "subject": "vieta",
+      "title": "推导骨架（比较系数）+ n 次推广",
+      "keywords": [
+        "若 ax²+bx+c 有根 x₁,x₂，则与 a(x-x₁)(x-x₂) 同首项同零点",
+        "展开比对：一次项 -a(x₁+x₂)=b，常数 ax₁x₂=c",
+        "n 次版：∑xᵢ=-a_{n-1}/a_n，∏xᵢ=(-1)ⁿa₀/a_n",
+        "易错点：一次项带负号（误用高发点）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 119,
+        "line_end": 119
+      },
+      "fill_hint": "二次完整推导 + n 次推广（切片标【熟】）一句带过机制。",
+      "content": "**二次推导**（比较系数，分步）：\n\n1. 若 $ax^2+bx+c$ 有根 $x_1,x_2$，则它与 $a(x-x_1)(x-x_2)$ 同首项系数、同零点集（带重数）⟹ 相差常数因子，而首项已同为 $a$ ⟹ 相等。\n2. 展开：$a(x-x_1)(x-x_2)=a\\left(x^2-(x_1+x_2)x+x_1x_2\\right)$（交叉项 $-x_1x_2-x_2x_1$ 合并——P2.1 的合并操作）。\n3. 比对：一次项 $-a(x_1+x_2)=b$、常数 $ax_1x_2=c$；移项即得韦达两式。\n\n**$n$ 次推广**（切片标【熟】）：$\\sum_i x_i=-\\frac{a_{n-1}}{a_n}$、$\\prod_i x_i=(-1)^n\\frac{a_0}{a_n}$——机制完全相同（展开 $(x-x_1)\\cdots(x-x_n)$ 比较系数），奇偶符号来自\"取 $k$ 个 $-x_i$\"的组合符号。\n\n**易错点**：**负号**——一次项系数带 $-$（见 misuse）；$n$ 次版奇偶符号。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.3:vieta.quantifiers",
+      "type": "comparison",
+      "subject": "vieta",
+      "title": "适用条件表",
+      "keywords": [
+        "a≠0：a=0 只一根，公式除零",
+        "实根对需要 Δ≥0；复数上恒成立",
+        "重根按重数计：(x-3)² 的两根都是 3",
+        "先首一化：忘除 a 则全错（2x²-10x+12 例）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 119,
+        "line_end": 119
+      },
+      "fill_hint": "条件四行，各配具体例子。",
+      "content": "| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $a\\ne0$ | $a=0$：$bx+c=0$ 只一根 | 公式除零 | 退化为一次式 |\n| 实根对要求 $\\Delta\\ge0$ | $x^2+x+1$：$\\Delta=-3$ 无实根，但复根 $\\omega,\\omega^2$ 满足和 $=-1$、积 $=1$ | 实数语境硬谈两根 | 可放宽到复数（R1） |\n| 重根按重数计 | $x^2-6x+9=(x-3)^2$：\"两根\"都是 $3$：和 $6$ ✓ 积 $9$ ✓ | 漏根导致对称式算错 | — |\n| 只对**首一化后**的系数用 | $2x^2-10x+12=0$（根 $2,3$）：硬写和 $=-10$、积 $=12$ | 全错 | 先除 $a$：和 $=5$、积 $=6$ |",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.3:vieta.misuse",
+      "type": "counterexample",
+      "subject": "vieta",
+      "title": "典型误用：韦达符号（差一个负号）",
+      "keywords": [
+        "x²+5x+6 根是 -2,-3：真实和 -5，误用给 +5",
+        "第二误用：忘除首项 a（-10/12 vs 5/6）",
+        "修补：单根回代（根代回方程应为零）",
+        "或代入 a(x-x₁)(x-x₂) 展开比对一次项"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 119,
+        "line_end": 119
+      },
+      "fill_hint": "两类误用各算出具体错误值；修补是单根回代。",
+      "content": "**误用一（丢负号）**：$x^2+5x+6=0$ 的根是 $-2,-3$（两因子为零，积为零【已核验:0|((-2)**2+5*(-2)+6)*((-3)**2+5*(-3)+6)】）。正确韦达：$x_1+x_2=-\\frac{5}{1}=-5$，与 $-2+(-3)=-5$ 一致【已核验:-5|-2+(-3)】；误用 $x_1+x_2=\\frac{b}{a}$ 给 $+5$——**差一个负号**。\n\n**误用二（忘除首项）**：$2x^2-10x+12=0$（根 $2,3$）：正确 $x_1+x_2=-\\frac{-10}{2}=5$、$x_1x_2=\\frac{12}{2}=6$；直接抄系数给 $-10$ 与 $12$——全错。\n\n**修补**：①**单根回代**——把求出的根代回原方程（应得零，见上标记）；②展开 $a(x-x_1)(x-x_2)$ 比对一次项系数（正负号当场显形）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.3:vieta.application",
+      "type": "application",
+      "subject": "vieta",
+      "title": "韦达的服务对象（不解方程求对称式）",
+      "keywords": [
+        "x₁²+x₂²=(x₁+x₂)²-2x₁x₂（对称式转换+韦达）",
+        "例：x²-5x+6 → 25-12=13=4+9",
+        "特征多项式：特征值之和=迹、之积=行列式",
+        "矩阵 [[2,1],[1,2]]：特征值 1,3，迹 4、det 3",
+        "P2.4 部分分式：分母的根=分式的极点"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 119,
+        "line_end": 120
+      },
+      "fill_hint": "典型用法 + 跨章落点（特征值、部分分式极点）各带数值。",
+      "content": "**典型用法（不解方程求对称式）**：$x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2$（对称式转换，见 symmetric-identities）+ 韦达。例：$x^2-5x+6$：$5^2-2\\times6=13$，与 $2^2+3^2=13$ 一致【已核验:13|2**2+3**2】【已核验:13|25-2*6】。\n\n**跨章落点**：\n\n- **特征多项式**（P6.3、P6.1）：$\\lambda^2-(\\mathrm{tr}A)\\lambda+\\det A=0$——**特征值之和 = 迹、特征值之积 = 行列式**。例：$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$：特征方程 $(2-\\lambda)^2-1=0$ 给 $\\lambda=1,3$（$\\lambda=1$：$\\det\\begin{pmatrix}1&1\\\\1&1\\end{pmatrix}=1-1=0$【已核验:0|1*1-1*1】；$\\lambda=3$：$(-1)(-1)-1=0$【已核验:0|(-1)*(-1)-1*1】），和 $4=$ 迹【已核验:4|2+2】、积 $3=$ 行列式【已核验:3|2*2-1*1】✓。\n- **部分分式**（P2.4）：分母的根就是分式的极点——韦达先读出\"根的和与积\"可以校验分解。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.3",
+        "P6.1",
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P2.3:symmetric-identities.extension",
+      "type": "extension",
+      "subject": "symmetric-identities",
+      "title": "对称式与轮换式转换（切片给的唯一一条）",
+      "keywords": [
+        "a²+b²+c²=(a+b+c)²-2(ab+bc+ca)",
+        "用法：把'平方和'降到'和+两两积'（韦达可控）",
+        "验证 (1,2,3)：14=36-2×11",
+        "二次版同族：x₁²+x₂²=(和)²-2×积",
+        "一般理论（牛顿恒等式）超出切片，路标"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 120,
+        "line_end": 120
+      },
+      "fill_hint": "切片唯一给的转换展开 + 用法说明；牛顿恒等式只立牌子。",
+      "content": "**切片给的转换**：$a^2+b^2+c^2=(a+b+c)^2-2(ab+bc+ca)$（P2.1 三项平方公式移项即得——对称式的\"降级\"操作）。\n\n**代入验证**：$a,b,c=1,2,3$：左边 $=1+4+9=14$【已核验:14|1+4+9】，右边 $=36-2\\times(2+6+3)=36-22=14$【已核验:14|(1+2+3)**2-2*(2+6+3)】✓。\n\n**用法**：把\"平方和\"（韦达摸不到）降到\"和 + 两两积\"（韦达直接可控）——对称式在对称群下不变 ⟹ 原则上都能用初级对称多项式表达（一般理论是牛顿恒等式，超出切片，只立路标）。二次同族：$x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2$（vieta.application 的算例用的正是它）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1",
+        "P2.2"
+      ]
+    },
+    {
+      "id": "P2.3:factoring.statement",
+      "type": "statement",
+      "subject": "factoring",
+      "title": "因式分解工具箱（条件即'何时用哪个'）",
+      "keywords": [
+        "十字相乘：凑 p+q=b、pq=c（本质韦达试根）",
+        "分组分解：四项拆两组提公因",
+        "试根法：有理根定理（候选=常数项因子）",
+        "长除/综合除法：已知一根后降次",
+        "示范：x³-2x²-x+2=(x-1)(x-2)(x+1)"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 118,
+        "line_end": 118
+      },
+      "fill_hint": "切片工具箱条目转写 + 完整示范（试根→降次→三根）。",
+      "content": "**工具清单**（切片）：十字相乘（二次、整系数——凑出两数之积与和，本质是韦达试根）；分组分解（四项拆两组提公因）；试根法（**有理根定理**：首一整系数多项式的有理根必是常数项的整数因子）；多项式长除／综合除法（已知一根后降次）。\n\n**完整示范**：$x^3-2x^2-x+2$：\n\n1. 试根 $x=1$：$1-2-1+2=0$ ✓【已核验:0|1-2-1+2】——$1$ 是根（候选 $\\pm1,\\pm2$ 里第一个就命中）。\n2. 除以 $(x-1)$ 降次得 $x^2-x-2=(x-2)(x+1)$（十字相乘：凑 $p+q=-1$、$pq=-2$）。\n3. 全分解 $(x-1)(x-2)(x+1)$，三根 $1,2,-1$。**韦达核对**（三次版）：和 $=2=-a_2$ ✓（$a_2=-2$）；积 $=-2=-a_0$ ✓（$a_0=2$）；验证 $x=-1$：$-1-2+1+2=0$【已核验:0|-1-2+1+2】。\n\n**成立条件**：有理根定理只保证\"有理根必在候选里\"，不保证存在；$\\Delta<0$ 的二次在实数上不可约——转到 P2.4 当\"二次不可约块\"处理。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1",
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P2.3:vieta.probe1",
+      "type": "probe",
+      "subject": "vieta",
+      "title": "检验：韦达 + 对称式",
+      "keywords": [
+        "x²-7x+12=0：和 7、积 12、平方和 25",
+        "根为 3,4：3+4=7、3×4=12、9+16=25",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 119,
+        "line_end": 119
+      },
+      "fill_hint": "检验题（P2.3 标【熟】，仍配一道）；答案数值已带核验标记。",
+      "content": "不解方程，用韦达定理求 $x^2-7x+12=0$ 两根的和、积与平方和；再用求根公式验证。\n\n（答案：和 $7$、积 $12$、平方和 $7^2-2\\times12=49-24=25$；根为 $3,4$：$3+4=7$【已核验:0|3+4-7】、$3\\times4=12$【已核验:0|3*4-12】、$9+16=25$【已核验:0|3**2+4**2-(7**2-2*3*4)】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "与 P2.1 的分工（正向展开 vs 逆向分解）",
+      "keywords": [
+        "同一恒等式两个方向两套手感",
+        "平方差：速算 ↔ 分解；三项平方：展开 ↔ 十字相乘",
+        "立方和差：展开 ↔ 逆向分解",
+        "分解是'猜+验证'（试根给候选），展开是机械操作"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 116,
+        "line_end": 122
+      },
+      "fill_hint": "整单元对照表（P2.1 的逆向视角）。",
+      "content": "P2.1（乘法公式）正向把积展成和差；P2.3 逆向把和差收成积——同一批恒等式，两个方向两套手感：\n\n| 结构 | 正向（P2.1） | 逆向（P2.3） |\n|---|---|---|\n| $a^2-b^2$ | 速算 $(a+b)(a-b)$ | 平方差分解 |\n| 三项平方 | 展开交叉项 | 十字相乘（凑 $p+q=b$、$pq=c$） |\n| $a^3\\pm b^3$ | 展开 | 立方和差分解 |\n| 一般多项式 | 查表 | 试根（有理根定理给候选）→ 长除降次 |\n\n逆向难于正向：分解是\"猜 + 验证\"（试根法把无穷猜测收窄成有限候选表），展开是机械操作——这也是 P2.3 排在 P2.1 之后讲的原因。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P2.3 的服务对象",
+      "keywords": [
+        "P2.4 部分分式的前置工序（分母必须先分解干净）",
+        "韦达 → P6.1 行列式 / P6.3 特征值（迹与行列式）",
+        "试根降次 → de1.5 特征方程求解的日常"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 116,
+        "line_end": 122
+      },
+      "fill_hint": "单元级下游一览。",
+      "content": "P2.3 的分解能力是 P2.4 部分分式的**前置工序**（分母必须先完全分解）；韦达定理通向 P6.1（行列式）与 P6.3（特征值：和 = 迹、积 = 行列式）；试根降次是解微分方程特征方程（de1.5 二阶常系数 ODE）的日常操作。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.4",
+        "P6.1",
+        "P6.3",
+        "de1.5"
+      ]
+    },
+    {
+      "id": "P2.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：root-coefficient（拖根看系数）",
+      "keywords": [
+        "数轴上拖两个根，实时展开 x²-(x₁+x₂)x+x₁x₂",
+        "一次项系数自带负号（韦达符号坑可视化）",
+        "根从 {2,3} 拖到 {-2,-3}：b 从 -5 翻到 +5",
+        "判据 Q4：简单交互 ⟹ 前端直渲"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 119,
+        "line_end": 119
+      },
+      "fill_hint": "档1 新模块 root-coefficient；契约细节由前端另行记录。",
+      "content": "单元级演示叙事：**拖根看系数**。交互：数轴上拖两个根 $x_1,x_2$，实时显示展开式 $x^2-(x_1+x_2)x+x_1x_2$ 与它的图像——一次项系数**自带负号**：把两根从 $\\{2,3\\}$ 拖到 $\\{-2,-3\\}$，$b$ 从 $-5$ 翻到 $+5$，\"韦达负号\"在拖动中直接可见（配合 misuse 词条的 $-5$ vs $+5$）。第二模式：拖重合根演示重根（两根并到 $3$ 时 $b=-6,c=9$【已核验:-6|-(3+3)】【已核验:9|3*3】）。判据 Q4：简单显式函数 + 直接交互 ⟹ 前端直渲。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "module": "root-coefficient",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "roots_draggable": 2,
+          "show": [
+            "sum",
+            "product",
+            "expanded",
+            "graph"
+          ]
+        }
+      }
+    }
+  ]
+}

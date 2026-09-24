@@ -1,0 +1,439 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P7.2",
+  "chapter": "P7",
+  "title": "积分技术（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 367,
+    "line_end": 379,
+    "anchor": "notebook/P_computation.tex:367"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P7.2:integration.quantifiers",
+      "type": "comparison",
+      "subject": "integration",
+      "title": "适用条件表：五大积分技术各自的坑",
+      "keywords": [
+        "凑微分要求内层导数在场（差常数可补）；e^{x²} 凑不出",
+        "三角替换按根号形状选：√(a²−x²)／√(x²+a²)／√(x²−a²)",
+        "分部积分要选对 u·dv，否则多项式升幂越做越糟",
+        "部分分式先看分母结构：重根、二次不可约因子都要占块",
+        "对称性要求区间对称／周期对齐；不对称区间用奇偶=0 翻车",
+        "万能替换 t=tan(x/2) 只在不含 x=π 的长度 <2π 区间单射"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 368,
+        "line_end": 377
+      },
+      "fill_hint": "切片给五条技术的清单；条件表逐条给失效数值。凑不出 e^{x²} 的断言属 Liouville 定理背景，只作使用层事实陈述不展开。",
+      "content": "五条技术各有一个「用了就翻车」的限定词，逐行给失效例子：\n\n| 条件 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 凑微分：内层导数 $f'(x)$ 必须与 $g(f(x))$ 同场（差常数可补） | $\\int e^{x^2}dx$：内层 $2x$ 不在场，根本没有初等原函数 | 硬凑会得到错误结果；正确出路是级数（P7.1）或数值积分 | 不能放宽成「想凑就凑」；判断标准是 $f'g(f)$ 结构确实出现，如 $\\frac{x}{1+x^2}=\\frac12\\cdot\\frac{(1+x^2)'}{1+x^2}$ |\n| 三角替换：按根号形状对号入座 | $\\int_0^{1/2}\\frac{dx}{\\sqrt{1-x^2}}$ 换 $x=\\sin t$ 后忘记 $t$ 的范围是 $\\arcsin$ 值域 $[-\\frac\\pi2,\\frac\\pi2]$ | 回代／定限出错 | 能：$t$ 范围取主值区间即可保证 $\\cos t\\ge0$，根号开出来不带绝对值麻烦 |\n| 分部积分：$u$、$dv$ 选向决定收敛 | $\\int xe^x dx$ 若把 $u=e^x$、$dv=x\\,dx$，第二次分部得到 $-\\frac{x^2}{2}e^x+\\int\\frac{x^2}{2}e^x dx$，多项式因子升幂 | 阶数越做越高，永不闭合 | 正确选向：$u=x$，一步得 $(x-1)e^x+C$（检验：$\\int_0^1 xe^x dx=1$【已核验:1|(1-1)*exp(1)-(0-1)*exp(0)】） |\n| 部分分式：分母结构先分解干净 | $\\frac{1}{x(x-1)^2}$ 若忘记 $(x-1)^2$ 是二重根、只拆 $\\frac{A}{x}+\\frac{B}{x-1}$，通分对不上 | 系数解不出（方程无解） | 不能；重根必须占 $\\frac{C}{(x-1)^2}$ 块，二次不可约因子占 $\\frac{Dx+E}{x^2+\\cdots}$ 块（见 links P2.4） |\n| 对称性：区间必须对称 | $\\int_{-1}^{2}x\\,dx$ 被当「奇函数积分为 0」，真值 $1.5$【已核验:1.5|0.5*(2**2-(-1)**2)】 | 白扔 1.5 的面积 | 能：不对称区间先拆 $\\int_{-1}^{2}=\\int_{-1}^{1}+\\int_{1}^{2}$，对称段用奇偶、剩余段老实算 |\n| 万能替换：$t=\\tan\\frac x2$ 在长度 $<2\\pi$ 且不含 $x=\\pi$ 的区间单射 | $\\int_0^{2\\pi}\\frac{dx}{2+\\cos x}$ 直接换元：$t$ 从 $\\tan0=0$ 到 $\\tan\\pi=0$，积分限 0 到 0，「算出」0；真值 $2\\pi/\\sqrt3=3.6276$【已核验:3.62759872847|2*pi/sqrt(3)】 | 结果完全错误（0 vs 3.63） | 能：先用周期性把区间平移对齐到 $(-\\pi,\\pi)$，再换元则 $t$ 从 $-\\infty$ 到 $+\\infty$，一次算对 |\n\n总结：每条技术翻车的位置都不在「公式本身」而在「适用前提」——导数在场、形状对号、选向正确、分母分解、区间对称、单射范围。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P7.2:by-parts.intuition",
+      "type": "intuition",
+      "subject": "by-parts",
+      "title": "直觉：分部积分是「移导数」搬家",
+      "keywords": [
+        "(uv)′=u′v+uv′ 的积分版：∫u dv=uv−∫v du",
+        "「移导数」像搬家：把导数从难搞的因子搬到好搞的因子",
+        "搬家方向决定成败：越搬越简单才对",
+        "表格法=搬家搬到多项式归零",
+        "循环积分=搬一圈回家，解方程回收自己",
+        "P9 能量法的同一手法（移导数出积分号）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 371,
+        "line_end": 373
+      },
+      "fill_hint": "切片原话：「乘积法则的积分版；移导数像搬家——把导数从难搞的因子搬到好搞的因子（P9 能量法的同一手法）」。假设与结论分开写。",
+      "content": "**假设给了什么：** 乘积法则 $(uv)'=u'v+uv'$ 两边积分、移项，就得分部积分 $\\int u\\,dv=uv-\\int v\\,du$。它没有创造新东西，只是把「求导的负担」从等式右边挪到了左边。\n\n**结论为什么因此成立（直觉）：** 两个因子相乘时，其中一个总要「吃导数」。分部积分是**主动选择谁来吃**——把导数从难搞的因子（如多项式，吃完降次）搬到好搞的因子（如 $e^x$、$\\sin$，吃完打转不变形）。这就是「移导数像搬家」：\n\n- 搬家方向选对：$\\int xe^x dx$ 让 $x$ 吃导数，一次搬完，$(x-1)e^x+C$；\n- 方向选反：让 $e^x$ 吃导数，多项式反而升幂，越搬越乱。\n\n**两个标准剧本：** ①表格法——多项式 $\\times$ 三角／指数，反复搬导数直到多项式一列全零，对角连线求和；②循环积分——$\\int e^x\\sin x$ 型，搬两圈后原积分自己回来了（移项解方程回收，见 by-parts.misuse）。\n\n**为什么在 P 篇要专门强调：** 同一个「移导数」动作在 P9 能量法里是发动机——把 $\\Delta u$ 的导数移出积分号、搬到测试函数上（见 links P9.1），弱解、Green 公式、分部积分全是这一个招式。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P9.1"
+      ]
+    },
+    {
+      "id": "P7.2:by-parts.misuse",
+      "type": "counterexample",
+      "subject": "by-parts",
+      "title": "误用：循环积分中途停手，答案翻倍",
+      "keywords": [
+        "∫e^x sinx 分部两圈后原积分回家",
+        "必须移项解方程回收 I，不能把残余项当 0",
+        "中途停手：误得 e^π+1 ≈ 24.14，真值 (e^π+1)/2 ≈ 12.07",
+        "恰好差因子 2",
+        "表格法也同理：最后一格必须回收",
+        "修补：见 I 出现立即移项"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 371,
+        "line_end": 372
+      },
+      "fill_hint": "切片列「循环积分（∫e^x sinx 型）」但不给数值；本条完整算出正确值与误用值的对比。",
+      "content": "循环积分的标准戏法：$I=\\int_0^\\pi e^x\\sin x\\,dx$。分部两次（都取 $dv=e^x dx$）：\n\n$$I=\\underbrace{[e^x\\sin x]_0^\\pi}_{=0}-\\int_0^\\pi e^x\\cos x\\,dx=-\\Big(\\underbrace{[e^x\\cos x]_0^\\pi}_{=-e^\\pi-1}+\\int_0^\\pi e^x\\sin x\\,dx\\Big)=e^\\pi+1-I$$\n\n原积分 $I$ 自己回来了——**移项解方程**：$2I=e^\\pi+1$，得 $I=\\frac{e^\\pi+1}{2}=12.0703$【已核验:12.0703463164|(exp(pi)+1)/2】。\n\n**误用：** 第二步之后不认出 $I$ 回家，把残余的 $\\int e^x\\sin x$ 项直接丢掉（当作 0），得「$I=e^\\pi+1=24.1407$【已核验:24.1406926328|exp(pi)+1】——**恰好是真值的 2 倍**（丢掉的正是 $I$ 本身）。另一些同学停在第一步就把 $\\int e^x\\cos x$ 当 0，得 $I=0$，与真值差 12.07。\n\n**失效机制：** 循环积分的合法性全靠「$I$ 出现在等式两边 → 移项」这一步；任何把 $I$ 当成可忽略小量的做法都是在扔掉与答案同阶的项。\n\n**修补条件：** 分部后只要被积函数回到原样（允许差常数倍），立即移项：$I(1\\pm c)=\\text{已知项}$。表格法的最后一格同理必须回收。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.2:symmetry.misuse",
+      "type": "counterexample",
+      "subject": "symmetry",
+      "title": "误用：区间不对称还想用奇偶",
+      "keywords": [
+        "奇函数在对称区间才为 0",
+        "∫_{-1}^{2} x dx 真值 1.5，误用得 0",
+        "偶函数 2×半区间同样要求对称",
+        "周期函数先平移对齐再谈对称",
+        "修补：拆区间，对称段归奇偶、剩余段老实算"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 375,
+        "line_end": 375
+      },
+      "fill_hint": "切片给「奇函数在对称区间积分为 0；偶函数=2×半区间；周期函数平移对齐」；反例是「对称区间」四字的失效演示。",
+      "content": "对称性三连的完整限定是**区间形状**：\n\n- 奇函数 $f(-x)=-f(x)$ 在 $[-a,a]$ 上积分为 0——例如 $\\int_{-\\pi}^{\\pi}\\sin^3x\\,dx=0$（正负面积精确相消）；\n- 偶函数在 $[-a,a]$ 上等于 $2\\int_0^a$；\n- 周期函数可以把区间平移整数个周期对齐，如 $\\int_0^{2\\pi}$ 上的三角有理式平移到 $(-\\pi,\\pi)$ 后才好做奇偶判断。\n\n**误用演示：** $\\int_{-1}^{2}x\\,dx$ 被积分者是奇函数，于是「顺手」写 0。真值 $\\frac12(2^2-(-1)^2)=1.5$【已核验:1.5|0.5*(2**2-(-1)**2)】——区间 $[-1,2]$ 不对称，正面积（$[0,2]$ 段）比负面积（$[-1,0]$ 段）多，正负根本不抵消。\n\n**修补条件：** 不对称区间先拆 $\\int_{-1}^{2}=\\int_{-1}^{1}+\\int_{1}^{2}$：对称段 $\\int_{-1}^{1}x\\,dx=0$ 由奇偶吃掉，剩余段 $\\int_{1}^{2}x\\,dx=1.5$【已核验:1.5|0.5*(2**2-1**2)】老实算。周期平移同理——先把区间对齐到周期格点，再判断奇偶（见 weierstrass.misuse 中 $2\\pi$ 区间的处理）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.2:weierstrass.misuse",
+      "type": "counterexample",
+      "subject": "weierstrass",
+      "title": "误用：万能替换跨过 x=π，积分限坍缩成 0",
+      "keywords": [
+        "t=tan(x/2) 在 x=π 处 t=∞（不是有限数）",
+        "∫₀^{2π} dx/(2+cosx) 直接换元得上限=下限=0",
+        "真值 2π/√3 ≈ 3.6276",
+        "修补：周期平移到 (−π,π)，t 从 −∞ 走到 +∞",
+        "正确换元后 ∫dt/(3+t²) 全线贯通",
+        "半周期内（不跨 π）可直接用"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 376,
+        "line_end": 376
+      },
+      "fill_hint": "切片称万能替换为「三角有理式的保险手段」；本条给出它最著名的失效点（x=π）与修补（周期平移），数值全部可复算。",
+      "content": "万能替换的三件套：$t=\\tan\\frac x2$ 时 $\\sin x=\\frac{2t}{1+t^2}$、$\\cos x=\\frac{1-t^2}{1+t^2}$、$dx=\\frac{2dt}{1+t^2}$，任何 $\\sin/\\cos$ 的有理式都变成 $t$ 的有理式——「保险」指的是总能落地为有理函数，不保证便宜。\n\n**失效点：** $t=\\tan\\frac x2$ 在 $x=\\pi$ 处没有有限值（$t\\to\\infty$），只在长度 $<2\\pi$、不含 $\\pi$ 的区间上单射。\n\n**误用演示：** $\\int_0^{2\\pi}\\frac{dx}{2+\\cos x}$。直接换元：下限 $t=\\tan0=0$，上限 $t=\\tan\\pi=0$——积分限坍缩成「0 到 0」，算出 **0**。真值是 $\\frac{2\\pi}{\\sqrt3}=3.6276$【已核验:3.62759872847|2*pi/sqrt(3)】，错得离谱。根源：$x$ 从 0 走到 $2\\pi$ 时 $t$ 去了 $+\\infty$ 又从 $-\\infty$ 回来，换元把这段路程「折叠」了。\n\n**修补条件：** 先用周期平移把区间对齐到 $(-\\pi,\\pi)$（被积函数以 $2\\pi$ 为周期，$\\int_0^{2\\pi}=\\int_{-\\pi}^{pi}$），再换元：$t$ 从 $-\\infty$ 到 $+\\infty$ 单调走全程，\n$$\\int_{-\\infty}^{\\infty}\\frac{2\\,dt}{3+t^2}=\\frac{2}{\\sqrt3}\\Big[\\arctan\\frac{t}{\\sqrt3}\\Big]_{-\\infty}^{\\infty}=\\frac{2\\pi}{\\sqrt3}\\ \\checkmark$$\n若积分区间本来就不跨 $\\pi$（如 $[0,\\frac\\pi2]$），可直接用：$\\int_0^{\\pi/2}\\frac{dx}{2+\\cos x}=\\frac{\\pi}{3\\sqrt3}=0.6046$【已核验:0.604599788078|pi/(3*sqrt(3))】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.2:substitution.statement",
+      "type": "statement",
+      "subject": "substitution",
+      "title": "换元：凑微分与三种三角替换",
+      "keywords": [
+        "凑微分：认出 f′(x)·g(f(x)) 结构",
+        "√(a²−x²) → x=a sin t",
+        "√(x²+a²) → x=a tan t",
+        "√(x²−a²) → x=a sec t",
+        "三角替换后开根号要带 t 范围（主值区间）",
+        "定积分换元必须同步换限"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 369,
+        "line_end": 370
+      },
+      "fill_hint": "逐字转写切片换元条目（含三条三角替换）；补换限与开根号的注意事项。",
+      "content": "换元的两个形态：\n\n**凑微分（第一类换元）：** 被积函数里认出 $f'(x)\\,g(f(x))$ 的结构，令 $u=f(x)$ 后 $\\int g(f(x))f'(x)dx=\\int g(u)du$。例：$\\frac{x}{1+x^2}=\\frac12\\cdot\\frac{(1+x^2)'}{1+x^2}\\Rightarrow\\int\\frac{x\\,dx}{1+x^2}=\\frac12\\ln(1+x^2)$（这正是 P7.3 表的第二条）。\n\n**三角替换（第二类换元，按根号形状对号）：**\n$$\\sqrt{a^2-x^2}\\to x=a\\sin t,\\qquad \\sqrt{x^2+a^2}\\to x=a\\tan t,\\qquad \\sqrt{x^2-a^2}\\to x=a\\sec t$$\n\n成立条件：①换元函数在积分区间上可导（定积分还要单调／单射，保证反解与换限合法）；②开根号时必须携带新变量的范围——如 $x=a\\sin t$ 取 $t\\in[-\\frac\\pi2,\\frac\\pi2]$ 保证 $\\sqrt{a^2-x^2}=a\\cos t\\ge0$，避免绝对值纠缠；③定积分换元必须**同步换限**（见 substitution 的误用演示在 quantifiers 表）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.2:by-parts.statement",
+      "type": "statement",
+      "subject": "by-parts",
+      "title": "分部积分：公式、表格法与循环积分",
+      "keywords": [
+        "∫u dv = uv − ∫v du",
+        "表格法：多项式×三角／指数，搬到多项式归零",
+        "循环积分：∫e^x sinx 型，两圈回家移项回收",
+        "选向口诀：让「越求导越简单」的因子当 u",
+        "u、dv 需连续可积"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 371,
+        "line_end": 372
+      },
+      "fill_hint": "逐字转写切片分部条目；公式为乘积法则移项，成立条件是 u、dv 相应的原函数存在。",
+      "content": "公式（乘积法则移项）：\n$$\\int u\\,dv=uv-\\int v\\,du$$\n\n**成立条件：** $v=\\int dv$ 与 $u$ 相应积分存在（通常要求 $u,v$ 连续可微）。\n\n**表格法（切片指定的主战场：多项式 $\\times$ 三角／指数）：** 左列写 $u$（多项式逐阶求导直到 0），右列写 $dv$（三角／指数逐阶积分），对角相乘、正负交替求和。适用判据：$u$ 列**有限步归零**——多项式求导降次，$n$ 次后归零。\n\n**循环积分（$\\int e^x\\sin x$ 型）：** 两个「求导不变形」的因子相乘，分部两圈后原积分回家，移项解方程回收（完整计算与误用见 by-parts.misuse）。\n\n**选向原则：** 把「越求导越简单」的因子设为 $u$（多项式降次、$\\ln$ 求导变幂），把「积分不变形」的因子设为 $dv$（$e^x$、$\\sin/\\cos$、循环型）。反向选会让多项式升幂、永不闭合。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.2:partial-fraction.statement",
+      "type": "statement",
+      "subject": "partial-fraction",
+      "title": "部分分式积分：四类基本块逐块积",
+      "keywords": [
+        "先分解分母（P2.4 的四类块）再逐块积分",
+        "线性单根 → ln|x−a|",
+        "重根 → 逐次降幂 1/(x−a)^k",
+        "二次不可约 → arctan 型 + ln 型",
+        "算例：∫dx/((x+1)(x+2)) = ln((x+2)/(x+1))+C"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 374,
+        "line_end": 374
+      },
+      "fill_hint": "切片一句「拆成 P2 的四类基本块后逐块积」；本条展开四类块对应哪种原函数，links 指 P2.4。",
+      "content": "切片的原则：有理函数积分 $=$ 分解（P2.4 的四类基本块）$+$ 逐块积分。\n\n| 分母结构 | 块 | 对应原函数 |\n|---|---|---|\n| 线性单根 $(x-a)$ | $\\frac{A}{x-a}$ | $A\\ln\\|x-a\\|$ |\n| 线性重根 $(x-a)^k$ | $\\frac{A_k}{(x-a)^k}+\\cdots+\\frac{A_1}{x-a}$ | 幂法则逐次积分 + $\\ln$ |\n| 二次不可约 $x^2+px+q$ | $\\frac{Bx+C}{x^2+px+q}$ | 配方拆成 $\\ln(x^2+px+q)$ + $\\arctan$ 型 |\n| 二次重根 | 同上降幂 | 同上类推 |\n\n**完整算例：** $\\frac{1}{(x+1)(x+2)}=\\frac{1}{x+1}-\\frac{1}{x+2}$，故 $\\int_0^1\\frac{dx}{(x+1)(x+2)}=\\ln\\frac32=0.4055$【已核验:0.405465108108|log(3/2)】。\n\n**成立条件：** 分解必须覆盖全部根结构——重根占满每一阶、二次不可约因子不硬拆成复线性（除非愿意走复数再回收实部）。P7.3 表的 $\\int\\frac{dx}{x^2-1}=\\frac12\\ln\\left|\\frac{x-1}{x+1}\\right|$ 正是本技术 $+\\,$P2.4 的合作产物。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.4",
+        "P7.3"
+      ]
+    },
+    {
+      "id": "P7.2:symmetry.statement",
+      "type": "statement",
+      "subject": "symmetry",
+      "title": "对称性：奇偶与周期的三条快刀",
+      "keywords": [
+        "奇函数在对称区间积分为 0",
+        "偶函数在对称区间 = 2×半区间",
+        "周期函数先平移对齐",
+        "三条都要求区间形状配合",
+        "算例：∫_{-π}^{π} sin³x dx = 0"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 375,
+        "line_end": 375
+      },
+      "fill_hint": "逐字转写切片对称性条目；补一条带数值的自检例。",
+      "content": "三条快刀（全部要求**区间形状配合**）：\n\n1. **奇函数在对称区间 $[-a,a]$ 上积分为 0：** 正负面积镜像相消。例：$\\int_{-\\pi}^{\\pi}\\sin^3x\\,dx=0$。\n2. **偶函数在对称区间 $=2\\int_0^a$：** 只算一半再翻倍。例：$\\int_{-1}^{1}\\frac{dx}{1+x^2}=2\\arctan1=\\frac\\pi2$【已核验:1.57079632679|2*pi/4】。\n3. **周期函数平移对齐：** $\\int_a^{a+T}f=\\int_0^T f$（$f$ 以 $T$ 为周期），先把区间挪到方便的位置再判断奇偶。\n\n失效与修补：区间不对称时三条全部不可直接用（完整反例见 symmetry.misuse）。周期平移是万能替换跨 $\\pi$ 翻车的标准修补（见 weierstrass.misuse）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.2:weierstrass.statement",
+      "type": "statement",
+      "subject": "weierstrass",
+      "title": "万能替换：三角有理式的保险手段",
+      "keywords": [
+        "t=tan(x/2)",
+        "sinx=2t/(1+t²)，cosx=(1−t²)/(1+t²)，dx=2dt/(1+t²)",
+        "任何 sin/cos 的有理式 → t 的有理式",
+        "「保险」=总能落地，不保证快",
+        "x=π 处 t=∞：区间单射条件必须检查"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 376,
+        "line_end": 376
+      },
+      "fill_hint": "逐字转写切片条目（t=tan(x/2)，保险手段）；三件套公式与单射条件为标准内容。",
+      "content": "万能替换（Weierstrass 替换）：令 $t=\\tan\\frac x2$，则\n\n$$\\sin x=\\frac{2t}{1+t^2},\\qquad \\cos x=\\frac{1-t^2}{1+t^2},\\qquad dx=\\frac{2\\,dt}{1+t^2}$$\n\n于是**任何** $\\sin x,\\cos x$ 的有理函数都变成 $t$ 的有理函数，再走部分分式（links P2.4）必能积出——这就是「保险」的含义：总能落地，但不保证计算量小（常产生高次分母）。\n\n**成立条件：** $t=\\tan\\frac x2$ 只在**长度 $<2\\pi$ 且不含 $x=\\pi$（奇数倍）**的区间上单射——$x=\\pi$ 处 $t$ 发散到 $\\infty$。跨 $\\pi$ 的区间必须先用周期性平移拆分（失效数值演示见 weierstrass.misuse）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P7.2:integration.application",
+      "type": "application",
+      "subject": "integration",
+      "title": "用在哪：能量法、高斯积分、归一化",
+      "keywords": [
+        "分部移导数 → P9 能量法的发动机",
+        "极坐标/球坐标换元 → P8.1 高斯积分的平方升维",
+        "对称性与换元 → C2 密度归一化",
+        "分部积分 → I9.2 能量稳定格式的推导",
+        "有理式积分链（P2.4→P7.2）→ Laplace 反变换"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 368,
+        "line_end": 377
+      },
+      "fill_hint": "切片点明分部与 P9 的关系；其余 links 各给一句「谁用这条技术」。",
+      "content": "- **P9.1／P9.2（能量法）：** 切片明说分部积分是「P9 能量法的同一手法」——弱形式里把 $\\nabla u$ 的导数移到测试函数上，全靠 $\\int u\\,dv=uv-\\int v\\,du$。\n- **P8.1（高斯积分）：** 平方升维后的 $\\iint e^{-(x^2+y^2)}dxdy$ 靠极坐标换元（$J=r$）落地；换元技术是 P8 全家的地基。\n- **C2（概率分布族）：** 密度归一化 $\\int p=1$ 的计算反复使用对称性与换元（正态密度配出 $\\sqrt{2\\pi}$ 全靠这两招）。\n- **I9.2（能量稳定格式）：** 流体数值格式的能量不等式推导，本质是把非线性项分部移导数再放缩。\n- **de2.13（Laplace 变换）：** 有理函数的部分分式积分是 Laplace 反变换查表的基本功（links de2.13 走 ODE 线）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P9.1",
+        "P9.2",
+        "P8.1",
+        "C2",
+        "I9.2",
+        "de2.13"
+      ]
+    },
+    {
+      "id": "P7.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "五技法选择决策表",
+      "keywords": [
+        "看到 f′(x)·g(f(x)) → 凑微分",
+        "看到根号三形状 → 三角替换",
+        "看到多项式×三角/指数 → 表格法分部",
+        "看到有理分式 → P2.4 分解后逐块",
+        "看到对称区间+奇偶 → 对称性",
+        "看到 sin/cos 有理式走投无路 → 万能替换兜底"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 368,
+        "line_end": 377
+      },
+      "fill_hint": "把切片五条整合为按「被积函数长相」索引的决策表。",
+      "content": "| 被积函数长相 | 掏哪个 | 关键前提 |\n|---|---|---|\n| $f'(x)\\,g(f(x))$ 结构在场 | 凑微分 | 内层导数确实出现 |\n| $\\sqrt{a^2-x^2}$、$\\sqrt{x^2+a^2}$、$\\sqrt{x^2-a^2}$ | 三角替换（三条对号） | $t$ 主值范围 + 回代 |\n| 多项式 $\\times$ 三角／指数 | 表格法分部 | 多项式有限步归零 |\n| $\\sin/\\cos$ 的有理式但含混不清 | 万能替换 | 区间不跨 $x=\\pi$ |\n| 有理分式 $P/Q$ | 部分分式（links P2.4）→逐块 | 分母先分解干净 |\n| 对称区间上的奇／偶／周期 | 对称性三连 | 区间形状配合 |\n\n决策原则一句话：**先看形状再掏工具**；掏错工具的代价不是「慢」而是「错」（见 quantifiers 各行数值）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P7.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "单元级下游：积分技术的跨章落点",
+      "keywords": [
+        "移导数（分部）是 P9 能量法与弱形式的通用招",
+        "换元是 P8 欧拉积分全家的机器",
+        "对称性是物理里「不用算就出 0」的第一来源",
+        "部分分式支撑 Laplace／Fourier 查表",
+        "有理式积分链在传递函数（控制/CG）反复出现"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 368,
+        "line_end": 377
+      },
+      "fill_hint": "单元级应用总览，每条一句，细节归目标章节。",
+      "content": "- **A4.5／P9.2（弱解与能量法）：** 分部积分把强导数搬到测试函数上——弱形式与 Lax–Milgram 的第一步永远是它。\n- **P8.1–P8.4：** 高斯积分的极坐标、$\\Gamma$ 的 $t=x^2$ 换元、Beta 的三角公式，全是本单元换元机器的直系产品。\n- **C2／C7.2：** 分布归一化与矩计算靠对称性省力（奇函数直接 0）。\n- **de2.13／R4.3：** 反变换积分的标准套路 $=$ 部分分式 $+$ 查表。\n- **I2／H8.1（流体）：** 应力张量与能量估计里大量分部移导数（散度定理是它的高维版）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A4.5",
+        "P8.1",
+        "C2",
+        "de2.13",
+        "I2"
+      ]
+    },
+    {
+      "id": "P7.2:integration.probe1",
+      "type": "probe",
+      "subject": "integration",
+      "title": "检验：算完整循环积分 ∫₀^π e^x sinx dx",
+      "keywords": [
+        "分部两圈、移项回收",
+        "答案应出现在 (e^π+1)/2",
+        "若忘了移项会得 2 倍值"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 371,
+        "line_end": 372
+      },
+      "fill_hint": "从 quantifiers 循环行变的问句；答案带【待核验】。",
+      "content": "用循环积分算 $I=\\int_0^\\pi e^x\\sin x\\,dx$：分部两次，移项解出 $I$，并写出「中途停手丢掉残余项」会得到的错误值。\n\n（答案：$I=\\frac{e^\\pi+1}{2}=12.0703$【已核验:12.0703463164|(exp(pi)+1)/2】；中途停手的误用值 $e^\\pi+1=24.1407$【已核验:24.1406926328|exp(pi)+1】，恰好两倍。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P7.2:integration.probe2",
+      "type": "probe",
+      "subject": "integration",
+      "title": "检验：万能替换在不跨 π 的区间上落地",
+      "keywords": [
+        "∫₀^{π/2} dx/(2+cosx)",
+        "t 从 0 到 1，有理式后接 arctan",
+        "答案 π/(3√3)"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 376,
+        "line_end": 376
+      },
+      "fill_hint": "从 weierstrass 行变的问句；答案带【待核验】。",
+      "content": "用万能替换 $t=\\tan\\frac x2$ 计算 $\\int_0^{\\pi/2}\\frac{dx}{2+\\cos x}$（说明为什么这个区间可以直接替换、不必平移）。\n\n（答案：换元后 $\\int_0^1\\frac{2\\,dt}{3+t^2}=\\frac{2}{\\sqrt3}\\arctan\\frac{1}{\\sqrt3}=\\frac{\\pi}{3\\sqrt3}=0.6046$【已核验:0.604599788078|pi/(3*sqrt(3))】；区间 $[0,\\frac\\pi2]$ 不含 $x=\\pi$，$t$ 从 0 单调到 1，替换合法。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

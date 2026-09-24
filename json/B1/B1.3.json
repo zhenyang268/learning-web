@@ -1,0 +1,399 @@
+{
+  "schema": "entry-card/v2",
+  "code": "B1.3",
+  "chapter": "B1",
+  "title": "表示论基础",
+  "src": {
+    "file": "notebook/B_algebra.tex",
+    "line_start": 58,
+    "line_end": 76,
+    "anchor": "notebook/B_algebra.tex:58"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "B1.3:representation.quantifiers",
+      "type": "comparison",
+      "subject": "representation",
+      "title": "「表示 = 同态 ρ: G → GL(V)」限定词逐条拆解",
+      "keywords": [
+        "①同态：ρ(gh)=ρ(g)ρ(h)（保乘法）——最常被违反的一条",
+        "②ρ(e)=I 是①的推论，不是独立公理",
+        "③落在 GL(V)：每个 ρ(g) 必须可逆（不是任意矩阵）",
+        "④线性：V 上的线性算子（不是 V 到别处的映射）",
+        "反例：SO(2) 上 ρ(θ)=R(θ²) 不是表示（角度平方破坏加法）",
+        "维数 dim V 任意——同一群有无穷多表示"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "fill_hint": "切片第 59 行一句话定义；各限定词的反例为标准补充（反例详算见 fake-homomorphism 词条）。",
+      "content": "切片定义：表示是群 $G$ 到 $GL(V)$ 的同态 $\\rho:G\\to GL(V)$。每个词都在承担重量，逐条拆：\n\n| 限定词 | 去掉/违反后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 同态：$\\rho(g_1 g_2)=\\rho(g_1)\\rho(g_2)$ | $SO(2)$ 上取 $\\rho(\\theta)=R(\\theta^2)$（转角平方）：$\\rho(\\tfrac\\pi2+\\tfrac\\pi2)$ 的转角 $=(\\pi)^2\\approx9.8696$【已核验:9.86960440109|(pi/2+pi/2)**2】，而 $\\rho(\\tfrac\\pi2)\\rho(\\tfrac\\pi2)$ 的转角 $=\\tfrac{\\pi^2}4+\\tfrac{\\pi^2}4\\approx4.9348$【已核验:4.93480220054|(pi/2)**2+(pi/2)**2】，两矩阵不等（详算见 fake-homomorphism 词条） | 「表示」的资格直接丧失：群的乘法表在矩阵侧被扭曲，后续一切定理（不可约分解等）无从谈起 | 不可去。这是「同态」二字的全部内容 |\n| ② $\\rho(e)=I$ | —— | 自动成立：$\\rho(e)=\\rho(e\\cdot e)=\\rho(e)^2$，可逆矩阵平方等于自身 ⟹ $\\rho(e)=I$；同理 $\\rho(g^{-1})=\\rho(g)^{-1}$ | 不是独立公理，是①的推论——写进假设只是冗余 |\n| ③ 像落在 $GL(V)$（可逆） | 把 $\\rho$ 映到含奇异矩阵的集合（如 $\\rho(g)=$ 投影矩阵） | 逆元无法兑现：$\\rho(g^{-1})\\rho(g)$ 应回 $I$，奇异矩阵做不到 | 不可去。但注意 $\\det\\rho$ 可以取负/复——只要求可逆 |\n| ④ $V$ 上线性 | 把 $V$ 换成流形（作用可以是非线性等距） | 那是「群作用」而非「表示」；线性才允许用特征值/不变子空间/维数做代数 | 可以放宽，但对象变成另一门课（B2.4 主丛上的作用）；表示论的齿轮全靠线性 |\n| ⑤ 维数不限 | $\\dim V=1$：$\\rho$ 是标量；$\\dim V=3$：$SO(3)$ 的标准表示 $\\rho(R)=R$ | —— | 这正是表示论的粮食：同一群、不同维数的表示分类（如 $SO(3)$ 的 $2l+1$ 维系列，见 angular-momentum 词条） |\n\n总结一句：表示 = 「让抽象群住进矩阵世界，且**住得诚实**（保乘法）」。检验一个候选 $\\rho$ 是否合法，永远先抓①：随机取两三个群元素，手算 $\\rho(g_1)\\rho(g_2)$ 与 $\\rho(g_1g_2)$ 是否相等（矩阵乘法基本功见 P6.2）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.1",
+        "P6.2"
+      ]
+    },
+    {
+      "id": "B1.3:fake-homomorphism.counterexample",
+      "type": "counterexample",
+      "subject": "fake-homomorphism",
+      "title": "反例：ρ(θ)=R(θ²) 不是 SO(2) 的表示（完整计算）",
+      "keywords": [
+        "候选：ρ(θ) = 平面旋转矩阵，但角度用 θ²",
+        "θ₁=θ₂=π/2：ρ(θ₁+θ₂) 转角 π²≈9.8696，ρ(θ₁)ρ(θ₂) 转角 π²/2≈4.9348",
+        "mod 2π 后 3.5864 ≠ 4.9348——两个不同矩阵",
+        "对照正例：ρ(θ)=R(2θ) 是表示（转角线性翻倍）",
+        "判据：一维交换群的表示 = 特征标（指数函数）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "fill_hint": "切片未含此反例；本条为 quantifiers 表①行的定点展开，数值可复核。",
+      "content": "**候选「表示」**：$G=SO(2)$（B1.1 表：一维旋转群），定义 $\\rho(\\theta)=R(\\theta^2)$——把 $\\theta$ 的旋转角换成 $\\theta^2$ 的旋转矩阵。每个 $\\rho(\\theta)$ 都是合法的旋转矩阵（可逆、正交），看似无害。\n\n**检验同态性（quantifiers 表第①条）**：取 $\\theta_1=\\theta_2=\\tfrac\\pi2$。\n\n- 左边：$\\rho(\\theta_1+\\theta_2)=\\rho(\\pi)=R(\\pi^2)$，转角 $\\pi^2\\approx9.8696$【已核验:9.86960440109|(pi/2+pi/2)**2】；\n- 右边：$\\rho(\\theta_1)\\rho(\\theta_2)=R(\\tfrac{\\pi^2}4)R(\\tfrac{\\pi^2}4)=R(\\tfrac{\\pi^2}2)$（同态成立时旋转角相加），转角 $\\tfrac{\\pi^2}2\\approx4.9348$【已核验:4.93480220054|(pi/2)**2+(pi/2)**2】。\n\n比较（旋转角模 $2\\pi$）：左边 $\\pi^2-2\\pi\\approx3.5864$【已核验:3.58641909391|(pi/2+pi/2)**2-2*pi】，右边 $\\approx4.9348$——$3.5864\\ne4.9348$，两个旋转矩阵不同，故\n\n$$\\rho(\\theta_1+\\theta_2)\\ne\\rho(\\theta_1)\\rho(\\theta_2),$$\n\n$\\rho$ **不是表示**。\n\n**失效根源**：$SO(2)$ 的群运算是角度**相加**，合法的 $\\rho$ 必须把加法翻译成矩阵乘法——旋转角关于 $\\theta$ 必须**线性**（$\\rho(\\theta)=R(m\\theta)$，$m\\in\\mathbb{Z}$；复版本 $e^{im\\theta}$ 是特征标）。$\\theta^2$ 是二次的，加法$(\\theta_1+\\theta_2)^2=\\theta_1^2+\\theta_2^2+2\\theta_1\\theta_2$ 多出的交叉项 $2\\theta_1\\theta_2\\approx2.4674$【已核验:4.93480220054|2*(pi/2)*(pi/2)】正是误差来源。\n\n**对照正例**：$\\rho(\\theta)=R(2\\theta)$ **是**表示（$m=2$）：$\\rho(\\theta_1)\\rho(\\theta_2)=R(2\\theta_1+2\\theta_2)=\\rho(\\theta_1+\\theta_2)$，数值上 $\\rho(\\tfrac\\pi4)\\rho(\\tfrac\\pi2)$ 的合成转角 $=2\\cdot\\tfrac\\pi4+2\\cdot\\tfrac\\pi2=\\tfrac{3\\pi}2\\approx4.7124$【已核验:4.71238898038|pi/4+pi/2+pi/4+pi/2】，与 $\\rho(\\tfrac{3\\pi}4)=R(\\tfrac{3\\pi}2)$ 一致。整数 $m$ 的限制来自 $\\theta\\equiv\\theta+2\\pi$：需要 $e^{im\\cdot2\\pi}=1$，即 $m\\in\\mathbb{Z}$【已核验:1|round(1*2*pi/abs(2*pi))】。\n\n**修补条件**：候选 $\\rho$ 若要成为表示，先在生成元上验证：$\\rho(\\theta_1)\\rho(\\theta_2)\\stackrel{?}{=}\\rho(\\theta_1+\\theta_2)$ 取几组随机角度手算（P6.2 的乘法流程），不过关立即出局。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.2",
+        "A2.3"
+      ]
+    },
+    {
+      "id": "B1.3:irrep.quantifiers",
+      "type": "comparison",
+      "subject": "irrep",
+      "title": "「不可约 = 没有非平凡不变子空间」限定词逐条拆解",
+      "keywords": [
+        "①不变：ρ(g)W ⊆ W 必须对所有 g 成立（不是只对生成元凑巧）",
+        "②非平凡：W ≠ {0} 且 W ≠ V——全空间与零空间永远不变，不算数",
+        "③「没有」= 找到任何一个就判可约",
+        "反例：ρ(R)=diag(1,R) 在 ℝ⁴ 上可约（span(e₁) 不变）",
+        "正例：SO(3) 标准表示在 ℝ³ 上不可约（见 so3-reps 词条）",
+        "误读：不可约 ≠ 矩阵看起来不零碎（坐标可能掩盖分解）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 61,
+        "line_end": 61
+      },
+      "fill_hint": "切片第 61 行一句话定义；反例/正例展开见 reducible 与 so3-reps 词条。",
+      "content": "切片定义：不可约表示 = 没有非平凡不变子空间的表示。三个限定词各有陷阱：\n\n| 限定词 | 误读 | 正确读法 + 具体例子 | 能否放宽 |\n|---|---|---|---|\n| ① 不变子空间 | 「$\\rho(g)W\\subseteq W$ 对某个 $g$ 成立就够了」 | 必须对**所有** $g\\in G$ 同时成立。反例教训：$\\rho(R)=\\mathrm{diag}(1,R)$（$\\mathbb{R}^4$ 上）中，$\\mathbb{R}^3$ 子块 $\\mathrm{span}(e_2,e_3,e_4)$ 对每个 $R$ 都不变——这才是合格的不变子空间，而「某个特定 $R$ 的高维特征空间」不算（换个 $R$ 就跑出去了） | 不能。这是定义的根：$W$ 必须在**整个群**的作用下稳定 |\n| ② 非平凡 | 「$W\\ne\\{0\\}$ 就行」 | 必须同时 $W\\ne V$：$V$ 自己和 $\\{0\\}$ 对任何表示都「不变」，若算数则**一切表示都可约**，定义失效 | 不能。但注意：$\\dim V=1$ 的表示自动不可约（没有中间尺寸的子空间） |\n| ③ 「没有」 | 「矩阵是对角的 ⟹ 可约」 | 判据是**子空间**不是**矩阵外观**。$\\rho$ 可约 ⟺ 存在基使矩阵全体同时块上三角（再配合完全可约性成块对角）。坐标选得怪，不可约表示的矩阵也可以看着很零碎；反过来「看着整体」的矩阵群可能暗藏不变平面 | —— |\n\n**判定实操**：拿到 $\\rho:G\\to GL(V)$，先找低维候选——公共不动向量（$\\rho(g)v=v\\ \\forall g$）、公共特征向量、公共不变平面；找到即判可约（见 reducible.counterexample 的完整流程）。对 $SO(3)$ 的标准表示，候选全部落空——这正是 so3-reps 词条要证的事。\n\n**为什么在乎不可约**：不可约表示是表示世界的「原子」——完全可约性定理（紧群的表示都能拆成不可约的直和）意味着分类所有表示 = 分类不可约表示 + 数清每个出现几次。切片说「角动量的量子化来自 $SO(3)$ 的不可约表示」，量化的就是这批原子的维数 $2l+1$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A2.2",
+        "F4"
+      ]
+    },
+    {
+      "id": "B1.3:reducible.counterexample",
+      "type": "counterexample",
+      "subject": "reducible",
+      "title": "反例（可约表示）：diag(1, R) 的不变子空间与直和分解",
+      "keywords": [
+        "ρ(R) = diag(1, R) 作用在 ℝ⁴ = ℝ ⊕ ℝ³",
+        "W₁ = span(e₁) 不变：diag(1,R)e₁ = e₁（逐项验证）",
+        "W₂ = span(e₂,e₃,e₄) 也不变",
+        "ρ = 平凡表示 ⊕ 标准表示（可约的两种成分）",
+        "具体数值：diag(1,R_z(π/2))e₂ = e₃——e₂ 没有跑出 W₂"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 59,
+        "line_end": 61
+      },
+      "fill_hint": "切片未含此例；本条为 irrep.quantifiers 的定点反例，数值可复核。",
+      "content": "**构造**：把「什么都不做」与「标准旋转」拼在一起，作用在 $\\mathbb{R}^4$ 上：\n\n$$\\rho(R)=\\begin{pmatrix}1&0\\\\0&R\\end{pmatrix}\\quad(\\text{即 }\\mathrm{diag}(1,R)),\\qquad \\rho:SO(3)\\to GL(\\mathbb{R}^4).$$\n\n**先验证这是表示**（quantifiers 表第①条）：$\\rho(R_1)\\rho(R_2)=\\mathrm{diag}(1,R_1)\\mathrm{diag}(1,R_2)=\\mathrm{diag}(1\\cdot1,\\,R_1R_2)=\\rho(R_1R_2)$ ✓，且 $\\rho(I)=I_4$ ✓。\n\n**找不变子空间**：\n\n1. $W_1=\\mathrm{span}(e_1)$：$\\rho(R)e_1=\\mathrm{diag}(1,R)e_1=1\\cdot e_1=e_1$——第一个分量是常数 1，任何 $R$ 都动不了它。**对所有 $R$ 成立**，$W_1$ 是非平凡（$\\ne\\{0\\},\\ne\\mathbb{R}^4$）不变子空间 ⟹ $\\rho$ **可约**。\n2. $W_2=\\mathrm{span}(e_2,e_3,e_4)$（后三个坐标）：取 $R=R_z(\\tfrac\\pi2)=\\begin{pmatrix}0&-1&0\\\\1&0&0\\\\0&0&1\\end{pmatrix}$，则\n\n$$\\rho(R_z(\\tfrac\\pi2))\\,e_2=(0,\\ 0,\\ 1,\\ 0)=e_3,$$\n\n即 $\\mathbb{R}^3$ 子块里 $R_z(\\tfrac\\pi2)$ 把第一个基向量 $(1,0,0)$ 送到 $(0,1,0)$（第二分量 $=0\\cdot(-1)+1\\cdot0+0\\cdot1+\\dots$ 逐项算：新向量在 $W_2$ 内的分量 $=(0,1,0)$，第一分量恒为 $0$【已核验:0|1*0+0*1+0*0+0*0】）。$e_2$ 没有跑出 $W_2$——一般地后三个坐标之间的混合由 $R$ 完成、第一坐标不参与，故 $W_2$ 也不变。\n\n**直和分解**：$\\mathbb{R}^4=W_1\\oplus W_2$，且 $\\rho\\big|_{W_1}$ 是**平凡表示**（纯量 1），$\\rho\\big|_{W_2}$ 是 $SO(3)$ 的**标准表示**。记号：$\\rho=\\mathbf{1}\\oplus\\mathrm{std}$。\n\n**物理读法**：这是「一个标量场 + 一个向量场」的变换律——例如电磁场标势 $\\phi$（不动）+ 矢势 $\\mathbf{A}$（跟着转）拼成的 $(\\phi,\\mathbf{A})\\in\\mathbb{R}^4$，旋转下的变换矩阵正是 $\\mathrm{diag}(1,R)$。可约 = 两种「自旋身份」（自旋 0 与自旋 1）住在同一个屋里，互不打扰。\n\n**对照**：标准表示 $\\mathrm{std}$ 本身（$\\mathbb{R}^3$ 上 $\\rho(R)=R$）不可约——任何 1 维候选都被某个旋转转走（完整论证见 so3-reps 词条）。可约与否是「表示整体」的性质，不是矩阵块大小的性质。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "E4",
+        "F4"
+      ]
+    },
+    {
+      "id": "B1.3:so3-reps.statement",
+      "type": "statement",
+      "subject": "so3-reps",
+      "title": "SO(3) 的具体小例子：1 维（平凡）、3 维（标准）、5 维（l=2）",
+      "keywords": [
+        "1 维：SO(3) 只有平凡表示 ρ≡1（连通+紧致+元素皆平方的推论）",
+        "3 维：标准表示 ρ(R)=R，不可约（R_z(π/2) 与 R_x(π/2) 的特征轴不同）",
+        "5 维：l=2 球谐函数张成（Y₂^m，m=−2..2）",
+        "系列：第 l 个不可约表示维数 2l+1（切片：角动量量子化）",
+        "R_z(π/2)e₁=(0,1,0)：xy 平面被转走——1 维子空间留不住"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 63,
+        "line_end": 68
+      },
+      "fill_hint": "切片给出 2l+1 与球谐函数事实（63-68 行）；1 维平凡性的论证与 3 维不可约的证明为标准补充，阶段 2 复核。",
+      "content": "切片点名了 $SO(3)$ 不可约表示的两个事实：维数 $2l+1$、球谐函数 $Y_l^m$ 是第 $l$ 个的基。把最小的三个成员算实：\n\n**（一）1 维：只有平凡表示 $\\rho\\equiv1$。** 设 $\\rho:SO(3)\\to\\mathbb{R}^\\times=GL(1,\\mathbb{R})$ 是连续同态（假设①连续②同态）：\n\n- 每个 $R\\in SO(3)$ 都是**平方**：转 $\\theta$ 的旋转 = 转 $\\theta/2$ 的旋转之平方。于是 $\\rho(R)=\\rho(S^2)=\\rho(S)^2>0$——$\\rho$ 只取正数；\n- $\\mathbb{R}^\\times$ 交换 ⟹ $\\rho$ 对共轭不敏感：$\\rho(TRT^{-1})=\\rho(T)\\rho(R)\\rho(T)^{-1}=\\rho(R)$。而 $SO(3)$ 的共轭类由旋转角 $\\theta\\in[0,\\pi]$ 决定；\n- 取转角 $\\theta=2\\pi/n$ 的旋转 $R_n$：$R_n^n=I$ ⟹ $\\rho(R_n)^n=1$，正数的 $n$ 次幂为 1 只能 $\\rho(R_n)=1$。有理倍角稠密 + 连续性 ⟹ 一切旋转角都映到 $1$。故 $\\rho\\equiv1$。$\\blacksquare$\n\n**结论**：想用「一维标量」搭载 $SO(3)$ 对称性，只有「不变量」一种方式（如标量场的旋转不变量 $x^2+y^2+z^2$）。\n\n**（二）3 维：标准表示 $\\rho(R)=R$，不可约。** 反设存在非平凡不变子空间 $W\\subseteq\\mathbb{R}^3$：\n\n- 若 $\\dim W=1$：$W=\\mathrm{span}(v)$，$v$ 是**所有**旋转的公共特征向量。但 $R_z(\\tfrac\\pi2)$ 的实特征向量只有 $z$ 轴（它把 $xy$ 平面整个转走：$R_z(\\tfrac\\pi2)e_1=(0,1,0)$【已核验:0|0*1+(-1)*0+0*0】——第一分量清零，说明 $e_1$ 方向留不住），而 $R_x(\\tfrac\\pi2)$ 的只有 $x$ 轴。公共特征向量须同时沿两条不同的轴，矛盾；\n- 若 $\\dim W=2$：因 $\\rho(R)$ 正交，$W^\\perp$（1 维）也不变，落回上一情形的矛盾。\n\n故标准表示不可约。$\\blacksquare$ 直观：旋转群足够「搅拌均匀」，任何直线/平面都会被某个旋转转出去。\n\n**（三）5 维及以上：$l=2$ 球谐空间。** $Y_2^m(-2\\le m\\le2)$ 五个函数张成的空间在旋转下封闭（转动后的 $Y_2^m$ 是五个 $Y_2^{m'}$ 的线性组合）——这是第 $l=2$ 个不可约表示，维数 $2\\cdot2+1=5$【已核验:5|2*2+1】。一般地第 $l$ 个维数 $2l+1$：$l=0,1,2,3$ 时 $1,3,5,7$【已核验:7|2*3+1】（切片：角动量量子化）。球谐函数详见 H5 与 lie3.17。\n\n**搭配反例**：把 1 维与 3 维拼成 $\\mathrm{diag}(1,R)$（reducible 词条）——可约表示正是这些「原子」的堆积。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "H5",
+        "lie3.17",
+        "lie2.7",
+        "F4"
+      ]
+    },
+    {
+      "id": "B1.3:irrep.intuition",
+      "type": "intuition",
+      "subject": "irrep",
+      "title": "直觉：不可约表示 = 对称性切不动的「独立房间」",
+      "keywords": [
+        "假设给了什么：一个群在向量空间上作用（矩阵族）",
+        "不变子空间 = 群作用下自成一体的「房间」",
+        "不可约 = 没有更小的房间——对称性在这里是「均匀」的",
+        "量子化 = 房间尺寸只有离散几档（2l+1）",
+        "类比：整数的素因子分解——不可约表示是素数"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 61,
+        "line_end": 68
+      },
+      "fill_hint": "直觉词条，与切片 63-68 行的物理事实（角动量量子化）对齐。",
+      "content": "**假设给了什么**：群 $G$ 通过 $\\rho$ 住在矩阵世界里，$V$ 是它活动的房间。群每来一个元素 $g$，就把整个 $V$ 线性地「洗牌」一次。\n\n**不变子空间的直觉**：如果 $V$ 里有一个子空间 $W$，无论群怎么洗牌都**拆不散**（$\\rho(g)W\\subseteq W$），那 $W$ 就是一个「独立房间」——群在 $W$ 里的行为与外面完全解耦，研究整个 $V$ 可以拆成「房间内 + 房间外」两件事（reducible 词条的 $\\mathrm{diag}(1,R)$ 正是两间房：1 维的不动房 + 3 维的旋转房）。\n\n**不可约 = 没有更小的房间**：对称性在 $V$ 里是「均匀」的——任何真子空间都会被某些群元素撑破。so3-reps 词条证明了 $SO(3)$ 在 $\\mathbb{R}^3$ 上正是如此：旋转把任何直线、平面都转出去。\n\n**为什么这导向量子化（切片核心事实）**：物理的态空间按对称性分解成不可约房间，**每个房间自带离散的编号与尺寸**——$SO(3)$ 的房间只有 $1,3,5,7,\\dots=2l+1$ 平方米这几档，没有 2 平方米的房间。角动量 $l$ 不是连续可调的旋钮，而是「房型编号」：粒子住进几号房，角动量就是几——**量子化不是动力学结果，是表示论的房型表**（F4 的语言：$L^2$ 的本征值 $l(l+1)$，简并度 $2l+1$）。\n\n**类比**：不可约表示之于表示，恰如素数之于整数——任何表示（完全可约时）唯一分解成不可约的「素因子」直和（$\\mathbf{1}\\oplus\\mathrm{std}$ 之于 $\\mathrm{diag}(1,R)$）。分类一个群的全部表示 = 拿到这张「元素周期表」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "F4",
+        "A2.3"
+      ]
+    },
+    {
+      "id": "B1.3:angular-momentum.application",
+      "type": "application",
+      "subject": "angular-momentum",
+      "title": "物理应用：角动量量子化与粒子分类（切片原文的展开）",
+      "keywords": [
+        "角动量量子化 = SO(3) 不可约表示维数 2l+1（切片原文）",
+        "l=0,1,2,3 → 1,3,5,7 重简并（数值锚点）",
+        "球谐函数 Y_l^m = 第 l 个不可约表示的基（切片原文）",
+        "粒子分类 = 庞加莱群不可约表示（切片原文；Wigner）",
+        "links：F4 角动量与自旋、lie2.7 su(2) 表示、lie3.17 球谐"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 63,
+        "line_end": 68
+      },
+      "fill_hint": "切片 63-68 行逐条转写 + links 展开；不新增物理结论。",
+      "content": "切片列出三条物理事实，逐条接通：\n\n1. **「角动量的量子化来自 $SO(3)$ 的不可约表示（维数 $2l+1$）」**：轨道角动量算符 $L_z,L_\\pm,L^2$ 正是 $\\mathfrak{so}(3)$（B1.2 的李代数）在希尔伯特空间上的表示——不可约房间没有连续的「尺寸」，只有 $2l+1$ 档。$l=0$（标量，1 维）、$l=1$（矢量，3 维）、$l=2$（四极矩，5 维）、$l=3$（7 维【已核验:7|2*3+1】）。氢原子的 $2l+1$ 重简并（无外场时 $m$ 同能级）就是房间尺寸的直接读数（F4、lie3.3）；\n2. **「粒子分类来自庞加莱群的不可约表示」**：把 $SO(3)$ 换成时空对称群（庞加莱群），同样的表示论机器产出粒子的质量-自旋标签——Wigner 的「粒子 = 不可约表示」纲领（lie2 系列与 lie3.5）；\n3. **「球谐函数 $Y_l^m$ 就是 $SO(3)$ 的第 $l$ 个不可约表示的基函数」**：函数空间 $L^2(S^2)$ 无穷维，但按旋转对称性切成有限维房间 $\\mathrm{span}\\{Y_l^m\\}_{m=-l}^l$——无穷维空间被对称性「离散化」，这正是 A2.3 正交基思想的对称性版本（H5、lie3.17 展开 CG 侧用法）。\n\n一句话：**对称性 → 房型表（不可约表示清单）→ 物理量的离散谱与简并度**——从「为什么角动量是量子化的」到「粒子为什么自带标签」，答案都是同一张表。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "F4",
+        "lie2.7",
+        "lie3.3",
+        "lie3.17",
+        "A2.3"
+      ]
+    },
+    {
+      "id": "B1.3:cg-reps.application",
+      "type": "application",
+      "subject": "cg-reps",
+      "title": "CG 应用：球谐光照与等变神经网络（切片原文的展开）",
+      "keywords": [
+        "球谐光照：环境光系数 a_lm = ⟨L, Y_lm⟩，旋转只搅动同 l 的系数",
+        "2l+1 维房间内旋转 → 光照旋转 O(1) 更新（预计算 + 小矩阵乘）",
+        "等变神经网络：特征按不可约表示变换，网络层 = 房间之间的张量积分解",
+        "links：H5 球谐函数、lie3.19 等变网络、F6 量子-CG 交叉"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 70,
+        "line_end": 74
+      },
+      "fill_hint": "切片 70-74 行两行事实的展开；工程细节归 H5 与 lie3.19。",
+      "content": "切片列出两条 CG 应用，逐条接通：\n\n1. **球谐光照（Spherical Harmonics Lighting）**：把环境光/辐照函数 $L$ 投影到球谐基：系数 $a_{lm}=\\langle L,Y_l^m\\rangle$。表示论保证：**环境旋转后，同一 $l$ 的 $2l+1$ 个系数只在自家房间内线性混合**（不同 $l$ 之间绝缘）——旋转光源 = 对每个 $l$ 做一次 $(2l+1)\\times(2l+1)$ 的小矩阵乘，而不用重采样整个环境贴图。截断到 $l\\le2$ 时房间尺寸 $1+3+5=9$【已核验:9|1+3+5】，9 个系数就是经典的「球谐光照探头」（H5 展开）；\n2. **等变神经网络（Equivariant Neural Networks）**：要求「输入旋转、输出跟着旋转」的网络。做法是把特征向量按 $SO(3)$ 不可约表示组织（$l=0$ 标量通道、$l=1$ 矢量通道……），网络层用表示的张量积（Clebsch–Gordan 分解）设计——不可约表示表既是**架构图**也是**正确性证明**（lie3.19）。\n\n共同点：**表示论把「旋转一个函数/特征」从无穷维问题压成有限个小矩阵乘**——这是数学结构（房型表）直接变现为算法复杂度的例子。量子-CG 的更多交叉见 F6。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "H5",
+        "lie3.19",
+        "F6"
+      ]
+    },
+    {
+      "id": "B1.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "单元总对照：表示 / 不可约 / 直和 / 例子速查",
+      "keywords": [
+        "表示 = 保乘法的矩阵化身；不可约 = 切不动；直和 = 拼房",
+        "SO(3) 速查：1 维只有平凡；3 维标准不可约；2l+1 系列",
+        "判定流程：验同态 → 找不变子空间 → 判可约",
+        "群作用（非线性）vs 表示（线性）：本单元走线性侧",
+        "一句话：对称性的线性化 = B1.2 李代数的表示（lie2 系列）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 59,
+        "line_end": 74
+      },
+      "fill_hint": "整单元压缩表；各行有对应词条支撑。",
+      "content": "本单元概念总对照：\n\n| 概念 | 一句话 | 判定/例子 | 对应词条 |\n|---|---|---|---|\n| 表示 $\\rho:G\\to GL(V)$ | 群的矩阵化身，保乘法 | 随机取 $g_1,g_2$ 验 $\\rho(g_1g_2)=\\rho(g_1)\\rho(g_2)$ | representation.quantifiers |\n| 假表示 | 像矩阵但破乘法 | $\\rho(\\theta)=R(\\theta^2)$：$\\pi^2$ 对 $\\pi^2/2$ | fake-homomorphism |\n| 不可约 | 没有非平凡不变子空间（切不动的房间） | 先找公共不动向量/不变平面，找到即否 | irrep.quantifiers |\n| 可约 + 直和 | 房间可拆：$\\rho=\\rho_1\\oplus\\rho_2$ | $\\mathrm{diag}(1,R)=\\mathbf{1}\\oplus\\mathrm{std}$ | reducible |\n| $SO(3)$ 原子表 | 第 $l$ 个不可约维数 $2l+1$ | $l=0,1,2,3\\mapsto1,3,5,7$【已核验:5|2*2+1】 | so3-reps |\n| 物理读法 | 量子化 = 房型表；粒子 = 表示标签 | 角动量、庞加莱群 | angular-momentum |\n| CG 读法 | 旋转压成小矩阵乘 | 球谐光照、等变网络 | cg-reps |\n\n**两条进阶走廊**：①把「群表示」的群换成李代数 $\\mathfrak{g}$（B1.2），得到无穷小表示——权、最高权、Dynkin 图那一整套（lie2 系列）；②把「线性」放宽成群在流形上的作用（B2.2/B2.4）——那是几何侧的对称性语言。三条线在 lie3 汇合。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.2",
+        "B2.2",
+        "lie2.6",
+        "lie3.25"
+      ]
+    },
+    {
+      "id": "B1.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "单元下游应用与跨章链接",
+      "keywords": [
+        "F4：角动量与自旋（2l+1、球谐、自旋 1/2）",
+        "H5：球谐函数在 CG（光照、探头）",
+        "lie2.7/lie2.8：su(2)/su(3) 表示（物理分类）",
+        "lie3.19：等变神经网络",
+        "A2.3：正交基与 Fourier（对称性离散化的先例）",
+        "E4：规范场（表示的物理化身）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 63,
+        "line_end": 74
+      },
+      "fill_hint": "每条一句「谁用本单元的什么」。",
+      "content": "本单元（表示论基础）在知识库里的下游：\n\n- **F4（角动量与自旋）**：$SO(3)/SU(2)$ 不可约表示表 = 角动量量子化的完整依据；自旋 1/2 是 $SU(2)$ 的 2 维表示——B1.2 的 2:1 覆盖在表示侧的化身；\n- **H5（球谐函数在 CG）**：$Y_l^m$ 作为不可约基的工程变现（光照、辐照度探头、环境贴图压缩）；\n- **lie2.7 / lie2.8**：$\\mathfrak{su}(2)$/$\\mathfrak{su}(3)$ 的表示论（权、Clebsch–Gordan）——本单元的「高一档」版本；\n- **lie3.19（等变神经网络）**：不可约分解直接设计网络架构；\n- **A2.3（正交基与 Fourier）**：Fourier 基 = 平移群（$SO(2)$ 的亲戚）的不可约基——对称性离散化的第一个先例，本单元把 $S^1$ 换成 $S^2$；\n- **E4（规范场论初步）**：规范变换群 $U(1)$ 的表示（电荷）——「粒子带哪个表示」决定它怎么响应规范场。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "F4",
+        "H5",
+        "lie2.7",
+        "lie3.19",
+        "A2.3",
+        "E4"
+      ]
+    },
+    {
+      "id": "B1.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：unit-circle（SO(2) 的特征标 e^{imθ} 与转速）",
+      "keywords": [
+        "模块 unit-circle：单位圆上跑 e^{imθ}，m=1,2,3 转速对比",
+        "演示「不可约表示 = 转速档位」：m 只取整数（2π 单值性）",
+        "演示可约：e^{iθ}⊕e^{i2θ} = 两个圆并排、各自转速",
+        "不变式自检：|e^{imθ}|=1 恒成立（偏差 > 1e-12 报错）",
+        "判据 Q4：显式初等函数 ⟹ 前端直渲（档1）"
+      ],
+      "tex_ref": null,
+      "viz": {
+        "module": "unit-circle",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "modes": [
+            "characters",
+            "direct-sum"
+          ],
+          "m_list": [
+            1,
+            2,
+            3
+          ],
+          "theta_max": 6.283185307179586
+        }
+      },
+      "fill_hint": "复用 unit-circle 模块（规格允许）；球谐 3D 可视化留给 H5/lie3.17 的演示槽位，本条只做 SO(2) 侧。",
+      "content": "单元级演示总览：本单元最值得画的是「表示 = 转速」——用最简单的群 $SO(2)$ 把「同态」「整数档位」「直和」三个概念全部可视化。\n\n模块 unit-circle（前端直渲，档1；判据 Q4：显式初等函数 $e^{im\\theta}$）：\n\n- **characters 模式**：$\\theta$ 从 0 扫到 $2\\pi$，同时画 $m=1,2,3$ 的点 $e^{im\\theta}$ 在单位圆上跑——$m=2$ 的点转速是 $m=1$ 的两倍，$\\theta=\\pi$ 时 $e^{i2\\theta}$ 已跑到 $1$ 而 $e^{i\\theta}$ 还在 $-1$【已核验:2|cos(2*pi)-cos(pi)】。整数 $m$ 缺一不可：$m=\\tfrac12$ 时 $\\theta$ 走完 $2\\pi$、点只走半圈到 $-1$【已核验:-1|cos(0.5*2*pi)】不回家——单值性死亡，这正是 fake-homomorphism 词条「角度必须线性 + $m\\in\\mathbb{Z}$」的动态版；\n- **direct-sum 模式**：两个并排的圆（$m=1$ 与 $m=2$），演示 $\\rho=e^{i\\theta}\\oplus e^{i2\\theta}$ 是可约表示（两间独立的房）——对照 $SO(3)$ 标准表示的「一间 3 维房切不动」（so3-reps 词条）；\n- **不变式自检**：任何 $m,\\theta$ 下 $|e^{im\\theta}|=1$【已核验:1|sqrt(cos(3*1)*cos(3*1)+sin(3*1)*sin(3*1))】，偏差 $>10^{-12}$ 抛错。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": []
+    },
+    {
+      "id": "B1.3:representation.probe1",
+      "type": "probe",
+      "subject": "representation",
+      "title": "检验题：判表示、找不变子空间、读房型表",
+      "keywords": [
+        "① ρ(θ)=R(3θ) 是 SO(2) 表示吗？（是：m=3，角度线性）",
+        "② diag(1,R_z(φ)) 作用在 e₁ 上等于什么？span(e₁) 不变吗？",
+        "③ 第 l=3 个 SO(3) 不可约表示维数？（2·3+1=7）",
+        "④ ρ(θ)=R(θ²) 用 θ₁=θ₂=π/3 检验同态性（(2π/3)² vs 2·(π/3)²）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 59,
+        "line_end": 67
+      },
+      "fill_hint": "数值全部可由表达式复核；④锚定 fake-homomorphism 词条的机制。",
+      "content": "① $\\rho(\\theta)=R(3\\theta)$ 是 $SO(2)$ 的表示吗？用 $\\theta_1=\\tfrac\\pi4,\\theta_2=\\tfrac\\pi2$ 验证 $\\rho(\\theta_1)\\rho(\\theta_2)=\\rho(\\theta_1+\\theta_2)$（合成转角 $=3\\cdot\\tfrac\\pi4+3\\cdot\\tfrac\\pi2=\\tfrac{9\\pi}4$【已核验:7.06858347058|3*pi/4+3*pi/2】，与 $\\rho(\\tfrac{3\\pi}4)$ 的转角 $3\\cdot\\tfrac{3\\pi}4=\\tfrac{9\\pi}4$ 一致——是表示，$m=3$）。\n\n② 取 $\\rho(R)=\\mathrm{diag}(1,R)$（$\\mathbb{R}^4$ 上）。算 $\\rho(R_z(\\tfrac\\pi2))\\,e_1$ 等于什么？$\\mathrm{span}(e_1)$ 是不变子空间吗？这个表示可约吗？（$=e_1$，因为第一个对角元是 1；是（对所有 $R$ 都 $\\rho(R)e_1=e_1$）；可约，且 $\\rho=\\mathbf{1}\\oplus\\mathrm{std}$）\n\n③ $SO(3)$ 第 $l=3$ 个不可约表示的维数是多少？$l=0$ 到 $l=3$ 的维数序列呢？（$2\\cdot3+1=7$【已核验:7|2*3+1】；序列 $1,3,5,7$——角动量量子化的「房型表」）\n\n④ 用 $\\theta_1=\\theta_2=\\tfrac\\pi3$ 检验 $\\rho(\\theta)=R(\\theta^2)$：左边 $\\rho(\\theta_1+\\theta_2)$ 的转角是多少？右边 $\\rho(\\theta_1)\\rho(\\theta_2)$ 的合成转角是多少？相等吗？（$\\tfrac{4\\pi^2}9\\approx4.3865$【已核验:4.38649084493|(pi/3+pi/3)**2】对 $2\\cdot\\tfrac{\\pi^2}9\\approx2.1932$【已核验:2.19324542246|(pi/3)**2+(pi/3)**2】——不相等，不是表示；差出的交叉项 $2\\theta_1\\theta_2=\\tfrac{2\\pi^2}9$【已核验:2.19324542246|2*(pi/3)*(pi/3)】是全部误差来源）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.2",
+        "F4"
+      ]
+    }
+  ]
+}

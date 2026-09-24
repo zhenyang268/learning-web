@@ -1,0 +1,338 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P2.2",
+  "chapter": "P2",
+  "title": "配方（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 105,
+    "line_end": 114,
+    "anchor": "notebook/P_computation.tex:105"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P2.2:completing-square.statement",
+      "type": "statement",
+      "subject": "completing-square",
+      "title": "配方（公式 + 条件 a≠0）",
+      "keywords": [
+        "ax²+bx+c=a(x+b/2a)²+(4ac-b²)/4a",
+        "条件：a≠0（a=0 退化为一次式）",
+        "配方=换元 x→x+b/2a（平移原点）",
+        "验证：x²-6x+5=(x-3)²-4，x=1 处两边=0",
+        "四个用途：顶点/求根公式/正定性/积分"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 107,
+        "line_end": 109
+      },
+      "fill_hint": "切片公式逐字转写 + 代入验证；'一元对角化'类比留在 compare。",
+      "content": "**公式本体**（切片）：\n\n$$ax^2+bx+c=a\\Big(x+\\frac{b}{2a}\\Big)^2+\\frac{4ac-b^2}{4a}$$\n\n**成立条件**：$a\\ne0$（$a=0$ 时是一次式，无顶点可配）；实系数（配方是纯代数操作，复系数亦成立，但用途多在实数）。\n\n**直觉**（切片原话）：平移原点让抛物线对称——配方就是换元 $x\\to x+\\frac{b}{2a}$。\n\n**代入验证**：$x^2-6x+5$（$a=1,b=-6,c=5$）：$(x-3)^2+\\frac{20-36}{4}=(x-3)^2-4$；$x=1$ 处：左边 $1-6+5=0$，右边 $(1-3)^2-4=0$，两边相等（差 $0$）【已核验:0|1-6+5-((1-3)**2-4)】。\n\n**用途**（切片原话）：求顶点/最值；推导求根公式；二次型正定性（见 P6）；把 $\\int\\frac{dx}{x^2+bx+c}$ 化为 $\\arctan$ 或 $\\log$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1",
+        "P6.3"
+      ]
+    },
+    {
+      "id": "P2.2:completing-square.intuition",
+      "type": "intuition",
+      "subject": "completing-square",
+      "title": "配方直觉：平移原点让抛物线对称",
+      "keywords": [
+        "ax² 本身对称、顶点在原点——复杂度全来自平移",
+        "搬原点到 x=-b/2a 后一次项消失",
+        "剩下两个可读参数：开口 a、顶点高度 (4ac-b²)/4a",
+        "类比：一元情形下的'对角化'（切片原话）",
+        "配方用平移消一次项，对角化用换基消交叉项"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 111,
+        "line_end": 111
+      },
+      "fill_hint": "切片直觉句展开；'对角化'类比的完整对照放 compare 词条。",
+      "content": "**假设给了什么**：带一次项的二次式——图像是平移过的抛物线，顶点不在原点、对称轴不过 $y$ 轴。**结论为什么成立**：抛物线 $ax^2$ 本身关于 $x=0$ 对称、最值在原点，**一切复杂度都来自平移**；把坐标原点搬到 $x=-\\frac{b}{2a}$（即换元 $x\\to x+\\frac{b}{2a}$，切片原话）后一次项消失，剩下\"纯平方 + 常数\"两个可读参数：平方项系数 $a$（开口方向与陡峭）、常数 $\\frac{4ac-b^2}{4a}$（顶点高度，符号由判别式决定）。\n\n**类比**（切片原话：一元情形下的\"对角化\"）：二次型（P6.3）用正交变换消**交叉项**，配方用平移消**一次项**——同一动机：把一般形式搬到标准位置，让参数自己说话。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.3"
+      ]
+    },
+    {
+      "id": "P2.2:completing-square.proof",
+      "type": "proof",
+      "subject": "completing-square",
+      "title": "推导骨架（怎么凑 + 求根公式）",
+      "keywords": [
+        "①提 a；②补半系数平方（逆向用 (u+v)²）",
+        "③回乘整理得常数项 (4ac-b²)/4a",
+        "求根公式=配方后开方移项",
+        "判别式就是'顶点高度的分子相反数'",
+        "易错点：括号里是 +b/2a（随 b 的符号自动变）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 107,
+        "line_end": 109
+      },
+      "fill_hint": "三步推导 + 求根公式 derivation；每步给理由。",
+      "content": "**三步骨架**：\n\n1. **提 $a$**：$ax^2+bx=a\\left(x^2+\\frac{b}{a}x\\right)$。\n2. **补半系数平方**：$x^2+\\frac{b}{a}x=\\left(x+\\frac{b}{2a}\\right)^2-\\frac{b^2}{4a^2}$（逆向用 $(u+v)^2=u^2+2uv+v^2$，P2.1——半系数 $\\frac{b}{2a}$ 正是交叉项的来源）。\n3. **回乘整理**：\n\n$$ax^2+bx+c=a\\Big(x+\\frac{b}{2a}\\Big)^2-\\frac{b^2}{4a}+c=a\\Big(x+\\frac{b}{2a}\\Big)^2+\\frac{4ac-b^2}{4a}.$$\n\n**求根公式 derivation**：令上式 $=0$：$a\\left(x+\\frac{b}{2a}\\right)^2=\\frac{b^2-4ac}{4a}$，开方移项得 $x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$——判别式 $\\Delta=b^2-4ac$ 就是顶点高度分子的相反数：$\\Delta>0$ ⟺ 顶点在 $x$ 轴下方（开口向上时两实根）。\n\n**易错点**：①括号里是 $x+\\frac{b}{2a}$——**加**号，$b<0$ 时自动变减（见 misuse）；②$a\\ne1$ 时别丢外面的 $a$；③常数项 $-\\frac{b^2}{4a}$ 要跟着走。**自检习惯**：配方后代一个具体 $x$ 核对左右相等。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1"
+      ]
+    },
+    {
+      "id": "P2.2:completing-square.quantifiers",
+      "type": "comparison",
+      "subject": "completing-square",
+      "title": "适用条件表",
+      "keywords": [
+        "a≠0：a=0 除零，退化为一次式",
+        "判别式符号决定下游形态（arctan vs log）",
+        "Δ<0 ⟹ 恒正/恒负（如 x²+2x+2=(x+1)²+1>0）",
+        "Δ>0 时积分走部分分式（P2.4）不走配方",
+        "配方法本身可放宽到复系数"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 107,
+        "line_end": 114
+      },
+      "fill_hint": "条件表 + 积分路线分支（与 P2.4 的接缝）。",
+      "content": "| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $a\\ne0$ | $a=0$：公式除以零；$bx+c$ 直接解 | 公式无意义 | $a=0$ 退化为一次式，单独处理 |\n| 实系数 | 复系数配方照做不误 | 其实不失效 | 可放宽（配方纯代数） |\n| $\\Delta<0$ 才有\"恒定号\"读法 | $x^2+2x+2=(x+1)^2+1>0$ 恒正、无实根；$\\Delta>0$ 的 $x^2-6x+5$ 有两实根 $1,5$（$x=5$：$25-30+5=0$【已核验:0|5**2-6*5+5】） | 误判根数/符号 | — |\n| 积分用途：二次式不可约（$\\Delta<0$）才配成 $\\arctan$ | $\\int\\frac{dx}{x^2-1}$（$\\Delta>0$）：配方不适用 | 走错技术路线 | $\\Delta>0$ 先部分分式（P2.4） |\n| 最值用途：开口方向决定 max/min | $-x^2+4x$ 配方 $-(x-2)^2+4$：是最大值 $4$ 不是最小值 | 方向反 | $a<0$ ⟹ 最大值 |",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.2:completing-square.misuse",
+      "type": "counterexample",
+      "subject": "completing-square",
+      "title": "典型误用：符号错与丢 a（-5 vs 7、3 vs 6）",
+      "keywords": [
+        "x²+6x 配成 (x-3)²-9：x=1 给 -5≠7",
+        "丢外层 a：2x²+4x 写成 (x+1)²-1：x=1 给 3≠6",
+        "修补：单点回代自检（两个误用都在 x=1 暴露）",
+        "记忆：括号里是 +b/2a，随 b 的符号自动变"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 107,
+        "line_end": 109
+      },
+      "fill_hint": "两类误用各算出具体错误值；单点回代是修补纪律。",
+      "content": "**误用一（符号）**：$x^2+6x$ 配成 $(x-3)^2-9$（平移方向反了）。$x=1$：左边 $=1+6=7$【已核验:7|1+6】，错误右边 $=(1-3)^2-9=-5$【已核验:-5|(1-3)**2-9】；正确配方 $(x+3)^2-9$ 在 $x=1$ 给 $16-9=7$ ✓【已核验:7|(1+3)**2-9】。\n\n**误用二（丢外层 $a$）**：$2x^2+4x$ 正确配方 $2(x+1)^2-2$：$x=1$ 处左边 $=6$【已核验:6|2*1**2+4*1】，配方给 $2\\cdot4-2=6$ ✓【已核验:6|2*(1+1)**2-2】；漏外层系数写成 $(x+1)^2-1$：$x=1$ 给 $3\\ne6$【已核验:3|(1+1)**2-1】。\n\n**修补（单点回代）**：配方完随便代一个非顶点的 $x$ 核对左右——两个误用都在 $x=1$ 当场暴露。**记忆规则**：括号里出现的是 $+\\frac{b}{2a}$——加号，随 $b$ 的符号自动变号；半系数是交叉项的来源（$2\\cdot x\\cdot\\frac{b}{2a}=\\frac{b}{a}x$ ✓）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.2:completing-square.integral-use",
+      "type": "application",
+      "subject": "completing-square",
+      "title": "落地：∫dx/(x²+bx+c) 化 arctan（含数值）",
+      "keywords": [
+        "x²+2x+2=(x+1)²+1（配方后不可约）",
+        "∫₀¹ dx/(x²+2x+2)=arctan(x+1)|₀¹=arctan(1/3)",
+        "数值 ≈0.32175（中点法核验）",
+        "分支判据：Δ<0 配方→arctan；Δ>0 部分分式→log"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 113,
+        "line_end": 114
+      },
+      "fill_hint": "切片'用途'第四条的完整算例；中点法数值核验（atan 不在沙箱）。",
+      "content": "**标准流程**（切片用途第四条）：$\\frac{1}{x^2+2x+2}=\\frac{1}{(x+1)^2+1}$（配方后分母不可约，$\\Delta=4-8<0$），于是\n\n$$\\int_0^1\\frac{dx}{x^2+2x+2}=\\arctan(x+1)\\Big|_0^1=\\arctan2-\\arctan1=\\arctan\\frac13,$$\n\n（末步用差角公式合并：$\\frac{2-1}{1+2\\cdot1}=\\frac13$。）数值 $\\approx0.32175$，中点法数值核验（$1000$ 段）【已核验:0.32175054023|sum(1/(((k+0.5)/1000+1)**2+1)/1000 for k in range(1000))】。\n\n**分支判据（与 P2.4 的接缝）**：配方后看 $\\Delta$——$\\Delta<0$：分母不可约，本路线（$\\arctan$ 型，配 P2.4 四类基本块的第 3 类）；$\\Delta>0$：分母能实分解，先部分分式（P2.4）出 $\\log$。同一积分在两个 $\\Delta$ 分支下走完全不同的路。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P7.2",
+        "P2.4"
+      ]
+    },
+    {
+      "id": "P2.2:completing-square.probe1",
+      "type": "probe",
+      "subject": "completing-square",
+      "title": "检验：配方并读最值",
+      "keywords": [
+        "x²-8x+11=(x-4)²-5，顶点 (4,-5)",
+        "2x²+4x+7=2(x+1)²+5，最小值 5 在 x=-1",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 107,
+        "line_end": 109
+      },
+      "fill_hint": "【必】小目检验题（两个系数形态）；答案数值已带核验标记。",
+      "content": "①配方 $x^2-8x+11$，写出顶点与最小值；②配方 $2x^2+4x+7$ 并求最小值及其取到位置。\n\n（答案：①$(x-4)^2-5$，顶点 $(4,-5)$——验证 $x=4$：$16-32+11=-5$【已核验:-5|4**2-8*4+11】；②$2(x+1)^2+5$，最小值 $5$ 在 $x=-1$：$2-4+7=5$【已核验:5|2*(-1)**2+4*(-1)+7】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.2:completing-square.application",
+      "type": "application",
+      "subject": "completing-square",
+      "title": "配方的服务对象",
+      "keywords": [
+        "顶点/最值：一切二次优化的读法",
+        "求根公式：代数常识的底座",
+        "P6.3 二次型正定性：Sylvester 判据的一元根",
+        "P7.2 积分技术：arctan/log 路线（见 integral-use）",
+        "A4.4/G5：能量估计吸收一次项的 ε-技巧是配方的分析学后代"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 113,
+        "line_end": 114
+      },
+      "fill_hint": "切片用途四则 + 两个跨章远亲（ε-技巧）。",
+      "content": "切片列的四个用途逐个落点：①**顶点/最值**——一切二次优化的标准读法（$x^2-6x+5$ 最小值 $-5$ 在 $x=3$：见 statement 的验证）；②**求根公式**——整个初等代数的底座（proof 已推）；③**二次型正定性**（切片：\"见 P6\"）——$n$ 维配方即 Sylvester 判据，一元情形就是\"看 $\\frac{4ac-b^2}{4a}$ 与 $a$ 同号\"；④**积分**（integral-use 已算）。\n\n**远亲**：能量估计与 Sobolev 证明里\"吸收一次项\"的 $\\varepsilon$-技巧（A4.4 嵌入定理、G5 强凸优化）是配方的分析学后代——$\\|x+y\\|^2=\\|x\\|^2+2\\langle x,y\\rangle+\\|y\\|^2$ 展开，再用 Young 不等式（P3）把交叉项 $2\\langle x,y\\rangle$ 收进 $\\frac{\\varepsilon}{2}\\|x\\|^2+\\frac{1}{2\\varepsilon}\\|y\\|^2$ 的配方形态。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.3",
+        "P7.2",
+        "A4.4",
+        "G5"
+      ]
+    },
+    {
+      "id": "P2.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "配方 vs 因式分解 vs 对角化",
+      "keywords": [
+        "配方消一次项（平移）→ 平方+常数",
+        "因式分解整体拆积 → 根的乘积",
+        "对角化消交叉项（换基）→ ∑λᵢyᵢ²（类比，切片原话）",
+        "三个'搬到标准位置'的操作同动机"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 111,
+        "line_end": 114
+      },
+      "fill_hint": "整单元对照表；'一元对角化'是切片原话。",
+      "content": "| 技术 | 消掉什么 | 输出形态 | 典型场景 |\n|---|---|---|---|\n| 配方（本单元） | 一次项（平移原点） | 平方 + 常数 | 最值、判别式、$\\arctan$ 积分 |\n| 因式分解（P2.3） | 整体拆成乘积 | 根的乘积 $(x-x_1)(x-x_2)$ | 求根、约分、部分分式前置 |\n| 对角化（P6.3，类比） | 交叉项（换基） | $\\sum\\lambda_i y_i^2$ | 二次型、主轴定理 |\n\n切片原话：配方是\"一元情形下的**对角化**\"——三者同一动机：把一般形式搬到标准位置，让参数（顶点/根/特征值）自己说话。选择判据：要**根**走分解（P2.3），要**最值/形态**走配方（本单元），要**多变量分类**走对角化（P6.3）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P2.2 的服务对象",
+      "keywords": [
+        "上游吃 P2.1（逆向用平方公式）",
+        "下游双路：Δ<0 配方到底（P7.2）；Δ>0 交 P2.4",
+        "多变量推广通向 P6.3 二次型"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 105,
+        "line_end": 114
+      },
+      "fill_hint": "单元级枢纽定位。",
+      "content": "P2.2 居 P2 节枢纽：上游吃 P2.1 的平方公式（逆向使用）；下游分两路——$\\Delta<0$ 配方到底走 $\\arctan$ 积分（P7.2），$\\Delta>0$ 分母可实分解交给 P2.4 部分分式；多变量推广通向 P6.3（二次型）。它是\"从恒等式到结构读法\"的第一个完整样本。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1",
+        "P2.4",
+        "P7.2",
+        "P6.3"
+      ]
+    },
+    {
+      "id": "P2.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：parabola-vertex（平移看对称）",
+      "keywords": [
+        "拖 b 滑块看对称轴 x=-b/2a 实时跟随",
+        "顶点轨迹 y=-b²/4a 叠加显示",
+        "反例叙事：符号开关反向平移，顶点跳错位置",
+        "判据 Q4：简单显式函数 ⟹ 前端直渲"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 111,
+        "line_end": 111
+      },
+      "fill_hint": "档1 新模块 parabola-vertex（小写短横线合法）；契约细节由前端另行记录。",
+      "content": "单元级演示叙事：**平移看对称**。交互：拖 $b$ 滑块，$y=x^2+bx$ 的抛物线随**配方平移**变到 $y=\\left(x+\\frac{b}{2}\\right)^2-\\frac{b^2}{4}$——对称轴 $x=-\\frac{b}{2}$ 实时跟随，顶点轨迹 $y=-\\frac{b^2}{4}$ 叠加显示。反例叙事：符号开关故意把 $+\\frac{b}{2a}$ 反向（$b=6$ 时对称轴跳到 $x=3$ 而非 $x=-3$），与 misuse 词条的 $-5$ vs $7$ 数值联动——\"平移方向\"的错在图上一目了然。判据 Q4：简单显式函数 + 几何图像 ⟹ 前端直渲。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "module": "parabola-vertex",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "a": 1,
+          "b_range": [
+            -8,
+            8
+          ],
+          "show": [
+            "original",
+            "shifted",
+            "vertex",
+            "sign-error"
+          ]
+        }
+      }
+    }
+  ]
+}

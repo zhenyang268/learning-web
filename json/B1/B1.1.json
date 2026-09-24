@@ -1,0 +1,389 @@
+{
+  "schema": "entry-card/v2",
+  "code": "B1.1",
+  "chapter": "B1",
+  "title": "群的基本概念",
+  "src": {
+    "file": "notebook/B_algebra.tex",
+    "line_start": 6,
+    "line_end": 27,
+    "anchor": "notebook/B_algebra.tex:6"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "B1.1:group-axioms.quantifiers",
+      "type": "comparison",
+      "subject": "group-axioms",
+      "title": "群公理限定词逐条拆解（去掉每一条会怎样）",
+      "keywords": [
+        "四条公理：封闭性 / 结合律 / 单位元 / 逆元——交换律不在其中",
+        "①封闭性不可去：奇数集在加法下 1+1=2 出界",
+        "②结合律不可去：整数减法 (3−2)−1=0 ≠ 3−(2−1)=2",
+        "③单位元不可去：正整数加法无 0",
+        "④逆元不可去：(N,+) 中 2 无逆（−2 ∉ N）",
+        "误加交换律：GL(2) 与 SO(3) 都非交换（具体矩阵见反例词条）",
+        "切片表本身就是证据：SO(3)/GL(n)/SE(3) 全是非交换群"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 7,
+        "line_end": 7
+      },
+      "fill_hint": "切片第 7 行只列了四条公理名；反例与「交换律不是公理」为标准内容补全，需阶段 2 复核措辞。",
+      "content": "切片给出群的公理化定义：集合 + 运算，满足封闭性、结合律、单位元、逆元。把它拆成限定词逐条检验——每条会失效的行各配一个具体反例：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 封闭性：$\\forall a,b\\in G$，$a\\cdot b\\in G$ | 奇数集合在加法下：$1+1=2$【已核验:2|1+1】是偶数，跑出集合 | 运算结果无定义，「群」这个词失去对象 | 不可去。封闭性是「运算」二字的一部分 |\n| ② 结合律：$(a\\cdot b)\\cdot c = a\\cdot(b\\cdot c)$ | 整数上的减法：$(3-2)-1=0$【已核验:0|(3-2)-1】但 $3-(2-1)=2$【已核验:2|3-(2-1)】，$0\\ne 2$ | 乘积 $a_1 a_2\\cdots a_n$ 的含义依赖加括号方式，无法定义 $g^n$、无法做迭代 | 不可去。三维叉积同理：$(\\mathbf{i}\\times\\mathbf{j})\\times\\mathbf{j}=-\\mathbf{i}$ 而 $\\mathbf{i}\\times(\\mathbf{j}\\times\\mathbf{j})=\\mathbf{0}$ |\n| ③ 单位元：$\\exists e$，$\\forall a$，$e\\cdot a=a\\cdot e=a$ | 正整数 $(\\mathbb{Z}_{>0},+)$：单位元须为 $0$，但 $0\\notin\\mathbb{Z}_{>0}$ | 没有「不动元素」，逆元更无从谈起（逆元靠 $e$ 定义） | 不可去。但 $e$ 的存在性可以从「左单位 + 左逆」推出（弱公理系统等价） |\n| ④ 逆元：$\\forall a$，$\\exists a^{-1}$，$a\\cdot a^{-1}=a^{-1}\\cdot a=e$ | $(\\mathbb{N},+)$：有单位元 $0$，但 $2+x=0$ 在 $\\mathbb{N}$ 内无解 | 方程 $a\\cdot x=b$ 不可解，无法「撤销」操作 | 不可去。这正是群区别于半群/幺半群的本质 |\n| ⑤（误加）交换律 $a\\cdot b=b\\cdot a$ | $GL(2)$：$AB\\ne BA$（具体矩阵见 abelian.counterexample）；切片表里 $SO(3)$、$SE(3)$、$GL(n)$、$SL(n)$ 全部非交换 | 若把交换律当公理会丢掉整个物理/CG 世界：刚体旋转、机器人学、量子色动力学全出局 | **不该加**。交换律是额外结构（阿贝尔群），只在 $SO(2)$、$U(1)$ 这类「一维」群上成立 |\n\n总结一句：四条公理 = 「可撤销操作的语法」。封闭性保证运算有输出、结合律保证迭代有意义、单位元与逆元保证任何操作都能被撤销——而交换律（操作顺序无关）是绝大多数对称群**没有**的奢侈品。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.2",
+        "P6.3"
+      ]
+    },
+    {
+      "id": "B1.1:abelian.counterexample",
+      "type": "counterexample",
+      "subject": "abelian",
+      "title": "反例：非交换群的两个完整计算（GL(2) 与 SO(3) 的 90° 旋转）",
+      "keywords": [
+        "GL(2)：A=[[0,1],[1,0]]，B=[[1,0],[0,2]]，AB≠BA",
+        "(1,2) 元：AB 给 2、BA 给 1——一个元素就够定案",
+        "SO(3)：绕 x 转 90° 再绕 y 转 90° ≠ 反过来",
+        "Rx·Ry 与 Ry·Rx 两矩阵逐元素不同",
+        "后果：动画里旋转顺序不可随意交换；(gh)⁻¹=h⁻¹g⁻¹ 顺序反转",
+        "修补：绕同一轴的旋转交换；SO(2)/U(1) 整体交换"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 15,
+        "line_end": 23
+      },
+      "fill_hint": "切片表格列出了 SO(3)/GL(n) 但未给非交换的具体计算；两个矩阵乘法为本条补全，数值全部可由表达式复核。",
+      "content": "**反例一：$GL(2)$（切片表：可逆矩阵群，维度 $n^2=4$）。** 取\n\n$$A=\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix},\\qquad B=\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}.$$\n\n逐元素相乘：\n\n$$AB=\\begin{pmatrix}0\\cdot1+1\\cdot0 & 0\\cdot0+1\\cdot2\\\\ 1\\cdot1+0\\cdot0 & 1\\cdot0+0\\cdot2\\end{pmatrix}=\\begin{pmatrix}0&2\\\\1&0\\end{pmatrix},$$\n\n其中 $(1,2)$ 元 $=2$【已核验:2|0*0+1*2】；而\n\n$$BA=\\begin{pmatrix}1\\cdot0+0\\cdot1 & 1\\cdot1+0\\cdot0\\\\ 0\\cdot0+2\\cdot1 & 0\\cdot1+2\\cdot0\\end{pmatrix}=\\begin{pmatrix}0&1\\\\2&0\\end{pmatrix},$$\n\n其中 $(1,2)$ 元 $=1$【已核验:1|1*1+0*0】。$2\\ne1$，故 $AB\\ne BA$——交换律死亡，且 $\\det A=0\\cdot0-1\\cdot1=-1$【已核验:-1|0*0-1*1】、$\\det B=2$【已核验:2|1*2-0*0】均非零，两矩阵确实都在 $GL(2)$ 里。\n\n**反例二：$SO(3)$（切片表：3D 旋转，刚体旋转）。** 取绕 $x$ 轴与绕 $y$ 轴各转 $90^\\circ$：\n\n$$R_x=\\begin{pmatrix}1&0&0\\\\0&0&-1\\\\0&1&0\\end{pmatrix},\\qquad R_y=\\begin{pmatrix}0&0&1\\\\0&1&0\\\\-1&0&0\\end{pmatrix}.$$\n\n先 $x$ 后 $y$：\n\n$$R_xR_y=\\begin{pmatrix}0&0&1\\\\1&0&0\\\\0&1&0\\end{pmatrix};$$\n\n先 $y$ 后 $x$：\n\n$$R_yR_x=\\begin{pmatrix}0&1&0\\\\0&0&-1\\\\-1&0&0\\end{pmatrix}.$$\n\n两矩阵从 $(2,3)$ 元起就分道扬镳（$0$ 对 $-1$【已核验:0|1*0+0*1+(-1)*0】 vs 【已核验:-1|0*0+0*0+(-1)*1】）。直观验证：把一本书先「向前倾 $90^\\circ$ 再向左倒 $90^\\circ$」与「先向左倒再向前倾」，封面最终朝向不同。\n\n**失效后果**：旋转不能当「向量」做线性组合；动画/机器人学中旋转序列的顺序是语义的一部分；且 $(gh)^{-1}=h^{-1}g^{-1}$（逆序展开），$(AB)^{-1}=B^{-1}A^{-1}$，顺序处理错会直接算出错误的逆变换。\n\n**修补条件**：绕**同一根轴**的旋转彼此交换（都等于角度相加）；一维群 $SO(2)\\cong U(1)$（切片表：维度 1）整体交换。矩阵手算细节见 P6.2 的消元与乘法流程。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.2",
+        "B1.2"
+      ]
+    },
+    {
+      "id": "B1.1:group-axioms.statement",
+      "type": "statement",
+      "subject": "group-axioms",
+      "title": "群定义的精确陈述",
+      "keywords": [
+        "群 (G,·)：集合 G + 二元运算 ·",
+        "①封闭 ∀a,b∈G: a·b∈G",
+        "②结合 ∀a,b,c: (a·b)·c = a·(b·c)",
+        "③单位元 ∃e ∀a: e·a = a·e = a",
+        "④逆元 ∀a ∃a⁻¹: a·a⁻¹ = a⁻¹·a = e",
+        "交换律不是公理；阿贝尔群 = 群 + 交换"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 7,
+        "line_end": 7
+      },
+      "fill_hint": "切片第 7 行的逐字转写 + 量词化；「阿贝尔群」定义为标准补充。",
+      "content": "群 $(G,\\cdot)$ 是一个集合 $G$ 配上一个二元运算 $\\cdot$，满足四条公理（量词逐条写全）：\n\n1. **封闭性**：$\\forall a,b\\in G$，$a\\cdot b\\in G$；\n2. **结合律**：$\\forall a,b,c\\in G$，$(a\\cdot b)\\cdot c=a\\cdot(b\\cdot c)$；\n3. **单位元**：$\\exists e\\in G$，使 $\\forall a\\in G$，$e\\cdot a=a\\cdot e=a$；\n4. **逆元**：$\\forall a\\in G$，$\\exists a^{-1}\\in G$，使 $a\\cdot a^{-1}=a^{-1}\\cdot a=e$。\n\n注意量词顺序：单位元是「先存在一个 $e$、再对一切 $a$ 成立」（$\\exists e\\,\\forall a$），而逆元是「每个 $a$ 各有自己的逆」（$\\forall a\\,\\exists a^{-1}$）——逆元允许依赖 $a$，单位元必须一视同仁。若额外满足 $a\\cdot b=b\\cdot a$，称**阿贝尔群**（abelian group，交换群）——这是额外结构，切片的关键群表里只有 $SO(2)$ 与 $U(1)$（都是一维）是阿贝尔的。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "B1.1:group-axioms.intuition",
+      "type": "intuition",
+      "subject": "group-axioms",
+      "title": "群 = 「可撤销操作」的语法",
+      "keywords": [
+        "把群元素读成「动作」而不是「东西」",
+        "封闭 = 动作可接连做；结合 = 连做的方式唯一",
+        "单位元 = 不动；逆元 = 撤销",
+        "非交换 = 动作有先后顺序（穿袜子vs穿鞋）",
+        "切片关键群表全是「动作集合」：旋转、刚体运动、规范变换"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 7,
+        "line_end": 7
+      },
+      "fill_hint": "直觉词条，切片无对应内容；与切片表格的「应用」列对齐（旋转/运动/对称）。",
+      "content": "**假设给了什么**：一个集合和一些可以复合的「动作」。切片关键群表里的条目全是动作集合——$SO(2)$ 是平面旋转、$SO(3)$ 是刚体旋转、$SE(3)$ 是刚体运动、$U(1)$ 是电磁规范的相位变换。\n\n**结论为什么因此成立**：四条公理恰好是「动作集合自洽」的最低要求——\n\n- **封闭性**：做完一个动作再做另一个，结果仍是该集合里的动作（转 $30^\\circ$ 再转 $45^\\circ$ = 转 $75^\\circ$，仍是一个旋转）；\n- **结合律**：三个动作 $a,b,c$ 连做，无论先复合哪两个，最终执行顺序都是 $a\\to b\\to c$——复合只关心顺序，不关心分组；\n- **单位元**：「什么都不做」也是一个合法动作（转 $0^\\circ$）；\n- **逆元**：每个动作都能撤销（转 $\\theta$ 撤销为转 $-\\theta$）。\n\n**非交换的直觉**：动作有顺序——先穿袜子再穿鞋，与先穿鞋再穿袜子，结果不同（$ab\\ne ba$）。只有当动作彼此「不干扰」时才可交换，例如绕同一根轴的旋转。\n\n一句话：群公理没在描述集合里的「东西」，它在描述「东西怎么被搬动」——这正是 B1.2 里「群 + 光滑结构 = 连续动作族（李群）」的入口。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.2"
+      ]
+    },
+    {
+      "id": "B1.1:group-axioms.proof",
+      "type": "proof",
+      "subject": "group-axioms",
+      "title": "证明骨架：单位元唯一、逆元唯一、消去律",
+      "keywords": [
+        "单位元唯一：e = e·e' = e'（一步完成）",
+        "逆元唯一：b = b·(a·c) = (b·a)·c = c",
+        "消去律：a·b=a·c ⟹ b=c（左乘 a⁻¹）",
+        "方程 a·x=b 恒有唯一解 x=a⁻¹·b",
+        "全部只用结合律 + 逆元定义，零额外工具"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 7,
+        "line_end": 7
+      },
+      "fill_hint": "标准小命题，切片未含证明；推导每步注明所用公理。",
+      "content": "三条基本命题，全部只用结合律（公理②）与单位元/逆元的定义（公理③④）。\n\n**命题 1（单位元唯一）**：设 $e,e'$ 都是单位元。把 $e'$ 当普通元素用 $e$ 的单位性，再把 $e$ 当普通元素用 $e'$ 的单位性：\n\n$$e \\overset{e'\\text{是单位}}{=} e\\cdot e' \\overset{e\\text{是单位}}{=} e'.$$\n\n故 $e=e'$。$\\blacksquare$\n\n**命题 2（逆元唯一）**：设 $b,c$ 都是 $a$ 的逆元，即 $b\\cdot a=a\\cdot b=e$、$c\\cdot a=a\\cdot c=e$。则\n\n$$b \\overset{e\\text{是单位}}{=} b\\cdot e = b\\cdot(a\\cdot c) \\overset{\\text{结合律}}{=} (b\\cdot a)\\cdot c = e\\cdot c \\overset{e\\text{是单位}}{=} c.$$\n\n故 $a^{-1}$ 记号合法。$\\blacksquare$\n\n**命题 3（消去律）**：若 $a\\cdot b=a\\cdot c$，两边左乘 $a^{-1}$：\n\n$$a^{-1}(a\\cdot b)=(a^{-1}a)\\cdot b=e\\cdot b=b,\\qquad a^{-1}(a\\cdot c)=c,$$\n\n故 $b=c$。右消去同理。**推论**：方程 $a\\cdot x=b$ 有唯一解 $x=a^{-1}\\cdot b$——这是「群上可以做代数」的全部基础。\n\n**易错点**：非交换群里左乘右乘必须分清——$a\\cdot b=a\\cdot c$ 只能**左**消去 $a$；$b\\cdot a=c\\cdot a$ 只能**右**消去。把 $ab=ca$ 错误地「约去 $a$」得出 $b=c$ 是非交换群上最常见的初学者错误。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "B1.1:key-groups.compare",
+      "type": "comparison",
+      "subject": "key-groups",
+      "title": "切片九群对照：维度数字从哪来",
+      "keywords": [
+        "SO(2)=1（一个角度）；SO(3)=3（9 元素 − 6 个正交约束）",
+        "SE(3)=6 = 3 旋转 + 3 平移",
+        "SU(2)=3（8 实参数 − 4 酉约束 − 1 行列式约束）",
+        "SU(3)=8、GL(n)=n²、SL(n)=n²−1（一个 det 约束）",
+        "维度 = 自由参数个数 = 李代数维数（B1.2 接口）",
+        "行列式与正交性的手算见 P6.1/P6.3"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 9,
+        "line_end": 26
+      },
+      "fill_hint": "切片表格的维度列为原文；「维度从哪来」的核算是本条扩展讲解，需人工复核约束计数。",
+      "content": "切片的九群表逐行核算「维度」数字的来源（维度 = 独立自由参数个数，也是 B1.2 李代数的维数）：\n\n| 群 | 维度 | 核算 | 应用（切片原文） |\n|---|---|---|---|\n| $SO(2)$ | 1 | 一个旋转角 $\\theta\\in[0,2\\pi)$ | 2D 旋转 |\n| $SO(3)$ | 3 | $3\\times3$ 矩阵 9 个元素，$R^TR=I$ 是对称方程组给 6 个独立约束：$9-6=3$【已核验:3|9-6】 | 刚体旋转 |\n| $SE(3)$ | 6 | 旋转部分 3 + 平移向量 3：$3+3$【已核验:6|3+3】 | 机器人学、动画 |\n| $U(1)$ | 1 | 单位圆上一个相位角 $e^{i\\theta}$ | 电磁规范对称 |\n| $SU(2)$ | 3 | $2\\times2$ 复矩阵有 8 个实参数；酉条件 4 个 + $\\det=1$ 一个：$8-4-1=3$【已核验:3|8-4-1】 | 自旋、四元数 |\n| $SU(3)$ | 8 | $3\\times3$ 复矩阵 18 实参数；酉条件 9 个 + $\\det=1$ 一个：$18-9-1=8$【已核验:8|18-9-1】 | 量子色动力学 |\n| $O(3)$ | 3 | 同 $SO(3)$（反射不增加参数） | 包含反射 |\n| $GL(n)$ | $n^2$ | $n\\times n$ 矩阵每个元素自由（可逆是开条件，不减维数） | 一般线性变换 |\n| $SL(n)$ | $n^2-1$ | 比 $GL(n)$ 多一个约束 $\\det=1$，如 $SL(2)$：$2^2-1=3$【已核验:3|2*2-1】 | 保体积变换 |\n\n读表方式：**维度 = 你需要多少个实数来指定群里的一个元素**。$SO(3)$ 的 3 恰好对应「绕哪根轴（2 个参数）+ 转多少度（1 个参数）」；$SU(2)$ 与 $SO(3)$ 同为 3 不是巧合——B1.2 会看到 $SU(2)\\to SO(3)$ 是 2:1 覆盖，两者局部同构（李代数相同）。\n\n约束计数的手算工具（行列式展开、正交条件 $R^TR=I$ 的逐元素展开）见 P6.1（行列式）与 P6.3（特征值与二次型）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.2",
+        "P6.1",
+        "P6.3"
+      ]
+    },
+    {
+      "id": "B1.1:o3-vs-so3.compare",
+      "type": "comparison",
+      "subject": "o3-vs-so3",
+      "title": "O(3) vs SO(3)：一个行列式符号的分界",
+      "keywords": [
+        "O(3) = 正交矩阵：RᵀR=I，det=±1",
+        "SO(3) = det=+1 的连通分量（纯旋转）",
+        "反射 diag(1,1,−1)：det=−1，落在 O(3)\\SO(3)",
+        "旋转 ∘ 反射 = 反射；O(3) = SO(3) ⋊ {I, 反射}",
+        "CG 落点：镜像模型/法线翻转要区分 det 正负"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 16,
+        "line_end": 21
+      },
+      "fill_hint": "切片表只说 O(3)「包含反射」；det 分解与半直积结构为标准扩展，需复核。",
+      "content": "切片表把 $O(3)$（正交矩阵）与 $SO(3)$（3D 旋转）分列两行，差别就在一个行列式符号：\n\n- $O(3)=\\{R:R^TR=I\\}$，条件 $\\det(\\,)=\\pm1$（对 $R^TR=I$ 取行列式：$(\\det R)^2=1$【已核验:1|(1)*(1)】，所以只有 $\\pm1$ 两档）；\n- $SO(3)=\\{R\\in O(3):\\det R=+1\\}$——**保定向**的正交变换，即纯旋转。\n\n**具体反例（$O(3)$ 里、$SO(3)$ 外）**：关于 $xy$ 平面的镜像\n\n$$F=\\mathrm{diag}(1,1,-1),\\qquad \\det F=1\\cdot1\\cdot(-1)=-1【已核验:-1|1*1*(-1)】.$$\n\n它把右手系变成左手系（$z$ 轴翻转），没有旋转能连续地做到这一点——$\\det$ 从 $+1$ 变到 $-1$ 必须跳过 $0$，而 $0$ 不是可逆的。这解释了两者的**拓扑差别**：$SO(3)$ 连通，$O(3)$ 有两个连通分量（$\\det=+1$ 与 $\\det=-1$）。\n\n**乘法结构**：$\\det(RS)=(\\det R)(\\det S)$，所以「旋转×旋转=旋转、旋转×反射=反射、反射×反射=旋转」——与整数的 $\\pm1$ 乘法同构。$O(3)$ 是 $SO(3)$ 与二元群 $\\{I,F\\}$ 的半直积。\n\n**CG 落点**：网格的镜像实例（instancing 做对称复用）会带 $\\det=-1$ 的变换，此时法线必须用逆转置矩阵 $(R^{-1})^T$ 变换而非 $R$ 本身，否则光照方向出错——这是「$O(3)$ 与 $SO(3)$ 之差」在渲染管线里的直接代价。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.1",
+        "H8.2"
+      ]
+    },
+    {
+      "id": "B1.1:key-groups.application",
+      "type": "application",
+      "subject": "key-groups",
+      "title": "切片「应用」列的下游展开",
+      "keywords": [
+        "SE(3) → 机器人学/动画：正运动学、皮肤绑定（H8.2、lie3.15/lie3.16）",
+        "SO(3) → 刚体旋转姿态（lie1.4）",
+        "SU(2) → 四元数与自旋（lie3.13、F4）",
+        "U(1)/SU(3) → 规范场论（E4）",
+        "GL(n)/SL(n) → 一般线性变换/保体积（G3 数值线性代数）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 15,
+        "line_end": 23
+      },
+      "fill_hint": "切片「应用」列逐行接 links；下游内容一句话带过，细节归目标章节。",
+      "content": "切片九群表最右列的每一行都通向一个后续章节：\n\n- **$SO(2)$/1D 旋转**：傅里叶分析里的相位旋转（A2.3）、圆群上的调和分析；\n- **$SO(3)$/刚体旋转**：姿态表示的母题（lie1.4）；角动量量子化的来源（F4、B1.3）；\n- **$SE(3)$/机器人学、动画**：机器人正/逆运动学、骨骼动画的变换层级、皮肤绑定（lie3.15 刚体变换、lie3.16 螺旋运动、H8.2 刚体模拟）；\n- **$U(1)$/电磁规范**：电磁势的规范自由度 $A\\mapsto A+\\partial\\lambda$ 就是 $U(1)$ 相位旋转（E4 规范场论初步）；\n- **$SU(2)$/自旋、四元数**：单位四元数与 $SU(2)$ 同构，旋转插值 Slerp 走这条路（lie3.13 四元数与 SU(2)、lie3.14 Slerp、F4 角动量与自旋）；\n- **$SU(3)$/量子色动力学**：夸克三色是 $SU(3)$ 的三维表示（lie2.8、lie3.5 标准模型的群结构）；\n- **$O(3)$/反射**：镜像对称与定向问题（本单元 o3-vs-so3 词条）；\n- **$GL(n)$/一般线性变换**：数值线性代数的整个舞台（G3）；\n- **$SL(n)$/保体积**：不可压缩流保持体积（I 系列）与辛结构（D3 哈密顿力学）的雏形。\n\n一句话：这张表是「后续所有对称性语言」的字典——学到 B1.2（李群）后，每个群都会配上自己的李代数与指数映射。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "lie1.4",
+        "lie3.13",
+        "lie3.15",
+        "H8.2",
+        "E4",
+        "F4"
+      ]
+    },
+    {
+      "id": "B1.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "九群总对照：按结构性质重排切片表",
+      "keywords": [
+        "几何类（SO/SE/O）vs 物理类（U/SU）vs 代数类（GL/SL）",
+        "交换的只有 SO(2)、U(1)——都是一维",
+        "SU(2)→SO(3) 2:1 覆盖：维度同为 3 不是巧合",
+        "紧致：SO/SE(3)/U/SU/O 全紧；GL(n) 不紧",
+        "选择判据：要「位置+姿态」选 SE(3)，要「纯旋转+无奇异」选 SU(2)"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 9,
+        "line_end": 26
+      },
+      "fill_hint": "交换/紧致/覆盖等性质超出切片表格原文（切片只给定义、维度、应用），属扩展讲解，逐行需阶段 2 复核。",
+      "content": "把切片九群表按结构性质重排成一张总对照（切片原文只给定义/维度/应用，本表是扩展阅读）：\n\n| 群 | 维度 | 交换？ | 连通？ | 一句话定位 |\n|---|---|---|---|---|\n| $SO(2)$ | 1 | 是 | 是 | 平面旋转的「钟表盘」 |\n| $U(1)$ | 1 | 是 | 是 | 与 $SO(2)$ 同构（$e^{i\\theta}\\leftrightarrow$ 转角 $\\theta$），物理里叫相位 |\n| $SO(3)$ | 3 | 否 | 是（但 $\\pi_1=\\mathbb{Z}_2$，双连通） | 刚体旋转；有万向锁问题 |\n| $SU(2)$ | 3 | 否 | 是（单连通） | $SO(3)$ 的「双胞胎」：2:1 覆盖（B1.2）、无奇异、四元数 |\n| $SE(3)$ | 6 | 否 | 是 | 位置+姿态，机器人/动画的标准变换群 |\n| $O(3)$ | 3 | 否 | 否（两分量） | $SO(3)$ 加反射 |\n| $SU(3)$ | 8 | 否 | 是 | 夸克颜色对称 |\n| $GL(n)$ | $n^2$ | 否 | 是（两分量，按 det 符号） | 一切线性代数的老祖宗 |\n| $SL(n)$ | $n^2-1$ | 否 | 是 | 保体积/保定向 |\n\n**三条读表判据**：\n\n1. **交换的只有一维群**（$SO(2)$、$U(1)$）：维度 $>1$ 的紧群的元素必然互相干扰；\n2. **$SU(2)$ 与 $SO(3)$ 同为 3 维**不是巧合——它们局部同构、整体 2:1（B1.2 的指数映射与四元数词条展开）；CG 里用四元数而不用旋转矩阵，正是因为 $SU(2)$ 拓扑更简单（插值无奇异性，lie3.14）；\n3. **「要什么选什么」**：需要平移选 $SE(3)$；只需要旋转且要避免万向锁/奇异，选 $SU(2)$（四元数）；需要反射/镜像，只能用 $O(3)$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.2",
+        "lie3.12"
+      ]
+    },
+    {
+      "id": "B1.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "单元下游应用与跨章链接",
+      "keywords": [
+        "B1.2 李群：本表九群全部升级为「光滑流形」",
+        "B1.3 表示论：群用矩阵「实现」，SO(3) 的 2l+1 维不可约表示",
+        "CG 旋转管线：四元数（SU(2)）→ 刚体（H8.2）→ 动画（lie3.15）",
+        "物理规范：U(1)/SU(3) → E4；粒子分类 = 庞加莱群表示（F4）",
+        "线代手算：行列式/正交性/特征值验证全走 P6"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 15,
+        "line_end": 23
+      },
+      "fill_hint": "每条一句「谁用本单元的什么」，细节归目标节点。",
+      "content": "本单元（群的基本概念）在知识库里的下游：\n\n- **B1.2（李群与李代数）**：本表九群是李群的全部具体例子；李代数 $\\mathfrak{so}(3)$、指数映射、Rodrigues 公式都在 $SO(3)$ 这一行上展开；\n- **B1.3（表示论）**：群公理给出「同态」的目标结构 $GL(V)$，$SO(3)$ 的不可约表示（维数 $2l+1$）直接成为角动量量子化；\n- **CG 旋转管线**：四元数插值（lie3.14）→ 骨骼动画变换层级（lie3.15）→ 刚体动力学（H8.2）——起点都是本表的 $SU(2)$/$SE(3)$ 行；\n- **物理**：$U(1)$/$SU(3)$ 行接 E4 规范场论初步；粒子分类 = 庞加莱群不可约表示（F4）；\n- **手算技法**：验证某矩阵属于哪个群（算 $R^TR$、算 $\\det$）是 P6.1（行列式）与 P6.3（二次型/正交性）的标准练习。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.2",
+        "B1.3",
+        "lie3.14",
+        "H8.2",
+        "E4",
+        "F4",
+        "P6.1",
+        "P6.3"
+      ]
+    },
+    {
+      "id": "B1.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：unit-circle（SO(2)/U(1) 与非交换性）",
+      "keywords": [
+        "模块 unit-circle：单位圆上的旋转角与相位",
+        "演示 1：SO(2) 交换——两段旋转合成只需角度相加",
+        "演示 2：e^{iθ} 模长恒 1（U(1) 定义的可视化）",
+        "演示 3：对照 3D——绕不同轴两次 90° 旋转顺序不同结果不同",
+        "不变式自检：任取 θ，|e^{iθ}−1| = 2|sin(θ/2)|（偏差 > 1e-12 报错）",
+        "判据 Q4：显式初等函数 ⟹ 前端直渲（档1）"
+      ],
+      "tex_ref": null,
+      "viz": {
+        "module": "unit-circle",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "modes": [
+            "compose-2d",
+            "phase-u1",
+            "so3-order"
+          ],
+          "theta": 1.0471975511965976,
+          "theta2": 0.7853981633974483
+        }
+      },
+      "fill_hint": "复用规格允许的 unit-circle 模块；so3-order 模式需要 3D 小部件，属契约扩展方向，先记槽位。",
+      "content": "单元级演示总览：本单元最值得画的是「一维群的交换性 vs 三维群的非交换性」——同一张单位圆，前者角度相加即可，后者必须看顺序。\n\n模块 unit-circle（前端直渲，档1；判据 Q4：显式初等函数）：\n\n- **compose-2d 模式**：拖两个滑块 $\\theta_1,\\theta_2$，显示先转 $\\theta_1$ 再转 $\\theta_2$ 与反序结果重合——合成角 $=\\theta_1+\\theta_2$（模 $2\\pi$）。锚点：$\\theta_1=\\pi/3,\\theta_2=\\pi/4$ 时合成角 $=7\\pi/12\\approx1.8330$【已核验:1.83259571459|pi/3+pi/4】；\n- **phase-u1 模式**：同一张圆读成 $U(1)$（复平面），点 $e^{i\\theta}$ 的模长恒为 1【已核验:1|sqrt(cos(1)*cos(1)+sin(1)*sin(1))】；\n- **so3-order 模式（对照）**：并排显示 $R_x(90^\\circ)R_y(90^\\circ)$ 与 $R_y(90^\\circ)R_x(90^\\circ)$ 作用在一个小飞船模型上的两个不同终态（矩阵数值见 abelian.counterexample 词条）；\n- **不变式自检**：$|e^{i\\theta}-1|=2|\\sin(\\theta/2)|$，取 $\\theta=\\pi/2$ 得 $\\sqrt2\\approx1.4142$【已核验:1.41421356237|2*abs(sin(pi/4))】，偏差 $>10^{-12}$ 抛错。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": []
+    },
+    {
+      "id": "B1.1:group-axioms.probe1",
+      "type": "probe",
+      "subject": "group-axioms",
+      "title": "检验题：亲手判一个矩阵属于哪个群",
+      "keywords": [
+        "① A=[[0,1],[−1,0]]：验 AᵀA=I、det=1 ⟹ SO(2)",
+        "② 奇数集加法：3+5=8 破坏封闭性",
+        "③ 反射 diag(1,1,−1)：det=−1 ⟹ O(3)\\SO(3)",
+        "④ (gh)⁻¹ 顺序：用 GL(2) 的 AB、BA 验逆元反序"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 7,
+        "line_end": 21
+      },
+      "fill_hint": "数值全部可由表达式复核；第④问锚定 abelian.counterexample 的结论。",
+      "content": "① 取 $A=\\begin{pmatrix}0&1\\\\-1&0\\end{pmatrix}$。算 $A^TA$ 与 $\\det A$，判断 $A$ 属于切片表中的哪个群？（$A^TA=I$、$\\det A=1$【已核验:1|0*0-1*(-1)】，故 $A\\in SO(2)$：转 $90^\\circ$ 的平面旋转）\n\n② 奇数集合在加法下成群吗？用 $3+5$ 检验封闭性。（$3+5=8$【已核验:8|3+5】是偶数，出界——封闭性死亡，不是群）\n\n③ 取 $F=\\mathrm{diag}(1,1,-1)$。$F^TF=I$ 成立吗？$\\det F$ 是多少？它属于 $O(3)$ 吗？属于 $SO(3)$ 吗？（$F^TF=I$ 成立；$\\det F=-1$【已核验:-1|1*1*(-1)】，故 $F\\in O(3)$ 但 $F\\notin SO(3)$：它是反射）\n\n④ 取本单元反例词条的 $A=\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$、$B=\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}$。验证 $(AB)^{-1}=B^{-1}A^{-1}$ 而不是 $A^{-1}B^{-1}$：算 $B^{-1}=\\begin{pmatrix}1&0\\\\0&1/2\\end{pmatrix}$（$\\det B=2$【已核验:2|1*2-0*0】），再分别算 $(AB)\\cdot(B^{-1}A^{-1})$ 与 $(AB)\\cdot(A^{-1}B^{-1})$，哪个等于 $I$？（前者 $=I$；后者 $=\\begin{pmatrix}2&0\\\\0&0.5\\end{pmatrix}$【已核验:2|0*0+2*1】——顺序错了）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P6.2"
+      ]
+    }
+  ]
+}

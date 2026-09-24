@@ -1,0 +1,336 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P6.2",
+  "chapter": "P6",
+  "title": "消元与求逆（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 317,
+    "line_end": 325,
+    "anchor": "notebook/P_computation.tex:317"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P6.2:gauss.quantifiers",
+      "type": "comparison",
+      "subject": "gauss",
+      "title": "适用条件表：主元、可逆性与换行的每个坑",
+      "keywords": [
+        "主元为零必须换行：[[0,1],[1,0]] 直接消元除零",
+        "det=0 时求逆公式分母为零：[[1,2],[2,4]]",
+        "LU 分解需要主元非零（或记录换行 PA=LU）",
+        "四等价：det≠0 ⟺ 满秩 ⟺ 列线性无关 ⟺ 可逆",
+        "增广 [A|I] 消元对一切方阵合法（结果里 det=0 自己现形）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 318,
+        "line_end": 321
+      },
+      "fill_hint": "切片四条 item（消元/LU、2×2 求逆、3×3 增广、四等价）隐含的使用条件逐条配失效数值，【待核验】表达式可与 numpy 对拍。",
+      "content": "切片的四条 item 隐含几个硬限定词。逐条拆解（每行给失效数值）：\n\n| 条件／限定 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 消元遇到**主元为零**必须换行 | $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$：第一步就要除以 $a_{11}=0$，直接除零崩溃 | 流程中断，误判「解不出来」（其实它可逆，$\\det=-1$【已核验:-1|0*0-1*1】） | 换行即可继续；带换行记录的版本是 $PA=LU$（工业标准） |\n| $2\\times2$ 求逆公式要求 $ad-bc\\ne0$ | $\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix}$：$ad-bc=1\\cdot4-2\\cdot2=0$【已核验:0|1*4-2*2】，分母 $\\tfrac{1}{ad-bc}$ 除零 | 公式直接无定义；强行「约掉」得到伪逆 | 不能：$\\det=0$ 的矩阵不可逆（几何上被压扁，P6.1） |\n| LU 分解要求**消元不换行**（主元全程非零） | 同 $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$：无换行的 LU 不存在 | 想存的「消元档案」存不下 | 放宽为 $PA=LU$：把换行也记进 $P$ |\n| 四等价链对方阵成立 | 非方阵（$2\\times3$）谈 $\\det$ 无意义；列相关则 $\\det=0$ 自动现形 | 把「秩亏」误当「计算错误」 | 等价链的每一环都是同一件事的不同仪表 |\n| 回代要求已是**阶梯形** | 未化完就回代，方程混着未消的元 | 解错 | 流程纪律：先消完（左端阶梯），再回代（自下而上） |\n\n总结一句：消元是**流程**、求逆是**流程的副产品**（对 $[A\\mid I]$ 做）、$\\det\\ne0$ 是**流程能走通的判据**——三者是同一台机器（四等价把它们焊在一起）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:gauss.misuse",
+      "type": "counterexample",
+      "subject": "gauss",
+      "title": "典型误用：奇异矩阵强行求逆（完整计算）",
+      "keywords": [
+        "[[1,2],[2,4]]：det=0，第二行=第一行×2",
+        "公式分母 ad−bc=0 除零",
+        "增广消元现形：左端出现 0=非零",
+        "几何：把平面压扁到一条线，信息不可恢复",
+        "修补：最小二乘/伪逆是另一台机器"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 319,
+        "line_end": 320
+      },
+      "fill_hint": "切片只给求逆公式与四等价；奇异矩阵的失效全程是使用层面展开，数值带【待核验】。",
+      "content": "反例矩阵 $A=\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix}$。完整失效计算：\n\n1. 查判据：$\\det A=1\\cdot4-2\\cdot2=0$【已核验:0|1*4-2*2】——第二行恰是第一行的 $2$ 倍（列也成比例：$(2,4)=2(1,2)$）。\n2. 套 $2\\times2$ 求逆公式 $A^{-1}=\\tfrac{1}{ad-bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$：分母为零，**除零**，公式无定义。\n3. 换增广消元路线（$[A\\mid I]$）：$r_2\\leftarrow r_2-2r_1$ 后左端变成 $\\begin{pmatrix}1&2\\\\0&0\\end{pmatrix}$——第二行全零，永远消不成 $[I\\mid A^{-1}]$；右端对应行变成 $(−2,1)$，即「$0\\cdot x=1$」型的矛盾记账，**$\\det=0$ 自己在流程里现形**。\n4. 几何验尸：$A$ 把整个平面压到直线 $\\{(t,2t)\\}$ 上（第二列 $=$ 第一列 $\\times2$），两个自由度压成一个——信息丢失，不存在逆映射。\n\n常见错误修补（都错）：「约掉公因子 2 再求逆」——那是另一个矩阵的逆；「交换行列」——$\\det$ 只变号不变零。\n\n正确出路：解不存在唯一解时改问最小二乘（正规方程 $A^TA$，见 A2.2 的投影观点）或伪逆（SVD，P6.4）——那是「换问题」，不是「修公式」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:gauss.statement",
+      "type": "statement",
+      "subject": "gauss",
+      "title": "高斯消元：阶梯形 → 回代；LU 是消元的记录",
+      "keywords": [
+        "高斯消元 → 阶梯形 → 回代",
+        "LU 分解＝消元过程的记录（切片原话）",
+        "主元为零先换行",
+        "切片标注【必】",
+        "对 [A|I] 做同一套动作得 A⁻¹"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 318,
+        "line_end": 318
+      },
+      "fill_hint": "切片第一条 item 逐字转写（高斯消元→阶梯形→回代；LU 分解（消元过程的记录）），流程条件（换行）由 quantifiers 表支撑。",
+      "content": "切片原文：高斯消元 $\\to$ 阶梯形 $\\to$ 回代；LU 分解（消元过程的记录）。\n\n**流程**（解 $Ax=b$）：\n\n1. 消元：用「某行 $\\pm$ 另一行的倍数」把左下角逐列清零，化成**阶梯形**（上三角）；主元为零时先换行（记账）；\n2. 回代：从最后一行（一个未知数）自下而上逐个解出。\n\n**LU 分解**：把第 1 步里「每一步用了什么倍数」存进下三角阵 $L$，消元结果就是 $U$——$A=LU$。以后再解同 $A$ 不同 $b$ 的方程组，只需「$Ly=b$ 前代、$Ux=y$ 回代」，不再消元。这正是切片「LU＝消元过程的记录」的含义：**消元做一次，存档复用**。\n\n成立条件：消元全程不换行才能有 $A=LU$（主元零则需 $PA=LU$，见 quantifiers 表）。数值例见 gauss.derivation。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:gauss.intuition",
+      "type": "intuition",
+      "subject": "gauss",
+      "title": "直觉：消元＝左乘一串「打包好的行变换」",
+      "keywords": [
+        "每步行变换＝左乘一个初等下三角阵",
+        "一串初等阵乘起来＝单个下三角 L⁻¹",
+        "U 是产品，L 是工艺卡片",
+        "假设：主元非零（或换行）",
+        "回代＝顺着梯子往下爬"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 318,
+        "line_end": 318
+      },
+      "fill_hint": "切片只说「LU 分解（消元过程的记录）」；本条是这句话的机制展开（左乘初等阵的复合）。",
+      "content": "**假设给了什么**：「某行加上另一行的倍数」这类行变换，等价于**左乘**一个单位下三角阵 $E$（对角线是 1，只在被加的位置有一个倍数）。\n\n**结论为什么因此成立**：整个消元流程是\n$$E_k\\cdots E_2E_1A=U$$\n一串下三角阵的乘积还是下三角阵，把它的逆记作 $L=(E_k\\cdots E_1)^{-1}$——于是 $A=LU$。所以：\n\n- $U$ 是**产品**（消元产出的阶梯形）；\n- $L$ 是**工艺卡片**（每一步用了什么倍数，倒过来抄一遍）——「LU＝消元过程的记录」（切片原话）的机制版。\n\n回代的直觉：阶梯形最后一行只剩一个未知数，解出后代入倒数第二行……像顺着梯子往下爬，每爬一层多带回一个已解出的值。\n\n几何视角：消元是在「不改变解集」的前提下换一套更好解的方程（行变换保持行空间与解）；$\\det$ 在整个过程中只在换行/倍乘时被动记账（P6.1）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:gauss.derivation",
+      "type": "proof",
+      "subject": "gauss",
+      "title": "数值全程：2×2 的 LU 分解与回代",
+      "keywords": [
+        "A=[[2,1],[4,3]]：L21=2，U=[[2,1],[0,1]]",
+        "验证 LU=A 逐元素",
+        "回代解 Ly=b、Ux=y",
+        "每步给理由",
+        "全部数值可 numpy 对拍"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 318,
+        "line_end": 318
+      },
+      "fill_hint": "切片无具体算例；本条 2×2 数值全程（LU、回代）按切片流程展开，数值均带【待核验】（numpy 可对拍：A=[[2,1],[4,3]] 的 LU 与解）。",
+      "content": "取 $A=\\begin{pmatrix}2&1\\\\4&3\\end{pmatrix}$，$b=\\begin{pmatrix}3\\\\7\\end{pmatrix}$。全程：\n\n**第 1 步（消元）**：主元 $a_{11}=2\\ne0$，行倍数 $l_{21}=\\tfrac{4}{2}=2$【已核验:2|4/2】。做 $r_2\\leftarrow r_2-2r_1$：\n$$\\begin{pmatrix}2&1\\\\4-2\\cdot2&3-2\\cdot1\\end{pmatrix}=\\begin{pmatrix}2&1\\\\0&1\\end{pmatrix}=U$$\n（第二行第一元 $4-2\\cdot2=0$【已核验:0|4-2*2】——清零成功。）\n\n**第 2 步（存档 LU）**：$L=\\begin{pmatrix}1&0\\\\2&1\\end{pmatrix}$（把倍数 $2$ 抄进下三角）。验证 $LU=A$：$(LU)_{21}=2\\cdot2+1\\cdot0=4$【已核验:4|2*2+1*0】，$(LU)_{22}=2\\cdot1+1\\cdot1=3$【已核验:3|2*1+1*1】——逐元素复原 $A$。\n\n**第 3 步（回代）**：解 $Ly=b$：$y_1=3$，$2\\cdot3+y_2=7\\Rightarrow y_2=1$【已核验:1|7-2*3】。再解 $Ux=y$：$x_2=1$，$2x_1+1=3\\Rightarrow x_1=1$【已核验:1|(3-1)/2】。\n\n**对拍**：直接验证 $Ax=b$：$2\\cdot1+1\\cdot1=3$【已核验:3|2*1+1*1】，$4\\cdot1+3\\cdot1=7$【已核验:7|4*1+3*1】。解 $x=(1,1)$ 成立。\n\n易错点：①$L$ 里抄的是「用的倍数」，不是行变换本身（是 $E$ 的逆）；②换行时 $L$ 与 $U$ 的记账要同步（$PA=LU$）；③回代先 $Ly=b$ 再 $Ux=y$，顺序别反。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:inverse-2x2.statement",
+      "type": "statement",
+      "subject": "inverse-2x2",
+      "title": "2×2 求逆公式（切片逐字）",
+      "keywords": [
+        "[[a,b],[c,d]]⁻¹ = 1/(ad−bc)·[[d,−b],[−c,a]]",
+        "条件：ad−bc≠0",
+        "主对角线对调、副对角线变号、除以行列式",
+        "切片标注【必】",
+        "数值例 [[2,1],[1,3]]⁻¹=1/5[[3,−1],[−1,2]]"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 319,
+        "line_end": 320
+      },
+      "fill_hint": "切片公式逐字转写；数值例与验证见 inverse-2x2.proof。",
+      "content": "切片原文（$2\\times2$ 求逆）：\n\n$$\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1}=\\frac{1}{ad-bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$$\n\n口诀：**主对角线对调，副对角线变号，整体除以行列式**。\n\n成立条件：$ad-bc\\ne0$（即 $\\det\\ne0$，可逆四等价的头一环）。$ad-bc=0$ 时公式除零——矩阵把平面压扁（见 gauss.misuse 的完整验尸）。\n\n数值例：$\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}^{-1}=\\tfrac15\\begin{pmatrix}3&-1\\\\-1&2\\end{pmatrix}$（$\\det=2\\cdot3-1\\cdot1=5$【已核验:5|2*3-1*1】）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:inverse-2x2.proof",
+      "type": "proof",
+      "subject": "inverse-2x2",
+      "title": "验证：A·A⁻¹=I 逐元素算通（含数值例）",
+      "keywords": [
+        "A·adj(A)=det·I 的 2×2 特例",
+        "四个元素逐一验证 [[2,1],[1,3]]",
+        "每步给理由（乘法定义）",
+        "对角元=1、非对角=0",
+        "numpy 对拍 inv([[2,1],[1,3]])"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 319,
+        "line_end": 320
+      },
+      "fill_hint": "切片只给公式；本条是「代回验证」的完整计算（证明即乘出来），数值带【待核验】。",
+      "content": "证明即验证：设 $B=\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$（伴随阵），算 $AB$：\n\n$$(AB)_{11}=ad+ b(-c)=ad-bc,\\quad (AB)_{12}=a(-b)+bd=0$$\n$$(AB)_{21}=cd+d(-c)=0,\\quad (AB)_{22}=c(-b)+da=ad-bc$$\n\n即 $AB=(ad-bc)I$，两边除以 $ad-bc$（条件：非零）得 $A\\cdot\\tfrac{1}{ad-bc}B=I$，且同理 $BA=I$——$B/(ad-bc)$ 就是逆。\n\n数值例全程（$A=\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}$，$A^{-1}=\\tfrac15\\begin{pmatrix}3&-1\\\\-1&2\\end{pmatrix}$）：\n\n- $(AA^{-1})_{11}=\\tfrac{2\\cdot3+1\\cdot(-1)}{5}=\\tfrac55=1$【已核验:1|(2*3+1*(-1))/5】\n- $(AA^{-1})_{12}=\\tfrac{2\\cdot(-1)+1\\cdot2}{5}=0$【已核验:0|(2*(-1)+1*2)/5】\n- $(AA^{-1})_{21}=\\tfrac{1\\cdot3+3\\cdot(-1)}{5}=0$【已核验:0|(1*3+3*(-1))/5】\n- $(AA^{-1})_{22}=\\tfrac{1\\cdot(-1)+3\\cdot2}{5}=\\tfrac55=1$【已核验:1|(1*(-1)+3*2)/5】\n\n四元素对账完毕（可 `numpy.linalg.inv([[2,1],[1,3]])` 对拍）。易错点：副对角线变号是「$-b,-c$」两处都要；除的是 $\\det$ 不是 $1/\\det$ 的倒数搞反。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:inverse-gauss.statement",
+      "type": "statement",
+      "subject": "inverse-gauss",
+      "title": "3×3 求逆：增广 [A|I] 消到 [I|A⁻¹]（切片逐字）",
+      "keywords": [
+        "增广矩阵 [A|I] 做行变换",
+        "左端变 I 时右端自动是 A⁻¹",
+        "切片标注【熟】",
+        "机制：行变换＝左乘，整条流程＝左乘 A⁻¹",
+        "主元为零换行记账"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 321,
+        "line_end": 321
+      },
+      "fill_hint": "切片原文「3×3：增广 [A|I] 消到 [I|A⁻¹]（【熟】）」。转写＋机制一行（为什么左端变 I 右端就是逆）。",
+      "content": "切片原文：$3\\times3$：增广 $[A\\mid I]$ 消到 $[I\\mid A^{-1}]$（【熟】）。\n\n**操作**：对增广矩阵 $[A\\mid I]$ 只做行变换（换行、倍乘、行加），目标是把**左半**化成 $I$；到达时**右半**自动是 $A^{-1}$。\n\n**机制（为什么自动）**：每个行变换＝左乘一个初等阵，设全程等效于左乘 $E$：$E[A\\mid I]=[EA\\mid E]$。左半 $EA=I$ 说明 $E=A^{-1}$，于是右半 $E=A^{-1}$——**右半记录的就是「对 $A$ 做过的全部动作」**，与 LU 的存档思想同源（gauss.intuition）。\n\n成立条件：$A$ 可逆（$\\det\\ne0$）。$\\det=0$ 时左端某行会消成全零、永远到不了 $I$——奇异性在流程中自己现形（gauss.misuse 第 3 步）。\n\n数值样例（$2\\times2$ 演示同一流程）：$\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}\\to r_1/2\\to r_2-r_1\\to\\dots$ 走完得右半 $\\tfrac15\\begin{pmatrix}3&-1\\\\-1&2\\end{pmatrix}$，与公式版一致（inverse-2x2.statement）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:invertibility.statement",
+      "type": "statement",
+      "subject": "invertibility",
+      "title": "可逆四等价（切片逐字）",
+      "keywords": [
+        "可逆 ⟺ det≠0 ⟺ 满秩 ⟺ 列向量线性无关",
+        "四块仪表测同一件事",
+        "几何：不压扁维度",
+        "切片原文",
+        "再加一环：⟺ 行向量线性无关"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 322,
+        "line_end": 322
+      },
+      "fill_hint": "切片原文「可逆 ⟺ det≠0 ⟺ 满秩 ⟺ 列向量线性无关」逐字转写；各环的仪表解读为展开讲解。",
+      "content": "切片原文（四等价）：\n\n$$\\text{可逆}\\iff\\det\\ne0\\iff\\text{满秩}\\iff\\text{列向量线性无关}$$\n\n四个说法各是一块「仪表」，测的是同一件事——**变换不压扁维度**：\n\n- **可逆**（存在 $A^{-1}$，$AA^{-1}=I$）：动作函数视角——变换可撤销；\n- **$\\det\\ne0$**（P6.1）：体积视角——面积/体积不被压成 $0$；\n- **满秩**：行/列空间维度视角——$n\\times n$ 阵的秩达到 $n$；\n- **列线性无关**：几何视角——像集还是 $n$ 维（没有两列塌到同一方向）。\n\n顺带一环（同链）：$\\iff$ **行向量线性无关**（$\\det$ 的行列对称性，P6.1 性质对行列都成立）；$\\iff$ $Ax=0$ 只有零解；$\\iff$ $Ax=b$ 对一切 $b$ 有唯一解。\n\n反例环：$\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix}$ 四块仪表同时报红——$\\det=0$【已核验:0|1*4-2*2】、秩 $1$、列成比例、不可逆（gauss.misuse）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：解系统、法线变换、数值核心（A2 与 H 章）",
+      "keywords": [
+        "A2.2 希尔伯特空间：正交投影/最小二乘的正规方程求解",
+        "A2.4 谱理论：预条件与算子方程离散化",
+        "H1 DDG：网格线性系统（Laplacian 方程）",
+        "H8.2 刚体：法线/惯量矩阵、约束求解",
+        "G3 数值线性代数：LU/QR 的工业实现"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 318,
+        "line_end": 322
+      },
+      "fill_hint": "按用户规则 P6 的 application links 指向 A2（泛函）与 H 章（CG）；G3 是本单元的直接下游（数值实现），一并列入。",
+      "content": "消元/求逆在全库的落点：\n\n- **A2.2（希尔伯特空间）**：最小二乘＝往列空间正交投影，落地即解正规方程 $A^TAx=A^Tb$——本单元的消元是它的计算引擎（投影观点见 P6.4 的 GS）；\n- **A2.4（谱理论）**：算子方程 $(T-\\lambda I)x=0$ 离散化后是奇异系统（$\\det=0$ 判据的放大版）——P6.3 特征值计算的前站；\n- **H1（离散微分几何）**：网格的 Laplacian／泊松方程（曲面平滑、参数化）每步都在解大型稀疏线性系统；\n- **H8.2（刚体模拟）**：接触约束的 LCP（M4）、惯量矩阵的逆（角加速度 $\\alpha=I^{-1}\\tau$）——不可逆的 $I$ 意味着零惯量方向的数值爆炸；\n- **G3（数值线性代数）**：本单元的工业版——LU 带主元选取、QR、迭代法；手算一次 $2\\times2$（切片要求）正是为了看懂它在做什么。\n\n选择判据：一次性解 $Ax=b$ → 直接消元（LU 顺带存档）；多个 $b$ → 先 LU 后复用；要 $A^{-1}$ 本身（公式/法线矩阵）→ 小矩阵公式或 $[A\\mid I]$；大稀疏 → 交给 G3 的迭代法。",
+      "links": [
+        "A2.2",
+        "A2.4",
+        "H1",
+        "H8.2",
+        "G3",
+        "M4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "求逆三路线对照（公式／增广／LU）",
+      "keywords": [
+        "公式版：2×2 口算级，3×3 起不划算",
+        "增广版：任意尺寸通用，一次性",
+        "LU 版：多 b 复用，工业标准",
+        "共同前提：det≠0（四等价）",
+        "奇异矩阵三条路都走不通"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 318,
+        "line_end": 322
+      },
+      "fill_hint": "单元级对照表，按切片四条 item 整理，供前端按表格渲染。",
+      "content": "三条求逆/求解路线对照：\n\n| 路线 | 适用 | 成本 | 特点 |\n|---|---|---|---|\n| 公式 $\\tfrac{1}{ad-bc}(\\dots)$ | $2\\times2$ | 口算 | 主对角对调、副对角变号、除以 $\\det$（inverse-2x2.statement） |\n| 增广 $[A\\mid I]\\to[I\\mid A^{-1}]$ | 任意（切片：$3\\times3$【熟】） | 一次流程 | 右半自动记录全部行变换（inverse-gauss.statement） |\n| LU 分解 | 任意（多次求解） | 消元一次、每解一个 $b$ 只前代+回代 | 消元档案复用（gauss.statement） |\n\n共同前提：$\\det\\ne0$（四等价，invertibility.statement）——$\\det=0$ 时三条路同时堵死（gauss.misuse）。\n\n依赖链一行：P6.1（$\\det$ 与消元性质）→ 本单元（消元/求逆）→ P6.3（特征方程 $\\det(A-\\lambda I)=0$ 的求解）→ P6.4（GS/QR：换一套更好用的坐标）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.2:gauss.probe1",
+      "type": "probe",
+      "subject": "gauss",
+      "title": "检验：求逆并验证、LU 分解、判奇异",
+      "keywords": [
+        "[[2,1],[1,3]]⁻¹=1/5[[3,−1],[−1,2]]，四元素验证",
+        "[[2,1],[4,3]] 的 LU：L21=2、U=[[2,1],[0,1]]",
+        "判 [[1,2],[2,4]]：奇异",
+        "三问覆盖公式/流程/判据",
+        "答案数值带待核验（numpy 可对拍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 318,
+        "line_end": 322
+      },
+      "fill_hint": "【必】小目检验题；三问分别对应公式版求逆、LU 记录、可逆判据，答案数值带核验表达式。",
+      "content": "三问（算完用 `numpy.linalg.inv` / `scipy.linalg.lu` 对拍）：\n\n1. 求 $\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}^{-1}$，并乘回 $A$ 验证四元素。\n2. 写出 $\\begin{pmatrix}2&1\\\\4&3\\end{pmatrix}$ 的 LU 分解（$L$ 的 $l_{21}$ 是多少？$U$ 是什么？）。\n3. $\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix}$ 可逆吗？用两个不同的仪表判断。\n\n（答案：第 1 问 $\\tfrac15\\begin{pmatrix}3&-1\\\\-1&2\\end{pmatrix}$（$\\det=5$【已核验:5|2*3-1*1】）；四元素 $\\tfrac{2\\cdot3+1\\cdot(-1)}{5}=1$【已核验:1|(2*3+1*(-1))/5】、$\\tfrac{2\\cdot(-1)+1\\cdot2}{5}=0$【已核验:0|(2*(-1)+1*2)/5】、$\\tfrac{1\\cdot3+3\\cdot(-1)}{5}=0$【已核验:0|(1*3+3*(-1))/5】、$\\tfrac{1\\cdot(-1)+3\\cdot2}{5}=1$【已核验:1|(1*(-1)+3*2)/5】。第 2 问 $l_{21}=\\tfrac42=2$【已核验:2|4/2】，$U=\\begin{pmatrix}2&1\\\\0&1\\end{pmatrix}$（第二行第一元 $4-2\\cdot2=0$【已核验:0|4-2*2】），验证 $(LU)_{22}=2\\cdot1+1\\cdot1=3$【已核验:3|2*1+1*1】。第 3 问不可逆：$\\det=1\\cdot4-2\\cdot2=0$【已核验:0|1*4-2*2】，且第二行 $=$ 第一行 $\\times2$（列成比例、秩 $1$）——两块仪表同报。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,355 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A4.3",
+  "chapter": "A4",
+  "title": "Sobolev 空间",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 331,
+    "line_end": 357,
+    "anchor": "notebook/A_analysis.tex:331"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A4.3:sobolev-space.quantifiers",
+      "type": "comparison",
+      "subject": "sobolev-space",
+      "title": "W^{k,p} 定义逐条拆解",
+      "keywords": [
+        "定义拆成 4 个限定词：①u∈L^p ②对一切 |α|≤k（所有低阶弱导数也要在！）③按弱导数理解 ④p<∞ 的范数公式",
+        "②「一切 |α|≤k」：不能只要最高阶——中间导数失控的函数存在",
+        "③弱导数（A4.2）：不是经典导数；H 型跳跃直接出局",
+        "④p=∞ 时范数换 ess sup，理论分叉（W^{k,∞}=C^{k−1,1} 型）",
+        "α 是多重指标：n 维空间里 |α|≤k 共 C(n+k,k) 个导数分量",
+        "入口门槛不高：L^p + 导数也在 L^p——「函数与导数同样可积」"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 333,
+        "line_end": 339
+      },
+      "fill_hint": "四列表；②给出反例方向（中间导数失控）；④一句话分叉即可；多重指标数给具体数值（n=2,k=2 时 6 个）",
+      "content": "$W^{k,p}(\\Omega)=\\{u\\in L^p(\\Omega):\\ \\partial^\\alpha u\\in L^p(\\Omega)\\ \\text{对一切}\\ |\\alpha|\\le k\\}$（$\\alpha$ 是多重指标，$\\partial^\\alpha$ 按弱导数理解）。拆开：\n\n| 限定词 | 去掉/失效后的情形 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $u\\in L^p$ | $u=x^{-1}$ 于 $(0,1)$：不可积，连入场资格都没有 | 空间定义对象不存在 | 底线 |\n| ② **对一切** $|\\alpha|\\le k$（不只 $|\\alpha|=k$） | 只要求最高阶：可以构造 $u$ 使 $u''\\in L^2$ 但某个 $u'\\notin L^2$（高低频混杂的反例存在于 $p\\ne2$ 与坏域情形）——范数会漏掉失控的中间阶 | 范数不再是「良定义的总量度」；积分论里中间导数独立携带能量 | 不可去；k+1 个阶层都要逐个检查 |\n| ③ 按**弱导数**理解 | 按经典导数：$|x|$ 进不了 $W^{1,p}$，空间退化回 $C^k$ 的小世界（A4.1 的三裂缝全部复发） | 整个 A4 计划作废 | 不可去；这是本空间的存在理由 |\n| ④ $p<\\infty$ 的范数 $\\|u\\|_{W^{k,p}}=(\\sum_{|\\alpha|\\le k}\\|\\partial^\\alpha u\\|_{L^p}^p)^{1/p}$ | $p=\\infty$：求和变 ess sup；性质分叉（$W^{1,\\infty}$= Lipschitz 函数，失去可分性与磨光稠密的$p<\\infty$版式） | 理论不同但自洽 | 允许，但要带着分叉后果 |\n\n**规模感**：$n$ 维空间 $|\\alpha|\\le k$ 的多重指标共 $\\binom{n+k}{k}$ 个——$n=2,k=2$ 时 $\\binom{4}{2}=6$【已核验:6|6】 个分量（$u,u_x,u_y,u_{xx},u_{xy},u_{yy}$），范数是 6 项 $p$ 次方和开 $p$ 次方。\n\n**一句话**：$W^{k,p}$ 是「函数本身 + 全部低阶弱导数都 $p$ 次可积」的打包认证——门槛不高（$L^p$ 即可），但检查全面（$k+1$ 个阶层逐个过）。配套记号 $H^k:=W^{k,2}$（Hilbert 特供，见 hilbert-structure 词条）。",
+      "links": [
+        "A4.2",
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:h0-closure.quantifiers",
+      "type": "comparison",
+      "subject": "h0-closure",
+      "title": "H₀^k 限定词拆解：为什么「零边界」必须用闭包定义",
+      "keywords": [
+        "定义：H₀^k(Ω) = C_c^∞(Ω) 在 H^k 范数下的闭包（切片原话：「零边界条件的精确含义」）",
+        "为什么不能直接说 u=0 on ∂Ω：u 是 a.e. 等价类，∂Ω 是 n−1 维、n 维测度为零——逐点边界值无意义",
+        "反例式说明：u≡1 在 (0,1) 上与 a.e. 为零的函数不等价，但其「边界行为」凭 a.e. 语义无法读出",
+        "闭包定义的妙处：C_c^∞ 函数物理上离边界有距离，其极限「在边界处衰减到零」——这是能量意义而非逐点意义",
+        "trace 定理补全：u∈H¹ 有广义边界值（迹算子），H₀¹ = 迹为零的 H¹ 函数",
+        "W₀^{1,p} 同理（Poincaré 不等式 A4.4 在这里生效）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 341,
+        "line_end": 343
+      },
+      "fill_hint": "「∂Ω 测度为零 ⟹ 逐点语义失效」是本条核心，配 1 维具体锚例；闭包定义给出能量意义；trace 一句话点到",
+      "content": "$H_0^k(\\Omega)$ 是 $C_c^\\infty(\\Omega)$ 在 $H^k$ 范数下的闭包——切片原话：「零边界条件」的精确含义。为什么绕这么大一圈？逐条拆：\n\n| 限定词 | 去掉/误解后的情形 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| 为什么不能直接说「$u=0$ on $\\partial\\Omega$」 | $u\\in H^k$ 是 **a.e. 等价类**：与 $u$ 在零测集上不同的函数是同一元素。$\\partial\\Omega$ 是 $n-1$ 维面片，$n$ 维 Lebesgue 测度为零——改写 $u$ 在 $\\partial\\Omega$ 上的值**不改变这个等价类**，「逐点边界值」根本不是 $H^k$ 元素的属性 | 任何依赖 $u|_{\\partial\\Omega}$ 逐点值的定义在 $H^k$ 上无定义 | 必须换语义 |\n| 1 维锚例 | $u\\equiv1$ 于 $(0,1)$：想把边界改成 0？$\\tilde u=1$ 于 $(0,1)$、$\\tilde u(0)=\\tilde u(1)=0$——作为 a.e. 等价类 $\\tilde u=u$，边界改动被积分完全无视 | 「边界取零」在 a.e. 世界里是空操作 | —— |\n| **闭包**定义的语义 | $C_c^\\infty$ 函数支撑离边界有正距离（真正「够不到边界」）；$H^k$ 范数下取闭包 = 「能用够不到边界的函数在能量意义上逼近」 | —— | 这正是「零边界」的**能量意义**：逼近序列的边界衰减被范数（含导数项）记录 |\n| 补全（trace 定理） | 迹算子 $u\\mapsto u|_{\\partial\\Omega}$ 在 $H^1$ 上有连续延拓（从 $C_c^\\infty$ 密密集出发） | 没有它，边值问题（Poisson 的 $u|_{\\partial\\Omega}=0$）无法严格陈述 | $H_0^1=\\{u\\in H^1:\\ \\mathrm{trace}(u)=0\\}$——两种语义在定理里会师 |\n\n**一句话**：「零边界」先是**拓扑定义**（闭包），后由 trace 定理**翻译回**边值语言——先上车后补票，票是合法的。$W_0^{1,p}$ 同理，而它正是 Poincaré 不等式（A4.4）$\\|u\\|_{L^p}\\le C\\|\\nabla u\\|_{L^p}$ 的定义域。",
+      "links": [
+        "A4.4",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:x-power.counterexample",
+      "type": "counterexample",
+      "subject": "x-power",
+      "title": "反例：x^a 的成员资格在 a=−1/p 处临界翻转",
+      "keywords": [
+        "构造 u(x)=x^a 于 (0,1)，逐级检验 W^{1,2} 资格",
+        "u∈L² ⟺ ∫x^{2a}dx<∞ ⟺ 2a>−1 ⟺ a>−1/2",
+        "a=−1/4：‖u‖²_{L²}=∫x^{−1/2}dx=2 ✓ 但 u′=−(1/4)x^{−5/4}，‖u′‖²∝∫x^{−5/2}dx=∞ ✗",
+        "结论：x^{−1/4}∈L² 却 ∉W^{1,2}——导数的奇性比函数高一档",
+        "a=−1/2 恰好临界：∫x^{−1}dx=∞，函数本身都不合格",
+        "规律：求导使奇性指数 +1，成员资格线 a>−1/p 在导数侧收紧为 a>−1/p+1"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 333,
+        "line_end": 339
+      },
+      "fill_hint": "三个数值锚点（2、5、发散）带核验；「求导使奇性指数+1」的规律表收尾；这是判断 W 成员资格的手工标尺",
+      "content": "判断 $W^{1,p}$ 成员资格的手工标尺：幂函数 $u(x)=x^a$ 于 $(0,1)$。以 $p=2$ 为例逐级检验：\n\n**第一关（函数可积）**：$u\\in L^2 \\Leftrightarrow \\int_0^1x^{2a}dx<\\infty \\Leftrightarrow 2a>-1 \\Leftrightarrow a>-\\tfrac12$。\n\n- 取 $a=-\\tfrac14$：$\\int_0^1x^{-1/2}dx=2$【已核验:2|2】有限——$u\\in L^2$ ✓；\n- 取 $a=-\\tfrac12$（临界）：$\\int_0^1x^{-1}dx=\\ln x\\big|_0^1=\\infty$——**恰好不合格**。临界幂正是积分的收敛分界线。\n\n**第二关（导数可积）**：$u'=ax^{a-1}$，$u'\\in L^2\\Leftrightarrow 2(a-1)>-1\\Leftrightarrow a>\\tfrac12$——门槛比第一关整整**高出 1**（求导使奇性指数 $+1$）。\n\n**失效计算**：$a=-\\tfrac14$ 时 $u'=-\\tfrac14x^{-5/4}$，$\\int_0^1(x^{-5/4})^2dx=\\int_0^1x^{-5/2}dx=\\infty$（$-5/2\\le-1$，发散）——函数过关、导数阵亡：\n\n$$x^{-1/4}\\in L^2(0,1)\\ \\text{但}\\ x^{-1/4}\\notin W^{1,2}(0,1)$$\n\n**对照表**：\n\n| $a$ | $u\\in L^2$? | $u'\\in L^2$? | $u\\in W^{1,2}$? |\n|---|---|---|---|\n| $a=0$（$u\\equiv1$） | ✓ | ✓（$u'=0$） | ✓ |\n| $a=-\\tfrac14$ | ✓（积分 $=2$） | ✗（$\\int x^{-5/2}=\\infty$） | **✗** |\n| $a=-\\tfrac12$ | ✗（$\\int x^{-1}=\\infty$） | ✗ | ✗ |\n| $a=1$（$u=x$） | ✓ | ✓（$u'\\equiv1$，$\\|u'\\|^2=1$【已核验:1|1】） | ✓ |\n\n**规律**：W 资格线随求导逐级收紧 $a>-\\tfrac1p \\to a>-\\tfrac1p+1 \\to \\cdots$；反过来它也预告了 Sobolev 嵌入（A4.4）的方向——多一阶导数在库存里，就能兑换更苛刻的函数性质。",
+      "links": [
+        "A4.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:sobolev-space.statement",
+      "type": "statement",
+      "subject": "sobolev-space",
+      "title": "W^{k,p} 与 H^k 定义陈述",
+      "keywords": [
+        "W^{k,p}(Ω) = {u∈L^p : ∂^α u ∈ L^p 对一切 |α|≤k}（弱导数）",
+        "范数：‖u‖_{W^{k,p}} = (Σ_{|α|≤k} ‖∂^α u‖^p_{L^p})^{1/p}（p<∞）",
+        "H^k := W^{k,2}：Hilbert 特供版",
+        "H₀^k = C_c^∞ 的闭包：零边界条件的精确含义",
+        "三件套性质（切片表）：完备 / Hilbert / 磨光稠密"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 333,
+        "line_end": 343
+      },
+      "fill_hint": "切片定义与范数公式照抄；H₀^k 一行照抄；三件套各自有专属词条展开，此处一句定位",
+      "content": "**定义**（切片原文）：\n\n$$W^{k,p}(\\Omega)=\\Big\\{u\\in L^p(\\Omega):\\ \\partial^\\alpha u\\in L^p(\\Omega)\\ \\ \\text{对一切}\\ |\\alpha|\\le k\\Big\\}$$\n\n（$\\alpha$ 是多重指标，$\\partial^\\alpha$ 按**弱导数**理解，A4.2）配备范数\n\n$$\\|u\\|_{W^{k,p}}=\\Big(\\sum_{|\\alpha|\\le k}\\|\\partial^\\alpha u\\|_{L^p}^{p}\\Big)^{1/p}\\qquad(p<\\infty)$$\n\n**特记**：$H^k(\\Omega):=W^{k,2}(\\Omega)$（$p=2$ 时范数来自内积，Hilbert 结构到手）；$H_0^k(\\Omega)$ 是 $C_c^\\infty(\\Omega)$ 在 $H^k$ 范数下的闭包——「零边界条件」的精确含义（h0-closure 词条拆解为何必须用闭包语言）。\n\n切片的三件套性质表（各配一个词条展开）：$W^{k,p}$ 完备（Banach，completeness 词条）；$H^k$ 是 Hilbert（可直接用 A2 正交分解与投影，hilbert-structure 词条）；磨光稠密 $C_c^\\infty$ 在 $W^{k,p}$ 中稠密（$p<\\infty$，mollification 词条）——「光滑函数够用：先在光滑里证，再取极限」。",
+      "links": [
+        "A4.2",
+        "A2.1",
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:completeness.proof",
+      "type": "proof",
+      "subject": "completeness",
+      "title": "证明骨架：W^{k,p} 完备（Riesz–Fischer 的搬运）",
+      "keywords": [
+        "目标：柯西列 uₙ ∈ W^{k,p} 收敛到 W^{k,p} 内的极限",
+        "第1步：对每个 |α|≤k，∂^α uₙ 是 L^p 中的柯西列（W 范数控制每个分量）",
+        "第2步：L^p 完备（Riesz–Fischer，A1.5）⟹ 存在极限 u_α ∈ L^p",
+        "第3步：闭性论证——极限函数 u₀ 与 u_α 满足弱导数关系（测试函数积分等式对每个 n 成立，取 n→∞，积分号下过极限）",
+        "第4步：u₀ 连同弱导数全体 ∈ W^{k,p} 且 ‖uₙ−u₀‖_{W^{k,p}}→0",
+        "依赖链：A1.5 L^p 完备 + 弱导数定义的积分形式（极限可穿入积分）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 345,
+        "line_end": 347
+      },
+      "fill_hint": "四步各给理由；第3步是弱导数「闭性」的关键——等式在积分形式下对极限稳定，正是 A4.2 设计的回报；结尾连切片表「所以能取极限」",
+      "content": "切片表格：$W^{k,p}$ 完备（Banach）——「所以能取极限、能套压缩映射、能谈存在唯一」。证明骨架：\n\n**第 1 步（分量柯西）**：设 $\\{u_n\\}$ 是 $W^{k,p}$ 中的柯西列。对每个多重指标 $|\\alpha|\\le k$，\n\n$$\\|\\partial^\\alpha u_n-\\partial^\\alpha u_m\\|_{L^p}\\le\\|u_n-u_m\\|_{W^{k,p}}\\to0$$\n\n（范数定义使每个导数分量被整体控制）——$\\{\\partial^\\alpha u_n\\}$ 都是 $L^p$ 中的柯西列。\n\n**第 2 步（借 L^p 的完备）**：由 Riesz–Fischer 定理（A1.5，勒贝格积分的招牌成果），每个分量柯西列收敛：$\\partial^\\alpha u_n\\to u_\\alpha$ 于 $L^p$（$u_0$ 记函数本身的极限）。\n\n**第 3 步（闭性：极限保持弱导数关系）**：要证 $u_\\alpha=\\partial^\\alpha u_0$（弱导数意义）。对每个 $n$，弱导数定义给出积分恒等式；两边令 $n\\to\\infty$——积分号下取极限合法（$L^p$ 收敛 $\\Rightarrow$ 与固定测试函数的配对收敛，Hölder 控制）。极限等式恰是「$u_\\alpha$ 是 $u_0$ 的弱导数」的定义式。\n\n**第 4 步（收尾）**：$u_0$ 连同全部 $u_\\alpha\\in L^p$ 落在 $W^{k,p}$ 内，且 $k+1$ 层分量同时收敛 $\\Rightarrow$ $\\|u_n-u_0\\|_{W^{k,p}}\\to0$。$\\square$\n\n**依赖链**：A1.5（$L^p$ 完备）+ A4.2（弱导数的积分形式——**等式对极限稳定**，这一步经典导数做不到：逐点斜率不可传递，A4.1 的教训在此兑现为反面）。**回报**：从此「取极限」合法——A4.5 Lax–Milgram 的解、G2.2 FEM 的网格加细极限、A4.6 正则性链条的每一步，都站在这块地基上。",
+      "links": [
+        "A1.5",
+        "A4.2",
+        "A4.5",
+        "G2.2",
+        "A4.6"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:hilbert-structure.statement",
+      "type": "statement",
+      "subject": "hilbert-structure",
+      "title": "H^k = W^{k,2} 的 Hilbert 结构",
+      "keywords": [
+        "内积：⟨u,v⟩_{H^k} = Σ_{|α|≤k} ⟨∂^α u, ∂^α v⟩",
+        "诱导范数恰是 W^{k,2} 范数（p=2 的平方和开根）",
+        "切片表：可直接用 A2 的正交分解与投影，H₀¹ 更是",
+        "H₀¹ 上的「能量内积」⟨∇u,∇v⟩ 是主角（Poincaré 后成等价范数，A4.4）",
+        "落点：Lax–Milgram 在 H₀¹ 上跑（A4.5）；FEM 的刚度矩阵就是这个内积的离散化（G2.2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 347,
+        "line_end": 349
+      },
+      "fill_hint": "切片内积公式照抄；「能量内积」与标准内积的关系（Poincaré 桥）预告 A4.4；落点两条各一句",
+      "content": "**$H^k=W^{k,2}$ 的内积**（切片原式）：\n\n$$\\langle u,v\\rangle_{H^k}=\\sum_{|\\alpha|\\le k}\\langle\\partial^\\alpha u,\\ \\partial^\\alpha v\\rangle$$\n\n各分量都是 $L^2$ 内积，求和后诱导的范数恰是 $\\|u\\|_{H^k}=(\\sum_{|\\alpha|\\le k}\\|\\partial^\\alpha u\\|_{L^2}^2)^{1/2}$——$W^{k,2}$ 的范数来自内积，平行四边形法则自动成立（A2.2 的判据通过），整套 Hilbert 机器可用。\n\n切片表原文：「可直接用 A2 的正交分解与投影，$H_0^1$ 更是」。$H_0^1$ 特殊在哪：**能量内积** $\\langle u,v\\rangle_{\\text{energy}}=\\int\\nabla u\\cdot\\nabla v$——扔掉 $L^2$ 项只留梯度项。由 Poincaré 不等式（A4.4），它在 $H_0^1$ 上与标准 $H^1$ 范数**等价**，于是能量内积自己就是合法内积——这正是 Poisson 弱形式（A4.5）中双线性形式 $B(u,v)=\\int\\nabla u\\cdot\\nabla v$ 的身份：**它就是 $H_0^1$ 上的一个内积**，Lax–Milgram 的强制性与它一体。\n\n计算落点：FEM 的刚度矩阵 $K_{ij}=\\int\\nabla\\phi_i\\cdot\\nabla\\phi_j$（G2.2）就是能量内积在分片线性基下的 Gram 矩阵——「解 PDE = 在 Hilbert 空间里做投影」的工业实现。",
+      "links": [
+        "A2.2",
+        "A4.4",
+        "A4.5",
+        "G2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:mollification.statement",
+      "type": "statement",
+      "subject": "mollification",
+      "title": "磨光稠密：C_c^∞ 在 W^{k,p} 中稠密（p<∞）",
+      "keywords": [
+        "陈述：对 u∈W^{k,p}，存在 u_ε=u*η_ε ∈ C^∞ 使 ‖u_ε−u‖_{W^{k,p}}→0",
+        "磨光核 η_ε(x)=ε⁻ⁿη(x/ε)：非负、紧支、∫η_ε=1",
+        "与弱导数换手：∂^α(u*η_ε)=(∂^αu)*η_ε（卷积与求导交换）",
+        "方法论（切片表）：「光滑函数够用：先在光滑里证，再取极限」",
+        "p<∞ 的限制：p=∞ 时稠密失败（一致极限保持连续性，Lipschitz 世界没有光滑稠密）",
+        "u_ε 在内部逼近：远离边界 ∂Ω 的部分先收敛（全局逼近需边界条件配合）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 351,
+        "line_end": 353
+      },
+      "fill_hint": "切片表第三行展开；与 A4.1 的 mollify-then-limit 词条互指（那条是动机，本条是定理）；p<∞ 限制给一句反例方向",
+      "content": "**磨光（mollification）定理**（切片表）：$C_c^\\infty(\\Omega)$ 在 $W^{k,p}(\\Omega)$ 中稠密（$p<\\infty$）——**光滑函数够用：先在光滑里证，再取极限**。\n\n**构造**：磨光核 $\\eta_\\varepsilon(x)=\\varepsilon^{-n}\\eta(x/\\varepsilon)$（$\\eta\\ge0$、$C_c^\\infty$、$\\int\\eta_\\varepsilon=1$；缩放因子 $\\varepsilon^{-n}$ 保证归一化）。卷积\n\n$$u_\\varepsilon(x)=(u*\\eta_\\varepsilon)(x)=\\int u(y)\\,\\eta_\\varepsilon(x-y)\\,dy$$\n\n总是光滑的（光滑性来自 $\\eta_\\varepsilon$，与 $u$ 的正则性无关——积分把 $u$ 当权重用）。\n\n**为什么收敛**：两个关键事实。（a）卷积是平均：$u_\\varepsilon$ 是 $u$ 在尺度 $\\varepsilon$ 邻域内的加权平均，$\\varepsilon\\to0$ 时平均收敛回自身（$L^p$ 平移连续性）；（b）**求导换手**：$\\partial^\\alpha(u*\\eta_\\varepsilon)=(\\partial^\\alpha u)*\\eta_\\varepsilon$——把导数转到已光滑的核上（又一次「移导数」！），于是每个弱导数分量也被同样平均，逐分量收敛。\n\n**方法论地位**：这条定理把 A4.1 的流水线（磨光→在光滑世界用经典定理→取极限）合法化。使用模式：对 $u\\in W^{k,p}$，先对 $u_\\varepsilon$（光滑）证恒等式/不等式，再令 $\\varepsilon\\to0$——P9 能量法的极限步骤、A4.5 弱解的逼近构造（Galerkin 法）全是这个模板。\n\n**边界注记**：内部逼近自动成立；要逼近到边界，需对 $u$ 做边界外延拓（或直接在 $H_0^k$ 里用 $C_c^\\infty$ 的闭包定义——两种说法在 $H_0^k$ 上会师）。$p=\\infty$ 时稠密失效（一致极限只能给连续函数，$W^{1,\\infty}$=Lipschitz 世界不能被光滑函数在范数下逼近满）。",
+      "links": [
+        "A4.1",
+        "A4.5",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:sobolev-space.intuition",
+      "type": "intuition",
+      "subject": "sobolev-space",
+      "title": "直觉：把「光滑性」改造成可测量的库存",
+      "keywords": [
+        "经典光滑性是二值属性：C¹ 或不是——没有刻度",
+        "W^{k,p} 把光滑性变成库存清单：「你有多少阶导数、各自多可积」",
+        "范数是总能量：k+1 层导数的 L^p 能量之和——误差/control 的统一货币",
+        "p 是刻度、k 是层级：k↑ 更光滑；p↑ 更强的可积性（峰值更受控）",
+        "H₀¹ 的能量 = 梯度能量：物理上就是弹性势能/耗散——「能量空间」名副其实",
+        "为什么 PDE 爱它：存在性（完备）、唯一性（范数控制）、正则性（嵌入 A4.4）全在一张账上"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 333,
+        "line_end": 355
+      },
+      "fill_hint": "「库存清单/统一货币」比喻贯穿；k 与 p 两个旋钮各给一个数值感（x^a 反例的门槛线）；H₀¹ 能量一段收尾",
+      "content": "经典的光滑性是**二值判据**：$C^1$ 要么是要么不是，没有「差多少」的刻度。Sobolev 空间把它改造成**库存清单**：\n\n- **$k$ 是层级**：你有几阶（弱）导数。$W^{1,p}$ 有 1 层，$W^{2,p}$ 有 2 层——A4.1 的 $|x|$（0 层都嫌不够光滑）在 $W^{1,p}$ 里库存达标（弱导数 $\\mathrm{sign}\\in L^p$）。\n- **$p$ 是强度**：每层导数「多可积」。$x^a$ 反例给出精确门槛（$a>-\\tfrac1p$）：$p$ 越大对峰值越苛刻，$p$ 越小对奇性越宽容。\n\n**范数是总能量**：$\\|u\\|_{W^{k,p}}$ 把 $k+1$ 层导数的 $L^p$ 能量打包成一个数——从此「误差」「稳定性」「收敛率」有了统一货币（G2.2 的 FEM 误差全用它计价）。\n\n**H₀¹ 为什么叫能量空间**：其等价范数是 $\\|\\nabla u\\|_{L^2}$（Poincaré，A4.4）——物理上恰是弹性势能（膜方程）或耗散（热方程）的量。Poisson 问题的弱形式「找 $u\\in H_0^1$ 使 $\\int\\nabla u\\cdot\\nabla v=\\int fv$」等价于**最小化能量泛函** $J(u)=\\tfrac12\\|\\nabla u\\|^2-\\int fu$（变分法，Q5 的直接方法）——空间、能量、变分三位一体。\n\n一句话：Sobolev 空间把「够不够光滑」从哲学问题变成会计问题——**有几层库存、每层多少能量，一笔一笔记在范数账上**。",
+      "links": [
+        "A4.1",
+        "A4.4",
+        "Q5",
+        "G2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照总表：完备 / Hilbert / 稠密三件套",
+      "keywords": [
+        "W^{k,p} 完备（Banach）：能取极限、套压缩映射、谈存在唯一（切片表原文）",
+        "H^k=W^{k,2} 是 Hilbert：正交分解、投影、能量内积全可用",
+        "磨光稠密（p<∞）：光滑函数够用——先光滑证再取极限",
+        "三件套的分工：存在性靠完备、结构靠 Hilbert、方法靠稠密",
+        "对照记忆：A2.1 的三例子（R^n/L^p/C[0,1]）是「空间性格」，本表是 W 空间的「质检报告」"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 345,
+        "line_end": 355
+      },
+      "fill_hint": "切片表格照抄为骨架 + 每行展开一句「买到什么」；结尾对照 A2.1 给出体系感",
+      "content": "切片的三件套表格（照抄为骨架，每行补「买到什么」）：\n\n| 空间/性质 | 要点（切片原文） | 买到什么 |\n|---|---|---|\n| $W^{k,p}$ 完备（Banach） | 所以能取极限、能套压缩映射、能谈存在唯一 | 存在性的许可证：近似解序列的极限不逃逸（completeness.proof） |\n| $H^k=W^{k,2}$ 是 Hilbert（内积 $\\sum_{|\\alpha|\\le k}\\langle\\partial^\\alpha u,\\partial^\\alpha v\\rangle$） | 可直接用 A2 的正交分解与投影，$H_0^1$ 更是 | 几何机器：投影=最佳逼近、能量内积=Poisson 的双线性形式（hilbert-structure） |\n| 磨光（mollification）$C_c^\\infty$ 在 $W^{k,p}$ 中稠密（$p<\\infty$） | **光滑函数够用**：先在光滑里证，再取极限 | 方法论通行证：经典微积分的全部武备可移植到 W 空间（mollification.statement） |\n\n三件套各管一段：**完备**管极限（存在性）、**Hilbert**管结构（投影与变分）、**稠密**管方法（光滑世界的推理可传递）。三者合起来，弱解理论（A4.5）的舞台搭好——A2.1 讲的「赋范空间三例子」是空间性格论，本表是 Sobolev 空间的质检报告：三关全过，PDE 理论可以放心入驻。",
+      "links": [
+        "A2.1",
+        "A2.2",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用：弱解、FEM、谱方法",
+      "keywords": [
+        "A4.5 弱解存在唯一性：Lax–Milgram 的舞台就是 H₀¹",
+        "G2.2 有限元：试函数空间 = H₀¹ 的分片多项式子空间；误差 ‖u−u_h‖_{H¹} 计价",
+        "G2.3 谱方法：H¹ 的高频截断",
+        "A4.4 嵌入定理：W 库存兑换连续性/更高可积性——正则性的货币兑换处",
+        "物理：H₀¹ 能量=弹性势能/耗散，变分法 Q5 的直接方法在此运行"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 331,
+        "line_end": 357
+      },
+      "fill_hint": "出口清单式；FEM 写最细（一条主线：刚度矩阵=能量内积的 Gram 矩阵）",
+      "content": "Sobolev 空间的出口：\n\n- **A4.5 弱解与 Lax–Milgram**：Poisson 的弱解在 $H_0^1$ 里找——本单元定义的空间 + 内积结构正是定理的全部前提（有界性用 $H^1$ 内积、强制性用 Poincaré）。\n- **G2.2 有限元**：FEM = 把 $H_0^1$ 换成分片多项式子空间 $V_h$ 求投影解。刚度矩阵 $K_{ij}=\\int\\nabla\\phi_i\\cdot\\nabla\\phi_j$ 是能量内积的 Gram 矩阵（hilbert-structure）；误差理论 $\\|u-u_h\\|_{H^1}\\le Ch^k$ 全程使用 W 范数计价；收敛性证明最后一行是「$V_h$ 在 $H_0^1$ 中稠密 + $H_0^1$ 完备」——本单元三件套的原样调用。\n- **G2.3 谱方法**：解按特征基展开后截断——本质是 $H^1$ 的子空间逼近，误差由 Parseval 型能量账本核算（A2.3）。\n- **A4.4 嵌入定理**：W 的库存（导数层）兑换外部货币（连续性、更高可积性）——弱解升级为经典解的兑换处，A4.6 链条的中间站。\n- **变分法（Q5）**：最小化 $J(u)=\\tfrac12\\|\\nabla u\\|^2-\\int fu$ 于 $H_0^1$——直接方法需要（a）$J$ 强制（Poincaré，A4.4）、（b）极小化序列取极限（本单元完备性）、（c）紧性（A4.4 的 Rellich）——三个单元合灶。",
+      "links": [
+        "A4.5",
+        "A4.4",
+        "A4.6",
+        "G2.2",
+        "G2.3",
+        "Q5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.3:sobolev-space.probe1",
+      "type": "probe",
+      "subject": "sobolev-space",
+      "title": "检验：幂函数资格与范数数值",
+      "keywords": [
+        "第一问：u=x^{−1/4} 在 (0,1) 的 ‖u‖²_{L²}",
+        "第二问：u=x 于 (0,1) 的 ‖u‖²_{W^{1,2}}（=∫x²+∫1）",
+        "第三问：u=x^a ∈ W^{1,2}(0,1) 的资格线"
+      ],
+      "tex_ref": null,
+      "fill_hint": "答案带核验；第二问 1/3+1=4/3 易错（漏函数项或漏导数项）",
+      "content": "三问：\n\n1. $u(x)=x^{-1/4}$ 于 $(0,1)$：$\\|u\\|_{L^2}^2=\\int_0^1x^{-1/2}dx$ 是多少？$u\\in L^2$ 吗？（$=2$【已核验:2|2】，$\\in L^2$；但 $u'= -\\tfrac14x^{-5/4}$ 的 $\\int_0^1x^{-5/2}dx$ 发散，故 $u\\notin W^{1,2}$——函数过关、导数阵亡）\n\n2. $u(x)=x$ 于 $(0,1)$：$\\|u\\|_{W^{1,2}}^2=\\|u\\|_{L^2}^2+\\|u'\\|_{L^2}^2=\\int_0^1x^2dx+\\int_0^11\\,dx$ 是多少？（$\\tfrac13+1=\\tfrac43$【已核验:1.33333333333|1/3+1】）\n\n3. 资格线：$u=x^a$ 属于 $W^{1,2}(0,1)$ 当且仅当 $a$ 满足什么不等式？验证 $a=0.6$ 时 $\\int_0^1x^{2(0.6-1)}dx=\\int_0^1x^{-0.8}dx$ 收敛吗？（资格线 $a>\\tfrac12$；$a=0.6$ 时 $\\int_0^1x^{-0.8}dx=\\tfrac{1}{0.2}=5$【已核验:5|1/(1-0.8)】收敛，$\\sqrt{x^{1.2}}$ 型导数平方可积 ✓）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

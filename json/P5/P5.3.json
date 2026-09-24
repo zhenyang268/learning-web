@@ -1,0 +1,289 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P5.3",
+  "chapter": "P5",
+  "title": "三角正交性（【熟】· Fourier 前置）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 287,
+    "line_end": 294,
+    "anchor": "notebook/P_computation.tex:287"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P5.3:orthogonality.quantifiers",
+      "type": "comparison",
+      "subject": "orthogonality",
+      "title": "适用条件表：m、n、区间三个限定词逐条拆解",
+      "keywords": [
+        "m、n 必须正整数：m=1/4 时正交性丢失",
+        "区间长度必须 2π：[0,3π/2] 上算出 −2/3",
+        "m=0 被约定排除（否则 δ 约定失效）",
+        "sin–cos 一条对一切正整数成立（无例外）",
+        "区间可平移：[a,a+2π] 由周期性仍成立"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 288,
+        "line_end": 291
+      },
+      "fill_hint": "切片只给两条公式与「用积化和差一句话即可证明」；条件表是使用层面的展开，失效数值均带【待核验】。",
+      "content": "切片的两条公式隐含三个限定词，逐条拆解（每行给失效数值）：\n\n| 条件 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $m,n$ 为**正整数** | $m=\\tfrac14,\\ n=\\tfrac12$：$\\int_0^{2\\pi}\\sin\\tfrac{\\theta}{4}\\sin\\tfrac{\\theta}{2}d\\theta=\\tfrac83\\approx2.667$【已核验:2.66666666667|0.5*(4*sin(pi/2)-(4/3)*sin(3*pi/2))】（本应为 $0$） | 不同频不再互相抵消，系数提取失真 | 能放宽一点：只要 $m\\pm n$ 都是（非零）整数即可；一般实数不行（整周期性丢失） |\n| 积分区间**恰为一个周期** $[0,2\\pi]$ | $\\int_0^{3\\pi/2}\\sin\\theta\\sin2\\theta\\,d\\theta=-\\tfrac23$【已核验:-0.666666666667|0.5*(sin(1.5*pi)-(1/3)*sin(4.5*pi))】（本应为 $0$） | 正交性丢失；$m=n$ 行的 $\\pi$ 也变（$\\int_0^{\\pi}\\sin^2=\\tfrac\\pi2$） | 区间可平移（$[a,a+2\\pi]$ 仍成立，由周期性）；长度不是 $2\\pi$ 的整数倍则失效，需换该区间上自己的正交系 |\n| $m,n\\ge1$（$m=0$ 排除） | $m=0$：左边 $\\int 0\\cdot\\sin n\\theta=0$，但 $\\pi\\delta_{0n}$ 在 $n=0$ 时给 $\\pi$——两边对不上 | $\\delta_{mn}$ 约定被破坏 | 不能：公式按正整数频率陈述；常数函数（频率 0）的账要单独算（$\\int_0^{2\\pi}1\\,d\\theta=2\\pi$） |\n| sin–cos 一条无例外 | 对一切正整数 $m,n$（含 $m=n$）恒为 $0$：$\\int_0^{2\\pi}\\sin n\\theta\\cos n\\theta=\\tfrac12\\int\\sin 2n\\theta=0$ | —— | 最稳的一条：积化和差后两项都是整周期正弦 |\n\n总结一句：正交性的全部机关是「**整数频率 × 整周期区间**」——保证每个乘积分量都恰好走完整数圈，净面积归零。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:orthogonality.interval-counterexample",
+      "type": "counterexample",
+      "subject": "orthogonality",
+      "title": "反例：区间不是完整 2π 时正交性丢失（完整计算）",
+      "keywords": [
+        "∫_0^{3π/2} sinθsin2θ = −2/3 ≠ 0",
+        "积化和差后两项不再整周期",
+        "m=n 行也变：∫_0^π sin²θ = π/2 ≠ π",
+        "修补：区间平移自由，长度必须是 2π 整数倍",
+        "[0,π] 上 {sin nx} 自身仍正交但范数 π/2"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 288,
+        "line_end": 289
+      },
+      "fill_hint": "切片公式默认 [0,2π]；区间失效例是条件表的定点展开，两处数值均带【待核验】。「[0,π] 上 sin 系正交」为拓展事实（阶段2复核）。",
+      "content": "反例一（$m\\ne n$）：在 $[0,\\tfrac{3\\pi}{2}]$ 上算 $\\int_0^{3\\pi/2}\\sin\\theta\\sin2\\theta\\,d\\theta$。完整计算：\n\n1. 积化和差：$\\sin\\theta\\sin2\\theta=\\tfrac12[\\cos((1{-}2)\\theta)-\\cos((1{+}2)\\theta)]=\\tfrac12[\\cos\\theta-\\cos3\\theta]$。\n2. 积分：$\\tfrac12\\big[\\sin\\theta-\\tfrac13\\sin3\\theta\\big]_0^{3\\pi/2}=\\tfrac12\\big[(-1)-\\tfrac13(1)\\big]$（$\\sin\\tfrac{3\\pi}{2}=-1$，$\\sin\\tfrac{9\\pi}{2}=1$）。\n3. 结果 $=-\\tfrac23\\approx-0.667$【已核验:-0.666666666667|0.5*(sin(1.5*pi)-(1/3)*sin(4.5*pi))】——**本应为 $0$**。\n\n失效机制：区间不是 $2\\pi$ 的整数倍，$\\cos\\theta,\\cos3\\theta$ 的积分不再整圈抵消——「整数频率」救不了「不完整的区间」。\n\n反例二（$m=n$）：$\\int_0^{\\pi}\\sin^2\\theta\\,d\\theta=\\big[\\tfrac\\theta2-\\tfrac{\\sin2\\theta}{4}\\big]_0^{\\pi}=\\tfrac\\pi2$【已核验:1.57079632679|pi/2】——公式里的 $\\pi$ 变成 $\\tfrac\\pi2$，「范数」依赖区间长度。\n\n修补条件：①区间可任意平移（$[a,a+2\\pi]$ 上结论不变，被积函数以 $2\\pi$ 为周期）；②长度必须是 $2\\pi$ 的整数倍；③换区间就要换系——例如 $[0,\\pi]$ 上 $\\{\\sin nx\\}$ 自己仍互相正交，但范数降为 $\\sqrt{\\pi/2}$（阶段 2 人工复核此拓展事实）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:orthogonality.statement",
+      "type": "statement",
+      "subject": "orthogonality",
+      "title": "三角正交性（sin–sin 与 sin–cos 两条公式）",
+      "keywords": [
+        "∫_0^{2π} sin(mθ)sin(nθ)dθ = πδ_{mn}",
+        "∫_0^{2π} sin(mθ)cos(nθ)dθ = 0",
+        "条件：m、n 正整数，区间恰一个周期",
+        "δ_{mn}：Kronecker 记号",
+        "切片标注【熟】：Fourier 前置"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 288,
+        "line_end": 289
+      },
+      "fill_hint": "切片公式逐字转写；条件（正整数、整周期区间）由公式语境与 quantifiers 表支撑。",
+      "content": "三角正交性（切片标注【熟】· Fourier 前置）：\n\n$$\\int_0^{2\\pi}\\sin(m\\theta)\\sin(n\\theta)\\,d\\theta=\\pi\\delta_{mn},\\qquad \\int_0^{2\\pi}\\sin(m\\theta)\\cos(n\\theta)\\,d\\theta=0$$\n\n其中 $\\delta_{mn}$ 是 Kronecker 记号（$m=n$ 时取 $1$，否则 $0$）。成立条件：$m,n$ 为**正整数**；积分区间**恰为一个完整周期** $[0,2\\pi]$（可平移，见 quantifiers 表）。用积化和差一句话即可证明（切片原话，见 orthogonality.proof）——这正是 A2「正交基与 Fourier 分析」里 $\\{e^{inx}\\}$ 正交性的实数版（见 orthogonality.complex-version）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:orthogonality.intuition",
+      "type": "intuition",
+      "subject": "orthogonality",
+      "title": "直觉：积分是内积，正交就是垂直",
+      "keywords": [
+        "⟨f,g⟩=∫fg：函数空间内积",
+        "正交=垂直=内积零",
+        "不同整数频率整周期上互相抵消",
+        "m=n 时 sin² 均值 1/2 × 2π = π",
+        "「自己和自己内积」= 范数²（√π）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 291,
+        "line_end": 291
+      },
+      "fill_hint": "切片「这就是 A2 里 {e^{inx}} 正交性的实数版」的内积视角展开；假设/结论分开写。",
+      "content": "把积分当作内积：$\\langle f,g\\rangle=\\int_0^{2\\pi}fg\\,d\\theta$。在这个视角下，两条公式说的是——**不同频率的正弦互相垂直，正弦与余弦永远垂直**。\n\n**假设给了什么**：频率是正整数（$m,n\\in\\mathbb{Z}_{>0}$），积分跑满一个整周期。这保证每个乘积分量在区间上恰好走完整数圈。\n\n**结论为什么因此成立**：两个不同整数频率的波相乘，乘积的净面积归零——一个往上拱的时候另一个在均值附近上下摆，贡献互相抵消；同频同相（$m=n$ 的 sin–sin）才共振，此时 $\\sin^2$ 的均值是 $\\tfrac12$，乘区间长 $2\\pi$ 得 $\\pi$——「自己与自己的内积 = 长度的平方」，即 $\\|\\sin n\\theta\\|=\\sqrt\\pi$。\n\n几何图像：把 $\\{\\sin\\theta,\\sin2\\theta,\\dots\\}$ 想成无穷维空间里一组**互相垂直的坐标轴**。正交性就是「沿一根轴走多远都不影响别的坐标」——这正是 Fourier 展开（A2.3）能「逐个系数独立提取」的原因（见 general.apps）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:orthogonality.proof",
+      "type": "proof",
+      "subject": "orthogonality",
+      "title": "证明：积化和差一句话（切片指定的路线）",
+      "keywords": [
+        "sinAsinB=½[cos(A−B)−cos(A+B)]",
+        "m≠n：两项都是整周期余弦，积分为 0",
+        "m=n：cos0=1 贡献 (1/2)·2π=π",
+        "sin·cos=½[sin((m+n)θ)+sin((m−n)θ)]，恒零",
+        "依赖：P5.1 积化和差＋整周期正余弦积分为零"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 291,
+        "line_end": 291
+      },
+      "fill_hint": "切片原话「用积化和差一句话即可证明」；本条把这一句话拆成分步计算，含 m=n 的 δ 机制。",
+      "content": "切片指定路线：积化和差一句话。\n\n**sin–sin 条**：用 $\\sin A\\sin B=\\tfrac12[\\cos(A-B)-\\cos(A+B)]$（P5.1）：\n$$\\sin(m\\theta)\\sin(n\\theta)=\\tfrac12\\big[\\cos((m{-}n)\\theta)-\\cos((m{+}n)\\theta)\\big]$$\n积分：\n- $m\\ne n$：两个频率 $|m\\pm n|$ 都是非零整数，整周期余弦积分 $\\int_0^{2\\pi}\\cos(k\\theta)d\\theta=\\tfrac{\\sin(2\\pi k)}{k}=0$【已核验:0|sin(2*pi*3)/3】——两项全灭，得 $0$；\n- $m=n$：第一项 $\\cos 0=1$，积分 $\\tfrac12\\cdot 2\\pi=\\pi$；第二项频率 $2n$ 仍整周期归零。得 $\\pi$。\n\n合并即 $\\pi\\delta_{mn}$。\n\n**sin–cos 条**：$\\sin(m\\theta)\\cos(n\\theta)=\\tfrac12[\\sin((m{+}n)\\theta)+\\sin((m{-}n)\\theta)]$，两项都是（或退化于）整周期正弦，$\\int_0^{2\\pi}\\sin(k\\theta)d\\theta=\\tfrac{1-\\cos(2\\pi k)}{k}=0$——**连 $m=n$ 都不用例外**（此时第二项为 $\\sin 0=0$，第一项频率 $2n$）。\n\n依赖链：P5.1 积化和差 → 本证明 → A2.3 Fourier 系数公式。易错点：区间必须是 $[0,2\\pi]$（或平移）——见 interval-counterexample 的 $-\\tfrac23$ 反例。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:orthogonality.complex-version",
+      "type": "extension",
+      "subject": "orthogonality",
+      "title": "复数版：{e^{inx}} 的正交性（切片原话的母体）",
+      "keywords": [
+        "(1/2π)∫_0^{2π} e^{i(m−n)x}dx = δ_{mn}",
+        "实数版两条是它的实部/虚部",
+        "复数版一条顶实数版四条",
+        "Fourier 级数与 DFT 的标准语言",
+        "m=n 时 |e^{inx}|²=1 积分 2π"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 291,
+        "line_end": 291
+      },
+      "fill_hint": "切片原话「这就是 A2『正交基与 Fourier 分析』里 {e^{inx}} 正交性的实数版」；本条把母体公式写出并说明母子关系。",
+      "content": "切片点破的身份：本单元两条公式是 **A2.3 $\\{e^{inx}\\}$ 正交性的实数版**。复数版母体：\n\n$$\\frac{1}{2\\pi}\\int_0^{2\\pi}e^{i(m-n)x}\\,dx=\\delta_{mn}$$\n\n（$m\\ne n$ 时被积函数是整周期复指数，实部虚部都归零；$m=n$ 时被积函数恒为 $1$，积分 $2\\pi$。）\n\n母子对账（用 P5.2 Euler 公式展开 $e^{i(m-n)x}$）：\n\n- 实部：$\\cos((m{-}n)x)=\\cos mx\\cos nx+\\sin mx\\sin nx$——把 **sin–sin 与 cos–cos 两条打包**成一条（除以 $\\pi$ 归一后即 $\\delta_{mn}$）；\n- 虚部：$\\sin((m{-}n)x)=\\sin mx\\cos nx-\\cos mx\\sin nx$——给出 **sin–cos 恒零**那条。\n\n为什么用复数版更划算：一条顶四条（sin–sin、cos–cos、sin–cos、cos–sin），系数提取公式对称（正变换/逆变换只差指数符号），且与 DFT（P5.2 单位根）、Laplace 变换（de2.13）、谱方法（G2.3）共用同一套记号。实数版的好处是手算积分时直接落地（P5.4）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:orthogonality.cos-cos",
+      "type": "extension",
+      "subject": "orthogonality",
+      "title": "拓展：cos–cos 正交（实数版四条的缺角）",
+      "keywords": [
+        "∫_0^{2π} cos(mθ)cos(nθ)dθ = πδ_{mn}（m,n≥1）",
+        "切片未列，是复数版实部的另一半",
+        "m=0 特殊：常数函数范数 √(2π)",
+        "与 sin–sin 完全平行",
+        "阶段2人工复核"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 291,
+        "line_end": 291
+      },
+      "fill_hint": "切片只列 sin–sin 与 sin–cos 两条；cos–cos 是「实数版」的第三条（标题带拓展前缀），由 orthogonality.complex-version 的实部直接推出，需人工复核。",
+      "content": "（拓展：切片未列此条，它由复数版的实部 $\\cos((m{-}n)x)$ 展开的另一半给出。）与 sin–sin 完全平行的一条：\n\n$$\\int_0^{2\\pi}\\cos(m\\theta)\\cos(n\\theta)\\,d\\theta=\\pi\\delta_{mn}\\qquad(m,n\\ge1)$$\n\n证明同款：积化和差 $\\cos A\\cos B=\\tfrac12[\\cos(A+B)+\\cos(A-B)]$，$m\\ne n$ 两项全灭，$m=n$ 得 $\\tfrac12\\cdot2\\pi=\\pi$。数值抽查：$\\int_0^{2\\pi}\\cos^2(3\\theta)d\\theta=\\pi$【已核验:3.14159265359|2*pi/2+sin(2*3*0)/12-sin(2*3*2*pi)/12】（用 P5.4 的 $\\tfrac x2+\\tfrac{\\sin2x}{4}$ 换频版）。\n\n缺角警示：$m=0$（常数函数 $\\cos0\\theta\\equiv1$）要单独记账——$\\int_0^{2\\pi}1\\cdot\\cos n\\theta=0$（与所有振荡正交），但 $\\int_0^{2\\pi}1^2=2\\pi\\ne\\pi$（范数是 $\\sqrt{2\\pi}$，不是 $\\sqrt\\pi$）。Fourier 级数里 $a_0$ 系数公式单独除以 $2\\pi$ 而不是 $\\pi$，根源就在这。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：Fourier 机器的系数过滤器",
+      "keywords": [
+        "系数提取机：乘 sin(kθ) 积分，别项全灭只剩 b_k·π",
+        "A2.3 Fourier 级数求系数的全部机制",
+        "de2.10 分离变量：PDE 解展开三角级数取系数",
+        "de2.12 Fourier 变换、G2.3 谱方法的连续/离散同构",
+        "H5 球谐：同一招的高维版"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 291,
+        "line_end": 291
+      },
+      "fill_hint": "切片定位「Fourier 前置」；按用户规则 application links 指向 Fourier 相关章节（A2.3、de2.10、de2.12、G2.3、H5，均在全库清单内）。",
+      "content": "正交性的用途一句话：**系数过滤器**。\n\n设 $f(\\theta)=\\sum_{n\\ge1}(a_n\\cos n\\theta+b_n\\sin n\\theta)$。要提取 $b_k$：两边乘 $\\sin(k\\theta)$ 再积分——由正交性，其余每一项的积分全是 $0$，只剩\n$$\\int_0^{2\\pi}f(\\theta)\\sin(k\\theta)\\,d\\theta=b_k\\cdot\\pi\\ \\Rightarrow\\ b_k=\\frac1\\pi\\int_0^{2\\pi}f\\sin(k\\theta)$$\n正交性把「解无穷联立方程」压缩成「逐个积分」。\n\n落点（全库）：\n\n- **A2.3 正交基与 Fourier 分析**：母体；系数公式、Parseval 等式的根基；\n- **de2.10 分离变量法**：PDE 的解叠加成三角级数后，用这套过滤器对边界条件/初始条件定系数；\n- **de2.12 Fourier 变换**：$\\int e^{-i\\xi x}$ 核正交性的连续版；\n- **G2.3 谱方法**：数值上把解投影到三角正交基，插值与微分都变成对角运算；\n- **H5 球谐函数**：球面上 $\\{Y_l^m\\}$ 的正交性是同一招的高维版（CG 里环境光贴图、预计算辐射传输的骨架）。",
+      "links": [
+        "A2.3",
+        "de2.10",
+        "de2.12",
+        "G2.3",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "三条正交关系对照（含拓展 cos–cos）",
+      "keywords": [
+        "sin–sin：πδ_{mn}，同频共振",
+        "sin–cos：恒 0，奇偶错位",
+        "cos–cos（拓展）：πδ_{mn}，平行结构",
+        "m=0 单独记账：范数 √(2π)",
+        "与 P5.4 的关系：m=n 行就是 ∫sin²=π"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 288,
+        "line_end": 291
+      },
+      "fill_hint": "对照表供前端渲染；cos–cos 行标注为拓展（切片未列），m=0 行由缺角警示支撑。",
+      "content": "三条正交关系对照（区间均为 $[0,2\\pi]$，$m,n\\ge1$）：\n\n| 关系 | 值 | 机制 | 备注 |\n|---|---|---|---|\n| $\\sin m\\theta\\cdot\\sin n\\theta$ | $\\pi\\delta_{mn}$ | $\\cos((m{-}n)\\theta)-\\cos((m{+}n)\\theta)$，同频时低频项变常数 | 切片原列 |\n| $\\sin m\\theta\\cdot\\cos n\\theta$ | $0$（恒） | $\\sin((m{+}n)\\theta)+\\sin((m{-}n)\\theta)$，两项整周期正弦 | 切片原列；连 $m=n$ 都无例外 |\n| $\\cos m\\theta\\cdot\\cos n\\theta$ | $\\pi\\delta_{mn}$ | $\\cos((m{+}n)\\theta)+\\cos((m{-}n)\\theta)$ | **拓展**（切片未列） |\n| （$m=0$：常数 $1$） | 与振荡全 $0$；自内积 $2\\pi$ | 常数不震荡 | 缺角警示，见 orthogonality.cos-cos |\n\n与其他单元的接缝：\n\n- **P5.4 常用三角积分**：$m=n$ 行正是 $\\int_0^{2\\pi}\\sin^2=\\pi$——P5.4 是「一行一行算」，本单元是「打包成表查」；\n- **P5.1 积化和差**：本表三条的证明工具；\n- **P5.2 复数版**：三条打包成 $\\tfrac{1}{2\\pi}\\int e^{i(m-n)x}=\\delta_{mn}$ 一条；\n- **A2.3**：正交基语言的正式版本（Hilbert 空间视角）。",
+      "links": [
+        "P5.1",
+        "P5.2",
+        "P5.4",
+        "A2.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.3:orthogonality.probe1",
+      "type": "probe",
+      "subject": "orthogonality",
+      "title": "检验：三个积分（含一个会翻车的区间）",
+      "keywords": [
+        "∫_0^{2π} sin²(5θ)dθ = π",
+        "∫_0^{2π} sin(3θ)cos(7θ)dθ = 0",
+        "陷阱题：[0,π] 上 ∫sinθcos2θ = −2/3",
+        "考察：整周期条件 + 积化和差手算",
+        "答案数值带待核验"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 288,
+        "line_end": 291
+      },
+      "fill_hint": "从 quantifiers 表「区间」与「sin–cos 无例外」两行变问句；第 3 问是陷阱题（区间换成 [0,π]），答案数值带核验表达式。",
+      "content": "口算/手算三问：\n\n1. $\\displaystyle\\int_0^{2\\pi}\\sin^2(5\\theta)\\,d\\theta=$ ？\n2. $\\displaystyle\\int_0^{2\\pi}\\sin(3\\theta)\\cos(7\\theta)\\,d\\theta=$ ？\n3. 陷阱题：$\\displaystyle\\int_0^{\\pi}\\sin\\theta\\cos2\\theta\\,d\\theta=$ ？还是 $0$ 吗？\n\n（答案：第 1 问 $\\pi$——$m=n$ 行，或用 P5.4 公式换频 $\\big[\\tfrac\\theta2-\\tfrac{\\sin10\\theta}{20}\\big]_0^{2\\pi}=\\pi$【已核验:3.14159265359|2*pi/2-sin(10*2*pi)/20】。第 2 问 $0$——sin–cos 恒正交；积化和差 $\\tfrac12[\\sin10\\theta-\\sin4\\theta]$，两项整周期正弦积分为零【已核验:0|0.5*((-cos(10*2*pi)/10+cos(10*0)/10)+(cos(4*2*pi)/4-cos(4*0)/4))】。第 3 问 $-\\tfrac23$——区间 $[0,\\pi]$ 不是完整 $2\\pi$，sin–cos 正交性丢失：$\\tfrac12[-\\tfrac{\\cos3\\theta}{3}+\\cos\\theta]\\Big|_0^{\\pi}=\\tfrac12[(\\tfrac13-1)-(-\\tfrac13+1)]=-\\tfrac23$【已核验:-0.666666666667|0.5*((-cos(3*pi)/3+cos(pi))-(-cos(0)/3+cos(0)))】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

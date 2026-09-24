@@ -1,0 +1,362 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A2.3",
+  "chapter": "A2",
+  "title": "正交基与傅里叶分析",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 205,
+    "line_end": 227,
+    "anchor": "notebook/A_analysis.tex:205"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A2.3:parseval.quantifiers",
+      "type": "comparison",
+      "subject": "parseval",
+      "title": "Parseval 定理限定词逐条拆解",
+      "keywords": [
+        "陈述拆成 3 个限定词：①{eₙ} 是完备正交系（正交基）②f ∈ L²（不是 L¹）③级数按 L² 范数收敛",
+        "①去掉「完备」⟹ 崩：去掉一个基向量后 f=该向量时 1≠0（见 incomplete-basis 反例）",
+        "②L¹ 不够：⟨f,eₙ⟩ 要有定义需要 f∈L²；且 ‖·‖₁ 下级数可以发散",
+        "③收敛是 L² 的，不是逐点：逐点收敛是 Carleson 定理这种深结果，Parseval 不背这个锅",
+        "正交系总能展开（Bessel 不等式 Σ|⟨f,eₙ⟩|²≤‖f‖²），完备性才把 ≤ 升级为 =",
+        "可分性 ⟸ 正交基可数；L²(S²) 球谐、L²[0,2π] 复指数都是标准完备系"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 209,
+        "line_end": 221
+      },
+      "fill_hint": "四列表；「Bessel ≤ 升级为 =」是本表灵魂，每行反例具体；逐点 vs L² 收敛那行点到 Carleson 即可不展开",
+      "content": "Parseval 定理 $\\|f\\|^2=\\sum_n|\\langle f,e_n\\rangle|^2$ 的限定词拆解：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $\\{e_n\\}$ 是**完备**正交系 | 从 $L^2[0,2\\pi]$ 的复指数基中去掉 $e_0=1$：取 $f=e_0$，则 $\\|f\\|^2=2\\pi$ 而 $\\sum_{n\\ne0}|\\langle f,e_n\\rangle|^2=0$，$2\\pi\\ne0$ | 不等号方向只剩 Bessel 的 $\\le$（能量漏掉基所张不到的分量） | 不可去；检验完备性只需对稠密子集验证 $\\langle f,e_n\\rangle=0\\ \\forall n\\Rightarrow f=0$ |\n| ② $f\\in L^2$ | $f(x)=x^{-1/4}\\in L^1[0,1]$ 但 $\\notin L^2$（$\\int x^{-1/2}dx=2$【已核验:2|2】有限而 $\\int x^{-1}dx=\\infty$）：系数 $\\langle f,e_n\\rangle$ 未必有限，能量无穷无从守恒 | 陈述对象消失 | 不可去；$L^1\\cap L^2$ 可以，但框架必须在 $L^2$ |\n| ③ 收敛按 $L^2$ 范数理解 | 部分和 $S_N f$ 在不连续点处有 Gibbs 振荡（超调约 9%）：$L^2$ 收敛照常成立，逐点在不连续点必不收敛到 $f$ | 把收敛模式误读为逐点/一致会「发现」假矛盾 | 不能加强为一致（除非 $f$ 更光滑）；逐点 a.e. 成立是 Carleson 定理（深结果，非本题范围） |\n\n灵魂一行：任何正交系都有 Bessel 不等式 $\\sum|\\langle f,e_n\\rangle|^2\\le\\|f\\|^2$（投影不超过本体，C-S 的级数版）；**完备性就是把 $\\le$ 修成 $=$$ 的那个条件**——基张满了全空间，能量无处可漏。",
+      "links": [
+        "A2.2",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:incomplete-basis.counterexample",
+      "type": "counterexample",
+      "subject": "incomplete-basis",
+      "title": "反例：去掉一个基向量，Parseval 以 2π≠0 失效",
+      "keywords": [
+        "L²[0,2π] 复指数基 {e^{inx}}，去掉 e₀=1 得不完备系 {e^{inx}}_{n≠0}",
+        "取 f=e₀：‖f‖²=∫1²dx=2π",
+        "⟨f,eₙ⟩=0 对一切 n≠0（复指数互相正交）⟹ Σ|⟨f,eₙ⟩|²=0",
+        "2π ≠ 0：能量凭空消失——漏掉的正是去掉的那个方向",
+        "Bessel 侧仍成立：0 ≤ 2π，不等号严格",
+        "修补：补回 e₀（完备化），或只对 span 的闭包内的 f 使用等式"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 209,
+        "line_end": 221
+      },
+      "fill_hint": "数值 2π 与 0 带核验；结尾强调「检验完备性 = 检验没有漏方向」与 quantifiers 第①行呼应",
+      "content": "考察 $L^2[0,2\\pi]$（内积 $\\langle f,g\\rangle=\\int_0^{2\\pi}f\\,\\overline g\\,dx$）的标准正交系 $e_n(x)=e^{inx}$。它们两两正交：\n\n$$\\langle e_m,e_n\\rangle=\\int_0^{2\\pi}e^{i(m-n)x}dx=\\begin{cases}2\\pi, & m=n\\\\ 0, & m\\ne n\\end{cases}$$\n\n**破坏完备性**：把 $e_0=1$ 扔掉，只留 $\\{e_n\\}_{n\\ne0}$。取被扔掉方向的函数 $f=e_0\\equiv1$：\n\n- 左边：$\\|f\\|^2=\\int_0^{2\\pi}1\\,dx=2\\pi$【已核验:6.28318530718|2*pi】；\n- 右边：对一切 $n\\ne0$，$\\langle f,e_n\\rangle=\\langle e_0,e_n\\rangle=0$（正交性），故 $\\sum_{n\\ne0}|\\langle f,e_n\\rangle|^2=0$【已核验:0|0】。\n\n$2\\pi\\ne0$：Parseval 等式崩溃，且缺口恰好是 $\\|e_0\\|^2=2\\pi$——$f$ 的全部能量都在被删掉的方向上，级数一个也收不到。\n\n失效机制：正交系 $\\{e_n\\}_{n\\ne0}$ 张成的闭子空间是 $\\{\\text{均值为零的函数}\\}$（正交补由 $e_0$ 张成）。$f=1$ 恰好完全落在这个正交补里。Bessel 不等式无恙（$0\\le2\\pi$），只是严格——完备性死了，等号就死了。\n\n修补条件：加回 $e_0$。一般判据：$\\{e_n\\}$ 完备 $\\Leftrightarrow$ $\\langle f,e_n\\rangle=0\\ \\forall n \\Rightarrow f=0$（没有非零的「漏网方向」）。球谐系的完备性同理：环境光信号中未被低阶球谐捕获的能量，就是高阶截断的泄漏（PRT 的 band-limited 误差来源，H5）。",
+      "links": [
+        "H5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:fourier-expand.statement",
+      "type": "statement",
+      "subject": "fourier-expand",
+      "title": "正交基展开定理陈述",
+      "keywords": [
+        "可分希尔伯特空间存在可数正交基 {eₙ}",
+        "任何 f ∈ H 可展开 f = Σₙ ⟨f,eₙ⟩ eₙ（L²/范数收敛）",
+        "系数 ⟨f,eₙ⟩ 唯一：换基才换系数，不换基系数不动",
+        "部分和 = f 在 span{e₁..eₙ} 上的正交投影（最佳逼近）",
+        "傅里叶级数、球谐展开、Hermite 展开都是这个抽象式的具体化"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 209,
+        "line_end": 213
+      },
+      "fill_hint": "切片开头两行照抄；补「部分和=投影」这一定量刻画（连接 A2.2 正交分解）",
+      "content": "可分希尔伯特空间存在**可数正交基** $\\{e_n\\}$，且任何元素可展开：\n\n$$f=\\sum_{n}\\langle f,e_n\\rangle\\,e_n$$\n\n收敛按 $H$ 的范数理解。三个配套事实：\n\n1. **部分和是投影**：$S_N f=\\sum_{n\\le N}\\langle f,e_n\\rangle e_n$ 恰是 $f$ 在 $\\mathrm{span}\\{e_1,\\ldots,e_N\\}$ 上的正交投影（A2.2 的最近点）——所以 $S_Nf$ 是 $N$ 维意义下对 $f$ 的**最佳逼近**，这是傅里叶截断、球谐截断「天然合理」的原因。\n2. **系数唯一**：给定基，坐标 $\\langle f,e_n\\rangle$ 是唯一确定的「护照」。\n3. **可分性是前提**：基可数 $\\Leftrightarrow$ 空间可分（有可数稠密集）；$L^2$ 类函数空间都满足。切片的经典基表（复指数、球谐、Hermite、Legendre、平面波）是同一条定理在五个空间的具体化。",
+      "links": [
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:parseval.statement",
+      "type": "statement",
+      "subject": "parseval",
+      "title": "Parseval 定理陈述（频域能量守恒）",
+      "keywords": [
+        "‖f‖² = Σₙ |⟨f,eₙ⟩|²：时域能量 = 频域能量之和",
+        "「能量守恒在频域的表述」（切片原话）",
+        "推广：⟨f,g⟩ = Σ ⟨f,eₙ⟩⟨g,eₙ⟩̄（双线性版，内积也守恒）",
+        "有限维类比：坐标长度平方和 = 向量长度平方（勾股定理的无穷版）",
+        "截断误差：‖f−S_Nf‖² = ‖f‖² − Σ_{n≤N}|⟨f,eₙ⟩|²（Bessel 缺口可精确计算）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 223,
+        "line_end": 223
+      },
+      "fill_hint": "切片一行照抄；补截断误差公式——这是 PRT/信号处理里判断「截断丢多少能量」的实操工具",
+      "content": "Parseval 定理：对完备正交系 $\\{e_n\\}$，\n\n$$\\|f\\|^2=\\sum_n|\\langle f,e_n\\rangle|^2$$\n\n切片称之为「能量守恒在频域的表述」：信号在时域（原空间）的总能量 $\\|f\\|^2$，等于各频率分量能量 $|\\langle f,e_n\\rangle|^2$ 之和——变换不产生、不湮灭能量，只是重新记账。\n\n两个实用形式：\n\n- **内积守恒**：$\\langle f,g\\rangle=\\sum_n\\langle f,e_n\\rangle\\overline{\\langle g,e_n\\rangle}$（两边各取 $f+g$、$f-g$ 用平行四边形即得）。数值上它把积分换成了级数。\n- **截断误差**：$\\|f-S_Nf\\|^2=\\|f\\|^2-\\sum_{n\\le N}|\\langle f,e_n\\rangle|^2$。PRT 用 $N$ 阶球谐重建环境光时丢掉的能量、信号处理里的带宽-能量权衡，用的都是这一行。",
+      "links": [
+        "H5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:orthonormal-basis.intuition",
+      "type": "intuition",
+      "subject": "orthonormal-basis",
+      "title": "直觉：正交基 = 无限维的直角坐标系",
+      "keywords": [
+        "R³ 的 x/y/z 轴推广：正交基把「函数」变成「数列」（坐标）",
+        "坐标 = 投影：⟨f,eₙ⟩ 是 f 在第 n 个轴上的影子长度",
+        "垂直坐标系的好处：改一个坐标不影响其他（系数解耦）",
+        "傅里叶系数 f̂(n) = ⟨f,e^{inx}⟩：把函数搬到频域记账",
+        "Parseval = 勾股定理的无穷维版：斜边² = 各直角边²之和"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 209,
+        "line_end": 213
+      },
+      "fill_hint": "假设与结论分开；「坐标系」比喻承载全部内容；数值例子见 parseval.probe1",
+      "content": "把 $\\mathbb{R}^3$ 的经验直搬上来：直角坐标系之所以好用，是因为（a）任何向量都能用三个坐标表示；（b）坐标 = 各轴投影，互不干扰；（c）长度由勾股定理 $\\|v\\|^2=v_1^2+v_2^2+v_3^2$ 直接算。\n\n正交基把这三件好事全部搬到无限维：\n\n- **表示**：任何 $f\\in H$ 都是基的线性组合（无穷多个，按范数收敛）；\n- **解耦**：$f=\\sum\\langle f,e_n\\rangle e_n$ 的每个系数只依赖 $f$ 在那个方向的投影——换掉一个坐标分量，其他坐标**不动**（非正交基没有这个福利，系数互相纠缠）；\n- **勾股**：Parseval $\\|f\\|^2=\\sum|\\langle f,e_n\\rangle|^2$ 正是 $\\|v\\|^2=\\sum v_i^2$ 的无穷维化身。\n\n**假设给了什么**：希尔伯特结构（内积 → 正交有定义；完备 → 无穷和收敛有保证）。**结论为什么因此成立**：正交分解（A2.2）保证投影存在，部分和 $S_Nf$ 就是投影；完备正交系保证投影的极限正好回到 $f$。\n\n傅里叶分析 = 选 $e^{inx}$ 这套坐标；球谐分析 = 选 $Y_l^m$ 这套坐标。信号在时域和频域是同一个函数的两本账，Parseval 说两本账记的能量分毫不差。",
+      "links": [
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:parseval.intuition",
+      "type": "intuition",
+      "subject": "parseval",
+      "title": "Parseval 直觉：能量不会因为换账本而改变",
+      "keywords": [
+        "两本账：时域 ‖f‖²（积分）与频域 Σ|f̂(n)|²（级数）",
+        "变换 = 换记账方式，不是换内容",
+        "每个正交方向是独立的能量仓库，勾股定理逐仓清点",
+        "截断 = 丢弃高阶仓库：丢多少能量可以精确算出",
+        "CG 落点：球谐截断的环境光误差、信号重建的带宽权衡"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 223,
+        "line_end": 223
+      },
+      "fill_hint": "与 orthonormal-basis.intuition 分工：那条讲坐标，本条讲能量记账；截断误差公式重申一次（实操最常用）",
+      "content": "Parseval 的内容一句话：**换账本不改变总额**。$\\|f\\|^2$ 是时域账本上的总能量（一次积分算出）；$\\sum|\\langle f,e_n\\rangle|^2$ 是频域账本上的总能量（每个系数平方后逐项累加）。定理说两个数字相等。\n\n为什么必然相等：每个正交基向量是一个**独立的能量仓库**——正交意味着仓库之间没有重复计数，勾股定理保证「斜边² = 各直角边²之和」可以无穷次叠加。只要基是完备的（仓库张满全空间），能量就无处可藏；基不完备时（incomplete-basis 反例），有些能量放在系统看不见的仓库里，两本账就对不上。\n\n实操价值在截断误差：用 $N$ 个基向量重建 $f$ 时，误差 $\\|f-S_Nf\\|^2=\\|f\\|^2-\\sum_{n\\le N}|\\langle f,e_n\\rangle|^2$ 可以**精确**算出——PRT 选球谐阶数、信号处理定带宽、谱方法（G2.3）定模式数，都是在「误差预算」里花这笔账。",
+      "links": [
+        "H5",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:basis-table.compare",
+      "type": "comparison",
+      "subject": "basis-table",
+      "title": "五个经典正交基对照（照切片表格展开）",
+      "keywords": [
+        "L²[0,2π] ↔ {e^{inx}}：傅里叶级数、信号处理",
+        "L²(S²) ↔ 球谐 Y_l^m：环境光照、PRT",
+        "L²(R) ↔ Hermite 函数：量子谐振子",
+        "L²[0,1] ↔ Legendre 多项式：数值积分",
+        "L²(R³) ↔ 平面波 e^{ik·x}：衍射、散射",
+        "选基判据：对称性匹配（定义域/算子的对称群决定最自然的基）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 215,
+        "line_end": 221
+      },
+      "fill_hint": "表格照抄 + 每行一句「为什么是这个基」；选基判据（对称性匹配）是本条增量",
+      "content": "切片的经典正交基表，每行补一句「为什么是它」：\n\n| 空间 | 正交基 | 应用 | 为什么是它 |\n|---|---|---|---|\n| $L^2[0,2\\pi]$ | $\\{e^{inx}\\}$ | 傅里叶级数、信号处理 | 区间平移不变 → 平移算子的特征函数；周期信号的天然频率分解 |\n| $L^2(S^2)$ | 球谐 $Y_l^m$ | 环境光照、PRT | 球面旋转对称 → $SO(3)$ 表示的不可约基（lie3.17）；环境贴图正好活在球面上 |\n| $L^2(\\mathbb{R})$ | Hermite 函数 | 量子谐振子 | 谐振子哈密顿量的特征函数（F3）；与 Gaussian 亲缘，Gabor 变换的基础 |\n| $L^2[0,1]$ | Legendre 多项式 | 数值积分 | 区间无周期性时的多项式正交系；Gauss 求积节点由其零点给出 |\n| $L^2(\\mathbb{R}^3)$ | 平面波 $e^{i\\mathbf{k}\\cdot\\mathbf{x}}$ | 衍射、散射 | 全空间平移不变 → 动量本征态；傅里叶变换的连续版 |\n\n选基的判据是**对称性匹配**：定义域与所关心算子的对称群决定哪套基「最自然」——对称性匹配时系数稀疏（大部分接近零），展开才经济。CG 里环境光用球谐（球面对称）、网格上的振动用 Laplacian 特征向量（A2.4）都是这个原则。",
+      "links": [
+        "A2.4",
+        "F3",
+        "lie3.17",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:fourier.application",
+      "type": "application",
+      "subject": "fourier",
+      "title": "应用：信号处理、PRT、谱方法——展开定理在哪儿干活",
+      "keywords": [
+        "信号处理：滤波 = 频域逐系数乘法（卷积定理），能量谱由 |f̂(n)|² 给出",
+        "PRT/环境光照：环境函数投影到球谐系数，传输预计算（H5）",
+        "谱方法 G2.3：PDE 解按基展开，微分算子变（近似）对角矩阵",
+        "PCA/降维（A2.4 谱应用同族）：能量最大的前几个系数保留",
+        "球谐在 CG：光照基选择由对称性决定（lie3.17）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 215,
+        "line_end": 223
+      },
+      "fill_hint": "每条一句机制 + links；P 篇规则：三角正交性（系数计算工具）指向 P5.3",
+      "content": "展开定理与 Parseval 的干活现场：\n\n- **信号处理**：滤波 = 频域逐系数操作；Parseval 保证滤波前后能量账目可核对。系数计算用三角正交性积分（P5.3 的工具箱）。\n- **PRT / 环境光照（H5）**：环境光函数 $L(\\omega)$ 投影为球谐系数 $l_m^l=\\langle L,Y_l^m\\rangle$，渲染时只搬运低阶系数——「低阶系数装下大部分能量」正是 Parseval 截断误差公式（丢的能量可精确核算）。\n- **谱方法（G2.3）**：PDE 的解按正交基展开，微分算子在这套坐标下变成（近）对角矩阵，方程组解耦——A2.4 谱定理的计算版落地。\n- **量子谐振子（F3）**：Hermite 基就是能量本征态，展开系数 = 各能级占据数，Parseval = 粒子数守恒。\n\n一句话：任何「把函数变系数 → 系数上做便宜计算 → 变回函数」的流水线，地基都是本单元的两条定理。",
+      "links": [
+        "H5",
+        "G2.3",
+        "P5.3",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:gram-schmidt.extension",
+      "type": "extension",
+      "subject": "gram-schmidt",
+      "title": "拓展：基从哪里来——Gram–Schmidt 正交化",
+      "keywords": [
+        "拓展内容：切片未展开，属背景延伸",
+        "输入：一组线性无关向量；输出：一套正交基张同一空间",
+        "核心操作：每步减掉在已有正交方向上的投影（A2.2 投影公式的流水线）",
+        "数值例子：R² 中 (1,0),(1,1) → e₁=(1,0), e₂=(0,1)",
+        "Legendre 多项式 = 对 {1,x,x²,…} 做 Gram–Schmidt 的产物",
+        "计算侧工具见 P6.4；球谐等对称基则来自表示论（更高明的造基方式）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 215,
+        "line_end": 221
+      },
+      "fill_hint": "标注拓展；数值例子算到底（投影系数 1/√2 等）；连接 P6.4 与 lie3.17 两种造基路线",
+      "content": "（拓展：本条是切片内容之外的背景延伸——正交基表列了「基是什么」，这里补「基怎么造」。）\n\nGram–Schmidt 流水线：拿到线性无关的 $v_1,v_2,\\ldots$，逐个**减掉**在已生成正交方向上的投影：\n\n$$u_k=v_k-\\sum_{j<k}\\langle v_k,e_j\\rangle e_j,\\qquad e_k=u_k/\\|u_k\\|$$\n\n每步只用到 A2.2 的投影公式——正交化就是「投影 → 取残差 → 归一化」的循环。\n\n数值例子：$\\mathbb{R}^2$ 中 $v_1=(1,0)$、$v_2=(1,1)$。第一步 $e_1=(1,0)$。第二步：$u_2=(1,1)-\\langle(1,1),(1,0)\\rangle(1,0)=(1,1)-(1,0)=(0,1)$，$e_2=(0,1)$。\n\n两个出处：\n\n1. **Legendre 多项式**正是对 $\\{1,x,x^2,\\ldots\\}$ 在 $L^2[0,1]$ 上做 Gram–Schmidt 的产物——切片表里那一行的「来路」。\n2. **对称基**（球谐、Hermite）不走这条路：它们是算子/群的表示论给出的（lie3.17），天然正交且系数稀疏——「高明的造基」优先于「暴力的正交化」。\n\n计算实现的细节（数值稳定性、修正 Gram–Schmidt）见 P6.4。",
+      "links": [
+        "P6.4",
+        "lie3.17",
+        "A2.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：傅里叶部分和的能量收敛",
+      "keywords": [
+        "演示目标：f=x 在 L²[0,2π] 的部分和 S_Nf 逐步逼近，Parseval 两本账对齐",
+        "交互：拖 N 滑块看 S_Nf 曲线 + 累计能量 Σ_{|n|≤N}|cₙ|²/总能量 比值",
+        "关键数据：c₀=π，cₙ=i/n（n≠0），总能量 4π²/3",
+        "可同时展示 Gibbs 振荡（周期延拓的跳跃点）——L² 收敛与逐点失效同屏",
+        "需要逐 N 计算部分和与能量，长时程迭代 → 后端"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 223,
+        "line_end": 223
+      },
+      "fill_hint": "档2：参数建议给函数选择（方波/锯齿/自定义）、N 范围、能量条；契约细节由实现阶段定",
+      "content": "单元级演示总览：展示「傅里叶部分和如何收敛 + 能量账本如何对齐」。以 $f(x)=x$、$x\\in[0,2\\pi]$（周期延拓）为例：系数 $c_0=\\pi$、$c_n=i/n$（$n\\ne0$，推导见 parseval.probe1），总能量 $\\|f\\|^2$（归一化记账）$=\\frac{1}{2\\pi}\\int_0^{2\\pi}x^2dx=\\frac{4\\pi^2}{3}$【已核验:13.1594725348|(1/(2*pi))*((2*pi)**3/3)】。拖动 $N$：左边画 $S_Nf$ 与 $f$（观察跳跃点的 Gibbs 振荡不消失但 $L^2$ 误差趋于零），右边能量条显示 $\\sum_{|n|\\le N}|c_n|^2$ 逼近 $\\frac{\\pi^2}{3}+\\pi^2=\\frac{4\\pi^2}{3}$【已核验:13.1594725348|pi**2/3+pi**2】。同一演示同时回答 Parseval（账本对齐）与收敛模式（$L^2$ vs 逐点）两件事。",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "部分和与能量累计需要逐 N 迭代计算与对拍，超出前端直渲的简单显式函数范畴",
+        "params_hint": {
+          "example": [
+            "sawtooth",
+            "square",
+            "constant"
+          ],
+          "N_range": [
+            1,
+            200
+          ],
+          "show": [
+            "partial-sum-curve",
+            "energy-ratio",
+            "gibbs-zoom"
+          ]
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.3:parseval.probe1",
+      "type": "probe",
+      "subject": "parseval",
+      "title": "检验：f=x 的傅里叶系数与 Parseval 数值验证",
+      "keywords": [
+        "f(x)=x 在 [0,2π]，归一化系数 cₙ=(1/2π)∫x e^{−inx}dx",
+        "分部积分得 c₀=π、cₙ=i/n（n≠0）",
+        "前三个系数的能量：π²+2(1+1/4)=12.59…（对比总能量 4π²/3≈13.16）",
+        "收敛速度 1/n²：能量缺口 ~ 2×(1/9+1/16+…)"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 223,
+        "line_end": 223
+      },
+      "fill_hint": "答案全部带核验；注意 c₀=π 与总能量 4π²/3 两处易错（漏掉 c₀ 或忘了归一化 1/2π）",
+      "content": "取 $f(x)=x$、$x\\in[0,2\\pi]$，归一化傅里叶系数 $c_n=\\frac{1}{2\\pi}\\int_0^{2\\pi}x\\,e^{-inx}dx$。三问：\n\n1. 分部积分算出 $c_0$？（$c_0=\\frac{1}{2\\pi}\\cdot\\frac{(2\\pi)^2}{2}=\\pi$【已核验:3.14159265359|(1/(2*pi))*((2*pi)**2/2)】）\n\n2. 对 $n\\ne0$，分部积分（边界项 $e^{-in\\cdot2\\pi}=1$ 消去积分项）得 $c_n=\\frac{1}{2\\pi}\\cdot\\frac{2\\pi i}{n}=i/n$。取 $n=1$：$|c_1|^2=1$【已核验:1|abs(1j/1)**2】。\n\n3. Parseval 验证：总能量 $\\frac{1}{2\\pi}\\int_0^{2\\pi}x^2dx=\\frac{4\\pi^2}{3}\\approx13.159$【已核验:13.1594725348|4*pi**2/3】；只用 $|n|\\le1$ 的系数记账：$\\pi^2+2\\times1\\approx11.87$【已核验:11.8696044011|pi**2+2*1】；缺口是多少？（$\\frac{4\\pi^2}{3}-(\\pi^2+2)\\approx1.29$【已核验:1.2898681337|4*pi**2/3-(pi**2+2)】，由 $|n|\\ge2$ 的 $1/n^2$ 尾巴补足）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

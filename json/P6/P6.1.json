@@ -1,0 +1,342 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P6.1",
+  "chapter": "P6",
+  "title": "行列式（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 307,
+    "line_end": 315,
+    "anchor": "notebook/P_computation.tex:307"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P6.1:det.quantifiers",
+      "type": "comparison",
+      "subject": "det",
+      "title": "适用条件表：对角线法则、行线性与倍乘的每个坑",
+      "keywords": [
+        "Sarrus 只到 3×3：4×4 天真推广得 17，真值 −15",
+        "det 对行线性，不对矩阵线性：det(A+B)≠detA+detB",
+        "det(cA)=cⁿdetA：2I₃ 的 det 是 8 不是 2",
+        "三角阵=对角元之积；换行变号",
+        "Vandermonde：x 互异 ⟺ det≠0"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 308,
+        "line_end": 312
+      },
+      "fill_hint": "切片给「2×2/3×3 公式 + 性质四条 + Vandermonde + 几何直觉」；条件表是使用层面展开，每行失效数值带【待核验】（纯 python 算术，可与 numpy.linalg.det 对拍）。",
+      "content": "切片的四条性质（换行变号、行乘 $\\lambda$ 则行列式乘 $\\lambda$、行加不变、三角阵＝对角元之积）加上「$4\\times4$ 起用展开／消元」，隐含几个最容易翻车的限定词。逐条拆解（每行给失效数值，均可与 `numpy.linalg.det` 对拍）：\n\n| 条件／限定 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 对角线法则（Sarrus）**只到 $3\\times3$** | 取 $M=\\begin{pmatrix}1&2&0&0\\\\0&1&2&0\\\\0&0&1&2\\\\2&0&0&1\\end{pmatrix}$：把「主对角线乘积之和减副对角线乘积之和」机械推广到 $4\\times4$，得 $1\\cdot1\\cdot1\\cdot1+2\\cdot2\\cdot2\\cdot2=17$【已核验:17|1*1*1*1+2*2*2*2】；真值（按第一行展开）是 $-15$【已核验:-15|1*(1*1*1)-2*(0*(1*1-2*0)-2*(0*1-2*2)+0*(0*0-1*2))】 | 凭空多出 32，符号也错 | 不能：$n\\times n$ 行列式的完全展开有 $n!$ 项，$n\\ge4$ 时对角线只盖住其中 $2n$ 项——必须换展开／消元 |\n| 行列式对**行**线性，不对**矩阵**线性 | $A=\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$（$\\det A=1\\cdot4-2\\cdot3=-2$【已核验:-2|1*4-2*3】），$B=I_2$（$\\det B=1$）：$\\det(A+B)=\\det\\begin{pmatrix}2&2\\\\3&5\\end{pmatrix}=2\\cdot5-2\\cdot3=4$【已核验:4|2*5-2*3】，而 $\\det A+\\det B=-1$【已核验:-1|1*4-2*3+1】 | 以为 $\\det(A+B)=\\det A+\\det B$ | 不能：多重线性是对「单独一行」说的，多行同时变不行 |\n| $\\det(cA)=c^n\\det A$（不是 $c\\det A$） | $\\det(2I_3)=2\\cdot2\\cdot2=8$【已核验:8|2*2*2】，而 $2\\det(I_3)=2$ | 尺度算错 $n$ 次方 | 不能：每行都乘了 $c$，共 $n$ 行 |\n| 三角阵＝对角元之积（前提：已用**换行变号**化到三角） | $\\begin{vmatrix}0&1\\\\1&0\\end{vmatrix}=0\\cdot0-1\\cdot1=-1$【已核验:-1|0*0-1*1】——已经「三角」化的矩阵若忘了换行次数，符号错 | 面积/体积差一个负号 | 记账：每次换行乘 $-1$ |\n| Vandermonde 的 $\\prod_{i<j}(x_j-x_i)\\ne0\\iff x_i$ 互异 | $a=b=2,c=3$：两行相同，$(b-a)(c-a)(c-b)=0$【已核验:0|(2-2)*(3-2)*(3-2)】 | 忘了「互异」条件，以为插值矩阵总可逆 | 不能：重复节点 ⟹ 矩阵奇异（P6.2） |\n\n总结一句：$2\\times2$／$3\\times3$ 是公式，$n\\ge4$ 是**算法**（消元化三角再乘对角元），几何量（面积/体积比）永远是 $|\\det|$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:det.sarrus-misuse",
+      "type": "counterexample",
+      "subject": "det",
+      "title": "典型误用：对角线法则推广到 4×4（完整计算）",
+      "keywords": [
+        "4×4 矩阵 M=[[1,2,0,0],[0,1,2,0],[0,0,1,2],[2,0,0,1]]",
+        "天真对角线推广：17",
+        "真值（第一行展开）：−15",
+        "根源：完全展开有 n!=24 项，对角线只盖 8 项",
+        "修补：n≥4 一律展开或消元"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 308,
+        "line_end": 308
+      },
+      "fill_hint": "切片只说「4×4 起用展开／消元（【熟】）」；本条用具体矩阵演示违反它的数值后果，两处数值带【待核验】，可与 numpy 对拍。",
+      "content": "反例矩阵：\n\n$$M=\\begin{pmatrix}1&2&0&0\\\\0&1&2&0\\\\0&0&1&2\\\\2&0&0&1\\end{pmatrix}$$\n\n误用（把 Sarrus 的「复制列、正对角线相加减负对角线相减」机械推广）：主对角线族乘积之和取到 $1\\cdot1\\cdot1\\cdot1=1$ 与环绕对角线 $2\\cdot2\\cdot2\\cdot2=16$（其余含 0），得 $17$【已核验:17|1*1*1*1+2*2*2*2】；副对角线族全为 0。错误答案 $17$。\n\n正确计算（按第一行展开，切片指定的路线）：\n\n1. $\\det M=1\\cdot\\det\\begin{pmatrix}1&2&0\\\\0&1&2\\\\0&0&1\\end{pmatrix}-2\\cdot\\det\\begin{pmatrix}0&2&0\\\\0&1&2\\\\2&0&1\\end{pmatrix}$（其余两项系数为 0）。\n2. 第一个是上三角：$1\\cdot1\\cdot1=1$。\n3. 第二个按第一行展开：$0\\cdot(1\\cdot1-2\\cdot0)-2\\cdot(0\\cdot1-2\\cdot2)+0\\cdot(0\\cdot0-1\\cdot2)=0-2\\cdot(-4)+0=8$。\n4. 合计 $\\det M=1\\cdot1-2\\cdot8=-15$【已核验:-15|1*(1*1*1)-2*(0*(1*1-2*0)-2*(0*1-2*2)+0*(0*0-1*2))】。\n\n失效机制：$4\\times4$ 行列式的完全展开有 $4!=24$ 项（排列求和），对角线模式只覆盖 $2n=8$ 项——$3\\times3$ 恰好 $3!=6\\le2\\times3=6$ 项全盖住（这是 Sarrus 能活的唯一原因），$n\\ge4$ 就漏项。\n\n修补条件：$n\\ge4$ 一律走展开（本例）或消元（化三角后对角元相乘，见 det-properties.proof）。数值检验习惯：手算完用 `numpy.linalg.det(M)` 对拍（本例 $-15$）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:det-small.statement",
+      "type": "statement",
+      "subject": "det-small",
+      "title": "小矩阵行列式：2×2 公式、3×3 Sarrus、4×4 起换算法",
+      "keywords": [
+        "2×2：det=ad−bc",
+        "3×3：对角线法则（Sarrus）",
+        "4×4 起用展开/消元（切片标注【熟】）",
+        "切片标注【必】（本单元）",
+        "数值例全部可 numpy 对拍"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 308,
+        "line_end": 308
+      },
+      "fill_hint": "切片第一行逐字转写；数值例为展开讲解（【待核验】表达式与 numpy.linalg.det 对拍）。",
+      "content": "切片原文：$2\\times2$：$\\det=ad-bc$；$3\\times3$：对角线法则（Sarrus）；$4\\times4$ 起用展开／消元（【熟】）。\n\n**$2\\times2$**：$\\begin{vmatrix}a&b\\\\c&d\\end{vmatrix}=ad-bc$。例：$\\begin{vmatrix}1&2\\\\3&4\\end{vmatrix}=1\\cdot4-2\\cdot3=-2$【已核验:-2|1*4-2*3】。\n\n**$3\\times3$（Sarrus）**：把前三列复制一遍接在右边，「\\」方向三条对角线乘积相加、「/」方向三条相减：\n$$\\begin{vmatrix}a&b&c\\\\d&e&f\\\\g&h&i\\end{vmatrix}=aei+bfg+cdh-ceg-afh-bdi$$\n例：$\\begin{vmatrix}1&2&3\\\\4&5&6\\\\7&8&10\\end{vmatrix}=1\\cdot(5\\cdot10-6\\cdot8)-2\\cdot(4\\cdot10-6\\cdot7)+3\\cdot(4\\cdot8-5\\cdot7)=-3$【已核验:-3|1*(5*10-6*8)-2*(4*10-6*7)+3*(4*8-5*7)】（等价写法：按第一行展开）。\n\n**$n\\ge4$**：Sarrus 失效（见 det.sarrus-misuse 的 17 vs −15），改用：①按行/列展开（Laplace）；②消元化三角阵后对角元相乘（P6.2 的高斯消元，注意每换一行乘 $-1$）。\n\n成立条件：方阵（非方阵无行列式）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:det-small.intuition",
+      "type": "intuition",
+      "subject": "det-small",
+      "title": "几何直觉：行列式＝面积／体积的伸缩率",
+      "keywords": [
+        "det=面积/体积的伸缩率（切片原文）",
+        "diag(2,3) 把单位正方形拉成面积 6",
+        "旋转 det=1：不伸缩",
+        "det<0：翻转（定向反）",
+        "μ(T(A))=|detT|·μ(A)（切片引 A1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 313,
+        "line_end": 315
+      },
+      "fill_hint": "切片原话「几何直觉：行列式＝面积／体积的伸缩率——即 A1 里的 μ(T(A))=|det T|μ(A)」。本条展开成数值可验的直觉叙述。",
+      "content": "切片原话：**行列式＝面积／体积的伸缩率**——即 A1 里的 $\\mu(T(A))=|\\det T|\\,\\mu(A)$（$\\mu$ 是 Lebesgue 测度）。\n\n**假设给了什么**：矩阵 $T$ 作为线性变换，把单位正方形（$2\\times2$）／单位立方体（$3\\times3$）搬到某个平行四边形／平行六面体。\n\n**结论为什么因此成立**：$\\det$ 恰好是这个搬运前后的面积/体积比。数值例：\n\n- $T=\\begin{pmatrix}2&0\\\\0&3\\end{pmatrix}$：单位正方形变成 $2\\times3$ 矩形，面积 $6$，$|\\det T|=2\\cdot3=6$【已核验:6|2*3】；\n- 旋转矩阵（P5.1）：$\\det R(\\theta)=\\cos^2\\theta+\\sin^2\\theta=1$——旋转不改变面积（只挪地方）；\n- $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$：$\\det=-1$【已核验:-1|0*0-1*1】——面积不变但定向翻转（镜像），负号是「翻转的记账」；\n- $\\det=0$：降维压扁（正方形压成线段，面积 $0$）——这正是「$\\det=0\\iff$ 不可逆」（P6.2）的几何面孔：信息被压丢了。\n\n为什么取 $|\\det|$：测度（面积/体积）不关心方向，但「保留定向还是翻转」由符号单独记账——符号是 $\\det$ 比「体积」多给的一比特信息。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:det-properties.statement",
+      "type": "statement",
+      "subject": "det-properties",
+      "title": "行列式四性质（换行变号／行倍乘／行加不变／三角阵）",
+      "keywords": [
+        "换行（列）变号",
+        "某行乘 λ 则 det 乘 λ",
+        "一行加上另一行的倍数，det 不变",
+        "三角阵 det=对角元之积",
+        "推论：两行相同 det=0；某行全零 det=0"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 309,
+        "line_end": 309
+      },
+      "fill_hint": "切片性质行逐字转写；两个平凡推论（相同行、全零行）由「行乘 λ 取 λ=0」直接得出。",
+      "content": "切片原文四性质（对「列」同样成立）：\n\n1. **换行变号**：交换两行，$\\det$ 乘 $-1$；\n2. **行倍乘**：某行乘 $\\lambda$，$\\det$ 乘 $\\lambda$；\n3. **行加不变**：某行加上另一行的倍数，$\\det$ 不变；\n4. **三角阵**：上/下三角阵的 $\\det=$ 对角元之积。\n\n两个立即推论：两行相同 $\\Rightarrow\\det=0$（换这两行：$\\det=-\\det$）；某行全零 $\\Rightarrow\\det=0$（性质 2 取 $\\lambda=0$）。\n\n数值例（性质 3）：$\\begin{vmatrix}1&2\\\\3&4\\end{vmatrix}=-2$【已核验:-2|1*4-2*3】；第一行减去第二行的 $\\tfrac13$：$\\begin{vmatrix}0&\\tfrac23\\\\3&4\\end{vmatrix}=0\\cdot4-\\tfrac23\\cdot3=-2$【已核验:-2|0*4-(2/3)*3】——不变。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:det-properties.proof",
+      "type": "proof",
+      "subject": "det-properties",
+      "title": "用法骨架：四性质把任意 det 化成三角阵（3×3 全程）",
+      "keywords": [
+        "消元流程：换行记账、行倍乘记账、行加白做",
+        "数值例 3×3 消到上三角",
+        "每步给理由（四性质逐条对应）",
+        "对角元相乘收尾",
+        "与 P6.2 消元同一套动作"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 309,
+        "line_end": 309
+      },
+      "fill_hint": "切片只列性质；本条演示「性质→计算流水线」的标准用法（数值全程带【待核验】，可与 numpy 对拍）。这也是 P6.2 高斯消元的 det 版。",
+      "content": "四性质的真正用途：**把任意行列式化成三角阵再乘对角元**。数值全程（取 $A=\\begin{pmatrix}0&2&1\\\\2&4&2\\\\1&2&3\\end{pmatrix}$）：\n\n1. 换行（$r_1\\leftrightarrow r_3$，性质 1 记账 $-1$）：$\\det A=-\\begin{vmatrix}1&2&3\\\\2&4&2\\\\0&2&1\\end{vmatrix}$。（理由：主元 $0$ 不能做除数，先换上来。）\n2. 行加（$r_2\\leftarrow r_2-2r_1$，性质 3 不记账）：$\\det A=-\\begin{vmatrix}1&2&3\\\\0&0&-4\\\\0&2&1\\end{vmatrix}$。\n3. 再换行（$r_2\\leftrightarrow r_3$，再记一个 $-1$，两个 $-1$ 相乘回正）：$\\det A=\\begin{vmatrix}1&2&3\\\\0&2&1\\\\0&0&-4\\end{vmatrix}$。\n4. 上三角（性质 4）：$\\det A=1\\cdot2\\cdot(-4)=-8$【已核验:-8|1*2*(-4)】。\n\n对拍（完全展开验算）：$\\det A=0\\cdot(4\\cdot3-2\\cdot2)-2\\cdot(2\\cdot3-2\\cdot1)+1\\cdot(2\\cdot2-4\\cdot1)=-8$【已核验:-8|0*(4*3-2*2)-2*(2*3-2*1)+1*(2*2-4*1)】。\n\n易错点：①每次换行/行倍乘都要记账（本例两个换行相乘回正，纯巧合不是规律）；②「行加」用**别的行**的倍数加到目标行，别把目标行自己乘了；③这套动作与 P6.2 高斯消元完全同源——消元是过程，行列式是过程的「记账卷宗」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:vandermonde.statement",
+      "type": "statement",
+      "subject": "vandermonde",
+      "title": "Vandermonde 行列式：∏(x_j−x_i)",
+      "keywords": [
+        "det=∏_{i<j}(x_j−x_i)",
+        "切片标注【熟】：记结论 + 会 3×3 手推",
+        "x 互异 ⟺ det≠0（插值可解性）",
+        "每行是 [1, x, x²]（几何级数）",
+        "数值例 a=1,b=2,c=3 → det=2"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 310,
+        "line_end": 310
+      },
+      "fill_hint": "切片原文「Vandermonde（【熟】）：det=∏_{i<j}(x_j−x_i)（记结论 + 会 3×3 手推）」。转写＋矩阵形状说明＋数值例。",
+      "content": "Vandermonde 行列式（切片标注【熟】：记结论 $+$ 会 $3\\times3$ 手推）：\n\n$$\\begin{vmatrix}1&x_1&x_1^2\\\\1&x_2&x_2^2\\\\1&x_3&x_3^2\\end{vmatrix}=\\prod_{1\\le i<j\\le3}(x_j-x_i)=(x_2-x_1)(x_3-x_1)(x_3-x_2)$$\n\n（一般 $n$：矩阵第 $i$ 行是 $\\begin{pmatrix}1&x_i&x_i^2&\\cdots&x_i^{n-1}\\end{pmatrix}$，$\\det=\\prod_{i<j}(x_j-x_i)$。）\n\n成立条件与关键推论：$\\det\\ne0\\iff$ 诸 $x_i$ **互异**——这正是多项式插值方程组可解（P6.2 可逆）的判据。数值例（$a=1,b=2,c=3$）：\n\n- 因式积：$(2-1)(3-1)(3-2)=2$【已核验:2|(2-1)*(3-1)*(3-2)】；\n- 直接展开对拍：$1\\cdot(2\\cdot9-4\\cdot3)-1\\cdot(1\\cdot9-4\\cdot1)+1\\cdot(1\\cdot3-2\\cdot1)=6-5+1=2$【已核验:2|1*(2*9-4*3)-1*(1*9-4*1)+1*(1*3-2*1)】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:vandermonde.proof",
+      "type": "proof",
+      "subject": "vandermonde",
+      "title": "3×3 手推（切片点名要求）：行相减因式分解",
+      "keywords": [
+        "r2−r1、r3−r1：出现 (b−a)、(c−a) 公因式",
+        "提公因式后剩 2×2 再因式分解",
+        "每步给理由（行加不变）",
+        "结果 (b−a)(c−a)(c−b)",
+        "数值对拍 a=1,b=2,c=3"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 310,
+        "line_end": 310
+      },
+      "fill_hint": "切片要求「会 3×3 手推」；本条是完整推导（行变换路线），末尾数值对拍带【待核验】。",
+      "content": "记三行对应 $a,b,c$：$\\Delta=\\begin{vmatrix}1&a&a^2\\\\1&b&b^2\\\\1&c&c^2\\end{vmatrix}$。手推骨架（每步给理由）：\n\n1. $r_2\\leftarrow r_2-r_1$、$r_3\\leftarrow r_3-r_1$（行加不变，不记账）：\n$$\\Delta=\\begin{vmatrix}1&a&a^2\\\\0&b-a&b^2-a^2\\\\0&c-a&c^2-a^2\\end{vmatrix}$$\n（理由：$b^2-a^2=(b-a)(b+a)$——差平方公式在自动因式分解。）\n\n2. 按第一列展开（$2\\times2$ 上三角块）：\n$$\\Delta=\\begin{vmatrix}b-a&(b-a)(b+a)\\\\c-a&(c-a)(c+a)\\end{vmatrix}$$\n\n3. 两行各提公因式（行倍乘，记账到因子上）：$\\Delta=(b-a)(c-a)\\begin{vmatrix}1&b+a\\\\1&c+a\\end{vmatrix}$。\n\n4. 最后一个 $2\\times2$：$(c+a)-(b+a)=c-b$。合并：\n$$\\Delta=(b-a)(c-a)(c-b)$$\n\n（$=\\prod_{i<j}(x_j-x_i)$ 的 $3\\times3$ 版，列顺序重排即与切片公式同形。）\n\n数值对拍（$a=1,b=2,c=3$）：公式给 $(2-1)(3-1)(3-2)=2$【已核验:2|(2-1)*(3-1)*(3-2)】，直接展开也给 $2$【已核验:2|1*(2*9-4*3)-1*(1*9-4*1)+1*(1*3-2*1)】。\n\n结构注解：$x_i=x_j$ 时两行相同 $\\Rightarrow\\Delta=0$——因式 $\\prod_{i<j}(x_j-x_i)$ 正是把「哪些退化会发生」写成了显式因子。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:det.geometry",
+      "type": "extension",
+      "subject": "det",
+      "title": "与 A1 的接缝：μ(T(A))=|detT|·μ(A)（测度变换）",
+      "keywords": [
+        "切片原文引用 A1：μ(T(A))=|detT|μ(A)",
+        "换元积分的 |det J| 因子",
+        "σ 有限的可数可加把局部线性拼成全局",
+        "CG 落点：纹理/几何的面积比",
+        "links A1.2"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 313,
+        "line_end": 315
+      },
+      "fill_hint": "切片原文「即 A1 里的 μ(T(A))=|det T|μ(A)（此处 μ 是 Lebesgue 测度）」；本条解释这条等式在 A1 的位置与它在换元积分里的化身。",
+      "content": "切片点破的接缝：几何直觉 $|\\det T|= $ 体积伸缩率，在分析里的正式形态是\n\n$$\\mu(T(A))=|\\det T|\\,\\mu(A)$$\n\n（$\\mu$ 是 Lebesgue 测度。）这条等式为什么值钱：\n\n1. **换元积分的引擎**：多元积分换元 $y=T(x)$ 时 $dy=|\\det T'|\\,dx$（Jacobian 行列式）——高斯积分（P8.1）极坐标换元、球坐标换元、概率分布的变量替换（C3）全部靠它；\n2. **线性→全局**：$T$ 线性时它就是本单元的面积比；$T$ 非线性时局部线性化（微分），再用「测度的可数可加」把局部拼成全局（A1.2/A1.4 的机器）；\n3. **CG 落点**：参数化曲面的面积元、纹理映射的 texel 面积比、Monte Carlo 采样的 pdf 变换（H4、H7）——凡是「坐标换一下，面积/概率密度补个因子」的地方，因子都是 $|\\det|$。\n\n为什么绝对值：测度非负、不区分定向；定向信息由 $\\det$ 的符号单独携带（det-small.intuition 的镜像例）。",
+      "links": [
+        "A1.2",
+        "P8.1",
+        "C3",
+        "H4",
+        "H7"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：谱、测度、几何（A2 与 H 章的落点）",
+      "keywords": [
+        "A2.4 谱理论：特征多项式 det(A−λI)",
+        "A1.2 测度变换：μ(T(A))=|detT|μ(A)（切片原文）",
+        "H1 离散微分几何：网格面积/体积元",
+        "H8.2 刚体：惯量张量与体积积分换元",
+        "可逆性判据 det≠0（接 P6.2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 308,
+        "line_end": 315
+      },
+      "fill_hint": "按用户规则 P6 的 application links 指向 A2（泛函）与 H 章（CG）；A1.2 是切片原文明确引用的章（「即 A1 里的 μ(T(A))=|detT|μ(A)」），一并列入。",
+      "content": "行列式在全库的承重点：\n\n- **A2.4（有界线性算子与谱理论）**：特征值由 $\\det(A-\\lambda I)=0$ 定义（P6.3 的手算入口）；无穷维算子没有现成的 $\\det$，谱理论正是「$\\det$ 的无穷维替身」；\n- **A1.2（勒贝格积分的构造）**：测度变换 $\\mu(T(A))=|\\det T|\\mu(A)$（切片原文引用 A1）——换元积分、概率密度变换的公因子；\n- **H1（离散微分几何）**：网格上一切「面积比」——局部参数化的 Jacobian、形变能量里的面积畸变——都是小矩阵行列式；\n- **H8.2（刚体模拟）**：惯量张量的体积积分换元、质量矩阵的行列式条件数；\n- **P6.2（消元与求逆）**：$\\det\\ne0$ 是可逆四等价的头一环。\n\n选择判据：要「数值」→ 小矩阵公式/消元（本单元）；要「结构」（可逆性、谱）→ 把 $\\det$ 当判据函数用；要「几何量」→ 一律取 $|\\det|$。",
+      "links": [
+        "A2.4",
+        "A1.2",
+        "H1",
+        "H8.2",
+        "P6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "本单元工具分工对照表",
+      "keywords": [
+        "2×2 公式：口算级",
+        "Sarrus：3×3 专用",
+        "展开/消元：n≥4 唯一正路",
+        "Vandermonde：记结论 + 会 3×3 手推",
+        "几何量永远取 |det|"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 308,
+        "line_end": 315
+      },
+      "fill_hint": "单元级对照表，按切片四条 item 整理，供前端按表格渲染。",
+      "content": "按切片四条 item 整理的分工对照：\n\n| 工具 | 适用尺寸 | 用法 | 陷阱 |\n|---|---|---|---|\n| 公式 $ad-bc$ | $2\\times2$ | 口算 | 无 |\n| Sarrus 对角线法则 | **只到 $3\\times3$** | 6 项对角线乘积加减 | $n\\ge4$ 推广翻车（17 vs −15，见 det.sarrus-misuse） |\n| 展开／消元 | $n\\ge4$（任意） | 化三角后对角元相乘 | 换行/倍乘记账；主元为零先换行 |\n| Vandermonde $\\prod_{i<j}(x_j-x_i)$ | 记结论 | 插值可解性判据：$x$ 互异 $\\iff\\det\\ne0$ | 忘「互异」条件 |\n| 几何量 $|\\det|$ | 全部 | 面积/体积伸缩率、换元积分因子 | 测度不区分定向，别把负号带进面积 |\n\n依赖链一行：本单元（$\\det$ 公式与性质）→ P6.2（$\\det\\ne0$ 判可逆、消元求逆）→ P6.3（$\\det(A-\\lambda I)=0$ 解特征值）。\n\n记忆负担控制：【必】的是 $2\\times2$／$3\\times3$ 公式与四性质；Sarrus 的 $n\\ge4$ 失效与 Vandermonde 结论属【熟】——知道边界在哪比背展开式值钱。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P6.1:det.probe1",
+      "type": "probe",
+      "subject": "det",
+      "title": "检验：2×2 口算、3×3 Sarrus、Vandermonde 对拍",
+      "keywords": [
+        "det[[2,1],[1,3]]=5",
+        "det[[1,2,3],[4,5,6],[7,8,10]]=−3",
+        "Vandermonde a=1,b=3,c=4：两法都得 6",
+        "三问覆盖公式/Sarrus/因式积",
+        "答案数值带待核验（numpy 可对拍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 308,
+        "line_end": 310
+      },
+      "fill_hint": "【必】小目检验题；三问分别对应 quantifiers 表的三行（小公式、Sarrus 边界内、Vandermonde 互异），答案数值带核验表达式。",
+      "content": "手算三问（算完可用 `numpy.linalg.det` 对拍）：\n\n1. $\\begin{vmatrix}2&1\\\\1&3\\end{vmatrix}=$ ？\n2. $\\begin{vmatrix}1&2&3\\\\4&5&6\\\\7&8&10\\end{vmatrix}=$ ？（用 Sarrus 或第一行展开。）\n3. Vandermonde：$a=1,b=3,c=4$，用因式积与直接展开两法各算一次，比较结果。\n\n（答案：第 1 问 $2\\cdot3-1\\cdot1=5$【已核验:5|2*3-1*1】。第 2 问 $1\\cdot(5\\cdot10-6\\cdot8)-2\\cdot(4\\cdot10-6\\cdot7)+3\\cdot(4\\cdot8-5\\cdot7)=2+4-9=-3$【已核验:-3|1*(5*10-6*8)-2*(4*10-6*7)+3*(4*8-5*7)】。第 3 问因式积 $(3-1)(4-1)(4-3)=6$【已核验:6|(3-1)*(4-1)*(4-3)】，直接展开 $1\\cdot(3\\cdot16-9\\cdot4)-1\\cdot(1\\cdot16-9\\cdot1)+1\\cdot(1\\cdot4-3\\cdot1)=12-7+1=6$【已核验:6|1*(3*16-9*4)-1*(1*16-9*1)+1*(1*4-3*1)】，两法一致。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,470 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P5.2",
+  "chapter": "P5",
+  "title": "Euler 公式与复数（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 272,
+    "line_end": 285,
+    "anchor": "notebook/P_computation.tex:272"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P5.2:euler.quantifiers",
+      "type": "comparison",
+      "subject": "euler",
+      "title": "适用条件表：Euler 公式与 De Moivre 的每个限定词",
+      "keywords": [
+        "θ 必须弧度：sin(30)≈−0.988 不是 1/2",
+        "De Moivre 的 n 必须整数：分数幂多值",
+        "|e^{iθ}|=1 恒成立：缩放归实部管",
+        "e^{iθ} 以 2π 为周期：辐角多值根源",
+        "公式本体无条件：对一切复数 θ 成立"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 273,
+        "line_end": 282
+      },
+      "fill_hint": "切片本体是公式+四条 item（直觉/De Moivre/复数乘法/单位根），无条件可拆；本表把「使用层面的限定」逐条配具体失效数值。行号按切片 272-285 估算。",
+      "content": "$e^{i\\theta}=\\cos\\theta+i\\sin\\theta$ 是恒等式（对一切实数（乃至复数）$\\theta$ 成立，以幂级数为定义时无条件）；De Moivre 与单位根则有实打实的限定词。逐条拆解：\n\n| 条件／限定 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $\\theta$ 以弧度计（级数定义的前提） | $\\sin(30)$ 是 30 弧度的正弦 $\\approx-0.988$【已核验:-0.988031624093|sin(30)】，不是 $\\sin 30^\\circ=1/2$ | 公式数值全错 | 不能：$\\cos,\\sin$ 的幂级数系数（$1/2!,1/3!,\\dots$）只在弧度制下成立；角度制先 $\\times\\pi/180$ |\n| De Moivre 的 $n$ 为整数 | $n=1/2$：$(e^{i\\pi})^{1/2}$ 有两个值 $\\pm i$；对同一个点 $-1=e^{i3\\pi}$ 开方却得 $e^{i3\\pi/2}=-i$ | 单值断言错——辐角差 $2\\pi$ 的同一点给出不同结果 | 放宽需引入多值函数／主值分支（见 euler.misuse，接 R6） |\n| $\\lvert e^{i\\theta}\\rvert=1$ 只对纯虚指数成立 | $e^{(0.1+i)\\theta}$ 的模是 $e^{0.1\\theta}$，随 $\\theta$ 指数增长【已核验:2.71828182846|exp(0.1*10)】 | 把「乘复数=纯旋转」用到带实部指数上 | 旋转（模 1）与缩放（实指数）必须分开记账（见 complex-multiplication.statement） |\n| $e^{i\\theta}$ 以 $2\\pi$ 为周期 | $e^{i\\theta}=e^{i(\\theta+2\\pi)}$：$\\arg$ 不是单值函数 | 辐角主值区间外重复计数 | 不能消除，只能约定主值 $(-\\pi,\\pi]$；这是复对数多值的根源（R6） |\n| 单位根要求 $n$ 为正整数 | $n$ 非整数时「$n$ 个均匀分布的解」无从谈起 | DFT 骨架失效 | 不能：$z^n=1$ 恰有 $n$ 个根依赖代数基本定理 |\n\n总结一句：Euler 公式本体无条件可谈，坑全在**单位（弧度）**与**多值性（分数幂、辐角）**两处。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:euler.misuse",
+      "type": "counterexample",
+      "subject": "euler",
+      "title": "典型误用：角度制与分数幂单值化（算出错误数值）",
+      "keywords": [
+        "cos(60 rad)≈−0.952，不是 1/2",
+        "分数幂：(e^{iπ})^{1/2}=±i 而非只有 i",
+        "同一点 −1=e^{iπ}=e^{i3π} 开方结果不同",
+        "修补：×π/180；主值区间 (−π,π]",
+        "多值性是结构不是 bug"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 279,
+        "line_end": 279
+      },
+      "fill_hint": "切片 De Moivre 行「幂的辐角 n 倍」隐含 n 整数；误用例是使用层面展开，数值带【待核验】。",
+      "content": "误用一（角度制）：代码里期望 $\\cos(60^\\circ)=1/2$，实际算的是 $\\cos(60\\ \\text{rad})\\approx-0.952$【已核验:-0.952412980415|cos(60)】。Euler 公式与 De Moivre 全部以弧度定义。修补：数值前统一 $\\times\\pi/180$。\n\n误用二（分数幂单值化）：对 De Moivre 「$(\\cos\\theta+i\\sin\\theta)^n=\\cos n\\theta+i\\sin n\\theta$」想当然取 $n=1/2$。完整计算失效过程：\n\n- $-1=e^{i\\pi}$，也等于 $e^{i3\\pi}$（周期 $2\\pi$，同一个点）；\n- 若 $(e^{i\\theta})^{1/2}=e^{i\\theta/2}$ 单值成立：对 $e^{i\\pi}$ 得 $e^{i\\pi/2}=i$；对 $e^{i3\\pi}$ 得 $e^{i3\\pi/2}=-i$——**同一个数 $-1$ 开平方得到两个不同结果**，而平方根本应只有 $\\pm i$ 两个值；\n- 矛盾根源：$\\theta\\mapsto\\theta/2$ 不保持「辐角差 $2\\pi$」的等价性（$\\theta$ 与 $\\theta+2\\pi$ 各自减半后差 $\\pi$，落到对径点）。\n\n修补条件：①De Moivre 只对整数 $n$ 直接用；②分数幂必须声明主值区间（如 $\\arg\\in(-\\pi,\\pi]$），并记住其他分支；多值性是复数的**结构**而非计算失误（接 R6 解析延拓与多值函数）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:euler-formula.statement",
+      "type": "statement",
+      "subject": "euler-formula",
+      "title": "Euler 公式：e^{iθ}=cosθ+isinθ",
+      "keywords": [
+        "e^{iθ}=cosθ+isinθ",
+        "对一切实数（复数）θ 成立",
+        "直接推论：|e^{iθ}|=1，单位圆",
+        "指数法则 e^{iθ}e^{iφ}=e^{i(θ+φ)}=旋转叠加",
+        "切片标注【必】"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 273,
+        "line_end": 275
+      },
+      "fill_hint": "切片公式行逐字转写（272-275 行的 display 公式）；推论（模 1、周期性）由公式两边直接算出，为标准展开。",
+      "content": "Euler 公式（切片标注【必】）：\n\n$$e^{i\\theta}=\\cos\\theta+i\\sin\\theta$$\n\n对一切实数 $\\theta$ 成立（把 $e^{z}$ 用幂级数定义后，对一切复数 $z=i\\theta$ 成立）。三个直接推论（各一行可验）：\n\n1. **模恒为 1**：$|e^{i\\theta}|^2=\\cos^2\\theta+\\sin^2\\theta=1$——点 $e^{i\\theta}$ 永远在单位圆上；\n2. **指数法则＝旋转叠加**：$e^{i\\theta}e^{i\\phi}=e^{i(\\theta+\\phi)}$——两个旋转的复合是角度相加（与 P5.1 和角公式同一件事的压缩版）；\n3. **周期 $2\\pi$**：$e^{i(\\theta+2\\pi)}=e^{i\\theta}$——绕圈回到同一点。\n\n两条特别值（值得背）：$e^{i\\pi}=-1$（Euler 恒等式），$e^{i\\pi/2}=i$。数值抽查：$e^{i\\pi/3}$ 的实部 $\\cos(\\pi/3)=1/2$【已核验:0.5|cos(pi/3)】、虚部 $\\sin(\\pi/3)\\approx0.866$【已核验:0.866025403784|sin(pi/3)】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:euler-formula.intuition",
+      "type": "intuition",
+      "subject": "euler-formula",
+      "title": "直觉：指数是旋转的引擎（单位圆匀速圆周运动＋实虚双投影）",
+      "keywords": [
+        "θ 增大时 e^{iθ} 沿单位圆逆时针匀速走",
+        "速度 ie^{iθ} 与位置垂直、长度恒 1",
+        "实部 cosθ＝横投影，虚部 sinθ＝纵投影",
+        "假设：指数法则 e^a e^b=e^{a+b}（加法→旋转叠加）",
+        "结论：e^{iθ} 就是旋转的解析表示",
+        "viz：unit-circle 模块"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 277,
+        "line_end": 278
+      },
+      "fill_hint": "切片原话「直觉：指数是旋转的引擎——单位圆上的匀速圆周运动」。本条展开成假设/结论分开的叙述，并按用户规则挂 viz 档1 unit-circle（e^{iθ} 沿单位圆走、实虚部双投影）。",
+      "content": "切片原话：**指数是旋转的引擎**——单位圆上的匀速圆周运动。\n\n**假设给了什么**：指数法则 $e^ae^b=e^{a+b}$——「指数相乘＝指数相加」。放到虚轴上，乘 $e^{i\\theta}$ 就是把平面逆时针转 $\\theta$：角度的加法对应旋转的叠加。\n\n**结论为什么因此成立**：让 $\\theta$ 从 $0$ 匀速增大，点 $e^{i\\theta}$ 的运动方程满足「速度向量 $=i\\,e^{i\\theta}$」——速度与位置垂直（不拉伸）、长度恒为 $|i|\\cdot|e^{i\\theta}|=1$（匀速）。于是：\n\n- 位置 $e^{i\\theta}=(\\cos\\theta,\\ \\sin\\theta)$ 沿**单位圆**逆时针走；\n- **实部 $\\cos\\theta$** 是位置在横轴上的投影曲线，**虚部 $\\sin\\theta$** 是纵轴投影曲线——一个指数同时携带两条正弦波（相位差 $90^\\circ$）；\n- 转过 $2\\pi$ 回到起点（周期性），转过 $\\pi$ 到达 $-1$。\n\n这解释了「为什么 $e$ 和三角函数会搅在一起」：$e$ 管的是「不变的复利增长率」，放在虚轴上增长率方向恒垂直于位置，圆周运动就是「永远垂直于自己的增长」。",
+      "viz": {
+        "module": "unit-circle",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "theta_range": [
+            0,
+            12.566370614359172
+          ],
+          "show": [
+            "unit-circle",
+            "point",
+            "cos-projection",
+            "sin-projection"
+          ],
+          "trace": "helix",
+          "demoivre_mode": {
+            "n": 6,
+            "jump": true
+          }
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:euler-formula.proof",
+      "type": "proof",
+      "subject": "euler-formula",
+      "title": "严格证明：幂级数实虚部分家（切片指定的路线）",
+      "keywords": [
+        "e^{iθ}=Σ(iθ)^k/k! 定义为幂级数",
+        "偶次项按 mod 4 分实部＝cos 级数",
+        "奇次项提出 i 得 i·sin 级数",
+        "依赖：cos/sin 的 Maclaurin 级数（P7.1）",
+        "易错点：不是循环论证"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 277,
+        "line_end": 278
+      },
+      "fill_hint": "切片原话「严格证明：把 e^{iθ} 定义为幂级数，实部／虚部分别就是 cos、sin 的级数」。本条按此路线写全分步推导。",
+      "content": "切片指定的严格路线：把 $e^{i\\theta}$ **定义为**幂级数，再对账。\n\n1. 定义：$e^{i\\theta}=\\displaystyle\\sum_{k=0}^{\\infty}\\frac{(i\\theta)^k}{k!}$。（理由：这是 $e^z$ 的定义在虚轴上的取值；级数绝对收敛，重排自由。）\n\n2. 幂次分家：$i^2=-1,\\ i^3=-i,\\ i^4=1$，幂按 $\\bmod 4$ 循环——\n- 偶次项 $k=2j$：$(i\\theta)^{2j}=(-1)^j\\theta^{2j}$，是**实数**；\n- 奇次项 $k=2j+1$：$(i\\theta)^{2j+1}=i\\cdot(-1)^j\\theta^{2j+1}$，是**纯虚数**。\n\n3. 实部对账：$\\displaystyle\\sum_{j=0}^{\\infty}\\frac{(-1)^j\\theta^{2j}}{(2j)!}=\\cos\\theta$ 的 Maclaurin 级数（P7.1 必背表）。\n\n4. 虚部对账：$\\displaystyle i\\sum_{j=0}^{\\infty}\\frac{(-1)^j\\theta^{2j+1}}{(2j+1)!}=i\\sin\\theta$。\n\n合并即 $e^{i\\theta}=\\cos\\theta+i\\sin\\theta$。\n\n易错点：这不是循环论证——$\\cos,\\sin$ 的级数是其自身的（独立）展开，Euler 公式是三方（指数、余弦、正弦）的对账单。依赖链：幂级数定义 → Euler 公式 → De Moivre → 单位根。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:demoivre.statement",
+      "type": "statement",
+      "subject": "demoivre",
+      "title": "De Moivre 公式（幂的辐角 n 倍）",
+      "keywords": [
+        "(cosθ+isinθ)^n=cos nθ+i sin nθ",
+        "n 必须为整数",
+        "一行证明：(e^{iθ})^n=e^{inθ}",
+        "n 倍角公式的批发商",
+        "切片原文「幂的辐角 n 倍」"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 279,
+        "line_end": 279
+      },
+      "fill_hint": "切片 De Moivre 行逐字转写；「n 为整数」这一条件由 euler.quantifiers 表的分数幂反例支撑。",
+      "content": "De Moivre 公式（切片原文：幂的辐角 $n$ 倍）：\n\n$$(\\cos\\theta+i\\sin\\theta)^n=\\cos n\\theta+i\\sin n\\theta$$\n\n成立条件：$n$ 为**整数**（正整数由归纳直接成立；负整数用 $|e^{i\\theta}|=1$ 的倒数；分数幂会翻车——见 euler.misuse 的完整计算）。数值抽查：$n=3,\\ \\theta=\\pi/9$，左边模长 $1$，辐角 $3\\times\\pi/9=\\pi/3$，实部 $\\cos(\\pi/3)=1/2$【已核验:0.5|cos(pi/3)】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:demoivre.proof",
+      "type": "proof",
+      "subject": "demoivre",
+      "title": "证明骨架：Euler 公式代换两次＋指数法则一次",
+      "keywords": [
+        "第一步：cosθ+isinθ=e^{iθ}（Euler）",
+        "第二步：(e^{iθ})^n=e^{inθ}（指数法则）",
+        "第三步：e^{inθ}=cos nθ+i sin nθ（再用 Euler）",
+        "依赖链：幂级数→Euler→De Moivre",
+        "整数 n 保证指数法则无歧义"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 279,
+        "line_end": 279
+      },
+      "fill_hint": "切片只给 De Moivre 陈述；三步证明是标准展开（Euler 公式的直接推论），依赖链显式标注。",
+      "content": "三步，每步一个理由：\n\n1. 代入：$\\cos\\theta+i\\sin\\theta=e^{i\\theta}$。（理由：Euler 公式，见 euler-formula.proof。）\n2. 取幂：$(e^{i\\theta})^n=e^{in\\theta}$。（理由：指数法则；$n$ 为整数时无歧义——分数幂的多值问题正出在这一步，见 euler.misuse。）\n3. 代回：$e^{in\\theta}=\\cos n\\theta+i\\sin n\\theta$。（理由：再用一次 Euler 公式，自变量换成 $n\\theta$。）\n\n依赖链：幂级数定义 → Euler 公式 → De Moivre →（取实虚部）n 倍角公式族。对照 P5.1：和角公式用矩阵乘法推、De Moivre 用指数法则推，两路在「旋转叠加」处会师——$R(\\theta)^n=R(n\\theta)$ 与 $(e^{i\\theta})^n=e^{in\\theta}$ 是同一句话的矩阵版和复数版。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:demoivre.application",
+      "type": "application",
+      "subject": "demoivre",
+      "title": "应用：n 倍角公式的批发商（以 cos3θ 为例）",
+      "keywords": [
+        "二项式展开 (cosθ+isinθ)³ 实部＝cos3θ",
+        "cos3θ=4cos³θ−3cosθ",
+        "数值对拍 θ=π/9 两边都 0.5",
+        "P5.1 倍角公式是 n=2 特例",
+        "一次推导，所有 n 免费拿"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 279,
+        "line_end": 279
+      },
+      "fill_hint": "切片 De Moivre 行只给陈述；本条是其标准用法演示（n=3），数值带【待核验】。用途定位呼应 P5.1 倍角行。",
+      "content": "De Moivre 是 $n$ 倍角公式的**批发商**：展开 $(\\cos\\theta+i\\sin\\theta)^n$（二项式定理），实部给 $\\cos n\\theta$、虚部给 $\\sin n\\theta$，右边全是 $\\cos^k\\theta\\sin^{n-k}\\theta$ 的多项式。\n\n例（$n=3$）：\n$$(\\cos\\theta+i\\sin\\theta)^3=\\cos^3\\theta+3i\\cos^2\\theta\\sin\\theta-3\\cos\\theta\\sin^2\\theta-i\\sin^3\\theta$$\n实部对账 $\\cos 3\\theta=\\cos^3\\theta-3\\cos\\theta\\sin^2\\theta$，用 $\\sin^2=1-\\cos^2$ 化简得\n\n$$\\cos 3\\theta=4\\cos^3\\theta-3\\cos\\theta$$\n\n数值对拍（$\\theta=\\pi/9$）：左边 $\\cos(\\pi/3)=0.5$【已核验:0.5|cos(pi/3)】；右边 $4\\cos^3(\\pi/9)-3\\cos(\\pi/9)\\approx0.5$【已核验:0.5|4*cos(pi/9)**3-3*cos(pi/9)】。\n\n定位：P5.1 的倍角公式 $\\sin 2x,\\cos 2x$ 就是 $n=2$ 特例；De Moivre 一次推导给你所有 $n$。在 PDE/CG 里取 $n$ 倍角的地方（波的谐波、绕 $n$ 折对称轴的旋转）都从这拿公式。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:complex-multiplication.statement",
+      "type": "statement",
+      "subject": "complex-multiplication",
+      "title": "复数乘法＝旋转＋缩放（模相乘、辐角相加）",
+      "keywords": [
+        "z₁z₂=r₁r₂ e^{i(θ₁+θ₂)}",
+        "模相乘、辐角相加",
+        "乘 e^{iθ}＝纯旋转（长度不变）",
+        "CG 旋转矩阵/四元数全从这里长出来（切片原话）",
+        "复数既是点又是动作"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 280,
+        "line_end": 281
+      },
+      "fill_hint": "切片原话「复数乘法＝旋转＋缩放：模相乘、辐角相加。CG 的旋转矩阵／四元数全从这里长出来（与 B1 的 SU(2) 一节合看）」。转写并给出极坐标算式。",
+      "content": "复数乘法（切片原文：**旋转＋缩放**，模相乘、辐角相加）。把复数写成极坐标 $z_1=r_1e^{i\\theta_1},\\ z_2=r_2e^{i\\theta_2}$（$r\\ge0$ 为模、$\\theta$ 为辐角），则\n\n$$z_1z_2=r_1r_2\\,e^{i(\\theta_1+\\theta_2)}$$\n\n- 模：$|z_1z_2|=|z_1|\\,|z_2|$（相乘）；\n- 辐角：$\\arg(z_1z_2)=\\arg z_1+\\arg z_2$（相加，模 $2\\pi$）。\n\n特例：乘以 $e^{i\\theta}$（模 1）＝**纯旋转** $\\theta$，长度不动；乘以正实数 $r$＝纯缩放；一般复数＝先转后拉。\n\n数值例：$(1+i)(1-i)=2$（辐角 $\\pi/4$ 与 $-\\pi/4$ 相加归零，模 $\\sqrt2\\cdot\\sqrt2=2$）【已核验:2|sqrt(2)*sqrt(2)】。\n\n切片特别指出：**CG 的旋转矩阵／四元数全从这里长出来**——平面旋转矩阵 $R(\\theta)$ 就是「乘 $e^{i\\theta}$」的矩阵写法（P5.1），四元数把这个故事搬到三维（与 lie1.3 $SO(2)$、lie1.13 四元数与 $SU(2)$ 合看）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:complex-multiplication.intuition",
+      "type": "intuition",
+      "subject": "complex-multiplication",
+      "title": "直觉：复数既是「点」又是「动作」",
+      "keywords": [
+        "乘一个复数＝对全平面先转后拉",
+        "e^{iθ} 是动作（纯转），r 是动作（纯拉）",
+        "2D 旋转矩阵与「乘 e^{iθ}」是同一变换的两种写法",
+        "四元数：把这个能力推广到 3D",
+        "CG 落点：旋转的插值与复合"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 280,
+        "line_end": 281
+      },
+      "fill_hint": "切片「CG 的旋转矩阵／四元数全从这里长出来（与 B1 的 SU(2) 一节合看）」的直觉展开；跨章 links 用全库代号清单内的 lie1.3、lie1.13。",
+      "content": "**假设给了什么**：复数比实数多一个维度，乘法因此从「拉伸数轴」升级为「作用于整个平面」。\n\n**结论为什么因此成立**：把 $z=re^{i\\theta}$ 拆成「动作」——乘 $z$ 等于乘 $e^{i\\theta}$（把平面逆时针转 $\\theta$）再乘 $r$（把平面均匀拉大 $r$ 倍）。模与辐角正是这套动作的两个参数：转多少、拉多少。\n\n「既是点又是动作」是复数的身份分裂：$z$ 既可以看作平面上的一个**点**（坐标 $(\\Re z,\\Im z)$），也可以看作一个**变换**（乘法算子「转 $\\theta$ 拉 $r$」）。几何里通常把变换和点分开记账（矩阵 vs 向量），复数把两者压缩成一个对象。\n\nCG 落点（切片原话）：\n\n- 2D 旋转矩阵 $R(\\theta)=\\begin{pmatrix}\\cos\\theta&-\\sin\\theta\\\\ \\sin\\theta&\\cos\\theta\\end{pmatrix}$ 与「乘 $e^{i\\theta}$」是同一变换的两种写法（lie1.3 $SO(2)$）；\n- 3D 旋转没有单个复数可用，四元数（$SU(2)$，双倍覆盖 $SO(3)$）是「复数故事」的三维续集（lie1.13）——旋转的复合、插值（Slerp，lie3.14）、刚体姿态（H8.2）全在其上展开。",
+      "links": [
+        "lie1.3",
+        "lie1.13",
+        "lie3.14",
+        "H8.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:roots-of-unity.statement",
+      "type": "statement",
+      "subject": "roots-of-unity",
+      "title": "单位根：z^n=1 的 n 个均匀解",
+      "keywords": [
+        "z_k=e^{2πik/n}，k=0,…,n−1",
+        "n 个点均匀分布在单位圆上",
+        "相邻夹角 2π/n（把圆 n 等分）",
+        "DFT／Fourier 的骨架（切片原话）",
+        "n 为正整数"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 282,
+        "line_end": 282
+      },
+      "fill_hint": "切片原话「单位根：z^n=1 的解为 e^{2πik/n}，n 个均匀分布在单位圆上——DFT／Fourier 的骨架」。逐字转写＋解集的完整列举。",
+      "content": "单位根（切片原文：$z^n=1$ 的解为 $e^{2\\pi ik/n}$，$n$ 个均匀分布在单位圆上——**DFT／Fourier 的骨架**）：\n\n$$z_k=e^{2\\pi ik/n},\\qquad k=0,1,\\dots,n-1$$\n\n成立条件：$n$ 为正整数。几何图像：把单位圆 $n$ 等分，从 $1$（$k=0$）出发逆时针每步转 $2\\pi/n$——像钟面上均匀钉 $n$ 枚钉子。\n\n验证（$n$ 次幂把辐角乘 $n$）：$z_k^n=e^{2\\pi ik}=1$【已核验:1|cos(2*pi)】（实部）。例：$n=4$ 的四个根 $1,i,-1,-i$；$n=3$ 的三个根 $1,\\ e^{2\\pi i/3},\\ e^{4\\pi i/3}$（后两者辐角 $120^\\circ,240^\\circ$，实部分别为 $-\\tfrac12$【已核验:-0.5|cos(2*pi/3)】）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:roots-of-unity.intuition",
+      "type": "intuition",
+      "subject": "roots-of-unity",
+      "title": "直觉：单位根之和为零与「DFT 骨架」",
+      "keywords": [
+        "几何级数 Σz^k=(1−z^n)/(1−z) 在单位根处归零",
+        "所有单位根重心在原点：实部和=0、虚部和=0",
+        "n=5 数值核验：Σcos(2πk/5)=0",
+        "均匀钟面刻度＝正交基的离散版",
+        "接 A2.3 {e^{inx}} 正交性的离散版"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 282,
+        "line_end": 282
+      },
+      "fill_hint": "切片「DFT／Fourier 的骨架」一句的展开；求和为零的数值核验用实部/虚部分别的【待核验】表达式（表达式环境不支持复数）。",
+      "content": "**假设给了什么**：$n$ 个点把圆均匀等分（相邻夹角恰 $2\\pi/n$），且每个点的 $n$ 次幂都回到 $1$。\n\n**结论为什么因此成立（单位根之和为零）**：令 $z=e^{2\\pi i/n}\\ne1$，几何级数\n$$1+z+z^2+\\dots+z^{n-1}=\\frac{1-z^n}{1-z}=\\frac{1-1}{1-z}=0$$\n——「转一整圈的平均贡献互相抵消」。数值核验（$n=5$）：实部 $\\sum_{k=0}^{4}\\cos(2\\pi k/5)=0$【已核验:0|sum(cos(2*pi*k/5) for k in range(5))】，虚部 $\\sum_{k=0}^{4}\\sin(2\\pi k/5)=0$【已核验:0|sum(sin(2*pi*k/5) for k in range(5))】——重心恰在原点。\n\n为什么是「DFT／Fourier 的骨架」（切片原话）：离散 Fourier 变换把长度 $n$ 的信号投影到这 $n$ 个「均匀钟面刻度」$z^{-k}$ 上；上面那个「求和归零」正是**不同频率互相正交、同频同相才共振**的离散版——与 P5.3 三角正交性（连续版）、A2.3 的 $\\{e^{inx}\\}$（函数版）是同一骨架的三个尺寸。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：旋转、Fourier、围道积分的公共源头",
+      "keywords": [
+        "lie1.3 SO(2)：平面旋转＝乘 e^{iθ}",
+        "lie1.13 四元数 SU(2)：3D 旋转的复数推广",
+        "A2.3：{e^{inx}} 正交基（P5.3 实数版的母体）",
+        "R2.1 围道积分：e^{iz} 的模长控制",
+        "de3.4：Laplace/Taylor 在复平面的统一"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 277,
+        "line_end": 282
+      },
+      "fill_hint": "应用落点由切片「CG 的旋转矩阵／四元数全从这里长出来」「DFT／Fourier 的骨架」两句推定；跨章代号均在全库清单内。",
+      "content": "Euler 公式是全库少有的「三线枢纽」：\n\n- **旋转线（CG）**：lie1.3（$SO(2)$ 平面旋转＝乘 $e^{i\\theta}$）→ lie1.13（四元数与 $SU(2)$，3D 旋转）→ lie3.14（Slerp 球面插值）→ H8.2（刚体姿态）。切片原话：CG 的旋转矩阵／四元数全从这里长出来。\n- **频谱线（Fourier）**：P5.3 三角正交性是 $\\{e^{inx}\\}$ 的实数版 → A2.3 正交基与 Fourier 分析 → de2.12（Fourier 变换）、G2.3（谱方法）。单位根（roots-of-unity）是这条线的离散骨架（DFT）。\n- **复分析线**：R1（复可微比实可微强得多）→ R2.1（围道积分，$|e^{i(x+iy)}|=e^{-y}$ 的模长控制是 Jordan 引理的芯）→ de3.4（Laplace／Taylor 在复平面的统一）。\n\n选择判据：要复合/插值旋转 → 复数/四元数写法；要做频率分解 → $e^{inx}$ 写法；要估计增长/衰减 → 模长 $e^{\\Re z}$。",
+      "links": [
+        "lie1.3",
+        "lie1.13",
+        "A2.3",
+        "R2.1",
+        "de2.12",
+        "G2.3",
+        "H8.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：unit-circle（旋转引擎总览）",
+      "keywords": [
+        "模块 unit-circle，档1 前端直渲",
+        "拖 θ 滑块：点沿单位圆走，右侧同步展开 cos/sin 双投影曲线",
+        "θ>2π 演示周期性",
+        "De Moivre 模式：一次跳转 nθ",
+        "失败演示：角度制 vs 弧度制（sin(30) 的坑）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 277,
+        "line_end": 282
+      },
+      "fill_hint": "按用户规则：P5.2 Euler 公式挂 viz 档1 unit-circle（e^{iθ} 沿单位圆走、实虚部双投影），直觉词条已挂；本条为单元级总览（叙事 + 参数建议）。",
+      "content": "单元级演示总览（模块 unit-circle，前端直渲）：\n\n- **trace 模式**：拖 $\\theta$ 滑块，点 $e^{i\\theta}$ 沿单位圆走；右侧两栏同步描出 $\\cos\\theta$（横投影）与 $\\sin\\theta$（纵投影）曲线——「一个指数携带两条波」。$\\theta$ 越过 $2\\pi$ 时曲线回摆，周期性肉眼可见。\n- **demoivre 模式**：输入整数 $n$，一次跳转 $n\\theta$（跳过中间过程），配合 $(e^{i\\theta})^n=e^{in\\theta}$ 的代数式对照。\n- **radical 模式（反例叙事）**：把 $\\theta$ 显示成「度数」喂进 $\\sin$——$\\sin(30)\\approx-0.988$【已核验:-0.988031624093|sin(30)】，图上直接看出单位不匹配的灾难。\n\n演示与词条的挂点：euler-formula.intuition（trace）、demoivre.statement（demoivre）、euler.misuse（radical）。",
+      "viz": {
+        "module": "unit-circle",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "modes": [
+            "trace",
+            "demoivre",
+            "radical"
+          ],
+          "theta_range": [
+            0,
+            6.283185307179586
+          ],
+          "show": [
+            "unit-circle",
+            "cos-projection",
+            "sin-projection"
+          ],
+          "demoivre_n": [
+            2,
+            3,
+            6
+          ]
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.2:euler-formula.probe1",
+      "type": "probe",
+      "subject": "euler-formula",
+      "title": "检验：e^{iπ/3} 的实虚部、De Moivre 六次幂、单位根之和",
+      "keywords": [
+        "e^{iπ/3} 实部 1/2、虚部 √3/2",
+        "(e^{iπ/3})^6=1：实部 cos2π=1",
+        "5 次单位根实部之和=0",
+        "三问覆盖：公式、De Moivre、单位根",
+        "答案数值带待核验"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 273,
+        "line_end": 282
+      },
+      "fill_hint": "【必】小目的检验题；从 quantifiers 表（单位、整数幂）与单位根行变问句，答案数值带核验表达式（前端折叠用）。",
+      "content": "第 1 问：写出 $e^{i\\pi/3}$ 的实部与虚部（不查表）。\n\n第 2 问：用 De Moivre 验证 $(e^{i\\pi/3})^6=1$（给出实部与虚部的数值）。\n\n第 3 问：$5$ 次单位根的实部之和是多少？虚部之和是多少？（提示：几何级数归零，或对称性。）\n\n（答案：第 1 问实部 $\\cos(\\pi/3)=1/2$【已核验:0.5|cos(pi/3)】、虚部 $\\sin(\\pi/3)=\\sqrt3/2\\approx0.866$【已核验:0.866025403784|sin(pi/3)】。第 2 问 $(e^{i\\pi/3})^6=e^{i2\\pi}$：实部 $\\cos(2\\pi)=1$【已核验:1|cos(2*pi)】、虚部 $\\sin(2\\pi)=0$【已核验:0|sin(2*pi)】。第 3 问实部和 $0$【已核验:0|sum(cos(2*pi*k/5) for k in range(5))】、虚部和 $0$【已核验:0|sum(sin(2*pi*k/5) for k in range(5))】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C4",
+  "chapter": "C4",
+  "title": "条件期望与鞅",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 51,
+    "line_end": 60,
+    "anchor": "notebook/C_partial.tex:51"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C4:cond-exp.quantifiers",
+      "type": "comparison",
+      "subject": "cond-exp",
+      "title": "条件期望定义的限定词拆解（可测性 + 全事件积分等式）",
+      "keywords": [
+        "两条限定词钉死唯一性：G-可测 + 对一切 A∈G 积分相等",
+        "只验 A=Ω：任何同均值函数都合格，定义塌掉",
+        "G 必须是 F 的子 σ-代数，否则 ∫_A X dP 无定义",
+        "X∈L¹ 不可去：Cauchy 型两边无穷",
+        "骰子数值示范：偶 4 奇 3 是唯一解",
+        "「验证候选」因唯一性成为合法算法"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 52,
+        "line_end": 55
+      },
+      "fill_hint": "以切片 52-55 行定义为准；骰子示范的两条积分等式数值带【待核验】。",
+      "content": "**定义（切片原文）**：$E[X\\mid\\mathcal{G}]$ 是关于子 σ-代数 $\\mathcal{G}\\subseteq\\mathcal{F}$ 可测的随机变量，满足 $\\int_A E[X\\mid\\mathcal{G}]\\,dP=\\int_A X\\,dP$ 对一切 $A\\in\\mathcal{G}$。两个限定词拆开拷问：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| $Y=E[X\\mid\\mathcal{G}]$ 关于 $\\mathcal{G}$ 可测 | 掷骰子 $X$、$\\mathcal{G}=\\sigma(\\text{奇偶})$：$Y\\equiv 3.5$（处处常数）与 $Y'=\\text{偶}4\\text{奇}3$ 同均值 | 两个候选都过 $A=\\Omega$ 的检验，条件期望不唯一，定义塌掉 | 不可去：可测性钉住唯一性 |\n| 积分等式对**一切** $A\\in\\mathcal{G}$ | 上例在 $A=\\{\\text{偶}\\}$ 上分出真假：$\\int_A Y\\,dP=\\frac{4+4+4}{6}=2$【已核验:2|(4+4+4)/6】$=\\int_A X\\,dP=\\frac{2+4+6}{6}$【已核验:2|(2+4+6)/6】对 $Y'$ 成立、对 $Y\\equiv3.5$ 得 $\\frac{3.5\\times3}{6}=1.75$【已核验:1.75|3.5*3/6】$\\ne 2$ 不成立 | 弱化成「部分事件」后任何同均值函数都合格 | 不能少验：「一切」正是定义的强制力 |\n| $\\mathcal{G}\\subseteq\\mathcal{F}$（子 σ-代数） | $\\mathcal{G}\\not\\subseteq\\mathcal{F}$ 时存在 $A\\in\\mathcal{G}$ 不可测 | $\\int_A X\\,dP$ 无定义 | 必须是子代数 |\n| $X\\in L^1$ | Cauchy 型 $X$：$E[X^+]=E[X^-]=\\infty$ | 积分 $\\pm\\infty$ 相减无意义 | 可放宽到 $X\\ge0$（允许 $+\\infty$） |\n\n数值示范（骰子，$\\mathcal{G}=\\{\\varnothing,\\text{偶},\\text{奇},\\Omega\\}$）：唯一解是偶数取 $\\frac{2+4+6}{3}=4$【已核验:4|(2+4+6)/3】、奇数取 $\\frac{1+3+5}{3}=3$【已核验:3|(1+3+5)/3】——「每个信息块内部各自做平均」的化身。定义是性质式的：不告诉你怎么算，只规定必须满足什么；唯一性让「猜一个候选再验证」成为合法算法。",
+      "links": [
+        "A1.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:cond-exp.zero-prob",
+      "type": "counterexample",
+      "subject": "cond-exp",
+      "title": "反例：P(Y=y)=0 的陷阱——古典条件概率在这里是 0/0",
+      "keywords": [
+        "Y~U(0,1)、X=Y，问 E[X|Y=0.3]",
+        "古典公式分母 P(Y=0.3)=0 → 0/0 无定义",
+        "测度论定义给出 E[X|Y]=Y，代入得 0.3",
+        "先在随机变量层面定义，再落地到点值",
+        "渲染中「给定方向/深度的条件量」全是连续条件量",
+        "古典写法直接除零，正确路径经条件期望/条件密度"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 52,
+        "line_end": 55
+      },
+      "fill_hint": "演示「为什么需要测度论定义」的动机反例；E[X|Y=0.3]=0.3 的落地规则需人工复核表述。",
+      "content": "取 $Y\\sim U(0,1)$、$X=Y$。问：$E[X\\mid Y=0.3]$ 是多少？\n\n古典条件概率的写法 $P(X\\le x\\mid Y=0.3)=\\frac{P(X\\le x,\\,Y=0.3)}{P(Y=0.3)}$：分母 $P(Y=0.3)=0$（连续分布单点概率为零），整个表达式是 $\\frac{0}{0}$——**无定义**。不是 0，也不是 1，是问不出来。\n\n但直觉答案显然存在：已知 $Y=0.3$ 就知道 $X=0.3$。给出这个答案的正是测度论定义：$X$ 本身关于 $\\sigma(Y)$ 可测，取 $E[X\\mid Y]=Y$ 直接满足定义的积分等式，再代入 $Y=0.3$ 得 $E[X\\mid Y=0.3]=0.3$【已核验:0.3|0.3】。\n\n机制：$E[X\\mid\\mathcal{G}]$ 先在**随机变量层面**定义（$\\sigma(Y)$-可测 + 积分等式），再通过「$E[X\\mid Y]=g(Y)$ 时规定 $E[X\\mid Y=y]:=g(y)$」落地到点值——完全绕开除以零。正则条件分布的一般存在性是 delicacy（拓展），但离散与实值情形总可行。\n\n误用后果：渲染里「给定方向 $\\omega$ 的辐射亮度」「给定深度 $t$ 的散射概率」全是连续条件量，按古典公式写代码会直接除零；正确路径全部经条件期望或条件密度（H3、J5 的条件采样公式）。",
+      "links": [
+        "H3",
+        "J5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:cond-exp.statement",
+      "type": "statement",
+      "subject": "cond-exp",
+      "title": "条件期望定义与三大日用性质",
+      "keywords": [
+        "Y 关于 G 可测 + ∫_A Y dP=∫_A X dP（∀A∈G）",
+        "存在唯一性由 Radon–Nikodym 保证（a.e. 唯一）",
+        "G={∅,Ω} 时退化为 E[X]；X 可测时等于 X",
+        "线性性",
+        "性质式定义：猜候选再验证是合法算法",
+        "离散 σ(Y) 情形退化为初等条件平均"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 52,
+        "line_end": 55
+      },
+      "fill_hint": "切片 52-55 行原文转写；存在唯一性与三大性质为切片外补充，已在正文标注。",
+      "content": "**切片原文**：$E[X\\mid\\mathcal{G}]$ 是关于子 σ-代数 $\\mathcal{G}$ 可测的随机变量，满足\n\n$$\\int_A E[X\\mid\\mathcal{G}]\\,dP=\\int_A X\\,dP,\\qquad\\forall A\\in\\mathcal{G}$$\n\n存在唯一性（Radon--Nikodym 定理保证，切片外补充）：$X\\in L^1$ 时 $E[X\\mid\\mathcal{G}]$ 在 a.e. 意义下存在且唯一。定义是「性质式」而非「构造式」——不告诉你怎么算，只规定必须满足什么；唯一性让「验证候选」成为合法算法（用法见 cond-exp.quantifiers 的骰子示范）。\n\n三个日用性质（切片外补充）：线性（$E[aX+bY\\mid\\mathcal{G}]=aE[X\\mid\\mathcal{G}]+bE[Y\\mid\\mathcal{G}]$）；$\\mathcal{G}=\\{\\varnothing,\\Omega\\}$ 时 $E[X\\mid\\mathcal{G}]=E[X]$（一无所知则退化为普通期望）；$X$ 关于 $\\mathcal{G}$ 可测时 $E[X\\mid\\mathcal{G}]=X$（全知则保持原样）。塔性质单列一条（cond-exp.tower）。\n\n与初等版本的关系：$\\mathcal{G}=\\sigma(Y)$、$Y$ 离散时，$E[X\\mid Y]$ 逐段取常数值——初等「条件平均」是其特例（cond-exp.quantifiers 的骰子数值示范）。",
+      "links": [
+        "A1.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:cond-exp.intuition",
+      "type": "intuition",
+      "subject": "cond-exp",
+      "title": "条件期望直觉：信息块内的平均 + L² 正交投影",
+      "keywords": [
+        "G 是信息水平：越粗知道越少、越细知道越多",
+        "每个信息块（原子）内部各自做平均",
+        "L² 视角：到 G-可测函数子空间的正交投影（A2.2）",
+        "均方误差最小的 G-可测预测",
+        "「给定信息求最优估计」的数学本体（C9.1 生根处）"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 52,
+        "line_end": 55
+      },
+      "fill_hint": "直觉词条，假设与结论分开写；投影视角为切片外拓展，引 A2.2 与 C9.1。",
+      "content": "**假设给了什么**：$\\mathcal{G}$ 是「当前信息水平」——你知道哪些事件的答案。$\\mathcal{G}$ 越粗知道得越少（极端 $\\{\\varnothing,\\Omega\\}$ 一无所知），越细知道得越多（$\\mathcal{F}$ 全知）。\n\n**结论为什么因此成立**：$E[X\\mid\\mathcal{G}]$ 是「在每个信息块内部各自做平均」：$\\mathcal{G}$ 把 $\\Omega$ 切成若干不可分辨的块，可测性强制 $Y$ 在块内取常数，积分等式强制这个常数等于 $X$ 的块内平均。骰子例（cond-exp.quantifiers）：知道奇偶后，最优预测就是「偶数块均值 4、奇数块均值 3」。\n\n几何视角（拓展，切片外）：在 $L^2$ 中，$E[X\\mid\\mathcal{G}]$ 是 $X$ 到「$\\mathcal{G}$-可测函数子空间」的**正交投影**（A2.2 的 Hilbert 投影）——积分等式恰好等价于误差与子空间正交。这解释了「最优预测」的精确含义：均方误差 $E[(X-Y)^2]$ 在所有 $\\mathcal{G}$-可测 $Y$ 中于 $Y=E[X\\mid\\mathcal{G}]$ 处取最小。「给定信息求最优估计」的数学本体就在这里，C9.1 的估计量理论在此生根。",
+      "links": [
+        "A2.2",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:cond-exp.tower",
+      "type": "extension",
+      "subject": "cond-exp",
+      "title": "拓展：塔性质——逐层平均等于直接平均",
+      "keywords": [
+        "H⊆G 时 E[E[X|G]|H]=E[X|H]",
+        "细信息在粗层平均时被洗掉",
+        "特例：全期望公式 E[E[X|G]]=E[X]",
+        "骰子数值例：E=3.5 守恒",
+        "俄罗斯轮盘无偏性证明的引擎",
+        "方差缩减条件技巧（C9.2）同款"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 52,
+        "line_end": 55
+      },
+      "fill_hint": "切片外补充（title 带「拓展：」）；骰子数值例带【待核验】，与 rr.application 的引用保持一致。",
+      "content": "**塔性质（切片外补充）**：$\\mathcal{H}\\subseteq\\mathcal{G}\\subseteq\\mathcal{F}$ 时\n\n$$E\\big[E[X\\mid\\mathcal{G}]\\mid\\mathcal{H}\\big]=E[X\\mid\\mathcal{H}]$$\n\n直觉：先在丰富信息上平均、再在粗信息上平均 = 直接在粗信息上平均——中间多知道的信息被粗层平均洗掉。$\\mathcal{H}=\\{\\varnothing,\\Omega\\}$ 的特例是全期望公式 $E\\big[E[X\\mid\\mathcal{G}]\\big]=E[X]$。\n\n数值例（骰子）：$\\mathcal{G}=\\sigma(\\text{奇偶})$。$E[X\\mid\\mathcal{G}]$ 偶 4 奇 3，再取全期望 $\\frac{3}{6}\\cdot4+\\frac{3}{6}\\cdot3=\\frac{4+3}{2}=3.5=E[X]$【已核验:3.5|(4+3)/2】——期望守恒。\n\nCG 落点（服务 rr.application）：俄罗斯轮盘的无偏性证明就是一次塔性质——轮盘决策在某信息层下做，权重补偿后条件期望不变，再全期望展开收尾；方差缩减的条件技巧（C9.2）同样逐层套塔。",
+      "links": [
+        "C9.2",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:martingale.statement",
+      "type": "statement",
+      "subject": "martingale",
+      "title": "鞅：E[X_{n+1} | F_n] = X_n（公平赌局的形式化）",
+      "keywords": [
+        "切片原文一行：E[X_{n+1}|F_n]=X_n",
+        "完整假设：filtration 递增 + X_n 适应 + 可积",
+        "等价改写：增量条件零均值",
+        "塔性质 ⟹ E[X_n]=E[X_0] 期望全程守恒",
+        "正例：对称随机游走；反例：p=0.6 的偏漂移",
+        "「无系统性漂移」的精确含义"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 57,
+        "line_end": 57
+      },
+      "fill_hint": "切片 57 行原文转写 + 完整假设（切片外补充）；随机游走正反例与 probe 词条共用。",
+      "content": "**切片原文**：$E[X_{n+1}\\mid\\mathcal{F}_n]=X_n$。\n\n完整假设（切片外补充，缺一不可）：$(\\mathcal{F}_n)$ 是 filtration（$\\mathcal{F}_0\\subseteq\\mathcal{F}_1\\subseteq\\cdots$，信息只增不减）；$X_n$ 关于 $\\mathcal{F}_n$ 可测（适应——$X_n$ 在时刻 $n$ 已知）；$E[|X_n|]<\\infty$（可积——条件期望才有定义）。合起来：$X_n$ 是「公平赌本」——已知全部历史 $\\mathcal{F}_n$ 时，对下一时刻的最优预测恰是当前值 $X_n$，不多不少。\n\n等价改写：$E[X_{n+1}-X_n\\mid\\mathcal{F}_n]=0$（增量条件零均值）。由塔性质立刻得 $E[X_n]=E[X_0]$ 对一切 $n$——期望全程守恒，这是「无系统性漂移」的精确含义。\n\n最基本正例：对称随机游走 $X_n=\\sum_{i=1}^n\\xi_i$，$\\xi_i$ 独立取 $\\pm1$ 各半（验证计算见 martingale.probe1）。反例：$\\xi_i$ 取 $+1$ 概率 0.6 时 $E[X_{n+1}\\mid\\mathcal{F}_n]=X_n+0.2\\ne X_n$——带漂移的不公平赌局不是鞅。",
+      "links": [
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:martingale.intuition",
+      "type": "intuition",
+      "subject": "martingale",
+      "title": "鞅直觉：公平游戏里没有越赌越富的系统方法",
+      "keywords": [
+        "X_n 是赌本、F_n 是到时刻 n 的全部历史",
+        "无论策略与历史，下一时刻期望赌本 = 当前",
+        "条件期望是最优预测：鞅 = 预测恰为当前值",
+        "布朗运动是连续时间鞅标杆（C5）",
+        "停时定理与收敛定理是路径追踪无偏性的后盾"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 57,
+        "line_end": 57
+      },
+      "fill_hint": "直觉词条；布朗运动一句引 C5，停时/收敛定理只点名不展开。",
+      "content": "赌徒形象：$X_n$ 是你时刻 $n$ 的赌本，$\\mathcal{F}_n$ 是到时刻 $n$ 为止见过的所有历史（包括你自己用过的策略）。鞅性 $E[X_{n+1}\\mid\\mathcal{F}_n]=X_n$ 说：**无论采取什么策略、无论历史如何，下一时刻赌本的期望就是当前赌本**。公平游戏里没有「越赌越富」的系统方法——鞅就是这句话的数学化身。\n\n**假设给了什么**：信息流 $\\mathcal{F}_n$ 递增（记忆只增）+ 适应 + 可积。**结论为什么因此成立**：条件期望是给定信息下的最优预测（cond-exp.intuition 的投影视角）；鞅 = 「最优预测恰为当前值」，即未来对过去的一切可预测偏离平均为零。\n\n连续时间的标杆：布朗运动（C5）满足 $E[W_t\\mid\\mathcal{F}_s]=W_s$（独立增量 + 零均值增量），是连续鞅的原型。鞅论两大定理——停时定理与收敛定理——是路径追踪无偏性证明（rr.application）与自适应采样收敛分析的理论后盾。",
+      "links": [
+        "C5",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:rr.application",
+      "type": "application",
+      "subject": "rr",
+      "title": "CG 落点：俄罗斯轮盘与分裂的无偏性证明",
+      "keywords": [
+        "轮盘：概率 p 存活、贡献乘 1/p",
+        "E[(1/p)·B·C]=E[C]：一行期望守恒",
+        "方差增大：轮盘换时间、方差买单",
+        "分裂：k 份副本各乘 1/k，同样的守恒论证",
+        "鞅视角：权重补偿后的累积贡献是鞅",
+        "links: H4 / C8.2 / C9.1"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "fill_hint": "切片 59 行「俄罗斯轮盘和分裂的无偏性证明」的展开；方差代价一句点到 C9.1，不展开推导。",
+      "content": "切片原文点名的两个 CG 应用，无偏性各一行证明。\n\n**俄罗斯轮盘（Russian Roulette）**：路径追踪为砍掉长路径开销，以概率 $p$ 让路径存活继续、概率 $1-p$ 终止，并把幸存贡献乘 $\\frac{1}{p}$ 补偿。设贡献 $C$、存活指示 $B$（$P(B=1)=p$，与 $C$ 独立），估计量 $\\tilde C=\\frac{1}{p}BC$：\n\n$$E[\\tilde C]=\\tfrac{1}{p}\\,E[B]\\,E[C]=\\tfrac{1}{p}\\cdot p\\cdot E[C]=E[C]$$\n\n数值例：$p=0.5$、$E[C]=7$，则 $E[\\tilde C]=\\frac{1}{0.5}\\cdot0.5\\cdot7=7$【已核验:7|(1/0.5)*0.5*7】——期望不变。代价是方差增大（切片外补充：「轮盘换时间、方差买单」，偏差-方差语言见 C9.1）。\n\n**分裂（Splitting）**：对高贡献区域把一条路径复制 $k$ 份、权重各乘 $\\frac{1}{k}$——同样的守恒论证：$E\\big[\\tfrac{1}{k}\\sum_{i=1}^k C_i\\big]=\\tfrac{1}{k}\\cdot k\\,E[C]=E[C]$。\n\n鞅视角：权重补偿后的累积贡献过程关于路径信息流是鞅——期望在每一步操作下守恒，正是 martingale.statement 的「无漂移」。落点：H4 蒙特卡洛积分、C8.2 Metropolis 光传输（接受-拒绝同样期望守恒）、C9.1 估计量偏差分析。",
+      "links": [
+        "H4",
+        "C8.2",
+        "C9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C4:martingale.probe1",
+      "type": "probe",
+      "subject": "martingale",
+      "title": "检验：随机游走的鞅性与轮盘的期望守恒",
+      "keywords": [
+        "E[X_4|X_3=1] 一步验证",
+        "Var(X_10)=10（每步方差 1）",
+        "轮盘 p=0.25、C≡4 的 E 与 P(tilde C=16)",
+        "答案数值折叠在括号里"
+      ],
+      "tex_ref": {
+        "file": "notebook/C_partial.tex",
+        "line_start": 57,
+        "line_end": 59
+      },
+      "fill_hint": "两问分别对应 martingale.statement 与 rr.application；【待核验】构建时重算。",
+      "content": "两道检验题：\n\n(1) 对称随机游走：$\\xi_i$ 独立取 $\\pm1$ 各半，$X_n=\\sum_{i\\le n}\\xi_i$。已知 $X_3=1$，求 $E[X_4\\mid X_3=1]$；再求 $\\mathrm{Var}(X_{10})$。（$E[X_4\\mid X_3=1]=1+\\frac12\\cdot1+\\frac12\\cdot(-1)=1$【已核验:1|1+0.5*1+0.5*(-1)】；每步方差 1，$\\mathrm{Var}(X_{10})=10$【已核验:10|10】）\n\n(2) 俄罗斯轮盘：贡献 $C$ 恒为 $4$，存活概率 $p=0.25$，估计量 $\\tilde C=\\frac{1}{p}BC$。求 $E[\\tilde C]$ 与 $P(\\tilde C=16)$。（$E[\\tilde C]=4$【已核验:4|(1/0.25)*0.25*4】；$P(\\tilde C=16)=p=0.25$【已核验:0.25|0.25】）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

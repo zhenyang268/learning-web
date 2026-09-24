@@ -1,0 +1,440 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P5.1",
+  "chapter": "P5",
+  "title": "三角公式",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 256,
+    "line_end": 270,
+    "anchor": "notebook/P_computation.tex:256"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P5.1:trig.quantifiers",
+      "type": "comparison",
+      "subject": "trig",
+      "title": "三角公式适用条件表（每条误用都给具体数值）",
+      "keywords": [
+        "恒等式本体无条件，坑全在使用层面：单位、符号、象限",
+        "角度必须弧度：sin(30)≈−0.988 不是 1/2",
+        "和角不可线性拆分：sin(A+B)≠sinA+sinB",
+        "辅助角 φ 象限由 a、b 联定，不能只看 arctan(b/a)",
+        "R=√(a²+b²) 恒正，缩放信息全在 R"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 266
+      },
+      "fill_hint": "切片是一张公式总表，本条把「公式表 + 直觉来源」两列拆成适用条件四列表。行内数值均已给【待核验】表达式。行号按切片行 262-266（表格各行）估算。",
+      "content": "切片给的是一张「公式｜直觉来源」对照表（和角＝旋转矩阵乘法、倍角＝和角特例、辅助角＝向量极坐标、积化和差＝和角两式相加减）。这些公式本体是**恒等式**，对一切实数成立、无条件可谈；真正的「适用条件」在使用层面。逐条拆解：\n\n| 条件／限定 | 违反后的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 角度量必须是弧度 | 算 $\\sin(30)$（30 弧度）得 $\\approx -0.988$【已核验:-0.988031624093|sin(30)】，不是 $1/2$ | 所有公式数值全错 | 不能：级数与旋转矩阵都以弧度定义；角度制须先 $\\times\\pi/180$ |\n| 和角不是「线性拆分」 | $A=B=\\pi/3$：$\\sin(A+B)=\\sin(2\\pi/3)\\approx 0.866$【已核验:0.866025403784|sin(2*pi/3)】，而 $\\sin A+\\sin B=\\sqrt 3\\approx 1.732$【已核验:1.73205080757|2*sin(pi/3)】，差一倍 | 编造出错误「公式」$\\sin(A+B)=\\sin A+\\sin B$ | 不能：正弦本质非线性（旋转矩阵乘法，见 sum-angle.intuition） |\n| 辅助角 $R=\\sqrt{a^2+b^2}$ 恒正 | $a=1,b=\\sqrt3$ 时 $R=2$【已核验:2|sqrt(1+3)】；若误写 $R=-2$ 则整个振动反相 | 振幅符号错 → 相位差 $\\pi$ | 不能取负；缩放信息只能在 $R>0$ 约定下与 $\\varphi$ 配合表达 |\n| 辅助角 $\\varphi$ 象限由 $a,b$ 联定 | $a=-1,b=1$ 时想当然取 $\\varphi=\\arctan(b/a)=-\\pi/4$：$\\theta=\\pi/2$ 处错误版给 $1$【已核验:1|sqrt(2)*sin(pi/2-pi/4)】，真值 $-1$ | 合成振动相位错 $180^\\circ$ | 不能只看比值：必须 $\\cos\\varphi=a/R,\\ \\sin\\varphi=b/R$ 两式联定（见 auxiliary-angle.misuse） |\n| 公式对复数也成立 | ——（见 P5.2：和角公式是 $e^{i(A+B)}=e^{iA}e^{iB}$ 的实虚部） | —— | 可放宽：$A,B$ 可为复数 |\n\n总结一句：这张表的公式没有假设可拆，四问里的「反例」全部是**使用层面的误用**（单位、线性化、象限），不是定理失效。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:sum-angle.misuse",
+      "type": "counterexample",
+      "subject": "sum-angle",
+      "title": "典型误用：sin(A+B) 拆成 sinA+sinB（算出错误数值）",
+      "keywords": [
+        "sin(A+B)≠sinA+sinB，取 A=B=π/3 差一倍",
+        "sin(2π/3)≈0.866，2sin(π/3)=√3≈1.732",
+        "根源：旋转合成是矩阵乘法不是加法",
+        "角度制误用：sin(30)≈−0.988 不是 1/2",
+        "修补：单位统一弧度，拆角只走公式"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 262
+      },
+      "fill_hint": "切片该行只写「sin(A±B), cos(A±B)（【必】）＝旋转矩阵的乘法」。误用例是使用层面的展开（非切片内容），数值带【待核验】。",
+      "content": "误用一：把和角当线性运算。取 $A=B=\\pi/3$：\n\n- 正确：$\\sin(A+B)=\\sin(2\\pi/3)=\\dfrac{\\sqrt3}{2}\\approx 0.866$【已核验:0.866025403784|sin(2*pi/3)】\n- 错误「公式」：$\\sin A+\\sin B=2\\sin(\\pi/3)=\\sqrt3\\approx 1.732$【已核验:1.73205080757|2*sin(pi/3)】\n\n差整整一倍。失效根源：$\\sin$ 来自旋转矩阵，两个旋转叠加是**矩阵乘法** $R(A)R(B)$（见 sum-angle.intuition），矩阵乘法对元素是「乘积再求和」，不是分量各自相加——所以和角公式里全是 $\\sin A\\cos B$ 这种交叉项。\n\n误用二：角度制。代码或计算器里 $\\sin(30)$ 是 30 **弧度**的正弦 $\\approx -0.988$【已核验:-0.988031624093|sin(30)】，不是 $\\sin 30^\\circ=1/2$。修补：数值计算前统一乘 $\\pi/180$ 换成弧度。\n\n修补条件总结：①统一弧度；②拆角只走和角／差角公式，绝不拆函数本身。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:auxiliary-angle.misuse",
+      "type": "counterexample",
+      "subject": "auxiliary-angle",
+      "title": "典型误用：辅助角 φ 象限判错（相位差 180°）",
+      "keywords": [
+        "φ 由 cosφ=a/R、sinφ=b/R 联定，不能只看 arctan(b/a)",
+        "a=−1,b=1：正确 φ=3π/4，误取 −π/4",
+        "θ=π/2 处错误版给 1，真值 −1",
+        "修补：用 atan2(b,a) 或两式联定象限",
+        "R=√2 恒正，符号错误全推给相位"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 264,
+        "line_end": 265
+      },
+      "fill_hint": "切片只给公式 a sinθ+b cosθ=R sin(θ+φ)、R=√(a²+b²) 与「向量 (a,b) 的极坐标」直觉；象限误用例是使用层面展开，数值带【待核验】。",
+      "content": "辅助角公式 $a\\sin\\theta+b\\cos\\theta=R\\sin(\\theta+\\varphi)$ 中，$\\varphi$ 必须同时满足 $R\\cos\\varphi=a$、$R\\sin\\varphi=b$。误用：只算比值 $\\arctan(b/a)$、不检查象限。\n\n反例：$a=-1,\\ b=1$，则 $R=\\sqrt2$【已核验:1.41421356237|sqrt(2)】。正确解：$\\cos\\varphi=-1/\\sqrt2,\\ \\sin\\varphi=1/\\sqrt2\\Rightarrow\\varphi=3\\pi/4$。若想当然取 $\\arctan(b/a)=\\arctan(-1)=-\\pi/4$，展开 $R\\sin(\\theta-\\pi/4)$ 得到的是 $\\sin\\theta-\\cos\\theta$（$a,b$ 双双变号）。\n\n数值验尸（取 $\\theta=\\pi/2$）：\n\n- 左边真值：$a\\sin(\\pi/2)+b\\cos(\\pi/2)=-1+0=-1$\n- 错误版：$\\sqrt2\\sin(\\pi/2-\\pi/4)=\\sqrt2\\cdot\\sin(\\pi/4)=1$【已核验:1|sqrt(2)*sin(pi/2-pi/4)】\n- 正确版：$\\sqrt2\\sin(\\pi/2+3\\pi/4)=\\sqrt2\\sin(5\\pi/4)=-1$【已核验:-1|sqrt(2)*sin(pi/2+3*pi/4)】\n\n错误版恰好差一个负号（相位差 $\\pi$）。修补条件：永远用 $\\operatorname{atan2}(b,a)$（或 $\\cos\\varphi=a/R,\\ \\sin\\varphi=b/R$ 两式联定象限）；$R$ 本身恒正，不许用「负 R」来救象限。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:sum-angle.statement",
+      "type": "statement",
+      "subject": "sum-angle",
+      "title": "和角公式（sin(A±B)、cos(A±B)）",
+      "keywords": [
+        "sin(A+B)=sinAcosB+cosAsinB",
+        "cos(A+B)=cosAcosB−sinAsinB",
+        "差角版由 B→−B 代入（奇偶性）",
+        "恒等式：对一切实（复）数成立",
+        "来源：旋转矩阵的乘法（两个旋转叠加）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 262
+      },
+      "fill_hint": "切片原文「sin(A±B), cos(A±B)（【必】）＝旋转矩阵的乘法（和角＝两个旋转叠加）」。公式本体为切片标注【必】的展开，逐字转写。",
+      "content": "和角公式（切片标注【必】，直觉来源＝**旋转矩阵的乘法**，和角＝两个旋转叠加）：\n\n$$\\sin(A+B)=\\sin A\\cos B+\\cos A\\sin B,\\qquad \\cos(A+B)=\\cos A\\cos B-\\sin A\\sin B$$\n\n把 $B$ 换成 $-B$，用奇偶性 $\\sin(-B)=-\\sin B,\\ \\cos(-B)=\\cos B$，得差角版：\n\n$$\\sin(A-B)=\\sin A\\cos B-\\cos A\\sin B,\\qquad \\cos(A-B)=\\cos A\\cos B+\\sin A\\sin B$$\n\n成立条件：无——这是恒等式，对一切实数 $A,B$ 成立（甚至可放宽到复数，见 P5.2）。使用层面的条件只有一条：$A,B$ 以弧度计（见 sum-angle.misuse）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:sum-angle.intuition",
+      "type": "intuition",
+      "subject": "sum-angle",
+      "title": "直觉：和角＝两个旋转叠加（矩阵乘法逐元素读出）",
+      "keywords": [
+        "平面旋转 R(θ)=[[cosθ,−sinθ],[sinθ,cosθ]]",
+        "R(A)R(B)=R(A+B)：旋转合成还是旋转",
+        "和角公式＝逐元素比较合成矩阵",
+        "假设给了什么：旋转可交换叠加",
+        "结论为何成立：矩阵相等⟺元素相等"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 262
+      },
+      "fill_hint": "切片直觉列原文「旋转矩阵的乘法（和角＝两个旋转叠加）」。本条把它展开成假设/结论分开的直觉叙述。",
+      "content": "平面旋转 $\\theta$ 角的矩阵是\n\n$$R(\\theta)=\\begin{pmatrix}\\cos\\theta&-\\sin\\theta\\\\ \\sin\\theta&\\cos\\theta\\end{pmatrix}$$\n\n**假设给了什么**：先转 $B$ 再转 $A$，几何上是转了 $A+B$，即 $R(A)R(B)=R(A+B)$（旋转的合成还是旋转，且平面旋转可交换）。\n\n**结论为什么因此成立**：两个矩阵相等 ⟺ 每个元素相等。把 $R(A)R(B)$ 乘出来：\n\n- $(1,1)$ 元：$\\cos A\\cos B-\\sin A\\sin B$，必须等于 $R(A+B)$ 的 $(1,1)$ 元 $\\cos(A+B)$；\n- $(2,1)$ 元：$\\sin A\\cos B+\\cos A\\sin B$，必须等于 $\\sin(A+B)$。\n\n和角公式不是背出来的死知识，它是「矩阵乘法」逐元素读出的账单。这也解释了为什么公式里全是 $\\sin A\\cos B$ 型交叉项（矩阵乘法＝行乘列），以及为什么 $\\sin(A+B)\\ne\\sin A+\\sin B$（见 sum-angle.misuse）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:sum-angle.proof",
+      "type": "proof",
+      "subject": "sum-angle",
+      "title": "推导骨架：乘出两个旋转矩阵",
+      "keywords": [
+        "写出 R(A)R(B) 的乘积",
+        "(1,1) 元对照 cos(A+B)，(2,1) 元对照 sin(A+B)",
+        "差角版由 B→−B 与奇偶性",
+        "依赖链：旋转矩阵 → 和角 → 倍角/积化和差",
+        "易错点：−sin 的位置在 (1,2)"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 262
+      },
+      "fill_hint": "切片只给「旋转矩阵的乘法」一句话；本条是完整推导骨架（几何合成＝矩阵相等）。易错点段为使用层面补充。",
+      "content": "推导骨架（每步给理由）：\n\n1. 写出乘积：\n$$R(A)R(B)=\\begin{pmatrix}\\cos A&-\\sin A\\\\ \\sin A&\\cos A\\end{pmatrix}\\begin{pmatrix}\\cos B&-\\sin B\\\\ \\sin B&\\cos B\\end{pmatrix}$$\n（理由：这是两个几何变换的复合。）\n\n2. 几何事实：先转 $B$ 再转 $A$ 等于直接转 $A+B$，故 $R(A)R(B)=R(A+B)$（理由：平面上角度可加；平面旋转群是交换的）。\n\n3. 逐元素对照：\n$(1,1)$：$\\cos A\\cos B-\\sin A\\sin B=\\cos(A+B)$；$(2,1)$：$\\sin A\\cos B+\\cos A\\sin B=\\sin(A+B)$。（理由：矩阵相等 ⟺ 元素相等。）\n\n4. 差角版：代入 $B\\mapsto -B$，用 $\\sin(-B)=-\\sin B,\\ \\cos(-B)=\\cos B$。（理由：奇偶性。）\n\n依赖链：旋转矩阵 → 和角公式 → 倍角（特例）→ 积化和差（线性组合）。学完 P5.2 后还有一条压缩路线：$e^{i(A+B)}=e^{iA}e^{iB}$，一个复数乘法同时给出四个和角公式。\n\n易错点：①$-\\sin$ 的位置在 $(1,2)$ 元（不是 $(2,1)$）；②$\\cos$ 的公式是**减**、$\\sin$ 的公式是**加**；③别把「和角＝角度相加」误读成「函数值相加」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:double-angle.statement",
+      "type": "statement",
+      "subject": "double-angle",
+      "title": "倍角公式（和角特例）",
+      "keywords": [
+        "sin2x=2sinx cosx",
+        "cos2x=cos²x−sin²x=1−2sin²x=2cos²x−1",
+        "B=A 特例，三种形式各有分工",
+        "降幂形式是 P5.4 积分与 Fourier 系数的发动机",
+        "切片标注【必】"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 263,
+        "line_end": 263
+      },
+      "fill_hint": "切片原文「sin 2x=2sinx cosx，cos2x=1−2sin²x（【必】）｜和角特例」。三种 cos2x 形式中 cos²−sin² 与 2cos²−1 是同一恒等式的配方变体（和角公式的直接特例），转写并注明分工。",
+      "content": "在和角公式里取 $B=A$（切片：「和角特例」，标注【必】）：\n\n$$\\sin 2x=2\\sin x\\cos x,\\qquad \\cos 2x=\\cos^2x-\\sin^2x=1-2\\sin^2x=2\\cos^2x-1$$\n\n（$\\cos^2x-\\sin^2x$ 是代入 $\\cos(A+B)$ 的直接结果；用 $\\sin^2x+\\cos^2x=1$ 换掉一个平方，即得另外两种形式。）\n\n三种 $\\cos 2x$ 形式的分工：\n\n- $\\cos^2x-\\sin^2x$：验证恒等式、与其他公式对账时最对称；\n- $1-2\\sin^2x$：**降幂**用——把 $\\sin^2$ 换成一次的 $\\cos 2x$，是 P5.4 三个常用三角积分的直接来源；\n- $2\\cos^2x-1$：解三角方程（只剩一个未知函数 $\\cos x$）。\n\n数值抽查 $x=\\pi/6$：$\\sin(\\pi/3)=2\\sin(\\pi/6)\\cos(\\pi/6)=2\\cdot\\tfrac12\\cdot\\tfrac{\\sqrt3}{2}=\\tfrac{\\sqrt3}{2}\\approx 0.866$【已核验:0.866025403784|2*sin(pi/6)*cos(pi/6)】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:double-angle.extension",
+      "type": "extension",
+      "subject": "double-angle",
+      "title": "降幂恒等式：平方 → 直流 + 二倍频（P5.4 与 Fourier 的发动机）",
+      "keywords": [
+        "sin²x=(1−cos2x)/2，cos²x=(1+cos2x)/2",
+        "平方函数 = 常数 1/2 + 二倍频振荡",
+        "P5.4 三个常用积分的直接来源",
+        "Fourier 系数计算里 sinⁿ 降次的通用武器",
+        "数值抽查 x=π/6 两边都 0.25"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 263,
+        "line_end": 263
+      },
+      "fill_hint": "由切片倍角行「cos2x=1−2sin²x」反解而得，是同一恒等式的移项，非新定理；「Fourier 系数」用途对应切片 P5.3「Fourier 前置」的定位。",
+      "content": "把切片的 $\\cos 2x=1-2\\sin^2x$ 移项反解，得**降幂恒等式**：\n\n$$\\sin^2x=\\frac{1-\\cos 2x}{2},\\qquad \\cos^2x=\\frac{1+\\cos 2x}{2}$$\n\n结构图像：左边是 $[0,1]$ 之间起伏的平方波，右边是「**直流分量** $\\tfrac12$ ＋ **二倍频**振荡」——平方运算把频率翻倍，并抬出一个均值 $1/2$。\n\n为什么值钱：\n\n1. 它是 P5.4「常用三角积分」三条公式的直接来源（先降幂再积分，一次的 $\\cos 2x$ 人人会积）；\n2. 它是 Fourier 系数计算（A2.3）里把 $\\sin^n$、$\\cos^n$ 逐层降次的通用武器（每用一次次数减半、频率翻倍）；\n3. 它是 P5.3 正交性里 $m=n$ 行「$\\int\\sin^2=\\pi$」的计算内核。\n\n数值抽查：$x=\\pi/6$ 时左边 $\\sin^2(\\pi/6)=1/4$【已核验:0.25|sin(pi/6)**2】，右边 $\\dfrac{1-\\cos(\\pi/3)}{2}=\\dfrac{1-1/2}{2}=0.25$【已核验:0.25|(1-cos(pi/3))/2】，吻合。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:auxiliary-angle.statement",
+      "type": "statement",
+      "subject": "auxiliary-angle",
+      "title": "辅助角公式（a sinθ+b cosθ=R sin(θ+φ)）",
+      "keywords": [
+        "R=√(a²+b²) 恒正",
+        "φ 由 cosφ=a/R、sinφ=b/R 联定",
+        "a、b 不全为零",
+        "向量 (a,b) 的极坐标；同频振动合成",
+        "切片标注【必】"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 264,
+        "line_end": 265
+      },
+      "fill_hint": "切片原文逐字：a sinθ+b cosθ=R sin(θ+φ)，R=√(a²+b²)（【必】）；直觉列「向量 (a,b) 的极坐标；两个同频振动合成」。φ 的联定条件由展开式匹配系数得出。",
+      "content": "辅助角公式（切片标注【必】，直觉来源＝**向量 $(a,b)$ 的极坐标**；两个同频振动合成）：\n\n$$a\\sin\\theta+b\\cos\\theta=R\\sin(\\theta+\\varphi),\\qquad R=\\sqrt{a^2+b^2}$$\n\n其中 $\\varphi$ 由两式联定：\n\n$$R\\cos\\varphi=a,\\qquad R\\sin\\varphi=b$$\n\n（即 $\\varphi=\\operatorname{atan2}(b,a)$。）成立条件：$a,b$ 不全为零（保证 $R>0$）；$\\theta$ 以弧度计。注意 $R$ 恒取正根，方向信息全部交给 $\\varphi$ 的象限（这是最常见的误用点，见 auxiliary-angle.misuse）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:auxiliary-angle.intuition",
+      "type": "intuition",
+      "subject": "auxiliary-angle",
+      "title": "直觉：向量 (a,b) 的极坐标、同频振动合成",
+      "keywords": [
+        "(a,b) 看成平面向量：R 是长度、φ 是辐角",
+        "a sinθ 与 b cosθ 相位差 90°",
+        "同频合成还是同频：换振幅、换相位",
+        "展开 R sin(θ+φ) 匹配系数即证",
+        "物理图像：两列波叠加成一列"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 264,
+        "line_end": 265
+      },
+      "fill_hint": "切片直觉列原文「向量 (a,b) 的极坐标；两个同频振动合成」。本条展开为假设/结论分开的直觉叙述。",
+      "content": "**假设给了什么**：系数对 $(a,b)$ 可以看成一个平面向量，它的极坐标是（长度 $R=\\sqrt{a^2+b^2}$，辐角 $\\varphi$）。物理上，$a\\sin\\theta$ 与 $b\\cos\\theta$ 是两个**同频**振动，相位差恰为 $90^\\circ$（$\\cos\\theta=\\sin(\\theta+\\pi/2)$）。\n\n**结论为什么因此成立**：两个同频振动叠加仍是同频振动，只是换了振幅与初相——\n$$R\\sin(\\theta+\\varphi)=(R\\cos\\varphi)\\sin\\theta+(R\\sin\\varphi)\\cos\\theta$$\n把右边展开（用和角公式），系数正是向量的两个分量 $a=R\\cos\\varphi,\\ b=R\\sin\\varphi$。所以「辅助角」不是技巧而是**坐标变换**：直角坐标 $(a,b)$ 换成极坐标 $(R,\\varphi)$，叠加波的自然参数就是极坐标。\n\n这也是它叫「辅助角」的原因：新造的 $\\varphi$ 把两个自由度 $a,b$ 压成一个相位，代价只是振幅换成 $R$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:auxiliary-angle.derivation",
+      "type": "proof",
+      "subject": "auxiliary-angle",
+      "title": "推导 + 数值例：a=1, b=√3 全程算通",
+      "keywords": [
+        "展开 R sin(θ+φ) 匹配 sinθ/cosθ 系数",
+        "两式平方相加得 R²=a²+b²",
+        "数值例 R=2、φ=π/3",
+        "θ=π/6 处两边都等于 2",
+        "易错点：φ 象限（见 misuse 词条）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 264,
+        "line_end": 265
+      },
+      "fill_hint": "切片只给公式与直觉；推导和数值例为展开讲解，数值均带【待核验】。象限陷阱单列在 auxiliary-angle.misuse。",
+      "content": "推导骨架（待定系数法）：\n\n1. 目标：找 $R,\\varphi$ 使 $R\\sin(\\theta+\\varphi)\\equiv a\\sin\\theta+b\\cos\\theta$。用和角公式展开左边：$R\\sin(\\theta+\\varphi)=(R\\cos\\varphi)\\sin\\theta+(R\\sin\\varphi)\\cos\\theta$。\n\n2. 匹配 $\\sin\\theta,\\ \\cos\\theta$ 的系数：$R\\cos\\varphi=a,\\ R\\sin\\varphi=b$。（理由：两边的 $\\sin\\theta,\\cos\\theta$ 线性无关，系数必须逐个相等。）\n\n3. 两式平方相加：$R^2(\\cos^2\\varphi+\\sin^2\\varphi)=a^2+b^2$，故 $R=\\sqrt{a^2+b^2}$（取正根）。（理由：$\\sin^2+\\cos^2=1$。）\n\n4. 两式相除得 $\\tan\\varphi=b/a$，但象限必须由第 2 步两式的符号联定（易错点，见 auxiliary-angle.misuse）。\n\n数值例（$a=1,\\ b=\\sqrt3$）：\n\n- $R=\\sqrt{1+3}=2$【已核验:2|sqrt(1+3)】；\n- $\\cos\\varphi=1/2,\\ \\sin\\varphi=\\sqrt3/2\\Rightarrow\\varphi=\\pi/3$；\n- 结论：$\\sin\\theta+\\sqrt3\\cos\\theta=2\\sin(\\theta+\\pi/3)$。\n\n验尸（$\\theta=\\pi/6$）：左边 $\\sin(\\pi/6)+\\sqrt3\\cos(\\pi/6)=\\tfrac12+\\tfrac32=2$【已核验:2|sin(pi/6)+sqrt(3)*cos(pi/6)】；右边 $2\\sin(\\pi/6+\\pi/3)=2\\sin(\\pi/2)=2$【已核验:2|2*sin(pi/6+pi/3)】。吻合。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:prod-sum.statement",
+      "type": "statement",
+      "subject": "prod-sum",
+      "title": "积化和差／和差化积",
+      "keywords": [
+        "sinAcosB=½[sin(A+B)+sin(A−B)]",
+        "cosAcosB=½[cos(A+B)+cos(A−B)]",
+        "sinAsinB=½[cos(A−B)−cos(A+B)]",
+        "和差化积＝同公式反着用（A→(A+B)/2）",
+        "切片标注【熟】：和角两式相加减即得"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 266,
+        "line_end": 266
+      },
+      "fill_hint": "切片只写「积化和差／和差化积（【熟】）｜和角两式相加减即得」一行；具体公式是该行的标准展开（阶段2人工复核公式系数）。",
+      "content": "积化和差（切片标注【熟】，来源：**和角两式相加减**）：\n\n$$\\sin A\\cos B=\\tfrac12\\big[\\sin(A+B)+\\sin(A-B)\\big]$$\n$$\\cos A\\cos B=\\tfrac12\\big[\\cos(A+B)+\\cos(A-B)\\big]$$\n$$\\sin A\\sin B=\\tfrac12\\big[\\cos(A-B)-\\cos(A+B)\\big]$$\n\n和差化积＝同一组公式反着用：令 $A\\mapsto\\tfrac{A+B}{2},\\ B\\mapsto\\tfrac{A-B}{2}$（则 $A+B\\mapsto A$、$A-B\\mapsto B$），例如\n\n$$\\sin A+\\sin B=2\\sin\\tfrac{A+B}{2}\\cos\\tfrac{A-B}{2}$$\n\n成立条件：恒等式，无条件；使用层面同前（弧度、别拆线性）。用途定位：这是**证明工具**而非背诵负担——P5.3 三角正交性「用积化和差一句话即可证明」，靠的就是 $\\sin A\\sin B$ 这一条把乘积拆成两个可积的一次余弦。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:prod-sum.proof",
+      "type": "proof",
+      "subject": "prod-sum",
+      "title": "推导骨架：和角两式相加减（以 sinAsinB 为例）",
+      "keywords": [
+        "cos(A−B)−cos(A+B)=2sinAsinB",
+        "加减消元：两式相减消去 cosAcosB",
+        "sinAsinB 那条正是 P5.3 正交性证明的武器",
+        "记忆法：全部是和角公式的线性组合",
+        "易错点：sinAsinB 是 cos(A−B) 减 cos(A+B)，方向别反"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 266,
+        "line_end": 266
+      },
+      "fill_hint": "切片原文「和角两式相加减即得」；本条按此路线完整算一遍 sinAsinB（P5.3 证明的直系依赖），另两条一笔带过。",
+      "content": "以 $\\sin A\\sin B$ 为例（切片原话：和角两式相加减即得）：\n\n1. 写下和角/差角两条（P5.1 和角公式）：\n$$\\cos(A-B)=\\cos A\\cos B+\\sin A\\sin B$$\n$$\\cos(A+B)=\\cos A\\cos B-\\sin A\\sin B$$\n\n2. **相减**（消去 $\\cos A\\cos B$）：$\\cos(A-B)-\\cos(A+B)=2\\sin A\\sin B$，即 $\\sin A\\sin B=\\tfrac12[\\cos(A-B)-\\cos(A+B)]$。（理由：线性消元。）\n\n3. 同法：$\\sin A\\cos B$ 用 $\\sin(A+B)$ 与 $\\sin(A-B)$ **相加**消去 $\\cos A\\sin B$ 项；$\\cos A\\cos B$ 用 $\\cos(A+B)$ 与 $\\cos(A-B)$ **相加**消去 $\\sin A\\sin B$ 项。\n\n依赖链：和角公式 → 积化和差 → P5.3 正交性证明（$\\sin m\\theta\\sin n\\theta$ 拆成 $\\cos((m{-}n)\\theta)-\\cos((m{+}n)\\theta)$，正是第 2 步的 $A=m\\theta,B=n\\theta$）。\n\n易错点：$\\sin A\\sin B$ 那条是 $\\cos(A-B)$ **减** $\\cos(A+B)$（低频减高频），方向写反则 P5.3 里 $m=n$ 行会算出 $-\\pi$；数值自检 $A=B=\\pi/2$：左边 $1$，右边 $\\tfrac12[\\cos 0-\\cos\\pi]=\\tfrac12[1-(-1)]=1$【已核验:1|0.5*(cos(0)-cos(pi))】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "用在哪里：P5 组内下游与全库落点",
+      "keywords": [
+        "P5.3 正交性证明：积化和差一句话",
+        "P5.4 三角积分：降幂恒等式",
+        "A2.3 Fourier 系数：sinⁿ 降次",
+        "de2.10 分离变量：边界条件展成三角级数",
+        "辅助角：de1.5 强迫振动的振幅-相位形式"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 266
+      },
+      "fill_hint": "切片本行只有公式表；应用落点按切片 P5.3「Fourier 前置」与 P5.4 的定位推得，跨章代号均在全库清单内。",
+      "content": "本单元是 P5 组的「公式原材料」，直接服务同组下游与全库多处：\n\n- **P5.3 三角正交性**：切片原话「用积化和差一句话即可证明」——$\\sin m\\theta\\sin n\\theta$ 拆成两个一次余弦是全部证明；\n- **P5.4 常用三角积分**：$\\sin^2x\\to\\tfrac{1-\\cos2x}{2}$ 降幂（double-angle.extension）是三条积分公式的推导内核；\n- **A2.3（正交基与 Fourier 分析）**：计算 Fourier 系数时对 $\\sin^n$、$\\cos^n$ 逐层降次；\n- **de2.10（分离变量法）**：把 PDE 的解叠加成三角级数后，用这些公式处理边界条件与系数；\n- **de1.5（二阶线性常系数方程）**：强迫响应 $a\\sin\\omega t+b\\cos\\omega t$ 用辅助角合并成 $R\\sin(\\omega t+\\varphi)$，一眼读出共振风险（$R$ 的分母趋零）；\n- **H5（球谐函数）**：$\\sin\\theta,\\cos\\theta$ 的恒等式是球谐在极角方向的建材。\n\n选择判据：证明正交性/算积分 → 积化和差或降幂；合并同频振动 → 辅助角；推导一切 → 和角公式（旋转矩阵视角，P5.2 复数版更省力）。",
+      "links": [
+        "P5.3",
+        "P5.4",
+        "A2.3",
+        "de2.10",
+        "de1.5",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "本单元公式分工对照表",
+      "keywords": [
+        "和角：旋转叠加，一切公式的母体",
+        "倍角：和角特例，降幂形式通向积分",
+        "辅助角：极坐标/振动合成，合并同频项",
+        "积化和差：【熟】，证明正交性的工具",
+        "选择判据：算积分→降幂；证正交→积化和差；合并→辅助角"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 266
+      },
+      "fill_hint": "对照切片表格四行（公式｜直觉来源）整理为分工表，供前端按表格渲染。等级标注按切片：【必】×3、【熟】×1。",
+      "content": "把切片的公式表重排成「分工—来源—等级」对照：\n\n| 公式 | 直觉来源（切片原文） | 等级 | 什么时候掏它 |\n|---|---|---|---|\n| 和角 $\\sin(A\\pm B),\\cos(A\\pm B)$ | 旋转矩阵的乘法（和角＝两个旋转叠加） | 【必】 | 推导一切三角公式的母体；数值验算 |\n| 倍角 $\\sin2x,\\ \\cos2x$ | 和角特例 | 【必】 | 降幂（$\\sin^2\\to\\tfrac{1-\\cos2x}{2}$）→ 积分、Fourier 系数 |\n| 辅助角 $a\\sin\\theta+b\\cos\\theta=R\\sin(\\theta+\\varphi)$ | 向量 $(a,b)$ 的极坐标；同频振动合成 | 【必】 | 合并同频项、读振幅与相位（de1.5 强迫振动） |\n| 积化和差／和差化积 | 和角两式相加减 | 【熟】 | 证明正交性（P5.3）、把乘积拆成可积项 |\n\n依赖链一行：和角 → 倍角 → 降幂 → P5.4 积分 → P5.3 正交性 → A2.3 Fourier。\n\n记忆负担控制：背【必】三件（和角、倍角、辅助角——前两个其实是「一件事＋一个特例」）；积化和差【熟】＝知道「和角两式相加减即得」，需要时现场推。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P5.1:sum-angle.probe1",
+      "type": "probe",
+      "subject": "sum-angle",
+      "title": "检验：不用计算器求 cos(π/12) 与辅助角合成",
+      "keywords": [
+        "π/12=π/3−π/4 差角拆解",
+        "答案 (√2+√6)/4≈0.9659",
+        "辅助角：sinθ+√3cosθ=2sin(θ+π/3)",
+        "θ=π/6 处两边都等于 2",
+        "两问答案数值均带待核验"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 262,
+        "line_end": 265
+      },
+      "fill_hint": "从 quantifiers 表「和角不可线性拆分」与辅助角行变问句；答案数值带核验表达式（前端折叠用）。",
+      "content": "第 1 问：不用计算器，求 $\\cos\\dfrac{\\pi}{12}$。（提示：$\\pi/12=\\pi/3-\\pi/4$，用差角公式。）\n\n第 2 问：把 $\\sin\\theta+\\sqrt3\\cos\\theta$ 合成 $R\\sin(\\theta+\\varphi)$，并取 $\\theta=\\pi/6$ 验证两边数值相等。\n\n（答案：第 1 问 $\\cos\\tfrac{\\pi}{12}=\\cos\\tfrac{\\pi}{3}\\cos\\tfrac{\\pi}{4}+\\sin\\tfrac{\\pi}{3}\\sin\\tfrac{\\pi}{4}=\\tfrac{\\sqrt2+\\sqrt6}{4}\\approx0.9659$【已核验:0.965925826289|(sqrt(2)+sqrt(6))/4】【已核验:0.965925826289|cos(pi/12)】。第 2 问 $R=2$【已核验:2|sqrt(1+3)】、$\\varphi=\\pi/3$；$\\theta=\\pi/6$ 时左边 $=2$【已核验:2|sin(pi/6)+sqrt(3)*cos(pi/6)】、右边 $=2$【已核验:2|2*sin(pi/6+pi/3)】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

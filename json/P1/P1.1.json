@@ -1,0 +1,335 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P1.1",
+  "chapter": "P1",
+  "title": "核心思想：差分法（telescoping）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 38,
+    "line_end": 41,
+    "anchor": "notebook/P_computation.tex:38"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P1.1:telescoping.quantifiers",
+      "type": "comparison",
+      "subject": "telescoping",
+      "title": "差分法适用条件表（条件｜失效例子｜误用后果｜能否放宽）",
+      "keywords": [
+        "核心句：找 F 使 f(k)=F(k+1)-F(k)，求和只剩首尾相消",
+        "指标必须取整数格点（连续版=微积分基本定理）",
+        "F 总能构造但未必有闭式（闭式才有计算价值）",
+        "端点公式 F(n+1)-F(1)，上端是 n+1 不是 n",
+        "差分方向反号 ⟹ 和式整体变号"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 40
+      },
+      "fill_hint": "以切片 39-40 行（差分法核心句）为准转写；表格行内的具体数字是本生成单元自算，阶段 2 需人工复核。",
+      "content": "差分法（telescoping，望远镜求和）的全部机制一句话：想求 $\\sum_k f(k)$，就找一个 $F$ 使 $f(k) = F(k+1) - F(k)$，整列求和只剩首尾相消。它是全部求和公式的统一来源，但每一步都有适用条件：\n\n| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 求和指标 $k$ 取整数格点 | 对连续变量直接套（把 $\\int_0^1 f$ 当一个\"和\"来消） | 离散恒等式根本不适用 | 不能；连续对应物是微积分基本定理（见 telescoping.ftc-analogy） |\n| 存在 $F$ 使 $f(k)=F(k+1)-F(k)$ | $F$ 总能**构造**（$F(1)=0$、$F(k+1)=F(k)+f(k)$ 递归），但可能没有闭式 | 递归构造出的 $F$ 就是原问题本身，等于没算 | 不能放宽；实际靠待定系数/查差分表**猜**闭式（见 telescoping.proof） |\n| 求和区间 $k=1,\\dots,n$ | 下界换成 $k=0$：如 $\\sum \\frac{1}{k(k+1)}$ 从 $k=0$ 起无定义 | 首项丢失或无定义 | 可以换区间，结论相应变为 $F(\\text{上端}+1)-F(\\text{下端})$ |\n| 端点公式 $\\sum_{k=1}^n f(k)=F(n+1)-F(1)$ | 误写 $F(n)-F(1)$：$f(k)=k$、$n=10$ 时得 $45$【已核验:45|10*9/2-1*0/2】，正确 $55$【已核验:55|sum(k for k in range(1,11))】 | 系统性少掉末项 $f(n)$ | 不可放宽；是机械记忆点（见 telescoping.endpoint-misuse） |\n| 差分方向 $f(k)=F(k+1)-F(k)$ | 方向认反（$F(k)-F(k+1)$）：和式变成 $-55$【已核验:-55|-(sum(k for k in range(1,11)))】 | 结果整体变号 | 方向可以反写，但恒等式与求和结论必须同时变号 |\n\n总结一句：差分法本体无假设（纯恒等式），真正的\"限定词\"全在**使用环节**——格点、端点、方向三处各有一个高频坑。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.1:telescoping.statement",
+      "type": "statement",
+      "subject": "telescoping",
+      "title": "差分法（望远镜求和）：公式 + 成立条件",
+      "keywords": [
+        "若 f(k)=F(k+1)-F(k) 则 ∑f(k)=F(n+1)-F(1)",
+        "F 只需在格点 {1,…,n+1} 上有定义",
+        "不需要连续性/单调性——纯代数恒等式",
+        "验证例：f(k)=2k-1 取 F(k)=(k-1)²",
+        "∑(2k-1)(10)=100（与 F(11)-F(1) 一致）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 40
+      },
+      "fill_hint": "核心句逐字转写 + 补两组代入验证（f=k 与 f=2k-1）。",
+      "content": "**公式本体**：若能找到 $F$ 使得对一切 $k=1,\\dots,n$ 有\n\n$$f(k) = F(k+1) - F(k),$$\n\n则\n\n$$\\sum_{k=1}^n f(k) = F(n+1) - F(1).$$\n\n**成立条件**：只要求 $F$ 在格点 $\\{1,\\dots,n+1\\}$ 上有定义——不需要连续性、不需要单调性，$F$ 完全可以只活在整数点上。\n\n**代入值验证**（P 篇纪律：每个公式至少一组）。例一：$f(k)=k$，取 $F(k)=\\frac{k(k-1)}{2}$，则 $F(k+1)-F(k)=\\frac{(k+1)k}{2}-\\frac{k(k-1)}{2}=k$ 成立；于是 $\\sum_{k=1}^{10} k = F(11)-F(1) = 55-0 = 55$【已核验:55|sum(k for k in range(1,11))】。例二：$f(k)=2k-1$，取 $F(k)=(k-1)^2$，则 $F(k+1)-F(k)=k^2-(k-1)^2=2k-1$，于是 $\\sum_{k=1}^{10}(2k-1)=F(11)-F(1)=100-0=100$【已核验:100|sum(2*k-1 for k in range(1,11))】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.1:telescoping.intuition",
+      "type": "intuition",
+      "subject": "telescoping",
+      "title": "楼梯相消：F 是累积高度",
+      "keywords": [
+        "F(k)=爬到第 k 级的累积高度，f(k)=每级升高量",
+        "中间项 F(2)…F(n) 每个出现一正一负，全部对消",
+        "像望远镜逐节收拢，只剩两端 F(n+1) 与 F(1)",
+        "不是背公式，而是找那个 F（公式只是副产品）",
+        "离散同构：∑↔∫、差分↔求导、首尾相消↔F(b)-F(a)"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 40
+      },
+      "fill_hint": "楼梯图像 + 与微积分基本定理的同构表（后者在 ftc-analogy 词条展开）。",
+      "content": "**假设给了什么**：一列数 $f(1), f(2), \\dots, f(n)$（每级台阶的升高量）。**结论为什么成立**：把 $F(k)$ 想成\"爬到第 $k$ 级时的累积高度\"，那么相邻两级累积高度之差 $F(k+1)-F(k)$ 恰是第 $k$ 级的升高量 $f(k)$；整列求和时，中间的 $F(2), F(3), \\dots, F(n)$ 每个都以\"+一次、−一次\"出现，全部对消——像望远镜逐节收拢，只剩两端 $F(n+1)$ 和 $F(1)$。\n\n所以\"背公式\"是本末倒置：P1.2 的三个幂和公式、P1.4 的裂项相消，全都是**先找 $F$**，公式只是副产品。这张离散图像与 $\\int_a^b F'(x)\\,dx = F(b)-F(a)$（微积分基本定理，见 links）完全同构：差分是求导的离散版，求和是积分的离散版。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A1.1"
+      ]
+    },
+    {
+      "id": "P1.1:telescoping.proof",
+      "type": "proof",
+      "subject": "telescoping",
+      "title": "推导骨架：怎么找 F",
+      "keywords": [
+        "找 F 的两条路线：猜闭式（多项式用待定系数）或裂项",
+        "验证差分恒等式只需抽查格点（恒等式对一切 k 成立）",
+        "求和步：中间项对消，读出 F(n+1)-F(1)",
+        "易错点：上端点是 F(n+1)；验证一次即可，别逐项展开",
+        "依赖链：无外部定理，P1.2 全部公式反过来依赖它"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 40
+      },
+      "fill_hint": "三步骨架 + F(k)=k(k-1)(2k-1)/6 的抽查验证（k=3 处差分=9=3²）。",
+      "content": "三步骨架：\n\n1. **找 $F$**（唯一有含金量的一步）。两条路线：①猜闭式再验证——多项式 $f$ 就猜同次多项式（$f(k)=k$ 猜二次 $F$、$f(k)=k^2$ 猜三次 $F$），系数待定；②裂项——分式 $f$ 往往能写成 $g(k)-g(k+1)$ 的形状（P1.4 的 $\\frac{1}{k(k+1)}=\\frac{1}{k}-\\frac{1}{k+1}$）。\n2. **验证差分恒等式**。抽查即可（恒等式对一切 $k$ 成立）。例：$F(k)=\\frac{k(k-1)(2k-1)}{6}$（P1.2 表里 $\\sum k^2$ 的那个 $F$），取 $k=3$：$F(4)-F(3)=\\frac{4\\cdot3\\cdot7}{6}-\\frac{3\\cdot2\\cdot5}{6}=14-5=9=3^2$【已核验:9|4*3*7/6-3*2*5/6】。\n3. **首尾相消求和**。$\\sum_{k=1}^n [F(k+1)-F(k)]$ 中间项对消，得 $F(n+1)-F(1)$。\n\n**$F$ 的存在性**（构造证明）：$F(1)=0$、$F(k+1)=F(k)+f(k)$ 递归定义——所以差分法**永远可用**，问题只是 $F$ 有没有闭式。\n\n**易错点**：①上端点是 $F(n+1)$ 不是 $F(n)$（见 endpoint-misuse）；②恒等式验证一次就够，求和时不要试图把每一项写出来再消。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.2",
+        "P1.3",
+        "P1.4"
+      ]
+    },
+    {
+      "id": "P1.1:telescoping.endpoint-misuse",
+      "type": "counterexample",
+      "subject": "telescoping",
+      "title": "典型误用：端点错位少一项",
+      "keywords": [
+        "误写 ∑f(k)=F(n)-F(1)：n=10 时得 45≠55",
+        "错值恰比真值少 f(n)（丢的正是末项）",
+        "第二误用：差分方向反认，和式整体变号（-55）",
+        "修补：写完恒等式逐项展开前三项核对端点",
+        "机械自检比记忆可靠"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 39
+      },
+      "fill_hint": "两类误用各算出具体错误数值（45、-55）；修补法是展开前三项。",
+      "content": "**误用一（端点错位）**：把 $\\sum_{k=1}^n f(k)$ 的结果写成 $F(n)-F(1)$。\n\n具体计算：$f(k)=k$，$F(k)=\\frac{k(k-1)}{2}$，$n=10$。正确：$F(11)-F(1)=\\frac{11\\cdot10}{2}-0=55$【已核验:55|11*10/2-1*0/2】；错算：$F(10)-F(1)=\\frac{10\\cdot9}{2}-0=45$【已核验:45|10*9/2-1*0/2】。错误结果 $45$ 恰比真值 $55$ 少 $f(10)=10$——丢掉的正是末项用到的 $F(n+1)-F(n)$。\n\n**误用二（方向反号）**：把 $f(k)$ 认成 $F(k)-F(k+1)$，则 $\\sum = F(1)-F(n+1) = -55$【已核验:-55|1*0/2-11*10/2】，整体变号。\n\n**修补条件**：写完恒等式后**逐项展开前三个**核对：$[F(2)-F(1)]+[F(3)-F(2)]+[F(4)-F(3)]+\\cdots$——中间项谁消谁留一目了然，端点自然不会错。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.1:telescoping.ftc-analogy",
+      "type": "extension",
+      "subject": "telescoping",
+      "title": "拓展：差分法 = 离散版微积分基本定理",
+      "keywords": [
+        "对应表：∑↔∫、差分↔导数、首尾相消↔F(b)-F(a)",
+        "数值对照：∫₀¹⁰ x dx=50 而 ∑k=55，差约 n/2",
+        "离散与连续同结构不同值",
+        "系统修正是 Euler–Maclaurin（拓展路标，超出切片）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 40
+      },
+      "fill_hint": "结构类比属拓展内容（切片只讲求和），对应表 + 一组数值对照；Euler–Maclaurin 只作路标不展开。",
+      "content": "（拓展：本条是结构类比，切片本身只讲求和。）离散—连续对应表：\n\n| 离散（差分法） | 连续（微积分基本定理） |\n|---|---|\n| 格点函数 $f(k)$ | 导数 $F'(x)$ |\n| 差分 $f(k)=F(k+1)-F(k)$ | $F'(x)=\\frac{dF}{dx}$ |\n| 求和 $\\sum_{k=1}^n$ | 积分 $\\int_a^b$ |\n| 首尾相消 $F(n+1)-F(1)$ | $F(b)-F(a)$ |\n\n数值对照：$\\int_0^{10} x\\,dx = \\frac{10^2}{2} = 50$【已核验:50|10*10/2】，而 $\\sum_{k=1}^{10} k = 55$【已核验:55|sum(k for k in range(1,11))】——阶梯高度的和比连续面积多出 $5=\\frac{n}{2}$（每级台阶比连续斜坡高出约半格）。这说明两者是同一个**结构**而不是同一个**数**；差 $n/2$ 一类的系统修正属 Euler–Maclaurin 公式（拓展路标，超出切片范围，此处只立牌子）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "A1.1"
+      ]
+    },
+    {
+      "id": "P1.1:telescoping.application",
+      "type": "application",
+      "subject": "telescoping",
+      "title": "差分法在哪一层被用",
+      "keywords": [
+        "P1.2 三公式 / P1.3 升阶差分 / P1.4 裂项相消全由它统一产生",
+        "P4.1 数列递推 a(n+1)=a(n)+f(n) 就是 F 的定义式",
+        "Fourier 部分和封闭形式（A2.3）是 telescoping",
+        "理解微积分基本定理（A1.1）最便宜的先导"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 40
+      },
+      "fill_hint": "分层列举下游；每条给一句'怎么用上'。",
+      "content": "差分法是 P1 节的地基与统一来源：\n\n- **P 篇内部**：P1.2 的三个幂和公式全部由它产生（表里的\"差分/证明\"列就是 $F$ 的显式公式）；P1.3 的升阶差分推导是它对 $\\sum k^2$、$\\sum k^3$ 的系统化；P1.4 的裂项相消是它在分式上的形态；P4.1 的数列递推 $a_{n+1}=a_n+f(n)$ 直接就是 $F$ 的定义式。\n- **分析层**：Fourier 级数部分和 $\\sum_{k=1}^n \\sin(kx)$ 的封闭形式（A2.3）、概率里期望的尾和公式 $E[X]=\\sum_{k\\ge1}P(X\\ge k)$ 都是 telescoping。\n- **概念层**：它是理解\"为什么 $\\int F' = F(b)-F(a)$\"（A1.1，黎曼积分）最便宜的先导——同一个\"总量 = 端点差\"结构。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.2",
+        "P1.3",
+        "P1.4",
+        "P4.1",
+        "A1.1",
+        "A2.3"
+      ]
+    },
+    {
+      "id": "P1.1:telescoping.probe1",
+      "type": "probe",
+      "subject": "telescoping",
+      "title": "检验：用差分法求奇数和",
+      "keywords": [
+        "找 F(k)=(k-1)² 验证差分恒等式",
+        "闭式 n² 在 n=10、n=100 两处代入验证",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 39,
+        "line_end": 40
+      },
+      "fill_hint": "从 quantifiers 表'端点公式'行变问句；答案数值已带核验标记。",
+      "content": "用差分法求 $\\sum_{k=1}^{n}(2k-1)$：先验证 $F(k)=(k-1)^2$ 满足 $F(k+1)-F(k)=2k-1$，再写出闭式，并分别取 $n=10$、$n=100$ 代入验证。\n\n（答案：$\\sum_{k=1}^n (2k-1) = n^2$；$n=10$ 时 $100$【已核验:100|sum(2*k-1 for k in range(1,11))】，$n=100$ 时 $10000$【已核验:10000|sum(2*k-1 for k in range(1,101))】。验证：$F(11)-F(1)=100-0=100$。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "求和三条路线对照（差分法 vs 硬加 vs 背公式）",
+      "keywords": [
+        "公式表是差分法的缓存",
+        "缓存失效时回退到找 F 的再生程序",
+        "正确性/速度/可迁移性三维对照"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 38,
+        "line_end": 41
+      },
+      "fill_hint": "单元级对照表；结论句'公式表=缓存'呼应切片'不是背公式'。",
+      "content": "本单元只有一个核心思想，对照三条求和路线：\n\n| 维度 | 差分法（找 $F$） | 逐项硬加 | 背 P1.2 公式表 |\n|---|---|---|---|\n| 正确性 | 恒等式保证 | 有限次总对 | 记错指数/系数即全错 |\n| 速度 | 找到 $F$ 后一步出闭式 | $n$ 大时不可行 | 最快 |\n| 可迁移性 | 任何能找到 $F$ 的 $f$（幂、分式、组合数） | 无迁移 | 只覆盖背过的几个 |\n| 学习成本 | 要会猜 $F$ + 验证 | 零 | 零 |\n\n结论：公式表（P1.2）是差分法的**缓存**；缓存失效（忘了/没见过）时，回退到\"找 $F$\"的再生程序（本单元 + P1.3 的推导示范）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P1.1 的服务对象",
+      "keywords": [
+        "P1.2/P1.3/P1.4 全部建立在差分法上",
+        "笔记中'望远镜即得'均指本条",
+        "A 篇黎曼积分（A1.1）的离散先导"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 38,
+        "line_end": 41
+      },
+      "fill_hint": "单元级下游一览，细节归各目标词条。",
+      "content": "P1.1 是 P1 节的地基：P1.2（必备公式）、P1.3（推导示范）、P1.4（常用技巧）都建立在本条思想上；往 A 篇走，它是黎曼积分与微积分基本定理（A1.1）的离散先导。笔记里凡写\"望远镜即得\"，指的都是这一条。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.2",
+        "P1.3",
+        "P1.4",
+        "A1.1"
+      ]
+    },
+    {
+      "id": "P1.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：sum-telescoping（楼梯相消动画）",
+      "keywords": [
+        "左列台阶（每级升高 f(k)）、右列累积曲线 F(k)",
+        "拖 n 滑块：中间项 F(2)…F(n) 成对高亮消失",
+        "只剩 F(1) 与 F(n+1) 两块",
+        "判据 Q4：简单显式数列+几何图像 ⟹ 前端直渲"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 38,
+        "line_end": 41
+      },
+      "fill_hint": "模块名 sum-telescoping 在规格已有模块清单内（档1）；契约细节由前端另行记录，本条只定叙事。",
+      "content": "单元级演示叙事：**楼梯相消**。左列画台阶（每级升高 $f(k)$），右列画累积曲线 $F(k)$；拖 $n$ 滑块时，中间项 $F(2),\\dots,F(n)$ 以\"+/−\"成对高亮消失，只剩 $F(1)$ 与 $F(n+1)$ 两块——\"只剩首尾相消\"从文字变成动画。\n\n参数建议：$f \\in \\{k,\\ k^2,\\ \\frac{1}{k(k+1)}\\}$，$n\\le 8$（每项可见）。反例叙事（同一模块第二模式）：故意把端点标成 $F(n)$，差值 $f(n)$ 用红色缺口标出（$f=k$、$n=10$ 时缺口高 $10$），对应 endpoint-misuse 词条的 $45$ vs $55$。判据 Q4：简单显式数列 + 几何图像 ⟹ 前端直渲（模块 sum-telescoping）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "module": "sum-telescoping",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "f": [
+            "k",
+            "k^2",
+            "1/(k(k+1))"
+          ],
+          "n": 8,
+          "modes": [
+            "cancel",
+            "endpoint-error"
+          ]
+        }
+      }
+    }
+  ]
+}

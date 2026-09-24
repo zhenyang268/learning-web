@@ -1,0 +1,338 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C6.3",
+  "chapter": "C6",
+  "title": "一致可积性：让「依概率」升到 $L^1$",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 133,
+    "line_end": 146,
+    "anchor": "notebook/C_partial.tex:133"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C6.3:ui.quantifiers",
+      "type": "comparison",
+      "subject": "ui",
+      "title": "Vitali 定理限定词逐条拆解（去掉每一条会怎样）",
+      "keywords": [
+        "UI 定义三要素：sup_n（一致性）、|X_n|>M 的尾部、期望贡献 → 0",
+        "去掉 UI：f_n = n·1_[0,1/n]，依概率→0 但 E|f_n| ≡ 1",
+        "sup_n 不可去（换成「每个可积」）：同一个尖峰反例",
+        "依概率收敛不可去：f_n = 1_[n,n+1] 型滑动（UI 但不收敛）",
+        "E|X_n| < ∞ 逐项可积是最低入场费",
+        "UI 正是「DCT 盖子」扔掉具体形状后剩下的实质"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 133,
+        "line_end": 146
+      },
+      "fill_hint": "Vitali 定理与 UI 定义照抄 tex 135-146；四列表的反例行分别指向 ui.bump-fails / ui.slide-conv / A1.3 的盖子词条；「sup_n 不可去」是量词顺序陷阱（∀∃ vs ∃∀，与 A1.3:dct.unif-in-n 同构），须显式点破。",
+      "content": "切片的核心定理（tex 137-139）：若 $\\mathbb E|X_n| < \\infty$，$X_n \\xrightarrow{\\ \\mathbb P\\ } X$，且 $\\{X_n\\}$ 均匀可积（UI），则 $X_n \\xrightarrow{\\ L^1\\ } X$ 且 $\\mathbb E X_n \\to \\mathbb E X$。把陈述拆成限定词逐条检验（限定词｜去掉后的具体反例｜结论如何失效｜能否放宽）：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① UI 定义里的 $\\sup_n$（对全族一致） | 换成「每个 $X_n$ 各自可积」（$\\forall n\\ \\exists$ 各自的界）：$f_n = n\\cdot\\mathbf{1}_{[0,1/n]}$ 每项都可积（$\\mathbb E|f_n| = 1 < \\infty$），但对每个 $M$，$\\sup_n \\mathbb E[|f_n|\\mathbf{1}_{|f_n|>M}] = 1$【已核验:1|1】恒不趋于 0 | 依概率收敛到 0 但 $\\mathbb E|f_n| \\equiv 1 \\not\\to 0$，$L^1$ 升级失败 | **量词顺序不可换**：$\\forall n\\exists$ 各自界 $\\ll$ $\\exists$ 一致界（与 A1.3:dct.unif-in-n 的 $\\forall n\\exists g_n$ vs $\\exists g \\forall n$ 同一个陷阱） |\n| ② UI 本身（尾部期望贡献一致消失） | 同上尖峰：大值部分（$|f_n| = n > M$）的贡献恒为 1，质量持续挤向零测点 | $\\mathbb E X_n \\to \\mathbb E X$ 断链——期望与极限不可交换 | 不能去；可换等价条件（凸增长函数判据，见 ui.sufficient） |\n| ③ 依概率收敛 | $f_n = \\mathbf{1}_{[n,n+1)}$（滑动方块）：一致有界故 UI 成立，但不收敛到任何东西 | 没有 $X$ 可收敛，「升到 $L^1$」无从谈起 | 收敛模式可放宽到 a.e.（概率空间上 a.s. ⟹ 依概率，C6.1） |\n| ④ $\\mathbb E|X_n| < \\infty$（逐项可积） | UI 定义本身已蕴含它（$\\mathbb E|X_n| \\le M + \\sup_k \\mathbb E[|X_k|\\mathbf{1}_{|X_k|>M}] < \\infty$） | 去掉只是陈述冗余，不造成失效 | 是 UI 的推论，写着防御 |\n| ⑤ 结论两件套：$L^1$ 收敛 + 期望收敛 | —— | $L^1$ 收敛 $\\Rightarrow \\mathbb E X_n \\to \\mathbb E X$（$|\\mathbb E X_n - \\mathbb E X| \\le \\mathbb E|X_n - X|$），期望收敛是搭车结论 | 结论不可拆卖：只想要期望收敛也得付 UI 全价（Scheffé 路线是例外，见 C6.4） |\n\n**总结一句**：Vitali 的实质内容只有一个——**UI 是「依概率 → $L^1$」这条反向箭头的明码标价**；切片原话「DCT 用『被一个可积函数盖住』来保证 $L^1$ 收敛；均匀可积是它的抽象化」的准确含义见 ui.dct-bridge。",
+      "links": [
+        "C6.1",
+        "C6.2",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:ui.bump-fails",
+      "type": "counterexample",
+      "subject": "ui",
+      "title": "反例：f_n = n·1_[0,1/n]——UI 的标准否证（L^1 分水岭的守门反例）",
+      "keywords": [
+        "f_n = n·1_[0,1/n]：每个都可积（E|f_n| = 1），依概率收敛到 0",
+        "UI 判定崩溃：n > M 的项贡献 n·(1/n) = 1，sup_n ≡ 1 不趋于 0",
+        "E|f_n − 0| = 1 ↛ 0：恰好卡死在「依概率 ↛ L^1」缺口上",
+        "与 C6.2 尖峰展品、A1.3 的 bump 反例三位一体",
+        "修补：对 f_n^α = n^α·1_[0,1/n^α] 看 α < 1 时 UI 恢复"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 135,
+        "line_end": 139
+      },
+      "fill_hint": "切片未给 UI 反例（定义与定理直接给出）；本条用 C6.2/A1.3 已有的尖峰序列补上「为什么需要 UI」的守门计算，数值全部直接可算带待核验标记；α < 1 修补参数的计算须人工复核（∫x^{-α} 在 0 处可积 ⟺ α<1）。",
+      "content": "为什么「依概率收敛 + 各自可积」不够、必须再加 UI？标准否证就是分水岭反例 $f_n = n\\cdot\\mathbf{1}_{[0,1/n]}$（$([0,1/n]$ 与 $(0,1/n)$ 至多差一个点，期望相同；即 C6.2 博物馆的尖峰展品、A1.3 的 bump 反例，同一对象第三次出场——它是 UI 概念的「创始人反例」）。\n\n**三步完整计算。**\n\n1. **依概率收敛成立**：$\\mathbb P(|f_n| > \\varepsilon) = 1/n \\to 0$（$\\varepsilon < n$ 时；取 $n = 8$、$\\varepsilon = 1/2$：$0.125$【已核验:0.125|1/8】）。\n2. **每项可积成立**：$\\mathbb E|f_n| = n \\cdot (1/n) = 1 < \\infty$【已核验:1|1】。\n3. **UI 崩溃**：固定 $M > 0$，看尾部贡献。对 $n > M$：$|f_n| = n > M$ 恰好在 $[0,1/n]$ 上成立，故\n$$\\mathbb E\\big[|f_n|\\,\\mathbf{1}_{|f_n| > M}\\big] = n \\cdot \\tfrac{1}{n} = 1, \\qquad \\sup_n \\mathbb E\\big[|f_n|\\mathbf{1}_{|f_n|>M}\\big] = 1 \\quad (\\forall M),$$\n【已核验:1|1】——尾部贡献**一致地**停在 1，$M \\to \\infty$ 压不下去，UI 定义被否决。\n\n**后果（Vitali 定理的反面验证）**：$\\mathbb E|f_n - 0| \\equiv 1 \\not\\to 0$——$L^1$ 收敛失败、$\\mathbb E f_n \\equiv 1 \\not\\to 0 = \\mathbb E[0]$ 期望交换失败。UI 的缺失与 $L^1$ 的失败**同步出现**，这不是巧合而是 Vitali 定理在说：UI 恰好是那道分水岭。\n\n**机理**：尖峰的高度 $n$ 随宽度 $1/n$ 增长，大值部分（$> M$）承载了**全部**质量（1）——「大值部分对期望的贡献可以被一致地压小」（切片对 UI 的白话翻译）恰好在这里整套失效。\n\n**修补的参数版**：把尖峰削平为 $f_n^{(\\alpha)} = n^{\\alpha}\\cdot\\mathbf{1}_{[0,\\,1/n]}$（$0 < \\alpha < 1$）。此时 $\\mathbb E|f_n^{(\\alpha)}| = n^{\\alpha - 1} \\to 0$【已核验:0.707106781187|2**(0.5-1)】（取 α=0.5, n=2），$L^1$ 收敛自动恢复——而它的一致可积性验证：尾部贡献 $\\sup_n \\mathbb E[|f_n^{(\\alpha)}|\\mathbf{1}_{|f_n^{(\\alpha)}|>M}] \\le \\sup_{n > M^{1/\\alpha}} n^{\\alpha-1} = M^{(\\alpha-1)/\\alpha} \\to 0$【已核验:0.25|4**((0.5-1)/0.5)】的示意（α=0.5, M=4 → 4^{-1} = 0.25）。**同一个形状、只调高度指数，UI 与 $L^1$ 同时起死回生**——分水岭的「岭」就在 $\\alpha = 1$。",
+      "links": [
+        "C6.2",
+        "A1.3",
+        "C6.1"
+      ],
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "核心图是「sup_n E[|f_n|·1_{|f_n|>M}] 随 M 的曲线」：α=1 时恒为 1 的水平线 vs α<1 时衰减曲线的对照，需要对 M 扫描逐项计算，超出前端简单显式函数范畴。",
+        "params_hint": {
+          "alpha": [
+            1,
+            0.75,
+            0.5
+          ],
+          "M_range": "1..200",
+          "show": "sup_n 尾部贡献曲线族"
+        }
+      },
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:ui.statement",
+      "type": "statement",
+      "subject": "ui",
+      "title": "均匀可积性定义与 Vitali 收敛定理陈述",
+      "keywords": [
+        "UI 定义：lim_{M→∞} sup_n E[|X_n|·1_{|X_n|>M}] = 0",
+        "白话：大值部分对期望的贡献可以被一致地压小",
+        "Vitali：E|X_n|<∞ + 依概率收敛 + UI ⟹ L^1 收敛且 E X_n → E X",
+        "UI + 依概率 = 依概率升到 L^1 的完整门票",
+        "切片定位：这是 A1 三大收敛定理那条线索在概率论的收口"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 135,
+        "line_end": 146
+      },
+      "fill_hint": "定义与定理逐字转写 tex 135-146；「收口」定位引用切片原话「这正是 A1 中『三大收敛定理』那条线索的收口」；逐符号注解 sup_n / 1_{·>M} / 极限顺序（先 sup 后 M→∞）。",
+      "content": "**定义（切片 tex 135-138 逐字转写）**：族 $\\{X_n\\}$ 称为**均匀可积**（uniformly integrable, UI），若\n$$\\lim_{M \\to \\infty}\\ \\sup_n\\ \\mathbb E\\big[|X_n|\\,\\mathbf{1}_{\\{|X_n| > M\\}}\\big] = 0,$$\n即「大值部分对期望的贡献可以被一致地压小」（切片白话原文）。\n\n逐符号拆解：$\\mathbf{1}_{\\{|X_n| > M\\}}$ 只保留**超过门限 $M$ 的部分**（尾部事件）；$\\mathbb E[|X_n|\\mathbf{1}_{\\cdots}]$ 是这部分的期望贡献；$\\sup_n$ 要求**同一个 $M$ 对全族有效**（一致性）；最外层 $M \\to \\infty$ 是说门限推高时，全族的尾部贡献**统一**消失。四个零件缺一不可（拆解见 ui.quantifiers）。\n\n**核心定理（Vitali 收敛定理，tex 137-139 逐字转写）**：若 $\\mathbb E|X_n| < \\infty$，$X_n \\xrightarrow{\\ \\mathbb P\\ } X$，且 $\\{X_n\\}$ 均匀可积，则\n$$X_n \\xrightarrow{\\ L^1\\ } X \\quad \\text{且} \\quad \\mathbb E X_n \\to \\mathbb E X.$$\n\n**定理的位置（切片原话，tex 140-142）**：DCT 用「被一个可积函数盖住」保证 $L^1$ 收敛；均匀可积是它的抽象化——$|X_n| \\le g \\in L^1$ 本身就是 UI 的一个充分条件。**一句话：DCT 的盖子 $\\iff$ 均匀可积性（准确读法见 ui.dct-bridge：充分方向严格成立，反向需加注）。这正是 A1 中「三大收敛定理」那条线索的收口**（A1.3 的 MCT/Fatou/DCT 在概率空间上的最终形态）。\n\n**读法**：把 Vitali 当成「反向箭头的售票亭」——C6.1 层级图上「依概率 $\\not\\Rightarrow L^1$」的缺口（C6.2 尖峰展品）在这条定理里明码标价：**票价 = UI**。付了钱，升级到 $L^1$ 并附赠期望交换；不付钱，尖峰序列就是你的下场。",
+      "links": [
+        "C6.1",
+        "C6.2",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:ui.intuition",
+      "type": "intuition",
+      "subject": "ui",
+      "title": "为什么 UI 是 L^1 的分水岭（盖子的抽象化直觉）",
+      "keywords": [
+        "假设给了什么：尾部质量不随 n 撤离门限（一致地）",
+        "结论为什么成立：L^1 = 常规部分（依概率管）+ 尾部部分（UI 管）",
+        "尖峰反例的解剖：质量全部住在大值区，门限推多高都拦不住",
+        "盖子 ⟹ UI：g ∈ L^1 自己的尾部 ∫_{g>M} g → 0 帮全族垫底",
+        "UI 扔掉了盖子的「形状」只留「质量纪律」——所以更普适"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 140,
+        "line_end": 146
+      },
+      "fill_hint": "按规格「假设与结论分开写」组织；「L^1 = 常规 + 尾部」的二分是证明骨架（ui.proof）的直觉版，须与形式化对应；盖子垫底论证引用 A1.3:dct.vitali 的既有内容。",
+      "content": "**假设给了什么（分开说其一）**：UI 假设只管一件事——**大值地区的质量纪律**。门限 $M$ 以下的世界它不管（那里交给依概率收敛），门限以上的世界它要求：全族的居民（$\\sup_n$）加起来的「质量账单」随门限推高统一清零。注意它完全不说「谁住在哪里、房子什么形状」——盖子 $g$ 的点态形状信息被整个扔掉了。\n\n**结论为什么因此成立（分开说其二）**：$L^1$ 误差 $\\mathbb E|X_n - X|$ 天然拆成两笔账：\n$$\\underbrace{\\mathbb E\\big[|X_n - X|\\mathbf{1}_{|X_n - X| \\le \\delta^{-1}}\\big]}_{\\text{有界部分：依概率收敛 + 有界收敛定理管}} + \\underbrace{\\mathbb E\\big[|X_n - X|\\mathbf{1}_{|X_n - X| > \\delta^{-1}}\\big]}_{\\text{尾部部分：UI 管}}.$$\n有界部分里 $|X_n - X| \\le 1/\\delta$ 一致有界、依概率收敛到 0，有限测度上的有界收敛（BCT，A1.3:dct.bct）把它压到任意小；尾部部分由 UI（连带极限 $X$ 也 UI）压小。**两笔账各有人管，$L^1$ 就收敛**——这就是分水岭的全部直觉：依概率收敛**单独**管不住尾部账单（尖峰反例的 1 全部记在尾部），UI 恰好是尾部账单的担保人。\n\n**盖子为什么是 UI 的特例**：若 $|X_n| \\le g \\in L^1$，则 $\\mathbb E[|X_n|\\mathbf{1}_{|X_n|>M}] \\le \\mathbb E[g\\,\\mathbf{1}_{g > M}]$——门限以上 $X_n$ 的账单全转到 $g$ 头上，而 $g$ 可积意味着**自己的**尾部账单 $\\mathbb E[g\\mathbf{1}_{g>M}] \\to 0$（A1.4 的积分绝对连续性）。一个 $g$ 替全族垫底，这就是「盖子 ⟹ UI」。反方向不保证（UI 族可以没有统一点态上界，见 ui.dct-bridge 的 $1/x$ 切片反例）——**UI 是把盖子「抽象化」后剩下的纯质量纪律，普适用代价是丢掉形状**（切片原话「DCT 用『被一个可积函数盖住』……均匀可积是它的抽象化」的展开）。\n\n**为什么叫「分水岭」**：C6.2 的尖峰序列站在岭的坏侧（UI 否决、$L^1$ 失败）；削平指数 $\\alpha < 1$ 的版本站好侧（UI 通过、$L^1$ 成立，见 ui.bump-fails）。岭脊恰好是「大值区承载多少质量」这一个量——UI 就是它的法定度量。",
+      "links": [
+        "A1.3",
+        "A1.4",
+        "C6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:ui.proof",
+      "type": "proof",
+      "subject": "ui",
+      "title": "Vitali 定理证明骨架（截断三分账）",
+      "keywords": [
+        "截断记号 Y^M = Y·1_{|Y|≤M}：把误差拆成三笔账",
+        "第一账 E|X_n − X_n^M|：UI 直接压（≤ 2 sup_n 尾部贡献）",
+        "第二账 E|X_n^M − X^M|：一致有界 + 依概率 + BCT（A1.3:dct.bct）",
+        "第三账 E|X − X^M|：极限 X 也 UI（Fatou：E[|X|1_{|X|>M}] ≤ liminf E[|X_n|1_{|Xn|>M}]）",
+        "依赖链：A1.4 绝对连续性 / A1.3 BCT / Fatou ⟹ Vitali"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 137,
+        "line_end": 139
+      },
+      "fill_hint": "切片未给证明；以下为标准教材路线（Folland / Williams 的 Vitali 证明），分步给理由；「X 也 UI」一步用 Fatou 是隐藏依赖（A1.3），须显式标出；人工复核第二步 BCT 的使用方式（有界 + 依概率 + 有限测度）。",
+      "content": "切片只给定理未给证明；以下为标准路线（分步给理由），骨架是 ui.intuition 里「三笔账」的形式化。记截断 $Y^M = Y\\,\\mathbf{1}_{|Y| \\le M}$，三角不等式拆\n$$\\mathbb E|X_n - X| \\le \\underbrace{\\mathbb E|X_n - X_n^M|}_{\\text{①}} + \\underbrace{\\mathbb E|X_n^M - X^M|}_{\\text{②}} + \\underbrace{\\mathbb E|X^M - X|}_{\\text{③}}.$$\n\n**第 0 步（隐藏依赖）：极限 $X$ 也 UI。** 由依概率收敛 + Fatou（A1.3）：$\\mathbb E[|X|\\mathbf{1}_{|X|>M}] \\le \\liminf_n \\mathbb E[|X_n|\\mathbf{1}_{|X_n|>M}] \\le \\sup_n(\\cdots) \\to 0$（中间一步对 $\\{|X_n - X| \\le 1\\}$ 与其补集分别估计，标准细节）。没有这步，③ 没人担保——**Fatou 是 Vitali 的隐藏发动机**。\n\n**第 1 步（账①，UI 主场）**：$\\mathbb E|X_n - X_n^M| = \\mathbb E[|X_n|\\mathbf{1}_{|X_n|>M}] \\le \\sup_k \\mathbb E[|X_k|\\mathbf{1}_{|X_k|>M}]$，由 UI 取 $M$ 大即任意小。这一步**只有** UI 能做——尖峰反例的 1【已核验:1|1】全部漏在这里。\n\n**第 2 步（账②，BCT 主场）**：$|X_n^M - X^M| \\le 2M$ 一致有界，且 $X_n^M \\xrightarrow{\\mathbb P} X^M$（截断函数连续、依概率收敛被连续映射保持）；概率测度有限（$\\mathbb P(\\Omega) = 1$），有界收敛定理（A1.3:dct.bct：一致有界 + 依概率 + 有限测度 ⟹ $L^1$）给出 $\\mathbb E|X_n^M - X^M| \\to 0$。实现上先用 $\\mathbb E[|Y|\\mathbf{1}_{|Y|>\\varepsilon}] \\le \\varepsilon + 2M\\,\\mathbb P(|Y| > \\varepsilon)$ 的两段估计再令 $\\varepsilon \\to 0$。\n\n**第 3 步（账③）**：$\\mathbb E|X - X^M| = \\mathbb E[|X|\\mathbf{1}_{|X|>M}]$，由第 0 步取 $M$ 大即小。\n\n**收口**：先取 $M$ 使 ①③ 之和 $< \\eta/2$（UI），再取 $n$ 大使 ② $< \\eta/2$（BCT），得 $\\mathbb E|X_n - X| < \\eta$。期望收敛搭车：$|\\mathbb E X_n - \\mathbb E X| \\le \\mathbb E|X_n - X| \\to 0$。\n\n**依赖链**：A1.4（积分绝对连续性，撑「$g$ 可积 ⟹ 尾部消失」与 UI 检验）+ A1.3 的 BCT 与 Fatou ⟹ Vitali。**易错点**：忘了证 $X$ UI（第 0 步）是最常见的漏洞；以及把 ② 误用 DCT（没有盖子可用——能用盖子就不需要 Vitali 了）。",
+      "links": [
+        "A1.3",
+        "A1.4",
+        "C6.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:ui.dct-bridge",
+      "type": "extension",
+      "subject": "ui",
+      "title": "盖子与 UI 的精确关系：充分但不必充要（1/x 切片反例）",
+      "keywords": [
+        "盖子 ⟹ UI：E[|X_n|1_{|Xn|>M}] ≤ E[g·1_{g>M}] → 0（g ∈ L^1）",
+        "反向不成立：UI 族可以没有统一点态上界",
+        "反例：f_n = (1/x)·1_(1/(n+1), 1/n)——1/x 切成互斥片",
+        "UI 验证：sup_n E[f_n·1_{f_n>M}] = ln(1+1/M) → 0（M=1 时 0.6931）",
+        "无盖子验证：sup_n f_n = 1/x，∫_0^1 dx/x = ∞",
+        "切片「盖子 ⟺ UI」的准确读法：同一分水岭的两种门票，非逻辑等价"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 140,
+        "line_end": 146
+      },
+      "fill_hint": "切片原话「一句话：DCT 的盖子 ⟺ 均匀可积性」按数学事实校准为「充分方向严格成立；作为分水岭等价、作为命题不等价」；1/x 切片反例与数值（ln(1+1/M) 系列）来自 A1.3 参考库的既有核验内容，此处完整复算；人工复核 ln(1+1/M) 的推导。",
+      "content": "切片的一句话「DCT 的盖子 $\\iff$ 均匀可积性」需要校准着读：**作为「$L^1$ 分水岭」两者是同一道岭（都能让依概率升级到 $L^1$），但作为逻辑命题只有单向蕴含成立**——盖子 ⟹ UI 严格成立，UI ⟹ 盖子不成立。\n\n**正向（盖子 ⟹ UI，两行）**：设 $|X_n| \\le g \\in L^1$ 对所有 $n$ 一致成立，则\n$$\\sup_n \\mathbb E\\big[|X_n|\\mathbf{1}_{|X_n|>M}\\big] \\le \\mathbb E\\big[g\\,\\mathbf{1}_{g>M}\\big] \\xrightarrow{M\\to\\infty} 0,$$\n末一步是 $g \\in L^1$ 的积分绝对连续性（A1.4）。一个 $g$ 替全族垫清尾部账单。\n\n**反向不成立（具体反例）**：把 $1/x$ 切成互不相交的片——\n$$f_n(x) = \\tfrac{1}{x}\\,\\mathbf{1}_{(\\,1/(n+1),\\ \\,1/n\\,)}(x), \\qquad x \\in (0,1).$$\n- **无盖子**：$\\sup_n f_n = 1/x$ 在 $(0,1)$ 上，$\\int_0^1 \\frac{dx}{x} = \\infty$——最小盖子不可积，DCT 判定**不可用**。\n- **但 UI 成立**：$f_n > M \\iff x < 1/M$，与支撑 $(1/(n+1), 1/n)$ 相交当 $n \\ge M$，贡献 $\\int_{1/(n+1)}^{\\min(1/n,\\,1/M)} \\frac{dx}{x}$，对 $n$ 取 sup 得 $\\ln\\big(1 + \\tfrac{1}{M}\\big)$（$n = M$ 附近取到最大）。数值：$M = 1$ 时 $\\ln 2 \\approx 0.6931$【已核验:0.69314718056|log(2)】；$M = 10$ 时 $\\ln 1.1 \\approx 0.0953$【已核验:0.0953101798043|log(1.1)】；$M = 100$ 时 $\\approx 0.00995$【已核验:0.00995033085317|log(1.01)】——尾部贡献确实一致消失，UI 判定**通过**（此例同时 $f_n \\to 0$ 处处、$\\mathbb E f_n = \\ln(1+1/n) \\to 0$，Vitali 顺利交付 $L^1$ 收敛）。\n\n**含义**：UI 是比「存在盖子」**严格更弱**的条件——它允许每个 $f_n$ 在自己的地盘上超过任何固定函数（$1/x$ 的片谁也盖不住谁），只要求**大值区的总质量**守纪律。这就是切片「抽象化」的准确内容：**扔掉形状（点态上界），留下质量纪律（尾部期望）**。实践上这是赚的：依概率收敛的序列往往没有盖子（盖子要预先知道全族的形态），而 UI 可以事后验证（见 ui.sufficient 的速查判据）。",
+      "links": [
+        "A1.3",
+        "A1.4",
+        "A1.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:ui.sufficient",
+      "type": "extension",
+      "subject": "ui",
+      "title": "UI 的实操判据速查（两个充分条件 + 一个必要条件）",
+      "keywords": [
+        "充分条件①：一致有界 |X_n| ≤ C ⟹ UI（尾部贡献恒 0）",
+        "充分条件②：被可积 g 支配（盖子，DCT 场景）",
+        "必要条件：sup_n E|X_n| < ∞（UI ⟹ 一致 L^1 有界）",
+        "常见误判：sup E|X_n| < ∞ 推不出 UI（尖峰反例 sup ≡ 1 有界但不 UI）",
+        "切片未含速查表，属标准补充（de la Vallée Poussin 判据见 fill_hint）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 135,
+        "line_end": 139
+      },
+      "fill_hint": "标题不带「拓展：」但内容为标准补充判据（切片只有定义与定理）；三个判据各配一行验证计算；「sup 有界 ⇏ UI」用尖峰反例点破是本条防呆重点；de la Vallée Poussin 判据（存在凸函数 φ，φ(t)/t→∞ 且 sup E φ(|X_n|)<∞ ⟹ UI）在 fill_hint 登记、正文一句带过，人工复核是否扩充。",
+      "content": "拿到一族 $\\{X_n\\}$，怎么快速判 UI？三件速查（标准补充，切片未列）：\n\n**充分条件①：一致有界。** $|X_n| \\le C$ 对所有 $n$ ⟹ 对 $M \\ge C$，$\\mathbf{1}_{|X_n|>M} \\equiv 0$，尾部贡献 $\\mathbb E[|X_n|\\mathbf{1}_{|X_n|>M}] = 0$【已核验:0|0】——UI 平凡成立。这是 BCT（A1.3:dct.bct）能处理的世界，Vitali 覆盖它的超集。\n\n**充分条件②：可积盖子。** $|X_n| \\le g \\in L^1$（证明见 ui.dct-bridge）。DCT 的领地，同样被 Vitali 超集覆盖。\n\n**必要条件：一致 $L^1$ 有界。** UI ⟹ $\\sup_n \\mathbb E|X_n| \\le M + \\sup_n \\mathbb E[|X_n|\\mathbf{1}_{|X_n|>M}] < \\infty$（任取固定 $M$）。**警告：反向不成立**——尖峰 $f_n = n\\mathbf{1}_{[0,1/n]}$ 满足 $\\sup_n \\mathbb E|f_n| = 1$ 有界【已核验:1|1】，但 UI 失败（ui.bump-fails）。一致 $L^1$ 有界只是「账面总额」受控，UI 还要求「大额账单」受控——**总额有界挡不住挤兑**。\n\n**实操流程**：先查 ①②（秒判）；不行再算 $\\sup_n \\mathbb E[|X_n|\\mathbf{1}_{|X_n|>M}]$ 关于 $M$ 的曲线（ui.bump-fails 的 viz 槽位就是这条曲线）；曲线不衰减（如尖峰的水平线 1【已核验:1|1】）即 UI 否决。另有 de la Vallée Poussin 判据（存在凸函数 $\\varphi$，$\\varphi(t)/t \\to \\infty$，使 $\\sup_n \\mathbb E\\varphi(|X_n|) < \\infty$ ⟹ UI）可把「找 $M$-曲线」换成「找一个增长函数」，例如 $\\sup_n \\mathbb E|X_n|^2 < \\infty$（取 $\\varphi = t^2$）即 UI——$L^2$ 有界是 UI 的常用充分条件（CLT 一致可积性的标准来源，C7.3）。",
+      "links": [
+        "A1.3",
+        "A1.5",
+        "C7.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:ui.probe1",
+      "type": "probe",
+      "subject": "ui",
+      "title": "检验题：亲手判三族随机变量的 UI",
+      "keywords": [
+        "尖峰族：sup_n E[|f_n|·1_{|f_n|>M}] 等于多少？UI 判定？",
+        "一致有界族 U(0,1)：M=1 时尾部贡献？",
+        "1/x 切片族：M=10 的 sup_n 尾部贡献（ln 1.1）？",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 135,
+        "line_end": 139
+      },
+      "fill_hint": "三道小题分别对应 ui.bump-fails / ui.sufficient① / ui.dct-bridge 三个词条的复算；答案给待核验表达式；目标是让学习者会算「尾部贡献」这一个量。",
+      "content": "**第 1 题（尖峰族）**：$f_n = n\\cdot\\mathbf{1}_{[0,1/n]}$。对 $M = 5$，算 $\\sup_n \\mathbb E[|f_n|\\mathbf{1}_{|f_n|>M}]$；对一般的 $M$ 呢？该族 UI 吗？（答案：$n > 5$ 的项贡献 $n \\cdot (1/n) = 1$，故 sup 为 1【已核验:1|1】；对一切 $M$ 同理 sup 恒为 1【已核验:1|1】，不趋于 0，**不是** UI。）\n\n**第 2 题（一致有界族）**：$X_n \\sim \\mathrm{Uniform}(0,1)$ 独立同分布。对 $M = 1$，算 $\\sup_n \\mathbb E[|X_n|\\mathbf{1}_{|X_n|>M}]$；该族 UI 吗？（答案：$|X_n| \\le 1$ 恒成立，$\\mathbf{1}_{|X_n|>1} \\equiv 0$，贡献为 0【已核验:0|0】；对 $M \\ge 1$ 全为 0，UI 成立。）\n\n**第 3 题（1/x 切片族）**：$f_n = (1/x)\\mathbf{1}_{(1/(n+1),\\,1/n)}$。对 $M = 10$，算 $\\sup_n \\mathbb E[f_n \\mathbf{1}_{f_n>M}]$（提示：$f_n > M \\iff x < 1/M$，仅 $n \\ge M$ 的片与之相交，最大贡献在 $n = M$ 附近，为 $\\ln(1 + 1/M)$）。（答案：$\\ln(1.1) \\approx 0.0953$【已核验:0.0953101798043|log(1.1)】；随 $M \\to \\infty$ 趋 0，该族**是** UI——尽管它没有可积盖子。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "「依概率 → L^1」的三个入口总表（Vitali / DCT / BCT）",
+      "keywords": [
+        "三个入口条件强度递减排列：BCT ⊂ DCT ⊂ Vitali 的覆盖面",
+        "BCT：一致有界 + 有限测度（P(Ω)=1 白送）",
+        "DCT：可积盖子（点态形状约束）",
+        "Vitali：UI（纯质量纪律，最弱门票）",
+        "三者的共同隐藏依赖：Fatou / 积分绝对连续性（A1.4）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 135,
+        "line_end": 146
+      },
+      "fill_hint": "单元级对照表；BCT/DCT 行引用 A1.3 的既有词条（dct.bct / dct.vitali）；覆盖面用 1/x 切片例标定三档边界；供前端直接渲染。",
+      "content": "把「依概率 / a.e. 收敛升到 $L^1$」的三个定理摆成一张门票等级表：\n\n| 入口 | 条件 | 强度 | 覆盖不到了谁 | 本库位置 |\n|---|---|---|---|---|\n| BCT（有界收敛） | $|X_n| \\le C$ 一致有界，$\\mathbb P(\\Omega) = 1$ | 最强门票 | $1/x$ 切片族（每片峰值 $n+1$ 无界）、尖峰族（峰值 $n$ 无界） | A1.3:dct.bct |\n| DCT（控制收敛） | $|X_n| \\le g \\in L^1$（统一点态盖子） | 中档门票 | $1/x$ 切片族（$\\sup_n f_n = 1/x$ 不可积，无盖子） | A1.3 |\n| Vitali（UI 收敛） | $\\{X_n\\}$ 均匀可积（纯尾部质量纪律） | 最弱门票 | 尖峰族（$\\sup_n \\mathbb E[|f_n|\\mathbf{1}_{|f_n|>M}] \\equiv 1$【已核验:1|1】，纪律涣散） | 本单元 |\n\n**读表**：往下走条件越来越弱、覆盖面越来越广——$1/x$ 切片族把 BCT 与 DCT 挡在门外却被 Vitali 接纳（ui.dct-bridge）；尖峰族连 Vitali 也拒收（ui.bump-fails），它就是分水岭的界碑。**三者的共同点**：都在「封质量逃逸」——BCT 用高度上限、DCT 用可积形状、Vitali 用尾部账单（C6.2:museum.mechanism 的封路表）。\n\n**选择判据（实操）**：一眼看去有界 ⟹ BCT；有天然的控制函数（如 $e^{-x}$ 型衰减）⟹ DCT；只有「$L^2$ 一致有界」或「分布已知且尾部衰减」这类矩信息 ⟹ Vitali。反过来，若手头序列连 UI 都验不出（尾部贡献曲线不降），别硬闯 $L^1$——它真的过不去（尖峰就是判例）。",
+      "links": [
+        "A1.3",
+        "C6.2",
+        "C6.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "SLLN 的期望版证明、条件期望收敛全靠 Vitali",
+        "MC 估计量的期望与方差交换（C9.1）需要 L^2 级 UI",
+        "鞅收敛定理（C4）与 UI 的标准搭档",
+        "CLT 一致可积性：sup E|X_n|^2 < ∞ 即 UI（C7.3）",
+        "A1.3 三大收敛定理在概率空间的收口（切片原话）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 140,
+        "line_end": 146
+      },
+      "fill_hint": "每条一句「谁在用 UI」；C4/C9.1/C7.3 均为清单内代号；「收口」用切片原话；细节归目标单元。",
+      "content": "UI 的下游（一条一句）：\n\n- **切片定位（原话收口）**：这正是 A1 中「三大收敛定理」那条线索的收口——A1.3 的 DCT 盖子经 ui.dct-bridge 抽象为 UI，测度论的收敛机器在概率论里装上最后一节车厢。\n- **条件期望与鞅（C4）**：鞅收敛定理（Doob）的标准假设就是 UI——鞅差大值部分的账单受控，才能把「依概率/弱收敛」升到 $L^1$ 并交换期望。\n- **蒙特卡洛（C9.1、H4）**：估计量族的 $\\mathbb E$ 与 $\\mathrm{Var}$ 交换（方差公式 $\\mathrm{Var}[\\hat I_N] = \\sigma^2/N$ 的合法性）需要 $L^2$ 级控制——$\\sup \\mathbb E|X_n|^2 < \\infty$ 即 UI（ui.sufficient 的 $\\varphi = t^2$ 判据）。\n- **CLT（C7.3）**：特征函数 Taylor 展开到二阶需要 $\\mathbb E X^2 < \\infty$，三角阵列版本的一致形式正是 UI 型条件。\n- **C6.1 层级图**：UI 是「依概率 ⟹ $L^1$」反向箭头的官方门票——本单元整节都在给这张票定价、验票、找假票（尖峰）。",
+      "links": [
+        "A1.3",
+        "C4",
+        "C6.1",
+        "C7.3",
+        "C9.1",
+        "H4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,402 @@
+{
+  "schema": "entry-card/v2",
+  "code": "B1.2",
+  "chapter": "B1",
+  "title": "李群与李代数",
+  "src": {
+    "file": "notebook/B_algebra.tex",
+    "line_start": 29,
+    "line_end": 56,
+    "anchor": "notebook/B_algebra.tex:29"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "B1.2:exp-map.quantifiers",
+      "type": "comparison",
+      "subject": "exp-map",
+      "title": "指数映射限定词逐条拆解：exp 不是你以为的那种映射",
+      "keywords": [
+        "方向：exp: 𝖌 → G（切空间到群），反向 log 只在单位元附近良定义",
+        "非单射：so(3) 中 exp(πe₃) = exp(−πe₃) = diag(−1,−1,1)",
+        "非加法同态：[A,B]≠0 时 exp(A)exp(B) ≠ exp(A+B)",
+        "exp(0) = e；t ↦ exp(tA) 是单参数子群（无穷小生成元）",
+        "（拓展）‖ω‖<π 内 exp 一一对应——旋转的 log 主值",
+        "数量级锚点：sin(1)≈0.8415、1−cos(π)=2"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 35,
+        "line_end": 36
+      },
+      "fill_hint": "切片第 35-36 行只给 exp: 𝖌→G 一行；各限定词行为为 so(3)/SU(2) 标准内容补全，『拓展』行需阶段 2 复核。",
+      "content": "切片给出指数映射 $\\exp:\\mathfrak{g}\\to G$，一行字后面藏着四个容易想当然的性质——每一个都不成立，各配一个具体反例：\n\n| 限定词 | 想当然的版本 | 实际情况 + 具体反例 | 能否放宽 |\n|---|---|---|---|\n| ① 方向：从 $\\mathfrak{g}$（单位元处的切空间）到 $G$ | 「群和代数元素可以互相随便换」 | 方向单向：切向量 $\\mapsto$ 群元素。反向的 $\\log$ 只在单位元附近良定义（见④） | 方向不可换；$\\exp$ 在 $0$ 附近是局部微分同胚（逆函数定理），这是 log 的合法域 |\n| ② 单射 | 「不同切向量给不同群元素」 | **非单射**：$\\mathfrak{so}(3)$ 中 $\\omega=\\pi e_3$ 与 $\\omega'=-\\pi e_3$ 映到同一旋转 $\\mathrm{diag}(-1,-1,1)$（完整计算见 exp-not-injective 词条）；一般地 $\\exp(\\theta\\hat\\omega)$ 关于 $\\theta$ 以 $2\\pi$ 为周期 | 不能。但限制 $\\|\\omega\\|<\\pi$ 后单射（拓展行，见④） |\n| ③ 加法同态 | 「$\\exp(A)\\exp(B)=\\exp(A+B)$」 | **不成立**（除非 $[A,B]=0$）：取 $A=[e_1]_\\times$、$B=[e_2]_\\times$，$\\exp(A)\\exp(B)$ 的 $(3,1)$ 元 $=-\\sin(1)\\cos(1)\\approx-0.4546$【已核验:-0.454648713413|-sin(1)*cos(1)】而 $\\exp(A+B)$ 的 $(3,1)$ 元 $=-\\sin(\\sqrt2)/\\sqrt2\\approx-0.6985$【已核验:-0.698455998637|-sin(sqrt(2))/sqrt(2)】，相差 $0.2438$【已核验:0.243807285224|abs(-sin(1)*cos(1)+sin(sqrt(2))/sqrt(2))】（完整计算见 exp-not-homomorphism 词条） | 交换子为零时可取等（同轴旋转、$\\mathfrak{so}(2)$）；一般情形的修正是 BCH 公式（见 bch 词条） |\n| ④ $\\exp(0)=e$，且 $t\\mapsto\\exp(tA)$ 是群里的「直线」 | —— | 成立：$\\exp((s+t)A)=\\exp(sA)\\exp(tA)$（单参数子群），这正是李代数元素 = 无穷小变换的含义（de2.1 的无穷小生成元） | —— |\n| ⑤（拓展）局部可逆 | —— | $\\|\\omega\\|<\\pi$ 时 $\\exp$ 在 $\\mathfrak{so}(3)$ 的开球上是一一对应，$\\log$ 有唯一主值——所以「旋转 → 角轴」在半圈内才无歧义 | 超出切片原文，阶段 2 复核 |\n\n总结一句：$\\exp$ 是「无穷小变换积分成有限变换」的机器——它忠实记录单参数直线（④），但在多参数世界里既不保加法（③）也不一一对应（②）；李群的非交换性全部浓缩在李括号里，由 BCH 公式接管（见 bch 词条）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.1",
+        "de2.1",
+        "de3.6"
+      ]
+    },
+    {
+      "id": "B1.2:exp-not-homomorphism.counterexample",
+      "type": "counterexample",
+      "subject": "exp-not-homomorphism",
+      "title": "反例：exp(A)exp(B) ≠ exp(A+B) 的完整计算",
+      "keywords": [
+        "取 A=[e₁]×、B=[e₂]×（so(3) 中最简单的一对）",
+        "exp(A)exp(B) 的 (3,1) 元 = −sin(1)cos(1) ≈ −0.4546",
+        "exp(A+B) 的 (3,1) 元 = −sin(√2)/√2 ≈ −0.6985",
+        "相差 0.2438——非交换性的具体价格",
+        "失效根源：A 与 B 不交换（[A,B]=[e₃]× ≠ 0）",
+        "修补：BCH 公式加 ½[A,B] 修正项（见 bch 词条）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 35,
+        "line_end": 51
+      },
+      "fill_hint": "切片给出 Rodrigues 公式但未做此对比；本条用它逐元素算出失效数值，表达式可复核。",
+      "content": "**目标**：检验「$\\exp(A)\\exp(B)=\\exp(A+B)$」在 $\\mathfrak{so}(3)$ 里是否成立。取最简单的两个反对称矩阵（切片的参数化 $[\\omega]_\\times$）：\n\n$$A=[e_1]_\\times=\\begin{pmatrix}0&0&0\\\\0&0&-1\\\\0&1&0\\end{pmatrix},\\qquad B=[e_2]_\\times=\\begin{pmatrix}0&0&1\\\\0&0&0\\\\-1&0&0\\end{pmatrix}.$$\n\n**第一步：$\\exp(A)$ 与 $\\exp(B)$（Rodrigues，切片公式）**。$\\theta=\\|e_1\\|=1$，$\\sin\\theta\\approx0.8415$【已核验:0.841470984808|sin(1)】、$1-\\cos\\theta\\approx0.4597$【已核验:0.459697694132|1-cos(1)】。绕 $x$ 轴转 1 弧度：\n\n$$\\exp(A)=\\begin{pmatrix}1&0&0\\\\0&\\cos 1&-\\sin 1\\\\0&\\sin 1&\\cos 1\\end{pmatrix},\\qquad \\exp(B)=\\begin{pmatrix}\\cos 1&0&\\sin 1\\\\0&1&0\\\\-\\sin 1&0&\\cos 1\\end{pmatrix}.$$\n\n**第二步：乘积 $\\exp(A)\\exp(B)$ 的第三行**。第三行 $=(0,\\sin 1,\\cos 1)$，与 $\\exp(B)$ 的三个列作点积：$(3,1)$ 元 $=0\\cdot\\cos 1+\\sin 1\\cdot0+\\cos 1\\cdot(-\\sin 1)=-\\sin(1)\\cos(1)\\approx-0.4546$【已核验:-0.454648713413|-sin(1)*cos(1)】。\n\n**第三步：$\\exp(A+B)$ 的同一元素**。$A+B=[e_1+e_2]_\\times$，$\\omega=(1,1,0)$，$\\theta=\\|\\omega\\|=\\sqrt2\\approx1.4142$【已核验:1.41421356237|sqrt(2)】。Rodrigues 用单位轴 $\\hat\\omega=\\omega/\\sqrt2$：$(3,1)$ 元 $=\\sin(\\sqrt2)\\cdot[\\hat\\omega]_{\\times,31}=\\sin(\\sqrt2)\\cdot(-1/\\sqrt2)=-\\sin(\\sqrt2)/\\sqrt2\\approx-0.6985$【已核验:-0.698455998637|-sin(sqrt(2))/sqrt(2)】。\n\n**失效结论**：$-0.4546\\ne-0.6985$，两个矩阵在 $(3,1)$ 元上相差 $0.2438$【已核验:0.243807285224|abs(-sin(1)*cos(1)+sin(sqrt(2))/sqrt(2))】。所以\n\n$$\\exp(A)\\exp(B)\\ne\\exp(A+B).$$\n\n**根源**：$[A,B]=AB-BA=[e_1\\times e_2]_\\times=[e_3]_\\times\\ne0$——两个无穷小旋转「先后」复合时差出一个交换子。$\\mathfrak{so}(2)$（一维）或同轴情形 $[A,B]=0$ 时取等。\n\n**修补条件**：BCH（Baker–Campbell–Hausdorff）公式给出一阶修正 $\\exp(A)\\exp(B)\\approx\\exp(A+B+\\tfrac12[A,B])$，本例中修正后偏差从 $0.2438$ 降到 $0.0038$【已核验:0.00384510024935|abs(-sin(1)*cos(1)-(-sin(1.5)/1.5+(1-cos(1.5))*0.5/2.25))】（见 bch 词条）。矩阵指数的级数定义与 ODE 视角见 de3.6。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "de3.6",
+        "P6.2"
+      ]
+    },
+    {
+      "id": "B1.2:exp-not-injective.counterexample",
+      "type": "counterexample",
+      "subject": "exp-not-injective",
+      "title": "反例：exp(πe₃) = exp(−πe₃)——两个切向量，同一个旋转",
+      "keywords": [
+        "ω = πe₃ 与 ω' = −πe₃ 都映到 diag(−1,−1,1)",
+        "Rodrigues：sin(π)=0 杀掉一次项，(1−cos(π))=2 的二次项对符号不敏感",
+        "一般地 exp(θω̂) 以 2π 为周期",
+        "后果：角轴表示在 θ=π 处二选一；旋转空间 SO(3) 不是向量空间",
+        "与 SU(2) 2:1 覆盖同根同源（见 su2-double-cover）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 47,
+        "line_end": 51
+      },
+      "fill_hint": "用切片 Rodrigues 公式逐项算；周期性与 SO(3) 拓扑评述为标准内容。",
+      "content": "**构造**：在 $\\mathfrak{so}(3)$ 里取两个不同的切向量 $\\omega=\\pi e_3$ 与 $\\omega'=-\\pi e_3$（互为相反向量）。它们理应「往相反方向转」。\n\n**代入 Rodrigues（切片公式）**：$\\theta=\\|\\omega\\|=\\pi$，故 $\\sin\\theta=\\sin\\pi=0$【已核验:0|sin(pi)】、$1-\\cos\\theta=1-\\cos\\pi=2$【已核验:2|1-cos(pi)】。单位轴 $\\hat\\omega=e_3$，\n\n$$[e_3]_\\times=\\begin{pmatrix}0&-1&0\\\\1&0&0\\\\0&0&0\\end{pmatrix},\\qquad [e_3]_\\times^2=\\begin{pmatrix}-1&0&0\\\\0&-1&0\\\\0&0&0\\end{pmatrix}.$$\n\n$$R=\\exp([\\omega]_\\times)=I+\\frac{\\sin\\pi}{\\pi}[\\omega]_\\times+\\frac{1-\\cos\\pi}{\\pi^2}[\\omega]_\\times^2=I+0+\\frac{2}{\\pi^2}\\cdot\\pi^2\\,[e_3]_\\times^2=\\begin{pmatrix}-1&0&0\\\\0&-1&0\\\\0&0&1\\end{pmatrix}.$$\n\n关键一步：一次项系数 $\\sin\\pi/\\pi=0$ 恰好**杀掉了唯一对 $\\omega$ 的符号敏感的项**；二次项 $[\\omega]_\\times^2$ 对 $\\omega\\mapsto-\\omega$ 不变。于是同样地\n\n$$\\exp([-\\pi e_3]_\\times)=\\mathrm{diag}(-1,-1,1)=\\exp([\\pi e_3]_\\times).$$\n\n**失效结论**：$\\omega\\ne\\omega'$ 但 $\\exp(\\omega)=\\exp(\\omega')$——$\\exp$ 非单射。直观：绕 $z$ 轴顺时针转 $\\pi$ 与逆时针转 $\\pi$，终态相同。\n\n**一般化**：$\\exp(\\theta\\hat\\omega)$ 关于 $\\theta$ 以 $2\\pi$ 为周期（切片 SU(2) 行所说「旋转 $2\\pi$ 后变号、$4\\pi$ 才回到自身」的矩阵版前奏）。\n\n**实践后果**：①角轴参数化在 $\\theta=\\pi$ 处有二义性（$\\pi\\hat\\omega$ 与 $-\\pi\\hat\\omega$ 是同一点）；②**旋转不能当向量做线性组合**——$\\exp(A)+\\exp(B)$、$\\tfrac12(R_1+R_2)$ 都不是旋转，旋转插值必须走测地线/Slerp（lie3.14）；③想在旋转之间「取平均」必须先取 $\\log$ 回到 $\\mathfrak{so}(3)$（且要选对分支），再 $\\exp$ 回去——这个「log-平均-exp」套路是动画与机器人学的标准操作。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "lie3.14",
+        "lie3.12"
+      ]
+    },
+    {
+      "id": "B1.2:lie-group.statement",
+      "type": "statement",
+      "subject": "lie-group",
+      "title": "李群、李代数、指数映射的精确陈述",
+      "keywords": [
+        "李群 = 群 + 光滑流形 + 群运算（乘法/求逆）光滑",
+        "李代数 𝖌 = 单位元处的切空间 + 李括号 [·,·]",
+        "括号公理：双线性、反对称、Jacobi 恒等式",
+        "so(3) = {A ∈ ℝ³ˣ³ : Aᵀ = −A}，括号 = 叉积",
+        "[ω]×v = ω×v（矩阵作用 = 叉积，数值锚点）",
+        "维度核算：反对称 3×3 只有 3 个自由数 ω₁ω₂ω₃"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 31,
+        "line_end": 45
+      },
+      "fill_hint": "切片 31-45 行的逐字转写；括号公理与『括号=叉积』为标准补充（切片 38-40 给了 so(3) 与参数化）。",
+      "content": "切片的三个定义精确化：\n\n**李群**：$(G,\\cdot)$ 既是群又是光滑流形（B2.2 的对象），且乘法 $(g,h)\\mapsto gh$ 与求逆 $g\\mapsto g^{-1}$ 都是光滑映射。B1.1 表里的 $SO(3)$、$SE(3)$、$SU(2)$ 等全是李群。\n\n**李代数** $\\mathfrak{g}$：李群在**单位元处**的切空间（B2.2 的 $T_eG$），配备李括号 $[\\cdot,\\cdot]$——双线性、反对称（$[A,B]=-[B,A]$）、满足 Jacobi 恒等式的运算。矩阵李群里括号就是交换子 $[A,B]=AB-BA$。\n\n**指数映射**：$\\exp:\\mathfrak{g}\\to G$，矩阵情形为级数 $\\exp(A)=\\sum_{k=0}^\\infty A^k/k!$（与 de3.6 的矩阵指数同一个东西）。\n\n**$\\mathfrak{so}(3)$ 的具体形式（切片原文）**：\n\n$$\\mathfrak{so}(3)=\\{A\\in\\mathbb{R}^{3\\times3}:A^T=-A\\},\\qquad [\\omega]_\\times=\\begin{pmatrix}0&-\\omega_3&\\omega_2\\\\ \\omega_3&0&-\\omega_1\\\\ -\\omega_2&\\omega_1&0\\end{pmatrix}.$$\n\n维度核算：$3\\times3$ 反对称矩阵由上三角 3 个数 $\\omega_1,\\omega_2,\\omega_3$ 完全决定，故 $\\dim\\mathfrak{so}(3)=3$——与 $\\dim SO(3)=3$ 相等（B1.1 表），这不是巧合：**李代数维数 = 李群维数**。\n\n**两个可手验的性质**（矩阵作用 = 叉积）：\n\n1. $[\\omega]_\\times v=\\omega\\times v$。验证 $\\omega=e_1,v=e_2$：左边 $[e_1]_\\times e_2=(0,0,1)$【已核验:0|0*0+0*1+0*0】逐项——$[e_1]_\\times$ 第三行为 $(-\\omega_2,\\omega_1,0)=(0,1,0)$，作用在 $e_2=(0,1,0)$ 上给第三分量 $=0\\cdot0+1\\cdot1+0\\cdot0=1$【已核验:1|0*0+1*1+0*0】；右边 $e_1\\times e_2=e_3=(0,0,1)$。一致。\n2. $[[\\omega_1]_\\times,[\\omega_2]_\\times]=[\\omega_1\\times\\omega_2]_\\times$（括号 = 叉积）。数值锚点：$\\omega_1=(1,2,3),\\omega_2=(4,5,6)$，$\\omega_1\\times\\omega_2=(-3,6,-3)$【已核验:-3|2*6-3*5】，括号矩阵的第一行 $=(0,3,6)$【已核验:-3|2*6-3*5】恰为 $[-3,6,-3]_\\times$ 的第一行 $(0,3,6)$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B2.2",
+        "B1.1",
+        "de3.6"
+      ]
+    },
+    {
+      "id": "B1.2:lie-algebra.intuition",
+      "type": "intuition",
+      "subject": "lie-algebra",
+      "title": "直觉：李代数 = 群的「无穷小版本」，exp = 积分",
+      "keywords": [
+        "假设给了什么：群元素连续可变（光滑结构）",
+        "结论为什么成立：在单位元处放大 1000 倍，群的弯曲被拉直成切空间",
+        "exp(tA) = 沿方向 A 走 t 步——ODE 视角 d/dt exp(tA) = A·exp(tA)",
+        "非交换群的无穷小残余 = 李括号（一阶消不掉的项）",
+        "类比：速度场之于流、导数之于函数"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 31,
+        "line_end": 36
+      },
+      "fill_hint": "直觉词条，切片无对应正文；ODE 视角与 de2.1/de3.6 对齐。",
+      "content": "**假设给了什么**：李群 = 「可以连续拧的对称群」——B1.1 的群公理只许离散地复合动作，光滑结构额外允许你「微微转一点」（$\\theta\\to\\theta+d\\theta$）。\n\n**结论为什么因此成立**：在单位元处把群无限放大——弯曲的群流形在显微镜下被拉平，剩下的就是切空间 $\\mathfrak{g}$。这就是「李代数 = 单位元处的切空间」的直觉：**它是群在「什么都不做」附近的线性化**。类比：微分 $f'(x)$ 是 $f$ 在一点的一阶近似——但群是非交换的，一阶近似会漏掉信息，漏掉的部分正是李括号：\n\n$$[A,B]\\ \\sim\\ \\frac{(\\text{先}A\\text{后}B)-(\\text{先}B\\text{后}A)}{\\text{二阶}}.$$\n\n**指数映射 = 积分**：切向量 $A$ 告诉你「此刻往哪转、转多快」，$\\exp(A)$ 把这个瞬时指令积分为一秒钟后的实际变换：$t\\mapsto\\exp(tA)$ 满足 ODE $\\frac{d}{dt}\\exp(tA)=A\\exp(tA)$、初值 $\\exp(0)=e$——「沿直线走单位时间」。这解释了 exp-not-homomorphism 词条的失效：**沿 $A$ 走 1 秒再沿 $B$ 走 1 秒 ≠ 沿 $A+B$ 走 1 秒**，因为走的过程中「方向」被群自己扭曲了（同轴时才不扭）。\n\n**一句话**：李代数是群的「速度空间」，括号是「速度场的不可交换残余」，$\\exp$ 是把速度积分成位移的机器。$\\mathfrak{so}(3)$ 的元素 $[\\omega]_\\times$ 读作「角速度为 $\\omega$ 的瞬时旋转」——Rodrigues 公式则是把这个角速度积一圈的闭式解。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "de2.1",
+        "de3.6"
+      ]
+    },
+    {
+      "id": "B1.2:rodrigues.proof",
+      "type": "proof",
+      "subject": "rodrigues",
+      "title": "Rodrigues 公式：陈述与推导骨架（把指数级数折叠成三项）",
+      "keywords": [
+        "陈述：R = I + (sinθ/θ)[ω]× + ((1−cosθ)/θ²)[ω]×²，θ=‖ω‖",
+        "关键引理：[ω̂]×³ = −[ω̂]×（单位轴）——级数以此折叠",
+        "sin 与 cos 的级数从奇偶项分家",
+        "θ=0 极限：sinθ/θ→1、(1−cosθ)/θ²→1/2，公式退化正确",
+        "数值检验：exp(π/2·e₃) = [[0,−1,0],[1,0,0],[0,0,1]]，det=1"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 47,
+        "line_end": 51
+      },
+      "fill_hint": "切片 47-51 行给出公式本体；折叠推导与极限检查为标准补充，数值可用表达式复核。",
+      "content": "**陈述（切片原文）**：对 $\\omega\\in\\mathbb{R}^3$、$\\theta=\\|\\omega\\|$，\n\n$$R=\\exp([\\omega]_\\times)=I+\\frac{\\sin\\theta}{\\theta}[\\omega]_\\times+\\frac{1-\\cos\\theta}{\\theta^2}[\\omega]_\\times^2.$$\n\n**推导骨架**：写 $\\omega=\\theta\\hat\\omega$（$\\|\\hat\\omega\\|=1$），则 $\\exp([\\omega]_\\times)=\\exp(\\theta[\\hat\\omega]_\\times)$。核心引理：\n\n$$[\\hat\\omega]_\\times^3=-[\\hat\\omega]_\\times\\quad(\\|\\hat\\omega\\|=1).$$\n\n证明引理：$[\\hat\\omega]_\\times^2=\\hat\\omega\\hat\\omega^T-I$（直接展开验证），两边再乘一次 $[\\hat\\omega]_\\times$，用 $\\hat\\omega\\times\\hat\\omega=0$ 即得。于是指数级数按「$[\\hat\\omega]_\\times$ 的幂 mod 3」分家：\n\n$$\\exp(\\theta[\\hat\\omega]_\\times)=I+\\Big(\\theta-\\tfrac{\\theta^3}{3!}+\\tfrac{\\theta^5}{5!}-\\cdots\\Big)[\\hat\\omega]_\\times+\\Big(\\tfrac{\\theta^2}{2!}-\\tfrac{\\theta^4}{4!}+\\cdots\\Big)[\\hat\\omega]_\\times^2=I+\\sin\\theta\\,[\\hat\\omega]_\\times+(1-\\cos\\theta)[\\hat\\omega]_\\times^2.$$\n\n两个括号分别认出 $\\sin$ 与 $\\cos$ 的 Maclaurin 级数（P7.1）。代回 $\\theta[\\hat\\omega]=[\\omega]$ 即得切片形式（$\\sin\\theta\\,[\\hat\\omega]_\\times=\\frac{\\sin\\theta}{\\theta}[\\omega]_\\times$，另一项同理）。\n\n**边界检查（$\\theta\\to0$）**：$\\frac{\\sin\\theta}{\\theta}\\to1$、$\\frac{1-\\cos\\theta}{\\theta^2}\\to\\frac12$【已核验:0.499999958326|(1-cos(0.001))/0.001**2】，故 $R\\to I+[\\omega]_\\times+\\frac12[\\omega]_\\times^2$——与 $\\exp$ 级数截断到二阶一致，公式在 $\\theta=0$ 处极限良定义（代码实现时用阈值切换，避免 $0/0$）。\n\n**数值检验**：取 $\\omega=\\frac{\\pi}{2}e_3$（绕 $z$ 转 $90^\\circ$）：$\\sin\\frac\\pi2=1$【已核验:1|sin(pi/2)】、$1-\\cos\\frac\\pi2=1$【已核验:1|1-cos(pi/2)】，代入得\n\n$$R=I+[e_3]_\\times+[e_3]_\\times^2=\\begin{pmatrix}0&-1&0\\\\1&0&0\\\\0&0&1\\end{pmatrix},\\qquad \\det R=1【已核验:1|0*0-(-1)*1】,$$\n\n正是标准的 $90^\\circ$ 旋转矩阵（B1.1 探针题同一矩阵的 $3\\times3$ 版）。\n\n**依赖链**：矩阵指数级数（de3.6）→ 单位轴幂零循环引理 → $\\sin/\\cos$ 级数（P7.1）→ Rodrigues。**易错点**：①$\\theta$ 忘开根（它是 $\\omega$ 的模长不是分量）；②$\\theta=0$ 直接除零；③把 $\\omega$ 当已经单位化的轴（公式里的 $[\\omega]_\\times$ 用的是**未单位化**的 $\\omega$，系数里的 $\\theta$ 补偿这一点——切片公式两个系数的分母正是为此）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "de3.6",
+        "P7.1",
+        "lie1.11"
+      ]
+    },
+    {
+      "id": "B1.2:su2-double-cover.counterexample",
+      "type": "counterexample",
+      "subject": "su2-double-cover",
+      "title": "反例/关键现象：q 与 −q 给同一个旋转（SU(2)→SO(3) 的 2:1）",
+      "keywords": [
+        "切片原文：旋转 2π 后四元数变号，4π 才回到自身（自旋 1/2 的根源）",
+        "q(θ) = (cos(θ/2), sin(θ/2)·n)——半角是变号的机关",
+        "θ=π：q=(0,n)；θ=3π：q=(0,−n)——同一旋转（绕 n 转 π）",
+        "θ=2π：q=(−1,0)（变号）；θ=4π：q=(1,0)（回家）",
+        "cos(π)=−1、cos(2π)=1 的数值锚点",
+        "后果：四元数球 S³ 上对径点粘合 = SO(3)"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 53,
+        "line_end": 53
+      },
+      "fill_hint": "切片 53 行给出 2:1 覆盖与 2π/4π 现象；本条用半角公式算出具体四元数值，需复核符号约定。",
+      "content": "切片断言：「$SU(2)\\to SO(3)$ 是 2:1 的覆盖映射（旋转 $2\\pi$ 后四元数变号，需要 $4\\pi$ 才回到自身——自旋 $1/2$ 粒子的数学根源）」。用四元数的半角公式把它算实：绕单位轴 $n$ 转 $\\theta$ 的旋转对应四元数\n\n$$q(\\theta)=\\Big(\\cos\\tfrac{\\theta}{2},\\ \\sin\\tfrac{\\theta}{2}\\,n\\Big)\\in SU(2).$$\n\n**机关在半角**：$\\theta$ 走一整圈 $2\\pi$，四元数只走半圈——$\\theta/2$ 才走 $\\pi$。\n\n**具体数值**：\n\n- $\\theta=\\pi$（转半圈）：$q=(\\cos\\frac\\pi2,\\sin\\frac\\pi2\\,n)=(0,n)$；\n- $\\theta=3\\pi$（转一圈半）：$q'=(\\cos\\frac{3\\pi}2,\\sin\\frac{3\\pi}2\\,n)=(0,-n)$——其中 $\\cos\\frac{3\\pi}2=0$【已核验:0|abs(cos(3*pi/2))】、$\\sin\\frac{3\\pi}2=-1$【已核验:-1|sin(3*pi/2)】。转 $3\\pi$ 与转 $\\pi$ 是**同一个旋转**，但 $q'=-q$：两个不同的四元数（$SU(2)$ 元素）映到 $SO(3)$ 的同一个点——2:1 的具体化；\n- $\\theta=2\\pi$（转一整圈，旋转回到 $I$）：$q=(\\cos\\pi,\\sin\\pi\\,n)=(-1,0)$【已核验:-1|cos(pi)】——旋转回家，四元数**变号**；\n- $\\theta=4\\pi$（转两整圈）：$q=(\\cos 2\\pi,\\sin 2\\pi\\,n)=(1,0)$【已核验:1|cos(2*pi)】——四元数也回家。\n\n**失效的是「想当然」**：「转一圈 = 回到原状」对旋转矩阵成立、对四元数不成立——$q$ 和 $-q$ 永远代表同一旋转（作用公式 $v\\mapsto qvq^{-1}$ 对 $q\\mapsto-q$ 不敏感），但 $q\\ne-q$。\n\n**修补/利用**：\n\n1. 表示论上：$SU(2)$ 是单连通的，$SO(3)$ 是把四元数球 $S^3$ 的**对径点粘合**的商——这就是「2:1 覆盖」的拓扑内容（Q7 商空间、lie1.7）；\n2. 工程上：四元数插值（Slerp）取**短弧**时要在 $q$ 与 $-q$ 之间选符号一致的那个，否则动画会绕远路（lie3.14）；\n3. 物理上：电子等自旋 $1/2$ 粒子的波函数在 $2\\pi$ 旋转下变号（$-1$）、$4\\pi$ 才复原——「转两圈才回家」不是比喻，是 $SU(2)$ 覆盖的直接的物理后果（F4、lie3.2）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "F4",
+        "lie1.7",
+        "lie3.13",
+        "lie3.2",
+        "Q7"
+      ]
+    },
+    {
+      "id": "B1.2:bch.extension",
+      "type": "extension",
+      "subject": "bch",
+      "title": "拓展：BCH 公式——非交换性的修正项 ½[A,B]",
+      "keywords": [
+        "exp(A)exp(B) = exp(A+B+½[A,B]+…)（Baker–Campbell–Hausdorff）",
+        "so(3) 版本：修正项 = ½ ω₁×ω₂（叉积）",
+        "数值：本单元反例的偏差 0.2438 → 0.0038（修正后）",
+        "物理落点：非对易量子力学、控制论中的误差累积",
+        "切片未含 BCH——本条为拓展，需人工复核"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 35,
+        "line_end": 45
+      },
+      "fill_hint": "拓展词条（切片未出现 BCH）；数值与 exp-not-homomorphism 词条同源，可复核。",
+      "content": "**为什么需要它**：exp-not-homomorphism 词条算出 $\\exp(A)\\exp(B)\\ne\\exp(A+B)$，差出一个交换子。BCH 公式给出完整的修正序列：\n\n$$\\exp(A)\\exp(B)=\\exp\\Big(A+B+\\tfrac12[A,B]+\\tfrac1{12}[A,[A,B]]-\\tfrac1{12}[B,[A,B]]+\\cdots\\Big).$$\n\n**一阶截断的数值检验**（沿用反例词条的 $A=[e_1]_\\times$、$B=[e_2]_\\times$）：修正项 $\\tfrac12[A,B]=\\tfrac12[e_3]_\\times$，即把指数里的 $\\omega$ 从 $(1,1,0)$ 改为 $(1,1,0)+(0,0,\\tfrac12)=(1,1,\\tfrac12)$，模长 $\\sqrt{1+1+0.25}=1.5$【已核验:1.5|sqrt(1+1+0.25)】。重算 $(3,1)$ 元：\n\n- 无修正（$\\omega=(1,1,0)$）：$-0.6985$，与真值 $-0.4546$ 差 $0.2438$【已核验:0.243807285224|abs(-sin(1)*cos(1)+sin(sqrt(2))/sqrt(2))】；\n- 一阶修正（$\\omega=(1,1,\\tfrac12)$）：$-\\sin(1.5)/1.5+(1-\\cos(1.5))\\cdot0.5/2.25\\approx-0.4585$【已核验:-0.458493813662|-sin(1.5)/1.5+(1-cos(1.5))*0.5/2.25】，与真值只差 $0.0038$【已核验:0.00384510024935|abs(-sin(1)*cos(1)-(-sin(1.5)/1.5+(1-cos(1.5))*0.5/2.25))】。\n\n**$\\mathfrak{so}(3)$ 版本**：$\\tfrac12[A,B]=\\tfrac12[\\omega_1\\times\\omega_2]_\\times$——修正项就是**角速度的叉积的一半**。直觉：先转 $A$ 再转 $B$，等效于转「$A+B$」外加一个「二级进动」修正，修正方向垂直于两者。\n\n**用在哪里**：①非对易量子力学（$[x,p]=i\\hbar$ 进 BCH 后给出不确定性原理的量级）；②机器人/航天姿态控制的误差累积分析（小旋转复合时交换子是二阶误差的来源）；③数值方法中「分裂算子」的 Strang 分裂正是用 $\\tfrac12$ 步长对称化把 BCH 的奇数阶误差消掉（G1.2 辛积分器的同门思想）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "G1.2",
+        "lie1.9",
+        "F4"
+      ]
+    },
+    {
+      "id": "B1.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "李群 ↔ 李代数 ↔ 指数映射总对照（以 SO(3)/so(3) 为例）",
+      "keywords": [
+        "群元素 = 有限旋转 R vs 代数元素 = 角速度 [ω]×",
+        "群乘法（复合）vs 代数加法（角速度叠加）——exp 不 bridging 两者",
+        "非交换 vs 李括号（so(3) 里 = 叉积）",
+        "exp：积分（走 1 单位时间）；log：局部可逆（‖ω‖<π）",
+        "SU(2) 与 SO(3) 李代数相同、群不同——李代数只看局部"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 31,
+        "line_end": 56
+      },
+      "fill_hint": "整单元压缩表；行内容全部有对应词条支撑（见各 links 方向）。",
+      "content": "本单元全部内容压缩成一张「群侧 / 代数侧」对照表（以切片的主角 $SO(3)/\\mathfrak{so}(3)$ 为例）：\n\n| | 群侧 $G=SO(3)$ | 代数侧 $\\mathfrak{g}=\\mathfrak{so}(3)$ |\n|---|---|---|\n| 元素 | 有限旋转 $R$（正交、$\\det=1$） | 角速度 $[\\omega]_\\times$（反对称） |\n| 自由参数 | 3（轴 2 + 角 1） | 3（$\\omega_1,\\omega_2,\\omega_3$） |\n| 运算 | 复合 $R_1R_2$（非交换） | 加法 + 李括号 $[A,B]=AB-BA$（= 叉积） |\n| 单位元 / 零元 | $I$（不转） | $0$（角速度为零） |\n| 拓扑 | 双连通（$\\pi_1=\\mathbb{Z}_2$，见 su2 词条） | 向量空间（平的、单连通） |\n| 求逆 | 转置 $R^T=R^{-1}$ | 取负 $-A$ |\n| 桥 | $\\leftarrow$ $\\exp([\\omega]_\\times)$（Rodrigues）$\\rightarrow$ | |\n\n**桥的性质**（本单元三条反例的正反面）：\n\n- $\\exp$ 非单射：$\\pi e_3$ 与 $-\\pi e_3$ 同像（转半圈的二义性）；\n- $\\exp$ 非加法同态：复合 ≠ 相加，差一个 $\\tfrac12[A,B]$（BCH）；\n- $\\exp$ 保单参数直线：$\\exp((s+t)A)=\\exp(sA)\\exp(tA)$——同轴旋转「角度相加」正是这一条。\n\n**一句话分工**：群侧管「有限变换的复合与拓扑」，代数侧管「无穷小变换的线性代数」；$\\exp$ 是积分器，$\\log$ 是局部微分器（只在 $\\|\\omega\\|<\\pi$ 内合法）。$SU(2)$ 与 $SO(3)$ 的李代数同为 $\\mathfrak{so}(3)\\cong\\mathfrak{su}(2)$——**李代数只看局部，区分不出 2:1 覆盖**（这正是 su2 词条的拓扑内容）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "B1.1",
+        "lie1.10",
+        "lie1.11"
+      ]
+    },
+    {
+      "id": "B1.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "单元下游应用与跨章链接",
+      "keywords": [
+        "Rodrigues → 刚体姿态更新、角速度积分（H8.2、lie3.16）",
+        "log-平均-exp 套路 → 旋转插值/混合（lie3.14 Slerp）",
+        "so(3) 括号=叉积 → 刚体动力学 Euler 方程（H8.2）",
+        "SU(2) 2:1 → 自旋 1/2（F4）、四元数引擎（lie3.13）",
+        "exp/ODE 视角 → de2.1 无穷小生成元、de3.6 矩阵指数、G1.2 保结构积分"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 31,
+        "line_end": 56
+      },
+      "fill_hint": "每条一句「谁用本单元的什么」，细节归目标节点。",
+      "content": "本单元（李群与李代数）在知识库里的下游：\n\n- **刚体模拟（H8.2）**：姿态动力学 $\\dot R=R[\\omega]_\\times$ 的离散更新 $R\\leftarrow R\\cdot\\exp([\\omega\\Delta t]_\\times)$ 直接用 Rodrigues——用矩阵乘法更新会漂移（离开 $SO(3)$），用 $\\exp$ 则**精确保群结构**；\n- **机器人/螺旋运动（lie3.16）**：$\\mathfrak{se}(3)$ 的指数映射是 Rodrigues 的 6 维推广（螺旋运动）；\n- **旋转插值（lie3.14 Slerp）**：在四元数球上走大圆 = $\\exp(t\\log(q_1^{-1}q_2))$ 的 $SU(2)$ 版；\n- **自旋物理（F4、lie3.2）**：$SU(2)$ 的 2:1 覆盖（su2 词条）是自旋 $1/2$ 的数学根源；\n- **ODE/PDE 对称性（de2.1）**：单参数李群 $\\exp(tA)$ 的无穷小生成元视角，把本单元的 $\\exp$ 与「对称性解微分方程」接上；\n- **数值保结构（G1.2 辛积分器、M7 变分积分器）**：把「用 $\\exp$ 更新保住流形」的思想推广到辛流形；\n- **手算支撑（P6.2/P6.3）**：矩阵乘法、转置、特征值是验证 $\\mathfrak{so}(3)$ 成员资格与 Rodrigues 结果的基本功。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "H8.2",
+        "lie3.14",
+        "lie3.16",
+        "F4",
+        "de2.1",
+        "de3.6",
+        "G1.2",
+        "P6.3"
+      ]
+    },
+    {
+      "id": "B1.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：so3-exp（指数映射与 2:1 覆盖，需后端）",
+      "keywords": [
+        "拖 ω ∈ ℝ³ 滑块 → 实时显示 exp([ω]×) 旋转效果",
+        "演示非单射：ω 与 ω+2πω̂ 同像（对径重合）",
+        "演示 2:1：四元数 q 与 −q 的旋转一致",
+        "不变式自检：RᵀR=I、det=1（偏差 > 1e-12 报错）",
+        "判据 Q1/Q3：需要 3D 交互与矩阵对拍 ⟹ 档2 留空待接"
+      ],
+      "tex_ref": null,
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "需要 3D 姿态交互与 Rodrigues 数值对拍（Q1 既有实现缺 3D 旋转部件；Q3 需要与参考实现对拍），前端直渲撑不起。",
+        "params_hint": {
+          "omega": [
+            0,
+            0,
+            1.5707963267948966
+          ],
+          "scenes": [
+            "exp-rotate",
+            "non-injective",
+            "double-cover"
+          ],
+          "tol": 1e-12
+        }
+      },
+      "fill_hint": "只记槽位与需求；契约细化归 learning-web 前端项目，不在生成侧实现。",
+      "content": "单元级演示总览：本单元最值得画的是「拖动 $\\omega\\in\\mathbb{R}^3$、实时看 $\\exp([\\omega]_\\times)$ 把一个小飞船转过去」——三个失败/怪异现象全都肉眼可见。\n\n模块 so3-exp（档2，planned-backend）：\n\n- **exp-rotate 场景**：$\\omega$ 三滑块 + 沿 $\\omega$ 的转轴箭头；旋转角 $\\theta=\\|\\omega\\|$ 与 Rodrigues 三项系数 $\\sin\\theta/\\theta$、$(1-\\cos\\theta)/\\theta^2$ 同屏显示。锚点：$\\omega=(0,0,\\pi/2)$ 时一次项系数 $=2/\\pi\\approx0.6366$【已核验:0.636619772368|sin(pi/2)/(pi/2)】与 $4/\\pi^2\\approx0.4053$【已核验:0.405284734569|(1-cos(pi/2))/(pi/2)**2】；\n- **non-injective 场景**：把 $\\theta$ 推过 $\\pi$，显示 $\\omega$ 与 $\\omega-2\\pi\\hat\\omega$（反向长向量）给出同一个姿态——「转半圈两边等价」；\n- **double-cover 场景**：同一个旋转对应 $S^3$ 上的对径点对 $(q,-q)$，$\\theta$ 从 0 扫到 $4\\pi$ 时四元数走满两圈才回家（切片 2π 变号/4π 回家）；\n- **不变式自检**：任何 $\\omega$ 下算出的 $R$ 必须满足 $R^TR=I$、$\\det R=1$（ Rodrigues 的保结构性质），偏差 $>10^{-12}$ 抛错。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": []
+    },
+    {
+      "id": "B1.2:exp-map.probe1",
+      "type": "probe",
+      "subject": "exp-map",
+      "title": "检验题：亲手算三笔 exp 的账",
+      "keywords": [
+        "① 用 Rodrigues 算 exp(πe₃)（答案 diag(−1,−1,1)）",
+        "② 验证 exp(πe₃)=exp(−πe₃)（非单射）",
+        "③ 算 exp([e₁]×)exp([e₂]×) 与 exp([e₁+e₂]×) 的 (3,1) 元（答案 −0.4546 与 −0.6985）",
+        "④ q(2π) 与 q(4π) 的标量分量（答案 −1 与 1）"
+      ],
+      "tex_ref": {
+        "file": "notebook/B_algebra.tex",
+        "line_start": 47,
+        "line_end": 53
+      },
+      "fill_hint": "数值全部可由表达式复核；③锚定 exp-not-homomorphism、④锚定 su2-double-cover。",
+      "content": "① 用 Rodrigues 公式计算 $\\exp([\\pi e_3]_\\times)$：先算 $\\sin\\pi$【已核验:0|sin(pi)】与 $1-\\cos\\pi$【已核验:2|1-cos(pi)】，再代入三项公式，结果是什么矩阵？（$\\mathrm{diag}(-1,-1,1)$：绕 $z$ 转 $\\pi$）\n\n② 再算 $\\exp([-\\pi e_3]_\\times)$，与①比较。两个不同的切向量给出同一个旋转说明 $\\exp$ 的什么性质失败？（同样得 $\\mathrm{diag}(-1,-1,1)$——非单射）\n\n③ 取 $A=[e_1]_\\times$、$B=[e_2]_\\times$：分别算 $\\exp(A)\\exp(B)$ 与 $\\exp(A+B)$ 的 $(3,1)$ 元，比较是否相等。（$-\\sin(1)\\cos(1)\\approx-0.4546$【已核验:-0.454648713413|-sin(1)*cos(1)】对 $-\\sin(\\sqrt2)/\\sqrt2\\approx-0.6985$【已核验:-0.698455998637|-sin(sqrt(2))/sqrt(2)】——不等，加法同态失败）\n\n④ 四元数 $q(\\theta)=(\\cos\\frac\\theta2,\\sin\\frac\\theta2\\,n)$：算 $q(2\\pi)$ 与 $q(4\\pi)$ 的标量分量（$\\cos\\pi$ 与 $\\cos 2\\pi$），并回答「旋转转一整圈时四元数回到家了吗」。（$-1$【已核验:-1|cos(pi)】与 $1$【已核验:1|cos(2*pi)】——$2\\pi$ 时四元数变号未回家，$4\\pi$ 才回家：SU(2)→SO(3) 的 2:1）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "lie1.10"
+      ]
+    }
+  ]
+}

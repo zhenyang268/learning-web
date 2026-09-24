@@ -1,0 +1,380 @@
+{
+  "schema": "entry-card/v2",
+  "code": "C6.4",
+  "chapter": "C6",
+  "title": "三大定理之外的收敛定理",
+  "src": {
+    "file": "notebook/C_partial.tex",
+    "line_start": 148,
+    "line_end": 170,
+    "anchor": "notebook/C_partial.tex:148"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "C6.4:beyond.quantifiers",
+      "type": "comparison",
+      "subject": "beyond",
+      "title": "四定理限定词总表（每个条件都有它挡住的灾难）",
+      "keywords": [
+        "Egorov：有限测度不可去（R 上 1_[n,∞) 恒可击穿）",
+        "Scheffé：非负不可去（正负双滑动方块 ∫f_n ≡ 0 但 ∫|f_n| ≡ 2）",
+        "Scheffé：∫f_n → ∫f 不可去（尖峰 ∫f_n ≡ 1）",
+        "Vitali：UI 不可去（同尖峰；详见 C6.3）",
+        "单调类：P 必须是 π-系（{1,2},{2,3} 反例）",
+        "四行表格 = 四个「条件换结论」的汇率"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 148,
+        "line_end": 170
+      },
+      "fill_hint": "切片四行表格照抄为总起；每个「不可去」都配具体反例并算出失效数值（带待核验标记）；Vitali 行不重复 C6.3 的完整计算、只留指针；反例的完整展开分别在各展品词条。",
+      "content": "切片的表格（tex 148-170）收录了四大收敛定理之外的四件工具。每件的条件都不是装饰——逐条拆解（限定词｜去掉后的具体反例｜结论如何失效｜能否放宽）：\n\n| 定理与限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| Egorov：$\\mu$ **有限**，$f_n \\to f$ a.e. | $\\mathbb{R}$ 上 $f_n = \\mathbf{1}_{[n,\\infty)}$：处处收敛到 0；去掉任何测度 $< \\varepsilon$ 的集合 $A$ 后，$\\mathbb{R} \\setminus A$ 仍无界，$\\sup_{x \\in \\mathbb{R}\\setminus A} f_n(x) = 1$【已核验:1|1】对一切 $n$ 成立 | 「去掉一小块后一致收敛」失效：无界的余集里永远有 $x \\ge n$ 让 $f_n(x) = 1$ | 不能放宽到 $\\sigma$-有限；可改成「有限测度子集上分别用」（见 egorov.statement） |\n| Scheffé：$f_n, f \\ge 0$ **可积** | $f_n = \\mathbf{1}_{[n,n+1]} - \\mathbf{1}_{[-n-1,-n]}$：a.e. 收敛到 0 且 $\\int f_n = 1 - 1 = 0 \\equiv \\int f$【已核验:0|1-1】，但 $\\int\\lvert f_n\\rvert = 2$【已核验:2|2】恒成立 | 正负两块质量各自逃逸、积分号内互相抵消——$L^1$ 收敛崩溃（见 scheffe.signed） | 非负（或双方同号）不可去；可推广到 $\\int f_n^+ \\to \\int f^+$ 且 $\\int f_n^- \\to \\int f^-$ 的双侧版本 |\n| Scheffé：$\\int f_n \\to \\int f$ | 尖峰 $n\\mathbf{1}_{(0,1/n)}$：a.e. 收敛到 0，$\\int f_n \\equiv 1 \\not\\to 0$ | 质量挤进零测点，总量对不上账（C6.2/C6.3 同一反例） | 这正是「把 DCT 的结论当已知」的价格——不付总量对账就没有 $L^1$ |\n| Vitali：$\\{f_n\\}$ 均匀可积 | 同尖峰（UI 判定 $\\sup_n \\equiv 1$【已核验:1|1】） | 依概率/a.e. 收敛升不到 $L^1$ | 完整拆解见 C6.3（本表只留指针） |\n| 单调类（Dynkin $\\pi$--$\\lambda$）：$\\mathcal P$ 是 **π-系**（对交封闭） | $\\Omega = \\{1,2,3,4\\}$，$\\mathcal P = \\{\\{1,2\\}, \\{2,3\\}\\}$：$\\{1,2\\} \\cap \\{2,3\\} = \\{2\\} \\notin \\mathcal P$；存在包含 $\\mathcal P$ 的 λ-系 $\\mathcal L$ 却漏掉 $\\{2\\} \\in \\sigma(\\mathcal P)$（完整构造见 monotone-class.nonpi） | $\\sigma(\\mathcal P) \\subset \\mathcal L$ 失效——「只验证生成元」漏检了交出来的集合 | π-系不可去；可换成单调类定理的其它版本（函数形式，见 monotone-class.statement） |\n\n**总起一句**：这四件工具的分工——Egorov 把「a.e.」赎回「（近似）一致」，Scheffé 把「积分收敛」兑换成「$L^1$ 收敛」，Vitali 把「UI + 依概率」兑换成「$L^1$」，单调类把「全测度验证」压缩成「生成元验证」。汇率各不相同，但每行都明码标价。",
+      "links": [
+        "C6.3",
+        "C6.2",
+        "A1.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:egorov.infinite-measure",
+      "type": "counterexample",
+      "subject": "egorov",
+      "title": "反例：Egorov 在无穷测度上失效（滑动方块 1_[n,∞)）",
+      "keywords": [
+        "f_n = 1_[n,∞)：R 上处处收敛到 0（每个固定 x 最终 < n）",
+        "去掉测度 < ε 的集合 A 后，R∖A 无界 ⟹ sup f_n = 1 恒成立",
+        "失效根源：质量可以滑向无穷远，任何有限测度的丢弃都拦不住",
+        "同一反例家族：A1.3:mct.decreasing（−1_[n,∞)）、A1.3:general.slide",
+        "修补：σ-有限空间上逐块使用（每个有限测度块上 Egorov）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 154,
+        "line_end": 158
+      },
+      "fill_hint": "Egorov 行的定点反例；「R∖A 无界」一步要写全（A 测度有限 ⟹ 不可能覆盖尾部射线）；数值 sup = 1 带待核验标记；与 A1.3 slide 家族的对照显式引用。",
+      "content": "**Egorov 定理的有限测度条件不可去——用一个最朴素的序列击穿它。**\n\n**构造**：$\\mathbb{R}$（Lebesgue 测度，$\\mu(\\mathbb{R}) = \\infty$）上取\n$$f_n = \\mathbf{1}_{[n, \\infty)}.$$\n\n**a.e. 收敛成立**：固定 $x$，$n > x$ 后 $f_n(x) = 0$，故 $f_n \\to 0$ **处处**（连例外集都是空集——收敛品质无可挑剔）。\n\n**「去掉一小块后一致收敛」崩溃**：任取 $\\varepsilon > 0$ 与任何满足 $\\mu(A) < \\varepsilon$ 的丢弃集 $A$。关键一步：$A$ 测度有限，故**不可能吞掉整条尾部射线**——对每个 $n$，集合 $[n, \\infty) \\setminus A$ 非空（否则 $\\mu([n,\\infty)) \\le \\mu(A) < \\varepsilon$，但 $\\mu([n,\\infty)) = \\infty$，矛盾）。于是对每个 $n$ 存在 $x \\in \\mathbb{R} \\setminus A$、$x \\ge n$，使 $f_n(x) = 1$：\n$$\\sup_{x \\in \\mathbb{R} \\setminus A} |f_n(x) - 0| = 1 \\quad (\\forall n),$$\n【已核验:1|1】——一致收敛在任何有限测度丢弃之后都不成立。Egorov 的结论整体失效。\n\n**失效根源**：滑动质量（路线 A，C6.2:museum.mechanism）。在有限测度空间里，$\\varepsilon$-小块虽小，却能把「还没收敛完的残余」圈进墙角；在无穷测度上，质量可以一路滑向 $+\\infty$，任何有限测度的墙都圈不住它。这与 A1.3:general.slide（$\\mathbf{1}_{[n,n+1)}$，DCT 无盖子）和 A1.3:mct.decreasing（$-\\mathbf{1}_{[n,\\infty)}$，MCT 递减版失效）是**同一反例家族**的三次出场——「无穷远处」是三大定理与 Egorov 共同的盲区。\n\n**修补**：$\\sigma$-有限空间上分块使用——$\\mathbb{R} = \\bigcup_k [-k, k]$，每块测度 $2k < \\infty$，各自用 Egorov 得到丢弃集 $A_k$（$\\mu(A_k) < \\varepsilon 2^{-k}$【已核验:0.5|2**-1】示意），合并 $A = \\bigcup_k A_k$ 有 $\\mu(A) < \\varepsilon$。代价：各块的一致收敛速度可以互不相同，全局仍无一致速度——这正是「a.e. 收敛 $\\approx$ 一致收敛」在无穷测度上只能买到批发价的原因。",
+      "links": [
+        "A1.3",
+        "A1.4",
+        "C6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:scheffe.signed",
+      "type": "counterexample",
+      "subject": "scheffe",
+      "title": "反例：Scheffé 去掉非负（正负双滑块）失效",
+      "keywords": [
+        "f_n = 1_[n,n+1] − 1_[−n−1,−n]：正负两块质量对称滑向 ±∞",
+        "a.e. 收敛到 0 且 ∫f_n = 1−1 = 0 ≡ ∫f：Scheffé 前两条条件全过",
+        "但 ∫|f_n| = 2 恒成立：正负质量在积分号内互相抵消",
+        "失效根源：总量对账看不出正负各自的逃逸",
+        "与 A1.3 slide 的家族关系：两个镜像 slide 的叠加"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "Scheffé 行的「非负不可去」定点反例（标准构造，切片未给、人工复核）；三步计算完整：a.e. 收敛、积分恒等（0 ≡ 0）、L^1 恒等（2）数值全带待核验标记。",
+      "content": "**Scheffé 的非负条件（或双侧总量对账）不可去——正负双滑块击穿它。**\n\n**构造**：$\\mathbb{R}$ 上取\n$$f_n = \\mathbf{1}_{[n,\\ n+1]} - \\mathbf{1}_{[-n-1,\\ -n]}$$\n——正质量方块滑向 $+\\infty$，负质量方块对称滑向 $-\\infty$（两个镜像的 A1.3:general.slide 叠加）。\n\n**Scheffé 前两条条件全部通过**：\n1. 可积性：$\\int |f_n| = 1 + 1 = 2 < \\infty$【已核验:2|2】，每个 $f_n$ 可积。\n2. a.e. 收敛 + 总量对账：固定 $x$，$n > |x| + 1$ 后两块支撑都离开 $x$，$f_n(x) = 0$，处处收敛到 $f \\equiv 0$；且 $\\int f_n = 1 - 1 = 0 \\equiv \\int f$【已核验:0|1-1】——「$\\int f_n \\to \\int f$」以**恒等**的强度成立。\n\n**结论崩溃**：\n$$\\int |f_n - f| = \\int |f_n| = 2 \\not\\to 0,$$\n【已核验:2|2】恒成立——$L^1$ 收敛失败，Scheffé 的兑换被拒。\n\n**失效根源**：总量对账（$\\int f_n = \\int f$）只看**净值**。正块与负块各自逃逸（各带 1 的质量），净值恰好抵消成 0——账面平衡，仓廪已空。Scheffé 的恒等式 $\\int|f_n - f| = 2\\int(f - f_n)^+$（见 scheffe.proof）在非负世界里把「净值对账」放大成「全额对账」，前提正是**没有负质量可以藏身**。\n\n**修补**：双侧版本——把「$\\int f_n \\to \\int f$」加强为「$\\int f_n^+ \\to \\int f^+$ 且 $\\int f_n^- \\to \\int f^-$」（正负各自对账），Scheffé 的结论即恢复；本例中 $\\int f_n^+ \\equiv 1 \\not\\to 0 = \\int f^+$，立刻露馅。",
+      "links": [
+        "A1.3",
+        "C6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:monotone-class.nonpi",
+      "type": "counterexample",
+      "subject": "monotone-class",
+      "title": "反例：P 不是 π-系时单调类定理失效（{2} 的失踪案）",
+      "keywords": [
+        "Ω = {1,2,3,4}，P = {{1,2},{2,3}}：交出 {2} ∉ P，不是 π-系",
+        "λ-系 L = {∅, Ω, {1,2}, {3,4}, {2,3}, {1,4}}：包含 P 但漏 {2}",
+        "{2} = {1,2}∩{2,3} ∈ σ(P)，却不在 L：σ(P) ⊂ L 失效",
+        "失效根源：λ-系只封「补 + 不交并」，交运算从后门溜走"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 162,
+        "line_end": 170
+      },
+      "fill_hint": "「π-系不可去」的定点反例（标准构造，切片未给、人工复核）；L 的 λ-系三条公理逐条验证写全（Ω/补封闭/不交并封闭在有限 Ω 上只需查有限多对）；{2} ∈ σ(P) 用「σ-代数对交封闭」一步给出。",
+      "content": "**单调类定理的 π-系条件不可去——一个四元素有限空间足以演示。**\n\n**构造**：取 $\\Omega = \\{1,2,3,4\\}$，令\n$$\\mathcal{P} = \\big\\{\\{1,2\\},\\ \\{2,3\\}\\big\\}.$$\n$\\mathcal{P}$ **不是 π-系**：$\\{1,2\\} \\cap \\{2,3\\} = \\{2\\} \\notin \\mathcal{P}$（π-系要求对有限交封闭）。\n\n**构造包含 $\\mathcal{P}$ 的 λ-系**：\n$$\\mathcal{L} = \\big\\{\\varnothing,\\ \\Omega,\\ \\{1,2\\},\\ \\{3,4\\},\\ \\{2,3\\},\\ \\{1,4\\}\\big\\}.$$\n逐条验证 λ-系公理：① $\\Omega \\in \\mathcal{L}$ ✓；② 补封闭：$\\{1,2\\}^c = \\{3,4\\} \\in \\mathcal{L}$，$\\{2,3\\}^c = \\{1,4\\} \\in \\mathcal{L}$，$\\varnothing^c = \\Omega$ ✓；③ 对两两不交并封闭：$\\{1,2\\} \\cup \\{3,4\\} = \\Omega \\in \\mathcal{L}$，$\\{2,3\\} \\cup \\{1,4\\} = \\Omega \\in \\mathcal{L}$，与 $\\varnothing$ 的并都是自身 ✓（有限 $\\Omega$ 上两两不交族至多两员非空，已查全）。所以 $\\mathcal{L}$ 是 λ-系且 $\\mathcal{P} \\subset \\mathcal{L}$。\n\n**但结论失效**：$\\sigma(\\mathcal P)$ 是含 $\\mathcal{P}$ 的最小 σ-代数，由 σ-代数对有限交封闭，\n$$\\{2\\} = \\{1,2\\} \\cap \\{2,3\\} \\in \\sigma(\\mathcal{P}), \\qquad \\text{却 } \\{2\\} \\notin \\mathcal{L}.$$\n于是 $\\sigma(\\mathcal{P}) \\not\\subset \\mathcal{L}$——单调类定理的结论被击穿。**失踪的正是那个交**：λ-系的公理只封住「补 + 不交并」，交运算从后门溜走；π-系条件的作用就是把「生成元之间的交」预先圈进 $\\mathcal{L}$，堵住这扇后门（一旦生成元的交都在 $\\mathcal{L}$ 里，λ-系的封闭性就足以把整个 σ-代数拖进来）。\n\n**测度唯一性视角的后果**：若想「只在 $\\{\\{1,2\\}, \\{2,3\\}\\}$ 上验证 $\\mu = \\nu$」就断言全空间相等，会翻车——可以造出 $\\mu \\ne \\nu$ 但在这两个集合上相等的概率测度（例如让 $\\mu(\\{2\\}) \\ne \\nu(\\{2\\})$ 并相应调整 $\\{1\\},\\{4\\}$ 的配重），因为 $\\{2\\}$ 根本不在验证范围内。**验证集必须是 π-系，否则「验过」≠「验全」**。",
+      "links": [
+        "A1.4",
+        "C1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:egorov.statement",
+      "type": "statement",
+      "subject": "egorov",
+      "title": "Egorov 定理陈述：a.e. 收敛 ≈ 一致收敛（代价是丢一小块）",
+      "keywords": [
+        "条件：μ(Ω) < ∞ 且 f_n → f a.e.",
+        "结论：∀ε>0，存在 μ(E) < ε 的丢弃集，在 Ω∖E 上一致收敛",
+        "「几乎」换「一致」的汇率：一小块测度",
+        "直觉：收敛慢的点可以圈进小集合（有限测度下圈得住）",
+        "配套反例：无穷测度上 1_[n,∞) 击穿（egorov.infinite-measure）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 154,
+        "line_end": 158
+      },
+      "fill_hint": "切片表格 Egorov 行逐字转写（含「a.e. 收敛 ≈ 一致收敛，代价是丢掉一小块」原话）；证明思路一行带过（分层丢弃 E_n^k = {|f_m − f| > 1/k 对某 m ≥ n}），细节标注为标准路线供阶段2补全。",
+      "content": "**陈述（切片 tex 154-158 逐字转写）**：若 $\\mu(\\Omega) < \\infty$ 且 $f_n \\to f$ a.e.，则对任意 $\\varepsilon > 0$，去掉一个测度 $< \\varepsilon$ 的集合后**一致**收敛——即存在可测集 $E$，$\\mu(E) < \\varepsilon$，使\n$$\\sup_{x \\in \\Omega \\setminus E} |f_n(x) - f(x)| \\to 0.$$\n切片原话：a.e. 收敛 $\\approx$ 一致收敛，代价是丢掉一小块。\n\n**直觉（假设与结论分开）**：假设给了两样东西——「逐点都收敛」加上「总测度有限」。逐点收敛的**速度**可以因点而异（有的点收敛得极慢）；关键在于「收敛慢」是可以分层的：对每个精度 $1/k$，「追上 $1/k$ 所需步数超过 $n$」的点构成集合 $E_n^k$，且固定 $k$ 时 $E_n^k \\downarrow$ 零测集（a.e. 收敛）。有限测度上测度从上连续（A1.4），故每个 $k$ 都能用**有限块** $E_{n_k}^k$（$\\mu < \\varepsilon 2^{-k}$【已核验:0.25|2**-2】示意（k=2））圈住该层的慢点；把所有层的圈合并成 $E$（$\\mu(E) < \\sum_k \\varepsilon 2^{-k} = \\varepsilon$【已核验:0.249999523163|sum(0.25*(2**-k) for k in range(1,20))】示意 ε=0.5）。圈外每点在每层都有统一的速度上限——一致收敛。\n\n**两个坐标**：① 有限测度是圈地的前提（无穷测度上圈不住，见 egorov.infinite-measure）；② 丢弃集 $E$ 依赖 $\\varepsilon$——$\\varepsilon \\to 0$ 时 $E$ 会膨胀，所以 Egorov 买不到「整体一致收敛」，只能买到「任意接近一致的收敛」。这是 a.e. 与一致之间**能买到的最好汇率**。",
+      "links": [
+        "A1.4",
+        "C6.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:scheffe.statement",
+      "type": "statement",
+      "subject": "scheffe",
+      "title": "Scheffé 定理陈述：积分收敛兑换 L^1 收敛",
+      "keywords": [
+        "条件：f_n, f ≥ 0 可积，f_n → f a.e.，且 ∫f_n → ∫f",
+        "结论：∫|f_n − f| → 0（即 L^1 收敛）",
+        "定位：把 DCT 的结论当已知，反过来买 L^1（不要盖子）",
+        "典型场景：密度函数归一化 ∫p_n = ∫p = 1 天然对账"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "切片表格 Scheffé 行逐字转写；「把 DCT 的结论当已知」的定位与 A1.3:dct.scheffe 的既有词条呼应（那条含恒等式证明，本库内不重复全文、给指针并复述骨架）。",
+      "content": "**陈述（切片 tex 159-161 逐字转写）**：若 $f_n, f \\ge 0$ 可积，$f_n \\to f$ a.e.，且 $\\int f_n \\to \\int f$，则\n$$\\int |f_n - f| \\to 0 \\quad (\\text{即 } L^1 \\text{ 收敛}).$$\n\n**定位**：DCT 的路线是「找到盖子 ⟹ 积分收敛 ⟹（附带）$L^1$ 收敛」；Scheffé 把中间那一环（$\\int f_n \\to \\int f$）**当作已知条件**，跳过盖子直接兑换 $L^1$ 收敛。适合的场景是**总量天然对账**的问题——最典型的是密度函数：$\\int p_n = \\int p = 1$ 恒成立（归一化），于是一旦 $p_n \\to p$ a.e.，$L^1$ 收敛白送。分布函数的收敛（依分布收敛到绝对连续极限）、概率密度的稳定化（MCMC 长期直方图，C8.3）都是这个形态。\n\n**证明骨架**（恒等式 + 一次 DCT，完整版见 A1.3:dct.scheffe 与 scheffe.proof）：正差 $(f - f_n)^+ \\le f \\in L^1$ 且逐点趋 0，DCT 压掉它；负差 $(f_n - f)^+$ 的积分与正差之差恰为 $\\int f_n - \\int f \\to 0$，故同步归零；两者相加即 $\\int|f_n - f| \\to 0$。**易错点**：必须用 $\\int f_n \\to \\int f$（极限相等）而非逐项相等；且非负条件在恒等式里暗中工作（正差的盖子是 $f$ 本身——若允许负值，$f$ 盖不住 $(f - f_n)^+$ 之外的负质量逃逸，见 scheffe.signed）。",
+      "links": [
+        "A1.3",
+        "C6.3",
+        "C8.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:scheffe.proof",
+      "type": "proof",
+      "subject": "scheffe",
+      "title": "Scheffé 证明：恒等式 ∫|f_n−f| = 2∫(f−f_n)^+（当 ∫f_n = ∫f）",
+      "keywords": [
+        "正差/负差分解：|f_n − f| = (f_n−f)^+ + (f−f_n)^+",
+        "净值恒等式：∫(f_n−f)^+ − ∫(f−f_n)^+ = ∫f_n − ∫f",
+        "正差被 f 盖住（0 ≤ (f−f_n)^+ ≤ f）⟹ DCT 归零",
+        "极限情形整理成 ∫|f_n−f| = 2∫(f−f_n)^+ + o(1)",
+        "非负条件的作用：f 恰好是正差的盖子"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 159,
+        "line_end": 161
+      },
+      "fill_hint": "切片未给证明；标准路线分四步写全，每步给理由；「f 是正差的盖子」一步显式点出非负条件在哪里工作（对应 scheffe.signed 的失效）；恒等式的极限版本与 A1.3:dct.scheffe 词条表述对齐。",
+      "content": "切片只给条件结论；证明分四步（标准路线，每步给理由）：\n\n**第 1 步（正负差分解）。** 逐点恒等式\n$$|f_n - f| = (f_n - f)^+ + (f - f_n)^+, \\qquad (\\cdot)^+ = \\max(\\cdot, 0).$$\n两块都非负，积分后相加即 $\\int|f_n - f| = \\int(f_n - f)^+ + \\int(f - f_n)^+$。\n\n**第 2 步（净值恒等式）。** $(f_n - f) = (f_n - f)^+ - (f - f_n)^+$（正负差之差就是原函数），积分：\n$$\\int(f_n - f)^+ - \\int(f - f_n)^+ = \\int f_n - \\int f \\to 0.$$\n于是两个正块的积分**渐近相等**——总额对账把正负两半绑在了一起。\n\n**第 3 步（DCT 压正差）。** $0 \\le (f - f_n)^+ \\le f \\in L^1$（**非负条件在此工作**：$f$ 自己就是盖子），且 $f_n \\to f$ a.e. ⟹ $(f - f_n)^+ \\to 0$ a.e.。DCT（A1.3）给出 $\\int(f - f_n)^+ \\to 0$。\n\n**第 4 步（收口）。** 由第 2 步 $\\int(f_n - f)^+ \\to 0$，代回第 1 步：$\\int|f_n - f| \\to 0$。在极限情形 $\\int f_n = \\int f$（恒等）时可整理成紧凑形式 $\\int|f_n - f| = 2\\int(f - f_n)^+$——正是 A1.3:dct.scheffe 词条引用的恒等式。\n\n**依赖链与易错点**：整条证明只用一次 DCT（盖子 = $f$ 本身），这也是 Scheffé 「不要盖子」的准确含义——不要**额外**的盖子，$f$ 白送。易错点有二：① 把第 2 步当成恒等式用（必须是极限趋零，除非已知恒等）；② 忘了非负条件——若 $f_n$ 可取负，$(f - f_n)^+ \\le f$ 不再成立（负质量逃逸无盖子可盖），scheffe.signed 的双滑块正是从这里漏出去的。",
+      "links": [
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:monotone-class.statement",
+      "type": "statement",
+      "subject": "monotone-class",
+      "title": "单调类定理（Dynkin π–λ）：只在生成元上验证就够",
+      "keywords": [
+        "π-系：对有限交封闭的集族；λ-系：Ω ∈ L + 补封闭 + 不交可数并封闭",
+        "定理：P 是 π-系，L 是 λ-系，P ⊂ L ⟹ σ(P) ⊂ L",
+        "测度唯一性用法：μ|_P = ν|_P ⟹ μ = ν 于 σ(P)",
+        "切片原话：把「对一切可测集验证」压缩成「只在 π-系上验证」",
+        "函数版变体：验证 E[h|σ(P)] 或积分相等只需在 π-系上验"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 162,
+        "line_end": 170
+      },
+      "fill_hint": "定理与典型用法照抄 tex 162-170（含切片原话「最省力的证明手段之一」）；λ-系公理逐条列出；测度唯一性用法的三行论证（L = {A: μ(A)=ν(A)} 是 λ-系）写全；函数版一句带过并标注为标准变体。",
+      "content": "**两个主角（定义）**：\n- **π-系** $\\mathcal{P}$：对**有限交**封闭的集族（$A, B \\in \\mathcal{P} \\Rightarrow A \\cap B \\in \\mathcal{P}$）。\n- **λ-系** $\\mathcal{L}$：满足 ① $\\Omega \\in \\mathcal{L}$；② 对**补**封闭；③ 对**两两不交**的可数并封闭。\n\n**定理（切片 tex 162-165 逐字转写）**：若 $\\mathcal{P}$ 是 π-系，$\\mathcal{L}$ 是 λ-系，且 $\\mathcal{P} \\subset \\mathcal{L}$，则 $\\sigma(\\mathcal{P}) \\subset \\mathcal{L}$。\n\n**典型用法（切片 tex 166-170 逐字转写与展开）**：$\\mu, \\nu$ 是 $(\\Omega, \\sigma(\\mathcal{P}))$ 上的概率测度，若 $\\mu|_{\\mathcal{P}} = \\nu|_{\\mathcal{P}}$ 且 $\\mathcal{P}$ 是 π-系，则 $\\mu = \\nu$。论证三行：令 $\\mathcal{L} = \\{A : \\mu(A) = \\nu(A)\\}$——① $\\mu(\\Omega) = 1 = \\nu(\\Omega)$；② $A \\in \\mathcal{L} \\Rightarrow \\mu(A^c) = 1 - \\mu(A) = 1 - \\nu(A) = \\nu(A^c)$；③ 不交并由可数可加性保持（$\\mu(\\bigsqcup A_i) = \\sum \\mu(A_i) = \\sum \\nu(A_i) = \\nu(\\bigsqcup A_i)$）。故 $\\mathcal{L}$ 是含 $\\mathcal{P}$ 的 λ-系，单调类定理给出 $\\sigma(\\mathcal{P}) \\subset \\mathcal{L}$，即两测度在**全部**可测集上相等。切片原话：它把「证明两个测度相等」从「对一切可测集验证」压缩成「只在一个生成 π-系上验证」，这是测度论里最省力的证明手段之一。\n\n**为什么 π-系是杠杆的支点**：λ-系公理只封「补 + 不交并」，交运算不在封闭清单里；π-系把生成元之间的交预先缴械，两种封闭性合流后恰好凑齐 σ-代数的全部运算（交 = De Morgan 的补与并的组合）。支点一松（P 非 π-系），整条杠杆报废——见 monotone-class.nonpi 的 {2} 失踪案。\n\n**函数版变体（标准补充）**：把集合换成函数——若两测度在 π-系上积分一致（$\\int f\\,d\\mu = \\int f\\,d\\nu$ 对某函数类），可断言在整个 σ(P) 上一致；条件期望的唯一性（C4）同样靠这套压缩论证。",
+      "links": [
+        "A1.4",
+        "C1",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:monotone-class.example",
+      "type": "application",
+      "subject": "monotone-class",
+      "title": "算例：三点空间上「只在 π-系验证」省了多少力",
+      "keywords": [
+        "Ω = {1,2,3}，π-系 P = {∅, {1}, {1,2}}",
+        "只验 μ({1}) = 0.2、μ({1,2}) = 0.5 两条，全空间 8 个集合全推出",
+        "μ({2}) = 0.3，μ({3}) = 0.5，μ({2,3}) = 0.8 …全部由 λ-系封闭性白送",
+        "验证成本从 8 降到 2（更一般地从 2^n 降到 |P|）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 166,
+        "line_end": 170
+      },
+      "fill_hint": "切片未给数值算例；本条构造最小可算例（三点空间），全部数值为初等算术带待核验标记；「成本从 2^n 降到 |P|」的推广一句带过（有限空间直观），人工复核表述。",
+      "content": "**最小算例**：$\\Omega = \\{1,2,3\\}$，取 π-系 $\\mathcal{P} = \\{\\varnothing, \\{1\\}, \\{1,2\\}\\}$（交封闭：$\\{1\\} \\cap \\{1,2\\} = \\{1\\} \\in \\mathcal{P}$ ✓）。注意 $\\sigma(\\mathcal{P}) = 2^{\\Omega}$（$\\{1\\}$ 与 $\\{1,2\\}$ 生成出全部单点：$\\{2\\} = \\{1,2\\} \\setminus \\{1\\}$，$\\{3\\} = \\Omega \\setminus \\{1,2\\}$）。\n\n**只在 π-系上「验货」两条**：设 $\\mu$ 是概率测度，已知 $\\mu(\\{1\\}) = 0.2$、$\\mu(\\{1,2\\}) = 0.5$。由单调类定理（本例即 λ-系封闭性的直接推演），**全部 8 个可测集的测度被这两条白送**：\n\n| 集合 | 推导（λ-系封闭性） | 数值 |\n|---|---|---|\n| $\\varnothing, \\Omega$ | 公理/归一化 | $0$，$1$ |\n| $\\{1\\}, \\{1,2\\}$ | 已知（验货） | $0.2$，$0.5$ |\n| $\\{2\\}$ | $\\mu(\\{1,2\\}) - \\mu(\\{1\\})$（不交并拆解） | $0.3$【已核验:0.3|0.5-0.2】 |\n| $\\{3\\}$ | $1 - \\mu(\\{1,2\\})$（补封闭） | $0.5$【已核验:0.5|1-0.5】 |\n| $\\{1,3\\}$ | $1 - \\mu(\\{2\\})$（补封闭） | $0.7$【已核验:0.7|1-0.3】 |\n| $\\{2,3\\}$ | $1 - \\mu(\\{1\\})$（补封闭） | $0.8$【已核验:0.8|1-0.2】 |\n\n**测度唯一性用法**：若 $\\nu$ 是另一个在 $\\mathcal{P}$ 上与 $\\mu$ 相符的概率测度（$\\nu(\\{1\\}) = 0.2$、$\\nu(\\{1,2\\}) = 0.5$），上表逐行对 $\\nu$ 同样成立 ⟹ $\\mu = \\nu$ 于 $2^{\\Omega}$。**验证成本：2 条 vs 全空间 8 条**；一般地，$n$ 点空间上全验证要 $2^n$ 条，π-系验证只要 $|\\mathcal{P}|$ 条——指数到线性的压缩。连续情形里这个压缩更惊人：$\\mathbb{R}$ 上验证两个概率测度相等，只需在 π-系 $\\{(-\\infty, x] : x \\in \\mathbb{Q}\\}$（对交封闭：$(-\\infty,x] \\cap (-\\infty,y] = (-\\infty, \\min(x,y)]$ ✓）上验——可数条搞定不可测度多地验证，这正是「分布函数定分布」（C7.1 一一对应的底层机制）与 C1 测度论的标准内循环。",
+      "links": [
+        "A1.4",
+        "C1",
+        "C7.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:beyond.probe1",
+      "type": "probe",
+      "subject": "beyond",
+      "title": "检验题：Scheffé 恒等式与单调类算例复算",
+      "keywords": [
+        "f_n = (1+1/n)·1_[0,1]：∫|f_n − f| 在 n=10 的值？",
+        "三点空间 μ({1})=0.2、μ({1,2})=0.5：μ({2,3}) 与 μ({1,3})？",
+        "双滑块 f_n = 1_[n,n+1] − 1_[−n−1,−n]：∫f_n 与 ∫|f_n|？",
+        "答案数值均带待核验标记，供前端折叠"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 148,
+        "line_end": 170
+      },
+      "fill_hint": "三道小题分别复算 scheffe.proof / monotone-class.example / scheffe.signed；答案给待核验表达式；目标是会算 Scheffé 的正差积分与 λ-系封闭性推演。",
+      "content": "**第 1 题（Scheffé 正差）**：取 $f_n = (1 + \\tfrac{1}{n})\\mathbf{1}_{[0,1]}$，$f = \\mathbf{1}_{[0,1]}$。(a) 验证 $\\int f_n \\to \\int f$；(b) 算 $\\int|f_n - f|$ 在 $n = 10$ 的值（用恒等式 $\\int|f_n - f| = 2\\int(f - f_n)^+$ 的思路——注意此例中 $(f - f_n)^+ \\equiv 0$，差全在正侧）。（答案：(a) $\\int f_n = 1 + 1/n \\to 1$【已核验:1.1|1+1/10】；(b) $\\int|f_n - f| = 1/n = 0.1$【已核验:0.1|1/10】——正差为 0、负差 $= 1/n$，恒等式给 $\\int|f_n-f| = 2\\int(f_n - f)^+ = 2 \\cdot 0.05$【已核验:0.1|2*0.05】。）\n\n**第 2 题（单调类推演）**：$\\Omega = \\{1,2,3\\}$，$\\mu(\\{1\\}) = 0.2$、$\\mu(\\{1,2\\}) = 0.5$。只用 λ-系封闭性（补 + 不交并）推出 $\\mu(\\{2,3\\})$、$\\mu(\\{1,3\\})$、$\\mu(\\{3\\})$。（答案：$0.8$【已核验:0.8|1-0.2】、$0.7$【已核验:0.7|1-0.3】、$0.5$【已核验:0.5|1-0.5】。）\n\n**第 3 题（双滑块）**：$f_n = \\mathbf{1}_{[n,n+1]} - \\mathbf{1}_{[-n-1,-n]}$。(a) 算 $\\int f_n$；(b) 算 $\\int|f_n|$；(c) 它满足 Scheffé 的哪几条条件、缺哪条？（答案：(a) $1 - 1 = 0$【已核验:0|1-1】；(b) $1 + 1 = 2$【已核验:2|1+1】；(c) 满足可积、a.e. 收敛、$\\int f_n \\to \\int f$（恒等），**缺非负**——$L^1$ 收敛失败正是从这条缝漏的。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "四件工具总表（各兑换什么 / 门票是什么 / 失效反例）",
+      "keywords": [
+        "Egorov：a.e. → 近似一致（门票：有限测度）",
+        "Scheffé：积分收敛 → L^1（门票：非负 + a.e. + 总量对账）",
+        "Vitali：依概率 → L^1（门票：UI，详见 C6.3）",
+        "单调类：全验证 → π-系验证（门票：P 对交封闭）",
+        "与三大定理（A1.3）的分工：兑换的方向各不相同"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 148,
+        "line_end": 170
+      },
+      "fill_hint": "单元级总表，合并切片四行表格与反例指针；「兑换方向」列是本条组织增量（每件工具都在做某种「条件→结论」的兑换）；Vitali 行保持指针式引用避免与 C6.3 重复。",
+      "content": "本单元四件工具的一页总表（切片表格 + 反例 + 兑换视角）：\n\n| 工具 | 兑换（用 A 买 B） | 门票 | 失效反例 | 本库展开 |\n|---|---|---|---|---|\n| Egorov | a.e. 收敛 →（丢 $\\varepsilon$ 块后的）一致收敛 | $\\mu < \\infty$ | $\\mathbf{1}_{[n,\\infty)}$ 在 $\\mathbb{R}$：sup 恒 1【已核验:1|1】 | egorov.statement / egorov.infinite-measure |\n| Scheffé | $\\int f_n \\to \\int f$ → $L^1$ 收敛 | 非负 + a.e. + 可积 | 双滑块：$\\int f_n \\equiv 0$ 但 $\\int|f_n| \\equiv 2$【已核验:2|2】 | scheffe.statement / scheffe.proof / scheffe.signed |\n| Vitali | 依概率收敛 → $L^1$ 收敛 | UI | 尖峰：尾部贡献 sup 恒 1【已核验:1|1】 | C6.3（整节） |\n| 单调类 | 全 σ-代数验证 → π-系验证 | $\\mathcal{P}$ 对交封闭 | $\\{\\{1,2\\},\\{2,3\\}\\}$：$\\{2\\}$ 失踪 | monotone-class.statement / monotone-class.nonpi |\n\n**与三大定理（A1.3）的分工**：MCT/Fatou/DCT 回答「什么时候**极限与积分可交换**」；本单元四件回答四个更杂的问题——收敛的**质量**（Egorov：一致到什么程度）、收敛的**全额对账**（Scheffé）、收敛的**升级门票**（Vitali）、验证的**压缩**（单调类）。它们共同的特点：每个条件都在挡一个**具体**的灾难（每行第三列），而不是抽象的谨慎——这正是「反例博物馆」（C6.2）精神的延续：**没有反例的条件是没长大的条件**。\n\n**选择判据**：手里有「总量对账」（归一化密度）→ Scheffé；只有「矩信息 / 尾部纪律」→ Vitali；需要一致收敛估计（数值分析、逼近论）→ Egorov；要证两测度相等（分布唯一性）→ 单调类。",
+      "links": [
+        "A1.3",
+        "C6.2",
+        "C6.3",
+        "A1.4"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "C6.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用与跨章链接",
+      "keywords": [
+        "Egorov：把 a.e. 结论升级成一致估计（数值/逼近场景）",
+        "Scheffé：密度收敛与 MCMC 直方图（C8.3）、分布稳定性",
+        "Vitali：期望交换的总门票（C6.3 已索引）",
+        "单调类：分布函数定分布（C7.1）、条件期望唯一性（C4）、测度唯一性（C1）"
+      ],
+      "tex_ref": {
+        "file": "C_partial.tex",
+        "line_start": 166,
+        "line_end": 170
+      },
+      "fill_hint": "每条一句「谁在用哪件工具」；单调类行的三个下游（C7.1/C4/C1）均为标准用法、切片给了测度唯一性一个，其余为常规延伸并标注；细节归目标单元。",
+      "content": "四件工具的下游（一条一句）：\n\n- **Egorov**：凡是「a.e. 收敛 + 想要一致速度」的场景——数值逼近的误差分段控制、依测度收敛与 a.e. 的子列论证（C6.2:museum.subsequence）里都能看到它的分层丢弃技术（$\\varepsilon 2^{-k}$ 预算分配）。\n- **Scheffé**：密度函数族收敛的标准收口——MCMC 长期采样直方图趋于平稳密度（C8.3）、参数化分布族的稳定性（C2）；归一化 $\\int p_n = 1$ 天然付清总量对账。\n- **Vitali**：期望与极限交换的总门票，整节 C6.3 已展开（鞅 C4、蒙特卡洛 C9.1/H4、CLT C7.3 的消费清单见 C6.3:general.apps）。\n- **单调类（切片钦点的用法：测度唯一性）**：① 分布函数定分布（C7.1 的「一一对应」，$\\{(-\\infty, x]\\}$ 是 π-系）；② 条件期望的唯一性（C4，函数版单调类）；③ 概率测度在生成 π-系上相等即全等（C1，切片原话「测度论里最省力的证明手段之一」）。A 篇对照：A1.4 的 σ-代数生成与可测性判定共享同一套「生成元思维」。",
+      "links": [
+        "C1",
+        "C2",
+        "C4",
+        "C6.3",
+        "C7.1",
+        "C8.3",
+        "A1.4",
+        "A1.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

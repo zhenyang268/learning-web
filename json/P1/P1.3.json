@@ -1,0 +1,389 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P1.3",
+  "chapter": "P1",
+  "title": "推导示范（$\\sum k^2$，必须会复述）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 60,
+    "line_end": 70,
+    "anchor": "notebook/P_computation.tex:60"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P1.3:power-sum.statement",
+      "type": "statement",
+      "subject": "power-sum",
+      "title": "升阶差分套路（公式 + 条件）",
+      "keywords": [
+        "核心：升一阶的差，凑出想求的幂",
+        "(k+1)^{m+1}-k^{m+1} 的主项恰是 (m+1)k^m",
+        "低次项混入已知低阶和式，解线性方程",
+        "条件：m 非负整数、低阶和式已知、有限和",
+        "求 ∑k³ 就用 (k+1)⁴-k⁴（切片原话）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 60,
+        "line_end": 70
+      },
+      "fill_hint": "切片整段转写：恒等式、两边求和、解出；'必须会复述'。",
+      "content": "**套路本体**（切片原话：升一阶的差，凑出想求的幂）：求 $\\sum_{k=1}^n k^m$ 时，对恒等式\n\n$$(k+1)^{m+1}-k^{m+1} = (m+1)k^m + (\\text{低次项})$$\n\n从 $k=1$ 加到 $n$：左边望远镜只剩 $(n+1)^{m+1}-1$，右边把 $\\sum k^m$ 与已知的低阶和式（$\\sum k^{m-1},\\dots,\\sum 1$）混在一起，解线性方程即得。\n\n**成立条件**：①$M$ 次幂 $m$ 为非负整数（展开才有限项）；②低阶和式已知（归纳可行——知道 $\\sum k$ 才能解 $\\sum k^2$）；③两边求和是**有限和**（恒等式逐项相加无需收敛条件）。\n\n示范（切片原文，必须会复述）：$(k+1)^3-k^3=3k^2+3k+1$，从 $k=1$ 加到 $n$，解出 $\\sum k^2=\\frac{n(n+1)(2n+1)}{6}$。完整推导见 power-sum.proof。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.2"
+      ]
+    },
+    {
+      "id": "P1.3:power-sum.proof",
+      "type": "proof",
+      "subject": "power-sum",
+      "title": "∑k² 完整推导（必须会复述）",
+      "keywords": [
+        "第一步：三次展开（P2.1 的 n=3 特例）",
+        "第二步：两边求和，左边望远镜=(n+1)³-1",
+        "第三步：代入 ∑k 与 ∑1=n（P1.2）",
+        "第四步：解出 ∑k²=n(n+1)(2n+1)/6",
+        "n=10 数值验证：1155/3=385"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 62,
+        "line_end": 68
+      },
+      "fill_hint": "切片推导逐字骨架化，每步给理由；n=10 全程代入验证。",
+      "content": "分步（每步给理由）：\n\n1. **展开恒等式**：$(k+1)^3 = k^3+3k^2+3k+1$（二项式 $n=3$，见 P2.1），移项得 $(k+1)^3-k^3 = 3k^2+3k+1$。\n2. **两边从 $k=1$ 加到 $n$**。左边：$\\sum_{k=1}^n[(k+1)^3-k^3]$ 望远镜 $=(n+1)^3-1$（中间项 $2^3,\\dots,n^3$ 成对相消——P1.1）。右边：$3\\sum k^2+3\\sum k+n$（注意 $\\sum_{k=1}^n 1 = n$）。\n3. **代入低阶公式**：$\\sum k=\\frac{n(n+1)}{2}$（P1.2）。\n4. **解出**：\n\n$$\\sum_{k=1}^n k^2=\\frac{(n+1)^3-1-3\\cdot\\frac{n(n+1)}{2}-n}{3}=\\frac{n(n+1)(2n+1)}{6}.$$\n\n5. **数值验证**：$n=10$：$\\frac{1331-1-165-10}{3}=\\frac{1155}{3}=385$【已核验:385|(11**3-1-3*(10*11//2)-10)/3】，与逐项累加一致【已核验:385|sum(k*k for k in range(1,11))】。\n\n**易错点**：①忘常数项 $+1$（见 power-sum.misuse-constant，$n=10$ 时错出 $388.33$）；②$\\sum_{k=1}^n 1=n$ 不是 $n+1$；③左边相消后是 $(n+1)^3-1$（下端 $1^3$ 保留为 $-1$），不是 $(n+1)^3-n^3$。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.2",
+        "P2.1"
+      ]
+    },
+    {
+      "id": "P1.3:power-sum.proof-k3",
+      "type": "proof",
+      "subject": "power-sum",
+      "title": "∑k³ 用同一套路（升到四阶）",
+      "keywords": [
+        "(k+1)⁴-k⁴=4k³+6k²+4k+1",
+        "依赖链：∑k → ∑k² → ∑k³ 逐级上爬",
+        "n=10 验证：(14641-1-2310-220-10)/4=3025",
+        "每级只依赖低两级和式"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 69,
+        "line_end": 70
+      },
+      "fill_hint": "切片'求 ∑k³ 就用 (k+1)⁴-k⁴'一句的完整展开；n=10 数值核验。",
+      "content": "套路的直接复用（切片：求 $\\sum k^3$ 就用 $(k+1)^4-k^4$）：\n\n1. $(k+1)^4-k^4 = 4k^3+6k^2+4k+1$（二项式 $n=4$ 展开）。\n2. 两边求和：$(n+1)^4-1 = 4\\sum k^3+6\\sum k^2+4\\sum k+n$（左边望远镜，右边混入 $\\sum k^2$、$\\sum k$、$\\sum 1$）。\n3. 代入已知（P1.2 的 $\\sum k^2$、$\\sum k$），解出 $\\sum k^3=\\Big[\\frac{n(n+1)}{2}\\Big]^2$。\n4. **数值验证**：$n=10$：$\\frac{11^4-1-6\\cdot385-4\\cdot55-10}{4}=\\frac{14641-1-2310-220-10}{4}=\\frac{12100}{4}=3025$【已核验:3025|(11**4-1-6*385-4*55-10)/4】，与 $55^2$ 一致【已核验:3025|55*55】。\n\n**依赖链**：$\\sum k \\to \\sum k^2 \\to \\sum k^3$ 逐级上爬——每级的方程里含所有低阶和式；所以顺序不能跳（先会 $\\sum k$ 才能解 $\\sum k^2$）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.2"
+      ]
+    },
+    {
+      "id": "P1.3:power-sum.intuition",
+      "type": "intuition",
+      "subject": "power-sum",
+      "title": "为什么升一阶有效",
+      "keywords": [
+        "k^m 不是简单式的差分，但它是'升一阶差分'的主项",
+        "(m+1)k^m 是 (k+1)^{m+1}-k^{m+1} 展开的领头项",
+        "低次项是'利息'——低阶和式已经会算",
+        "不求'k^m 的原函数是谁'，改问'谁家差分主项是 k^m'"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 62,
+        "line_end": 69
+      },
+      "fill_hint": "切片'套路'一句的机理解释：主项 + 低阶利息两段。",
+      "content": "**假设给了什么**：想求 $\\sum k^m$，而 $k^m$ 本身不是任何简单式的差分（直接找 $F$ 需要猜三次式，见 P1.1/P1.2 的 $F$ 表）。**结论为什么成立**：$(k+1)^{m+1}-k^{m+1}$ 是\"台阶高度升一阶后的相邻差\"，二项展开后**主项恰是 $(m+1)k^m$**，其余全是低次幂——低次幂的和我们已经会（归纳基础）。\n\n所以\"升一阶的差，凑出想求的幂\"的正确读法：不去问\"$k^m$ 的原函数 $F$ 是什么\"，改问\"**谁家的差分以 $k^m$ 为主项**\"——答案 $(k+1)^{m+1}$ 现成，代价是附送的低次\"利息\"，而利息用低阶公式结清。\n\n数值感（$k=2$ 处）：$(k+1)^3-k^3 = 27-8=19$，其中 $3k^2=12$ 是主项、$3k+1=7$ 是利息【已核验:0|27-8-(3*4+3*2+1)】（恒等式差为 $0$）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.2"
+      ]
+    },
+    {
+      "id": "P1.3:power-sum.quantifiers",
+      "type": "comparison",
+      "subject": "power-sum",
+      "title": "套路适用条件表",
+      "keywords": [
+        "m 非负整数：∑√k 无从截断（展开无穷列）",
+        "归纳顺序不能跳：低阶和式必须先有",
+        "有限和恒等式逐项相加无收敛问题",
+        "∑1=n 记牢：常数项和是 n 不是 n+1"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 60,
+        "line_end": 70
+      },
+      "fill_hint": "适用条件四行，各配失效例子或后果；misuse-constant 词条承接第 4 行。",
+      "content": "| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| $m$ 为非负整数 | $m=\\frac12$（$\\sum\\sqrt k$）：$(k+1)^{3/2}-k^{3/2}$ 的展开是无穷列 | 无从截断，套路失灵 | 不能；非整数幂回到积分放缩（P1.4 的 $\\sum\\leftrightarrow\\int$） |\n| 低阶和式已知 | 跳过 $\\sum k$ 直接求 $\\sum k^2$：右边 $\\sum k$ 项卡住 | 线性方程解不出 | 归纳顺序不能跳 |\n| 两边求和是有限和 | $n\\to\\infty$ 时两边同时发散 | \"解出 $\\infty$\"无意义 | 不能；无穷和先谈收敛（P4.2/P4.3） |\n| 记牢 $\\sum_{k=1}^n 1 = n$ | 常数项 $+1$ 求和后是 $n$；忘掉它 → $n=10$ 错出 $388.33$【已核验:388.333333333|(11**3-1-165)/3】 vs 真值 $385$【已核验:385|sum(k*k for k in range(1,11))】 | 误差 $\\frac{n}{3}$ 随 $n$ 线性增长 | 见 power-sum.misuse-constant |",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.3:power-sum.misuse-constant",
+      "type": "counterexample",
+      "subject": "power-sum",
+      "title": "典型误用：忘掉常数项（错出 388.33）",
+      "keywords": [
+        "把 (k+1)³-k³=3k²+3k+1 的 +1 丢了",
+        "n=10：错解 1165/3≈388.33，真值 385",
+        "误差恰为 n/3（被忘的 n 个 1 除以 3）",
+        "n=2 自检：错误公式给 17/3≠5，当场暴露",
+        "修补：推导完必做端点数值自检"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 62,
+        "line_end": 66
+      },
+      "fill_hint": "忘常数项的完整错误计算 + n=2 早暴露技巧；数值带核验标记。",
+      "content": "**误用**：把 $(k+1)^3-k^3 = 3k^2+3k+1$ 的 $+1$ 丢了，即误用 $(k+1)^3-k^3 = 3k^2+3k$。\n\n**具体错误计算**（$n=10$）：\"解出\"\n\n$$\\sum k^2 \\stackrel{?}{=} \\frac{1331-1-165}{3} = \\frac{1165}{3} \\approx 388.33【已核验:388.333333333|(11**3-1-165)/3】,$$\n\n而真值 $385$【已核验:385|sum(k*k for k in range(1,11))】，偏差 $3.33$【已核验:3.33333333333|abs(385-1165/3)】——恰是 $\\frac{\\sum 1}{3}=\\frac{10}{3}$【已核验:3.33333333333|10/3】。\n\n**失效机制**：被忘掉的 $n$ 个 $1$ 在右边贡献 $n$，除以 $3$ 后误差 $\\frac{n}{3}$；$n$ 越大错得越多（$n=100$ 时错出 $33.3$【已核验:33.3333333333|100/3】）。\n\n**修补（早暴露技巧）**：推导完代入最小端点自检。$n=2$：真值 $1+4=5$【已核验:5|sum(k*k for k in range(1,3))】，错误公式给 $\\frac{3^3-1-3\\cdot3}{3}=\\frac{17}{3}\\approx5.67$【已核验:5.66666666667|(3**3-1-3*3)/3】——不必等到 $n=10$ 就穿帮。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.3:power-sum.extension",
+      "type": "extension",
+      "subject": "power-sum",
+      "title": "拓展：Faulhaber——任意 ∑k^m 都是多项式",
+      "keywords": [
+        "∑k^m 永远是 n 的 m+1 次多项式",
+        "首项 n^{m+1}/(m+1)（与积分一致）、无常数项",
+        "∑k⁴=n(n+1)(2n+1)(3n²+3n-1)/30（n=10 时 25333）",
+        "统一封闭形式涉及 Bernoulli 数（路标）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 69,
+        "line_end": 70
+      },
+      "fill_hint": "拓展内容（切片只演示 m=2,3），∑k⁴ 公式标为拓展并给数值核对；Bernoulli 只立牌子。",
+      "content": "（拓展：切片只演示 $m=2,3$，本条指出一般规律供记忆定位。）套路逐级上爬的终点：$\\sum_{k=1}^n k^m$ 永远是 $n$ 的 $m+1$ 次多项式，首项 $\\frac{n^{m+1}}{m+1}$（与 $\\int_0^n x^m\\,dx$ 一致），无常数项。例（拓展公式）：$\\sum k^4 = \\frac{n(n+1)(2n+1)(3n^2+3n-1)}{30}$，$n=10$ 时逐项累加 $25333$【已核验:25333|sum(k**4 for k in range(1,11))】，公式代入同样给 $25333$【已核验:25333|10*11*21*(3*100+30-1)/30】。\n\n系数的统一封闭形式涉及 Bernoulli 数（拓展路标，超出切片，不展开）。实用层面两条腿：量级靠主导项 $\\frac{n^{m+1}}{m+1}$，精确系数靠现场升阶差分——忘了就现场重造，这正是本单元\"必须会复述\"的原因。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P9.3",
+        "P1.4"
+      ]
+    },
+    {
+      "id": "P1.3:power-sum.application",
+      "type": "application",
+      "subject": "power-sum",
+      "title": "推导示范的服务对象",
+      "keywords": [
+        "技能训练单元：有限和上的恒等式操作+归纳求解",
+        "复述它=同时复习 P1.1/P2.1/P1.2",
+        "P4.3 极限 ∑k²/n³→1/3 直接引用",
+        "P9.3 的 Θ 证明同源"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 60,
+        "line_end": 70
+      },
+      "fill_hint": "定位说明 + links。",
+      "content": "本小目的定位是**技能训练**：$\\sum k^2$ 的推导是\"有限和上恒等式操作 + 归纳求解\"的最小完整样本——复述一遍等于同时复习了 P1.1（望远镜）、P2.1（三次展开）、P1.2（低阶公式）。\n\n下游：P4.3 常用极限里 $\\frac{\\sum k^2}{n^3}\\to\\frac13$ 的证明就是本推导的直接引用；P9.3 的 $\\sum k^m=\\Theta(n^{m+1})$ 证明同源（主导项即升阶差分的主项）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.2",
+        "P4.3",
+        "P9.3"
+      ]
+    },
+    {
+      "id": "P1.3:power-sum.probe1",
+      "type": "probe",
+      "subject": "power-sum",
+      "title": "检验：复述 ∑k² 推导（n=4 全程代入）",
+      "keywords": [
+        "不看笔记完成升阶差分推导",
+        "n=4：左边 5³-1=124",
+        "右边 3×30+3×10+4=124，两边相等",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 62,
+        "line_end": 68
+      },
+      "fill_hint": "复述型检验题；答案数值已带核验标记。",
+      "content": "不看笔记，用升阶差分推导 $\\sum_{k=1}^n k^2$，然后取 $n=4$ 验证每一步：左边望远镜 $=(n+1)^3-1$ 是多少？右边 $3\\sum k^2+3\\sum k+n$ 是多少？两边是否相等？\n\n（答案：左边 $5^3-1=124$【已核验:124|5**3-1】；右边 $3\\times30+3\\times10+4=124$【已核验:124|3*30+3*10+4】，其中 $\\sum_{k=1}^4 k^2=30$【已核验:30|sum(k*k for k in range(1,5))】、$\\sum_{k=1}^4 k=10$【已核验:10|sum(k for k in range(1,5))】；两边相等 ✓，解出 $\\sum k^2(4)=\\frac{4\\cdot5\\cdot9}{6}=30$ ✓。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.3:power-sum.probe2",
+      "type": "probe",
+      "subject": "power-sum",
+      "title": "检验：∑k³ 的一步推导（n=3 自检）",
+      "keywords": [
+        "用 (k+1)⁴-k⁴ 求立方和",
+        "n=3：左边 4⁴-1=255",
+        "右边 4×36+6×14+4×6+3=255",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 69,
+        "line_end": 70
+      },
+      "fill_hint": "第二道检验题（核心定理 1–2 道配额）；答案数值已带核验标记。",
+      "content": "用 $(k+1)^4-k^4$ 求 $\\sum_{k=1}^n k^3$，并取 $n=3$ 自检：左边 $=$？右边 $4\\sum k^3+6\\sum k^2+4\\sum k+n$ 逐项代值后 $=$？\n\n（答案：左边 $4^4-1=255$【已核验:255|4**4-1】；右边 $4\\times36+6\\times14+4\\times6+3=255$【已核验:255|4*36+6*14+4*6+3】，其中 $\\sum k^3(3)=1+8+27=36$【已核验:36|sum(k**3 for k in range(1,4))】、$\\sum k^2(3)=14$【已核验:14|sum(k*k for k in range(1,4))】、$\\sum k(3)=6$【已核验:6|sum(k for k in range(1,4))】；两边相等 ✓，且 $36=6^2$ 印证立方和 = 和的平方。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "两条产出 ∑k² 的路线对照",
+      "keywords": [
+        "直查 F：猜闭式→验证差分→望远镜（快）",
+        "升阶差分：展开→求和→解方程（可再生产）",
+        "表是缓存，本单元是缓存失效时的再生程序",
+        "这是'必须会复述'的原因"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 60,
+        "line_end": 70
+      },
+      "fill_hint": "单元级对照表。",
+      "content": "| 路线 | 步骤 | 适用场景 |\n|---|---|---|\n| 直查 $F$（P1.1 + P1.2 表） | 猜 $F(k)=\\frac{k(k-1)(2k-1)}{6}$ → 验证差分 → 望远镜 | 已知答案只需确认 |\n| 升阶差分（本单元） | $(k+1)^3-k^3$ 展开 → 求和 → 解线性方程 | **忘了公式也能现场重造**；对任意整数幂可行 |\n\n结论：P1.2 的表是缓存，本单元是缓存失效时的再生程序——这也是切片标\"必须会复述\"的原因。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P1.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P1.3 的服务对象",
+      "keywords": [
+        "把 P1.1 思想固化为可执行程序",
+        "产出反哺 P1.2 的表",
+        "量级版服务 P9.3，极限版服务 P4.3"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 60,
+        "line_end": 70
+      },
+      "fill_hint": "单元级下游一览。",
+      "content": "本单元把 P1.1 的差分思想固化为**可执行程序**（展开→求和→解方程三步）；产出的闭式反哺 P1.2 的公式表；量级版本服务 P9.3（渐近记号），极限版本服务 P4.3（常用极限）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P1.1",
+        "P1.2",
+        "P9.3",
+        "P4.3"
+      ]
+    },
+    {
+      "id": "P1.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：sum-telescoping（差分项相消动画）",
+      "keywords": [
+        "左列画 (k+1)³-k³ 的差分柱，逐项相消成 (n+1)³-1",
+        "右列同步显示右边的 3∑k²+3∑k+n 三块面积",
+        "与 P1.1 共用模块、不同叙事",
+        "判据 Q4：离散柱状 + 简单表达式 ⟹ 前端直渲"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 62,
+        "line_end": 68
+      },
+      "fill_hint": "档1 复用 sum-telescoping 模块（清单内），叙事换成'左边差分柱相消 vs 右边多项式拼块'。",
+      "content": "演示叙事（与 P1.1 共用 sum-telescoping 模块）：左列画 $(k+1)^3-k^3$ 的差分柱（高度 $19,37,61,\\dots$），逐项对消后只剩两端 $(n+1)^3$ 与 $-1$；右列同步把右边 $3\\sum k^2+3\\sum k+n$ 画成三块面积拼图——\"两边相等\"从代数式变成两列等高柱。\n\n参数建议：$f(k)=(k+1)^3-k^3$，$n\\le5$（数值不至于爆炸：$6^3-1=215$【已核验:215|6**3-1】）。判据 Q4 ⟹ 前端直渲。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "module": "sum-telescoping",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "f": "(k+1)^3-k^3",
+          "n": 5,
+          "show": [
+            "left-cancel",
+            "right-blocks"
+          ]
+        }
+      }
+    }
+  ]
+}

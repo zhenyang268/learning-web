@@ -1,12 +1,16 @@
 {
-  "schema": "entry-card/v1",
+  "schema": "entry-card/v2",
   "code": "A1.3",
   "chapter": "A1",
   "title": "三大收敛定理（MCT / Fatou / DCT）",
-  "src": { "file": "A_analysis.tex", "line": 41, "anchor": "subsubsection 三大收敛定理" },
-  "notebook_commit": "e089f96",
-  "stage": 1,
-  "updated": "2026-09-23",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 42,
+    "line_end": 56,
+    "anchor": "notebook/A_analysis.tex:42"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
   "entries": [
     {
       "id": "A1.3:mct.statement",
@@ -21,10 +25,11 @@
         "又名 Beppo Levi 定理",
         "单调与收敛均可放宽到 a.e."
       ],
-      "tex_ref": { "file": "A_analysis.tex", "line": 48 },
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 48, "line_end": 48 },
       "fill_hint": "以 tex_ref 的 tabular 行为准转写；只补精确假设（可测性、a.e. 放宽、扩充实数处理），不另造结论",
-      "content": null,
-      "status": "seed"
+      "content": "单调收敛定理（Monotone Convergence Theorem，MCT，又名 Beppo Levi 定理）：设 $(X,\\mathcal{A},\\mu)$ 为测度空间，$\\{f_n\\}$ 是非负可测函数列，满足 $0 \\leq f_1 \\leq f_2 \\leq \\cdots$（逐点单调升）且 $f_n \\to f$ 逐点（等价地 $f = \\sup_n f_n$，允许取值 $+\\infty$），则\n\n$$\\lim_{n\\to\\infty} \\int f_n \\, d\\mu = \\int f \\, d\\mu,$$\n\n即极限与积分可以交换，且两边允许同时为 $+\\infty$。\n\n假设拆解：（i）每个 $f_n$ 非负可测——非负锁住质量的下界；（ii）单调升——锁住质量流动的方向；（iii）逐点收敛到 $f$——注意 $f$ 的可测性是推论（$\\{f > a\\} = \\bigcup_n \\{f_n > a\\}$，可数并保持可测）而非假设。\n\n两条标准放宽：单调与收敛都只需 a.e. 成立（在例外零测集上把 $f_n$ 置零，积分不变）；$f$ 可以是扩充实值函数（取 $+\\infty$），这正是 MCT 与 DCT 的硬分界——DCT 的盖子强制 $f \\in L^1$。\n\n对照切片表格（A_analysis.tex:48）：条件栏「$0 \\leq f_1 \\leq f_2 \\leq \\cdots$，$f_n \\to f$」、结论栏「$\\int f_n \\to \\int f$」。本词条只补足可测性与 a.e. 放宽这类精确化，不另造结论。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.intuition",
@@ -40,9 +45,11 @@
         "逐点极限 f(x) = sup_n f_n(x) 恰好接住全部质量，所以 ∫lim = lim∫",
         "对照组：去掉单调性后质量可以逃跑（见 general.bump / general.slide）"
       ],
+      "tex_ref": null,
       "fill_hint": "扩成一段直觉文字 + 配图建议：三维柱状/曲面（x 横、n 纵深、高度 f_n(x)），演示 ∫ f_n 截面积逐步增大；可挂 A1.3:general.viz 的 monotone 模式",
-      "content": null,
-      "status": "seed"
+      "content": "把 $(x, n) \\mapsto f_n(x)$ 看成一族离散曲面：$x$ 是横轴，$n$ 是时间轴（纵深），高度是 $f_n(x)$。MCT 的假设说的是：沿 $n$ 方向看，每一步的增量 $\\Delta f_n(x) = f_{n+1}(x) - f_n(x) \\geq 0$——符号固定为正、不依赖 $x$（用户 2026-09-23 的原始表述：MCT 研究的就是这个变化的正负性 / 方向）。\n\n假设给了什么：方向固定 ⟹ 总质量 $\\int f_n \\, d\\mu$ 作为 $n$ 的函数是单调递增数列，必有极限（$= \\sup$，可为 $\\infty$）。质量只能逐步堆积，无法在取极限时「先借后还」。\n\n结论为什么因此成立：逐点极限 $f(x) = \\sup_n f_n(x)$ 恰好在每一点接住曾经堆到的最高质量，没有多余的洞可以让质量逃走，所以 $\\int \\lim = \\lim \\int$。\n\n对照组：去掉单调性后质量可以逃跑——向无穷远滑走（general.slide）或挤进零测点（general.bump），两者都 $\\int f_n \\equiv 1$ 而 $\\int f = 0$。\n\n配图建议（挂 general.viz）：三维柱状 / 曲面图（$x$ 横、$n$ 纵深、高度 $f_n(x)$），拖动 $n$ 演示 $\\int f_n$ 截面积逐步增大。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.proof",
@@ -60,9 +67,10 @@
       ],
       "tex_ref": null,
       "fill_hint": ".tex 无证明（占位待阶段2补全）。两步写完；显式引用 A1.4 测度下连续性；参考 Rudin Ch.1 / Stein Ch.1",
-      "content": null,
+      "content": "目标：$\\lim_n \\int f_n = \\int f$。两个方向难度不对称。\n\n方向 ≤（容易）：$f_n \\leq f$（sup 的定义），由积分单调性 $\\int f_n \\leq \\int f$，取极限得 $\\lim \\int f_n \\leq \\int f$。\n\n方向 ≥（全部技巧所在）：任取简单函数 $0 \\leq s \\leq f$（回忆非负函数积分的定义：$\\int f = \\sup \\{ \\int s \\}$，$s$ 取遍 $\\leq f$ 的简单函数）。固定截断系数 $c \\in (0,1)$，令 $E_n = \\{ x : f_n(x) \\geq c \\cdot s(x) \\}$：\n\n- $E_n$ 可测（$f_n - c\\,s$ 可测）；\n- $E_n$ 递增且 $E_n \\uparrow X$：在 $s > 0$ 处 $f \\geq s > c\\,s$，而 $f_n \\uparrow f$，每个点最终被某个 $E_n$ 接住。$c < 1$ 的作用就是容忍 $s$ 的正值部分被 $f_n$「晚一点」追上，保证 $E_n$ 递增；\n- 在 $E_n$ 上 $f_n \\geq c\\,s$，故 $\\int f_n \\geq \\int_{E_n} f_n \\geq c \\int_{E_n} s \\, d\\mu$。\n\n对 $s$ 的每个取值块 $A_i = \\{ s = a_i \\}$：$\\mu(A_i \\cap E_n) \\uparrow \\mu(A_i)$，由测度下连续性（见 A1.4）得 $\\int_{E_n} s \\, d\\mu = \\sum_i a_i \\, \\mu(A_i \\cap E_n) \\to \\sum_i a_i \\, \\mu(A_i) = \\int s$。\n\n于是 $\\lim \\int f_n \\geq c \\int s$；令 $c \\to 1$、再对 $s \\leq f$ 取 sup：$\\lim \\int f_n \\geq \\int f$。\n\n依赖链：可数可加 ⟹ 测度下连续性（A1.4）⟹ MCT。证明中唯一用到测度性质的一步就是 $\\mu(A_i \\cap E_n) \\uparrow \\mu(A_i)$——这是 MCT 与可数可加的接缝（见 mct.countable-add）。\n\n易错点：不能对 $\\int_{E_n} s$ 直接「用 MCT」——那正是要证的东西；这一步必须走简单函数 + 下连续性。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.decreasing",
@@ -80,9 +88,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "反例完整计算 + 两条修补路线各给理由；与 A1.4 测度上下连续性对照（可数可加的连续性刻画）",
-      "content": null,
+      "content": "递减版不能直接套 MCT。\n\n反例：$f_n = \\mathbf{1}_{[n,\\infty)}$（$\\mathbb{R}$ 上 Lebesgue 测度）。$f_n \\downarrow 0$ 逐点（每个固定 $x$ 最终 $< n$），但 $\\int f_n = \\mu([n,\\infty)) = +\\infty$ 对每个 $n$ 恒成立，故 $\\int f_n \\equiv \\infty \\not\\to 0 = \\int f$：质量从「无穷远的尾巴」持续漏走，无人接住。\n\n失效根源必然是 $\\int f_1 = \\infty$：若 $\\int f_1 < \\infty$，则 $0 \\leq f_1 - f_n \\uparrow f_1 - f$，对 $\\{ f_1 - f_n \\}$ 用（递增版）MCT 即得结论——这就是修补路线 1（加 $f_1 \\in L^1$）。\n\n修补路线 2：$\\mu(X) < \\infty$ 时 $0 \\leq f_n \\leq f_1 \\in L^1$，被可积函数控制，实为 DCT 的特例（盖子就是 $f_1$）。\n\n同构视角：测度的上连续性（$A_n \\downarrow A \\Rightarrow \\mu(A_n) \\to \\mu(A)$）同样要求 $\\mu(A_1) < \\infty$（A1.4）——同一个坑：递减时「漏出去」的质量无人记账。对示性函数 $f_n = \\mathbf{1}_{A_n}$，两条定理逐字对应。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:fatou.statement",
@@ -95,10 +104,11 @@
         "liminf f_n = sup_n inf_{k>=n} f_k：'最终总成立'的下包络",
         "不等号可以严格（质量逃逸场景）"
       ],
-      "tex_ref": { "file": "A_analysis.tex", "line": 50 },
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 50, "line_end": 50 },
       "fill_hint": "以 tex_ref 的 tabular 行为准转写；补 liminf 的定义展开与'为什么只能得到单边'",
-      "content": null,
-      "status": "seed"
+      "content": "Fatou 引理（法图引理）：设 $\\{f_n\\}$ 是非负可测函数列——不要求单调、不要求收敛——则\n\n$$\\int \\liminf_{n\\to\\infty} f_n \\, d\\mu \\;\\leq\\; \\liminf_{n\\to\\infty} \\int f_n \\, d\\mu.$$\n\n$\\liminf$ 的展开：$\\liminf_n f_n = \\sup_n \\inf_{k \\geq n} f_k$，是「最终总成立」的下包络——扔掉每个点上前 $n$ 项的临时高峰，只留尾部必定的低谷，再对 $n$ 取上确界。\n\n三个要点：（i）只需 $f_n \\geq 0$ 可测，是三大定理中假设最弱的；（ii）结论是单边不等式——质量在极限过程中只能丢、不能凭空多（见 fatou.intuition）；（iii）不等号可以严格：$f_n = \\mathbf{1}_{[n,n+1)}$ 时 $\\int \\liminf f_n = 0 < 1 = \\liminf \\int f_n$（其中 $\\int f_{10} = \\mu([10,11)) = 1$【待核验:11-10】）。\n\n对照切片表格（A_analysis.tex:50）：条件栏只有「$f_n \\geq 0$」，结论栏是 liminf 单边不等式——假设最弱、结论也最弱，恰好互配。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:fatou.intuition",
@@ -113,8 +123,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "一段直觉 + 示意建议：画出'质量逃逸的两种方式'（对应 general.slide / general.bump），说明 Fatou 为何仍成立但严格",
-      "content": null,
-      "status": "seed"
+      "content": "一句话：质量只能丢、不能凭空多。\n\n在非单调的世界里，质量可以在取极限时逃逸：跑向无穷远（$f_n = \\mathbf{1}_{[n,n+1)}$，方块整体滑走）或挤进零测点（$f_n = n\\,\\mathbf{1}_{(0,1/n)}$，尖峰越挤越窄）。两种逃法都让 $\\int f_n$ 携带的信息在极限中丢失，所以从 $\\liminf \\int f_n$ 只能「往下」推断极限函数的积分——不等号方向只能是 $\\int \\liminf \\leq \\liminf \\int$。\n\n反过来，质量不会凭空产生：极限函数（的下包络）在每一点的高度都被某个「最终成立」的 $f_k$ 控制，其积分不可能超过 $\\int f_n$ 的尾部下确界的极限。\n\n证明思路即直觉：$g_n = \\inf_{k \\geq n} f_k$ 人为造出单调升序列（尾部下包络只增不减），归还给 MCT 处理——Fatou = 拆掉单调性假设的 MCT，代价是结论从等式降级为单边不等式。\n\n示意建议：画出「质量逃逸的两种方式」（对应 general.slide / general.bump），在图上标出 $\\liminf f_n \\equiv 0$ 与 $\\int f_n \\equiv 1$ 的落差，说明 Fatou 为何仍成立但可以严格。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:fatou.proof",
@@ -130,9 +141,10 @@
       ],
       "tex_ref": null,
       "fill_hint": ".tex 无证明（占位待阶段2补全）；强调'化归到 MCT'这一步是全部内容",
-      "content": null,
+      "content": "全部内容一句话：把非单调序列改造成单调序列，交给 MCT。\n\n构造：令 $g_n = \\inf_{k \\geq n} f_k$（逐点下确界）。可测性：$\\{ g_n \\geq a \\} = \\bigcap_{k \\geq n} \\{ f_k \\geq a \\}$，可数交保持可测。\n\n单调与非负：求 inf 的指标集随 $n$ 变小，故 $g_n \\uparrow$；$f_k \\geq 0 \\Rightarrow g_n \\geq 0$；且 $\\lim_n g_n = \\sup_n \\inf_{k \\geq n} f_k = \\liminf f_n$。\n\n对 $\\{g_n\\}$ 用 MCT：$\\lim_n \\int g_n = \\int \\liminf f_n$。\n\n比较：$g_n \\leq f_j$ 对所有 $j \\geq n$，故 $\\int g_n \\leq \\inf_{k \\geq n} \\int f_k$。串起来：\n\n$$\\int \\liminf f_n = \\lim_n \\int g_n \\leq \\lim_n \\inf_{k \\geq n} \\int f_k = \\liminf_n \\int f_n.$$\n\n依赖链：测度下连续性 ⟹ MCT ⟹ Fatou。\n\n易错点：不能写 $\\lim \\int g_n \\leq \\int f_n$ 再「对 $n$ 取极限」——中间必须经 $\\inf_{k \\geq n}$ 的链条，这正是 liminf 出现的原因。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:fatou.strict",
@@ -147,8 +159,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "对两个反例分别算出 liminf f_n 与两侧数值；一句话点明 MCT 与 Fatou 的取等关系",
-      "content": null,
-      "status": "seed"
+      "content": "严格 ⟺ 极限过程中丢了一部分质量。两个标准失效场景：\n\n逃逸到无穷远：$f_n = \\mathbf{1}_{[n,n+1)}$。逐点 $f_n \\to 0$（故 $\\liminf f_n \\equiv 0$、$\\int \\liminf f_n = 0$），但 $\\int f_n = 1$ 对每个 $n$（如 $\\int f_{10} = \\mu([10,11)) = 1$【待核验:11-10】），故 $\\liminf \\int f_n = 1$。严格不等 $0 < 1$（见 general.slide）。\n\n挤进零测点：$f_n = n\\,\\mathbf{1}_{(0,1/n)}$。同样 $\\liminf f_n \\equiv 0$、$\\int f_n = n \\cdot (1/n) = 1$（$n = 10$ 时【待核验:10*(1/10)】），严格不等 $0 < 1$（见 general.bump）。\n\n取等的充分场景：单调升。若 $f_n \\uparrow f$ 非负，则 $\\liminf f_n = f$ 且 $\\liminf \\int f_n = \\lim \\int f_n$，Fatou 的两端都化归为 MCT 的等式——MCT 正是 Fatou 的取等情形。一般判据：取等 ⟺ 极限过程中没有质量丢失。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.statement",
@@ -162,10 +175,11 @@
         "附带强化：f ∈ L^1 且 ∫ |f_n − f| → 0（L^1 收敛）",
         "不要求单调、不要求非负（对比 MCT / Fatou）"
       ],
-      "tex_ref": { "file": "A_analysis.tex", "line": 49 },
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 49, "line_end": 49 },
       "fill_hint": "以 tex_ref 的 tabular 行为准转写；补结论的 L^1 收敛强化；注明'盖子 g 与 n 无关'是一致性的来源",
-      "content": null,
-      "status": "seed"
+      "content": "控制收敛定理（Dominated Convergence Theorem，DCT）：设 $f_n \\to f$ a.e.，且存在可积函数 $g \\in L^1(\\mu)$ 使 $|f_n| \\leq g$ a.e. 对所有 $n$ 一致成立（同一个 $g$，与 $n$ 无关），则\n\n$$\\int f_n \\, d\\mu \\to \\int f \\, d\\mu.$$\n\n附带强化（DCT 的真实结论，见 dct.l1conv）：$f \\in L^1$ 自动成立（$|f| \\leq g$ a.e.），且\n\n$$\\|f_n - f\\|_1 = \\int |f_n - f| \\, d\\mu \\to 0$$\n\n（$L^1$ 收敛）——给的不只是积分值的收敛，而是 $L^1$ 范数收敛。\n\n不要求单调、不要求非负（对比 MCT / Fatou）。「盖子 $g$ 与 $n$ 无关」是一致性的来源：$g$ 把所有 $f_n$ 的高度同时压住——质量既不能挤进零测点（高度被封顶）也不能逃向无穷远（$g$ 可积逼质量回紧集）。\n\n对照切片表格（A_analysis.tex:49）：条件栏「$f_n \\to f$ a.e.，$\\exists$ 可积 $g$ 使 $|f_n| \\leq g$」、结论栏「$\\int f_n \\to \\int f$」；本词条补足的是「对所有 $n$ 一致」与 $L^1$ 强化。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.intuition",
@@ -183,9 +197,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "按两条路线展开，各配对应反例的计算（引 general.slide / general.bump 说明'没有盖子时恰好从这里漏'）；结尾指向 C6.3 一致可积作为抽象版",
-      "content": null,
+      "content": "一句话：可积盖子把质量逃逸的两条路线同时封死。\n\n极限与积分不可交换时，质量只有两条逃逸路线——路线A 逃向无穷远：$f_n = \\mathbf{1}_{[n,n+1)}$，方块滑向 $+\\infty$，最小盖子 $\\sup_n f_n = \\mathbf{1}_{[1,\\infty)} \\notin L^1$；路线B 挤进零测点：$f_n = n\\,\\mathbf{1}_{(0,1/n)}$，尖峰在 $0$ 附近越挤越窄，最小盖子 $\\sup_n f_n(x) \\approx 1/x$ 而 $\\int_0^1 dx/x = \\infty$。两个反例恰好都找不到可积盖子——这不是巧合，是盖子假设的用意（ns-progress 2026-09-18 结清的检验题）。\n\n盖子怎么封路线A：$g$ 可积 ⟹ 尾部质量 $\\int_{|x| > R} g \\to 0$（$R \\to \\infty$），全部质量被逼回紧集（紧性 / tightness），滑不走。\n\n盖子怎么封路线B：尖峰高度被 $g$ 压住，而 $g$ 可积要求它在零测点附近不能爆得太快——$1/x$ 型不可积、$1/\\sqrt{x}$ 型才可积（$\\int_0^1 x^{-1/2} dx = 2$【待核验:2*sqrt(1)-2*sqrt(0)】），质量挤不进零测点。\n\n同一机制的抽象名：可积盖子 ⟹ 一致可积（uniform integrability，见 C6.3）。分工视角：MCT 用「单调」锁质量，DCT 用「盖子」锁质量，锁的是同一样东西。",
       "links": ["C6.3"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.proof",
@@ -202,8 +217,9 @@
       ],
       "tex_ref": null,
       "fill_hint": ".tex 无证明（占位待阶段2补全）；按 g±f_n 双 Fatou 路线写全，标注易错点",
-      "content": null,
-      "status": "seed"
+      "content": "路线：两次 Fatou 夹逼（双 Fatou）。\n\n第一发，$g + f_n \\geq 0$，用 Fatou：\n$$\\int (g + f) \\leq \\liminf \\int (g + f_n) = \\int g + \\liminf \\int f_n.$$\n（$f_n \\to f$ a.e. ⟹ $g + f_n \\to g + f$ a.e.；积分线性把 $\\int g$ 拆出来。）整理得 $\\int f \\leq \\liminf \\int f_n$。\n\n第二发，$g - f_n \\geq 0$，再用 Fatou：\n$$\\int (g - f) \\leq \\liminf \\int (g - f_n) = \\int g - \\limsup \\int f_n.$$\n（易错点：$\\liminf(-a_n) = -\\limsup(a_n)$，过负号时上下极限互换。）整理得 $\\limsup \\int f_n \\leq \\int f$。\n\n合并：$\\limsup \\int f_n \\leq \\int f \\leq \\liminf \\int f_n$，而恒有 $\\liminf \\leq \\limsup$，夹逼 ⟹ $\\lim \\int f_n$ 存在且 $= \\int f$。\n\n依赖链：MCT ⟹ Fatou ⟹ DCT——DCT 是三者中假设最重、结论最强的。$L^1$ 收敛的强化见 dct.l1conv（对 $|f_n - f|$ 自己再用一次 DCT）。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:general.bump",
@@ -221,10 +237,11 @@
         "关键澄清：没有任何点发散到 ∞，是'质量'挤进零测点 {0}"
       ],
       "tex_ref": null,
-      "viz": { "module": "convergence-thm", "version": 1, "params_hint": { "mode": "bump", "n_min": 1, "n_max": 40 } },
+      "viz": { "module": "convergence-thm", "version": 1, "source": "frontend", "params_hint": { "mode": "bump", "n_min": 1, "n_max": 40 } },
       "fill_hint": "阶段2：逐项写出三大定理各自的判定（为何不适用/适用但严格）；阶段3：挂 convergence-thm 模块 bump 模式（契约见 DESIGN.md §4.3）",
-      "content": null,
-      "status": "seed"
+      "content": "定义：$f_n = n \\cdot \\mathbf{1}_{(0,1/n)}$（$\\mathbb{R}$ 上 Lebesgue 测度）——宽 $1/n$、高 $n$、面积恒为 1 的尖峰，峰体不断向 $x = 0$ 挤。\n\n逐点极限：固定 $x > 0$，当 $n > 1/x$ 时 $x \\notin (0, 1/n)$，$f_n(x) = 0$。故 $f \\equiv 0$、$\\int f = 0$。数值感受：$x = 0.05$ 时 $f_{10}(0.05) = 10$【待核验:10*(0.05<0.1)】而 $f_{100}(0.05) = 0$【待核验:100*(0.05<0.01)】——没有哪个点发散，峰只是路过。\n\n积分：$\\int f_n = n \\cdot \\mu((0,1/n)) = n \\cdot (1/n) = 1$（$n = 10$ 时【待核验:10*(1/10)】）对每个 $n$ 恒成立。于是 $\\lim \\int f_n = 1 \\neq 0 = \\int \\lim f_n$：极限与积分不可交换。\n\n三大定理逐条判定：\n- MCT 不适用：数列不单调——$f_1$ 在 $(1/2, 1)$ 上取 1 而 $f_2$ 在该处取 0；\n- DCT 不适用：最小盖子 $\\sup_n f_n(x) \\approx 1/x$（$0$ 附近），$\\int_0^1 dx/x = \\infty$，无可积盖子（见 dct.lid）；\n- Fatou 适用但严格：$\\int \\liminf f_n = 0 < 1 = \\liminf \\int f_n$。\n\n关键澄清（纠正过的误解，ns-progress 2026-09-15）：没有任何点 $f_n(x) \\to +\\infty$，是「质量」挤进零测点 $\\{0\\}$。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:general.slide",
@@ -242,11 +259,12 @@
         "与 bump 的对偶性：一个往'空间无穷远'逃，一个往'测度零集'逃"
       ],
       "tex_ref": null,
-      "viz": { "module": "convergence-thm", "version": 1, "params_hint": { "mode": "slide" } },
+      "viz": { "module": "convergence-thm", "version": 1, "source": "frontend", "params_hint": { "mode": "slide" } },
       "fill_hint": "与 general.bump 同构展开；注意 DESIGN §4.3 契约样例只列 mode=bump，slide 属阶段3的契约扩展（评估是否升 version）",
-      "content": null,
+      "content": "定义：$f_n = \\mathbf{1}_{[n,n+1)}$（$\\mathbb{R}$ 上 Lebesgue 测度）——单位质量的方块整体滑向 $+\\infty$。\n\n逐点极限：固定 $x$，当 $n > x$ 时方块已越过 $x$，$f_n(x) = 0$。故 $f \\equiv 0$、$\\int f = 0$。\n\n积分：$\\int f_n = \\mu([n, n+1)) = 1$（$n = 10$ 时【待核验:11-10】）对每个 $n$。$\\lim \\int f_n = 1 \\neq 0$：极限与积分不可交换。\n\n三大定理逐条判定：\n- DCT 不适用：$\\sup_n f_n = \\mathbf{1}_{[1,\\infty)}$，$\\int = \\infty$，无可积盖子；\n- MCT 不适用：不单调（$f_1$ 在 $[1,2)$ 上取 1，$f_2$ 在该处取 0）；\n- Fatou 适用但严格：$0 < 1$。\n\n概率语言：$f_n \\to 0$ 逐点（从而依概率）但 $L^1$ 不收敛——这是「依概率收敛不蕴含 $L^1$ 收敛」的标准反例（见 C6.1 四种收敛模式）。\n\n与 bump 的对偶性：一个往「空间无穷远」逃（路线A），一个往「测度零集」逃（路线B）；质量逃逸有且仅有这两条路，DCT 的盖子恰好各封一条（见 dct.intuition）。",
       "links": ["C6.1"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:general.compare",
@@ -262,9 +280,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "产出一张三列对照表（条件 / 结论 / 封死的逃逸路线 + 失效反例），供前端按表格直接渲染",
-      "content": null,
+      "content": "推导链：测度下连续性（A1.4）⟹ MCT ⟹ Fatou ⟹ DCT（DCT 的证明用两次 Fatou）。\n\n| 定理 | 条件 | 结论 | 封死的逃逸路线 | 失效反例 |\n|---|---|---|---|---|\n| MCT | 非负 + 单调升，$f_n \\uparrow f$ | $\\int f_n \\uparrow \\int f$（允许 $\\infty = \\infty$） | 单调锁住质量堆积方向（两条路线都封） | 去非负：$-\\mathbf{1}_{[n,\\infty)}$（mct.nonneg）；递减：$\\mathbf{1}_{[n,\\infty)}$（mct.decreasing） |\n| Fatou | 仅非负 | $\\int \\liminf f_n \\leq \\liminf \\int f_n$（单边） | 不封路线，只保证「丢质量」方向的不等式 | bump / slide：$0 < 1$，严格 |\n| DCT | $f_n \\to f$ a.e. + 可积盖子 $\\lvert f_n \\rvert \\leq g \\in L^1$（对所有 $n$ 一致） | $\\int f_n \\to \\int f$ 且 $\\| f_n - f \\|_1 \\to 0$ | 盖子封死两条路线（高度 + 紧性） | 无盖子时：bump（高度失控）/ slide（紧性失控） |\n\n分工一句话：每个假设都在封某一条质量逃逸路线——单调锁堆积方向、盖子锁高度与位置。MCT = Fatou 的取等情形；DCT = 用盖子替代单调性。选择判据见 dct.vs-mct。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:general.viz",
@@ -284,10 +303,11 @@
         "【补充】判定归属：演示是 learning-web 前端项目的职责，学习会话只记槽位与需求，不在对话里做演示"
       ],
       "tex_ref": null,
-      "viz": { "module": "convergence-thm", "version": 1, "params_hint": { "mode": ["bump", "slide", "monotone"] } },
+      "viz": { "module": "convergence-thm", "version": 1, "source": "frontend", "params_hint": { "mode": ["bump", "slide", "monotone"] } },
       "fill_hint": "阶段3：实现 src/viz/convergence-thm.ts（契约按 §4.3），modules/ 注册表 source=frontend，UI 标'前端计算·未对拍'徽标。【2026-09-23 补充】契约 v1 尚无消费方（只有 DESIGN §4.3 的文档样例），故直接改 v1 样例加入 lid / l1dist 字段、mode 定为 { bump, slide, exp }，不算破坏性变更；若届时已有消费方则升 version=2",
-      "content": null,
-      "status": "seed"
+      "content": "演示槽位：convergence-thm 模块（契约 v1 见 DESIGN.md §4.3，前端直渲，UI 标「前端计算·未对拍」徽标）。\n\n交互：拖 $n$ 滑块看 $f_n$ 曲线与 $\\int f_n$ 数值（批量返回、本地 scrub）；assumptions（nonneg / monotone / dominated）与 verdict 由计算方算出，不写死文案。\n\n模式（2026-09-23 定名）：{ bump, slide, exp }。exp $= (1+x/n)^n e^{-2x}$：同时演示 MCT 取等（单调升到 $e^{-x}$）与 DCT 有盖子（$g = e^{-x} \\in L^1$），一个模式顶两个；它取代早期的 monotone 命名。\n\n契约需新增两个序列字段：lid（最小盖子 $\\sup_{n \\leq N} |f_n|$ 的曲线，$N$ 可调）与 l1dist（$\\| f_n - f \\|_1$ 数列）——现有 §4.3 样例只有 { xs, ys, integral }，撑不起 dct.lid / dct.failure-rate / dct.l1conv 三条词条。\n\n盖子发散率同图对照：slide 的 $\\int \\sup = N$（线性）、bump 的 $\\int \\sup \\sim \\ln N$（对数；离散精确值是调和数 $H_N$，连续包络 $\\min(N, 1/x)$ 给 $1 + \\ln N$，见 dct.failure-rate 的勘误）、exp 的 $\\int \\sup = 1$（收敛，盖子 $e^{-x}$）——三者同图才有说服力。\n\ninvariant 自检：bump 模式每条 series 的 integral ≡ 1.0，偏差 > 1e-12 抛错。\n\n判定归属：演示是 learning-web 前端项目的职责，学习会话只记槽位与需求，不在对话里做演示。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:general.apps",
@@ -303,9 +323,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "每条写一句'谁用了三大定理的哪一条'即可，不展开全文；细节归各目标节点自己的词条文件",
-      "content": null,
+      "content": "谁用了三大定理的哪一条（每条一句，细节归各目标节点自己的词条文件）：\n\n- H4 蒙特卡洛积分：渲染方程的 MC 估计收敛性证明依赖 DCT（切片原文 A_analysis.tex:55「在 CG 中：渲染方程的蒙特卡洛估计收敛性证明依赖 DCT」）——CG 侧最实际的理由：DCT 经 MCT 依赖可数可加，有限可加下 MC 渲染没有理论保证。\n- C6.3 一致可积性：DCT 盖子的抽象版（依概率 → $L^1$ 的升级条件，Vitali 定理）。\n- A1.4 反面对照：有限可加的 Banach 测度上 MCT / Fatou / DCT 全部失效——三大定理恰好刻画「可数可加」的价钱（见 mct.countable-add）。\n- A1.5 Riesz–Fischer（$L^p$ 完备性）：证明用 MCT（级数版 Beppo Levi）处理快速子列的 $\\sum |f_k|$（见 mct.series）。\n- 可微渲染：参数微分穿过积分号 = DCT（见 dct.leibniz）。",
       "links": ["H4", "C6.1", "C6.3", "A1.4", "A1.5"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.quantifiers",
@@ -323,11 +344,12 @@
         "①可测性不可去：积分对不可测函数**无定义**，不是'结论失效'而是'陈述无意义'",
         "总结一句：MCT 的假设只有两条实质内容（非负锁下界、单调锁方向），其余都是可放宽或不必要的"
       ],
-      "tex_ref": { "file": "A_analysis.tex", "line": 48 },
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 48, "line_end": 48 },
       "fill_hint": "产出「限定词 | 去掉后的反例 | 结论如何失效 | 能否放宽」四列表，前端直接渲染。每行必须给**具体函数**，不许写'存在反例'",
-      "content": null,
+      "content": "把 MCT 陈述拆成 5 个限定词，逐条问「去掉 / 放宽会怎样」（每行给具体函数，不许写「存在反例」）：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $f_n$ 可测 | $\\mathbf{1}_V$（Vitali 集 $V$ 的示性函数，见 A1.4） | 积分对不可测函数无定义——不是结论失效，是陈述无意义 | 不可去；但 $f = \\sup_n f_n$ 的可测性是推论（mct.measurable） |\n| ② $f_n \\geq 0$ | $f_n = -\\mathbf{1}_{[n,\\infty)}$：单调升、逐点 ↑ 0，但 $\\int f_n = -\\infty$ | 等式反向破裂：左 $-\\infty$、右 $0$（mct.nonneg） | 可放宽为下方可积：$\\int f_1 > -\\infty$，对 $f_n - f_1 \\geq 0$ 用 MCT |\n| ③ $f_n \\leq f_{n+1}$ 单调 | $f_n = n\\,\\mathbf{1}_{(0,1/n)}$：$\\int \\equiv 1 \\not\\to 0$ | 质量挤进零测点（general.bump） | 不可去；但 $\\leq$ 不能加强为 $<$：常数列 $f_n \\equiv \\mathbf{1}_{[0,1]}$ 不严格递增却合法（mct.strict-incr） |\n| ④ $f_n \\to f$ 逐点 | ——（逐点已是陈述里最具体的收敛） | —— | 可放宽到 a.e.：积分对零测集不敏感（mct.ae） |\n| ⑤ 结论允许 $\\int f = +\\infty$ | $f_n = n\\,\\mathbf{1}_{[0,1]}$：$\\int f_n = n \\to \\infty = \\int f$，等式成立 | 不是失效，是平凡等式 $\\infty = \\infty$，不含信息（mct.infinite） | 不要求 $\\int f < \\infty$、$f_n \\in L^1$、$\\mu(X) < \\infty$——MCT 的免费午餐 |\n\n总结：MCT 的假设只有两条实质内容（非负锁下界、单调锁方向），其余都是可放宽或不必要的。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.nonneg",
@@ -345,8 +367,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "完整算一遍；强调这不是'结论变弱'而是**等式反向破裂**（左边 −∞、右边 0）；给出修补条件 ∫f_1 > −∞ 并说明它等价于'下方有可积控制'",
-      "content": null,
-      "status": "seed"
+      "content": "构造：$f_n = -\\mathbf{1}_{[n,\\infty)}$（$\\mathbb{R}$ 上 Lebesgue 测度）。\n\n单调升成立：$[n,\\infty) \\supset [n+1,\\infty)$，故 $-\\mathbf{1}_{[n,\\infty)} \\leq -\\mathbf{1}_{[n+1,\\infty)}$ 处处成立。数值验证：$x = 10$ 处 $f_5(10) = -1 \\leq f_{11}(10) = 0$【待核验:-(10>=5)】【待核验:-(10>=11)】。\n\n逐点极限：固定 $x$，当 $n > x$ 时 $x \\notin [n,\\infty)$，$f_n(x) = 0$。故 $f \\equiv 0$、$\\int f = 0$。\n\n等式反向破裂：$\\int f_n = -\\mu([n,\\infty)) = -\\infty$ 对每个 $n$ 恒成立，$\\lim \\int f_n = -\\infty \\neq 0 = \\int \\lim f_n$。这不是「结论变弱」，是等式整个破裂（左边 $-\\infty$、右边 $0$）。\n\n失效机制：负质量可以从「无穷远处」被持续抽走而无人接住——非负假设锁的正是下界。与 mct.decreasing 对偶：递减版失效要 $\\int f_1 = +\\infty$，去掉非负失效要 $\\int f_n = -\\infty$，是同一个洞的两面（无穷远处的质量无人记账）。\n\n修补：要求 $\\int f_1 > -\\infty$（即下方可积），则 $f_n - f_1 \\geq 0$ 单调升，对它用 MCT 再加回 $\\int f_1$。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.strict-incr",
@@ -363,8 +386,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "这条讲的是'数学写作惯例背后的理由'，不是新定理。写清三点：①常数序列被严格版排除 ②证明中哪一步只用到 <= ③**不要写'可严格化'**（初稿这么写过，是错的：加严格升项会改变极限、减则破坏非负）。结尾点出三大定理共用这个惯例",
-      "content": null,
-      "status": "seed"
+      "content": "问题：单调为什么写成 $\\leq$ 而不是 $<$？\n\n严格版会无谓排除合法情形：常数序列 $f_n \\equiv \\mathbf{1}_{[0,1]}$ 满足 MCT 全部实质内容（非负、单调、$\\int f_n \\equiv 1 \\to 1 = \\int f$）但不严格递增；简单函数逼近中的「平台期」同理。严格版也成立（严格递增 ⊂ 单调递增，假设更强结论不变），所以这不是对错问题而是覆盖面问题：严格版白扔一批常见情形。\n\n真正的理由是证明里只用到 $\\leq$：截断集 $E_n = \\{ f_n \\geq c \\cdot s \\}$ 的递增性只需 $f_n \\leq f_{n+1}$，严格性在证明中无处可用。\n\n易错点：不能靠「严格化」补救。想把单调升列改成严格升：加严格升的项会改变极限 $f$，减则破坏非负——两者都不行（初稿曾写「可严格化」，是错的）。故 $\\leq$ 无法化归为 $<$，只能直接用。\n\n同类现象：DCT 的 $|f_n| \\leq g$ 也是 $\\leq$（允许 $f_n$ 触及盖子，如 $f_n \\equiv g$）；Fatou 的 $f_n \\geq 0$ 也是 $\\geq$（允许恒为 0）。一般原则：分析里的不等式假设几乎总是非严格的——严格版要么无谓排除边界情形，要么在证明中根本用不上。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.measurable",
@@ -381,9 +405,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "写 {f > a} = ∪_n {f_n > a} 这一步的完整推导；明确指出它依赖可数并封闭，并引 A1.4 说明为什么'可数'二字是关键",
-      "content": null,
+      "content": "$f_n$ 可测是陈述有意义的前提：Lebesgue 积分只对可测函数定义，不可测函数谈不上 $\\int f_n$。不可测函数确实存在——Vitali 集 $V$ 的示性函数 $\\mathbf{1}_V$（见 A1.4）。\n\n但 $f = \\sup_n f_n$ 的可测性是推论不是假设：\n$$\\{ f > a \\} = \\bigcup_{n=1}^{\\infty} \\{ f_n > a \\}.$$\n推导：$f(x) > a$ ⟺ 存在 $n$ 使 $f_n(x) > a$（sup 超过 $a$ 则某项超过 $a$）。每个 $\\{ f_n > a \\}$ 可测，可数并保持可测。\n\n关键在「可数」二字：这一步用了 σ-代数对可数并封闭。若只对有限并封闭，sup 可能不可测（A1.4 的 boxed 结论：可数封闭性正是 Lebesgue 可测集族胜过有限可加代数的地方）。\n\n对照 DCT：那里 $f$ 的可测性来自 a.e. 极限 + 完备化（若测度不完备需额外小心，见 A1.4 完备化）。\n\n深层：三大定理都把「可测性」当作免费午餐，而这份免费的来源是 σ-代数的可数封闭性——与 mct.countable-add 同源：可数操作（并可测、可数可加）是整座大厦的地基。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.hyp-vs-concl",
@@ -401,8 +426,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "**必须把假设与结论分开写**，不要把单调性表述成定理的内容。给一句因果链：同号 ⟹ ∫f_n 单调数列 ⟹ 极限必存在（可为 ∞）⟹ 且等于 ∫sup f_n",
-      "content": null,
-      "status": "seed"
+      "content": "假设与结论必须分开写：「沿 $n$ 的变化方向固定为正、不依赖 $x$」——该描述精确命中的是 MCT 的条件（$0 \\leq f_1 \\leq f_2 \\leq \\cdots$）；MCT 真正在说的是回报。\n\n假设给了什么：增量 $\\Delta f_n(x) = f_{n+1}(x) - f_n(x) \\geq 0$ 处处同号。\n\n结论是什么：质量无处可逃 ⟹ $\\int f_n \\uparrow \\int f$（积分号可以穿过极限）。因果链：同号 ⟹ $\\int f_n$ 是单调数列 ⟹ 极限必存在（可为 $\\infty$）⟹ 且等于 $\\int \\sup_n f_n$。\n\n区别的价值：单调性本身是白给的（那是你假设的），值钱的是「单调 ⟹ 可交换」。\n\n「不依赖 $x$」要拆两层：单调性是逐点的（对每个 $x$ 各自成立，不要求一致）；真正与 $x$ 无关的是符号（不等号对所有 $x$ 同号）。符号一致 ≠ 一致收敛：MCT 比一致收敛弱得多却仍够用——一致收敛 + $\\mu(X) < \\infty$ 也能交换积分，但那要求「收敛速度不依赖 $x$」，MCT 只要求「方向不依赖 $x$」。这是它的力量所在。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.ae",
@@ -419,9 +445,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "写清'为什么 a.e. 够用'要引 A1.5 的 a.e. 等价类，不要只说'显然'；把 N_n 依赖 n 的陷阱单列一句，指向 dct.why-ae",
-      "content": null,
+      "content": "放宽陈述：$f_n \\uparrow f$ 只需 a.e. 成立、$f_n \\geq 0$ 只需 a.e. 成立，结论不变。\n\n为什么够用：积分对零测集不敏感——$f = g$ a.e. ⟹ $\\int f = \\int g$（$L^p$ 按 a.e. 等价类定义，见 A1.5）。\n\n标准做法：设例外零测集 $N$，在 $N$ 上把 $f_n$ 置零得 $f_n'$，则 $\\int f_n' = \\int f_n$ 且 $f_n'$ 处处满足假设，对 $f_n'$ 用逐点版再把结论搬回来。\n\n$f$ 本身可以取 $+\\infty$（扩充实值函数）：这是 MCT 与 DCT 的硬分界——DCT 的盖子强制 $f \\in L^1$（$|f| \\leq g$），MCT 允许 $\\int f = \\infty$。\n\na.e. 不是最宽的：还能放宽到依测度收敛，但那要付出子列论证的代价（见 dct.measure-conv）。\n\n陷阱：每个 $f_n$ 的例外集 $N_n$ 可以依赖 $n$。合并 $N = \\bigcup_n N_n$ 时需要 $\\mu(N) \\leq \\sum_n \\mu(N_n) = 0$——这一步用可数次可加性（与 dct.why-ae 的论证同一条）。",
       "links": ["A1.5"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.infinite",
@@ -438,8 +465,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "给出'什么时候 MCT 的结论是有信息的'判据；与 dct.vs-mct 呼应（DCT 用更重假设换非平凡结论）",
-      "content": null,
-      "status": "seed"
+      "content": "例：$f_n = n \\cdot \\mathbf{1}_{[0,1]}$，则 $f_n \\uparrow f \\equiv \\infty$（在 $[0,1]$ 上），$\\int f_n = n \\to \\infty = \\int f$——等式成立（$n = 10$ 时 $\\int f_{10} = 10$【待核验:10*1】）。\n\nMCT 不需要：$\\int f < \\infty$、$f \\in L^1$、$\\mu(X) < \\infty$、任何支配函数——这是它的免费午餐。\n\n代价：结论可能是 $\\infty = \\infty$ 这种平凡等式，不含信息。使用判据：要先独立确认 $\\int f < \\infty$（或 $\\int f_n$ 有界），MCT 才给出有用结论。\n\n对照 DCT：盖子 $g \\in L^1$ 直接强制 $\\int f \\leq \\int g < \\infty$，所以 DCT 的结论永远非平凡——这是它假设更重的回报（见 dct.vs-mct）。\n\n实践含义：MCT 常用来证明某积分有限（先对截断列 $f_n = \\min(f, n)$ 算 $\\int f_n$ 的极限，见 mct.probe1 的实操），也常用来证明某积分无限（$\\int f_n$ 无界 ⟹ $\\int f = \\infty$，反证法方向）。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.series",
@@ -456,9 +484,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "写 s_N ↑ s 到 ∫s_N ↑ ∫s 的两行证明，再写 Riesz–Fischer 里具体用在哪一步（快速子列 + 2^(−k) 估计）",
-      "content": null,
+      "content": "级数版（Beppo Levi 定理）：$g_k \\geq 0$ 可测，则\n$$\\int \\sum_{k=1}^{\\infty} g_k \\, d\\mu = \\sum_{k=1}^{\\infty} \\int g_k \\, d\\mu$$\n（两边可同时为 $\\infty$）。\n\n证法两行：令 $s_N = \\sum_{k \\leq N} g_k$，则 $s_N \\geq 0$、$s_N \\uparrow s = \\sum_k g_k$，对 $\\{ s_N \\}$ 用 MCT 得 $\\int s_N \\uparrow \\int s$，而 $\\int s_N = \\sum_{k \\leq N} \\int g_k$（有限和的线性）。\n\n这是 A1.5 Riesz–Fischer（$L^p$ 完备性）的引擎：取快速子列使 $\\| f_{n_{k+1}} - f_{n_k} \\|_p < 2^{-k}$，对 $\\sum_k |\\Delta f_k|^p$ 用逐项积分：$\\int \\sum_k |\\Delta f_k|^p = \\sum_k \\int |\\Delta f_k|^p \\leq \\sum_k 2^{-kp} < \\infty$（取 $p = 1$ 示意：前 10 项已和 $0.9990$【待核验:sum(2**(-k) for k in range(1,11))】，全和 $= 1$）⟹ $\\sum_k |\\Delta f_k|^p < \\infty$ a.e. ⟹ 子列 a.e. 收敛。\n\n下游：Fubini–Tonelli 的非负半边同样是它（交换求和 / 积分顺序的合法性）。\n\nCG 落点：H4 蒙特卡洛的方差分析、路径追踪的级数展开（Neumann 级数）都依赖逐项积分合法性。\n\n注意：级数版不需要 $\\sum \\int g_k$ 收敛——这是它比 DCT 系列工具好用的地方。",
       "links": ["A1.5", "H4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:mct.countable-add",
@@ -473,11 +502,12 @@
         "这解释了 A_analysis.tex:110 那张表为什么成立：Banach 测度（只有限可加）上 MCT/Fatou/DCT 全灭",
         "CG 后果（A_analysis.tex:121-122）：有限可加下 MC 渲染没有理论保证 —— 这是整条依赖链最实际的落点"
       ],
-      "tex_ref": { "file": "A_analysis.tex", "line": 103 },
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 103, "line_end": 122 },
       "fill_hint": "**这条是 A1.3 与 A1.4 的接缝**，必须写清双向蕴含（正向用下连续性、反向用示性函数）；不要只说'MCT 需要可数可加'。tex_ref 103-122 是 Banach 测度那张表",
-      "content": null,
+      "content": "这条是 A1.3 与 A1.4 的接缝：MCT（限制在示性函数上）⟺ 可数可加。\n\n正向：MCT 证明中唯一用到测度性质的一步是 $\\mu(A_i \\cap E_n) \\uparrow \\mu(A_i)$——即测度下连续性；而下连续性 ⟺ 可数可加（A1.4：$A_n \\uparrow A \\Rightarrow \\mu(A_n) \\to \\mu(A)$ 是可数可加的连续性刻画）。\n\n反向：对示性函数用 MCT 可推出下连续性——设 $A_n \\uparrow A$，取 $f_n = \\mathbf{1}_{A_n}$，则 $f_n \\geq 0$、$f_n \\uparrow \\mathbf{1}_A$，MCT 给 $\\mu(A_n) = \\int f_n \\to \\int \\mathbf{1}_A = \\mu(A)$；下连续性 ⟹ 可数可加（A1.4 的标准等价刻画）。\n\n结论：两者是同一件事的两种说法——积分形式的可数可加 = MCT。\n\n这解释了 A_analysis.tex:110 那张表为什么成立：Banach 测度（只有限可加）上 MCT / Fatou / DCT 全灭——因为证明里那一步下连续性在有限可加下不成立。\n\nCG 后果（A_analysis.tex:121-122）：有限可加下 MC 渲染没有理论保证——渲染方程 MC 估计的收敛性证明依赖 DCT、DCT 依赖 Fatou、Fatou 依赖 MCT、MCT 依赖可数可加。这是整条依赖链最实际的落点。",
       "links": ["A1.4", "H4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.quantifiers",
@@ -495,11 +525,12 @@
         "额外可放宽：μ(X) < ∞ 时 g 可取常数 ⟹ 退化为有界收敛定理 BCT（见 dct.bct）",
         "总结一句：DCT 的实质内容是'一致的可积上界'，'一致'与'可积'两字缺一不可，'绝对值'第三字不可缺"
       ],
-      "tex_ref": { "file": "A_analysis.tex", "line": 49 },
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 49, "line_end": 49 },
       "fill_hint": "产出「限定词 | 去掉后的反例 | 结论如何失效 | 能否放宽」四列表。**每一条都必须配一个具体函数**，禁止写'存在反例'了事。与 mct.quantifiers 同构，便于前端并排渲染",
-      "content": null,
+      "content": "把 DCT 陈述拆成 6 个限定词，逐条问「去掉 / 放宽会怎样」（每行配具体函数，禁止写「存在反例」了事）：\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $f_n$ 可测 | $\\mathbf{1}_V$（Vitali 集） | 积分无定义——陈述无意义 | 不可去；$f$ 的可测性由 a.e. 极限 + 完备化补上（mct.measurable 同款论证） |\n| ② $f_n \\to f$ a.e. | ——（收敛是前提，不是可去条件） | —— | 逐点太强、依测度也够（子列论证，dct.measure-conv）；为什么默认 a.e. 见 dct.why-ae |\n| ③ $g \\in L^1$ 可积 | slide：$\\sup_n f_n = \\mathbf{1}_{[1,\\infty)}$ 不可积 | $\\int f_n \\equiv 1 \\not\\to 0$ | 不可去；三种松法见 dct.g-integrable；$\\mu(X) < \\infty$ 时可取常数 ⟹ BCT（dct.bct） |\n| ④ $\\lvert f_n \\rvert \\leq g$ 对所有 $n$ 一致 | bump：每个 $f_n$ 各自可积（$\\int f_n = 1$）但无可积统一盖子 | $\\int f_n \\equiv 1 \\not\\to 0$（量词顺序 $\\forall n\\,\\exists g_n \\neq \\exists g\\,\\forall n$，dct.unif-in-n） | 不可去——最容易误读的一条 |\n| ⑤ 绝对值 $\\lvert f_n \\rvert$ 而非单边 $f_n \\leq g$ | $f_n = -n\\,\\mathbf{1}_{(0,1/n)}$，$g = \\mathbf{1}_{[0,1]}$：单边成立但 $\\int f_n = -1 \\not\\to 0$ | 负质量逃向 $-\\infty$（dct.abs-value） | 单边版本需配对条件（$-g \\leq f_n$，或额外 $\\inf \\int f_n > -\\infty$） |\n| ⑥ 结论含 $L^1$ 收敛 | ——（是强化不是限制） | —— | $\\| f_n - f \\|_1 \\to 0$（dct.l1conv） |\n\n总结：DCT 的实质内容是「一致的可积上界」——「一致」与「可积」两字缺一不可，「绝对值」第三字不可缺。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.why-ae",
@@ -517,9 +548,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "按'太强/够用/更弱'三档组织。可数次可加那一步要写全（N = ∪N_n 的估计），它是整条的唯一技术核心。结尾点出 a.e. 与完备化的关系，引 A1.4",
-      "content": null,
+      "content": "逐点太强：分析里自然产生的极限常常只在 a.e. 意义下存在。例：Riesz–Fischer 的快速子列只保证 a.e. 收敛；Fourier 级数的部分和只在 a.e. 收敛（Carleson 定理）。\n\na.e. 够用：积分看不见零测集——在例外集 $N$ 上重定义 $f_n$、$f$ 不改变任何 $\\int$ 的值，所以逐点版本自动升级为 a.e. 版本。\n\n例外集可以依赖 $n$，但仍安全（唯一技术核心）：设 $f_n \\to f$ 在 $N_n^c$ 上逐点成立、$f_n \\geq 0$ 在 $M_n^c$ 上成立，合并 $N = (\\bigcup_n N_n) \\cup (\\bigcup_n M_n)$，则\n$$\\mu(N) \\leq \\sum_n \\mu(N_n) + \\sum_n \\mu(M_n) = 0$$\n——用可数次可加性。这是 a.e. 能「逐层放宽」的技术根据。\n\n依测度也够（更弱）：$f_n \\to f$ 依测度 + $|f_n| \\leq g$ ⟹ 结论不变，证法是子列论证（见 dct.measure-conv）。\n\n为什么教科书默认写 a.e.：它是「够用的最弱常见条件」，且不需要引入依测度收敛的机器；概率论里则默认写依概率（= 依测度）。\n\na.e. 不是免费的：若测度空间不完备，a.e. 极限的可测性需要额外论证（A1.4 的完备化）——这是 Vitali 集那类病态的来源。",
       "links": ["A1.4", "A1.5", "C6.1"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.unif-in-n",
@@ -538,8 +570,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "这条是**用户直接点名的问题**，要写透。开头就用量词顺序 ∀∃ vs ∃∀ 点明区别，再给两个反例 + 一个正例（含核验数值）。结尾解释证明里 g 为什么必须统一（两次 Fatou）",
-      "content": null,
-      "status": "seed"
+      "content": "核心区分：量词顺序决定生死。「每个 $f_n$ 各自可积」是 $\\forall n\\, \\exists g_n$（$g$ 可以随 $n$ 换）；DCT 要的是 $\\exists g\\, \\forall n$（一个 $g$ 管住全部）。前者几乎不蕴含任何关于极限的信息。\n\n反例 bump：$f_n = n\\,\\mathbf{1}_{(0,1/n)}$。每个 $f_n$ 都可积（$\\int f_n = 1 < \\infty$【待核验:10*(1/10)】）、逐点 $\\to 0$，但 $\\int f_n = 1 \\not\\to 0$。失败原因：最小盖子 $\\sup_n f_n(x) \\approx 1/x$（$0$ 附近），$\\int_0^1 dx/x = \\infty$，不存在统一的 $g$。\n\n反例 slide：$f_n = \\mathbf{1}_{[n,n+1)}$。每个都可积（$\\int = 1$），但 $\\sup_n f_n = \\mathbf{1}_{[1,\\infty)}$ 不可积。\n\n对照正例：$f_n = (1+x/n)^n e^{-2x}$（$x \\geq 0$）逐点 $\\uparrow e^{-x}$，盖子 $g = e^{-x} \\in L^1$ 对所有 $n$ 一致（$(1+x/n)^n \\leq e^x$）⟹ DCT 适用，$\\int f_n \\to 1$。数值：$n = 1, 2, 5, 10, 50, 200$ 时 $\\int f_n = 0.75, 0.8125, 0.8866, 0.9294, 0.9817, 0.9951$（核验 $n{=}1$【待核验:sum(factorial(1)/factorial(1-k)/(1**k*2**(k+1)) for k in range(2))】与 $n{=}10$【待核验:sum(factorial(10)/factorial(10-k)/(10**k*2**(k+1)) for k in range(11))】，其余同法）。\n\n为什么「一致」是实质内容：证明里 $g$ 要被拿去用两次 Fatou（对 $g + f_n$ 与 $g - f_n$），同一个 $g$ 必须同时管住所有 $n$，否则 liminf / limsup 的估计在每一步换盖子，链条断开。\n\n实操检验法：算 $\\sup_n |f_n|$ 的积分——收敛 ⟹ DCT 可用；发散 ⟹ 一定不可用（见 dct.lid）。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.abs-value",
@@ -557,8 +590,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "先给反例的显式验证（f_n <= g 成立、|f_n| <= g 不成立、∫f_n = −1），再讲失效机制。最后与 Fatou 对照：为什么 Fatou 单边就够（因为它只声称单边不等式）",
-      "content": null,
-      "status": "seed"
+      "content": "反例：$f_n = -n \\cdot \\mathbf{1}_{(0,1/n)}$，取 $g = \\mathbf{1}_{[0,1]}$（$\\int g = 1 < \\infty$，可积）。\n\n逐项验证：\n- 单边 $f_n \\leq g$ 处处成立：左边 $\\leq 0 < 1$；\n- 绝对值版 $|f_n| \\leq g$ 不成立：$n = 2$ 时 $|f_2| = 2\\,\\mathbf{1}_{(0,1/2)}$，在 $(0, 1/2)$ 上取值 $2 > 1 = g$（取 $x = 0.25$：$|f_2(0.25)| = 2$【待核验:2*(0.25<0.5)】而 $g(0.25) = 1$）；\n- 结论崩溃：$\\int f_n = -n \\cdot (1/n) = -1$ 对每个 $n$（$n = 10$ 时【待核验:-10*(1/10)】），而 $f \\equiv 0 \\Rightarrow \\int f = 0$，$-1 \\not\\to 0$。\n\n失效机制：单边控制只封住了「向上逃」，负质量可以无限制地逃向 $-\\infty$（挤进零测点 $\\{0\\}$）。\n\n对偶视角：与 mct.nonneg 是同一个洞——都是「负质量无人看管」（缺下界）。\n\n正确的单边版本存在但要配对：$-g \\leq f_n \\leq g$（双边）等价于 $|f_n| \\leq g$；若只有 $f_n \\leq g$ 则需额外要求 $\\inf_n \\int f_n > -\\infty$。\n\nFatou 的对照：Fatou 只要 $f_n \\geq 0$（单边！）就成立，但结论也降级为单边不等式——单边假设配单边结论，双边假设配等式结论。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.g-integrable",
@@ -575,9 +609,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "三种松法各配一个具体函数 + 积分计算。临界幂次那两条（p>1 / p<1）要写清是两端相反的，这是初学者最常记反的地方",
-      "content": null,
+      "content": "松法1：$g \\equiv \\infty$——等于没有盖子。bump / slide 都是这种情形的具体化（$\\sup_n$ 不可积）。\n\n松法2：$g$ 有界但空间无穷。$g = 1$（常数）在 $\\mathbb{R}$ 上不可积（$\\mu(\\mathbb{R}) = \\infty$）。slide 序列满足 $|f_n| \\leq 1$ 却失效——「有界」不等于「可积」，差别就在 $\\mu(X)$。\n\n松法3：$g$ 的可积性差一点。$g(x) = 1/x$ 在 $(0,1)$ 上 $\\int_0^1 dx/x = \\infty$——正好是 bump 的最小盖子；而 $g(x) = 1/\\sqrt{x}$ 在 $(0,1)$ 上 $\\int_0^1 x^{-1/2} dx = 2 < \\infty$ 可积【待核验:2*sqrt(1)-2*sqrt(0)】——差一个幂次就翻天。\n\n临界幂次（两端相反，初学者最常记反）：\n- $\\mathbb{R}$ 上（$\\infty$ 处，尾部）：$1/x^p$ 可积 ⟺ $p > 1$；\n- $(0,1)$ 上（$0$ 附近，尖点）：$1/x^p$ 可积 ⟺ $p < 1$。\n这是「尾部」与「尖点」的对偶。\n\n实用判据：$g$ 不可积 ⟹ DCT 判死；但可以试着截断（$g_R = g \\cdot \\mathbf{1}_{[-R,R]}$）——若截断后尾部 $\\int_{|x|>R} g \\to 0$ 则原 $g$ 其实可积（这正是 $g \\in L^1$ 的等价刻画）。\n\nCG 关联：渲染方程的被积函数常有 $1/\\cos\\theta$ 型奇点，能否找到可积盖子直接决定 MC 估计的合法性（H4）。",
       "links": ["H4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.lid",
@@ -595,8 +630,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "写双向证明（各一两行）。重点落在'实操结论'那句：把'找盖子'这个存在性难题变成'算 sup'这个计算问题",
-      "content": null,
-      "status": "seed"
+      "content": "命题：存在可积盖子 ⟺ $\\sup_n |f_n| \\in L^1$。\n\n⟸ 直接：取 $g = \\sup_n |f_n|$，则 $|f_n| \\leq g$ 且 $g$ 可积。\n\n⟹ 任何盖子 $g$ 都满足 $\\sup_n |f_n| \\leq g$ a.e.，由积分单调性 $\\int \\sup_n |f_n| \\leq \\int g < \\infty$，故 $\\sup_n |f_n|$ 可积。\n\n所以 $\\sup_n |f_n|$ 就是最小盖子（minimal lid），DCT 可用 ⟺ 它可积。\n\n可测性不成问题：可数个可测函数的 sup 仍可测——$\\{ \\sup_n f_n > a \\} = \\bigcup_n \\{ f_n > a \\}$，与 mct.measurable 同一论证。\n\n实操结论：判断 DCT 能不能用，不需要「找」盖子（存在性问题），只需要算 $\\sup_n |f_n|$ 并判断它可不可积（计算问题）。\n\n发散率有信息（见 dct.failure-rate）：slide 的 $\\int \\sup_{n \\leq N} = N$（线性），bump 的 $\\int \\sup_{n \\leq N} = H_N \\sim \\ln N$（对数）——差一个量级。\n\n使用纪律：任何「DCT 不适用」的断言都应改写为「$\\sup_n |f_n|$ 不可积」——后者是可计算的，前者只是断言。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.failure-rate",
@@ -614,8 +650,9 @@
       ],
       "tex_ref": null,
       "fill_hint": "给出两个 sup 的显式计算 + 上面这组核验数值（表格形式）。最后一段'发散率决定正则化可行性'是这条的价值所在，不要省",
-      "content": null,
-      "status": "seed"
+      "content": "slide：$\\sup_{n \\leq N} \\mathbf{1}_{[n,n+1)} = \\mathbf{1}_{[1,N+1)}$，$\\int = N$——线性发散（$N = 16$ 时 $= 16$【待核验:17-1】）。\n\nbump：$\\sup_{n \\leq N} n\\,\\mathbf{1}_{(0,1/n)}$——$x \\in (1/(k{+}1),\\, 1/k]$ 时 sup $= \\min(N, k)$，逐段积分得离散精确值\n$$\\int_0^1 \\sup_{n \\leq N} f_n \\, dx = \\sum_{k=1}^{N-1} \\frac{1}{k+1} + 1 = H_N = 1 + \\tfrac{1}{2} + \\cdots + \\tfrac{1}{N},$$\n对数发散（$H_N \\approx \\ln N + \\gamma$，$\\gamma \\approx 0.5772$）。\n\n数值对照（离散精确值 $H_N$ vs 连续包络 $\\min(N, 1/x)$ 的 $1 + \\ln N$）：\n\n| $N$ | $H_N$（离散精确） | $1 + \\ln N$（连续包络） |\n|---|---|---|\n| 4 | 2.0833【待核验:sum(1/k for k in range(1,5))】 | 2.3863【待核验:1+log(4)】 |\n| 8 | 2.7179【待核验:sum(1/k for k in range(1,9))】 | 3.0794【待核验:1+log(8)】 |\n| 16 | 3.3807【待核验:sum(1/k for k in range(1,17))】 | 3.7726【待核验:1+log(16)】 |\n| 64 | 4.7439【待核验:sum(1/k for k in range(1,65))】 | 5.1589【待核验:1+log(64)】 |\n\n（勘误：初稿 keywords 里「核验数据 2.3863, 3.0794, …」核的是连续包络 $\\min(N, 1/x)$ 的积分，不是离散 sup 的精确值——后者是 $H_N$。两者同阶对数发散，量级结论不变。）\n\n含义：两者都不可积，但发散速度差一个量级——尖峰反例「更接近」有盖子，滑动反例「差得远」。\n\n为什么这有信息：发散率决定正则化能否救回收敛。对数发散时截断 / 加权常能补救（如引入 $e^{-\\varepsilon x}$ 因子）；线性发散通常需要改变问题本身。\n\n正例对照：$(1+x/n)^n e^{-2x}$ 的最小盖子 $= e^{-x}$，$\\int_0^\\infty e^{-x} dx = 1$ 收敛（$f_n \\leq g$ 对所有 $n$ 处处成立）。",
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.l1conv",
@@ -634,9 +671,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "把'对 |f_n−f| 自己再用一次 DCT'这个自指技巧写清楚（这是初学者最容易卡的一步：需要先知道 |f_n−f| <= 2g）。附核验数值表",
-      "content": null,
+      "content": "DCT 给的不只是 $\\int f_n \\to \\int f$，而是\n$$\\| f_n - f \\|_1 = \\int |f_n - f| \\, d\\mu \\to 0.$$\n\n证法（自指技巧）：$|f_n - f| \\leq |f_n| + |f| \\leq 2g \\in L^1$（盖子白送控制），且 $|f_n - f| \\to 0$ a.e.，对序列 $\\{ |f_n - f| \\}$ 自己再用一次 DCT ⟹ $\\int |f_n - f| \\to 0$。初学者最容易卡的一步：需要先知道 $|f_n - f| \\leq 2g$——第二个 DCT 的盖子是 $2g$。\n\n推论：$f \\in L^1$ 自动成立（$|f| \\leq g$ a.e.）。\n\n核验数据（bump / slide，反例）：两者 $\\| f_n - f \\|_1 \\equiv 1 \\not\\to 0$（$f \\equiv 0$；$n = 10$ 时【待核验:10*(1/10)】），与 $\\int f_n \\equiv 1 \\not\\to 0 = \\int f$ 一致失败。\n\n核验数据（正例 exp）：$\\| f_n - f \\|_1 = 1 - \\int f_n$（$f_n \\leq f$ 单调升），$n = 1, 2, 5, 10, 50, 200$ 时 $= 0.25, 0.1875, 0.1134, 0.0706, 0.0183, 0.0049$（核验 $n{=}10$ 项【待核验:1-sum(factorial(10)/factorial(10-k)/(10**k*2**(k+1)) for k in range(11))】，其余同法）$\\to 0$。\n\n对比 MCT：MCT 只给 $\\int f_n \\uparrow \\int f$，不给 $L^1$ 收敛（可能 $\\infty = \\infty$，$\\| \\cdot \\|_1$ 无定义）。\n\n为什么 $L^1$ 收敛才是分析真正需要的：它保证 $f_n$ 在 $L^1$ 中是 Cauchy 列，A1.5 的完备性（Riesz–Fischer）可以接上。\n\n更强的替代路线：Scheffé 引理在不要盖子的情况下从 $\\int f_n \\to \\int f$ 直接得 $L^1$ 收敛（见 dct.scheffe）。",
       "links": ["A1.5", "C6.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.bct",
@@ -653,9 +691,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "重点写'两个反例各破一个条件'这个对照（bump 破有界、slide 破 μ 有限），这是本条的记忆锚点",
-      "content": null,
+      "content": "有界收敛定理（BCT）：$\\mu(X) < \\infty$ 且 $|f_n| \\leq M$（一致有界）⟹ $\\int f_n \\to \\int f$。\n\n为什么是 DCT 的特例：常数 $M$ 就是盖子——$M \\cdot \\mathbf{1}_X$ 可积，$\\int M \\, d\\mu = M \\cdot \\mu(X) < \\infty$。所以 BCT 不是独立定理。\n\n概率里的默认设置：$P(\\Omega) = 1 < \\infty$，故「一致有界 + 依概率收敛 ⟹ $L^1$ 收敛」直接可用。\n\n记忆锚点——两个反例各破一个条件：\n- bump 活在 $(0,1)$ 上（$\\mu$ 有限！）但无界（高度 $n \\to \\infty$）；\n- slide 在 $\\mathbb{R}$ 上（有界，$|f_n| \\leq 1$！）但 $\\mu$ 无限（方块滑出任何紧集）。\n合起来说明 BCT 的两个条件都必需——把「BCT 的两个条件」变成「两个反例各破一个」，比抽象论证好记得多。\n\n出处：Lebesgue bounded convergence theorem，Rudin 里作为 DCT 的推论出现。",
       "links": ["C6.1"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.measure-conv",
@@ -672,9 +711,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "写清'子列论证'这一步（依测度 ⟹ 有 a.e. 收敛子列），不必展开全部 ε-δ。标注这是 Folland / Rudin 里的标准加强形式，非原创",
-      "content": null,
+      "content": "标准加强形式（Folland / Rudin）：$f_n \\to f$ 依测度（$\\mu\\{|f_n - f| > \\varepsilon\\} \\to 0$ 对每个 $\\varepsilon > 0$）+ $|f_n| \\leq g \\in L^1$ ⟹ $\\int f_n \\to \\int f$ 且 $\\| f_n - f \\|_1 \\to 0$。\n\n证法：反证 + 子列。若结论不成立，则存在子列 $\\{ f_{n_k} \\}$ 使 $| \\int f_{n_k} - \\int f | \\geq \\varepsilon_0$；但依测度收敛 ⟹ 存在 a.e. 收敛的进一步子列（每 $j$ 取 $n_{k_j}$ 使 $\\mu\\{ |f_{n_{k_j}} - f| > 2^{-j} \\} < 2^{-j}$，由 Borel–Cantelli 换出 a.e. 收敛）；对它用标准 DCT 得 $\\int f_{n_{k_j}} \\to \\int f$，矛盾。\n\n为什么重要：概率里依测度（= 依概率）收敛是常态，a.e. 收敛常拿不到——强大数定律给 a.e.，弱大数定律只给依概率。\n\n与 a.e. 的关系：a.e. 收敛 ⟹ 依测度收敛（当 $\\mu(X) < \\infty$，Egorov 定理的方向）；反向不成立（经典反例：typewriter 扫描序列，见 C6.2 反例博物馆）。\n\n与 Vitali 的关系：Vitali 收敛定理也接受依测度收敛，两者在「放宽收敛模式」这个维度上同向（见 dct.vitali）。\n\n代价：子列论证是非构造性的，且每次只能处理一个子列——这是比 a.e. 版本弱的地方。",
       "links": ["C6.1", "C6.3"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.vitali",
@@ -693,11 +733,12 @@
         "好处：很多 DCT 用不上的场合 Vitali 能用（依概率收敛的序列往往没有盖子），这是概率论的标准工具",
         "【纠错记录 2026-09-23】初稿举的例子 f_n = n·1_(0,1/n^2) 是**错的** —— 已核验 ∫sup_n f_n = 1.6445 ≈ π^2/6 有限，它其实**有**可积盖子，证明不了'UI ⇏ 盖子'。现例已改为上述 1/x 切片版"
       ],
-      "tex_ref": { "file": "C_partial.tex", "line": 132 },
-      "fill_hint": "**这条是 A1.3 通向概率论的桥**。写清'盖子 ⟹ UI'的证明思路（用 ∫_{g>M} g → 0），并给出反向不成立的显式反例（n·1_(0,1/n^2)）。tex_ref 是 C6.3 一致可积性小节（含 Vitali 定理陈述）",
-      "content": null,
+      "tex_ref": { "file": "C_partial.tex", "line_start": 132, "line_end": 132 },
+      "fill_hint": "**这条是 A1.3 通向概率论的桥**。写清'盖子 ⟹ UI'的证明思路（用 ∫_{g>M} g → 0），并给出反向不成立的显式反例（1/x 切片版，见 keywords 纠错记录）。tex_ref 是 C6.3 一致可积性小节（含 Vitali 定理陈述）",
+      "content": "Vitali 收敛定理 = DCT 的推广：用一致可积性（UI）替代可积盖子。\n\nUI 定义（C6.3）：$\\sup_n \\int_{\\{|f_n| > M\\}} |f_n| \\, d\\mu \\to 0$（$M \\to \\infty$）——质量既不集中到小集合、也不跑到无穷远。\n\n定理：$\\mu(X) < \\infty$、$f_n \\to f$（a.e. 或依测度）、$\\{f_n\\}$ UI ⟹ $f \\in L^1$ 且 $\\| f_n - f \\|_1 \\to 0$。\n\n蕴含关系（盖子 ⟹ UI）：$\\int_{\\{|f_n| > M\\}} |f_n| \\leq \\int_{\\{g > M\\}} g \\to 0$（$M \\to \\infty$，由 $g$ 可积——可积函数的尾部质量趋零）。所以 DCT 是 Vitali 的特例。\n\n反向不成立：UI 序列可以没有统一点态上界。正确例子：$f_n = \\frac{1}{x}\\,\\mathbf{1}_{(1/(n+1),\\,1/n)}$（把 $1/x$ 切成互不相交的片）：\n- $\\sup_n f_n = 1/x$ on $(0,1)$，$\\int_0^1 dx/x = \\infty$ ⟹ 无可积盖子；\n- 但 UI 成立：$\\sup_n \\int_{\\{f_n > M\\}} f_n = \\ln(1 + 1/M) \\to 0$，数值 $M = 1, 2, 5, 20, 100, 1000$ 时 $= 0.6931, 0.4055, 0.1823, 0.0488, 0.0100, 0.0010$（核验 $M{=}1$【待核验:log(2)】、$M{=}5$【待核验:log(1+1/5)】、$M{=}1000$【待核验:log(1+1/1000)】）；\n- 还有：$f_n \\to 0$ 处处（支撑互不相交）、$\\int f_n = \\ln(1+1/n) \\to 0$（$n = 10$ 时 $\\approx 0.0953$【待核验:log(11/10)】）、$\\sup_n \\int f_n = \\ln 2$ 有界 ⟹ Vitali 可用而 DCT 不可用。\n\n【纠错记录 2026-09-23】初稿举的例子 $f_n = n\\,\\mathbf{1}_{(0,1/n^2)}$ 是错的——$\\int \\sup_n f_n = \\pi^2/6 \\approx 1.6449$【待核验:pi**2/6】有限，它其实有可积盖子，证明不了「UI ⇏ 盖子」。现例已改为上述 $1/x$ 切片版。\n\nUI 的直觉正是「盖子封死的两条路线」的抽象版：不集中到小集合 = 路线B（尖峰）、不跑到无穷远 = 路线A（滑动）。\n\n好处：很多 DCT 用不上的场合 Vitali 能用（依概率收敛的序列往往没有盖子），这是概率论的标准工具。",
       "links": ["C6.3", "C6.1"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.scheffe",
@@ -714,11 +755,12 @@
         "为什么有用：很多场合积分收敛容易验证（比如密度函数归一化 ∫p_n = ∫p = 1 天然成立），此时 Scheffé 直接给 L^1 收敛，绕过找盖子",
         "与 dct.vitali 对照：两者都是 DCT 的推广，但一个放宽 domination（Vitali 用 UI），一个把结论反过来用（Scheffé 用已知积分收敛）"
       ],
-      "tex_ref": { "file": "C_partial.tex", "line": 147 },
+      "tex_ref": { "file": "C_partial.tex", "line_start": 147, "line_end": 147 },
       "fill_hint": "写出关键恒等式 ∫|f_n−f| = 2∫(f−f_n)^+ 的推导（这步最容易错，注意要用 ∫f_n → ∫f 而非等号）。tex_ref 是 C6.4「三大定理之外的收敛定理」表格的 Scheffé 行",
-      "content": null,
+      "content": "Scheffé 引理：反方向的推广——把 DCT 的结论当已知，不要盖子。\n\n条件：$f_n, f \\geq 0$ 可积、$f_n \\to f$ a.e.、$\\int f_n \\to \\int f$。结论：$\\int |f_n - f| \\to 0$。\n\n关键恒等式（非负情形，推导最容易错的一步）：分解 $|f_n - f| = (f - f_n)^+ + (f_n - f)^+$（正部之和）。当 $\\int f_n = \\int f$ 精确成立时，$\\int (f - f_n)^+ = \\int (f_n - f)^+$（正负部积分相等），故\n$$\\int |f_n - f| = 2 \\int (f - f_n)^+.$$\n一般情形（只有 $\\int f_n \\to \\int f$）多出修正项 $\\int f_n - \\int f \\to 0$，极限不受影响。\n\n证法：$(f - f_n)^+ \\to 0$ a.e. 且 $0 \\leq (f - f_n)^+ \\leq f \\in L^1$，对它用 DCT（盖子就是 $f$；或直接用 Fatou）⟹ $\\int (f - f_n)^+ \\to 0$，代回恒等式收尾。\n\n与 DCT 的分工：DCT 是「有盖子 ⟹ 积分收敛（再得 $L^1$）」；Scheffé 是「积分收敛（已知）⟹ $L^1$ 收敛，不要盖子」。\n\n为什么有用：很多场合积分收敛容易验证——比如密度函数归一化 $\\int p_n = \\int p = 1$ 天然成立，此时 Scheffé 直接给 $L^1$ 收敛（全变差距离），绕过找盖子。这是概率论证明分布收敛的标准工具。\n\n与 dct.vitali 对照：两者都是 DCT 的推广——一个放宽 domination（Vitali 用 UI），一个把结论反过来用（Scheffé 用已知积分收敛）。",
       "links": ["C6.4", "C6.3"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.vs-mct",
@@ -736,9 +778,10 @@
       ],
       "tex_ref": null,
       "fill_hint": "与 general.compare **互补不重复**：那条是三定理总表，这条专写 MCT/DCT 的蕴含方向。必须写明'g = f'这个构造，以及 DCT 为什么覆盖不了 ∞ = ∞",
-      "content": null,
+      "content": "不对称性：谁是谁的特例？\n\n$\\int f < \\infty$ 时 MCT 是 DCT 的特例：取 $g = f$——单调升白送一个盖子（$f_n \\leq f$ 且 $f$ 可积）。\n\n反向不成立：DCT 的盖子强制 $\\int f \\leq \\int g < \\infty$，覆盖不了 MCT 的 $\\infty = \\infty$ 情形（如 $f_n = n\\,\\mathbf{1}_{[0,1]}$，$\\int f = \\infty$，任何盖子都不可积）。\n\n结论强度：DCT 给 $L^1$ 收敛（$\\| f_n - f \\|_1 \\to 0$），MCT 只给积分收敛（可能 $\\infty = \\infty$，$\\| \\cdot \\|_1$ 无定义）。\n\n假设强度：MCT 要单调 + 非负；DCT 要盖子但不要单调、不要非负——两者互不包含。\n\n共同祖先是 Fatou：推导链 A1.4 下连续性 ⟹ MCT ⟹ Fatou ⟹ DCT。\n\n分工一句话：单调锁方向、盖子锁高度，锁的都是「质量不许逃」。\n\n选择判据：序列单调且非负 ⟹ 用 MCT（假设最弱，允许 $\\infty$）；不单调但能找到盖子 ⟹ 用 DCT（结论最强，给 $L^1$）；两者都不满足 ⟹ 只能要 Fatou 的单边不等式。",
       "links": ["A1.4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     },
     {
       "id": "A1.3:dct.leibniz",
@@ -756,9 +799,122 @@
       ],
       "tex_ref": null,
       "fill_hint": "**这条要写全，它是 A1.3 到 CG 的最短路径**。三个条件逐条列出，证法用 MVT + DCT 两步。失效场景那段（1/cosθ、δ 分布）与 H4 蒙特卡洛积分呼应，但不要展开成渲染教程",
-      "content": null,
+      "content": "参数微分交换（Leibniz 法则）——DCT 在 CG 的最短路径：\n$$\\frac{d}{dt} \\int f(t, x) \\, dx = \\int \\partial_t f(t, x) \\, dx.$$\n\n条件三条：① 对每个 $t$，$x \\mapsto f(t,x)$ 可积；② $t \\mapsto f(t,x)$ 对每个 $x$ 可微；③ 存在 $g(x) \\in L^1$ 使 $| \\partial_t f(t,x) | \\leq g(x)$ 在 $t$ 的邻域内一致成立。\n\n证法两步：差商 $\\frac{f(t+h,x) - f(t,x)}{h} \\to \\partial_t f(t,x)$（$h \\to 0$）；由中值定理（MVT）$\\left| \\frac{f(t+h,x) - f(t,x)}{h} \\right| \\leq \\sup_{|s - t| < \\delta} | \\partial_s f(s,x) | \\leq g(x)$，对差商套 DCT。\n\n条件③的「一致」二字不可省：$g$ 不能依赖 $t$，否则差商的支配随 $h$ 变化，DCT 不适用——与 dct.unif-in-n 是同一个量词陷阱（$\\forall \\exists$ vs $\\exists \\forall$）。\n\nCG 落点：可微渲染（Mitsuba 3、nvdiffrast 一类）对渲染方程的参数求导，本质就是这个交换——几何 / 材质参数 $t$ 穿过积分号。\n\n失效场景：被积函数含 $1/\\cos\\theta$ 型奇点或 δ 分布（点光源）时，$\\partial_t f$ 常常找不到可积盖子 ⟹ 需要正则化或改用重参数化技巧（reparameterization / path-space 求导）。\n\n同族结果：Fubini–Tonelli 交换积分顺序、级数逐项积分（mct.series）、Fourier 变换的微分——都是「极限穿过积分号」的变体。",
       "links": ["H4"],
-      "status": "seed"
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.3:mct.probe1",
+      "type": "probe",
+      "subject": "mct",
+      "title": "检验题：截断列 min(n, 1/√x) 走一遍 MCT",
+      "keywords": [
+        "f_n = min(n, 1/√x) 截断列（0 < x < 1）",
+        "分段积分：[0, 1/n²] 上取 n、其余取 x^(−1/2)",
+        "∫f_n = 2 − 1/n，n=10 时 1.9",
+        "MCT 取极限得 ∫x^(−1/2) = 2",
+        "对应 mct.infinite 的截断实践"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 48, "line_end": 48 },
+      "fill_hint": "数值全部可由标记表达式复核；第③问锚定 mct.infinite 的'截断算极限'实践，人工复核分段积分的端点 1/n²。",
+      "content": "取 $f_n(x) = \\min(n,\\; 1/\\sqrt{x})$（$0 < x < 1$，Lebesgue 测度）。\n\n① 验证 $f_n \\uparrow x^{-1/2}$，且每个 $f_n$ 有界可积（截断是 mct.infinite 的标准实践）。\n② 算 $n = 10$ 时的 $\\int_0^1 f_n \\, dx$：分段——$[0, 1/100]$ 上 $f_n \\equiv 10$、$[1/100, 1]$ 上 $f_n = x^{-1/2}$。（答案：$2 - 1/10 = 1.9$【待核验:2-1/10】）\n③ 用 MCT 求极限并核对。（答案：$\\int_0^1 x^{-1/2} dx = 2$【待核验:2*sqrt(1)-2*sqrt(0)】，与 $2 - 1/n \\to 2$ 一致）",
+      "links": [],
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.3:mct.probe2",
+      "type": "probe",
+      "subject": "mct",
+      "title": "检验题：去掉非负的反例逐点验证",
+      "keywords": [
+        "f_n = −1_[n,∞) 非负性反例的数值验证",
+        "单调升：f_5(10) = −1 ≤ f_11(10) = 0",
+        "逐点极限 0 vs ∫f_n = −∞",
+        "对应 mct.quantifiers 限定词②"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 48, "line_end": 48 },
+      "fill_hint": "数值全部可由标记表达式复核；第③问锚定 mct.nonneg 的失效等式（左 −∞、右 0）。",
+      "content": "对 $f_n = -\\mathbf{1}_{[n,\\infty)}$（$\\mathbb{R}$ 上 Lebesgue 测度，mct.nonneg 的反例）：\n\n① 取 $x = 10$，算 $f_5(10)$ 与 $f_{11}(10)$，确认单调升。（答案：$f_5(10) = -1$【待核验:-(10>=5)】，$f_{11}(10) = 0$【待核验:-(10>=11)】）\n② 写出 $\\lim_n f_n(10)$ 与 $\\int f_5 \\, d\\mu$。（答案：$\\lim_n f_n(10) = 0$；$\\int f_5 = -\\mu([5,\\infty)) = -\\infty$）\n③ 指出 MCT 等式哪一边爆掉。（答案：左边 $\\lim \\int f_n = -\\infty$，右边 $\\int \\lim f_n = 0$——等式反向破裂，非负性锁的是下界）",
+      "links": [],
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.3:fatou.probe1",
+      "type": "probe",
+      "subject": "fatou",
+      "title": "检验题：尖峰列的 Fatou 严格不等",
+      "keywords": [
+        "bump 尖峰列 f_n = n·1_(0,1/n)",
+        "逐点值 f_10(0.05)=10、f_100(0.05)=0",
+        "∫liminf = 0 < 1 = liminf∫，严格",
+        "对应 fatou.strict / general.bump"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 50, "line_end": 50 },
+      "fill_hint": "数值全部可由标记表达式复核；第③问锚定 fatou.strict 的两侧数值 0 < 1。",
+      "content": "对尖峰列 $f_n = n \\cdot \\mathbf{1}_{(0,1/n)}$（general.bump）：\n\n① 取 $x = 0.05$，算 $f_{10}(x)$ 与 $f_{100}(x)$，确认逐点极限为 $0$。（答案：$f_{10}(0.05) = 10$【待核验:10*(0.05<0.1)】，$f_{100}(0.05) = 0$【待核验:100*(0.05<0.01)】）\n② 算 $\\liminf_n \\int_0^1 f_n \\, dx$ 与 $\\int_0^1 \\liminf_n f_n \\, dx$。（答案：$1$【待核验:10*(1/10)】 与 $0$）\n③ 写出 Fatou 不等式并判断是否严格。（答案：$0 \\leq 1$，严格——质量挤进了零测点 $\\{0\\}$）",
+      "links": [],
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.3:fatou.probe2",
+      "type": "probe",
+      "subject": "fatou",
+      "title": "检验题：1/x 切片——非单调列的 Fatou 取等",
+      "keywords": [
+        "1/x 切片 f_n = (1/x)·1_(1/(n+1),1/n)",
+        "∫f_1 = ln 2、∫f_10 = ln(11/10)",
+        "支撑互不相交 ⟹ 处处收敛到 0",
+        "非单调列 Fatou 取等（两边都是 0）",
+        "同族：Vitali 的 UI 反例（dct.vitali）"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 50, "line_end": 50 },
+      "fill_hint": "数值全部可由标记表达式复核；第③问的人工复核点：支撑互不相交 ⟹ 处处收敛，且 ∫f_n = ln(1+1/n) → 0 使两边同为 0（取等而非严格）。",
+      "content": "把 $1/x$ 切成互不相交的片：$f_n = \\frac{1}{x}\\,\\mathbf{1}_{(1/(n+1),\\,1/n)}$（$0 < x < 1$；与 dct.vitali 的 UI 反例同族）。\n\n① 算 $\\int_0^1 f_1 \\, dx$ 与 $\\int_0^1 f_{10} \\, dx$。（答案：$\\ln 2 \\approx 0.6931$【待核验:log(2)】，$\\ln(11/10) \\approx 0.0953$【待核验:log(11/10)】）\n② 验证 $f_n \\to 0$ 处处（支撑互不相交，每个 $x$ 至多被一个 $f_n$ 照顾）。\n③ 算 Fatou 两边，说明这个非单调列居然取等。（答案：$\\int \\liminf f_n = 0 = \\liminf \\int f_n$，取等——每个 $f_n$ 的质量在自己的片上随 $n$ 塌缩，极限过程没有「丢」质量）",
+      "links": [],
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.3:dct.probe1",
+      "type": "probe",
+      "subject": "dct",
+      "title": "检验题：算最小盖子积分判 DCT 生死",
+      "keywords": [
+        "最小盖子积分 = DCT 可用性判据（dct.lid）",
+        "slide：∫sup_{n≤16} = 16（线性）",
+        "bump：∫sup_{n≤4} = H_4 = 2.0833（对数）",
+        "连续包络 min(N,1/x) 给 1+ln4 = 2.3863",
+        "两者发散 ⟹ DCT 判死"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 49, "line_end": 49 },
+      "fill_hint": "数值全部可由标记表达式复核；人工复核点：bump 的离散 sup 逐段积分得调和数 H_N，与连续包络 1+lnN 区分（见 dct.failure-rate 勘误）。",
+      "content": "用最小盖子判据（dct.lid）逐个判死：\n\n① slide 列 $f_n = \\mathbf{1}_{[n,n+1)}$：算 $N = 16$ 时的 $\\int \\sup_{n \\leq 16} f_n \\, dx$。（答案：$\\mu([1,17)) = 16$【待核验:17-1】，线性发散）\n② bump 列 $f_n = n\\,\\mathbf{1}_{(0,1/n)}$：算 $N = 4$ 时的 $\\int_0^1 \\sup_{n \\leq 4} f_n \\, dx$——离散精确值是调和数 $H_4$，连续包络 $\\min(4, 1/x)$ 给 $1 + \\ln 4$。（答案：$H_4 = 2.0833$【待核验:sum(1/k for k in range(1,5))】，包络 $1 + \\ln 4 = 2.3863$【待核验:1+log(4)】）\n③ 结论：两族的最小盖子积分随 $N \\to \\infty$ 发散 ⟹ $\\sup_n |f_n| \\notin L^1$ ⟹ DCT 对两者都不可用（bump 对数发散、slide 线性发散，差一个量级）。",
+      "links": [],
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
+    },
+    {
+      "id": "A1.3:dct.probe2",
+      "type": "probe",
+      "subject": "dct",
+      "title": "检验题：exp 族验证盖子与 DCT 结论",
+      "keywords": [
+        "exp 族 f_n = (1+x/n)^n·e^(−2x)",
+        "x=1 处 f_n(1) ≤ e^(−1) 验证盖子",
+        "∫f_10 = 0.9294（精确和式）",
+        "DCT 结论 ∫f_n → 1 = ∫e^(−x)",
+        "对应 dct.unif-in-n 正例"
+      ],
+      "tex_ref": { "file": "A_analysis.tex", "line_start": 49, "line_end": 49 },
+      "fill_hint": "数值全部可由标记表达式复核；人工复核点：∫x^k·e^(−2x)dx = k!/2^(k+1) 的逐项展开（dct.unif-in-n 同款计算）。",
+      "content": "对 exp 族 $f_n = (1+x/n)^n e^{-2x}$（$x \\geq 0$，dct.unif-in-n 的正例）：\n\n① 取 $x = 1$，验证盖子 $g = e^{-x}$ 生效：算 $f_1(1)$、$f_{10}(1)$ 并与 $e^{-1}$ 比较。（答案：$f_1(1) = 2e^{-2} \\approx 0.2707$【待核验:2*exp(-2)】$< e^{-1} \\approx 0.3679$【待核验:exp(-1)】；$f_{10}(1) = (1.1)^{10} e^{-2} \\approx 0.3510$【待核验:(1+1/10)**10*exp(-2)】，仍 $< e^{-1}$）\n② 算 $\\int_0^\\infty f_{10} \\, dx$（提示：逐项展开，$\\int_0^\\infty x^k e^{-2x} dx = k!/2^{k+1}$）。（答案：$\\approx 0.9294$【待核验:sum(factorial(10)/factorial(10-k)/(10**k*2**(k+1)) for k in range(11))】）\n③ 写出 DCT 结论。（答案：$\\int f_n \\to \\int_0^\\infty e^{-x} dx = 1$，且 $\\| f_n - f \\|_1 = 1 - \\int f_n \\to 0$）",
+      "links": [],
+      "generated_by": { "model": "glm-5.3", "date": "pending", "reviewed": false },
+      "status": "drafted"
     }
   ]
 }

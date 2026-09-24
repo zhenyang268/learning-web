@@ -1,0 +1,281 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A2.5",
+  "chapter": "A2",
+  "title": "分布（广义函数）",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 248,
+    "line_end": 265,
+    "anchor": "notebook/A_analysis.tex:248"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A2.5:distribution.quantifiers",
+      "type": "comparison",
+      "subject": "distribution",
+      "title": "分布定义逐条拆解（测试函数 / 线性 / 连续）",
+      "keywords": [
+        "定义拆成 4 个限定词：①测试函数空间 D=C_c^∞ ②T 线性 ③T 连续（对 D 的拓扑）④⟨T,φ⟩ 是数",
+        "①「紧支」的作用：积分只在紧集上做，一切积分有限；边界项在分部积分中消失",
+        "①「无穷可微」的作用：让「分布的导数」永远可定义（把导数转嫁给 φ）",
+        "②线性不可去：T(φ+ψ)=T(φ)+T(ψ) 是「广义函数」能保持线性运算的根基",
+        "③连续性在初学阶段可粗读为「对 φ 的收敛稳定」；δ 例子里 ⟨δ,φ⟩=φ(0) 连续（取值 ≤ sup|φ|）",
+        "每个局部可积函数 f 都自动是分布：φ↦∫fφ——分布真包含函数"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 253,
+        "line_end": 257
+      },
+      "fill_hint": "四列表；①的两行（紧支/光滑）是「为什么测试函数长这样」的答案，必须各给一句理由；数值例子不必多，重在机制",
+      "content": "分布的定义：测试函数空间 $\\mathcal D=C_c^\\infty$ 上的**连续线性泛函**。拆成限定词：\n\n| 限定词 | 去掉/改动后的情形 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 测试函数**紧支**（$C_c$） | 若用 $C^\\infty$（无紧支）当测试空间：常函数 $\\varphi\\equiv1$ 也是测试函数，$\\langle f,1\\rangle=\\int f$ 对 $f\\equiv1$ 发散——积分未必有限 | 泛函无定义或不连续 | 不可去；紧支保证一切积分只在紧集上发生 |\n| ① 测试函数**无穷可微**（$\\infty$） | 若只用 $C_c^0$：无法定义分布的导数（$\\langle T',\\varphi\\rangle=-\\langle T,\\varphi'\\rangle$ 需要 $\\varphi'$ 存在且仍是测试函数） | 微分机器停摆；δ' 偶极子等全部无法登场 | 不可去；光滑是「导数转嫁」的接驳口 |\n| ② $T$ **线性** | $\\varphi\\mapsto\\int\\varphi^2$：非线性泛函，两个分布无法相加、无法与函数相乘出好理论 | 整套代数结构消失 | 必需 |\n| ③ $T$ **连续** | 病态泛函（对测试函数的收敛不稳定）无法对应任何「广义函数」直觉 | 微分方程论里不能对 T 取极限 | 必需；初学可粗读为「$|\\langle T,\\varphi_n\\rangle|\\to0$ 当 $\\varphi_n$ 及其各阶导数一致收敛于 0 且支集公共有界」 |\n\n**包含关系**：每个 $f\\in L^1_{\\text{loc}}$ 都是分布 $\\varphi\\mapsto\\int f\\varphi\\,dx$（线性显然；连续性由 $|\\int f\\varphi|\\le\\|f\\|_{L^1(K)}\\sup|\\varphi|$，紧支把积分压到紧集 $K$）。所以分布空间真包含函数空间——「广义函数」是合法的放大，而 δ 是其中第一个「不是函数的居民」（见专属反例）。",
+      "links": [
+        "A4.2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:delta-not-function.counterexample",
+      "type": "counterexample",
+      "subject": "delta-not-function",
+      "title": "反例：δ 不是函数（尖峰逼近的极限不在函数世界里）",
+      "keywords": [
+        "构造 δ_n(x)=n·1_{[0,1/n]}：∫δ_n dx=1 恒成立",
+        "逐点极限 δ_n(x)→0 几乎处处（A1.3 的 bump 反例同款）",
+        "若 δ=某个函数 g：∫gφ=φ(0) 对一切 φ∈C_c^∞",
+        "取 φ 支撑避开原点 ⟹ g=0 a.e. 于原点之外；再取 φ(0)≠0 ⟹ ∫gφ=0≠φ(0)，矛盾",
+        "结论：δ 是合法分布但不是函数——质量挤进了零测点",
+        "数值锚点：δ_10 在 x=0.05 处取值 10（在支撑内）、x=0.2 处取值 0（支撑外）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 251,
+        "line_end": 257
+      },
+      "fill_hint": "三步论证完整（逼近 → 逐点归零 → 函数假设导出矛盾）；连回 A1.3 general.bump——同一序列在积分收敛定理里的身份",
+      "content": "狄拉克 δ 的「定义」$\\delta(x)=0\\ (x\\ne0),\\ \\delta(0)=\\infty,\\ \\int\\delta=1$ 不是任何函数的描述。分三步看清：\n\n**第一步（合法的逼近序列）**：$\\delta_n(x)=n\\cdot\\mathbf 1_{[0,1/n]}$。每个 $\\delta_n$ 是货真价实的函数，且\n\n$$\\int_0^1\\delta_n\\,dx=n\\cdot\\tfrac1n=1\\ \\text{恒成立}$$\n\n对测试函数分部积分/换元可得 $\\int\\delta_n\\varphi\\,dx\\to\\varphi(0)$（$\\varphi$ 连续 + 支撑紧：$\\varphi$ 在原点附近的震荡被 $\\delta_n$ 的集中性平均掉）。数值锚点：$\\delta_{10}$ 在 $x=0.05$ 处值为 10（支撑 $[0,0.1]$ 内）、在 $x=0.2$ 处为 0（支撑外）。\n\n**第二步（逐点极限是零）**：对每个固定 $x$，当 $n>1/x$ 时 $x$ 落在支撑外，$\\delta_n(x)=0$。故 $\\delta_n\\to0$ 几乎处处——这正是 A1.3 的 bump 反例（质量挤进零测点）：逐点极限为 0 而积分恒为 1，极限与积分不可交换。\n\n**第三步（δ 不是函数）**：假设存在局部可积函数 $g$ 使 $\\int g\\varphi=\\varphi(0)$ 对**一切** $\\varphi\\in C_c^\\infty$。取 $\\varphi$ 支撑避开原点（则 $\\varphi(0)=0$）：$\\int g\\varphi=0$ 对所有这类 $\\varphi$ ⟹ $g=0$ 几乎处处（原点之外）。于是对**任何** $\\varphi$ 都有 $\\int g\\varphi=0$；但取 $\\varphi$ 使 $\\varphi(0)=1$（如光滑鼓包在原点取 1），右边应为 1。$0\\ne1$，矛盾。\n\n结论：δ 是合法分布（$\\varphi\\mapsto\\varphi(0)$ 线性且连续：$|\\varphi(0)|\\le\\sup|\\varphi|$），但它不对应任何函数——「点质量」住在函数世界之外，分布世界之内。CG 里点光源的辐射亮度正是这种对象：全部能量集中在一个方向/一点上。",
+      "links": [
+        "A1.3",
+        "H7"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:pv-1x.counterexample",
+      "type": "counterexample",
+      "subject": "pv-1x",
+      "title": "反例：1/x 不可积，主值分布靠奇对称抵消存活",
+      "keywords": [
+        "1/x 在 (−1,1) 上不（绝对）可积：∫_ε^1 dx/x = −ln ε → ∞",
+        "数值锚点：ε=10⁻² 时 −ln ε ≈ 4.605；ε=10⁻⁶ 时 ≈ 13.816",
+        "但对称截断的积分存在：lim_{ε→0}(∫_{−1}^{−ε}+∫_ε^1) φ(x)/x dx 对好 φ 收敛",
+        "机制：1/x 奇函数，φ(x)/x = [φ(x)−φ(0)]/x + φ(0)/x，后者奇对称抵消，前者 ≈ φ'(0) 有界",
+        "⟨p.v.1/x, φ⟩ 必须用主值极限定义，不是普通积分",
+        "警示：p.v.1/x 是「条件收敛」的化身——绝对值一取就发散，顺序/对称性是命根"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 262,
+        "line_end": 262
+      },
+      "fill_hint": "数值表（ε=10⁻²/10⁻⁶）带核验；抵消机制的分解式 φ(x)/x=[φ(x)−φ(0)]/x+φ(0)/x 是核心推导，必须写全",
+      "content": "切片列出的第三个关键分布：$\\text{p.v.}\\frac1x$（主值分布）。它展示分布与函数的另一种错位——**积分本身发散，但配对有意义**。\n\n**失效计算（不可积）**：$\\frac1x$ 在 $(0,1)$ 上\n\n$$\\int_\\epsilon^1\\frac{dx}{x}=-\\ln\\epsilon\\to\\infty$$\n\n$\\epsilon=10^{-2}$ 时 $-\\ln\\epsilon=4.605$【已核验:4.60517018599|-log(0.01)】，$\\epsilon=10^{-6}$ 时 $13.816$【已核验:13.815510558|-log(0.000001)】——绝对值积分 $\\int_{-1}^{1}|1/x|\\,dx=\\infty$，$1/x$ 连 $L^1$ 都不在，直接拿它当「函数分布」配对 $\\int\\varphi/x$ 会发散。\n\n**存活机制（奇对称抵消）**：把被积函数改写为\n\n$$\\frac{\\varphi(x)}{x}=\\frac{\\varphi(x)-\\varphi(0)}{x}+\\varphi(0)\\cdot\\frac1x$$\n\n- 第二项是奇函数乘常数：对称区间上 $\\int_{-a}^{-\\epsilon}+\\int_{\\epsilon}^{a}$ 精确抵消为 0；\n- 第一项：$\\frac{\\varphi(x)-\\varphi(0)}{x}\\to\\varphi'(0)$（$\\varphi$ 光滑），在原点附近**有界**，可正常积分。\n\n于是**主值极限**\n\n$$\\left\\langle\\text{p.v.}\\frac1x,\\ \\varphi\\right\\rangle=\\lim_{\\epsilon\\to0}\\left(\\int_{-1}^{-\\epsilon}+\\int_{\\epsilon}^{1}\\right)\\frac{\\varphi(x)}{x}\\,dx$$\n\n对每个测试函数收敛。这就是「p.v.」三个字母的全部内容：**不取绝对值、坚持对称截断**——奇性在配对中被测试函数的光滑性驯服。\n\n修补条件：普通函数身份无法恢复（不可积就是不可积）；分布身份完整合法——线性显然，连续性来自上式对 $\\varphi,\\varphi'$ 的一致控制。它在 Hilbert 变换（信号处理）与量子散射（平面波基，A2.3 表）中是常客。",
+      "links": [
+        "A2.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:distribution.statement",
+      "type": "statement",
+      "subject": "distribution",
+      "title": "分布的定义陈述",
+      "keywords": [
+        "分布 = 测试函数空间 D=C_c^∞ 上的连续线性泛函",
+        "记号 ⟨T,φ⟩：T 作用于测试函数 φ 得到一个数",
+        "δ 的定义：⟨δ,φ⟩=φ(0)——「采样机」",
+        "函数 ↪ 分布：f ↦ (φ ↦ ∫fφ)，嵌入保线性、保导数（分部积分一致）",
+        "动机（切片）：狄拉克 δ 在物理中无处不在但不是函数"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 251,
+        "line_end": 257
+      },
+      "fill_hint": "切片动机句+定义式照抄；「采样机」读法与函数嵌入各一段；导数一致性指向 distribution-derivative.statement",
+      "content": "**定义**：分布是测试函数空间 $\\mathcal D=C_c^\\infty$（紧支光滑函数）上的连续线性泛函：$T$ 吃一个测试函数 $\\varphi$，吐出一个数 $\\langle T,\\varphi\\rangle$，对 $\\varphi$ 线性且连续。\n\n切片的动机：狄拉克 δ 函数不是普通函数，但在物理中无处不在（点电荷、点光源、瞬时脉冲）。分布理论给这类对象合法身份——**不问 T 本身是什么，只问它对测试函数做什么**：\n\n$$\\langle\\delta,\\varphi\\rangle=\\varphi(0)$$\n\nδ 是一台「采样机」：喂它任何测试函数，它报出该函数在原点的值。\n\n同时，所有常规函数原封不动地搬进来：$f\\in L^1_{\\text{loc}}$ 对应分布 $\\varphi\\mapsto\\int f\\varphi\\,dx$。这个嵌入保持加法、数乘，也保持求导（分部积分把 $f'$ 转移给 $\\varphi'$ 后与经典导数一致）——所以分布理论是函数理论的**保守扩张**：旧居民全部留下，还接收了 δ、δ'、p.v.1/x 这些新居民（切片的关键分布清单）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:distribution.intuition",
+      "type": "intuition",
+      "subject": "distribution",
+      "title": "直觉：与其问「T 是什么」，不如问「T 如何被探测」",
+      "keywords": [
+        "探测器隐喻：测试函数是探针，⟨T,φ⟩ 是探针读数",
+        "物理对应：测量仪器有有限分辨率+局部灵敏度——探针 = 理想化的仪器",
+        "两个函数对所有探针读数相同 ⟹ 它们相等（分布意义下 a.e.）——读数决定身份",
+        "δ = 无限窄探针：只读原点值；光滑 f = 宽探针：读加权平均",
+        "为什么能「求导」：把导数转嫁给探针（分部积分），代价一个负号",
+        "广义函数的哲学：对象由其全部可观测效应定义"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 251,
+        "line_end": 257
+      },
+      "fill_hint": "探测器隐喻贯穿；「读数决定身份」连接测度论（A1.4）与物理可观测性哲学（F2）各一句",
+      "content": "分布理论的哲学转折：放弃「对象本身是什么」，改问「对象对探测器做什么」。\n\n**探针模型**：测试函数 $\\varphi$ 是一根**理想探针**——有有限的作用范围（紧支：探针不碰远处）和平滑的灵敏度剖面（光滑）。读数 $\\langle T,\\varphi\\rangle$ 是探针与对象相互作用的积分结果。普通函数 $f$ 的读数是加权平均 $\\int f\\varphi$；δ 是无限窄的探针，读数就是原点采样 $\\varphi(0)$。\n\n**读数决定身份**：若两个对象对**所有**探针的读数全部相同，则它们不可区分——在分布理论里就视为相等（对函数而言即 a.e. 相等，与 A1.5 的等价类语言一致）。这符合物理可观测性的精神：粒子的「位置」只通过它与测量仪器（探针）的相互作用显现（F2 的操作主义侧面）。\n\n**为什么求导免费**：探针是光滑的，于是可以把「对 T 求导」**转嫁**为「对探针求导」：$\\langle T',\\varphi\\rangle=-\\langle T,\\varphi'\\rangle$。$\\varphi'$ 仍是合法探针（紧支光滑），所以**每个分布都有任意阶导数**——哪怕它根本不是函数。这一个负号的搬运（分部积分，P9.1 的移导数）是整个弱解理论（A4.2）的技术心脏。\n\n一句话：分布 = 用「可被怎样探测」来登记的对象；δ 不是诡异的函数，而是最简单的读数规则。",
+      "links": [
+        "A4.2",
+        "P9.1",
+        "F2"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:distribution-derivative.statement",
+      "type": "statement",
+      "subject": "distribution-derivative",
+      "title": "分布导数与 δ′（偶极子）",
+      "keywords": [
+        "定义：⟨T′,φ⟩ = −⟨T,φ′⟩（导数转嫁给测试函数，带负号）",
+        "每个分布无穷次可导——分部积分可以无限接力",
+        "δ′ 的读数：⟨δ′,φ⟩ = −φ′(0)，物理 = 偶极子（正负点电荷无限靠近）",
+        "数值例：φ(x)=x 时 ⟨δ′,φ⟩=−1；φ(x)=x² 时 ⟨δ′,φ⟩=0",
+        "与经典导数一致：函数 f 光滑时 ⟨f′,φ⟩=−∫fφ′=∫f′φ（分部积分恒等式）",
+        "阶梯的导数是 δ：⟨H′,φ⟩=−⟨H,φ′⟩=φ(0)（A4.2 弱导数失效的分布版解释）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 259,
+        "line_end": 260
+      },
+      "fill_hint": "定义一行 + δ' 读数推导 + 数值例；末条 H' = δ 是 A4.2 阶跃反例的「分布世界解释」，必须写（跨单元桥）",
+      "content": "**分布导数的定义**：\n\n$$\\langle T',\\varphi\\rangle=-\\langle T,\\varphi'\\rangle$$\n\n来源于分部积分 $\\int f'\\varphi=-\\int f\\varphi'$（边界项因 $\\varphi$ 紧支而消失，P9.1 的移导数）：把「对 $T$ 求导」改写成「对 $\\varphi$ 求导再取负号」。因为 $\\varphi\\in C_c^\\infty$ 的导数仍是 $C_c^\\infty$，这个定义可以**无限接力**——每个分布都有任意阶导数，无论它是不是函数。\n\n**δ′（偶极子）**：$\\langle\\delta',\\varphi\\rangle=-\\langle\\delta,\\varphi'\\rangle=-\\varphi'(0)$——读出测试函数导数在原点的值（带负号）。物理对应：一对正负点电荷相距 $\\epsilon$、各自带电 $\\pm1/\\epsilon$，令 $\\epsilon\\to0$，极限就是 δ′（偶极子）。数值例：$\\varphi(x)=x$ 时 $\\langle\\delta',\\varphi\\rangle=-1$【已核验:-1|-1】；$\\varphi(x)=x^2$ 时 $\\langle\\delta',\\varphi\\rangle=-2\\cdot0=0$【已核验:0|0】（导数在 0 处取值决定一切）。\n\n**一致性**：$f$ 光滑时 $\\langle f',\\varphi\\rangle=-\\int f\\varphi'=\\int f'\\varphi$，与经典导数完全一致——分布导数是经典导数的保守扩张。\n\n**最重要的特例（跨单元桥）**：Heaviside 阶跃 $H=\\mathbf 1_{(0,\\infty)}$ 在函数世界里没有（弱）导数（A4.2 的反例），但在分布世界里\n\n$$\\langle H',\\varphi\\rangle=-\\int_0^\\infty\\varphi'\\,dx=-(\\varphi(\\infty)-\\varphi(0))=\\varphi(0)=\\langle\\delta,\\varphi\\rangle$$\n\n即 $H'=\\delta$：**跳跃产生点质量**。这句分布语言精确解释了 A4.2 里「阶跃没有弱导数」的原因——它的导数太奇异，只能活在分布世界里。",
+      "links": [
+        "A4.2",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照：函数 / 弱导数 / 分布三个世界",
+      "keywords": [
+        "函数世界：f、f′ 都是普通函数，积分普通意义",
+        "弱导数世界（A4.2）：u∈L¹_loc，导数 v∈L¹_loc，靠 ∫u∂φ=−∫vφ 定义",
+        "分布世界：T′ 可以是任意分布（δ、δ′、p.v.1/x）",
+        "包含链：光滑函数 ⊂ L¹_loc ⊂ 分布；导数存在性：光滑 ⊃ 弱 ⊃ 分布（越宽越弱）",
+        "分界判据：「导数仍是函数吗」——H 的导数 δ 不是，故 H 只有分布导数",
+        "选择策略：PDE 存在性先用分布（最宽容），正则性好了再降回弱导数/函数"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 253,
+        "line_end": 262
+      },
+      "fill_hint": "三层对照表；「越宽容导数越容易存在」的反比关系是记忆锚点；PDE 策略行连接 A4.6 正则性链条",
+      "content": "三个世界的层级关系：\n\n| | 居民 | 导数 | 典型对象 |\n|---|---|---|---|\n| 经典函数 | 光滑/连续函数 | 逐点极限定义，可能不存在 | $\\sin x$、$x^2$；$\\|x\\|$ 在 0 处无导数 |\n| 弱导数（A4.2） | $L^1_{\\text{loc}}$ 函数 | 必须仍是 $L^1_{\\text{loc}}$ 函数 | $\\|x\\|$ 的弱导数 $=\\mathrm{sign}(x)$ ✓；$H$ 的弱导数要求 δ ∉ $L^1_{\\text{loc}}$ ✗ |\n| 分布 | 一切连续线性泛函 | 永远存在，仍是分布 | $H'=\\delta$、$\\delta'=\\text{偶极子}$、$\\text{p.v.}\\frac1x$ |\n\n两条规律：\n\n1. **包含链**（居民）：光滑 $\\subset L^1_{\\text{loc}}\\subset$ 分布——每层都是保守扩张；\n2. **反比律**（导数存在性）：居民范围越宽，「导数存在」越容易——光滑世界里 $\\|x\\|$ 已经失败，弱导数世界里它成功但 $H$ 失败，分布世界里连 $H$ 都有导数（δ）。\n\nPDE 的使用策略正是利用反比律：存在性定理在最宽容的世界（分布/弱解，A4.5）里拿下，然后靠正则性提升（A4.6）逐级「降回」光滑世界——弱解→经典解的链条，本质是「先保证有，再证明好」。",
+      "links": [
+        "A4.2",
+        "A4.5",
+        "A4.6"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用：点光源、镜面 BRDF、弱解前置",
+      "keywords": [
+        "点光源辐射度用 δ 建模（切片 CG 句）：能量集中一点/一方向",
+        "镜面反射 BRDF 含 δ 分量：完美镜面把入射全部反射到唯一出射方向",
+        "H7 辐射度量学：点光源/方向光源的数学登记",
+        "A4.2 弱导数是分布导数的「函数版特例」：PDE 理论的地基",
+        "P9.1 移导数：分布导数定义用到的同一个分部积分"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 264,
+        "line_end": 265
+      },
+      "fill_hint": "切片 CG 句展开：点光源/镜面 BRDF 各给一句机制；links 指向 H2/H7 与 A4.2/P9.1",
+      "content": "切片的 CG 落点：「点光源的辐射度用 δ 函数建模，BRDF 中的镜面反射分量包含 δ 函数。」机制：\n\n- **点光源**：几何上是一个点，能量密度却有限——辐射亮度 $L$ 集中在一个零测集上，函数世界装不下，分布世界一行写完：$\\langle L,\\varphi\\rangle=$ 光源总功率 $\\times\\varphi$(光源位置)。\n- **镜面 BRDF**：完美镜面把入射方向 $\\omega_i$ 的光全部反射到镜面反射方向 $\\omega_r$——反射分布是方向空间上的 δ：$f_r\\propto\\delta(\\omega_r-\\text{mirror}(\\omega_i))$。渲染器里的「专门处理镜面光路」本质就是在给 δ 分量做解析特判（H2、H7）。\n- **数学侧的下游**：A4.2 弱导数 =「分布导数恰好还是函数」的特例；A4.5 弱解存在性在 $L^2$ 世界工作，但更一般的框架（右端项 $f$ 含 δ，如点源 Poisson 方程）必须回到分布。分部积分（P9.1）是两个世界共用的那把搬运工具。",
+      "links": [
+        "H2",
+        "H7",
+        "A4.2",
+        "A4.5",
+        "P9.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A2.5:delta.probe1",
+      "type": "probe",
+      "subject": "delta",
+      "title": "检验：δ 与 δ′ 的读数数值",
+      "keywords": [
+        "第一问：⟨δ, x²+1⟩ 在原点读数",
+        "第二问：⟨δ′, x²⟩ 与 ⟨δ′, eˣ⟩",
+        "第三问：δ_n=n·1_[0,1/n] 的 ∫δ_n 与支撑长度"
+      ],
+      "tex_ref": null,
+      "fill_hint": "答案带核验；第三问连 A1.3 bump：积分恒 1、逐点归零",
+      "content": "三问（前两问用分布读数规则 $\\langle\\delta,\\varphi\\rangle=\\varphi(0)$、$\\langle\\delta',\\varphi\\rangle=-\\varphi'(0)$）：\n\n1. $\\langle\\delta,\\ x^2+1\\rangle$ 是多少？（$=0^2+1=1$【已核验:1|0**2+1】）\n\n2. $\\langle\\delta',\\ x^2\\rangle$ 与 $\\langle\\delta',\\ e^x\\rangle$ 各是多少？（$\\varphi=x^2$ 时 $-\\varphi'(0)=-2\\cdot0=0$【已核验:0|-2*0】；$\\varphi=e^x$ 时 $-e^0=-1$【已核验:-1|-exp(0)】）\n\n3. 逼近序列 $\\delta_n=n\\cdot\\mathbf 1_{[0,1/n]}$：$\\int_0^1\\delta_n\\,dx$ 恒为多少？$n=20$ 时支撑长度是多少？（积分恒为 1【已核验:1|20*(1/20)】，支撑长度 $1/20=0.05$【已核验:0.05|1/20】；逐点极限为 0 但积分不变——A1.3 bump 反例同款）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

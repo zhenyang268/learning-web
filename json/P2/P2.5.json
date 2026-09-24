@@ -1,0 +1,409 @@
+{
+  "schema": "entry-card/v2",
+  "code": "P2.5",
+  "chapter": "P2",
+  "title": "根式、指数与对数（【必】）",
+  "src": {
+    "file": "notebook/P_computation.tex",
+    "line_start": 150,
+    "line_end": 157,
+    "anchor": "notebook/P_computation.tex:150"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "P2.5:radicals.statement",
+      "type": "statement",
+      "subject": "radicals",
+      "title": "有理化（共轭乘法 + 双重根式配方）",
+      "keywords": [
+        "(√a+√b)(√a-√b)=a-b（平方差的根式版）",
+        "1/(√2+1)=√2-1（乘共轭）",
+        "双重根式 √(a±2√b) 配方化简：√(3+2√2)=1+√2",
+        "条件：根号内非负；整式化要求 a²-4b 为完全平方",
+        "验证：x=√2 处差 0"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 152,
+        "line_end": 152
+      },
+      "fill_hint": "切片有理化条目转写 + 两组验证数值。",
+      "content": "**本体**（切片）：有理化——乘共轭 $(\\sqrt a+\\sqrt b)(\\sqrt a-\\sqrt b)=a-b$（P2.1 平方差在根式上的应用），分母有理化、极限中约除\"零因子\"；双重根式 $\\sqrt{a\\pm2\\sqrt b}$ 配方化简（若能写成 $(\\sqrt m\\pm\\sqrt n)^2$）。\n\n**成立条件**：$a,b\\ge0$（根号内非负）；双重根式整式化要求 $m+n=a$、$mn=b$ 有非负解（即 $a^2-4b$ 为完全平方）。\n\n**代入验证**：①$\\frac{1}{\\sqrt2+1}=\\sqrt2-1$（分子分母同乘共轭 $\\sqrt2-1$：$\\frac{\\sqrt2-1}{2-1}$），数值两侧差 $0$【已核验:0|1/(sqrt(2)+1)-(sqrt(2)-1)】。②$\\sqrt{3+2\\sqrt2}=1+\\sqrt2$（因 $(1+\\sqrt2)^2=3+2\\sqrt2$），数值差 $0$【已核验:0|sqrt(3+2*sqrt(2))-(1+sqrt(2))】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1"
+      ]
+    },
+    {
+      "id": "P2.5:radicals.proof",
+      "type": "proof",
+      "subject": "radicals",
+      "title": "双重根式的配方骨架",
+      "keywords": [
+        "设 √(a+2√b)=√m+√n，平方后比对",
+        "m+n=a、mn=b——m,n 是 t²-at+b=0 的根（韦达）",
+        "整式化条件：a²-4b 为完全平方",
+        "例：√(5-2√6)=√3-√2（取减号保非负）",
+        "对偶技巧：1/(√3+√2)=√3-√2 同一数的两张面孔"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 152,
+        "line_end": 152
+      },
+      "fill_hint": "配方骨架四步 + 两个数值例；韦达接头（P2.3）。",
+      "content": "**四步骨架**：\n\n1. 设 $\\sqrt{a+2\\sqrt b}=\\sqrt m+\\sqrt n$（$m\\ge n\\ge0$）。\n2. 平方：$a+2\\sqrt b=m+n+2\\sqrt{mn}$。\n3. 比对：$m+n=a$、$mn=b$——**$m,n$ 是 $t^2-at+b=0$ 的两根**（韦达定理，P2.3 在根式里的接头）。\n4. 整式化条件：$a^2-4b$ 为完全平方（判别式）。\n\n**例**：$\\sqrt{5-2\\sqrt6}$：$m+n=5$、$mn=6$ ⟹ $m=3,n=2$，故 $=\\sqrt3-\\sqrt2$（内层是 $-2\\sqrt6$ 取减号，且 $\\sqrt3>\\sqrt2$ 保证外层非负）。数值差 $0$【已核验:0|sqrt(5-2*sqrt(6))-(sqrt(3)-sqrt(2))】。\n\n**对偶**：$\\frac{1}{\\sqrt3+\\sqrt2}=\\sqrt3-\\sqrt2$（共轭有理化），数值差 $0$【已核验:0|1/(sqrt(3)+sqrt(2))-(sqrt(3)-sqrt(2))】——与 $\\sqrt{5-2\\sqrt6}$ 是同一个数的两张面孔（共轭乘法 ↔ 双重根式配方是同一恒等式的正反两用）。\n\n**易错点**：$a-2\\sqrt b$ 情形取 $\\sqrt m-\\sqrt n$ 时必须 $m\\ge n$（否则外层变负，根式无实值）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1",
+        "P2.3"
+      ]
+    },
+    {
+      "id": "P2.5:exp-log.statement",
+      "type": "statement",
+      "subject": "exp-log",
+      "title": "指数与对数运算法则（公式 + 条件）",
+      "keywords": [
+        "aˣaʸ=a^{x+y}（同底相乘并指数）",
+        "ln(xy)=ln x+ln y（乘变加）",
+        "换底 log_b x=ln x/ln b",
+        "条件：a>0（作底 a≠1）、真数>0、b>0 且 b≠1",
+        "验证：2³·2⁵=2⁸=256；ln2+ln3=ln6；log₂8=3"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 153,
+        "line_end": 153
+      },
+      "fill_hint": "切片三条法则逐字转写 + 三组代入验证；条件表见 quantifiers。",
+      "content": "**本体**（切片三条）：\n\n$$a^x a^y=a^{x+y},\\qquad \\ln(xy)=\\ln x+\\ln y,\\qquad \\log_b x=\\frac{\\ln x}{\\ln b}.$$\n\n（同族推论：$a^{-x}=\\frac{1}{a^x}$、$(a^x)^y=a^{xy}$、$\\ln\\frac{x}{y}=\\ln x-\\ln y$、$\\log_b(xy)=\\log_bx+\\log_by$。）\n\n**成立条件**：底 $a>0$（作底时 $a\\ne1$）；$\\ln$ 的真数 $x,y>0$；换底的 $b>0$、$b\\ne1$。\n\n**代入验证**：$2^3\\times2^5=8\\times32=256=2^8$（差 $0$）【已核验:0|2**3*2**5-2**8】；$\\ln2+\\ln3=\\ln6$（两侧差 $0$）【已核验:0|log(2)+log(3)-log(6)】；$\\log_28=\\frac{\\ln8}{\\ln2}=3$【已核验:3|log(8)/log(2)】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P4.2"
+      ]
+    },
+    {
+      "id": "P2.5:exp-log.quantifiers",
+      "type": "comparison",
+      "subject": "exp-log",
+      "title": "适用条件表（底与真数的限定词）",
+      "keywords": [
+        "底 a>0：(−2)^x 非整数 x 无实定义",
+        "作底 a≠1：log₁ 无意义（1ʸ≡1 回不到 x）",
+        "真数>0：ln(x+y) 拆 ln x+ln y 遇负数翻车",
+        "同底才能并指数；只有乘法能并",
+        "(aˣ)ʸ=a^{xy} 与 a^{(xʸ)} 是两回事（括号差 8 倍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 153,
+        "line_end": 153
+      },
+      "fill_hint": "条件五行，各配具体数字；两个 misuse 词条承接。",
+      "content": "| 条件 | 失效的具体例子 | 误用后果 | 能否放宽 |\n|---|---|---|---|\n| 底 $a>0$ | $(-2)^x$ 对非整数 $x$ 无实定义 | 运算律整体失灵 | 实数框架不能；复数多值（R6） |\n| 作底 $a\\ne1$ | $\\log_1x$：$1^y\\equiv1$ 永远回不到 $x\\ne1$ | 换底公式除零 | 不能 |\n| 真数 $>0$ | $\\ln(x+y)=\\ln x+\\ln y$ 遇 $x,y<0$：无定义 | 见 misuse（数值反例） | 复数上 $\\ln$ 多值，慎放宽 |\n| 同底才能并指数 | $2^x3^x=6^x$ 对（底乘）；但 $2^x+2^y\\ne2^{x+y}$ | 加法并指数必错 | 只有**乘法**能并 |\n| $(a^x)^y=a^{xy}$ 与 $a^{(x^y)}$ 区分 | $(2^3)^2=64$ vs $2^{3^2}=512$ | 差 $8$ 倍 | 结合法则只对固定底成立 |",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.5:exp-log.misuse",
+      "type": "counterexample",
+      "subject": "exp-log",
+      "title": "典型误用：函数穿加法（ln 5≈1.609 ≠ ln2+ln3≈1.792）",
+      "keywords": [
+        "ln(x+y)≠lnx+lny：差 ln(6/5)≈0.182",
+        "√(a+b)≠√a+√b：√25=5 vs 3+4=7",
+        "幂次括号：(2³)²=64 vs 2^{3²}=512",
+        "修补：只有线性函数能穿加法；代小数字检验"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 152,
+        "line_end": 153
+      },
+      "fill_hint": "三类误用各算出具体错误值；修补=小数字检验法。",
+      "content": "**误用一（$\\ln$ 穿加法）**：$\\ln(2+3)=\\ln5\\approx1.60944$【已核验:1.60943791243|log(5)】，而 $\\ln2+\\ln3=\\ln6\\approx1.79176$【已核验:1.79175946923|log(2)+log(3)】——差 $\\ln\\frac65\\approx0.18232$【已核验:0.182321556794|log(6/5)】。**$\\ln$ 只把乘变加，加法穿不过去。**\n\n**误用二（根号穿加法）**：$\\sqrt{9+16}=5$【已核验:5|sqrt(9+16)】而 $\\sqrt9+\\sqrt{16}=3+4=7$【已核验:7|3+4】。\n\n**误用三（幂次括号）**：$2^{3^2}$ 从上往下算 $2^9=512$【已核验:512|2**(3**2)】，不是 $(2^3)^2=2^6=64$【已核验:64|(2**3)**2】——括号位置差 $8$ 倍。\n\n**修补（三条共用）**：对\"函数穿加法\"的断言一律警惕——只有**线性函数**（$c\\cdot x$）能穿过加法；$\\ln$、$\\sqrt{\\ }$、$a^x$ 都非线性。检验法：代一对小数字（如上），不等立现。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P4.2"
+      ]
+    },
+    {
+      "id": "P2.5:exp-log.bound",
+      "type": "extension",
+      "subject": "exp-log",
+      "title": "常用界：ln2<1、e>2（心算标尺）",
+      "keywords": [
+        "ln2≈0.693<1、e≈2.718>2（切片给的界）",
+        "推论：2<e<3 ⟹ 1=ln e ∈ (ln2, ln3)",
+        "log₂10≈3.32 ⟹ 10³=2^9.97，'千≈2¹⁰'",
+        "换底公式是这一切的引擎"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 154,
+        "line_end": 154
+      },
+      "fill_hint": "切片两条界展开为心算标尺；2¹⁰ 换算数值核验。",
+      "content": "（本条把切片给的两个界用起来。）切片原文：$\\ln2\\approx0.693<1$【已核验:0.69314718056|log(2)】、$e\\approx2.718>2$【已核验:2.71828182846|exp(1)】。\n\n**直接推论**：$2<e<3$（$e$ 距 $3$ 还差 $0.28$【已核验:-0.281718171541|exp(1)-3】）⟹ 取对数后 $1<\\ln3$【已核验:1.09861228867|log(3)】而 $\\ln2<1$——\"$e$ 做分界\"把整数关进对数刻度。\n\n**心算量级（换底公式的实战）**：$\\log_210\\approx3.32$【已核验:3.32192809489|log(10)/log(2)】，故 $10^3=2^{9.97}$【已核验:9.96578428466|3*log(10)/log(2)】与 $2^{10}$ 只差 $2.4\\%$【已核验:0.024|2**10/10**3-1】——算法分析（P9.3）里\"千 $\\approx2^{10}$\"换算的来源：$2^{10}=1024$【已核验:1024|2**10】。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P9.3"
+      ]
+    },
+    {
+      "id": "P2.5:radicals.probe1",
+      "type": "probe",
+      "subject": "radicals",
+      "title": "检验：有理化 + 双重根式",
+      "keywords": [
+        "①1/(√5+√3)=(√5-√3)/2≈0.25201",
+        "②√(7+2√10)=√5+√2≈3.65028",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 152,
+        "line_end": 152
+      },
+      "fill_hint": "【必】小目检验题（两条主线各一问）；答案数值已带核验标记。",
+      "content": "①有理化 $\\frac{1}{\\sqrt5+\\sqrt3}$；②化简 $\\sqrt{7+2\\sqrt{10}}$（找 $m+n=7$、$mn=10$）。\n\n（答案：①$\\frac{\\sqrt5-\\sqrt3}{2}\\approx0.25201$，与原式差 $0$【已核验:0|1/(sqrt(5)+sqrt(3))-(sqrt(5)-sqrt(3))/2】；②$\\sqrt5+\\sqrt2$（$m=5,n=2$），数值 $\\approx3.65028$，差 $0$【已核验:0|sqrt(7+2*sqrt(10))-(sqrt(5)+sqrt(2))】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.5:exp-log.probe1",
+      "type": "probe",
+      "subject": "exp-log",
+      "title": "检验：换底与真数条件",
+      "keywords": [
+        "log₂10≈3.32193 与 log₁₀2≈0.30103 互为倒数",
+        "log₂32=5",
+        "ln(x+y)=lnx+lny 在 x=2,y=3 时差 -0.18232",
+        "答案数值带待核验标记（前端折叠用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 153,
+        "line_end": 153
+      },
+      "fill_hint": "【必】小目检验题（换底 + 误用数值）；答案数值已带核验标记。",
+      "content": "①用换底公式算 $\\log_2 10$ 与 $\\log_{10}2$，验证两者互为倒数；②算 $\\log_2 32$；③指出 $\\ln(x+y)=\\ln x+\\ln y$ 在 $x=2,y=3$ 时的两端值差。\n\n（答案：①$3.32193$【已核验:3.32192809489|log(10)/log(2)】与 $0.30103$【已核验:0.301029995664|log(2)/log(10)】，积为 $1$【已核验:1|(log(10)/log(2))*(log(2)/log(10))】；②$5$【已核验:5|log(32)/log(2)】；③$\\ln5-\\ln6\\approx-0.18232$【已核验:-0.182321556794|log(5)-log(6)】。）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "P2.5:radicals.application",
+      "type": "application",
+      "subject": "radicals",
+      "title": "有理化的下游",
+      "keywords": [
+        "极限 0/0：(√(x+1)-1)/x → 1/2（乘共轭差化积）",
+        "P7.2 积分：根式代换前的有理化预处理",
+        "差分分解：√a-√b=(a-b)/(√a+√b)（平方差逆向）",
+        "de1.2 积分因子的根式判别式化简"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 152,
+        "line_end": 152
+      },
+      "fill_hint": "跨章落点各一句 + 一个数值算例。",
+      "content": "- **极限（P4.2 极限三件套）**：$\\frac{0}{0}$ 型根式差——$\\lim_{x\\to0}\\frac{\\sqrt{x+1}-1}{x}$，乘共轭把差化积：$\\frac{x}{x(\\sqrt{x+1}+1)}\\to\\frac{1}{\\sqrt{0+1}+1}=\\frac12$【已核验:0.5|1/(sqrt(0+1)+1)】。这是 P2.1 平方差\"差分分解\"备注用途的根式版：$\\sqrt a-\\sqrt b=\\frac{a-b}{\\sqrt a+\\sqrt b}$。\n- **积分（P7.2）**：根式代换（$u=\\sqrt{x}$ 型）前的有理化预处理。\n- **ODE（de1.2）**：积分因子的根式判别式化简走同一操作。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P4.2",
+        "P7.2",
+        "P2.1"
+      ]
+    },
+    {
+      "id": "P2.5:exp-log.application",
+      "type": "application",
+      "subject": "exp-log",
+      "title": "指对数的下游",
+      "keywords": [
+        "M3 熵：H=-∑p·log₂p 全靠换底",
+        "P4.3 常用极限的形式操纵（(1+1/n)ⁿ=e 等）",
+        "P8.2 Γ(x+1)=xΓ(x) 取对数后是加法递推",
+        "P8.1 高斯积分 e^{-x²} 的指数律引擎",
+        "指数把乘法变加法——量级跨越大的场景全在用"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 153,
+        "line_end": 153
+      },
+      "fill_hint": "跨章落点各一句。",
+      "content": "- **信息论（M3）**：熵 $H=-\\sum p\\log_2p$——所有 $\\log_2$ 都靠换底公式算。\n- **常用极限（P4.3）**：$\\lim(1+\\frac1n)^n=e$ 一族的形式操纵全用本小目法则。\n- **特殊函数（P8.2）**：$\\Gamma(x+1)=x\\Gamma(x)$ 取对数后是加法递推 $\\ln\\Gamma(x+1)=\\ln x+\\ln\\Gamma(x)$（lgamma 的数值基础）。\n- **高斯积分（P8.1）**：$e^{-x^2}$ 的指数律（$e^ae^b=e^{a+b}$）是平方展开、换元、配方的引擎。\n\n一句话：**指数把乘法变加法**——熵、复杂度、半衰期这些\"量级跨越大\"的量，全部活在 $\\log$/指数刻度上。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "M3",
+        "P4.3",
+        "P8.1",
+        "P8.2"
+      ]
+    },
+    {
+      "id": "P2.5:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "P2.5 内部对照（根式 vs 指数 vs 对数）",
+      "keywords": [
+        "根式：乘共轭、配方（依赖平方差 P2.1）",
+        "指数：并指数（定义层，无 P2.1 依赖）",
+        "对数：拆乘（陷阱最多：加法穿不过）",
+        "共同纪律：乘法可拆、加法不可拆"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 150,
+        "line_end": 157
+      },
+      "fill_hint": "整单元对照表 + 共同纪律句。",
+      "content": "| 对象 | 核心操作 | 依赖的 P2.1 公式 | 高频陷阱 |\n|---|---|---|---|\n| 根式 | 乘共轭、双重根式配方 | 平方差 $(\\sqrt a+\\sqrt b)(\\sqrt a-\\sqrt b)=a-b$ | $\\sqrt{a+b}\\ne\\sqrt a+\\sqrt b$ |\n| 指数 | 并指数 $a^xa^y=a^{x+y}$ | 无（定义层） | $(a^x)^y\\ne a^{(x^y)}$（括号） |\n| 对数 | 拆乘 $\\ln(xy)=\\ln x+\\ln y$ | 无 | $\\ln(x+y)\\ne\\ln x+\\ln y$；真数 $>0$ |\n\n共同纪律：**乘法可拆、加法不可拆**——$\\ln$、$\\sqrt{\\ }$、幂全部把乘法降级为加法、把加法原样甩在原地（misuse 词条的统一修补原则）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P2.1"
+      ]
+    },
+    {
+      "id": "P2.5:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "P2.5 的服务对象",
+      "keywords": [
+        "P4.2/P4.3 极限的代数预处理",
+        "M3 熵（log₂ 换底）",
+        "P7.2 积分的有理化",
+        "P8.1/P8.2 特殊函数的指数律",
+        "P9.3 渐近记号的量级换算（千≈2¹⁰）"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 150,
+        "line_end": 157
+      },
+      "fill_hint": "单元级下游一览。",
+      "content": "P2.5 是\"数的手感\"层：极限（P4.2/P4.3）的代数预处理、熵（M3）的换底、积分（P7.2）的有理化、特殊函数（P8.1/P8.2）的指数律、渐近换算（P9.3 的\"千 $\\approx2^{10}$\"）都直接取用。它没有深定理，全是**使用纪律**（条件 + 误用形态）。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "links": [
+        "P4.2",
+        "P4.3",
+        "M3",
+        "P7.2",
+        "P8.1",
+        "P8.2",
+        "P9.3"
+      ]
+    },
+    {
+      "id": "P2.5:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：log-scale（对数刻度与心算标尺）",
+      "keywords": [
+        "线性轴与对数轴并排：1,2,e,3,10 的间距",
+        "ln 把乘法变加法可视化（ln3-ln2=ln(3/2)）",
+        "误用叙事：ln(x+y) 与 lnx+lny 曲线分叉",
+        "判据 Q4：简单显式函数 ⟹ 前端直渲"
+      ],
+      "tex_ref": {
+        "file": "notebook/P_computation.tex",
+        "line_start": 153,
+        "line_end": 154
+      },
+      "fill_hint": "档1 新模块 log-scale；契约细节由前端另行记录。",
+      "content": "单元级演示叙事：**对数刻度**。交互：同一根轴上线性刻度与对数刻度并排——$1,2,e,3,10$ 在对数轴上按 $\\ln$ 值均匀间距（$\\ln2\\approx0.693$【已核验:0.69314718056|log(2)】、$\\ln3\\approx1.0986$【已核验:1.09861228867|log(3)】，差恰为 $\\ln\\frac32$，差 $0$【已核验:0|log(3)-log(2)-log(3/2)】）——\"$\\ln$ 把乘法变加法\"直接可见：乘 $2$ = 平移 $0.693$ 格。\n\n误用叙事：叠加画 $\\ln(x+y)$ 与 $\\ln x+\\ln y$ 两条曲线，$x=y=1$ 后立刻分叉（$x=y=2$ 处 $\\ln4\\approx1.386$ vs $\\ln2+\\ln2=\\ln4$ 相等、$x=2,y=3$ 处 $1.609$ vs $1.792$ 分叉）——\"加法穿不过\"的图形版。判据 Q4：简单显式函数 ⟹ 前端直渲。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "module": "log-scale",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "bases": [
+            2,
+            "e",
+            10
+          ],
+          "marks": [
+            1,
+            2,
+            "e",
+            3,
+            10
+          ],
+          "show": [
+            "linear",
+            "logarithmic",
+            "misuse-curves"
+          ]
+        }
+      }
+    }
+  ]
+}

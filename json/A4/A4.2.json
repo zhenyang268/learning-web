@@ -1,0 +1,281 @@
+{
+  "schema": "entry-card/v2",
+  "code": "A4.2",
+  "chapter": "A4",
+  "title": "弱导数",
+  "src": {
+    "file": "notebook/A_analysis.tex",
+    "line_start": 317,
+    "line_end": 329,
+    "anchor": "notebook/A_analysis.tex:317"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-24",
+  "entries": [
+    {
+      "id": "A4.2:weak-derivative.quantifiers",
+      "type": "comparison",
+      "subject": "weak-derivative",
+      "title": "弱导数定义逐条拆解",
+      "keywords": [
+        "定义拆成 5 个限定词：①u,v∈L¹_loc ②φ∈C_c^∞ ③等式 ∫u∂φ=−∫vφ ④对一切φ（全称量词）⑤按分量 ∂ᵢ",
+        "①只需局部可积：u 连续都不需要——比「可导」弱得多的门槛",
+        "②φ 紧支（分部积分边界项消失）+ 光滑（可反复转嫁导数）——两个条件各司其职",
+        "④「对一切」是强约束：一个反例 φ 即否决候选 v；这是判据的力量来源",
+        "⑤ v 只需 L¹_loc：允许导数有可积奇性，不允许跳跃（阶跃反例）",
+        "与经典的关系：经典可导 ⟹ 弱导数存在且一致；反向不成立（|x|）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 317,
+        "line_end": 322
+      },
+      "fill_hint": "五列表；②两行（紧支/光滑）各给一句「为什么需要」；④强调「一个反例即否决」——检验时只需找一个坏 φ",
+      "content": "弱导数定义：设 $u\\in L^1_{\\text{loc}}(\\Omega)$。若存在 $v\\in L^1_{\\text{loc}}(\\Omega)$ 使对**一切** $\\varphi\\in C_c^\\infty(\\Omega)$（紧支光滑测试函数）成立\n\n$$\\int_\\Omega u\\,\\partial_i\\varphi\\,dx=-\\int_\\Omega v\\,\\varphi\\,dx$$\n\n则称 $v$ 是 $u$ 关于 $x_i$ 的弱导数 $v=\\partial_iu$。逐条拆：\n\n| 限定词 | 去掉/改动后的情形 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $u\\in L^1_{\\text{loc}}$（局部可积） | 更弱（如任意分布）⟹ 进入 A2.5 的分布世界，导数可能是 δ（不再是函数） | 弱导数的全部意义就是**导数仍是函数** | 不可再弱，否则换理论 |\n| ② $\\varphi$ **紧支**（$C_c$） | 若 $\\varphi$ 不紧支：分部积分边界项 $[u\\varphi]_{\\partial\\Omega}$ 不消失，等式两边差边界贡献 | 「移导数」搬运失败，定义根基垮 | 不可去；或在 $\\Omega$ 无界时用衰减条件替代 |\n| ② $\\varphi$ **光滑**（$\\infty$） | 若 $\\varphi$ 只连续：$\\varphi'$ 不存在，等式左边没定义 | 无法转嫁导数 | 不可去 |\n| ③④ 等式对**一切** $\\varphi$ 成立 | 只对部分 $\\varphi$ 成立：候选 $v$ 可以蒙混过关（删掉探测某些方向的探针，错误的 $v$ 检测不出来） | 唯一性（a.e.）失效——定义变松、无价值 | 全称量词是定义的牙齿：检验时**一个反例 $\\varphi$ 即否决** |\n| ⑤ $v\\in L^1_{\\text{loc}}$（导数局部可积） | 阶跃 $H$：分部积分给出 $\\int Hv'=-\\varphi(0)$，即「导数」须配出 $\\varphi(0)$——这是 δ 的行为，$\\delta\\notin L^1_{\\text{loc}}$ | $H$ 没有弱导数（完整论证见 heaviside.counterexample），但有分布导数 | 放宽即进入分布（A2.5） |\n\n与经典的关系（切片）：弱导数若存在则**几乎处处唯一**，且 $u$ 经典可导处二者一致——弱导数是经典导数的保守扩张。",
+      "links": [
+        "A2.5",
+        "A4.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:heaviside.counterexample",
+      "type": "counterexample",
+      "subject": "heaviside",
+      "title": "反例：阶跃函数没有弱导数（导数必须是 δ）",
+      "keywords": [
+        "构造 H(x)=1_{x>0}（Heaviside 阶跃）：本身 L¹_loc 合法",
+        "分部积分：∫₀^∞ φ′dx = φ(∞)−φ(0) = −φ(0)（φ 紧支）",
+        "若有弱导数 v：需 ∫vφ = φ(0) 对一切测试函数",
+        "这正是 δ 的读数（A2.5）——δ 不是函数，v 不存在于 L¹_loc",
+        "结论：H ∉ W^{1,1}_loc——跳跃太猛，弱导数世界也装不下",
+        "对比：|x| 的弱导数 sign(x) 是合法函数（裂缝 vs 断崖的差别）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 317,
+        "line_end": 325
+      },
+      "fill_hint": "三步论证完整；「裂缝装得下、断崖装不下」的对照表收尾；连 A2.5 的 H′=δ 词条（分布世界的解释）",
+      "content": "考察 Heaviside 阶跃 $H(x)=\\mathbf 1_{(0,\\infty)}$。$H\\in L^1_{\\text{loc}}$，作为被弱导数定义考察的对象完全合法。\n\n**第一步（分部积分算出等式的右边应是什么）**：对 $\\varphi\\in C_c^\\infty(\\mathbb R)$，\n\n$$\\int_{\\mathbb R}H\\,\\varphi'\\,dx=\\int_0^\\infty\\varphi'\\,dx=\\varphi(+\\infty)-\\varphi(0)=0-\\varphi(0)=-\\varphi(0)$$\n\n（$\\varphi$ 紧支 $\\Rightarrow\\varphi(+\\infty)=0$）。\n\n**第二步（若弱导数存在，它必须配出什么）**：按定义，需存在 $v\\in L^1_{\\text{loc}}$ 使 $-\\int v\\varphi=-\\varphi(0)$ 对一切 $\\varphi$，即\n\n$$\\int_{\\mathbb R}v\\,\\varphi\\,dx=\\varphi(0)\\quad\\text{对一切测试函数}$$\n\n**第三步（这个 $v$ 不存在）**：上式正是 $\\delta$ 的定义式（A2.5）——$v$ 必须在原点外为零（取支撑避开原点的 $\\varphi$）、又要在原点处「积出」探针在原点的值。任何 $L^1_{\\text{loc}}$ 函数在零测集上没有质量，做不到（A2.5 的 delta-not-function 反例的三步论证原样适用）。故 $v$ 不存在：**$H$ 没有弱导数**，$H\\notin W^{1,1}_{\\text{loc}}$。\n\n**对照表（裂缝 vs 断崖）**：\n\n| 对象 | 奇性 | 弱导数 | 原因 |\n|---|---|---|---|\n| $\\|x\\|$（裂缝） | 角点：函数连续、斜率跳跃 | $\\mathrm{sign}(x)$ ✓（合法函数） | 斜率跳跃仍是可积函数 |\n| $H$（断崖） | 跳跃：函数本身断开 | 无（只能是 δ） | 点质量不是函数 |\n\n**修补**：到分布世界（A2.5）里 $H'=\\delta$ 完全合法；弱导数世界（本单元）刻意停在「导数必须是函数」——这个节制让 Sobolev 空间保有范数、完备性与整套 Hilbert 机器（A4.3）。",
+      "links": [
+        "A2.5",
+        "A4.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:weak-derivative.statement",
+      "type": "statement",
+      "subject": "weak-derivative",
+      "title": "弱导数定义陈述（含唯一性与一致性）",
+      "keywords": [
+        "定义：∫_Ω u ∂ᵢφ dx = −∫_Ω v φ dx 对一切 φ∈C_c^∞(Ω)",
+        "直觉（切片原话）：经典分部积分反过来用——用恒等式定义 u′",
+        "u 只需可积，不需连续",
+        "唯一性：弱导数若存在则几乎处处唯一",
+        "一致性：经典导数存在处二者一致（分部积分本是由 u′ 推出的恒等式）",
+        "记号沿用 ∂ᵢu：弱导数不换符号，换的是判据"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 317,
+        "line_end": 325
+      },
+      "fill_hint": "切片定义式与直觉段照抄；一致性的解释（恒等式的「正向」与「反向」）是切片原意的展开；数值内容少，主打转写",
+      "content": "**定义**（切片原文）：设 $u\\in L^1_{\\text{loc}}(\\Omega)$。若存在 $v\\in L^1_{\\text{loc}}(\\Omega)$，使对一切 $\\varphi\\in C_c^\\infty(\\Omega)$（紧支光滑测试函数）成立\n\n$$\\int_\\Omega u\\,\\partial_i\\varphi\\,dx=-\\int_\\Omega v\\,\\varphi\\,dx$$\n\n则称 $v$ 是 $u$ 关于 $x_i$ 的**弱导数**，记 $v=\\partial_iu$。\n\n**切片的直觉**（原文转写）：经典分部积分 $\\int u\\varphi'=-\\int u'\\varphi$（边界项因 $\\varphi$ 紧支而消失）本来是**由 $u'$ 推出**的恒等式；现在反过来，**用它来定义 $u'$**。$u$ 只需要可积，不需要连续。\n\n**两条配套性质**（切片原话）：\n\n1. **几乎处处唯一**：若 $v,w$ 都满足定义，则 $\\int(v-w)\\varphi=0$ 对一切 $\\varphi$，推出 $v=w$ a.e.（证明见 uniqueness.proof）；\n2. **与经典导数一致**：$u$ 经典可导时，分部积分恒等式（$u$ 光滑时成立）恰好说明经典导数满足弱导数的定义——所以弱导数不改变已有答案，只是扩大合法名单（$|x|$ 进来，$H$ 仍在外面，见 heaviside 反例）。\n\n**记号哲学**：继续写 $\\partial_iu$ 而不发明新符号——弱导数与经典导数在后者存在时是同一个对象；改变的不是「叫什么」，而是「凭什么是」。",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:weak-derivative.intuition",
+      "type": "intuition",
+      "subject": "weak-derivative",
+      "title": "直觉：把「逐点斜率」换成「整体对账」",
+      "keywords": [
+        "经典：问每一点的斜率（点态、两侧、极限）",
+        "弱：问所有测试函数的总账是否平（∫uφ′=−∫vφ）",
+        "测试函数 = 审计员：等式对每个审计员都成立才算数",
+        "为什么更稳：积分对零测集不敏感（单点角点不破坏等式）、对 L^p 收敛封闭",
+        "单点豁免：v 在零测集上取什么值不影响积分——a.e. 唯一性的来源",
+        "P9 移导数的升格：从「对光滑函数的技巧」到「对一切可积函数的定义」"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 322,
+        "line_end": 325
+      },
+      "fill_hint": "审计员比喻贯穿；「积分对零测集不敏感」是 |x| 成功与 H 失败的分界——一条直觉解释两个结果",
+      "content": "两种导数观的对决：\n\n- **经典观**（点态）：在每个点问「两侧斜率是否一致且有限」。判据精细到单点，于是单点的角点（$|x|$ 在 0）就足以否决全局。\n- **弱观**（对账）：不问单点，问**整体账目**——把「$u$ 的导数是 $v$」翻译成一条对所有审计员（测试函数 $\\varphi$）的恒等式 $\\int u\\varphi'=-\\int v\\varphi$。每个 $\\varphi$ 审一遍，全部通过才承认 $v$。\n\n**为什么对账比点态稳**：积分对**零测集不敏感**——$v$ 在单个点（如 $x=0$）取什么值、甚至没定义，都不影响任何 $\\int v\\varphi$。所以 $|x|$ 的角点（只涉及一个点的斜率信息丢失）在弱观下毫无影响：$\\mathrm{sign}(x)$ 在 0 处取 $0$ 还是 $1$ 随便，账全平。但 $H$ 的跳跃把「一整段函数值」劈成两半，等式右边需要 $\\varphi(0)$——这是点质量的行为，任何函数的积分都配不出（heaviside 反例）。\n\n**升格的含义**（切片原话）：P9 里分部积分是**技巧**——先有 $u'$（光滑），再用它证明恒等式；现在恒等式**升格为定义**——先有等式，满足者才有资格叫 $u'$。技巧变判据，管辖范围从 $C^1$ 扩到 $L^1_{\\text{loc}}$，而所有旧结论原封不动（一致性）。\n\n一句话：经典导数用显微镜看每个点，弱导数用全库盘点看总账——显微镜看不见的裂缝，盘点根本不在乎。",
+      "links": [
+        "P9.1",
+        "A4.1"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:uniqueness.proof",
+      "type": "proof",
+      "subject": "uniqueness",
+      "title": "证明：弱导数几乎处处唯一",
+      "keywords": [
+        "设定：v,w 都满足定义 ⟹ ∫(v−w)φ = 0 对一切 φ∈C_c^∞",
+        "关键引理：与一切测试函数正交的 L¹_loc 函数为零（a.e.）",
+        "引理机制：若 g 在某点邻域积分非零，用磨光探针 φ=g̃*η_ε 局部探测出矛盾",
+        "结论：v=w a.e.——「几乎处处」的余量恰是积分看不见的零测集",
+        "同一引理撑起「与经典导数一致」：分部积分恒等式把 u′_classic 认证为弱导数"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 325,
+        "line_end": 325
+      },
+      "fill_hint": "分步给理由；引理只给机制（磨光探针）不展开完整泛函细节；结尾把「a.e. 余量」与积分盲区连起来",
+      "content": "陈述（切片）：弱导数若存在则几乎处处唯一。证明骨架：\n\n**第 1 步（差为零积）**：设 $v,w\\in L^1_{\\text{loc}}$ 都满足弱导数定义。两式相减：\n\n$$\\int_\\Omega(v-w)\\,\\varphi\\,dx=0\\quad\\text{对一切}\\ \\varphi\\in C_c^\\infty(\\Omega)$$\n\n**第 2 步（关键引理）**：若 $g\\in L^1_{\\text{loc}}$ 满足 $\\int g\\varphi=0$ 对一切测试函数，则 $g=0$ a.e.。机制：反设 $g$ 在某个小邻域 $B$ 上积分不为零（不妨 $\\int_Bg>0$），取测试函数为「磨光探针」——$\\varphi_\\varepsilon\\approx$ $B$ 上的光滑化示性函数（$C_c^\\infty$ 可以逼近任何简单函数，这正是磨光逼近的思想，A4.1/A4.3）。则 $\\int g\\varphi_\\varepsilon\\to\\int_Bg>0$，与处处为零矛盾。\n\n**第 3 步（结论）**：$g=v-w$ 代入引理得 $v=w$ a.e.。$\\square$\n\n**「几乎处处」的余量从哪来**：积分对零测集盲视（$v$ 与 $v+\\mathbf 1_{\\{0\\}}$ 不可区分），所以唯一性只能到 a.e.——这不是证明的疏漏，而是「用积分定义」的固有分辨率。\n\n**同引擎的第二个输出（一致性）**：$u$ 经典可导且 $u'\\in L^1_{\\text{loc}}$ 时，分部积分恒等式（对光滑 $u$ 成立）说明 $u'$ 满足弱导数定义；由唯一性，弱导数就是它——经典导数被弱定义原样认证。",
+      "links": [
+        "A4.3"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:abs-x-weak-derivative.application",
+      "type": "application",
+      "subject": "abs-x-weak-derivative",
+      "title": "范例：|x| 的弱导数 = sign(x)（完整验证）",
+      "keywords": [
+        "候选：u=|x|，v=sign(x)（0 处取值任意，约定 0）",
+        "验证：∫|x|φ′dx 分段分部积分 = −∫sign(x)φ dx",
+        "关键：x>0 段与 x<0 段分别分部，边界项在 x=0 处 ±|0|φ(0)=0 恰好相消",
+        "结论：sign 是 |x| 的弱导数——A4.1 的直觉被严格兑现",
+        "同法可得：max(x,0)（ReLU）的弱导数 = H(x)（斜坡的斜率是阶跃）",
+        "这个算例是「测试函数对账法」的最小完整演示"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 306,
+        "line_end": 307
+      },
+      "fill_hint": "分段分部积分写全（含 x=0 处边界项相消的一行）；ReLU 那条连接 A4.2.probe1 的数值验证；「0 处取值任意」呼应 a.e. 唯一性",
+      "content": "把 A4.1 的直觉（「$|x|$ 的导数应当是符号函数」）用弱导数定义严格兑现。\n\n**候选**：$u(x)=|x|$，$v(x)=\\mathrm{sign}(x)$（约定 $v(0)=0$；由 a.e. 唯一性，此点取值无关紧要）。\n\n**验证**（对任意 $\\varphi\\in C_c^\\infty(\\mathbb R)$，取 $R$ 使 $\\mathrm{supp}\\,\\varphi\\subset[-R,R]$）：分段分部积分——\n\n$$\\int_{-R}^{0}(-x)\\varphi'\\,dx+\\int_{0}^{R}x\\,\\varphi'\\,dx$$\n\n左段：$[-x\\varphi]_{-R}^{0}-\\int_{-R}^0(-1)\\varphi\\,dx=0\\cdot\\varphi(0)-R\\varphi(-R)+\\int_{-R}^0\\varphi\\,dx$；右段：$[x\\varphi]_0^R-\\int_0^R\\varphi\\,dx=0$（$\\varphi(\\pm R)=0$，紧支！）。两段相加，边界项只剩 $x=0$ 处的贡献：左段上边界给出 $-0\\cdot\\varphi(0)=0$，右段下边界给出 $-0\\cdot\\varphi(0)=0$——**$x=0$ 处的边界项因为 $u(0)=0$ 而恰好消失**。合计\n\n$$\\int_{\\mathbb R}|x|\\varphi'\\,dx=\\int_{-R}^0\\varphi\\,dx-\\int_0^R\\varphi\\,dx=-\\int_{\\mathbb R}\\mathrm{sign}(x)\\,\\varphi\\,dx$$\n\n这正是弱导数定义要求的等式（右边带负号）。**$\\mathrm{sign}$ 是 $|x|$ 的弱导数**。$\\square$\n\n**注意边界项的命运**：分部积分的边界项在 $x=0$ 处为 $|0|\\cdot\\varphi(0)=0$——角点处函数值连续（裂缝）救了它。对照 $H$（断崖）：$H$ 在跳点两侧函数值不同，边界项留下 $\\varphi(0)$ 抵消不掉，导数被迫成为 δ。\n\n**同款产品**：斜坡 $\\max(x,0)$（ReLU，机器学习激活函数的数学原型）弱导数是 $H(x)$——斜坡的斜率从 0 跳到 1，跳到 $H$ 这种「积分可配」的函数（$H\\in L^1_{\\text{loc}}$，它自己不可弱导是另一回事）。",
+      "links": [
+        "A4.1",
+        "A2.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:weak-vs-classical.compare",
+      "type": "comparison",
+      "subject": "weak-vs-classical",
+      "title": "对照：经典导数 / 弱导数 / 分布导数",
+      "keywords": [
+        "判据对比：逐点差商极限 vs 分部积分恒等式 vs 形式转嫁 −⟨T,φ′⟩",
+        "存在性金字塔：可经典导 ⟹ 弱可导 ⟹ 分布可导（后者永远成立）",
+        "对象对比：|x| 三种世界都处理（−/sign/含 sign 的分布）；H 只有分布导数 δ",
+        "精度对比：经典到点、弱到 a.e.、分布到读数",
+        "为什么 PDE 选中间层：保住「导数是函数+可积分」就有范数与 Hilbert 机器（A4.3）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 317,
+        "line_end": 329
+      },
+      "fill_hint": "三层对照表 + 存在性金字塔；|x| 与 H 两个锚例贯穿三列；结论行说明 PDE 的选址逻辑",
+      "content": "三种「导数」的层级对照：\n\n| | 经典导数 | 弱导数（本单元） | 分布导数（A2.5） |\n|---|---|---|---|\n| 判据 | 逐点差商极限存在 | $\\int u\\varphi'=-\\int v\\varphi$ 对一切 $\\varphi\\in C_c^\\infty$ | $\\langle T',\\varphi\\rangle=-\\langle T,\\varphi'\\rangle$（永远可定义） |\n| 对 $u$ 的要求 | 邻域内定义、两侧一致 | $u\\in L^1_{\\text{loc}}$ | $T$ 是任意分布 |\n| 导数是什么 | 数（逐点） | $L^1_{\\text{loc}}$ 函数（a.e. 唯一） | 分布（可以是 δ 等） |\n| $\\|x\\|$ | 0 处失败 | $\\mathrm{sign}$ ✓ | $\\mathrm{sign}$（函数视为分布）✓ |\n| $H$（阶跃） | 失败 | **失败**（导数须为 δ，非函数） | $\\delta$ ✓ |\n| 存在性 | 最挑剔 | 中间 | 永远存在 |\n\n**金字塔**：经典可导 $\\Rightarrow$ 弱可导 $\\Rightarrow$ 分布可导；越往右判据越松、居民越多。\n\n**PDE 为什么住在中间层**：底层（经典）装不下物理解（A4.1）；顶层（分布）太宽容——导数不是函数就没有 $\\|u'\\|_{L^p}$ 这种范数，Hilbert 机器（正交、投影、Lax–Milgram，A4.3/A4.5）全部罢工。中间层恰好：**物理解进得来，泛函工具用得上**。A4.3 的 Sobolev 空间就是这层的地籍登记。",
+      "links": [
+        "A2.5",
+        "A4.1",
+        "A4.3",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "下游应用：Sobolev 空间、FEM、图像处理",
+      "keywords": [
+        "A4.3 Sobolev 空间 W^{k,p}：把「弱导数 ∈ L^p」打包成带范数的完备空间",
+        "G2.2 FEM：分片线性函数一阶导数在单元边界间断，但弱导数存在——试函数空间合法",
+        "A4.5 弱形式：Lax–Milgram 的解在 H¹ 里找——弱导数是入场券",
+        "全变差图像去噪：允许 u 有跳跃（u∈BV），导数是测度——弱导数思想的工业延伸",
+        "激波解 I7：间断解按弱意义理解（熵条件补上唯一性）"
+      ],
+      "tex_ref": {
+        "file": "notebook/A_analysis.tex",
+        "line_start": 317,
+        "line_end": 329
+      },
+      "fill_hint": "出口清单式各一句机制；FEM 那条是弱导数在计算侧最值钱的兑现，写细一句",
+      "content": "弱导数的下游：\n\n- **A4.3 Sobolev 空间**：$W^{k,p}=\\{u:\\ \\text{弱导数}\\ \\partial^\\alpha u\\in L^p,\\ |\\alpha|\\le k\\}$——本单元的定义直接堆出下一单元的空间。\n- **G2.2 有限元**：FEM 的分片线性试函数在单元边界上一阶导数**间断**（每个单元内斜率不同），经典 $C^1$ 判据下非法；弱导数判据下完全合法（斜率函数分片常数、可积）。整套 FEM 的试函数空间建立在弱导数概念上——这是本单元在计算侧最值钱的兑现。\n- **A4.5 弱形式**：Poisson 方程的弱解 $u\\in H_0^1$——「$u$ 有平方可积弱导数」就是入场券。\n- **图像处理**：全变差去噪允许图像保留边缘（跳跃）——把弱导数进一步放宽到测度导数（BV 空间），思想一脉相承：**导数的定义决定你能保留多少结构**。\n- **激波（I7）**：守恒律的间断解按弱意义理解，熵条件补回唯一性——弱解 + 附加判据 = 现代守恒律理论的标准配置。",
+      "links": [
+        "A4.3",
+        "A4.5",
+        "G2.2",
+        "I7"
+      ],
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "A4.2:weak-derivative.probe1",
+      "type": "probe",
+      "subject": "weak-derivative",
+      "title": "检验：ReLU 弱导数的对账数值",
+      "keywords": [
+        "取 u(x)=max(x,0)（ReLU），候选弱导数 v=H(x)",
+        "具体探针 φ(x)=(1−x²)² 在 [−1,1]（端点处 φ=φ′=0，可当测试函数用；严格版需光滑化，结论不变）",
+        "算 ∫u φ′ 与 −∫H φ：两边都应等于 −8/15",
+        "∫₀¹(1−x²)²dx = 8/15"
+      ],
+      "tex_ref": null,
+      "fill_hint": "探针注明「演示用 C¹ 函数，端点零延拓；严格测试函数用磨光逼近，积分值连续依赖故结论不变」；8/15 带核验",
+      "content": "一问（可算出全部数值）：验证 ReLU 函数 $u(x)=\\max(x,0)$ 的弱导数是 $H(x)=\\mathbf 1_{(0,\\infty)}$，即验证 $\\int u\\,\\varphi'\\,dx=-\\int H\\,\\varphi\\,dx$。\n\n取探针 $\\varphi(x)=(1-x^2)^2$ 于 $[-1,1]$（端点处 $\\varphi=\\varphi'=0$，零延拓后是合法的演示用测试函数；严格版用磨光逼近，积分连续依赖、结论不变）：\n\n1. 右边：$-\\int_{-1}^{1}H(x)\\varphi\\,dx=-\\int_0^1(1-x^2)^2dx$。算出 $\\int_0^1(1-x^2)^2dx=1-\\tfrac23+\\tfrac15=\\tfrac{8}{15}$【已核验:0.533333333333|1-2/3+1/5】，故右边 $=-\\tfrac{8}{15}$【已核验:-0.533333333333|-(1-2/3+1/5)】。\n\n2. 左边：$\\int_0^1x\\,\\varphi'(x)\\,dx$（$u=0$ 于左半轴）。分部积分 $=\\big[x\\varphi\\big]_0^1-\\int_0^1\\varphi\\,dx=0-\\tfrac{8}{15}=-\\tfrac{8}{15}$。两边相等 ✓——账目平衡，$H$ 确为 ReLU 的弱导数。\n\n3. 追问：$\\int_{-1}^{1}|\\varphi'|\\,dx$ 有限吗？$u$ 与 $v=H$ 都在 $L^1_{\\text{loc}}$ 吗？（是；$u$ 连续、$H$ 有界可积——弱导数定义的门槛（$L^1_{\\text{loc}}$）本来就低）",
+      "generated_by": {
+        "model": "deepseek-v4.1-flash",
+        "date": "2026-09-24",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
