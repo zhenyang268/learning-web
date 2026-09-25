@@ -10,7 +10,11 @@
     "typecheck": "tsc --noEmit",
     "build:standalone": "node tools/build-standalone.mjs",
     "check:viz": "node tools/viz-model-check.mjs",
-    "check": "tsc --noEmit && npm run check:viz && node tools/dom-harness.mjs --all"
+    "check:graph": "node tools/check-graph.mjs",
+    "check": "tsc --noEmit && npm run check:graph && npm run check:viz && node tools/dom-harness.mjs --all"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

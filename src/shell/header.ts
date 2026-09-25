@@ -27,6 +27,7 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
       <div class="logo">learning-web</div>
       <div class="chapters"></div>
       <div class="warnslot"></div>
+      <button class="graphbtn" data-graph="1" title="知识图谱（三层缩放）">⬡ 图谱</button>
       <label class="search">
         <span class="ico">🔍</span>
         <input type="search" placeholder="筛选单元代号 / 标题…" autocomplete="off" spellcheck="false">
@@ -39,5 +40,7 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
   (host.querySelector('.warnslot') as HTMLElement).innerHTML = model.errorCount
     ? `<div class="warnchip" title="见右下角数据问题浮层">⚠ ${model.errorCount}</div>`
     : '';
+  const gbtn = host.querySelector<HTMLElement>('.graphbtn');
+  if (gbtn) gbtn.classList.toggle('on', model.current === 'graph');
   if (searchEl.value !== model.query) searchEl.value = model.query;
 }

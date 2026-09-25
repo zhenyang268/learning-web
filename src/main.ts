@@ -8,6 +8,8 @@ import { renderHeader } from './shell/header';
 import { renderSidebar } from './shell/sidebar';
 import { renderAside } from './shell/aside';
 import { difficultyOf, groupEntries, renderCard, type KbIndex } from './renderers/card';
+import { mountGraph } from './renderers/graph';
+import { loadMergedGraph } from './modules/graph-data';
 import { mountOverlay } from './renderers/overlay';
 import { escapeHtml, renderInline } from './renderers/markdown';
 
@@ -36,6 +38,8 @@ let fatal: string | null = null;
 const byCode = new Map<string, UnitMeta>();
 const currentCode = (): string => location.hash.replace(/^#\/?/, '');
 const metaOf = (code: string): UnitMeta | undefined => byCode.get(code);
+/** 最近一次真正阅读的单元（从图谱返回时用，别把 #graph 记进去） */
+let lastRead = '';
 
 function setUnits(next: UnitMeta[]): void {
   units = next;
@@ -232,11 +236,16 @@ function prefetch(code: string): void {
 function apply(): void {
   const code = currentCode();
   refreshChrome();
+  if (code === 'graph') {
+    renderGraphView();
+    return;
+  }
   const meta = metaOf(code);
   if (!meta) {
     renderPending(code);
     return;
   }
+  lastRead = code;
   const file = loaded.get(code);
   if (!file) {
     if (failed.has(code)) renderLoadFailed(meta);
@@ -251,6 +260,33 @@ function apply(): void {
   const difficulty = groups.length ? Math.max(...groups.map((g) => difficultyOf(g).level)) : 1;
   renderAside(elAside, { file, graph, masteryOf: masteryByCode, difficulty });
   prefetch(code);
+}
+
+/** 图谱视图：占据阅读区，右栏放说明。数据 = 索引元数据 + graph/*.yaml（异步，降级不白屏）。 */
+function renderGraphView(): void {
+  elReader.innerHTML = `<div class="card pagehead">
+      <h1>知识图谱 <em>四类语义边 · 三层缩放</em></h1>
+      <div class="meta"><span class="tag">graph</span><span>prereq / tension / dual / applies</span></div>
+    </div>
+    <div class="card graphhost" id="graph-host"><p class="dim">图谱加载中…</p></div>`;
+  elAside.innerHTML = `<div class="box">
+      <h4>怎么读这张图</h4>
+      <p class="kv"><b style="color:var(--cyan)">prereq</b> 实线箭头 = 学习顺序（左→右，必须无环）</p>
+      <p class="kv"><b style="color:var(--pink)">tension</b> 虚线 = 反例/约束互相打脸</p>
+      <p class="kv"><b style="color:var(--violet)">dual</b> 点线 = 对偶路径（顶下↔底上）</p>
+      <p class="kv"><b style="color:var(--green)">applies</b> 长虚线 = 下游应用</p>
+      <h4 style="margin-top:16px">三层缩放</h4>
+      <p class="kv">字母块（A/B/DE…）→ 章节组（A1/A2…）→ 单元节点。点节点下钻，L3 点节点跳阅读。</p>
+      <h4 style="margin-top:16px">数据来源</h4>
+      <p class="kv">派生边：json 词条 links（启发式）；语义边真源：<span class="mono">graph/&lt;letter&gt;.yaml</span>（逐章人工草拟+校验，现只有 A1）。yaml 覆盖组内 prereq 以 yaml 为准。</p>
+      <p class="kv dim">节点下弧线 = 掌握度（与右栏同源）；红色节点 = prereq 环（数据错误，需修 yaml）。</p>
+    </div>`;
+  const host = document.getElementById('graph-host');
+  if (!host) return;
+  void loadMergedGraph(units).then((merged) => {
+    if (currentCode() !== 'graph') return; // 用户已跳走，不画
+    mountGraph(host, { merged, masteryOf: masteryByCode });
+  });
 }
 
 /* ------------------------------------------------------------------ 启动 */
@@ -287,6 +323,12 @@ async function boot(): Promise<void> {
 }
 
 document.addEventListener('click', (ev) => {
+  const graphBtn = (ev.target as HTMLElement).closest<HTMLElement>('[data-graph]');
+  if (graphBtn) {
+    // 图谱视图：再点一次回上一个阅读单元（没有就回 frontier）
+    location.hash = currentCode() === 'graph' ? `#/${lastRead || frontierOf(graph, masteryByCode) || units[0]?.code || ''}` : '#graph';
+    return;
+  }
   const retry = (ev.target as HTMLElement).closest<HTMLElement>('[data-retry]');
   if (retry?.dataset.retry) {
     failed.delete(retry.dataset.retry);
