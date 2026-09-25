@@ -13,6 +13,7 @@
  * （难度在词条正文里，索引没有 —— 图谱不为它拉全库，宁缺毋假）。
  */
 import { escapeHtml } from './markdown';
+import { displayCode } from '../modules/codes';
 import {
   aggregateLetters,
   groupsOf,
@@ -394,7 +395,7 @@ export function mountGraph(host: HTMLElement, model: GraphViewModel): void {
       const m = model.masteryOf(c);
       nodeCircle(
         g, p.x, p.y, 16,
-        c, model.merged.titleOf.get(c) ?? '',
+        displayCode(c), model.merged.titleOf.get(c) ?? '',
         m,
         () => {
           location.hash = `#/${c}`;
@@ -407,7 +408,7 @@ export function mountGraph(host: HTMLElement, model: GraphViewModel): void {
       t.setAttribute('x', '12');
       t.setAttribute('y', '22');
       t.setAttribute('class', 'cycwarn');
-      t.textContent = `⚠ prereq 有环：${[...model.merged.cycleNodes].join(' ')}（红色）—— 数据需修复`;
+      t.textContent = `⚠ prereq 有环：${[...model.merged.cycleNodes].map((c) => displayCode(c)).join(' ')}（红色）—— 数据需修复`;
       g.appendChild(t);
     }
   }

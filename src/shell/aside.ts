@@ -2,6 +2,7 @@ import type { EntryFile } from '../types';
 import type { Graph } from '../modules/graph';
 import { escapeHtml, renderInline } from '../renderers/markdown';
 import { isProbeDone, toggleProbe } from '../modules/state';
+import { displayCode } from '../modules/codes';
 
 export interface AsideModel {
   file: EntryFile;
@@ -23,7 +24,8 @@ function chips(codes: string[], cls: string, empty: string): string {
   return codes
     .map(
       (c) =>
-        `<button class="chip ${cls}" data-goto="${escapeHtml(c)}">${escapeHtml(c)}</button>`,
+        // data-goto 用内部码（路由/取数），按钮文本用显示码（单单元章补 .1）
+        `<button class="chip ${cls}" data-goto="${escapeHtml(c)}">${escapeHtml(displayCode(c))}</button>`,
     )
     .join('');
 }
@@ -76,7 +78,7 @@ export function renderAside(host: HTMLElement, model: AsideModel): void {
       }
 
       <h4 style="margin-top:18px">本节元信息</h4>
-      <p class="kv mono">${escapeHtml(file.schema ?? '—')} · ${escapeHtml(code)}</p>
+      <p class="kv mono">${escapeHtml(file.schema ?? '—')} · ${escapeHtml(displayCode(code))}</p>
       ${srcText ? `<p class="kv mono">src ${escapeHtml(srcText)}</p>` : ''}
       ${file.notebook_commit ? `<p class="kv mono">commit ${escapeHtml(file.notebook_commit)}</p>` : ''}
       ${file.updated ? `<p class="kv mono">updated ${escapeHtml(file.updated)}</p>` : ''}

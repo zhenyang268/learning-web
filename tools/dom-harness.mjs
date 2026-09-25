@@ -183,6 +183,24 @@ async function runUnit(bundleJs, code) {
   p('无致命错误浮层', !textOf(overlay).includes('数据索引读取失败'), textOf(overlay).slice(0, 120));
   p('阅读区非空（不白屏）', reader.children.length > 0);
   p('页面标题含代号', textOf(reader.querySelector('.pagehead h1')).includes(code));
+  // ── 显示码（src/modules/codes.ts）：单单元章（code 无 `.`）的子节必须显示为
+  //    `<code>.1`（用户口径：子节要有子标号）；内部码（data-goto/路由）保持原样。
+  const selfNode = d.querySelector('#sidebar .node.on');
+  if (!code.includes('.')) {
+    p('单单元章侧栏显示码补 .1',
+      selfNode?.querySelector('.code')?.textContent === `${code}.1`,
+      `got=${selfNode?.querySelector('.code')?.textContent}`);
+    p('单单元章 data-goto 保持内部码',
+      selfNode?.getAttribute('data-goto') === code,
+      `got=${selfNode?.getAttribute('data-goto')}`);
+    p('正文 h1 显示码补 .1',
+      textOf(reader.querySelector('.pagehead h1')).includes(`${code}.1`),
+      textOf(reader.querySelector('.pagehead h1')).slice(0, 30));
+  } else {
+    p('多单元章显示码不加后缀',
+      selfNode?.querySelector('.code')?.textContent === code,
+      `got=${selfNode?.querySelector('.code')?.textContent}`);
+  }
   const cards = [...reader.querySelectorAll('.card')].filter((c) => !c.classList.contains('pagehead'));
   p('定理卡已渲染', cards.length > 0, `cards=${cards.length}`);
   p('顶栏字母块非空', d.querySelectorAll('#header .chapters b').length > 0);

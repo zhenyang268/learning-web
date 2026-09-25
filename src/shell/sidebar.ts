@@ -1,6 +1,7 @@
 import type { UnitMeta } from '../types';
 import { escapeHtml } from '../renderers/markdown';
 import { codeKey } from '../modules/graph';
+import { displayCode } from '../modules/codes';
 
 export interface SidebarModel {
   units: UnitMeta[];
@@ -21,7 +22,8 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   const q = (model.query ?? '').trim().toLowerCase();
   const byChapter = new Map<string, UnitMeta[]>();
   for (const u of model.units) {
-    if (q && !`${u.code} ${u.title}`.toLowerCase().includes(q)) continue;
+    // 搜索匹配同时覆盖内部码（Q8）与显示码（Q8.1），两种输入都能命中
+    if (q && !`${u.code} ${displayCode(u.code)} ${u.title}`.toLowerCase().includes(q)) continue;
     const chapter = u.chapter || u.code.split('.')[0] || u.code;
     const list = byChapter.get(chapter) ?? [];
     list.push(u);
@@ -65,7 +67,7 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
           const m = model.masteryOf(u.code);
           return `<div class="node${u.code === model.current ? ' on' : ''}${m >= 3 ? ' done' : ''}"
             data-goto="${escapeHtml(u.code)}" title="${escapeHtml(u.title)}">
-            <span class="code">${escapeHtml(u.code)}</span>
+            <span class="code">${escapeHtml(displayCode(u.code))}</span>
             <span class="ttl">${escapeHtml(u.title)}</span>
             <span class="m">L${m}</span>
           </div>`;

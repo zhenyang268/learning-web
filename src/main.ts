@@ -12,6 +12,7 @@ import { mountGraph } from './renderers/graph';
 import { loadMergedGraph } from './modules/graph-data';
 import { mountOverlay } from './renderers/overlay';
 import { escapeHtml, renderInline } from './renderers/markdown';
+import { displayCode } from './modules/codes';
 
 const elHeader = document.getElementById('header')!;
 const elFrontier = document.getElementById('frontier')!;
@@ -112,11 +113,11 @@ function renderFrontier(): void {
     <div class="inner">
       <div class="pulse"></div>
       <div>
-        <b>今天该学：${escapeHtml(meta.code)} ${escapeHtml(meta.title)}</b>
+        <b>今天该学：${escapeHtml(displayCode(meta.code))} ${escapeHtml(meta.title)}</b>
         <span>— frontier 由掌握度实时算出（mastery&lt;3 且 prereq 全部达标，拓扑序第一）</span>
       </div>
       <span class="grow"></span>
-      <span class="dim mono">prereq: ${prereq.length ? prereq.map(escapeHtml).join(' · ') : '无'}</span>
+      <span class="dim mono">prereq: ${prereq.length ? prereq.map((c) => escapeHtml(displayCode(c))).join(' · ') : '无'}</span>
       <button class="chip" data-goto="${escapeHtml(meta.code)}">去学 →</button>
     </div>`;
 }
@@ -131,7 +132,7 @@ function renderReader(file: EntryFile): void {
   const head = document.createElement('div');
   head.className = 'card pagehead';
   head.innerHTML = `
-    <h1>${escapeHtml(file.code ?? '')} <em>${renderInline(file.title ?? '')}</em></h1>
+    <h1>${escapeHtml(displayCode(file.code ?? ''))} <em>${renderInline(file.title ?? '')}</em></h1>
     <div class="meta">
       <span>src: ${escapeHtml(srcText)}</span>
       <span class="tag">${escapeHtml(file.schema ?? '—')}</span>
@@ -145,7 +146,7 @@ function renderReader(file: EntryFile): void {
 
 function renderLoading(meta: UnitMeta): void {
   elReader.innerHTML = `<div class="card pagehead">
-      <h1>${escapeHtml(meta.code)} <em>${escapeHtml(meta.title)}</em></h1>
+      <h1>${escapeHtml(displayCode(meta.code))} <em>${escapeHtml(meta.title)}</em></h1>
       <div class="meta"><span class="tag">加载中</span><span>${escapeHtml(meta.path)}</span></div>
       <p class="kv dim">按需加载：只拉这一个单元的词条（其余单元仍在索引里，不占带宽）。</p>
     </div>`;
@@ -156,7 +157,7 @@ function renderLoading(meta: UnitMeta): void {
 function renderLoadFailed(meta: UnitMeta): void {
   const list = failed.get(meta.code) ?? [];
   elReader.innerHTML = `<div class="card pagehead">
-      <h1>${escapeHtml(meta.code)} <em>数据读不出来</em></h1>
+      <h1>${escapeHtml(displayCode(meta.code))} <em>数据读不出来</em></h1>
       <div class="meta"><span class="tag">failed</span><span>${escapeHtml(meta.path)}</span></div>
       <div class="issues">${list
         .map(
@@ -185,7 +186,7 @@ function renderPending(code: string): void {
          <p class="kv">该单元还没被生成线产出。已生成同章单元：</p>
          <div class="pendinglist">${
            nearest.length
-             ? nearest.map((c) => `<button class="chip" data-goto="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('')
+             ? nearest.map((c) => `<button class="chip" data-goto="${escapeHtml(c)}">${escapeHtml(displayCode(c))}</button>`).join('')
              : '<span class="dim">本章暂无已生成单元</span>'
          }</div>
        </div>`
@@ -277,7 +278,10 @@ function prereqEmptyNote(code: string): string | undefined {
   const group = code.split('.')[0];
   const cross = meta.links.filter((l) => byCode.has(l) && l !== code && l.split('.')[0] !== group);
   if (!cross.length) return undefined;
-  return `组内无前序（真源已标注）。跨章关联 ${cross.length} 条尚未判定依赖方向，故不计入：${cross.slice(0, 6).join(' · ')}${cross.length > 6 ? ' …' : ''}`;
+  return `组内无前序（真源已标注）。跨章关联 ${cross.length} 条尚未判定依赖方向，故不计入：${cross
+    .slice(0, 6)
+    .map((c) => displayCode(c))
+    .join(' · ')}${cross.length > 6 ? ' …' : ''}`;
 }
 
 /**
