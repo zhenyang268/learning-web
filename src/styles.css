@@ -20,6 +20,14 @@
   /* 玻璃面板底色（header/aside/卡片共用）：暗色下是深色半透明 */
   --panel: rgba(7, 11, 22, .72);
   --panel-solid: #0b1120;
+  /* viz 画布专用（canvas 不能直接 var()，由 kit.ts 的 cssColor 读取）：
+     网格/轴线/暗文字/默认填充/画布底/画布前景 */
+  --viz-grid: rgba(148, 163, 255, .08);
+  --viz-axis: rgba(148, 163, 255, .32);
+  --viz-dim: rgba(139, 150, 196, .9);
+  --viz-fill: color-mix(in srgb, var(--cyan) 12%, transparent);
+  --viz-bg: #070b16;
+  --viz-fg: #ffffff;
 }
 
 /* 亮色主题：跟随系统（TASKBOOK §8 第8条）。结构同暗色，玻璃拟态改浅色适配。 */
@@ -42,6 +50,13 @@
     --red: #c74343;
     --panel: rgba(255, 255, 255, .78);
     --panel-solid: #ffffff;
+    /* 亮色画布：网格/轴线用深色调，底色=浅面板，前景=深文字色 */
+    --viz-grid: rgba(60, 80, 170, .10);
+    --viz-axis: rgba(60, 80, 170, .38);
+    --viz-dim: rgba(82, 93, 133, .95);
+    --viz-fill: rgba(14, 127, 168, .10);
+    --viz-bg: #f8f9fd;
+    --viz-fg: #1c2340;
   }
 
   .aurora i:nth-child(1) {
@@ -201,8 +216,8 @@ header {
   font-size: 12px;
   font-family: var(--mono);
   color: var(--yellow);
-  border: 1px solid #facc1540;
-  background: #facc1518;
+  border: 1px solid color-mix(in srgb, var(--yellow) 25%, transparent);
+  background: color-mix(in srgb, var(--yellow) 9%, transparent);
   border-radius: 20px;
   padding: 3px 11px;
   cursor: help;
@@ -263,7 +278,7 @@ header {
   padding: 13px 20px;
   border-radius: 16px;
   border: 1px solid transparent;
-  background: linear-gradient(var(--bg2), var(--bg2)) padding-box, linear-gradient(100deg, #5ee6ff55, #a78bfa44, #f472b633) border-box;
+  background: linear-gradient(var(--bg2), var(--bg2)) padding-box, linear-gradient(100deg, color-mix(in srgb, var(--cyan) 33%, transparent), color-mix(in srgb, var(--violet) 27%, transparent), color-mix(in srgb, var(--pink) 20%, transparent)) border-box;
 }
 
 .frontier .pulse {
@@ -340,7 +355,7 @@ nav .node.done .code {
 
 nav .node.done .m {
   color: var(--green);
-  border-color: #4ade8040;
+  border-color: color-mix(in srgb, var(--green) 25%, transparent);
 }
 
 nav .node {
@@ -361,7 +376,7 @@ nav .node:hover {
 }
 
 nav .node.on {
-  background: linear-gradient(90deg, rgba(94, 230, 255, .14), rgba(167, 139, 250, .10));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--cyan) 14%, transparent), color-mix(in srgb, var(--violet) 10%, transparent));
   color: var(--tx);
   border-left: 2px solid var(--cyan);
 }
@@ -446,13 +461,13 @@ nav .m {
 
 .tag.ok {
   color: var(--green);
-  border-color: #4ade8055;
+  border-color: color-mix(in srgb, var(--green) 33%, transparent);
 }
 
 .tag.err {
   color: var(--red);
-  border-color: #f8717155;
-  background: #f8717115;
+  border-color: color-mix(in srgb, var(--red) 33%, transparent);
+  background: color-mix(in srgb, var(--red) 8%, transparent);
 }
 
 /* 定理卡头部 */
@@ -590,7 +605,7 @@ nav .m {
   margin: 8px 0;
   color: var(--tx2);
   font-size: 13px;
-  background: rgba(167, 139, 250, .06);
+  background: color-mix(in srgb, var(--violet) 6%, transparent);
   border-radius: 0 10px 10px 0;
 }
 
@@ -677,7 +692,7 @@ table.q .fn {
 }
 
 table.q tr.detail td {
-  background: rgba(94, 230, 255, .04);
+  background: color-mix(in srgb, var(--cyan) 4%, transparent);
   border-radius: 12px;
   border: 1px solid var(--line);
 }
@@ -713,7 +728,7 @@ table.q tr.detail td {
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 18px;
-  background: rgba(0, 0, 0, .25);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
 }
 
 .viz .vhead {
@@ -728,22 +743,22 @@ table.q tr.detail td {
   font-size: 10px;
   padding: 2.5px 9px;
   border-radius: 20px;
-  background: #facc1518;
+  background: color-mix(in srgb, var(--yellow) 9%, transparent);
   color: var(--yellow);
-  border: 1px solid #facc1540;
+  border: 1px solid color-mix(in srgb, var(--yellow) 25%, transparent);
   letter-spacing: .5px;
 }
 
 .badge.ok {
-  background: #4ade8018;
+  background: color-mix(in srgb, var(--green) 9%, transparent);
   color: var(--green);
-  border-color: #4ade8040;
+  border-color: color-mix(in srgb, var(--green) 25%, transparent);
 }
 
 .badge.err {
-  background: #f8717118;
+  background: color-mix(in srgb, var(--red) 9%, transparent);
   color: var(--red);
-  border-color: #f8717140;
+  border-color: color-mix(in srgb, var(--red) 25%, transparent);
 }
 
 .viz canvas {
@@ -768,7 +783,7 @@ table.q tr.detail td {
 .chip.vizmode.on {
   color: var(--cyan);
   border-color: var(--cyan);
-  box-shadow: 0 0 12px #5ee6ff22;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cyan) 13%, transparent);
 }
 
 .slider {
@@ -798,7 +813,7 @@ input[type=range]::-webkit-slider-thumb {
   background: #fff;
   border: 3px solid var(--cyan);
   cursor: pointer;
-  box-shadow: 0 0 10px #5ee6ff88;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--cyan) 53%, transparent);
 }
 
 .readout {
@@ -823,7 +838,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .readout .fail b {
   color: var(--red);
-  text-shadow: 0 0 14px #f8717155;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--red) 33%, transparent);
 }
 
 .invariant {
@@ -872,11 +887,11 @@ aside h4 {
 .chip:hover {
   color: var(--cyan);
   border-color: var(--cyan);
-  box-shadow: 0 0 12px #5ee6ff22;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cyan) 13%, transparent);
 }
 
 .chip.dep {
-  border-color: #a78bfa55;
+  border-color: color-mix(in srgb, var(--violet) 33%, transparent);
 }
 
 .chip.dep:hover {
@@ -937,7 +952,7 @@ aside h4 {
 .probe.done .cb {
   background: linear-gradient(135deg, var(--cyan), var(--violet));
   border-color: transparent;
-  box-shadow: 0 0 10px #5ee6ff44;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--cyan) 27%, transparent);
 }
 
 .probe.done .txt {
@@ -967,7 +982,7 @@ aside h4 {
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  border: 1px solid #f8717155;
+  border: 1px solid color-mix(in srgb, var(--red) 33%, transparent);
   background: var(--panel-solid);
   backdrop-filter: blur(12px);
   box-shadow: 0 18px 48px #0009;
@@ -1056,23 +1071,23 @@ aside h4 {
   font: inherit;
   cursor: pointer;
   color: var(--cyan);
-  border-bottom: 1px dashed rgba(94, 230, 255, .55);
+  border-bottom: 1px dashed color-mix(in srgb, var(--cyan) 55%, transparent);
   transition: .18s;
 }
 
 .ref:hover {
-  color: #9df1ff;
-  border-bottom-color: #9df1ff;
+  color: color-mix(in srgb, var(--cyan), var(--tx) 25%);
+  border-bottom-color: color-mix(in srgb, var(--cyan), var(--tx) 25%);
 }
 
 .ref.cross {
   color: var(--violet);
-  border-bottom-color: rgba(167, 139, 250, .55);
+  border-bottom-color: color-mix(in srgb, var(--violet) 55%, transparent);
 }
 
 .ref.cross:hover {
-  color: #c4b5fd;
-  border-bottom-color: #c4b5fd;
+  color: color-mix(in srgb, var(--violet), var(--tx) 25%);
+  border-bottom-color: color-mix(in srgb, var(--violet), var(--tx) 25%);
 }
 
 /* 限定词表：实时渲染出来的真数据表，补 mockup 的语气配色与函数名着色 */
@@ -1107,7 +1122,7 @@ table.q tr.detail .in {
 
 @keyframes flash {
   0% {
-    background: rgba(94, 230, 255, .16);
+    background: color-mix(in srgb, var(--cyan) 16%, transparent);
   }
 
   100% {
@@ -1150,22 +1165,22 @@ p .badge {
 }
 
 .badge.warn {
-  background: #facc1518;
+  background: color-mix(in srgb, var(--yellow) 9%, transparent);
   color: var(--yellow);
-  border: 1px solid #facc1540;
+  border: 1px solid color-mix(in srgb, var(--yellow) 25%, transparent);
 }
 
 .badge.ok {
-  background: #4ade8018;
+  background: color-mix(in srgb, var(--green) 9%, transparent);
   color: var(--green);
-  border: 1px solid #4ade8040;
+  border: 1px solid color-mix(in srgb, var(--green) 25%, transparent);
 }
 
 /* 不等式决策树（P10 flagship） */
 .chip.on {
   color: var(--cyan);
   border-color: var(--cyan);
-  background: rgba(94, 230, 255, .1);
+  background: color-mix(in srgb, var(--cyan) 10%, transparent);
 }
 
 .dt {
@@ -1357,7 +1372,7 @@ p .badge {
 }
 
 .gnode .halo.danger {
-  fill: #f8717122;
+  fill: color-mix(in srgb, var(--red) 13%, transparent);
   stroke: var(--red);
   stroke-width: 2;
 }

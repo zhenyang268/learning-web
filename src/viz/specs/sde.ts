@@ -348,7 +348,7 @@ const fpModes: VizMode[] = [
           { f: () => 0, color: C.green, width: 1.8, dash: [4, 4] },
         ],
         segs: [{ x0: x0, y0: 0, x1: x0, y1: ouStationary(x0), color: C.yellow, width: 1.6, dash: [3, 3] }],
-        points: [{ x: 0, y: ouStationary(0), r: 5, fill: '#fff', stroke: C.cyan, label: '峰值 1/√π = 0.5642' }],
+        points: [{ x: 0, y: ouStationary(0), r: 5, fill: C.fg, stroke: C.cyan, label: '峰值 1/√π = 0.5642' }],
         labels: [
           { text: 'p(x) = √(θ/πσ²)·e^{−θx²/σ²}（θ=σ=1 ⟹ N(0, ½)）', x: -3.1, y: 0.58, color: C.cyan },
           { text: '概率流 J(x) ≡ 0（放大 2000 倍画出来是一条零线）', x: -3.1, y: 0.5, color: C.green },

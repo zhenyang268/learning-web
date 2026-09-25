@@ -330,7 +330,7 @@ const parabModes: VizMode[] = [
           { f: (x) => (x - vx) ** 2 + vy, color: C.pink, width: 2, dash: [5, 4] },
         ],
         segs: [{ x0: vx, y0: vy, x1: vx, y1: 0, color: 'rgba(250,204,21,.6)', width: 1.6, dash: [4, 4] }],
-        points: [{ x: vx, y: vy, r: 5, fill: '#fff', stroke: C.green, label: `顶点 (${num(vx, 2)}, ${num(vy, 2)})` }],
+        points: [{ x: vx, y: vy, r: 5, fill: C.fg, stroke: C.green, label: `顶点 (${num(vx, 2)}, ${num(vy, 2)})` }],
         axis: { x: 'x', y: '' },
       };
     },

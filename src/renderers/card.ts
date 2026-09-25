@@ -111,8 +111,17 @@ function linkChips(entry: Entry, codes: Set<string>): string {
  *     再退化成指向自己的空跳转）
  *   · 裸代号：等于当前代号 → 不链接（已经在这里了）
  */
+/**
+ * 词条引用 token。三段 alternation：
+ *   1. 全 id `A1.3:mct.nonneg`（前缀可多字母：de1.10:xxx 也算）
+ *   2. 裸 `subject.slot`（小写开头 + 点 + 小写开头；de1.10 不会误中——`10` 非字母开头）
+ *   3. 裸代号 `A1.3` / `de1.10` / `lie3.17`（**前缀必须多字母**：原来写 `[A-Za-z]\d+`
+ *      单字母，会把 `de1.10` 截成 `e1.10`、`lie3.17` 截成 `e3.17`——查无此代号，
+ *      跨章引用永远不可点；实测 B1/H5/H8/P3 等单元的 content 里大量存在）
+ * 匹配后仍有 isEntry/isCode 守门，误配的普通词（如 x2）不会成链。
+ */
 const REF_TOKEN =
-  /([A-Za-z]\d+(?:\.\d+)?):([A-Za-z][A-Za-z0-9-]*)|([a-z][A-Za-z0-9-]*)\.([a-z][A-Za-z0-9-]*)|([A-Za-z]\d+(?:\.\d+)?)/g;
+  /([A-Za-z]+\d+(?:\.\d+)?):([A-Za-z][A-Za-z0-9-]*)|([a-z][A-Za-z0-9-]*)\.([a-z][A-Za-z0-9-]*)|([A-Za-z]+\d+(?:\.\d+)?)/g;
 
 export interface RefTools {
   ctx: RenderCtx;

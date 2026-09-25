@@ -144,7 +144,8 @@ export interface VizSpec {
 
 /* ------------------------------------------------------------- 画布 */
 
-const C = {
+/** 暗色主题的回退值（Node 侧校验 / jsdom 无 CSS 变量时用；浏览器里以 CSS 变量为准）。 */
+const FALLBACK = {
   cyan: '#5ee6ff',
   violet: '#a78bfa',
   pink: '#f472b6',
@@ -154,6 +155,39 @@ const C = {
   grid: 'rgba(148,163,255,.08)',
   axis: 'rgba(148,163,255,.32)',
   dim: 'rgba(139,150,196,.9)',
+  fill: 'rgba(94,230,255,.12)',
+  bg: '#070b16',
+  fg: '#ffffff',
+};
+
+function cssColor(varName: string, fallback: string): string {
+  if (typeof document !== 'undefined' && typeof getComputedStyle === 'function') {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    if (v) return v;
+  }
+  return fallback;
+}
+
+/**
+ * 画布调色板：浏览器里每次取色都实时读 CSS 变量（跟随系统亮暗，红线「不写死色值」）；
+ * Node（viz-model-check / dom-harness）无 document → 落回暗色常量，规格纯函数照常求值。
+ */
+const C = {
+  get cyan(): string { return cssColor('--cyan', FALLBACK.cyan); },
+  get violet(): string { return cssColor('--violet', FALLBACK.violet); },
+  get pink(): string { return cssColor('--pink', FALLBACK.pink); },
+  get green(): string { return cssColor('--green', FALLBACK.green); },
+  get yellow(): string { return cssColor('--yellow', FALLBACK.yellow); },
+  get red(): string { return cssColor('--red', FALLBACK.red); },
+  get grid(): string { return cssColor('--viz-grid', FALLBACK.grid); },
+  get axis(): string { return cssColor('--viz-axis', FALLBACK.axis); },
+  get dim(): string { return cssColor('--viz-dim', FALLBACK.dim); },
+  /** 默认矩形填充 */
+  get fill(): string { return cssColor('--viz-fill', FALLBACK.fill); },
+  /** 画布底色（挖空点用） */
+  get bg(): string { return cssColor('--viz-bg', FALLBACK.bg); },
+  /** 画布前景色（高亮点的实心填充） */
+  get fg(): string { return cssColor('--viz-fg', FALLBACK.fg); },
 };
 
 export interface Frame {
@@ -231,7 +265,7 @@ function paint(canvas: HTMLCanvasElement, p: Payload): void {
   ctx.textAlign = 'left';
 
   for (const r of p.rects ?? []) {
-    ctx.fillStyle = r.fill ?? 'rgba(94,230,255,.12)';
+    ctx.fillStyle = r.fill ?? C.fill;
     const x = fr.px(Math.min(r.x, r.x + r.w));
     const y = fr.py(Math.max(r.y, r.y + r.h));
     ctx.fillRect(x, y, Math.abs(fr.px(r.x + r.w) - fr.px(r.x)), Math.abs(fr.py(r.y) - fr.py(r.y + r.h)));

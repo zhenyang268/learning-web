@@ -112,7 +112,7 @@ const cobwebModes: VizMode[] = [
           { f: (x) => x, color: 'rgba(148,163,255,.5)', width: 1.5, dash: [5, 5] },
         ],
         segs,
-        points: [...pts, { x: 2, y: 2, r: 5, fill: '#fff', stroke: C.green, label: '不动点 2' }],
+        points: [...pts, { x: 2, y: 2, r: 5, fill: C.fg, stroke: C.green, label: '不动点 2' }],
         axis: { x: 'aₙ', y: 'a_{n+1}' },
       };
     },
@@ -155,7 +155,7 @@ const cobwebModes: VizMode[] = [
           { f: (x) => x, color: 'rgba(148,163,255,.5)', width: 1.5, dash: [5, 5] },
         ],
         segs,
-        points: [{ x: 0.5, y: 0.5, r: 5, fill: '#fff', stroke: C.yellow, label: '不动点 0.5' }],
+        points: [{ x: 0.5, y: 0.5, r: 5, fill: C.fg, stroke: C.yellow, label: '不动点 0.5' }],
         axis: { x: 'aₙ', y: 'a_{n+1}' },
       };
     },
@@ -199,7 +199,7 @@ const cobwebModes: VizMode[] = [
           { f: (x) => x, color: 'rgba(148,163,255,.5)', width: 1.5, dash: [5, 5] },
         ],
         segs,
-        points: [{ x: 1, y: 1, r: 5, fill: '#fff', stroke: C.green, label: '不动点 1' }],
+        points: [{ x: 1, y: 1, r: 5, fill: C.fg, stroke: C.green, label: '不动点 1' }],
         axis: { x: 'aₙ', y: 'a_{n+1}' },
       };
     },
@@ -762,7 +762,7 @@ const doubleOriginModes: VizMode[] = [
           { x0: -eps, y0: 0, x1: -eps, y1: 1, color: C.green, width: 1.4, dash: [4, 4] },
           { x0: eps, y0: 0, x1: eps, y1: 1, color: C.green, width: 1.4, dash: [4, 4] },
         ],
-        points: [...pts, { x: 0, y: 0.42, r: 6, fill: '#fff', stroke: C.cyan, label: 'O₁' }, { x: 0, y: 0.68, r: 6, fill: '#fff', stroke: C.violet, label: 'O₂' }],
+        points: [...pts, { x: 0, y: 0.42, r: 6, fill: C.fg, stroke: C.cyan, label: 'O₁' }, { x: 0, y: 0.68, r: 6, fill: C.fg, stroke: C.violet, label: 'O₂' }],
         labels: [{ text: 'ε = 0.05 邻域', x: eps + 0.02, y: 0.92, color: C.green }],
         axis: { x: '1/k', y: '' },
       };
@@ -799,8 +799,8 @@ const doubleOriginModes: VizMode[] = [
         view: { x0: -0.02, x1: 1.02, y0: -0.2, y1: 1.4 },
         curves: [{ f: (x) => (x > 0 ? 1 / x : NaN), color: C.cyan, width: 2.4 }],
         points: [
-          { x: 0, y: 0.4, r: 6, fill: '#fff', stroke: C.cyan, label: 'O₁: f = 1' },
-          { x: 0, y: 0.75, r: 6, fill: '#fff', stroke: C.violet, label: 'O₂: f = 2' },
+          { x: 0, y: 0.4, r: 6, fill: C.fg, stroke: C.cyan, label: 'O₁: f = 1' },
+          { x: 0, y: 0.75, r: 6, fill: C.fg, stroke: C.violet, label: 'O₂: f = 2' },
         ],
         labels: [{ text: '沿 1/k → 两个原点，读出两个不同的「极限」', x: 0.12, y: 1.3, color: C.yellow }],
         axis: { x: '', y: '' },

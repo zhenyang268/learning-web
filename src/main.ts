@@ -278,13 +278,17 @@ function renderGraphView(): void {
       <h4 style="margin-top:16px">三层缩放</h4>
       <p class="kv">字母块（A/B/DE…）→ 章节组（A1/A2…）→ 单元节点。点节点下钻，L3 点节点跳阅读。</p>
       <h4 style="margin-top:16px">数据来源</h4>
-      <p class="kv">派生边：json 词条 links（启发式）；语义边真源：<span class="mono">graph/&lt;letter&gt;.yaml</span>（逐章人工草拟+校验，现只有 A1）。yaml 覆盖组内 prereq 以 yaml 为准。</p>
+      <p class="kv">派生边：json 词条 links（启发式）；语义边真源：<span class="mono">graph/&lt;letter&gt;.yaml</span>（逐章人工草拟+校验，已建 <span data-role="yamlcount">…</span> 章）。yaml 覆盖组内 prereq 以 yaml 为准。</p>
       <p class="kv dim">节点下弧线 = 掌握度（与右栏同源）；红色节点 = prereq 环（数据错误，需修 yaml）。</p>
     </div>`;
   const host = document.getElementById('graph-host');
   if (!host) return;
   void loadMergedGraph(units).then((merged) => {
     if (currentCode() !== 'graph') return; // 用户已跳走，不画
+    // 右栏「已建 N 章」用真实 yamlStatus 填（原来写死「现只有 A1」，铺开后就过期了）
+    const cnt = elAside.querySelector<HTMLElement>('[data-role=yamlcount]');
+    const okCount = merged.yamlStatus.filter((s) => s.ok).length;
+    if (cnt) cnt.textContent = `${okCount}/${merged.yamlStatus.length}`;
     mountGraph(host, { merged, masteryOf: masteryByCode });
   });
 }
@@ -315,7 +319,9 @@ async function boot(): Promise<void> {
   if (!currentCode() && units.length) {
     const next = frontierOf(graph, masteryByCode) ?? units[0]?.code;
     if (next) {
-      location.hash = `#/${next}`;
+      const target = `#/${next}`;
+      if (location.hash === target) apply(); // 同值 hashchange 不触发（onReload 后重进会白屏），手动补一发
+      else location.hash = target;
       return; // hashchange 会触发 apply
     }
   }

@@ -37,11 +37,11 @@ export function renderAside(host: HTMLElement, model: AsideModel): void {
       <h4>掌握度 · 难度</h4>
       <div class="ring">
         <svg width="64" height="64">
-          <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(148,163,255,.12)" stroke-width="6" />
+          <circle cx="32" cy="32" r="26" fill="none" style="stroke:var(--line)" stroke-width="6" />
           <circle cx="32" cy="32" r="26" fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round"
             stroke-dasharray="${RING}" stroke-dashoffset="${(RING * (1 - mastery / 5)).toFixed(1)}" />
           <defs>
-            <linearGradient id="g"><stop offset="0" stop-color="#5ee6ff" /><stop offset="1" stop-color="#a78bfa" /></linearGradient>
+            <linearGradient id="g"><stop offset="0" style="stop-color:var(--cyan)" /><stop offset="1" style="stop-color:var(--violet)" /></linearGradient>
           </defs>
         </svg>
         <div>

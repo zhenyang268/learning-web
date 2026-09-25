@@ -413,7 +413,11 @@ export function mountGraph(host: HTMLElement, model: GraphViewModel): void {
   }
 
   draw();
-  // 容器尺寸变化（窗口 resize）时重画
-  const ro = new ResizeObserver(() => draw());
-  ro.observe(host);
+  // 容器尺寸变化（窗口 resize）时重画。jsdom 无 ResizeObserver —— 必须特征检测，
+  // 否则 mountGraph 在这里抛 ReferenceError，且调用方的 .then() 没有 catch，
+  // 图谱会永远停在「加载中…」（实测 bug）。
+  if (typeof ResizeObserver !== 'undefined') {
+    const ro = new ResizeObserver(() => draw());
+    ro.observe(host);
+  }
 }

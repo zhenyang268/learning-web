@@ -190,7 +190,7 @@ const ibpModes: VizMode[] = [
         view: { x0: 0, x1: 1, y0: -0.2, y1: 1.3 },
         curves: [{ f: step, color: C.cyan, width: 2.6, glow: true, kind: 'step', steps: 400 }],
         points: [
-          { x: 0.5, y: 0, r: 4, fill: '#070b16', stroke: C.cyan },
+          { x: 0.5, y: 0, r: 4, fill: C.bg, stroke: C.cyan },
           { x: 0.5, y: 1, r: 5, fill: C.red, label: '跳跃 ⟹ 原子 δ' },
         ],
         segs: [{ x0: 0.5, y0: 1, x1: 0.5, y1: 1.25, color: C.red, width: 2 }],
