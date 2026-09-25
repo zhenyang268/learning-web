@@ -65,3 +65,56 @@ vite.config.ts  tsconfig.json  package.json  index.html
 ## 5. 验收口径
 
 对齐 mockup 视觉（并排截图对比）；A1.3 全部 45 词条可浏览、四问 tab 可用、bump/slide viz 可交互；改一个 json 文件 dev 页面秒级刷新；坏 JSON 出浮层；断网刷新正常；`npx tsc --noEmit` 零错误；standalone HTML 双击可开。
+
+---
+
+## 6. 进度追加（2026-09-25 上午，前端 agent 本轮）
+
+### P1 图谱语义边：已铺开 22 章（graph/ 从 1 → 23 个 yaml）
+
+- 新增 22 个：A2/A4/B1/B2/C6/C7/C8/C9/C10/H6/H8/I9/J2/P1–P9（含 A1 共 23 个文件）。
+- 依据全部来自各单元 json 的 entries（statement/counterexample/comparison 标题与正文）+ links；
+  每条边带注释说明依据，prereq 全库无环（`check:graph` **PASS 713 · FAIL 0**）。
+- 单元内部的对偶（如 H8.3「质点–弹簧 vs PBD」、C10.2「Itô vs Stratonovich」）**不建自指边**，
+  只在 yaml 里注记说明——自指是非法边，check-graph 会拦。
+- 覆盖原则：yaml 只写**组内**语义边（组内派生 prereq 被 yaml 覆盖）；跨章关系仍由 links 派生边承担。
+- 剩余：等 JSON agent 入库 D/E/F/G/K–R/de/lie 各章后跟进（当前这些章节目录为空或刚起步）。
+
+### P0 viz：无积压
+
+`check:viz` PASS 3182 · FAIL 0（48 模块/47 规格），H/I/J 新入库章节声明的档1 模块
+（`path-contribution`、`viscosity-curves` 等）上一轮已实现；本轮无「声明未实现/多余注册」。
+
+### 修掉的前端真 bug（5 个）
+
+1. **viz 画布调色板写死暗色**（`kit.ts` 的 `C` 常量 + specs 里 `#fff`/`#070b16`）——亮色主题下
+   画布网格/轴线/曲线几乎不可见，违反 P3「不写死色值」红线。改为 `--viz-*` CSS 变量
+   （暗/亮两套）+ getter 实时 `getComputedStyle`；Node 侧（viz-model-check/dom-harness）
+   无 document 时落回暗色常量，规格纯函数求值不受影响。
+2. **`REF_TOKEN` 不认多字母前缀**（card.ts）——`de1.10`/`lie3.17` 被单字母正则截成 `e1.10`，
+   跨章词条引用永远不可点（B1/H5/H8/P3/I1 等单元正文里大量存在）。放宽为 `[A-Za-z]+\d+`。
+3. **graph 渲染器 `ResizeObserver` 未特征检测**——jsdom/老环境里 mountGraph 直接抛
+   ReferenceError 且 .then() 无 catch，图谱永远停在「加载中…」。已加 `typeof` 守卫（kit.ts 原本就有同样守卫，graph.ts 漏了）。
+4. **boot() 同值 hash 不触发 apply**——错误浮层「重新加载」后若目标 hash 与当前相同，
+   hashchange 不派发，页面白屏。同值时手动补调 apply()。
+5. **standalone 不内联 graph/\*.yaml**——单文件快照里 fetch graph/* 全 404，23 章语义边
+   静默降级成纯派生边。build-standalone.mjs 已把 graph/ 打进 DATA 表并重建
+   dist/knowledge.html（128 单元 · 5.88MB · gitignore 不入库）。
+6. 顺手：图谱右栏「语义边真源现只有 A1」过期文案 → 动态 `N/M` 计数；
+   aside.ts 掌握度圆环、styles.css 37 处硬编码 alpha 色值 → `color-mix(var(--x))` 主题化。
+
+### P2 mastery 注入：**阻塞（真源缺失）**
+
+TASKBOOK §12.4 说「mastery 从 ns-progress.md 注入（那里有 P 组打勾表）」，但实测
+`learning-todo/ns-progress.md`（86 行全文读过）**没有逐小目 mastery/打勾表**——只有
+L0–L5 层级状态（L0 ✅、L1 🔄、L2–L5 ⬜）与会话日志；「24 条打勾总表」按日志第 48 行
+的记载在**黑板 ipynb**（`chats/ses_f5e6a74…ipynb`），不在任何只读真源文件里。
+`learning.md` 里也没有。红线是「mastery 不许模型编」，无确定性真源可提取 → 不做。
+**解阻塞需要用户拍板**：要么把黑板打勾表落回 ns-progress.md（或 learning-web 内一个
+真源文件），要么明确「L0=5/L1=3/L2+=0」这类层级映射规则。两者任选其一后 P2 半天可完成。
+
+### 验收快照（2026-09-25）
+
+tsc 0 错 · check:graph 713/0 · check:viz 3182/0 · dom-harness **123 单元 5198/0**
+（JSON agent 并行入库中，单元数从 96 涨到 123+，harness 全绿）。
+提交：`0d6e65f`（20 章 yaml）→ `072a395`（前端 bug 修复 + I9/J2）→ `e8ff4b1`（standalone graph 内联）。
