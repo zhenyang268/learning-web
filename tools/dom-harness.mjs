@@ -421,6 +421,41 @@ async function runStandalone() {
   check('快照首屏不是空页',
     textOf(reader.querySelector('.pagehead h1')).length > 0,
     textOf(reader.querySelector('.pagehead h1')).slice(0, 40));
+
+  // ── 语义边在快照里仍然有效（2026-09-25：快照曾静默丢掉 graph/*.yaml 的语义边，
+  //    现在语义边是**构建期烘进索引**的，所以断言索引里带 sem 字段 + 图谱视图画得出来）
+  //    注意：__indexJson 是被 JSON.stringify 二次转义后写进脚本的字符串字面量，
+  //    所以不能直接 grep `"sem":` —— 必须把内联索引**解析出来**再数（否则是脆断言）。
+  const idxMatch = /window\.__indexJson\s*=\s*("(?:[^"\\]|\\.)*");/.exec(html);
+  let inlineSem = 0;
+  let inlineIdxUnits = 0;
+  if (idxMatch) {
+    try {
+      const parsed = JSON.parse(JSON.parse(idxMatch[1]));
+      inlineIdxUnits = parsed.units?.length ?? 0;
+      inlineSem = (parsed.units ?? []).filter((u) => u && typeof u.sem === 'object' && u.sem !== null).length;
+    } catch { /* 解析失败 → inlineSem 保持 0，由下面的断言报错 */ }
+  }
+  check('内联索引带语义边（sem 已烘入，不靠运行期 fetch graph/*）', inlineSem > 0,
+    `内联索引 ${inlineIdxUnits} 单元中带 sem 的 ${inlineSem} 个${idxMatch ? '' : ' · 未定位到 __indexJson'}`);
+  check('快照不依赖 graph/*.yaml 数据（运行期零 graph 请求）',
+    !/"graph\/[A-Za-z0-9]+\.yaml":/.test(html),
+    '快照里仍内联着 yaml —— 应已移除（语义边在索引里）');
+
+  // 图谱视图真能画出来（曾被 ResizeObserver 未特征检测卡在「加载中…」）
+  dom.window.location.hash = '#graph';
+  const t1 = Date.now();
+  while (Date.now() - t1 < 3000) {
+    if (d.querySelectorAll('#graph-host .gnode').length > 0) break;
+    await sleep(10);
+  }
+  check('快照图谱视图能渲染（不卡在「加载中」）',
+    d.querySelectorAll('#graph-host .gnode').length > 0,
+    `gnode=${d.querySelectorAll('#graph-host .gnode').length} · ${textOf(d.getElementById('graph-host')).slice(0, 40)}`);
+  const gnote = d.querySelector('#graph-host [data-role=note]');
+  check('快照图谱无语义边降级提示（yamlStatus 全 ok）',
+    !gnote || gnote.hidden !== false,
+    gnote ? textOf(gnote).slice(0, 80) : '');
   dom.window.close();
 }
 
