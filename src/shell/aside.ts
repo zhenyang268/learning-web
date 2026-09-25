@@ -8,6 +8,12 @@ export interface AsideModel {
   graph: Graph;
   masteryOf: (code: string) => number;
   difficulty: number;
+  /**
+   * prereq 为空时的说明文案（调用方按数据情况给）。
+   * 默认「无前序（拓扑序起点）」；若该单元其实有跨章 links、只是 yaml 还没标注依赖，
+   * 必须换成如实说明 —— 否则「拓扑序起点」是**误导**（A2.1 明明要先学 A1.5）。
+   */
+  prereqEmptyNote?: string;
 }
 
 const RING = 163;
@@ -51,7 +57,7 @@ export function renderAside(host: HTMLElement, model: AsideModel): void {
       </div>
 
       <h4 style="margin-top:20px">依赖 ◂</h4>
-      ${chips(graph.prereq.get(code) ?? [], 'dep', '无前序（拓扑序起点）')}
+      ${chips(graph.prereq.get(code) ?? [], 'dep', model.prereqEmptyNote ?? '无前序（拓扑序起点）')}
 
       <h4 style="margin-top:14px">被用于 ▸</h4>
       ${chips(graph.usedBy.get(code) ?? [], '', '暂无反向引用')}

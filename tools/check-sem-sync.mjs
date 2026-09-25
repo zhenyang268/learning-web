@@ -133,6 +133,43 @@ check('被 yaml 覆盖的单元 prereq 严格等于 yaml（派生边已作废）
 
 console.log(`\n=== check-sem-sync：PASS ${pass} · FAIL ${fail} ===`);
 console.log(`    ${units.length} 单元 · ${covered.length} 个带语义边真源 · 索引 ${(idx.indexBytes / 1024).toFixed(1)} KB`);
+
+// ── 待办度量（**只报告不失败**）：跨章 links 尚未判定依赖方向的数量。
+// 背景：yaml 目前只标注了**组内**四类边；被覆盖单元的跨组派生 prereq 已按真源作废，
+// 于是「A2.1 ← A1.5 的 L^p」这类真依赖暂时不在图里（右栏会如实说明「尚未判定」，
+// 关系本身仍出现在「被用于」里，不会丢）。这个数字是剩余数据工作量的监控指标 ——
+// 逐条判方向需要语义依据（宁少而真、不许编），所以做成 warning 而不是 FAIL。
+{
+  const grpOf = (c) => c.split('.')[0];
+  const codeKey = (c) => {
+    const m = /^([A-Za-z]+)(\d+)(?:\.(\d+))?$/.exec(c);
+    return m ? [m[1].toLowerCase(), Number(m[2]), m[3] ? Number(m[3]) : 0] : [c, Infinity, 0];
+  };
+  const cmp = (a, b) => {
+    const ka = codeKey(a), kb = codeKey(b);
+    if (ka[0] !== kb[0]) return ka[0] < kb[0] ? -1 : 1;
+    if (ka[1] !== kb[1]) return ka[1] - kb[1];
+    return ka[2] - kb[2];
+  };
+  const known = new Set(units.map((u) => u.code));
+  let pending = 0, pendingUnits = 0, pendingP = 0;
+  for (const u of covered) {
+    const sem = u.sem;
+    const declared = new Set([...(sem.prereq ?? []), ...(sem.applies ?? [])]);
+    const cross = (u.links ?? []).filter(
+      (l) => known.has(l) && l !== u.code && grpOf(l) !== grpOf(u.code) && !declared.has(l),
+    );
+    if (cross.length) {
+      pending += cross.length;
+      pendingUnits += 1;
+      // 工具篇（P）的跨章 links 几乎都是 applies 方向（「这工具用在哪儿」），单独计数
+      if (u.code.startsWith('P')) pendingP += cross.length;
+    }
+  }
+  console.log(`    待判定跨章关联：${pending} 条 / ${pendingUnits} 个单元（其中 P 工具篇 ${pendingP} 条，多为 applies 方向）`);
+  if (pending) console.log('    ↑ 非失败：yaml 只标注了组内边，跨章方向需逐条语义判定（宁少而真）。右栏会如实说明。');
+}
+
 if (fail) {
   console.log('失败明细：');
   for (const f of failures.slice(0, 30)) console.log('  ✗', f);

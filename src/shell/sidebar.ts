@@ -76,19 +76,27 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
 
   const box = host.querySelector<HTMLElement>('.box');
   if (!box) return;
+
+  // 只在目录**真的是独立滚动区**时才动 scrollTop：
+  // 窄屏(<1150px)是 position:static + overflow:visible（styles.css 的媒体查询），
+  // 此时 box 不可滚动，写 scrollTop 会被浏览器转发去滚**祖先（整页）** ——
+  // 正是用户报的「目录与正文互相影响」的另一种表现。用 scrollHeight > clientHeight 判定。
+  const scrollable = box.scrollHeight > box.clientHeight + 1;
+
   // 换搜索词 → 回到顶部；否则还原重建前的滚动位置
   box.scrollTop = q !== lastQuery ? 0 : keptScroll;
   lastQuery = q;
 
   // 当前单元若不在目录可视区内（从图谱/正文链接/搜索跳转过来时很常见，
-  // 137 个单元的目录远高于一屏），最小滚动把它带进来。
-  // 手写而不用 scrollIntoView：后者会连带滚动祖先（把正文也推走），
-  // 正是「目录与正文共享滚动条」那个毛病的另一种表现。
-  const cur = box.querySelector<HTMLElement>('.node.on');
-  if (cur) {
-    const cTop = cur.offsetTop;
-    const cBot = cTop + cur.offsetHeight;
-    if (cTop < box.scrollTop) box.scrollTop = cTop - 8;
-    else if (cBot > box.scrollTop + box.clientHeight) box.scrollTop = cBot - box.clientHeight + 8;
+  // 一百多个单元的目录远高于一屏），最小滚动把它带进来。
+  // 手写而不用 scrollIntoView：后者会连带滚动祖先（把正文也推走）。
+  if (scrollable) {
+    const cur = box.querySelector<HTMLElement>('.node.on');
+    if (cur) {
+      const cTop = cur.offsetTop;
+      const cBot = cTop + cur.offsetHeight;
+      if (cTop < box.scrollTop) box.scrollTop = cTop - 8;
+      else if (cBot > box.scrollTop + box.clientHeight) box.scrollTop = cBot - box.clientHeight + 8;
+    }
   }
 }

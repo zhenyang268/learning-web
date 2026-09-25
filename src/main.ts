@@ -258,8 +258,26 @@ function apply(): void {
   renderReader(file);
   const groups = groupEntries(file);
   const difficulty = groups.length ? Math.max(...groups.map((g) => difficultyOf(g).level)) : 1;
-  renderAside(elAside, { file, graph, masteryOf: masteryByCode, difficulty });
+  renderAside(elAside, { file, graph, masteryOf: masteryByCode, difficulty, prereqEmptyNote: prereqEmptyNote(code) });
   prefetch(code);
+}
+
+/**
+ * prereq 为空时右栏该说什么。**不能一律写「拓扑序起点」**：
+ * 被 yaml 覆盖的单元，prereq 严格等于真源；而真源目前只标注了**组内**依赖，
+ * 跨章依赖（如 A2.1 ← A1.5 的 L^p）还没逐条判定方向，所以「空」可能只是**尚未标注**，
+ * 不是「真的没有前序」。把这两种情况说清楚，比给一个误导性的结论好。
+ *
+ * 判定：该单元有跨章组 links（编号序在前的）却没进 prereq → 属「待标注」，如实说明。
+ */
+function prereqEmptyNote(code: string): string | undefined {
+  const meta = metaOf(code);
+  if (!meta?.sem) return undefined; // 未被 yaml 覆盖 → 沿用默认文案
+  if ((graph.prereq.get(code) ?? []).length) return undefined;
+  const group = code.split('.')[0];
+  const cross = meta.links.filter((l) => byCode.has(l) && l !== code && l.split('.')[0] !== group);
+  if (!cross.length) return undefined;
+  return `组内无前序（真源已标注）。跨章关联 ${cross.length} 条尚未判定依赖方向，故不计入：${cross.slice(0, 6).join(' · ')}${cross.length > 6 ? ' …' : ''}`;
 }
 
 /**

@@ -143,14 +143,39 @@ function cmpCode(a: string, b: string): number {
   return ka[2] - kb[2];
 }
 
-/** links → prereq 启发式派生（只收数值序在前的目标；在后的是 usedBy，不入图）。 */
+/**
+ * 启发式派生边（**未被 yaml 覆盖的单元**才用）。规则必须与
+ * `modules/graph.ts` 的 buildGraphFromMeta 逐字一致，否则右栏与图谱会给出矛盾的依赖
+ * （实测 R2.4：右栏有 R2.2、图谱没有 —— 就差下面第 2 条）：
+ *   1. links 里编号序在前的 → prereq（在后的是下游引用，不入图）；
+ *   2. 同章节组内编号更小的小目 → prereq（同章递进）。
+ * 两条都满足 cmpCode(from) < cmpCode(to)，所以派生子图**天然无环**。
+ */
 export function deriveEdges(units: UnitMeta[], known: ReadonlySet<string>): DirectedEdge[] {
   const out: DirectedEdge[] = [];
+  // 按章节组桶化，桶内按代号序排 —— 同组递进边只在桶内产生，避免 O(n^2) 全表扫描
+  const byGroup = new Map<string, string[]>();
   for (const u of units) {
-    for (const link of u.links) {
-      if (!known.has(link) || link === u.code) continue;
-      if (cmpCode(link, u.code) < 0) {
-        out.push({ kind: 'prereq', from: link, to: u.code, semantic: false });
+    if (!u.code) continue;
+    const g = u.code.split('.')[0];
+    const list = byGroup.get(g);
+    if (list) list.push(u.code);
+    else byGroup.set(g, [u.code]);
+  }
+  for (const u of units) {
+    const code = u.code;
+    if (!code) continue;
+    for (const link of u.links ?? []) {
+      if (!known.has(link) || link === code) continue;
+      if (cmpCode(link, code) < 0) {
+        out.push({ kind: 'prereq', from: link, to: code, semantic: false });
+      }
+    }
+    const group = code.split('.')[0];
+    for (const other of byGroup.get(group) ?? []) {
+      if (other === code) continue;
+      if (cmpCode(other, code) < 0) {
+        out.push({ kind: 'prereq', from: other, to: code, semantic: false });
       }
     }
   }
