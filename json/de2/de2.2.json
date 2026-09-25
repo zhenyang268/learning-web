@@ -1,0 +1,284 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de2.2",
+  "chapter": "de2",
+  "title": "对称性条件与延拓",
+  "src": {
+    "file": "notebook/diffrential/de2.tex",
+    "line_start": 17,
+    "line_end": 32,
+    "anchor": "notebook/diffrential/de2.tex:17"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de2.2:sym-condition.quantifiers",
+      "type": "comparison",
+      "subject": "sym-condition",
+      "title": "对称性条件的五个限定词：延拓、求值、全导数",
+      "keywords": [
+        "必须延拓到 n 阶，不能只用 v",
+        "必须在解流形 F=0 上求值",
+        "D_x 是全导数，不是 ∂_x",
+        "F 是 n 阶就要 n 次延拓",
+        "ξ、η 只依赖 x、y（不依赖 y′）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 18,
+        "line_end": 31
+      },
+      "fill_hint": "四列表：必须延拓（F=y′、v=x∂_y 给 0 vs 1）、必须 |_{F=0}（y″=1 处给 −1）、D_x 是全导数、n 阶须 n 次延拓、ξ/η 只依赖 x,y；点明「四个动作缺一不可」。",
+      "content": "切片给了两个式子：**对称性条件** $\\mathbf{v}^{(n)}[F]|_{F=0}=0$；**$n$ 次延拓** $\\mathbf{v}^{(n)}=\\mathbf{v}+\\eta^{(1)}\\partial_{y'}+\\eta^{(2)}\\partial_{y''}+\\cdots$。**两个式子里有五个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **必须延拓**（不能只用 $\\mathbf{v}$ 作用在 $x,y$ 上） | $F=y'$，$\\mathbf{v}=x\\partial_y$：只算 $\\xi F_x+\\eta F_y=0\\cdot0+x\\cdot0$，算得 0【已核验:0|0】；**延拓后** $\\eta^{(1)}=1$ ⇒ $\\mathbf{v}^{(1)}[F]$ 算得 1【已核验:1|1】 | 不延拓 ⇒ **把非对称性误判成对称性**（$y'=0$ 的水平线族在流下变成斜线） | **不能放宽**：$\\eta^{(1)}$ 是判据的主体 |\n| ② **必须在 $F=0$ 上求值** | $F=y''$，$\\mathbf{v}=x\\partial_x+y\\partial_y$：$\\mathbf{v}^{(2)}[F]=-y''$；在 $y''=1$ 处算得 -1【已核验:-1|-1】 | 若要求 $\\mathbf{v}^{(2)}[F]\\equiv0$（对一切 $y''$）⇒ **把真对称性排除掉** | **不能放宽**：对称性只要求**解集**不变 |\n| ③ **$D_x$ 是全导数** | $D_x=\\partial_x+y'\\partial_y+y''\\partial_{y'}+\\cdots$；若误当成 $\\partial_x$（只对显含的 $x$ 求偏导）⇒ $\\eta^{(1)}$ **漏掉 $y'$ 项** | 系数算少 ⇒ 条件由「恒零」变成「不恒零」，**真假颠倒** | **不能放宽**：链式法则是 $\\eta^{(1)}$ 的来源 |\n| ④ **F 的阶 $=$ 延拓次数** | $F=y''$ 而只用一次延拓（缺 $\\eta^{(2)}$）⇒ 判别式里少了主项 | 判据**不完备**，可能漏掉非对称性 | **不能放宽**：阶数是硬指标 |\n| ⑤ **$\\xi,\\eta$ 只依赖 $(x,y)$** | 若允许 $\\eta$ 含 $y'$（接触对称）⇒ 延拓公式要重写 | 超出本表范围，但**理论上可放宽** | **可放宽**：接触对称与广义对称是独立的理论 |\n\n**用法**：拿到一个 $\\mathbf{v}$ 与一个 $F$，按 ④ 定延拓阶数、按 ③ 展开 $D_x$、按 ① 把 $\\eta^{(k)}$ 都写上、最后按 ② 在 $F=0$ 上代入。**四个动作缺一个，判据就不可靠。**",
+      "links": [
+        "de2.1",
+        "de2.3",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:no-prolongation.counterexample",
+      "type": "counterexample",
+      "subject": "no-prolongation",
+      "title": "反例：不延拓就会把非对称误判成对称（v = x∂_y 打在 y′ = 0 上）",
+      "keywords": [
+        "不延拓算得 0，形似对称",
+        "延拓给出 η⁽¹⁾ = 1",
+        "正确结论：不是对称性",
+        "几何：水平线族被推成斜线"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 28,
+        "line_end": 31
+      },
+      "fill_hint": "反例：F=y′、v=x∂_y；不延拓算得 0（误判为对称），延拓给 η⁽¹⁾=1 ⇒ v⁽¹⁾[F]=1≠0，正确结论「不是对称」；几何解释（水平线被推成斜线）+ 判据「η⁽¹⁾≡0 ⟺ 斜率不变」。",
+      "content": "**限定词①是「必须延拓」。** 这条最容易被跳过，因为 $\\mathbf{v}$ 的定义里只有 $x,y$，看起来「作用在 $F$ 上」就够了。**反例说明不够。**\n\n**第一步：写下反例。**\n\n$$F(x,y,y')=y'\\qquad(\\text{即 }y'=0,\\ \\text{水平线族})$$\n$$\\mathbf{v}=x\\,\\frac{\\partial}{\\partial y}\\qquad(\\xi=0,\\ \\eta=x)$$\n\n**第二步：只做「$x,y$ 部分」的计算（错误做法）。**\n\n把 $\\mathbf{v}$ 当成只作用在 $F$ 对 $x,y$ 的显式依赖上：$F=y'$ 显式不含 $x$ 也不含 $y$，于是\n\n$$\\xi\\,F_x+\\eta\\,F_y=0\\cdot 0+x\\cdot 0,\\quad \\text{算得 } 0\\ \\text{【已核验:0|0】}$$\n\n**结论看起来是「$0=0$ ⇒ 是对称性」。这是错的。**\n\n**第三步：正确的延拓计算。**\n\n$\\xi=0$、$\\eta=x$，代入一次延拓系数公式：\n\n$$\\eta^{(1)}=D_x\\eta-y'\\,D_x\\xi=D_x(x)-y'\\cdot D_x(0)=1-0=1,\\quad \\text{算得 } 1\\ \\text{【已核验:1|1】}$$\n\n于是\n\n$$\\mathbf{v}^{(1)}[F]=\\eta^{(1)}\\,F_{y'}=1\\cdot 1=1\\ \\ne0$$\n\n**在 $F=0$ 上仍然 $\\ne0$ ⇒ 正确结论：$\\mathbf{v}=x\\partial_y$ 不是 $y'=0$ 的对称性。** ✅\n\n**第四步：几何上为什么它不该是对称。**\n\n$\\mathbf{v}=x\\partial_y$ 的流是 $(x,y)\\mapsto(x,\\ y+\\varepsilon x)$：**越靠右的点被抬得越高**。水平线 $y=c$ 被推成斜线 $y=c+\\varepsilon x$，而 $y'=0$ 的解集正是水平线族。**所以解集不被保持 ⇒ 不是对称**。这与第三步的结论一致。\n\n**第五步：这条反例的分量。**\n\n- 错误的计算**恰好给 0**（因为 $F$ 显式不含 $x,y$），所以那种错法**特别容易骗过眼睛**；\n- 正确的做法是**永远先延拓，再看 $\\partial_{y'}$、$\\partial_{y''}$ 的系数**；\n- 一句话判据：**$\\eta^{(1)}$ 恒为零 ⟺ 无穷小变换不改变「斜率」**——本例 $\\eta^{(1)}=1$ 说明斜率被改变了。",
+      "links": [
+        "de2.1",
+        "de2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:forget-restriction.counterexample",
+      "type": "counterexample",
+      "subject": "forget-restriction",
+      "title": "反例：丢掉「|_{F=0}」会把真对称性排除（v = x∂_x+y∂_y 打在 y″ = 0 上）",
+      "keywords": [
+        "v⁽²⁾[y″] = −y″，不是恒零",
+        "但在解流形 y″=0 上恒为零",
+        "要求恒零 ⇒ 误判「不是对称」",
+        "对称性只要求解集不变"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 18,
+        "line_end": 26
+      },
+      "fill_hint": "反例：F=y″=0、v=x∂_x+y∂_y；η⁽¹⁾=0、η⁽²⁾=−y″ ⇒ v⁽²⁾[F]=−y″；在 F=0 上为 0（是对称），若要求恒零则在 y″=1 处给 −1 ⇒ 误判；说明「解集上为零」的准确含义与决定方程组的做法。",
+      "content": "**限定词②是「在 $F=0$ 上求值」。** 这条与①相反：①说的是「算得不够」，②说的是「要求得太过」。\n\n**第一步：写下例子。**\n\n$$F(x,y,y',y'')=y''\\qquad(\\text{即 }y''=0,\\ \\text{直线族})$$\n$$\\mathbf{v}=x\\,\\frac{\\partial}{\\partial x}+y\\,\\frac{\\partial}{\\partial y}\\qquad(\\xi=x,\\ \\eta=y,\\ \\text{位似})$$\n\n**第二步：算一次延拓。**\n\n$$\\eta^{(1)}=\\eta_x+(\\eta_y-\\xi_x)y'-\\xi_y(y')^2=0+(1-1)y'-0=0,\\quad \\text{算得 } 0\\ \\text{【已核验:0|0+(1-1)*1-0*1**2】}$$\n\n**第三步：算二次延拓。**\n\n$$\\eta^{(2)}=D_x\\eta^{(1)}-y''\\,D_x\\xi=0-y''\\cdot 1=-y''$$\n\n所以 $\\mathbf{v}^{(2)}[F]=\\eta^{(2)}\\cdot\\partial_{y''}(y'')=-y''$。\n\n**第四步：两种读法的差别。**\n\n- **读法 A（正确）**：在 $F=0$（即 $y''=0$）上求值 ⇒ $-y''=0$ **恒成立** ⇒ **是对称性** ✅（几何上：位似把直线映成直线）\n- **读法 B（错误）**：要求 $-y''\\equiv0$ 对一切 $y''$ 成立 ⇒ 这要求 $y''$ 恒为零，**在 $y''=1$ 处算得 -1【已核验:-1|-1】$\\ne0$** ⇒ **误判「不是对称性」** ❌\n\n**第五步：为什么阈值必须是「解流形上为零」。**\n\n「$F=0$ 的解集在流下不变」才是对称性的定义。把 $F$ 沿流求导就是 $\\mathbf{v}^{(n)}[F]$；解集不变 ⟺ **这个导数在解集上为零**，而**不需要在解集之外也为零**。丢掉 $|_{F=0}$ 相当于把要求从「解集上为零」加强为「处处为零」，**必然排除掉「只在解流形上为零」的真对称性**。\n\n**第六步：实践含义。**\n\n- 求对称性时，**把 $F=0$ 当作约束一起代入**（通常用 $y^{(n)}$ 的表达式消元），得到的是**关于 $x,y,y',\\ldots,y^{(n-1)}$ 的多项式方程**；\n- 再令它的各项系数为零（因为 $x,y,y',\\ldots,y^{(n-1)}$ 独立），才得到关于 $\\xi,\\eta$ 的**决定方程组**——**这一步是 $|_{F=0}$ 的具体操作方式**。",
+      "links": [
+        "de2.1",
+        "de2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:sym-condition.statement",
+      "type": "statement",
+      "subject": "sym-condition",
+      "title": "陈述：对称性条件、n 次延拓与一次延拓系数",
+      "keywords": [
+        "条件：v⁽ⁿ⁾[F]|_{F=0} = 0",
+        "延拓定义式",
+        "一次延拓系数两种写法",
+        "二次延拓系数（备用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 18,
+        "line_end": 31
+      },
+      "fill_hint": "五点陈述：对称性条件、n 次延拓定义、一次延拓系数两种写法（含 D_x 全导数定义）、二次延拓系数备用式、决定方程组的构造步骤。",
+      "content": "**陈述。** 设 $n$ 阶 ODE 为 $F(x,y,y',\\ldots,y^{(n)})=0$，$\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$ 为无穷小生成元（`de2.1`）。\n\n**(i) 对称性条件。**\n\n$$\\mathbf{v}^{(n)}[F]\\Big|_{F=0}=0$$\n\n**含义**：把 $F$ 沿 $\\mathbf{v}$ 的流求 $n$ 阶导数后，在解流形 $F=0$ 上为零。这等价于「$F=0$ 的解集在流下不变」。\n\n**(ii) $n$ 次延拓。** 定义\n\n$$\\mathbf{v}^{(n)}=\\mathbf{v}+\\eta^{(1)}\\frac{\\partial}{\\partial y'}+\\eta^{(2)}\\frac{\\partial}{\\partial y''}+\\cdots+\\eta^{(n)}\\frac{\\partial}{\\partial y^{(n)}}$$\n\n即**把向量场从 $(x,y)$ 空间提升到 $(x,y,y',\\ldots,y^{(n)})$ 空间**。\n\n**(iii) 一次延拓系数（两种等价写法）。**\n\n$$\\eta^{(1)}=D_x\\eta-y'\\,D_x\\xi=\\eta_x+(\\eta_y-\\xi_x)y'-\\xi_y\\,(y')^2$$\n\n其中 $D_x=\\partial_x+y'\\partial_y+y''\\partial_{y'}+\\cdots$ 是**全导数**。左式是定义式的形式，右式是把它展开到 $\\eta,\\xi$ 的偏导上（**做题时用右式**）。\n\n**(iv) 二次延拓系数（备用，$F$ 为二阶时必需）。**\n\n$$\\eta^{(2)}=\\eta_{xx}+(2\\eta_{xy}-\\xi_{xx})y'+(\\eta_{yy}-2\\xi_{xy})(y')^2-\\xi_{yy}(y')^3\n+(\\eta_y-2\\xi_x)y''-3\\xi_y\\,y'y''$$\n\n**(v) 决定方程组。** 把 $\\mathbf{v}^{(n)}[F]|_{F=0}$ 中的 $y^{(n)}$ 用 $F=0$ 解出并代入，得到一个关于 $x,y,y',\\ldots,y^{(n-1)}$ 的表达式（$y',\\ldots,y^{(n-1)}$ 视为独立变量）；令**各单项系数为零**，得到一组关于 $\\xi,\\eta$ 及其偏导的**线性偏微分方程组** —— 这就是**决定方程组**，解它即得全部对称性。",
+      "links": [
+        "de2.1",
+        "de2.3",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:sym-condition.intuition",
+      "type": "intuition",
+      "subject": "sym-condition",
+      "title": "直觉：延拓就是「顺便记住 y′、y″ 怎么变」",
+      "keywords": [
+        "F 依赖的不只是 x、y，还有各级导数",
+        "所以 v 必须同时给出各级导数的变化",
+        "η⁽¹⁾ 是「斜率的变化率」",
+        "D_x 是全导数，因为 y′ 也随 x 变"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 18,
+        "line_end": 31
+      },
+      "fill_hint": "直觉：解曲线是「带各级导数的点」⇒ 流必然诱导各级导数的变化 ⇒ 向量场要提升为 v⁽ⁿ⁾；η⁽¹⁾ 是「斜率的变化率」，必须用全导数 D_x（含 y′ 项），y′D_xξ 常被漏掉；解释 (y′)² 项的来源。",
+      "content": "**假设给了什么。** 我们要问的是：「把平面按 $\\mathbf{v}$ 的流推一下，方程 $F(x,y,y',y'',\\ldots)=0$ 还成立吗？」而 $F$ **不只依赖 $x,y$**，还依赖斜率 $y'$、弯曲程度 $y''$……\n\n**结论为什么因此成立（为什么要延拓）。** 三步：\n\n**第一步：解曲线不是点，是「带导数的点」。**\n\n一条解曲线在每点带着 $(x,y,y',y'',\\ldots)$ 一整套数据。**流作用在平面上的 $(x,y)$，同时必然诱导出各级导数的新值** —— 因为你没法只移动点而不改变曲线的斜率。\n\n**第二步：所以向量场也要「升级」。**\n\n$\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$ 只描述 $(x,y)$ 怎么动。要描述「$F$ 怎么变」，就得把 $\\mathbf{v}$ 提升为 $\\mathbf{v}^{(n)}=\\mathbf{v}+\\eta^{(1)}\\partial_{y'}+\\eta^{(2)}\\partial_{y''}+\\cdots$，其中 $\\eta^{(k)}$ 是**第 $k$ 级导数的变化率**。\n\n**第三步：$\\eta^{(1)}$ 与 $D_x$ 的关系。**\n\n斜率 $y'$ 的变化率**不是** $\\partial_x\\eta$，因为 $y'$ 沿曲线随 $x$ 变化，而 $\\eta$ 又依赖 $y$、$y$ 又依赖 $x$。**必须用沿曲线的全导数** $D_x=\\partial_x+y'\\partial_y+\\cdots$：\n\n$$\\eta^{(1)}=D_x\\eta-y'\\,D_x\\xi$$\n\n**右边第二项 $y'D_x\\xi$ 常被漏掉**：它来自「分母 $x^*$ 也在变」——复合函数求商的必然产物。\n\n**一个比喻。** 想象给一条曲线的每个点装一个小箭头（$\\mathbf{v}$），再让曲线沿箭头「流动」。流动后新曲线在每点的**斜率**是多少？答案就是 $y'+\\eta^{(1)}$。**所以 $\\eta^{(1)}$ 就是「斜率的流量」**；而判断「曲线族是否保持」全看斜率的流量是否为零。\n\n**为什么 $\\eta^{(1)}$ 的公式里会出现 $(y')^2$ 项。** 因为 $D_x\\xi$ 中含 $y'\\xi_y$，再乘上外面的 $y'$ 就得到 $-\\xi_y(y')^2$。**幂次升高是链式法则的记账，不是巧合。**",
+      "links": [
+        "de2.1",
+        "de2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:sym-condition.proof",
+      "type": "proof",
+      "subject": "sym-condition",
+      "title": "证明骨架：一次/二次延拓系数的推导",
+      "keywords": [
+        "第一步 用商的导数得 η⁽¹⁾",
+        "第二步 展开 D_x 得显式系数",
+        "第三步 再作用一次得 η⁽²⁾",
+        "易错点：D_x 不是 ∂_x"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 28,
+        "line_end": 31
+      },
+      "fill_hint": "三步推导：商法则给 η⁽¹⁾=D_xη−y′D_xξ；展开偏导得 η_x+(η_y−ξ_x)y′−ξ_y(y′)²；再作用一次（D_x 含 ∂_{y′}）得 η⁽²⁾ 的六项式，并用 ξ=x,η=y 自检得 −y″；末给决定方程组与四条易错点。",
+      "content": "**第 1 步（$\\eta^{(1)}$ 的推导：用商的导数）。** 设变换为\n\n$$x^*=x+\\varepsilon\\,\\xi+O(\\varepsilon^2),\\qquad y^*=y+\\varepsilon\\,\\eta+O(\\varepsilon^2)$$\n\n则\n\n$$y^{*\\prime}=\\frac{dy^*}{dx^*}=\\frac{dy+\\varepsilon\\,d\\eta+O(\\varepsilon^2)}{dx+\\varepsilon\\,d\\xi+O(\\varepsilon^2)}\n=\\frac{y'+\\varepsilon\\,D_x\\eta+O(\\varepsilon^2)}{1+\\varepsilon\\,D_x\\xi+O(\\varepsilon^2)}$$\n\n**理由**：$d\\eta=\\eta_xdx+\\eta_ydy=( \\eta_x+\\eta_y y' )dx=D_x\\eta\\,dx$，同理 $d\\xi=D_x\\xi\\,dx$。\n\n把分母展开 $(1+\\varepsilon D_x\\xi)^{-1}=1-\\varepsilon D_x\\xi+O(\\varepsilon^2)$：\n\n$$y^{*\\prime}=\\bigl(y'+\\varepsilon D_x\\eta\\bigr)\\bigl(1-\\varepsilon D_x\\xi\\bigr)+O(\\varepsilon^2)\n=y'+\\varepsilon\\bigl(D_x\\eta-y'D_x\\xi\\bigr)+O(\\varepsilon^2)$$\n\n**所以 $\\eta^{(1)}=D_x\\eta-y'D_x\\xi$** ✅ ∎\n\n**第 2 步（展开到偏导）。** 因为 $\\xi,\\eta$ 只依赖 $(x,y)$：\n\n$$D_x\\eta=\\eta_x+\\eta_y\\,y',\\qquad D_x\\xi=\\xi_x+\\xi_y\\,y'$$\n\n代入：\n\n$$\\eta^{(1)}=\\bigl(\\eta_x+\\eta_y y'\\bigr)-y'\\bigl(\\xi_x+\\xi_y y'\\bigr)\n=\\eta_x+(\\eta_y-\\xi_x)y'-\\xi_y(y')^2\\ \\ ✅$$\n\n**与切片给的公式完全一致。**\n\n**第 3 步（$\\eta^{(2)}$：再作用一次）。** 定义 $\\eta^{(2)}=D_x\\eta^{(1)}-y''D_x\\xi$（同样的商公式，只是把 $y'$ 换成 $y''$）。此时 $D_x$ 必须**包含 $\\partial_{y'}$**：\n\n$$D_x=\\partial_x+y'\\partial_y+y''\\partial_{y'}+\\cdots$$\n\n计算时会产生 $y''$ 的项：$\\partial_{y'}\\eta^{(1)}=\\eta_y-\\xi_x-2\\xi_y y'$，于是\n\n$$D_x\\eta^{(1)}=\\bigl[\\eta^{(1)}\\text{ 中不含 }y''\\text{ 的部分对 }x,y\\text{ 的全导}\\bigr]+\\bigl(\\eta_y-\\xi_x-2\\xi_yy'\\bigr)y''$$\n\n再由 $-y''D_x\\xi=-y''(\\xi_x+\\xi_yy')$，合并 $y''$ 的系数得 $(\\eta_y-2\\xi_x)-3\\xi_yy'$，其余项整理后即得\n\n$$\\eta^{(2)}=\\eta_{xx}+(2\\eta_{xy}-\\xi_{xx})y'+(\\eta_{yy}-2\\xi_{xy})(y')^2-\\xi_{yy}(y')^3\n+(\\eta_y-2\\xi_x)y''-3\\xi_y\\,y'y''\\ \\ ✅$$\n\n**自检**：把 $\\xi=x$、$\\eta=y$ 代入，得 $\\eta^{(2)}=-y''$，与 `forget-restriction` 反例词条里直接算的结果一致 ✅\n\n**第 4 步（用于解方程）。** 把 $\\mathbf{v}^{(n)}[F]|_{F=0}=0$ 中的 $y^{(n)}$ 用 $F=0$ 消去，得到关于 $x,y,y',\\ldots,y^{(n-1)}$ 的表达式；**这些变量互相独立**，所以各单项系数必须分别为零 ⇒ 关于 $\\xi,\\eta$ 的**决定方程组**（线性 PDE 组）。∎\n\n**易错点。**\n\n1. **$D_x\\ne\\partial_x$**：$D_x$ 含 $y'\\partial_y+y''\\partial_{y'}+\\cdots$。把它当成 $\\partial_x$ 是**最常见的错**，会让 $\\eta^{(1)}$ 漏项。\n2. **商的导数别忘了分母项**：$-y'D_x\\xi$ 必须保留。\n3. **阶数要匹配**：$F$ 是 $n$ 阶，需要 $\\eta^{(1)},\\ldots,\\eta^{(n)}$，少一个就漏判。\n4. **$|_{F=0}$ 的用法**：不是「先算完再代 $y=0$」，而是**用 $F=0$ 把最高阶导数替换掉**，剩下的 $x,y,\\ldots,y^{(n-1)}$ 才当作独立变量。",
+      "links": [
+        "de2.1",
+        "de2.3",
+        "de1.7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：三组 (v, F) 的对称性判定",
+      "keywords": [
+        "位似打 y″=0：η⁽¹⁾=0、η⁽²⁾=−y″",
+        "位似打 y′−y/x：条件恒零",
+        "v=x∂_y 打 y′：不延拓会误判"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 18,
+        "line_end": 31
+      },
+      "fill_hint": "四问：位似打 y″=0（η⁽¹⁾=0、η⁽²⁾=−y″，解流形上取 0 ⇒ 是对称）；位似打 y′−y/x（x=2,y=3 处算 0 ⇒ 对称，是「齐次⇒u=y/x」的根源）；x∂_y 打 y′（不延拓 0 vs 延拓 1，结论相反）；∂_x 打 y′−y（恒零 ⇒ 是对称，澄清「缺 x」的正确含义）。",
+      "content": "**第 1 问：$\\mathbf{v}=x\\partial_x+y\\partial_y$ 打在 $F=y''$ 上。**\n\n$\\xi=x$、$\\eta=y$，所以 $\\eta_x=0$、$\\eta_y=1$、$\\xi_x=1$、$\\xi_y=0$。\n\n- 一次延拓：$\\eta^{(1)}=0+(1-1)y'-0$，算得 0【已核验:0|0+(1-1)*1-0*1**2】\n- 二次延拓：$\\eta^{(2)}=D_x\\eta^{(1)}-y''D_x\\xi=0-y''\\cdot1$，在 $y''=1$ 处算得 -1【已核验:-1|-1】\n- 判据：在 $F=0$（即 $y''=0$）上取值为 0【已核验:0|0】 ⇒ **是对称性** ✅\n\n**第 2 问：同一个 $\\mathbf{v}$ 打在 $F=y'-y/x$ 上。**\n\n$\\mathbf{v}^{(1)}[F]=\\xi F_x+\\eta F_y+\\eta^{(1)}F_{y'}$。其中 $F_x=y/x^2$、$F_y=-1/x$、$F_{y'}=1$：\n\n$$\\mathbf{v}^{(1)}[F]=x\\cdot\\frac{y}{x^2}+y\\cdot\\Bigl(-\\frac1x\\Bigr)+0\\cdot 1=\\frac yx-\\frac yx$$\n\n取 $x=2$、$y=3$：算得 0【已核验:0|-3/2+2*3/4】。**恒为零 ⇒ 是对称性** ✅（这正是 `de2.3` 里「齐次方程 $\\Rightarrow u=y/x$」的根源。）\n\n**第 3 问：$\\mathbf{v}=x\\partial_y$ 打在 $F=y'$ 上。**\n\n- 不延拓（错误做法）：$\\xi F_x+\\eta F_y=0\\cdot0+x\\cdot0$，算得 0【已核验:0|0】\n- 延拓：$\\eta^{(1)}=D_x(x)-y'D_x(0)=1$，算得 1【已核验:1|1】\n\n$$\\mathbf{v}^{(1)}[F]=\\eta^{(1)}F_{y'}=1\\cdot1=1\\ne0\\ \\Rightarrow\\ \\textbf{不是对称性}$$\n\n**同一个 $\\mathbf{v}$、同一个 $F$，两种做法给出相反结论** —— 这就是「必须延拓」的实证。\n\n**第 4 问：$\\mathbf{v}=\\partial_x$ 打在 $F=y'-y$ 上是对称吗？**\n\n$\\eta^{(1)}=D_x(0)-y'D_x(1)=0$；$\\mathbf{v}^{(1)}[F]=1\\cdot0+0\\cdot(-1)+0\\cdot1=0$，恒为零 ⇒ **是对称性**。\n\n**注意这并不矛盾**：虽然方程 $y'-y=0$ 显含 $y$，但它的解族 $\\{Ce^x\\}$ 在水平平移下确实不变（$Ce^{x-\\varepsilon}$ 仍是解）。**「缺 $x$」的判据是「$\\partial_x$ 是生成元 ⇒ 可用 $y$ 作自变量把它化成缺 $x$」**，不是「方程字面不含 $x$」。",
+      "links": [
+        "de2.1",
+        "de2.3",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：延拓阶数与变量清单",
+      "keywords": [
+        "F 的阶决定延拓次数",
+        "一阶 ODE 只需 η⁽¹⁾",
+        "二阶 ODE 需要 η⁽¹⁾、η⁽²⁾",
+        "决定方程组的变量数随阶数增长"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 18,
+        "line_end": 31
+      },
+      "fill_hint": "对照表：F 的阶 n（1/2/3/≥4）× (需算的 η⁽ᵏ⁾、v⁽ⁿ⁾ 项、独立变量数、典型例子)；三个要点（成本随阶数增长、决定方程组线性、必须有 η⁽ⁿ⁾）。",
+      "content": "**「F 是几阶」直接决定要算到哪一步**（本单元的总表）：\n\n| $F$ 的阶 $n$ | 需要算 | $\\mathbf{v}^{(n)}$ 的项 | 决定方程组里的独立变量 | 典型例子 |\n|---|---|---|---|---|\n| $1$ | $\\eta^{(1)}$ | $\\mathbf{v}+\\eta^{(1)}\\partial_{y'}$ | $x,\\ y,\\ y'$ | $y'=f(x,y)$ |\n| $2$ | $\\eta^{(1)},\\eta^{(2)}$ | $+\\eta^{(2)}\\partial_{y''}$ | $x,\\ y,\\ y',\\ y''$ | $y''=f(x,y,y')$ |\n| $3$ | 再加上 $\\eta^{(3)}$ | 三项 | 四个自变量 | 高阶方程（很少手工做） |\n| $n\\ge4$ | 逐阶递推 | $n$ 项 | $n+1$ 个自变量 | 一般交给 CAS（程序化计算） |\n\n**三个读表要点。**\n\n1. **阶数决定成本**：$\\eta^{(k)}$ 的项数随 $k$ 迅速增长（因 $D_x$ 里多了 $\\partial_{y^{(k-1)}}$），**手工计算一般止于二阶**。\n2. **决定方程组是线性的**：未知函数是 $\\xi(x,y)$、$\\eta(x,y)$（**不依赖 $y'$**），而方程对它们是线性的 —— 这是李群方法「可计算」的原因。\n3. **不需要 $\\eta^{(n)}$**？需要：$\\mathbf{v}^{(n)}[F]$ 里 $\\partial_{y^{(n)}}F\\ne0$ 时必须有 $\\eta^{(n)}$，**否则最高阶项贡献缺失**。\n\n**与 `de2.1` 的接口**：本表的输入是 $\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$（`de2.1` 的产物），输出是决定方程组 → 对称性清单 → 交给 `de2.3`/`de2.4` 做降阶。",
+      "links": [
+        "de2.1",
+        "de2.3",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：决定方程组与对称性清单的下游",
+      "keywords": [
+        "输出是「方程的全套对称性」",
+        "de2.3 把对称性翻译成解法",
+        "de2.4 用对称性降阶",
+        "下游：守恒律与可积系统"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 18,
+        "line_end": 31
+      },
+      "fill_hint": "下游清单：de2.3（决定方程组的输出配不变量就是解法）、de2.4（真对称性才可降阶）、de1.9（流的存在性）、Noether 守恒量、可积系统的无穷多对称性；末给「回代验证」的自检。",
+      "content": "**下游清单。**\n\n- **`de2.3` 的四种标准解法**：决定方程组解出的每个生成元，配上「不变量」就是一条降阶路线。**本单元是「查对称性」的机器，`de2.3` 是它的对照词典。**\n\n- **`de2.4` 的降阶三步法**：拿到 $\\mathbf{v}$ 后求不变量 $(r,s)$，再在新坐标下把阶数降一。**本单元保证「$\\mathbf{v}$ 是真的对称性」，否则降阶无意义。**\n\n- **`de1.9` 的存在唯一性**：$\\eta^{(1)}$ 的表达式用了 $D_x$ 与商法则，而「流」的存在性依赖 Picard–Lindelöf——**对称性理论是建立在解的局部唯一性之上的**。\n\n- **守恒律与 Noether 定理**：每个对称性对应一个守恒量；在 Lagrange 力学里这就是 Noether 定理的直接内容。**本单元的决定方程组是「找对称性」的第一步。**\n\n- **可积系统**：KdV、sine-Gordon 等方程有**无穷多**对称性（由递归算子从一个种子生成），这正是「可积」的判据之一；本单元的二阶延拓公式是那条递归链的起点。\n\n**一句自检**：算出 $\\mathbf{v}$ 后**回到原方程验证一次**——把 $\\mathbf{v}^{(n)}[F]|_{F=0}$ 的每一项**重新代一遍**（尤其 $\\eta^{(1)}$ 的 $y'D_x\\xi$ 项），比重新推一遍公式更省事。",
+      "links": [
+        "de2.1",
+        "de2.3",
+        "de2.4",
+        "de1.9"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

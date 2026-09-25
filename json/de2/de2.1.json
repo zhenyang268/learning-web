@@ -1,0 +1,252 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de2.1",
+  "chapter": "de2",
+  "title": "单参数李群与无穷小生成元",
+  "src": {
+    "file": "notebook/diffrential/de2.tex",
+    "line_start": 6,
+    "line_end": 15,
+    "anchor": "notebook/diffrential/de2.tex:6"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de2.1:lie-group.quantifiers",
+      "type": "comparison",
+      "subject": "lie-group",
+      "title": "无穷小生成元的五个限定词：每一条去掉都能举出反例",
+      "keywords": [
+        "单参数：只有一个 ε",
+        "ε=0 处光滑（要能求导）",
+        "参数化是局部微分同胚",
+        "群运算满足结合律与逆",
+        "生成元只看见 ε=0 的一阶信息"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 6,
+        "line_end": 15
+      },
+      "fill_hint": "四列表：单参数性、ε=0 光滑（|ε| 反例给 −1/1）、参数化须微分同胚（x+ε³ 给 ξ=0）、群结构、只取一阶信息；点明①②③ 管「是不是李群」、⑤ 管「无穷小是局部信息」。",
+      "content": "切片给了三行：**一参数变换群** $x^*=X(x,y;\\varepsilon)$、$y^*=Y(x,y;\\varepsilon)$；**无穷小生成元** $\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$；以及 $\\xi=\\partial_\\varepsilon X|_{\\varepsilon=0}$、$\\eta=\\partial_\\varepsilon Y|_{\\varepsilon=0}$。**三行里塞了五个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **单参数**（只有一个 $\\varepsilon$） | 二维参数族 $x^*=x+\\varepsilon_1$、$y^*=y+\\varepsilon_2$ | 生成元变成**两个**（$\\partial_x$ 与 $\\partial_y$）——已不是「一条流」，降阶时只能用一个方向 | **可放宽**：多参数 ⇒ 多个生成元（李代数），但要逐个用 |\n| ② **$\\varepsilon=0$ 处光滑** | $X(x;\\varepsilon)=x+|\\varepsilon|$：左导 $-1$，右导 $1$（算得 -1【已核验:-1|-1】与 1【已核验:1|1】） | $\\partial_\\varepsilon X|_{\\varepsilon=0}$ **不存在** ⇒ 生成元不存在 ⇒ 整套机器起动不了 | **不能放宽**：生成元就是对 $\\varepsilon$ 的导数，光滑是定义的一部分 |\n| ③ **参数化是局部微分同胚**（$\\varepsilon\\mapsto$ 变换 可逆） | $X(x;\\varepsilon)=x+\\varepsilon^3$：$\\partial_\\varepsilon X|_0=3\\varepsilon^2|_0$，算得 0【已核验:0|3*0**2】 | **生成元退化为零**，可变换族 $\\{x+c\\}$ 明明非平凡 ⇒ 「有参数」不等于「有非零生成元」 | **可放宽**：重参数化 $\\varepsilon\\mapsto\\varepsilon^{1/3}$ 即可救回（但那样就不光滑了） |\n| ④ **群结构**（$\\varepsilon_1\\circ\\varepsilon_2=\\varepsilon_1+\\varepsilon_2$ 型、含恒等与逆） | 只给「一族变换」而不要求群：$X(x;\\varepsilon)=x+\\varepsilon$、$Y(y;\\varepsilon)=y+\\varepsilon^2$ | 复合后 $Y$ 不是 $\\varepsilon_1+\\varepsilon_2$ 型 ⇒ **不是群** ⇒ 流不闭合，无法谈「沿轨道」 | **不能放宽**：群结构是「流」的来源 |\n| ⑤ **只取 $\\varepsilon=0$ 的一阶信息** | $X=1+3\\varepsilon+7\\varepsilon^2$（在 $x=1$ 处）：$\\xi=3$，而 $\\varepsilon=0.1$ 时 $X=1.37$ | 高阶项**不影响生成元**；反过来，**只看生成元会丢失高阶信息**（局部结论不能推到有限 $\\varepsilon$） | **不能放宽**：这是「无穷小」的含义（局部） |\n\n**用法**：拿到一个「对称性」时，先确认 ①②③ 都能过（可导、非退化、可逆），再看 ④ 是否真的成群。**①③④ 是「是不是李群」的问题，②⑤ 是「生成元算什么」的问题。**",
+      "links": [
+        "de2.2",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.1:param-degenerate.counterexample",
+      "type": "counterexample",
+      "subject": "param-degenerate",
+      "title": "反例：x* = x + ε³ 有参数却没有（非零）生成元",
+      "keywords": [
+        "参数化退化 ⇒ 生成元为零",
+        "∂ε(x+ε³)|₀ = 0",
+        "但变换族 {x+c} 非平凡",
+        "救法：换参数化，代价是不光滑"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 8,
+        "line_end": 15
+      },
+      "fill_hint": "反例：X=x+ε³ ⇒ ξ=3ε²|₀=0、η=0，生成元退化为零，而变换族 {x+c} 非平凡；根因是 ε↦ε³ 在 0 处不可逆；救法换参数化但会失光滑；给「非退化参数化」判据。",
+      "content": "**限定词③是「$\\varepsilon\\mapsto$ 变换 是局部微分同胚」。** 直觉上「有一族带参数 $\\varepsilon$ 的变换」就该有生成元，**这条直觉是错的**。\n\n**第一步：写下反例。**\n\n$$X(x;\\varepsilon)=x+\\varepsilon^3,\\qquad Y(y;\\varepsilon)=y$$\n\n**第二步：算生成元。**\n\n$$\\xi=\\frac{\\partial X}{\\partial\\varepsilon}\\Big|_{\\varepsilon=0}=\\frac{d}{d\\varepsilon}\\bigl(x+\\varepsilon^3\\bigr)\\Big|_0=3\\varepsilon^2\\big|_0,\\quad \\text{得 } 0\\ \\text{【已核验:0|3*0**2】}$$\n\n$$\\eta=\\frac{\\partial Y}{\\partial\\varepsilon}\\Big|_0=0$$\n\n**所以 $\\mathbf{v}=0\\cdot\\partial_x+0\\cdot\\partial_y=0$：生成元是零向量场。**\n\n**第三步：为什么这不合理。**\n\n变换族 $\\{x+c\\}$（$c\\in\\mathbb{R}$）明明是**非平凡的单参数族**——每个 $\\varepsilon$ 给出一个真变换（平移 $\\varepsilon^3$）。可是生成元算出来是零。**零生成元意味着「无穷小变换 = 恒等」**，用它做降阶会得到「方程本来就与 $x$ 无关」这种错误结论。\n\n**第四步：根因是参数化不光滑（不可逆）。**\n\n$\\varepsilon\\mapsto\\varepsilon^3$ 在 $\\varepsilon=0$ 处**导数退化为零**，不是局部微分同胚；所以 $\\varepsilon$ 不是「好参数」。把参数换成 $\\tau=\\varepsilon^3$（即 $X=x+\\tau$），立刻得到 $\\xi=1$ ——**同一条流，换了参数化。而 $\\tau=\\varepsilon^3$ 的反函数 $\\varepsilon=\\tau^{1/3}$ 在 $0$ 处不可导**，所以「两种要求不能同时满足」。\n\n**第五步：这条反例的分量。**\n\n- 它说明**生成元依赖参数化**：把参数重标 $ \\varepsilon\\mapsto c\\varepsilon$ 会把 $\\xi$ 乘上 $c$（$c\\ne0$ 时只是伸缩，无关紧要）；而 $c=0$（退化）直接把生成元抹掉。\n- **判据**：$\\partial_\\varepsilon X|_0\\ne0$ 或 $\\partial_\\varepsilon Y|_0\\ne0$ 至少有一个成立，才算「非退化参数化」。\n- **实践含义**：写生成元前先检查 $\\xi,\\eta$ 是否**同时为零**；若同时为零，先换参数化（换完要重新验光滑性）。",
+      "links": [
+        "de2.2",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.1:lie-group.statement",
+      "type": "statement",
+      "subject": "lie-group",
+      "title": "陈述：单参数变换群、无穷小生成元与一次项展开",
+      "keywords": [
+        "一参数变换群的定义式",
+        "无穷小生成元的定义",
+        "ξ、η 由 ε=0 处一阶导给出",
+        "一阶 Taylor 展开的读法"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 6,
+        "line_end": 15
+      },
+      "fill_hint": "定义 + 生成元 + 一次项 Taylor 展开 + 与对称性的接口；强调 v 是向量场而非数值，ξ/η 只取 ε=0 处一阶导。",
+      "content": "**陈述。**\n\n**(i) 一参数变换群。** 一族依赖于实参数 $\\varepsilon$ 的变换\n\n$$x^*=X(x,y;\\varepsilon),\\qquad y^*=Y(x,y;\\varepsilon)$$\n\n满足：$\\varepsilon=0$ 时 $X=x$、$Y=y$（含恒等）；$X,Y$ 对 $\\varepsilon$ 及对 $x,y$ 光滑；且对 $\\varepsilon_1,\\varepsilon_2$ 有复合律\n\n$$X\\bigl(X(x,y;\\varepsilon_1),Y(x,y;\\varepsilon_1);\\varepsilon_2\\bigr)=X(x,y;\\varepsilon_1+\\varepsilon_2)$$\n\n同等式对 $Y$ 成立（含逆：$\\varepsilon$ 与 $-\\varepsilon$ 互逆）。**简写作 $\\varepsilon$ 构成一个「单参数李群」在平面上的作用。**\n\n**(ii) 无穷小生成元。** 定义为\n\n$$\\mathbf{v}=\\xi(x,y)\\,\\frac{\\partial}{\\partial x}+\\eta(x,y)\\,\\frac{\\partial}{\\partial y},\\qquad\n\\xi=\\frac{\\partial X}{\\partial\\varepsilon}\\Big|_{\\varepsilon=0},\\quad\n\\eta=\\frac{\\partial Y}{\\partial\\varepsilon}\\Big|_{\\varepsilon=0}$$\n\n**$\\mathbf{v}$ 是一个向量场**（不是数值），它把「$\\varepsilon=0$ 处朝哪个方向变」编码下来。\n\n**(iii) 一次项展开。** 由定义，$\\varepsilon$ 小的时候\n\n$$x^*=x+\\varepsilon\\,\\xi(x,y)+O(\\varepsilon^2),\\qquad\ny^*=y+\\varepsilon\\,\\eta(x,y)+O(\\varepsilon^2)$$\n\n**这就是「无穷小变换」的准确含义**：去掉 $O(\\varepsilon^2)$ 后剩下的线性部分。\n\n**(iv) 与解方程的关系。** 若 $y=y(x)$ 是一条曲线，则沿着 $\\mathbf{v}$ 的流它变成另一条曲线；$\\mathbf{v}$ 是方程「对称性」的候选——**「方程在 $\\mathbf{v}$ 的流下形式不变」这句话，全部要靠 $\\mathbf{v}$ 来表述**（见 `de2.2`）。",
+      "links": [
+        "de2.2",
+        "de2.3",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.1:lie-group.intuition",
+      "type": "intuition",
+      "subject": "lie-group",
+      "title": "直觉：把「一族变换」压成「一个向量场」",
+      "keywords": [
+        "一族变换信息量太大",
+        "生成元只留 ε=0 处的一阶信息",
+        "群结构保证「知道一阶就能重建流」",
+        "向量场的积分曲线 = 轨道"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 6,
+        "line_end": 15
+      },
+      "fill_hint": "直觉：群结构 ⇒ 自治流 dX/dε=ξ(X) ⇒ 一阶信息足以重建整族；生成元只含 ε=0 的一阶导 ⇒ 结论是局部的；几何图像（轨道/切向/不变量/降阶）。",
+      "content": "**假设给了什么。** 我们面对的是一族**依赖于 $\\varepsilon$ 的光滑变换** $X,Y$——这是一个「无穷多张地图」的对象，直接处理它没有抓手。\n\n**结论为什么因此成立（为什么可以只留一个向量场）。** 三步：\n\n**第一步：群结构使「一阶信息」足以重建整族。**\n\n因为复合律 $X(\\cdot;\\varepsilon_1+\\varepsilon_2)=X(X(\\cdot;\\varepsilon_1);\\varepsilon_2)$，把 $\\varepsilon$ 看成「时间」，这族变换就是一个**自治流**：\n\n$$\\frac{d}{d\\varepsilon}X(x;\\varepsilon)=\\xi\\bigl(X(x;\\varepsilon)\\bigr)$$\n\n**右边只含 $\\xi$**——所以「$\\xi$ 已知」⟺「整族变换已知」（解这个自治 ODE 即可）。**这就是「压成向量场」的合法性来源。**\n\n**第二步：生成元只取 $\\varepsilon=0$ 处的一阶导。**\n\n$\\xi=\\partial_\\varepsilon X|_0$ 用的是**原点处的导数**。高阶项 $O(\\varepsilon^2)$ 不进入 $\\xi$；反过来，$\\xi$ 也**不携带**高阶项的信息。所以「用生成元」= 「只用局部一阶信息」——结论都是**局部的**（在 $\\varepsilon=0$ 附近）。\n\n**第三步：几何图像。**\n\n向量场 $\\mathbf{v}$ 在每点 $(x,y)$ 画一个箭头；**它的积分曲线就是「轨道」**（$\\varepsilon$ 变动时点走的曲线）。于是：\n\n- **变换族** = 沿轨道走的时间 $\\varepsilon$；\n- **生成元** = 轨道在每点的切向；\n- **不变量 $r$** = 沿轨道不变的函数（$\\mathbf{v}r=0$，见 `de2.4`）；\n- **降阶** = 用「沿轨道」代替「沿原来的自变量」当新坐标。\n\n**一句话记忆**：**李群 = 一套轨道 + 一个走轨道的速度；生成元就是那个速度场。**",
+      "links": [
+        "de2.2",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.1:lie-group.proof",
+      "type": "proof",
+      "subject": "lie-group",
+      "title": "证明骨架：群性质如何保证「一阶信息决定整族」",
+      "keywords": [
+        "第一步 写出复合律的微分形式",
+        "第二步 取 ε₂→0 得自治 ODE",
+        "第三步 局部存在唯一性给出流",
+        "易错点：光滑性与非退化"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 6,
+        "line_end": 15
+      },
+      "fill_hint": "四步骨架：复合律对 ε₂ 展开 ⇒ 比较一次项 ⇒ 得自治 ODE dφ/dε=v(φ) ⇒ Picard-Lindelöf 给唯一流；反向由定义 v=∂εφ|₀；四条易错点（光滑、非退化、局部性、v 是向量场）。",
+      "content": "**第 1 步（从复合律到「半群性质」）。** 设 $\\phi_\\varepsilon(x,y)=(X,Y)$。复合律是 $\\phi_{\\varepsilon_1}\\circ\\phi_{\\varepsilon_2}=\\phi_{\\varepsilon_1+\\varepsilon_2}$。对 $\\varepsilon_2$ 在 $0$ 处展开：\n\n$$\\phi_{\\varepsilon_1}\\bigl(\\phi_{\\varepsilon_2}(p)\\bigr)=\\phi_{\\varepsilon_1}\\bigl(p+\\varepsilon_2\\mathbf{v}(p)+O(\\varepsilon_2^2)\\bigr)\n=\\phi_{\\varepsilon_1}(p)+\\varepsilon_2\\,(D\\phi_{\\varepsilon_1})(p)\\,\\mathbf{v}(p)+O(\\varepsilon_2^2)$$\n\n**理由**：中括号内是多元 Taylor 展开，$D\\phi_{\\varepsilon_1}$ 是 Jacobi 矩阵。左边也等于 $\\phi_{\\varepsilon_1+\\varepsilon_2}(p)=\\phi_{\\varepsilon_1}(p)+\\varepsilon_2\\,\\partial_\\varepsilon\\phi_{\\varepsilon_1+\\varepsilon_2}(p)|_{\\varepsilon_2=0}+O(\\varepsilon_2^2)$。\n\n**第 2 步（比较 $\\varepsilon_2$ 的一次项）。** 两式一次项相等：\n\n$$(D\\phi_{\\varepsilon_1})(p)\\,\\mathbf{v}(p)=\\partial_\\varepsilon\\phi_\\varepsilon(p)\\big|_{\\varepsilon=\\varepsilon_1}\n\\quad\\Longrightarrow\\quad\n\\frac{d}{d\\varepsilon}\\phi_\\varepsilon(p)=D\\phi_\\varepsilon(p)\\,\\mathbf{v}(p)=\\mathbf{v}\\bigl(\\phi_\\varepsilon(p)\\bigr)$$\n\n**最后一步用了 $D\\phi_\\varepsilon\\,\\mathbf{v}=\\mathbf{v}\\circ\\phi_\\varepsilon$**（向量场沿流的不变性，可由第 1 步对**任意** $\\varepsilon_1$ 成立再取 $\\varepsilon_1=0$ 得到）。\n\n**第 3 步（结论：一阶信息决定整族）。** 上式是一个**自治一阶 ODE 系统**，初值 $\\phi_0(p)=p$，右端只含 $\\mathbf{v}$。由 Picard–Lindelöf（`de1.9`）在 $\\mathbf{v}$ 局部 Lipschitz 时有唯一解 ⇒ **给 $\\mathbf{v}$，唯一确定 $\\phi_\\varepsilon$（局部）**。∎\n\n**第 4 步（反向：$\\mathbf{v}$ 由族决定）。** 由定义 $\\mathbf{v}=\\partial_\\varepsilon\\phi_\\varepsilon|_0$，所以「族 $\\to$ 生成元」也是确定的。**两个方向都通 ⇒ 一族变换与一个向量场（局部）一一对应。**\n\n**易错点。**\n\n1. **光滑性**：第 1 步的 Taylor 展开要求 $\\phi$ 对 $\\varepsilon$、$x,y$ 都 $C^1$；$X=x+|\\varepsilon|$ 这类函数不满足（见同单元反例词条）。\n2. **非退化**：第 2 步的 ODE 若 $\\mathbf{v}\\equiv0$，解只有常数解——**信息为零**，重建不出非平凡族（$X=x+\\varepsilon^3$ 的例子）。\n3. **局部 vs 全局**：$\\mathbf{v}\\mapsto\\phi_\\varepsilon$ 只在 $|\\varepsilon|$ 小（且轨迹未跑出定义域）时成立；**不能把局部结论当成全局结论**。\n4. **别把 $\\mathbf{v}$ 当数值**：$\\mathbf{v}$ 是向量场，$\\mathbf{v}[f]$ 才是对一个函数的作用（见 `de2.2` 的延拓）。",
+      "links": [
+        "de2.2",
+        "de1.9",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：从具体变换族算 (ξ, η) 并验证高阶项无关",
+      "keywords": [
+        "给定 X、Y 求 ξ、η",
+        "高阶项不应进入生成元",
+        "同时为零要报「退化」"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 6,
+        "line_end": 15
+      },
+      "fill_hint": "五问：由 X=x(1+3ε+7ε²)、Y=y(1+2ε) 得 ξ=3x、η=2y（x=2→6、y=5→10）；高阶项不进生成元（14ε|₀=0、4yε|₀=0）；退化判据是 ξ≡η≡0；并数值展示一次项近似的 O(ε²) 误差 0.0007。",
+      "content": "**第 1 问：给出变换族，求生成元。**\n\n$$X(x;\\varepsilon)=x(1+3\\varepsilon+7\\varepsilon^2),\\qquad\nY(y;\\varepsilon)=y\\,(1+2\\varepsilon)$$\n\n按定义，\n\n- $\\xi=\\partial_\\varepsilon X|_0=x\\cdot(3+14\\varepsilon)|_0$，在 $x=2$ 处：算得 6【已核验:6|3*2】\n- $\\eta=\\partial_\\varepsilon Y|_0=y\\cdot2$，在 $y=5$ 处：算得 10【已核验:10|2*5】\n\n所以 $\\mathbf{v}=x\\partial_x$ 的 $3$ 倍加上 $2y\\partial_y$：$\\mathbf{v}=3x\\,\\partial_x+2y\\,\\partial_y$。\n\n**第 2 问：$7\\varepsilon^2$ 这一项进生成元了吗？**\n\n**没有。**$\\partial_\\varepsilon(7\\varepsilon^2)|_0=14\\varepsilon|_0$，算得 0【已核验:0|14*0】。**高阶项在 $\\varepsilon=0$ 处导数为零，一律不进入 $\\xi,\\eta$。**\n\n**第 3 问：如果把 $Y$ 改成 $y(1+2\\varepsilon^2)$，生成元怎样？**\n\n$\\eta=\\partial_\\varepsilon(2y\\varepsilon^2)|_0=4y\\varepsilon|_0$，算得 0【已核验:0|4*5*0】。所以 $\\eta=0$，**只剩 $\\mathbf{v}=3x\\partial_x$**。注意此时 $\\mathbf{v}\\ne0$（因为 $\\xi\\ne0$），所以**不算退化**；但 $y$ 方向的信息丢了。\n\n**第 4 问：什么时候该报「参数化退化」？**\n\n当 $\\xi\\equiv0$ **且** $\\eta\\equiv0$ 时。例如 $X=x+\\varepsilon^3$、$Y=y+\\varepsilon^3$：两个导数在 $0$ 处都为零 ⇒ 生成元恒为零 ⇒ 报退化，先换参数化。\n\n**第 5 问：验证一次项展开的准确度。**\n\n取上问的 $X=x(1+3\\varepsilon+7\\varepsilon^2)$、$x=1$、$\\varepsilon=0.01$：\n\n- 精确值 $X=1\\times(1+0.03+0.0007)=1.0307$\n- 一次项近似 $1+\\varepsilon\\xi=1+0.01\\times3=1.03$\n\n**相差 $0.0007$，正是 $O(\\varepsilon^2)$ 的量级** ✅ 这说明「用生成元」只在 $\\varepsilon$ 很小时可靠。",
+      "links": [
+        "de2.2",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：四类基本变换的生成元与用途",
+      "keywords": [
+        "平移、缩放、旋转、位似",
+        "每个生成元的 ξ、η 写法",
+        "对应能消掉哪一类项"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 6,
+        "line_end": 15
+      },
+      "fill_hint": "对照表：四类基本变换（x 平移/y 平移/位似/x 缩放）× (ξ,η,生成元, 能消掉什么)；四个要点（速度分量读法、位似与 x 缩放的不变量差别、旋转留给 PDE、与降阶的接口）。",
+      "content": "**平面上的四类基本单参数变换**（本单元与 `de2.3` 的公共词典）：\n\n| 变换 | 参数化 | $\\xi$ | $\\eta$ | 生成元 | 能消掉什么 |\n|---|---|---|---|---|---|\n| **$x$ 平移** | $x^*=x+\\varepsilon$，$y^*=y$ | $1$ | $0$ | $\\partial_x$ | **方程里显含的 $x$** |\n| **$y$ 平移** | $x^*=x$，$y^*=y+\\varepsilon$ | $0$ | $1$ | $\\partial_y$ | **方程里显含的 $y$** |\n| **位似（同时缩放）** | $x^*=e^\\varepsilon x$，$y^*=e^\\varepsilon y$ | $x$ | $y$ | $x\\partial_x+y\\partial_y$ | **「齐次」结构（$y/x$）** |\n| **$x$ 单独缩放** | $x^*=e^\\varepsilon x$，$y^*=y$ | $x$ | $0$ | $x\\partial_x$ | **Euler 结构（$\\ln x$）** |\n\n**四个读表要点。**\n\n1. **$\\xi,\\eta$ 就是「速度分量」**：$x$ 平移的速度在 $x$ 方向恒为 $1$；位似的速度与位置成正比（离原点越远跑得越快）。\n2. **位似与 $x$ 缩放的差别**：位似同时动两个坐标 ⇒ 不变量是 $y/x$（比例保持）；$x$ 缩放只动 $x$ ⇒ 不变量是 $y$（以及派生的 $\\ln x$ 作为「时间」）。\n3. **旋转**（$\\xi=-y$、$\\eta=x$）在这张表里刻意不给解法**，因为一般 ODE 很少对旋转不变；但它在 PDE（Laplace 方程）里是关键（`de2.8`）。\n4. **与降阶的接口**：每个生成元都能给出「一个不变量 $r$ + 一个时间 $s$」，这就是 `de2.4` 三步法的输入。",
+      "links": [
+        "de2.2",
+        "de2.3",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：生成元这一工具在 de2 全章的位置",
+      "keywords": [
+        "de2.2 用它写对称性条件",
+        "de2.3 给出四种标准解法",
+        "de2.4 用它降阶",
+        "下游：守恒量与不变量"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 6,
+        "line_end": 15
+      },
+      "fill_hint": "下游清单：de2.2（延拓写对称性条件）、de2.3（四种标准解法都是「生成元→不变量」的实例）、de2.4（三步法的输入）、Noether 守恒量、de2.8 的 PDE 对称性降维；末给两句自检（非退化 + 不变量可解）。",
+      "content": "**下游清单。**\n\n- **`de2.2` 的对称性条件**：把 $\\mathbf{v}$「延拓」到含 $y',y'',\\ldots$ 的空间，写成 $\\mathbf{v}^{(n)}[F]|_{F=0}=0$。**延拓是生成元概念的第一次扩展。**\n\n- **`de2.3` 的四种标准解法**：$\\partial_x\\Rightarrow$「缺 $x$ 就令 $p=y'$」；$\\partial_y\\Rightarrow$「缺 $y$ 就令 $p=y'$」；$x\\partial_x+y\\partial_y\\Rightarrow$「齐次就设 $u=y/x$」；$x\\partial_x\\Rightarrow$「Euler 就换 $t=\\ln x$」。**四条解法都是「生成元 → 不变量」这一个动作的实例。**\n\n- **`de2.4` 的降阶三步法**：找 $\\mathbf{v}$ → 找不变量 $(r,s)$ → 在新坐标下降一阶。**本单元的 $\\mathbf{v}$ 就是它的输入。**\n\n- **守恒量与不变量**：物理里每个连续对称性给一个守恒量（Noether 定理的雏形）；在 ODE 里「不变量 $r$」就是把守恒量当新坐标。\n\n- **下游的 PDE 侧**：`de2.8` 的 Laplace 方程对旋转与平移不变，那些生成元构成 $\\mathfrak{so}(2)\\oplus\\mathbb{R}^2$；**用对称性降 PDE 的维数（相似解）与这里的方法同源。**\n\n**一句自检**：写下 $\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$ 后先问两件事——**$\\xi,\\eta$ 是不是至少一个非零**（非退化）？**$\\mathbf{v}[r]=0$ 解得出 $r$ 吗**（不变量存在）？",
+      "links": [
+        "de2.2",
+        "de2.3",
+        "de2.4",
+        "de2.8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
