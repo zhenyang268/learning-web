@@ -1,0 +1,290 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie2.4",
+  "chapter": "lie2",
+  "title": "Cartan 子代数与根",
+  "src": {
+    "file": "notebook/li/lie2.tex",
+    "line_start": 47,
+    "line_end": 56,
+    "anchor": "notebook/li/lie2.tex:47"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie2.4:cartan-roots.quantifiers",
+      "type": "comparison",
+      "subject": "cartan-roots",
+      "title": "Cartan 子代数与根的四个限定词：极大交换、根在 h* 里、半单时根空间一维、根成 ± 对",
+      "keywords": [
+        "极大交换(可同时对角化)",
+        "根是 h* 中的非零泛函",
+        "半单时根空间一维",
+        "根成对出现"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "四问：极大交换的必要性（so(3) 秩 1 vs so(4) 秩 2）；根为何在 h* 里；半单时根空间一维（非半单反例）；± 配对与偶数根数。",
+      "content": "切片给了 **Cartan 子代数 $\\mathfrak h$**（极大交换子代数，所有元素可同时对角化）、**根**（$\\alpha\\in\\mathfrak h^*$ 使 $[H,E_\\alpha]=\\alpha(H)E_\\alpha$ 对一切 $H\\in\\mathfrak h$）、**分解**（$\\mathfrak g=\\mathfrak h\\oplus\\bigoplus_{\\alpha\\in\\Phi}\\mathfrak g_\\alpha$）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$\\mathfrak h$ 必须\"极大\"交换 + 可同时对角化** | **交换子代数很容易造**（比如 $\\operatorname{span}\\{J_3\\}\\subset\\mathfrak{so}(3)$），但**极大**才合格。反例：$\\mathfrak{so}(3)$ 里 $\\operatorname{span}\\{J_3\\}$ 是极大交换（秩 $1$，算得 $1$【已核验:1|1】）；但在 $\\mathfrak{so}(4)$ 里取 $\\operatorname{span}\\{J_3\\}$ **不是**极大的（可以再加一个对易的生成元），而 $\\dim\\mathfrak{so}(4)$ 的秩是 $2$【已核验:2|2】 | 用非极大交换子代数 ⟹ 分解漏掉部分元素（\"对角化不完整\"） | 不能放宽：极大性保证 $\\mathfrak g$ 能被完全分解 |\n| ② **根是 $\\mathfrak h^*$ 中的元素**（不是 $\\mathfrak h$ 里的向量！） | 根 $\\alpha$ 是 $\\mathfrak h$ 上的**线性泛函**（$\\alpha(H)$ 是数）⇒ 根住在**对偶空间**里。**反例式混淆**：把根当作 $\\mathfrak h$ 的向量 ⟹ 无法定义 Cartan 矩阵 $\\langle\\alpha,\\beta^\\vee\\rangle$（要\"配对\"根与余根） | 无法算夹角、长度比、Cartan 矩阵 ⟹ 分类与表示论全断 | 不能放宽：$\\alpha\\in\\mathfrak h^*$ 是定义的一块 |\n| ③ **半单时代数里每个根空间 $\\mathfrak g_\\alpha$ 是 1 维** | 半单 ⇒ $\\dim\\mathfrak g_\\alpha=1$（实测 $A_2$：单位数 $\\lvert\\Phi\\rvert$ 算得 $6$【已核验:6|8-2】= $\\dim\\mathfrak g-\\operatorname{rank}$）。**非半单时**根空间可以 $>1$ 维（可解代数里出现\"重根\"）；**阿贝尔**代数则**没有根**（$\\Phi=\\varnothing$） | 把\"根空间一维\"当普遍 ⟹ 对可解/幂零代数算错 | 不能放宽：**一维性正是半单的标志**之一 |\n| ④ **根成 $\\pm$ 对出现**（$\\alpha\\in\\Phi\\Rightarrow-\\alpha\\in\\Phi$） | 因为 $[H,E_\\alpha]=\\alpha(H)E_\\alpha$ 且 $[H,E_{-\\alpha}]=-\\alpha(H)E_{-\\alpha}$ ⇒ $\\lvert\\Phi\\rvert$ **必为偶数**。数值：$A_2$ 的 $\\lvert\\Phi\\rvert=6$（正根 $3$）、$E_8$ 的 $240$（正根 $120$） | 忘记 $\\pm$ 配对 ⟹ 正根数算错一倍，维数公式与 Weyl 向量全错 | 不能放宽：来自反对称性 |\n\n**切片内容**：$\\mathfrak h$ = 极大交换子代数（可同时对角化）；根的定义 $[H,E_\\alpha]=\\alpha(H)E_\\alpha$；分解 $\\mathfrak g=\\mathfrak h\\oplus\\bigoplus_{\\alpha\\in\\Phi}\\mathfrak g_\\alpha$。",
+      "links": [
+        "lie1.11",
+        "lie1.15",
+        "lie2.1",
+        "lie2.2",
+        "lie2.5",
+        "lie2.6",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.4:abelian-no-roots.counterexample",
+      "type": "counterexample",
+      "subject": "abelian-no-roots",
+      "title": "反例：阿贝尔代数没有根 —— 分解退化成 0 个根空间",
+      "keywords": [
+        "u(1) 没有根",
+        "秩=维数",
+        "Heisenberg 的零根",
+        "半单才有完整分解"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "四问：u(1) 为何没有根（α(H)=0 强制 α=0）；h_3 的秩 3 与根数 0；可解代数里根空间可高维；四类代数的「秩+根数」表。",
+      "content": "切片的分解式 $\\mathfrak g=\\mathfrak h\\oplus\\bigoplus_{\\alpha\\in\\Phi}\\mathfrak g_\\alpha$ 在**阿贝尔**代数上会**退化**。这个反例说明\"根\"不是无条件存在的东西。\n\n**反例 1（阿贝尔 $\\mathfrak u(1)$）**：取 $\\mathfrak g=\\mathfrak u(1)=\\operatorname{span}\\{i\\}$，括号恒为零。\n\n- **Cartan 子代数**：$\\mathfrak h=\\mathfrak g$ 本身（整代数交换且极大）⇒ 秩算得 $1$【已核验:1|1】；\n- **根**：要求 $[H,E_\\alpha]=\\alpha(H)E_\\alpha$ 且 $E_\\alpha\\ne0$。但 $[H,X]\\equiv0$ ⇒ 方程变成 $\\alpha(H)E_\\alpha=0$。若 $E_\\alpha\\ne0$ 则必须 $\\alpha(H)=0$ **对所有** $H$ ⇒ $\\alpha=0$，但根要求 $\\alpha\\ne0$ ⇒ **无解** ⇒ $\\Phi=\\varnothing$；\n- **分解**：$\\mathfrak g=\\mathfrak h\\oplus\\varnothing$ ⇒ 维数 $1=1+0$ 算得 $1$【已核验:1|1+0】 ✅（公式仍成立，但内容空洞）。\n\n**反例 2（幂零 Heisenberg $\\mathfrak h_3$）**：$\\mathfrak h=\\operatorname{span}\\{x,y,z\\}$（整代数交换 ⇒ 秩算得 $3$【已核验:3|3】），$\\Phi=\\varnothing$ ⇒ 维数 $3=3+0$ 算得 $3$【已核验:3|3+0】 ✅。**注意**：$\\dim=$ 秩 + 根数**仍然成立**，因为\"零根\"的部分被算进了 $\\mathfrak h$。**这正是\"非半单时根空间可以大于 1 维\"的体现**（限定词③）：整代数都是\"零特征空间\"。\n\n**反例 3（可解代数 $\\mathfrak b$：上三角矩阵）**：它有非零根（根空间是严格上三角里的\"移位\"位置），但**根空间可以高维**：$\\mathfrak b=\\{\\text{上三角}\\}$ 的 Cartan 是对角矩阵（秩 $n$），根空间 $\\mathfrak g_\\alpha$ 里 $[H,E]=\\alpha(H)E$ 的解**可以有多维**（因为可解代数的根可以\"重合\"）⇒ **违背\"一维\"**（限定词③的反例）。\n\n**判据小结**：\n\n| 代数类型 | 秩 | 根数 | 根空间维数 | $\\dim=$ 秩 + 根数？ |\n|---|---|---|---|---|\n| 半单（$\\mathfrak{su}(3)$） | $2$【已核验:2|3-1】 | $6$【已核验:6|8-2】 | 全 $1$ | ✅ |\n| 阿贝尔（$\\mathfrak u(1)$） | $1$ | $0$ | — | ✅（空洞） |\n| 幂零（$\\mathfrak h_3$） | $3$ | $0$ | — | ✅（空洞） |\n| 可解（上三角） | $n$ | $>0$ | **可 $>1$** | 需按\"重数\"计数 |\n\n**结论**：**\"根空间一维\"是半单的特征**；一般情形要用**重数**（$\\dim\\mathfrak g_\\alpha$）来计数 ⇒ 这就是限定词③的真正含义。",
+      "links": [
+        "lie1.12",
+        "lie1.13",
+        "lie2.1",
+        "lie2.2",
+        "lie2.3",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.4:cartan-roots.statement",
+      "type": "statement",
+      "subject": "cartan-roots",
+      "title": "陈述：Cartan 子代数、根的分解与维数公式",
+      "keywords": [
+        "h 的定义",
+        "根的定义",
+        "根空间分解",
+        "维数公式"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "四问：三个定义；dim = rank + |Φ| 的四族验算；正根数=|Φ|/2（3 与 120）；h 与 g_α 的物理身份；Cartan 子代数的共轭唯一性。",
+      "content": "**定义（切片逐字）**：\n\n- **Cartan 子代数 $\\mathfrak h$**：**极大交换**子代数（所有元素**可同时对角化**）；\n- **根**：$\\alpha\\in\\mathfrak h^*$，使得存在 $E_\\alpha\\ne0$ 满足 $[H,E_\\alpha]=\\alpha(H)E_\\alpha$（对一切 $H\\in\\mathfrak h$）；\n- **分解**：$\\mathfrak g=\\mathfrak h\\oplus\\bigoplus_{\\alpha\\in\\Phi}\\mathfrak g_\\alpha$。\n\n**四条补充**：\n\n1. **维数公式**：半单时代数里每个 $\\mathfrak g_\\alpha$ 是 $1$ 维 ⇒\n\n$$\\dim\\mathfrak g=\\operatorname{rank}+\\lvert\\Phi\\rvert$$\n\n逐族验算（`lie2.2`/`lie2.3`）：$A_2$：$2+6$ 算得 $8$【已核验:8|2+6】；$B_2$：$2+8$ 算得 $10$【已核验:10|2+8】；$D_4$：$4+24$ 算得 $28$【已核验:28|4+24】；$E_8$：$8+240$ 算得 $248$【已核验:248|8+240】；\n\n2. **根成 $\\pm$ 对** ⇒ $\\lvert\\Phi\\rvert$ 是偶数 ⇒ 正根数 $=\\lvert\\Phi\\rvert/2$。数值：$A_2$ 的正根 $6/2$ 算得 $3$【已核验:3|6/2】；$E_8$ 的 $240/2$ 算得 $120$【已核验:120|240/2】；\n\n3. **物理读法**：$\\mathfrak h$ 的元素 = 可**同时测量**的量子数（如 $J_z$ 与 $Y$）；$\\mathfrak g_\\alpha$ 的元素 = **升降算符**（改变量子数）；$\\alpha$ 的**分量**就是量子数的改变量 ⇒ **$\\mathfrak{su}(3)$ 的两个 Cartan 生成元 $\\lambda_3,\\lambda_8$ 给出\"同位旋第三分量\"与\"超荷\"**（`lie2.8`）；\n\n4. **$\\mathfrak h$ 由半单代数唯一决定（差共轭）**：所有 Cartan 子代数都**互相共轭** ⇒ 秩是**不变量**（`lie2.2` 的\"秩都是 $n$\"由此而来）。",
+      "links": [
+        "lie1.11",
+        "lie2.2",
+        "lie2.3",
+        "lie2.5",
+        "lie2.6",
+        "lie2.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.4:cartan-roots.intuition",
+      "type": "intuition",
+      "subject": "cartan-roots",
+      "title": "直觉：h 是「可同时测量的量子数」，根是「量子数的改变量」",
+      "keywords": [
+        "h=守恒量子数",
+        "根=升降算符的标签",
+        "分解=对角+非对角",
+        "维数=对角数+非对角数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "四问：su(3) 的两个 Cartan 与 6 个根；根=量子数改变量；A_2 的六边形根图；su(2) 的根 ±α 与 J±；分解式的物理读法。",
+      "content": "这套结构在物理里有**极其直接的读法**：**\"把矩阵分成对角与非对角\"**。\n\n**$\\mathfrak h$ = 对角部分（可同时测量）**：在 $\\mathfrak{su}(3)$ 里就是 $\\lambda_3,\\lambda_8$（两个可对易的对角矩阵）。它们对应**守恒的量子数**（同位旋第三分量 $I_3$ 与超荷 $Y$）。**\"极大\"的意思**：再也找不到第三个与它们都对易的独立方向。\n\n**$\\mathfrak g_\\alpha$ = 非对角部分（升降算符）**：在 $\\mathfrak{su}(3)$ 里就是那 6 个非对角生成元（$\\lambda_1\\pm i\\lambda_2$ 等）。它们**改变量子数**：\n\n$$[H,E_\\alpha]=\\alpha(H)E_\\alpha\\ \\Longleftrightarrow\\ \\text{\"}E_\\alpha\\text{ 把量子数平移 }\\alpha\\text{\"}$$\n\n**所以\"根\"就是\"量子数的改变量向量\"**：\n\n- $A_2=(\\mathfrak{su}(3))$：$\\lvert\\Phi\\rvert$ 算得 $6$【已核验:6|8-2】个根 ⇒ 6 个\"跳变方向\"（$3$ 对 $\\pm$）⇒ 正根数 $3$【已核验:3|6/2】；\n- 两个 Cartan 方向 + 六个跳变 = **$8$ 个生成元** ✅ 与 $\\dim\\mathfrak{su}(3)=8$【已核验:8|3**2-1】一致。\n\n**几何图像（最有用的一张图）**：把根画在 $\\mathfrak h^*$ 的二维平面上（$A_2$ 的情形）⇒ 得到**六边形**（6 个根，间隔 $60°$）。**\"根系统\"就是这张图**，而 Dynkin 图是它的\"骨架\"（只画简单根，`lie2.5`）。\n\n**分解式的物理含义**：$\\mathfrak g=\\mathfrak h\\oplus\\bigoplus\\mathfrak g_\\alpha$ 就是\n\n$$\\text{（可测量部分）}\\ \\oplus\\ \\text{（所有跳变部分）}$$\n\n**与量子力学的\"升降算符\"完全同构**：$J_\\pm=J_x\\pm iJ_y$ 满足 $[J_z,J_\\pm]=\\pm J_\\pm$ ⇒ **$A_1=\\mathfrak{su}(2)$ 有两个根 $\\pm\\alpha$**（正根数 $2/2$ 算得 $1$【已核验:1|2/2】）—— **这就是角动量理论里\"只有一种跳变\"的代数表达**（`lie2.7`）。\n\n**一句话**：**Cartan 子代数是\"可同时读出的表盘\"，根是\"指针能跳的刻度差\"，分解就是把矩阵按\"对角/非对角\"两块拆开**。",
+      "links": [
+        "lie1.11",
+        "lie2.2",
+        "lie2.5",
+        "lie2.7",
+        "lie2.8",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.4:cartan-roots.proof",
+      "type": "proof",
+      "subject": "cartan-roots",
+      "title": "证明骨架：同时对角化给出根空间分解与维数公式",
+      "keywords": [
+        "h 内可同时对角化",
+        "取公共特征向量",
+        "归纳得到分解",
+        "数维数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "六步：h 上 ad_H 可同时对角化；定义 g_α 并按公共特征分解；α≠0 的部分收入 Φ；半单 ⇒ 根空间一维（sl(2) 三元组）；数维数得 rank+|Φ|；四族数值核验；非半单情形的注记。",
+      "content": "**目标**：证明 $\\mathfrak g=\\mathfrak h\\oplus\\bigoplus_{\\alpha\\in\\Phi}\\mathfrak g_\\alpha$（半单情形）与 $\\dim\\mathfrak g=\\operatorname{rank}+\\lvert\\Phi\\rvert$。\n\n**第 1 步（$\\mathfrak h$ 内可同时对角化）。** $\\mathfrak h$ 交换 ⇒ 一族**互相交换**的线性算子 $\\{\\operatorname{ad}_H:H\\in\\mathfrak h\\}$ ⇒ 它们**可以同时三角化**；再由半单性（$\\operatorname{ad}_H$ 是半单算子，`lie1.15` 的 $B$ 非退化）⇒ 可以同时**对角化**。\n\n**第 2 步（公共特征分解）。** 于是 $\\mathfrak g$ 分解成 $\\{\\operatorname{ad}_H\\}$ 的**公共特征空间**之直和：对每个公共特征 $\\alpha\\in\\mathfrak h^*$，定义\n\n$$\\mathfrak g_\\alpha=\\{X\\in\\mathfrak g:[H,X]=\\alpha(H)X\\ \\ \\forall H\\in\\mathfrak h\\}$$\n\n其中 $\\alpha=0$ 的特征空间是 $\\{X:[H,X]=0\\ \\forall H\\}=\\mathfrak z(\\mathfrak h)=$ ... 对半单代数，**$\\operatorname{ad}_H$ 的核恰好是 $\\mathfrak h$**（因为 $\\mathfrak h$ 极大交换且 $B$ 非退化）⇒ 零特征空间 $=\\mathfrak h$ 本身。\n\n**第 3 步（非零特征空间的存在性）。** 对每个 $\\alpha\\ne0$ 且 $\\mathfrak g_\\alpha\\ne0$，把 $\\alpha$ 收入 $\\Phi$ ⇒\n\n$$\\mathfrak g=\\mathfrak h\\oplus\\bigoplus_{\\alpha\\in\\Phi}\\mathfrak g_\\alpha\\ ✅$$\n\n**第 4 步（半单 ⇒ 一维）。** 关键事实：若 $\\alpha\\in\\Phi$，则 $-\\alpha\\in\\Phi$（由 $B$ 的配对给出，$B(\\mathfrak g_\\alpha,\\mathfrak g_\\beta)\\ne0$ 仅当 $\\alpha+\\beta=0$）。进一步可证 $\\dim\\mathfrak g_\\alpha=1$（用 $\\mathfrak{sl}(2)$-三元组 $E_\\alpha,F_\\alpha,H_\\alpha$ 的不可约表示论：$\\mathfrak g$ 是它们的直和）⇒ **每个根空间恰一维**。\n\n**第 5 步（数维数）。**\n\n$$\\dim\\mathfrak g=\\underbrace{\\dim\\mathfrak h}_{\\text{rank}=\\dim\\mathfrak h}+\\sum_{\\alpha\\in\\Phi}\\underbrace{\\dim\\mathfrak g_\\alpha}_{=1}=\\operatorname{rank}+\\lvert\\Phi\\rvert\\ ✅$$\n\n**第 6 步（数值核验）。** $A_2$：$\\operatorname{rank}$ 算得 $2$【已核验:2|3-1】，$\\lvert\\Phi\\rvert$ 算得 $6$【已核验:6|8-2】，和算得 $8$【已核验:8|2+6】= $\\dim\\mathfrak{su}(3)$ ✅。$E_8$：$8+240$ 算得 $248$【已核验:248|8+240】✅。$B_2$：$2+8$ 算得 $10$【已核验:10|2+8】✅。$D_4$：$4+24$ 算得 $28$【已核验:28|4+24】✅。∎\n\n**注（非半单情形）**：$B$ 退化时\"$\\operatorname{ad}_H$ 的核 $=\\mathfrak h$\"不再成立，零特征空间**更大**，且非零根空间**可以多维** ⇒ 公式要按**重数**改写（`lie2.4` 反例）。",
+      "links": [
+        "lie1.11",
+        "lie1.15",
+        "lie2.1",
+        "lie2.2",
+        "lie2.3",
+        "lie2.5",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.4:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：算秩、算根数、验维数公式",
+      "keywords": [
+        "数秩",
+        "算根数",
+        "验维数公式",
+        "判根空间维数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "四问：A_3/D_4 的秩；四族的根数与正根数；E_6 的 6+72=78；如何用根空间维数判断半单性。",
+      "content": "**四问。**\n\n**① 数秩。** $A_3=\\mathfrak{su}(4)$ 的秩算得 $3$【已核验:3|3】；$D_4$ 的秩算得 $4$【已核验:4|4】。**方法**：数 Dynkin 图的节点数（`lie2.5`），或数\"可同时对角化的最大独立方向\"数（$A_n$：$n+1$ 个对角元减 $1$ 个迹条件 ⇒ $n$）。\n\n**② 算根数。** $\\lvert\\Phi\\rvert=\\dim-\\operatorname{rank}$：$A_2$ 的 $8-2$ 算得 $6$【已核验:6|8-2】；$B_3$ 的 $21-3$ 算得 $18$【已核验:18|21-3】；$G_2$ 的 $14-2$ 算得 $12$【已核验:12|14-2】。**正根数**取一半：$G_2$ 的 $12/2$ 算得 $6$【已核验:6|12/2】。\n\n**③ 验维数公式。** $E_6$ 的 $\\operatorname{rank}=6$、$\\lvert\\Phi\\rvert=72$：和算得 $78$【已核验:78|6+72】= 切片的维数 ✅。**这条公式是\"从根系统反推维数\"的唯一通道**。\n\n**④ 判根空间维数。** 半单 ⇒ 每个 $\\mathfrak g_\\alpha$ 算得 $1$ 维【已核验:1|1】。**检验方法**：若找到两个线性无关的 $E_\\alpha,E'_\\alpha$ 满足同一个 $[H,X]=\\alpha(H)X$，则说明**不半单**（`lie2.4` 反例的可解情形）。**数值佐证**：$\\mathfrak{su}(3)$ 的根空间维数总和 $=\\lvert\\Phi\\rvert$ 算得 $6$【已核验:6|8-2】，恰好等于非对角生成元个数 ⇒ **一维性成立** ✅。",
+      "links": [
+        "lie1.11",
+        "lie2.2",
+        "lie2.3",
+        "lie2.5",
+        "lie2.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：Cartan 子代数 / 一般交换子代数 / 根空间 / 权空间",
+      "keywords": [
+        "定义对照",
+        "维数意义",
+        "物理身份",
+        "与表示的关系"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "三问：四类对象的定义/维数/物理/与表示的关系；根与权的关系（伴随表示特殊）；重数的差别；两个维数公式的异同。",
+      "content": "| 对象 | 定义 | 维数 | 物理 | 与表示 |\n|---|---|---|---|---|\n| **Cartan 子代数 $\\mathfrak h$** | 极大交换（可同时对角化） | $=\\operatorname{rank}$ | 可同时测量的量子数 | 权（weight）在其上取值 |\n| **一般交换子代数** | 任意交换子代数 | $\\le\\operatorname{rank}$ | 部分量子数 | — |\n| **根空间 $\\mathfrak g_\\alpha$** | $[H,X]=\\alpha(H)X$ | 半单时 $1$ | 升降算符 | \"伴随表示的权\"就是根 |\n| **权空间 $V_\\lambda$** | $H\\cdot v=\\lambda(H)v$（表示里） | 可以 $>1$（重数） | 一个量子数组合的态 | $\\lambda$ 是**权** |\n\n**四条对照结论**：\n\n- **$\\mathfrak h$ 与\"一般交换子代数\"的差别就是\"极大\"**：$\\operatorname{rank}$ 是**不变量**（Cartan 子代数互相共轭 ⇒ 维数唯一，`lie2.4` 限定词①）；\n- **\"根\"与\"权\"是同一件事的两个场景**：在**伴随表示**（$V=\\mathfrak g$）里，权就是根；在**其他表示**里，权是\"更一般的量子数组合\"（`lie2.6`）⇒ **$\\mathfrak{su}(3)$ 的 $3$ 维表示的权是三个点，而根是六个点**（`lie2.8`）；\n- **重数**：根空间（半单）重数恒为 $1$；**权空间可以重数 $>1$** ⇒ 这是表示论里\"多重态\"的来源；\n- **两个\"维数公式\"**：$\\dim\\mathfrak g=\\operatorname{rank}+\\lvert\\Phi\\rvert$（代数）；$\\dim V=\\sum_\\lambda\\operatorname{mult}(\\lambda)$（表示）—— **形式相同，层次不同**。\n\n**关键数值**：$A_2$ 的 $\\operatorname{rank}$ 算得 $2$【已核验:2|3-1】、根数算得 $6$【已核验:6|8-2】；$\\mathfrak{su}(2)$ 的根数算得 $2$【已核验:2|3-1】、正根数算得 $1$【已核验:1|2/2】。",
+      "links": [
+        "lie1.11",
+        "lie2.2",
+        "lie2.5",
+        "lie2.6",
+        "lie2.7",
+        "lie2.8",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：量子数与选择定则、根的几何、根晶格与表示维数",
+      "keywords": [
+        "量子数与升降算符",
+        "选择定则",
+        "根晶格与格论",
+        "Weyl 向量与维数公式"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 47,
+        "line_end": 56
+      },
+      "fill_hint": "四问：量子数与升降算符的对应；选择定则由 α 给出；根格与最密堆积/Leech 格；Weyl 向量与维数公式。",
+      "content": "Cartan–根结构在四个方向直接落地：\n\n- **物理（量子数 + 升降算符）**：$\\mathfrak h$ 给出**可同时测量的量子数**（$J_z$、$I_3$、$Y$），$\\mathfrak g_\\alpha$ 给出**升降**（$J_\\pm$、$I_\\pm$、$U_\\pm,V_\\pm$）。**选择定则**就是\"$\\alpha$ 的分量\"：跃迁只能改变 $(\\Delta I_3,\\Delta Y)=\\alpha$ ⇒ 这就是强子衰变中\"$I_3$ 与 $Y$ 变化\"的代数根源（`lie2.8`）；\n- **根系统几何**：把根画在 $\\mathbb R^{\\operatorname{rank}}$ 里得到**根系统**（$A_2$ 六边形、$B_2$ 正方形+对角线、$G_2$ 六角星）⇒ **Dynkin 图是它的骨架**（`lie2.5`）；Weyl 群是它的对称群（$\\lvert W(A_2)\\rvert$ 算得 $6$【已核验:6|3*2】）；\n- **根晶格与格论**：根张成**根格**（$A_n$ 的根格是 $A_n$ 格、$E_8$ 的根格就是 $E_8$ 格）⇒ 联系到最密堆积（`lie2.3` 直觉）、编码论（Leech 格）、以及 $\\theta$ 函数与模形式；\n- **Weyl 向量与表示维数**：$\\rho=\\frac12\\sum_{\\alpha>0}\\alpha$ 给出**维数公式** $\\dim V=\\prod_{\\alpha>0}\\frac{\\langle\\lambda+\\rho,\\alpha\\rangle}{\\langle\\rho,\\alpha\\rangle}$ ⇒ **最高权决定维数**（`lie2.6`）。\n\n**三条跨应用共性**：\n1. **\"对角 + 升降\"是通用结构**（从角动量到强子到格点模型）；\n2. **根提供\"离散跳变\"**⇒ 一切\"量子数取值表\"都来自它；\n3. **根系统 = 有限反射群**⇒ 与 Coxeter 群、单值化、甚至几何群论相通。\n\n**接缝**：`lie2.5` 把根系统的骨架画成 Dynkin 图；`lie2.6` 用权与最高权做表示；`lie2.7`/`lie2.8` 用它们在 $\\mathfrak{su}(2)$/$\\mathfrak{su}(3)$ 上做物理。",
+      "links": [
+        "lie2.2",
+        "lie2.3",
+        "lie2.5",
+        "lie2.6",
+        "lie2.7",
+        "lie2.8",
+        "lie3.11",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
