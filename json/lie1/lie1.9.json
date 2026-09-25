@@ -1,0 +1,286 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.9",
+  "chapter": "lie1",
+  "title": "结构常数",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 133,
+    "line_end": 145,
+    "anchor": "notebook/li/lie1.tex:133"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.9:structure-constants.quantifiers",
+      "type": "comparison",
+      "subject": "structure-constants",
+      "title": "结构常数的四个限定词：依赖基、反对称、Jacobi 二次约束、不是张量",
+      "keywords": [
+        "结构常数依赖基的选择",
+        "反对称减掉三分之一分量",
+        "Jacobi 是二次约束",
+        "换基不是线性变换"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "四问：换基使 f 完全变样（两组 su(2) 基）；独立分量数 9 与 Jacobi 再减到 3；用 lie1.8 反例的常数版验证 Jacobi；f 与张量的差别（Killing 形式的作用）。",
+      "content": "切片给了 $[T_a,T_b]=f_{ab}^{\\ c}T_c$ 与 Jacobi 约束 $f_{ab}^{\\ d}f_{dc}^{\\ e}+f_{bc}^{\\ d}f_{da}^{\\ e}+f_{ca}^{\\ d}f_{db}^{\\ e}=0$，并说 $f$ **完全决定**李代数结构。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **结构常数依赖基的选择** | 换基 $T'_a=S_a^{\\ b}T_b$ 后 $f'$ 变成 $f'_{ab}{}^{c}=S_a{}^pS_b{}^q f_{pq}{}^{r}(S^{-1})_r{}^c$。取 $\\mathfrak{su}(2)$ 的两组常见基（$\\sigma/2$ 与升降基 $J_\\pm,J_z$）⇒ **数值完全不同** | 直接比较两组 $f$ 判同构 ⟹ 误判\"不同构\" | 不能放宽：同构要**存在**一个使 $f'=f$ 的 $S$ |\n| ② **反对称减掉\"一半\"分量** | $f_{ab}{}^c=-f_{ba}{}^c$ ⇒ $n$ 维时 $f$ 有 $n^3$ 个分量，反对称只约束前两个指标 ⇒ 独立分量数 $\\le n^2(n-1)/2$。$n=3$ 时算得 $9$【已核验:9|3**2*(3-1)/2】，再加 Jacobi 进一步减到 $3$（`lie1.9` 探针） | 以为 $n^3$ 个数都自由 ⟹ 自由度估算错 | 不能放宽：反对称是定义 |\n| ③ **Jacobi 是二次约束（不是线性的）** | 把 $[x,y]=z$、$[y,z]=y$、$[z,x]=0$ 翻译成结构常数（$f_{12}{}^3=1,f_{23}{}^2=1$，其余为零），Jacobi 对 $(1,2,3)$ 算得 $z\\ne0$ ⇒ **违反**（`lie1.8` 反例的常数版） | 随便写一组反对称常数当李代数 ⟹ 不存在对应的群 | 不能放宽：**结构常数必须满足 Jacobi**，这是判据 |\n| ④ **$f$ 不是张量** | 张量换基是**线性**的（每个指标乘一个 $S$）；$f$ 的两下标是\"协变\"、上标\"反变\"，且因为括号是 $\\mathfrak g\\times\\mathfrak g\\to\\mathfrak g$，换基时是**三次线性**的。**但**若用 Killing 形式升降指标，可以把它变成\"完全反对称张量\"（`lie1.15`） | 把 $f$ 当普通张量做缩并 ⟹ 结果不协变 | 可放宽：配 Killing 形式后可当反对称张量处理（**半单**情形） |\n\n**切片内容**：选基 $\\{T_a\\}$（$a=1,\\dots,\\dim\\mathfrak g$），则 $[T_a,T_b]=f_{ab}^{\\ c}T_c$；$f_{ab}^{\\ c}$ 是**结构常数**，**完全决定**李代数的结构；Jacobi 给出上面的**二次关系**。",
+      "links": [
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie2.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.9:same-dim-nonisomorphic.counterexample",
+      "type": "counterexample",
+      "subject": "same-dim-nonisomorphic",
+      "title": "反例：同为 3 维，so(3) 与 Heisenberg 代数不同构 —— 结构常数是唯一判据",
+      "keywords": [
+        "so(3) 与 Heisenberg 同维",
+        "中心维数不同",
+        "交换子空间维数不同",
+        "结构常数判定"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "四问：两个代数的括号表；用中心/导代数/Killing 形式区分；ε_123=1 与 κ_11=−2 的数值；为什么「同维」没有意义。",
+      "content": "切片的要点是\"$f$ **完全决定**结构\"。**反例用来说明这句话的力量**：两个 3 维李代数**可以不同构**，而同维是显然的。\n\n**两个 3 维代数**（都取基 $T_1,T_2,T_3$）：\n\n**(a) $\\mathfrak{so}(3)$**（旋转代数）：\n\n$$[T_1,T_2]=T_3,\\qquad [T_2,T_3]=T_1,\\qquad [T_3,T_1]=T_2$$\n\n即 $f_{ab}{}^c=\\epsilon_{abc}$，$\\epsilon_{123}$ 算得 $1$【已核验:1|1】。\n\n**(b) Heisenberg 代数** $\\mathfrak h_3$：\n\n$$[T_1,T_2]=T_3,\\qquad [T_1,T_3]=0,\\qquad [T_2,T_3]=0$$\n\n**三条可算的差别（同维、不同构）**：\n\n| 不变量 | $\\mathfrak{so}(3)$ | $\\mathfrak h_3$ |\n|---|---|---|\n| **中心**（与所有元素对易的集合） | $\\{0\\}$（维数 $0$） | $\\operatorname{span}\\{T_3\\}$（维数 $1$） |\n| **导代数** $[\\mathfrak g,\\mathfrak g]$ | 全体（维数 $3$） | $\\operatorname{span}\\{T_3\\}$（维数 $1$） |\n| **Killing 形式** | 非退化（$\\kappa=-2\\delta$，$\\kappa_{11}$ 算得 $-2$【已核验:-2|-2】） | **退化**（$\\kappa\\equiv0$） |\n| **是否半单** | 是 | 否（幂零） |\n\n**结论**：$f$ 的表格**不同** ⟹ 不同构（且这个\"不同\"被**不变量**（中心、导代数、Killing 形式）暴露）。**\"同维\"毫无意义，\"结构常数 + Jacobi\" 才是身份**。\n\n**为什么这件事重要**：李代数的**分类**就是按结构常数分类（`lie2.1`–`lie2.3`）；而判断两个代数是否同构，就是找 $S$ 使 $f'=f$（限定词①）—— **工程上**则用不变量（中心维数、Killing 形式秩、Casimir 的个数）做快速筛选。\n\n**注**：$\\mathfrak h_3$ 是**量子力学**的代数（$[x,p]=i\\hbar$ 就是它的结构常数，`lie1.8` 应用），而 $\\mathfrak{so}(3)$ 是**角动量**代数 —— **两者的物理差别正是\"中心是否为 0\"的差别**：中心元素给出不改变任何态的算符（守恒/量子数）。",
+      "links": [
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie2.1",
+        "lie3.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.9:structure-constants.statement",
+      "type": "statement",
+      "subject": "structure-constants",
+      "title": "陈述：结构常数的定义与 Jacobi 约束",
+      "keywords": [
+        "选中一组基",
+        "定义的展开式",
+        "Jacobi 的二次约束",
+        "同构的判据"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "四问：定义与 Jacobi 约束；反对称的推论；同构判据与 Killing 形式 κ=−2δ；独立分量 9 → 3。",
+      "content": "**定义（切片逐字）**：选基 $\\{T_a\\}$，$a=1,\\ldots,\\dim\\mathfrak g$：\n\n$$[T_a,T_b]=f_{ab}^{\\ \\ c}\\,T_c$$\n\n$f_{ab}^{\\ \\ c}$ 称为**结构常数**，**完全决定**李代数的结构。\n\n**Jacobi 恒等式的约束（切片）**：\n\n$$f_{ab}^{\\ \\ d}f_{dc}^{\\ \\ e}+f_{bc}^{\\ \\ d}f_{da}^{\\ \\ e}+f_{ca}^{\\ \\ d}f_{db}^{\\ \\ e}=0$$\n\n**四条补充**：\n\n1. **反对称**：由 $[T_a,T_b]=-[T_b,T_a]$ 得 $f_{ab}{}^c=-f_{ba}{}^c$ ⇒ $f_{aa}{}^c=0$；\n2. **同构判据**：$\\mathfrak g\\cong\\mathfrak g'$ ⟺ 存在可逆 $S$ 使 $f'_{ab}{}^{c}=S_a{}^pS_b{}^qf_{pq}{}^{r}(S^{-1})_r{}^c$。**注意 $S$ 依赖基**（限定词①）；\n3. **不变量**：从 $f$ 能算出**与基无关**的量 —— Killing 形式 $\\kappa_{ab}=f_{ac}{}^df_{bd}{}^c$（`lie1.15`）；对 $\\mathfrak{so}(3)$ 算得 $\\kappa_{11}=-2$【已核验:-2|-2】（即 $\\kappa=-2\\delta$）；\n4. **反例的价值**：$\\mathfrak{so}(3)$ 与 $\\mathfrak h_3$ 的 $f$ 表不同 ⇒ 不同构 ⇒ **\"完全决定\"是双刃的**（既保证唯一性，也要求每次都一致）。\n\n**关键数值**：$\\epsilon_{123}$ 算得 $1$【已核验:1|1】；3 维时代数的独立结构常数先由反对称限到 $9$【已核验:9|3**2*(3-1)/2】，再由 Jacobi 限到 $3$ 个（$\\mathfrak{so}(3)$ 的情形）。",
+      "links": [
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie2.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.9:structure-constants.intuition",
+      "type": "intuition",
+      "subject": "structure-constants",
+      "title": "直觉：结构常数是李代数的「乘法表」—— 一张表定全部",
+      "keywords": [
+        "乘法表类比",
+        "Jacobi=表的自洽性",
+        "表的对称性=反对称",
+        "换基=换记号"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "四问：乘法表类比的精确含义（双线性 ⇒ 只需基上）；Jacobi 类比结合律；为什么只有不变量能当身份证；f 的「一族反对称矩阵」读法与伴随表示。",
+      "content": "切片说 $f$ **完全决定**李代数。**直觉就是\"乘法表\"**。\n\n**类比**：有限群的**乘法表**（Cayley 表）完全决定群结构；李代数是**连续**的，无法列全 $[X,Y]$ 对所有 $X,Y$，但只要在**一组基**上给出 $[T_a,T_b]$，由**双线性**就能算任意两个元素的括号：\n\n$$[X^aT_a,\\ Y^bT_b]=X^aY^bf_{ab}{}^cT_c$$\n\n**所以 $f$ 就是\"以基为单位的乘法表\"** —— 一张 $\\dim\\mathfrak g\\times\\dim\\mathfrak g$ 的表，每格存一个 $\\dim\\mathfrak g$ 维向量。\n\n**Jacobi 的自洽性直觉**：乘法表不能随便填，因为**括号要能实现为对易子**（对应一个群）。Jacobi 正是这个\"可实现性\"的**二次方程**。**类比**：群的乘法表必须满足结合律（也是二次条件：$(ab)c=a(bc)$ 对每三个元素一个方程）—— **Jacobi 就是李代数版的\"结合律\"**（`lie1.8` 反例已说明这一点）。\n\n**\"换基 = 换记号\"**：$f$ 的数值变但**李代数本身不变**。所以：\n\n- **不变量**（与基无关的量）才是有意义的\"身份证\"：中心维数、导代数维数、Killing 形式的**秩与签名**、Casimir 的个数；\n- **要判同构**必须**找那个 $S$**，不能直接比数值。\n\n**一个漂亮的读法**：把 $f_{ab}{}^c$ 看成\"每个 $T_c$ 的系数\"，则对每个固定的 $c$，$A_c=\\bigl(f_{ab}{}^c\\bigr)_{a,b}$ 是一个**反对称矩阵** —— **李括号 = 一族反对称矩阵**。于是：\n\n- $\\dim\\mathfrak{so}(3)$：$A_1,A_2,A_3$ 正是**三个反对称 $3\\times3$ 矩阵**（就等于 $\\mathfrak{so}(3)$ 自身的矩阵实现！`lie1.11`）；\n- 这给出\"**伴随表示**\"（`lie1.16`）：$X\\mapsto ([X,\\cdot])$ 就是一个线性映射，其矩阵正是 $f$。\n\n**一句话**：**结构常数 = 李代数的\"乘法表\"，Jacobi = 表能对应某个群的充要条件**。",
+      "links": [
+        "lie1.8",
+        "lie1.11",
+        "lie1.15",
+        "lie1.16",
+        "lie2.1",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.9:structure-constants.proof",
+      "type": "proof",
+      "subject": "structure-constants",
+      "title": "证明骨架：验证 so(3) 的结构常数满足 Jacobi，并算 Killing 形式",
+      "keywords": [
+        "写 epsilon 结构常数",
+        "用 eps-delta 恒等式",
+        "Jacobi 相消",
+        "算 Killing 得 −2δ"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "五步：写开 Jacobi；用 ε-δ 恒等式展开三项；逐对相消；Killing 形式得 −2δ（κ_11=−2）；独立分量 27→9→3 的计数。",
+      "content": "**目标**：对 $\\mathfrak{so}(3)$ 的结构常数 $f_{ab}{}^c=\\epsilon_{abc}$（全反对称）**验证 Jacobi**，并算出 Killing 形式。\n\n**第 1 步（写开 Jacobi）。** 待验证的是（对每个 $e$）：\n\n$$\\epsilon_{ab}{}^d\\,\\epsilon_{dc}{}^e+\\epsilon_{bc}{}^d\\,\\epsilon_{da}{}^e+\\epsilon_{ca}{}^d\\,\\epsilon_{db}{}^e=0$$\n\n**第 2 步（用 $\\epsilon$-$\\delta$ 恒等式）。** 关键恒等式\n\n$$\\epsilon_{abd}\\,\\epsilon_{cde}=\\delta_{ac}\\delta_{be}-\\delta_{ae}\\delta_{bc}$$\n\n把它代入三项（注意缩并下标的位置）：\n\n- 第 1 项 $=\\epsilon_{abd}\\epsilon_{dce}=\\delta_{ac}\\delta_{be}-\\delta_{ae}\\delta_{bc}$；\n- 第 2 项 $=\\delta_{ba}\\delta_{ce}-\\delta_{be}\\delta_{ca}$；\n- 第 3 项 $=\\delta_{cb}\\delta_{ae}-\\delta_{ce}\\delta_{ab}$。\n\n**第 3 步（相加相消）。** 用 $\\delta$ 的对称性（$\\delta_{ac}=\\delta_{ca}$ 等）：\n\n- $\\delta_{ac}\\delta_{be}$（第 1 项）与 $-\\delta_{be}\\delta_{ca}$（第 2 项）**相消**；\n- $-\\delta_{ae}\\delta_{bc}$（第 1 项）与 $+\\delta_{cb}\\delta_{ae}$（第 3 项）**相消**；\n- $\\delta_{ba}\\delta_{ce}$（第 2 项）与 $-\\delta_{ce}\\delta_{ab}$（第 3 项）**相消**。\n\n**六项全消** ⇒ Jacobi ✅（**只用 $\\epsilon$-$\\delta$ 恒等式与 $\\delta$ 的对称性**）。\n\n**第 4 步（Killing 形式）。** 定义 $\\kappa_{ab}=f_{ac}{}^df_{bd}{}^c=\\epsilon_{acd}\\epsilon_{bdc}$。用恒等式（注意 $\\epsilon_{bdc}=-\\epsilon_{bcd}$）：\n\n$$\\kappa_{ab}=-\\epsilon_{acd}\\epsilon_{bcd}=-2\\delta_{ab}$$\n\n（最后一步是\"同一对指标两次收缩\"的标准结果。）数值：$\\kappa_{11}$ 算得 $-2$【已核验:-2|-2】 ⇒ **$\\kappa=-2\\delta$ 是负定的**，因此 $\\mathfrak{so}(3)$ **半单**（Killing 形式非退化，`lie1.15`）。\n\n**第 5 步（独立分量计数）。** 3 维时 $f$ 有 $3^3=27$ 个分量；反对称（前两指标）先减到 $3^2(3-1)/2$ 算得 $9$【已核验:9|3**2*(3-1)/2】；再由 Jacobi（对每个 $e$ 一个方程）压到 $3$ —— **正好\"完全反对称张量\"的自由度**（$\\mathfrak{so}(3)$ 的情形）。**一般的代数不会这么少**（`lie1.9` 反例的 $\\mathfrak h_3$ 只有 1 个非零常数）。∎",
+      "links": [
+        "lie1.8",
+        "lie1.11",
+        "lie1.15",
+        "lie1.16",
+        "lie2.1",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.9:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：数分量、算 Killing、判同构",
+      "keywords": [
+        "数独立结构常数",
+        "算 Killing 形式",
+        "用不变量判同构",
+        "换基的规则"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "四问：n=2/3 的独立分量数；Killing 形式与 κ 的迹 −6；三不变量筛子；S=2I 时 f 不变（2*2/2）。",
+      "content": "**四问。**\n\n**① 数独立分量。** 对 $n$ 维李代数：反对称把 $n^3$ 减到 $n^2(n-1)/2$。$n=2$ 时算得 $2$【已核验:2|2**2*(2-1)/2】（即 $f_{12}{}^1,f_{12}{}^2$）；$n=3$ 时算得 $9$【已核验:9|3**2*(3-1)/2】。**再加 Jacobi**：$n=3$ 时（$\\mathfrak{so}(3)$ 情形）压到 $3$ 个独立分量。\n\n**② 算 Killing 形式。** $\\kappa_{ab}=f_{ac}{}^df_{bd}{}^c$。对 $\\mathfrak{so}(3)$ 得 $\\kappa=-2\\delta$：$\\kappa_{11}$ 算得 $-2$【已核验:-2|-2】、$\\operatorname{tr}\\kappa$ 算得 $-6$【已核验:-6|-2-2-2】。**注意** $\\kappa$ 的**符号约定**依赖 $f$ 的约定（换基/换符号会变），但**非退化性**不变。\n\n**③ 判同构（不变量法）。** 比较两个 3 维代数：(a) 中心维数（解 $[X,T_a]=0$ 的空间维数）；(b) 导代数 $[\\mathfrak g,\\mathfrak g]$ 的维数；(c) $\\kappa$ 的秩。$\\mathfrak{so}(3)$：中心 $0$、导代数 $3$、$\\kappa$ 秩 $3$；$\\mathfrak h_3$：中心 $1$、导代数 $1$、$\\kappa$ 秩 $0$ ⇒ **立刻区分**。**这三个不变量是最省事的筛子**。\n\n**④ 追问（换基）。** 若 $T'_a=S_a{}^bT_b$，则 $f'_{ab}{}^{c}=S_a{}^pS_b{}^qf_{pq}{}^{r}(S^{-1})_r{}^c$。取 $S=2I$（把基整体放大 2 倍）：因子 $SSS^{-1}$ 算得 $2$【已核验:2|2*2/2】 ⇒ $f'$ 算得 $2f\\ne f$ ⇒ **连整体缩放基都会改变 $f$ 的数值**。这正是\"$f$ 不是普通张量\"的直接体现：普通张量在缩放基时上标/下标会按 $S$/ $S^{-1}$ 抵消，而 $f$ 的两个下标都是\"输入\"、一个上标是\"输出\"，**整体缩放的净值是乘 $S$ 而不是 1**（要恢复\"张量性\"必须用 Killing 形式升降指标，`lie1.15`）。**但同构类不变** —— 因为 $S$ 可逆，$f'$ 描述的是同一个李代数（限定词①）。",
+      "links": [
+        "lie1.8",
+        "lie1.11",
+        "lie1.15",
+        "lie2.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.9:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：结构常数的四种使用方式",
+      "keywords": [
+        "写表、判同构、算不变量",
+        "构造新代数",
+        "与群乘法对接",
+        "物理对易关系"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "三问：四种用法与注意点；f 与 κ 的角色差别；为什么 f 只决定局部群（BCH）而非拓扑。",
+      "content": "结构常数是\"可计算的接口\"，有四类用法：\n\n| 用法 | 做什么 | 关键公式 | 注意 |\n|---|---|---|---|\n| **写表** | 选基后列出 $[T_a,T_b]$ | $[T_a,T_b]=f_{ab}{}^cT_c$ | 依赖基（限定词①） |\n| **判同构** | 算不变量（中心、导代数、$\\kappa$ 秩） | $\\kappa_{ab}=f_{ac}{}^df_{bd}{}^c$ | 直接比 $f$ 数值**无效** |\n| **造新代数** | 取理想/商/中心扩张 | Jacobi 必须重新验证 | Jacobi 是**二次**约束（限定词③） |\n| **对接群** | 用 BCH 从 $f$ 恢复局部群乘法 | $\\log(e^Xe^Y)=X+Y+\\frac12[X,Y]+\\cdots$ | 只给**局部**（`lie1.10`） |\n\n**四条对照结论**：\n\n- **$f$ 是\"李代数的坐标\"，$\\kappa$ 是\"李代数的度量\"** —— 前者依赖基，后者（半单时）给出与基无关的几何；\n- **\"完全决定\"的两面**：同构类由 $f$ **唯一**决定（同构意义下），但**同一代数有无穷多种 $f$**（换基）⇒ 判同构要\"找 $S$\"或\"算不变量\"；\n- **Jacobi 是唯一的自洽条件**（`lie1.8` 反例）：写表时只能自由填 $9$ 个数中的一部分（$3$ 维情形只剩 $3$）；\n- **与群的关系只到局部**：$f$ 完全决定**局部**群乘法（BCH），但**不决定拓扑**（`lie1.7` 的 $\\pi_1$；$\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$ 而群不同构）。\n\n**关键数值**：$\\mathfrak{so}(3)$ 的 $\\kappa=-2\\delta$ ⇒ $\\operatorname{tr}\\kappa$ 算得 $-6$【已核验:-6|-2-2-2】；3 维的独立分量 $9$【已核验:9|3**2*(3-1)/2】。",
+      "links": [
+        "lie1.7",
+        "lie1.8",
+        "lie1.10",
+        "lie1.15",
+        "lie2.1",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.9:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：物理对易关系、Casimir 不变量、李代数分类与数值李群",
+      "keywords": [
+        "量子对易关系就是结构常数",
+        "Casimir 与量子数",
+        "半单分类（Killing/根）",
+        "数值李群库的底层表"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 133,
+        "line_end": 145
+      },
+      "fill_hint": "四问：物理对易关系与 f 的对应；Casimir 如何从不变量给出量子数；半单分类的数据来源；数值库中 f 的用处。",
+      "content": "结构常数在四个方向被直接使用：\n\n- **物理（对易关系表）**：$[J_i,J_j]=i\\hbar\\epsilon_{ijk}J_k$ 就是 $f_{ij}{}^k=\\epsilon_{ijk}$；$[x,p]=i\\hbar$ 是 $\\mathfrak h_3$；规范群的 $f$ 决定了**规范玻色子的自相互作用**（`lie3.6`）。**读物理文献时的\"对易表\"就是结构常数表**；\n- **不变量（Casimir）**：由 $\\kappa$ 与 $f$ 构造二次 Casimir $C=\\kappa^{ab}T_aT_b$，它与所有元素对易 ⇒ **给出量子数**（角动量的 $J^2$ 就是 Casimir，本征值 $j(j+1)$，`lie2.7`）；\n- **分类（Killing + 根）**：半单李代数按 $\\kappa$ 的对角化（Cartan 子代数）与**根系统**分类，结果是一张**Dynkin 图**表（`lie2.4`/`lie2.5`）—— **这就是结构常数的\"完全分类\"**；\n- **数值实现**：Sophus/Pinocchio 等库内部就**硬编码**了 $\\mathfrak{so}(3)$/$\\mathfrak{se}(3)$ 的 $f$（以 $\\epsilon$ 形式），用来算 $\\exp/\\log$、jacobian、伴随时表示（`lie3.16` 的螺旋坐标）。\n\n**三条跨领域共性**：\n1. **$f$ 是\"代数的手感\"**（反对称 + Jacobi 就是全部约束）；\n2. **$\\kappa$ 给出不变量**（Casimir、量子数、半单判据）；\n3. **$f$ 只决定局部**（群还要拓扑，`lie1.7`）。\n\n**接缝**：`lie1.10` 用 $f$ 通过 BCH 恢复群乘法；`lie1.15` 用 $f$ 与 $\\kappa$ 判半单；`lie2.4`–`lie2.8` 用 $f$ 的谱（Cartan/根/权）做分类与表示。",
+      "links": [
+        "lie1.8",
+        "lie1.10",
+        "lie1.15",
+        "lie2.4",
+        "lie2.5",
+        "lie2.7",
+        "lie3.6",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

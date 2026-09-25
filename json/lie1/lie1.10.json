@@ -1,0 +1,294 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.10",
+  "chapter": "lie1",
+  "title": "指数映射",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 147,
+    "line_end": 166,
+    "anchor": "notebook/li/lie1.tex:147"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.10:exp-map.quantifiers",
+      "type": "comparison",
+      "subject": "exp-map",
+      "title": "指数映射的四个限定词：只在局部微分同胚、不必满射、不必单射、BCH 只给局部",
+      "keywords": [
+        "局部微分同胚不等于全局",
+        "一般不是满射",
+        "一般不单射",
+        "BCH 只是局部公式"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "四问：局部微分同胚与整体满射的差别；diag(−2,−1/2) 为何不在像中（det 1、迹 −2.5）；exp 的多值性与 Slerp；BCH 只在局部收敛且不终止。",
+      "content": "切片给了 $\\exp:\\mathfrak g\\to G$、$X\\mapsto e^X=\\sum X^k/k!$ 与**四条性质**（$\\exp(0)=e$；$\\exp(tX)$ 是一参数子群；**在单位元附近是局部微分同胚**；**一般不是满射**如 $SL(2,\\mathbb R)$），加上 **BCH 公式**与\"局部群乘法由括号决定\"的意义。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **只在单位元附近是局部微分同胚** | $\\exp$ 的微分 $d\\exp_0=\\operatorname{id}$ ⇒ 在 $0\\in\\mathfrak g$ 的某个邻域上是微分同胚 ⇒ $\\log$ **局部**存在。但**整体不行**：$\\exp:\\mathfrak{sl}(2,\\mathbb R)\\to SL(2,\\mathbb R)$ 不是满射（限定词②） | 以为\"$\\mathfrak g\\cong G$\" ⟹ 用线性代数代替全部群论 | 可放宽：只在紧/幂零/单连通且幂零的情形整体成立 |\n| ② **不必满射** | $SL(2,\\mathbb R)$ 中 $\\operatorname{diag}(-2,-\\tfrac12)$ 的行列式算得 $1$【已核验:1|-2*(-0.5)】、迹算得 $-2.5$【已核验:-2.5|-2-0.5】 ⇒ 在 $SL(2,\\mathbb R)$ 里，但**不是任何 $X$ 的 $\\exp$**。**对照**：$\\exp:\\mathfrak{so}(3)\\to SO(3)$ **是满射**（每个旋转都是旋转向量的 $\\exp$） | 假设\"总能取到 $\\log$\" ⟹ 数值算法在共轭类上失效（矩阵 $\\log$ 无实解） | 不能放宽：**非紧**群常不满射（紧连通群则满射，Weyl） |\n| ③ **不必单射** | $\\exp(tX)$ 关于 $t$ 是 $2\\pi$-周期（对 $SO(2)$/自旋）：$\\exp(\\pi X)=-I$、$\\exp(2\\pi X)=I$ ⇒ 无穷多原像。**核为离散** ⇒ 局部同胚整体多对一 | 以为\"$\\log$ 唯一\" ⟹ 姿态插值取到\"绕远路\"的角（`lie3.14` 的 Slerp 要选短弧） | 不能放宽：**多值是拓扑（$\\pi_1$）的必然** |\n| ④ **BCH 只是局部公式（且无穷多项）** | $\\log(e^Xe^Y)=X+Y+\\frac12[X,Y]+\\frac1{12}[X,[X,Y]]-\\frac1{12}[Y,[X,Y]]+\\cdots$ —— **仅在 $\\lVert X\\rVert,\\lVert Y\\rVert$ 足够小时收敛**，且一般**不终止**（除幂零代数） | 用 BCH 做\"精确\"群乘法 ⟹ 截断误差累积 | 可放宽：$\\mathfrak{so}(3)$ 等**紧/低维**时 BCH 有限项终止（罗德里格斯公式） |\n\n**切片四条性质**：$\\exp(0)=e$；$\\exp(tX)$ 是过单位元的**一参数子群**；单位元附近**局部微分同胚**；**一般不是满射**（$SL(2,\\mathbb R)$）。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.11",
+        "lie1.15",
+        "lie3.14",
+        "lie3.16",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.10:exp-not-surjective.counterexample",
+      "type": "counterexample",
+      "subject": "exp-not-surjective",
+      "title": "反例：diag(-2,-1/2) 在 SL(2,R) 里，却不是任何矩阵的指数",
+      "keywords": [
+        "det=1 但在 SL(2,R) 之外于 exp 的像",
+        "迹 −2.5 < −2",
+        "对照 so(3) 满射",
+        "非紧群的普遍现象"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "四问：D 的参数（det 1、迹 −2.5）；为什么 tr e^X ≥ −2（特征值分析）；SO(3) 为何满射；三条工程后果。",
+      "content": "切片明确点出\"$\\exp$ **一般不是满射**（如 $SL(2,\\mathbb R)$）\"。**这个反例可以精确给出。**\n\n**构造**：$D=\\operatorname{diag}(-2,-\\tfrac12)$。\n\n- 行列式算得 $1$【已核验:1|-2*(-0.5)】 ⇒ $D\\in SL(2,\\mathbb R)$ ✅；\n- 迹算得 $-2.5$【已核验:-2.5|-2-0.5】。\n\n**为什么它不在 $\\exp$ 的像里**。设 $D=e^X$，$X\\in\\mathfrak{sl}(2,\\mathbb R)$（实迹零 $2\\times2$ 矩阵）。关键事实：**迹零实矩阵 $X$ 的迹满足 $\\operatorname{tr}X=0$，其特征值形如 $\\pm\\lambda$（$\\lambda\\in\\mathbb R$）或 $\\pm i\\theta$（$\\theta\\in\\mathbb R$）** ⇒ $e^X$ 的特征值是 $e^{\\pm\\lambda}>0$ 或 $e^{\\pm i\\theta}$（模 1）⇒ **$\\operatorname{tr}e^X=2\\cosh\\lambda\\ge2$ 或 $2\\cos\\theta\\in[-2,2]$**。\n\n**所以对一切 $X\\in\\mathfrak{sl}(2,\\mathbb R)$**：\n\n$$\\operatorname{tr}(e^X)\\ \\ge\\ -2$$\n\n而 $\\operatorname{tr}D=-2.5<-2$ ⇒ **$D\\ne e^X$ 对任何实 $X$** ⇒ $D\\notin\\operatorname{Im}\\exp$ ✅。\n\n**对照（满射的情形）**：$\\exp:\\mathfrak{so}(3)\\to SO(3)$ **是满射** —— 任何旋转都是\"绕某轴转某角\"，即 $R=\\exp(\\theta\\hat{\\mathbf n}\\cdot\\mathbf X)$。**同维的两个群，一个满射一个不满射**，差别在于**紧性**：$SO(3)$ 紧（$SO(3)$ 连通紧 ⇒ $\\exp$ 满射，Weyl 定理），$SL(2,\\mathbb R)$ **非紧**（`lie1.2` 反例）。\n\n**工程后果（三条）**：\n1. **矩阵对数可能不存在**（实解）⇒ 姿态库必须处理\"无实 log\"的情形；\n2. **$\\mathfrak{se}(3)$ 的 log 在 $\\theta=\\pi$ 处奇异** ⇒ 数值上要加保护；\n3. **\"李代数优化\"要保证增量足够小**（局部有效，限定词①）—— 这就是为什么实践中做**小的** $\\delta$ 更新（`lie3.16`）。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.8",
+        "lie1.11",
+        "lie3.16",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.10:exp-map.statement",
+      "type": "statement",
+      "subject": "exp-map",
+      "title": "陈述：指数映射的定义、四条性质与 BCH 公式",
+      "keywords": [
+        "级数定义",
+        "四条性质",
+        "BCH 公式",
+        "局部群乘法由括号决定"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "四问：定义与四条性质；BCH 的前三项；$e^{X+Y}=e^Xe^Y$ 的条件；用结构常数展开一阶项。",
+      "content": "**定义（切片逐字）**：\n\n$$\\exp:\\mathfrak g\\to G,\\qquad X\\mapsto e^X=\\sum_{k=0}^{\\infty}\\frac{X^k}{k!}$$\n\n**四条性质（切片）**：\n\n| 性质 | 内容 | 依据 |\n|---|---|---|\n| **单位元** | $\\exp(0)=e$ | 级数第一项 $I$，其余为 $0$ |\n| **一参数子群** | $\\exp(tX)$ 是过 $e$ 的一参数子群；$\\exp((s+t)X)=\\exp(sX)\\exp(tX)$ | 级数或 ODE $\\frac{d}{dt}e^{tX}=Xe^{tX}$ |\n| **局部微分同胚** | 在 $0$ 附近是微分同胚（$d\\exp_0=\\operatorname{id}$） | 反函数定理 ⇒ $\\log$ **局部**存在 |\n| **一般不满射** | 反例见 `lie1.10`：$\\operatorname{diag}(-2,-\\frac12)\\in SL(2,\\mathbb R)$ 但不在像中 | 非紧群的普遍现象 |\n\n**BCH 公式（切片）**：\n\n$$\\log\\bigl(e^Xe^Y\\bigr)=X+Y+\\frac12[X,Y]+\\frac1{12}\\bigl[X,[X,Y]\\bigr]-\\frac1{12}\\bigl[Y,[X,Y]\\bigr]+\\cdots$$\n\n**意义（切片）**：**群乘法在（局部）李代数层面由李括号完全决定**。\n\n**三条补充**：\n\n1. **数值实例**：对 $X=\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$，$e^{\\pi X}=-I$（迹算得 $-2$【已核验:-2|2*cos(pi)】）、$e^{(\\pi/2)X}$ 给出 $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$ 型旋转（$\\cos(\\pi/2)$ 算得 $0$【已核验:0|cos(pi/2)】）；\n2. **对易性**：$e^{X+Y}=e^Xe^Y$ **只当** $[X,Y]=0$ 时成立（否则要 BCH 的修正项）；\n3. **与结构常数的关系**：BCH 的一阶项 $\\frac12[X,Y]$ 用 $f$ 展开就是 $\\frac12X^aY^bf_{ab}{}^cT_c$ ⇒ **$f$ 给出\"群乘法的非交换一阶量\"**（`lie1.9`）。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.11",
+        "lie1.15",
+        "lie3.16",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.10:exp-map.intuition",
+      "type": "intuition",
+      "subject": "exp-map",
+      "title": "直觉：exp 是「从速度回到位置」—— 局部同构、整体未必",
+      "keywords": [
+        "代数=速度,群=位置",
+        "一参数子群=匀速直线",
+        "局部一一对应",
+        "整体受拓扑限制"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "四问：速度-位置的类比；局部同构的直观；不满射（绕不过去的墙）与不单射（绕圈）各自的来源；BCH 修正项的意义与罗德里格斯公式的三项终止。",
+      "content": "指数映射的直觉可以完全靠**运动学**讲清：\n\n- **李代数 $X\\in\\mathfrak g$ = 速度（无穷小变换）**；\n- **群元素 $e^X\\in G$ = 位置（有限的变换）**；\n- **$e^{tX}$ = \"以恒定速度 $X$ 一直走下去\"的轨道** —— 这就是**一参数子群**。\n\n**为什么\"局部\"一定是同构**：把速度作微小改变，位置也作微小改变，且**不会有两个不同速度给出同一位置**（至少在小范围里）—— 这就是 $d\\exp_0=\\operatorname{id}$ 的直观内容 ⇒ **局部有个一一对应（$\\log$）**。\n\n**为什么\"整体\"未必**：\n\n1. **不满射**（$SL(2,\\mathbb R)$ 的反例）：有些\"位置\"**无法**用\"从 $e$ 出发的匀速运动\"到达 —— 几何上就是\"绕不过去的墙\"（非紧性）；\n2. **不单射**（$SO(2)$、$SU(2)$）：有些位置**能被多种速度到达** —— 就是\"绕圈\"（$\\pi_1$ 的信息）⇒ $\\exp$ 的信息损失恰好是**格** $\\ker\\exp$（`lie1.7` 的核）。\n\n**BCH 的直觉**：群里的\"先 $e^X$ 后 $e^Y$\"对应代数的什么？答案是\n\n$$X\\ \\oplus\\ Y\\ :=\\ X+Y+\\tfrac12[X,Y]+\\cdots$$\n\n**修正项就是\"不可交换的代价\"**。所以：\n\n- 幂零/低维时**有限项终止**（如 $\\mathfrak{so}(3)$ 的罗德里格斯公式：$e^{X}=I+\\frac{\\sin\\theta}\\theta X+\\frac{1-\\cos\\theta}{\\theta^2}X^2$，**只有三项**）；\n- 一般情形**无穷项**，只能局部用。\n\n**最重要的实用推论**：**\"在群里做乘法\"可以转化为\"在代数里做加法（带修正）\"**：\n\n- 数值积分/优化 ⇒ 用 $T\\leftarrow T\\exp(\\delta)$，把非线性约束变成线性增量（`lie3.16`）；\n- 量子演化 ⇒ $e^{-iHt/\\hbar}$（能量是\"速度\"，时间演化是\"位置\"）；\n- 姿态插值 ⇒ 在代数里线性插值再 $\\exp$（或直接在 $S^3$ 上走大圆，`lie3.14`）。\n\n**一句话**：**exp 是\"幂零阶梯\"的连续版（把 $X$ 的幂级数当成\"无穷小变换的累积\"），它把线性空间映到非线性群上，代价是局部同构、整体有损**。",
+      "links": [
+        "lie1.9",
+        "lie1.11",
+        "lie3.14",
+        "lie3.16",
+        "B1.2",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.10:exp-map.proof",
+      "type": "proof",
+      "subject": "exp-map",
+      "title": "证明骨架：exp(tX) 是一参数子群（微分方程 + 级数两条路）",
+      "keywords": [
+        "级数定义的收敛性",
+        "ODE 求导",
+        "给出子群性质",
+        "数值验证与 O(t^3) 残差"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "五步：级数收敛；ODE 刻画 dF/dt=XF；用唯一性证子群性质；数值验证（含 tr e^{πX}=−2）；BCH 截断残差 O(t³)（比值 1182.35）。",
+      "content": "**目标**：证明 $\\exp(tX)$ 是**一参数子群**，即 $\\exp((s+t)X)=\\exp(sX)\\exp(tX)$，并顺带展示 BCH 截断的误差阶。\n\n**第 1 步（级数收敛）。** 对任意矩阵 $X$，$\\lVert X^k/k!\\rVert\\le\\lVert X\\rVert^k/k!$，而 $\\sum\\lVert X\\rVert^k/k!=e^{\\lVert X\\rVert}<\\infty$ ⇒ **级数绝对收敛** ⇒ $e^X$ 定义良好（对一切 $X$）。\n\n**第 2 步（ODE 刻画）。** 令 $F(t)=e^{tX}$。逐项求导（幂级数在紧区间上一致收敛，可逐项求导）：\n\n$$\\frac{d}{dt}F(t)=\\sum_{k\\ge1}\\frac{kt^{k-1}X^k}{k!}=X\\sum_{k\\ge1}\\frac{t^{k-1}X^{k-1}}{(k-1)!}=X\\,F(t)$$\n\n且 $F(0)=I$ ⇒ $F$ 是线性 ODE $\\dot F=XF$、$F(0)=I$ 的**唯一解**。\n\n**第 3 步（子群性质）。** 固定 $s$，令 $G(t)=F(s)F(t)$。则 $\\dot G=F(s)XF(t)=XG(t)$（用 $F(s)X=XF(s)$，因为 $F(s)$ 是 $X$ 的多项式极限）且 $G(0)=F(s)$ ⇒ 由**唯一性**，$G(t)=F(s+t)$ ⇒\n\n$$e^{sX}e^{tX}=e^{(s+t)X}\\quad\\Rightarrow\\quad \\exp(tX)\\ \\text{是一参数子群}\\ ✅$$\n\n**第 4 步（数值验证）。** 取 $X=\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$、$s=0.7$、$t=1.3$：$\\exp((s+t)X)$ 与 $\\exp(sX)\\exp(tX)$ 逐元素一致 ✅。并且 $e^{\\pi X}=-I$：$\\operatorname{tr}e^{\\pi X}$ 算得 $-2$【已核验:-2|2*cos(pi)】；$e^{(\\pi/2)X}$ 的迹算得 $0$【已核验:0|2*cos(pi/2)】。\n\n**第 5 步（BCH 的截断误差）。** 取 $A=\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$、$B=\\operatorname{diag}(1,-1)$，比较 $e^{tA}e^{tB}$ 与 $e^{t(A+B)+\\frac{t^2}2[A,B]}$：\n\n| $t$ | 残差（最大元素差） |\n|---|---|\n| $0.1$ | $4.02\\times10^{-4}$ |\n| $0.01$ | $3.4\\times10^{-7}$ |\n\n**比值算得 $1182.35$【已核验:1182.35294118|4.02e-4/3.4e-7】** ⇒ 每缩小 $10$ 倍 $t$，残差降约 $10^3$ 倍 ⇒ **残差是 $O(t^3)$** ⇒ 确认\"BCH 在 $\\frac12[X,Y]$ 处截断\"的误差阶是**三阶**（下一项 $\\frac1{12}[X,[X,Y]]$ 的量级）。∎\n\n**结论**：**exp 把\"代数里的加法\"忠实翻译成\"群里的乘法\"的只有一维情形（$e^{sX}e^{tX}=e^{(s+t)X}$）**；一般情形要 BCH 的无穷修正项。**这就是\"李括号决定局部群乘法\"的精确含义**。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.11",
+        "lie3.16",
+        "B1.2",
+        "A1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.10:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：一参数子群、满射性、BCH 与核",
+      "keywords": [
+        "验证子群性质",
+        "判满射性",
+        "算 BCH 一阶项",
+        "求 exp 的核"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "四问：由 cos 和角验证子群性质；三类群的满射性；f_12^3=1 给一阶项 T3/2；ker exp 与 π1 的对应。",
+      "content": "**四问。**\n\n**① 子群性质。** 取 $X=\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$、$s=0.4$、$t=0.9$：$\\exp((s+t)X)$ 的迹 = $2\\cos(1.3)$，而 $\\exp(sX)\\exp(tX)$ 的迹 = $2\\cos(0.4)\\cdot2\\cos(0.9)/2$ —— **两者相等**（这就是 $\\cos$ 的和角公式的群论来源）。数值：$\\cos(1.3)$ 算得 $0.267499$【已核验:0.267498828625|cos(1.3)】。\n\n**② 判满射性。** 判据：**紧连通 ⇒ 满射**（Weyl）。(a) $\\exp:\\mathfrak{so}(3)\\to SO(3)$ ✅ 满射；(b) $\\exp:\\mathfrak{sl}(2,\\mathbb R)\\to SL(2,\\mathbb R)$ ❌ 不满射（迹 $<-2$ 的元素取不到，`lie1.10` 反例）；(c) $\\exp:\\mathfrak{su}(2)\\to SU(2)$ ✅ 满射。\n\n**③ 算 BCH 一阶项。** 对 $\\mathfrak{so}(3)$ 的 $X=T_1$、$Y=T_2$，一阶项 $\\frac12[X,Y]$ 用 $f_{12}{}^3=1$ 算得 $\\frac12T_3$ ⇒ $e^{X}e^{Y}\\approx e^{X+Y+\\frac12T_3}$。**对照**：若 $[X,Y]=0$（可交换），修正项消失，$e^{X+Y}=e^Xe^Y$。\n\n**④ 追问（核）。** $\\ker\\exp=\\{X:e^X=e\\}$ 对 $\\mathfrak{so}(2)$：所有 $X=2\\pi k\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$ ⇒ $\\ker\\exp=2\\pi\\mathbb Z$（无限离散）。**这与 $\\pi_1(SO(2))=\\mathbb Z$ 吻合**（`lie1.7` 的\"核 = 基本群\"）。对 $\\mathfrak{su}(2)$：$\\ker\\exp=\\{X:\\lVert X\\rVert=2\\pi k\\}$ 的球面族 —— 因为 $SU(2)$ 单连通，$\\exp$ 的**非单射性完全由这个核描述**。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.7",
+        "lie1.9",
+        "lie1.11",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.10:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：exp 的满射/单射性按群的类型分类",
+      "keywords": [
+        "紧群全满射",
+        "非紧群常不满射",
+        "幂零/单连通情形",
+        "工程含义"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "三问：五类群的 exp 满射/单射对照；紧性为何给出满射；幂零单连通为何整体微分同胚；多值性的工程对策。",
+      "content": "$\\exp$ 的\"好坏\"完全由群的**类型**决定：\n\n| 群的类型 | 例子 | $\\exp$ 满射 | 单射 | 工程含义 |\n|---|---|---|---|---|\n| **紧连通** | $SO(n)$、$SU(n)$、$U(n)$ | ✅ 是（Weyl） | ❌ 否（多值） | 旋转必有\"轴角\"，但 $\\log$ 需选分支 |\n| **连通幂零** | Heisenberg 群、$UT(n)$ | ✅ 是（且**微分同胚**） | ✅ 是 | 唯一情形：$\\mathfrak g\\cong G$（整体） |\n| **连通可解** | $SE(3)$ 的平移部分、仿射群 | 常 ✅ | ❌ | 多数情形可 $\\exp/\\log$ |\n| **连通半单非紧** | $SL(2,\\mathbb R)$、$SL(n,\\mathbb R)$ | ❌ **否** | ❌ | $\\log$ 可能有**无实解**的情形（限定词②） |\n| **连通单连通半单** | $SU(2)$、$SL(2,\\mathbb C)$ | ✅（多数） | ❌ | 拓扑简单但多值 |\n\n**四条对照结论**：\n\n- **紧 ⇒ 满射**（Weyl 定理）：所以旋转群、酉群的 $\\exp$ 都好用 —— **这是图形/PID/量子里\"用轴角/生成元表达一切\"的底气**；\n- **幂零且单连通 ⇒ 整体微分同胚**：唯一\"$\\mathfrak g$ 与 $G$ 一样\"的情形（Heisenberg 群）⇒ 可以用**线性**坐标做全局计算；\n- **非紧半单 ⇒ 不满射**：$SL(n,\\mathbb R)$ 里\"绕不过去的墙\"（迹约束，`lie1.10` 反例）⇒ **数值上必须处理无解分支**；\n- **多值性（不单射）是普遍的**：只要 $\\pi_1\\ne0$（或群不单连通），$\\exp$ 就有多个原像 ⇒ 插值/优化必须**选短弧**（`lie3.14`）。\n\n**关键数值**：$\\operatorname{tr}e^{\\pi X}$ 算得 $-2$【已核验:-2|2*cos(pi)】；$\\operatorname{tr}\\operatorname{diag}(-2,-\\frac12)$ 算得 $-2.5$【已核验:-2.5|-2-0.5】$<-2$ ⇒ 不在像中。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.5",
+        "lie1.6",
+        "lie1.8",
+        "lie3.14",
+        "lie3.16",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.10:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：姿态更新、量子演化、李群优化与数值积分",
+      "keywords": [
+        "姿态用 T←T exp(delta)",
+        "量子演化 e^{-iHt}",
+        "李群上的优化与 EKF",
+        "辛/保结构的数值积分"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 147,
+        "line_end": 166
+      },
+      "fill_hint": "四问：姿态更新的 exp 形式与好处；量子演化=指数映射；EKF 的误差状态选在哪；辛积分器为何用 exp。",
+      "content": "指数映射是\"代数 ↔ 群\"的唯一实用桥梁，四类应用：\n\n- **姿态/位姿更新（图形、机器人、SLAM）**：所有现代库都用 **$T\\leftarrow T\\exp(\\delta)$** 更新，$\\delta\\in\\mathfrak{se}(3)$（6 维无约束）：这样优化变量是线性的，且**自动保持 $SE(3)$ 约束**。$\\log$ 用于计算误差（`lie3.16`）；\n- **量子演化**：$|\\psi(t)\\rangle=e^{-iHt/\\hbar}|\\psi(0)\\rangle$ —— 时间演化就是**指数映射**，$H$（能量）是\"速度\"，$t$ 是\"弧长\"；算符代数（$\\mathfrak{su}(n)$）与量子门（$e^{-i\\theta\\sigma/2}$）都靠它（`lie3.2`）；\n- **李群上的滤波与优化**：EKF 在 $\\mathfrak{so}(3)/\\mathfrak{se}(3)$ 上做误差状态；姿态平均（例如 $SO(3)$ 上的 Karcher 均值）用 $\\log/\\exp$ 迭代（`lie3.19` 的等变网络也用它）；\n- **保结构数值积分**：辛积分器/变分积分器把\"离散更新\"写成 $\\exp$ 的组合，从而**精确保持群的约束**（$SO(3)$ 上不会产生\"非正交漂移\"，`lie3.15`）。\n\n**三条跨应用共性**：\n1. **$\\exp$ 把约束变线性**（增量在代数里）；\n2. **$\\log$ 有奇异/无解分支**（$\\theta=\\pi$、非紧情形）⇒ 必须写保护；\n3. **多值性 ⇒ 选短弧**（$\\lvert\\theta\\rvert\\le\\pi$）。\n\n**接缝**：`lie3.12`（旋转表示的取舍）、`lie3.14`（Slerp）、`lie3.15`（刚体变换）、`lie3.16`（$\\mathfrak{se}(3)$ 与螺旋坐标）把这里的每一条都做成算法。",
+      "links": [
+        "lie1.6",
+        "lie1.8",
+        "lie3.2",
+        "lie3.12",
+        "lie3.14",
+        "lie3.15",
+        "lie3.16",
+        "lie3.19",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
