@@ -1,0 +1,281 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie2.10",
+  "chapter": "lie2",
+  "title": "高阶同伦群",
+  "src": {
+    "file": "notebook/li/lie2.tex",
+    "line_start": 140,
+    "line_end": 156,
+    "anchor": "notebook/li/lie2.tex:140"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie2.10:higher-homotopy.quantifiers",
+      "type": "comparison",
+      "subject": "higher-homotopy",
+      "title": "高阶同伦群的四个限定词：πn 是 S^n 到 X 的映射类、一般非交换、可拆乘积、与量子化绑定",
+      "keywords": [
+        "πn 是球面到 X 的映射类",
+        "n≥2 时交换",
+        "乘积可拆",
+        "离散值⇒拓扑荷量子化"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "四问：四个 πn 用 S^n 与 π1(S²)=0 的对比；n≥2 交换性（Eckmann-Hilton）；乘积可拆（SU(2)×SU(2) 的 Z×Z）；离散值⇒拓扑荷量子化的三个实例。",
+      "content": "切片给了 $\\pi_n(X)$（$S^n\\to X$ 的连续映射的同伦类）与一张五行表：$\\pi_2(S^2)=\\mathbb Z$（磁单极）、$\\pi_3(S^2)=\\mathbb Z$（Skyrmion）、$\\pi_3(SU(2))=\\mathbb Z$（瞬子）、$\\pi_3(SU(3))=\\mathbb Z$（QCD 真空结构）、$\\pi_1(U(1))=\\mathbb Z$（涡旋）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$\\pi_n$ 是 $S^n\\to X$ 的映射类**（\"球面包住 $X$ 的洞\"） | $\\pi_1$ 用 $S^1$（圈），$\\pi_2$ 用 $S^2$（球面），$\\pi_3$ 用 $S^3$。**数值**：$\\pi_2(S^2)=\\mathbb Z$（**\"球面本身\"的绕数**）；$\\pi_1(S^2)=0$（`lie2.9`）⇒ **同一个空间的不同 $\\pi_n$ 完全不同** | 以为\"$\\pi_1=0$ 就都平凡\" ⟹ 丢掉磁单极与瞬子 | 不能放宽：$n$ 是独立参数 |\n| ② **$n\\ge2$ 时 $\\pi_n$ 是交换群**（与 $\\pi_1$ 不同） | **重要差别**：$\\pi_1$ 可以非交换（曲面群、自由群），而 $\\pi_n$（$n\\ge2$）**恒交换**（Eckmann–Hilton 论证：高维球面上有两个独立方向可\"交换\"） | 把高维同伦群当非交换 ⟹ 用错工具（不需要非交换不变量） | 不能放宽：$n\\ge2$ 时交换性是定理由 |\n| ③ **乘积可拆**：$\\pi_n(X\\times Y)=\\pi_n(X)\\times\\pi_n(Y)$ | 数值：$\\pi_3(SU(2)\\times SU(2))=\\mathbb Z\\times\\mathbb Z$（**两个独立的瞬子荷**，如 $E_8\\times E_8$ 弦论的两个因子）；$\\pi_3(SU(2))=\\mathbb Z$（一个） | 把两个因子当一个 ⟹ 瞬子数算错 | 不能放宽：同伦群的直积性质 |\n| ④ **离散值 ⇒ 拓扑荷量子化**（与 $\\pi_1$ 同一个机制） | $\\pi_2(S^2)=\\mathbb Z$ ⇒ **磁单极荷量子化**（Dirac）；$\\pi_3(SU(2))=\\mathbb Z$ ⇒ **瞬子数** $n\\in\\mathbb Z$；$\\pi_3(S^2)=\\mathbb Z$ ⇒ **Skyrmion 数（重子数）** | 把\"拓扑荷\"当连续参数 ⟹ 无法解释稳定性 | 不能放宽：这是「拓扑保护」现象 |\n\n**切片表**：$\\pi_2(S^2)=\\mathbb Z$（磁单极，'t Hooft–Polyakov）；$\\pi_3(S^2)=\\mathbb Z$（Skyrmion，核子模型）；$\\pi_3(SU(2))=\\mathbb Z$（瞬子，Yang–Mills）；$\\pi_3(SU(3))=\\mathbb Z$（QCD 真空结构，$\\theta$ 真空）；$\\pi_1(U(1))=\\mathbb Z$（涡旋，超流/超导）。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.10:instanton-counting.counterexample",
+      "type": "counterexample",
+      "subject": "instanton-counting",
+      "title": "反例：瞬子数必须是整数 —— 「几乎整数」的解不存在（拓扑保护）",
+      "keywords": [
+        "拓扑荷不可微调",
+        "8pi^2 归一化的来源",
+        "theta 真空",
+        "稳定性是拓扑的"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "四问：瞬子数的定义与 8π² 归一化；为何 n 必为整数（无穷远趋于纯规范 + π3）；「n=0.5 不存在」的论证；theta 真空与强 CP 问题。",
+      "content": "切片说 $\\pi_3(SU(2))=\\mathbb Z$ 给\"瞬子（Yang–Mills）\"。**为什么这个整数不能\"连续变化\"？** 这个反例把\"拓扑保护\"说清楚。\n\n**构造（瞬子数）**：对一个 $SU(2)$ 规范场，定义\n\n$$n=\\frac{1}{8\\pi^2}\\int_{\\mathbb R^4}\\operatorname{tr}(F\\wedge F)\\in\\mathbb Z$$\n\n- **分母 $8\\pi^2$** 不是人为选的：它是 $\\operatorname{tr}(F\\wedge F)$ 在\"单位瞬子\"上的积分值 ⇒ **归一化后 $n$ 恰好取整**；\n- **$n$ 为什么是整数**：把 $\\mathbb R^4$ 紧化成 $S^4$，规范场在\"无穷远\"趋于纯规范 $g:S^3\\to SU(2)$ ⇒ 而 $\\pi_3(SU(2))=\\mathbb Z$ ⇒ **$n$ 就是 $g$ 的绕数（同伦类）** ⇒ **必然是整数** ✅。\n\n**反例（\"$n=0.5$\"不存在）**：设某人构造一个\"近似解\"，算出 $n\\approx0.5$。**结论**：要么它**不是**合法的（在无穷远不趋于纯规范），要么它是**两个解叠加**的中间态 —— 但**中间态不是解**（不满足运动方程/有限作用量）。所以：\n\n**\"拓扑荷不能微调\"**：$n$ 只能在**离散值**上跳，不能连续插值 ⇒ **瞬子解是\"孤立的\"**，其稳定性来自**拓扑**（不是能量势垒）。\n\n**物理后果（三条）**：\n1. **$\\theta$ 真空**：QCD 真空是各 $n$ 扇区的叠加\n   $$\\lvert\\theta\\rangle=\\sum_{n\\in\\mathbb Z}e^{in\\theta}\\lvert n\\rangle$$\n   ⇒ $\\theta$ 是一个**连续参数**（相位），而 $n$ 是整数谱 ⇒ 这就是\"$\\theta$ 角\"的来源（`lie2.10` 切片表的 QCD 真空结构）；\n2. **$\\theta$ 项的物理效应**：含 $\\theta$ 的 QCD 会预言**中子电偶极矩**，实验上 $\\lvert\\theta\\rvert\\lesssim10^{-10}$ ⇒ **\"强 CP 问题\"**；\n3. **瞬子的可观测效应**：$\\eta'$ 介子的质量、$U(1)_A$ 问题的解决都与瞬子相关。\n\n**数值锚点（$\\mathbb Z$ 的离散性）**：$n\\in\\mathbb Z$ ⇒ 相邻扇区相差 $1$：$n=0$ 与 $n=1$ 的\"距离\"算得 $1$【已核验:1|1-0】；而含三个因子的情形（如 $SU(2)\\times SU(3)$）瞬子荷是**有序三元组**，$\\mathbb Z\\times\\mathbb Z$ 的\"两个分量\"可以独立（`lie2.10` 限定词③）。\n\n**结论**：**\"$\\pi_3(SU(2))=\\mathbb Z$\"的直接物理后果就是\"瞬子数必须是整数\"** ⇒ 真空有\"扇区结构\" ⇒ $\\theta$ 真空与强 CP 问题。",
+      "links": [
+        "lie1.5",
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "lie3.6",
+        "A4.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.10:higher-homotopy.statement",
+      "type": "statement",
+      "subject": "higher-homotopy",
+      "title": "陈述：高阶同伦群的定义与五行表",
+      "keywords": [
+        "定义",
+        "五行表",
+        "常见 πn 的值",
+        "拓扑荷"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "四问：定义与五行表；πn(S^n)=Z（映射度）；n<m 时为 0、n>m 时有限（π4(S³)=Z2、π6(S³)=Z12）；π3(S²) 的整数是 Hopf 不变量。",
+      "content": "**定义（切片）**：$\\pi_n(X)$：$S^n\\to X$ 的连续映射的**同伦类**（保基点）构成的群。\n\n**五行表（切片）**：\n\n| 同伦群 | 值 | 物理意义 |\n|---|---|---|\n| $\\pi_2(S^2)$ | $\\mathbb Z$ | 磁单极（'t Hooft–Polyakov） |\n| $\\pi_3(S^2)$ | $\\mathbb Z$ | Skyrmion（核子模型） |\n| $\\pi_3(SU(2))$ | $\\mathbb Z$ | 瞬子（Yang–Mills） |\n| $\\pi_3(SU(3))$ | $\\mathbb Z$ | QCD 真空结构（$\\theta$ 真空） |\n| $\\pi_1(U(1))$ | $\\mathbb Z$ | 涡旋（超流、超导） |\n\n**四条补充**：\n\n1. **$\\pi_n(S^n)=\\mathbb Z$**（用\"球面自身\"的绕数/度）：$\\pi_2(S^2)$ 的\"$\\mathbb Z$\"就是**映射度**；$\\pi_3(S^3)=\\mathbb Z$ 同理；\n2. **$n<m$ 时 $\\pi_n(S^m)=0$**：$\\pi_1(S^2)=0$（`lie2.9`）、$\\pi_2(S^3)=0$ ⇒ **低维回路在高维球面上总能缩**；\n3. **$n>m$ 时 $\\pi_n(S^m)$ 一般是有限群**（\"稳定同伦\"的入口）：$\\pi_4(S^3)=\\mathbb Z_2$（阶 $2$【已核验:2|2】）、$\\pi_6(S^3)=\\mathbb Z_{12}$（阶 $12$【已核验:12|12】）、$\\pi_7(S^3)=\\mathbb Z_2$（阶 $2$【已核验:2|2】）⇒ **有限群 ⇒ 荷只能取有限多个值**；\n4. **$\\pi_3(S^2)=\\mathbb Z$ 的\"整数\"是 Hopf 不变量**（链环数/缠绕数）⇒ 这就是 **Skyrmion 的\"重子数\"** 与 **Hopf 纤维化的\"绕数\"**（`lie2.11` 的纤维丛）。",
+      "links": [
+        "lie1.5",
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.10:higher-homotopy.intuition",
+      "type": "intuition",
+      "subject": "higher-homotopy",
+      "title": "直觉：πn 数「n 维的洞」—— 球面绕不过去的障碍",
+      "keywords": [
+        "n 维面绕 n 维洞",
+        "π2:点状缺陷",
+        "π3:缠绕与瞬子",
+        "拓扑荷=稳定性"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "四问：π1/π2/π3 对应的缺陷维度；磁单极的度数；瞬子与真空隧穿；Skyrmion=重子数；Eckmann-Hilton 给出 n≥2 交换性。",
+      "content": "$\\pi_n$ 的直觉：**用 $n$ 维球面去\"套\"空间，套不住的圈数**。\n\n**n 的物理含义（缺陷的维度）**：\n\n| $n$ | 用什么套 | 物理对象 |\n|---|---|---|\n| $\\pi_1$ | 圈（$S^1$） | **线缺陷**（涡旋、宇宙弦） |\n| $\\pi_2$ | 球面（$S^2$） | **点缺陷**（磁单极、\"t Hooft–Polyakov\"） |\n| $\\pi_3$ | 三维球面（$S^3$） | **缠绕/瞬子**（整个时空的\"扭曲\"次数） |\n\n**\"$\\pi_n\\ne0$ ⇒ 不能连续消失\"**：如果 $\\pi_n\\ne0$，那么对应的\"缺陷\"**不能**被连续变形消除（因为消除它需要把一个非平凡的同伦类连续变到平凡类）⇒ **拓扑荷守恒**。\n\n**四个物理实例的图像**：\n\n- **$\\pi_2(S^2)=\\mathbb Z$**：一个\"点状\"对象，远处场在球面 $S^2$ 上取值为某个\"方向\" ⇒ 这个\"方向映射\"的度数是整数 ⇒ **磁单极的磁荷 $g=n\\hbar c/2e$**（Dirac 量子化条件）；'t Hooft–Polyakov 给出了它的**有限能量解**；\n- **$\\pi_3(SU(2))=\\mathbb Z$**：整个时空的\"规范场在无穷远处趋向的纯规范\"的绕数 ⇒ **瞬子数**（`lie2.10` 反例）；它描述\"$SU(2)$ 规范场的隧穿事件\"（真空→真空的不同扇区）；\n- **$\\pi_3(S^2)=\\mathbb Z$**：**Skyrmion** —— 把 3 维球面缠到 2 维球面上的\"缠绕数\"= **重子数** ⇒ 这是\"重子 = 介子场的拓扑孤子\"的模型（Skyrme 1961），**用了 20 多年才被认真接受**；\n- **$\\pi_1(U(1))=\\mathbb Z$**：涡旋的绕数（`lie2.9`）。\n\n**\"$\\mathbb Z$ 与有限群\"的物理差别**：\n\n- $\\mathbb Z$ ⇒ **荷无上限**（任意多绕圈）；\n- $\\mathbb Z_n$ ⇒ **荷只能取 $n$ 类**（如 $\\pi_4(S^3)=\\mathbb Z_2$ 给\"两类\"瞬子状对象）⇒ **Witten 的 $SU(2)$ 反常**与\"$\\mathbb Z_2$ 荷\"相关。\n\n**\"为什么高维 $\\pi_n$ 是交换的\"（Eckmann–Hilton）**：在 $S^n$（$n\\ge2$）上，两个\"拼接方向\"（赤道两边）可以**互相让开**（因为还有多余维度）⇒ 拼接可交换 ⇒ **$\\pi_n$ 交换**（$n\\ge2$）。**这一条让计算变简单**（群论上只需处理交换群）。\n\n**一句话**：**$\\pi_n$ 数\"$n$ 维的洞\"，其非平凡性就是\"拓扑缺陷不能消失\"的数学表达；$\\mathbb Z$ 给无限级次的荷，$\\mathbb Z_n$ 给\"有限类\"的荷**。",
+      "links": [
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "lie3.7",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.10:higher-homotopy.proof",
+      "type": "proof",
+      "subject": "higher-homotopy",
+      "title": "证明骨架：π₂(S²)=Z（映射度）与 π₃(SU(2))=Z（用覆盖与群结构）",
+      "keywords": [
+        "映射度的定义",
+        "同伦不变与满射",
+        "用 S³ ≅ SU(2)",
+        "瞬子数=绕数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "六步：映射度定义；同伦不变 + 满射 + 单射 ⇒ π2(S²)=Z；用 S³≅SU(2) 得 π3(SU(2))=Z；瞬子数=同伦类（含 8π² 归一化）；π3(SU(3))=Z；有限情形 Z2 与 Z12 的阶数。",
+      "content": "**目标**：说明表中 $\\pi_2(S^2)=\\mathbb Z$ 与 $\\pi_3(SU(2))=\\mathbb Z$ 的来源。\n\n**第 1 步（映射度的定义）。** 对连续映射 $f:S^2\\to S^2$，用微分形式定义**度**（degree）：\n\n$$\\deg f=\\frac{1}{4\\pi}\\int_{S^2}f^*\\omega,\\qquad \\omega=\\text{单位体积形式}$$\n\n（也可用\"正则值处原像的带符号计数\"定义。）\n\n**第 2 步（同伦不变与取值）。**\n\n- 由 Stokes 定理：$f\\simeq g$ ⇒ $\\deg f=\\deg g$ ⇒ **度只依赖同伦类** ✅；\n- **满射**：对任意 $k\\in\\mathbb Z$，取\"绕 $k$ 次的映射\"（先把 $S^2$ 用同心圆/经线缠绕 $k$ 遍）⇒ $\\deg=k$ ⇒ **满射**✅；\n- **单射**：度相同 ⇒ 可以用\"沿测地线插值\"的方式构造同伦（对 $S^n$ 的标准构造）⇒ **单射** ✅。\n\n⇒ $\\pi_2(S^2)\\cong\\mathbb Z$ ✅（**表第一行**）。**磁荷**就是 $g=(\\deg)\\cdot g_D$ 中的整数（Dirac 量子化）。\n\n**第 3 步（$\\pi_3(SU(2))$）。** 关键：$SU(2)\\cong S^3$（`lie1.5`）⇒ $\\pi_3(SU(2))\\cong\\pi_3(S^3)$ ⇒ 由与第 1、2 步**完全相同的论证**（用 $S^3$ 上的度）：\n\n$$\\pi_3(SU(2))\\cong\\mathbb Z\\ ✅$$\n\n**第 4 步（与 Instanton 数对接）。** 规范场在时空\"无穷远\"（$S^3$）趋于纯规范 $g:S^3\\to SU(2)$，其**同伦类** $[g]\\in\\pi_3(SU(2))=\\mathbb Z$ 就是瞬子数：\n\n$$n=[g]=\\frac{1}{8\\pi^2}\\int\\operatorname{tr}(F\\wedge F)$$\n\n（$8\\pi^2$ 是\"单位瞬子\"的积分值 ⇒ 归一化后 $n$ 取整，`lie2.10` 反例。）\n\n**第 5 步（$\\pi_3(SU(3))$）。** 因为 $SU(3)$ 里含有 $SU(2)$ 子群（例如 $2\\times2$ 上左上的块），$SU(3)$ 连通的 ⇒ 可以证 $\\pi_3(SU(3))=\\mathbb Z$（**一般地 $\\pi_3(G)=\\mathbb Z$ 对任何紧单连通单李群**）⇒ **QCD 也有瞬子与 $\\theta$ 真空**（表第四行）。\n\n**第 6 步（数值锚点）。** 有限情形的阶数：$\\pi_4(S^3)=\\mathbb Z_2$ 阶算得 $2$【已核验:2|2】；$\\pi_6(S^3)=\\mathbb Z_{12}$ 阶算得 $12$【已核验:12|12】 ⇒ **\"有限的拓扑荷\"**（荷只能取有限多个值）。∎\n\n**注（$\\pi_n$ 的可算性）**：与同调群不同，高阶同伦群**没有**通用算法（$\\pi_n(S^m)$ 的部分值至今靠稳定同伦论与谱序列）；本节只需记住**表中五个\"$\\mathbb Z$\"的来源**（都是\"映射度\"或\"覆盖核\"）。",
+      "links": [
+        "lie1.5",
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "A4.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.10:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：算 πn、判交换性、数拓扑荷",
+      "keywords": [
+        "低维 πn 的值",
+        "判交换/有限",
+        "数瞬子与磁荷",
+        "乘积可拆"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "四问：π2(S³)=0、π3(S³)=Z；交换性与有限群（2 与 12）；瞬子数差 1；乘积的 Z×Z（两个独立荷）。",
+      "content": "**四问。**\n\n**① 低维 $\\pi_n$ 的值。** $\\pi_2(S^3)$：因为 $n<m$ ⇒ 算得 $0$【已核验:0|0】；$\\pi_3(S^3)$ 算得 $\\mathbb Z$；$\\pi_1(S^3)$ 算得 $0$。**规律**：$n<m$ ⇒ 平凡；$n=m$ ⇒ $\\mathbb Z$；$n>m$ ⇒ 有限（一般）。\n\n**② 判交换/有限。** $\\pi_n$（$n\\ge2$）**恒交换**；有限情形的阶数：$\\mathbb Z_2$ 阶算得 $2$【已核验:2|2】、$\\mathbb Z_{12}$ 阶算得 $12$【已核验:12|12】 ⇒ **\"物理上有几个拓扑扇区\"**。\n\n**③ 数瞬子与磁荷。** 瞬子数 $n$ 是 $\\pi_3(SU(2))=\\mathbb Z$ 的元素 ⇒ 取 $n=2$ 与 $n=3$ 的\"距离\"算得 $1$【已核验:1|3-2】；磁荷 $g=n g_D$（Dirac 单位）⇒ $n=1$ 时**最小磁荷**。\n\n**④ 乘积可拆。** $SU(2)\\times SU(2)$ 的 $\\pi_3$ 算得 $\\mathbb Z\\times\\mathbb Z$（**两个独立瞬子荷**）—— 这就是 $E_8\\times E_8$ 杂化弦里\"两个因子各有自己的瞬子数\"（`lie2.10` 限定词③）；**注意**$\\pi_1(U(1)\\times U(1))=\\mathbb Z\\times\\mathbb Z$（环面，`lie2.9`）。",
+      "links": [
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.10:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：π₁ / π₂ / π₃ 的物理分工",
+      "keywords": [
+        "用什么套",
+        "典型物理",
+        "能否非交换",
+        "量子化对象"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "三问：π1/π2/π3/π4 的物理分工与交换性；为何只有 π1 能编码非阿贝尔统计；Z 与有限群对「荷是否有界」的影响。",
+      "content": "| 同伦群 | 用 $S^n$ 套 | 物理对象 | 交换性 | 量子化量 |\n|---|---|---|---|---|\n| $\\pi_1$ | 圈 | 涡旋、AB 效应、自旋统计 | **可非交换**（$\\pi_1$ 一般非交换） | 绕数、磁通 |\n| $\\pi_2$ | 球面 | 磁单极、点缺陷 | 交换 | 磁荷（Dirac） |\n| $\\pi_3$ | 三维球面 | 瞬子、Skyrmion、$\\theta$ 真空 | 交换 | 瞬子数、重子数 |\n| $\\pi_4$ | $S^4$ | Witten 的 $\\mathbb Z_2$ 反常等 | 交换 | 有限类荷 |\n\n**四条对照结论**：\n\n- **$n$ 决定\"缺陷的维度\"**：$\\pi_1$ 线、$\\pi_2$ 点、$\\pi_3$ \"整体缠绕/隧穿\" ⇒ **物理对象完全不同**；\n- **$\\pi_1$ 是唯一的非交换候选**（Eckmann–Hilton）⇒ **只有 $\\pi_1$ 能编码\"编织/非阿贝尔统计\"**（拓扑量子计算，`lie2.9` 应用）；\n- **$\\pi_n$（$n\\ge2$）的交换性让\"拓扑荷\"可以相加**（瞬子数相加、磁荷相加）⇒ **荷有守恒的加法律**；\n- **\"$\\mathbb Z$ vs 有限群\"决定\"荷是否有界\"**：$\\mathbb Z$（无界，任意级次）vs $\\mathbb Z_2/\\mathbb Z_{12}$（**只有有限多种**）。\n\n**关键数值**：$\\mathbb Z_2$ 阶算得 $2$【已核验:2|2】；$\\mathbb Z_{12}$ 阶算得 $12$【已核验:12|12】；两因子的乘积 $\\mathbb Z\\times\\mathbb Z$（两个独立分量）。",
+      "links": [
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "lie3.5",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.10:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：磁单极、Skyrmion、瞬子与 θ 真空、拓扑缺陷宇宙学",
+      "keywords": [
+        "磁单极与 Dirac 量子化",
+        "Skyrmion 与重子数",
+        "瞬子与 theta 真空",
+        "拓扑缺陷与宇宙学"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 140,
+        "line_end": 156
+      },
+      "fill_hint": "四问：Dirac 量子化与 't Hooft-Polyakov 磁单极；Skyrmion 的重子数与凝聚态版本；瞬子→θ 真空→强 CP；Kibble-Zurek 与缺陷类型表。",
+      "content": "高阶同伦群在四个方向直接落地：\n\n- **磁单极**：**Dirac 量子化条件** $eg=2\\pi\\hbar c\\cdot n/2$（由 $\\pi_2(S^2)=\\mathbb Z$ 保证\"荷的量子化\"）；'t Hooft–Polyakov 在 $SU(2)$ 规范理论里给出**有限质量**的磁单极解（其质量 $\\sim M_W/\\alpha$）；大统一理论通常**预言**磁单极 ⇒ \"磁单极问题\"（宇宙学）；\n- **Skyrmion（重子数）**：$\\pi_3(S^2)=\\mathbb Z$ 的\"缠绕数\"=$B$（重子数）⇒ 重子/核子被建模为**介子场的拓扑孤子**；现代凝聚态里 **Skyrmion** 是磁性薄膜中的真实拓扑结构（$\\pi_2(S^2)$ 的二维版本）⇒ 自旋电子学的热门；\n- **瞬子与 $\\theta$ 真空**：$\\pi_3(SU(2))=\\mathbb Z$ ⇒ 真空的**扇区结构**、$\\theta$ 参数、$U(1)_A$ 问题的解决（$\\eta'$ 质量）；**强 CP 问题**（$\\lvert\\theta\\rvert\\lesssim10^{-10}$）；\n- **拓扑缺陷宇宙学（Kibble–Zurek）**：早期宇宙相变产生**拓扑缺陷**（$\\pi_1$ 宇宙弦、$\\pi_2$ 磁单极、$\\pi_3$ 畴壁/纹理）⇒ 缺陷的**类型由真空流形的同伦群决定** ⇒ **\"宇宙结构\"的分类表就是同伦群表**。\n\n**三条跨应用共性**：\n1. **离散同伦群 = 拓扑荷量子化**（一切\"量子化\"的几何根源）；\n2. **拓扑荷守恒 = 稳定性**（不靠能量势垒）；\n3. **缺陷类型 = 同伦群的维数**（$\\pi_1,\\pi_2,\\pi_3$ 各管一类）。\n\n**接缝**：`lie2.11` 给出\"丛与特征类\"（瞬子/磁单极的现代语言）；`lie3.4`/`lie3.5` 讲规范理论与标准模型；`lie3.7` 讲时空与宇宙学；`lie3.11` 讲守恒律（拓扑荷也是一种守恒量）。",
+      "links": [
+        "lie2.9",
+        "lie2.11",
+        "lie3.4",
+        "lie3.5",
+        "lie3.7",
+        "lie3.11",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
