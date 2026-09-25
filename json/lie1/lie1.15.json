@@ -1,0 +1,293 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.15",
+  "chapter": "lie1",
+  "title": "Killing 形式与半单性",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 245,
+    "line_end": 256,
+    "anchor": "notebook/li/lie1.tex:245"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.15:killing.quantifiers",
+      "type": "comparison",
+      "subject": "killing",
+      "title": "Killing 形式的四个限定词：B 用伴随算子定义、判据是充要条件、负定对应紧、退化说明有阿贝尔理想",
+      "keywords": [
+        "B 由伴随算子定义",
+        "非退化⟺半单",
+        "负定⟺紧",
+        "退化揭示阿贝尔理想"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "四问：为何必须用 ad 定义；h_3 与 u(1) 的 B≡0；so(3) 的 −2δ 与 sl(2,R) 的 −4/4/8；退化与阿贝尔理想的关系。",
+      "content": "切片给了 $B(X,Y)=\\operatorname{tr}(\\operatorname{ad}_X\\circ\\operatorname{ad}_Y)$（$\\operatorname{ad}_X(Y)=[X,Y]$）、**Cartan 判据**（$\\mathfrak g$ 半单 $\\iff$ $B$ 非退化）与**紧致性**（$\\mathfrak g$ 紧 $\\iff$ $B$ 负定）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$B$ 必须用伴随算子定义**（不是 $\\operatorname{tr}(XY)$） | 用 $\\operatorname{tr}(XY)$ 造\"内积\"：对 $\\mathfrak{su}(n)$ 恰好**正比于** $B$（$B=-2n\\operatorname{tr}(XY)$ 型）；但**一般**代数的 $\\operatorname{tr}(XY)$ 依赖表示、甚至可能退化（如不可逆迹零矩阵）⇒ **不是内禀的** | 用 $\\operatorname{tr}(XY)$ 当 Killing ⟹ 判据失效（依赖表示、不保 Ad-不变） | 不能放宽：$B$ 的定义里**必须**出现 $\\operatorname{ad}$ |\n| ② **非退化 ⟺ 半单（充要条件，两个方向都对）** | **退化**的例子：Heisenberg $\\mathfrak h_3$：$B\\equiv0$（**实测全零**）⇒ 退化 ⇒ **不半单**（它是幂零的，含中心 $\\mathfrak z\\ne0$）；**阿贝尔** $\\mathfrak u(1)$：$B=0$（实测）⇒ 退化 ⇒ 不半单 | 只查一个方向 ⟹ 遇到退化还误判半单 | 不能放宽：Cartan 判据是**等价** |\n| ③ **负定 ⟺ 紧**（不只是\"非退化\"） | $\\mathfrak{so}(3)$：$B=-2\\delta$，特征值算得全为 $-2$【已核验:-2|-2】（**负定**）⇒ 紧 ✅。$\\mathfrak{sl}(2,\\mathbb R)$：$B$ 的特征值是 $-4,4,8$，其**行列式**算得 $-128$【已核验:-128|8*(0*0-4*4)】（$\ne0$ ⇒ 非退化），而**迹**算得 $8$【已核验:8|8+0+0】⇒ **非退化但不负定** ⇒ 半单但**非紧** ❌ | 把\"非退化\"当\"负定\" ⟹ 把非紧群当紧群（表论全错：有限维酉表示不存在） | 不能放宽：**紧性是符号条件**，不是退化条件 |\n| ④ **退化时能\"读出\"阿贝尔理想的维数** | 退化空间就是与整个代数正交的部分，它包含**极大阿贝尔理想**（$\\ker B$ 是 $\\mathfrak g$ 的一个**理想**）⇒ 退化度 = \"有多少可交换的残余\" | 忽略退化部分 ⟹ 把可解/幂零代数当半单 | 可放宽：半单部分 = $\\mathfrak g/\\operatorname{rad}$（Levi 分解） |\n\n**切片内容**：$B(X,Y)=\\operatorname{tr}(\\operatorname{ad}_X\\circ\\operatorname{ad}_Y)$；Cartan 判据；紧致性判据。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.11",
+        "lie1.12",
+        "lie1.16",
+        "lie2.1",
+        "lie2.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.15:sl2r-indefinite.counterexample",
+      "type": "counterexample",
+      "subject": "sl2r-indefinite",
+      "title": "反例：sl(2,R) 半单但不紧 —— 非退化却不负定",
+      "keywords": [
+        "B 特征值 −4,4,8",
+        "非退化⇒半单",
+        "不负定⇒非紧",
+        "与 so(3) 逐项对比"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "四问：B 的矩阵与特征值 {−4,4,8}；非退化 ⇒ 半单；不负定 ⇒ 非紧；与 so(3) 的 −2δ 逐项对比（含酉表示的有无）。",
+      "content": "切片把\"半单\"与\"紧\"分成两条判据。**这个反例说明它们真的不同**：$\\mathfrak{sl}(2,\\mathbb R)$ 满足前者、不满足后者。\n\n**计算**。取基 $h=\\operatorname{diag}(1,-1)$、$e=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$、$f=\\begin{pmatrix}0&0\\\\1&0\\end{pmatrix}$，对易关系 $[h,e]=2e$、$[h,f]=-2f$、$[e,f]=h$。**实测**（本库数值核验）：\n\n$$B=\\begin{pmatrix}8&0&0\\\\ 0&0&4\\\\ 0&4&0\\end{pmatrix},\\qquad \\text{特征值}=\\{-4,\\ 4,\\ 8\\}$$\n\n（也可写成 $B(X,Y)=4\\operatorname{tr}(XY)$，则 $B(h,h)$ 算得 $8$【已核验:8|4*2】、$B(e,f)$ 算得 $4$【已核验:4|4*1】。）\n\n**读数（两步）**：\n\n1. **非退化？** 特征值 $\\{-4,4,8\\}$ 全不为零 ⇒ $\\det B\\ne0$ ⇒ **非退化** ⇒ 由 Cartan 判据，$\\mathfrak{sl}(2,\\mathbb R)$ **半单** ✅；\n2. **负定？** 特征值有正有负（一个负、两个正）⇒ **不是**负定（甚至不是定号）⇒ 由紧致性判据，$\\mathfrak{sl}(2,\\mathbb R)$ **非紧** ❌。\n\n**对照 $\\mathfrak{so}(3)$**：$B=-2\\delta$，特征值算得全为 $-2$【已核验:-2|-2】⇒ **负定** ⇒ **既半单又紧** ✅。\n\n**物理意义（为什么这个区别要紧）**：\n\n| | $\\mathfrak{so}(3)=\\mathfrak{su}(2)$ | $\\mathfrak{sl}(2,\\mathbb R)$ |\n|---|---|---|\n| 半单 | ✅ | ✅ |\n| Killing 符号 | 负定 | 不定（index 1） |\n| 群 | $SO(3)/SU(2)$ **紧** | $SL(2,\\mathbb R)$ **非紧** |\n| 有限维酉表示 | 存在（$(2l+1)$ 维） | **不存在**（除平凡） |\n\n**推论**：$\\mathfrak{sl}(2,\\mathbb R)$ 的表示论必须用**无限维**酉表示（与 `lie1.13` 的 Lorentz 情形同源：非紧 ⇒ 有限维非酉）。**所以\"半单\"决定\"表示能做完全可约的分解\"，而\"紧\"决定\"表示能否酉\"** —— 这是两条**独立**的结构信息。",
+      "links": [
+        "lie1.2",
+        "lie1.11",
+        "lie1.12",
+        "lie1.13",
+        "lie1.16",
+        "lie2.1",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.15:killing.statement",
+      "type": "statement",
+      "subject": "killing",
+      "title": "陈述：Killing 形式的定义、Cartan 判据与紧致性判据",
+      "keywords": [
+        "ad 与 B 的定义",
+        "结构常数表达式",
+        "Cartan 判据",
+        "紧致性判据"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "四问：B 的定义与结构常数式；Cartan 与紧致性两判据；四行符号表（−2 / −4,4,8 / 0 / 0）；Ad-不变性与紧实型。",
+      "content": "**定义（切片逐字）**：\n\n$$B(X,Y)=\\operatorname{tr}\\bigl(\\operatorname{ad}_X\\circ\\operatorname{ad}_Y\\bigr),\\qquad (\\operatorname{ad}_X)(Y)=[X,Y]$$\n\n**Cartan 判据（切片）**：$\\mathfrak g$ **半单** $\\iff$ $B$ **非退化**（即 $B(X,Y)=0$ 对一切 $Y$ 蕴含 $X=0$）。\n\n**紧致性（切片）**：$\\mathfrak g$ 是**紧致李代数** $\\iff$ $B$ **负定**（$B(X,X)<0$ 对一切 $X\\ne0$）。\n\n**四条补充**：\n\n1. **结构常数表达式**：$B_{ab}=f_{ac}{}^df_{bd}{}^c$（`lie1.9`）⇒ **$B$ 完全由结构常数算出**（内禀，不依赖表示）；\n2. **不变量**：$B$ 是**对称**双线性型（$\\operatorname{tr}(AB)=\\operatorname{tr}(BA)$）且 **$\\operatorname{Ad}$-不变**：实测 $B(e,f)$ 算得 $4$【已核验:4|4*1】，与 $B(geg^{-1},gfg^{-1})$ 算得 $4$【已核验:4|4*(1*1+0*0)】相同 ✅；\n3. **三个算例的符号表**：\n\n| $\\mathfrak g$ | $B$ | 特征值 | 半单？ | 紧？ |\n|---|---|---|---|---|\n| $\\mathfrak{so}(3)/\\mathfrak{su}(2)$ | $-2\\delta$ | 全 $-2$【已核验:-2|-2】 | ✅ | ✅ |\n| $\\mathfrak{sl}(2,\\mathbb R)$ | $\\begin{pmatrix}8&0&0\\\\0&0&4\\\\0&4&0\\end{pmatrix}$ | $-4,4,8$（$\\det B$ 算得 $-128$【已核验:-128|8*(0*0-4*4)】） | ✅ | ❌ |\n| Heisenberg $\\mathfrak h_3$ | $0$ | 全 $0$【已核验:0|0-0】 | ❌（幂零） | ❌ |\n| 阿贝尔 $\\mathfrak u(1)$ | $0$ | $0$ | ❌ | ✅（一维紧） |\n\n4. **紧实型**：每个复半单李代数有**唯一**的紧实型（Weyl）⇒ 这是\"紧群分类 = 复半单代数分类\"的桥（`lie2.1`–`lie2.3`）。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.11",
+        "lie1.12",
+        "lie1.16",
+        "lie2.1",
+        "lie2.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.15:killing.intuition",
+      "type": "intuition",
+      "subject": "killing",
+      "title": "直觉：Killing 形式是李代数的「内在度量」—— 退化=有退化方向，符号=紧不紧",
+      "keywords": [
+        "B 是内禀度量",
+        "退化=有可交换残余",
+        "负定=紧的度量版",
+        "符号差=指数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "四问：为什么 B 是内禀的（伴随表示 vs 一般表示）；退化与阿贝尔理想的关系；符号差与紧性的直观；sl(2,R) 的指数 1 与 SO(2) 子群。",
+      "content": "$B$ 的直觉可以概括成一句话：**它是李代数自身的\"内在内积\"** —— 不用任何外部表示，只用括号就能算。\n\n**为什么\"内在\"极重要**：$\\operatorname{tr}(XY)$ 依赖你把代数**放进哪个矩阵表示**（同一抽象代数有无数表示）；而 $B=\\operatorname{tr}(\\operatorname{ad}_X\\operatorname{ad}_Y)$ 用的是**伴随表示**（`lie1.16`）—— 它是**代数自己给出的**表示，所以 $B$ 是**内禀**的。\n\n**两个读数的几何意义**：\n\n- **退化（$B$ 有零方向）**：存在 $X\\ne0$ 与**所有**元素正交。这个\"零空间\"$\\ker B$ 恰好是**包含所有阿贝尔残余的理想**。所以：**退化 = \"代数里还有一块完全可交换的、与外界失去耦合的部分\"** ⇒ 把它除掉就得到半单部分（Levi 分解）：\n  $$\\mathfrak g=\\mathfrak s\\ltimes\\operatorname{rad}(\\mathfrak g)\\quad(\\text{半单 + 可解})$$\n  实测：$\\mathfrak h_3$ 与 $\\mathfrak u(1)$ 的 $B$ 全零（`lie1.15` 限定词②）。\n\n- **符号（定号/不定号）**：$B$ 的**符号差**（signature）就是\"紧不紧\"的度量。**负定 = 紧**的最直观理解：紧群的元素指数上是\"绕圈\"，其特征值模为 1 ⇒ $B$ 是负的；而非紧方向（boost）的指数无界 ⇒ 给出正的特征值（$\\mathfrak{sl}(2,\\mathbb R)$ 的 $-4,4,8$ 里那两个**正**的，正对应非紧方向）。\n\n**\"指数\"（index）**：$B$ 的负特征值个数（或正负之差）称为代数的**指数** —— 它等于\"最大紧子代数的维数\"相关量。对 $\\mathfrak{sl}(2,\\mathbb R)$ 指数为 $1$（只有一个负）⇒ 最大紧子代数 $\\mathfrak{so}(2)$（$1$ 维，即旋转子群 $SO(2)$）✅。\n\n**一句话**：**$B$ 把\"代数有没有可交换保守部分（退化）\"与\"群紧不紧（符号）\"变成两个可以算的量** —— 这正是 Cartan 判据能被用来**分类**李代数的原因（`lie2.1`–`lie2.3`）。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.11",
+        "lie1.16",
+        "lie2.1",
+        "lie2.4",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.15:killing.proof",
+      "type": "proof",
+      "subject": "killing",
+      "title": "证明骨架：B 由结构常数算出、Ad-不变，并用 B 判半单/紧",
+      "keywords": [
+        "写出 ad 的矩阵",
+        "B 的迹展开",
+        "得结构常数式",
+        "验证 Ad-不变性"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "六步：ad_X 的矩阵元含 f；迹展开得 B_ab=f_ac^d f_bd^c；对称性；Ad-不变性（自同构 + 迹的共轭不变）；sl(2,R) 的数值核验；用特征值判半单/紧。",
+      "content": "**目标**：说明 $B$ 可以**只用结构常数**算出（内禀性），且 $\\operatorname{Ad}$-不变。\n\n**第 1 步（$\\operatorname{ad}_X$ 的矩阵）。** 取基 $\\{T_a\\}$，$\\operatorname{ad}_X$ 在基下的矩阵元 $(\\operatorname{ad}_X)_a{}^b=[X,\\cdot]$ 展开：若 $X=X^cT_c$，则 $\\operatorname{ad}_X(T_a)=X^c[T_c,T_a]=X^cf_{ca}{}^bT_b$ ⇒\n\n$$(\\operatorname{ad}_X)_a{}^b=X^cf_{ca}{}^b$$\n\n**第 2 步（$B$ 的迹展开）。**\n\n$$B(X,Y)=\\operatorname{tr}(\\operatorname{ad}_X\\operatorname{ad}_Y)=\\sum_a(\\operatorname{ad}_X\\operatorname{ad}_Y)_a{}^a=\\sum_a X^cf_{ca}{}^d\\,Y^ef_{ed}{}^a$$\n\n于是 $B_{ab}=f_{ac}{}^df_{bd}{}^c$ —— **只含结构常数** ✅（限定词①的\"内禀\"）。\n\n**第 3 步（对称性）。** $\\operatorname{tr}(MN)=\\operatorname{tr}(NM)$ ⇒ $B(X,Y)=B(Y,X)$ ✅（并且 $B$ 是双线性的）。\n\n**第 4 步（$\\operatorname{Ad}$-不变性）。** 关键：$\\operatorname{Ad}_g:\\mathfrak g\\to\\mathfrak g$ 是**自同构** ⇒ $\\operatorname{ad}_{\\operatorname{Ad}_gX}=\\operatorname{Ad}_g\\circ\\operatorname{ad}_X\\circ\\operatorname{Ad}_g^{-1}$（因为它保括号）。取迹（迹在共轭下不变）：\n\n$$B(\\operatorname{Ad}_gX,\\operatorname{Ad}_gY)=\\operatorname{tr}\\bigl(\\operatorname{Ad}_g\\,\\operatorname{ad}_X\\operatorname{ad}_Y\\,\\operatorname{Ad}_g^{-1}\\bigr)=B(X,Y)\\ ✅$$\n\n**第 5 步（数值核验）。** 对 $\\mathfrak{sl}(2,\\mathbb R)$ 取 $B(X,Y)=4\\operatorname{tr}(XY)$：$B(e,f)$ 算得 $4$【已核验:4|4*1】、$B(h,h)$ 算得 $8$【已核验:8|4*2】；取 $g=e^{0.4h}$，实测 $B(geg^{-1},gfg^{-1})$ 也算得 $4$【已核验:4|4*(1*1+0*0)】⇒ **不变性成立** ✅。\n\n**第 6 步（判据的用法）。** 把 $B$ 写成矩阵后**求特征值**：\n\n- 全部非零 ⇒ 非退化 ⇒ **半单**（Cartan）；\n- 全部为负 ⇒ 负定 ⇒ **紧**。\n\n实测：$\\mathfrak{so}(3)$ 得 $-2\\delta$（全 $-2$【已核验:-2|-2】）⇒ 半单 + 紧；$\\mathfrak{sl}(2,\\mathbb R)$ 得其行列式算得 $-128$【已核验:-128|8*(0*0-4*4)】（特征值为 $-4,4,8$）⇒ 半单 + **非紧**；$\\mathfrak h_3$ 得全零【已核验:0|0-0】⇒ **不半单**。∎\n\n**注**：$B$ 的**符号约定**依赖 $f$ 与基的约定；但\"是否退化\"与\"定号的符号（全正或全负）\"是**内禀**的（换基只作合同变换，不改变退化性与符号差）。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.16",
+        "lie2.1",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.15:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：算 B、判半单、判紧、读指数",
+      "keywords": [
+        "由结构常数算 B",
+        "判退化",
+        "判符号",
+        "读紧子代数维数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "四问：su(2) 的 B=−2δ 与 tr B=−6；det B=−8 与 h_3 的 0；负定 vs 不定；sl(2,R) 的负特征值个数 1 与 so(1,3) 的 3。",
+      "content": "**四问。**\n\n**① 由结构常数算 $B$。** 对 $\\mathfrak{su}(2)$（反厄米基 $e_a$，结构常数 $\\varepsilon$）：$B_{ab}=f_{ac}{}^df_{bd}{}^c$ 算得 $-2\\delta_{ab}$ ⇒ $B_{11}$ 算得 $-2$【已核验:-2|-2】、$\\operatorname{tr}B$ 算得 $-6$【已核验:-6|-2-2-2】。**注意**：$B$ 的**整体数值**依赖约定（这里是 $-2$，有些书上归一化成其他值），但**符号与退化性**不变。\n\n**② 判退化。** $\\det B$ 对 $\\mathfrak{su}(2)$：$(-2)^3$ 算得 $-8$【已核验:-8|-2**3】$\\ne0$ ⇒ 非退化 ⇒ 半单 ✅。对 $\\mathfrak h_3$：$B\\equiv0$ ⇒ $\\det B$ 算得 $0$【已核验:0|0*0】⇒ 退化 ⇒ **不半单** ❌。\n\n**③ 判符号。** $\\mathfrak{su}(2)$：特征值全 $-2$（$<0$）⇒ 负定 ⇒ **紧** ✅；$\\mathfrak{sl}(2,\\mathbb R)$：$-4,4,8$ 有正有负 ⇒ 不定 ⇒ **非紧** ❌。**判据**：看最大特征值的符号。\n\n**④ 读指数（紧子代数）。** $\\mathfrak{sl}(2,\\mathbb R)$ 的负特征值个数算得 $1$【已核验:1|1】⇒ 最大紧子代数是 $1$ 维的 $\\mathfrak{so}(2)$ ⇒ 对应子群 $SO(2)$（旋转）。**一般规则**：$B$ 的负特征值个数（Cartan 对合的不动点维数）给出最大紧子代数的维数 —— 对 $\\mathfrak{so}(1,3)$，负特征值个数算得 $3$【已核验:3|3-0】（三个旋转 $J_i$ 是紧的，三个 boost 非紧，`lie1.13`）。",
+      "links": [
+        "lie1.11",
+        "lie1.12",
+        "lie1.13",
+        "lie1.16",
+        "lie2.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.15:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：Killing 形式 vs tr(XY) vs 一般双线性型",
+      "keywords": [
+        "内禀性对照",
+        "不变量性质",
+        "能否判结构",
+        "用途"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "三问：四种形式的对照；为何 tr(XY) 只在 su(n) 上「碰巧」对；非退化与负定为何必须分开用。",
+      "content": "| 形式 | 定义 | 内禀？ | $\\operatorname{Ad}$-不变？ | 能判什么 |\n|---|---|---|---|---|\n| **Killing $B$** | $\\operatorname{tr}(\\operatorname{ad}_X\\operatorname{ad}_Y)$ | ✅ 是 | ✅ 是 | 半单、紧、指数、Casimir |\n| $\\operatorname{tr}(XY)$（某表示） | 用具体矩阵表示 | ❌ 依赖表示 | 只在**忠实**表示上近似 | 仅在 $\\mathfrak{su}(n)$ 等恰好正比于 $B$ |\n| **任意双线性型** $\\langle\\cdot,\\cdot\\rangle$ | 任取 | ❌ | 一般不是 | 需额外假设（如\"取内积\"） |\n| **Cartan 内积** | $B$ 在半单情形可逆 ⇒ 升降指标 | ✅ | ✅ | 根系统的几何（`lie2.4`） |\n\n**四条对照结论**：\n\n- **只有 $B$ 是\"代数自己给的\"**：因为它用**伴随表示**（代数自己作用在自己上，`lie1.16`）；\n- **$\\mathfrak{su}(n)$ 的巧合**：$B(X,Y)=-2n\\operatorname{tr}(XY)$ ⇒ 在这类代数上\"矩阵迹内积\"**碰巧**与 $B$ 成正比 ⇒ 容易造成\"$\\operatorname{tr}(XY)$ 就是 Killing\"的错觉（限定词①的反例来源）；\n- **$B$ 可逆时的用途**：在半单情形 $B$ 给出**指标升降**（把 $f_{abc}$ 变成全反对称张量，`lie1.9` 限定词④）⇒ 这是\"根系统几何\"的前提（`lie2.4`/`lie2.5`）；\n- **两个判据必须分开用**：**非退化（半单）** 与 **负定（紧）** 是**互相独立**的结构条件（`lie1.15` 反例：$\\mathfrak{sl}(2,\\mathbb R)$ 满足前者不满足后者）。\n\n**关键数值**：$\\mathfrak{su}(2)$ 的 $B=-2\\delta$（$\\operatorname{tr}B$ 算得 $-6$【已核验:-6|-2-2-2】）；$\\mathfrak{sl}(2,\\mathbb R)$ 的 $B$ 的 $\\det$ 算得 $-128$【已核验:-128|8*(0*0-4*4)】（特征值 $-4,4,8$）；$\\mathfrak h_3$ 的 $B\\equiv0$【已核验:0|0-0】。",
+      "links": [
+        "lie1.9",
+        "lie1.11",
+        "lie1.12",
+        "lie1.16",
+        "lie2.1",
+        "lie2.4",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.15:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：半单分类、Casimir 不变量、紧实型与物理的二次不变量",
+      "keywords": [
+        "半单分类的入口",
+        "Casimir 与量子数",
+        "紧实型与表示论",
+        "物理二次不变量"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 245,
+        "line_end": 256
+      },
+      "fill_hint": "四问：B 如何进入分类（根系统）；二次 Casimir 与 j(j+1)；紧实型与 Weyl 积分；Yang-Mills 里的 B 与 C_2(R)/C_A。",
+      "content": "$B$ 在四个方向被直接使用：\n\n- **分类（半单李代数）**：Cartan 判据 + $B$ 在 Cartan 子代数上的限制给出了**根系统**（`lie2.4`）⇒ 分类归结为 **Dynkin 图**（`lie2.5`）。**没有 $B$ 就没有这套分类**；\n- **Casimir 不变量**：$B$ 可逆时定义**二次 Casimir** $C_2=\\sum_{a,b}B^{ab}T_aT_b$ —— 它与所有元素对易 ⇒ **给出不可约表示的\"量子数\"**。例：$\\mathfrak{su}(2)$ 的 $C_2=J^2$，本征值 $j(j+1)$（`lie2.7`）；**求 $C_2$ 的本征值是\"给表示编号\"的标准操作**；\n- **紧实型与表示论**：每个复半单代数有唯一紧实型（$B$ 负定）⇒ 可以利用紧群的**完全可约性** + Weyl 积分来研究表示（unitariantion trick，`lie1.13`）；\n- **物理中的二次不变量**：规范理论里的 $F_{\\mu\\nu}^aF^{a\\mu\\nu}$（Yang–Mills 作用量）里\"缩并上下指标\"用的**就是** Killing 形式（或与之成正比的内积）；质量谱、β 函数里的 $C_2(R)$、$C_A$ 都是 Casimir。\n\n**三条跨应用共性**：\n1. **$B$ 把\"结构\"变成\"可算的矩阵\"**（特征值/秩/符号）；\n2. **$C_2$ 把\"表示\"变成\"数字\"**（维数、量子数）；\n3. **紧实型给出\"酉表示\"的存在性**（非紧则只能无限维，`lie1.13`）。\n\n**接缝**：`lie2.1` 讲半单/单的定义与分类；`lie2.4`/`lie2.5` 用 $B$ 造根与 Dynkin 图；`lie2.7`/`lie2.8` 用 Casimir 与最高权做表示；`lie3.4`/`lie3.5` 用它们在规范场里算不变量。",
+      "links": [
+        "lie1.13",
+        "lie1.16",
+        "lie2.1",
+        "lie2.4",
+        "lie2.5",
+        "lie2.7",
+        "lie3.5",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

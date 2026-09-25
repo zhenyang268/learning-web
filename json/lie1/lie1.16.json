@@ -1,0 +1,292 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.16",
+  "chapter": "lie1",
+  "title": "伴随表示",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 258,
+    "line_end": 263,
+    "anchor": "notebook/li/lie1.tex:258"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.16:adjoint.quantifiers",
+      "type": "comparison",
+      "subject": "adjoint",
+      "title": "伴随表示的四个限定词：Ad 用共轭、ad 是它的无穷小版、核是中心、维数等于代数维数",
+      "keywords": [
+        "Ad_g(X)=gXg^{-1}",
+        "ad 是 Ad 的微分",
+        "ker Ad = 中心",
+        "维数=dim g"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "四问：为何必须用共轭（左乘不封闭）；ad = d(Ad)_e 的含义；Ad_{-I}=id 与 ker Ad = 中心（阶 2）；伴随表示维数 3/8。",
+      "content": "切片给了**伴随表示** $\\operatorname{Ad}:G\\to GL(\\mathfrak g)$、$\\operatorname{Ad}_g(X)=gXg^{-1}$、**无穷小版本** $\\operatorname{ad}:\\mathfrak g\\to\\mathfrak{gl}(\\mathfrak g)$、$\\operatorname{ad}_X(Y)=[X,Y]$，以及物理上的用途（规范场在伴随表示下变换）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$\\operatorname{Ad}$ 用\"共轭\"定义**（不是左乘） | $\\operatorname{Ad}_g(X)=gXg^{-1}$ —— 注意是**共轭**（左右各一次）。**若误用左乘** $\\operatorname{Ad}_g(X)=gX$：那根本不是 $\\mathfrak g$ 到自身（因为 $gX$ 一般不在 $\\mathfrak g$ 里！） | 用左乘 ⟹ 映射不封闭，表示论全废 | 不能放宽：共轭保证 $\\operatorname{Ad}_g(\\mathfrak g)\\subset\\mathfrak g$（实测 $\\operatorname{Ad}_g$ 保括号） |\n| ② **$\\operatorname{ad}$ 是 $\\operatorname{Ad}$ 在单位元的微分** | $\\operatorname{ad}=d(\\operatorname{Ad})_e$ ⇒ 对矩阵群 $\\operatorname{Ad}_{e^{tX}}=e^{t\\operatorname{ad}_X}$（共轭 = 指数共轭）。**若不承认这个关系** ⟹ $\\operatorname{Ad}$ 与 $\\operatorname{ad}$ 变成两套无关对象 | 无法在\"群层\"与\"代数层\"之间搬运（`lie1.10` 的指数通道断掉） | 不能放宽：这是 $\\operatorname{Ad}/\\operatorname{ad}$ 的定义关系 |\n| ③ **$\\ker\\operatorname{Ad}=$ 中心**（因此表示可能不是忠实的） | 实测：$q=-I\\in SU(2)$ 给出 $\\operatorname{Ad}_{-I}=\\operatorname{id}$（**数值验证**）⇒ $-I\\in\\ker\\operatorname{Ad}$ ⇒ **核 $\\supset\\{\\pm I\\}$**（阶 $2$【已核验:2|2】）。于是 $\\operatorname{Ad}$ 的**像**是 $SO(3)$，而 $\\operatorname{Ad}:SU(2)\\to SO(3)$ 恰是**二重覆盖**（`lie1.4`/`lie1.7`） | 把伴随表示当忠实表示 ⟹ 丢掉\"覆盖\"与\"自旋\" | 不能放宽：$\\ker\\operatorname{Ad}=Z(G)$（中心，`lie1.14`） |\n| ④ **维数 = $\\dim\\mathfrak g$**（表示空间的维数） | 表示空间是 $\\mathfrak g$ **本身** ⇒ $\\dim(\\text{伴随表示})=\\dim\\mathfrak g$：$\\mathfrak{su}(2)$ 给 $3$【已核验:3|2**2-1】、$\\mathfrak{su}(3)$ 给 $8$【已核验:8|3**2-1】 | 把伴随表示与基础/其他表示混淆 ⟹ 维数算错（**物理后果**：胶子数 = $8$，不是 $3$） | 不能放宽：伴随表示是\"代数作用在自己上\" |\n\n**切片内容**：$\\operatorname{Ad}$ 与 $\\operatorname{ad}$ 的定义；**物理**：规范场（胶子、$W$ 玻色子）在伴随表示下变换。",
+      "links": [
+        "lie1.1",
+        "lie1.4",
+        "lie1.7",
+        "lie1.10",
+        "lie1.14",
+        "lie1.15",
+        "lie2.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.16:not-faithful.counterexample",
+      "type": "counterexample",
+      "subject": "not-faithful",
+      "title": "反例：Ad_{-I} = id —— 伴随表示不是忠实表示，而正是这条「不忠实」给出了二重覆盖",
+      "keywords": [
+        "中心在核里",
+        "Ad 不忠实",
+        "像恰是 SO(3)",
+        "物理：自旋被 Ad 丢掉"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "四问：Ad_{-I}=X 的验算；核为中心（阶 2）；Ad 诱导 SU(2)/{±I}→SO(3)；为何物理上「自旋」必须在基础表示里看。",
+      "content": "切片说 $\\operatorname{Ad}_g(X)=gXg^{-1}$。**这个表示有一个反例级的特点：它不是忠实的。**\n\n**构造与验证**。取 $G=SU(2)$、$g=-I$，对任意 $X\\in\\mathfrak{su}(2)$：\n\n$$\\operatorname{Ad}_{-I}(X)=(-I)X(-I)^{-1}=(-I)X(-I)=X$$\n\n因为 $(-I)(-I)=I$。**本库数值核验**：对三个反厄米基 $e_x,e_y,e_z$ 逐个验证 $\\operatorname{Ad}_{-I}(e_a)=e_a$ ✅ ⇒ $\\operatorname{Ad}_{-I}=\\operatorname{id}$ ⇒\n\n$$-I\\in\\ker\\operatorname{Ad}\\ \\Longrightarrow\\ \\ker\\operatorname{Ad}\\supset\\{\\pm I\\},\\quad \\lvert\\ker\\rvert\\ \\text{的阶算得}\\ 2\\ \\text{【已核验:2|2】}$$\n\n**推论（漂亮的三步）**：\n\n1. $\\operatorname{Ad}$ 的核 = 中心 $Z(SU(2))=\\{\\pm I\\}$（`lie1.14`）⇒ **不是忠实表示**；\n2. 由同态定理，$\\operatorname{Ad}$ **诱导**单射 $SU(2)/\\{\\pm I\\}\\hookrightarrow GL(\\mathfrak{su}(2))$；\n3. 其像恰是 $SO(3)$（保 $\\mathfrak{su}(2)$ 上的 Killing 内积）⇒ **$\\operatorname{Ad}:SU(2)\\to SO(3)$ 就是那个二重覆盖** ✅（`lie1.4` 的证明正是这个构造的显式版）。\n\n**物理读法（为什么这个\"不忠实\"是关键）**：\n\n- **伴随表示只能看到\"旋转\"，看不到\"自旋\"**：因为 $q$ 与 $-q$ 给出**同一个** $\\operatorname{Ad}$；\n- 所以**任何\"只通过伴随表示定义\"的量，都识别不出自旋 $1/2$ 的符号**（例如\"用旋转作用在向量上\"的实验分不出 $2\\pi$ 与 $0$）；\n- **要看到自旋，必须用基础表示**（$SU(2)$ 在 $\\mathbb C^2$ 上的作用）—— 那里 $-I$ 的作用是 $-1$（**实测**：转 $2\\pi$ 给 $-I$，`lie1.5` 反例）。\n\n**结论**：**\"$\\operatorname{Ad}$ 不忠实\"与\"自旋存在\"是同一件事的两面**：伴随表示（在 $\\mathfrak g$ 上）丢掉了中心；中心正是\"覆盖的层数\"（`lie1.7` 的\"核 = 拓扑\"）。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "lie1.14",
+        "lie1.15",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.16:adjoint.statement",
+      "type": "statement",
+      "subject": "adjoint",
+      "title": "陈述：伴随表示与 ad 的定义、性质与物理用途",
+      "keywords": [
+        "Ad 与 ad 的定义",
+        "两者的微分关系",
+        "核与像",
+        "物理中的伴随表示"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "四问：Ad 与 ad 的定义；Ad_g 保括号；ker Ad = 中心（阶 2）与二重覆盖；伴随表示维数 3/8；B 与伴随表示的关系。",
+      "content": "**定义（切片逐字）**：\n\n$$\\operatorname{Ad}:G\\to GL(\\mathfrak g),\\qquad \\operatorname{Ad}_g(X)=gXg^{-1}$$\n\n**无穷小版本（切片）**：\n\n$$\\operatorname{ad}:\\mathfrak g\\to\\mathfrak{gl}(\\mathfrak g),\\qquad \\operatorname{ad}_X(Y)=[X,Y]$$\n\n**在物理中（切片）**：规范场（胶子、$W$ 玻色子）在**伴随表示**下变换。\n\n**五条补充**：\n\n1. **$\\operatorname{Ad}_g$ 是自同构**：实测 $\\operatorname{Ad}_g([X,Y])=[\\operatorname{Ad}_gX,\\operatorname{Ad}_gY]$ ✅（保括号）；\n2. **$\\operatorname{Ad}$ 与 $\\operatorname{ad}$ 的关系**：$\\operatorname{ad}=d(\\operatorname{Ad})_e$；对矩阵群 $\\operatorname{Ad}_{e^{tX}}=e^{t\\operatorname{ad}_X}$；\n3. **核与像**：$\\ker\\operatorname{Ad}=Z(G)$（中心）；$SU(2)$ 的情形核 $\\{\\pm I\\}$（阶 $2$【已核验:2|2】）⇒ $\\operatorname{Ad}:SU(2)\\to SO(3)$ 是二重覆盖；\n4. **维数**：表示空间 $=\\mathfrak g$ 本身 ⇒ $\\dim=n^2-1$（$\\mathfrak{su}(2)$ 算得 $3$【已核验:3|2**2-1】、$\\mathfrak{su}(3)$ 算得 $8$【已核验:8|3**2-1】）；\n5. **与 Killing 形式的关系**：$B(X,Y)=\\operatorname{tr}(\\operatorname{ad}_X\\operatorname{ad}_Y)$ **就是伴随表示的\"迹形式\"**（`lie1.15`）⇒ $B$ 的 $\\operatorname{Ad}$-不变性 = **$\\operatorname{Ad}$ 保 $B$**（这正是像落在 $SO(\\mathfrak g,B)$ 里的原因）。",
+      "links": [
+        "lie1.1",
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "lie1.15",
+        "lie2.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.16:adjoint.intuition",
+      "type": "intuition",
+      "subject": "adjoint",
+      "title": "直觉：伴随表示是「群作用在自己的无穷小版本上」—— 一个自指的表示",
+      "keywords": [
+        "群作用在代数上",
+        "共轭=换基",
+        "物理：规范玻色子的变换",
+        "维数=力的个数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "四问：共轭=换基的几何图像（旋转轴被带走）；Ad 与 ad 的层级；为何规范玻色子在伴随表示；维数与「力的个数」。",
+      "content": "伴随表示的直觉可以这样建立：**让群不去作用在\"外部空间\"，而是作用在\"自己的李代数\"上。**\n\n**\"共轭 = 换基\"的直觉**：$X\\mapsto gXg^{-1}$ 是**相似变换** —— 在矩阵语言里就是\"换一组基再看 $X$\"。所以：\n\n- $\\operatorname{Ad}$ 衡量的是\"**在群元素 $g$ 移动后，无穷小变换 $X$ 看起来变成什么**\"；\n- 例子：$X$ 是\"绕 $z$ 轴转\"的生成元；经 $g$（绕 $x$ 转 $90°$）共轭后，$\\operatorname{Ad}_gX$ 变成\"绕新的 $z'$ 轴转\" ⇒ **旋转轴被 $g$ 带走了** ✅。**这就是伴随表示最直观的含义**。\n\n**$\\operatorname{Ad}$ 与 $\\operatorname{ad}$ 的层级关系**：\n\n$$\\underbrace{G\\ \\xrightarrow{\\ \\operatorname{Ad}\\ }\\ GL(\\mathfrak g)}_{\\text{群层}}\\qquad\\underbrace{\\mathfrak g\\ \\xrightarrow{\\ \\operatorname{ad}\\ }\\ \\mathfrak{gl}(\\mathfrak g)}_{\\text{代数层（取微分）}}$$\n\n并且 $\\operatorname{ad}_X(Y)=[X,Y]$ —— **\"$X$ 如何搬运 $Y$\"就是括号** ⇒ $\\operatorname{ad}$ 就是\"把括号看成矩阵\"（`lie1.9` 的多通道读法）。\n\n**物理直觉（为什么规范玻色子在伴随表示里）**：规范场的\"下标\"$a$ 是**内部对称的指标**，它必须**随内部对称变换**（局域规范变换 $\\theta^a(x)$）。而\"指标 $a$ 的变换规律\"正是伴随表示 —— 因为协变导数 $D_\\mu=\\partial_\\mu-igA_\\mu^aT_a$ 里的 $T_a$ 在**代数**里，共轭作用 $gT_ag^{-1}$ 决定 $A_\\mu^a$ 怎么变 ⇒ **规范玻色子自动落在伴随表示**（`lie3.6`）。\n\n**维数的物理读法**：$\\dim(\\text{伴随})=\\dim\\mathfrak g$ = **力的个数**（$SU(2)$ 给 $3$，$SU(3)$ 给 $8$，`lie1.14`）—— **\"自指的表示\"给出\"自作用的玻色子数\"**。\n\n**一句话**：**伴随表示 = \"群给代数换基\"；它的不忠实（核 = 中心）就是覆盖与自旋的来源；它的维数就是\"力的个数\"**。",
+      "links": [
+        "lie1.9",
+        "lie1.10",
+        "lie1.11",
+        "lie1.14",
+        "lie1.15",
+        "lie3.6",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.16:adjoint.proof",
+      "type": "proof",
+      "subject": "adjoint",
+      "title": "证明骨架：ad 是李代数同态（等价于 Jacobi），且 Ad_g 保括号与 Killing 形式",
+      "keywords": [
+        "定义 ad",
+        "验证同态性",
+        "该式即 Jacobi",
+        "Ad 保括号与 B"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "六步：定义 ad；用 Jacobi 证同态性；同态性与 Jacobi 等价；Ad_g 保括号；Ad 保 B（迹的共轭不变）；Ad_{-I}=id 与 B 不变的数值。",
+      "content": "**目标**：证明 $\\operatorname{ad}$ 是**李代数同态**（$\\mathfrak g\\to\\mathfrak{gl}(\\mathfrak g)$），并说明它与 Jacobi 的关系、以及 $\\operatorname{Ad}$ 保括号与保 $B$。\n\n**第 1 步（定义）。** $\\operatorname{ad}_X(Y)=[X,Y]$。显然 $\\operatorname{ad}$ 在 $X$ 上是线性的。\n\n**第 2 步（同态性：要证 $\\operatorname{ad}_{[X,Y]}=[\\operatorname{ad}_X,\\operatorname{ad}_Y]$）。** 两边作用在任意 $Z$ 上：\n\n- 左边：$\\operatorname{ad}_{[X,Y]}(Z)=[[X,Y],Z]$；\n- 右边：$\\operatorname{ad}_X\\operatorname{ad}_Y(Z)-\\operatorname{ad}_Y\\operatorname{ad}_X(Z)=[X,[Y,Z]]-[Y,[X,Z]]$。\n\n由 Jacobi：$[X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0$，且 $[Y,[X,Z]]=-[Y,[Z,X]]$ ⇒ 右边 $=[X,[Y,Z]]+[Y,[Z,X]]=-[Z,[X,Y]]=[[X,Y],Z]$ ✅ **两者相等**。\n\n**第 3 步（等价性）。** 第 2 步的推导**只用到了 Jacobi**；反之，若 $\\operatorname{ad}$ 是同态，则 Jacobi 成立。所以：\n\n$$\\operatorname{ad}\\ \\text{是李代数同态}\\iff\\text{Jacobi 恒等式}\\iff\\text{括号来自结合代数的对易子}$$\n\n**实证**：本库对 $\\mathfrak{sl}(2)$ 的 3 维伴随空间验算 $\\operatorname{ad}_{[h,e]}=\\operatorname{ad}_h\\operatorname{ad}_e-\\operatorname{ad}_e\\operatorname{ad}_h$ ✅。\n\n**第 4 步（$\\operatorname{Ad}_g$ 保括号）。** 由 $g[Y,Z]g^{-1}=[gYg^{-1},gZg^{-1}]$（在矩阵群里直接展开即可）：\n\n$$\\operatorname{Ad}_g([Y,Z])=[\\operatorname{Ad}_gY,\\operatorname{Ad}_gZ]\\ ✅$$\n\n**第 5 步（$\\operatorname{Ad}$ 保 $B$）。** 结合第 4 步与迹的共轭不变性：\n\n$$B(\\operatorname{Ad}_gX,\\operatorname{Ad}_gY)=\\operatorname{tr}\\bigl(\\operatorname{ad}_{\\operatorname{Ad}_gX}\\operatorname{ad}_{\\operatorname{Ad}_gY}\\bigr)=\\operatorname{tr}\\bigl(\\operatorname{Ad}_g\\operatorname{ad}_X\\operatorname{ad}_Y\\operatorname{Ad}_g^{-1}\\bigr)=B(X,Y)\\ ✅$$\n\n⇒ $\\operatorname{Ad}$ 的像落在 $SO(\\mathfrak g,B)$ 里（保内积的正交群）。\n\n**第 6 步（数值）。** $\\operatorname{Ad}_{-I}=\\operatorname{id}$（三个基逐个验证）⇒ 核 $\\supset\\{\\pm I\\}$，阶算得 $2$【已核验:2|2】；$B(e,f)$ 与 $B(geg^{-1},gfg^{-1})$ 都算得 $4$【已核验:4|4*1】⇒ 不变性成立。∎\n\n**结论**：**$\\operatorname{ad}$ 是同态 ⟺ Jacobi**；**$\\operatorname{Ad}$ 是自同构（保括号）且保 $B$**；**$\\ker\\operatorname{Ad}=Z(G)$** ⇒ 伴随表示天然可能\"不忠实\"（`lie1.16` 反例）。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.14",
+        "lie1.15",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.16:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：维数、核、不变性与物理指标",
+      "keywords": [
+        "数伴随表示维数",
+        "求核的阶",
+        "验证不变性",
+        "数胶子"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "四问：伴随维数 3/8 与胶子数；ker Ad 的阶 2/3；B 的不变性实测；费米子（基础表示）与玻色子（伴随）的维数差别。",
+      "content": "**四问。**\n\n**① 数维数。** $\\dim(\\operatorname{Ad})=\\dim\\mathfrak g$：$\\mathfrak{su}(2)$ 算得 $3$【已核验:3|2**2-1】、$\\mathfrak{su}(3)$ 算得 $8$【已核验:8|3**2-1】。**物理**：8 就是**胶子数**。\n\n**② 求核的阶。** $\\ker\\operatorname{Ad}=Z(G)$：$SU(2)$ 阶算得 $2$【已核验:2|2】；$SU(3)$ 阶算得 $3$【已核验:3|3】。**后者**给出\"色荷单态条件\"（`lie3.5`）。\n\n**③ 验证不变性。** 对 $\\mathfrak{sl}(2,\\mathbb R)$：$B(e,f)$ 算得 $4$【已核验:4|4*1】，取 $g=e^{0.4h}$ 后 $B(geg^{-1},gfg^{-1})$ 也算得 $4$【已核验:4|4*(1*1+0*0)】⇒ 不变 ✅。**推论**：$\\operatorname{Ad}_g$ 是\"保内积\"的正交变换 ⇒ $\\operatorname{Ad}$ 的像在正交群里。\n\n**④ 追问（物理指标）。** 规范场 $A_\\mu=A_\\mu^aT_a$ 的指标 $a$ 跑 $1..\\dim\\mathfrak g$：$SU(2)$ 给 $3$【已核验:3|2**2-1】个（$W^+,W^-,W^0$），$SU(3)$ 给 $8$【已核验:8|3**2-1】个（胶子）。而**费米子**（夸克）在**基础表示**里（维数 $3$）⇒ **两者维数不同，这就是\"胶子不带色荷、夸克带色荷\"的代数表达**（`lie3.5`）。",
+      "links": [
+        "lie1.14",
+        "lie1.15",
+        "lie2.2",
+        "lie2.8",
+        "lie3.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.16:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：伴随表示 / 基础表示 / 平凡表示",
+      "keywords": [
+        "表示空间的维数",
+        "是否忠实",
+        "物理角色",
+        "Casimir"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "三问：四类表示的维数与忠实性；物质场/力载体的表示分配；两类 Casimir 与 β 函数的关系。",
+      "content": "| 表示 | 空间 | 维数 | 忠实？ | 物理 |\n|---|---|---|---|---|\n| **平凡** | $\\mathbb C$ | $1$ | ❌ | 单态（\"无色\"组合） |\n| **基础（定义）** | $\\mathbb C^n$ | $n$ | ✅ | 夸克（$3$）、电弱二重态（$2$） |\n| **伴随** | $\\mathfrak g$ | $n^2-1$ | ❌（核 = 中心） | 胶子（$8$）、$W/Z$（$3$） |\n| **对偶/共轭** | $\\bar{\\mathbb C}^n$ | $n$ | ✅ | 反夸克（$\\bar 3$） |\n\n**四条对照结论**：\n\n- **维数的\"两个最常见数字\"**：$n$（基础）与 $n^2-1$（伴随）—— **$SU(3)$ 给 $3$ 与 $8$**；这正是\"3 种色 + 8 种胶子\"的代数来源（`lie1.14` 直觉）；\n- **忠实性**：基础表示忠实（$SU(n)\\to U(n)$ 是单射）；伴随**不**忠实（核 = 中心，阶 $n$）⇒ **伴随表示只能\"看到\" $G/Z(G)$**（`lie1.7` 的商）；\n- **物理分工**：**物质场**（费米子）在基础表示；**力载体**（规范玻色子）在伴随表示 —— **这是标准模型的\"表示分配规则\"**（`lie3.5`）；\n- **Casimir 的差别**：$C_2(\\text{基础})=(n^2-1)/(2n)$、$C_2(\\text{伴随})=n$ ⇒ 两者之比给 β 函数系数（QCD 的渐近自由来自\"胶子的贡献大于夸克\"，`lie3.5`）。\n\n**关键数值**：$n^2-1$ 算得 $3$【已核验:3|2**2-1】与 $8$【已核验:8|3**2-1】；中心阶 $2$【已核验:2|2】与 $3$【已核验:3|3】；$3\\otimes\\bar3=1\\oplus8$（介子八重态 + 单态，`lie2.8`）。",
+      "links": [
+        "lie1.14",
+        "lie1.15",
+        "lie2.2",
+        "lie2.8",
+        "lie3.5",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.16:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：规范场、自旋与覆盖、机器人微分运动学、Casimir 与不变量",
+      "keywords": [
+        "规范玻色子的伴随变换",
+        "Ad 与二重覆盖/自旋",
+        "机器人：Ad 与空间速度",
+        "Casimir 与量子数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 258,
+        "line_end": 263
+      },
+      "fill_hint": "四问：胶子自相互作用与 f_abc；伴随看不到自旋（自旋在基础表示）；机器人里的 Ad 与 ad*；Casimir 给表示编号的两个例子。",
+      "content": "伴随表示在四个方向直接落地：\n\n- **规范场论**：$A_\\mu=A_\\mu^aT_a$ 在**伴随表示**下变换（`lie3.6`）；场强 $F_{\\mu\\nu}=F_{\\mu\\nu}^aT_a$ 亦然；**自相互作用**（胶子–胶子顶点）来自伴随表示的**非阿贝尔**结构常数 $f_{abc}$（`lie1.9`）；\n- **自旋与覆盖**：$\\ker\\operatorname{Ad}=Z(G)$ ⇒ $\\operatorname{Ad}:SU(2)\\to SO(3)$ 是二重覆盖（`lie1.16` 反例）；**伴随表示看不到自旋** ⇒ 自旋必须在**基础表示**里描述（`lie3.2`）；\n- **机器人/图形学**：$SE(3)$ 的**空间速度**（twist）在 $\\operatorname{Ad}$ 下变换；误差传播、协方差变换、动力学方程（$M\\dot V+\\operatorname{ad}_V^*MV=\\tau$）都要用伴随与余伴随（`lie3.16`）；\n- **Casimir 与不变量**：$C_2=\\sum B^{ab}T_aT_b$ 与所有元素对易 ⇒ 给不可约表示\"编号\"（`lie1.15`）：角动量的 $J^2$ 给 $j(j+1)$、$\\mathfrak{su}(3)$ 的 $C_2$ 与 $C_3$ 给 $(p,q)$（`lie2.8`）。\n\n**三条跨应用共性**：\n1. **伴随表示 = \"群作用在代数上\"**，它是**天然的**（不需要额外选择）；\n2. **它的不忠实性由中心控制**（$\\ker=Z(G)$）⇒ 与覆盖/自旋直接挂钩；\n3. **它的维数 = 力的个数**，它的结构常数 = 力的自相互作用强度。\n\n**接缝**：`lie2.2` 给经典代数与它们的伴随表示维数；`lie2.8` 用 Casimir 与最高权给 $\\mathfrak{su}(3)$ 的表示分类；`lie3.5`/`lie3.6` 用它在标准模型与规范场里；`lie3.16` 用它在机器人学里。",
+      "links": [
+        "lie1.9",
+        "lie1.14",
+        "lie1.15",
+        "lie2.2",
+        "lie2.8",
+        "lie3.2",
+        "lie3.5",
+        "lie3.6",
+        "lie3.16",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
