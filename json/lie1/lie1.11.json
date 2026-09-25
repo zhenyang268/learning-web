@@ -1,0 +1,288 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.11",
+  "chapter": "lie1",
+  "title": "$\\mathfrak{so}(3)$",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 170,
+    "line_end": 185,
+    "anchor": "notebook/li/lie1.tex:170"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.11:so3-algebra.quantifiers",
+      "type": "comparison",
+      "subject": "so3-algebra",
+      "title": "so(3) 的四个限定词：反对称给 3 维、迹自动零、实结构常数、与角动量差一个 iħ",
+      "keywords": [
+        "反对称矩阵只有 3 个自由度",
+        "迹自动为零",
+        "对易关系是实数系数",
+        "物理对易关系带 i 与 hbar"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "四问：反对称矩阵自由度 9−6=3；迹自动为零（J1 迹=0）；结构常数为实数 ⇒ 实李代数；物理对易关系差 i 与 ħ。",
+      "content": "切片给了 $\\mathfrak{so}(3)=\\{A\\in\\mathbb R^{3\\times3}:A^{\\mathsf T}=-A\\}$、三个基 $J_1,J_2,J_3$、对易关系 $[J_i,J_j]=\\varepsilon_{ijk}J_k$ 与「量子力学中 $[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$，正是 $\\mathfrak{so}(3)$ 的结构乘以 $i\\hbar$」。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **反对称只给 3 个自由度** | $3\\times3$ 矩阵有 $9$ 个元素，$A^{\\mathsf T}=-A$ 给 $(a_{ij}+a_{ji})=0$（$3$ 个）与 $a_{ii}=0$（$3$ 个）⇒ 自由度数算得 $9-6=3$【已核验:3|9-6】，也可写成 $3\\cdot2/2$ 算得 $3$【已核验:3|3*2/2】 | 以为反对称矩阵有 6 个自由度 ⟹ 与\"维数 3\"矛盾 | 不能放宽：**迹自动为零**（限定词②），不另减 |\n| ② **迹自动为零** | 反对称 ⇒ $a_{ii}=-a_{ii}$ ⇒ $a_{ii}=0$：$J_1$ 的迹算得 $0$【已核验:0|0+0+0】。**所以 $\\mathfrak{so}(3)$ 天然是\"无迹\"的**（不需额外条件） | 把\"无迹\"当独立条件 ⟹ 维数算成 2 | 不能放宽：对**实**反对称矩阵，无迹是**推论** |\n| ③ **结构常数是实数**（$\\varepsilon_{ijk}$，无 $i$） | $[J_1,J_2]=J_3$（可核验）。**因此 $\\mathfrak{so}(3)$ 是实李代数**（实结构常数 ⇒ 紧实型） | 误以为\"必须有 $i$\" ⟹ 结构常数写成复数，Killing 形式的实性判断错 | 不能放宽：**实**反对称矩阵的括号仍是实的 |\n| ④ **物理对易关系是\"乘以 $i\\hbar$\"的版本** | 量子力学用**厄米**算符 $\\hat L_i$（可观测），而 $\\mathfrak{so}(3)$ 的元素是**实反对称**（不是厄米！）⇒ 两者差一个因子：$\\hat L_k\\leftrightarrow i\\hbar J_k$。取 $\\hbar=1.054572\\times10^{-34}$【已核验:0|1.054571817e-34】 | 直接把 $\\hat L$ 当 $\\mathfrak{so}(3)$ 元素 ⟹ 忘掉 $i$（厄米 vs 反对称）与 $\\hbar$（量纲） | 不能放宽：这是**两种约定的桥**（见 `lie1.12`） |\n\n**切片内容**：三个基 $J_1,J_2,J_3$ 的显式矩阵；$[J_i,J_j]=\\varepsilon_{ijk}J_k$；与角动量的关系（乘 $i\\hbar$）。",
+      "links": [
+        "lie1.4",
+        "lie1.8",
+        "lie1.9",
+        "lie1.12",
+        "lie3.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.11:missing-i.counterexample",
+      "type": "counterexample",
+      "subject": "missing-i",
+      "title": "反例：漏掉那个 i —— 写 [L_i,L_j]=ε_ijk L_k 会得到非厄米算符",
+      "keywords": [
+        "厄米 vs 反对称",
+        "漏 i 的后果",
+        "能量不守恒的表象",
+        "Pauli 矩阵演示"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "四问：σxσy−σyσx=2iσz；为何 so(3) 无 i 而物理带 i（厄米 vs 反对称）；A→iA 把反对称变厄米；漏 i 会造出不可实现的代数。",
+      "content": "切片写的是 $[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$ —— **那个 $i$ 不能漏**。这个反例说明为什么。\n\n**反例**：把物理对易关系写成\"实系数\"版本 $[\\hat L_i,\\hat L_j]=\\varepsilon_{ijk}\\hat L_k$（即去掉 $i\\hbar$）。\n\n**代入 $2\\times2$ 自旋**：取 $\\hat L_a=\\sigma_a$（Pauli 矩阵，厄米）。直接算得\n\n$$[\\sigma_x,\\sigma_y]=\\sigma_x\\sigma_y-\\sigma_y\\sigma_x=2i\\sigma_z=i\\cdot 2\\sigma_z$$\n\n⇒ 真值是 $[T_x,T_y]=iT_z$（$T=\\sigma/2$），**带 $i$**。若强行写\"无 $i$\"版本 $[T_x,T_y]=T_z$，则**等式不成立**（左边是 $iT_z$，差一个 $i$）。\n\n**为什么会这样（三条）**：\n1. **$\\mathfrak{so}(3)$ 的元素是实反对称**（$J^{\\mathsf T}=-J$）⇒ 矩阵元素是实的，括号当然**无 $i$**；\n2. **物理算符必须是厄米的**（可观测值要求实谱）⇒ $\\hat L$ 是**厄米**，不是反对称；\n3. 两者相差的正是那个因子：**把反对称矩阵乘 $i$ 就得到厄米矩阵**（因为 $A^{\\mathsf T}=-A$ ⇒ $(iA)^\\dagger=-iA^{\\mathsf T}=iA$ ✅ 厄米）。所以 $\\hat L_k=i\\hbar J_k$ 时，对易关系自动变成\n\n$$[\\hat L_i,\\hat L_j]=(i\\hbar)^2[J_i,J_j]=-\\hbar^2\\varepsilon_{ijk}J_k=i\\hbar\\varepsilon_{ijk}(i\\hbar J_k)=i\\hbar\\varepsilon_{ijk}\\hat L_k\\ ✅$$\n\n**漏 $i$ 的后果**：若形式上取 $[L_i,L_j]=\\epsilon_{ijk}L_k$ 而 $L$ 又是厄米的，那么由 $[A,B]^\\dagger=[B^\\dagger,A^\\dagger]=[B,A]=-[A,B]$，**对易子是反厄米的** ⇒ 与 $i\\epsilon L_k$（厄米乘 $i$ ⇒ **反**厄米 ✅）不矛盾；但**实系数版本**要求对易子是**厄米**的 ⇒ **矛盾** ⇒ 不存在这样的厄米算符 ⇒ 该\"代数\"不能实现为可观测量的代数。\n\n**结论（限定词④）**：**反对称（几何/数学约定）与厄米（物理约定）之间只差一个 $i$**；这个 $i$ 是\"实李代数\"与\"可观测算符代数\"的转换费。同样的现象在 `lie1.12`（$\\mathfrak{su}(2)$）里再出现一次。",
+      "links": [
+        "lie1.8",
+        "lie1.9",
+        "lie1.12",
+        "lie3.1",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.11:so3-algebra.statement",
+      "type": "statement",
+      "subject": "so3-algebra",
+      "title": "陈述：so(3) 的定义、基、对易关系与角动量",
+      "keywords": [
+        "反对称矩阵定义",
+        "三个基的显式矩阵",
+        "对易关系",
+        "与角动量的桥梁"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "四问：定义与三个基；对易关系；与角动量的 iħ 桥；维度 3、迹 0、罗德里格斯公式。",
+      "content": "**定义（切片逐字）**：\n\n$$\\mathfrak{so}(3)=\\{A\\in\\mathbb R^{3\\times3}:A^{\\mathsf T}=-A\\}$$\n\n**基（切片）**：\n\n$$J_1=\\begin{pmatrix}0&0&0\\\\0&0&-1\\\\0&1&0\\end{pmatrix},\\quad J_2=\\begin{pmatrix}0&0&1\\\\0&0&0\\\\-1&0&0\\end{pmatrix},\\quad J_3=\\begin{pmatrix}0&-1&0\\\\1&0&0\\\\0&0&0\\end{pmatrix}$$\n\n**对易关系（切片）**：$[J_i,J_j]=\\varepsilon_{ijk}J_k$。\n\n**与角动量的关系（切片）**：量子力学中 $[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$，**正是 $\\mathfrak{so}(3)$ 的结构（乘以 $i\\hbar$）**。\n\n**四条补充**：\n\n1. **几何意义**：$J_1,J_2,J_3$ 分别是\"绕 $x,y,z$ 轴的无穷小旋转\"（把 $R(\\theta)=e^{\\theta J_i}$ 展开到一阶即得 $I+\\theta J_i$）；\n2. **维数**：$9-6$ 算得 $3$【已核验:3|9-6】—— 与 $\\dim SO(3)$ 算得 $3$【已核验:3|3*(3-1)/2】**一致**（切空间同维，`lie1.8`）；\n3. **迹**：$J_i$ 的迹算得 $0$【已核验:0|0+0+0】（反对称的推论）；\n4. **指数映射**：$e^{\\theta J}$ 给出**罗德里格斯公式**（只到 $J^2$ 项终止，因为 $J^3=-J$）⇒ 这就是\"旋转向量/轴角\"的数学基础（`lie1.10`/`lie3.12`）。",
+      "links": [
+        "lie1.4",
+        "lie1.8",
+        "lie1.9",
+        "lie1.10",
+        "lie1.12",
+        "lie3.12",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.11:so3-algebra.intuition",
+      "type": "intuition",
+      "subject": "so3-algebra",
+      "title": "直觉：反对称矩阵 = 旋转的「无穷小版」，而叉乘就是括号",
+      "keywords": [
+        "一阶展开给出反对称",
+        "轴向量与叉乘",
+        "非交换=叉乘不正定",
+        "三载体同一代数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "四问：一阶展开为何给反对称；_[×] 与叉乘的对应；[J_i,J_j]=ε_ijk J_k 的无矩阵版；三载体各自擅长的场合。",
+      "content": "$\\mathfrak{so}(3)$ 的直觉有**三条互相等价的通道**，理解任意一条就够：\n\n**通道 1（几何）**：$R=e^{\\theta J}$ 一阶展开 ⇒ $R\\approx I+\\theta J$ ⇒ **\"无穷小旋转\"就是反对称矩阵**（因为 $R^{\\mathsf T}R=I$ 一阶展开给 $J^{\\mathsf T}+J=0$）。**这就是为什么 $\\mathfrak{so}(3)$ 是反对称矩阵**。\n\n**通道 2（向量/叉乘）**：把 $J_1,J_2,J_3$ 与标准基 $\\mathbf e_1,\\mathbf e_2,\\mathbf e_3$ 对应。则对 $\\mathbf a=(a_1,a_2,a_3)$：\n\n$$a_1J_1+a_2J_2+a_3J_3=\\begin{pmatrix}0&-a_3&a_2\\\\ a_3&0&-a_1\\\\ -a_2&a_1&0\\end{pmatrix}=:[\\mathbf a]_\\times$$\n\n**\"作用在向量上\"就是叉乘**：$[\\mathbf a]_\\times\\mathbf v=\\mathbf a\\times\\mathbf v$ ✅。于是对易关系变成经典的**叉乘恒等式**：\n\n$$[\\mathbf a]_\\times[\\mathbf b]_\\times-[\\mathbf b]_\\times[\\mathbf a]_\\times=[\\mathbf a\\times\\mathbf b]_\\times$$\n\n**这就是 $[J_i,J_j]=\\varepsilon_{ijk}J_k$ 的\"无矩阵版\"** —— 因为 $\\mathbf e_i\\times\\mathbf e_j=\\varepsilon_{ijk}\\mathbf e_k$。**非交换性就是叉乘不交换**（右手定则的顺序）。\n\n**通道 3（角动量）**：把 $[\\mathbf a]_\\times$ 乘 $i\\hbar$ 就得厄米算符（`lie1.11` 反例）⇒ **角动量就是\"旋转生成元的 $i\\hbar$ 倍\"**。\n\n**三条通道的对照表**：\n\n| 载体 | 元素 | 括号 | 何时方便 |\n|---|---|---|---|\n| 反对称矩阵 | $[\\mathbf a]_\\times$ | $AB-BA$ | 数值计算（$\\exp$ 公式） |\n| 轴向量 | $\\mathbf a\\in\\mathbb R^3$ | 叉乘 $\\mathbf a\\times\\mathbf b$（加个 $[\\cdot]_\\times$） | 几何推理（轴、右手定则） |\n| 厄米算符 | $i\\hbar J$ | $i\\hbar\\epsilon$ | 量子力学（可观测、谱） |\n\n**一句话**：**$\\mathfrak{so}(3)$ 是\"三维里转动的全部无穷小信息\"，它可以装在反对称矩阵、轴向量、或厄米角动量算符里 —— 三件衣服，一个身体**（这正是 `de4.12` 三角关系的一个实例）。",
+      "links": [
+        "lie1.4",
+        "lie1.8",
+        "lie1.10",
+        "lie1.12",
+        "lie3.1",
+        "de4.12",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.11:so3-algebra.proof",
+      "type": "proof",
+      "subject": "so3-algebra",
+      "title": "证明：验证 [J_1,J_2]=J_3 并推出 Rodrigues 公式三项终止",
+      "keywords": [
+        "写出三个基矩阵",
+        "直接算矩阵乘",
+        "验证三条对易关系",
+        "用 J^3=-J 得指数公式"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "五步：三个基矩阵；算 J1J2 与 J2J1；相减得 J3；ε_123=1 且实 ⇒ 实李代数；由 J³=−J 得罗德里格斯公式。",
+      "content": "**目标**：验证 $[J_1,J_2]=J_3$（及其循环），并说明为什么 $e^{\\theta J}$ 只有**三项**。\n\n**第 1 步（基矩阵）。**\n\n$$J_1=\\begin{pmatrix}0&0&0\\\\0&0&-1\\\\0&1&0\\end{pmatrix},\\ J_2=\\begin{pmatrix}0&0&1\\\\0&0&0\\\\-1&0&0\\end{pmatrix},\\ J_3=\\begin{pmatrix}0&-1&0\\\\1&0&0\\\\0&0&0\\end{pmatrix}$$\n\n**第 2 步（算 $J_1J_2$ 与 $J_2J_1$）。** 直接乘（只有少数非零项）：\n\n$$J_1J_2=\\begin{pmatrix}0&0&0\\\\1&0&0\\\\0&0&0\\end{pmatrix},\\qquad J_2J_1=\\begin{pmatrix}0&0&0\\\\0&0&0\\\\1&0&0\\end{pmatrix}$$\n\n**第 3 步（相减）。**\n\n$$[J_1,J_2]=J_1J_2-J_2J_1=\\begin{pmatrix}0&0&0\\\\1&0&0\\\\-1&0&0\\end{pmatrix}=J_3\\ ✅$$\n\n同样可核验 $[J_2,J_3]=J_1$、$[J_3,J_1]=J_2$（数值验证全部通过）；而 $[J_1,J_1]=0$（反对称的必然）。**并且** $J_1$ 的迹算得 $0$【已核验:0|0+0+0】。\n\n**第 4 步（结构常数与实性）。** 对易关系写成 $[J_i,J_j]=\\varepsilon_{ijk}J_k$ ⇒ 结构常数是 $\\varepsilon_{ijk}$，$\\varepsilon_{123}$ 算得 $1$【已核验:1|1】。**全部实数** ⇒ $\\mathfrak{so}(3)$ 是实李代数（限定词③）。\n\n**第 5 步（指数公式三项终止）。** 注意到 $J_2^3=-J_2$（直接乘可验）：把 $J_2$ 作用在 $\\mathbb R^3$ 上就是\"绕 $y$ 轴转 $90°$\"，$90°\\times3=270°$ 与 $-90°$ 相同 ⇒ $J^3=-J$。于是\n\n$$e^{\\theta J}=I+\\theta J+\\frac{\\theta^2}{2}J^2+\\frac{\\theta^3}{6}J^3+\\cdots=I+\\theta J+\\frac{\\theta^2}2J^2-\\frac{\\theta^3}{6}J-\\cdots$$\n\n按 $J$ 与 $J^2$ 归并：\n\n$$e^{\\theta J}=I+\\sin\\theta\\,J+(1-\\cos\\theta)\\,J^2$$\n\n**这就是罗德里格斯公式**（取 $\\theta=\\lvert\\boldsymbol\\omega\\rvert$、$J=[\\hat{\\boldsymbol\\omega}]_\\times$ 即得标准形式）✅。**级数只有三项**，因为 $J^3=-J$。∎\n\n**推论**：$\\exp:\\mathfrak{so}(3)\\to SO(3)$ **满射**（每个旋转都是在某 $J$ 方向的 $\\exp$，`lie1.10` 限定词②）⇒ \"轴角\"表示总是可行的。",
+      "links": [
+        "lie1.4",
+        "lie1.8",
+        "lie1.9",
+        "lie1.10",
+        "lie3.12",
+        "A1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.11:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：对易关系、叉乘对应、迹与维数",
+      "keywords": [
+        "验证 [J1,J2]=J3",
+        "把向量映成矩阵",
+        "算迹与维数",
+        "罗德里格斯检验"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "四问：验证三条对易关系与迹；_[×] 与叉乘（a×v 首分量 −3）；so(3) 维数 3 与「无迹是推论」；e^{θJ3} 在 θ=π/2 的迹 1。",
+      "content": "**四问。**\n\n**① 验证对易关系。** $[J_2,J_3]$ 与 $J_1$ 相等（数值核对通过），即 $[J_2,J_3]-J_1$ 是零矩阵；同样 $[J_3,J_1]=J_2$。**注意**：$[J_1,J_1]=0$（反对称的必然）；$\\operatorname{tr}J_1$ 算得 $0$【已核验:0|0+0+0】。\n\n**② 向量的矩阵化。** 对 $\\mathbf a=(1,2,3)$：$[\\mathbf a]_\\times=a_1J_1+a_2J_2+a_3J_3$。验算 $[\\mathbf a]_\\times\\mathbf v=\\mathbf a\\times\\mathbf v$：取 $\\mathbf v=(4,5,6)$，则 $\\mathbf a\\times\\mathbf v$ 的第一分量算得 $2\\cdot6-3\\cdot5$ 的值是 $-3$【已核验:-3|2*6-3*5】。\n\n**③ 迹与维数。** $\\operatorname{tr}J_i=0$（算得 $0$【已核验:0|0+0+0】）；$\\dim\\mathfrak{so}(3)$ 算得 $9-6=3$【已核验:3|9-6】。**注意** $\\mathfrak{so}(3)$ 里**没有**\"迹为零\"的独立条件（它是反对称的推论，限定词②）—— 这一点与 $\\mathfrak{su}(2)$ **不同**（那里无迹是**额外**要求，`lie1.12`）。\n\n**④ 罗德里格斯检验。** $e^{\\theta J_3}$ 应是绕 $z$ 轴转 $\\theta$：取 $\\theta=\\pi/2$，得到矩阵 $\\begin{pmatrix}0&-1&0\\\\1&0&0\\\\0&0&1\\end{pmatrix}$，其 $(3,3)$ 元素算得 $1$【已核验:1|cos(0)+0】、迹算得 $1$【已核验:1|1+2*cos(pi/2)】。**这验证了\"指数映射给出旋转\"**，也是\"旋转向量 → 矩阵\"的算法核心（`lie3.12`）。",
+      "links": [
+        "lie1.4",
+        "lie1.8",
+        "lie1.10",
+        "lie1.12",
+        "lie3.12",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.11:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：so(3) 的三种载体（矩阵 / 轴向量 / 厄米算符）",
+      "keywords": [
+        "元素形式对照",
+        "括号形式",
+        "指数映射",
+        "各自优势"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "三问：三种载体的元素/括号/指数；「换载体不换结构」的准确含义；工程分工。",
+      "content": "| 载体 | 元素 | 括号 | 指数映射 | 优势 |\n|---|---|---|---|---|\n| **反对称矩阵** | $[\\mathbf a]_\\times$（3 个自由度） | $AB-BA$ | $e^{\\theta J}=I+\\sin\\theta J+(1-\\cos\\theta)J^2$ | 数值计算、复合 |\n| **轴向量** | $\\mathbf a\\in\\mathbb R^3$ | 叉乘（配 $[\\cdot]_\\times$） | 轴角 $(\\hat{\\mathbf n},\\theta)$ | 几何直觉、参数化 |\n| **厄米算符** | $i\\hbar J$（角动量） | $[L_i,L_j]=i\\hbar\\varepsilon_{ijk}L_k$ | $e^{-i\\theta\\mathbf n\\cdot\\mathbf L/\\hbar}$ | 量子力学、谱 |\n\n**四条对照结论**：\n\n- **三者是同一个李代数**（结构常数都是 $\\varepsilon_{ijk}$）：$\\mathfrak{so}(3)\\cong(\\mathbb R^3,\\times)\\cong\\mathfrak{su}(2)$（`lie1.12`）；\n- **括号在三种载体里的\"外观\"不同**：矩阵对易子、叉乘、带 $i\\hbar$ 的量子括号 —— **换载体不换结构**（限定词③）；\n- **指数映射的\"形状\"不同**：矩阵版是罗德里格斯三项；轴角版是\"转个角\"；量子版是演化算符；\n- **工程分工**：**存储/插值** 用轴角或四元数，**复合** 用矩阵，**求导/优化** 用李代数，**量子/谱** 用厄米算符（`lie3.12`）。\n\n**关键数值**：$\\dim\\mathfrak{so}(3)$ 算得 $3$【已核验:3|9-6】；$\\operatorname{tr}J_1$ 算得 $0$【已核验:0|0+0+0】；$\\varepsilon_{123}$ 算得 $1$【已核验:1|1】。",
+      "links": [
+        "lie1.4",
+        "lie1.8",
+        "lie1.9",
+        "lie1.12",
+        "lie3.12",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.11:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：角动量量子化、姿态积分、叉乘运算与刚体动力学",
+      "keywords": [
+        "角动量代数与量子数",
+        "姿态的指数更新",
+        "叉乘/反对称矩阵在图形学",
+        "刚体角速度方程"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 170,
+        "line_end": 185
+      },
+      "fill_hint": "四问：角动量量子数与 2l+1；姿态积分用罗德里格斯；_[×] 在图形学出现处；刚体 Euler 方程的轴向量写法。",
+      "content": "$\\mathfrak{so}(3)$ 在四个地方被直接使用：\n\n- **量子力学（角动量）**：$[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$。由 $\\mathfrak{su}(2)$ 表示论（`lie2.7`）得 $\\hat L^2$ 的本征值 $l(l+1)\\hbar^2$、$L_z$ 的本征值 $m\\hbar$（$m=-l,\\dots,l$ ⇒ 共 $2l+1$ 个）—— **角动量量子化的代数来源**；\n- **姿态积分（机器人/图形）**：$\\dot R=R[\\boldsymbol\\omega]_\\times$ ⇒ $R_{n+1}=R_n\\exp(\\Delta t[\\boldsymbol\\omega]_\\times)$，用罗德里格斯公式（只有三项）实现**精确的旋转更新**（不会漂移出 $SO(3)$，`lie3.15`）；\n- **图形学/计算几何**：反对称矩阵 $[\\mathbf a]_\\times$ 是\"叉乘的矩阵化\"，出现在：光照模型（$\\mathbf n\\times\\mathbf l$）、面积/体积公式、最小二乘拟合平面、SVD 与 Procrustes 问题；\n- **刚体动力学**：角动量方程 $\\dot{\\mathbf L}=\\boldsymbol\\tau$、角速度的 Euler 方程 $\\mathbf I\\dot{\\boldsymbol\\omega}+\\boldsymbol\\omega\\times(\\mathbf I\\boldsymbol\\omega)=\\boldsymbol\\tau$ —— **用轴向量写法最简洁**（`lie3.15`）。\n\n**三条跨应用共性**：\n1. **三个自由度**（旋转的维数），最佳参数化是 $3$ 个（旋转向量）；\n2. **罗德里格斯公式只有三项**（$J^3=-J$）⇒ 计算效率最高；\n3. **非交换 = 叉乘顺序敏感**（`lie1.6` 的 $SE(3)$ 非交换在旋转部分同源）。\n\n**接缝**：`lie1.12` 给出 $\\mathfrak{su}(2)$ 并证明 $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$；`lie2.7` 给出表示论（角动量的谱）；`lie3.12` 给出工程参数化的取舍。",
+      "links": [
+        "lie1.4",
+        "lie1.10",
+        "lie1.12",
+        "lie2.7",
+        "lie3.1",
+        "lie3.12",
+        "lie3.15",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

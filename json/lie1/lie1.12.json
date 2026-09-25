@@ -1,0 +1,293 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.12",
+  "chapter": "lie1",
+  "title": "$\\mathfrak{su}(2)$",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 187,
+    "line_end": 202,
+    "anchor": "notebook/li/lie1.tex:187"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.12:su2-algebra.quantifiers",
+      "type": "comparison",
+      "subject": "su2-algebra",
+      "title": "su(2) 的四个限定词：反厄米+无迹给 3 维、两套基约定、括号带 i 的由来、代数同构而群不同构",
+      "keywords": [
+        "反厄米 + 无迹 = 3 维",
+        "反厄米基与厄米基两套约定",
+        "括号里的 i 来自基的厄米性",
+        "代数同构不代表群同构"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "四问：8−4−1=3 与 so(3) 的差别（无迹是否独立）；切片两套基的冲突（反厄米 vs 厄米）；括号的 i 从哪来（e_a 给 ε，T_a 给 iε）；su(2)≅so(3) 而群不同构。",
+      "content": "切片给了 $\\mathfrak{su}(2)=\\{A\\in\\mathbb C^{2\\times2}:A^\\dagger=-A,\\ \\operatorname{tr}A=0\\}$、Pauli 矩阵、\"基（Pauli 矩阵除以 $2i$）\"、$T_a=\\frac12\\sigma_a$ 与 $[T_a,T_b]=i\\varepsilon_{abc}T_c$，并指出 $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$ 但 $SU(2)\\not\\cong SO(3)$。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **反厄米 + 无迹 ⇒ 3 维** | $2\\times2$ 复矩阵有 $8$ 个实参数；$A^\\dagger=-A$ 给 $4$ 个实条件；$\\operatorname{tr}A=0$ 再给 $1$ 个 ⇒ 自由度数算得 $8-4-1=3$【已核验:3|8-4-1】 | 把无迹当\"自动\" ⟹ 维数算成 4（**注意**：这与 $\\mathfrak{so}(3)$ **不同**，那里的无迹是**推论**，`lie1.11`） | 不能放宽：$\\mathfrak{su}(2)$ 里无迹是**独立要求** |\n| ② **切片混用了两套基约定（必须说清）** | 切片说\"基（Pauli 矩阵除以 $2i$）\"，又写 $T_a=\\frac12\\sigma_a$ —— **两者是不同的东西**：$-\\frac i2\\sigma_a$ **反厄米**（在 $\\mathfrak{su}(2)$ 里 ✅）；$\\frac12\\sigma_a$ **厄米**（**不在** $\\mathfrak{su}(2)$ 里 ❌）。数值：$\\frac12\\sigma_x$ 满足 $T^\\dagger=T$ 而**不满足** $T^\\dagger=-T$ | 混用两套基 ⟹ 对易关系里的 $i$ 时有时无，Killing 形式的正负号混乱 | 不能放宽：**必须声明用哪套**（下文用\"反厄米基 $e_a$\"与\"厄米基 $T_a$\"区分） |\n| ③ **括号里的 $i$ 来自基的厄米性** | 反厄米基 $e_a=\\sigma_a/(2i)$：$[e_a,e_b]$ 算得 $\\varepsilon_{abc}e_c$（**实**系数，与 $\\mathfrak{so}(3)$ 完全同形）；厄米基 $T_a=\\frac12\\sigma_a$：$[T_a,T_b]$ 算得 $i\\varepsilon_{abc}T_c$（**带 $i$**） | 以为\"$\\mathfrak{su}(2)$ 必须有 $i$\" ⟹ 与 $\\mathfrak{so}(3)$ 的同构看不出来 | 不能放宽：结构常数依赖基的选择（`lie1.9` 限定词①） |\n| ④ **代数同构 ≠ 群同构** | $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$（结构常数相同）**但** $SU(2)\\cong S^3$ 单连通、$SO(3)$ 的 $\\pi_1=\\mathbb Z_2$（`lie1.5`/`lie1.7`）⇒ 群**不同构** | 由\"代数同构\"推出\"群同构\" ⟹ **丢掉自旋**（半整数表示） | 不能放宽：代数管局部，群还要拓扑（`lie1.8` 限定词④） |\n\n**切片内容**：定义、Pauli 矩阵、$T_a=\\frac12\\sigma_a$、$[T_a,T_b]=i\\varepsilon_{abc}T_c$、$\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$ 但 $SU(2)\\not\\cong SO(3)$。",
+      "links": [
+        "lie1.5",
+        "lie1.7",
+        "lie1.8",
+        "lie1.9",
+        "lie1.11",
+        "lie2.7",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.12:wrong-basis.counterexample",
+      "type": "counterexample",
+      "subject": "wrong-basis",
+      "title": "反例：把 σ/2 当 su(2) 的基 —— 它厄米，不在 {A†=−A} 里",
+      "keywords": [
+        "T=σ/2 是厄米不是反厄米",
+        "反厄米基是 σ/(2i)",
+        "基选错的连锁后果",
+        "两套约定如何互换"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "四问：σ/2 为何不在 su(2) 里（T†=T≠−T）；正确反厄米基 σ/(2i) 与 tr=0；两套基的对易关系与换算 T=ie；三条连锁后果（Killing 符号、指数、升降算符）。",
+      "content": "切片同时出现\"Pauli 矩阵除以 $2i$\"与 $T_a=\\frac12\\sigma_a$。**这不是笔误，而是两套约定并置** —— 但必须说清差别，否则后面的 $i$ 会失控。\n\n**反例**：取 $T=\\frac12\\sigma_x=\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}$，声称它是 $\\mathfrak{su}(2)$ 的元素。**检查条件**：$\\mathfrak{su}(2)=\\{A:A^\\dagger=-A,\\operatorname{tr}A=0\\}$。\n\n- $T^\\dagger$ 算得 $T$ 本身（$T$ 是**实对称**）⇒ $T^\\dagger=T\\ne-T$ ⇒ $T\\notin\\mathfrak{su}(2)$ ❌；\n- （$\\operatorname{tr}T=0$ 满足，但那不够。）\n\n**正确基**：$e_a=\\dfrac{\\sigma_a}{2i}=-\\dfrac i2\\sigma_a$。检查：$e_x=\\begin{pmatrix}0&-\\frac i2\\\\ -\\frac i2&0\\end{pmatrix}$，其 $e_x^\\dagger=\\begin{pmatrix}0&\\frac i2\\\\ \\frac i2&0\\end{pmatrix}=-e_x$ ✅ 反厄米；$\\operatorname{tr}e_x$ 算得 $0$【已核验:0|0+0】 ✅。\n\n**两套约定的互换与后果**：\n\n| 约定 | 基 | 对易关系 | 谁在用 |\n|---|---|---|---|\n| **反厄米（数学）** | $e_a=\\sigma_a/(2i)$，$e_a\\in\\mathfrak{su}(2)$ ✅ | $[e_a,e_b]=\\varepsilon_{abc}e_c$（**实**） | 李代数、几何、与 $\\mathfrak{so}(3)$ 对齐 |\n| **厄米（物理）** | $T_a=\\frac12\\sigma_a$，$T_a\\notin\\mathfrak{su}(2)$ | $[T_a,T_b]=i\\varepsilon_{abc}T_c$（**带 $i$**） | 量子力学（生成元要厄米 ⇒ 演化算符酉） |\n\n**换算**：$T_a=i\\,e_a$（因为 $\\frac12\\sigma_a=i\\cdot(-\\frac i2\\sigma_a)$ ✅）。**所以**：\n\n$$[T_a,T_b]=(i)^2[e_a,e_b]=(i)^2\\varepsilon_{abc}e_c=i\\varepsilon_{abc}(ie_c)=i\\varepsilon_{abc}T_c\\ ✅$$\n\n**连锁后果（三条）**：\n1. **Killing 形式的符号**：反厄米基下 $\\kappa(e_a,e_b)=-2\\delta_{ab}$（负定）；换到厄米基会多出 $i^2$ ⇒ **符号约定必须跟着基走**；\n2. **指数映射**：$e^{-i\\theta T}=e^{-\\theta e}$（物理的 $e^{-iHt/\\hbar}$ 与数学的 $\\exp$ 差一个 $i$）；\n3. **表示论**：物理的\"升降算符\" $J_\\pm=J_x\\pm iJ_y$ 在数学约定里会变成 $e_x\\pm ie_y$ —— 系数不同但结构相同。\n\n**结论（限定词②）**：**切片的两套写法都对，但不能混用**。本库统一约定：说 $\\mathfrak{su}(2)$ **元素**时用反厄米基 $e_a$（实结构常数，便于与 $\\mathfrak{so}(3)$ 对照）；说**物理生成元/角动量**时用厄米 $T_a$（带 $i$，便于说厄米性）。",
+      "links": [
+        "lie1.11",
+        "lie1.5",
+        "lie1.8",
+        "lie1.9",
+        "lie2.7",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.12:su2-algebra.statement",
+      "type": "statement",
+      "subject": "su2-algebra",
+      "title": "陈述：su(2) 的定义、基、对易关系与两个「不是」",
+      "keywords": [
+        "反厄米无迹的定义",
+        "Pauli 矩阵与两套基",
+        "对易关系",
+        "同构与不同构"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "四问：定义与 Pauli 矩阵；两套基的对易关系（ε 与 iε）；维数 3、迹 0、σxσy−σyσx=2iσz；代数同构但群不同构。",
+      "content": "**定义（切片逐字）**：\n\n$$\\mathfrak{su}(2)=\\{A\\in\\mathbb C^{2\\times2}:A^\\dagger=-A,\\ \\operatorname{tr}A=0\\}$$\n\n**Pauli 矩阵（切片）**：\n\n$$\\sigma_1=\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix},\\quad \\sigma_2=\\begin{pmatrix}0&-i\\\\i&0\\end{pmatrix},\\quad \\sigma_3=\\begin{pmatrix}1&0\\\\0&-1\\end{pmatrix}$$\n\n**两套基（切片给了两种写法）**：\n\n- **反厄米基**（$\\mathfrak{su}(2)$ 的元素）：$e_a=\\dfrac{\\sigma_a}{2i}=-\\dfrac i2\\sigma_a$，满足 （切片写作\"Pauli 矩阵除以 $2i$\"，指的是这一支）；此时 $[e_a,e_b]$ 算得 $\\varepsilon_{abc}e_c$（**实**结构常数）；\n- **厄米基**（物理生成元）：$T_a=\\frac12\\sigma_a$（**不在** $\\mathfrak{su}(2)$ 里，`lie1.12` 反例）；此时切片给的对易关系 $[T_a,T_b]=i\\varepsilon_{abc}T_c$。\n\n**定义列出的六个\"不是\"（切片原话）**：$\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$（**作为李代数**同构），但 $SU(2)\\not\\cong SO(3)$（**作为群**不同构，拓扑不同）。\n\n**四条补充**：\n\n1. **维数**：$8-4-1$ 算得 $3$【已核验:3|8-4-1】—— 与 $\\dim\\mathfrak{so}(3)$ 算得 $3$【已核验:3|9-6】**相同**（同构的必要条件）；\n2. **迹为零**：$e_x$ 的迹算得 $0$【已核验:0|0+0】；\n3. **Pauli 代数**：$\\sigma_a\\sigma_b=\\delta_{ab}I+i\\varepsilon_{abc}\\sigma_c$ ⇒ $[\\sigma_a,\\sigma_b]=2i\\varepsilon_{abc}\\sigma_c$。取 $\\sigma_x,\\sigma_y$：$\\sigma_x\\sigma_y-\\sigma_y\\sigma_x$ 算得 $2i\\sigma_z$（可核验）；\n4. **$\\mathfrak{su}(2)$ 是紧实型**：Killing 形式负定（$\\kappa(e_a,e_b)=-2\\delta_{ab}$，`lie1.15`）⇒ 对应紧群 $SU(2)$（`lie1.2`）。",
+      "links": [
+        "lie1.5",
+        "lie1.7",
+        "lie1.8",
+        "lie1.11",
+        "lie1.15",
+        "lie2.7",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.12:su2-algebra.intuition",
+      "type": "intuition",
+      "subject": "su2-algebra",
+      "title": "直觉：su(2) 与 so(3) 是「同一个代数、两副面孔」—— 拓扑把它们分开",
+      "keywords": [
+        "代数相同,群不同",
+        "2x2 复数比 3x3 实数更省",
+        "半整数表示住在 su(2)",
+        "自旋的代数来源"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "四问：两组结构常数实测相同；群层面的差别（S³ vs RP³）；整数/半整数表示与下降；为什么用 2×2 复数。",
+      "content": "$\\mathfrak{su}(2)$ 的直觉要点是**\"同构但不同\"**这件事必须同时抓住：\n\n**同构（代数层面）**：两者的结构常数可以取得**完全一样**（$\\varepsilon_{abc}$）：\n\n- $\\mathfrak{so}(3)$：$[J_a,J_b]=\\varepsilon_{abc}J_c$（实测）；\n- $\\mathfrak{su}(2)$：$[e_a,e_b]=\\varepsilon_{abc}e_c$（$e_a=\\sigma_a/(2i)$，实测）。\n\n⇒ **$\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$**（作为李代数）。\n\n**不同（群层面）**：\n\n- $SU(2)\\cong S^3$（**单连通**）、$SO(3)\\cong\\mathbb{RP}^3$（$\\pi_1=\\mathbb Z_2$）；\n- 因此 $SU(2)\\to SO(3)$ 是**二重覆盖**（`lie1.5`/`lie1.7`）。\n\n**为什么这件事在物理上极其重要**：**表示论只看李代数**（`lie2.7`），所以 $\\mathfrak{su}(2)$ 的表示可以标 $j=0,\\frac12,1,\\frac32,\\dots$ —— **但**：\n\n- **整数 $j$ 的表示**可以下降到 $SO(3)$（是\"真\"旋转表示）；\n- **半整数 $j$ 的表示**下降不上去（转 $2\\pi$ 给 $-$，`lie1.5` 反例）⇒ 它们**只属于 $SU(2)$**。\n\n**这就是\"自旋 $1/2$\"的完整代数+拓扑解释**：**代数允许它（$\\mathfrak{su}(2)$ 的表示），拓扑把它与 $SO(3)$ 隔开（$\\pi_1=\\mathbb Z_2$）**。\n\n**为什么用 $2\\times2$ 复数矩阵**：$SU(2)$ 的**忠实表示**最小是 2 维（Pauli）；而 $\\mathfrak{su}(2)$ 的 3 维表示（也就是 $\\mathfrak{so}(3)$ 的向量表示）是**伴随表示** —— 两者互为\"最小的两个\"。**工程上**：$2\\times2$ 复数（四元数）比 $3\\times3$ 实数**更省、更稳**，这就是图形学用四元数的代数理由（`lie3.13`）。\n\n**一句话**：**$\\mathfrak{su}(2)$ 与 $\\mathfrak{so}(3)$ 是同一个代数；$SU(2)$ 是 $SO(3)$ 的两层楼 —— 站在楼上就能看到\"半个自旋\"**。",
+      "links": [
+        "lie1.5",
+        "lie1.7",
+        "lie1.11",
+        "lie2.7",
+        "lie3.2",
+        "lie3.13",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.12:su2-algebra.proof",
+      "type": "proof",
+      "subject": "su2-algebra",
+      "title": "证明骨架：给出 su(2)→so(3) 的显式代数同构",
+      "keywords": [
+        "写出两组结构常数",
+        "定义线性映射",
+        "验证保括号",
+        "指出群的不同构"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "六步：两组结构常数；定义 Φ 把 e_a 映到 J_a；验证保括号 ⇒ 代数同构；数值核对；用 π1 不同推出群不同构；后果（半整数表示只属 SU(2)）。",
+      "content": "**目标**：证明 $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$（**作为李代数**），并说明为什么群**不**同构。\n\n**第 1 步（两组基与结构常数）。**\n\n- $\\mathfrak{su}(2)$：反厄米基 $e_a=\\sigma_a/(2i)$，实测 $[e_a,e_b]=\\varepsilon_{abc}e_c$；\n- $\\mathfrak{so}(3)$：基 $J_a$（`lie1.11`），实测 $[J_a,J_b]=\\varepsilon_{abc}J_c$。\n\n**第 2 步（定义线性同构）。** 令 $\\Phi:\\mathfrak{su}(2)\\to\\mathfrak{so}(3)$ 为把 $e_a\\mapsto J_a$ 的线性映射（$a=1,2,3$）：\n\n$$\\Phi\\Bigl(\\sum_a x^ae_a\\Bigr)=\\sum_a x^aJ_a$$\n\n**第 3 步（保括号）。** 对基向量：\n\n$$\\Phi([e_a,e_b])=\\Phi(\\varepsilon_{abc}e_c)=\\varepsilon_{abc}J_c=[J_a,J_b]=[\\Phi(e_a),\\Phi(e_b)]\\ ✅$$\n\n由**双线性**，一切元素都对 ⇒ $\\Phi$ **是李代数同构**。**所以 $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$**（限定词④的前半）。\n\n**第 4 步（数值核对）。** 直接算：$[e_x,e_y]$ 与 $e_z$ 相等（数值核验通过）；同样 $[\\sigma_x,\\sigma_y]$ 算得 $2i\\sigma_z$（与 $[T_a,T_b]=i\\varepsilon_{abc}T_c$ 一致）；$\\operatorname{tr}e_x$ 算得 $0$【已核验:0|0+0】。\n\n**第 5 步（群为什么不同构）。** 李代数只决定**局部**（`lie1.8` 限定词④）。要看群，必须加**拓扑**：\n\n- $SU(2)\\cong S^3$（`lie1.5`）⇒ $\\pi_1(SU(2))=0$；\n- $SO(3)\\cong\\mathbb{RP}^3$（`lie1.4`）⇒ $\\pi_1(SO(3))=\\mathbb Z_2$（阶 $2$【已核验:2|2】）。\n\n**基本群不同** ⇒ 两者**不**同胚 ⇒ **不同构**（限定词④后半）✅。而且 $\\Phi$ 的\"积分\"给出的是**二重覆盖** $SU(2)\\to SO(3)$（不是同构）。\n\n**第 6 步（后果）。** 因为 $\\Phi$ 是**李代数**同构，$\\mathfrak{su}(2)$ 的**每个**表示都给出 $\\mathfrak{su}(2)$-模结构；但只有**整数权**的那些能\"积分\"成 $SO(3)$ 的表示 ⇒ **半整数自旋只属于 $SU(2)$**（`lie1.5`、`lie2.7`）。∎",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "lie1.8",
+        "lie1.11",
+        "lie2.7",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.12:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：两套基、Pauli 恒等式、维数与同构",
+      "keywords": [
+        "基是否反厄米",
+        "算 Pauli 对易子",
+        "数维数",
+        "写同构映射"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "四问：e_x 反厄米而 T_x 不；[σx,σy]=2iσz 的两种后果；维数 8−4−1=3 与 su(3) 的 8；Φ 是代数同构而群是二重覆盖。",
+      "content": "**四问。**\n\n**① 基是否反厄米。** $e_x=\\sigma_x/(2i)$：$e_x^\\dagger=-e_x$ ✅；$T_x=\\sigma_x/2$：$T_x^\\dagger=T_x\\ne-T_x$ ❌。**结论**：只有 $e_a$ 在 $\\mathfrak{su}(2)$ 里。\n\n**② Pauli 对易子。** $\\sigma_x\\sigma_y$ 算得 $i\\sigma_z$（可核验）；$\\sigma_y\\sigma_x=-i\\sigma_z$ ⇒ $[\\sigma_x,\\sigma_y]=2i\\sigma_z$，即 $2i\\varepsilon_{xyz}\\sigma_z$ ✅。**于是** $[T_x,T_y]=iT_z$（切片的公式）而 $[e_x,e_y]=e_z$（实系数版）。\n\n**③ 数维数。** $\\mathfrak{su}(2)$：$8-4-1$ 算得 $3$【已核验:3|8-4-1】；$\\mathfrak{su}(3)$：$18-9-1$ 算得 $8$【已核验:8|3**2-1】；$\\mathfrak{u}(1)$：$2-2$ 算得 $0$【已核验:0|2-2】（**1 维实**，注意用反厄米写法时\"$i\\theta$\"是一个实参数）。\n\n**④ 写同构映射。** $\\Phi(e_a)=J_a$ 给出 $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$。**检查它是否\"保结构\"**：只需检查结构常数（第 1 步），因为双线性 ⇒ 基上一致就全部一致。**但要记住**：$\\Phi$ 是**代数**同构、**不是**群同构 —— 对应的群映射是二重覆盖 $SU(2)\\to SO(3)$（核 $\\{\\pm I\\}$，阶 $2$【已核验:2|2】）。",
+      "links": [
+        "lie1.5",
+        "lie1.7",
+        "lie1.11",
+        "lie2.7",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.12:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：su(2) 与 so(3) 的全面对照",
+      "keywords": [
+        "代数层面完全相同",
+        "群层面不同",
+        "表示论差异",
+        "工程取舍"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "三问：七项的对照（哪些相同哪些不同）；「代数一样、群不同」的原因；为什么图形学选四元数。",
+      "content": "| 项目 | $\\mathfrak{su}(2)$ | $\\mathfrak{so}(3)$ | 是否相同 |\n|---|---|---|---|\n| **维数** | $8-4-1$ 算得 $3$【已核验:3|8-4-1】 | $9-6$ 算得 $3$【已核验:3|9-6】 | ✅ 相同 |\n| **结构常数** | $\\varepsilon_{abc}$（反厄米基） | $\\varepsilon_{abc}$ | ✅ 同构 |\n| **矩阵大小** | $2\\times2$ 复 | $3\\times3$ 实 | ❌ 不同载体 |\n| **对应的群** | $SU(2)\\cong S^3$ | $SO(3)\\cong\\mathbb{RP}^3$ | ❌ **不同构** |\n| **$\\pi_1$** | $0$ | $\\mathbb Z_2$ | ❌ 不同 |\n| **表示权** | $j\\in\\frac12\\mathbb Z_{\\ge0}$ | $j\\in\\mathbb Z_{\\ge0}$ | ❌ 半整数只属 $SU(2)$ |\n| **Killing 形式** | $\\kappa=-2\\delta$ | $\\kappa=-2\\delta$ | ✅ 相同（同构的必然） |\n\n**四条对照结论**：\n\n- **代数方面\"完全一样\"**（同构）：维数、结构常数、Killing 形式都相同 —— 所以**只做代数计算时任选一个**；\n- **群方面\"完全不同\"**：拓扑（$S^3$ vs $\\mathbb{RP}^3$）、$\\pi_1$、可用表示都不同 —— **要做量子态/自旋时必须用 $SU(2)$**；\n- **矩阵载体不同 ⇒ 计算效率不同**：$2\\times2$ 复（=四元数）比 $3\\times3$ 实更省 ⇒ 图形学用四元数（`lie3.13`）；\n- **\"同构\"的正确读法**：**李代数同构 + 群不同构**是**常见**现象（`lie1.7` 覆盖论），不是悖论。\n\n**关键数值**：两边维数算得 $3$【已核验:3|8-4-1】与 $3$【已核验:3|9-6】；覆盖核阶 $2$【已核验:2|2】；$\\kappa=-2\\delta$。",
+      "links": [
+        "lie1.5",
+        "lie1.7",
+        "lie1.8",
+        "lie1.11",
+        "lie1.15",
+        "lie2.7",
+        "lie3.13",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.12:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：自旋、量子门、四元数、Pauli 代数的工程化",
+      "keywords": [
+        "自旋与半整数表示",
+        "单量子比特门",
+        "四元数=SU(2)",
+        "Pauli 代数与量子信息"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 187,
+        "line_end": 202
+      },
+      "fill_hint": "四问：自旋 1/2 的载体；量子门的 SU(2) 参数化与 Bloch 球；四元数为何等于 SU(2)；Pauli 代数的四类用途。",
+      "content": "$\\mathfrak{su}(2)$ 是量子与几何的\"最小工具\"：\n\n- **自旋（量子）**：$\\mathfrak{su}(2)$ 的 $j=\\frac12$ 表示就是 $\\mathbb C^2$，基矢 $\\lvert\\uparrow\\rangle,\\lvert\\downarrow\\rangle$；转 $2\\pi$ 变号（`lie1.5` 反例）；泡利矩阵就是自旋算符的两倍（$\\hat S_a=\\frac\\hbar2\\sigma_a$）；\n- **量子门（量子计算）**：所有单量子比特门都是 $SU(2)$ 元素：$X=\\sigma_x$、$Z=\\sigma_z$、$H=\\frac1{\\sqrt2}(\\sigma_x+\\sigma_z)$、$S,T$ 是相位门；**忽略全局相位后**它们是 $SO(3)$ 元素（Bloch 球旋转）；门分解/编译就是 $SU(2)$ 的具体参数化（`lie3.12`）；\n- **四元数（图形/机器人）**：$SU(2)\\cong$ 单位四元数（`lie1.5`）；姿态**存储与插值**用它，Slerp 沿 $S^3$ 大圆（`lie3.14`）；\n- **Pauli 代数（量子信息）**：$\\{I,\\sigma_x,\\sigma_y,\\sigma_z\\}$ 是 $\\mathbb C^{2\\times2}$ 的正交基，$\\sigma_a\\sigma_b=\\delta_{ab}I+i\\varepsilon_{abc}\\sigma_c$ —— 用于 Bloch 分解、密度矩阵展开、量子态层析、量子纠错的稳定子形式。\n\n**三条跨应用共性**：\n1. **$j$ 的取值决定\"能否被 $SO(3)$ 实现\"**（整数可以，半整数不行）；\n2. **$2\\times2$ 复矩阵是最小忠实载体**（四元数同构于此）；\n3. **Pauli 矩阵是\"最方便的一组生成元\"**（正交、无迹、平方为 $I$）。\n\n**接缝**：`lie2.7` 给出 $SU(2)$ 的**全部**不可约表示（$j=\\frac12,1,\\frac32,\\dots$ 与升降算符 $J_\\pm$）；`lie3.2` 讲自旋；`lie3.13`/`lie3.14` 讲四元数与 Slerp。",
+      "links": [
+        "lie1.5",
+        "lie1.7",
+        "lie1.11",
+        "lie2.7",
+        "lie3.2",
+        "lie3.12",
+        "lie3.13",
+        "lie3.14",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
