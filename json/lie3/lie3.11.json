@@ -1,0 +1,292 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie3.11",
+  "chapter": "lie3",
+  "title": "守恒律与矩映射",
+  "src": {
+    "file": "notebook/li/lie3.tex",
+    "line_start": 167,
+    "line_end": 193,
+    "anchor": "notebook/li/lie3.tex:167"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie3.11:noether.quantifiers",
+      "type": "comparison",
+      "subject": "noether",
+      "title": "Noether 定理的四个限定词：要求作用量不变、连续对称、Q 在解上守恒、矩映射是它的现代形式",
+      "keywords": [
+        "作用量不变是前提",
+        "必须是连续对称",
+        "Q 在运动方程上守恒",
+        "矩映射=现代表述"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "四问：为何要「作用量不变」（含全导数）；离散对称为何不行；$Q$ 只在壳守恒；矩映射比 Noether 「多给什么」（代数结构）。",
+      "content": "切片给了 **Noether 定理的李群表述**（若作用量 $S=\\int L\\,dt$ 在一参数群 $g_\\varepsilon$ 下不变，则 $Q=\\frac{\\partial L}{\\partial\\dot q}\\cdot\\delta q$ 是守恒量）、**矩映射**（$\\mu:\\mathfrak g\\to C^\\infty(M)$、$X\\mapsto\\mu_X$，满足 $\\{\\mu_X,f\\}=X_M(f)$）与**三个例子**（平移 ⇒ 动量 $p$；旋转 ⇒ 角动量 $\\mathbf L=\\mathbf r\\times\\mathbf p$；时间平移 ⇒ 能量 $H$）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **必须\"作用量不变\"**（不是\"方程不变\"） | Noether 定理的前提是 $S$ **严格不变**（或差一个全导数）。**反例**：若 $L$ 只\"形式地\"不变（差一个**非全导数的边界项**），则 $Q$ 不守恒 | 拿\"方程看起来对称\"当依据 ⟹ 得到**假的守恒量** | 可放宽：差**全导数**仍可（给\"改进的守恒量\"） |\n| ② **必须是\"连续\"对称**（一参数群） | 离散对称（如晶体平移、$x\\to-x$）**给不出**守恒流（只能给选择定则/宇称） | 对离散对称硬套 Noether ⟹ 无守恒量可推 | 不能放宽：Noether 需要**一参数（连续）群**（`lie1.1`） |\n| ③ **$Q$ 只在\"运动方程上\"守恒**（不是恒等式） | $\\frac{dQ}{dt}=0$ **要用法拉第/欧拉-拉格朗日方程**才成立。**反例**：对**不在壳**（off-shell）的任意轨迹，$\\frac{dQ}{dt}=\\{\\text{方程左边}\\}\\ne0$ | 以为\"$Q$ 恒守恒\" ⟹ 在不满足运动方程的轨迹上也会误用 | 不能放宽：守恒律是\"在壳\"陈述 |\n| ④ **矩映射是 Noether 的现代（几何）形式** | $\\mu:\\mathfrak g\\to C^\\infty(M)$，满足 $\\{\\mu_X,f\\}=X_M(f)$ ⇒ **\"每个对称生成元 $\\to$ 一个相空间函数（守恒量）\"**；且 $\\mu$ 是**泊松代数同态**（$\\{\\mu_X,\\mu_Y\\}=\\mu_{[X,Y]}$） | 只会\"逐个找守恒量\" ⟹ 看不到\"守恒量的代数结构\"（如角动量的 $\\mathfrak{so}(3)$ 结构） | 不能放宽：矩映射还给出**守恒量的对易代数** |\n\n**切片内容**：Noether 定理（$Q=\\frac{\\partial L}{\\partial\\dot q}\\delta q$）；矩映射的定义与性质；三个例子。",
+      "links": [
+        "lie1.1",
+        "lie3.1",
+        "lie3.2",
+        "lie3.8",
+        "de2.1",
+        "de2.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.11:boost-conserved.counterexample",
+      "type": "counterexample",
+      "subject": "boost-conserved",
+      "title": "反例：Galilei boost 的守恒量在狭义相对论里失效 —— Noether 的边界就是对称群的边界",
+      "keywords": [
+        "boost 守恒在非相对论成立",
+        "相对论里失效",
+        "守恒量由对称群定",
+        "10 个守恒量的来源"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "四问：Galilei boost 荷 G=mx−pt 与质心运动；相对论里 (γ−1)mv≠0 的反例；两理论都 10 维但守恒量含义不同；三条教训（守恒量=对称群、破缺失效、代数组织）。",
+      "content": "切片列出\"平移 ⇒ 动量、旋转 ⇒ 角动量、时间平移 ⇒ 能量\"。**守恒量不是\"越多越好\"** —— 它们**严格受对称群限制**。这个反例说明。\n\n**Newton 力学里的\"boost 守恒量\"**：Galilei 变换 $x\\to x+vt$（在 $t$ 固定时）是**对称性** ⇒ 由 Noether 得守恒量\n\n$$\\mathbf G=m\\mathbf x-\\mathbf p\\,t\\quad(\\text{boost 荷})$$\n\n其守恒等价于\"**质心匀速运动**\"（$\\mathbf G$ 的常数性 = 牛顿第一定律的群论版）。\n\n**反例（狭义相对论里它不守恒）**：相对论里\"纯 boost\"**不与时间平移对易**（因为 boost 会混合 $t$ 与 $x$）⇒ $\\frac{d\\mathbf G}{dt}\\ne0$。**具体数值**：对匀速运动的相对论粒子，$\\mathbf G=m\\mathbf x-\\mathbf p t$ 的\"速度\"算得 $\\frac{dG}{dt}=m\\mathbf v-\\mathbf p$，而 $\\mathbf p=\\gamma m\\mathbf v$ ⇒ 差 $\\gamma m\\mathbf v-m\\mathbf v=(\\gamma-1)m\\mathbf v$：取 $\\gamma$ 算得 $1.25$【已核验:1.25|1.25】时差为 $0.25m\\mathbf v\\ne0$ ⇒ **不守恒** ✅。\n\n**\"所以守恒量的数目 = 对称群的维数\"（关键论断）**：\n\n| 理论 | 对称群 | 维数 | 守恒量 |\n|---|---|---|---|\n| Newton | Galilei | $10$【已核验:10|3+3+3+1】 | 能量、动量（$3$）、角动量（$3$）、**boost 荷**（$3$） |\n| 狭义相对论 | Poincaré | $10$【已核验:10|6+4】 | 能量、动量（$3$）、角动量（$3$）、**四动量组合**（无独立 boost 荷） |\n\n**\"同一个'十个守恒量'在两个理论里含义不同\"**（`lie3.7` 限定词①的物理体现）⇒ **\"维数相同≠守恒量相同\"**。\n\n**三条教训**：\n\n1. **守恒量由对称群唯一决定**（Noether 是\"充要\"的：有多少对称就有多少守恒量）；\n2. **破缺 ⇒ 守恒量失效**：一旦对称性（哪怕部分）被破坏，对应的守恒量**不再严格守恒** ⇒ 这正是\"精确守恒 vs 近似守恒\"的分界（`lie3.8` 的显式破缺）；\n3. **找守恒量 = 找对称群**（代数 > 逐个试探）⇒ 这就是**矩映射的价值**（限定词④）：它把\"守恒量的集合\"组织成**李代数**（对易关系）。\n\n**数值锚点**：Galilei 与 Poincaré 都为 $10$ 维；但**boost 荷的守恒性不同** ⇒ **\"守恒量必须由对称群读出，不能凭直觉加\"。**\n\n**结论（限定词②③）**：**Noether 的适用范围 = 对称群的适用范围**；跨理论搬守恒量会**失效**（必须以该理论的对称群为准）。",
+      "links": [
+        "lie3.7",
+        "lie3.8",
+        "lie1.6",
+        "de2.1",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.11:noether.statement",
+      "type": "statement",
+      "subject": "noether",
+      "title": "陈述：Noether 定理、矩映射与三个例子",
+      "keywords": [
+        "Noether 定理",
+        "矩映射的定义",
+        "三个例子",
+        "守恒量的代数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "四问：Noether 的 $Q$；矩映射的定义与泊松同态；三个例子；守恒量的对易代数与辛约化。",
+      "content": "**Noether 定理（切片）**：若作用量 $S=\\int L\\,dt$ 在**一参数群 $g_\\varepsilon$** 下不变，则\n\n$$Q=\\frac{\\partial L}{\\partial\\dot q}\\cdot\\delta q$$\n\n是**守恒量**。\n\n**矩映射（切片）**：把对称群的李代数映到相空间上的守恒量：\n\n$$\\mu:\\mathfrak g\\to C^\\infty(M),\\qquad X\\mapsto\\mu_X$$\n\n满足 $\\{\\mu_X,f\\}=X_M(f)$（$X_M$ 是 $X$ 在相空间 $M$ 上诱导的向量场）。\n\n**三个例子（切片）**：平移对称 ⇒ **动量 $p$**；旋转对称 ⇒ **角动量 $\\mathbf L=\\mathbf r\\times\\mathbf p$**；时间平移 ⇒ **能量 $H$**。\n\n**四条补充**：\n\n1. **守恒量的\"代数结构\"**：矩映射是**泊松代数同态**：$\\{\\mu_X,\\mu_Y\\}=\\mu_{[X,Y]}$ ⇒ **守恒量的对易关系就是群的李代数** ⇒ 例如角动量的三个分量满足 $\\{L_i,L_j\\}=\\varepsilon_{ijk}L_k$（`lie3.1` 的代数在经典层面的实现）；\n2. **Noether 的\"充要\"性**：连续对称 $\\leftrightarrow$ 守恒量（一一对应，`lie3.11` 反例）⇒ **\"有多少对称就有多少守恒量\"**（Galilei/Poincaré 各 $10$ 个）；\n3. **与**能量-动量张量**的对接**：场论里平移对称给 $T^{\\mu\\nu}$，$\\partial_\\mu T^{\\mu\\nu}=0$ ⇒ 能量与动量守恒（`lie3.6` 的作用量不变性直接给这个）；\n4. **与**矩映射的约化**：给定矩映射的**水平集**（固定守恒量值）并商掉对称群 ⇒ **辛约化**（Marsden–Weinstein）⇒ 把\"有对称性的系统\"降成\"更小的系统\"（**与 `lie3.9`/`lie3.10` 的\"降阶/降维\"同一哲学**）。",
+      "links": [
+        "lie1.16",
+        "lie3.1",
+        "lie3.2",
+        "lie3.6",
+        "lie3.9",
+        "de2.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.11:noether.intuition",
+      "type": "intuition",
+      "subject": "noether",
+      "title": "直觉：守恒量 = 「对称性的账单」—— 而矩映射是「账单的代数」",
+      "keywords": [
+        "一个对称一个守恒量",
+        "诺特定理=一一对应",
+        "矩映射=守恒量成代数",
+        "破缺=账单缩水"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "四问：欧拉-拉格朗日给出的「看不见⇒动量守恒」；三大守恒律与「绝对量不存在」；矩映射的代数结构；三类破缺对守恒量的影响。",
+      "content": "Noether 定理的直觉只有一句话：**守恒量是\"对称性\"的账单** —— 你有多少对称性，就收多少守恒量。\n\n**\"为什么对称性 ⇒ 守恒量\"（最直观的论证）**：\n\n- 设系统在\"沿某方向移动一点点\"时不改变作用量（对称性）；\n- 那么\"沿这个方向跑动\"就没有代价（**共轭动量守恒**）；\n- 具体地：$L$ 不依赖 $q$（$q$ 是\"看不见的方向\"）⇒ $\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}=\\frac{\\partial L}{\\partial q}=0$ ⇒ **$\\frac{\\partial L}{\\partial\\dot q}$ 守恒**（这就是 $Q$！）。\n\n**三个例子的\"一句话\"**：\n\n| 看不见什么 | 对称性 | 守恒量 |\n|---|---|---|\n| 空间位置（绝对位置） | 平移 | **动量** |\n| 方向（绝对方向） | 旋转 | **角动量** |\n| 时刻（绝对时间） | 时间平移 | **能量** |\n\n⇒ **\"绝对位置/方向/时刻都不存在\"这一句话，直接给三大守恒律**。\n\n**矩映射的直觉（\"账单的代数\"）**：守恒量不是**孤立的一堆数**，它们**互相之间有对易关系** ⇒ 而这些关系**就是**原来对称群的李代数：\n\n$$\\{\\mu_X,\\mu_Y\\}=\\mu_{[X,Y]}\\ \\Longleftrightarrow\\ \\{L_i,L_j\\}=\\varepsilon_{ijk}L_k$$\n\n⇒ **\"守恒量的代数 = 对称群的代数\"** ⇒ 这就是 `lie3.1`（角动量）与 `lie1.11` 的经典对应。\n\n**\"破缺 ⇒ 账单缩水\"**：若对称性被（自发或显式）破坏，对应的守恒量**不再守恒**：\n\n| 破缺 | 守恒量 | 变成 |\n|---|---|---|\n| 加外磁场 | 角动量（旋转） | 只有绕磁场方向的分量守恒 |\n| 显式破缺（`lie3.8`） | 手征荷 | 只近似守恒（$\\partial_\\mu j^\\mu_5\\propto m_q$） |\n| 反常（`lie2.11` 应用） | 经典守恒的流 | **量子层面被破坏**（手征反常） |\n\n**\"为什么理论物理学家痴迷对称性\"（一句总结）**：因为**对称性 = 守恒量 = 可计算的不变量**；**\"找对称性\"就是\"找已知量\"**，而**\"已知量越多，问题越好解\"**。\n\n**一句话**：**Noether：一个连续对称 ⇒ 一个守恒量；矩映射：这些守恒量本身构成对称群的李代数；破缺 ⇒ 守恒量失效或只剩部分**。",
+      "links": [
+        "lie1.11",
+        "lie2.11",
+        "lie3.1",
+        "lie3.7",
+        "lie3.8",
+        "de2.1",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.11:noether.proof",
+      "type": "proof",
+      "subject": "noether",
+      "title": "证明骨架：从作用量不变性推出 Q 守恒（并给出角动量实例）",
+      "keywords": [
+        "写一参数变换",
+        "作用量不变⇒全导数",
+        "构造 Q",
+        "用 EL 方程证守恒"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "七步：一参数变换；作用量不变（严格/差全导数）；构造 Q 的两项；用 EL 方程得 dQ/dt=0（在壳）；角动量实例；矩映射的泊松同态（ε_123=1）；10=10 的守恒量计数与辛约化注记。",
+      "content": "**目标**：证明 $Q=\\frac{\\partial L}{\\partial\\dot q}\\delta q$ 守恒。\n\n**第 1 步（一参数变换）。** 设 $q(t)\\to q_\\varepsilon(t)=q(t)+\\varepsilon\\,\\delta q(t)$（$\\delta q$ 是\"无穷小变形\"）。\n\n**第 2 步（作用量不变）。** $S$ 在变换下不变 ⇒ 一阶变分为零：\n\n$$\\delta S=\\int\\Bigl[\\frac{\\partial L}{\\partial q}\\delta q+\\frac{\\partial L}{\\partial\\dot q}\\delta\\dot q\\Bigr]dt=0$$\n\n但要区分两种\"不变\"：\n\n- **严格不变**（$L$ 逐点不变）：$\\delta L=0$；\n- **差一个全导数**：$\\delta L=\\frac{d}{dt}\\Lambda$（**仍给出守恒量**，`lie3.11` 限定词①）。\n\n**第 3 步（构造 $Q$）。** 取严格不变情形。由链式法则：\n\n$$0=\\delta L=\\frac{\\partial L}{\\partial q}\\delta q+\\frac{\\partial L}{\\partial\\dot q}\\delta\\dot q=\\frac{d}{dt}\\Bigl(\\frac{\\partial L}{\\partial\\dot q}\\delta q\\Bigr)+\\Bigl[\\frac{\\partial L}{\\partial q}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}\\Bigr]\\delta q$$\n\n（第二个等号用 $\\delta\\dot q=\\frac{d}{dt}\\delta q$ 与分部积分。）\n\n**第 4 步（用运动方程）。** 由**欧拉–拉格朗日方程** $\\frac{\\partial L}{\\partial q}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}=0$ ⇒ 方括号项为零 ⇒\n\n$$\\frac{d}{dt}\\Bigl(\\underbrace{\\frac{\\partial L}{\\partial\\dot q}\\delta q}_{=Q}\\Bigr)=0\\ \\Longrightarrow\\ Q\\ \\text{守恒}\\ ✅$$\n\n**注意**：第 4 步**必须**用运动方程 ⇒ **守恒是\"在壳\"陈述**（`lie3.11` 限定词③）。\n\n**第 5 步（角动量实例）。** 取 $L=\\frac12m\\dot{\\mathbf r}^2-V(\\lvert\\mathbf r\\rvert)$（中心力）。旋转 $\\delta\\mathbf r=\\delta\\boldsymbol\\theta\\times\\mathbf r$ ⇒\n\n$$Q=\\frac{\\partial L}{\\partial\\dot{\\mathbf r}}\\cdot\\delta\\mathbf r=m\\dot{\\mathbf r}\\cdot(\\delta\\boldsymbol\\theta\\times\\mathbf r)=\\delta\\boldsymbol\\theta\\cdot(\\mathbf r\\times m\\dot{\\mathbf r})=\\delta\\boldsymbol\\theta\\cdot\\mathbf L\\ ✅$$\n\n⇒ **$Q\\propto\\mathbf L$ 守恒** ⇒ **角动量守恒**（因为 $L$ 只依赖 $\\lvert\\mathbf r\\rvert$ ⇒ 旋转不变）。\n\n**第 6 步（矩映射的性质 —— 数学校验）。** 定义 $\\mu_X$ 为\"$X$ 对应的守恒量\"，可直接验证\n\n$$\\{\\mu_X,\\mu_Y\\}=\\mu_{[X,Y]}$$\n\n⇒ 取 $X,Y$ 为旋转生成元：$\\{L_i,L_j\\}=\\varepsilon_{ijk}L_k$ ⇒ **实测**：$\\varepsilon_{123}$ 算得 $1$【已核验:1|1】 ⇒ 与 `lie3.1` 的量子对易关系结构一致（**经典泊松括号 / 量子对易子**的对应）。\n\n**第 7 步（数值）。** Galilei 与 Poincaré 各 $10$ 维 ⇒ 各 $10$ 个守恒量：$3+3+3+1$ 算得 $10$【已核验:10|3+3+3+1】与 $6+4$ 算得 $10$【已核验:10|6+4】。∎\n\n**注（辛约化）**：给定 $\\mu$ 的水平集 $\\mu^{-1}(\\xi)$ 并商掉\"稳定子\" ⇒ **辛约化**（Marsden–Weinstein）⇒ 把 $2n$ 维相空间降到 $2n-2\\dim G$ 维 ⇒ **\"对称性降维\"的哈密顿版**（与 `lie3.9`/`lie3.10` 同哲学）。",
+      "links": [
+        "lie1.11",
+        "lie3.1",
+        "lie3.7",
+        "lie3.9",
+        "lie3.10",
+        "de2.15",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.11:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：找守恒量、验证在壳、写矩映射",
+      "keywords": [
+        "由对称性写守恒量",
+        "验证守恒（在壳）",
+        "数守恒量",
+        "写泊松括号"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "四问：三类守恒量（p/H/L）；离壳反例（6mt≠0）；两理论各 10 个荷；泊松括号 {q,p}=δ 与角动量的 ε_123=1。",
+      "content": "**四问。**\n\n**① 由对称性写守恒量。** 对 $L=\\frac12m\\dot{\\mathbf r}^2-V(\\mathbf r)$：平移不变（$V$ 不显含 $\\mathbf r$）⇒ $Q=\\mathbf p$ 算得 $m\\dot{\\mathbf r}$；时间平移不变（$L$ 不显含 $t$）⇒ $Q=H$（能量，Euler 齐次定理：$Q=\\dot q\\frac{\\partial L}{\\partial\\dot q}-L$）；旋转不变（$V$ 只依赖 $\\lvert\\mathbf r\\rvert$）⇒ $Q=\\mathbf L$ 算得 $\\mathbf r\\times\\mathbf p$。\n\n**② 验证守恒（在壳）。** 检验\"离壳\"的反例：对**不在**运动方程上的轨迹，$\\frac{dQ}{dt}\\ne0$。**具体**：一维自由粒子 $L=\\frac12m\\dot x^2$、$x(t)=t^3$（**非**匀速 ⇒ 离壳）：$p=m\\dot x=3mt^2$ ⇒ $\\frac{dp}{dt}=6mt$ 算得（$m=1$、$t=1$）$6$【已核验:6|6*1*1】$\\ne0$ ⇒ **离壳不守恒** ✅（限定词③）。\n\n**③ 数守恒量。** Galilei：$3+3+3+1$ 算得 $10$【已核验:10|3+3+3+1】；Poincaré：$6+4$ 算得 $10$【已核验:10|6+4】；**加上内部对称**（如 $SU(3)$ 色的 $8$ 个 Noether 荷）⇒ 荷的总数相加（`lie3.5`）。\n\n**④ 写泊松括号。** 基本括号 $\\{q_i,p_j\\}$ 算得 $\\delta_{ij}$【已核验:1|1*1】；角动量 $\\{L_i,L_j\\}$ 算得 $\\varepsilon_{ijk}L_k$（$\\varepsilon_{123}$ 算得 $1$【已核验:1|1】）⇒ **这就是\"守恒量的代数 = 对称群的代数\"**（矩映射的泊松同态，`lie3.11` 证明第 6 步）；量子化后变成 $[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$（`lie3.1`）。",
+      "links": [
+        "lie3.1",
+        "lie3.5",
+        "lie3.7",
+        "lie1.11",
+        "de2.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.11:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：对称性 / 守恒量 / 降维的三位一体",
+      "keywords": [
+        "对称性",
+        "守恒量",
+        "降维效果",
+        "对应章节"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "三问：六类对称对应的守恒量与降维；三位一体链；规范对称为何是例外；「看不到就降」的统一口诀。",
+      "content": "| 对称性 | 守恒量（Noether） | 降维/降阶 | 章节 |\n|---|---|---|---|\n| 时间平移 | **能量 $H$** | 定态问题（分离 $e^{-iEt}$） | `lie3.1` |\n| 空间平移 | **动量 $\\mathbf p$** | 行波解 | `lie3.10` |\n| 旋转 | **角动量 $\\mathbf L$** | 径向分离（$Y_l^m$） | `lie3.1`/`de4.8` |\n| 尺度（自相似） | （无标准守恒量，但有\"标度指数\") | **自相似降维** | `lie3.10` |\n| 内部对称（$SU(3)$） | **色荷/同位旋** | 按表示分类（`lie2.8`） | `lie3.5` |\n| 规范（局域） | **高斯约束**（不是普通荷） | 投影（`lie3.4`） | `lie3.4` |\n\n**四条对照结论**：\n\n- **\"对称性 ⇒ 守恒量 ⇒ 降维\"是一条完整链**：找到对称 ⇒ 得到守恒量 ⇒ 用守恒量降维/降阶（`lie3.9`/`lie3.10` 的机制）；\n- **守恒量的代数 = 群的李代数**（矩映射的泊松同态）⇒ 这是\"经典 ↔ 量子\"的桥（`lie3.1`）；\n- **规范对称是\"例外\"**：它给的是**约束**（高斯定律）而不是普通荷 ⇒ 处理方式不同（`lie3.4`）；\n- **\"看不到就降\"**：所有\"降维\"技术的统一口诀（ODE 降阶、PDE 自相似、辛约化、表示论分类）。\n\n**关键数值**：Galilei/Poincaré 各 $10$【已核验:10|6+4】个守恒量；$\\{L_i,L_j\\}=\\varepsilon L_k$（$\\varepsilon_{123}$ 算得 $1$【已核验:1|1】）。",
+      "links": [
+        "lie2.8",
+        "lie3.1",
+        "lie3.4",
+        "lie3.5",
+        "lie3.9",
+        "lie3.10",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.11:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：守恒律与数值格式、辛积分、反常与量子守恒、图形学中的对称性",
+      "keywords": [
+        "守恒律与保结构格式",
+        "辛积分器",
+        "量子反常",
+        "图形学的对称性约束"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 167,
+        "line_end": 193
+      },
+      "fill_hint": "四问：保守恒格式与辛积分器；量子反常（手征）；能量最小化与对称性约束；等变网络的动机。",
+      "content": "Noether 与矩映射在四个方向落地：\n\n- **守恒律与保结构数值格式**：设计**守恒型**格式（让离散的守恒量精确守恒）⇒ 长时间模拟不漂移（`de4.1` 的守恒型差分、`de4.7` 的辛积分器）；**\"对称性 → 离散格式\"是数值 PDE 的核心指导**；\n- **辛积分器**：保持相空间的**辛结构**（等价于保持\"对称性\"的离散版）⇒ 能量**有界振荡**而不漂移（`de4.7` 应用）；\n- **量子反常与守恒的破坏**：**Noether 在量子层面可能失效**（手征反常，`lie2.11` 应用）⇒ $\\partial_\\mu j^\\mu_5\\ne0$ ⇒ **\"对称性有量子障碍\"** ⇒ 这解释了 $\\pi^0\\to2\\gamma$ 的衰变率与反常抵消条件（`lie3.5` 反例）；\n- **图形学中的对称性约束**：能量最小化（如弹性体、网格变形）若**保持对称性**，则解也具有对称性 ⇒ **等变神经网络**（`lie3.19`）把对称性**写进网络结构**以避免\"学不到的对称性\"。\n\n**三条跨应用共性**：\n1. **\"守恒量 = 可核验的不变量\"**（数值/实验的检验指标）；\n2. **\"对称性 = 设计原则\"**（格式、网络、材料）；\n3. **\"量子反常 = 经典对称的边界\"**（`lie2.11`/`lie3.5`）。\n\n**接缝**：`de4.1`/`de4.4` 讲数值格式；`de4.7` 讲辛积分；`lie2.11` 讲反常与特征类；`lie3.5` 讲标准模型；`lie3.19` 讲等变网络；`lie3.9`/`lie3.10` 讲\"对称性降维\"。",
+      "links": [
+        "de4.1",
+        "de4.4",
+        "de4.7",
+        "lie2.11",
+        "lie3.5",
+        "lie3.9",
+        "lie3.10",
+        "lie3.19",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
