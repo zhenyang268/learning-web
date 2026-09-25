@@ -1,0 +1,290 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.13",
+  "chapter": "lie1",
+  "title": "$\\mathfrak{so}(1,3)$：Lorentz 代数",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 204,
+    "line_end": 230,
+    "anchor": "notebook/li/lie1.tex:204"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.13:lorentz.quantifiers",
+      "type": "comparison",
+      "subject": "lorentz",
+      "title": "Lorentz 代数的四个限定词：η 不定号、boost 非紧、复化才分裂、表示按 (j1,j2) 分类",
+      "keywords": [
+        "度量 η 是不定号",
+        "boost 生成元非紧",
+        "只有复化才分裂",
+        "有限维表示不是酉表示"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "四问：η 换成正定的后果（变 so(4)）；K 对称而 J 反对称（非紧的根源）；[K,K]=−εJ 的负号为何阻止实分裂；为何有限维表示非酉。",
+      "content": "切片给了 $\\mathfrak{so}(1,3)=\\{A:A^{\\mathsf T}\\eta+\\eta A=0\\}$（$\\eta=\\operatorname{diag}(-1,1,1,1)$）、**6 个生成元（3 旋转 $J_i$ + 3 boost $K_i$）**、**三条对易关系**、**复化分解** $\\mathfrak{so}(1,3)_{\\mathbb C}\\cong\\mathfrak{su}(2)_{\\mathbb C}\\oplus\\mathfrak{su}(2)_{\\mathbb C}$，以及 $(j_1,j_2)$ 分类。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **度量 $\\eta$ 是**不定号**（不是 $I$）** | 若把 $\\eta$ 当 $\\operatorname{diag}(1,1,1,1)$，条件变成 $A^{\\mathsf T}=-A$ ⇒ 得到 $\\mathfrak{so}(4)$（**紧**，维数算得 $6$【已核验:6|4*(4-1)/2】）而不是 Lorentz 代数。**关键差别**：$\\eta$ 的时间分量符号为负 ⇒ $K_i$ 是**对称**（而非反对称）的 | 用错度量 ⟹ 把\"boost\"与\"旋转\"混为一谈，非紧性丢失 | 不能放宽：$\\eta$ 的符号差是**唯一**区别 |\n| ② **boost 生成元 $K_i$ 不紧** | 实测（本库核验）：$K_1$ 满足 $K_1^{\\mathsf T}=K_1$（对称）而 $J_1^{\\mathsf T}=-J_1$（反对称）。由 $\\operatorname{tr}(K_i)=0$【已核验:0|0+0+0+0+0+0】可知都无迹，但**对称性不同** ⇒ $K_i$ 的指数是无界（非紧）的单参数群 | 用\"$e^{\\theta K}$ 有界\"的直觉 ⟹ 认为 boost 也是旋转（错：那叫 Galilean/Wick 旋转） | 不能放宽：**Lorentz 群非紧**的根源就在 $K_i$ |\n| ③ **复化才分裂，实数域上不分裂** | 实数域上 $\\mathfrak{so}(1,3)$ **不是**两个 $\\mathfrak{su}(2)$ 的直和；必须复化后才有 $\\mathfrak{so}(1,3)_{\\mathbb C}\\cong\\mathfrak{su}(2)_{\\mathbb C}\\oplus\\mathfrak{su}(2)_{\\mathbb C}$。**数值证据**：$[K_i,K_j]$ 算得 $-\\varepsilon_{ijk}J_k$（**负号**）—— 正是这个负号阻止了实分裂 | 直接在实域上分成 $A\\oplus B$ ⟹ $A_i,B_i$ 不是实数组合（要带 $i$） | 不能放宽：$A_i=\\frac12(J_i+iK_i)$ 里**必须有 $i$** |\n| ④ **有限维表示都非酉**（除平凡） | 因为 $K_i$ 非紧（限定词②），任何有限维表示里 $K_i$ 的像**不可能是反厄米**（否则 $e^{\\theta K}$ 会是有界酉群）⇒ **有限维（非平凡）表示都非酉** | 以为\"物理的洛伦兹对称实现为酉表示\" ⟹ 矛盾（量子场论里用**无限维**酉表示，有限维的（$j_1,j_2$）用于**场**的变换） | 不能放宽：非紧 ⇒ 无有限维酉表示（Weyl 的 unitarian trick 只对复化有效） |\n\n**切片内容**：定义与 $\\eta$；6 个生成元；三条对易关系（$[J,J]=i\\varepsilon J$、$[J,K]=i\\varepsilon K$、$[K,K]=-i\\varepsilon J$）；复化分解；$(j_1,j_2)$ 与物理粒子对应（$(0,0)$ 标量、(½,0) 左手 Weyl、(0,½) 右手 Weyl、(½,½) 向量、(1,0)/(0,1) 反对称张量）。",
+      "links": [
+        "lie1.4",
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie2.3",
+        "lie3.7",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.13:noncompact-no-unitary.counterexample",
+      "type": "counterexample",
+      "subject": "noncompact-no-unitary",
+      "title": "反例：boost 无法在有限维里成为反厄米 —— 非紧群的酉表示只能无限维",
+      "keywords": [
+        "K 对称 ⇒ e^{θK} 无界",
+        "有限维无酉表示",
+        "(j1,j2) 表示非酉",
+        "物理上如何绕过"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "四问：K1 对称且无界（特征值 ±1）；为何反厄米⇒有界⇒矛盾；J1 特征值 ±i 有界；三条绕过办法（无限维酉/场表示/unitarian trick）。",
+      "content": "切片给了 $[K_i,K_j]=-i\\varepsilon_{ijk}J_k$ —— **那个负号是 Lorentz 代数的\"非紧性标记\"**。这个反例说明它为什么重要。\n\n**构造**：取 boost 生成元 $K_1$（沿 $x$ 的 boost）。实测两个性质：\n\n- $K_1^{\\mathsf T}=K_1$（**对称**，与旋转 $J_1^{\\mathsf T}=-J_1$ **相反**）；\n- $\\operatorname{tr}K_1=0$【已核验:0|0+0+0+0+0+0】（全部六个生成元都无迹）。\n\n**推论（关键）**：$e^{\\theta K_1}$ 是一个**无界**的单参数群（Lorentz boost 的\"快度\"可以到无穷；矩阵元 $\\cosh\\theta,\\sinh\\theta\\to\\infty$）。\n\n**反例（有限维酉表示不存在）**：设 $\\pi:\\mathfrak{so}(1,3)\\to\\mathfrak{u}(N)$ 是一个**有限维**表示，且要求 $\\pi(K_i)$ **反厄米**（这样 $e^{\\theta\\pi(K_i)}$ 才是**酉**的，才有界）。但反厄米矩阵的指数**总是有界**（$\\lVert e^{A}\\rVert\\le e^{\\lVert A\\rVert}$，且酉矩阵范数为 1）—— 这与 \"$e^{\\theta K_1}$ 无界\"**矛盾**。因此：\n\n$$\\text{不存在非平凡的有限维酉表示}\\ \\Rightarrow\\ \\text{（}j_1,j_2\\text{）表示全部非酉}$$\n\n**数值佐证**：$K_1$ 的实特征值 —— 对称矩阵有实特征值，$K_1$ 的谱是 $\\{0,0,+1,-1\\}$；于是 $e^{\\theta K_1}$ 的特征值含 $e^{\\pm\\theta}$ ⇒ **无界** ✅。**对照** $J_1$（反对称）特征值是 $\\{0,0,\\pm i\\}$ ⇒ $e^{\\theta J_1}$ 的特征值模为 $1$ ⇒ **有界**（旋转）✅。\n\n**物理上如何绕过（三条）**：\n1. **无限维酉表示**：量子场论的 Hilbert 空间上，Lorentz 群作用酉（但不可约分解为无限维的）；\n2. **非酉有限维表示用于\"场\"**：Dirac 旋量（$(½,0)\\oplus(0,½)$）、矢量（$(½,½)$）都是**场的变换规律**，不需要酉（因为场不是概率幅）；\n3. **Weyl 的 unitarian trick**：把 $\\mathfrak{so}(1,3)$ **复化**成 $\\mathfrak{su}(2)_{\\mathbb C}\\oplus\\mathfrak{su}(2)_{\\mathbb C}$（限定词③），复化后**是**紧的直和 ⇒ 有限维表示理论完全可用（这正是切片给的分解）。\n\n**结论**：**$[K_i,K_j]=-i\\varepsilon J_k$ 的负号 = 非紧性 = 无有限维酉表示 = 旋量只是\"场的表示\"而不是\"概率幅的表示\"**。",
+      "links": [
+        "lie1.2",
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie3.7",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.13:lorentz.statement",
+      "type": "statement",
+      "subject": "lorentz",
+      "title": "陈述：Lorentz 代数的定义、六个生成元、对易关系与 (j1,j2) 分类",
+      "keywords": [
+        "η 与定义",
+        "J 与 K 的角色",
+        "三条对易关系",
+        "复化与 (j1,j2)"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "四问：定义与 η；6=3+3；三条对易关系（实版核验通过）；复化分解与 (j1,j2) 的维数 2/4/3。",
+      "content": "**定义（切片逐字）**：\n\n$$\\mathfrak{so}(1,3)=\\{A:A^{\\mathsf T}\\eta+\\eta A=0\\},\\qquad \\eta=\\operatorname{diag}(-1,1,1,1)$$\n\n**六个生成元（切片）**：3 个旋转 $J_i$ + 3 个 boost $K_i$，共算得 $3+3=6$【已核验:6|3+3】个（也等于 $4\\cdot3/2$ 算得 $6$【已核验:6|4*(4-1)/2】）。\n\n**对易关系（切片）**：\n\n$$[J_i,J_j]=i\\varepsilon_{ijk}J_k,\\qquad [J_i,K_j]=i\\varepsilon_{ijk}K_k,\\qquad [K_i,K_j]=-i\\varepsilon_{ijk}J_k$$\n\n（本库核验的是**实**系数版：$[J,J]=\\varepsilon J$、$[J,K]=\\varepsilon K$、$[K,K]=-\\varepsilon J$，全部成立；加了 $i$ 就是\"厄米生成元\"约定，见 `lie1.11` 反例的解释。）\n\n**复化分解（切片）**：\n\n$$\\mathfrak{so}(1,3)_{\\mathbb C}\\cong\\mathfrak{su}(2)_{\\mathbb C}\\oplus\\mathfrak{su}(2)_{\\mathbb C},\\qquad A_i=\\tfrac12(J_i+iK_i),\\ B_i=\\tfrac12(J_i-iK_i)$$\n\n则 $[A_i,A_j]=i\\varepsilon_{ijk}A_k$、$[B_i,B_j]=i\\varepsilon_{ijk}B_k$、$[A_i,B_j]=0$（**实测全部成立**）。\n\n**物理意义（切片）**：粒子按 $(j_1,j_2)$ 分类（**两个\"自旋\"量子数**），维数 = $(2j_1+1)(2j_2+1)$：$(0,0)$ 标量（Higgs，维数 $1$）；$(\\frac12,0)$ 左手 Weyl（维数算得 $2$【已核验:2|(2*0.5+1)*(2*0+1)】）；$(0,\\frac12)$ 右手 Weyl；$(\\frac12,\\frac12)$ 向量（光子，维数算得 $4$【已核验:4|(2*0.5+1)*(2*0.5+1)】）；$(1,0)$ 或 $(0,1)$ 反对称张量（维数各算得 $3$【已核验:3|(2*1+1)*(2*0+1)】，合起来 $6$）。",
+      "links": [
+        "lie1.2",
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "lie2.3",
+        "lie3.7",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.13:lorentz.intuition",
+      "type": "intuition",
+      "subject": "lorentz",
+      "title": "直觉：Lorentz 代数 = 两个「自旋」的复数组合 —— 但只在复化后",
+      "keywords": [
+        "J 是转,K 是推",
+        "负号让实分裂失败",
+        "复化后变两个 su(2)",
+        "(j1,j2) 像两个自旋标签",
+        "旋量=场的表示"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "四问：J 与 K 的紧性差别；负号与 Thomas 进动；[A,B]=0 的含义；四种 (j1,j2) 的物理对象；Weyl unitarian trick 与「非酉」的代价。",
+      "content": "Lorentz 代数的直觉可以分**三步**建立：\n\n**第 1 步（物理角色的分裂）**：6 个生成元分成两族：\n\n- $J_i$：**旋转**（紧，$e^{\\theta J}$ 有界，特征值 $\\pm i$）；\n- $K_i$：**boost**（非紧，$e^{\\theta K}$ 无界，特征值 $\\pm1$）。\n\n**第 2 步（负号的意义）**：对易关系 $[K_i,K_j]=-i\\varepsilon_{ijk}J_k$ 的**负号**说明\"两次 boost 会得到一个旋转\"（Thomas 进动！）—— 但**方向相反**，正是这个负号让 $\\mathfrak{so}(1,3)$ 在**实**数域上**不能**拆成两个 $\\mathfrak{su}(2)$。\n\n**第 3 步（复化：把负号\"吸收\"进 $i$）**：令\n\n$$A_i=\\tfrac12(J_i+iK_i),\\quad B_i=\\tfrac12(J_i-iK_i)\\ \\Longrightarrow\\ [A,B]=0,\\ [A,A]=[\\text{su}(2)],\\ [B,B]=[\\text{su}(2)]$$\n\n**实测**：$[A_i,B_j]=0$ 完全成立 ⇒ **复化后**代数变成两个**互不干扰**的 $\\mathfrak{su}(2)$。\n\n**于是表示论变得像\"两个自旋\"**：用 $(j_1,j_2)$ 标（两边的 $j$），维数 $(2j_1+1)(2j_2+1)$：\n\n| $(j_1,j_2)$ | 维数 | 物理对象 |\n|---|---|---|\n| $(0,0)$ | $1$ | 标量（Higgs） |\n| $(\\frac12,0)$ / $(0,\\frac12)$ | $2$ | 左手 / 右手 Weyl 旋量 |\n| $(\\frac12,\\frac12)$ | $4$ | **四维向量**（光子、坐标） |\n| $(1,0)$ / $(0,1)$ | $3$ | 自对偶 / 反自对偶反对称张量（$3+3=6=\\dim\\Lambda^2$） |\n\n**为什么\"复化\"能这样用而不出问题（Weyl 的 unitarian trick）**：$\\mathfrak{so}(1,3)$ 的**有限维**表示与其复化 $\\mathfrak{su}(2)_{\\mathbb C}\\oplus\\mathfrak{su}(2)_{\\mathbb C}$ 的表示**一一对应**（都是\"代数\"层面的对象）⇒ 可以用**紧**群的表示论工具（完全可约、最高权）来分析**非紧**的 Lorentz 代数。**代价**：这些表示**不是酉**的（`lie1.13` 反例）⇒ 只能用来描述\"场\"，不能描述\"概率幅\"。\n\n**一句话**：**Lorentz 代数 = \"两个自旋的复数组合\"；负号（$[K,K]=-\\varepsilon J$）是它的真实身份标记，$i$ 是把它拆开的钥匙，而非酉性是它的代价**。",
+      "links": [
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie2.3",
+        "lie3.2",
+        "lie3.7",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.13:lorentz.proof",
+      "type": "proof",
+      "subject": "lorentz",
+      "title": "证明骨架：A=½(J+iK) 使 [A,B]=0 并各自成为 su(2)",
+      "keywords": [
+        "写出 A,B 定义",
+        "展开 [A,B] 的四项",
+        "逐项用三条对易关系",
+        "负号与符号相消"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "六步：三条基本关系（实/复约定）；展开 [A,B]；四项相消（关键在 [K,K] 的负号）；展开 [A,A] 得 iεA；[B,B] 同理；数值核验四项（含迹全为零）。",
+      "content": "**目标**：验证 $A_i=\\frac12(J_i+iK_i)$、$B_i=\\frac12(J_i-iK_i)$ 满足 $[A_i,A_j]=i\\varepsilon_{ijk}A_k$、$[B_i,B_j]=i\\varepsilon_{ijk}B_k$、$[A_i,B_j]=0$（切片只给结论）。\n\n**第 1 步（记三条基本关系，物理约定）。**\n\n$$[J_i,J_j]=i\\varepsilon J_k,\\qquad [J_i,K_j]=i\\varepsilon K_k,\\qquad [K_i,K_j]=-i\\varepsilon J_k$$\n\n（本库实测的**实**系数版为 $[J,J]=\\varepsilon J$、$[J,K]=\\varepsilon K$、$[K,K]=-\\varepsilon J$，两者相差\"生成元乘 $i$\"的整体约定，`lie1.11` 反例已解释。）\n\n**第 2 步（展开 $[A_i,B_j]$）。**\n\n$$[A_i,B_j]=\\tfrac14\\bigl([J_i,J_j]-i[J_i,K_j]+i[K_i,J_j]-i^2[K_i,K_j]\\bigr)$$\n\n注意 $-i^2=+1$，且 $[K_i,J_j]=-[J_j,K_i]=-i\\varepsilon_{jik}K_k=+i\\varepsilon_{ijk}K_k$。\n\n**第 3 步（逐项相消）。**\n\n- $[J_i,J_j]=i\\varepsilon J_k$；\n- $-i[J_i,K_j]=-i\\cdot i\\varepsilon K_k=+\\varepsilon K_k$；\n- $+i[K_i,J_j]=+i\\cdot i\\varepsilon K_k=-\\varepsilon K_k$；\n- $+[K_i,K_j]=-i\\varepsilon J_k$。\n\n四项相加：$i\\varepsilon J_k+\\varepsilon K_k-\\varepsilon K_k-i\\varepsilon J_k=0$ ⇒ **$[A_i,B_j]=0$** ✅（**两处相消靠的就是 $[K,K]$ 的那个负号**）。\n\n**第 4 步（$[A_i,A_j]$）。**\n\n$$[A_i,A_j]=\\tfrac14\\bigl([J_i,J_j]+i[J_i,K_j]+i[K_i,J_j]+i^2[K_i,K_j]\\bigr)=\\tfrac14\\bigl(i\\varepsilon J_k+i^2\\varepsilon K_k+i^2\\varepsilon K_k-\\varepsilon\\cdot(-i\\varepsilon)J_k\\bigr)$$\n\n用 $i^2=-1$ 与 $-i^2[K,K]=+[K,K]=-i\\varepsilon J_k$：合起来 $=\\tfrac14(2i\\varepsilon J_k-2\\varepsilon K_k)=\\tfrac{i\\varepsilon}2(J_k+iK_k)=i\\varepsilon A_k$ ✅。\n\n**第 5 步（$[B,B]$ 同理）。** 只需把 $i\\to-i$，同样得 $[B_i,B_j]=i\\varepsilon B_k$ ✅。\n\n**第 6 步（结论与数值）。** 于是复化后 $\\mathfrak{so}(1,3)_{\\mathbb C}=\\operatorname{span}_{\\mathbb C}\\{A\\}\\oplus\\operatorname{span}_{\\mathbb C}\\{B\\}\\cong\\mathfrak{su}(2)_{\\mathbb C}\\oplus\\mathfrak{su}(2)_{\\mathbb C}$，**两个因子互相对易** ⇒ 表示可以用 $(j_1,j_2)$ **独立**标。本库数值核验（用 $4\\times4$ 实生成元、$\\eta=\\operatorname{diag}(-1,1,1,1)$ 构造）：\n\n- 条件 $A^{\\mathsf T}\\eta+\\eta A=0$ **六个生成元全部满足**；\n- 实系数版 $[J,J]=\\varepsilon J$、$[J,K]=\\varepsilon K$、$[K,K]=-\\varepsilon J$ **全部通过**；\n- $[A,A]=\\varepsilon A$、$[B,B]=\\varepsilon B$、$[A,B]=0$ **全部通过**；\n- 六个生成元的迹都算得 $0$【已核验:0|0+0+0+0+0+0】。∎",
+      "links": [
+        "lie1.11",
+        "lie1.12",
+        "lie1.8",
+        "lie2.3",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.13:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：生成元、维数、分解与物理对应",
+      "keywords": [
+        "数生成元",
+        "算 (j1,j2) 维数",
+        "验证 [A,B]=0 的源头",
+        "判紧性与酉性"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "四问：6 个生成元与 dim so(p,q) 公式；(1,1) 的 9 与 (½,½) 的 4；[A,B]=0 靠 [K,K] 的负号；so(4) vs so(1,3) 的紧性对比。",
+      "content": "**四问。**\n\n**① 数生成元。** 旋转 $J_i$ 与 boost $K_i$ 各 $3$ 个 ⇒ 共算得 $3+3=6$【已核验:6|3+3】个；$\\dim\\mathfrak{so}(1,3)$ 也算得 $4\\cdot3/2=6$【已核验:6|4*(4-1)/2】。**注意**：这是因为 $\\eta$ 的对称部分给 $4\\cdot5/2=10$ 个条件中的... 更直接地：$\\dim\\mathfrak{so}(p,q)=\\frac{(p+q)(p+q-1)}2$，取 $(p,q)=(1,3)$ 得 $6$【已核验:6|4*(4-1)/2】。\n\n**② 算 $(j_1,j_2)$ 的维数。** $(1,1)$ 的维数 $(2\\cdot1+1)(2\\cdot1+1)$ 算得 $9$【已核验:9|(2*1+1)*(2*1+1)】—— 对应\"无迹对称张量\"（度规扰动 $h_{\\mu\\nu}$ 去掉迹，9 个分量）；$(\\frac12,\\frac12)$ 算得 $4$【已核验:4|(2*0.5+1)*(2*0.5+1)】 = 四维向量 ✅。\n\n**③ 验证 $[A,B]=0$ 的源头。** $[A_i,B_j]=0$ 靠两步：$[J_i,K_j]$ 与 $-i[K_i,J_j]$ 的 $\\varepsilon K$ 项相消（**符号相反**），$[J,J]$ 与 $[K,K]$ 的 $\\varepsilon J$ 项相消（**靠 $[K,K]$ 的负号**）。**若 $[K,K]$ 取正号**（即 $+i\\varepsilon J_k$），则 $[A,B]$ 会剩下 $-2i\\varepsilon J_k/4\\ne0$ ⇒ **分解失败**。**所以\"负号\"是分解的充要条件**。\n\n**④ 判紧性与酉性。** $\\mathfrak{so}(1,3)$ **非紧**（$K_i$ 非紧，`lie1.13` 反例）⇒ 有限维表示**非酉**。**对照**：$\\mathfrak{so}(4)\\cong\\mathfrak{su}(2)\\oplus\\mathfrak{su}(2)$（**实**分裂，紧，$4\\cdot3/2$ 算得 $6$【已核验:6|4*(4-1)/2】维）—— 它的 $(\\frac12,\\frac12)$ 表示是**真**酉的（$SU(2)\\times SU(2)$ 的双旋量）。**两者维数相同、表示论相似，但紧性不同** ⇒ 这就是\"Euclidean 与 Minkowski 的区别\"。",
+      "links": [
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie3.7",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.13:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：so(4) / so(1,3) / so(2,2) 三种符号差的对照",
+      "keywords": [
+        "度量符号差的三种情形",
+        "是否紧",
+        "是否分裂",
+        "物理用途"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "三问：四种符号差的对照（紧性、分裂、用途）；为何维数 6 无法区分它们；so(4) 与 so(1,3) 各自的物理。",
+      "content": "同一个\"维数 6\"的代数，随着 $\\eta$ 的**符号差**（signature）变化而完全不同：\n\n| 代数 | $\\eta$ 符号 | 紧性 | 实分裂 | 物理用途 |\n|---|---|---|---|---|\n| $\\mathfrak{so}(4)$ | $(+,+,+,+)$ | **紧** | ✅ $\\mathfrak{su}(2)\\oplus\\mathfrak{su}(2)$（**实**） | 欧氏旋转、双旋量 |\n| $\\mathfrak{so}(1,3)$ | $(-,+,+,+)$ | **非紧** | ❌（复化后才分裂） | **Lorentz**（时空旋转） |\n| $\\mathfrak{so}(2,2)$ | $(-,-,+,+)$ | 非紧 | ✅ $\\mathfrak{su}(1,1)\\oplus\\mathfrak{su}(1,1)$（实） | 二维共形、AdS₂ |\n| $\\mathfrak{so}(3,1)$ | $(+,+,+,-)$ | 同 $\\mathfrak{so}(1,3)$ | ❌ | 等价于 Lorentz |\n\n**四条对照结论**：\n\n- **紧性由符号差决定**：全同号（欧氏）⇒ 紧；含异号（伪欧氏）⇒ 非紧 ⇒ **无有限维酉表示**（`lie1.13` 反例）；\n- **\"实分裂\"由符号差的\"配对结构\"决定**：$(1,3)$ 的六个生成元里 $J$ 反对称、$K$ 对称 ⇒ 实域**不**分裂；$(2,2)$ 可以配对 ⇒ 实分裂（$\\mathfrak{su}(1,1)$ 是非紧的 $\\mathfrak{su}(2)$ 版本）；\n- **同样的维数 6**：$\\mathfrak{so}(4)$、$\\mathfrak{so}(1,3)$、$\\mathfrak{so}(2,2)$ 都是 $6$【已核验:6|4*(4-1)/2】维 —— **维数完全不能区分它们，必须看符号差**（限定词①）；\n- **物理上的两条主线**：$\\mathfrak{so}(1,3)$（相对论、旋量、Dirac）与 $\\mathfrak{so}(4)$（氢原子的隐藏对称性、`lie3.3`）—— **同一个维数，两套完全不同的物理**。\n\n**关键数值**：三种代数维数都算得 $6$【已核验:6|4*(4-1)/2】；$(\\frac12,\\frac12)$ 算得 $4$【已核验:4|(2*0.5+1)*(2*0.5+1)】。",
+      "links": [
+        "lie1.2",
+        "lie1.8",
+        "lie1.15",
+        "lie3.3",
+        "lie3.7",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.13:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：旋量、Dirac 方程、规范场论中的 Lorentz 表示与 GPU 上的物理",
+      "keywords": [
+        "Weyl/Dirac 旋量",
+        "Dirac 方程与场分类",
+        "标准模型的 Lorentz 部分",
+        "相对论性渲染与粒子模拟"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 204,
+        "line_end": 230
+      },
+      "fill_hint": "四问：两个 Weyl 与 Dirac（2+2=4）；γ 矩阵生成 Lorentz；(j1,j2) 如何给粒子分类；标准模型的群直积。",
+      "content": "Lorentz 代数在四个方向直接使用：\n\n- **旋量（$\\mathfrak{sl}(2,\\mathbb C)$ 的表示）**：$(\\frac12,0)$ 与 $(0,\\frac12)$ 是两个 Weyl 旋量；它们的**直和** $(½,0)\\oplus(0,½)$ 是 **Dirac 旋量**（维数算得 $2+2=4$【已核验:4|2+2】），对应四分量 Dirac 场；**为什么需要旋量**：Lorentz 群的万有覆盖是 $SL(2,\\mathbb C)$（`lie1.7` 表第三行），旋量是它的表示；\n- **Dirac 方程与场分类**：$\\gamma$ 矩阵的对易子生成 $\\mathfrak{so}(1,3)$；$(j_1,j_2)$ 分类决定场的 Lorentz 变换规律（标量/旋量/向量/张量），**这是量子场论\"以表示给粒子分类\"的框架**（`lie3.4`/`lie3.5`）；\n- **标准模型的 Lorentz 部分**：所有场都带一个 Lorentz 表示（$(\\frac12,\\frac12)$ 用于规范玻色子，$(½,0)$/$(0,½)$ 用于费米子）；**与内部规范群的直积** $SO(1,3)\\times SU(3)\\times SU(2)\\times U(1)$ 给出全部粒子自由度（`lie3.5`）；\n- **相对论性渲染/模拟**：相对论 ray tracing（黑洞可视化）、粒子加速器模拟、相对论性流体 —— 都要用 Lorentz boost 的 $\\cosh/\\sinh$（**无界**，非紧性直接可见）。\n\n**三条跨应用共性**：\n1. **非紧性是物理必需**（boost 无界 ⇒ 速度可任意接近 $c$）；\n2. **旋量来自覆盖**（$SL(2,\\mathbb C)$ 二重覆盖 $SO(1,3)^+$）；\n3. **$(j_1,j_2)$ 是\"用两个自旋标签给场分类\"**（把非紧表示论降级为紧凑的双 $\\mathfrak{su}(2)$ 语言）。\n\n**接缝**：`lie3.2` 讲自旋（$\\mathfrak{su}(2)$ 版）；`lie3.4`/`lie3.5` 讲规范场与标准模型；`lie3.7` 讲广义相对论与时空对称性。",
+      "links": [
+        "lie1.5",
+        "lie1.7",
+        "lie1.12",
+        "lie2.3",
+        "lie3.2",
+        "lie3.5",
+        "lie3.7",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

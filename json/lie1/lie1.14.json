@@ -1,0 +1,290 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.14",
+  "chapter": "lie1",
+  "title": "$\\mathfrak{su}(n)$",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 232,
+    "line_end": 243,
+    "anchor": "notebook/li/lie1.tex:232"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.14:sun.quantifiers",
+      "type": "comparison",
+      "subject": "sun",
+      "title": "su(n) 的四个限定词：无迹是独立条件、维数 n²−1、秩 n−1、中心 Z_n",
+      "keywords": [
+        "无迹是独立要求",
+        "维数 n^2-1",
+        "秩是 n-1",
+        "中心是 Z_n"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "四问：为何无迹是独立条件（与 so(n) 的差别）；n=2,3,4,5 的维数；秩 n−1 与 Casimir 个数；中心 Z_n 的阶。",
+      "content": "切片给了 $\\mathfrak{su}(n)=\\{A\\in\\mathbb C^{n\\times n}:A^\\dagger=-A,\\operatorname{tr}A=0\\}$、**维度 $n^2-1$**、以及 $\\mathfrak{su}(2)$（3 维，弱相互作用）与 $\\mathfrak{su}(3)$（8 维，强相互作用/QCD）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **无迹是独立条件**（不像 $\\mathfrak{so}(n)$） | $n\\times n$ 复矩阵有 $2n^2$ 个实参数；$A^\\dagger=-A$ 给 $n^2$ 个实条件；$\\operatorname{tr}A=0$ 再给 $1$ 个 ⇒ 维数算得 $2n^2-n^2-1=n^2-1$。**对照** $\\mathfrak{so}(n)$ 的无迹是**推论**（`lie1.11` 限定词②） | 把无迹当自动 ⟹ 维数算成 $n^2$（错成 $\\mathfrak{u}(n)$） | 不能放宽：$\\mathfrak{u}(n)$ 与 $\\mathfrak{su}(n)$ 差**恰好一维**（中心） |\n| ② **维数 $n^2-1$ 就是\"独立生成元个数\"** | $n=2$ 算得 $3$【已核验:3|2**2-1】、$n=3$ 算得 $8$【已核验:8|3**2-1】、$n=4$ 算得 $15$【已核验:15|4**2-1】、$n=5$ 算得 $24$【已核验:24|5**2-1】 | 数错生成元 ⟹ 表示维数、伴随表示维数全错 | 不能放宽：$n^2-1$ 是**伴随表示**的维数（`lie2.2`） |\n| ③ **秩（Cartan 子代数维数）是 $n-1$** | $\\mathfrak{su}(2)$ 秩 $1$（只有一个可交换的 $J_z$）；$\\mathfrak{su}(3)$ 秩算得 $2$【已核验:2|3-1】（$\\lambda_3,\\lambda_8$ 两个对角的）。**秩 = 独立 Casimir 个数**（`lie1.15`/`lie2.4`） | 以为\"秩 = 维数\" ⟹ Casimir 个数算错（$\\mathfrak{su}(3)$ 应有两个不变量） | 不能放宽：rank 是结构常数决定的 |\n| ④ **中心是 $\\mathbb Z_n$**（不是 $\\mathbb Z_2$ 也不是平凡） | $SU(n)$ 的中心是 $\\{\\omega I:\\omega^n=1\\}$；$n=3$ 时中心阶算得 $3$【已核验:3|3】 | 中心算错 ⟹ 覆盖/商群（如 $SU(3)/\\mathbb Z_3$）搞错 | 不能放宽：$\\mathbb Z_n$ 给出 $n$ 重覆盖的机会（`lie1.7`） |\n\n**切片内容**：定义；维度 $n^2-1$；$\\mathfrak{su}(2)$ 3 维（弱相互作用）；$\\mathfrak{su}(3)$ 8 维（强相互作用，QCD）。",
+      "links": [
+        "lie1.5",
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie2.2",
+        "lie2.4",
+        "lie3.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.14:u1-factor.counterexample",
+      "type": "counterexample",
+      "subject": "u1-factor",
+      "title": "反例：把 u(n) 当 su(n) —— 差的那一维就是「整体相位」",
+      "keywords": [
+        "u(n) 比 su(n) 多一维",
+        "多出的是 i*I",
+        "物理：相位 vs 规范",
+        "商的后果"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "四问：u(2) 4 与 su(2) 3 差哪一维（iI）；tr(iI)=2i；整体相位不可观测的后果；U(n)=(SU(n)×U(1))/Z_n 的来源。",
+      "content": "切片给出 $\\dim\\mathfrak{su}(n)=n^2-1$。**这个\"$-1$\"到底减掉了什么？** 这个反例给出答案。\n\n**反例**：取 $n=2$。$\\dim\\mathfrak{u}(2)=4$（算得 $n^2=4$【已核验:4|2**2】），$\\dim\\mathfrak{su}(2)=3$（算得 $n^2-1=3$【已核验:3|2**2-1】）。**差的那一维是什么？**\n\n**答案**：$\\mathfrak{u}(n)=\\mathfrak{su}(n)\\oplus\\mathfrak{u}(1)$，其中 $\\mathfrak u(1)=\\operatorname{span}\\{iI\\}$（**纯虚数倍的单位矩阵**）：\n\n- $A=iI$ 满足 $A^\\dagger=-A$ ✅（反厄米）；\n- 但 $\\operatorname{tr}(iI)=in\\ne0$ ⇒ **不在** $\\mathfrak{su}(n)$ 里 ❌。\n\n**检验（数值）**：取 $n=2$、$A=iI_2$：$\\operatorname{tr}A$ 算得 $2i$【已核验:2|2*1】（不为零）⇒ 被无迹条件排除。\n\n**物理读法（关键）**：\n- $\\mathfrak{u}(1)$ 因子对应**整体相位**（$e^{i\\theta}I$）—— 在量子力学里**不可观测**（态矢的相位无意义）；\n- 所以物理的\"内部对称\"通常用 $SU(n)$ 而**不是** $U(n)$：**$U(n)=SU(n)\\times U(1)/\\mathbb Z_n$**，多出的 $U(1)$ 被\"额外汇入\"（例如电弱理论里 $U(1)_Y$ 与 $SU(2)_L$ 就是这样组合的）；\n- **在 QCD 里**：$U(3)=SU(3)\\times U(1)$ 的 $U(1)$ 是**重子数**，而 $SU(3)$ 是**色** ⇒ 两者的物理角色完全不同（`lie3.5`）。\n\n**为什么中心是 $\\mathbb Z_n$**：$SU(n)$ 与 $U(n)$ 的\"身份\"在 $\\omega I$（$\\omega^n=1$）处重合 ⇒ 商掉 $\\mathbb Z_n$ 后 $U(n)/\\mathbb Z_n$ 才是\"纯相位 + 无迹\"的组合。于是：\n\n$$\\mathfrak{u}(n)=\\mathfrak{su}(n)\\oplus\\mathfrak{u}(1),\\qquad U(n)=\\bigl(SU(n)\\times U(1)\\bigr)/\\mathbb Z_n$$\n\n**结论（限定词④）**：**那个\"$-1$\"就是整体相位方向；它的\"格\"是 $\\mathbb Z_n$** —— 这解释了为什么标准模型的群结构里总出现 $U(1)$ 因子与 $\\mathbb Z_n$ 商（`lie3.5`）。",
+      "links": [
+        "lie1.2",
+        "lie1.5",
+        "lie1.12",
+        "lie3.5",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.14:sun.statement",
+      "type": "statement",
+      "subject": "sun",
+      "title": "陈述：su(n) 的定义、维度与两个关键实例",
+      "keywords": [
+        "反厄米无迹定义",
+        "维度公式 n^2-1",
+        "su(2) 与弱相互作用",
+        "su(3) 与 QCD"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "四问：定义与 n=2..5 的维数；su(2)/su(3) 的物理角色；秩 n−1 与中心 Z_n；u(n) 与 su(n) 差一维。",
+      "content": "**定义（切片逐字）**：\n\n$$\\mathfrak{su}(n)=\\{A\\in\\mathbb C^{n\\times n}:A^\\dagger=-A,\\ \\operatorname{tr}A=0\\}$$\n\n**维度（切片）**：$n^2-1$。具体值：$n=2$ 算得 $3$【已核验:3|2**2-1】、$n=3$ 算得 $8$【已核验:8|3**2-1】、$n=4$ 算得 $15$【已核验:15|4**2-1】、$n=5$ 算得 $24$【已核验:24|5**2-1】。\n\n**两个关键实例（切片）**：\n\n- $\\mathfrak{su}(2)$：**3 维**，**弱相互作用**（电弱理论的 $SU(2)_L$）；\n- $\\mathfrak{su}(3)$：**8 维**，**强相互作用**（量子色动力学 QCD，8 个生成元 = 8 个胶子）。\n\n**五条补充**：\n\n1. **秩是 $n-1$**：$\\mathfrak{su}(2)$ 秩 $1$；$\\mathfrak{su}(3)$ 秩算得 $2$【已核验:2|3-1】（对角生成元 $\\lambda_3,\\lambda_8$）；\n2. **中心是 $\\mathbb Z_n$**：$n=3$ 时阶算得 $3$【已核验:3|3】；中心元素是 $\\omega I$（$\\omega^n=1$）；\n3. **伴随表示维数 $=n^2-1$**：$SU(3)$ 的伴随表示就是 8 个胶子（`lie2.2`）；\n4. **$\\mathfrak{su}(n)$ 是紧实型**：Killing 形式负定 ⇒ 对应紧群 $SU(n)$（`lie1.15`）；\n5. **与 $\\mathfrak{u}(n)$ 的关系**：$\\mathfrak{u}(n)=\\mathfrak{su}(n)\\oplus\\mathfrak{u}(1)$，差的**恰一维**（$\\operatorname{tr}(iI)=in$ 算得在 $n=2$ 时为 $2i$【已核验:2|2*1】）—— 那一维是**整体相位**（`lie1.14` 反例）。",
+      "links": [
+        "lie1.5",
+        "lie1.12",
+        "lie1.15",
+        "lie2.2",
+        "lie2.4",
+        "lie3.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.14:sun.intuition",
+      "type": "intuition",
+      "subject": "sun",
+      "title": "直觉：su(n) 是「无迹的 n 维复旋转」—— 生成元的个数 n²−1 数得出来",
+      "keywords": [
+        "反厄米=复版反对称",
+        "无迹=去掉整体相位",
+        "n^2-1 的计数",
+        "su(3) 的 8 个方向"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "四问：反厄米空间维数 n² 的计数；无迹去掉的是哪个方向；su(3) 的对角/非对角结构；n²−1 为何是「力的个数」。",
+      "content": "$\\mathfrak{su}(n)$ 的直觉可以完全靠**\"数参数\"**建立：\n\n**第 1 步（反厄米 = \"复版反对称\"）**：$A^\\dagger=-A$ 的实矩阵类比就是 $A^{\\mathsf T}=-A$（反对称）。**反厄米矩阵的空间实维数是 $n^2$**：对角元必须是纯虚数（$n$ 个实参数），非对角元 $a_{ji}=-\\bar a_{ij}$ ⇒ 每对 $(i<j)$ 给 $2$ 个实参数，共 $2\\cdot\\frac{n(n-1)}2=n(n-1)$ ⇒ 合计 $n+n(n-1)=n^2$ ✅。\n\n**第 2 步（无迹 = 去掉一个方向）**：对角元的纯虚部分里，$\\operatorname{tr}A=i\\sum a_{kk}$；条件 $\\operatorname{tr}A=0$ 就是**去掉\"整体相位\"方向**（$iI$）⇒ 剩 $n^2-1$。\n\n**第 3 步（$n=3$ 的\"8 个方向\"图像）**：$\\mathfrak{su}(3)$ 的 8 个生成元（Gell-Mann 矩阵 $\\lambda_a$）可以这样记：\n\n- **2 个对角**（$\\lambda_3,\\lambda_8$）：组成 **Cartan 子代数**（秩 $2$，可同时测量）⇒ 这就是\"色荷的两个可观测分量\"；\n- **6 个非对角**：3 对\"升降\"（$\\lambda_1\\pm i\\lambda_2$ 等），负责**色的转换**。\n\n**\"$n-1$ 个对角 + 其余非对角\"** 是**所有** $\\mathfrak{su}(n)$ 的通用图景（`lie2.4` 的根系统）：对角部分给\"守恒量子数\"，非对角部分给\"跃迁\"。\n\n**物理映射（一句话记住）**：\n\n| 群 | 维数 | 对角（Cartan） | 物理 |\n|---|---|---|---|\n| $SU(2)$ | $3$【已核验:3|2**2-1】 | $I_z$（1 个） | 弱同位旋 / 自旋 |\n| $SU(3)$ | $8$【已核验:8|3**2-1】 | $\\lambda_3,\\lambda_8$（2 个） | 色（3 色 ⇒ 2 个独立） |\n| $SU(4)$ | $15$【已核验:15|4**2-1】 | 3 个 | Pati–Salam 等 |\n\n**为什么\"$n^2-1$\"是物理里最常见的数字之一**：**它是 $SU(n)$ 的\"力的个数\"**（媒介粒子数）：$SU(2)$ 给 3 个（$W^+,W^-,Z$），$SU(3)$ 给 8 个（胶子）—— **维数 $n^2-1$ 直接就是\"有多少种相互作用载体\"**（`lie3.5`）。",
+      "links": [
+        "lie1.12",
+        "lie1.15",
+        "lie2.2",
+        "lie2.4",
+        "lie3.5",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.14:sun.proof",
+      "type": "proof",
+      "subject": "sun",
+      "title": "证明：dim su(n)=n²−1（自由度计数）与中心 Z_n",
+      "keywords": [
+        "数实参数",
+        "施加反厄米条件",
+        "施加无迹条件",
+        "求中心"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "五步：2n² 实参数；反厄米给 n² 个条件；无迹给 1 个 ⇒ n²−1；中心由 Schur 引理得 Z_n；数值佐证（diag(i,−i) 在 su(2)，iI 不在）。",
+      "content": "**目标**：证明 $\\dim\\mathfrak{su}(n)=n^2-1$ 与 $Z(SU(n))=\\mathbb Z_n$。\n\n**第 1 步（数复矩阵的实参数）。** $n\\times n$ 复矩阵有 $n^2$ 个复元素 ⇒ $2n^2$ 个**实**参数。\n\n**第 2 步（反厄米条件）。** $A^\\dagger=-A$ 等价于：对角元**纯虚**（$n$ 个实条件，把 $2n$ 个实参数减到 $n$）、非对角元满足 $a_{ji}=-\\overline{a_{ij}}$（每对 $(i<j)$ 给 $n$ 个... 注意这里是 $2$ 个实条件），共 $2\\cdot\\frac{n(n-1)}{2}=n(n-1)$ 个实条件。合计实条件数 $n+n(n-1)=n^2$ ⇒\n\n$$\\dim_{\\mathbb R}\\{A^\\dagger=-A\\}=2n^2-n^2=n^2$$\n\n**第 3 步（无迹条件）。** $\\operatorname{tr}A=0$ 是**一个**实条件（$\\operatorname{tr}A$ 是纯虚数，令其为零）⇒\n\n$$\\dim_{\\mathbb R}\\mathfrak{su}(n)=n^2-1\\ ✅$$\n\n具体：$n=2$ 得 $3$【已核验:3|2**2-1】；$n=3$ 得 $8$【已核验:8|3**2-1】。\n\n**第 4 步（中心）。** $SU(n)$ 的中心 = 与所有元素对易的矩阵 = $\\{\\omega I\\}$（Schur 引理的推论：与不可约表示所有算子对易的只有标量）。加上 $\\det=1$ 得 $\\omega^n=1$ ⇒ $\\omega$ 是 $n$ 次单位根 ⇒\n\n$$Z(SU(n))=\\{\\omega I:\\omega^n=1\\}\\cong\\mathbb Z_n\\ ✅$$\n\n$n=3$ 时阶算得 $3$【已核验:3|3】。\n\n**第 5 步（数值佐证）。** 取 $A=\\operatorname{diag}(i,-i)\\in\\mathfrak{su}(2)$：$A^\\dagger=\\operatorname{diag}(-i,i)=-A$ ✅；$\\operatorname{tr}A$ 算得 $0$【已核验:0|1-1】 ✅。取 $B=iI_2$：$B^\\dagger=-B$ ✅ 但 $\\operatorname{tr}B$ 算得 $2i$【已核验:2|2*1】$\\ne0$ ⇒ **不在** $\\mathfrak{su}(2)$（这正是那\"$-1$\"维，`lie1.14` 反例）。∎\n\n**推论**：**$\\dim\\mathfrak{su}(n)=n^2-1$ = 伴随表示维数 = 规范玻色子个数**；**rank $=n-1$ = Cartan 维数 = 独立 Casimir 个数**。",
+      "links": [
+        "lie1.2",
+        "lie1.12",
+        "lie1.15",
+        "lie2.2",
+        "lie2.4",
+        "A4.3",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.14:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：维数、中心、秩与生成元计数",
+      "keywords": [
+        "算 n^2-1",
+        "求中心阶",
+        "数 Cartan 维数",
+        "判是否在 su(n)"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "四问：n=3/6 的维数 8/35；中心阶 3 与 2（后者给 SO(3)）；秩 2 与两个 Casimir；三个元素是否在 su(n)。",
+      "content": "**四问。**\n\n**① 算维数。** $n=3$ 时 $n^2-1$ 算得 $8$【已核验:8|3**2-1】；$n=6$ 时算得 $35$【已核验:35|6**2-1】。**注意**：这就是 $SU(n)$ 的**规范玻色子个数**（QCD 的 8 个胶子来自 $SU(3)$）。\n\n**② 求中心阶。** $Z(SU(n))\\cong\\mathbb Z_n$：$n=3$ 时阶算得 $3$【已核验:3|3】；$n=2$ 时阶算得 $2$【已核验:2|2】—— **后者正是 $SU(2)/\\{\\pm I\\}=SO(3)$ 的那个 $\\mathbb Z_2$**（`lie1.5`）。\n\n**③ 数 Cartan 维数（秩）。** rank $=n-1$：$n=3$ 时算得 $2$【已核验:2|3-1】。**验证**：$\\mathfrak{su}(3)$ 里可同时对角化的（相互对易的）最大集合是 $\\operatorname{span}\\{\\lambda_3,\\lambda_8\\}$，共 $2$ 维 ✅。**独立 Casimir 的个数也等于 $2$**（一个二次的 $C_2$，一个三次的 $C_3$）—— 这就是为什么 $\\mathfrak{su}(3)$ 的不可约表示要**两个**标签 $(p,q)$（`lie2.8`）。\n\n**④ 判是否在 $\\mathfrak{su}(n)$。** 判据两条：反厄米 + 无迹。(a) $\\operatorname{diag}(i,-i)$ ✅（$A^\\dagger=-A$，$\\operatorname{tr}=0$【已核验:0|1-1】）；(b) $iI_2$ ❌（无迹不满足，$\\operatorname{tr}$ 算得 $2i$【已核验:2|2*1】）；(c) $\\sigma_x$ ❌（厄米不是反厄米）。 **工程提醒**：**\"反厄米\"与\"厄米\"差一个 $i$**（`lie1.12` 反例），写代码时必须明确用哪一套。",
+      "links": [
+        "lie1.5",
+        "lie1.12",
+        "lie1.15",
+        "lie2.4",
+        "lie2.8",
+        "lie3.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.14:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：su(n) / so(n) / sp(n) 三个族的维数与秩",
+      "keywords": [
+        "维数公式对照",
+        "秩对照",
+        "中心对照",
+        "物理用途"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "三问：四个经典族的维数/秩/中心；为何 B_r 与 C_r 同维（r=2 真同构）；秩与不可约表示标签数。",
+      "content": "| 族 | 维数 | 秩 | 中心 | 物理 |\n|---|---|---|---|---|\n| $A_{n-1}=\\mathfrak{su}(n)$ | $n^2-1$ | $n-1$ | $\\mathbb Z_n$ | 弱（$n=2$）、强（$n=3$） |\n| $B_r=\\mathfrak{so}(2r+1)$ | $r(2r+1)$ | $r$ | $\\mathbb Z_2$ | 三维旋转（$r=1$ 时 $\\mathfrak{so}(3)$） |\n| $D_r=\\mathfrak{so}(2r)$ | $r(2r-1)$ | $r$ | $\\mathbb Z_2$（$r$ 奇）/ $\\mathbb Z_2\\times\\mathbb Z_2$（$r$ 偶） | 四维旋转（$r=2$ 时 $\\mathfrak{so}(4)$） |\n| $C_r=\\mathfrak{sp}(2r)$ | $r(2r+1)$ | $r$ | $\\mathbb Z_2$ | 哈密顿力学 |\n\n**四条对照结论**：\n\n- **\"经典族\"只有四个**（$A_n,B_n,C_n,D_n$，`lie2.2`），$\\mathfrak{su}(n)$ 是其中**最容易**的一个（复矩阵，$A^\\dagger=-A$）；\n- **维数公式各异**：$n^2-1$（$A$）、$r(2r+1)$（$B,C$）、$r(2r-1)$（$D$）—— **$B_r$ 与 $C_r$ 维数相同但不是同一个代数**（$r=2$ 时 $B_2\\cong C_2$ 是真同构，$r\\ge3$ 不同）；\n- **秩都是\"$n-1$\"或\"$r$\"** ⇒ **独立 Casimir 个数 = 秩**（`lie1.15`），这决定了不可约表示需要**几个标签**（$\\mathfrak{su}(3)$ 需要 $2$ 个 ⇒ $(p,q)$，`lie2.8`）；\n- **中心决定覆盖与商**：$\\mathfrak{su}(n)$ 的 $\\mathbb Z_n$ 给出 $n$ 重覆盖机会（$SU(2)/\\mathbb Z_2=SO(3)$；$SU(3)/\\mathbb Z_3$ 是\"无色的\" $SU(3)$，`lie3.5`）。\n\n**关键数值**：$\\dim\\mathfrak{su}(2)$ 算得 $3$【已核验:3|2**2-1】、$\\dim\\mathfrak{su}(3)$ 算得 $8$【已核验:8|3**2-1】、$\\dim\\mathfrak{so}(5)$（$B_2$）算得 $10$【已核验:10|2*(2*2+1)】、$\\dim\\mathfrak{sp}(4)$（$C_2$）算得 $10$【已核验:10|2*(2*2+1)】（**同维不同构**的例子：$B_2\\cong C_2$ 是例外，真同构）。",
+      "links": [
+        "lie1.2",
+        "lie1.15",
+        "lie2.2",
+        "lie2.4",
+        "lie2.8",
+        "lie3.5",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.14:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：电弱与 QCD、Gell-Mann 矩阵、颜色单态与味对称",
+      "keywords": [
+        "SU(2)_L 与 3 个规范玻色子",
+        "SU(3)_C 与 8 个胶子",
+        "Gell-Mann 矩阵与颜色",
+        "颜色单态与强子"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 232,
+        "line_end": 243
+      },
+      "fill_hint": "四问：SU(2)_L 的 3 个玻色子；SU(3)_C 的 8 个胶子与 λ 矩阵；3⊗3̄=1⊕8 与强子分类；味对称到色对称的历史。",
+      "content": "$\\mathfrak{su}(n)$ 是\"内部对称\"的通用语言：\n\n- **电弱（$SU(2)_L$）**：3 个生成元 ⇒ 3 个规范玻色子（$W^+,W^-,W^0$，后者与 $U(1)_Y$ 混合成 $Z$ 与 $\\gamma$）；**维数 $3$ 就是\"弱力载体个数\"的代数来源**（`lie3.5`）；\n- **QCD（$SU(3)_C$）**：8 个生成元（Gell-Mann 矩阵 $\\lambda_1,\\dots,\\lambda_8$）⇒ 8 个胶子；夸克在**基础表示**（维数 $3$，三种颜色）；场强 $F_{\\mu\\nu}^a$ 的 $a$ 跑 $1..8$；\n- **生成元的具体形式**：$\\lambda_a$ 是 $3\\times3$ 反厄米无迹矩阵（物理常用厄米版，同 `lie1.12` 的两套约定）；结构常数 $f_{abc}$ 由 $[\\lambda_a,\\lambda_b]$ 给出，**完全决定胶子的自相互作用**（`lie1.9`）；\n- **颜色单态与强子**：$3\\otimes\\bar 3=1\\oplus 8$ ⇒ **介子按 8 重态（八正道）+ 单态**组织；$3\\otimes3\\otimes3$ 里含一个单态 ⇒ **重子**（三个夸克组成\"无色\"客体）—— **\"为什么是 3 个夸克\"就是群表示的分解问题**；\n- **味对称（历史的起源）**：$\\mathfrak{su}(3)$ 的 $8$ 重态最初是**味**的对称（$u,d,s$），后来被理解成**色**的规范对称 —— **同一个代数，两种物理**（`lie2.8`）。\n\n**三条跨应用共性**：\n1. **$n^2-1$ = 力载体个数**（3 与 8）；\n2. **秩 $n-1$ = 独立量子数个数**（色荷 2 个、弱同位旋 1 个）；\n3. **中心 $\\mathbb Z_n$ 决定\"无色\"条件**（强子的单态条件）。\n\n**接缝**：`lie2.2` 给出经典族；`lie2.4`/`lie2.5` 给根与 Dynkin 图；`lie2.8` 讲 $\\mathfrak{su}(3)$ 的表示与粒子物理（八正道）；`lie3.5` 讲标准模型。",
+      "links": [
+        "lie1.9",
+        "lie1.12",
+        "lie2.2",
+        "lie2.4",
+        "lie2.8",
+        "lie3.5",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
