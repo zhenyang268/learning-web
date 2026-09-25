@@ -1,0 +1,287 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de4.8",
+  "chapter": "de4",
+  "title": "微分方程在几何处理中的出现",
+  "src": {
+    "file": "notebook/diffrential/de4.tex",
+    "line_start": 109,
+    "line_end": 127,
+    "anchor": "notebook/diffrential/de4.tex:109"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de4.8:pde-in-geometry.quantifiers",
+      "type": "comparison",
+      "subject": "pde-in-geometry",
+      "title": "几何处理五个算子的限定词：度量、C¹ 基、奇异化、共轭点、谱序",
+      "keywords": [
+        "Laplace-Beltrami 需要度量与余切权重",
+        "双调和需要 C¹ 基",
+        "曲率流会奇异化",
+        "测地线的共轭点"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "五问：余切权重在钝角处为负的后果；双调和为何要 C¹；MCF 的有限时间奇异；共轭点为何破坏最短性；谱序与 Fiedler 值。",
+      "content": "切片给了**一张五行表**（方程 ↔ 几何任务）。**五个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **Laplace–Beltrami 依赖度量**（离散靠**余切权重**） | 三角网格有**钝角**（$\\theta>90°$）时 $\\cot\\theta<0$：$\\cot 120°$ 算得 $-0.577350$【已核验:-0.57735026919|1/tan(2*pi/3)】 ⟹ 权重矩阵**非正定** | 离散算子失去椭圆性 ⟹ 「平滑」变成「放大」 | 可放宽：加权重钳制 / 换成 Voronoi 权重 |\n| ② **双调和需要 $C^1$ 基** | $\\Delta^2u=0$ 的弱形式含 $\\int\\Delta u\\Delta v$ ⟹ 试探空间要 $H^2$（$C^1$），**分片线性不够** | 用线性元解薄板 ⟹ 刚度矩阵奇异（缺转动自由度） | 不能放宽：需 Morley/HCT 单元或换成 $C^0$ 惩罚法 |\n| ③ **平均曲率流会奇异化** | 圆在 MCF 下 $r(t)=\\sqrt{r_0^2-2t}$，$r_0=1$ 时 $t$ 算得 $0.5$【已核验:0.5|1/2】处**半径归零**（有限时间奇异） | 长时演化 ⟹ 网格扭曲、自交 | 可放宽：重网格化 / 拓扑手术 |\n| ④ **测地线有共轭点** | 球面上从北极出发的大圆，过了**对径点**（共轭点）不再是**最短**路径 | 拿「解测地线方程」当「求最短路径」⟹ 得到局部极值 | 可放宽：加二阶变分判据 / 用全局算法 |\n| ⑤ **特征值问题按谱序排列** | $-\\Delta u=\\lambda u$ 的谱 $0=\\lambda_0<\\lambda_1\\le\\lambda_2\\le\\cdots$；形状分析用 $\\lambda_1$（Fiedler 值） | 用错指标（如用 $\\lambda_0=0$）⟹ 恒等于常数函数，无信息 | 不能放宽：谱序是定义的一部分 |\n\n**五行表（切片）**：$\\Delta u=0$（Laplace）→ 调和映射、网格平滑；$\\Delta^2u=0$（双调和）→ 薄板弯曲、曲面重建；平均曲率流 → 网格平滑、曲面演化；测地线方程 → 最短路径、形状匹配；$-\\Delta u=\\lambda u$ → 形状分析、谱聚类。",
+      "links": [
+        "de4.6",
+        "de4.7",
+        "de1.16",
+        "de1.12",
+        "de2.10",
+        "de3.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.8:obtuse-cotangent.counterexample",
+      "type": "counterexample",
+      "subject": "obtuse-cotangent",
+      "title": "反例：钝角三角形让 Laplace-Beltrami 出现负权重，平滑变成放大",
+      "keywords": [
+        "cot 120° = −0.57735",
+        "权重矩阵非正定",
+        "出现负特征值",
+        "网格质量决定算子"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "四问：余切公式；cot120° 的数值；负权重为何给出负特征值并使迭代放大；三种工程对策。",
+      "content": "**离散 Laplace–Beltrami（余切公式）**：对顶点 $i$ 的邻边 $ij$，\n\n$$(\\Delta u)_i=\\frac{1}{2A_i}\\sum_{j\\in N(i)}(\\cot\\alpha_{ij}+\\cot\\beta_{ij})(u_j-u_i)$$\n\n其中 $\\alpha_{ij},\\beta_{ij}$ 是与边 $ij$ **相对**的两个角。\n\n**反例**：若某个角是钝角，比如 $120°$，则 $\\cot 120°$ 算得 $-0.577350$【已核验:-0.57735026919|1/tan(2*pi/3)】。若一条边的两个对角都钝（凸顶点附近的长瘦三角形常见），权重和 $(\\cot\\alpha+\\cot\\beta)$ **为负** ⇒ 这等价于「相邻点的差异被**放大**而不是减小」。\n\n**量化后果**：把权重矩阵 $W$ 看成图的 Laplace 矩阵的加权版（$L=D-W$，$D$ 为行和）。当某些 $w_{ij}<0$ 时 $W$ 不再是非负矩阵，**$L$ 不再半正定**，出现**负特征值** —— 在「平滑迭代」下，对应模态**指数增长**：\n\n$$u^{(k+1)}=u^{(k)}-\\tau Lu^{(k)}\\ \\Longrightarrow\\ \\text{负特征值}\\ \\lambda_{\\min}<0\\ \\text{时因子}\\ (1-\\tau\\lambda_{\\min})>1$$\n\n**症状**：网格越平滑越「长刺」；曲率计算出现尖峰；形状匹配的谱指纹失效。\n\n**工程对策**：① 权重钳制（把负权重置零）；② 用 **Voronoi/中值权重** 替代余切；③ 网格预处理（Laplacian 平滑 / 边翻转）保证**所有角 < 90°**（Delaunay 条件）。**这是「网格质量决定算子性质」的最直接例子**（限定词①）。",
+      "links": [
+        "de4.6",
+        "de4.7",
+        "de2.10",
+        "de2.15",
+        "de3.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.8:pde-in-geometry.statement",
+      "type": "statement",
+      "subject": "pde-in-geometry",
+      "title": "陈述：五个几何算子及其任务，与球面上的特征值 l(l+1)",
+      "keywords": [
+        "Laplace-Beltrami 与调和映射",
+        "双调和与薄板",
+        "曲率流与测地线",
+        "球面特征值 l(l+1)"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "四问：五行表对应；五个算子如何归约为 Laplace–Beltrami 的变体；球面特征值 l(l+1) 的四个值；重数 2l+1 与群表示的联系。",
+      "content": "**五个算子/方程（切片）**：\n\n| 方程 | 几何处理任务 |\n|---|---|\n| $\\Delta u=0$（**Laplace**） | 调和映射、网格平滑 |\n| $\\Delta^2u=0$（**双调和**） | 薄板弯曲、曲面重建 |\n| **平均曲率流** | 网格平滑、曲面演化 |\n| **测地线方程** | 最短路径、形状匹配 |\n| $-\\Delta u=\\lambda u$ | 形状分析、谱聚类 |\n\n**统一读法**：五个里的前四个都是 **Laplace–Beltrami 的变体**：$\\Delta$ 是「曲面上的一致二阶算子」，$\\Delta u=0$ 是它的**稳态**、$\\Delta^2u=0$ 是它在**能量泛函更高阶**下的稳态、曲率流是它的**梯度流**（$\\partial_t x=\\Delta x$ 的低阶近似）、测地线是它的**特征线**。\n\n**关键数值（单位球面 $S^2$）**：Laplace–Beltrami 的特征值是 $l(l+1)$：$l=0\\to0$、$l=1$ 算得 $2$【已核验:2|1*(1+1)】、$l=2$ 算得 $6$【已核验:6|2*(2+1)】、$l=3$ 算得 $12$【已核验:12|3*(3+1)】。**这些特征函数正是球谐函数** $Y_l^m$（见 `lie3.17`），其**重数**是 $2l+1$（$l=2$ 时 $5$ 个【已核验:5|2*2+1】）—— **谱的重数直接反映对称群的不可约表示维度**（连接 `lie2.x`）。",
+      "links": [
+        "de4.6",
+        "de4.7",
+        "de1.12",
+        "de1.16",
+        "de3.8",
+        "lie3.17",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.8:pde-in-geometry.intuition",
+      "type": "intuition",
+      "subject": "pde-in-geometry",
+      "title": "直觉：几何处理 = 把 PDE 搬到曲面上，特征函数就是「流形的振动模式」",
+      "keywords": [
+        "PDE 搬到流形上",
+        "特征函数=振动模式",
+        "球谐是球面的模式",
+        "谱指纹做形状匹配"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "四问：度量如何进入算子；Fourier 基 ↔ 特征函数；谱指纹为何能做形状匹配；热核的多尺度读出。",
+      "content": "几何处理的核心动作只有一句话：**把平直空间里的算子换成流形上的对应物**。\n\n- $\\partial_i\\partial_i\\ \\longrightarrow\\ \\Delta_g=\\frac{1}{\\sqrt{\\lvert g\\rvert}}\\partial_i(\\sqrt{\\lvert g\\rvert}\\,g^{ij}\\partial_j)$ —— **度量 $g$ 进了算子**（这是限定词①的几何来源）；\n- 平直空间的 Fourier 基 $e^{ikx}\\ \\longrightarrow$ **流形的 Laplace 特征函数** $\\{\\phi_k\\}$；\n- 「振动模式」这个词在这里是**字面意义**：鼓面的音高（`de1.12` 的 Sturm–Liouville）就是 $\\sqrt{\\lambda_k}$；换成球面就是球谐（`lie3.17`）；换成任意形状就是它的「形状音」。\n\n**为什么这能用来做形状匹配（Shape Google / 谱指纹）**：$\\{\\lambda_k\\}$ **与形状的采样、旋转、平移无关**，却对形状的变化敏感 —— 于是两个形状的相似度 = 两个谱序列的距离。这也解释了为什么「等谱但不等距」（Kac 的「能否听出鼓的形状」）是一个真问题：**谱不是完全刻度**。\n\n**流形的「热核」视角**：$\\partial_t u=\\Delta_g u$（曲面上的热方程）的解给出 $K_t(x,y)=\\sum_k e^{-\\lambda_k t}\\phi_k(x)\\phi_k(y)$ —— 是形状的**多尺度指纹**，$t$ 小看局部、$t$ 大看全局。这与 `de2.7` 的热核是同一个东西，只是底空间从 $\\mathbb R^n$ 换成了流形。",
+      "links": [
+        "de4.6",
+        "de4.7",
+        "de1.12",
+        "de2.7",
+        "de3.8",
+        "lie3.17",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.8:pde-in-geometry.proof",
+      "type": "proof",
+      "subject": "pde-in-geometry",
+      "title": "证明骨架：球面上 −Δ Y_l^m = l(l+1) Y_l^m —— Legendre 方程接上群表示",
+      "keywords": [
+        "球坐标分离变量",
+        "角向给出 Legendre 方程",
+        "整数 l 与截断",
+        "重数 2l+1"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "五步：球坐标分离变量（φ 方向给出整数 m）；角向化为 Legendre；整数 l 的截断要求；特征值 0/2/6/12 与重数 2l+1；与 SO(3) 不可约表示维数的对应。",
+      "content": "**目标**：说明球面的 Laplace–Beltrami 谱为什么是 $l(l+1)$，并且 $l$ 只能取非负整数。\n\n**第 1 步（球坐标分离变量）。** 在 $S^2$ 上用 $(\\theta,\\varphi)$，拉普拉斯写为\n\n$$\\Delta=\\frac{1}{r^2}\\Bigl[\\partial_r(r^2\\partial_r)+\\frac{1}{\\sin\\theta}\\partial_\\theta(\\sin\\theta\\,\\partial_\\theta)+\\frac{1}{\\sin^2\\theta}\\partial_\\varphi^2\\Bigr]$$\n\n令 $Y(\\theta,\\varphi)=\\Theta(\\theta)\\Phi(\\varphi)$。$\\varphi$ 方向得 $\\Phi''=-m^2\\Phi$ ⇒ $m$ 整数（**周期性**）。\n\n**第 2 步（角向 ⇒ Legendre 方程）。** 令 $x=\\cos\\theta$、$\\Theta(\\theta)=P(x)$，代入得\n\n$$(1-x^2)P''-2xP'+\\Bigl[l(l+1)-\\frac{m^2}{1-x^2}\\Bigr]P=0$$\n\n$m=0$ 时正是 **Legendre 方程**（`de1.16`）：$(1-x^2)y''-2xy'+l(l+1)y=0$。\n\n**第 3 步（$l$ 必须非负整数）。** 幂级数解在 $x\\in[-1,1]$ **有界**的充要条件是级数**截断**，截断恰好发生在 $k=l$ 处 —— 这要求 $l$ 为非负整数（`de1.16` 的递推 + 截断证明）。**否则 $P$ 在 $\\pm1$ 发散**（`de1.16` 的反例）。\n\n**第 4 步（特征值与重数）。** 于是分离常数就是 $l(l+1)$，$l$ 依次取 $0,1,2,3$ 时特征值算得 $0,2,6,12$【已核验:2|1*(1+1)】、【已核验:6|2*(2+1)】、【已核验:12|3*(3+1)】。每个 $l$ 有 $m=-l,\\dots,l$ 共 $2l+1$ 个（$l=2$ 时 $5$ 个【已核验:5|2*2+1】）。\n\n**第 5 步（群论读法）。** $2l+1$ 恰好是 $SO(3)$ 的 $(2l+1)$ 维**不可约表示**的维数 ⇒ 「球谐 = $SO(3)$ 的不可约表示基」（`lie3.17`）。**这就是「微分方程 ↔ 表示论」的三角关系的具体落点**（`de4.12`）。∎",
+      "links": [
+        "de1.16",
+        "de1.12",
+        "de3.8",
+        "lie3.17",
+        "de4.12",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.8:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：球面特征值、圆收缩半径、Fiedler 值、钝角后果",
+      "keywords": [
+        "l=3 的特征值",
+        "MCF 下的半径",
+        "路径图的 Fiedler 值",
+        "钝角使算子非椭圆"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "四问：l=4 的特征值与谱间隔；MCF 在 t=0.25 的半径；P_4 与 P_5 的 Fiedler 值；钝角对谱聚类指标的影响。",
+      "content": "**四问。**\n\n**① 球面特征值。** 单位球面上 $l=4$ 时 $\\lambda=l(l+1)$ 算得 $20$【已核验:20|4*(4+1)】；相邻差 $\\lambda_{l+1}-\\lambda_l=2(l+1)$，$l=0\\to1$ 时差算得 $2$【已核验:2|2*(0+1)】 —— **谱间隔线性增长**（球面是「高维谱密度」的典型，与鼓面的 $\\lambda_k\\sim k^2$ 不同）。\n\n**② 平均曲率流。** 圆 $r(t)=\\sqrt{r_0^2-2t}$，取 $r_0=1$、$t=0.25$：$r$ 算得 $0.707107$【已核验:0.707106781187|sqrt(1-2*0.25)】；$t\\to0.5$ 时 $r\\to0$（**有限时间熄灭**，限定词③）。\n\n**③ Fiedler 值。** 路径图 $P_4$（4 个顶点串成一条线）：$\\lambda_1=2(1-\\cos(\\pi/4))$ 算得 $0.585786$【已核验:0.585786437627|2*(1-cos(pi/4))】 = $2-\\sqrt2$【已核验:0.585786437627|2-sqrt(2)】；$P_5$ 时算得 $0.381966$【已核验:0.38196601125|2*(1-cos(pi/5))】（**路径越长，$\\lambda_1$ 越小 ⇒ 越容易被「切成两半」**，这正是谱聚类用 $\\lambda_1$ 做分割阈值的理由）。\n\n**④ 追问。** 若把 $P_4$ 的一个三角形网格元素换成钝角 $120°$，余切权重 $\\cot120°$ 算得 $-0.577350$【已核验:-0.57735026919|1/tan(2*pi/3)】 —— **负权重使算子非正定**，谱聚类的「最小非零特征值」不再是分割指标（出现负谱 ⇒ 指标失去意义）。**同一算法在两种网格上给出完全不同的结论**。",
+      "links": [
+        "de4.6",
+        "de4.7",
+        "de1.16",
+        "de3.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.8:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：五个几何方程的光滑性需求与离散单元",
+      "keywords": [
+        "阶数与光滑性",
+        "所需有限元空间",
+        "离散单元",
+        "典型任务"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "三问：阶数→光滑性→单元的三级映射；几何任务的离散退化问题；与 de2.15/de4.3 的同源性。",
+      "content": "| 方程 | 阶数/类型 | 需要的弱解空间 | 离散单元 | 任务 |\n|---|---|---|---|---|\n| $\\Delta u=0$ | 2 阶椭圆 | $H^1$（$C^0$） | 分片线性(P1) | 调和映射、平滑 |\n| $\\Delta^2u=0$ | 4 阶椭圆 | $H^2$（$C^1$） | Morley / HCT | 薄板、曲面重建 |\n| **平均曲率流** | 2 阶抛物 | $H^1$ | P1 + 重网格化 | 曲面演化 |\n| **测地线方程** | 2 阶 ODE | $C^1$ 曲线 | 折线 + 弧长参数 | 最短路径 |\n| $-\\Delta u=\\lambda u$ | 2 阶椭圆特征问题 | $H^1$ | P1 + 广义特征求解 | 形状分析、谱聚类 |\n\n**四条对照结论**：\n\n- **阶数决定空间**：2 阶要 $H^1$（$C^0$ 就够），4 阶要 $H^2$（$C^1$，分片线性**不够**）—— 这是限定词②的定量含义；\n- **几何任务多在「离散退化」处出问题**：钝角（算子非正定）、长瘦单元（条件数爆炸）、重网格化（拓扑变化）；\n- **离散化必须保住结构**：离散 Laplace 要**对称半正定**、双调和要**对称**、MCF 要**保体积近似**；\n- **与数值 PDE 同源**：$H^1/H^2$ 空间、条件数、奇异化 —— 与 `de2.15`（变分/弱解）、`de4.3`（有限元）是同一套工具箱。",
+      "links": [
+        "de4.3",
+        "de4.6",
+        "de4.7",
+        "de2.15",
+        "de1.16",
+        "de3.8",
+        "G2.2",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.8:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：网格平滑、形状匹配、参数化与几何深度学习",
+      "keywords": [
+        "网格平滑与去噪",
+        "谱指纹做形状匹配",
+        "调和映射做参数化",
+        "谱卷积神经网络"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 109,
+        "line_end": 127
+      },
+      "fill_hint": "四问：Laplace 平滑与热方程的关系；谱指纹为何姿态无关；UV 展开解哪个边值问题；谱卷积与等变网络的接缝。",
+      "content": "五个算子撑起几何处理的主流流水线：\n\n- **网格平滑/去噪**：Laplace 平滑（`u←u−τΔu`）就是**显式时间步进的热方程**（`de2.7`）；MCF 是它的「保形」版本（法向移动）；双调和平滑（$\\Delta^2$）保面积/保特征更好；\n- **形状匹配 / Shape Google**：用 $\\{\\lambda_k\\}$（谱指纹）或 HKS/SGW（热核）做检索 —— 与采样、姿态无关；\n- **曲面参数化（UV 展开）**：解 **调和映射**（$\\Delta u=0$ + 边界固定，`de2.8` 的 Dirichlet 问题）；纹理映射、重网格化的基础；\n- **薄板/壳体仿真**：**双调和**方程，工业 CAD/CAE；\n- **几何深度学习**：**谱卷积**（在 $\\lambda_k,\\phi_k$ 上定义卷积）与**等变网络**（`lie3.19`）—— 把「几何结构」当成先验嵌进网络，代价是谱分解 $O(n^3)$（近似用 Chebyshev 多项式）；\n- **拓扑分析**：同调/持久同调（`lie3.24`）与 Laplace 谱互补 —— 前者管「洞」，后者管「形状」。\n\n**与 Lie 群的接缝**：球谐是 $SO(3)$ 的不可约表示基（`lie3.17`），所以**球面上的几何处理天然是表示论的**（旋转等变卷积、球面 CNN）—— 这是 `de4.8` 与 li 篇的直接接口。",
+      "links": [
+        "de4.3",
+        "de4.6",
+        "de4.7",
+        "de2.7",
+        "de2.8",
+        "lie3.17",
+        "lie3.19",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

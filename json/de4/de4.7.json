@@ -1,0 +1,285 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de4.7",
+  "chapter": "de4",
+  "title": "微分方程在物理模拟中的出现",
+  "src": {
+    "file": "notebook/diffrential/de4.tex",
+    "line_start": 92,
+    "line_end": 107,
+    "anchor": "notebook/diffrential/de4.tex:92"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de4.7:pde-in-simulation.quantifiers",
+      "type": "comparison",
+      "subject": "pde-in-simulation",
+      "title": "物理模拟中六个方程的限定词：不可压约束、小应变、小振幅、无限速度、辛结构、扩散比",
+      "keywords": [
+        "Navier-Stokes 的不可压是全局约束",
+        "弹性方程小应变线性",
+        "波动方程小振幅",
+        "Hamilton 要求辛结构"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "六问：不可压约束为何要投影；线弹性的大变形失效；声波线性化与激波；热方程的无限传播速度；辛结构的必要性；Turing 的扩散比阈值。",
+      "content": "切片给了**一张六行表**（方程 ↔ 模拟对象）。**六个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **不可压 NS 的 $\\nabla\\cdot\\mathbf{v}=0$ 是全局约束** | 压力 $p$ 不是物理状态，而是** Lagrange 乘子**：解 Poisson 才能满足约束。忽略它直接用显式时间步 ⟹ 体积被压扁/膨胀 | 把约束当普通项 ⟹ 体积不守恒 | 可放宽：投影法 / 人工压缩性 |\n| ② **弹性方程的小应变假设** | 线性弹性 $\\varepsilon=\\frac12(\\nabla u+\\nabla u^{\\mathsf T})$ 只在小变形下成立；大变形（橡胶拉伸 200%）必须用超弹性 | 大变形用线弹性 ⟹ **体积虚增**、能量不守恒 | 可放宽：Saint-Venant / Neo-Hookean |\n| ③ **波动方程的小振幅假设** | 声波线性化只对 $\\lvert u\\rvert\\ll$ 波长成立；激波（$Ma>1$）必须用非线性守恒律 + 熵条件 | 用线性波算激波 ⟹ 位置与强度都错 | 不能放宽：激波是本质非线性 |\n| ④ **热方程是抛物型：传播速度无限** | 阶跃初值 $t=0^+$ 时**任意远处** $u>0$。取 $k=1$、一阶模态：$e^{-\\pi^2}$ 算得 $5.172319\\times10^{-5}$【已核验:5.17231862038e-05|exp(-pi**2)】 | 把热扩散当「有限速度」传输 ⟹ 因果结构搞错（与波动方程对照） | 不能放宽：这是抛物型的本质 |\n| ⑤ **Hamilton 方程要有辛结构** | 显式 Euler 破坏辛性 ⟹ 能量**单调漂移**。单摆：$\\theta=0.2$、$\\omega=0$ 时 $E=1-\\cos 0.2$ 算得 $0.019933$【已核验:0.0199334221588|1-cos(0.2)】 | 用非辛积分器 ⟹ 长时间模拟能量跑掉 | 可放宽：用辛（symplectic）积分器 |\n| ⑥ **反应–扩散的 Turing 图案需要扩散比足够大** | 抑制剂扩散必须**快于**激活剂：$D_v/D_u=d>d_c$。本例（$f_u=0.5,f_v=1,g_u=-2,g_v=-1$）$d_c$ 算得 $27.856406$【已核验:27.8564064606|14+8*sqrt(3)】 | 扩散比不够 ⟹ **无图案**（无量纲 d 是关键） | 不能放宽：阈值是硬的 |\n\n**六行表（切片）**：Navier–Stokes → 流体（水、烟、火）；弹性方程 → 固体变形；波动方程 → 布料、绳索、声波；热方程 → 温度场、扩散；Hamilton 方程 → 刚体、粒子系统；反应–扩散方程 → 图案生成（Turing）。",
+      "links": [
+        "de4.5",
+        "de4.6",
+        "de4.8",
+        "de2.7",
+        "de2.6",
+        "de1.10",
+        "de3.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.7:turing-threshold.counterexample",
+      "type": "counterexample",
+      "subject": "turing-threshold",
+      "title": "反例：Turing 图案 —— 扩散比不到 27.86 就什么也不长",
+      "keywords": [
+        "均匀态稳定但可被扩散破坏",
+        "d_c=14+8√3",
+        "d=2 时无图案",
+        "反直觉：扩散通常抹平"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "四问：为何「扩散造图案」不违反直觉；三条判据；d_c=14+8√3 的推导；d=2 时为何完全无图案。",
+      "content": "**通常直觉**：扩散是**抹平**不均匀的（热方程、`de4.6` 的 SSS）—— 两个物质互相扩散怎么会**制造**图案？Turing 的答案：**当抑制剂扩散得比激活剂快得多时，扩散反而放大空间不均匀**。\n\n**线性化判据**（激活剂 $u$、抑制剂 $v$，$u_t=f+D_u\\nabla^2u$，$v_t=g+D_v\\nabla^2v$）：\n\n1. **均匀态稳定**：$f_u+g_v<0$ 且 $f_ug_v-f_vg_u>0$；\n2. **扩散驱动不稳定**：$d f_u+g_v>0$ 且 $(df_u+g_v)^2>4d(f_ug_v-f_vg_u)$，其中 $d=D_v/D_u$。\n\n**取具体系数** $f_u=0.5$、$f_v=1$、$g_u=-2$、$g_v=-1$：\n\n- $f_u+g_v$ 算得 $-0.5$【已核验:-0.5|0.5-1】（**<0，稳定** ✅）\n- $f_ug_v-f_vg_u$ 算得 $1.5$【已核验:1.5|0.5*(-1)-1*(-2)】（**>0** ✅）\n- 条件 $d f_u+g_v>0$ ⟹ $0.5d-1>0$ ⟹ $d>2$；再加平方条件化简为 $d^2-28d+4>0$ ⟹ $d$ 算得临界值 $27.856406$【已核验:27.8564064606|14+8*sqrt(3)】\n\n**反例读数**：取 $d=2$ 时 $0.5\\cdot2-1$ 算得 $0$【已核验:0|0.5*2-1】（**不满足严格不等**）⇒ **完全无图案**；取 $d=1$（把扩散系数装反，激活剂比抑制剂扩散快）⇒ 更不可能。**阈值不是「差不多就行」，而是硬的**：$d$ 从 27 掉到 26 图案就没了。\n\n**物理读法**：激活剂局部自催化（在本地增长），抑制剂快速扩散到远处压制 —— 于是形成**有限波长**的稳定斑点/条纹。这就是动物皮毛、贝壳花纹、化学振荡（BZ 反应）的数学骨架。",
+      "links": [
+        "de4.6",
+        "de4.8",
+        "de2.7",
+        "de2.5",
+        "de3.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.7:pde-in-simulation.statement",
+      "type": "statement",
+      "subject": "pde-in-simulation",
+      "title": "陈述：六个方程及其模拟对象与守恒量",
+      "keywords": [
+        "NS 与守恒律",
+        "弹性与波动",
+        "热方程与耗散",
+        "Hamilton 与辛守恒"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "四问：六行表对应；按守恒量重排（守恒/耗散/辛）；Re=1000 的意义；耗散型方程需要什么格式。",
+      "content": "**六个方程（切片）**：\n\n| 方程 | 模拟对象 |\n|---|---|\n| **Navier–Stokes** | 流体（水、烟、火） |\n| **弹性方程** | 固体变形 |\n| **波动方程** | 布料、绳索、声波 |\n| **热方程** | 温度场、扩散 |\n| **Hamilton 方程** | 刚体、粒子系统 |\n| **反应–扩散方程** | 图案生成（Turing） |\n\n**按「守恒量」重排**（这是选数值格式的判据）：\n\n- **Navier–Stokes**：质量 + 动量守恒，**无**能量守恒（粘性耗散）；\n- **弹性 / 波动**：能量守恒（无阻尼时）；\n- **热方程**：**不守恒能量** —— 它是**耗散**的（$H=\\int u^2$ 单调减，`de2.7`）；\n- **Hamilton 方程**：能量 + **辛形式**双守恒；\n- **反应–扩散**：质量守恒（无源时），但**空间结构不守恒**（图案生长）。\n\n**关键数值**：雷诺数 $Re=UL/\\nu$，取 $U=L=1$、$\\nu=10^{-3}$ 算得 $1000$【已核验:1000|1*1/1e-3】 —— 已进入**湍流过渡区**（管流临界 $\\sim2000$–$4000$），意味着不能靠稳定格式硬算，必须处理小尺度涡。",
+      "links": [
+        "de4.5",
+        "de4.6",
+        "de2.6",
+        "de2.7",
+        "de1.10",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.7:pde-in-simulation.intuition",
+      "type": "intuition",
+      "subject": "pde-in-simulation",
+      "title": "直觉：物理模拟 = 把「守恒/耗散/约束」翻译成可迭代的离散规则",
+      "keywords": [
+        "守恒律给出通量形式",
+        "耗散给出隐式需求",
+        "约束给出投影",
+        "辛性给出长时稳定"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "四问：四类结构各自对应的离散要求；为何耗散项要隐式；投影法在约束中的地位；辛积分器的意义。",
+      "content": "物理模拟的全部难点可以归结为**三类结构**在离散化后是否被保住：\n\n- **守恒结构**（NS 的质量/动量、波动的能量）⟹ 离散必须写成**通量形式**（有限体积），否则能量会凭空产生或消失。`de4.1` 的守恒型差分就是这个要求的直接产物；\n- **耗散结构**（热方程、粘性项）⟹ 离散后是**刚性**的（时间尺度分离），显式格式要极小步长，必须用**隐式**（$e^{-\\pi^2}$ 这种衰减因子说明慢模态在长时后主导，见 `de2.7`）；\n- **约束结构**（不可压 $\\nabla\\cdot\\mathbf{v}=0$）⟹ 离散后是**代数约束**，用**投影 / 乘子**处理（解 Poisson，见 `de4.6`）；\n- **几何结构**（Hamilton 的辛形式）⟹ 离散后要**保辛**，否则长时间能量漂移（单摆 $E=1-\\cos0.2=0.019933$ 会慢慢跑掉）。\n\n**一句总纲**：模拟不是「把导数换成差分」这么简单 —— **是先认清方程的物理结构，再选一个能保住该结构的离散格式**。这就是为什么同一阶精度的两个格式（迎风 vs Lax–Wendroff）会在长时间后给出完全不同的物理。",
+      "links": [
+        "de4.5",
+        "de4.6",
+        "de4.1",
+        "de2.7",
+        "de1.10",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.7:pde-in-simulation.proof",
+      "type": "proof",
+      "subject": "pde-in-simulation",
+      "title": "证明：投影法的零散度恒等式 ∇·u^{n+1}=0",
+      "keywords": [
+        "分裂思路",
+        "解压力 Poisson",
+        "投影修散度",
+        "验证恒等式"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "四步：算子分裂；由零散度导出压力 Poisson；回代验证恒为 0；Helmholtz–Hodge 投影读法。",
+      "content": "**目标**：证明不可压 NS 的**投影法**（Chorin 1968）确实把速度投影到无散度空间。\n\n**第 1 步（算子分裂）。** NS：$\\partial_t\\mathbf u=-(\\mathbf u\\cdot\\nabla)\\mathbf u+\\nu\\nabla^2\\mathbf u-\\nabla p$，约束 $\\nabla\\cdot\\mathbf u=0$。把时间步分裂成「对流+粘性」与「压力」两步：\n\n$$\\mathbf u^*=\\mathbf u^n+\\Delta t\\bigl[-(\\mathbf u^n\\cdot\\nabla)\\mathbf u^n+\\nu\\nabla^2\\mathbf u^n\\bigr]$$\n\n（$\\mathbf u^*$ 一般**不满足** $\\nabla\\cdot\\mathbf u^*=0$）。\n\n**第 2 步（压力修正步）。** 令 $\\mathbf u^{n+1}=\\mathbf u^*-\\Delta t\\,\\nabla p$，并要求 $\\nabla\\cdot\\mathbf u^{n+1}=0$：\n\n$$\\nabla\\cdot\\mathbf u^*-\\Delta t\\,\\nabla^2p=0\\ \\Longrightarrow\\ \\nabla^2p=\\frac{1}{\\Delta t}\\nabla\\cdot\\mathbf u^*$$\n\n**这是一个 Poisson 方程** —— 正是 `de4.6` 里那个「压力投影」的来源。\n\n**第 3 步（验证零散度）。** 回代：\n\n$$\\nabla\\cdot\\mathbf u^{n+1}=\\nabla\\cdot\\mathbf u^*-\\Delta t\\,\\nabla^2p=\\nabla\\cdot\\mathbf u^*-\\Delta t\\cdot\\frac{1}{\\Delta t}\\nabla\\cdot\\mathbf u^*$$\n\n两项相消，算得 $0$【已核验:0|1-1】 —— **恒为**零散度（**不论 $\\mathbf u^*$ 多脏**）。\n\n**第 4 步（几何读法）。** $-\\Delta t\\nabla p$ 就是 $\\mathbf u^*$ 在 $L^2$ 意义下到「无散度子空间」的**正交投影**（Helmholtz–Hodge 分解），$p$ 是 Lagrange 乘子。**这就是「压力不是物理量、是约束乘子」（限定词①）的精确含义**。∎",
+      "links": [
+        "de4.5",
+        "de4.6",
+        "de2.8",
+        "de2.9",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.7:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：雷诺数、单摆能量、Turing 阈值、传播速度",
+      "keywords": [
+        "算 Re",
+        "算单摆能量",
+        "Turing 的 d_c",
+        "热 vs 波动的因果"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "四问：Re 的乘积不变性；单摆能量数值与辛性；d=30 时两条件都满足；热/波动的信息传播对比。",
+      "content": "**四问。**\n\n**① 雷诺数。** $U=2$、$L=0.5$、$\\nu=10^{-3}$：$Re=UL/\\nu$ 算得 $1000$【已核验:1000|2*0.5/1e-3】 = 与 $U=L=1$ 相同（**因为乘积相同**）。**结论**：$Re$ 是**乘积**决定的无量纲数，单独调 $U$ 或 $L$ 不变。\n\n**② 单摆能量。** $E=\\frac12\\omega^2+(1-\\cos\\theta)$，取 $\\omega=0.3$、$\\theta=0.4$：算得 $0.045+0.078939=0.123939$【已核验:0.123939005997|0.5*0.3**2+(1-cos(0.4))】。显式 Euler 每步会让 $E$ **单调上升**（虚假能量注入），辛格式则让它**有界振荡**。\n\n**③ Turing 阈值。** 系数 $f_u=0.5,f_v=1,g_u=-2,g_v=-1$：扩散比阈值 $d_c$ 算得 $27.856406$【已核验:27.8564064606|14+8*sqrt(3)】。取 $d=30$（略超）：$0.5\\cdot30-1$ 算得 $14$【已核验:14|0.5*30-1】>0，且 $(14)^2$ 算得 $196$【已核验:196|14**2】，与 $4d\\cdot\\det=4\\cdot30\\cdot1.5$ 算得 $180$【已核验:180|4*30*1.5】相比 $196>180$ ⇒ **不稳定，长图案** ✅。\n\n**④ 追问。** 热方程 $t=0^+$ 时远处 $u>0$（抛物型无限速度），而波动方程 $t$ 时刻只在 $\\lvert x\\rvert\\le ct$ 内有信号（双曲型有限速度）—— **两个方程的信息传播结构完全不同**，这决定了前者能隐式大步长、后者必须满足 CFL（`de4.1`）。",
+      "links": [
+        "de4.5",
+        "de4.6",
+        "de2.6",
+        "de2.7",
+        "de1.10",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.7:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：六个方程的守恒量、数值难点与主力算法",
+      "keywords": [
+        "守恒量对照",
+        "刚性来源",
+        "显式 vs 隐式",
+        "主流算法"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "三问：守恒量→格式的映射；刚性判据；约束的空间处理；三类跨类共性。",
+      "content": "| 方程 | 守恒量 | 数值难点 | 主力算法 |\n|---|---|---|---|\n| **Navier–Stokes** | 质量、动量（能量耗散） | 非线性对流 + 不可压约束 | 投影法 + 半拉格朗日（`de4.5`） |\n| **弹性** | 能量（无阻尼） | 刚性（高刚度 ⇒ 高频快模态） | 隐式时间步 / 模态分析 |\n| **波动** | 能量 | CFL（$\\Delta t\\le\\Delta x/c$） | 显式 + 通量格式 |\n| **热方程** | **无**（$H$ 单调减） | 刚性（慢模态长时主导） | 隐式差分 / 谱方法 |\n| **Hamilton** | 能量 + 辛形式 | 长期能量漂移 | 辛积分器（Verlet/Leapfrog） |\n| **反应–扩散** | 质量（无源） | 刚性 + 长时图案演化 | 隐式–显式混合（IMEX） |\n\n**三条判据**：\n\n- **看守恒量选格式**：守恒 ⟹ 通量形式；耗散 ⟹ 隐式；辛 ⟹ 辛积分器；\n- **看刚性选时间步**：刚性（弹性、热、反应扩散）必须隐式；非刚性（波动、对流）可显式 + CFL；\n- **看约束选空间离散**：不可压 ⟹ 投影；不可压 + 自由面 ⟹ 还要解界面（Level Set / SPH）。\n\n**跨类共性**：弹性、热、反应扩散都**刚性**（时间尺度跨越几个量级），所以三者都用隐式；波动与 NS 对流**非刚性**但受 CFL/非线性限制。",
+      "links": [
+        "de4.5",
+        "de4.6",
+        "de4.1",
+        "de2.6",
+        "de2.7",
+        "de1.10",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.7:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：实时水烟、布料与刚体、形态发生与工程仿真",
+      "keywords": [
+        "游戏中的流体与布料",
+        "电影特效的规模",
+        "Turing 图案与生物建模",
+        "工业 CFD/FEM"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 92,
+        "line_end": 107
+      },
+      "fill_hint": "四问：实时水烟的管线；布料为何用 PBD；Hamilton 为何要辛积分器；模拟与渲染的接缝。",
+      "content": "六个方程对应六条成熟的工业管线：\n\n- **实时水/烟（游戏）**：`de4.5` 半拉格朗日平流 → `de4.7` 投影（Poisson）→ 涡量增强；3D 用稀疏体素/粒子（FLIP）；\n- **布料/绳索**：**波动方程 + 约束求解**（位置式动力学 PBD/XPBD），本质是把「弹簧–质点」的刚性 ODE 用约束投影稳定化；\n- **刚体/粒子**：**Hamilton 方程 + 辛积分器**（Leapfrog/Verlet），保证长时间轨道稳定；游戏物理引擎的默认选择；\n- **固体变形（电影/工业）**：**弹性方程**，小变形用线性 FEM、大变形用超弹性 + 隐式；\n- **形态发生/生物**：**反应–扩散**（Turing）解释皮毛、贝壳、鱼纹；也用于城市生长、植被分布等元胞模型；\n- **工程仿真**：CFD（NS，$Re$ 从层流到湍流）+ 结构 FEM（弹性）+ 热管理（热方程），三者耦合（流固热）。\n\n**与渲染的接缝**：模拟产出的是**几何/场**（流体密度、布料顶点、温度），渲染（`de4.6`）再对它们求解传输方程 —— **模拟解动力学，渲染解辐射**，两条 PDE 线在同一个场景里并跑。",
+      "links": [
+        "de4.5",
+        "de4.6",
+        "de4.8",
+        "de2.6",
+        "de1.10",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

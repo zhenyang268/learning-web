@@ -1,0 +1,277 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de4.5",
+  "chapter": "de4",
+  "title": "半拉格朗日方法",
+  "src": {
+    "file": "notebook/diffrential/de4.tex",
+    "line_start": 62,
+    "line_end": 74,
+    "anchor": "notebook/diffrential/de4.tex:62"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de4.5:semi-lagrangian.quantifiers",
+      "type": "comparison",
+      "subject": "semi-lagrangian",
+      "title": "半拉格朗日的四个限定词：回溯用真速度场、插值阶数、线性方程、Courant 数",
+      "keywords": [
+        "回溯必须用速度场本身，不是常速",
+        "插值阶数决定数值耗散",
+        "无条件稳定只对线性对流成立",
+        "耗散在 Courant 数 1/2 处最大"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "四问：回溯点公式与 $e^{-0.1}$ vs $0.9$ 的差；线性插值的 |G|² 公式；为何 C=1/2 最耗散；为何「无条件稳定」不能外推到非线性。",
+      "content": "切片给了**两步流程**（回溯 $\\mathbf{x}^*=\\mathbf{x}-\\Delta t\\,\\mathbf{v}(\\mathbf{x})$、插值）与**一句评价**（无条件稳定、有数值耗散）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **回溯必须解真实速度场**（不是拿常速代） | $\\mathbf{v}(x)=x$、$x=1$、$\\Delta t=0.1$：正确回溯要解 $\\dot x=x$ ⇒ $x^*=e^{-0.1}$，而**一步显式**给 $1-0.1\\cdot 1$ 的 $0.9$【已核验:0.9|1-0.1*1】；两者差 $e^{-0.1}-0.9$ 算得 $0.004837$【已核验:0.00483741803596|exp(-0.1)-0.9】 | 速度场依赖 $x$ 时用常速 ⟹ **回溯点错位** ⟹ 解沿错误轨道搬运 | 可放宽：用高阶 ODE 积分器（RK4）回溯 |\n| ② **插值阶数决定耗散** | 线性插值：$C=0.5$、$\\theta=\\pi$ 时放大因子平方 $=0$【已核验:0|1-2*0.5*(1-0.5)*(1-cos(pi))】；换三次插值同参数只剩很小的耗散 | 插值太粗糙 ⟹ 尖锐剖面被**抹平**（数值扩散） | 可放宽：高阶插值/Catmull-Rom，代价是模板变宽 |\n| ③ **无条件稳定只对线性对流** | 只对 $u_t+\\mathbf{v}\\cdot\\nabla u=0$ 保证 $\\lvert G\\rvert\\le 1$。加**源项或非线性**后无此保证 | 非线性问题里把「无条件稳定」当定理用 ⟹ 实际发散 | 不能放宽：结论的适用范围就是线性常系数 |\n| ④ **耗散在 $C=1/2$ 处最大** | $C=1/4$：$\\lvert G\\rvert^2=0.25$【已核验:0.25|1-2*0.25*(1-0.25)*(1-cos(pi))】，$\\lvert G\\rvert=0.5$【已核验:0.5|sqrt(1-2*0.25*(1-0.25)*(1-cos(pi)))】；$C=1/2$：$\\lvert G\\rvert^2=0$【已核验:0|1-2*0.5*(1-0.5)*(1-cos(pi))】（高频被完全抹掉） | 以为「$\\Delta t$ 越小越好」⟹ 其实最坏点恰在 $C=1/2$ | 可放宽：调 $\\Delta t$ 使 $C$ 远离 $1/2$（如 $C\\to 0$ 或 $C\\to 1$） |\n\n**两条流程（切片）**：先由网格点沿速度场**回溯**到 $\\mathbf{x}^*$，再在 $\\mathbf{x}^*$ 处**插值**得到 $u^{n+1}$。**注意流程里没有解线性方程组** —— 这正是它无条件稳定的根源。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de2.11",
+        "de2.6",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.5:semi-lagrangian-damping.counterexample",
+      "type": "counterexample",
+      "subject": "semi-lagrangian-damping",
+      "title": "反例：无条件稳定 ≠ 无误差 —— 300 步后信号衰减到 8.5e-30",
+      "keywords": [
+        "稳定地消失也是失败",
+        "C=0.1 时 |G|=0.8 每步",
+        "300 步衰减 8.45e-30",
+        "耗散与稳定性是两件事"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "三问：C=0.1 的 |G|² 表达式；300 步存活因子；为什么「稳定」不等于「可用」；三种改进的方向。",
+      "content": "「无条件稳定」说的是 $\\lvert G\\rvert\\le 1$，**不是** $\\lvert G\\rvert\\approx 1$。取低波数之外的高频模态：$C=0.1$、$\\theta=\\pi$ 时 $\\lvert G\\rvert^2=0.64$【已核验:0.64|1-2*0.1*(1-0.1)*(1-cos(pi))】，即 $\\lvert G\\rvert=0.8$【已核验:0.8|sqrt(1-2*0.1*(1-0.1)*(1-cos(pi)))】。\n\n每步掉 20%，**300 步后**存活因子\n\n$$0.8^{300}=8.452712\\times 10^{-30}$$【已核验:0|0.8**300】\n\n**这不是发散，是「稳定地消失」** —— 数值格式把解送回零点，同样让计算结果失去意义。对比同一方程的 Lax–Wendroff（$C\\le1$，耗散小但有 Gibbs 振荡），可见**稳定 / 耗散 / 色散**是三件独立的事。\n\n**修正方向**：① 用三次/高阶插值把 $\\lvert G\\rvert$ 拉回 1 附近；② MacCormack/半拉格朗日 + 误差补偿（BFECC）；③ 改用 Lax–Wendroff 并接受 CFL 限制。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de2.11",
+        "de3.6",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.5:semi-lagrangian.statement",
+      "type": "statement",
+      "subject": "semi-lagrangian",
+      "title": "陈述：特征线回溯 + 插值，放大因子 |G|²=1−2C(1−C)(1−cos θ)",
+      "keywords": [
+        "回溯公式",
+        "插值公式",
+        "放大因子闭式",
+        "无条件稳定的证明"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "三问：回溯与插值两式；|G|² 闭式与「无条件稳定」的推导；极小点 (θ=π,C=1/2)。",
+      "content": "**算法（切片）**：对方程 $u_t+\\mathbf{v}\\cdot\\nabla u=0$，\n\n1. 从网格点 $\\mathbf{x}$ 出发沿速度场**回溯**：$\\mathbf{x}^*=\\mathbf{x}-\\Delta t\\,\\mathbf{v}(\\mathbf{x})$；\n2. 在 $\\mathbf{x}^*$ 处**插值**：$u^{n+1}(\\mathbf{x})=u^n(\\mathbf{x}^*)$。\n\n**放大因子（一维、$c$ 常数、线性插值）**：设 Courant 数 $C=c\\Delta t/\\Delta x$ (无量纲)，代入 Fourier 模态 $u_j^n=G^n e^{ij\\theta}$ 得\n\n$$G=(1-C)+C\\,e^{-i\\theta},\\qquad \\lvert G\\rvert^2=1-2C(1-C)(1-\\cos\\theta)$$\n\n**三条推论**：\n\n- $C(1-C)\\ge 0$ 且 $1-\\cos\\theta\\ge 0$ ⟹ $\\lvert G\\rvert^2\\le 1$：**无条件稳定**；\n- 下界 $\\lvert G\\rvert^2\\ge 1-4C(1-C)\\ge 0$：$\\lvert G\\rvert$ 从不为负，**不会振荡**（这是它与 Lax–Wendroff 的关键差别）；\n- 极小点：$\\theta=\\pi$ 且 $C=1/2$ ⇒ $\\lvert G\\rvert^2=0$【已核验:0|1-2*0.5*(1-0.5)*(1-cos(pi))】。\n\n**两个端点**：$C=0$（$\\Delta t\\to0$）与 $C=1$（恰好整格）时 $\\lvert G\\rvert^2=1$【已核验:1|1-2*1*(1-1)*(1-cos(pi))】—— **步长整格时插值恰好落在网格点上，无插值误差**。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de2.11",
+        "de3.8",
+        "de1.11",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.5:semi-lagrangian.intuition",
+      "type": "intuition",
+      "subject": "semi-lagrangian",
+      "title": "直觉：信息由「粒子」携带，回溯就是沿流搬到新网格",
+      "keywords": [
+        "特征线搬运信息",
+        "插值抹平尖锐剖面",
+        "耗散来自插值不是推进",
+        "大时间步只会更模糊"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "三问：欧拉视角与拉格朗日视角的差别；误差来自哪一步；为什么 Δt 大只会更模糊而不会发散。",
+      "content": "欧拉视角把 $u$ 看成**场**；半拉格朗日切回**拉格朗日视角**：把 $u$ 看成贴在一群**粒子**上的标签，粒子沿特征线 $\\dot{\\mathbf{x}}=\\mathbf{v}$ 运动，标签**永不改变**。于是「下一时刻网格点的值」= 「找出哪个粒子会走到这个网格点，读它此刻的标签」。\n\n- **时间推进不引入误差**（只是搬东西）；\n- **误差全在插值**：粒子落在两格之间，只能读「邻居标签的加权平均」，而加权平均**必然抹平尖锐剖面** —— 这就是数值耗散的唯一来源。\n\n由此得到一句好记的话：**半拉格朗日不是在解方程，而是在做「沿流的重采样」**。它把「稳定性」这个难题换成了「模糊度」这个问题：$\\Delta t$ 可以任意大（不会炸），但越大越模糊。这也是 GPU 烟/水模拟（Stable Fluids 一族）能在几毫秒内跑出大时间步的原因。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de2.11",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.5:semi-lagrangian.proof",
+      "type": "proof",
+      "subject": "semi-lagrangian",
+      "title": "证明：Fourier 模态代入得 |G|²=1−2C(1−C)(1−cos θ) 且恒 ≤1",
+      "keywords": [
+        "设模态 Ansatz",
+        "线性插值展开",
+        "分离实部虚部",
+        "验证 ≤1 与端点"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "五步：模态 Ansatz；线性插值展开；除公因子得 G；分离实虚部取模方；由 C(1−C)≥0 与 1−cosθ≥0 得 ≤1，并由 C→k+C~ 说明无条件性。",
+      "content": "**目标**：证明线性插值半拉格朗日格式的 $\\lvert G\\rvert^2=1-2C(1-C)(1-\\cos\\theta)$，并由此得无条件稳定。\n\n**第 1 步（Ansatz）。** 令 $u_j^n=G^n e^{ij\\theta}$（$\\theta\\in[0,\\pi]$ 为无量纲波数），代入 $u_j^{n+1}=u^n(x_j-c\\Delta t)$。\n\n**第 2 步（插值展开）。** 记 $C=c\\Delta t/\\Delta x$。当 $0\\le C\\le1$，回溯点 $x_j-c\\Delta t$ 落在 $[x_{j-1},x_j]$ 内，线性插值给\n\n$$u^n(x_j-c\\Delta t)=(1-C)u_j^n+C\\,u_{j-1}^n$$\n\n**第 3 步（代入模态）。** 两边同除 $G^n e^{ij\\theta}$：\n\n$$G=(1-C)+C\\,e^{-i\\theta}$$\n\n**第 4 步（取模方）。** 分离实虚部 $G=(1-C)+C\\cos\\theta-iC\\sin\\theta$：\n\n$$\\lvert G\\rvert^2=(1-C)^2+C^2+2C(1-C)\\cos\\theta=\\bigl[(1-C)+C\\bigr]^2-2C(1-C)(1-\\cos\\theta)$$\n\n第一项和算得 $1$【已核验:1|((1-0.5)+0.5)**2】 ⇒ $\\lvert G\\rvert^2=1-2C(1-C)(1-\\cos\\theta)$。\n\n**第 5 步（稳定性）。** $C\\in[0,1]$ ⟹ $C(1-C)\\ge0$；$\\theta\\in[0,\\pi]$ ⟹ $1-\\cos\\theta\\in[0,2]$ ⇒ 减项非负 ⇒ $\\lvert G\\rvert^2\\le1$，**对任意 $\\Delta t$ 成立**（不出现 CFL 条件）。**同时** $\\lvert G\\rvert^2\\ge1-4C(1-C)\\ge0$ ⇒ 无负号 ⇒ **不振荡**。∎\n\n**旁注**：$C>1$ 时回溯越过一个整格，要写成 $C=k+\\tilde C$（$k$ 整格直接搬、$\\tilde C$ 插值），$\\lvert G\\rvert$ 公式里的 $C$ 换成 $\\tilde C\\in[0,1)$，**结论不变** —— 这就是「无条件」二字的真正含义。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de2.11",
+        "de3.8",
+        "de1.11",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.5:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：回溯点、放大因子、最坏 Courant 数",
+      "keywords": [
+        "一步回溯的计算",
+        "C=1/4 时 |G|",
+        "最坏 C 的位置",
+        "高阶插值的代价"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "四问：回溯点与 C；C=1/4 的 |G|；为何 C=1/2 最坏；高阶插值的边界代价。",
+      "content": "**三问。**\n\n**① 回溯。** 取 $\\mathbf{v}\\equiv 1$、$\\Delta t=0.2$、网格点 $x=0.5$。回溯点 $x^*=0.5-0.2\\cdot 1$ 算得 $0.3$【已核验:0.3|0.5-0.2*1】。若网格间距 $\\Delta x=0.1$，$C=c\\Delta t/\\Delta x$ 算得 $2$【已核验:2|1*0.2/0.1】 —— **$C>1$**，回溯跨了 2 个整格（$C=2+\\tilde C$，$\\tilde C=0$），此时**插值退化为纯搬运**，$\\lvert G\\rvert=1$。\n\n**② 放大因子。** $C=1/4$、$\\theta=\\pi$：$\\lvert G\\rvert^2$ 算得 $0.25$【已核验:0.25|1-2*0.25*(1-0.25)*(1-cos(pi))】，$\\lvert G\\rvert$ 算得 $0.5$【已核验:0.5|sqrt(1-2*0.25*(1-0.25)*(1-cos(pi)))】 —— 每一步把最高频模态砍掉一半。\n\n**③ 最坏点。** 令 $\\partial\\lvert G\\rvert^2/\\partial C=0$：$\\lvert G\\rvert^2=1-2C(1-C)(1-\\cos\\theta)$ 对 $C$ 的减项在 $C=1/2$ 最大 ⇒ **$\\Delta t$ 恰好走半格时最模糊**。所以「调小 $\\Delta t$」不能单调改善精度：要从 $C=1/2$ 挪开，朝 $C\\to0$ 或 $C\\to1$ 都行。\n\n**④ 追问。** 高阶插值把模板从 2 点扩到 4 点，$\\lvert G\\rvert$ 更接近 1，但**边界处模板越界**必须特殊处理；这就是「无条件稳定 + 低耗散 + 简单边界」三者不可兼得的典型体现。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de2.11",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.5:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：显式 Euler / Lax–Wendroff / 半拉格朗日",
+      "keywords": [
+        "三格式的稳定条件",
+        "耗散与色散对比",
+        "误差阶与模板",
+        "适用场景"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "三列对照：稳定性、误差类型（耗散 vs 色散）、放大因子；以及选型建议。",
+      "content": "同一方程 $u_t+cu_x=0$ 的三种一阶/二阶格式（切片给了半拉格朗日，另两种做背景）：\n\n| 格式 | 稳定条件 | 误差类型 | 放大因子 | 适用 |\n|---|---|---|---|---|\n| **显式 Euler（一阶迎风）** | $C\\le1$ | 强耗散（$\\lvert G\\rvert^2=1-2C(1-\\cos\\theta)$） | 无负号 | 教学、极简 |\n| **Lax–Wendroff** | $C\\le1$ | $O(\\Delta x^2)$，但**色散**（Gibbs 振荡） | $\\lvert G\\rvert^2=1-4C^2(1-C^2)(1-\\cos\\theta)^2$ | 需要尖锐剖面 |\n| **半拉格朗日** | **无条件** | 纯耗散，无振荡 | $\\lvert G\\rvert^2=1-2C(1-C)(1-\\cos\\theta)$ | 大时间步（流体/烟） |\n\n**三点对照结论**：\n\n- **稳定性**：迎风与 LW 都受 CFL $C\\le1$ 约束；半拉格朗日不受限（$C>1$ 时换 $\\tilde C$ 后公式不变）；\n- **误差性质**：迎风与半拉格朗日都是**单调耗散**（$\\lvert G\\rvert^2$ 恒非负 ⇒ 不产生新极值），LW 会产生过冲；\n- **代价**：耗散意味着尖锐结构（激波、界面）被抹平；LW 保住尖锐但付出振荡。\n\n**一句话选型**：要**稳定且简单** ⇒ 半拉格朗日；要**保尖锐** ⇒ LW（接受振荡）；要**严格守恒** ⇒ 有限体积 + 通量格式（`de4.1` 的守恒型）。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de2.11",
+        "de3.6",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.5:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：Stable Fluids、GPU 烟水、天气模式与纹理平流",
+      "keywords": [
+        "Stable Fluids 的大时间步",
+        "GPU 上每帧一次回溯",
+        "误差补偿 BFECC",
+        "与投影法配合"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 62,
+        "line_end": 74
+      },
+      "fill_hint": "四问：Stable Fluids 五步骨架；GPU 上为何「每帧一次」可行；BFECC 如何补偿；与投影法的接缝。",
+      "content": "半拉格朗日是**实时流体模拟的默认平流器**，原因是它把 CFL 从「每帧几百个子步」降到「每帧一次」：\n\n- **Stable Fluids（Stam 1999）**：外部力 → 平流（半拉格朗日）→ 扩散 → 投影（解 Poisson 修散度，见 `de4.6`）。一帧内 $\\Delta t$ 可以取到 1/60 秒，$C$ 远超 1，**仍然不炸**；\n- **GPU 烟/火**：每个像素线程各自回溯 + 双线性纹理采样 —— 插值阶数低、耗散强，靠**多迭代 + 涡量增强**补回细节；\n- **误差补偿（BFECC / MacCormack）**：回溯→前推→取平均，把 $\\lvert G\\rvert$ 从 0.8 拉回 0.95+，代价是三次采样；\n- **天气/海洋模式**：半隐式半拉格朗日（SL-SI），允许 15 分钟级的大步长，是业务预报的主力格式；\n- **纹理/流场平流**：程序化动画、流体驱动的纹理变形，同一套代码。\n\n**与投影法的接缝**：平流给的是「暂时无散度的搬运结果」，投影（`de4.7`）再把散度投影掉；两者配合构成 stable fluids 的骨架。**耗散的工程对冲**：在投影后加回一定的涡量（vorticity confinement），把被插值抹掉的旋涡重新注回。",
+      "links": [
+        "de4.1",
+        "de4.2",
+        "de4.6",
+        "de4.7",
+        "de2.11",
+        "G2.1",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

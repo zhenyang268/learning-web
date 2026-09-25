@@ -1,0 +1,282 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de4.6",
+  "chapter": "de4",
+  "title": "微分方程在渲染中的出现",
+  "src": {
+    "file": "notebook/diffrential/de4.tex",
+    "line_start": 76,
+    "line_end": 90,
+    "anchor": "notebook/diffrential/de4.tex:76"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de4.6:pde-in-rendering.quantifiers",
+      "type": "comparison",
+      "subject": "pde-in-rendering",
+      "title": "渲染中五个方程的限定词：单色假设、尺度极限、能量守恒、光学厚、点源奇异",
+      "keywords": [
+        "Helmholtz 只在单色下成立",
+        "RTE 忽略波动与偏振",
+        "渲染方程收敛靠 albedo<1",
+        "扩散近似需光学厚"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "五问：Helmholtz 的时谐来源与宽带光的处理；RTE 的几何光学极限（油膜反例）；渲染方程 Neumann 收敛条件；SSS 的光学厚要求；Poisson Green 的 r→0 奇异。",
+      "content": "切片给了**一张五行表**（方程 ↔ 渲染角色）。**五个限定词**（每行一个）：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **Helmholtz 是单色（时谐）方程** | 它由 Maxwell 在 $e^{-i\\omega t}$ 下消去时间得到：$(\\nabla^2+k^2)u=0$。**宽带光**（白光干涉）必须多波长叠加或回到时域 Maxwell | 直接对白光用一个 $k$ ⟹ **丢掉色散**（棱镜色散算不出） | 可放宽：多波长逐个求解再积分 |\n| ② **RTE 处在几何光学极限**（特征尺度 $\\gg\\lambda$） | 薄膜厚度 $\\sim\\lambda$ 时须用波动光学 —— 油膜/肥皂泡的**彩色条纹**是干涉，RTE 给不出 | 用 RTE 算薄膜 ⟹ 只有单调灰，**没有彩虹色** | 不能放宽：只能换成 Maxwell/薄膜干涉公式 |\n| ③ **渲染方程是第二类 Fredholm 积分方程** | $L=L_e+\\mathcal KL$ 的 Neumann 级数收敛需 $\\lVert\\mathcal K\\rVert=a<1$（$a$ 为反照率）。取 $a=0.9$：级数和算得 $10$【已核验:10|1/(1-0.9)】；$a=1$（纯白闭合场景）**发散** | 以为路径追踪总收敛 ⟹ 全白场景里级数不收敛 | 可放宽：加自发光/求解分/有限次截断（`de3.15` 同款） |\n| ④ **扩散近似要求光学厚**（$\\tau=\\sigma_t L\\gg1$） | $\\tau=0.1$ 时扩散假设失效，误差放大到 $1/0.1$ 算得 $10$【已核验:10|1/0.1】倍量级 | 在**光学薄**介质（稀薄雾、单散射）用 SSS 扩散 ⟹ 光晕「糊过头」 | 不能放宽：改用 RTE 求解或单散射近似 |\n| ⑤ **Poisson 的 Green 函数在 $r\\to0$ 奇异** | 三维 $G=1/(4\\pi r)$，$r=0.5$ 处 $0.159155$【已核验:0.159154943092|1/(4*pi*0.5)】，$r\\to0$ 发散 | 点源直接离散 ⟹ 压力场/法线重建出现**无穷尖峰** | 可放宽：正则化核（$1/\\sqrt{r^2+\\epsilon^2}$）或罚项 |\n\n**五行表（切片）**：Helmholtz → 波动光学/衍射；RTE → 参与介质的光传输；渲染方程（积分方程）→ 全局光照；扩散方程 → 次表面散射近似；Poisson → 压力投影/法线重建。",
+      "links": [
+        "de4.5",
+        "de4.7",
+        "de2.8",
+        "de2.9",
+        "de2.15",
+        "de3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.6:thin-film.counterexample",
+      "type": "counterexample",
+      "subject": "thin-film",
+      "title": "反例：光学薄的介质 —— 扩散近似（SSS）放大 10 倍误差",
+      "keywords": [
+        "τ≪1 时扩散失效",
+        "单散射主导",
+        "稀薄雾/皮肤表层",
+        "替代方案"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "三问：τ 的计算；为何 τ=0.1 时扩散误差 ~10 倍；薄膜为何必须离开 RTE；两条修正方向。",
+      "content": "**SSS 扩散近似的适用条件是光学厚**：$\\tau=\\sigma_t L\\gg1$（$\\sigma_t$ 为消光系数，$L$ 为特征尺度）。取 $L=1$、$\\sigma_t=0.1$ ⇒ $\\tau=0.1$【已核验:0.1|0.1*1】。\n\n**失败的量级**：扩散理论把光当成「各向同性的随机游走」，而 $\\tau=0.1$ 时平均只有 $0.1$ 次消光事件 —— 光**几乎直线穿过**，完全不是游走。误差放大到\n\n$$1/\\tau=10$$【已核验:10|1/0.1】\n\n倍量级。**症状**：稀薄雾（真实应有清晰的单次散射光晕）被算成一团没有方向的糊；皮肤表层的脂质层高光被抹平。\n\n**同一问题的另一个反例：薄膜干涉。** 油膜厚度 $d\\sim\\lambda$（如 $d=0.4\\,\\mu\\text{m}$、$\\lambda\\sim0.55\\,\\mu\\text{m}$）时，RTE 的「几何光学 + 无偏振」假设**整体失效**，彩虹色完全算不出 —— 这不是精度问题，是**模型范式的越界**（限定词②）。\n\n**修正方向**：$\\tau\\lesssim1$ 用**单散射 + 少量多次散射**（Jensen 偶极子只适合 $\\tau\\gg1$）；薄膜用**多层干涉/传输矩阵**。",
+      "links": [
+        "de4.7",
+        "de2.8",
+        "de4.5",
+        "de3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.6:pde-in-rendering.statement",
+      "type": "statement",
+      "subject": "pde-in-rendering",
+      "title": "陈述：五个方程及其渲染角色，以及它们之间的近似链",
+      "keywords": [
+        "Helmholtz 与波动光学",
+        "RTE 与参与介质",
+        "渲染方程与全局光照",
+        "近似链的层级"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "四问：五行表的对应；近似链的层级（Maxwell→Helmholtz→RTE→扩散→渲染方程）；Poisson 的工具地位；k 与 G 的两个数值。",
+      "content": "**五个方程（切片）**：\n\n| 方程 | 渲染中的角色 |\n|---|---|\n| **Helmholtz** $(\\nabla^2+k^2)u=0$ | 波动光学、衍射 |\n| **辐射传输方程（RTE）** | 参与介质中的光传输 |\n| **渲染方程**（积分方程） | 全局光照 |\n| **扩散方程** | 次表面散射近似 |\n| **Poisson** $\\nabla^2u=f$ | 压力投影、法线重建 |\n\n**它们不是并列的五件东西，而是一条「近似链」**：Maxwell（时域，最精确）$\\xrightarrow{\\text{时谐}}$ Helmholtz $\\xrightarrow{\\text{忽略波动}}$ RTE $\\xrightarrow{\\text{多次散射 + 光学厚}}$ 扩散 $\\xrightarrow{\\text{自发光 + 反射}}$ 渲染方程；Poisson 则作为**求解工具**（散度投影）出现在流体与曲面问题里。\n\n**关键数值**：Helmholtz 波数 $k=2\\pi/\\lambda$，取 $\\lambda=0.5$ ⇒ $k$ 算得 $12.566371$【已核验:12.5663706144|2*pi/0.5】；三维 Poisson 的 $G(0.5)=0.159155$【已核验:0.159154943092|1/(4*pi*0.5)】 —— 这两个数把「波动」和「扩散」两个尺度标出来了：$k$ 大 ⇒ 波段细、可忽略扩散；$G$ 在近场尖 ⇒ 点源必须正则化。",
+      "links": [
+        "de4.5",
+        "de4.7",
+        "de2.8",
+        "de2.14",
+        "de3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.6:pde-in-rendering.intuition",
+      "type": "intuition",
+      "subject": "pde-in-rendering",
+      "title": "直觉：渲染就是解积分方程，其余方程是它在不同极限下的样子",
+      "keywords": [
+        "渲染本质是积分方程",
+        "Neumann 级数就是路径追踪",
+        "不同极限给出不同方程",
+        "近似链对应不同需求"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "三问：Neumann 级数第 k 项的物理含义；直接光/多次弹射/RR 如何对应级数；为何不同极限给出不同方程。",
+      "content": "把渲染方程 $L(x,\\omega)=L_e+\\int f\\,L\\,G\\,d\\omega'$ 抽象成 $\\mathcal L=L_e+\\mathcal K\\mathcal L$，解是 **Neumann 级数**\n\n$$\\mathcal L=(I-\\mathcal K)^{-1}L_e=L_e+\\mathcal K L_e+\\mathcal K^2L_e+\\cdots$$\n\n**第 $k$ 项恰好是「$k$ 次弹射的光」** —— 这不是类比，是**同一件事**：路径追踪（path tracing）就是在用蒙特卡洛估计这个级数。于是三件工程做法有了统一的解释：\n\n- **直接光采样** = 只算第 1 项（$\\mathcal KL_e$）；\n- **多次弹射** = 累加更高阶项；\n- **Russian roulette** = 让高阶项以递减概率被截断，控制级数长度。\n\n**为什么会有另外四个方程**：因为 $\\mathcal K$ 的核在不同物理极限下变成不同的微分算子 —— 忽略多次散射 ⇒ 单散射 RTE；介质够厚 ⇒ 扩散（$\\mathcal K$ 近似为局部算子）；介质够薄且尺度远大于 $\\lambda$ ⇒ 几何光学；反之保留波动 ⇒ Helmholtz。**所以「用哪个方程」其实是「在哪一段极限里」的问题**。",
+      "links": [
+        "de4.5",
+        "de3.15",
+        "de2.8",
+        "de2.12",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.6:pde-in-rendering.proof",
+      "type": "proof",
+      "subject": "pde-in-rendering",
+      "title": "证明骨架：渲染方程的 Neumann 级数 = 路径积分展开，收敛靠 albedo<1",
+      "keywords": [
+        "算子形式化",
+        "Neumann 级数",
+        "收敛条件",
+        "路径积分等价"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "五步：K 的算子形式；Neumann 级数；a<1 的误差界（a=0.9→10、a=0.5→2）；与路径积分等价；a=1 的不收敛但可解。",
+      "content": "**第 1 步（算子形式）。** 记 $(\\mathcal K L)(x,\\omega)=\\int_{\\Omega}f_r(x,\\omega,\\omega')\\,L(x',\\omega')\\,G(x,x')\\,d\\omega'$，渲染方程写为 $\\mathcal L=L_e+\\mathcal K\\mathcal L$。\n\n**第 2 步（Neumann 级数）。** 形式移项得 $\\mathcal L=(I-\\mathcal K)^{-1}L_e$；在 $\\lVert\\mathcal K\\rVert<1$ 下展开\n\n$$\\mathcal L=\\sum_{k\\ge0}\\mathcal K^kL_e$$\n\n**第 3 步（收敛条件）。** $\\lVert\\mathcal K\\rVert\\le a$（$a$ 为场景的**最大反照率**：$\\int f_r\\cos\\theta\\,d\\omega\\le a<1$ 由能量守恒给出）。于是\n\n$$\\lVert\\mathcal L\\rVert\\le\\frac{\\lVert L_e\\rVert}{1-a}$$\n\n取 $a=0.9$：放大因子 $\\lVert\\mathcal L\\rVert/\\lVert L_e\\rVert$ 算得 $10$【已核验:10|1/(1-0.9)】；$a=0.5$：算得 $2$【已核验:2|1/(1-0.5)】 —— **反照率越接近 1，级数越长、方差越大**（这正是「白墙房间最难渲染」的定量原因）。\n\n**第 4 步（等价于路径积分）。** 展开 $\\mathcal K^kL_e$ 逐层代入就是「光源 → $k$ 次反射 → 眼睛」的所有路径之和，即 **path integral**。蒙特卡洛无偏估计每一项 ⟹ 路径追踪是无偏的（前提 $a<1$）。\n\n**第 5 步（$a=1$ 的边界）。** 纯白闭合场景 $\\lVert\\mathcal K\\rVert=1$：级数**不收敛**，但方程**仍有解**（能量守恒下的均匀辐射度）—— 与 `de3.15` 的 Neumann 发散反例同源，必须靠解析解/求解分/截断处理。∎",
+      "links": [
+        "de3.15",
+        "de2.9",
+        "de4.5",
+        "de2.12",
+        "G2.1",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.6:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：波数、Green 函数、收敛因子",
+      "keywords": [
+        "由波长算波数",
+        "Poisson Green 的值",
+        "反照率与级数长度",
+        "近场奇异的处理"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "四问：λ 减半则 k 加倍；G(1) 与 G(0.5) 的加倍关系；由 0.8^k≤1e-3 求 k；实时渲染绕开级数的手段。",
+      "content": "**四问。**\n\n**① 波长 → 波数。** $\\lambda=0.25$（紫外附近）时 $k=2\\pi/\\lambda$ 算得 $25.132741$【已核验:25.1327412287|2*pi/0.25】—— 是 $\\lambda=0.5$ 时的**两倍**【已核验:2|2*pi/0.25/(2*pi/0.5)】。**结论**：$k$ 与 $\\lambda$ 成反比，短波要更细的网格（每个波长至少 10 个采样点）。\n\n**② Poisson Green。** 三维 $G(r)=1/(4\\pi r)$：$r=1$ 时算得 $0.079577$【已核验:0.0795774715459|1/(4*pi*1)】，$r=0.5$ 时算得 $0.159155$【已核验:0.159154943092|1/(4*pi*0.5)】 —— 恰好**加倍**（$G\\propto1/r$）。$r\\to0$ 发散 ⇒ 压力投影里必须用**正则化核**。\n\n**③ 级数长度。** 反照率 $a=0.8$ 时，要让第 $k$ 项衰减到 $10^{-3}$ 倍：$0.8^k\\le10^{-3}$。取 $k=31$：算得 $0.8^{31}=9.903520\\times10^{-4}$【已核验:0.000990352031428|0.8**31】，故**约需 31 次弹射**；$a=0.9$ 时同样精度要到 $k$ 更大（$0.9^{66}\\approx10^{-3}$【已核验:0.000955004950797|0.9**66】）—— **反照率每接近 1 一点，代价指数上升**。\n\n**④ 追问。** 为什么 GPU 实时渲染不直接截断到低阶？因为它用**预计算/近似**（SH 环境光、屏幕空间）绕开级数，代价是丢掉高阶多次散射的「颜色渗透」（color bleeding）。",
+      "links": [
+        "de4.5",
+        "de2.8",
+        "de2.14",
+        "de3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.6:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：五个方程的类型、极限与数值难点",
+      "keywords": [
+        "方程类型（椭圆/抛物/双曲/积分）",
+        "所依赖的物理极限",
+        "数值难点",
+        "典型算法"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "三问：五方程的类型归类；三个无量纲数（λ/L、τ、a）如何选模型；类型与难点/算法的对应。",
+      "content": "把切片五行表按**数学类型**重排（这是「何时用哪个」的判据）：\n\n| 方程 | 类型 | 依赖的极限 | 数值难点 | 典型算法 |\n|---|---|---|---|---|\n| **Helmholtz** | 椭圆（时谐） | 单色、线性 | 高频下网格需 $\\sim10$ 点/波长 | FEM/BEM、FDTD |\n| **RTE** | 一阶积分–微分（传输） | 几何光学（尺度 $\\gg\\lambda$） | 高维相空间、各向异性散射 | 离散纵标、光子映射 |\n| **渲染方程** | 第二类 Fredholm 积分 | 几何光学 + 表面反射 | 级数收敛慢（$a\\to1$） | 路径追踪、MLT |\n| **扩散** | 抛物 | 光学厚（$\\tau\\gg1$）、强散射 | 边界条件（外推长度） | 隐式差分、偶极子 |\n| **Poisson** | 椭圆 | 稳态、无源区外 | 点源奇异、大规模求解 | 多重网格、FFT |\n\n**三条读表心得**：\n\n- **类型决定算法**：椭圆（边值）⇒ 稀疏线性系统；抛物（初值 + 耗散）⇒ 时间步进或隐式；积分（级数）⇒ 蒙特卡洛；\n- **极限决定模型**：$\\lambda$ 与特征尺度之比、光学厚度 $\\tau$、反照率 $a$ —— 三个无量纲数把五个方程串成一条链；\n- **难点与类型绑定**：椭圆怕奇异与规模、抛物怕刚性、积分怕方差。",
+      "links": [
+        "de4.5",
+        "de4.7",
+        "de2.8",
+        "de2.9",
+        "de2.14",
+        "de3.15",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.6:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：路径追踪、实时 SSS、屏幕空间与医学成像",
+      "keywords": [
+        "离线与实时的分工",
+        "SSS 扩散的实时实现",
+        "屏幕空间近似的边界",
+        "RTE 在生物组织中的应用"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 76,
+        "line_end": 90
+      },
+      "fill_hint": "四问：离线与实时各用哪些方程；SSS 的两种实现；波动光学只在哪些特效用；RTE→扩散在成像中的同构。",
+      "content": "五个方程在真实渲染/成像管线里各占一块：\n\n- **离线渲染（电影）**：主解**渲染方程**（路径追踪 / MLT），对**参与介质**解 **RTE**（体积渲染、云、烟），两者耦合在多散射介质里（体积路径追踪）；\n- **实时光栅化**：用 **扩散近似** 做次表面散射（预积分皮肤模型、屏幕空间 SSS），用 **Poisson** 做屏幕空间法线重建、TAA 的法线滤波；\n- **压力投影**：`de4.5` 的流体平流 → 解 **Poisson** 修散度，实时水/烟的核心；\n- **波动光学**：只在**特殊效果**里上阵 —— 薄膜干涉（油膜/肥皂泡）、衍射光栅（CD/DVD 彩虹）、全息；\n- **生物医学成像**：**RTE** 是光在组织里传输的物理模型（DOT/NIRS），光学厚极限退化为**扩散方程**（扩散光学层析）—— 与图形学共用同一套数学。\n\n**工程共识**：实时管线**尽量把积分方程降级为局部算子**（扩散=局部），因为局部算子能做屏幕空间近似（几毫秒）；一旦需要真正的多次散射就没法降级，只能回到蒙特卡洛。",
+      "links": [
+        "de4.5",
+        "de4.7",
+        "de2.8",
+        "de2.14",
+        "de3.15",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
