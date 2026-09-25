@@ -1,0 +1,270 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de2.9",
+  "chapter": "de2",
+  "title": "边界条件",
+  "src": {
+    "file": "notebook/diffrential/de2.tex",
+    "line_start": 161,
+    "line_end": 177,
+    "anchor": "notebook/diffrential/de2.tex:161"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de2.9:bc-types.quantifiers",
+      "type": "comparison",
+      "subject": "bc-types",
+      "title": "三类边界条件的限定词表：Dirichlet 最老实用，Neumann 要加条件",
+      "keywords": [
+        "Dirichlet：给值，最稳",
+        "Neumann：相容条件 + 只到相差常数",
+        "Robin：α=0 退 Dirichlet、α→∞ 退 Neumann",
+        "同一处不能同时给值又给通量（过定）",
+        "边界必须覆盖整个 ∂Ω（不能漏段）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "六行条件表：Dirichlet 只给边界值；Neumann 的相容条件（∮1=2π≠0 无解）与差常数（∮cosθ=0 相容但不唯一）；Robin 的 α=0/1/1e6 给 1/0.5/1e-6；过定（0−1≠0）；覆盖完整性；另附三类速判表。",
+      "content": "切片给了**三类边界条件**：Dirichlet $u|_{\\partial\\Omega}=g$、Neumann $\\partial_nu|_{\\partial\\Omega}=g$、Robin $u+\\alpha\\,\\partial_nu=g$。**每一类都有自己的「翻车方式」**：\n\n| 类型 / 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| **Dirichlet**：给**函数值** | 若在 $n$ 维的**内点**给值（不落在 $\\partial\\Omega$ 上），问题是过定的 | 内点的值本应由边界+方程决定，额外给值一般**无解** | 不能放宽：值只给在边界上 |\n| **Neumann**：① **相容条件** | 单位圆上 $\\Delta u=0$、$\\partial_nu=1$：$\\oint_{\\partial\\Omega}\\partial_nu\\,ds=\\int_\\Omega\\Delta u\\,dV=0$ 要求 $\\oint1\\,ds$ 算得 6.283185【已核验:6.28318530718|2*pi】$\\ne0$ | **无解**（通量总量非零 ⇒ 源汇不平衡） | 不能放宽：这是散度定理的硬约束 |\n| **Neumann**：② **只到相差常数** | 同上改取 $\\partial_nu=\\cos\\theta$：$\\oint\\cos\\theta\\,ds$ 算得 0【已核验:0|0】 ⇒ 相容 ✅，但 $u$ 与 $u+C$ **都是解** | 解**不唯一**（差任意常数），数值上「解出来加多少都对」 | 可放宽：钉住一点的值，或改用 Dirichlet |\n| **Robin**：$\\alpha$ 的两个极限 | $[-u''=0,\\ u(0)=0,\\ u(1)+\\alpha u'(1)=1]$ 的解是 $u=ax$、$a=\\dfrac{1}{1+\\alpha}$：$\\alpha=0$ 给 1【已核验:1|1/(1+0)】（Dirichlet）、$\\alpha=1$ 给 0.5【已核验:0.5|1/(1+1)】、$\\alpha=10^6$ 给 9.99999e-07【已核验:9.99999000001e-07|1/(1+1000000)】$\\approx0$（Neumann） | 若把 $\\alpha$ 的量纲/倒数搞反，**极限行为会互换**（该趋 Dirichlet 的趋了 Neumann） | 不能放宽：必须核 $\\alpha\\to0$ 与 $\\alpha\\to\\infty$ 两端 |\n| **过定**：同一处**同时**给值与通量 | $\\Delta u=0$ 于单位圆盘、$u\\vert_{\\partial\\Omega}=1$ ⇒ $u\\equiv1$ ⇒ $\\partial_nu\\vert_{\\partial\\Omega}=0$；若**再**要求 $\\partial_nu=1$，差 $0-1$ 算得 -1【已核验:-1|0-1】$\\ne0$ | **无解**（一般情形：两个条件不能压在同一个边界段上） | 不能放宽：混合条件要**分段给**（一部分 Dirichlet、一部分 Neumann） |\n| **覆盖完整性** | 只在**部分** $\\partial\\Omega$ 上给条件，其余段「不管」 | 解不唯一或不稳定（漏段等于给 Neumann $g=0$，可能触发相容/唯一性问题） | 可放宽：漏段必须显式补条件 |\n\n**三类条件的个数规律（二阶方程）**：**每个边界点恰好给一个条件**，全场共「$1$ 个/点」。**双曲/抛物还要另加初值**（`de2.5` 的三型表）。\n\n**一张速判表**：\n\n| 条件 | 物理 | 是否影响唯一性 | 何时退化为别类 |\n|---|---|---|---|\n| Dirichlet | 固定温度 / 固定位移 | **最稳**（唯一） | —— |\n| Neumann | 固定通量 / 绝热 / 自由端 | 差常数 + 相容条件 | —— |\n| Robin | 对流换热 | 唯一（$\\alpha\\ne0$） | $\\alpha=0$ ⇒ Dirichlet；$\\alpha\\to\\infty$ ⇒ Neumann |",
+      "links": [
+        "de2.5",
+        "de2.8",
+        "de2.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.9:pure-neumann.counterexample",
+      "type": "counterexample",
+      "subject": "pure-neumann",
+      "title": "反例：纯 Neumann 问题——通量不为零则无解，为零也不唯一",
+      "keywords": [
+        "散度定理给相容条件 ∮g = 0",
+        "单位圆 g=1 ⇒ ∮=2π ⇒ 无解",
+        "g=cosθ ⇒ ∮=0 ⇒ 有解但不唯一",
+        "解只在相差常数意义下确定"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "反例：散度定理给相容条件 ∮g=0；单位圆 g=1 给 ∮=2π=6.283185≠0 ⇒ 无解；g=cosθ 给 ∮=0 ⇒ 有解但差常数不唯一（解集 {u₀+C}）；与 Dirichlet 对照；点出数值上矩阵奇异。",
+      "content": "**Neumann 条件的两个限定词（① 相容、② 唯一性）都可以用同一个例子演出来。**\n\n**第一步：问题的相容条件来自散度定理。**\n\n$$\\Delta u=0\\ \\text{于}\\ \\Omega,\\qquad \\partial_nu=g\\ \\text{于}\\ \\partial\\Omega\n\\qquad\\Longrightarrow\\qquad\n\\int_\\Omega\\Delta u\\,dV=\\oint_{\\partial\\Omega}\\partial_nu\\,ds\\ \\Longrightarrow\\ \\oint_{\\partial\\Omega}g\\,ds=0$$\n\n**所以「通量的净流入为零」是硬约束**（物理上：稳态问题不能有净源）。\n\n**第二步：反例 A —— 相容条件被破坏。**\n\n取 $\\Omega$ 为单位圆盘、$g\\equiv1$：\n\n$$\\oint_{\\partial\\Omega}1\\,ds=2\\pi,\\quad \\text{算得 } 6.283185\\ \\text{【已核验:6.28318530718|2*pi】}\\ \\ne0$$\n\n⇒ **无解**。几何上：每一点都在往外流，而内部没有源，稳态不可能存在。\n\n**第三步：反例 B —— 相容了也不唯一。**\n\n取 $g(\\theta)=\\cos\\theta$：\n\n$$\\oint_{\\partial\\Omega}\\cos\\theta\\,ds=\\int_0^{2\\pi}\\cos\\theta\\,d\\theta,\\quad \\text{算得 } 0\\ \\text{【已核验:0|0】}\\ ✅$$\n\n此时解存在，但**解不唯一**：若 $u$ 是解，则 $u+C$ 也是解（$\\partial_n(u+C)=\\partial_nu$）。**所以解只在「相差一个常数」的意义下确定。**\n\n**第四步：严格的唯一性陈述。**\n\n$$\\text{解集}=\\{\\,u_0+C\\ :\\ C\\in\\mathbb R\\,\\}$$\n\n**做法**：钉住一点的值（例如要求 $\\int_\\Omega u\\,dV=0$ 或 $u(x_0)=0$）才能谈唯一。\n\n**第五步：与 Dirichlet 的对照（为什么 Dirichlet 更「稳」）。**\n\n- **Dirichlet**：$u|_{\\partial\\Omega}=g$ 直接钉住了常数自由度 ⇒ **唯一**；\n- **Neumann**：$\\partial_nu$ 对加常数不敏感 ⇒ **留一个自由度** + 需要相容条件。\n\n**第六步：物理读法。**\n\n- 相容条件 = **「不能有净源」**（稳态）；\n- 不唯一 = **「温度/势的绝对零点任意」**（只有差值有意义）。\n\n**这两条在数值离散里会具体表现为**：纯 Neumann 的矩阵**奇异**（零特征值对应常数向量），必须用「钉一点」或「最小二乘 + 约束」处理。\n\n**一句话**：**纯 Neumann 是「有两条附加要求」的问题（相容 + 定常数），不是一个「给条件就完事」的问题。**",
+      "links": [
+        "de2.5",
+        "de2.8",
+        "de2.14"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.9:bc-types.statement",
+      "type": "statement",
+      "subject": "bc-types",
+      "title": "陈述：三类边界条件的定义与标准形",
+      "keywords": [
+        "Dirichlet：定值",
+        "Neumann：定通量（外法向导数）",
+        "Robin：混合（线性组合）",
+        "二阶方程每点恰好一个条件",
+        "初值条件的个数由型决定"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "五点陈述：三类条件定义表（形式/物理/性质）；Robin 两极限的代数解释；条件个数与三型的配合；非齐次条件标准化 w=u−u_p；一维 Robin 示例给 a=1/0.5/1e-6 三个数。",
+      "content": "**陈述。**\n\n**(i) 三类边界条件（切片）。** 设 $\\Omega$ 有足够光滑的边界 $\\partial\\Omega$，$n$ 为**外法向**，$\\partial_nu=\\nabla u\\cdot n$。\n\n| 类型 | 形式 | 物理意义 | 数学性质 |\n|---|---|---|---|\n| **Dirichlet** | $u\\big\\vert_{\\partial\\Omega}=g$ | 固定值（温度、位移、电位） | 直接钉住值 ⇒ 唯一性最好 |\n| **Neumann** | $\\partial_nu\\big\\vert_{\\partial\\Omega}=g$ | 固定通量（绝热、自由端、给定面电荷） | 需相容条件；解差常数 |\n| **Robin** | $u+\\alpha\\,\\partial_nu\\big\\vert_{\\partial\\Omega}=g$ | 对流换热（$\\alpha=k/h$ 型） | $\\alpha=0$⇒Dirichlet；$\\alpha\\to\\infty$⇒Neumann |\n\n**(ii) 为什么 Robin 的两个极限是那样。** 把 $u+\\alpha\\partial_nu=g$ 两边除以 $\\alpha$（$\\alpha$ 大时）：\n\n$$\\frac{u}{\\alpha}+\\partial_nu=\\frac{g}{\\alpha}\\ \\xrightarrow[\\alpha\\to\\infty]{}\\ \\partial_nu=0$$\n\n⇒ **Neumann**；而 $\\alpha\\to0$ 时直接得 $u=g$ ⇒ **Dirichlet** ✅\n\n**(iii) 条件的个数（与 `de2.5` 的三型表配合）。**\n\n- **二阶方程**：每个边界点**恰好 1 个**边界条件；\n- **双曲**：再加 **2 个初值**（位置 + 速度）；\n- **抛物**：再加 **1 个初值**；\n- **椭圆**：**没有初值**，只有边界条件。\n\n**(iv) 非齐次条件的标准化（很实用的一步）。** 若边界条件非齐次（$g\\ne0$），先找任一满足边界条件的已知函数 $u_p$（不必满足方程），令 $w=u-u_p$，则 $w$ 满足**齐次**边界条件，方程变成 $Lw=f-Lu_p$。**这样所有「齐次边界」的技巧（分离变量、Green 函数、特征函数展开）才可用。**\n\n**切片示例的核对**（一维）：\n\n$$-u''=0,\\quad u(0)=0,\\quad u(1)+\\alpha u'(1)=1$$\n\n解为 $u=ax$。边界给出 $a\\cdot1+\\alpha\\cdot a=1$ ⇒\n\n$$a=\\frac{1}{1+\\alpha}:\\qquad\n\\alpha=0\\Rightarrow a=1\\ \\text{【已核验:1|1/(1+0)】},\\quad\n\\alpha=1\\Rightarrow a=0.5\\ \\text{【已核验:0.5|1/(1+1)】},\\quad\n\\alpha=10^6\\Rightarrow a=9.99999e-07\\ \\text{【已核验:9.99999000001e-07|1/(1+1000000)】}$$\n\n**三个数正好把「Dirichlet（1）→ 中间（0.5）→ Neumann（0）」这条退化链走完** ✅",
+      "links": [
+        "de2.5",
+        "de2.8",
+        "de2.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.9:bc-types.intuition",
+      "type": "intuition",
+      "subject": "bc-types",
+      "title": "直觉：边界条件就是「外部世界对区域说的话」",
+      "keywords": [
+        "闭合方程的「缺口」由边界条件补上",
+        "给值 vs 给通量：一个钉住内部、一个放行常数",
+        "Robin 是「外面很热，隔着膜」",
+        "相容条件 = 稳态不能有净源"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "直觉：方程定不出常数 ⇒ 必须从边界钉自由度；三类条件的几何图像（夹子/斜坡指标/膜）；α 小像 Dirichlet、α 大像 Neumann；相容条件是守恒律；统一图像是「被边界钉住的布 + 弹簧」；提醒「每点恰好一个条件」。",
+      "content": "**假设给了什么。** 方程 $\\Delta u=0$（或 $Lu=f$）描述**区域内部**的规律。但内部的规律**不足以**定出唯一解 —— 还差「外部世界的信息」。\n\n**结论为什么因此成立。** 三步：\n\n**第一步：为什么必须有边界条件。**\n\n$u\\equiv C$ 对任何 $C$ 都是 $\\Delta u=0$ 的解 ⇒ **光是方程定不出常数**。要让解唯一，必须从外部**钉住**至少一个自由度。**边界条件就是这个「钉住」的动作。**\n\n**第二步：三类条件的几何图像。**\n\n- **Dirichlet（给值）**：边界像**夹子**，把解的高度固定住。**所以它把常数自由度和形状自由度一起钉死** ⇒ 唯一性最好。\n- **Neumann（给通量）**：边界像**斜坡指标**，只管「解从边界往外走多快」，**不管高度绝对在哪** ⇒ 高度整体平移（加常数）不影响它 ⇒ **留一个自由度**。\n- **Robin（混合）**：边界像**一层膜**，膜外的温度 $g$、膜的导热系数 $\\alpha$ 共同决定流入量。**$\\alpha$ 小（膜很厚/外部导热差）⇒ 膜内温度≈外部温度 ⇒ 像 Dirichlet；$\\alpha$ 大 ⇒ 膜几乎不挡 ⇒ 流入几乎不受膜内温度影响 ⇒ 像 Neumann。**\n\n**第三步：相容条件的物理来源。**\n\nNeumann 是在说「**指定每点的流出量**」。但对内部无源的稳态问题（$\\Delta u=0$），**流出的总量必然为零**（流进多少流出多少）。所以你指定的一组流出量**必须总和为零**：\n\n$$\\oint_{\\partial\\Omega}g\\,ds=0$$\n\n**这不是技术性要求，而是守恒律**。它把「不可能的问题」提前筛掉。\n\n**一个统一图像**：把解想成「被边界钉住的一块布」。\n\n- 给值 = 把布的边**钉在指定的高度**；\n- 给通量 = 只规定布边**往外拉的方向**，不规定高度；\n- 混合 = 布边连着**弹簧**（弹簧的另一端固定在某个高度）。\n\n**一个常见困惑**：为什么「给得越多越好」不对？因为**给多了是过定**（同一处既钉高度又钉方向，一般无解）；**给少了是不定**（漏一段 = 默认那里是 Neumann $g=0$，可能又碰上相容/唯一性问题）。**边界条件的数量有精确要求：每点恰好一个。**",
+      "links": [
+        "de2.5",
+        "de2.8",
+        "de2.10",
+        "de2.14"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.9:bc-types.proof",
+      "type": "proof",
+      "subject": "bc-types",
+      "title": "证明骨架：相容条件的推导与三类的退化链",
+      "keywords": [
+        "第一步 散度定理给 Neumann 相容条件",
+        "第二步 极值原理给 Dirichlet 唯一性",
+        "第三步 Robin 的唯一性（能量法）",
+        "第四步 α 两端极限"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "四步证明：散度定理给 Neumann 相容条件 ∮g=0；极值原理给 Dirichlet 唯一性；Green 恒等式 + Robin 消去给 ∫|∇w|²=0 与 ∮w²=0（需 α>0）；α 两端极限；一维实例 a=1/(1+α) 验证；四条易错。",
+      "content": "**第 1 步（Neumann 的相容条件）。** 对 $\\Delta u=0$ 在 $\\Omega$ 上积分并用散度定理：\n\n$$0=\\int_\\Omega\\Delta u\\,dV=\\oint_{\\partial\\Omega}\\partial_nu\\,ds=\\oint_{\\partial\\Omega}g\\,ds$$\n\n**理由**：散度定理（这里是 Green 恒等式）把体积分转成边界通量。**所以 $\\oint g\\,ds=0$ 是必要条件**（不是充分条件，但对光滑区域 + 合适函数类也是充分的）。∎\n\n**第 2 步（Dirichlet 的唯一性）。** 设 $u_1,u_2$ 同解，$w=u_1-u_2$：\n\n$$\\Delta w=0\\ \\text{于}\\ \\Omega,\\qquad w|_{\\partial\\Omega}=0$$\n\n由极值原理（`de2.8`）：$\\max_{\\bar\\Omega}w=\\max_{\\partial\\Omega}w=0$、$\\min_{\\bar\\Omega}w=\\min_{\\partial\\Omega}w=0$ ⇒ $w\\equiv0$ ⇒ **唯一** ✅\n\n**第 3 步（Robin 的唯一性：能量法，不需要极值原理）。** 设 $w$ 满足\n\n$$\\Delta w=0,\\qquad w+\\alpha\\,\\partial_nw=0\\ \\text{于}\\ \\partial\\Omega$$\n\n用 Green 恒等式（第一形式）：\n\n$$0=\\int_\\Omega w\\,\\Delta w\\,dV=-\\int_\\Omega|\\nabla w|^2dV+\\oint_{\\partial\\Omega}w\\,\\partial_nw\\,ds$$\n\n把边界项用 Robin 消去：$\\alpha\\partial_nw=-w$ ⇒ $w\\partial_nw=-\\dfrac{w^2}{\\alpha}$（设 $\\alpha>0$）：\n\n$$0=-\\int_\\Omega|\\nabla w|^2dV-\\frac1\\alpha\\oint_{\\partial\\Omega}w^2\\,ds\\ \\Longrightarrow\\ \\int_\\Omega|\\nabla w|^2dV=0,\\ \\oint_{\\partial\\Omega}w^2\\,ds=0$$\n\n⇒ $\\nabla w\\equiv0$ ⇒ $w\\equiv$ 常数；再由边界 $\\oint w^2=0$ ⇒ $w\\equiv0$ ⇒ **唯一** ✅\n\n**（注意 $\\alpha>0$ 是必需的：$\\alpha<0$ 时上面的符号会翻转，唯一性可能失败。）**\n\n**第 4 步（$\\alpha$ 两端极限）。** $u+\\alpha\\partial_nu=g$：\n\n- $\\alpha\\to0$：得 $u=g$ ⇒ **Dirichlet**；\n- $\\alpha\\to\\infty$：两边除以 $\\alpha$ 再令 $\\alpha\\to\\infty$：$\\dfrac{u}{\\alpha}+\\partial_nu=\\dfrac{g}{\\alpha}\\to0$ ⇒ $\\partial_nu=0$ ⇒ **Neumann**（$g$ 的尺度也随 $\\alpha$ 放大时得一般的 Neumann 条件）。\n\n**一维实例验证**（$[-u''=0,\\ u(0)=0,\\ u(1)+\\alpha u'(1)=1]$）：$u=ax$ ⇒ $a(1+\\alpha)=1$ ⇒\n\n$$a=\\frac{1}{1+\\alpha}:\\quad \\alpha=0\\Rightarrow1\\ \\text{【已核验:1|1/(1+0)】},\\quad \\alpha\\to\\infty\\Rightarrow0$$\n\n**与第 4 步的结论完全一致** ✅\n\n**易错点。**\n\n1. **$\\partial_n$ 是外法向**：用错方向会让 Neumann/Robin 的符号整体反号。\n2. **Neumann 的相容条件只在「无内部源」时是 $\\oint g=0$**：若方程是 $-\\Delta u=f$，则变成 $\\oint g\\,ds=\\int_\\Omega f\\,dV$（-号约定下要小心符号）。\n3. **$\\alpha>0$ 是 Robin 唯一性的前提**（第 3 步）。\n4. **非齐次条件先标准化**（$w=u-u_p$），否则分离变量/Green 函数都不直接可用。",
+      "links": [
+        "de2.5",
+        "de2.7",
+        "de2.8",
+        "de2.14"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.9:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：三类条件各解一个一维问题",
+      "keywords": [
+        "Dirichlet 解 u=x",
+        "Robin 解 u=x/(1+α)",
+        "Neumann 解不唯一",
+        "四个数核验"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "六问：Dirichlet 给 u=x、u′(1)=1；Robin 给 a=1/0.5/1e-6；Neumann 给 u≡0 但差常数不唯一；解释 α→∞ 与 Neumann 一致；把 α 写成 1/α 会让两端极限互换（易错点）；点出离散矩阵有零特征值。",
+      "content": "**题设**：$-u''=0$ 于 $(0,1)$，$u(0)=0$，右端分别为三类条件。\n\n**第 1 问：Dirichlet $u(1)=1$。**\n\n$u=ax$（$-u''=0$ 的通解 + $u(0)=0$），$u(1)=a=1$ ⇒ $u=x$。**$u'(1)$ 算得 1【已核验:1|1】**。\n\n**第 2 问：Robin $u(1)+\\alpha u'(1)=1$。**\n\n$u=ax$ ⇒ $a+\\alpha a=1$ ⇒ $a=\\dfrac{1}{1+\\alpha}$：\n\n| $\\alpha$ | $a$ |\n|---|---|\n| $0$ | 1.000000【已核验:1|1/(1+0)】 |\n| $1$ | 0.500000【已核验:0.5|1/(1+1)】 |\n| $10^6$ | 9.99999e-07【已核验:9.99999000001e-07|1/(1+1000000)】 |\n\n**第 3 问：Neumann $u'(1)=0$。**\n\n$u=ax$ ⇒ $a=0$ ⇒ $u\\equiv0$。**但注意 $u\\equiv C$ 也满足 $u'(1)=0$** —— 这就是「差常数」的自由度。若只给 $u'(1)=0$ 而不给 $u(0)$，解集是 $\\{C\\}$（无穷多）。\n\n**第 4 问：为什么 Robin 的解在 $\\alpha$ 很大时趋 0，而 Neumann 也趋 0？**\n\n因为 Robin 在 $\\alpha\\to\\infty$ 时**退化为 Neumann**（第 4 步的分母 $1+\\alpha$ 爆炸）；而 Neumann 加 $u(0)=0$ 的解正是 $u\\equiv0$。**两者一致，说明退化链是连续的** ✅\n\n**第 5 问（易错自查）：如果把 $u(1)+\\alpha u'(1)=1$ 的 $\\alpha$ 写成 $1/\\alpha$ 会怎样？**\n\n那会得到 $a=\\dfrac{1}{1+1/\\alpha}=\\dfrac{\\alpha}{1+\\alpha}$：$\\alpha\\to0$ 时 $a\\to0$（变成 Neumann）、$\\alpha\\to\\infty$ 时 $a\\to1$（变成 Dirichlet）。**两个极限正好互换** —— 这是本节最容易犯的错，**核验方法就是查两个端点**。\n\n**第 6 问：$L^2$ 意义下「差常数」有多大影响？**\n\n对 $\\|u\\|_{L^2}$ 的影响是 $\\|C\\|_{L^2(\\Omega)}$，在 $(0,1)$ 上是 $|C|$（与 $L$ 无关的量级）。**数值上**：纯 Neumann 的离散矩阵有一个零特征值，对应常向量；条件数形式上是 $\\infty$，必须显式处理。",
+      "links": [
+        "de2.5",
+        "de2.8",
+        "de2.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.9:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：三类边界条件 × 三型方程的配伍",
+      "keywords": [
+        "双曲：边界 + 2 初值",
+        "抛物：边界 + 1 初值",
+        "椭圆：只有边界",
+        "各类条件的相容与唯一性差别"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "三型 × 三类条件的配伍表（11 行）；三要点（只有椭圆纯 Neumann 需要相容+定常数、Robin 三型通用、条件个数由边界方向阶数决定）；与 de2.10–2.14 的接口与「先定型再定边界再选工具」的流程。",
+      "content": "**边界条件不能脱离方程类型单独谈**。把 `de2.5` 的三型与本节的三类条件交叉：\n\n| | **双曲**（波动） | **抛物**（热） | **椭圆**（Laplace） |\n|---|---|---|---|\n| 需要初值个数 | **2**（位置 + 速度） | **1** | **0** |\n| 边界条件 | 每点 1 个（三类任选，与空间有关） | 每点 1 个 | 每点 1 个 |\n| Dirichlet 的物理 | 固定端（弦） | 固定表面温度 | 固定电位/温度 |\n| Neumann 的物理 | 自由端（$u_x=0$） | 绝热（$\\partial_nT=0$） | 面电荷/给定热流 |\n| Robin 的物理 | 弹性支撑端 | 对流换热 | 接触热阻 |\n| 纯 Neumann 是否可解 | **是**（有初值钉住常数） | **是**（初值钉住常数） | **否**（需相容条件 + 差常数） |\n| 时间方向是否可推进 | 是（双曲，有限速度） | 是（抛物，无限速度） | **无时间** |\n\n**三条读表要点。**\n\n1. **只有椭圆型的纯 Neumann 问题需要「相容条件 + 定常数」**；双曲/抛物因为有初值，常数自由度**已被初值钉住**（例如波动方程 $u_t(x,0)$ 一给，整体常数就固定了）。\n2. **Robin 在三种型里都出现**，但物理含义随物理量变（弹簧支撑 / 对流换热 / 接触热阻），**数学形式相同**。\n3. **「边界条件个数」= 「方程在边界方向上的阶数」**：二阶方程每点 1 个；这不是约定，而是「特征线在边界处的进出个数」决定的（`de2.11` 会给特征线视角）。\n\n**与后续单元的接口**：分离变量（`de2.10`）要求**齐次**边界条件；Fourier 变换（`de2.12`）处理**无界域**（无边界）；Laplace 变换（`de2.13`）处理**半无界** + 初值；Green 函数（`de2.14`）把边界条件吸收进核。**先定型、再定边界、再选工具** —— 这是 de2 后半章的固定流程。",
+      "links": [
+        "de2.5",
+        "de2.6",
+        "de2.7",
+        "de2.8",
+        "de2.10",
+        "de2.11",
+        "de2.12",
+        "de2.13",
+        "de2.14"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.9:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：边界条件在后续方法与数值里的位置",
+      "keywords": [
+        "de2.10 需要齐次边界",
+        "de2.12 无界域无边界",
+        "de2.14 Green 函数吸收边界",
+        "de4 数值：边界离散与矩阵奇异"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 161,
+        "line_end": 177
+      },
+      "fill_hint": "下游清单：de2.10 需齐次边界（非齐次先标准化）；de2.12 无界域无边界、de2.13 半无界；de2.14 边界吸进核（镜像项）；de2.15 弱形式里 Dirichlet 是本质条件、Neumann 是自然条件；数值侧（奇异矩阵、消去边界、边界精度）；末给三件自检。",
+      "content": "**下游清单。**\n\n- **`de2.10` 分离变量**：**必须齐次边界**（否则 $X(0)T(t)=g(t)$ 无法分离）。非齐次先做 (iv) 的标准化 $w=u-u_p$。\n\n- **`de2.12` Fourier 变换 / `de2.13` Laplace 变换**：前者用于**无界域**（**没有边界条件**，只需初值 + 衰减条件）；后者用于**半无界 + 初值**（在 $t$ 方向做变换，边界条件在空间方向仍保留）。\n\n- **`de2.14` Green 函数（PDE 版）**：边界条件被**吸进核**——Dirichlet 要「减掉镜像项」使 $G|_{\\partial\\Omega}=0$；Neumann 要让 $\\partial_nG$ 满足对应条件。**这是「把边界条件变成核的一部分」的标准操作。**\n\n- **`de2.15` 弱形式**：Dirichlet 条件写进**试验函数空间**（$u,v\\in H_0^1$ ⇒ 齐次 Dirichlet **本质边界条件**）；Neumann 条件**自动出现**在弱形式的边界项里（**自然边界条件**）。**这个区分是有限元实现的核心。**\n\n- **数值侧（`de4.1`–`de4.4`）**：\n  - 纯 Neumann ⇒ 离散矩阵**奇异**（零特征值 = 常向量），必须「钉一点」或用最小二乘；\n  - Dirichlet ⇒ 直接**消去边界未知量**（本质条件，矩阵保持正定）；\n  - 边界离散的**精度**常常决定整体精度阶（特别是曲线边界）。\n\n**一句自检**：写下边界条件后核三件事 —— **（1）齐次吗**（不齐就先标准化）；**（2）每点恰好一个吗**（多了过定、少了不定）；**（3）若是纯 Neumann，相容条件 $\\oint g=0$ 满足吗**。",
+      "links": [
+        "de2.10",
+        "de2.12",
+        "de2.13",
+        "de2.14",
+        "de2.15",
+        "de4.1",
+        "de4.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
