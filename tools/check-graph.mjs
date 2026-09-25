@@ -49,7 +49,33 @@ async function loadModel() {
   return m.exports;
 }
 
-/** json/ 索引：单元代号 + 标题 + links（与前端 UnitMeta 同构的最小实现） */
+/**
+ * json/ 索引：单元代号 + 标题 + links（与前端 UnitMeta 同构的最小实现）。
+ *
+ * ⚠️ 解析失败**不能静默跳过**：JSON agent 会并发写入 json/，读到写一半的文件时
+ * `JSON.parse` 抛错，静默 `continue` 会让该单元「从索引里消失」，于是它被 yaml 引用时
+ * 误报「节点 X 不在知识库索引里」——闸门结果随机波动（实测 D1/D2/D3 集体误报，重跑就绿）。
+ * 所以：解析失败先**短重试**（等写完），仍失败才记进 unreadable 并在结尾显式警告。
+ */
+const unreadable = [];
+
+function readJsonWithRetry(abs, relPath) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      return JSON.parse(fs.readFileSync(abs, 'utf8'));
+    } catch (err) {
+      if (attempt === 2) {
+        unreadable.push(`${relPath} — ${err.message.slice(0, 80)}`);
+        return null;
+      }
+      // 同步短等待（校验脚本是同步的，用 busy-wait 100ms 等对方写完）
+      const t0 = Date.now();
+      while (Date.now() - t0 < 100) { /* spin */ }
+    }
+  }
+  return null;
+}
+
 function scanUnits() {
   const units = [];
   if (!fs.existsSync(JSON_DIR)) return units;
@@ -58,16 +84,16 @@ function scanUnits() {
     if (!fs.statSync(dir).isDirectory()) continue;
     for (const name of fs.readdirSync(dir).sort()) {
       if (!name.endsWith('.json') || name === 'index.json') continue;
-      let d;
-      try {
-        d = JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
-      } catch {
-        continue; // 坏 JSON 由 verify_kb / dom-harness 负责报告
+      const rel = `json/${chapter}/${name}`;
+      const d = readJsonWithRetry(path.join(dir, name), rel);
+      if (!d) continue;
+      if (typeof d.code !== 'string') {
+        unreadable.push(`${rel} — 缺 code 字段`);
+        continue;
       }
-      if (typeof d.code !== 'string') continue;
       const links = new Set();
       for (const e of d.entries ?? []) for (const l of e.links ?? []) links.add(l);
-      units.push({ path: `json/${chapter}/${name}`, code: d.code, chapter, title: d.title ?? d.code, cards: [], links: [...links] });
+      units.push({ path: rel, code: d.code, chapter, title: d.title ?? d.code, cards: [], links: [...links] });
     }
   }
   return units;
@@ -133,6 +159,14 @@ for (const e of merged.undirected) {
 }
 
 console.log(`\n=== check-graph：PASS ${pass} · FAIL ${fail} ===`);
+// 有读不了的文件 = 索引不全，后续「节点不在索引里」类断言全部失去意义 → 显式失败。
+// 静默跳过会让闸门在 JSON agent 并发写入时随机波动（实测误报 D1/D2/D3 集体不在索引）。
+if (unreadable.length) {
+  console.log(`\n⚠ 有 ${unreadable.length} 个 json 读不出来（索引不完整，结果不可信）：`);
+  for (const u of unreadable.slice(0, 20)) console.log('  ✗', u);
+  if (unreadable.length > 20) console.log(`  …另 ${unreadable.length - 20} 个`);
+  process.exit(1);
+}
 if (fail) {
   console.log('失败明细：');
   for (const f of failures.slice(0, 40)) console.log('  ✗', f);
