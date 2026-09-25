@@ -78,10 +78,12 @@ vite.config.ts  tsconfig.json  package.json  index.html
   每条边带注释说明依据，prereq 全库无环（`check:graph` **PASS 817 · FAIL 0**）。
 - 单元内部的对偶（如 H8.3「质点–弹簧 vs PBD」、C10.2「Itô vs Stratonovich」）**不建自指边**，
   只在 yaml 里注记说明——自指是非法边，check-graph 会拦。
-- 覆盖原则：yaml 只写**组内**语义边（组内派生 prereq 被 yaml 覆盖）；跨章关系仍由 links 派生边承担。
+- 覆盖原则：~~yaml 只写组内语义边；跨章关系仍由 links 派生边承担~~
+  **★ 2026-09-25 下午已推翻，见 §7**：被 yaml 覆盖的单元，prereq **严格只用 yaml**（跨组派生边也作废），
+  所以新铺 yaml 时必须把证据明确的**跨章 prereq 一并显式声明**（K3/Q9/R2 就是这么写的）。
 - 剩余：等 JSON agent 入库 K–R/de/lie 各章后跟进（defg 批已于 2026-09-25 上午入库完毕）。
 - **接力规则（本轮验证过的工作流）**：`find json/<G> -name '*.json' -mmin +5` 全部命中
-  且 ≥2 文件、`graph/<G>.yaml` 不存在 → 该铺了；铺完 `npm run check:graph` 必须 0 FAIL。
+  且 ≥2 文件、`graph/<G>.yaml` 不存在 → 该铺了；铺完 `npm run check:graph` **和 `check:sem-sync`** 必须 0 FAIL。
 
 ### P0 viz：无积压
 
@@ -101,8 +103,9 @@ vite.config.ts  tsconfig.json  package.json  index.html
 4. **boot() 同值 hash 不触发 apply**——错误浮层「重新加载」后若目标 hash 与当前相同，
    hashchange 不派发，页面白屏。同值时手动补调 apply()。
 5. **standalone 不内联 graph/\*.yaml**——单文件快照里 fetch graph/* 全 404，23 章语义边
-   静默降级成纯派生边。build-standalone.mjs 已把 graph/ 打进 DATA 表并重建
-   dist/knowledge.html（128 单元 · 5.88MB · gitignore 不入库）。
+   静默降级成纯派生边。~~build-standalone.mjs 已把 graph/ 打进 DATA 表~~
+   **★ 本轮（下午）已改为更彻底的解法**：语义边烘进索引后，运行期根本不 fetch graph/*，
+   standalone 里内联 yaml 反而成了死数据，已移除。详见 §7。
 6. 顺手：图谱右栏「语义边真源现只有 A1」过期文案 → 动态 `N/M` 计数；
    aside.ts 掌握度圆环、styles.css 37 处硬编码 alpha 色值 → `color-mix(var(--x))` 主题化。
 
@@ -133,3 +136,102 @@ L0–L5 层级状态（L0 ✅、L1 🔄、L2–L5 ⬜）与会话日志；「24 
 tsc 0 错 · check:graph 713/0 · check:viz 3182/0 · dom-harness **123 单元 5198/0**
 （JSON agent 并行入库中，单元数从 96 涨到 123+，harness 全绿）。
 提交：`0d6e65f`（20 章 yaml）→ `072a395`（前端 bug 修复 + I9/J2）→ `e8ff4b1`（standalone graph 内联）。
+
+---
+
+## 7. 进度追加（2026-09-25 下午，前端 agent 第二轮）
+
+用户本轮提了两件事：① 左侧目录与整页共享滚动条互相影响；② 继续查 bug。
+结果查出**一个比上午所有 bug 都严重的架构不一致**，并把它彻底修掉了。
+
+### 7.1 界面：目录/右栏改为独立滚动区（用户报的问题）
+
+- `styles.css`：`nav .box` 与 `aside .box` 加 `max-height: calc(100vh - 96px)` + `overflow-y: auto`
+  + **`overscroll-behavior: contain`**（关键：滚到底/顶时不把滚动链传给 body）+ `scrollbar-width: thin`。
+  细滚动条 hover 才显形。窄屏 `@media(max-width:1150px)` 单列堆叠时取消限高、交回整页滚动。
+- `sidebar.ts`：目录每次 `refreshChrome()` 都被 innerHTML 整树重建 → **滚动位置会归零**
+  （实测点掌握度 +1 目录就跳回 A1）。已改为重建前存 `scrollTop`、重建后还原；换搜索词才归零。
+  并把 `.node.on` 最小滚动带进可视区（**手写 offsetTop 计算，不用 scrollIntoView** ——
+  后者会连带滚动祖先，等于把正文推走，正是用户报的毛病）。
+  仅当 `scrollHeight > clientHeight`（真的是独立滚动区）时才动 scrollTop，窄屏 static 下不动。
+
+### 7.2 真 bug：右栏/frontier 与图谱视图吃**两套规则**（严重）
+
+**症状**：26 个 yaml 真源当时只喂给了图谱视图；右栏「依赖◂」和顶部「今天该学」
+（`modules/graph.ts` 的 `buildGraphFromMeta`）仍只用编号序启发式。后果可量化：
+- **A1.2 的真实上游 A1.4 在右栏里根本不显示**（A1.4 编号在后，被启发式判成下游）；
+- **P3.1 是起点却凭空长出 16 个假上游**（A1.5/C1/H1/I5…）。根因：links 对工具篇是
+  **applies 方向**（「这个放缩用在那些证明里」），启发式按「编号序在前」一律猜成 prereq；
+- **26 个地基单元被假上游压住**，frontier 拓扑序因此算错；
+- 图谱视图给 P3.1 画 16 条入箭头，右栏却说它是起点 —— **界面自相矛盾**。
+
+**修法（单一真源，构建期烘入）**：
+- `graph/*.yaml` 四类边在**构建期烘进 `json/index.json`**（`kb-index.ts` 新增 `attachSem`，
+  **复用 `graph-model.ts` 的 `normalizeSemYaml`**，与图谱同一份规则）；`UnitMeta.sem` 承载。
+  为什么不在运行期 fetch：`dom-harness` 把非 `json/` 的请求全判为「外部请求」，
+  fetch yaml 直接撞「零外部请求」红线；而且每次开图谱要多 26 个往返。
+- `loader.ts` 补 `parseSem`（它逐字段构造 UnitMeta，不加会静默丢掉新字段）。
+- **被 yaml 覆盖的单元，prereq 严格只用 yaml**（组内 + 跨组派生一律作废）。
+  `graph-model.ts` 的 `mergeGraph` 同步改成同一规则（原先只作废同组，混用会造出
+  **A1.4 ⇄ A1.2 假环** —— 正是 A1.yaml 头部警告过的那个坑，实测注入后拓扑序只剩 31/165）。
+- `graph-data.ts` **不再 fetch graph/*.yaml**，改从索引反构造（消除第二数据源 = 漂移根源）。
+  附带收益：yaml 解析器移出浏览器 bundle（app **0.58MB → 0.49MB**）；
+  `build-standalone.mjs` 不再内联 yaml（同文件里留两份会漂）。
+- `usedBy` 补记 yaml prereq 的反向（原先 P2.5 说依赖 P2.2、P2.2 却不显示被 P2.5 用）。
+- `buildIndex(jsonDir, graphDir)`：graphDir 改**显式必填**（原先 `resolve(jsonDir,'..','graph')`
+  隐含「兄弟目录」，`HARNESS_JSON` 指到别处会**静默丢光语义边**）。三个调用方已同步。
+
+### 7.3 新增常驻闸门 `tools/check-sem-sync.mjs`（已串进 `npm run check`）
+
+三方对拍：右栏 `buildGraphFromMeta` / 图谱 `mergeGraph(索引反构造)` / 图谱 `mergeGraph(磁盘 yaml)`。
+断言：prereq **逐单元**一致 · tension/dual/applies 一致 · 两边无环 · 拓扑序全覆盖 ·
+烘入无损 · 覆盖单元 prereq 严格等于 yaml · frontier 能算出 · 语义边确实烘进索引（防静默全丢）。
+
+**这个闸门不是摆设，已两次抓到真问题**：
+1. 注入旧 bug（yaml 覆盖单元仍补派生边）→ FAIL 4、退出码 1，并报出 A1.4⇄A1.2 假环；
+2. 正常跑时抓到 **R2.4 右栏有 R2.2、图谱没有** —— 根因是 `deriveEdges`（图谱侧）
+   漏了「同章节递进」这条派生规则，而 `buildGraphFromMeta` 有。已补齐，两边逐字一致。
+
+闸门另报一个**只警告不失败**的度量：「待判定跨章关联 N 条」（当前 707 条 / 102 单元，
+其中 P 工具篇 256 条多为 applies 方向）。这是剩余数据工作量指标 ——
+逐条判方向需要语义依据（宁少而真、不许编），所以不做成 FAIL。
+右栏对此**如实说明**：prereq 为空且存在跨章 links 时，显示
+「组内无前序（真源已标注）。跨章关联 N 条尚未判定依赖方向，故不计入：…」
+而不是误导性的「无前序（拓扑序起点）」。
+
+### 7.4 新铺 3 章 yaml（含跨章 prereq，共 29 章 / graph 29 个文件）
+
+`K3`（传播子）、`Q9`（同调）、`R2`（Cauchy 理论）。因为 §7.2 改了规则，
+**新铺的 yaml 必须显式声明跨章 prereq**，否则真依赖会丢。逐条查了正文依据：
+- K3.1 ← K1（「理由：K1:time-slicing.statement 的切片公式，V=0 时直接得到」）、P8.1（高斯积分）
+- K3.2 ← K3.1（三处对照 + ωT→0 自检）、K1、D3（「分离技巧依赖 δS=0，这正是 D3 的哈密顿方程」）、P8.1
+- Q9.2 ← Q9.1（「需要 ∂²=0，否则商无定义」）、**Q7**（H_k 是商群；statement 有「与 Q7 的接口」条目）
+- Q9.3 ← Q9.1（「χ 的良定义依赖 ∂²=0」）；与 Q9.2 建 dual（V−E+F ↔ Σ(−1)^k b_k）
+- R2.2 ← R2.1、**R1**（「f dz 是闭 1-形式，由 C-R 方程——R1 的两式正是 d(f dz)=0」）
+- R2.3 ← R2.1 + R2.2（statement 自陈「依赖 R2.1 的 ∮dz/z、R2.2 的 Cauchy 定理」）
+- R2.4 ← R2.3（「三个都用 f^(n) 的 Cauchy 求导形式」）
+
+跨章端点**只写已入库者**（R6/R7/R8 当时未入库，写了 check-graph 会 FAIL）。
+9 个单元的 prereq 逐个验收与 yaml 声明一致，全库无环、拓扑序 185/185。
+
+### 7.5 顺带验证（不是猜的，都跑过）
+
+- **frontier 合理性**：mastery 全 0 → A1.1；学完 A1 → A2.1；学完 A2 → A4.1；
+  再学完 A4+P1/P2 → B1.1。P 篇起点（P3.1/P9.1/P9.3/P8.1/P7.1）全部「随时可学」
+  （旧 bug 里它们被假上游压死）。
+- **图谱视图 DOM 验收**：不再卡「加载中」、SVG 有 16 个 L1 字母块、下钻 L2 正常、
+  **graph/* 请求 0 条**（语义边确实来自索引）、无未处理异常。
+- **REF_TOKEN 放宽后无误匹配**：12 个用例全过（`de1.10`/`lie3.17` 现在可点；
+  `3.14`、`v2.1`、`2x3y`、`a.e.`、`3.5` 都不误链）。
+- **DOM 层确认右栏如实文案**已渲染（A2.1/P3.1/A1.1/C7.1 四个用例），请求各 4 条全在 `json/` 下。
+
+### 7.6 验收快照（2026-09-25 下午）
+
+tsc 0 错 · check:graph **804/0** · **check:sem-sync 11/0** · check:viz 3182/0 ·
+dom-harness **185 单元 7430/0** · standalone 重建 7.19MB（185 单元，app 0.49MB）。
+提交：`20a1162`（语义边烘入 + 侧栏独立滚动 + 闸门）→ `0abf98b`（deriveEdges 补齐 + 如实文案 + 闸门度量）
+→ `dfde1b3`（K3/Q9/R2）。
+
+**已知未做（非 bug，是数据工作量）**：707 条跨章关联待逐条判定方向（见 §7.3）。
+要做的话按「章对」批量推进最省力：`X → P` 的 165 条基本都是 applies（工具篇），
+`A → C`/`G → H`/`D → G` 这类路径章之间多数是真 prereq。
