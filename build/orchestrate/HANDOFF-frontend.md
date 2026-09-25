@@ -352,3 +352,21 @@ R5,R6/N8,N9,N14,N15 共 25 个单元的强证据边 **0 个可安全落地**—�
 harness 见当日日志。方法沉淀：dump 派生基线用 `mergeGraph(units, new Map()).prereqIn`
 （**是 Map，要 .get()**；返回结构是 {codes, titleOf, directed, undirected, prereqIn, order,
 cycleNodes, yamlStatus}，不是按节点索引的对象）。
+
+### 7.11 继续轮：de2 跟随 + standalone 重建（2026-09-25 17:30–17:45）
+
+- **de2 跟随入库**：de2.7（热方程）/ de2.8（Laplace）入库，扩 de2.yaml——
+  PDE 三原型链 de2.5→de2.6/de2.7→de2.8；de2.8 额外 ← de1.18（Green 函数方法
+  的 ODE 原型 → PDE 推广，声明 4/9 点名）。de2.6 与 de2.7 是并列原型
+  （传播 vs 扩散），互引属对照不建边。提交 `9f400f4`。
+- **P3 standalone 重建**：`dist/knowledge.html` 8.30MB（226 单元 / 146 带 sem /
+  51 yaml / KaTeX 字体 20 woff2）。注意 **dist/ 在 .gitignore 里，不入库**——
+  它是「双击即开」的本地快照，每次数据更新后需手动重建
+  （`npm run build:standalone`）。harness 第 8 节快照断言随全库跑绿
+  （9276/0；jsdom 无 canvas 的 getContext 警告属已知噪声）。
+- **P3 视觉收口复查**：src 里写死色值仅剩三处且全部合理——极光背景
+  （亮暗成对，§7.9 已定性）、滑块拇指 `#fff`+`var(--cyan)` 边、错误浮层阴影
+  `#0009`。`src/viz/kit.ts` 的 FALLBACK 常量是 Node 侧校验回退（浏览器实时读
+  CSS 变量），非违规。
+- 闸门终态：check-graph 1151/0 · sem-sync 11/0 · tsc 0 · viz 3523/0 ·
+  harness 226 单元 9276/0（含新快照）。
