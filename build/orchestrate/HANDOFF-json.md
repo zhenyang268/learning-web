@@ -66,3 +66,36 @@
 
 全库 318/318 文件存在；verify_kb 全量 CRIT=0 MAJ=0；数值标记 100% 回填为【已核验】；
 每批提交后报：文件数、词条数、CRIT 数、提交哈希。
+
+---
+
+## 6. 进度日志（append-only，最新在下）
+
+### 2026-09-25 · batch_hij 续 + batch_defg 完成（+41 单元 → 137/318）
+
+- **本会话产出 41 单元**（串行自生成，模型 `glm-5.3-flashx`，都在 WorkBuddy 会话内直接写，未派子 CLI）：
+  - `batch_hij` 续 **18 单元**：`I4 I5 I6 I7 I8 I9.1 I9.2 I9.3 I9.4 J1 J2.1 J2.2 J3 J4 J5 J6 J7 J8`
+    → 提交 **604777e**（18 files, 5413 insertions）
+  - `batch_defg` **23 单元**：`D1 D2 D3 D4 E1 E2 E3 E4 F1 F2 F3 F4 F5 F6 G1.1 G1.2 G2.1 G2.2 G2.3 G3 G4.1 G4.2 G5`
+    → 提交 **9d9b8fd**（23 files, 5811 insertions）
+- **进度：137/318（剩 181）**；41 单元逐个 verify 全绿（CRIT 0 / MAJ 0），
+  数值回填 100%（I/J 批 122 处 + D–G 批 132 处，全部经校验器独立复算一致）。
+- **本会话实测到的新坑 / 经验（都是「踩过才知道」的）**：
+  1. **校验器表达式白名单没有反三角**：`asin/atan/degrees/acos` 都不可用 → 角度断言必须
+     **改成写其三角函数值**（如 `tan θ_B = n₂/n₁` → 断言 `cos(pi/4)`、`sqrt(1-(sin(pi/4)/1.5)**2)`）。
+     J2.1 曾因此报 3 处 CRIT。
+  2. **复数不能进标记表达式**：`abs(exp(-0.5j))` 报 `must be real number`。改用
+     `cos(0.5)**2+sin(0.5)**2`、`cos(-pi)` 等实数形式。F1/F3 曾因此报 5 处 CRIT。
+  3. **`ent()` 参数错位是最常见的手误**：把 `type_` 或 `title` 漏掉会让 `content` 收到 kw 列表，
+     报 `expected string or bytes-like object, got 'list'`。**见到这个报错就是参数个数错**。
+  4. **小目单元的 json 目录用组码**：`G1.1` 要写进 `json/G1/G1.1.json`（不是 `json/G1.1/`）。
+     我在 G1.1 上犯过一次，verify 报「文件不存在」。
+  5. **单元级词条（`general.compare`/`general.apps`）的 `tex_ref` 必须落在本单元切片区间内**，
+     写整节区间（如 `34-56`）会被 MAJ 抓。本会话 D1/G2.1/G2.2/G4.1 各犯一次。
+  6. **节级单元（无 `.k`，如 `D1`/`E1`/`F6`/`G3`/`G5`）词条数 6–12**；小目单元 8–16。
+     我多次先写 4–6 条再补，**建议直接按 8 条起草**，省一轮返工。
+  7. **`json/F1` 的挂载点**：F1 首个词条曾被写成 `type: "definition"`（不在 9 种枚举里）→ CRIT。
+     **type 只有**：statement / proof / intuition / extension / counterexample / comparison /
+     application / viz / probe。
+- **子任务无需重跑**：本会话未用 `wbdispatch`（直生成更快且无 429 风险）。
+  下一批 `batch_klmqr`（48 单元）可继续沿用同一模式。
