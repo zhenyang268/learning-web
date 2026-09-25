@@ -132,6 +132,19 @@ async function main() {
   for (const p of units) data[p] = fs.readFileSync(path.join(ROOT, p), 'utf8');
   const indexJson = JSON.stringify({ units: index.units });
 
+  // 图谱语义边真源也要内联（graph/<L>.yaml + 清单 graph/index.json）——
+  // 否则 standalone 里 fetch graph/* 全部 404，21 章语义边静默降级成纯派生边。
+  const GRAPH_DIR = path.join(ROOT, 'graph');
+  const graphLetters = [];
+  if (fs.existsSync(GRAPH_DIR)) {
+    for (const name of fs.readdirSync(GRAPH_DIR).sort()) {
+      if (!name.endsWith('.yaml')) continue;
+      graphLetters.push(name.slice(0, -'.yaml'.length));
+      data[`graph/${name}`] = fs.readFileSync(path.join(GRAPH_DIR, name), 'utf8');
+    }
+  }
+  data['graph/index.json'] = JSON.stringify({ letters: graphLetters, generated: new Date().toISOString() });
+
   const shim = `
     // standalone：索引 + 单元原文全部内联；fetch 只认内联表，其余一律 404（零外部请求）
     (function () {
