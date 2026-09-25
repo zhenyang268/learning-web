@@ -1,0 +1,281 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de4.11",
+  "chapter": "de4",
+  "title": "从局部到全局的三条路径",
+  "src": {
+    "file": "notebook/diffrential/de4.tex",
+    "line_start": 153,
+    "line_end": 163,
+    "anchor": "notebook/diffrential/de4.tex:153"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de4.11:three-paths.quantifiers",
+      "type": "comparison",
+      "subject": "three-paths",
+      "title": "三条路径的限定词：解析延拓要单连通、σ=0 会失去收敛域、生成函数要非零收敛半径",
+      "keywords": [
+        "解析延拓受奇点限制",
+        "Laplace 在 σ=0 退化为 Fourier",
+        "生成函数有收敛半径",
+        "局部信息未必决定全局"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "四问：z=1 奇点如何挡住延拓；log z 的多值性；σ=0 与系统稳定性的关系；生成函数的收敛半径（x=0 时 |t|<1）。",
+      "content": "切片的**三条路径**：① Taylor 展开（局部）$\\xrightarrow{\\text{解析延拓}}$ 复平面上的全局信息；② Laplace 变换（半轴）$\\xrightarrow{\\sigma=0}$ Fourier 变换（全轴）；③ 幂级数（离散指标）$\\xrightarrow{\\text{生成函数}}$ 复变函数（连续变量）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **解析延拓被奇点挡住** | $\\sum z^n=1/(1-z)$ 只在 $\\lvert z\\rvert<1$ 收敛，但右式在全平面除 $z=1$ **解析**。$z=1$ 是**奇点**，把延拓路径挡住 | 以为「$z=1$ 处无定义」⟹ 丢掉整块区域的信息 | 可放宽：绕开奇点（分支切割）/多值函数 |\n| ①' **延拓要求单连通** | $\\log z$ 绕 $z=0$ 一圈回来多出 $2\\pi i$（**单值化失败**） | 在多连通区域强行单值延拓 ⟹ 矛盾 | 可放宽：黎曼面（多值化） |\n| ② **$\\sigma=0$ 时收敛域退化为虚轴** | Laplace 收敛域是 $\\Re s>\\sigma_c$；取 $\\sigma=0$（$s=i\\omega$）就把**实部方向**的信息丢了。稳定系统 $\\sigma_c<0$ ⇒ 虚轴在域内 ✅；$\\sigma_c>0$（增长解）⇒ 虚轴**不在**域内 | 对增长信号（$\\sigma_c>0$）直接令 $\\sigma=0$ ⟹ Fourier 变换**不存在**（这就是「不稳定系统无频率响应」） | 可放宽：加阻尼 $e^{-\\sigma t}$（正则化） |\n| ③ **生成函数有收敛半径** | $\\sum P_n(x)t^n=(1-2xt+t^2)^{-1/2}$ 只收敛到**最近奇点** $\\lvert t\\rvert<\\lvert x\\pm\\sqrt{x^2-1}\\rvert$；取 $x=0$ ⇒ $\\lvert t\\rvert<1$【已核验:1|abs(1j)】 | 在收敛域外提取系数 ⟹ 级数发散、系数无意义 | 不能放宽：硬边界（只能做渐近/重整化） |\n\n**三条路径的共同结构**：**局部数据 →（某个「延续」操作）→ 全局对象**。",
+      "links": [
+        "de1.13",
+        "de2.13",
+        "de2.12",
+        "de3.10",
+        "de1.16",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.11:divergent-tail.counterexample",
+      "type": "counterexample",
+      "subject": "divergent-tail",
+      "title": "反例：在收敛域外提取系数 —— 生成函数给出发散的阶乘",
+      "keywords": [
+        "x=0 时半径恰好 1",
+        "t=1.5 处级数发散",
+        "形式系数仍可定义但无意义",
+        "渐近 vs 收敛的差别"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "四问：x=0 时的收敛半径；t=0.5 与 t=1.5 的差别；为何「形式系数存在」不等于「级数收敛」；与渲染方程 Neumann 的同构。",
+      "content": "**生成函数 $\\sum_{n\\ge0}P_n(x)t^n=(1-2xt+t^2)^{-1/2}$**（`de1.16`）的收敛半径由**最近奇点**决定：$1-2xt+t^2=0$ 的根 $t=x\\pm\\sqrt{x^2-1}$。\n\n**取 $x=0$**：根为 $\\pm\\sqrt{-1}=\\pm i$ ⇒ 收敛半径 $\\lvert t\\rvert<1$【已核验:1|abs(1j)】。**在半径内**取 $t=0.5$：级数收敛，部分和趋近 $(1+0.25)^{-1/2}$ 算得 $0.894427$【已核验:0.894427191|1/sqrt(1+0.5**2)】。\n\n**反例（越界）**：取 $t=1.5$（**大于半径**）。形式上代入仍得 $P_n(0)$（由 Rodrigues 公式可算），但**级数 $\\sum P_n(0)t^n$ 发散** —— 例如 $P_n(0)$ 按 $n^{-1/2}$ 量级衰减（`de1.16`），乘 $1.5^n$ 后通项**指数增长**：\n\n$$P_{10}(0)\\cdot1.5^{10}\\ \\text{的通项量级}\\sim n^{-1/2}\\cdot1.5^n\\to\\infty$$\n\n**症状**：截断求和给出的「近似值」随 $N$ 增大**越走越远**（不是收敛慢，是**不收敛**）。\n\n**为什么这个反例重要**：它把「**幂级数形式定义**」与「**级数收敛**」两件事分开 —— 形式幂级数（formal power series）**在任意 $t$ 都有意义**（是代数对象），但只有在收敛域内才能**求值**。**这与 `de4.6` 里渲染方程 Neumann 级数「形式解存在但级数发散」是同一种病**（`de3.15`）。\n\n**工程后果**：用生成函数做**组合计数**（系数提取）时必须检查半径；做**渐近分析**（大 $n$ 行为）时可以用「发散级数 + 截断在最小项」的技巧（Stirling 型），但**不能把渐近级数当收敛级数**。",
+      "links": [
+        "de1.16",
+        "de3.10",
+        "de3.15",
+        "de4.6",
+        "de1.13",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.11:three-paths.statement",
+      "type": "statement",
+      "subject": "three-paths",
+      "title": "陈述：三条路径的方向、机制与两端对象",
+      "keywords": [
+        "Taylor 与解析延拓",
+        "Laplace 与 Fourier 的联系",
+        "幂级数与生成函数",
+        "局部到全局的统一机制"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "四问：三条路径的起点/机制/终点三栏；三条的统一读法（编码-运算-解码）；σ=0 的双面性；x=0 时生成函数的半径。",
+      "content": "**三条路径（切片逐字）**：\n\n1. **Taylor 展开（局部）** $\\xrightarrow{\\text{解析延拓}}$ **复平面上的全局信息**；\n2. **Laplace 变换（半轴）** $\\xrightarrow{\\sigma=0}$ **Fourier 变换（全轴）**；\n3. **幂级数（离散指标）** $\\xrightarrow{\\text{生成函数}}$ **复变函数（连续变量）**。\n\n**三条路径的坐标轴含义**：\n\n| 路径 | 起点（局部数据） | 机制 | 终点（全局对象） |\n|---|---|---|---|\n| ① | 一点处的各阶导数 $f^{(n)}(z_0)$ | 解析延拓（沿路径连续推进） | 全平面的解析函数（含奇点结构） |\n| ② | 半轴上的衰减信号（收敛域 $\\Re s>\\sigma_c$） | 取 $\\sigma=0$（$s=i\\omega$） | 全轴的频谱（可能有 $\\delta$ 项） |\n| ③ | 离散序列 $a_n$ | 生成函数（把指标变成变量） | 复变函数 $A(z)=\\sum a_nz^n$ |\n\n**三条路径的统一读法**：都在做 **「把局部/离散的数据编码成一个全局/连续的对象，然后在后者上做题，再把答案解码回来」**。\n\n**关键数值**：路径 ② 的 $\\sigma=0$ 是**信息最丰富又最危险**的一点 —— 稳定信号（$\\sigma_c<0$）在虚轴上有 Fourier 变换，增长信号没有；路径 ③ 的收敛半径 $\\lvert t\\rvert<\\lvert x\\pm\\sqrt{x^2-1}\\rvert$ 在 $x=0$ 时算得半径 $1$【已核验:1|abs(1j)】。",
+      "links": [
+        "de1.13",
+        "de1.16",
+        "de2.12",
+        "de2.13",
+        "de3.10",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.11:three-paths.intuition",
+      "type": "intuition",
+      "subject": "three-paths",
+      "title": "直觉：局部数据为什么能决定全局 —— 刚性与奇点两件事",
+      "keywords": [
+        "解析函数刚性极强",
+        "一点邻域决定整体",
+        "奇点决定延拓边界",
+        "奇异点编码全局信息"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "四问：解析函数的刚性指什么（举实函数的反例）；两条通道（编码/障碍）；Cauchy–Hadamard 如何读奇点；三条路径如何体现同一思想。",
+      "content": "**局部如何决定全局？** 答案来自复分析最惊人的事实：**解析函数的刚性**。\n\n**刚性**：若 $f$ 在一点 $z_0$ 的某个邻域内解析，则它在 $z_0$ 的全部 Taylor 系数 $f^{(n)}(z_0)$ 已**唯一确定**了 $f$ 在整个连通区域上的取值（恒等定理）。对比实函数：$e^{-1/x^2}$ 在 $0$ 处所有导数都是 $0$，却**不是**零函数 —— 实函数**没有刚性**。**复可微是极强的条件**。\n\n**于是「局部 → 全局」有两条通道**：\n\n1. **编码通道**（Taylor 系数 → 函数）：系数序列就是函数的「DNA」，**没有任何冗余**；\n2. **障碍通道**（奇点 → 延拓边界）：延拓能走多远，完全由**奇点的位置与类型**决定。$\\sum z^n$ 的系数序列「知道」$z=1$ 处有奇点 —— 因为 $\\lvert a_n\\rvert^{1/n}\\to1$ 时收敛半径必然是 1（Cauchy–Hadamard）。**奇点位置可以从系数增长速率读出来**（这就是 `de3.10` 的「用系数定位奇点」）。\n\n**同一个思想在另外两条路径的体现**：\n- 路径 ②：Laplace 收敛横标 $\\sigma_c$ 由「**最靠右的奇点**」决定 —— 同样「奇点编码全局」；\n- 路径 ③：生成函数的收敛半径同样由最近奇点给出（$x=0$ 时半径 $1$）。\n\n**一句话**：**全局信息被压缩存储在「系数序列 + 奇点位置」里**，而三条路径提供了三种读取方式。",
+      "links": [
+        "de1.13",
+        "de1.16",
+        "de3.10",
+        "de2.13",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.11:three-paths.proof",
+      "type": "proof",
+      "subject": "three-paths",
+      "title": "证明骨架：σ=0 时 Laplace 变换退化为 Fourier 变换",
+      "keywords": [
+        "双边 Laplace 定义",
+        "代入 s=σ+iω",
+        "取 σ=0",
+        "收敛域与稳定性"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "五步：双边 Laplace 与条带收敛域；代入 s=σ+iω 得加窗 Fourier；σ=0 的退化；a>0 时虚轴不在域内；|1/(1+i)|=0.7071 的佐证。",
+      "content": "**目标**：说明路径 ② 的 $\\sigma=0$ 为什么给出 Fourier 变换，以及它对收敛域的要求。\n\n**第 1 步（双边 Laplace）。** 定义\n\n$$F(s)=\\int_{-\\infty}^{\\infty}f(t)e^{-st}\\,dt,\\qquad s=\\sigma+i\\omega$$\n\n积分在**垂直条带** $\\sigma_1<\\Re s<\\sigma_2$ 内收敛（收敛域是条带，不是半平面 —— 这是双边与单边写法的差别）。\n\n**第 2 步（代入 $s=\\sigma+i\\omega$）。**\n\n$$F(\\sigma+i\\omega)=\\int f(t)e^{-\\sigma t}e^{-i\\omega t}\\,dt=\\mathcal F\\{f(t)e^{-\\sigma t}\\}(\\omega)$$\n\n即 **Laplace 就是「先乘指数窗、再取 Fourier」**。\n\n**第 3 步（取 $\\sigma=0$）。** 若虚轴落在收敛条带内（$0\\in(\\sigma_1,\\sigma_2)$），则\n\n$$F(i\\omega)=\\int f(t)e^{-i\\omega t}\\,dt=\\mathcal F\\{f\\}(\\omega)$$\n\n**这就是路径 ② 的箭头**：$\\sigma=0$ 时 Laplace **退化为** Fourier。\n\n**第 4 步（什么时候不能取 $\\sigma=0$）。** 若 $f(t)=e^{at}u(t)$（$a>0$ 增长信号），单边 Laplace 的收敛域是 $\\Re s>a$（**$a>0$**）—— 虚轴 $0$ **不在**域内。此时 $F(i\\omega)$ **不存在**，$\\int_0^\\infty e^{-i\\omega t}e^{at}dt$ 按普通意义发散。\n\n**第 5 步（工程读法）。** $a>0$ 对应「系统不稳定」（脉冲响应指数增长）⟹ **不稳定系统没有频率响应**。这就是「$\\sigma=0$ 会丢掉 $\\sigma$ 方向的信息」（限定词②）的定量含义：**虚轴在域内 ⟺ 信号可积 ⟹ 频率响应存在**。\n\n**数值佐证**：脉冲响应 $e^{-t}$（稳定，$\\sigma_c=-1$）在 $\\omega=1$ 处的幅度 $\\lvert1/(1+i)\\rvert$ 算得 $0.707107$【已核验:0.707106781187|abs(1/(1+1j))】—— 虚轴在域内，值有限 ✅。∎",
+      "links": [
+        "de2.12",
+        "de2.13",
+        "de3.3",
+        "de3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.11:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：生成函数半径、σ=0 的条件、收敛横标",
+      "keywords": [
+        "由奇点求半径",
+        "σ=0 是否合法",
+        "Cauchy-Hadamard",
+        "延拓的障碍"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "四问：由奇点求半径（0.5）；σ=0 的合法性判据；R=0 的极端例；log(1+z) 在 z=1 的边界行为。",
+      "content": "**四问。**\n\n**① 半径由奇点定。** $\\sum\\frac{z^n}{n!}$ 的半径：系数 $1/n!$ 使 $\\lvert a_n\\rvert^{1/n}\\to0$ ⇒ 半径**无穷**（整函数）。对照 $\\sum 2^nz^n$：奇点在 $z=1/2$ ⇒ 半径算得 $0.5$【已核验:0.5|1/2】。\n\n**② $\\sigma=0$ 合法性。** $f(t)=e^{-2t}u(t)$：收敛域 $\\Re s>-2$，虚轴**在域内** ⇒ Fourier 变换存在，$\\omega=0$ 处值算得 $0.5$【已核验:0.5|1/(0+2)】；换 $f(t)=e^{t}u(t)$：收敛域 $\\Re s>1$，虚轴**不在**域内 ⇒ Fourier 不存在。\n\n**③ Cauchy–Hadamard。** 半径 $R=1/\\limsup\\lvert a_n\\rvert^{1/n}$。取 $a_n=n^n$：$\\lvert a_n\\rvert^{1/n}=n\\to\\infty$ ⇒ $R$ 算得 $0$【已核验:0|1/inf】—— 级数**只在 $z=0$ 收敛**（这是「形式的生成函数」的极端例子，仍可做系数提取）。\n\n**④ 追问。** $\\log(1+z)=\\sum(-1)^{n+1}z^n/n$ 的半径由 $z=-1$ 处的**对数奇点**给出（$R=1$），但 $z=1$ 处级数**条件收敛** —— 说明「收敛圆边界上的行为」由**边界点的奇性之外的因素**决定（这里 $z=1$ 不是奇点，所以可以收敛）。**圆内的结论不能直接外推**（`de4.11` 限定词①）。",
+      "links": [
+        "de1.13",
+        "de2.12",
+        "de2.13",
+        "de3.10",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.11:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：三条路径的起点、机制、终点与失效条件",
+      "keywords": [
+        "局部数据的形式",
+        "延续机制",
+        "全局对象",
+        "何时失效"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "三问：三栏对照；失效原因如何统一于奇点；为何说 Laplace 是连续版生成函数；① 为何是 ②③ 的基础。",
+      "content": "| 路径 | 局部数据 | 延续机制 | 全局对象 | 失效条件 |\n|---|---|---|---|---|\n| ① Taylor | $f^{(n)}(z_0)$ | **解析延拓** | 全平面解析函数（+ 奇点结构） | 遇奇点阻断 / 多连通区域多值 |\n| ② Laplace | 半轴上的衰减信号 | **$\\sigma=0$** | Fourier 频谱（全轴） | $\\sigma_c>0$（增长信号）⇒ 虚轴不在域 |\n| ③ 幂级数 | 离散序列 $a_n$ | **生成函数** | 复变函数 $A(z)=\\sum a_nz^n$ | 超出收敛半径 ⇒ 发散 |\n\n**四条对照结论**：\n\n- **三者的「延续」都是同一件事**：把局部数据放进一个**更大的函数空间**里，靠**该空间的刚性**反推全局（`de4.11` 直觉）；\n- **失效原因统一于「奇点」**：① 被奇点阻断、② 由最右奇点定收敛横标、③ 由最近奇点定半径 —— **奇点是三条路径共同的「信息源」与「障碍」**；\n- **② 与 ③ 是同一变换的两个视角**：Laplace 就是**连续指标**的生成函数（$\\mathcal L$ 把 $t$ 的微分变成 $s$ 的乘法，`de3.3`）；生成函数就是**离散** Laplace（$z=e^{-s}$ 或 $z=1/s$）；\n- **① 是 ②③ 的基础**：解析延拓保证了「在收敛域内算出的结果可以往外推」—— 没有它，②③ 得到的只是局部信息。\n\n**一句话**：**三条路径 = 三种「把局部数据全局化」的编码方式，共用同一套奇点理论**。",
+      "links": [
+        "de1.13",
+        "de1.16",
+        "de2.12",
+        "de2.13",
+        "de3.3",
+        "de3.10",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de4.11:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：解析延拓、谱方法与生成函数的工程用途",
+      "keywords": [
+        "Z 变换与数字滤波",
+        "解析延拓做外推",
+        "生成函数做组合计数",
+        "谱方法中的半轴变换"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de4.tex",
+        "line_start": 153,
+        "line_end": 163
+      },
+      "fill_hint": "四问：Z 变换与滤波器稳定性判据；解析延拓的两个实际用途；生成函数的三个战场；Laplace 把时间微分变成什么。",
+      "content": "三条路径在工程里对应三种主力技术：\n\n- **② Laplace/Fourier 的工程版 —— Z 变换与数字滤波**：离散信号的 Z 变换就是「离散 Laplace」（生成函数，路径③）；滤波器稳定性 = 收敛域**包含单位圆**（= 路径 ② 的「虚轴在域内」）；IIR 滤波器设计全在 $z$ 平面上做极零点布置；\n- **① 解析延拓的实际用途**：**信号外推**（从有限带宽数据推更高频，如超分辨/外推谱估计）、**重整化**（物理里发散级数的解析延拓，如 $\\zeta$ 函数正则化：$\\sum n\\to-1/12$）、**数值解析延拓**（Krylov 子空间求谱、免矩阵求解）；\n- **③ 生成函数的三处主战场**：**组合计数**（Fibonacci、Catalan —— `de3.10` 的转移矩阵就是生成函数的线性代数版）、**概率论**（矩母函数、概率母函数）、**递归算法分析**（算法复杂度由生成函数奇点位置决定 —— 与「奇点编码全局」完全一致）；\n- **谱方法的半轴变换**：`de4.4` 的谱方法用 Fourier/Chebyshev 基；对于初值问题，Laplace 变换把时间微分变成乘 $s$（`de3.3`），于是「半轴上的收敛域」直接给出**稳定性的充要条件**。\n\n**三处接口**：①↔数值分析（外推/正则化）、②↔控制与信号（稳定性判据）、③↔组合与算法（计数与复杂度）。",
+      "links": [
+        "de2.12",
+        "de2.13",
+        "de3.3",
+        "de3.10",
+        "de4.4",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
