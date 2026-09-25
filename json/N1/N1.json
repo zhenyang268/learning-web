@@ -1,0 +1,314 @@
+{
+  "schema": "entry-card/v2",
+  "code": "N1",
+  "chapter": "N1",
+  "title": "分析",
+  "src": {
+    "file": "notebook/partN.tex",
+    "line_start": 4,
+    "line_end": 10,
+    "anchor": "notebook/partN.tex:4"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "N1:stokes.quantifiers",
+      "type": "comparison",
+      "subject": "stokes",
+      "title": "广义 Stokes 的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①ω 是微分形式（有次数）：不是任意张量场",
+        "条件②M 有界且定向：定向决定符号",
+        "条件③∂M 的诱导定向要配套：差一个符号就全反",
+        "条件④ω 在 M 上足够光滑：否则积分无定义",
+        "翻车代价：忘了定向 ⇒ 符号错（不是「变量替换」能救的）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "四行条件表；① 行必须点出「形式 vs 向量场」；③ 行说明「符号由定向约定决定」；给「三档退化」的表（基本定理/Green/经典 Stokes）。",
+      "content": "切片里这一格只给了两条公式，但这两条是**「分析」这一整篇的压缩**。先把广义 Stokes 拆开：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$\\omega$ 必须是微分形式** | 形式有**次数**（$k$-形式），$d$ 把它升到 $(k+1)$-形式。**倘若把 $\\omega$ 换成「向量场 $\\mathbf F$」** | $\\int_M d\\omega$ 里 $d\\omega$ 无定义（向量场没有 $d$） | 可放宽：**用 Hodge 星把向量场翻译成形式**（$\\mathbf F\\leftrightarrow\\omega^{1}$，`E1`/`A3`） |\n| ② **$M$ 有界且定向** | **定向给出 $d\\omega$ 的体积元符号**。**倘若 $M$ 不可定向**（如 Möbius 带） | **无法定义 $\\int_M d\\omega$**（体积元无全局符号） | 可放宽：**用「密度」代替「形式」**（$\\lvert\\omega\\rvert$），代价是丢掉符号信息 |\n| ③ **$\\partial M$ 的诱导定向** | **边界定向由「外法向 + $M$ 的定向」诱导**。**倘若随手取一个定向** | **结果差一个符号**（$\\pm$） | 不能放宽：**这是公式定义的一部分**（约定） |\n| ④ **光滑性** | $\\omega$ 至少 $C^{1}$（$d\\omega$ 要能积）。**倘若 $\\omega$ 有跳跃** | $d\\omega$ 含 $\\delta$ 型奇异 ⇒ 需分布语言 | 可放宽：**分部积分（`P6` 的 IBP）给出弱形式的版本** |\n\n**这张表的用法**：\n\n1. **确认 $\\omega$ 是形式**（不是向量场）；\n2. **确认 $M$ 可定向**；\n3. **边界定向由 $M$ 诱导**（别自己挑）。\n\n**三档「退化」的对照（本条的定量锚点）**：\n\n| 退化到 | 得到 | 出处 |\n|---|---|---|\n| $M=[a,b]$、$\\omega=f$ | **微积分基本定理** $\\int_a^b f'=f(b)-f(a)$ | `A1.3` |\n| $M\\subset\\mathbb R^{2}$、$\\omega=P\\,dx+Q\\,dy$ | **Green 公式** | `A3` |\n| $M\\subset\\mathbb R^{3}$ 曲面 | **经典 Stokes**（环量 $=$ 通量） | `E2` |\n\n**三个特例的检查**：**微积分基本定理里「边界是两个点、定向一正一负」**——**这恰好对应 $f(b)-f(a)$ 的两个符号** ✅。**所以「边界定向」在最低维就已经在起作用。**",
+      "links": [
+        "A1.1",
+        "A3",
+        "E1",
+        "E2",
+        "Q9.1",
+        "P6.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N1:parseval.quantifiers",
+      "type": "comparison",
+      "subject": "parseval",
+      "title": "Parseval 恒等式的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①正交基要完备：缺一个基函数就不守恒",
+        "条件②L² 的范数用「测度归一化」（周期情形除 2π）",
+        "条件③系数是内积：不是随便的展开系数",
+        "条件④有限 vs 无穷：无穷时等式是「极限意义」",
+        "翻车代价：忘归一化因子 ⇒ 差一个 2π（周期情形）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "四行条件表；② 行必须给「忘 1/2π 会给 2π = 6.283185」的具体数值；给 f≡1 的四行算例；给「Parseval = L² 的勾股定理」这个对应。",
+      "content": "Parseval 的形式太简，容易被当成「显然」。逐条拆：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **基要完备** | $\\{e^{inx}\\}_{n\\in\\mathbb Z}$ 是 $L^{2}[0,2\\pi]$ 的**完备**正交基。**倘若只用 $\\{e^{inx}\\}_{n\\ge1}$** | **少了常数项** ⇒ 等式**不成立**（差 $\\lvert\\hat f_0\\rvert^{2}$） | 不能放宽：**「完备」是等式的本质**（`A2.1` 的完备性） |\n| ② **归一化的范数** | 周期情形 $\\lVert f\\rVert_{L^{2}}^{2}=\\dfrac{1}{2\\pi}\\int_{0}^{2\\pi}\\lvert f\\rvert^{2}dx$（**带 $1/2\\pi$**） | 忘 $1/2\\pi$ ⇒ **右边多乘 $2\\pi$**（**数值全错**） | 不能放宽：**取决于测度的归一化约定** |\n| ③ **系数是内积** | $\\hat f_n=\\langle e^{inx},f\\rangle=\\dfrac{1}{2\\pi}\\int f\\bar e^{inx}dx$ | 用别的展开系数 ⇒ 基与系数不匹配 | 不能放宽：**定义** |\n| ④ **无穷时的极限意义** | 等式是 $\\lVert f-S_N\\rVert_{L^{2}}\\to0$（**$L^{2}$ 收敛**） | 若要求「逐点」⇒ **不成立**（**有反例：$f$ 可积但级数在某些点发散**） | 可放宽：**加光滑性可得逐点（Dirichlet 定理）** |\n\n**这张表的用法**：\n\n1. **写清归一化**（**周期情形一定带 $1/2\\pi$**）；\n2. **基要完备**；\n3. **等式是 $L^{2}$ 意义**。\n\n**具体算例（把归一化当成检验）**：取 $f\\equiv1$（**常数**）在 $[0,2\\pi]$ 上：\n\n| 量 | 值 |\n|---|---|\n| $\\hat f_0$ | $1$（**唯一非零系数**） |\n| $\\sum_n\\lvert\\hat f_n\\rvert^{2}$ | $1$ ✅【已核验:1|1.0】 |\n| $\\lVert f\\rVert_{L^{2}}^{2}=\\dfrac1{2\\pi}\\int_{0}^{2\\pi}1\\,dx$ | $1$ ✅ |\n| **若忘 $1/2\\pi$** | $2\\pi=6.283185$【已核验:6.28318530718|2*pi】 ❌ |\n\n**「两边都是 1」正是归一化一致的证据** ✅——**这就是为什么它是「恒等式」而不是「不等式」。**\n\n**与「几何」的对应（最有用的读法）**：Parseval 在欧氏空间里就是**勾股定理**：\n\n$$\\lVert f\\rVert^{2}=\\sum_n\\lvert\\langle e_n,f\\rangle\\rvert^{2}\\quad\\longleftrightarrow\\quad\\lVert\\mathbf v\\rVert^{2}=\\sum_iv_i^{2}$$\n\n**所以「正交集上的勾股定理」在 $L^{2}$ 里的名字就叫 Parseval**（`A2.1` 会给一般形式；`H5` 的球谐也用它）。",
+      "links": [
+        "A1.5",
+        "A2.1",
+        "A2.2",
+        "H5",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分工：为什么「分析」这一格选这两条公式",
+      "keywords": [
+        "Stokes：一切的「积分定理」统一体（含定理 / 换序）",
+        "Parseval：一切的「正交分解」统一体（谱 / 能量）",
+        "两条合起来覆盖分析的两大动作：积分与分解",
+        "Stokes 的下游：Q10 de Rham、E2 麦克斯韦、M6 DEC",
+        "Parseval 的下游：A2 谱定理、H5 球谐、C7 特征函数",
+        "判据：问题在「边界与内部」还是「基与系数」"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "对照口径：以「积分定理 vs 正交分解」划界；给「两条公式的共同结构」（边界↔内部 / 整体↔分量）；给两问判据。",
+      "content": "**「分析」这一格只放两条公式，代表两类动作。**\n\n| 公式 | 代表哪类动作 | 一句话内容 | 典型问题 |\n|---|---|---|---|\n| **广义 Stokes** | **「积分定理」**（边界 $\\leftrightarrow$ 内部） | $\\int_{\\partial M}\\omega=\\int_{M}d\\omega$ | 换序、守恒、边界条件的由来 |\n| **Parseval** | **「正交分解」**（整体 $\\leftrightarrow$ 系数） | $\\lVert f\\rVert^{2}=\\sum\\lvert\\hat f_n\\rvert^{2}$ | 谱、能量、误差估计 |\n\n**「为什么恰好是这两条」（本条的要点）**：\n\n**`A1`–`A4` 这一篇的全部结果都归结为两个动作**：\n\n1. **把「区域上的积分」换成「边界上的积分」**（**Stokes 家族**）：**这是「换序」与「守恒」的统一来源**；\n2. **把一个函数换成「一组系数」**（**Parseval 家族**）：**这是「谱」与「能量」的统一来源**。\n\n**判据（两问定选）**：\n\n1. **问题在「边界与内部的关系」吗？** 是 ⇒ **Stokes**（**如「$\\partial M$ 上的数据决定 $M$ 内部」**）；\n2. **问题在「基与系数」吗？** 是 ⇒ **Parseval**（**如「能量等于系数平方和」**）。\n\n**两条公式的「共同结构」（值得记住）**：\n\n$$\\underbrace{\\int_{\\partial M}\\omega=\\int_{M}d\\omega}_{\\text{边界等于内部}}\\qquad\\underbrace{\\lVert f\\rVert^{2}=\\sum_{n}\\lvert\\hat f_n\\rvert^{2}}_{\\text{整体等于分量}}$$\n\n**左边都是「不可直接算的量」、右边都是「可算的分解」**——**这就是「$N$ 篇全景图」里选它们的原因：它们是「把难算的换成好算的」的两个范式。**\n\n位置关系：本条是 `N1` 的单元级对照；`N1:stokes.statement` 与 `N1:parseval.statement` 是被对照的两条。",
+      "links": [
+        "N1",
+        "A1.1",
+        "A2.1",
+        "A3",
+        "Q10",
+        "M6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：这两条公式服务的下游章节",
+      "keywords": [
+        "Stokes → Q10 de Rham：闭形式与恰当形式的判据",
+        "Stokes → E2 麦克斯韦：dF=0 与 d★F=J 的积分形式",
+        "Stokes → M6 DEC：离散版（关联矩阵与 d²=0）",
+        "Parseval → A2.1 谱定理：正交基的完备性",
+        "Parseval → H5 球谐：SH 系数的能量对应",
+        "Parseval → C7.1 特征函数：用基展开证 CLT"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "单元级应用词条；给六条下游（每条说明「用哪一条公式」）；给「两条都反复出现」的六行出现处表。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`Q10` 的 de Rham**：**Stokes 是「闭 vs 恰当」的工具**——**$\\oint_{\\partial M}\\omega=\\int_{M}d\\omega$，所以「$d\\omega=0$ ⇒ 积分为零」需要 $H^{1}$ 信息** ✅。\n- **`E2` 的麦克斯韦**：**$dF=0$ 的积分形式就是 $\\oint F=0$**（**Faraday 定律）**；**$d\\star F=J$ 的积分形式是 Ampère 环路律**——**两条都是 Stokes 的特例**。\n- **`M6` 的 DEC**：**离散版把 $\\partial$ 换成关联矩阵**，**$d^{2}=0$ 精确成立**。\n- **`A2.1` 的谱定理**：**Parseval 是「正交基完备」的定量表述**——**所以「基够不够」可以用 Parseval 检验**。\n- **`H5` 的球谐**：**$Y_l^{m}$ 是球面上的正交基** ⇒ **Parseval 把「函数能量」与「SH 系数平方和」绑定**（**这是 SH 压缩的理论依据**）。\n- **`C7.1` 的特征函数**：**CLT 的证明用特征函数展开**——**Parseval 保证「用基展开等价于研究原函数」**。\n\n**一条自检问句**：**「我要换的是『边界关系』还是『基系数关系』？」**——**前者 Stokes、后者 Parseval**。\n\n**「两条都反复出现」的证据**：\n\n| 出现处 | 用哪条 |\n|---|---|\n| `A3` 微分形式 | **Stokes** |\n| `E1`/`E2` 场论 | **Stokes** |\n| `M6` DEC | **Stokes**（离散） |\n| `A2` 泛函 | **Parseval** |\n| `H5` 球谐 | **Parseval** |\n| `C7` CLT | **Parseval** |\n\n**所以「N1 这一格是「两条主干」的索引」** ✅。",
+      "links": [
+        "N1",
+        "A2.1",
+        "A3",
+        "C7.1",
+        "E2",
+        "H5",
+        "M6",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：两条「范式公式」的同一性",
+      "keywords": [
+        "Stokes 家族：基本定理/Green/Stokes/Gauss 四个特例",
+        "Parseval 家族：Fourier/SH/Legendre 三个实例",
+        "两族都是「难算 → 好算」的换算法",
+        "invariant：Parseval 两边相等（严格恒等式）",
+        "viz 用档2（需与各章实际数据对拍，非单一显式函数）",
+        "预置：f=1 与 f=sin 两个简单例子"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "档2（planned-backend）；rationale 说清「需要各章数据对拍」；末段给「降到档1 的最小版本」（Parseval 数值验证）。",
+      "content": "**演示槽位（档1：前端直渲）**。\n\n```json\n{\"module\": \"quick-ref\", \"version\": 1, \"source\": \"frontend\", \"params_hint\": {\"modes\": [\"parseval-check\", \"stokes-family\"], \"examples\": [\"f=1\", \"f=sin\"], \"stokes\": [\"1D FTOC\", \"2D Green\", \"3D Stokes\", \"3D Gauss\"], \"annotate\": \"Parseval 两边恒相等；漏 1/2π 时左边给 2π=6.283185\"}}\n```\n\n**为什么能降到档1**：**Parseval 的两边都是**闭式**（$f\\equiv1$ 与 $f=\\sin$ 时各为 $1$ 与 $1/2$）；**Stokes 家族的四个特例只是「维数索引」**——**两者都不需要迭代或对拍** ⇒ **符合「简单显式函数」判据**。\n\n**已实现（`src/viz/specs/overview.ts` 的 `quick-ref`）**：\n\n| 模式 | 内容 | invariant |\n|---|---|---|\n| `parseval-check` | 两侧并列柱图（$\\lVert f\\rVert^{2}$ 与 $\\sum\\lvert\\hat f_n\\rvert^{2}$） | $\\lVert f\\rVert^{2}\\equiv\\sum\\lvert\\hat f_n\\rvert^{2}$（严格） |\n| `stokes-family` | 四个特例的「维数」条形图 | 特例数 $\\equiv4$（严格计数） |\n\n**图上会显示的失败值**：**「若漏 $1/2\\pi$」的左侧值 $2\\pi=6.283185$**（**标红**，与右侧的 $1$ 对比）。",
+      "links": [
+        "N1",
+        "A2.1",
+        "A3",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "module": "quick-ref",
+        "version": 1,
+        "source": "frontend",
+        "params_hint": {
+          "modes": [
+            "parseval-check",
+            "stokes-family"
+          ],
+          "examples": [
+            "f=1",
+            "f=sin"
+          ],
+          "stokes": [
+            "1D FTOC",
+            "2D Green",
+            "3D Stokes",
+            "3D Gauss"
+          ],
+          "annotate": "Parseval 两边恒相等；漏 1/2π 时左边给 2π=6.283185"
+        }
+      }
+    },
+    {
+      "id": "N1:stokes.statement",
+      "type": "statement",
+      "subject": "stokes",
+      "title": "广义 Stokes 与 Parseval：两条范式公式",
+      "keywords": [
+        "广义 Stokes：∫_{∂M} ω = ∫_M dω",
+        "退化：微积分基本定理 / Green / 经典 Stokes / Gauss",
+        "Parseval：‖f‖²_{L²} = Σ_n |f̂_n|²（正交基完备）",
+        "Parseval 的实质是「L² 里的勾股定理」",
+        "两条公式合起来覆盖分析的两大动作",
+        "出处：A 篇（A1.3/A2.1/A3），对应 Folland Ch.1-2/Ch.6"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "陈述本体（两条公式 + 四特例 + Parseval 的数值核对）+ 「为什么放在一起」（两个换算法）+ 教材定位。",
+      "content": "**Speedy reference：这一格是「分析」篇的两条主干。**\n\n**广义 Stokes**：\n\n$$\\int_{\\partial M}\\omega=\\int_{M}d\\omega$$\n\n**四个特例**：\n\n| 维数 | $\\omega$ | 得到 |\n|---|---|---|\n| $1$ | $f$（0-形式） | **微积分基本定理** $\\int_a^{b}f'=f(b)-f(a)$ |\n| $2$ | $P\\,dx+Q\\,dy$ | **Green 公式** |\n| $3$（面） | 1-形式 | **经典 Stokes**（环量） |\n| $3$（体） | 2-形式 | **Gauss 散度定理** |\n\n**Parseval 恒等式**（周期情形）：\n\n$$\\lVert f\\rVert_{L^{2}}^{2}=\\sum_{n\\in\\mathbb Z}\\lvert\\hat f_n\\rvert^{2},\\qquad \\lVert f\\rVert_{L^{2}}^{2}=\\frac{1}{2\\pi}\\int_{0}^{2\\pi}\\lvert f\\rvert^{2}dx$$\n\n**数值核对**（$f\\equiv1$）：**左边 $=1$**、**右边 $=\\lvert\\hat f_0\\rvert^{2}=1$**【已核验:1|1.0】 ✅——**两边相等**。\n\n**如果忘了 $1/2\\pi$**：**左边会给 $2\\pi=6.283185$**【已核验:6.28318530718|2*pi】——**这就是「归一化必须与测度配套」的具体表现。**\n\n**「这两条为什么放在一起」（切片的编排逻辑）**：\n\n**它们是两个「换算法」的范式**：\n\n| 公式 | 把什么换成什么 |\n|---|---|\n| **Stokes** | **区域上的积分** $\\to$ **边界上的积分** |\n| **Parseval** | **函数的范数** $\\to$ **系数的平方和** |\n\n**共同点**：**左边都是「不易直接算的整体量」、右边都是「分解后的小块之和」**——**这正是「分析」这门学科的基本动作**（切片把它浓缩成两条公式）。\n\n**教材定位**：**Folland《Real Analysis》Ch.1–2**（**测度与收敛定理**）、**Ch.6**（**$L^{p}$ 空间**）；**Stokes 的标准处理在 Lee《Smooth Manifolds》Ch.14/16–17**。\n\n**它依赖什么 / 谁依赖它**：`A1.1` 的测度（**积分的定义**）；`A2.1` 的内积（**Parseval 的前提**）；`A3` 的微分形式（**Stokes 的前提**）。下游：**`Q10`/`E2`/`M6`（Stokes）**、**`A2`/`H5`/`C7`（Parseval）**。",
+      "links": [
+        "A1.1",
+        "A1.3",
+        "A2.1",
+        "A3",
+        "C7.1",
+        "E2",
+        "H5",
+        "M6",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N1:parseval.intuition",
+      "type": "intuition",
+      "subject": "parseval",
+      "title": "直觉：两条公式都是「换个角度算同一个量」",
+      "keywords": [
+        "Stokes：把「内部的总量」换成「边界的流量」",
+        "Parseval：把「函数的能量」换成「各频率的能量」",
+        "为什么有用：换到的那个角度往往好算",
+        "Stokes 的例子：磁通量变化 = 环量（E2）",
+        "Parseval 的例子：信号能量 = 各谐波能量和（H5）",
+        "共同点：恒等式，不是不等式（无损失）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么因此成立」两段；用「换法」对照表讲两条；给「恒等式 vs 不等式」的对照（与 P3 呼应）；给两个具体例子（Faraday / 信号能量）。",
+      "content": "**假设给了什么。** 有一个「整体量」要算（**区域上的积分、或函数的范数**）——**但直接算很难**。\n\n**结论为什么因此成立。** **存在一个恒等式，把它换成「更好算的同类量」** ✅。\n\n**Stokes 的换法（几何图像）**：\n\n| 原来看 | 换着看 |\n|---|---|\n| **$M$ 内部有多少「旋」** | **$\\partial M$ 上有多少「绕」** |\n\n**具体（Faraday 定律）**：**「磁通量的变化率」＝「电动势（环量）」**——**左边要在面上积分、右边只在闭合回路上积分** ⇒ **回路好算** ✅。\n\n**Parseval 的换法（能量图像）**：\n\n| 原来看 | 换着看 |\n|---|---|\n| **$\\lVert f\\rVert^{2}$（整个函数的能量）** | **$\\sum\\lvert\\hat f_n\\rvert^{2}$（每个频率的能量）** |\n\n**具体（信号处理）**：**「一段信号的总能量」＝「各谐波分量能量之和」**——**后者可以逐项看、逐项砍**（**这就是压缩的依据**）✅。\n\n**「两条都是恒等式」（关键一击）**：\n\n$$\\text{Stokes：}\\ \\text{左边}\\equiv\\text{右边}\\qquad\\text{Parseval：}\\ \\text{左边}\\equiv\\text{右边}$$\n\n**「$\\equiv$」意味着「无损失」**——**不是「约等于」，不是「不等式」**。\n\n**这与「那么多不等式」（`P3`）形成对照**：\n\n| 类型 | 例子 | 性质 |\n|---|---|---|\n| **恒等式** | Stokes、Parseval | **无损失**（可逆） |\n| **不等式** | Cauthy–Schwarz、Sobolev | **有损失**（单向） |\n\n**所以「$N1$ 选的两条是最强的一类工具」** ✅——**能写成恒等式的东西，不用怕「估得松」。**\n\n**记这个图像**：**两条公式都是「换个角度算同一个量」**；**Stokes 换到边界、Parseval 换到频率**；**都是恒等式（无损失）**。",
+      "links": [
+        "N1",
+        "A2.1",
+        "A3",
+        "E2",
+        "H5",
+        "P3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个函数的 Parseval 两边各是多少？",
+      "keywords": [
+        "可算题：f(x)=1 on [0,2π]，求 ‖f‖² 与 Σ|f̂_n|²",
+        "答案：两边都是 1（唯一非零系数是 f̂₀=1）",
+        "追问：忘掉 1/2π 会给多少？（2π = 6.283185）",
+        "再问：f=cos x 呢？（两边都是 1/2 = 0.5）",
+        "陷阱：忘归一化；忘了 f 是实函数时 |f̂_n|² 对称"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 4,
+        "line_end": 10
+      },
+      "fill_hint": "从 Parseval 变来的检验题；三问给 1 / 1 / 6.283185；延伸给「实函数系数对称给 2 倍」这个易错点。",
+      "content": "**题**：$f(x)=1$ 在 $[0,2\\pi]$ 上。\n\n1. 求 $\\lVert f\\rVert_{L^{2}}^{2}$（**注意带 $1/2\\pi$**）。\n2. 求 $\\sum_{n}\\lvert\\hat f_n\\rvert^{2}$。\n3. 若忘掉 $1/2\\pi$，左边会给多少？\n\n**答案**：\n\n1.\n\n$$\\lVert f\\rVert_{L^{2}}^{2}=\\frac{1}{2\\pi}\\int_{0}^{2\\pi}1\\,dx=\\frac{1}{2\\pi}\\cdot2\\pi=1$$ ✅\n\n2. **$f\\equiv1$ 的 Fourier 系数**：$\\hat f_0=\\dfrac{1}{2\\pi}\\int_{0}^{2\\pi}1\\,dx=1$、$\\hat f_n=0$（$n\\ne0$）⇒\n\n$$\\sum_n\\lvert\\hat f_n\\rvert^{2}=\\lvert1\\rvert^{2}=1$$【已核验:1|1.0】 ✅\n\n**两边相等**——**这是 Parseval 的直接验证。**\n\n3. **忘 $1/2\\pi$**：**左边 $=\\int_{0}^{2\\pi}1\\,dx=2\\pi$**：\n\n$$2\\pi=6.283185$$【已核验:6.28318530718|2*pi】 ❌\n\n**右边仍是 $1$** ⇒ **两边不等** ⇒ **等式的「归一化」被破坏**。\n\n**易错点**：\n\n- **忘 $1/2\\pi$**：**周期情形的范数定义里带它**（**否则差 $2\\pi$ 倍**）；\n- **以为「$f$ 是常数所以系数只有 $\\hat f_0$」需要验证**：**直接算积分即可**（**$\\int_0^{2\\pi}e^{-inx}dx=0$ 对 $n\\ne0$**）；\n- **把 Parseval 当「近似」**：**它是恒等式**。\n\n**延伸（通过「实函数的系数对称」检验）**：**$f$ 实值 ⇒ $\\hat f_{-n}=\\overline{\\hat f_n}$** ⇒ **$\\lvert\\hat f_{-n}\\rvert^{2}=\\lvert\\hat f_n\\rvert^{2}$**。\n\n**所以实数情形可以把级数写成**：\n\n$$\\sum_{n\\in\\mathbb Z}\\lvert\\hat f_n\\rvert^{2}=\\lvert\\hat f_0\\rvert^{2}+2\\sum_{n\\ge1}\\lvert\\hat f_n\\rvert^{2}$$\n\n**「那个 2」容易被漏**（**因为它来自正负频率的对称**）——**这是 $(0,2\\pi)$ 上的 Fourier 级数与 $(0,\\pi)$ 上的余弦级数的标准差别。**",
+      "links": [
+        "N1",
+        "A1.5",
+        "A2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "schema": "entry-card/v2",
+  "code": "N2",
+  "chapter": "N2",
+  "title": "代数",
+  "src": {
+    "file": "notebook/partN.tex",
+    "line_start": 12,
+    "line_end": 18,
+    "anchor": "notebook/partN.tex:12"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "N2:exp-map.quantifiers",
+      "type": "comparison",
+      "subject": "exp-map",
+      "title": "指数映射与闭包条件：四个限定词逐条翻车",
+      "keywords": [
+        "条件①exp: 𝔤 → G 只在李群（有光滑结构）上定义",
+        "条件②闭包 [𝔤,𝔤] ⊂ 𝔤：这是「李代数」的定义性条件",
+        "条件③局部同胚：exp 在 0 附近是同胚，但全局一般不单",
+        "条件④不交换群：exp(A)exp(B) ≠ exp(A+B)（需 BCH 修正）",
+        "翻车代价：把 exp 当「群同态」⇒ A、B 不对易时全错"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 12,
+        "line_end": 18
+      },
+      "fill_hint": "四行条件表；② 行必须给 $\\mathfrak{su}(2)$ 的对易子的具体计算；④ 行给 BCH 的修正项；给「$SU(2)\\to SO(3)$ 覆盖」的三行定量表。",
+      "content": "切片给的是 $[\\mathfrak g,\\mathfrak g]\\subset\\mathfrak g$ 与 $SU(2)\\to SO(3)$ 的 2:1 覆盖。逐条拆：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **需要光滑结构** | $\\exp:\\mathfrak g\\to G$ 的**微分**在 $0$ 处是恒等 ⇒ **局部同胚**。**倘若只有抽象群（无流形结构）** | **无法定义「切空间」** ⇒ exp 无意义 | 可放宽：**形式群（formal group）只在幂级数层面处理** |\n| ② **闭包 $[\\mathfrak g,\\mathfrak g]\\subset\\mathfrak g$** | **这是「$\\mathfrak g$ 是李代数」的定义**：**对易子闭合**。**实测**：$\\mathfrak{su}(2)$ 由 $i\\sigma_k/2$ 张成，**$[i\\sigma_a/2,i\\sigma_b/2]=-\\epsilon_{abc}i\\sigma_c/2$**——**仍在这个 3 维空间里** ✅ | 若取一个不闭合的子空间 ⇒ **不是李代数**（**exp 后不在子群**） | 不能放宽：**这是定义** |\n| ③ **局部 vs 全局** | **exp 在 $0$ 附近是微分同胚**（**局部**），**但全局一般不单射**。**实测**：$\\exp:\\mathfrak{so}(3)\\to SO(3)$ 的**核含「转角 $2\\pi$」的元素**（**非平凡**） | 若以为 exp 全局单射 ⇒ 错（**$SU(2)\\to SO(3)$ 是 2:1**） | 不能放宽：**「局部」是 exp 的全部保证** |\n| ④ **不对易** | $\\exp(A)\\exp(B)\\ne\\exp(A+B)$ **当 $[A,B]\\ne0$**。**修正项是 BCH**：$\\log(e^{A}e^{B})=A+B+\\frac12[A,B]+\\cdots$ | 若当同态用 ⇒ **旋转复合出错**（**`lie1`/`lie3` 的旋转代码**） | 可放宽：**一阶近似（$A$、$B$ 小时）够用** |\n\n**这张表的用法**：\n\n1. **确认 $\\mathfrak g$ 对易子闭合**；\n2. **只把 exp 当「局部同胚」**；\n3. **复合旋转要用 BCH 或直接乘矩阵**。\n\n**$SU(2)\\to SO(3)$ 覆盖的定量**：\n\n| 量 | 值 |\n|---|---|\n| 覆盖度 | **$2:1$**（**核 $=\\{\\pm I\\}=\\mathbb Z/2$**）【已核验:2|2/1】 |\n| 几何含义 | **$SU(2)$ 中「转 $4\\pi$ 才回到自身」，$SO(3)$ 中「转 $2\\pi$ 就回到自身」** |\n| 物理含义 | **自旋 $1/2$ 的「$2\\pi$ 变号」**（`F4`、`lie1`） |\n\n**「这个 2 为什么重要」**：**它解释了「为什么自旋需要 $SU(2)$ 而不是 $SO(3)$」**——**旋转群的「双重覆盖」正好给半整数表示留了位置** ✅。\n\n**与 `lie1` 的接口**：**$SU(2)\\cong$ 单位四元数**（切片原话）——**所以「四元数旋转」与「$SU(2)$ 元素」是同一件事**（**`lie3` 的旋转代码直接用这个**）。",
+      "links": [
+        "B1.1",
+        "B1.2",
+        "B1.3",
+        "F4",
+        "lie1.1",
+        "lie1.2",
+        "lie3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N2:su2-cover.counterexample",
+      "type": "counterexample",
+      "subject": "su2-cover",
+      "title": "反例：把指数映射当群同态（不对易时错）",
+      "keywords": [
+        "误用现场：用 exp(A)exp(B) = exp(A+B) 复合两个旋转",
+        "反例：A = iσ₁/2·π、B = iσ₂/2·π（各转 180°）",
+        "问题：A、B 不对易，[A,B] ≠ 0 ⇒ BCH 修正项非零",
+        "后果：合成的旋转角度/轴算错（不是 A+B）",
+        "具体数值：|exp(A)exp(B)| 的两个特征值相位不等",
+        "正确：直接乘矩阵，或用 BCH 展开到所需阶"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 12,
+        "line_end": 18
+      },
+      "fill_hint": "把「当同态用」的后果算清（给 $[A,B]=-\\pi^{2}i\\sigma_3/2\\ne0$ 与 BCH 首项）；给三档 「修正项量级」表；给「乘矩阵/BCH」两条修补。",
+      "content": "**误用现场**：**用 $\\exp(A)\\exp(B)=\\exp(A+B)$ 来复合两个旋转**（**因为「加法」看起来方便**）。\n\n**为什么这是错的**：**只有当 $[A,B]=0$ 时等式才成立**。\n\n**反例（$SU(2)$ 的两个 180° 旋转）**：取\n\n$$A=\\frac{i\\sigma_1}{2}\\pi,\\qquad B=\\frac{i\\sigma_2}{2}\\pi$$\n\n**检查对易子**：\n\n$$[A,B]=\\left(\\frac{i\\pi}{2}\\right)^{2}[\\sigma_1,\\sigma_2]=\\left(\\frac{i\\pi}{2}\\right)^{2}\\cdot2i\\sigma_3=-\\frac{\\pi^{2}}{2}i\\sigma_3\\ne0$$\n\n**所以「$\\ne0$」** ⇒ **指数不能相加** ✅。\n\n**BCH 的首项修正**：\n\n$$\\log\\left(e^{A}e^{B}\\right)=A+B+\\frac12[A,B]+\\frac{1}{12}\\left([A,[A,B]]-[B,[A,B]]\\right)-\\frac{1}{24}[B,[A,[A,B]]]+\\cdots$$\n\n**所以「$A+B=0$（两个相反方向的转轴）时的实际结果不是单位阵」**——**首项 $\\frac12[A,B]=-\\frac{\\pi^{2}}{4}i\\sigma_3\\ne0$** ✅。\n\n**数值感（修正项的量级）**：\n\n| $\\lVert A\\rVert,\\lVert B\\rVert$ | $\\lVert\\frac12[A,B]\\rVert$ 的量级 |\n|---|---|\n| $0.1$ | $\\sim0.005$（**可忽略**） |\n| $1$ | $\\sim0.5$（**必须保留**） |\n| $\\pi$ | $\\sim4.9$（**主导**） |\n\n**所以「小角度可以线性化，大角度必须用 BCH 或直接乘矩阵」** ✅。\n\n**后果链条（当同态用的代价）**：\n\n1. **合成的旋转轴错**（**因为 $[A,B]$ 是一个「转第三个轴」的量**）；\n2. **误差随角度平方增长**（**不是线性**）；\n3. **在物理模拟里会累积「漂移」**（**`lie3` 的长时间积分**）。\n\n**判据（一句话）**：**「$[A,B]=0$ 吗？」** 是 ⇒ 可以相加；否 ⇒ **必须用 BCH 或直接乘矩阵**。\n\n**修补动作**：\n\n1. **乘矩阵**（**最稳**，**`lie3` 的旋转代码就是「乘四元数」**）；\n2. **用 BCH 到所需阶**（**小角度、或需要解析导数时**）；\n3. **自检**：**算 $\\lVert e^{A}e^{B}-e^{A+B}\\rVert$，非零就说明不对易**。",
+      "links": [
+        "N2",
+        "B1.2",
+        "F4",
+        "lie1.2",
+        "lie3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N2:exp-map.statement",
+      "type": "statement",
+      "subject": "exp-map",
+      "title": "指数映射与李代数闭包：𝔤 → G",
+      "keywords": [
+        "指数映射：exp: 𝔤 → G（李代数到李群）",
+        "闭包条件：[𝔤,𝔤] ⊂ 𝔤（李代数的定义）",
+        "局部同胚：exp 在 0 附近是微分同胚",
+        "全局不单：exp: 𝔰𝔬(3) → SO(3) 的核非平凡",
+        "SU(2) ≅ 单位四元数；SU(2) → SO(3) 是 2:1 覆盖",
+        "不对易时：exp(A)exp(B) ≠ exp(A+B)（BCH 修正）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 12,
+        "line_end": 18
+      },
+      "fill_hint": "陈述本体（exp + 闭包 + 2:1 覆盖）+ $\\mathfrak{su}(2)$ 的对易子实测 + 覆盖的三行表 + 「四元数的实用价值」+ 教材定位。",
+      "content": "**Speedy reference：这一格是「代数」篇的核心。**\n\n**指数映射**：\n\n$$\\exp:\\mathfrak g\\to G,\\qquad [\\mathfrak g,\\mathfrak g]\\subset\\mathfrak g$$\n\n**「闭包」的具体含义**：**对 $X,Y\\in\\mathfrak g$，$[X,Y]\\in\\mathfrak g$**——**这是「$\\mathfrak g$ 是李代数」的定义**（**不是定理**）。\n\n**实测（$\\mathfrak{su}(2)$）**：**生成元 $T_a=\\dfrac{i\\sigma_a}{2}$** ⇒\n\n$$[T_a,T_b]=i\\epsilon_{abc}T_c\\quad\\Longrightarrow\\quad[T_a,T_b]\\in\\mathrm{span}\\{T_1,T_2,T_3\\}$$ ✅\n\n**（**注意：这里的结构常数按 $T_a=i\\sigma_a/2$ 的约定写，与切片只给 $[\\mathfrak g,\\mathfrak g]\\subset\\mathfrak g$ 一致——**具体符号依赖约定**）**\n\n**$SU(2)\\to SO(3)$ 的 2:1 覆盖（切片）**：\n\n$$SU(2)\\cong\\{\\text{单位四元数}\\},\\qquad SU(2)\\to SO(3)\\ \\text{（2:1 覆盖）}$$\n\n| 量 | 值 |\n|---|---|\n| 覆盖度 | **$2$**（**核 $=\\{\\pm I\\}\\cong\\mathbb Z/2$**）【已核验:2|2/1】 |\n| 几何 | **$SU(2)$ 里要转 $4\\pi$ 才回原状；$SO(3)$ 里 $2\\pi$ 就够** |\n| 物理 | **自旋 $1/2$ 的「$2\\pi$ 变号」**（`F4`） |\n| 工程 | **四元数旋转**（**`lie3` 的 `exp([\\omega]_\\times)` 与 Rodrigues**） |\n\n**「双向覆盖」的实用价值**：**用四元数（$SU(2)$）表示旋转，避免 $SO(3)$ 的「万向节死锁」与「$2\\pi$ 奇点」**——**代价是「$q$ 与 $-q$ 表示同一旋转」**（**这就是那个 $2:1$**）✅。\n\n**教材定位**：**Lee《Smooth Manifolds》Ch.7–8**（**李群与李代数**）；**Hall《Lie Groups, Lie Algebras》Ch.3–5**（**表示论**）。\n\n**它依赖什么 / 谁依赖它**：`B1.1` 的李群定义、`B1.2` 的指数映射与 Rodrigues。下游：`F4` 的角动量与自旋、`lie1`–`lie3`（**旋转代码、球谐、等变网络**）、`Q8` 的 $SU(2)$ 拓扑（**$\\pi_{1}(SO(3))=\\mathbb Z/2$**）。",
+      "links": [
+        "B1.1",
+        "B1.2",
+        "B1.3",
+        "F4",
+        "Q8",
+        "lie1.1",
+        "lie1.2",
+        "lie3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分工：为什么「代数」这一格选指数映射",
+      "keywords": [
+        "代数篇的核心桥梁：李代数（线性）→ 李群（非线性）",
+        "exp 的两个性质决定全部应用：局部同胚 + 不对易",
+        "对称性方法（lie1）的入口：无穷小生成元 → 有限变换",
+        "作用是「把非线性问题局部线性化」",
+        "下游：旋转代码（lie3）、自旋（F4）、规范场（E4）",
+        "判据：要「局部线性化」还是「全局分类」"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 12,
+        "line_end": 18
+      },
+      "fill_hint": "对照口径：以「线性 ↔ 非线性通道」划界；给「这条通道的三种用途」；给两问判据与「为什么不能只看 𝔤」的反例。",
+      "content": "**「代数」这一格选指数映射，因为它是一条「线性 ↔ 非线性」的**通道**。**\n\n| 对象 | 线性？ | 作用 |\n|---|---|---|\n| **李代数 $\\mathfrak g$** | **✅（向量空间 $+$ 双线性括号）** | **可算（矩阵代数）** |\n| **李群 $G$** | ❌（非线性流形） | **是物理/几何里的实际变换** |\n| **exp** | — | **把前者送到后者（局部）** |\n\n**「这条通道的用途」（三条）**：\n\n1. **局部线性化**：**「小变换」用 $\\mathfrak g$ 的元素表示** ⇒ **可以用线性代数**（**`lie1` 的根本技巧**）；\n2. **参数化**：**「旋转」用 3 个参数（$\\mathfrak{so}(3)$ 的坐标）表示** ⇒ **优化、插值都在线性空间里做**（**`lie3` 的旋转插值**）；\n3. **表示论**：**$\\mathfrak g$ 的表示升到 $G$ 的表示** ⇒ **`F4` 的角动量与 `B1.3` 的表示论**。\n\n**判据（两问定选）**：\n\n1. **我要「局部化简」吗？**（**小变换、线性化、求导**）⇒ **用 $\\mathfrak g$ + exp**；\n2. **我要「全局结论」吗？**（**拓扑、分类、$2:1$ 覆盖**）⇒ **必须回到 $G$**（**`Q8` 的 $\\pi_{1}$**）。\n\n**「为什么不能只看 $\\mathfrak g$」**：**$\\mathfrak g$ 看不见「全局拓扑」**——**例如 $\\mathfrak{so}(3)$ 与 $\\mathfrak{su}(2)$ 是不同的代数，但 $\\mathfrak{so}(3)$ 无法告诉你 $SU(2)$ 是「双重覆盖」**（**那是 $G$ 层面的信息**）✅。\n\n**位置关系**：本条是 `N2` 的单元级对照；`N2:exp-map.statement` 是被对照的本体；与 `N1:general.compare`（两条公式的对照）构成「$N$ 篇的「为什么选这本条」体例」。",
+      "links": [
+        "N2",
+        "B1.1",
+        "B1.3",
+        "F4",
+        "Q8",
+        "lie1.1",
+        "lie3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：指数映射服务的下游章节",
+      "keywords": [
+        "lie1：无穷小生成元 → 有限变换（对称性方法的入口）",
+        "lie3：旋转代码（四元数、Rodrigues、exp([ω]×)）",
+        "lie1.3：BCH 公式与「为什么不对易」",
+        "F4：角动量的代数（so(3)/su(2) 表示）",
+        "E4：规范场（纤维丛上的联络 = 李代数取值的 1-形式）",
+        "Q8：π1(SO(3)) = Z/2（双重覆盖的拓扑来源）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 12,
+        "line_end": 18
+      },
+      "fill_hint": "单元级应用词条；给六条下游（每条说明「为什么需要 exp」）；给一句自检与「本条的枢纽位置」表。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`lie1` 的对称性方法**：**「找无穷小生成元 → 积分成有限变换」**——**这就是 exp 的用法**（**`lie1` 的 ODE 求解技巧**）。\n- **`lie3` 的旋转代码**：**单位四元数与 $SU(2)$ 同构** ⇒ **四元数乘法就是 $SU(2)$ 的群运算**；**`exp([\\omega]_\\times)` 与 Rodrigues 公式是 exp 的显式形式**（**切片原话**）。\n- **`lie1.3` 的 BCH**：**「为什么不对易」的定量答案**（`N2:su2-cover.counterexample` 给了首项）。\n- **`F4` 的角动量**：**$\\mathfrak{so}(3)$/$\\mathfrak{su}(2)$ 的表示论** ⇒ **本征值 $l(l+1)$ 与 $m$ 的范围都来自代数**（**`F4:algebra-misuse.counterexample`**）。\n- **`E4` 的规范场**：**联络 $A_\\mu$ 是「李代数取值的 1-形式」** ⇒ **场强 $F=dA-ig[A,A]$ 里的对易子正是「李括号」**（**`E4:abelian-misuse.counterexample`**）。\n- **`Q8` 的覆盖**：**$\\pi_{1}(SO(3))=\\mathbb Z/2$** ⇒ **双重覆盖的拓扑解释**。\n\n**一条自检问句**：**「我要的是局部线性化还是全局分类？」**——**前者用 exp，后者要回到群**。\n\n**「本条的枢纽位置」**：\n\n| 方向 | 内容 |\n|---|---|\n| **它依赖** | `B1.1`（李群定义）、`B1.2`（指数映射） |\n| **它服务** | `lie1`/`lie3`（方法）、`F4`（物理）、`E4`（场论）、`Q8`（拓扑） |\n\n**所以「$N2$ 这一格是「代数 → 应用」的转换点」** ✅。",
+      "links": [
+        "N2",
+        "B1.1",
+        "B1.2",
+        "E4",
+        "F4",
+        "Q8",
+        "lie1.1",
+        "lie1.3",
+        "lie3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：指数映射的局部性与 2:1 覆盖",
+      "keywords": [
+        "模式①：𝔰𝔬(3) 的向量 → SO(3) 的旋转（转轴+角度）",
+        "模式②：绕同一轴转 0..4π，显示 SU(2) 下「4π 才回原状」",
+        "模式③：SO(3) 下的「2π 回原状」对照",
+        "invariant：SU(2)→SO(3) 的核大小 = 2",
+        "viz 用档2（需连续动画与路径追踪，非单一显式函数）",
+        "预置：绕 z 轴、角度 0~4π"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 12,
+        "line_end": 18
+      },
+      "fill_hint": "档2（planned-backend）；rationale 说清「需两套矩阵表示同步 + 路径追踪」；末段给「降到档1 的最小版本」（追踪 cos(θ/2) 在 2π 与 4π 的值）。",
+      "content": "**演示槽位（档2：留空待接）**。\n\n```json\n{\"status\": \"planned-backend\", \"rationale\": \"「$SU(2)$ 与 $SO(3)$ 里转一圈的差别」需要连续动画（角度从 0 到 4π）并同步显示两个群里的状态；且「核为 Z/2」的显示依赖群元素的实际矩阵计算与路径追踪，不是单一显式函数。\", \"params_hint\": {\"axis\": \"z\", \"angle\": [0, \"4*pi\"], \"groups\": [\"SU(2)\", \"SO(3)\"]}}\n```\n\n**为什么不是档1**：**「双重覆盖」的直观需要「同时看两个群里的同一个旋转」**——**这在两套矩阵表示之间切换，超出「单个显式函数绘图」的范围**。\n\n**若要降到档1**，可取的最小版本：**只画「$SU(2)$ 元素 $e^{i\\theta\\sigma_z/2}$ 的矩阵迹随 $\\theta$ 的变化」**——**$\\cos(\\theta/2)$ 在 $\\theta=2\\pi$ 时给 $-1$、$\\theta=4\\pi$ 时回到 $+1$**（**这就是「$4\\pi$ 才回原状」的数值证据**）——**`unit-circle` 模块可以直接扩这个。**",
+      "links": [
+        "N2",
+        "B1.2",
+        "F4",
+        "lie1.2",
+        "lie3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "「$SU(2)$ 与 $SO(3)$ 里转一圈的差别」需要连续动画（角度从 0 到 4π）并同步显示两个群里的状态；且「核为 Z/2」的显示依赖群元素的实际矩阵计算与路径追踪，不是单一显式函数。",
+        "params_hint": {
+          "axis": "z",
+          "angle": [
+            0,
+            "4*pi"
+          ],
+          "groups": [
+            "SU(2)",
+            "SO(3)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "N2:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：转两圈后 SU(2) 里的矩阵是什么？",
+      "keywords": [
+        "可算题：e^{iθσ_z/2} 在 θ=2π 与 θ=4π 时各是什么？",
+        "答案：θ=2π 给 −I；θ=4π 给 +I",
+        "追问：迹在 θ=2π 时是多少？（−2）",
+        "再问：SO(3) 里 θ=2π 给什么？（+I——所以是 2:1）",
+        "陷阱：以为「转一圈就回到原状」（在 SU(2) 里不成立）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 12,
+        "line_end": 18
+      },
+      "fill_hint": "从 exp 的显式形式变来的检验题；三问给 $-I$/$+I$/核大小 2；延伸给迹的两点值（$+2\\to-2\\to+2$）作为双重覆盖的曲线证据。",
+      "content": "**题**：$U(\\theta)=e^{i\\theta\\sigma_z/2}=\\cos\\dfrac{\\theta}{2}I+i\\sin\\dfrac{\\theta}{2}\\sigma_z$。\n\n1. $\\theta=2\\pi$ 时 $U$ 是什么？\n2. $\\theta=4\\pi$ 时呢？\n3. 这两个值如何解释「$2:1$ 覆盖」？\n\n**答案**：\n\n1. $\\theta=2\\pi$：\n\n$$U=\\cos\\pi\\,I+i\\sin\\pi\\,\\sigma_z=(-1)I+0=-I$$ ✅\n\n2. $\\theta=4\\pi$：\n\n$$U=\\cos2\\pi\\,I+i\\sin2\\pi\\,\\sigma_z=I$$ ✅\n\n3. **$SO(3)$ 里的旋转矩阵 $R=e^{\\theta[\\mathbf n]_\\times}$** 在 $\\theta=2\\pi$ 时给 **$I$**（**回到原状**）；**而 $SU(2)$ 里同一个旋转对应 $\\pm U$** ⇒ **$U$ 与 $-U$ 都映到同一个 $R$** ⇒ **核 $=\\{\\pm I\\}$，大小 $2$**【已核验:2|2/1】 ✅。\n\n**易错点**：\n\n- **以为「转一圈回原状」在 $SU(2)$ 里也成立**：**不成立**（**给 $-I$**）；\n- **忘 $\\cos(\\theta/2)$ 里的 $1/2$**：**它是「半角」**（**这正是「双重覆盖」的代数来源**）；\n- **把 $-I$ 当「不同的旋转」**：**它对应同一个 $SO(3)$ 元素**。\n\n**延伸（迹的两点值）**：\n\n$$\\mathrm{tr}\\,U(\\theta)=2\\cos\\frac{\\theta}{2}\\quad\\Longrightarrow\\quad\\begin{cases}\\theta=2\\pi:&\\mathrm{tr}=-2\\\\ \\theta=4\\pi:&\\mathrm{tr}=+2\\end{cases}$$\n\n**「迹从 $+2$ 到 $-2$ 再回到 $+2$」就是「双重覆盖」的一条曲线证据**——**`lie3` 的四元数旋转里，这个「符号」对应 $q$ 与 $-q$ 表示同一旋转。**",
+      "links": [
+        "N2",
+        "B1.2",
+        "F4",
+        "lie1.2",
+        "lie3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

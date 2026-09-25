@@ -1,0 +1,242 @@
+{
+  "schema": "entry-card/v2",
+  "code": "N4",
+  "chapter": "N4",
+  "title": "力学",
+  "src": {
+    "file": "notebook/partN.tex",
+    "line_start": 28,
+    "line_end": 34,
+    "anchor": "notebook/partN.tex:28"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "N4:el-equation.quantifiers",
+      "type": "comparison",
+      "subject": "el-equation",
+      "title": "Euler–Lagrange 方程的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①L 是 L(q,q̇,t)：必须写成「自由度 + 速度」的形式",
+        "条件②δS = 0 是「驻定」：不是「最小」（鞍点也满足）",
+        "条件③q 是广义坐标：不能用多余的坐标（会引入约束力）",
+        "条件④δq 在端点为零：变分的边界条件",
+        "翻车代价：把「最小」当字面 ⇒ 长时程谐振子选错路径"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 28,
+        "line_end": 34
+      },
+      "fill_hint": "四行条件表；②③ 行必须给「S_cl 变号」与「多余坐标漏约束力」；给 S_cl 四档数值（含 ωT=π 发散）；给 Poisson 括号的三行数值。",
+      "content": "切片给的是 $\\delta S=0\\Rightarrow\\dfrac{d}{dt}\\dfrac{\\partial L}{\\partial\\dot q}=\\dfrac{\\partial L}{\\partial q}$ 与 $\\{f,H\\}=\\dot f$。逐条拆：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$L(q,\\dot q,t)$ 的形式** | **$L$ 只能依赖 $(q,\\dot q,t)$**（**不能依赖 $\\ddot q$**，否则是高阶理论） | 若 $L$ 含 $\\ddot q$ ⇒ **E-L 方程不同**（**Euler–Poisson 方程**） | 可放宽：**高阶拉格朗日力学**（**但一般避免**） |\n| ② **$\\delta S=0$ 是驻定** | **鞍点也满足 $\\delta S=0$**。**实测**（谐振子、$x_i=x_f=x$）：$S_{\\text{cl}}=\\dfrac{m\\omega x^{2}(\\cos\\omega T-1)}{2\\sin\\omega T}$ 在 $\\omega T>\\pi$ 时**变号** | 若去「最小化 $S$」⇒ **选错路径** | 不能放宽：**一阶变分只给驻定** |\n| ③ **$q$ 是广义坐标** | **自由度数要等于系统的自由度**。**倘若用多余坐标**（如「质点 + 约束」直接写 $L$ 而不消约束） | **约束力会漏掉** ⇒ 方程错 | 可放宽：**拉格朗日乘子法**（**把约束用 $\\lambda$ 引入**，`D1`） |\n| ④ **端点变分为零** | $\\delta q(t_1)=\\delta q(t_2)=0$（**这是分部积分时边界项消失的条件**） | 若不要求 ⇒ **多出边界项**（**自然边界条件**） | 可放宽：**留着边界项就得到自然边界条件**（**`de2.9` 的边界条件分类**） |\n\n**这张表的用法**：\n\n1. **写清 $L$ 的依赖**；\n2. **说「驻定」不说「最小」**；\n3. **广义坐标要不含多余约束**。\n\n**「S_cl 变号」的数值核对（谐振子）**：取 $x_i=x_f=x=1$、$m\\omega=1$：\n\n| $\\omega T$ | $\\sin\\omega T$ | $S_{\\text{cl}}$ |\n|---|---|---|\n| $0.5$ | $0.479426$ | $-0.127671$ |\n| $1.0$ | $0.841471$ | $-0.273151$ |\n| $2.0$ | $0.909297$ | $-0.778704$ |\n| $\\pi$ | $0$ | **发散（焦点）** |\n\n**$\\omega T>\\pi$ 时段 $\\sin<0$ ⇒ $S_{\\text{cl}}$ 变号** ⇒ **「最小」的直觉失效** ✅。\n\n**与 `K2` 的接口**：**`K2:saddle-not-minimum.counterexample` 用**同一组数值**说明「经典路径是驻点而非极小」**——**所以 `N4` 的这条与 `K2` 是同一事实的两种说法。**\n\n**「Poisson 括号」的数值核对（谐振子 $H=\\frac12(p^{2}+q^{2})$）**：取 $q=1.3$、$p=0.7$：\n\n| 括号 | 值 |\n|---|---|\n| $\\{q,H\\}$ | $p=0.7$【已核验:0.7|0.7】 |\n| $\\{p,H\\}$ | $-q=-1.3$【已核验:-1.3|-1.3】 |\n| $\\{H,H\\}$ | $0$【已核验:0|0】 |\n\n**「$\\dot q=p$、$\\dot p=-q$」** ✅——**所以「Hamilton 方程就是 Poisson 括号的展开」**。",
+      "links": [
+        "D1",
+        "D2",
+        "D3",
+        "K2",
+        "de2.9",
+        "de2.15"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N4:el-equation.statement",
+      "type": "statement",
+      "subject": "el-equation",
+      "title": "Euler–Lagrange 方程与 Poisson 括号",
+      "keywords": [
+        "δS = 0 ⇒ d/dt(∂L/∂q̇) = ∂L/∂q",
+        "L = T − V（动能减势能，符号不能反）",
+        "Poisson 括号：{f,H} = ḟ（Hamilton 方程的紧凑形式）",
+        "Hamilton 方程：q̇ = ∂H/∂p、ṗ = −∂H/∂q",
+        "Noether：对称性 ↔ 守恒量（D2）",
+        "辛结构：{q,p} = 1（辛积分器的来源）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 28,
+        "line_end": 34
+      },
+      "fill_hint": "陈述本体（E-L + Poisson 括号）+ 「$L=T-V$ 的符号」两行对照 + 三行括号数值 + 「三条基本括号 = 辛结构」+ 教材定位。",
+      "content": "**Speedy reference：这一格是「力学」篇的核心。**\n\n**Euler–Lagrange 方程（切片）**：\n\n$$\\delta S=0\\ \\Longrightarrow\\ \\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}=\\frac{\\partial L}{\\partial q}$$\n\n**注意符号（最常错的一处）**：**$L=T-V$（动能减势能）**。**实测**：\n\n| $L$ | E-L 给出的运动 | 物理 |\n|---|---|---|\n| $\\frac12m\\dot q^{2}-mgq$ | $\\ddot q=-g$ | **自由落体** ✅ |\n| $\\frac12m\\dot q^{2}+mgq$ | $\\ddot q=+g$ | **加速上升（非物理）** ❌ |\n\n**所以「$T-V$」不是约定，是「让方程给出正确符号」的唯一选择。**\n\n**Poisson 括号（切片）**：\n\n$$\\{f,H\\}=\\dot f,\\qquad \\{f,g\\}=\\sum_i\\left(\\frac{\\partial f}{\\partial q_i}\\frac{\\partial g}{\\partial p_i}-\\frac{\\partial f}{\\partial p_i}\\frac{\\partial g}{\\partial q_i}\\right)$$\n\n**数值核对（谐振子 $H=\\frac12(p^{2}+q^{2})$、$q=1.3$、$p=0.7$）**：\n\n| 括号 | 值 |\n|---|---|\n| $\\{q,H\\}$ | $p=0.7$【已核验:0.7|0.7】 |\n| $\\{p,H\\}$ | $-q=-1.3$【已核验:-1.3|-1.3】 |\n| $\\{H,H\\}$ | $0$【已核验:0|0】 |\n\n**「$\\dot q=p$、$\\dot p=-q$、$\\dot H=0$」** ✅——**三条正是 Hamilton 方程 + 能量守恒**。\n\n**基本括号**：\n\n$$\\{q_i,q_j\\}=0,\\qquad\\{p_i,p_j\\}=0,\\qquad\\{q_i,p_j\\}=\\delta_{ij}$$\n\n**「这三条就是辛结构」**——**它们定义了「正则坐标」**（**`D3`**）⇒ **辛积分器要保的就是它们**（**`G1.2`/`M7`**）。\n\n**「为什么不退化为 E-L」**：**Poisson 括号的写法更紧凑**（**一个式子代替 $2n$ 个方程**），**且直接暴露对称性与守恒量**（**`D2` 的 Noether**）✅。\n\n**教材定位**：**Arnold《Mathematical Methods of Classical Mechanics》Ch.1–3**（**含 Noether 定理**）。\n\n**它依赖什么 / 谁依赖它**：`D1` 的变分原理、`D3` 的哈密顿形式。下游：`D2` 的 Noether、`G1.2` 的辛积分器、`M7` 的变分积分器、`K2`/`K4` 的路径积分（**作用量**）。",
+      "links": [
+        "D1",
+        "D2",
+        "D3",
+        "G1.2",
+        "K2",
+        "K4",
+        "M7",
+        "Q9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分工：为什么「力学」这一格选 E-L 与 Poisson 括号",
+      "keywords": [
+        "Euler–Lagrange：变分表述（配置空间视角）",
+        "Poisson 括号：哈密顿表述（相空间视角）",
+        "两种表述等价但各有便利：E-L 便于具体计算，括号便于找守恒量",
+        "E-L 的下游：D1（变分原理）、K1-K5（路径积分的作用量）",
+        "括号的下游：D2（Noether）、D3（哈密顿）、G1.2（辛）",
+        "判据：要「算轨迹」还是「看结构」"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 28,
+        "line_end": 34
+      },
+      "fill_hint": "对照口径：以「配置空间 vs 相空间」划界；给「两条都要」的理由；给「括号 → 对易子」的对应规则（连到 N5）；给两问判据。",
+      "content": "**「力学」这一格选这两条，因为它们是「同一个动力学的两种表述」。**\n\n| 表述 | 出发点 | 便利之处 |\n|---|---|---|\n| **Euler–Lagrange** | **配置空间** $(q,\\dot q)$ | **具体计算**（**写出 $L$ 就得到方程**） |\n| **Poisson 括号** | **相空间** $(q,p)$ | **看结构**（**守恒量、对称性一目了然**） |\n\n**「为什么两条都要」（本条的要点）**：\n\n**同一个物理系统，两种视角各解决一半问题**：\n\n1. **「轨迹是什么？」** ⇒ **E-L**（**解二阶 ODE**）；\n2. **「有什么守恒量？为什么？」** ⇒ **括号**（**$\\{f,H\\}=0$ ⇔ $f$ 守恒**）。\n\n**判据（两问定选）**：\n\n1. **要算具体轨迹吗？** ⇒ **E-L**（**`D1` 的标准流程**）；\n2. **要判断守恒、或做正则变换吗？** ⇒ **括号**（**`D2`/`D3` 的语言**）。\n\n**与「量子」的接口（最有价值的连接）**：**Poisson 括号 → 对易子**：\n\n$$\\{f,g\\}\\ \\longrightarrow\\ \\frac{1}{i\\hbar}[\\hat f,\\hat g]$$\n\n**「这条对应规则」是量子化的入口**（**`D3`/`F2` 的 $[\\hat x,\\hat p]=i\\hbar$**）——**具体**：\n\n$$\\{q,p\\}=1\\ \\Longrightarrow\\ [\\hat q,\\hat p]=i\\hbar$$ ✅\n\n**所以「$N4$ 的括号」直接连到 `N5` 的对易子**——**这是 $N$ 篇「力学 → 量子」相邻两格的暗线。**\n\n**位置关系**：本条与 `N5:commutator` 是「经典 → 量子」的一对；也对接 `K1`–`K5` 的作用量（**E-L 的路径积分版**）。",
+      "links": [
+        "N4",
+        "D1",
+        "D2",
+        "D3",
+        "F2",
+        "K1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：这两条服务的下游章节",
+      "keywords": [
+        "D1：变分原理（δS=0 的完整处理）",
+        "D2：Noether 定理（对称性 → 守恒律）",
+        "K1-K5：路径积分的作用量 S[x]",
+        "G1.2：辛积分器（保 {q,p}=1 的离散版）",
+        "M7：变分积分器（先离散 S 再变分）",
+        "de2.15：变分法与弱解（PDE 的同一手法）"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 28,
+        "line_end": 34
+      },
+      "fill_hint": "单元级应用词条；给六条下游（含 K1-K5 的作用量与 M7 的「先离散后变分」）；给一句自检与「枢纽位置」表。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`D1` 的变分原理**：**$\\delta S=0$ 的完整处理**（**边界项、自然边界条件、多余坐标的处理**）。\n- **`D2` 的 Noether**：**「对称性 ⇒ 守恒量」**——**用括号表述就是「$\\{f,H\\}=0$」**（**`D2` 的守恒量表**）。\n- **`K1`–`K5` 的作用量**：**路径积分的权重是 $e^{iS/\\hbar}$**——**$S$ 就是这里的「作用量」**（**`K1:time-slicing.statement`**）；**`K3.2` 的谐振子传播子就是用 $S_{\\text{cl}}$ 算的**。\n- **`G1.2` 的辛积分器**：**要保的是「$\\{q,p\\}=1$ 的离散版」** ⇒ **leapfrog 的相空间行列式为 1**（**`G1.2:symplectic.proof`**）。\n- **`M7` 的变分积分器**：**「先离散 $S$（$S_d=\\sum L_d$）、再变分」** ⇒ **Verlet**（**`M7:variational-integrator.statement`**）。\n- **`de2.15` 的变分法与弱解**：**同一个手法用在 PDE 上**（**从 $\\delta S=0$ 到弱形式**）——**所以「变分原理」是 ODE 与 PDE 的公共入口**。\n\n**一条自检问句**：**「我要算轨迹还是要看守恒？」**——**前者 E-L、后者括号**。\n\n**「本条的枢纽位置」**：\n\n| 方向 | 内容 |\n|---|---|\n| **它依赖** | `D1`（变分原理）、`D3`（哈密顿） |\n| **它服务** | `D2`（Noether）、`K1`–`K5`（作用量）、`G1.2`/`M7`（辛）、`de2.15`（弱解） |\n\n**所以「$N4$ 这一格是「分析力学」的入口」** ✅——**它同时通向量子（`K` 篇）与数值（`G`/`M` 篇）。**",
+      "links": [
+        "N4",
+        "D1",
+        "D2",
+        "D3",
+        "G1.2",
+        "K1",
+        "K3.2",
+        "M7",
+        "de2.15"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "N4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：作用量的驻定与相空间流",
+      "keywords": [
+        "模式①：多条路径的 S 值（驻点处取极值/鞍点）",
+        "模式②：相空间流（保面积，与 G1.2 同源）",
+        "模式③：{q,H} 与 ṗ 的对应（拖动相点看运动）",
+        "invariant：{q,p} = 1（辛结构，严格）",
+        "viz 用档2（需路径族枚举与相空间积分，非单一显式函数）",
+        "预置：谐振子 x_i=x_f=1、ωT∈[0,2π]"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 28,
+        "line_end": 34
+      },
+      "fill_hint": "档2（planned-backend）；rationale 说清「路径族枚举 + 相空间积分」；末段给「降到档1 的最小版本」（S_cl(ωT) 曲线）。",
+      "content": "**演示槽位（档2：留空待接）**。\n\n```json\n{\"status\": \"planned-backend\", \"rationale\": \"「作用量在驻点处取极值还是鞍点」需要对路径族枚举并逐个算 $S$（且要跨 ωT = π 的焦点）；相空间流需要时间积分。都属于迭代型计算。\", \"params_hint\": {\"system\": \"harmonic\", \"endpoints\": [1, 1], \"omegaT\": [0, \"2*pi\"], \"paths\": 200}}\n```\n\n**为什么不是档1**：**「路径族」是高维枚举**（**§0 的判据：需迭代/对拍 ⇒ 档2**）。\n\n**若要降到档1**：**可只画 $S_{\\text{cl}}(\\omega T)$ 的曲线**（**`K2`/`N4` 已给了四档数值**）：**在 ωT = π 处发散、之后变号**——**这条曲线足以说明「驻点不等于极小」**。**`path-contribution` 模块（已实现）可扩展成这个版本。**",
+      "links": [
+        "N4",
+        "D1",
+        "D3",
+        "G1.2",
+        "K2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted",
+      "viz": {
+        "status": "planned-backend",
+        "rationale": "「作用量在驻点处取极值还是鞍点」需要对路径族枚举并逐个算 $S$（且要跨 ωT = π 的焦点）；相空间流需要时间积分。都属于迭代型计算。",
+        "params_hint": {
+          "system": "harmonic",
+          "endpoints": [
+            1,
+            1
+          ],
+          "omegaT": [
+            0,
+            "2*pi"
+          ],
+          "paths": 200
+        }
+      }
+    },
+    {
+      "id": "N4:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个系统的 Poisson 括号是多少？",
+      "keywords": [
+        "可算题：谐振子 H=½(p²+q²)、q=1.3、p=0.7，求 {q,H} 与 {p,H}",
+        "答案：{q,H} = p = 0.7；{p,H} = −q = −1.3",
+        "追问：{H,H} 呢？（0——能量守恒）",
+        "再问：换成 H=p²/2m + kq²/2 呢？（{q,H}=p/m）",
+        "陷阱：忘 {p,q}=−1 的符号；把 {f,H} 写成 H 对 f 的括号"
+      ],
+      "tex_ref": {
+        "file": "notebook/partN.tex",
+        "line_start": 28,
+        "line_end": 34
+      },
+      "fill_hint": "从 Poisson 括号变来的检验题；三问给 0.7 / −1.3 / 0；延伸给一般 Hamiltonian 的括号（给出 Newton 方程）。",
+      "content": "**题**：谐振子 $H=\\dfrac12(p^{2}+q^{2})$，取 $q=1.3$、$p=0.7$。\n\n1. 求 $\\{q,H\\}$。\n2. 求 $\\{p,H\\}$。\n3. 求 $\\{H,H\\}$，并解释它的物理含义。\n\n**答案**：\n\n1. **由定义**（**$H=\\frac12(p^{2}+q^{2})$**）：\n\n$$\\{q,H\\}=\\frac{\\partial q}{\\partial q}\\frac{\\partial H}{\\partial p}-\\frac{\\partial q}{\\partial p}\\frac{\\partial H}{\\partial q}=1\\cdot p-0\\cdot q=p=0.7$$【已核验:0.7|0.7】 ✅\n\n2.\n\n$$\\{p,H\\}=0\\cdot p-1\\cdot q=-q=-1.3$$【已核验:-1.3|-1.3】 ✅\n\n3.\n\n$$\\{H,H\\}=0$$【已核验:0|0】 ✅\n\n**物理含义**：**$\\dot H=\\{H,H\\}=0$** ⇒ **能量守恒** ✅——**这正是 Noether 定理的一个实例**（**时间平移不变 ⇒ 能量守恒**，`D2`）。\n\n**易错点**：\n\n- **忘 $\\{p,q\\}=-1$ 的符号**：**$\\{q,p\\}=+1$、$\\{p,q\\}=-1$**（**反交换**）；\n- **把 $\\{f,H\\}$ 的方向搞反**：**是 $\\{f,H\\}=\\dot f$**（**不是 $\\{H,f\\}$**，**后者给 $-\\dot f$**）；\n- **以为「$H$ 自己和自己」要给 $2H$**：**括号反交换 ⇒ $\\{H,H\\}=0$**。\n\n**延伸（一般 Hamiltonian 的括号）**：**$H=\\dfrac{p^{2}}{2m}+\\dfrac{kq^{2}}{2}$**：\n\n$$\\{q,H\\}=\\frac{\\partial H}{\\partial p}=\\frac{p}{m},\\qquad\\{p,H\\}=-\\frac{\\partial H}{\\partial q}=-kq$$\n\n**所以「$\\dot q=p/m$、$\\dot p=-kq$」** ✅——**这就是 Newton 方程的哈密顿形式**。",
+      "links": [
+        "N4",
+        "D2",
+        "D3",
+        "F2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
