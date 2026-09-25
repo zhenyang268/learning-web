@@ -70,15 +70,18 @@ vite.config.ts  tsconfig.json  package.json  index.html
 
 ## 6. 进度追加（2026-09-25 上午，前端 agent 本轮）
 
-### P1 图谱语义边：已铺开 22 章（graph/ 从 1 → 23 个 yaml）
+### P1 图谱语义边：已铺开 25 章（graph/ 从 1 → 26 个 yaml）
 
-- 新增 22 个：A2/A4/B1/B2/C6/C7/C8/C9/C10/H6/H8/I9/J2/P1–P9（含 A1 共 23 个文件）。
+- 新增 25 个：A2/A4/B1/B2/C6/C7/C8/C9/C10/G1/G2/G4/H6/H8/I9/J2/P1–P9（含 A1 共 26 个文件）。
+  当前**所有已入库的多单元组都已覆盖**；D/E/F 全是单单元组（每组 1 文件、无组内边）不需要 yaml。
 - 依据全部来自各单元 json 的 entries（statement/counterexample/comparison 标题与正文）+ links；
-  每条边带注释说明依据，prereq 全库无环（`check:graph` **PASS 713 · FAIL 0**）。
+  每条边带注释说明依据，prereq 全库无环（`check:graph` **PASS 817 · FAIL 0**）。
 - 单元内部的对偶（如 H8.3「质点–弹簧 vs PBD」、C10.2「Itô vs Stratonovich」）**不建自指边**，
   只在 yaml 里注记说明——自指是非法边，check-graph 会拦。
 - 覆盖原则：yaml 只写**组内**语义边（组内派生 prereq 被 yaml 覆盖）；跨章关系仍由 links 派生边承担。
-- 剩余：等 JSON agent 入库 D/E/F/G/K–R/de/lie 各章后跟进（当前这些章节目录为空或刚起步）。
+- 剩余：等 JSON agent 入库 K–R/de/lie 各章后跟进（defg 批已于 2026-09-25 上午入库完毕）。
+- **接力规则（本轮验证过的工作流）**：`find json/<G> -name '*.json' -mmin +5` 全部命中
+  且 ≥2 文件、`graph/<G>.yaml` 不存在 → 该铺了；铺完 `npm run check:graph` 必须 0 FAIL。
 
 ### P0 viz：无积压
 
