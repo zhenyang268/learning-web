@@ -1,0 +1,280 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie3.16",
+  "chapter": "lie3",
+  "title": "$\\mathfrak{se}(3)$ 与螺旋运动",
+  "src": {
+    "file": "notebook/li/lie3.tex",
+    "line_start": 244,
+    "line_end": 257,
+    "anchor": "notebook/li/lie3.tex:244"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie3.16:se3-screw.quantifiers",
+      "type": "comparison",
+      "subject": "se3-screw",
+      "title": "se(3) 与螺旋的四个限定词：6 维螺旋坐标、指数给出螺旋、V 的系数形式、theta=0 要兜底",
+      "keywords": [
+        "se(3) 是 6 维螺旋坐标",
+        "指数给出螺旋运动",
+        "V 的三个系数",
+        "theta=0 数值兜底"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "四问：3+3=6 与 v 不是速度；Chasles 与 θ=|ω|；V 的三个系数（0.40528473/0.14727246）；θ→0 的泰勒兜底（1/2 与 1/6）。",
+      "content": "切片给了 $\\mathfrak{se}(3)=\\left\\{\\begin{pmatrix}[\\omega]_\\times&\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&0\\end{pmatrix}:\\omega,\\mathbf v\\in\\mathbb R^3\\right\\}$、**指数映射（螺旋运动）** $\\exp\\begin{pmatrix}[\\omega]_\\times&\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&0\\end{pmatrix}=\\begin{pmatrix}e^{[\\omega]_\\times}&V\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}$（其中 $V=I+\\frac{1-\\cos\\theta}{\\theta^2}[\\omega]_\\times+\\frac{\\theta-\\sin\\theta}{\\theta^3}[\\omega]_\\times^2$）与 CG 用途。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$\\mathfrak{se}(3)$ 是 $6$ 维螺旋坐标**（$\\omega$ 与 $\\mathbf v$ 各 $3$） | 算得 $3+3=6$【已核验:6|3+3】= $\\dim SE(3)$（`lie1.8` 的 $\\dim\\mathfrak g=\\dim G$）⇒ **与\"$6$ 个自由度\"一致**（`lie3.15`）；**注意** $\\mathbf v$ **不是**\"速度\"，而是\"螺旋的平动分量\"（与 $\\omega$ 一起编码\"轴 + 螺距\"） | 把 $\\mathbf v$ 当\"世界系速度\" ⟹ 与 $\\dot{\\mathbf t}$ 混淆（二者不同：$\\dot{\\mathbf t}$ 是\"体速度\"经 $R$ 变换后的结果） | 不能放宽：螺旋坐标是\"几何对象\" |\n| ② **指数映射给出\"螺旋运动\"**（Chasles 定理） | 任何刚体运动都可写成\"绕一条固定轴的螺旋\"（转 $+$ 沿轴移）⇒ $\\exp$ 把这个\"螺旋\"实现为**匀速运动**；**$\\theta=\\lvert\\omega\\rvert$** 是转角 | 以为\"$SE(3)$ 的运动都是纯旋转 + 纯平移\" ⟹ 无法理解\"螺旋插值\"（`lie3.15` 反例的第二种做法） | 不能放宽：这是 Chasles 定理的内容 |\n| ③ **$V$ 的系数有三个**（$I$、$[\\omega]_\\times$、$[\\omega]_\\times^2$） | $V=I+\\frac{1-\\cos\\theta}{\\theta^2}[\\omega]_\\times+\\frac{\\theta-\\sin\\theta}{\\theta^3}[\\omega]_\\times^2$；**数值**（$\\theta=\\pi/2$）：$\\frac{1-\\cos\\theta}{\\theta^2}$ 算得 $0.40528473$【已核验:0.405284734569|(1-cos(pi/2))/(pi/2)**2】（$=4/\\pi^2$）、$\\frac{\\theta-\\sin\\theta}{\\theta^3}$ 算得 $0.14727246$【已核验:0.147272459104|(pi/2-sin(pi/2))/(pi/2)**3】 | 漏掉 $[\\omega]_\\times^2$ 项 ⟹ 平移量算错（\"旋转带动的平移\"漏掉） | 不能放宽：$V$ 是\"把螺旋的平动分量搬到群上\"的必需因子 |\n| ④ **$\\theta\\to0$ 要数值兜底** | $\\theta\\to0$ 时 $\\frac{1-\\cos\\theta}{\\theta^2}\\to\\frac12$、$\\frac{\\theta-\\sin\\theta}{\\theta^3}\\to\\frac16$ ⇒ **系数有极限但公式本身 0/0** ⇒ 必须用 **Taylor 展开**：取 $\\theta=10^{-4}$ 算得 $\\frac{1-\\cos\\theta}{\\theta^2}=0.5$【已核验:0.499999996961|(1-cos(1e-4))/1e-8】 | 直接套公式 ⟹ NaN（与 Slerp 的 $\\Omega\\to0$ 同类问题，`lie3.14` 反例） | 不能放宽：工程必须写分支（$\\theta<\\epsilon$ 时用 $1/2$ 与 $1/6$） |\n\n**切片内容**：$\\mathfrak{se}(3)$ 的形式；指数映射（螺旋）；$V$ 的公式；CG 用途。",
+      "links": [
+        "lie1.6",
+        "lie1.10",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.16:exp-log-singularity.counterexample",
+      "type": "counterexample",
+      "subject": "exp-log-singularity",
+      "title": "反例：θ=π 时 log 的轴方向不唯一 —— 螺旋坐标的「反向奇异」",
+      "keywords": [
+        "θ=π 是奇异点",
+        "轴方向不唯一",
+        "θ=0 是另一端",
+        "两端都要兜底"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "四问：θ=π 时轴不唯一（±ω）；θ=0 的 Taylor 兜底（0.5 与 0.166667）；为何实践很少撞奇异（增量/Slerp 短弧/阻尼）；三个「三角函数除法」奇异点的对照表。",
+      "content": "切片给了 $\\exp$ 的公式。**它的逆（$\\log$）有两个奇异点** —— 这个反例说明工程上必须处理的两端。\n\n**反例（$\\theta=\\pi$ 处轴不唯一）**：设 $\\theta=\\pi$（转 $180°$）且 $\\mathbf v=\\mathbf 0$：\n\n$$e^{[\\omega]_\\times}=\\text{绕 }\\hat\\omega\\text{ 转 }180°$$\n\n**关键事实**：绕 $+\\hat\\omega$ 转 $180°$ 与绕 $-\\hat\\omega$ 转 $180°$ 给**同一个旋转**（`lie1.4` 的\"对径粘合\"）⇒ 从 $R$ 反解 $\\hat\\omega$ 时**方向不唯一**（$\\pm\\hat\\omega$ 都合法）⇒ $\\log$ 在 $\\theta=\\pi$ 处**不唯一/不连续** ❌。\n\n**数值症状**：$\\theta$ 接近 $\\pi$ 时，$\\log$ 的分量对输入噪声**极其敏感**（微小扰动导致 $\\hat\\omega$ 翻转）⇒ 迭代优化在这些姿态附近**抖动/发散**。\n\n**另一端的奇异（$\\theta=0$）**：$\\theta\\to0$ 时 $\\hat\\omega$ 无定义（\"转零度\"没有轴）⇒ 也需要兜底（`lie3.16` 限定词④）。\n\n**两端的处理（工程做法）**：\n\n| 奇异 | 现象 | 兜底 |\n|---|---|---|\n| $\\theta\\to0$ | $\\hat\\omega$ 无定义；系数 0/0 | 用 Taylor：$\\frac{1-\\cos\\theta}{\\theta^2}\\to\\frac12$（实测 $\\theta=10^{-4}$ 给 $0.5$【已核验:0.499999996961|(1-cos(1e-4))/1e-8】）、$\\frac{\\theta-\\sin\\theta}{\\theta^3}\\to\\frac16$（实测给 $0.166667$【已核验:0.166666661483|(1e-4-sin(1e-4))/1e-12】） |\n| $\\theta\\to\\pi$ | $\\hat\\omega$ 不唯一（$\\pm$） | 用\"最大分量\"分支（与四元数的 $w\\to0$ 分支同法，`lie3.12` 证明第 4 步）；或**限制迭代步长**使 $\\theta$ 永不接近 $\\pi$ |\n\n**\"为什么实践中很少撞上 $\\theta=\\pi$\"**（三条）：\n\n1. **增量更新**：用 $T\\leftarrow T\\exp(\\delta)$（$\\delta$ 很小）⇒ **永远不进奇异区**（这是李群优化的标准做法）；\n2. **插值**：`Slerp`（`lie3.14`）也已用\"选同半球\"把 $\\Omega$ 压到 $\\le\\pi/2$ ⇒ 对应的 $\\theta=2\\Omega\\le\\pi$ 但\"短弧\"保证远离 $\\pi$；\n3. **约束求解**：多约束系统里用**阻尼/信赖域**避免大步长。\n\n**对照表（三个\"三角函数的除法\"奇异点）**：\n\n| 场景 | 奇异条件 | 系数/公式 | 兜底 |\n|---|---|---|---|\n| Slerp（`lie3.14`） | $\\sin\\Omega=0$（$\\Omega\\to0$ 或 $\\pi$） | $\\frac{\\sin((1-t)\\Omega)}{\\sin\\Omega}$ | nlerp / 选同半球 |\n| $\\mathfrak{so}(3)$ 的 $\\log$ | $\\theta\\to0$ 或 $\\pi$ | $\\theta=2\\arccos w$ | Taylor / 分支 |\n| $\\mathfrak{se}(3)$ 的 $V$ | $\\theta\\to0$ | $\\frac{1-\\cos\\theta}{\\theta^2}$ 等 | Taylor（$1/2$、$1/6$） |\n\n**结论（限定词④）**：**$\\mathfrak{se}(3)$ 的 $\\exp/\\log$ 在 $\\theta=0$ 与 $\\theta=\\pi$ 各有一个奇异点**；工程上用 **Taylor 兜底 + 小步增量** 两条手段同时规避（`lie3.15` 反例的\"螺旋插值\"也必须处理这两端）。",
+      "links": [
+        "lie1.4",
+        "lie1.10",
+        "lie3.12",
+        "lie3.14",
+        "lie3.15",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.16:se3-screw.statement",
+      "type": "statement",
+      "subject": "se3-screw",
+      "title": "陈述：se(3) 的形式、指数映射与螺旋解读",
+      "keywords": [
+        "se(3) 的形式",
+        "指数映射",
+        "V 的公式",
+        "螺旋解读"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "四问：se(3) 的形式与 3+3=6；指数映射与 Rodrigues 的系数（0.63661977/0.40528473）；V 的两个系数（0.40528473/0.14727246）；CG 用途。",
+      "content": "**$\\mathfrak{se}(3)$（切片）**：\n\n$$\\mathfrak{se}(3)=\\left\\{\\begin{pmatrix}[\\omega]_\\times&\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&0\\end{pmatrix}:\\omega,\\mathbf v\\in\\mathbb R^3\\right\\}$$\n\n**指数映射（切片）**：\n\n$$\\exp\\begin{pmatrix}[\\omega]_\\times&\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&0\\end{pmatrix}=\\begin{pmatrix}e^{[\\omega]_\\times}&V\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix},\\qquad V=I+\\frac{1-\\cos\\theta}{\\theta^2}[\\omega]_\\times+\\frac{\\theta-\\sin\\theta}{\\theta^3}[\\omega]_\\times^2$$\n\n**四条补充**：\n\n1. **维数**：$3+3$ 算得 $6$【已核验:6|3+3】= $\\dim SE(3)$（`lie1.8`）；**$\\mathbf v$ 是\"螺旋的平动分量\"**（不是世界速度）；\n2. **旋转部分用 Rodrigues**：$e^{[\\omega]_\\times}=I+\\frac{\\sin\\theta}\\theta[\\omega]_\\times+\\frac{1-\\cos\\theta}{\\theta^2}[\\omega]_\\times^2$（$\\theta=\\lvert\\omega\\rvert$）；**数值**（$\\theta=\\pi/2$）：$\\frac{\\sin\\theta}\\theta$ 算得 $0.63661977$【已核验:0.636619772368|sin(pi/2)/(pi/2)】、$\\frac{1-\\cos\\theta}{\\theta^2}$ 算得 $0.40528473$【已核验:0.405284734569|(1-cos(pi/2))/(pi/2)**2】；\n3. **$V$ 的系数（$\\theta=\\pi/2$）**：$\\frac{1-\\cos\\theta}{\\theta^2}$ 算得 $0.40528473$【已核验:0.405284734569|(1-cos(pi/2))/(pi/2)**2】、$\\frac{\\theta-\\sin\\theta}{\\theta^3}$ 算得 $0.14727246$【已核验:0.147272459104|(pi/2-sin(pi/2))/(pi/2)**3】；\n4. **CG 用途（切片）**：骨骼动画的关节变换、相机运动、机器人学 ⇒ **全部是\"在 $\\mathfrak{se}(3)$ 上做增量、用 $\\exp$ 回群\"** 的场景（`lie3.15` 应用）。",
+      "links": [
+        "lie1.6",
+        "lie1.10",
+        "lie1.11",
+        "lie3.12",
+        "lie3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.16:se3-screw.intuition",
+      "type": "intuition",
+      "subject": "se3-screw",
+      "title": "直觉：se(3) 的六个数是「一条螺旋轴」—— 指数映射就是沿它匀速走",
+      "keywords": [
+        "螺旋轴 + 螺距",
+        "指数=匀速走",
+        "V 处理平移的耦合",
+        "优化在代数里做"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "四问：螺旋坐标六数的几何含义；指数映射=匀速沿轴；V 项的必要性（旋转带动平移）；李群优化的四步套路。",
+      "content": "$\\mathfrak{se}(3)$ 的直觉可以用**\"一条螺旋轴\"**说清。\n\n**六个数的几何含义（螺旋坐标）**：\n\n- $\\omega\\in\\mathbb R^3$：**轴的方向 + 转角**（$\\lvert\\omega\\rvert=\\theta$ 是转角）；\n- $\\mathbf v\\in\\mathbb R^3$：**轴的\"瞬时平移分量\"** ⇒ 它与 $\\omega$ 一起决定**轴的位置与螺距**。\n\n⇒ **\"一条空间中的螺旋轴（方向、位置、螺距）\"就是 $6$ 个数** ⇒ 这就是 Chasles 定理的坐标化。\n\n**\"指数映射 = 沿螺旋轴匀速走\"**：\n\n$$T(t)=\\exp(t\\,\\xi)\\quad(\\xi\\in\\mathfrak{se}(3))$$\n\n⇒ $t$ 从 $0$ 到 $1$ 就是\"沿螺旋轴**匀速**运动\"（转匀速 + 沿轴移匀速）⇒ **这就是\"最自然的位姿插值\"**（`lie3.15` 反例的第二条做法）。\n\n**\"为什么 $V$ 这一项必要\"**：因为**旋转会带动物体的\"平动\"**（想想\"绕不在原点的轴旋转\"⇒ 物体会搬家）⇒ $V$ 正是\"把螺旋的平动分量**正确翻译**成群里的平移\"的因子 ⇒ **漏掉它就等于忽略\"旋转引起的位移\"**。\n\n**数值感受（$\\omega=$ 单位 $z$ 轴、$\\theta=1$）**：$V$ 算得 $\\begin{pmatrix}0.841471&-0.459698&0\\\\0.459698&0.841471&0\\\\0&0&1\\end{pmatrix}$（`lie3.16` 数值核验）⇒ **$z$ 方向不受影响**（转轴的平动分量不被旋转改变），而 $xy$ 平面有\"旋转耦合\"⇒ **这就是\"轴\"的几何**。\n\n**\"李群优化的标准套路（四步）\"**：\n\n1. **表示**：存 $(R,\\mathbf t)$ 或四元数 + 平移；\n2. **误差**：算 $\\log(T_{\\text{des}}T_{\\text{cur}}^{-1})\\in\\mathfrak{se}(3)$（$6$ 维）；\n3. **更新**：解线性方程得 $\\delta\\in\\mathfrak{se}(3)$，然后 $T\\leftarrow T\\exp(\\delta)$；\n4. **保护**：$\\theta<\\epsilon$ 用 Taylor、$\\theta$ 接近 $\\pi$ 用分支（`lie3.16` 反例）。\n\n⇒ **这条套路是 SLAM/机器人/图形学里\"位姿优化\"的通用骨架**（`lie3.15` 应用）。\n\n**一句话**：**$\\mathfrak{se}(3)$ 的六个数是一条螺旋轴；$\\exp$ 沿它匀速走；$V$ 把\"旋转带动的平移\"正确翻译；优化就在这个**平的** $6$ 维空间里做**。",
+      "links": [
+        "lie1.6",
+        "lie1.10",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.16:se3-screw.proof",
+      "type": "proof",
+      "subject": "se3-screw",
+      "title": "证明骨架：从 exp 的级数得到 V 的闭式（含数值验证）",
+      "keywords": [
+        "分块写指数",
+        "用幂零性质展开",
+        "求和得 V",
+        "数值验证"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "六步：A 的幂的归纳；级数给出 V 与 e^W；W³=−θ²W 使 e^W 三项终止；V 的三项闭式（三个系数数值）；数值验证 V 的 (3,3)=1；θ→0 的极限 1/2 与 1/6。",
+      "content": "**目标**：说明 $\\exp\\begin{pmatrix}[\\omega]_\\times&\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&0\\end{pmatrix}=\\begin{pmatrix}e^{[\\omega]_\\times}&V\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}$ 与 $V$ 的闭式。\n\n**第 1 步（分块与幂）。** 记 $A=\\begin{pmatrix}W&\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&0\\end{pmatrix}$（$W=[\\omega]_\\times$）。归纳可得\n\n$$A^k=\\begin{pmatrix}W^k&W^{k-1}\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&0\\end{pmatrix}\\quad(k\\ge1)$$\n\n**第 2 步（级数）。** $\\exp A=\\sum_{k\\ge0}\\frac{A^k}{k!}$ ⇒ 分块为\n\n$$\\exp A=\\begin{pmatrix}\\sum_{k\\ge0}\\frac{W^k}{k!}&\\ \\sum_{k\\ge1}\\frac{W^{k-1}}{k!}\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}=\\begin{pmatrix}e^{W}&V\\mathbf v\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix},\\qquad V=\\sum_{k\\ge1}\\frac{W^{k-1}}{k!}$$\n\n**第 3 步（$W$ 的三次终止）。** 由 $[\\omega]_\\times^3=-\\theta^2[\\omega]_\\times$（`lie1.11` 证明第 5 步的同类事实）⇒ 级数化为**三项**：\n\n$$e^{W}=I+\\frac{\\sin\\theta}\\theta W+\\frac{1-\\cos\\theta}{\\theta^2}W^2$$\n\n**第 4 步（$V$ 的闭式）。** 用第 3 步把 $\\sum\\frac{W^{k-1}}{k!}$ 按 $I,W,W^2$ 归并（$\\sum\\frac{\\theta^{2m}}{(2m+2)!}$ 等）。\n\n- $I$ 的系数：$\\sum_{m\\ge0}\\frac{(-1)^m\\theta^{2m}}{(2m+1)!}$ 算得 $\\frac{\\sin\\theta}\\theta$【已核验:0.636619772368|sin(pi/2)/(pi/2)】；\n- $W$ 的系数：$\\sum_{m\\ge0}\\frac{(-1)^m\\theta^{2m}}{(2m+2)!}$ 算得 $\\frac{1-\\cos\\theta}{\\theta^2}$【已核验:0.405284734569|(1-cos(pi/2))/(pi/2)**2】；\n- $W^2$ 的系数：$\\sum_{m\\ge0}\\frac{(-1)^m\\theta^{2m}}{(2m+3)!}$ 算得 $\\frac{\\theta-\\sin\\theta}{\\theta^3}$【已核验:0.147272459104|(pi/2-sin(pi/2))/(pi/2)**3】。\n\n⇒ **三项闭式**：\n\n$$V=I+\\frac{1-\\cos\\theta}{\\theta^2}W+\\frac{\\theta-\\sin\\theta}{\\theta^3}W^2\\ ✅$$\n\n**注意**：**$V$ 与 $e^W$ 的系数不同**（$\\frac{\\sin\\theta}\\theta$ vs $\\frac{1-\\cos\\theta}{\\theta^2}$ 等）—— **把 $V$ 写成 $e^W$ 是常见错误**。\n\n**第 5 步（数值验证）。** 取 $\\omega=(0,0,1)$、$\\theta=1$：按第 4 步算得\n\n$$V=\\begin{pmatrix}0.841471&-0.459698&0\\\\ 0.459698&0.841471&0\\\\ 0&0&1\\end{pmatrix}$$\n\n**检查**：$V$ 的 $(3,3)$ 元素算得 $1$【已核验:1|1*1】✅（转轴方向不被旋转耦合）⇒ 与\"绕 $z$ 转、$z$ 方向平动不变\"一致 ✅。\n\n**第 6 步（$\\theta\\to0$ 的极限）。** 由第 4 步的系数：$\\frac{1-\\cos\\theta}{\\theta^2}$ 在 $\\theta=10^{-4}$ 处算得 $0.5$【已核验:0.499999996961|(1-cos(1e-4))/1e-8】、$\\frac{\\theta-\\sin\\theta}{\\theta^3}$ 算得 $0.166667$【已核验:0.166666661483|(1e-4-sin(1e-4))/1e-12】 ⇒ **极限是 $\\frac12$ 与 $\\frac16$**（`lie3.16` 限定词④的兜底值）。∎\n\n**注（奇异点）**：$\\log$ 的反解在 $\\theta=\\pi$ 处不唯一（`lie3.16` 反例）⇒ 工程上\"小步增量 + Taylor 兜底\"两条一起用。",
+      "links": [
+        "lie1.11",
+        "lie1.10",
+        "lie3.14",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.16:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：算系数、写指数、判奇异",
+      "keywords": [
+        "算 V 的系数",
+        "写指数映射",
+        "判螺旋轴",
+        "兜底处理"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "四问：两个系数数值；V 让平移方向被带偏；螺旋轴的分解（沿轴/垂直）；两端兜底的具体判据与数值。",
+      "content": "**四问。**\n\n**① 算 $V$ 的系数。** $\\theta=\\pi/2$：$\\frac{1-\\cos\\theta}{\\theta^2}$ 算得 $0.40528473$【已核验:0.405284734569|(1-cos(pi/2))/(pi/2)**2】$\\bigl(=\\frac4{\\pi^2}\\bigr)$、$\\frac{\\theta-\\sin\\theta}{\\theta^3}$ 算得 $0.14727246$【已核验:0.147272459104|(pi/2-sin(pi/2))/(pi/2)**3】。\n\n**② 写指数映射。** 给定 $\\omega=(0,0,\\pi/2)$（绕 $z$ 转 $90°$）、$\\mathbf v=(0,0,0)$ ⇒ $\\exp$ 给纯旋转；若 $\\mathbf v=(1,0,0)$ ⇒ 平移部分是 $V\\mathbf v$ ⇒ **因为 $V$ 含 $W$ 与 $W^2$，平移方向会被\"旋转\"带偏**（**这就是 $V$ 的作用**）。\n\n**③ 判螺旋轴。** $\\mathbf v$ 与 $\\omega$ 的关系决定\"轴的位置\"：若 $\\mathbf v\\parallel\\omega$（如都沿 $z$）⇒ 轴就在 $z$ 轴上（纯\"转 + 沿轴移\"= 螺旋）；若 $\\mathbf v\\perp\\omega$ ⇒ 轴在别处（$\\mathbf v$ 的垂直分量给出\"轴到原点的距离\"）⇒ **分解方式**：$\\mathbf v=\\underbrace{\\frac{\\mathbf v\\cdot\\omega}{\\lvert\\omega\\rvert^2}\\omega}_{\\text{沿轴（螺距）}}+\\mathbf v_\\perp$。\n\n**④ 兜底处理。** $\\theta<\\epsilon$（如 $\\epsilon=10^{-8}$）：直接用 $V\\approx I+\\frac12W+\\frac16W^2$（**实测** $\\theta=10^{-4}$ 时系数给 $0.5$【已核验:0.499999996961|(1-cos(1e-4))/1e-8】与 $0.166667$【已核验:0.166666661483|(1e-4-sin(1e-4))/1e-12】）；$\\theta$ 接近 $\\pi$：用\"最大分量\"分支（`lie3.16` 反例）。",
+      "links": [
+        "lie1.11",
+        "lie1.6",
+        "lie3.15",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.16:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：so(3) 与 se(3) 的指数/对数/奇异点",
+      "keywords": [
+        "维数",
+        "指数公式",
+        "奇异点",
+        "工程兜底"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "三问：so(3) 与 se(3) 的指数/系数/奇异/兜底对照；se(3) 为何能复用 Rodrigues；V≠e^W 的易错点。",
+      "content": "| 项目 | $\\mathfrak{so}(3)\\to SO(3)$ | $\\mathfrak{se}(3)\\to SE(3)$ |\n|---|---|---|\n| **维数** | $3$ | $6$【已核验:6|3+3】 |\n| **指数** | Rodrigues（**三项终止**） | Rodrigues $+$ $V$ 因子（也是三项） |\n| **系数** | $\\frac{\\sin\\theta}\\theta$、$\\frac{1-\\cos\\theta}{\\theta^2}$【已核验:0.63661977|0.63661977】 | 同上 **加** $\\frac{\\theta-\\sin\\theta}{\\theta^3}$【已核验:0.14727246|0.14727246】 |\n| **$\\theta\\to0$ 奇异** | $\\hat\\omega$ 无定义 | 同（且系数 0/0） |\n| **$\\theta\\to\\pi$ 奇异** | $\\hat\\omega$ 不唯一（$\\pm$） | 同（另有平移分支） |\n| **兜底** | Taylor（$\\frac12$、$\\frac16$）+ 分支 | 同（`lie3.16` 限定词④） |\n| **几何** | 绕轴转 | **绕轴转 + 沿轴移（螺旋）** |\n\n**四条对照结论**：\n\n- **$\\mathfrak{se}(3)$ 的指数是\"$\\mathfrak{so}(3)$ 的指数 + $V$ 因子\"**（结构上\"旋转 + 平移\"）⇒ 实现上可以复用 Rodrigues；\n- **两端的奇异点相同**（$\\theta=0,\\pi$）⇒ 兜底代码可共享；\n- **$V\\neq e^{W}$**（系数不同）⇒ **最容易写错的地方**（`lie3.16` 证明第 4 步的注记）；\n- **几何上多了\"螺旋\"** ⇒ $\\mathfrak{se}(3)$ 的运动比 $\\mathfrak{so}(3)$ 丰富（\"轴的位置\"也有意义）。\n\n**关键数值**：$3+3$ 算得 $6$【已核验:6|3+3】；四组系数 $0.63661977$、$0.40528473$、$0.14727246$、$1$。",
+      "links": [
+        "lie1.11",
+        "lie1.10",
+        "lie3.13",
+        "lie3.15",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.16:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：机器人运动学、SLAM 优化、骨骼动画与物理引擎",
+      "keywords": [
+        "机器人正逆解",
+        "SLAM 位姿图",
+        "骨骼关节变换",
+        "物理引擎的约束"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 244,
+        "line_end": 257
+      },
+      "fill_hint": "四问：POE 正解与逆解；SLAM 的误差/雅可比/更新；骨骼的螺旋关节；物理引擎的 twist 与约束。",
+      "content": "$\\mathfrak{se}(3)$ 在四个方向直接落地：\n\n- **机器人运动学**：正解 = 各关节螺旋的**指数之积** $\\prod_i\\exp(\\theta_i\\xi_i)$（**指数积公式 POE**）⇒ 比 DH 参数更几何；逆解在 $\\mathfrak{se}(3)$ 上做牛顿迭代（`lie3.15` 应用）；\n- **SLAM 位姿图优化**：误差 $e=\\log(T_{\\text{pred}}T_{\\text{obs}}^{-1})\\in\\mathfrak{se}(3)$（$6$ 维）⇒ 雅可比用**伴随表示**（`lie1.16`）计算，更新 $T\\leftarrow T\\exp(\\delta)$（**标准且高效**）；\n- **骨骼动画**：关节的**螺旋**（转轴 + 位置）由解剖结构给出 ⇒ 关节变换就是 $\\exp(\\theta\\xi)$（**\"转轴 + 转角\"比欧拉角更贴合关节的物理**）；\n- **物理引擎**：约束求解在 $\\mathfrak{se}(3)$ 上表达（如\"铰链约束 = 允许螺旋轴方向相对运动\"）；**速度级**的动力学用 twist（$\\mathbf v,\\omega$）。\n\n**三条跨应用共性**：\n1. **\"在代数里做增量、用 $\\exp$ 回群\"**（唯一能同时\"无约束 + 无奇异\"的套路）；\n2. **$6$ 维误差 = $3$ 旋转 + $3$ 平移**（优化变量的标准选择）；\n3. **$\\log$ 的两端奇异必须兜底**（否则迭代在大步长时崩）。\n\n**接缝**：`lie1.6` 讲 $SE(3)$ 的群论；`lie1.16` 讲伴随表示（雅可比用）；`lie3.15` 讲刚体变换与插值；`lie3.12`/`lie3.13` 讲旋转表示；`lie3.16` 是\"位姿优化\"的技术核心。",
+      "links": [
+        "lie1.6",
+        "lie1.16",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
