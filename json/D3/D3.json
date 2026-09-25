@@ -1,0 +1,245 @@
+{
+  "schema": "entry-card/v2",
+  "code": "D3",
+  "chapter": "D3",
+  "title": "哈密顿力学",
+  "src": {
+    "file": "notebook/D_classic.tex",
+    "line_start": 43,
+    "line_end": 61,
+    "anchor": "notebook/D_classic.tex:43"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "D3:hamiltonian.quantifiers",
+      "type": "comparison",
+      "subject": "hamiltonian",
+      "title": "哈密顿力学的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①Legendre 变换可逆：∂²L/∂q̇² ≠ 0（否则不能解出 q̇）",
+        "条件②H = Σp q̇ − L（不是 T+V 的盲目代入）",
+        "条件③泊松括号 {q,p}=1：正则性判据",
+        "条件④辛结构：变换必须保 {Q,P}=1（否则不是正则变换）",
+        "翻车代价：非正则变换会给出错误的运动方程"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 43,
+        "line_end": 61
+      },
+      "fill_hint": "四行条件表；③ 行给泊松括号的具体数值；② 行必须点出「H 不是盲目代入 T+V」（含磁场反例）。",
+      "content": "切片给了 $p_i$、$H$、哈密顿方程、泊松括号、辛结构。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **Legendre 变换可逆** | 需要 $\\dfrac{\\partial^{2}L}{\\partial\\dot q_i\\partial\\dot q_j}$ **非奇异**（Hessian 可逆）才能从 $p=\\partial L/\\partial\\dot q$ 解出 $\\dot q(p)$。奇异的例子：$L=\\dot q$（线性于 $\\dot q$）⇒ $p=1$ 与 $\\dot q$ 无关 ⇒ **无法反解** | 哈密顿化失败 | 可放宽：用 Dirac 约束系统（规范理论的标准处理，如电磁场的 $A_0$） |\n| ② $H=\\sum p_i\\dot q_i-L$ | **不是** $T+V$ 的盲目代入。对标准力学（$V=V(q)$）两者数值相同，但**定义式是 Legendre 变换**。例子：带电粒子在磁场中 $H=\\tfrac{1}{2m}(\\mathbf{p}-q\\mathbf{A})^{2}+q\\phi$（**含 $\\mathbf{A}$**，不是 $\\tfrac{p^{2}}{2m}$） | 有速度相关势（磁场、相对论）时会算错 | 不能放宽：定义式必须用 $\\sum p\\dot q-L$ |\n| ③ **$\\{q,p\\}=1$ 是正则性判据** | 实测：$(Q=q,P=2p)$ 给 $\\{Q,P\\}=2\\neq1$ ⇒ **非正则**；$(Q=p,P=-q)$ 给 $\\{Q,P\\}=0\\cdot0-1\\cdot(-1)=1$ ⇒ 正则 ✅ | 非正则变换会改掉运动方程 | 不能放宽：正则性的定义就是「保持基本括号」 |\n| ④ **辛结构保持** | 刘维尔定理（相空间体积守恒）是辛结构保持的推论。若用非辛格式积分，相空间体积会变（`G1.2` 的 Euler 实测能量涨到 $25.9$） | 长时程统计性质错 | 可放宽：用辛积分器（保持辛形式的离散版） |\n\n**这张表的数值锚点**（泊松括号）：\n\n取 $H=\\tfrac12(p^{2}+q^{2})$、$q=1.3$、$p=0.7$：\n\n$$\\{q,H\\}=\\frac{\\partial q}{\\partial q}\\frac{\\partial H}{\\partial p}-\\frac{\\partial q}{\\partial p}\\frac{\\partial H}{\\partial q}=1\\cdot p-0\\cdot q=p=0.7$$【已核验:0.7|0.7】\n\n$$\\{p,H\\}=0\\cdot p-1\\cdot q=-q=-1.3$$【已核验:-1.3|-1.3】\n\n于是 $\\dot q=\\{q,H\\}=p$、$\\dot p=\\{p,H\\}=-q$ —— **正是谐振子的哈密顿方程** ✅。\n\n**正则变换的数值检验**：\n\n| 变换 | $\\{Q,P\\}$ | 是否正则 |\n|---|---|---|\n| $(Q=q,\\ P=2p)$ | $2$【已核验:2|2】 | ❌ |\n| $(Q=p,\\ P=-q)$ | $1$【已核验:1|1】 | ✅ |",
+      "links": [
+        "D3",
+        "D1",
+        "D2",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D3:poisson.noncanonical",
+      "type": "counterexample",
+      "subject": "poisson",
+      "title": "反例：用非正则变换（{Q,P}≠1）会改掉运动方程",
+      "keywords": [
+        "误用现场：任意定义新坐标 (Q,P)，直接套哈密顿方程",
+        "正则性判据：{Q,P} = ∂Q/∂q·∂P/∂p − ∂Q/∂p·∂P/∂q = 1",
+        "反例：(Q=q, P=2p) ⇒ {Q,P}=2 ≠ 1（非正则）",
+        "后果：运动方程被改掉，H 不再是正确的生成元",
+        "正例：(Q=p, P=−q) ⇒ {Q,P}=0·0−1·(−1)=1 ✅",
+        "修补：用生成函数（四类 F₁..F₄）构造正则变换"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 43,
+        "line_end": 61
+      },
+      "fill_hint": "把非正则变换的后果算成具体因子（2 或 2 倍）；给出三个变换的判据表；修补指向生成函数。",
+      "content": "**误用现场**：为了「方便」，随手定义一组新变量 $(Q,P)$（例如把动量缩放一下），然后直接用哈密顿方程\n\n$$\\dot Q=\\frac{\\partial H}{\\partial P},\\qquad \\dot P=-\\frac{\\partial H}{\\partial Q}.$$\n\n**为什么这是错的**：哈密顿方程的形式**不是任意的坐标变换下都成立**的。要求变换是**正则变换**（canonical transformation）：\n\n$$\\{Q,P\\}_{q,p}=1.$$\n\n**算给你看**（取 $H=\\tfrac12(p^{2}+q^{2})$）：\n\n| 变换 | $\\{Q,P\\}$ | 结果 |\n|---|---|---|\n| $(Q=q,\\ P=2p)$ | $1\\cdot2-0\\cdot0=2$【已核验:2|2】 | ❌ **非正则** |\n| $(Q=q/2,\\ P=2p)$ | $\\tfrac12\\cdot2=1$【已核验:1|1】 | ✅ 正则 |\n| $(Q=p,\\ P=-q)$ | $0\\cdot0-1\\cdot(-1)=1$【已核验:1|1】 | ✅ 正则 |\n\n**非正则会出什么错（具体）**：把 $(Q=q,P=2p)$ 代进哈密顿方程，得到\n\n$$\\dot Q=\\frac{\\partial H}{\\partial P}=\\frac{\\partial}{\\partial(2p)}\\left(\\tfrac12p^{2}+\\tfrac12q^{2}\\right)=\\frac{p}{2}=\\frac{P}{4},$$\n\n而**正确的** $\\dot q=p=P/2$。**运动方程被改掉了一个因子 2。**\n\n**为什么 $\\{q,p\\}=1$ 是判据（几何理由）**：哈密顿方程等价于「辛形式 $\\omega=\\sum dp_i\\wedge dq_i$ 在流下不变」。而 $\\{Q,P\\}=1$ 正是「新坐标下的辛形式与原来相同」的代数表达。**所以正则性的定义就是「保持辛结构」。**\n\n**后果链条**：\n\n1. 非正则变换会**改变运动方程的形式**（如上例的因子 2）；\n2. 于是守恒量与不变量的识别也会错；\n3. 量子化时更危险：正则量子化要求 $[\\hat Q,\\hat P]=i\\hbar$，而它对应经典 $\\{Q,P\\}=1$——**非正则变换会破坏这个对应**。\n\n**修补动作**：\n\n1. **用生成函数**：四类 $F_1(q,Q)$、$F_2(q,P)$、$F_3(p,Q)$、$F_4(p,P)$ 保证构造出的一定是正则变换（`D4`）；\n2. **验算判据**：任何自定义变换，先算 $\\{Q,P\\}$（或 $\\{Q_i,P_j\\}=\\delta_{ij}$ 与 $\\{Q_i,Q_j\\}=\\{P_i,P_j\\}=0$）；\n3. **记得缩放是常见来源**：$P=\\lambda p$ 只在 $Q=q/\\lambda$ 时正则。\n\n**一个常被忽略的点**：缩放变换 $(Q=q/\\lambda,P=\\lambda p)$ 是正则的——**位置与动量的缩放必须互逆**。这解释了为什么「辛」这个性质与「面积」有关（相空间面积 $Q P=q p$ 不变）。",
+      "links": [
+        "D3",
+        "D4",
+        "D2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D3:hamiltonian.statement",
+      "type": "statement",
+      "subject": "hamiltonian",
+      "title": "哈密顿力学：Legendre 变换、哈密顿方程与泊松括号",
+      "keywords": [
+        "广义动量：p_i = ∂L/∂q̇_i",
+        "哈密顿量：H(q,p) = Σ p_i q̇_i − L（Legendre 变换）",
+        "哈密顿方程：q̇_i = ∂H/∂p_i，ṗ_i = −∂H/∂q_i",
+        "泊松括号：{f,g} = Σ(∂f/∂q_i ∂g/∂p_i − ∂f/∂p_i ∂g/∂q_i)",
+        "运动方程：ḟ = {f,H}；{q,p} = 1（正则性）",
+        "辛结构：ω = Σ dp_i ∧ dq_i；刘维尔定理（相空间体积守恒）"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 43,
+        "line_end": 61
+      },
+      "fill_hint": "陈述本体 + 与 D1 的阶数对照 + 泊松括号数值校核 + 辛结构/刘维尔定理；连到 F2 与 G1.2。",
+      "content": "**陈述**（切片）。\n\n**广义动量**：\n\n$$p_i=\\frac{\\partial L}{\\partial\\dot q_i}.$$\n\n**哈密顿量（Legendre 变换）**：\n\n$$H(q,p)=\\sum_i p_i\\dot q_i-L.$$\n\n**注意两件事**：① 定义式是 $\\sum p\\dot q-L$（**不是** $T+V$ 的代入）；② 右侧的 $\\dot q$ 必须用 $p$ 表出（这一步需要 Legendre 变换可逆，见 `D3:hamiltonian.quantifiers` 第①行）。\n\n**哈密顿方程**（一阶方程组，$2N$ 个方程）：\n\n$$\\dot q_i=\\frac{\\partial H}{\\partial p_i},\\qquad \\dot p_i=-\\frac{\\partial H}{\\partial q_i}.$$\n\n**与 `D1` 的对照**：$N$ 个二阶 E–L 方程 ⟷ $2N$ 个一阶哈密顿方程。**阶数减半，但变量翻倍**——代价换来的是**辛结构显式**。\n\n**泊松括号**：\n\n$$\\{f,g\\}=\\sum_i\\left(\\frac{\\partial f}{\\partial q_i}\\frac{\\partial g}{\\partial p_i}-\\frac{\\partial f}{\\partial p_i}\\frac{\\partial g}{\\partial q_i}\\right).$$\n\n**运动方程**：任何量 $f(q,p,t)$ 满足\n\n$$\\dot f=\\{f,H\\}+\\frac{\\partial f}{\\partial t}.$$\n\n（不显含 $t$ 时就是 $\\dot f=\\{f,H\\}$。）\n\n**具体校核**（$H=\\tfrac12(p^{2}+q^{2})$、$f=q$、$g=p$）：\n\n| 括号 | 值 |\n|---|---|\n| $\\{q,p\\}$ | $1$（正则性） |\n| $\\{q,H\\}$ | $p=0.7$【已核验:0.7|0.7】（取 $q=1.3,p=0.7$） |\n| $\\{p,H\\}$ | $-q=-1.3$【已核验:-1.3|-1.3】 |\n\n于是 $\\dot q=p$、$\\dot p=-q$ ✅ —— **谐振子的哈密顿方程**。\n\n**辛结构**：相空间上有辛 2-形式\n\n$$\\omega=\\sum_i dp_i\\wedge dq_i,$$\n\n**哈密顿流保持 $\\omega$**（$\\mathcal{L}_{X_H}\\omega=0$）。**推论是刘维尔定理**（Liouville）：相空间**体积**守恒。数值含义：**辛积分器**（`G1.2`）就是保持离散辛形式的格式，所以能量有界振荡而非漂移（实测带宽 $3.606\\times10^{-5}$）。\n\n**它依赖什么 / 谁依赖它**：`D1` 的 $L$ 与广义动量；`D2` 的守恒量（如 $H$ 本身）。下游：`D4`（正则变换与 H–J）、`F2`（泊松括号 → 对易子 $[\\hat A,\\hat B]=i\\hbar\\{A,B\\}$）、`G1.2`（辛积分器）。",
+      "links": [
+        "D1",
+        "D2",
+        "D4",
+        "F2",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D3:hamiltonian.intuition",
+      "type": "intuition",
+      "subject": "hamiltonian",
+      "title": "直觉：哈密顿是「守恒量的几何学」——轨迹是相空间里的等高线",
+      "keywords": [
+        "相空间 (q,p)：一维系统的状态是一条曲线",
+        "H 是相空间上的函数：轨迹 = H 的等值线（H 守恒）",
+        "q̇=∂H/∂p、ṗ=−∂H/∂q：梯度垂直等值线 → 轨迹沿等值线跑",
+        "为什么是「一阶」：把二阶方程拆成两半（位置与动量分开管）",
+        "泊松括号 = 相空间里的「向量场配对」（结构而非数值）",
+        "辛结构 = 「相空间面积」的守恒（刘维尔定理）"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 43,
+        "line_end": 61
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用等高线图像解释轨迹；给辛 vs Euler 的几何对比；末段连到 F2 与 I9.3。",
+      "content": "**切片给了四组公式**。理解它们的关键是**相空间的几何图像**。\n\n**假设给了什么。** 把状态从「位置 + 速度」换成「位置 + 动量」，即从 $(q,\\dot q)$ 到 $(q,p)$。**这一步把二阶方程变成一阶方程组。**\n\n**结论为什么因此成立（几何读法）**：哈密顿量 $H(q,p)$ 是**相空间上的一个函数**。而\n\n$$\\dot q=\\frac{\\partial H}{\\partial p},\\qquad \\dot p=-\\frac{\\partial H}{\\partial q}$$\n\n合起来就是「速度场 = $H$ 的梯度旋转 90°」。**梯度垂直于等值线，旋转 90° 后沿等值线**——所以：\n\n$$\\boxed{\\text{轨迹就是 }H\\text{ 的等值线}}$$\n\n**这就是「$H$ 守恒」的几何内容**：轨迹不会穿过等值线（$H$ 不变）。\n\n**具体例子（谐振子）**：$H=\\tfrac12(p^{2}+q^{2})$ 的等值线是**圆**（相空间里的圆），轨迹就是绕圆转。**数值验证**（`G1.2` 辛积分）：能量在 $0.5$ 附近振荡，带宽 $3.606\\times10^{-5}$ —— 轨迹是个「几乎闭合的环」。\n\n**对照：显式 Euler**：它的轨迹是**向外扩张的螺旋**（能量从 $0.5$ 涨到 $25.9$）——**不再是等值线**。**这就是「非辛格式破坏几何结构」的直观表现。**\n\n**为什么「一阶」很有用**：\n\n| | 拉格朗日（二阶） | 哈密顿（一阶） |\n|---|---|---|\n| 方程数 | $N$ 个二阶 | $2N$ 个一阶 |\n| 初始条件 | $(q,\\dot q)$ | $(q,p)$ |\n| 几何结构 | 切丛上的变分 | **辛流形上的流** |\n| 数值 | 需专门设计 | 辛格式**自然** |\n\n**泊松括号的几何身份（这条最值得记住）**：$\\{f,g\\}$ 不是「两个函数的运算」，而是**相空间上的一个二元运算（Poisson 代数）**。它的三大性质：\n\n$$\\{f,g\\}=-\\{g,f\\}\\ (\\text{反对称}),\\quad \\{f,\\{g,h\\}\\}+\\text{轮换}=0\\ (\\text{Jacobi}),\\quad \\{f,gh\\}=\\{f,g\\}h+g\\{f,h\\}\\ (\\text{Leibniz}).$$\n\n**这三条正是量子力学对易子性质的经典对应**——量化时 $\\{\\cdot,\\cdot\\}\\to\\frac{1}{i\\hbar}[\\cdot,\\cdot]$（`F2`）。\n\n**「刘维尔定理」为什么叫守恒（图像）**：相空间里一团初始条件（一个「体积」）随流演化时会**变形但体积不变**。这与「不可压缩流」同构——**哈密顿流就是相空间里的不可压缩流**（`I9.3` 的散度自由在这里有对应）。\n\n**记这个图像**：**哈密顿力学是相空间的几何学：$H$ 是地形高度，轨迹是等高线，辛结构是面积守恒，泊松括号是等高线之间的配对规则。**",
+      "links": [
+        "D1",
+        "D2",
+        "F2",
+        "G1.2",
+        "I9.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D3:legendre.proof",
+      "type": "proof",
+      "subject": "legendre",
+      "title": "推导骨架：Legendre 变换与哈密顿方程的导出",
+      "keywords": [
+        "第一步：从 L(q,q̇,t) 定义 p=∂L/∂q̇",
+        "第二步：构造 H = Σp q̇ − L，并证明它对 q̇ 的偏导为零",
+        "第三步：由 dH 比较系数得哈密顿方程",
+        "第四步：Legendre 可逆性要求 ∂²L/∂q̇²≠0（Hessian 非奇异）",
+        "易错点：H 不是 T+V 的盲目代入；Legendre 奇异时要 Dirac 约束",
+        "校验：谐振子 H=½(p²+q²) 给 q̇=p、ṗ=−q"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 43,
+        "line_end": 61
+      },
+      "fill_hint": "四步骨架；第二步的「∂H/∂q̇=0」是核心判据；第四步给 Legendre 奇异性的反例（L=q̇）。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：定义广义动量。**\n\n$$p_i:=\\frac{\\partial L}{\\partial\\dot q_i}(q,\\dot q,t).$$\n\n**理由**：这是 Legendre 变换的自变量替换（从 $\\dot q$ 换到 $p$）。\n\n**第二步：构造 $H$ 并验证它不依赖 $\\dot q$。**\n\n$$H(q,p,t):=\\sum_i p_i\\dot q_i-L(q,\\dot q,t).$$\n\n**关键验证**：算 $H$ 对 $\\dot q_j$ 的偏导（把 $p$ 当独立变量、$q,\\dot q$ 视为 $p$ 的定义约束）：\n\n$$\\frac{\\partial H}{\\partial\\dot q_j}=p_j-\\frac{\\partial L}{\\partial\\dot q_j}=p_j-p_j=0.$$\n\n**理由**：**这正是 Legendre 变换的定义性质**——新函数对旧的自变量（$\\dot q$）的导数应为零。**若不为零，说明构造错了。**\n\n**第三步：比较 $dH$ 的系数得哈密顿方程。** 计算全微分：\n\n$$dH=\\sum_i\\dot q_i\\,dp_i+\\sum_i p_i\\,d\\dot q_i-\\sum_i\\frac{\\partial L}{\\partial q_i}dq_i-\\sum_i\\frac{\\partial L}{\\partial\\dot q_i}d\\dot q_i-\\frac{\\partial L}{\\partial t}dt.$$\n\n**$\\sum p_i d\\dot q_i$ 与 $\\sum\\frac{\\partial L}{\\partial\\dot q_i}d\\dot q_i$ 相消**（因为 $p_i=\\partial L/\\partial\\dot q_i$），剩下\n\n$$dH=\\sum_i\\dot q_i\\,dp_i-\\sum_i\\frac{\\partial L}{\\partial q_i}dq_i-\\frac{\\partial L}{\\partial t}dt.$$\n\n另一方面，由 E–L 方程 $\\dfrac{\\partial L}{\\partial q_i}=\\dfrac{d}{dt}\\dfrac{\\partial L}{\\partial\\dot q_i}=\\dot p_i$，故\n\n$$dH=\\sum_i\\dot q_i\\,dp_i-\\sum_i\\dot p_i\\,dq_i-\\frac{\\partial L}{\\partial t}dt.$$\n\n**比较 $dq_i$ 与 $dp_i$ 的系数**：\n\n$$\\dot q_i=\\frac{\\partial H}{\\partial p_i},\\qquad \\dot p_i=-\\frac{\\partial H}{\\partial q_i},\\qquad \\frac{\\partial H}{\\partial t}=-\\frac{\\partial L}{\\partial t}.$$\n\n**这就是哈密顿方程** ✅。\n\n**第四步：Legendre 可逆的条件。** 要从 $p_i=\\dfrac{\\partial L}{\\partial\\dot q_i}$ 反解出 $\\dot q_i(p)$，需要**映射 $\\dot q\\mapsto p$ 可逆**，即 Hessian 非奇异：\n\n$$\\det\\left(\\frac{\\partial^{2}L}{\\partial\\dot q_i\\partial\\dot q_j}\\right)\\neq0.$$\n\n**理由**：这是反函数定理（inverse function theorem）在 $\\dot q\\mapsto p$ 上的应用。\n\n**奇异反例**：$L=\\dot q$ ⇒ $p=1$（与 $\\dot q$ 无关）⇒ **无法反解** $\\dot q$。这类情形需要 **Dirac 约束系统**处理（电磁场的 $A_0$ 就是典型）。\n\n**数值校核（谐振子）**：$L=\\tfrac12\\dot q^{2}-\\tfrac12q^{2}$ ⇒ $p=\\dot q$ ⇒\n\n$$H=p\\dot q-L=p\\cdot p-\\left(\\tfrac12p^{2}-\\tfrac12q^{2}\\right)=\\tfrac12(p^{2}+q^{2}).$$\n\n于是 $\\dot q=\\partial H/\\partial p=p$、$\\dot p=-\\partial H/\\partial q=-q$ ✅。\n\n**依赖链**：$p$ 的定义 → Legendre 构造（验证 $\\partial H/\\partial\\dot q=0$）→ 全微分比较 → 哈密顿方程；可逆性由 Hessian 非奇异保证。\n\n**易错点**：\n\n1. **$H$ 不是 $T+V$ 的盲目代入**：有速度相关势（磁场）时 $H=\\tfrac{1}{2m}(\\mathbf{p}-q\\mathbf{A})^{2}+q\\phi$，与 $\\tfrac{p^{2}}{2m}+V$ 不同；\n2. **$\\partial H/\\partial\\dot q=0$ 是判据**：构造完 $H$ 后应立刻验证这条（若不为零，说明定义写错）；\n3. **$-\\partial L/\\partial t=\\partial H/\\partial t$**：时间依赖性也随 Legendre 变换传递（符号相同，因为 $dH$ 展开里已消去 $\\dot q$ 项）；\n4. **Legendre 奇异性**：不要盲目求逆，先看 Hessian。",
+      "links": [
+        "D1",
+        "D2",
+        "F2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D3:poisson.vs-commutator",
+      "type": "comparison",
+      "subject": "poisson",
+      "title": "分工：泊松括号与量子对易子的对应关系",
+      "keywords": [
+        "经典泊松括号：{f,g}（反对称、Jacobi、Leibniz）",
+        "量子对易子：[A,B] = AB − BA",
+        "对应规则：{f,g} → (1/iħ)[A,B]（Dirac 的量化规则）",
+        "基本关系：[x,p] = iħ ↔ {x,p} = 1",
+        "区别：括号是普通函数运算；对易子是算子运算（非交换）",
+        "判据：需要「算子顺序敏感」时用量子版；经典极限 ħ→0 回到括号"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 43,
+        "line_end": 61
+      },
+      "fill_hint": "对照口径：并排列出两套代数与对应规则；点出「非交换性」与「反常」这两个不能简单对应的点。",
+      "content": "**两者是同一代数结构的两个版本。**\n\n| | 经典泊松括号 | 量子对易子 |\n|---|---|---|\n| 定义 | $\\{f,g\\}=\\sum(\\partial_qf\\,\\partial_pg-\\partial_pf\\,\\partial_qg)$ | $[\\hat A,\\hat B]=\\hat A\\hat B-\\hat B\\hat A$ |\n| 自变量 | 相空间上的**函数** | 希尔伯特空间上的**算子** |\n| 反对称 | $\\{f,g\\}=-\\{g,f\\}$ | $[\\hat A,\\hat B]=-[\\hat B,\\hat A]$ |\n| Jacobi | $\\{f,\\{g,h\\}\\}+\\text{轮换}=0$ | 同 |\n| Leibniz | $\\{f,gh\\}=\\{f,g\\}h+g\\{f,h\\}$ | 同 |\n| 基本关系 | $\\{q,p\\}=1$ | $[\\hat x,\\hat p]=i\\hbar$ |\n| 运动方程 | $\\dot f=\\{f,H\\}$ | $i\\hbar\\dfrac{d\\hat A}{dt}=[\\hat A,\\hat H]$ |\n\n**对应规则（Dirac 的量化规则）**：\n\n$$\\{f,g\\}\\ \\longrightarrow\\ \\frac{1}{i\\hbar}[\\hat A,\\hat B].$$\n\n**验算**：$\\{q,p\\}=1$ ⇒ $\\frac{1}{i\\hbar}[\\hat x,\\hat p]=1$ ⇒ $[\\hat x,\\hat p]=i\\hbar$ ✅ 与 `F2` 的基本对易关系一致。\n\n**三个必须注意的差别**：\n\n1. **非交换性**：对易子**依赖算子顺序**，而泊松括号不依赖（因为函数相乘可交换）。**这导致了量子力学里「排序歧义」**（如 $\\hat x\\hat p$ 与 $\\hat p\\hat x$ 不同）——经典极限里不存在这个问题；\n2. **$\\hbar\\to0$ 是经典极限**：形式上令 $\\hbar\\to0$，对易子项相对主项可忽略，回到泊松括号。**但这不是严格的均匀极限**（K 章会讲 $O(\\hbar)$ 修正）；\n3. **约束系统**：有约束时量子对易子会出**反常（anomaly）**——经典的约束代数不再闭合。这是量子场论里的核心问题（如 Yang–Mills 的规范反常，见 `E4`）。\n\n**判据（两问定选）**：\n\n1. **需要「算子顺序敏感」吗？** 需要（如不确定原理、自旋）→ 量子对易子（`F2`）；\n2. **是宏观极限吗？** $\\hbar\\to0$ → 泊松括号（本条）。\n\n**为什么这个对应很重要**：它是**正则量子化**的全部内容——「把经典哈密顿系统改写为量子系统」的操作就是「把泊松括号换成对易子」。**所以 `D3` 是量子力学的入口**（`D4` 的 H–J 方程是另一个入口，`F5` 的路径积分是第三个）。\n\n**位置关系**：`D3` 给经典的括号，`F2` 给量子的对易子，本条给两者的桥。**三者的基本关系都是「$\\{q,p\\}=1$ / $[\\hat x,\\hat p]=i\\hbar$」这一条。**",
+      "links": [
+        "D3",
+        "F2",
+        "D4",
+        "E4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：相空间轨迹与辛结构",
+      "keywords": [
+        "模块 phase-portrait（档1 前端直渲）",
+        "模式①：谐振子相空间圆轨迹，等值线 H=const 叠在上面",
+        "模式②：辛（leapfrog）vs 显式 Euler 的轨迹（闭合环 vs 外扩螺旋）",
+        "模式③：单摆相空间（分离线 separatrix），等值线族",
+        "invariant：轨迹必须落在 H=const 的等值线上（严格等式）",
+        "预置：谐振子 E0=0.5；显式 Euler 同初值"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 43,
+        "line_end": 61
+      },
+      "fill_hint": "档1 依据：相空间轨迹与等值线都是显式可算，前端可算；invariant 用「轨迹在等值线上」与「辛映射 Jacobian=1」两条严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `phase-portrait`。\n\n**模式① `harmonic-orbit`**：谐振子相空间轨迹（圆）＋ $H=\\text{const}$ 的等值线（同心圆）。**轨迹应完全落在某条等值线上**——这是本模块的核心 invariant。\n\n**模式② `symplectic-vs-euler`**：同初值下两条轨迹并排：\n\n- **leapfrog（辛）**：几乎闭合的环（能量带宽 $3.606\\times10^{-5}$）；\n- **显式 Euler**：外扩螺旋（能量从 $0.5$ 涨到 $25.9$）。\n\n**让「辛格式保几何、非辛格式破坏几何」一眼可见。**\n\n**模式③ `pendulum-separatrix`**：单摆 $H=\\tfrac12p^{2}+(1-\\cos q)$ 的相空间：闭合环（振荡）、开曲线（翻转）、中间是**分离线**（separatrix，对应「刚好翻过顶点」）。**展示等值线族的完整结构。**\n\n**恒等式（给前端 invariant）**：\n\n$$H(q(t),p(t))=H(q(0),p(0))\\quad\\text{（辛格式下到 }O(h^{2})\\text{）}.$$\n\n以及**辛性判据**（离散版）：一步映射 $(q_n,p_n)\\to(q_{n+1},p_{n+1})$ 的 Jacobian 行列式必须为 $1$：\n\n$$\\det\\frac{\\partial(q_{n+1},p_{n+1})}{\\partial(q_n,p_n)}=1.$$\n\n**这是严格等式**（leapfrog 的 Jacobian 行列式精确为 1）。Euler 的则 **大于 1**（这就是外扩螺旋的数学原因）。\n\n**参数契约**：\n\n- 预置：`H0=0.5`、$q(0)=1$、$p(0)=0$、`h=2π/1000`；\n- 与 `D3:hamiltonian.statement` 的数值（$\\{q,H\\}=0.7$、$\\{p,H\\}=-1.3$）保持一致。",
+      "links": [
+        "D1",
+        "D2",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "schema": "entry-card/v2",
+  "code": "G2.2",
+  "chapter": "G2",
+  "title": "有限元法（FEM）",
+  "src": {
+    "file": "notebook/G_numeric.tex",
+    "line_start": 43,
+    "line_end": 50,
+    "anchor": "notebook/G_numeric.tex:43"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "G2.2:fem.quantifiers",
+      "type": "comparison",
+      "subject": "fem",
+      "title": "有限元法（弱形式/刚度矩阵）的适用条件表",
+      "keywords": [
+        "条件①弱形式要求合适的函数空间（H¹）：解需一阶导可积",
+        "条件②基函数的选择决定精度（P1 线性 → 二阶）",
+        "条件③刚度矩阵对称正定：K_ij = K_ji，且正定",
+        "条件④结构网格 vs 非结构：FEM 天然支持任意几何",
+        "翻车代价：不适定问题（如纯对流）用弱形式会失去稳定性"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 43,
+        "line_end": 50
+      },
+      "fill_hint": "四行条件表；③ 行必须给刚度矩阵的三对角形式与「对称+半正定」的具体表现；② 行给 P1/P2 的阶数。",
+      "content": "切片给了弱形式与刚度矩阵。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **弱形式需合适的函数空间** | 弱形式 $\\int\\nabla u\\cdot\\nabla v=\\int fv$ 要求 $u,v\\in H^{1}$（一阶导平方可积）。**纯对流问题**（无椭圆项）用弱形式会是**不适定的**（没有自然的强制项） | 解不存在/不唯一 | 不能放宽：这是泛函分析的硬约束（Lax–Milgram 定理的前提） |\n| ② **基函数决定精度** | 线性基（$P_1$）给 $O(h^{2})$ 的 $L^{2}$ 误差、$O(h)$ 的 $H^{1}$ 误差；二次基（$P_2$）各高一阶 | 选低阶基则精度受限 | 可放宽：提高基函数阶数（谱元法可指数收敛） |\n| ③ **刚度矩阵对称** | $K_{ij}=\\int\\nabla\\phi_i\\cdot\\nabla\\phi_j$——**交换 $i,j$ 不变** ⇒ **对称** ✅；且 $\\mathbf{v}^{T}K\\mathbf{v}=\\int\\lvert\\nabla(\\sum v_i\\phi_i)\\rvert^{2}\\ge0$ ⇒ **半正定**（加边界条件后正定） | 对称性让可用 Cholesky（`G3`）——**快一半** | 不能放宽：对称性是算子自伴性的直接结果 |\n| ④ **任意几何** | FEM 的基函数定义在**单元**上，所以对任意几何天然适用（这是相对 FDM 的核心优势） | 用 FDM 处理复杂几何要额外技巧（贴体坐标、浸没边界） | 不能放宽：这是 FEM 的主要卖点 |\n\n**这张表的用法**：\n\n1. **确认问题的函数空间**（椭圆型 → 弱形式自然；纯对流 → 要额外稳定化）；\n2. **选基函数阶数**；\n3. **利用对称性**（Cholesky 而非 LU）。\n\n**数值锚点（对称性的具体表现）**：一维 $P_1$ 单元、均匀网格 $h$，刚度矩阵是三对角：\n\n$$K=\\frac{1}{h}\\begin{pmatrix}2&-1&&\\\\-1&2&-1&&\\\\&-1&2&\\ddots\\\\&&\\ddots&\\ddots\\end{pmatrix}.$$\n\n**关键性质**：**对角元 $2/h$、次对角元 $-1/h$——完全由 $h$ 决定且对称** ✅。**行和为零**（常数函数是零特征值，对应「无边界条件时解不唯一」）。\n\n**质量矩阵**（$M_{ij}=\\int\\phi_i\\phi_j$）为 $h/6\\cdot(1,4,1)$——**也是对称三对角**（Simpson 的权重再现，`G1.1`）。\n\n**为什么「对称」很重要（实用价值）**：存储只需一半、可用 Cholesky（$\\sim n^{3}/3$ 而非 $2n^{3}/3$）、可用共轭梯度（CG，只需矩阵-向量乘）。**这是 FEM 在大规模问题上的核心优势。**",
+      "links": [
+        "G2.2",
+        "G2.1",
+        "G3",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G2.2:fem.statement",
+      "type": "statement",
+      "subject": "fem",
+      "title": "有限元法：弱形式、基函数与刚度矩阵",
+      "keywords": [
+        "弱形式：∫∇u·∇v dΩ = ∫fv dΩ（对检验函数 v）",
+        "离散化：u ≈ Σ u_j φ_j（基函数展开）",
+        "线性系统：K u = f，K_ij = ∫∇φ_i·∇φ_j",
+        "质量矩阵：M_ij = ∫φ_i φ_j",
+        "对称正定：K = Kᵀ（加边界条件后正定）",
+        "精度：P1 基给 O(h²) 的 L² 误差"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 43,
+        "line_end": 50
+      },
+      "fill_hint": "陈述本体（弱形式 + 离散化 + 刚度矩阵）+ 三条性质 + 一维 $P_1$ 的具体形式与「行和为零」；给两个范数的误差阶。",
+      "content": "**陈述**（切片）。\n\n**弱形式**（泊松方程 $-\\nabla^{2}u=f$ 的弱形式）：\n\n$$\\int_{\\Omega}\\nabla u\\cdot\\nabla v\\,d\\Omega=\\int_{\\Omega}fv\\,d\\Omega\\quad\\forall v\\in H^{1}_{0}.$$\n\n**它的来历（分部积分）**：从强形式出发乘 $v$ 并积分：\n\n$$\\int(-\\nabla^{2}u)v=\\int fv,$$\n\n分部积分（Green 公式）把左边变成\n\n$$\\int\\nabla u\\cdot\\nabla v-\\oint(\\nabla u\\cdot\\mathbf{n})v.$$\n\n**取 $v$ 在边界上为零** ⇒ 边界项消失 ⇒ **得到弱形式** ✅。\n\n**为什么「弱」**：要求从「二阶导存在」**降低**到「一阶导平方可积」——**允许更大类别的解**（例如 $\\lvert x\\rvert$ 型、有角的解）。\n\n**离散化**：把 $u\\approx\\sum_j u_j\\phi_j$ 代入，取 $v=\\phi_i$：\n\n$$\\sum_j\\left(\\int\\nabla\\phi_i\\cdot\\nabla\\phi_j\\right)u_j=\\int f\\phi_i\\quad\\Longrightarrow\\quad K\\mathbf{u}=\\mathbf{f}.$$\n\n**刚度矩阵**：\n\n$$K_{ij}=\\int_{\\Omega}\\nabla\\phi_i\\cdot\\nabla\\phi_j\\,d\\Omega.$$\n\n**性质（三条）**：\n\n1. **对称**：$K_{ij}=K_{ji}$（被积函数对 $i,j$ 对称）；\n2. **半正定**：$\\mathbf{v}^{T}K\\mathbf{v}=\\int\\lvert\\nabla(\\sum v_i\\phi_i)\\rvert^{2}\\ge0$；\n3. **稀疏**：$\\phi_i$ 与 $\\phi_j$ 只在共享单元上重叠 ⇒ $K_{ij}=0$ 除非 $i,j$ 相邻。\n\n**一维 $P_1$ 的具体形式**（均匀网格 $h$）：\n\n$$K=\\frac{1}{h}\\begin{pmatrix}2&-1&0&\\cdots\\\\-1&2&-1&\\ddots\\\\0&-1&2&\\ddots\\\\\\vdots&\\ddots&\\ddots&\\ddots\\end{pmatrix}.$$\n\n**注意行和为零**（$2-1-1=0$）：**常数向量是零特征向量** —— 这就是「无边界条件时解差一个常数」的代数表现。\n\n**误差阶（$P_1$ 基）**：\n\n$$\\lVert u-u_h\\rVert_{L^{2}}=O(h^{2}),\\qquad\\lVert u-u_h\\rVert_{H^{1}}=O(h).$$\n\n**注意 $H^{1}$ 范数的阶比 $L^{2}$ 低一阶**——**因为 $H^{1}$ 里有导数（求导会降一阶）**。**这个差别在误差分析里很重要**（用错范数会得出错误结论）。\n\n**与 FDM 的对照**：\n\n| | FDM | FEM |\n|---|---|---|\n| 出发点 | 逐点近似导数 | 弱形式（变分） |\n| 几何 | 结构网格 | **任意几何** |\n| 守恒 | 需特殊设计 | 自然（弱形式含守恒律的积分形式） |\n| 矩阵 | 带状 | 稀疏、**对称正定** |\n| 实现 | 简单 | 复杂（单元、装配） |\n\n**它依赖什么 / 谁依赖它**：`G2.1` 的差分思想（对比）；下游：`G3` 的矩阵分解（Cholesky 用对称性）、`G2.3` 的谱方法（高阶基的极限）。",
+      "links": [
+        "G2.1",
+        "G3",
+        "G2.3",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G2.2:fem.intuition",
+      "type": "intuition",
+      "subject": "fem",
+      "title": "直觉：FEM 是「用简单形状拼出台阶，再让误差最小」",
+      "keywords": [
+        "把区域切成简单形状（单元），每个单元上解用简单函数表示",
+        "「弱形式」= 让残差与所有检验函数正交",
+        "为什么用弱形式：降低光滑性要求 + 自然带边界条件",
+        "刚度矩阵 = 相邻单元的「耦合强度」",
+        "为什么对称：算子自伴的正交投影",
+        "与 Galerkin 的关系：FEM 就是 Galerkin 方法的一种实现"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 43,
+        "line_end": 50
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「正交投影」串起弱形式、对称性与「最接近」；给 FEM 步骤的几何含义表。",
+      "content": "**切片给了弱形式与刚度矩阵**。理解的关键是**「正交投影」**。\n\n**假设给了什么。** 我们要解一个方程，但**精确解不在有限维空间里**（解空间是无穷维的）。\n\n**结论为什么因此成立。** **只能找一个「最接近」的近似。** 「最接近」的定义是：**残差与所有检验函数正交**：\n\n$$\\int\\left(-\\nabla^{2}u_{h}-f\\right)v=0\\quad\\forall v\\in V_{h}.$$\n\n**用分部积分把它变成对称形式**，得弱形式。\n\n**几何图像（最有力的理解）**：在有限维子空间 $V_{h}$ 里找 $u_{h}$，使它与真解 $u$ 的**差**在能量意义下最小。\n\n$$\\lVert u-u_{h}\\rVert_{E}=\\min_{w\\in V_{h}}\\lVert u-w\\rVert_{E}.$$\n\n**这就是「正交投影」**——$u_{h}$ 是 $u$ 在 $V_{h}$ 上的投影。**所以 FEM 的误差是「投影误差」**，与「真解与子空间的距离」有关。\n\n**为什么这会让「刚度矩阵对称」（关键一击）**：投影算子是**自伴**的（投影是正交的）。**所以它对应的矩阵（刚度矩阵）也是自伴（对称）的** ✅。\n\n**几何补偿的直观**：\n\n| FEM 步骤 | 几何含义 |\n|---|---|\n| 单元剖分 | 把区域切成小块 |\n| 基函数 $\\phi_i$ | 每个节点上的「帐篷函数」（局部支撑） |\n| 弱形式 | 让误差与所有基正交（**投影**） |\n| 刚度矩阵 | 相邻节点间的「弹性耦合」 |\n| 解 $K\\mathbf{u}=\\mathbf{f}$ | 求平衡位置 |\n\n**「刚度」这个名字的来历**：结构力学里 $K$ 描写杆/梁的**刚度**（变形与力的关系）——**这正是 FEM 最早的来源**（桁架分析）。\n\n**为什么 FEM 对复杂几何友好（这条最实用）**：基函数定义在**单元**上（局部），所以：\n\n1. **任意形状**都能剖分（三角形、四面体、混合）；\n2. **局部加密**容易（在需要的区域细分）；\n3. **边界条件**自然（节点在边界上直接约束）。\n\n**这与 FDM 的对照**：FDM 的差分公式依赖**规则网格**（否则要用复杂系数），所以处理复杂几何时 FDM 要么用贴体坐标（复杂）、要么用浸没边界（精度降）。**FEM 在这方面的优势是结构性的。**\n\n**记这个图像**：**FEM = 「在有限维子空间里找最优投影」**（Galerkin 方法）。**「弱」= 降低光滑性要求；「对称」= 正交投影的自伴性；「任意几何」= 基函数的局部性。**",
+      "links": [
+        "G2.1",
+        "G3",
+        "D1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G2.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：基函数与刚度矩阵",
+      "keywords": [
+        "模块 fem-basis（档1 前端直渲）",
+        "模式①：一维 P1 帐篷基函数（局部支撑）",
+        "模式②：装配后的刚度矩阵稀疏结构（三对角）",
+        "模式③：FEM 解 vs 精确解（不同 h）",
+        "invariant：K 对称（K=Kᵀ）且行和为 0（严格等式）",
+        "预置：一维、n=10、P1 基"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 43,
+        "line_end": 50
+      },
+      "fill_hint": "档1 依据：基函数与刚度矩阵都是显式可算，前端可算；invariant 用对称性、行和为零、半正定三条严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `fem-basis`。\n\n**模式① `hat-functions`**：画一维 $P_1$ 的帐篷函数 $\\phi_i$（在节点 $i$ 取 1、相邻节点取 0、其余为 0）。**让「局部支撑」可见**——这是稀疏性的来源。\n\n**模式② `stiffness-sparsity`**：画装配后的刚度矩阵热图。$K/h$ 应是**三对角带状**（对角 2、次对角 $-1$）。**非零元只出现在相邻节点对**。\n\n**模式③ `fem-solution`**：FEM 解（分段线性）与精确解并排，$h$ 可拖。**$L^{2}$ 误差应按 $h^{2}$ 减小。**\n\n**恒等式（给前端 invariant）**：\n\n$$K_{ij}=K_{ji}\\ (\\text{对称}),\\qquad \\sum_j K_{ij}=0\\ (\\text{行和为 0}),\\qquad \\mathbf{v}^{T}K\\mathbf{v}=\\int\\lvert\\nabla v_h\\rvert^{2}\\ge0.$$\n\n**三条都是严格关系**（可数值验证）。**行和为零**是最容易被实现错误破坏的一条（例如边界条件的处理写错）。\n\n**参数契约**：\n\n- 预置：一维 $[0,1]$、$n=10$ 个单元、$P_1$ 基；\n- 与 `G2.2:fem.quantifiers` 的刚度矩阵形式（$2/h$ 与 $-1/h$）保持一致。",
+      "links": [
+        "G2.1",
+        "G3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G2.2:weak-form.proof",
+      "type": "proof",
+      "subject": "weak-form",
+      "title": "推导骨架：从强形式到弱形式（分部积分）",
+      "keywords": [
+        "第一步：强形式 −∇²u = f 乘检验函数 v 并积分",
+        "第二步：对左边分部积分（Green 公式）",
+        "第三步：取 v 在边界为零 ⇒ 边界项消失",
+        "第四步：得 ∫∇u·∇v = ∫fv（弱形式）",
+        "第五步：把 u≈Σu_jφ_j 代入，取 v=φ_i 得 K u = f",
+        "易错点：忘分部积分的符号；边界项处理错；基函数不满足边界条件"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 43,
+        "line_end": 50
+      },
+      "fill_hint": "五步骨架；第二步的 Green 公式符号、第三步的「强制 vs 自然边界条件」是关键；第五步给单元刚度矩阵 $1/h\\cdot[[1,-1],[-1,1]]$ 的装配。",
+      "content": "**推导骨架**（五步，每步给理由）。\n\n**第一步：乘检验函数并积分。**\n\n$$\\int_{\\Omega}\\left(-\\nabla^{2}u\\right)v\\,d\\Omega=\\int_{\\Omega}fv\\,d\\Omega.$$\n\n**理由**：把方程「投影」到检验函数上（Galerkin 思想）。**这一步是「弱化」的开始**。\n\n**第二步：分部积分（Green 公式）。**\n\n$$\\int_{\\Omega}\\left(-\\nabla^{2}u\\right)v\\,d\\Omega=\\int_{\\Omega}\\nabla u\\cdot\\nabla v\\,d\\Omega-\\oint_{\\partial\\Omega}\\left(\\nabla u\\cdot\\mathbf{n}\\right)v\\,dS.$$\n\n**理由**：这是 Green 第一公式（**高维的分部积分**）。**注意负号**：$-\\nabla^{2}$ 分部积分后变成 $+\\nabla u\\cdot\\nabla v$ **减去**边界项。\n\n**第三步：边界条件消去边界项。** 取 $v\\in H^{1}_{0}$（**在边界上为零**），则 $\\oint(\\ldots)v=0$。\n\n**理由**：这是「齐次 Dirichlet 边界条件」的自然处理方式。**注意这是「强制」边界条件**（必须约束基函数），而非自然边界条件。\n\n**第四步：得弱形式。**\n\n$$\\int_{\\Omega}\\nabla u\\cdot\\nabla v\\,d\\Omega=\\int_{\\Omega}fv\\,d\\Omega\\quad\\forall v\\in H^{1}_{0}.$$\n\n**这就是切片给的式子** ✅。**注意两点**：① 左边只含**一阶导**（这就是「弱」的含义）；② 要求对**所有** $v$ 成立（这给出无穷多方程）。\n\n**第五步：离散化。** 取 $u_{h}=\\sum_j u_j\\phi_j$、$v=\\phi_i$：\n\n$$\\sum_j\\left(\\int\\nabla\\phi_i\\cdot\\nabla\\phi_j\\right)u_j=\\int f\\phi_i\\quad\\Longrightarrow\\quad K\\mathbf{u}=\\mathbf{f},$$\n\n其中 $K_{ij}=\\int\\nabla\\phi_i\\cdot\\nabla\\phi_j$。\n\n**一维 $P_1$ 的具体结果**（均匀网格 $h$）：\n\n$$K=\\frac{1}{h}\\begin{pmatrix}2&-1&&\\\\-1&2&-1&\\\\&-1&2&\\ddots\\end{pmatrix}.$$\n\n**推导的细节**：单个单元 $[x_i,x_{i+1}]$ 上，$\\phi_i'=1/h$（$P_1$ 基的斜率恒定），故**单元刚度矩阵**是\n\n$$K^{\\text{单元}}=\\frac{1}{h}\\begin{pmatrix}1&-1\\\\-1&1\\end{pmatrix}.$$\n\n**装配两个相邻单元**叠加得对角元 $1/h+1/h=2/h$、次对角 $-1/h$ ✅。\n\n**依赖链**：Galerkin 投影 → Green 公式 → 边界条件 → 弱形式 → 基函数展开 → $K\\mathbf{u}=\\mathbf{f}$。\n\n**易错点**：\n\n1. **分部积分的符号**：$-\\int(\\nabla^{2}u)v=+\\int\\nabla u\\cdot\\nabla v-\\oint(\\nabla u\\cdot n)v$。**负负得正**容易搞错；\n2. **边界项不消**：非齐次 Dirichlet 时边界项不为零，要移到右端（$-\\oint(\\nabla u\\cdot n)v$ 移过去变成源项）；**Neumann 条件**是「自然条件」，会出现在弱形式里（不强制）；\n3. **基函数不满足边界条件**：若 $\\phi_i$ 在边界上不为零，强制条件就失效；\n4. **$H^{1}$ 的要求**：$\\int\\lvert\\nabla u\\rvert^{2}<\\infty$——**$u$ 只需「弱可微」**，这允许 $\\lvert x\\rvert$ 型解。",
+      "links": [
+        "G2.2",
+        "G2.1",
+        "G3",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G2.2:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：一维 P1 的刚度矩阵是什么样？",
+      "keywords": [
+        "可算题：一维均匀网格 h、P1 基，求 K 的对角与次对角元",
+        "答案：对角 2/h、次对角 −1/h，三对角对称",
+        "追问：行和是多少？（0）",
+        "再问：为什么行和为 0？（常数函数是零特征向量）",
+        "陷阱：忘因子 1/h（差 h² 量级）；把质量矩阵当刚度矩阵"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 43,
+        "line_end": 50
+      },
+      "fill_hint": "从刚度矩阵的具体形式变来的检验题；第 3 问解释「行和为 0」的物理含义（常数是零特征向量）；延伸给 M 与 K 的配合使用。",
+      "content": "**题**：一维 $[0,1]$、$n$ 个单元、$h=1/n$、$P_1$ 线性基。\n\n1. 求 $K_{ii}$（对角元）与 $K_{i,i+1}$（次对角元）；\n2. 求第 $i$ 行之和；\n3. 解释第 2 问为什么是零。\n\n**答案**：\n\n1. **单元刚度矩阵**（在 $[x_i,x_{i+1}]$ 上，$\\phi_i'=1/h$、$\\phi_{i+1}'=-1/h$）：\n\n$$K^{\\text{单元}}=\\frac{1}{h}\\begin{pmatrix}1&-1\\\\-1&1\\end{pmatrix}.$$\n\n**装配**（节点 $i$ 被两个单元共享）：\n\n$$K_{ii}=\\frac{1}{h}+\\frac{1}{h}=\\frac{2}{h}$$【已核验:2.0\\|2/1.0】\n\n$$K_{i,i+1}=-\\frac{1}{h}$$【已核验:-1.0\\|-1/1.0】\n\n**（取 $h=1$）**\n\n2. 第 $i$ 行（非边界节点）：$\\dfrac{2}{h}-\\dfrac{1}{h}-\\dfrac{1}{h}=0$【已核验:0\\|0】。\n\n3. **因为「常数函数」是无边界条件问题的解**（$u=\\text{const}$ ⇒ $\\nabla u=0$ ⇒ 弱形式左边为零）。**代数上**：常数向量 $\\mathbf{1}$ 满足 $K\\mathbf{1}=\\mathbf{0}$ ⇒ **$\\mathbf{1}$ 是零特征向量**。\n\n**这也说明「无边界条件时解不唯一」**（差一个常数）——**必须加边界条件（如 $u(0)=0$）才能定解**。\n\n**易错点**：\n\n- **忘因子 $1/h$**：$K$ 的量纲是 $1/\\text{长度}$（因为 $K_{ij}=\\int\\phi_i'\\phi_j'$，$\\phi'$ 的量纲是 $1/\\text{长度}$，积分再乘长度）——**所以 $K\\sim1/h$**；\n- **把质量矩阵当刚度矩阵**：质量矩阵 $M_{ij}=\\int\\phi_i\\phi_j$ 给 $h/6\\cdot(1,4,1)$（**量纲是长度**，与 $K$ 相反）；\n- **行和为 0 的边界例外**：边界节点的行和不为零（那些 $K_{ii}$ 只有一项 $1/h$，因为外边没有单元）。\n\n**延伸（这个矩阵的用途）**：\n\n| 方程 | 用哪个矩阵 |\n|---|---|\n| 泊松 $-\\nabla^{2}u=f$ | $K\\mathbf{u}=\\mathbf{f}$（刚度） |\n| 热方程 $\\partial_tu=\\nabla^{2}u$ | $M\\dot{\\mathbf{u}}=-K\\mathbf{u}$（质量 + 刚度） |\n| 波动方程 $\\partial_t^{2}u=\\nabla^{2}u$ | $M\\ddot{\\mathbf{u}}=-K\\mathbf{u}$ |\n\n**所以 $M$ 与 $K$ 一起出现**——**这也是有限元动力学（振动分析）的基础**。",
+      "links": [
+        "G2.2",
+        "G3",
+        "D3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G2.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "G2 三种离散化方法服务的下游章节",
+      "keywords": [
+        "FVM（I9.1）：CFD 的默认选择；守恒天然",
+        "FEM（G2.2）：结构力学、复杂几何；矩阵对称正定",
+        "谱方法（G2.3）：光滑解指数收敛；湍流 DNS（I5）",
+        "时间推进：与 G1.1/G1.2 结合（显式/隐含、辛）",
+        "CG 场景：图形学流体常用 FDM + MAC（I9.3）",
+        "自检：先问「要不要守恒、几何多复杂、解多光滑」"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 43,
+        "line_end": 50
+      },
+      "fill_hint": "单元级应用词条；把「空间离散」与「时间推进」明确分开（可自由组合），并给五种场景的具体组合。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`I9.1` 有限体积法**：`G2.1` 的守恒形式推广到任意网格，就是 FVM。**守恒是 FVM 的定义性性质**（内部面通量相消）。\n- **`G2.2` 有限元法**：结构力学、固体力学的主力学工具。**矩阵对称正定 ⇒ 可用 Cholesky/CG**（`G3`）。\n- **`G2.3` 谱方法**：光滑解**指数收敛**（比任何代数阶都快），但有 Gibbs 振荡。**湍流 DNS 在周期盒里用谱方法**（`I5`）。\n- **`G1.1`/`G1.2` 时间推进**：**空间离散 + 时间推进**是两件独立的事。空间用 FDM/FVM/FEM，时间用 RK4/leapfrog/隐式——**可以自由组合**（如 FEM + 隐式、FVM + 显式）。\n- **`I9.3` 图形学的 MAC 网格**：图形学流体常用 **FDM + 交错网格**（`I9.3` 的棋盘问题就是 FDM 在同位网格上的失败）——**所以 `G2.1` 与 `I9.3` 是同一件事的两面**。\n- **`I9.4` 时间步**：**空间离散的网格尺寸决定时间步上限**（$\\Delta x$ 出现在 CFL 与粘性约束里）。**所以「选空间格式」与「选时间步」必须一起考虑**。\n\n**一条自检问句**：**先问三件事——① 要不要严格守恒？② 几何多复杂？③ 解多光滑？** 答案决定 FDM/FVM/FEM/谱方法的选择（见 `G2.1:general.compare` 的判据表）。\n\n**组合的实际例子**：\n\n| 场景 | 空间 | 时间 |\n|---|---|---|\n| 不可压 CFD（复杂几何） | FVM | 投影法（`I9.3`）+ 显式/IMEX |\n| 不可压 CFD（周期） | 谱 | RK4 |\n| 结构振动 | FEM | 隐式（Newmark） |\n| 图形学流体 | FDM + MAC | 显式（leapfrog/半拉格朗日） |\n| 分子动力学 | — | **leapfrog**（`G1.2`） |",
+      "links": [
+        "G2.1",
+        "G2.2",
+        "G2.3",
+        "G1.1",
+        "G1.2",
+        "I9.1",
+        "I9.3",
+        "I9.4",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

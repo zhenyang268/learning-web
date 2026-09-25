@@ -1,0 +1,245 @@
+{
+  "schema": "entry-card/v2",
+  "code": "E2",
+  "chapter": "E2",
+  "title": "麦克斯韦方程的微分形式表述",
+  "src": {
+    "file": "notebook/E_Field.tex",
+    "line_start": 19,
+    "line_end": 32,
+    "anchor": "notebook/E_Field.tex:19"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "E2:maxwell.quantifiers",
+      "type": "comparison",
+      "subject": "maxwell",
+      "title": "麦克斯韦方程微分形式表述的适用条件表",
+      "keywords": [
+        "条件①F = dA：需要 A 全局存在（拓扑非平凡时要分片）",
+        "条件②dF = 0 是恒等式（因 F=dA 且 d²=0）",
+        "条件③d★F = J：需要 Hodge ★，故需要度规（闵氏）",
+        "条件④规范不变性 A→A+dλ：因 d²=0，F 不变",
+        "翻车代价：忘 ★ 会把 Maxwell 方程写成维数不符的形式"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 19,
+        "line_end": 32
+      },
+      "fill_hint": "四行条件表；② 行点出「$dF=0$ 一半是恒等式一半是实验事实」；维数表要给出 4/4/6。",
+      "content": "切片给了 $F=dA$、$dF=0$、$d\\star F=J$、规范不变性。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $F=dA$ 要 $A$ **全局存在** | 若时空拓扑非平凡（如有磁单极/缺陷），$A$ 不能全局定义，需**分片（patch）**定义 | 「$F=dA$」在全局不成立 | 可放宽：用「$F$ 闭但不恰当」（$dF=0$ 但 $F\\neq dA$）——**这正是磁单极的拓扑刻画** |\n| ② $dF=0$ 是**恒等式** | 由 $F=dA$ 与 $d^{2}=0$ 自动成立。它包含 **Faraday 定律**（3 个分量）+ **无磁单极**（1 个分量） | 若以为「$dF=0$ 是独立物理定律」，会奇怪为什么它「不需要验证」 | 不能放宽：它的一半是恒等式，另一半（无磁单极）是**实验事实** |\n| ③ $d\\star F=J$ 需要 $\\star$ | $\\star$ 依赖**度规**（闵氏 $\\eta_{\\mu\\nu}$）。所以这一半方程**依赖度规** | 在弯曲时空/非闵氏度规下形式会变 | 不能放宽：$\\star$ 是必需的（也是「为什么第二组方程与第一组不对称」的原因） |\n| ④ **规范不变性来自 $d^{2}=0$** | $A\\to A+d\\lambda$ ⇒ $F=dA\\to d(A+d\\lambda)=dA+d^{2}\\lambda=dA$ ✅——**因为 $d^{2}=0$** | 若 $d^{2}\\neq0$，规范不变性立刻破 | 不能放宽：这是**拓扑/代数**层面的事实 |\n\n**维数核算（4D）**：\n\n| 方程 | 形式次数 | 独立分量 | 对应 |\n|---|---|---|---|\n| $dF=0$ | $2\\to3$ | $4$ | Faraday 定律（3）+ 无磁单极（1） |\n| $d\\star F=J$ | $2\\to3$ | $4$ | Ampère 定律（3）+ Gauss 定律（1） |\n\n**合计 8 个方程，但独立只有 6 个**——因为对 $d\\star F=J$ 再取 $d$ 得 $0=dJ$（**电荷守恒**），这是一个自动成立的恒等式。\n\n**数值/结构锚点**：$F$ 是反对称 $4\\times4$ 矩阵，独立分量 $\\binom{4}{2}=6$——**正好容纳 $\\mathbf{E}$（3）与 $\\mathbf{B}$（3）**。",
+      "links": [
+        "E2",
+        "E1",
+        "E4",
+        "D2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E2:gauge-invariance.counterexample",
+      "type": "counterexample",
+      "subject": "gauge-invariance",
+      "title": "反例：以为规范变换会改变 F（其实 d²=0 保证不变）",
+      "keywords": [
+        "误用现场：以为 A→A+dλ 后 F=dA 会变（因为 A 变了）",
+        "正解：F → d(A+dλ) = dA + d²λ = dA ✅（因 d²=0）",
+        "具体：λ=xy、A=(0,0,0,0) 时 dλ=(y dx + x dy)，d²λ=0",
+        "物理含义：A 有规范自由 ⇒ 物理量（E、B）唯一",
+        "推论：A 本身不可观测（不是物理量，是「势」）",
+        "修补：算物理量用 F；要处理 A 时必须固定规范（Lorenz/Coulomb）"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 19,
+        "line_end": 32
+      },
+      "fill_hint": "把「F 为什么不变」算成 $d^{2}\\lambda=0$ 的显式验证（$\\lambda=xy$）；给可观测量对照表与三条用途。",
+      "content": "**误用现场**：认为「$A$ 变了，所以 $F=dA$ 也应该变」——毕竟 $F$ 是 $A$ 的导数。\n\n**为什么这是错的**：规范变换是 $A\\to A+d\\lambda$（$\\lambda$ 是任意函数）。于是\n\n$$F=dA\\ \\longrightarrow\\ d(A+d\\lambda)=dA+\\underbrace{d^{2}\\lambda}_{=\\,0}=dA.$$\n\n**$d^{2}=0$ 保证 $F$ 完全不变。**\n\n**具体算一遍**：取 $\\lambda=xy$，则 $d\\lambda=y\\,dx+x\\,dy$。计算 $d^{2}\\lambda$：\n\n$$d(d\\lambda)=d(y\\,dx)+d(x\\,dy)=dy\\wedge dx+dx\\wedge dy=-dx\\wedge dy+dx\\wedge dy=0$$ ✅\n\n（用了 $dy\\wedge dx=-dx\\wedge dy$。）**所以无论 $\\lambda$ 取什么，$d^{2}\\lambda$ 恒为零。**\n\n**物理含义（这条最要紧）**：\n\n| 量 | 规范变换下 | 是否可观测量 |\n|---|---|---|\n| $A$（势） | $A\\to A+d\\lambda$（**变**） | ❌ 不可观测 |\n| $F=dA$（场强） | 不变 | ✅ 可观测（$\\mathbf{E}$、$\\mathbf{B}$） |\n| $\\psi$（波函数） | $\\psi\\to e^{iq\\lambda/\\hbar}\\psi$ | ⚠️ 相位不可观测，$|\\psi|^{2}$ 可观测 |\n\n**所以 $A$ 不是「物理量」，是「势」**——它带着冗余信息（规范自由）。**这种冗余不是缺陷，而是「$U(1)$ 规范对称性」的内容**（`D2` 的第四行、`E4` 的起点）。\n\n**为什么这个冗余有用（三条）**：\n\n1. **简化计算**：可以选规范让方程变形（Lorenz 规范让 Maxwell 方程解耦成波动方程）；\n2. **量子化的必需**：光子的路径积分需要 $A$（不能用 $F$）；\n3. **统一的基础**：规范原理（要求局部 $U(1)$ 不变）**唯一地**定出电磁相互作用的形式——这是 `E4` 的核心思想。\n\n**后果链条（若忽略规范自由）**：\n\n1. 把 $A$ 当可观测量 → 得到「不同的 $A$ 描述不同物理」的错误结论；\n2. 数值上会出现「规范漂移」（$\\partial_\\mu A^{\\mu}$ 随时间漂移），需**规范固定**来抑制；\n3. 量子化时若漏掉 Faddeev–Popov 行列式（在非阿贝尔情形），会得到错误的结果。\n\n**修补动作**：① 物理量一律用 $F$ 与 $|\\psi|^{2}$；② 必须用 $A$ 时先固定规范（Lorenz/Coulomb/axial）。",
+      "links": [
+        "E2",
+        "E1",
+        "E4",
+        "D2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E2:maxwell.statement",
+      "type": "statement",
+      "subject": "maxwell",
+      "title": "麦克斯韦方程的微分形式：F=dA、两组方程与规范不变性",
+      "keywords": [
+        "电磁势 A：1-形式；场强 F = dA（2-形式）",
+        "第一组：dF = 0（Faraday 定律 + 无磁单极）",
+        "第二组：d★F = J（Ampère 定律 + Gauss 定律）",
+        "★ 是 Hodge 星算子（需度规）；J 是电流 3-形式",
+        "规范不变：A→A+dλ 不改变 F（因 d²=0）",
+        "自动守恒：dJ = 0（电荷守恒，来自 d²=0）"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 19,
+        "line_end": 32
+      },
+      "fill_hint": "陈述本体（F 的 6 分量矩阵）+ 两组方程的维数核算 + 电荷守恒自动成立；点出「两组不对称」的原因。",
+      "content": "**陈述**（切片）。\n\n**电磁势**：$A=A_\\mu dx^{\\mu}$ 是 **1-形式**（4 个分量）。\n\n**场强**：\n\n$$F=dA,\\qquad F_{\\mu\\nu}=\\partial_\\mu A_\\nu-\\partial_\\nu A_\\mu.$$\n\n**$F$ 是反对称 2-形式**，独立分量 $\\binom{4}{2}=6$——**正好容纳 $\\mathbf{E}$（3）与 $\\mathbf{B}$（3）**：\n\n$$F_{\\mu\\nu}=\\begin{pmatrix}0&-E_x/c&-E_y/c&-E_z/c\\\\ E_x/c&0&-B_z&B_y\\\\ E_y/c&B_z&0&-B_x\\\\ E_z/c&-B_y&B_x&0\\end{pmatrix}.$$\n\n**第一组方程**：\n\n$$dF=0.$$\n\n**它包含 4 个分量**：Faraday 定律（3，即 $\\nabla\\times\\mathbf{E}=-\\partial_t\\mathbf{B}$）+ 无磁单极（1，即 $\\nabla\\cdot\\mathbf{B}=0$）。\n\n**注意这一组的特殊地位**：由 $F=dA$ 与 $d^{2}=0$ 自动成立——**它是恒等式**（无磁单极那一半是实验事实，但形式上与其余合并）。\n\n**第二组方程**：\n\n$$d\\star F=J,$$\n\n其中 $\\star$ 是 **Hodge 星算子**（需要度规）、$J$ 是**电流 3-形式**（4 个分量：$\\rho c$ 与 $\\mathbf{J}$）。\n\n**它包含**：Ampère 定律（3，含 Maxwell 位移电流项）+ Gauss 定律（1）。\n\n**电荷守恒自动成立**：对第二组再取 $d$：\n\n$$d^{2}\\star F=dJ\\quad\\Longrightarrow\\quad 0=dJ,$$\n\n**$dJ=0$ 就是连续性方程**（$\\partial_\\mu J^{\\mu}=0$）。**所以电荷守恒不是额外假设，是 $d^{2}=0$ 的推论。**\n\n**规范不变性**：\n\n$$A\\to A+d\\lambda\\ \\Longrightarrow\\ F=dA\\to dA+d^{2}\\lambda=dA.$$\n\n**两条方程的不对称（值得注意）**：第一组 $dF=0$ 不含 $\\star$；第二组 $d\\star F=J$ 含 $\\star$。**这个不对称来自「$F$ 与 $\\star F$ 是两个不同的 2-形式」**。（加入磁单极会让方程对称——这也是磁单极在理论上诱人的原因。）\n\n**它依赖什么 / 谁依赖它**：`E1` 的外部代数与 $\\star$；`E3` 的闵氏度规（$\\star$ 需要）；下游：`E4` 的规范场推广、`J1` 的波动光学（$d\\star F=0$ 给波动方程）。",
+      "links": [
+        "E1",
+        "E3",
+        "E4",
+        "D2",
+        "J1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E2:maxwell.intuition",
+      "type": "intuition",
+      "subject": "maxwell",
+      "title": "直觉：E 与 B 不是两个场，是同一个 2-形式的两组分量",
+      "keywords": [
+        "2-形式 F 有 6 个分量：3 个「时间-空间」（= E）+ 3 个「空间-空间」（= B）",
+        "换参考系会把 E 与 B 混合（因为 F 是一个几何对象）",
+        "为什么分两类：F 的指标里「有没有时间」是参考系相关的",
+        "dF=0 是几何恒等式（闭合）；d★F=J 是动力学（源）",
+        "为什么不对称：★F 用度规，F 不用",
+        "规范自由的意义：A 有冗余，但正是这个冗余给出相互作用的形式"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 19,
+        "line_end": 32
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「指标有没有时间」解释 E/B 的分组；把规范自由讲成「相互作用的生成原则」。",
+      "content": "**切片给了三行公式**。理解它们的关键是**不要把 $\\mathbf{E}$、$\\mathbf{B}$ 当两个独立的场**。\n\n**假设给了什么。** 电磁场是一个 **2-形式** $F$（反对称 $4\\times4$ 矩阵），独立分量 6 个。\n\n**结论为什么因此成立（六分量的含义）**：\n\n| 分量类型 | 个数 | 物理 |\n|---|---|---|\n| 1 个指标是时间（$F_{0i}$） | $3$ | $\\mathbf{E}$（电场） |\n| 两个指标都是空间（$F_{ij}$） | $3$ | $\\mathbf{B}$（磁场） |\n\n**所以 $\\mathbf{E}$ 与 $\\mathbf{B}$ 不是两个场，而是同一个几何对象按「指标有没有时间」分成的两组。**\n\n**为什么这个观点重要（换参考系）**：洛伦兹变换会**混合**时间与空间指标——于是 \\(\\mathbf{E}\\)与 $\\mathbf{B}$ **互相转化**：\n\n$$\\mathbf{E}\\to\\mathbf{E}'=\\gamma(\\mathbf{E}+\\mathbf{v}\\times\\mathbf{B})+\\ldots,\\qquad \\mathbf{B}'\\ \\text{同理}.$$\n\n**「运动电荷的磁场在另一参考系里是电场」这件事，在 $F$ 的语言里是「换个基底看同一个矩阵」**——不需要两套物理。\n\n**两条方程的不对称（几何解释）**：\n\n| 方程 | 含 $\\star$？ | 类型 |\n|---|---|---|\n| $dF=0$ | ❌ | **几何恒等式**（$F$ 闭合） |\n| $d\\star F=J$ | ✅ | **动力学**（源决定场） |\n\n**为什么一个含 $\\star$ 一个不含**：$\\star$ 依赖**度规**，而 $d$ 不依赖。**所以第一组方程在任意度规下形式相同（弯曲时空也成立）；第二组在弯曲时空要改。**\n\n**「规范自由」的直觉（这条最值得说）**：$A$ 有冗余（规范自由）看似「不干净」，但它**恰好是相互作用的来源**：\n\n1. 要求**局部** $U(1)$ 不变（$\\lambda=\\lambda(x)$，不是常数）；\n2. 这迫使导数 $\\partial_\\mu$ 换成协变导数 $D_\\mu=\\partial_\\mu-iqA_\\mu$（`E4`）；\n3. 于是**相互作用的形式被唯一确定**（$A$ 必须存在，且耦合方式唯一）。\n\n**换句话说：规范对称性不是「多余的对称」，而是「生成相互作用」的原则。** 这就是规范场论（`E4`）的核心思想，也是整个标准模型的构造方式。\n\n**记这个图像**：**$\\mathbf{E}$ 与 $\\mathbf{B}$ 是同一个 2-形式的「时间部分」与「空间部分」；$F=dA$ 是几何（闭合），$d\\star F=J$ 是动力学（有源）；而 $A$ 的冗余恰好生出了相互作用。**",
+      "links": [
+        "E1",
+        "E4",
+        "D2",
+        "J1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E2:em-tensor.statement",
+      "type": "statement",
+      "subject": "em-tensor",
+      "title": "电磁场张量 F：6 个独立分量与 E/B 的分组",
+      "keywords": [
+        "F 是反对称 2-形式，独立分量 C(4,2)=6",
+        "时间-空间分量 F_{0i} = −E_i/c（3 个 = 电场）",
+        "空间-空间分量 F_{ij} = −ε_{ijk}B_k（3 个 = 磁场）",
+        "洛伦兹变换混合 E 与 B（因为 F 是一个几何对象）",
+        "对偶张量 ★F：把 E 与 B 的角色互换",
+        "两个不变量：F_{μν}F^{μν} ∝ B²−E²/c² 与 F_{μν}★F^{μν} ∝ E·B"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 19,
+        "line_end": 32
+      },
+      "fill_hint": "陈述本体（F 的矩阵与分组）+ 洛伦兹混合公式 + 两个不变量；给 $\binom{4}{2}=6$ 的维数核算。",
+      "content": "**陈述**。\n\n**定义**：\n\n$$F_{\\mu\\nu}=\\partial_\\mu A_\\nu-\\partial_\\nu A_\\mu,\\qquad F_{\\mu\\nu}=-F_{\\nu\\mu}.$$\n\n**矩阵形式**（$x^{0}=ct$）：\n\n$$F_{\\mu\\nu}=\\begin{pmatrix}0&-E_x/c&-E_y/c&-E_z/c\\\\ E_x/c&0&-B_z&B_y\\\\ E_y/c&B_z&0&-B_x\\\\ E_z/c&-B_y&B_x&0\\end{pmatrix}.$$\n\n**分组（本条的定量核心）**：\n\n| 分量类型 | 个数 | 物理量 |\n|---|---|---|\n| $F_{0i}$（一个时间指标） | $\\binom{3}{1}=3$ | $E_i/c$ |\n| $F_{ij}$（两个空间指标） | $\\binom{3}{2}=3$ | $\\varepsilon_{ijk}B_k$ |\n\n**合计 6**，正好是 $\\binom{4}{2}$ ✅。\n\n**洛伦兹变换混合两者**（这条最能体现「$F$ 是几何对象」）：纯 boost 沿 $x$：\n\n$$E_x'=E_x,\\qquad E_y'=\\gamma\\left(E_y-vB_z\\right),\\qquad B_z'=\\gamma\\left(B_z-\\frac{v}{c^{2}}E_y\\right),\\ldots$$\n\n**电场与磁场**互相转化**——因为它们是同一个张量在不同参考系下的分量。\n\n**两个洛伦兹不变量**（由 $F$ 构造的标量）：\n\n$$F_{\\mu\\nu}F^{\\mu\\nu}=2\\left(B^{2}-\\frac{E^{2}}{c^{2}}\\right),\\qquad F_{\\mu\\nu}\\star F^{\\mu\\nu}\\propto\\mathbf{E}\\cdot\\mathbf{B}.$$\n\n**物理含义**：若某参考系里 $\\mathbf{E}\\cdot\\mathbf{B}=0$ 且 $B^{2}>E^{2}/c^{2}$，则**任何**参考系里都是「类磁」的——这是**不变量决定的分类**（而不是参考系相关的现象）。\n\n**它依赖什么 / 谁依赖它**：`E1` 的 2-形式与 $\\star$；`E3` 的闵氏度规（$F^{\\mu\\nu}$ 的上指标用 $\\eta^{\\mu\\alpha}\\eta^{\\nu\\beta}$）。下游：`E4` 的规范场（$F$ 的推广）、相对论电动力学、`E2:maxwell.statement` 的两组方程。",
+      "links": [
+        "E1",
+        "E3",
+        "E4",
+        "E2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E2:maxwell.components",
+      "type": "comparison",
+      "subject": "maxwell",
+      "title": "分工：微分形式写法与分量写法怎么选",
+      "keywords": [
+        "形式写法：dF=0、d★F=J 两行，结构清晰、坐标无关",
+        "分量写法：8 个方程（Faraday 3 + 无磁单极 1 + Ampère 3 + Gauss 1）",
+        "形式优势：规范不变性自动、任意维、弯曲时空可用",
+        "分量优势：具体计算（天线、波导）更直接",
+        "判据①：看结构/做理论 → 形式",
+        "判据②：算具体场/查表 → 分量"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 19,
+        "line_end": 32
+      },
+      "fill_hint": "对照口径：以「看结构 vs 算数值」划界；给方程数（2 行 vs 8 个）与电荷守恒的具体对照。",
+      "content": "**两者是同一组方程。**\n\n| 需求 | 形式写法 | 分量写法 |\n|---|---|---|\n| **方程数** | $2$ 行（$dF=0$、$d\\star F=J$） | $8$ 个（或 4 个矢量方程） |\n| 规范不变性 | **自动**（$d^{2}=0$） | 要单独验证 |\n| 任意维 | ✅ | ❌（依赖 3+1 分解） |\n| 弯曲时空 | ✅ 形式不变（第二组要改用协变导数） | 繁琐 |\n| 具体计算（天线/波导） | ⚠️ 要先展开 | ✅ 直接 |\n| 教学 | ⚠️ 需先建立形式语言 | ✅ 熟悉 |\n\n**判据（两问定选）**：\n\n1. **要「看结构」还是「算数值」？** 看结构 → 形式；算数值 → 分量；\n2. **维数/度规是否固定为 3+1 闵氏？** 固定 → 分量够用；否则 → 形式。\n\n**一个具体的对照（电荷守恒）**：\n\n- **形式**：对 $d\\star F=J$ 取 $d$，得 $0=dJ$（一行）；\n- **分量**：写出 $\\partial_\\mu J^{\\mu}=0$ 并验证它与前两个方程相容（要算）。\n\n**位置关系**：`E2:maxwell.statement` 给形式写法；本条给「什么时候用哪个」。**`E1:vs-vector-calculus` 是同一话题在「向量分析层面」的版本。**",
+      "links": [
+        "E1",
+        "E2",
+        "E4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：电磁场张量的 6 分量与洛伦兹混合",
+      "keywords": [
+        "模块 em-tensor-grid（档1 前端直渲）",
+        "模式①：4×4 反对称矩阵，E 分量（第一行/列）与 B 分量（右下 3×3）配色区分",
+        "模式②：拖 boost 速度 v，看 E、B 分量如何按洛伦兹变换混合",
+        "模式③：两个不变量 B²−E²/c² 与 E·B 在变换下不变（数值验证）",
+        "invariant：F_{μν} = −F_{νμ}（严格反对称）；两个不变量在 boost 下不变",
+        "预置：E=(1,0,0)、B=(0,1,0)（正交情形），v∈[0,0.9c]"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 19,
+        "line_end": 32
+      },
+      "fill_hint": "档1 依据：F 的分量与 boost 变换都是显式公式，前端可算；invariant 用反对称性与两个不变量的严格不变。",
+      "content": "**档1 演示**（前端直渲），模块 `em-tensor-grid`。\n\n**模式① `tensor-layout`**：$4\\times4$ 网格显示 $F_{\\mu\\nu}$：\n\n- 第一行/列（$F_{0i}$）着**蓝色**（电场）；\n- 右下 $3\\times3$（$F_{ij}$）着**红色**（磁场）；\n- 对角线上标 0。\n\n**让「6 个独立分量分成 3+3」一眼可见。**\n\n**模式② `lorentz-mix`**：拖动 boost 速度 $v$，按\n\n$$E_y'=\\gamma(E_y-vB_z),\\qquad B_z'=\\gamma\\left(B_z-\\frac{v}{c^{2}}E_y\\right)$$\n\n实时更新网格。$v=0$ 时是初始场；$v\\to0.9c$ 时混合明显。**演示「E 与 B 不是独立的」**。\n\n**模式③ `invariants`**：显示两个不变量\n\n$$I_1=B^{2}-\\frac{E^{2}}{c^{2}},\\qquad I_2=\\mathbf{E}\\cdot\\mathbf{B},$$\n\n在拖动 $v$ 时**保持不变**。**这是本模块最有价值的 invariant**（严格不变，任何实现错误都会破坏它）。\n\n**恒等式（给前端 invariant）**：\n\n$$F_{\\mu\\nu}+F_{\\nu\\mu}=0\\quad\\text{（反对称，严格）},\\qquad I_1,I_2\\ \\text{在 boost 下不变}.$$\n\n**参数契约**：\n\n- 预置：$\\mathbf{E}=(1,0,0)$、$\\mathbf{B}=(0,1,0)$（正交，$I_2=0$）、$v\\in[0,0.9c]$；\n- boost 公式用标准洛伦兹变换（$\\gamma=1/\\sqrt{1-v^{2}/c^{2}}$）。",
+      "links": [
+        "E1",
+        "E3",
+        "E4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

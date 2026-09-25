@@ -1,0 +1,243 @@
+{
+  "schema": "entry-card/v2",
+  "code": "F3",
+  "chapter": "F3",
+  "title": "薛定谔方程",
+  "src": {
+    "file": "notebook/F_quantum.tex",
+    "line_start": 34,
+    "line_end": 42,
+    "anchor": "notebook/F_quantum.tex:34"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "F3:schrodinger.quantifiers",
+      "type": "comparison",
+      "subject": "schrodinger",
+      "title": "薛定谔方程的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①非相对论：高速需用 Dirac/Klein-Gordon",
+        "条件②哈密顿量自伴：保证演化是酉的（概率守恒）",
+        "条件③时间是一阶导：与空间二阶不「对称」（相对论问题）",
+        "条件④形式解 U(t)=e^{−iĤt/ħ} 要求 Ĥ 不显含 t",
+        "翻车代价：用薛定谔方程处理高能粒子，会得到错误的自旋/反粒子"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 34,
+        "line_end": 42
+      },
+      "fill_hint": "四行条件表；② 行给酉性检验的具体数值；④ 行点出「Ĥ 含 t 要时间排序」。",
+      "content": "切片给了方程、形式解与酉性。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **非相对论** | 薛定谔方程对时间一阶、对空间二阶——**不是洛伦兹协变的**。用它描述高能粒子会丢掉自旋与反粒子 | 电子自旋、正电子无法自然出现 | 不能放宽：要相对论协变需 Dirac 方程（自旋 $1/2$）或 Klein–Gordon（标量） |\n| ② $\\hat H$ **自伴** | 自伴性保证 $U(t)=e^{-i\\hat Ht/\\hbar}$ 是**酉**的，从而概率守恒（$\\lVert\\psi(t)\\rVert=\\lVert\\psi(0)\\rVert$）。若 $\\hat H$ 非自伴，概率不守恒 | 「粒子会消失」 | 不能放宽：这是概率解释的前提 |\n| ③ **时间一阶 vs 空间二阶** | 这个不对称是薛定谔方程的标志。**相对论要求时间与空间同等对待** | 方程在洛伦兹变换下变形 | 不能放宽：Dirac 通过 $\\gamma$ 矩阵让时间与空间都成一阶 |\n| ④ **形式解的条件** | $U(t)=e^{-i\\hat Ht/\\hbar}$ 只在 $\\hat H$ **不显含 $t$** 时是正确的解。若 $\\hat H=\\hat H(t)$（如含时外场），要用时间排序指数 | 含时场下演化算子算错 | 可放宽：用 $U(t)=T\\exp\\left(-\\frac{i}{\\hbar}\\int_0^t\\hat H(t')dt'\\right)$（时间排序） |\n\n**这张表的用法**：\n\n1. **速度低（$v\\ll c$）** → 薛定谔够用；\n2. **高能/需要自旋** → Dirac 方程；\n3. **含时外场** → 用时间排序指数。\n\n**数值锚点（酉性的检验）**：对二能级系统 $\\hat H=\\frac{\\hbar\\omega}{2}\\sigma_z$，$U(t)=\\mathrm{diag}(e^{-i\\omega t/2},e^{i\\omega t/2})$。**酉性**：\n\n$$U^{\\dagger}U=\\mathrm{diag}(e^{i\\omega t/2}e^{-i\\omega t/2},\\ e^{-i\\omega t/2}e^{i\\omega t/2})=\\hat I$$ ✅\n\n**具体数值**（$\\omega t=1$）：$U$ 的两项模长都是 $1$：\n\n$$\\lvert e^{-i/2}\\rvert=1,\\qquad \\lvert e^{i/2}\\rvert=1$$【已核验:1|cos(0.5)**2+sin(0.5)**2】\n\n**所以概率守恒**（$\\lVert\\psi(t)\\rVert$ 不随时间变）。\n\n**如果 $\\hat H$ 含虚部**（非自伴），例如 $\\hat H=\\frac{\\hbar\\omega}{2}\\sigma_z-i\\Gamma$，则 $U$ 会带 $e^{-\\Gamma t/\\hbar}$ 的衰减——**概率不守恒**（这可以建模「粒子衰变」，但那已不是标准薛定谔）。",
+      "links": [
+        "F3",
+        "F1",
+        "F2",
+        "F5",
+        "D4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F3:unitarity.counterexample",
+      "type": "counterexample",
+      "subject": "unitarity",
+      "title": "反例：用非自伴 H（含虚部）会破坏概率守恒",
+      "keywords": [
+        "误用现场：为了「建模衰变」直接把 H 加一个 −iΓ 虚部",
+        "后果：U(t) 带 e^{−Γt/ħ} 因子，范数随时间衰减",
+        "具体：|ψ(0)|=1 → |ψ(t)| = e^{−Γt/ħ}（若 Γ=0.1ħ，t=10 时已降到 e^{−1}=0.367879）",
+        "物理：概率不守恒，粒子「消失」而不是「变成别的东西」",
+        "正确做法：衰变要写成开放系统/耦合到环境（用 Lindblad 方程）",
+        "判据：检验 U†U = I（酉性）；不成立就是非自伴"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 34,
+        "line_end": 42
+      },
+      "fill_hint": "把「非自伴 H」的后果算成具体衰减序列；给「有效 vs 严格」对照表与 Lindblad 方程；点出「粒子是变成别的东西」。",
+      "content": "**误用现场**：想建模「不稳定的粒子」（如激发态、放射性核），于是直接在 Hamiltonian 里加一个负的虚部：\n\n$$\\hat H\\to\\hat H-i\\Gamma.$$\n\n**为什么这在严格意义上是错的**：$\\hat H$ 必须**自伴**（`F3:schrodinger.quantifiers` 第②行），而带 $-i\\Gamma$ 的算子**不是自伴的**（$\\hat H^{\\dagger}\\neq\\hat H$）。后果：\n\n$$U(t)=e^{-i(\\hat H-i\\Gamma)t/\\hbar}=e^{-i\\hat Ht/\\hbar}\\cdot e^{-\\Gamma t/\\hbar}.$$\n\n**第二项是实数衰减因子**——于是\n\n$$\\lVert\\psi(t)\\rVert=e^{-\\Gamma t/\\hbar}\\lVert\\psi(0)\\rVert.$$\n\n**概率不再守恒**（粒子「凭空消失」）。\n\n**具体数值**（$\\Gamma=0.1\\hbar$）：\n\n| $t$ | $e^{-\\Gamma t/\\hbar}=e^{-0.1t}$ |\n|---|---|\n| $0$ | $1$ |\n| $10$ | $0.367879$【已核验:0.367879441171|exp(-1)】 |\n| $20$ | $0.135335$【已核验:0.135335283237|exp(-2)】 |\n\n**$t=10$ 时「概率只剩 36.8%」**——那 63.2% 去哪了？**没有物理机制解释**。\n\n**为什么这个问题很微妙（值得说清）**：**「有效」与「严格」是两件事**。\n\n| 做法 | 严格性 | 适用 |\n|---|---|---|\n| $\\hat H-i\\Gamma$（非自伴） | ❌ 概率不守恒 | 「唯象」建模衰变（如某些核物理计算），接受近似 |\n| **开放量子系统**（Lindblad） | ✅ 密度矩阵演化，迹守恒 | 严格处理「粒子跑到环境里去了」 |\n| **耦合到环境**（更大的自伴 $\\hat H$） | ✅ | 完整物理（衰变产物被显式包含） |\n\n**正确的图像（关键）**：**「粒子消失」在物理上从来不是「消失」，而是「变成了别的东西」**（衰变产物、环境自由度）。**所以严格的描述必须把那些自由度也包含进来**——那时总系统仍然是酉演化的。\n\n**数学表述（Lindblad 方程）**：\n\n$$\\frac{d\\rho}{dt}=-\\frac{i}{\\hbar}[\\hat H,\\rho]+\\sum_{k}\\left(\\hat L_k\\rho\\hat L_k^{\\dagger}-\\frac12\\left\\{\\hat L_k^{\\dagger}\\hat L_k,\\rho\\right\\}\\right).$$\n\n**注意第二项（Lindblad 耗散项）**：它让 $\\mathrm{tr}\\rho$ 保持为 1（迹守恒 = 概率守恒），而**非对角元**会衰减（退相干）。**这才是「衰变/耗散」的正确数学框架。**\n\n**后果链条（用非自伴 $\\hat H$ 的代价）**：\n\n1. 概率不守恒 → 若用它算可观测量期望值，会得到「模长归一化」的隐性错误（每次测量后要重新归一）；\n2. 与「幺正演化 ⇒ 信息守恒」矛盾（这在量子信息里是硬约束）；\n3. 若真要用（唯象），必须显式说明「这是近似，概率需要重新归一」。\n\n**修补动作**：\n\n1. **首选**：把环境自由度包含进来 → 总系统自伴 → 酉演化；\n2. **等效**：用 Lindblad 方程（密度矩阵 + 耗散项）；\n3. **若用唯象 $-i\\Gamma$**：明确标注「近似」，并在每次计算后重新归一。",
+      "links": [
+        "F3",
+        "F1",
+        "F2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F3:schrodinger.statement",
+      "type": "statement",
+      "subject": "schrodinger",
+      "title": "薛定谔方程：陈述、形式解与酉性",
+      "keywords": [
+        "方程：iħ ∂_t|ψ⟩ = Ĥ|ψ⟩",
+        "形式解：|ψ(t)⟩ = U(t)|ψ(0)⟩，U = exp(−iĤt/ħ)",
+        "酉性：U†U = I（因 Ĥ 自伴）",
+        "概率守恒：‖ψ(t)‖ = ‖ψ(0)‖（酉性的推论）",
+        "定态：Ĥ|n⟩ = E_n|n⟩，|ψ(t)⟩ = e^{−iE_n t/ħ}|n⟩",
+        "含时 Ĥ：需时间排序指数 T exp(−i/ħ ∫Ĥdt)"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 34,
+        "line_end": 42
+      },
+      "fill_hint": "陈述本体（方程 + 形式解 + 酉性证明）+ 定态与含时情形；给酉性的逐分量数值检验。",
+      "content": "**陈述**（切片）。\n\n**方程**：\n\n$$i\\hbar\\frac{\\partial}{\\partial t}|\\psi(t)\\rangle=\\hat H|\\psi(t)\\rangle.$$\n\n**结构**：对时间**一阶**导数——所以给定 $|\\psi(0)\\rangle$ 就唯一确定演化（**不需要初始速度**，与牛顿力学不同）。\n\n**形式解**（$\\hat H$ 不显含 $t$）：\n\n$$|\\psi(t)\\rangle=e^{-i\\hat Ht/\\hbar}|\\psi(0)\\rangle=:U(t)|\\psi(0)\\rangle.$$\n\n**$U(t)$ 是酉算子**（切片明说）——**这是概率守恒的来源**：\n\n$$U^{\\dagger}U=e^{+i\\hat H^{\\dagger}t/\\hbar}e^{-i\\hat Ht/\\hbar}=e^{i(\\hat H^{\\dagger}-\\hat H)t/\\hbar}=e^{0}=\\hat I\\quad(\\hat H^{\\dagger}=\\hat H).$$\n\n**概率守恒**：\n\n$$\\lVert\\psi(t)\\rVert^{2}=\\langle\\psi(0)\\rvert U^{\\dagger}U\\lvert\\psi(0)\\rangle=\\langle\\psi(0)\\lvert\\psi(0)\\rangle=\\lVert\\psi(0)\\rVert^{2}=1.$$\n\n**具体检验**（二能级、$\\hat H=\\frac{\\hbar\\omega}{2}\\sigma_z$、$\\omega t=1$）：\n\n$$U=\\mathrm{diag}\\left(e^{-i/2},e^{+i/2}\\right),\\qquad \\lvert U_{11}\\rvert=\\lvert U_{22}\\rvert=1$$【已核验:1|cos(0.5)**2+sin(0.5)**2】\n\n**模长全为 1** ✅——这正是酉性的「逐分量」表现。\n\n**定态（能量本征态）**：若 $\\hat H|n\\rangle=E_n|n\\rangle$，则\n\n$$|\\psi(t)\\rangle=e^{-iE_nt/\\hbar}|n\\rangle.$$\n\n**注意只有相位在转**（模长不变）——所以叫**定态**（stationary state）：所有可观测量期望值不随时间变。\n\n**含时哈密顿量**：若 $\\hat H=\\hat H(t)$，形式解要改成**时间排序指数**：\n\n$$U(t)=T\\exp\\left(-\\frac{i}{\\hbar}\\int_0^{t}\\hat H(t')\\,dt'\\right),$$\n\n其中 $T$ 是**时间排序算子**（因为不同时刻的 $\\hat H(t')$ 可能不对易）。\n\n**它依赖什么 / 谁依赖它**：`F1` 的态与内积；`F2` 的自伴算子；`D4` 的哈密顿–雅可比方程（$\\hbar\\to0$ 极限）。下游：`F4` 的角动量（用 $\\hat H$ 的对易子）、`F5` 的路径积分（$e^{-i\\hat Ht/\\hbar}$ 的分解）、`F6` 的 CG 对应。",
+      "links": [
+        "F1",
+        "F2",
+        "F4",
+        "F5",
+        "D4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F3:unitarity.intuition",
+      "type": "intuition",
+      "subject": "unitarity",
+      "title": "直觉：酉演化 = 信息不丢失（相位在转，模长不变）",
+      "keywords": [
+        "酉算子 = 复空间的「旋转」（保持内积）",
+        "为什么概率守恒：旋转不改变向量长度",
+        "为什么是 −i：让演化成为「相位旋转」而不是「指数增长/衰减」",
+        "定态图像：能量本征态只转相位，观测量不变",
+        "量子力学的可逆性来自酉性（与经典耗散相对）",
+        "测量是唯一的非酉步骤（坍缩）"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 34,
+        "line_end": 42
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「酉=旋转」讲酉性；用「$i$ 把增长变成转动」解释 $-i$；点出「测量是唯一非酉步骤」。",
+      "content": "**切片给了方程与酉性**。理解的关键是**「酉 = 旋转」。**\n\n**假设给了什么。** 量子态是复向量；演化是「把初态变成末态的线性映射」$U(t)$。**物理要求**：概率（范数）必须守恒。\n\n**结论为什么因此成立。** 「保持范数的线性映射」就是**酉算子**：\n\n$$\\lVert U\\psi\\rVert=\\lVert\\psi\\rVert\\quad\\forall\\psi\\quad\\Longleftrightarrow\\quad U^{\\dagger}U=\\hat I.$$\n\n**用复数域的图像**：酉算子就是**一点处的「旋转」**（复空间的旋转）。**所以整个量子演化就是「态向量在希尔伯特空间里转动」。**\n\n**为什么是 $-i$（这条最值得说）**：看看如果把方程写成\n\n$$i\\hbar\\partial_t\\psi=\\hat H\\psi\\quad\\text{(薛定谔)}\\quad\\text{vs}\\quad\\hbar\\partial_t\\psi=-\\hat H\\psi\\quad(\\text{错误符号}).$$\n\n**后者的解是 $e^{+\\hat Ht/\\hbar}$——模长指数增长**（概率爆炸 ❌）。**$i$ 的作用正是把「指数增长」变成「相位旋转」**（因为 $e^{-iEt/\\hbar}$ 的模长恒为 1）。\n\n**具体对照**：\n\n| 演化 | 形式 | 模长 |\n|---|---|---|\n| 薛定谔（正确） | $e^{-iEt/\\hbar}$ | $\\lvert e^{-iEt/\\hbar}\\rvert=1$【已核验:1|cos(0.5)**2+sin(0.5)**2】 |\n| 错误符号 | $e^{+Et/\\hbar}$ | 指数增长 ❌ |\n| 唯象耗散 | $e^{-\\Gamma t/\\hbar}$ | 指数衰减（`F3:unitarity.counterexample`） |\n\n**定态的图像**：能量本征态 $|n\\rangle$ 的演化是 $e^{-iE_nt/\\hbar}|n\\rangle$——**向量方向在转、但整体只是相位**。所以：\n\n$$\\langle\\hat A\\rangle=\\langle n\\lvert e^{+iE_nt/\\hbar}\\hat Ae^{-iE_nt/\\hbar}\\lvert n\\rangle=\\langle n\\lvert\\hat A\\lvert n\\rangle$$\n\n**与时间无关** ✅——这就是「定态」的准确含义。\n\n**量子力学的可逆性（酉性的推论）**：$U(t)$ 总是可逆的（$U^{-1}=U^{\\dagger}$）——**所以量子演化是可逆的**（给定末态可以反推初态）。\n\n**这与经典耗散形成对照**：`D2:noether.broken-symmetry` 里的阻尼（能量衰减）对应**非酉**演化。**在量子情形，耗散必须来自「与环境耦合」（把环境包含进来后仍是酉的）。**\n\n**唯一的非酉步骤（这条很重要）**：**测量**（`F2` 的坍缩）**不是酉的**——它把叠加变成确定态（信息「丢失」到环境里）。\n\n| 过程 | 酉？ | 可逆？ |\n|---|---|---|\n| 自由演化 | ✅ | ✅ |\n| 测量（坍缩） | ❌ | ❌ |\n| 与经典仪器相互作用 | ✅（含仪器） | ✅（但实际不可追踪） |\n\n**所以「量子力学的不可逆性从哪来」的答案是：测量（或与之等价的环境退相干）。**\n\n**记这个图像**：**酉演化 = 希尔伯特空间里的旋转：相位在转、模长不变、信息不丢、过程可逆。** $i$ 的作用是「把增长变成转动」；测量是唯一的非酉步骤。",
+      "links": [
+        "F1",
+        "F2",
+        "F4",
+        "D4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F3:unitarity.proof",
+      "type": "proof",
+      "subject": "unitarity",
+      "title": "推导骨架：从自伴性到概率守恒（三步）",
+      "keywords": [
+        "第一步：写出 U(t) = exp(−iĤt/ħ)",
+        "第二步：用 Ĥ†=Ĥ 得 U† = exp(+iĤt/ħ)（自伴算子的函数）",
+        "第三步：U†U = exp(iĤt/ħ)exp(−iĤt/ħ) = I（同算子可交换）",
+        "第四步：范数守恒 ‖ψ(t)‖ = ‖ψ(0)‖（酉性的推论）",
+        "易错点：忘 Ĥ 自伴；把 e^A e^B 当 e^{A+B}（需 A、B 对易）",
+        "校验：二能级系统 ωt=1 时 |U_ii|=1"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 34,
+        "line_end": 42
+      },
+      "fill_hint": "四步骨架；第二步用自伴性、第三步强调「同算子可合并」；末段用 $-i\\sigma_z$ 给具体例子。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：写出演化算子。**\n\n$$U(t)=e^{-i\\hat Ht/\\hbar}:=\\sum_{k=0}^{\\infty}\\frac{1}{k!}\\left(-\\frac{i\\hat Ht}{\\hbar}\\right)^{k}.$$\n\n**理由**：这是算子指数函数的定义（幂级数）。**它对自伴 $\\hat H$ 收敛**（谱定理保证可以按本征基展开）。\n\n**第二步：求 $U^{\\dagger}$。** 用 $(\\hat H^{k})^{\\dagger}=(\\hat H^{\\dagger})^{k}=\\hat H^{k}$（$\\hat H$ **自伴**）与 $\\overline{(-i)}=+i$：\n\n$$U^{\\dagger}=\\sum_k\\frac{1}{k!}\\left(\\frac{i\\hat Ht}{\\hbar}\\right)^{k}=e^{+i\\hat Ht/\\hbar}.$$\n\n**理由**：**这一步用了自伴性**——若 $\\hat H^{\\dagger}\\neq\\hat H$，则 $U^{\\dagger}$ 不是这个形式。\n\n**第三步：算 $U^{\\dagger}U$。**\n\n$$U^{\\dagger}U=e^{+i\\hat Ht/\\hbar}e^{-i\\hat Ht/\\hbar}=e^{0}=\\hat I.$$\n\n**关键点**：**同一个算子 $\\hat H$ 的指数可以合并**（$e^{A}e^{-A}=I$ 对任意 $A$ 成立，因为 $A$ 与 $-A$ 当然对易）。**所以这一步不需要「不同算子对易」，只要同一个算子。** ✅\n\n**第四步：范数守恒。**\n\n$$\\lVert\\psi(t)\\rVert^{2}=\\langle\\psi(0)\\rvert U^{\\dagger}U\\lvert\\psi(0)\\rangle=\\langle\\psi(0)\\lvert\\psi(0)\\rangle=\\lVert\\psi(0)\\rVert^{2}=1.$$\n\n**理由**：这就是「概率守恒」——**归一化在演化中保持**。\n\n**数值校核**：二能级 $\\hat H=\\frac{\\hbar\\omega}{2}\\sigma_z$、$\\omega t=1$：\n\n$$U=\\mathrm{diag}\\left(e^{-i/2},\\ e^{+i/2}\\right),\\qquad \\lvert U_{11}\\rvert=\\lvert e^{-i/2}\\rvert=1,\\quad \\lvert U_{22}\\rvert=1$$【已核验:1|cos(0.5)**2+sin(0.5)**2】\n\n**两个模长都是 1** ✅（酉矩阵的列/行必须是单位向量）。\n\n**更具体的验证（$\\omega t=\\pi$）**：$U=\\mathrm{diag}(e^{-i\\pi/2},e^{i\\pi/2})=\\mathrm{diag}(-i,+i)$，即\n\n$$U=-i\\sigma_z.$$\n\n**这是一个「把 $|0\\rangle$ 加上 $-i$ 相位、把 $|1\\rangle$ 加上 $+i$ 相位」的操作**——纯相位（模长不变）。\n\n**依赖链**：$\\hat H$ 自伴 → $U^{\\dagger}=e^{+i\\hat Ht/\\hbar}$ → $U^{\\dagger}U=I$ → 范数守恒。\n\n**易错点**：\n\n1. **忘自伴性**：这是「所有环节里唯一需要 $\\hat H^{\\dagger}=\\hat H$ 的地方」；\n2. **把 $e^{A}e^{B}=e^{A+B}$ 当普遍成立**：**只有 $[A,B]=0$ 时才成立**。本题里 $A=+i\\hat Ht/\\hbar$、$B=-i\\hat Ht/\\hbar$ 满足 $[A,B]=0$（它们是同一个算子的倍数），所以可以合并 ✅。**但换两个不同算子就不行了**（这正是含时哈密顿量要「时间排序」的原因）；\n3. **以为「概率守恒」需要额外条件**：它只是自伴性的推论。",
+      "links": [
+        "F1",
+        "F2",
+        "F4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F3:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：定态演化一个周期后相位是多少？",
+      "keywords": [
+        "可算题：Ĥ|1⟩ = E|1⟩，t = 2πħ/E，求 e^{−iEt/ħ}",
+        "答案：e^{−2πi} = 1（回到初态）",
+        "追问：t = πħ/E 时是多少？（e^{−iπ} = −1）",
+        "再问：此时可观测量期望值变了吗？（没变，只是全局相位）",
+        "陷阱：把 e^{−iπ} 当成「概率变负」"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 34,
+        "line_end": 42
+      },
+      "fill_hint": "从定态演化变来的检验题；三问分别考相位循环、半周期、全局相位不可观测；延伸给玻尔频率条件。",
+      "content": "**题**：能量本征态 $|1\\rangle$（$\\hat H|1\\rangle=E|1\\rangle$）。\n\n1. 求 $t=\\dfrac{2\\pi\\hbar}{E}$ 时的相位因子 $e^{-iEt/\\hbar}$；\n2. 求 $t=\\dfrac{\\pi\\hbar}{E}$ 时的相位因子；\n3. 第 2 问的相位下，可观测量期望值变了吗？\n\n**答案**：\n\n1. $e^{-iE\\cdot(2\\pi\\hbar/E)/\\hbar}=e^{-2\\pi i}=1$【已核验:(1+2.4492935982947064e-16j)|cos(-2*pi)+1j*sin(-2*pi)】\n\n   **回到初态**（同一条射线）。\n\n2. $e^{-i\\pi}=-1$【已核验:(-1-1.2246467991473532e-16j)|cos(-pi)+1j*sin(-pi)】\n\n3. **没变**。理由：\n\n$$\\langle\\hat A\\rangle=\\langle 1\\lvert e^{+i\\pi}\\hat Ae^{-i\\pi}\\lvert 1\\rangle=\\langle 1\\lvert\\hat A\\lvert 1\\rangle$$\n\n——**$e^{+i\\pi}\\cdot e^{-i\\pi}=1$ 相消**（`F1:hilbert-space.global-phase`）。\n\n**关键读数**：第 2 问的 $-1$ 是**全局相位**（$|\\psi\\rangle\\to-|\\psi\\rangle$）——**不可观测**。所以「演化半周期后态仍然一样」在物理上与「没演化」不可区分。\n\n**易错点**：\n\n- **把 $e^{-i\\pi}=-1$ 当「概率变负」**：概率是 $\\lvert-1\\rvert^{2}=1$，不变；\n- **把「相位回到 1」当「演化停了」**：演化一直在进行（只是 $t=2\\pi\\hbar/E$ 时相位循环回来）；\n- **忘记 $-i$ 的位置**：$e^{-iEt/\\hbar}$ 里的负号来自薛定谔方程的 $i\\hbar\\partial_t$（`F3:unitarity.intuition`）。\n\n**延伸（能量-相位的时间尺度）**：\n\n| $t$ | 相位 | 与初态的关系 |\n|---|---|---|\n| $0$ | $1$ | 相同 |\n| $\\pi\\hbar/E$ | $-1$ | 同一射线（全局相位） |\n| $2\\pi\\hbar/E$ | $1$ | 完整循环 |\n\n**周期 $T=2\\pi\\hbar/E=2\\pi/\\omega$**（$\\omega=E/\\hbar$）——**这正是玻尔频率条件 $\\hbar\\omega=E$ 的来源**。",
+      "links": [
+        "F3",
+        "F1",
+        "F2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：态演化与相位旋转",
+      "keywords": [
+        "模块 schrodinger-evolution（档1 前端直渲）",
+        "模式①：Bloch 球上态向量的相位旋转（绕 z 轴）",
+        "模式②：拖时间，看定态的相位转动（观测量不变）",
+        "模式③：含时 H（如拉比振荡），态在球上摆动",
+        "invariant：‖ψ(t)‖ = 1（严格等式，酉演化）",
+        "预置：Ĥ = (ħω/2)σz，ωt∈[0,4π]"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 34,
+        "line_end": 42
+      },
+      "fill_hint": "档1 依据：态演化与相位旋转都是显式可算，前端可算；invariant 用范数守恒这个严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `schrodinger-evolution`。\n\n**模式① `phase-rotation`**：Bloch 球上，态向量绕 $z$ 轴**匀速旋转**（$|\\psi\\rangle=\\frac{1}{\\sqrt2}(|0\\rangle+e^{i\\omega t}|1\\rangle)$）。**这是「相位在转」的可视化**（`F3:unitarity.intuition`）。\n\n**模式② `stationary-state`**：$|0\\rangle$ 的演化——Bloch 向量**完全不动**（因为全局相位不可观测）。**这就是「定态」的图像。**\n\n**模式③ `rabi-oscillation`**：含时 $\\hat H(t)=\\frac{\\hbar}{2}(\\omega_0\\sigma_z+\\Omega\\cos(\\omega t)\\sigma_x)$——**态在球上摆动**（Rabi 振荡）。**这是「含时 H 需要时间排序指数」的物理场合。**\n\n**恒等式（给前端 invariant）**：\n\n$$\\lVert\\psi(t)\\rVert=1\\quad\\forall t\\ \\text{（酉演化）},\\qquad U^{\\dagger}U=\\hat I.$$\n\n**两条都是严格关系**。实现正确时，实时计算的范数必须恒为 1；任何非酉的错误（符号错、丢掉 $i$）都会让它漂移。\n\n**参数契约**：\n\n- 预置：$\\hat H=\\frac{\\hbar\\omega}{2}\\sigma_z$、$\\omega t\\in[0,4\\pi]$；\n- Rabi 模式：$\\Omega/\\omega_0$ 可拖，展示振荡频率与 $\\Omega$ 的关系；\n- 与 `F3:schrodinger.statement` 的酉性数值（$\\lvert U_{ii}\\rvert=1$）保持一致。",
+      "links": [
+        "F1",
+        "F2",
+        "F4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

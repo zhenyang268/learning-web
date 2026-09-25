@@ -1,0 +1,243 @@
+{
+  "schema": "entry-card/v2",
+  "code": "F4",
+  "chapter": "F4",
+  "title": "角动量与自旋",
+  "src": {
+    "file": "notebook/F_quantum.tex",
+    "line_start": 44,
+    "line_end": 59,
+    "anchor": "notebook/F_quantum.tex:44"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "F4:angular-momentum.quantifiers",
+      "type": "comparison",
+      "subject": "angular-momentum",
+      "title": "角动量量子化的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①对易关系 [L_i,L_j]=iħε_ijk L_k（so(3) 代数）",
+        "条件②量子化：L² 本征值 ħ²l(l+1)，L_z 本征值 ħm",
+        "条件③l 是整数或半整数：轨道 l 只能整数，自旋可半整数",
+        "条件④m 的范围 −l ≤ m ≤ l：共 2l+1 个取值",
+        "翻车代价：把轨道角动量当自旋（l 的整数性被破坏）"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 44,
+        "line_end": 59
+      },
+      "fill_hint": "四行条件表；② 行必须点出「$l(l+1)$ 而非 $l^2$」；③ 行区分轨道与自旋；末段给 $l=0..3$ 与 $s=1/2$ 的数值。",
+      "content": "切片给了角动量算子、对易关系、量子化与自旋。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **对易关系** | $[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$（切片）。这是 $\\mathfrak{so}(3)$ 的李代数，**由它出发就能推出全部量子化**，不需要 $L=r\\times p$ 的具体形式 | 若用「互相对易」的错误假设，会认为三个分量可同时确定 | 不能放宽：这是角动量的定义性对易关系 |\n| ② **本征值** | $\\hat L^{2}\\lvert l,m\\rangle=\\hbar^{2}l(l+1)\\lvert l,m\\rangle$。**注意是 $l(l+1)$ 而不是 $l^{2}$**——这是量子力学的标志（经典里是 $L^{2}=l^{2}$） | 用 $l^{2}$ 会算错能量（如转动能级） | 不能放宽：$l(l+1)$ 来自对易关系 |\n| ③ **$l$ 的取值** | 轨道角动量（$\\hat{\\mathbf L}=\\hat{\\mathbf r}\\times\\hat{\\mathbf p}$）**只允许整数 $l$**；自旋（无 $r\\times p$ 表示）**允许半整数**（电子 $s=1/2$） | 把自旋当轨道角动量 → 无法解释电子的 $s=1/2$，也无法解释自旋磁矩的 $g=2$ | 不能放宽：这是「自旋不是空间转动」的直接体现 |\n| ④ **$m$ 的范围** | $-l\\le m\\le l$，故每个 $l$ 有 $2l+1$ 个态。实测：$l=0\\to1$ 个、$l=1\\to3$ 个、$l=2\\to5$ 个、$l=3\\to7$ 个 | 若忘了这个范围，会认为「有无穷多个 $m$」 | 不能放宽：来自升降算子的截断 |\n\n**这张表的用法**：\n\n1. **看 $l(l+1)$**（不是 $l^{2}$）；\n2. **区分轨道与自旋**（$l$ 整数 vs $s$ 半整数）；\n3. **$m$ 的数目 $2l+1$**。\n\n**数值锚点（$l(l+1)$ 与 $2l+1$）**：\n\n| $l$ | $\\hat L^{2}$ 本征值 $/\\hbar^{2}$ | $m$ 的个数 $2l+1$ |\n|---|---|---|\n| $0$ | $0$ | $1$ |\n| $1$ | $2$【已核验:2|1*2】 | $3$ |\n| $2$ | $6$【已核验:6|2*3】 | $5$ |\n| $3$ | $12$【已核验:12|3*4】 | $7$ |\n\n**电子自旋**（$s=1/2$）：$\\hat S^{2}$ 本征值 $\\hbar^{2}\\cdot\\frac12\\cdot\\frac32=\\frac34\\hbar^{2}$【已核验:0.75|(1/2)*(3/2)】，$\\hat S_z$ 本征值 $\\pm\\frac{\\hbar}{2}$。\n\n**注意 $l(l+1)$ 与 $2l+1$ 的关系**：$2l+1$ 是「态数」、$l(l+1)$ 是「本征值」。**两者都只由 $l$ 决定**——这是角动量量子化的全部内容。",
+      "links": [
+        "F4",
+        "F1",
+        "F2",
+        "E3",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F4:algebra-misuse.counterexample",
+      "type": "counterexample",
+      "subject": "algebra-misuse",
+      "title": "反例：假设三个角动量分量可同时确定（它们不对易）",
+      "keywords": [
+        "误用现场：认为 |l,m⟩ 同时是 Lx、Ly、Lz 的本征态",
+        "正解：只有 L² 与 Lz 可同时对角化（因为它们对易）",
+        "对易关系：[L_i,L_j] = iħε_ijk L_k ⇒ Lx、Ly、Lz 两两不对易",
+        "判据：可同时精确 ⟺ 对易子为零（F2 的不确定性原理）",
+        "后果：ΔLx·ΔLy ≥ ½|⟨Lz⟩| = ½ħ|m|",
+        "修补：只用 L² 与 Lz 作为「好量子数」"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 44,
+        "line_end": 59
+      },
+      "fill_hint": "把「不对易 ⇒ 不能同时确定」算成 $\\Delta L_x\\Delta L_y\\ge\\hbar|m|/2$；给「可同时对角化」的对照表；连到 E3。",
+      "content": "**误用现场**：认为角动量态 $|l,m\\rangle$ 同时确定了 $\\hat L_x$、$\\hat L_y$、$\\hat L_z$ 三个分量。\n\n**为什么这是错的**：\n\n$$[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k\\quad\\Longrightarrow\\quad[\\hat L_x,\\hat L_y]=i\\hbar\\hat L_z\\neq0.$$\n\n**三个分量两两不对易**（除了退化情形 $m=0$）。所以由 `F2` 的不确定性原理：\n\n$$\\Delta L_x\\,\\Delta L_y\\ \\ge\\ \\frac{1}{2}\\left\\lvert\\langle\\hat L_z\\rangle\\right\\rvert=\\frac{1}{2}\\hbar\\lvert m\\rvert.$$\n\n**$m\\neq0$ 时不能同时确定**。\n\n**可同时对角化的组合（这条是正解）**：\n\n| 组合 | 对易？ | 可同时确定？ |\n|---|---|---|\n| $\\hat L^{2}$ 与 $\\hat L_z$ | ✅（$[\\hat L^{2},\\hat L_z]=0$） | ✅（$|l,m\\rangle$） |\n| $\\hat L_x$ 与 $\\hat L_y$ | ❌ | ❌ |\n| $\\hat L_x$ 与 $\\hat L^{2}$ | ✅ | ✅（但 $L_x$ 与 $L_z$ 不能同时选） |\n\n**所以「好量子数」只能选 $l$ 与 $m$**（即 $\\hat L^{2}$ 与 $\\hat L_z$）——**这是「为什么量子力学用 $|l,m\\rangle$ 而不写三个分量」的答案**。\n\n**后果链条**：\n\n1. 若强行写 $|L_x,L_y,L_z\\rangle$ → 不存在这样的态（除 $l=0$）；\n2. 若在某方向测了 $L_x$，则 $L_z$ 的值变为不确定（**这正是 Stern–Gerlach 连续实验的现象**）；\n3. 若用它算转动能级 → 只用到 $\\hat L^{2}$（$l(l+1)$），不受影响。\n\n**修补动作**：\n\n1. **记住「可同时确定 ⟺ 对易」**（`F2:observable.quantifiers` 第④行）；\n2. **角动量永远选 $\\hat L^{2}$ 与 $\\hat L_z$**；\n3. **若要换方向**（如沿 $x$ 测），必须重新展开（用 Wigner $D$ 矩阵，即转动）——**这与 `E3` 的「同一向量不同基底」是同型操作**。\n\n**跨篇连接**：这与 `E3` 的「$\\mathbf{E}$ 与 $\\mathbf{B}$ 是同一个 2-形式的不同分量」结构相同——**「同一个几何对象，不同投影」的图景在量子力学与相对论里都出现**。",
+      "links": [
+        "F4",
+        "F2",
+        "F1",
+        "E3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F4:angular-momentum.statement",
+      "type": "statement",
+      "subject": "angular-momentum",
+      "title": "角动量：对易关系、量子化与自旋",
+      "keywords": [
+        "角动量算子：L̂ = r̂ × p̂",
+        "对易关系：[L̂_i,L̂_j] = iħε_ijk L̂_k（so(3) 李代数）",
+        "量子化：L̂²|l,m⟩ = ħ²l(l+1)|l,m⟩，L̂_z|l,m⟩ = ħm|l,m⟩",
+        "取值范围：l=0,1,2,…；m=−l,…,l（共 2l+1 个）",
+        "球谐函数 Y_l^m 是 L̂² 与 L̂_z 的共同本征函数",
+        "自旋：内禀角动量，满足相同代数；电子 s=1/2"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 44,
+        "line_end": 59
+      },
+      "fill_hint": "陈述本体（对易关系 + 量子化 + 球谐）+ 自旋与 s=1/2 的数值；点出「自旋无 r×p 形式」与 $g\u0007pprox2$。",
+      "content": "**陈述**（切片）。\n\n**角动量算子**：\n\n$$\\hat{\\mathbf L}=\\hat{\\mathbf r}\\times\\hat{\\mathbf p}.$$\n\n**对易关系**（切片标注为 $\\mathfrak{so}(3)$ 的李代数）：\n\n$$[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k.$$\n\n**这条对易关系是「角动量」的定义**——它比 $\\hat{\\mathbf r}\\times\\hat{\\mathbf p}$ 更基本（自旋没有后者那样的表示，但满足同样的对易关系）。\n\n**量子化**：\n\n$$\\hat L^{2}|l,m\\rangle=\\hbar^{2}l(l+1)|l,m\\rangle,\\qquad \\hat L_z|l,m\\rangle=\\hbar m|l,m\\rangle,$$\n\n$$l=0,1,2,\\ldots,\\qquad m=-l,-l+1,\\ldots,l.$$\n\n**注意两件事**：① 本征值是 $l(l+1)$（**不是 $l^{2}$**）；② $m$ 有 $2l+1$ 个取值。\n\n**数值锚点**：\n\n| $l$ | $\\hbar^{2}l(l+1)$ | $\\lvert m\\rvert_{\\max}$ | 态数 |\n|---|---|---|---|\n| $0$ | $\\hbar^{2}\\cdot0$ | $0$ | $1$ |\n| $1$ | $\\hbar^{2}\\cdot2$【已核验:2|1*2】 | $1$ | $3$ |\n| $2$ | $\\hbar^{2}\\cdot6$【已核验:6|2*3】 | $2$ | $5$ |\n| $3$ | $\\hbar^{2}\\cdot12$【已核验:12|3*4】 | $3$ | $7$ |\n\n**球谐函数**：$Y_l^{m}(\\theta,\\phi)$ 是 $\\hat L^{2}$ 与 $\\hat L_z$ 的**共同本征函数**：\n\n$$\\hat L^{2}Y_l^{m}=\\hbar^{2}l(l+1)Y_l^{m},\\qquad \\hat L_zY_l^{m}=\\hbar mY_l^{m}.$$\n\n**它们是「球面上的基」**——这正是 `H5` 的球谐光照（SH lighting）用的那套基。\n\n**自旋**（切片）：**内禀角动量，不对应空间旋转，但满足相同的代数。**\n\n$$\\hat S^{2}|s,m_s\\rangle=\\hbar^{2}s(s+1)|s,m_s\\rangle,\\qquad \\hat S_z|s,m_s\\rangle=\\hbar m_s|s,m_s\\rangle.$$\n\n**电子**：$s=1/2$，故 $\\hat S^{2}$ 本征值\n\n$$\\hbar^{2}\\cdot\\frac12\\cdot\\frac32=\\frac{3}{4}\\hbar^{2}$$【已核验:0.75|(1/2)*(3/2)】\n\n$\\hat S_z$ 本征值 $\\pm\\frac{\\hbar}{2}$（两个态，$2s+1=2$ ✅）。\n\n**「内禀、不对应空间旋转」的含义**（这条最要紧）：**自旋没有 $\\hat{\\mathbf r}\\times\\hat{\\mathbf p}$ 形式**——它是**额外**的自由度。所以：\n\n1. 自旋的 $s$ **可以是半整数**（轨道 $l$ 只能整数，因为 $Y_l^{m}$ 必须单值）；\n2. 自旋磁矩的 $g$ 因子**约为 2**（而轨道 $g=1$）——这是 Dirac 方程给出的，也是自旋「内禀」的定量证据。\n\n**它依赖什么 / 谁依赖它**：`F2` 的对易关系与不确定性；下游：原子光谱（精细结构）、`H5` 的球谐基、`F5` 的路径积分（自旋的路径积分需要 Grassmann 数）、`E3` 的洛伦兹群表示（自旋是 $\\mathrm{SU}(2)$ 的表示）。",
+      "links": [
+        "F1",
+        "F2",
+        "E3",
+        "H5",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F4:angular-momentum.intuition",
+      "type": "intuition",
+      "subject": "angular-momentum",
+      "title": "直觉：角动量是「球的转动」，自旋是「多出来的一个自由度」",
+      "keywords": [
+        "轨道角动量：粒子在空间转 → 有 r×p 表示 → l 只能整数",
+        "为什么 l 整数：波函数必须单值（转 2π 回原位）",
+        "自旋：没有空间表示 → s 可半整数 → 转 2π 只回到「−ψ」",
+        "半整数的图像：需要转 4π 才回到原态（自旋or 旋量）",
+        "为什么角动量对易关系非零：三个转动方向不能对易（球面上转动的几何）",
+        "为什么只选 L² 与 Lz：它们对易（可同时确定）"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 44,
+        "line_end": 59
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用三个几何事实（不可交换、单值性、无空间表示）解释全部；连到 H5 的球谐。",
+      "content": "**切片给了对易关系与自旋**。理解的关键是**「转动群」的几何**。\n\n**假设给了什么。** 角动量是**转动的生成元**——这是它与平移（动量）的类比：**动量生成平移，角动量生成转动**（`F2:uncertainty.intuition` 里 $\\hat p$ 是平移生成元）。\n\n**结论为什么因此成立（三个几何事实）**：\n\n**① 为什么三个分量不对易（球面转动不可交换）**：在三维里，先绕 $x$ 转、再绕 $y$ 转，与反过来转的结果**不同**（这与 `B` 篇的非交换群是同一件事）。**所以 $[\\hat L_x,\\hat L_y]\\neq0$**。\n\n**② 为什么 $l$ 只能整数（轨道情形）**：波函数 $\\psi(\\mathbf{r})$ 必须**单值**（转 $2\\pi$ 回到同一点）。\n\n$$Y_l^{m}(\\phi+2\\pi)=(-1)^{m}\\cdot(\\ldots)\\cdot e^{im2\\pi}$$\n\n要求 $e^{im2\\pi}=1$ ⇒ **$m$ 整数** ⇒ $l$ 整数（因为 $l$ 与 $m$ 同奇偶步长）。\n\n**③ 为什么自旋可半整数（无空间表示）**：自旋**不是空间中的函数**（没有 $\\psi(\\mathbf{r})$ 那样的单值性要求）。所以 $s=1/2$ 合法——代价是**转 $2\\pi$ 后态变成 $-\\psi$**（需要转 $4\\pi$ 才回到原态）。\n\n**这个「$2\\pi$ 变号」是可观测的（值得说清）**：用中子干涉仪可以测出「自旋 $1/2$ 的态在转 $2\\pi$ 后相位变 $\\pi$」——**这是自旋非经典的直接实验证据**。\n\n**为什么「$\\hat L^{2}$ 与 $\\hat L_z$」是默认选择**：\n\n| 组合 | 对易 | 可作为好量子数 |\n|---|---|---|\n| $\\hat L^{2},\\hat L_z$ | ✅ | ✅（标准选择） |\n| $\\hat L_x,\\hat L_y$ | ❌ | ❌ |\n| $\\hat L_z,\\hat L_x$ | ❌ | ❌ |\n\n**任意一对「$\\hat L^{2}$ 加一个方向」都可以**——选 $z$ 只是**约定**（因为 $z$ 是球坐标的极轴）。\n\n**与 `H5` 的连接（实用）**：$Y_l^{m}$ 是球面上的**正交基**，所以任何球面函数可以展开\n\n$$f(\\theta,\\phi)=\\sum_{l,m}c_{l}^{m}Y_l^{m}(\\theta,\\phi).$$\n\n**这就是「球谐变换」**——图形学的 SH 光照、环境贴图压缩都用它。**而它的数学来源正是「$\\hat L^{2}$ 与 $\\hat L_z$ 的共同本征函数」。**\n\n**记这个图像**：**角动量 = 转动生成元；三个分量不对易（球面转动不可交换）；轨道只能整数 $l$（波函数单值）；自旋可半整数（无空间表示，$2\\pi$ 变号）。**",
+      "links": [
+        "F1",
+        "F2",
+        "H5",
+        "E3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F4:spin.proof",
+      "type": "proof",
+      "subject": "spin",
+      "title": "推导骨架：从对易关系推出角动量量子化（四步）",
+      "keywords": [
+        "第一步：定义升降算子 L± = Lx ± iLy",
+        "第二步：由对易关系得 [Lz,L±] = ±ħL±（升降的性质）",
+        "第三步：L± 作用在 |l,m⟩ 上把 m 变为 m±1，且 L² 不变",
+        "第四步：截断（有限维表示）给出 −l ≤ m ≤ l 与 l(l+1)",
+        "易错点：把 L² 与 Lz 的对易漏掉；忘截断条件；混用 ±i 的符号",
+        "校验：l=1 时 m∈{−1,0,1}（3 个态，与 2l+1 一致）"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 44,
+        "line_end": 59
+      },
+      "fill_hint": "四步骨架；重点是「只用对易关系就能推出全部量子化」；第四步的截断条件（$L^2\\ge L_z^2$）是关键；末段说明半整数为何合法。",
+      "content": "**推导骨架**（四步，每步给理由）。目标：说明**只用对易关系**就能推出全部量子化。\n\n**第一步：定义升降算子。**\n\n$$\\hat L_{\\pm}=\\hat L_x\\pm i\\hat L_y.$$\n\n**理由**：与谐振子的 $\\hat a$、$\\hat a^{\\dagger}$ 同型（`F2:non-selfadjoint.counterexample` 的升降算子）。**注意 $\\hat L_{\\pm}$ 不是自伴的**——它们是「换 $m$」的工具，不是可观测量。\n\n**第二步：由对易关系得升降性质。**\n\n$$[\\hat L_z,\\hat L_{\\pm}]=\\pm\\hbar\\hat L_{\\pm}.$$\n\n**理由**：直接代入 $[\\hat L_z,\\hat L_x]=i\\hbar\\hat L_y$ 与 $[\\hat L_z,\\hat L_y]=-i\\hbar\\hat L_x$：\n\n$$[\\hat L_z,\\hat L_{\\pm}]=[\\hat L_z,\\hat L_x]\\pm i[\\hat L_z,\\hat L_y]=i\\hbar\\hat L_y\\pm i(-i\\hbar\\hat L_x)=i\\hbar(\\hat L_y\\mp\\hat L_x)=\\pm\\hbar(\\hat L_x\\pm i\\hat L_y)=\\pm\\hbar\\hat L_{\\pm}$$ ✅\n\n**第三步：作用在本征态上（换 $m$）。** 设 $\\hat L_z|m\\rangle=\\hbar m|m\\rangle$，则\n\n$$\\hat L_z\\left(\\hat L_{\\pm}|m\\rangle\\right)=\\left(\\hat L_{\\pm}\\hat L_z\\pm\\hbar\\hat L_{\\pm}\\right)|m\\rangle=\\hbar(m\\pm1)\\left(\\hat L_{\\pm}|m\\rangle\\right).$$\n\n**所以 $\\hat L_{\\pm}|m\\rangle$ 仍是 $\\hat L_z$ 的本征态，本征值变成 $\\hbar(m\\pm1)$** ✅——**这就是「升/降」的含义**。\n\n**同时**（这条是 $l$ 的来源）：$[\\hat L^{2},\\hat L_{\\pm}]=0$（因为 $\\hat L^{2}$ 是标量算子在转动下不变），所以 $\\hat L_{\\pm}$ **不改变 $l$**。\n\n**第四步：截断给出 $l(l+1)$（关键一步）。** 因为 $\\hat L_z^{2}\\le\\hat L^{2}$（严格不等式，因 $\\hat L^{2}-\\hat L_z^{2}=\\hat L_x^{2}+\\hat L_y^{2}\\ge0$），所以 $m$ **有上下界**：\n\n$$\\hbar^{2}m^{2}\\le\\hbar^{2}l(l+1)\\quad\\Longrightarrow\\quad\\lvert m\\rvert\\le\\sqrt{l(l+1)}.$$\n\n**于是存在最高态** $|l,l\\rangle$ 满足 $\\hat L_{+}|l,l\\rangle=0$。用恒等式\n\n$$\\hat L_{-}\\hat L_{+}=\\hat L^{2}-\\hat L_z^{2}-\\hbar\\hat L_z,$$\n\n作用在 $|l,l\\rangle$ 上：\n\n$$0=\\left[\\hbar^{2}l(l+1)-\\hbar^{2}l^{2}-\\hbar^{2}l\\right]|l,l\\rangle=\\hbar^{2}\\left[l(l+1)-l^{2}-l\\right]|l,l\\rangle.$$\n\n**括号恒为零**——**这验证了自洽性**（而不是「推出」$l(l+1)$）。**$l(l+1)$ 的形式是由对易关系与非负性共同决定的**。\n\n**同理从最低态** $|l,-l\\rangle$（$\\hat L_{-}|l,-l\\rangle=0$）得到对称的 $m$ 范围。**因为 $m$ 每次变 1，从 $-l$ 到 $+l$ 共 $2l+1$ 个值** ✅。\n\n**数值校核**：\n\n| $l$ | $m$ 的范围 | 态数 |\n|---|---|---|\n| $0$ | $\\{0\\}$ | $1$ |\n| $1$ | $\\{-1,0,1\\}$ | $3$【已核验:3|2*1+1】 |\n| $2$ | $\\{-2,\\ldots,2\\}$ | $5$【已核验:5|2*2+1】 |\n| $3$ | $\\{-3,\\ldots,3\\}$ | $7$【已核验:7|2*3+1】 |\n\n**依赖链**：对易关系 → 升降性质（第二步）→ 换 $m$（第三步）→ 非负性截断（第四步）→ $m$ 范围与 $2l+1$。\n\n**易错点**：\n\n1. **忘了 $[\\hat L^{2},\\hat L_{\\pm}]=0$**：这保证 $l$ **不变**（只有 $m$ 变）；\n2. **忘截断条件**：$m$ 的有限范围**不是假设**，是 $\\hat L^{2}\\ge\\hat L_z^{2}$ 的推论；\n3. **$2l+1$ 的来源**：从 $-l$ 到 $l$ 步长 1，所以是 $2l+1$（**不是 $2l$**）；\n4. **半整数情形**：对自旋，第三步到第四步的推导**完全相同**，只是截断允许「从 $-s$ 到 $s$ 步长为 1」且 $s$ 可为半整数——**没有任何矛盾**。",
+      "links": [
+        "F2",
+        "F1",
+        "E3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F4:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：l=2 的角动量有多少个态？本征值是多少？",
+      "keywords": [
+        "可算题：l=2，求 L² 本征值与 m 的取值个数",
+        "答案：L² = ħ²·2·3 = 6ħ²；m ∈ {−2,−1,0,1,2}（5 个）",
+        "追问：l=3 呢？（12ħ²，7 个）",
+        "再问：电子自旋 s=1/2 的 S² 本征值？（3ħ²/4）",
+        "陷阱：用 l² 而不是 l(l+1)；把态数算成 2l"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 44,
+        "line_end": 59
+      },
+      "fill_hint": "从量子化公式变来的检验题；两处陷阱（l(l+1) vs l²、2l+1 vs 2l）；延伸给四个实际用途。",
+      "content": "**题**：轨道角动量量子数 $l=2$。\n\n1. 求 $\\hat L^{2}$ 的本征值（以 $\\hbar^{2}$ 为单位）；\n2. 求 $m$ 的全部取值与个数；\n3. 换成 $l=3$ 与电子的自旋 $s=1/2$，各是多少？\n\n**答案**：\n\n1. $\\hat L^{2}$ 本征值 $=\\hbar^{2}l(l+1)$：\n\n$$\\hbar^{2}\\cdot2\\cdot3=6\\hbar^{2}$$【已核验:6|2*3】\n\n2. $m=-2,-1,0,1,2$——**共 $2l+1=5$ 个**【已核验:5|2*2+1】。\n\n3.\n\n| 情形 | $l$ 或 $s$ | $\\hat L^{2}$（或 $\\hat S^{2}$） | 态数 |\n|---|---|---|---|\n| $l=3$ | $3$ | $12\\hbar^{2}$【已核验:12|3*4】 | $7$【已核验:7|2*3+1】 |\n| 电子自旋 $s=1/2$ | $1/2$ | $\\frac{3}{4}\\hbar^{2}$【已核验:0.75|(1/2)*(3/2)】 | $2$【已核验:2|2*0.5+1】 |\n\n**易错点**：\n\n- **用 $l^{2}$ 而不是 $l(l+1)$**：$l=2$ 时前者给 $4\\hbar^{2}$（错），正解 $6\\hbar^{2}$。**差 50%**；\n- **态数算成 $2l$**：是 $2l+1$（含 $m=0$）；\n- **自旋的「态数」**：$2s+1=2$（$m_s=\\pm1/2$），**不是 3**。\n\n**延伸（这些数字的用处）**：\n\n| 场景 | 用到的组合 |\n|---|---|\n| 转动能级 | $E_l\\propto l(l+1)$（`F4:angular-momentum.statement`） |\n| 简并度（无外场） | $2l+1$ |\n| 塞曼分裂（有磁场） | 按 $m$ 分裂成 $2l+1$ 条 |\n| 自旋轨道耦合 | $\\langle\\hat{\\mathbf L}\\cdot\\hat{\\mathbf S}\\rangle=\\frac{\\hbar^{2}}{2}[j(j+1)-l(l+1)-s(s+1)]$ |",
+      "links": [
+        "F4",
+        "F2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "F4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：角动量量子化与球谐函数",
+      "keywords": [
+        "模块 angular-momentum-ladder（档1 前端直渲）",
+        "模式①：l=0..3 的 m 阶梯图（显示 2l+1 个态）",
+        "模式②：L± 作用在 |l,m⟩ 上的升降动画",
+        "模式③：球谐函数 |Y_l^m|² 的球面着色（l=0..3）",
+        "invariant：态数 = 2l+1（严格等式）；L² 本征值 = ħ²l(l+1)",
+        "预置：l∈{0,1,2,3}"
+      ],
+      "tex_ref": {
+        "file": "notebook/F_quantum.tex",
+        "line_start": 44,
+        "line_end": 59
+      },
+      "fill_hint": "档1 依据：阶梯与球谐都是显式可算，前端可算；invariant 用「态数 = 2l+1」等严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `angular-momentum-ladder`。\n\n**模式① `m-ladder`**：对每个 $l$ 画「阶梯」——横轴 $m$、纵轴 $\\hat L_z$ 本征值 $\\hbar m$。$l=0..3$ 分别有 $1,3,5,7$ 级。**直观显示 $2l+1$。**\n\n**模式② `raising-lowering`**：动态演示 $\\hat L_{\\pm}|l,m\\rangle$ 把 $m$ 变成 $m\\pm1$（**$l$ 不变**）。在阶梯最高/最低处显示 $\\hat L_{\\pm}|l,\\pm l\\rangle=0$（**截断**）。\n\n**模式③ `spherical-harmonics`**：用球面网格把 $|Y_l^{m}(\\theta,\\phi)|^{2}$ 涂色（$l=0..3$、$m=-l..l$）。**这是 `H5` 球谐光照用的同一套基函数。**\n\n**恒等式（给前端 invariant）**：\n\n$$\\text{态数}=2l+1,\\qquad \\hat L^{2}\\ \\text{本征值}=\\hbar^{2}l(l+1),\\qquad -l\\le m\\le l.$$\n\n**三条都是严格关系**。第一条可用来检查阶梯图是否画全；第二条用来检查本征值实现。\n\n**参数契约**：\n\n- 预置：$l\\in\\{0,1,2,3\\}$、$m=-l..l$；\n- 与 `F4:probe1` 的数值（$l=2\\to6\\hbar^{2}$、5 个态）保持一致。",
+      "links": [
+        "H5",
+        "F2",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

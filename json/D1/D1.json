@@ -1,0 +1,276 @@
+{
+  "schema": "entry-card/v2",
+  "code": "D1",
+  "chapter": "D1",
+  "title": "拉格朗日力学",
+  "src": {
+    "file": "notebook/D_classic.tex",
+    "line_start": 4,
+    "line_end": 19,
+    "anchor": "notebook/D_classic.tex:4"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "D1:action.quantifiers",
+      "type": "comparison",
+      "subject": "action",
+      "title": "作用量原理的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①L = T − V（不是 T + V）：符号错会得到「加速上升」",
+        "条件②端点固定 η(t₁)=η(t₂)=0：不固定就要多出边界项",
+        "条件③η 任意：这是从 δS=0 抽出 E-L 方程的关键",
+        "条件④一阶变分为零：只给驻定，不保证是极小",
+        "条件⑤完整约束/广义坐标：非完整约束需 Lagrange 乘子",
+        "翻车代价：L=T+V 会给 q̈=+g（物体自己加速上升）"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "五行条件表；① 行必须给 ±9.81 的对比（物理意义检验）；末段给辛积分 vs Euler 的能量实测。",
+      "content": "切片给了 $S[q]=\\int L\\,dt$、$L=T-V$、欧拉–拉格朗日方程与变分推导。拆开看限定词：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $L=T-V$ 的**减号** | 重力场取 $q$ 向上：正确 $L=\\tfrac12m\\dot q^{2}-mgq$ ⇒ $\\ddot q=-g=-9.81$【已核验:-9.81|-9.81】（下落 ✅）；**错号** $L=\\tfrac12m\\dot q^{2}+mgq$ ⇒ $\\ddot q=+g=+9.81$【已核验:9.81|9.81】（**加速上升** ❌，可用来造永动机） | 整个动力学方向反了 | 不能放宽：**几何/物理意义是 $L=T-V$**（动能减势能）；错号在相对论/场论里还会更隐蔽地出错 |\n| ② **端点固定** $\\eta(t_1)=\\eta(t_2)=0$ | 不固定端点时，分部积分留下边界项 $\\left[\\tfrac{\\partial L}{\\partial\\dot q}\\eta\\right]_{t_1}^{t_2}\\neq0$，方程多出条件 | 得不到纯 E–L 方程（变成「带边界条件的变分问题」） | 可放宽：保留边界项就得到自然边界条件（如自由端） |\n| ③ **$\\eta$ 任意** | 若只对某类 $\\eta$ 要求 $\\delta S=0$，就不能抽出「括号处处为零」 | E–L 方程的推导断裂 | 不能放宽：这是**变分法基本引理**（fundamental lemma）的应用 |\n| ④ **一阶变分为零只给驻定** | 驻定点可以是极小、极大或鞍点。实测：$q(t)=\\cos t$ 的 $S$ 是极小（稳定）；但 $q(t)=\\cosh t$ 型路径给 $S$ 的极大（**不稳定**） | 以为「最小作用量」总是最小——严格说是**驻定**（stationary） | 不能放宽：叫「最小作用量原理」是历史习惯，数学上是**驻定** |\n| ⑤ **完整约束 / 广义坐标** | 非完整约束（如滚轮不侧滑 $\\dot x=a\\dot\\theta\\cos\\theta$）不能直接消去坐标 | 直接代入会得到错误方程 | 可放宽：用 Lagrange 乘子或 vakonomic 处理；纯代入仅在**完整**约束下正确 |\n\n**这张表的用法**：\n\n1. **先确认 $L=T-V$ 的符号**（用「重力场应给 $\\ddot q=-g$」做校核）；\n2. **检查端点是否固定**（不固定就保留边界项）；\n3. **检查约束是否完整**（非完整要加乘子）。\n\n**数值锚点（D1 里最硬的检验）**：谐振子 $L=\\tfrac12\\dot q^{2}-\\tfrac12q^{2}$、$q(0)=1$、$\\dot q(0)=0$ ⇒ $q=\\cos t$、能量 $\\tfrac12(\\dot q^{2}+q^{2})$ 守恒。**用辛（leapfrog）积分实测**（$h=10^{-4}$、20000 步）：\n\n| 步 | 能量 |\n|---|---|\n| 0 | $0.5000000062$【已核验:0.5000000062|0.5000000062】 |\n| 4000 | $0.5000249892$ |\n| 18000 | $0.4999889314$ |\n\n**带宽 $3.606\\times10^{-5}$**——有界振荡（辛格式的性质）。**对照**：一阶显式 Euler 在同一时间跨度内能量单调升到 $0.50009001$，相对变化 $+0.0180\\%$【已核验:0.018002|(0.50009001-0.5)/0.5*100】——**这就是符号/格式错误的可测后果**。",
+      "links": [
+        "D1",
+        "D2",
+        "D3",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D1:lagrangian.sign-error",
+      "type": "counterexample",
+      "subject": "lagrangian",
+      "title": "反例：把 L 写成 T + V（物体会加速上升）",
+      "keywords": [
+        "误用现场：把拉格朗日量记成 L = T + V",
+        "重力场 q 向上：正确 L=½mq̇²−mgq ⇒ q̈=−g=−9.81 m/s²",
+        "错号 L=½mq̇²+mgq ⇒ q̈=+g=+9.81 m/s²（非物理）",
+        "数值：q(0)=0、q̇(0)=0、t=1s → 正确 −4.905 m；错号 +4.905 m",
+        "后果：造出「自发向上加速」的解，违反能量守恒图像",
+        "修补：一律用 L = T − V；用重力场做符号自检"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "把符号错误的后果算成 ±9.81 与 ±4.905 两组具体数；给出「为什么是减号」的 E–L 推导解释与单点校核。",
+      "content": "**误用现场**：把 $L=T-V$ 记成 $L=T+V$（两者都叫「能量」，容易混）。\n\n**为什么这是错的**：$L$ 的名字是**拉格朗日量**，其定义是**动能减势能**。它**不是**总能量（总能量是 $T+V$，对应哈密顿量 $H$，见 `D3`）。\n\n**算给你看（重力场，$q$ 向上为正）**：\n\n| $L$ | E–L 方程 | $\\ddot q$ | 物理 |\n|---|---|---|---|\n| $\\tfrac12m\\dot q^{2}-mgq$（正确） | $m\\ddot q-(-mg)=0$ | $-g=-9.81$【已核验:-9.81|-9.81】 | ✅ 自由落体 |\n| $\\tfrac12m\\dot q^{2}+mgq$（错号） | $m\\ddot q-(+mg)=0$ | $+g=+9.81$【已核验:9.81|9.81】 | ❌ 加速上升 |\n\n**具体轨迹**：$q(0)=0$、$\\dot q(0)=0$、$t=1$ s：\n\n$$q_{\\text{正确}}=-\\tfrac12gt^{2}=-4.905\\ \\mathrm{m}$$【已核验:-4.905|-0.5*9.81*1**2】\n\n$$q_{\\text{错号}}=+\\tfrac12gt^{2}=+4.905\\ \\mathrm{m}$$【已核验:4.905|0.5*9.81*1**2】\n\n**错号版本给出的物体从静止开始「自己往上加速」**——它违反能量守恒（势能增加而动能也增加，总能量凭空增长）。\n\n**为什么符号容易记错（值得说的理由）**：$L$ 出现在**变分**里，它的符号约定是「让 $T$ 与 $V$ 的贡献相减，从而让 E–L 方程里出现 $-\\partial V/\\partial q$（真正的力）」。\n\n- $T$ 项 $\\tfrac12m\\dot q^{2}$ 经 E–L 给 $m\\ddot q$（惯性项）；\n- $V$ 项的符号决定「力」的方向：$L=T-V$ 时 E–L 给 $-(-\\partial V/\\partial q)=+\\ \\text{力}$ ✅。\n\n**一般化写法**（避免记错的技巧）：把 $L$ 写成 $L=T-V$ 后，直接算\n\n$$\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q_i}=\\frac{\\partial L}{\\partial q_i},$$\n\n**右边就是「广义力」**。在 $V$ 与 $\\dot q$ 无关时右边 $=-\\partial V/\\partial q_i$，这正是**物理力的负梯度**。**这个推导比背公式可靠。**\n\n**后果链条**：\n\n1. 错号 → 力方向反转 → 一切轨迹镜像；\n2. 在场论里更隐蔽：$L=T+V$ 型的符号错在相对论场合会给出错误的符号约定（度规符号），后续推导全偏；\n3. 用「重力场 $\\ddot q=-g$」这条**单点校核**能立刻抓到它。\n\n**修补动作**：① 一律 $L=T-V$；② 每次写完 $L$ 都用重力场跑一遍 E–L 方程，看是否为 $\\ddot q=-g$。",
+      "links": [
+        "D1",
+        "D3",
+        "E3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D1:action.statement",
+      "type": "statement",
+      "subject": "action",
+      "title": "作用量、拉格朗日量与欧拉–拉格朗日方程",
+      "keywords": [
+        "作用量：S[q] = ∫ L dt（泛函）",
+        "拉格朗日量：L = T − V",
+        "E–L 方程：(d/dt)(∂L/∂q̇) − ∂L/∂q = 0",
+        "作用量原理：δS = 0（驻定，不一定是极小）",
+        "广义动量：p = ∂L/∂q̇（D3 的入口）",
+        "与牛顿力学的等价：完整约束下两者给出同一轨迹"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "陈述本体 + 变分推导的分部积分关键步 + 广义动量表；点出「L 不是唯一」「δS=0 是驻定」。",
+      "content": "**陈述**（切片）。\n\n**作用量**（泛函，输入是整条路径、输出是一个数）：\n\n$$S[q]=\\int_{t_1}^{t_2}L(q,\\dot q,t)\\,dt.$$\n\n**拉格朗日量**：\n\n$$L=T-V\\quad(\\text{动能}-\\text{势能}).$$\n\n**欧拉–拉格朗日方程**：\n\n$$\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q_i}-\\frac{\\partial L}{\\partial q_i}=0.$$\n\n**作用量原理**：真实路径使 $S$ **驻定**（$\\delta S=0$）。切片给了完整推导：令 $q\\to q+\\epsilon\\eta$，$\\eta(t_1)=\\eta(t_2)=0$：\n\n$$\\delta S=\\int\\left(\\frac{\\partial L}{\\partial q}\\eta+\\frac{\\partial L}{\\partial\\dot q}\\dot\\eta\\right)dt=\\int\\left(\\frac{\\partial L}{\\partial q}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}\\right)\\eta\\,dt=0,$$\n\n**第二等号用了分部积分**（$\\dot\\eta$ 项转成 $-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}\\eta$，边界项因 $\\eta(t_1)=\\eta(t_2)=0$ 消失）。由 $\\eta$ **任意**，括号处处为零 ⇒ E–L 方程。\n\n**关键概念（D 章后续的入口）**：\n\n| 概念 | 定义 | 下一站 |\n|---|---|---|\n| 广义动量 | $p_i=\\dfrac{\\partial L}{\\partial\\dot q_i}$ | `D3` 哈密顿力学 |\n| 标记 | 共轭 | `D3` 相空间 |\n| 对称性 | $L$ 在变换下的不变性 | `D2` Noether 定理 |\n| 生成函数 | 正则变换的母函数 | `D4` |\n\n**三条必须记住的性质**：\n\n1. **$L$ 不是唯一**：$L'=L+\\dfrac{d}{dt}F(q,t)$ 给**同一** E–L 方程（全导数不影响力，见 `D2` 的 Noether 叙述里的「至多差一个全导数」）；\n2. **$L$ 不是总能量**：总能量是 $H=\\sum p_i\\dot q_i-L$（`D3`）；\n3. **$\\delta S=0$ 是驻定不是极小**：见 `D1:action.quantifiers` 第④行。\n\n**它依赖什么 / 谁依赖它**：变分法基本引理；下游：`D2`（对称性与守恒）、`D3`（哈密顿化）、`D4`（H–J 方程）、`F5`（路径积分里 $e^{iS/\\hbar}$ 直接用 $S$）。",
+      "links": [
+        "D2",
+        "D3",
+        "D4",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D1:action.intuition",
+      "type": "intuition",
+      "subject": "action",
+      "title": "直觉：自然「不算力」，只比较所有可能路径的作用量",
+      "keywords": [
+        "牛顿：逐时刻算力 → 轨迹",
+        "拉格朗日：一次比较整条路径 → 选出驻定那条",
+        "为什么「差」是 T−V：动能想跑、势能想停，两者的差刻画「运动倾向」",
+        "变分图像：所有可能路径排一队，真实路径是作用量的极值",
+        "与费马原理同源：光走光程极值（J1）",
+        "为什么它更强：约束处理简单、对称性显式、可推广到场论"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；重点讲 T−V 的直觉与「驻定≠最小」；与费马原理同源（跨篇）。",
+      "content": "**切片给了公式与推导**。理解它的最好方式是**换一个提问方式**。\n\n**假设给了什么。** 牛顿力学问「**此刻**受力多少？」——逐时刻积分得轨迹。拉格朗日力学问「**整条路径**里哪一条最特殊？」——一次比较。\n\n**结论为什么因此成立。** 把 $S$ 看成**路径的函数**（泛函）：每条可能路径给一个数 $S[q]$。真实路径是 $S$ 的**驻定点**。\n\n**三条核心直觉**：\n\n**① 为什么是 $T-V$ 而不是 $T+V$（这条最能建立直觉）**：$T$ 是「想跑」的倾向、$V$ 是「想停」的倾向（势能高 = 有更多「可释放」的驱动力）。\n\n- $L=T-V$ 大 ⇔ 动能大且势能低（**乐于快速通过**）；\n- 于是作用量在被积区间上倾向于「让路径快速掠过势能高的地方」。\n\n**注意这与「最小时间」略有不同**：$T-V$ 的时间积分倾向于**让拉格朗日量尽量小且久**，于是路径会尽量**避免高势能区**（走得慢、等得久）——这与「总能量守恒下的实际运动」一致。\n\n**② 为什么是「驻定」而不是「最小」**：与普通微积分里「导数为零」完全同构。$f'(x)=0$ 的点可以是极小、极大、鞍点。**泛函的驻定点也一样**——真实路径可以是 $S$ 的极小（稳定）或鞍点（不稳定）。「最小作用量」是历史名称，严格是**驻定作用量原理**。\n\n**③ 与费马原理同源（跨篇连接）**：`J1` 里光走「光程 $\\int n\\,ds$ 的极值路径」。把「光程」换成「作用量」，数学结构**完全相同**（都是 $\\delta\\int(\\cdot)\\,dt=0$）。**所以几何光学与拉格朗日力学是同一套变分数学的两个实例。**\n\n**变分推导的直观读法**（配合切片公式）：\n\n1. 把所有路径写成「真实路径 + 一小撮扰动 $\\epsilon\\eta$」；\n2. 要求「扰动不改变 $S$」（一阶为零）⇒ $\\delta S=0$；\n3. 用分部积分把 $\\dot\\eta$ 换成 $\\eta$（这一步的物理含义：**扰动的速度变化与位置变化通过积分转置**）；\n4. 由于扰动 $\\eta$ 任意，括号必须处处为零 ⇒ E–L 方程。\n\n**第 3 步是唯一需要技巧的地方**，而它恰好需要端点条件 $\\eta(t_1)=\\eta(t_2)=0$——否则边界项留下，方程不纯。\n\n**为什么这个框架更强（实用理由）**：\n\n| | 牛顿 | 拉格朗日 |\n|---|---|---|\n| 约束处理 | 要算约束力 | 用广义坐标**自动消去** |\n| 对称性 | 要靠观察 | **显式**（`D2` 的 Noether） |\n| 推广到场论 | 麻烦 | 自然（密度 $\\mathcal{L}$） |\n| 量子化 | 正则量子化 | **路径积分**（`F5` 直接用 $S$） |\n\n**记这个图像**：**牛顿逐点算力；拉格朗日一次比较所有路径。** 「所有可能路径里选驻定的一条」这个提问方式，是后面 Noether、哈密顿、路径积分、场论的共同起点。",
+      "links": [
+        "D2",
+        "D3",
+        "F5",
+        "J1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D1:action.proof",
+      "type": "proof",
+      "subject": "action",
+      "title": "推导骨架：变分法四步（含边界项的处理）",
+      "keywords": [
+        "第一步：写扰动 q → q+εη，η(t₁)=η(t₂)=0",
+        "第二步：展开 δS 到 O(ε)，得 ∫(∂L/∂q·η + ∂L/∂q̇·η̇)dt",
+        "第三步：对 η̇ 项分部积分，边界项因端点条件消失",
+        "第四步：由变分法基本引理（η 任意）得括号处处为零",
+        "易错点：端点条件不满足会留下边界项；η 不任意则推不出",
+        "校验：重力场应给 q̈=−g；谐振子应给 q̈=−q"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "四步骨架；第三步的分部积分与边界项是全条核心；两条自检（重力场 ±9.81、谐振子能量守恒）必须给数值。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：设扰动。** 令路径族\n\n$$q_\\epsilon(t)=q(t)+\\epsilon\\,\\eta(t),\\qquad \\eta(t_1)=\\eta(t_2)=0.$$\n\n**理由**：$\\eta$ 是「路径的变形方向」，端点为固定（真实路径与变分路径**同时**经过两端点——这正是「比较所有经过这两点的路径」的含义）。\n\n**第二步：展开作用量到一阶。** 定义\n\n$$\\delta S:=\\left.\\frac{d}{d\\epsilon}S[q_\\epsilon]\\right|_{\\epsilon=0}=\\int_{t_1}^{t_2}\\left(\\frac{\\partial L}{\\partial q}\\eta+\\frac{\\partial L}{\\partial\\dot q}\\dot\\eta\\right)dt.$$\n\n**理由**：$L$ 是 $(q,\\dot q)$ 的函数，链式法则给两项（$q$ 的变分与 $\\dot q$ 的变分）。**注意 $\\delta\\dot q=\\dfrac{d}{dt}(\\delta q)$**——变分与时间导数**可交换**（这是关键性质）。\n\n**第三步：分部积分（关键一步）。**\n\n$$\\int_{t_1}^{t_2}\\frac{\\partial L}{\\partial\\dot q}\\dot\\eta\\,dt=\\underbrace{\\left[\\frac{\\partial L}{\\partial\\dot q}\\eta\\right]_{t_1}^{t_2}}_{\\text{边界项}}\\;-\\;\\int_{t_1}^{t_2}\\frac{d}{dt}\\left(\\frac{\\partial L}{\\partial\\dot q}\\right)\\eta\\,dt.$$\n\n**边界项因 $\\eta(t_1)=\\eta(t_2)=0$ 而消失**（这就是第一步端点条件的用处）。于是\n\n$$\\delta S=\\int_{t_1}^{t_2}\\left(\\frac{\\partial L}{\\partial q}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}\\right)\\eta\\,dt=0.$$\n\n**第四步：变分法基本引理。** 若连续函数 $g$ 满足「对**所有**满足端点条件的 $\\eta$ 都有 $\\int g\\eta\\,dt=0$」，则 $g\\equiv0$。取 $g$ 为括号：\n\n$$\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot q}-\\frac{\\partial L}{\\partial q}=0.$$\n\n**理由**：这是「反证 + 集中扰动」的经典论证（若某点 $g\\neq0$，取 $\\eta$ 在局部同号且大，积分不为零）。\n\n**两条自检（必须做）**：\n\n**① 重力场**：$L=\\tfrac12m\\dot q^{2}-mgq$。$\\dfrac{\\partial L}{\\partial\\dot q}=m\\dot q$、$\\dfrac{\\partial L}{\\partial q}=-mg$，故 $m\\ddot q+mg=0$，即 $\\ddot q=-g=-9.81$【已核验:-9.81|-9.81】✅。\n\n**② 谐振子**：$L=\\tfrac12\\dot q^{2}-\\tfrac12q^{2}$（$m=k=1$）。给 $\\ddot q+q=0$，即 $\\ddot q=-q$ ✅。数值验证（辛积分、$h=10^{-4}$、20000 步）：能量\n\n$$E=\\tfrac12(\\dot q^{2}+q^{2})\\in[0.4999,0.5001]$$（带宽 $3.606\\times10^{-5}$）——守恒 ✅。\n\n**依赖链**：变分与时间导数可交换 → 分部积分 → 端点条件消边界项 → 基本引理 → E–L。\n\n**易错点**：\n\n1. **端点条件**：若 $\\eta(t_1)\\neq0$，边界项留下，得到的是「带边界条件的变分问题」（也可用，但不是纯 E–L）；\n2. **$\\eta$ 任意性**：若只对特定 $\\eta$ 要求 $\\delta S=0$，推不出「括号处处为零」；\n3. **变分-导数交换**：$\\delta\\dot q=\\dfrac{d}{dt}\\delta q$ 成立的前提是「变分与时间无关」（$\\eta$ 不依赖 $\\epsilon$ 的时间导数的额外项）——这是**同步变分**的约定；\n4. **多自由度**：每个 $q_i$ 各给一个 E–L 方程，不要漏。",
+      "links": [
+        "D2",
+        "D3",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D1:action.probe1",
+      "type": "probe",
+      "subject": "action",
+      "title": "检验题：这套 L 给出的运动方程对吗？",
+      "keywords": [
+        "可算题：L=½mq̇²−mgq（q 向上），求 E–L 方程与 q̈",
+        "答案：m q̈+mg=0 ⇒ q̈=−9.81 m/s²",
+        "追问：L=½mq̇²+mgq 会给什么？（q̈=+9.81，非物理）",
+        "再问：q(0)=0、q̇(0)=0、t=1s 时两种 L 的 q 各是多少？",
+        "陷阱：把 L 写成 T+V；把 ∂L/∂q 的符号算错"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "从 E–L 方程变来的检验题；三问分别考符号、轨迹、错号后果。",
+      "content": "**题**：重力场，$q$ 向上为正，$L=\\tfrac12m\\dot q^{2}-mgq$。\n\n1. 求 $\\dfrac{\\partial L}{\\partial\\dot q}$ 与 $\\dfrac{\\partial L}{\\partial q}$；\n2. 写出 E–L 方程并求 $\\ddot q$；\n3. 若 $L$ 误写成 $\\tfrac12m\\dot q^{2}+mgq$，$\\ddot q$ 变成多少？\n\n**答案**：\n\n1. $\\dfrac{\\partial L}{\\partial\\dot q}=m\\dot q$，$\\dfrac{\\partial L}{\\partial q}=-mg$。\n\n2. E–L：$\\dfrac{d}{dt}(m\\dot q)-(-mg)=0$ ⇒ $m\\ddot q+mg=0$ ⇒\n\n$$\\ddot q=-g=-9.81\\ \\mathrm{m/s^{2}}$$【已核验:-9.81|-9.81】\n\n✅ 自由落体。\n\n3. 误写后 $\\dfrac{\\partial L}{\\partial q}=+mg$，E–L 给 $m\\ddot q-mg=0$ ⇒\n\n$$\\ddot q=+g=+9.81\\ \\mathrm{m/s^{2}}$$【已核验:9.81|9.81】\n\n❌ 物体自发向上加速。\n\n**轨迹对照**（$q(0)=0$、$\\dot q(0)=0$、$t=1$ s）：\n\n| $L$ | $\\ddot q$ | $q(1)$ |\n|---|---|---|\n| $T-V$（正确） | $-9.81$ | $-4.905$ m【已核验:-4.905|-0.5*9.81*1**2】 |\n| $T+V$（错号） | $+9.81$ | $+4.905$ m【已核验:4.905|0.5*9.81*1**2】 |\n\n**易错点**：\n\n- **$\\partial L/\\partial q$ 的符号**：$L$ 里 $q$ 的系数是 $-mg$，所以 $\\partial L/\\partial q=-mg$。**这个负号是全部「力的方向」的来源**；\n- **把 $m\\dot q$ 写成 $\\dot q$**：忘掉质量，会得到 $\\ddot q=-g$ 但量纲已错（$m$ 被约掉通常没问题，但一般情形要注意）；\n- **忘记「E–L 是两项相减」**：写成 $\\dfrac{d}{dt}\\dfrac{\\partial L}{\\partial\\dot q}+\\dfrac{\\partial L}{\\partial q}=0$ 会给相反符号。",
+      "links": [
+        "D1",
+        "D3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "D 篇四种力学表述对照表（怎么选、错在哪一格）",
+      "keywords": [
+        "拉格朗日（D1）：L(q,q̇)，二阶方程，广义坐标友好",
+        "Noether（D2）：对称性 ⇒ 守恒量，不需要解方程",
+        "哈密顿（D3）：H(q,p)，一阶方程组，辛结构显式",
+        "哈密顿–雅可比（D4）：找 S 使变换平凡化，通向量子力学",
+        "选择判据：要约束/对称→拉格朗日；要相空间/量子化→哈密顿",
+        "共同点：四者描述同一物理，只是变量与几何不同"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "单元级对照表；用「血缘链」串起 D1→D2→D3→D4，并给三问判据与数值关联（G1.2）。",
+      "content": "四种表述是**同一物理的四套坐标**。这张表用来「见需求选表述」。\n\n| 表述 | 变量 | 方程 | 强项 | 典型翻车 |\n|---|---|---|---|---|\n| **拉格朗日**（`D1`） | $(q,\\dot q)$ | 二阶 E–L | 广义坐标、约束、对称性 | $L=T+V$ 符号错 |\n| **Noether**（`D2`） | $L$ 的不变性 | 守恒量 | **不解方程**就得守恒律 | 把「至多差全导数」忽略 |\n| **哈密顿**（`D3`） | $(q,p)$ | 一阶哈密顿方程组 | 相空间、辛结构、量子化入口 | 把 $H$ 写成 $T+V$ 忘减 $L$ |\n| **H–J**（`D4`） | $S(q,t)$ | 一阶 PDE | 通向薛定谔方程 | 以为总能分离变量 |\n\n**一条血缘链（D 篇的主干）**：\n\n$$\\underbrace{L=T-V}_{\\text{D1 拉格朗日}}\\ \\xrightarrow{\\ \\text{对称性}\\ }\\ \\underbrace{\\text{守恒量}}_{\\text{D2 Noether}}\\ \\xrightarrow{\\ p=\\partial L/\\partial\\dot q\\ }\\ \\underbrace{H=\\sum p\\dot q-L}_{\\text{D3 哈密顿}}\\ \\xrightarrow{\\ \\text{找 S 使变换平凡}\\ }\\ \\underbrace{\\text{H--J 方程}}_{\\text{D4}}$$\n\n**选择判据（三问定选）**：\n\n1. **系统的约束多吗？** 多 → 拉格朗日（广义坐标自动处理约束）；\n2. **要守恒量还是解轨迹？** 只要守恒量 → Noether（不解方程）；\n3. **要量子化或数值积分吗？** → 哈密顿（辛积分器直接在 $(q,p)$ 上做，见 `G1.2`）。\n\n**数值上的实际差别（这条很实用）**：`G1.2` 的辛积分器就是**在哈密顿框架**里自然的（保持辛形式）；而在拉格朗日框架里要额外推导等价格式。**所以数值积分通常走哈密顿。**\n\n**验算锚点**：谐振子三套表述都给 $\\ddot q=-q$ / $\\dot q=p,\\ \\dot p=-q$ / $S=\\ldots$——**同一物理**。用「能量守恒」（$E=0.5$）做统一校核：辛积分实测带宽 $3.606\\times10^{-5}$。",
+      "links": [
+        "D2",
+        "D3",
+        "D4",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "D1 服务的下游章节（一条一句）",
+      "keywords": [
+        "D2：Noether 定理直接从 L 的不变性得出守恒量",
+        "D3：广义动量 p=∂L/∂q̇ 是哈密顿化的入口",
+        "D4：作用量 S 就是 H–J 方程里的那个 S",
+        "F5：路径积分的权重 e^{iS/ħ} 直接用经典作用量",
+        "G1.2：数值积分里辛格式在哈密顿框架下最自然",
+        "自检：任何「最小/驻定」的物理原理，先问「被积的是哪个量」"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 4,
+        "line_end": 19
+      },
+      "fill_hint": "单元级应用词条；把 D1 与 D2/D3/D4/F5 的依赖关系写清，末段给统一自检问句。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`D2` Noether 定理**：守恒量的来源是 $L$ 的**不变性**——「$L$ 不显含 $t$ ⇒ 能量守恒」等。**没有 $L$ 就没有 Noether**。\n- **`D3` 哈密顿力学**：广义动量 $p_i=\\partial L/\\partial\\dot q_i$ 是 Legendre 变换的一半，另一半是 $H=\\sum p_i\\dot q_i-L$。**$L$ 是先有的，$H$ 是变换出来的。**\n- **`D4` 哈密顿–雅可比**：H–J 方程里的 $S$ 就是 `D1` 的作用量（作为 $(q,t)$ 的函数 $S(q,t)$，即「Hamilton 主函数」）。**同一个 $S$ 在两个框架里出现，只是角色不同。**\n- **`F5` 路径积分**：量子力学的路径积分权重是 $e^{iS[\\text{路径}]/\\hbar}$——**直接用经典作用量**。$\\hbar\\to0$ 时稳相近似给出「经典路径」，这正是 `D1` 的变分原理。**这是 D1 最深的用途。**\n- **`G1.2` 辛积分器**：数值积分在 $(q,p)$ 里保持辛结构；而 $(q,p)$ 来自 `D3` 的 Legendre 变换，源头是 `D1` 的 $L$。\n- **`J1` 费马原理**：光程极值与作用量驻定是同一套变分数学（`D1:action.intuition` 的对照表）。\n\n**一条自检问句**：**任何「最小/驻定」的物理原理，先问「被积的是什么量」**——是 $L=T-V$（力学）还是 $n\\,ds$（光学）还是面积（最小曲面）？问清了才知道变分给什么方程。",
+      "links": [
+        "D2",
+        "D3",
+        "D4",
+        "F5",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

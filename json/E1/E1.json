@@ -1,0 +1,270 @@
+{
+  "schema": "entry-card/v2",
+  "code": "E1",
+  "chapter": "E1",
+  "title": "向量分析的微分形式统一",
+  "src": {
+    "file": "notebook/E_Field.tex",
+    "line_start": 4,
+    "line_end": 17,
+    "anchor": "notebook/E_Field.tex:4"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "E1:differential-forms.quantifiers",
+      "type": "comparison",
+      "subject": "differential-forms",
+      "title": "向量分析–微分形式对应的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①维度：3D 里 1-形式与 2-形式都「像」向量（3 分量），其他维数不行",
+        "条件②Hodge 星算子的作用：旋度要取 *dω 才是向量（不是 dω）",
+        "条件③d²=0 是精确恒等式：无需任何附加条件",
+        "条件④「像向量」依赖度规：没有度规时 1-形式与向量是不同的对象",
+        "翻车代价：在 4D 里把 2-形式的 6 分量硬当向量，维数对不上"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 4,
+        "line_end": 17
+      },
+      "fill_hint": "四行条件表；① 行给 $\binom{3}{k}$ 与 $\binom{4}{2}=6$ 的对比；② 行强调 $\\star$ 的位置。",
+      "content": "切片给了向量分析 ↔ 微分形式的对应表。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **3D 特有的巧合** | 3D 里 1-形式与 2-形式**都是 3 个分量**（$\\binom{3}{1}=\\binom{3}{2}=3$），所以「旋度像向量」。4D 里 $\\binom{4}{2}=6\\neq4$——**2-形式不再像向量** | 把 3D 的对应表搬到 4D 会维数不符 | 不能放宽：维数是硬约束 |\n| ② **Hodge 星算子的作用** | 旋度不是 $d\\omega$（那是 2-形式），而是 $\\star\\,d\\omega$（取 Hodge 对偶后才是向量）。**忘掉 $\\star$ 会得到 2-形式却当向量用** | 分量数一样（3），但变换性质不同 | 不能放宽：$\\star$ 是必需的桥 |\n| ③ **$d^{2}=0$ 是恒等式** | 它对应 $\\nabla\\times(\\nabla f)=0$ 与 $\\nabla\\cdot(\\nabla\\times\\mathbf{F})=0$——**两者都是精确的零**，不依赖任何物理假设 | 若以为「$d^{2}=0$ 需要条件」，会去「验证」一个恒等式 | 不能放宽：这是纯代数（反对称偏导的交换律） |\n| ④ 「像向量」依赖**度规** | 1-形式（余切）与向量（切）在没有度规时**是不同空间的对象**。3D 欧氏度规把它们同构，才显得一样 | 在相对论（闵氏度规）里混用会丢符号 | 不能放宽：度规决定如何把「上/下指标」互变 |\n\n**这张表的用法**：\n\n1. **数维数**：$k$-形式的维数是 $\\binom{n}{k}$——先确认在这里「像不像向量」；\n2. **记住 $\\star$ 的位置**：梯度 $=df$（1-形式）；旋度 $=\\star\\,d\\omega$；散度 $\\star\\,d(\\star\\eta)$ 或等价形式；\n3. **$d^{2}=0$ 随便用**（恒等式）。\n\n**维数核算（3D）**：\n\n| $k$ | $\\binom{3}{k}$ | 运算 |\n|---|---|---|\n| 0 | $1$ | $df$ = 梯度 |\n| 1 | $3$ | $d\\omega$ = 旋度（取 $\\star$ 后） |\n| 2 | $3$ | $d\\eta$ = 散度 |\n| 3 | $1$ | $d(\\text{3-形式})$ = 0（维数不够） |\n\n**4D 的关键差别**：$\\binom{4}{2}=6$——**2-形式有 6 个独立分量**，正好是反对称 $4\\times4$ 矩阵的独立分量数。**这就是电磁场张量 $F_{\\mu\\nu}$ 有 6 个独立分量的原因**（`E2`），也是「为什么电磁场不能简单用一个 4-矢量表示」的答案。",
+      "links": [
+        "E1",
+        "E2",
+        "E4",
+        "D3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E1:hodge-star.counterexample",
+      "type": "counterexample",
+      "subject": "hodge-star",
+      "title": "反例：把 dω（2-形式）当向量用（3D 里巧合掩盖了错误）",
+      "keywords": [
+        "误用现场：写「旋度 = dω」，直接当向量做点积/叉积",
+        "正解：旋度 = ★dω（先 d 得 2-形式，再取 Hodge 对偶）",
+        "3D 巧合：2-形式也有 3 个分量，所以分量数对得上",
+        "掩盖的错误①：变换性质不同（2-形式在坐标变换下用 Jacobian 的转置逆）",
+        "掩盖的错误②：搬到 4D 立刻暴露（2-形式 6 分量 ≠ 向量 4 分量）",
+        "修补：一律显式写 ★；维度变了先数分量"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 4,
+        "line_end": 17
+      },
+      "fill_hint": "把「省略 ★」的错误说清（3D 巧合掩盖、4D 暴露）；给分量数/变换律/对称性的对照表。",
+      "content": "**误用现场**：写「梯度 $=df$、旋度 $=d\\omega$、散度 $=d\\eta$」，然后**把 $d\\omega$ 当向量**直接做点积、叉积、或写进「向量方程」。\n\n**为什么这是错的**：$d\\omega$ 是 **2-形式**，不是向量。要得到向量必须取 **Hodge 对偶**：\n\n$$\\text{旋度}=\\star\\,d\\omega.$$\n\n**为什么错误被掩盖（3D 的巧合）**：在 3D 里 $\\binom{3}{2}=3=\\binom{3}{1}$——**2-形式与 1-形式恰好都是 3 个分量**。所以「分量数对得上」，代码能跑，数值也对。\n\n**具体的掩盖错误**：\n\n| 方面 | 1-形式/向量 | 2-形式 |\n|---|---|---|\n| 分量数（3D） | $3$ | $3$（**巧合相同**） |\n| 坐标变换 | 用 Jacobian $J$ | 用 $J^{-T}$（转置逆） |\n| 换到 4D | $4$ 个分量 | **$6$ 个分量**（暴露） |\n| 与 1-形式配对 | 内积（缩并） | 要**楔积**（wedge） |\n| 对称性 | 独立 | **反对称**（$\\omega_{\\mu\\nu}=-\\omega_{\\nu\\mu}$） |\n\n**搬到 4D 立刻暴露**：电磁场是 2-形式 $F$，有 $\\binom{4}{2}=6$ 个独立分量。**若把它当 4-向量用，会少掉 2 个分量**（4 vs 6）——物理上就是丢掉了一些场分量。\n\n**为什么 $\\star$ 不能省（数学理由）**：$d$ 提升次数（$k\\to k+1$），而我们要的「向量」是**同次数**的对象。$\\star$ 把 $k$-形式映到 $(n-k)$-形式——在 3D 里把 2-形式映回 1-形式。**所以「旋度是向量」需要「$d$ 升一次 + $\\star$ 降一次」这个组合。**\n\n**后果链条**：\n\n1. **3D 代码里掩盖**：数值正确，但推广到 4D 或曲线坐标立刻错；\n2. **符号/因子错**：$\\star$ 会带出度规的行列式因子（如球坐标里的 $r^{2}\\sin\\theta$）；\n3. **物理量写错**：在相对论里「磁场」不是一个向量，而是 2-形式的一部分（空间-空间分量）。\n\n**修补动作**：\n\n1. **显式写 $\\star$**：不要省略（特别是涉及度规时）；\n2. **数分量**：$\\binom{n}{k}$ 是硬约束，维数不符就先查；\n3. **区分楔积与内积**：2-形式与 1-形式配对用 $\\wedge$，不适用普通点积。",
+      "links": [
+        "E1",
+        "E2",
+        "E4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E1:differential-forms.statement",
+      "type": "statement",
+      "subject": "differential-forms",
+      "title": "微分形式：次数、外微分与向量分析的统一",
+      "keywords": [
+        "k-形式：反对称 k 阶张量，分量为 C(n,k) 个",
+        "外微分 d：k-形式 → (k+1)-形式",
+        "梯度 = df（0→1）；旋度 = ★dω（1→2 再取 ★）；散度 = ★d★η",
+        "d² = 0 ↔ ∇×(∇f)=0 与 ∇·(∇×F)=0",
+        "统一性：三个向量算子都是同一个 d 的不同次数/对偶",
+        "Stokes 定理统一：∫_Ω dω = ∮_∂Ω ω"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 4,
+        "line_end": 17
+      },
+      "fill_hint": "陈述本体（三算子统一表）+ $d^{2}=0$ 的一行证明 + Stokes 的统一；点出「$d$ 不需要度规」。",
+      "content": "**陈述**（切片）。\n\n**$k$-形式**：反对称 $k$ 阶张量，独立分量数 $\\binom{n}{k}$（$n$ 是维数）。\n\n**外微分** $d$：把 $k$-形式映到 $(k+1)$-形式：\n\n$$d\\omega=\\sum_{i}\\frac{\\partial\\omega}{\\partial x^{i}}dx^{i}\\wedge(\\ldots).$$\n\n**三个向量算子的统一**：\n\n| 向量分析 | 微分形式 | 说明 |\n|---|---|---|\n| 梯度 | $df$ | $0$-形式 → $1$-形式 |\n| 旋度 | $\\star\\,d\\omega$ | $1$-形式 → $2$-形式 → （$\\star$）→ $1$-形式 |\n| 散度 | $\\star\\,d(\\star\\eta)$ | $2$-形式 → $3$-形式 → （$\\star$）→ $0$-形式 |\n\n**核心恒等式**：\n\n$$d^{2}=0.$$\n\n**它对应两个向量恒等式**：\n\n$$\\nabla\\times(\\nabla f)=\\mathbf{0},\\qquad \\nabla\\cdot(\\nabla\\times\\mathbf{F})=0.$$\n\n**为什么 $d^{2}=0$（一行证明）**：$d^{2}$ 涉及二阶混合偏导 $\\dfrac{\\partial^{2}}{\\partial x^{j}\\partial x^{k}}$，而楔积**反对称**——两项相消：\n\n$$d^{2}\\omega\\sim\\left(\\frac{\\partial^{2}}{\\partial x^{j}\\partial x^{k}}-\\frac{\\partial^{2}}{\\partial x^{k}\\partial x^{j}}\\right)dx^{j}\\wedge dx^{k}=0$$\n\n（偏导可交换 + $\\wedge$ 反对称）✅ **所以 $d^{2}=0$ 是纯代数的，不需要任何物理条件。**\n\n**统一性（这是微分形式最大的价值）**：三个向量算子是**同一个 $d$** 在不同次数、配以不同 $\\star$ 组合的化身。于是：\n\n1. **Stokes 定理统一**：\n\n   $$\\int_{\\Omega}d\\omega=\\oint_{\\partial\\Omega}\\omega,$$\n\n   一维是微积分基本定理、二维是 Green 公式、三维是经典 Stokes/Gauss——**全是同一个定理**；\n\n2. **坐标无关**：$d$ 的定义不含度规（$d\\omega$ 的计算不需要度规），所以**梯度与旋度的「形式」不依赖度规**（只有 $\\star$ 需要）；\n3. **推广到任意维**：4D 里 2-形式 6 分量，直接处理电磁场（`E2`）。\n\n**它依赖什么 / 谁依赖它**：外代数的反对称性；下游：`E2` 的麦克斯韦方程、`E4` 的规范场（$F=dA$）、斯托克斯型积分定理、`Q` 篇的拓扑（闭形式/恰当形式）。",
+      "links": [
+        "E2",
+        "E4",
+        "D3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E1:differential-forms.intuition",
+      "type": "intuition",
+      "subject": "differential-forms",
+      "title": "直觉：微分形式是「可以积分的对象」，d 是「边界算子」",
+      "keywords": [
+        "k-形式的用途：在 k 维区域上积分（面积/体积/流量）",
+        "d 的作用：把「边界上的积分」与「内部的积分」联系起来",
+        "所以 d 天然带「边界」的含义（Stokes 定理）",
+        "d²=0 的几何含义：边界的边界是空集",
+        "为什么反对称：定向（换序变号），积分才有的概念",
+        "为什么比向量好：不需要度规、任意维、任意坐标"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 4,
+        "line_end": 17
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「可积域」的表 + 「边界的边界是空集」解释 $d^{2}=0$；给三条实用理由。",
+      "content": "**切片给了一张对应表**。理解它的最好角度是**问「这东西能积什么」**。\n\n**假设给了什么。** 一个 $k$-形式是「**可以在 $k$ 维区域上积分的对象**」：\n\n| 形式 | 可积的域 | 例子 |\n|---|---|---|\n| $0$-形式（函数） | 点 | 在点上取值 |\n| $1$-形式 | 曲线 | $\\int\\mathbf{F}\\cdot d\\mathbf{l}$ |\n| $2$-形式 | 曲面 | $\\iint\\mathbf{B}\\cdot d\\mathbf{A}$ |\n| $3$-形式 | 体 | $\\iiint\\rho\\,dV$ |\n\n**结论为什么因此成立。** 外微分 $d$ 的作用是\n\n$$\\int_{\\Omega}d\\omega=\\oint_{\\partial\\Omega}\\omega.$$\n\n**左边是「$\\Omega$ 内部」，右边是「$\\Omega$ 的边界」**——所以 **$d$ 就是「边界算子」的对偶**（Stokes 定理）。\n\n**$d^{2}=0$ 的几何含义（最漂亮的直觉）**：\n\n$$d^{2}=0\\quad\\Longleftrightarrow\\quad\\partial\\partial\\Omega=\\varnothing\\quad(\\text{边界的边界是空的}).$$\n\n**具体**：一个实心球（3 维体）的边界是球面（2 维）；球面的边界**是空的**（球面没有边界——它是闭的）。**所以「先取边界再取边界」得到零。**\n\n**用这个图像看两个向量恒等式**：\n\n| 代数 | 几何 |\n|---|---|\n| $\\nabla\\times(\\nabla f)=0$ | 梯度的「环量」在任意闭合圈上为零 |\n| $\\nabla\\cdot(\\nabla\\times\\mathbf{F})=0$ | 旋度的「通量」在任意闭合面上为零 |\n\n**为什么反对称（而不是任意张量）**：因为积分需要**定向**（orientation）：\n\n- 把曲线的方向反过来，$\\int\\mathbf{F}\\cdot d\\mathbf{l}$ 变号；\n- 把曲面的法向反过来，$\\iint\\mathbf{B}\\cdot d\\mathbf{A}$ 变号。\n\n**反对称性正是「换序变号」的代数编码。** 这也解释了为什么 $d^{2}=0$（两个反对称操作叠加相消）。\n\n**为什么比向量记号更好（三条实用理由）**：\n\n1. **不需要度规**：$d\\omega$ 的计算不涉及 $g_{\\mu\\nu}$（只有 $\\star$ 需要）。所以在广义相对论里「先写形式，再选度规」是标准做法；\n2. **任意维**：3D 的向量恒等式（如 $\\nabla\\times(\\nabla f)=0$）在其他维数没有直接对应，但 $d^{2}=0$ 恒成立；\n3. **任意坐标**：形式的分量按 $\\omega=\\omega_i\\,dx^{i}$ 定义，坐标变换规则固定，不需要记「球坐标下的旋度公式」（虽然实践中还是要查表）。\n\n**记这个图像**：**$k$-形式 = 能在 $k$ 维区域上积分的对象；$d$ = 边界算子；$d^{2}=0$ = 边界的边界是空的。** 三个向量算子的所有恒等式都被这一组概念统一。",
+      "links": [
+        "E2",
+        "E4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E1:exterior-derivative.proof",
+      "type": "proof",
+      "subject": "exterior-derivative",
+      "title": "推导骨架：d²=0 的两行证明与 Stokes 定理的统一",
+      "keywords": [
+        "第一步：写出 d 在坐标基上的作用",
+        "第二步：d² 涉及二阶混合偏导，两项符号相反",
+        "第三步：偏导可交换 + 楔积反对称 ⇒ 相消",
+        "第四步：Stokes 定理 ∫_Ω dω = ∮_∂Ω ω 统一四个积分定理",
+        "易错点：忘楔积的反对称；把 d²=0 当需要物理条件",
+        "校验：1D 给微积分基本定理；2D 给 Green；3D 给 Gauss/Stokes"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 8,
+        "line_end": 16
+      },
+      "fill_hint": "四步骨架；第三、四步是核心（反对称相消 + Stokes 统一）；易错点区分「闭合 vs 恰当」。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：$d$ 在坐标基上的作用。** 对 $k$-形式 $\\omega=\\omega_{i_1\\ldots i_k}dx^{i_1}\\wedge\\cdots\\wedge dx^{i_k}$，\n\n$$d\\omega=\\frac{\\partial\\omega_{i_1\\ldots i_k}}{\\partial x^{j}}dx^{j}\\wedge dx^{i_1}\\wedge\\cdots\\wedge dx^{i_k}.$$\n\n**理由**：$d$ 的定义就是「偏导 + 楔积一个 $dx^{j}$」。\n\n**第二步：算 $d^{2}$。** 作用两次会得到\n\n$$d^{2}\\omega=\\frac{\\partial^{2}\\omega_{\\ldots}}{\\partial x^{j}\\partial x^{k}}dx^{j}\\wedge dx^{k}\\wedge(\\cdots).$$\n\n**关键**：这里有一对指标 $(j,k)$ 被楔积——而 $dx^{j}\\wedge dx^{k}=-dx^{k}\\wedge dx^{j}$。\n\n**第三步：相消。** 把求和按 $(j,k)$ 与 $(k,j)$ 配对：\n\n$$\\sum_{j,k}\\frac{\\partial^{2}\\omega}{\\partial x^{j}\\partial x^{k}}dx^{j}\\wedge dx^{k}=\\frac{1}{2}\\sum_{j,k}\\left(\\frac{\\partial^{2}\\omega}{\\partial x^{j}\\partial x^{k}}-\\frac{\\partial^{2}\\omega}{\\partial x^{k}\\partial x^{j}}\\right)dx^{j}\\wedge dx^{k}=0.$$\n\n**理由**：括号里的两项**相等**（混合偏导可交换，即 Clairaut/Schwarz 定理），而 $dx^{j}\\wedge dx^{k}$ 在 $(j,k)\\leftrightarrow(k,j)$ 下**变号**。**所以整体为零** ✅。\n\n**注意这个证明只用了两件事**：① 二阶偏导可交换（光滑性）；② 楔积反对称。**不需要任何物理条件**——这就是「$d^{2}=0$ 是恒等式」的含义。\n\n**第四步：Stokes 定理的统一。** 由 $d$ 的「边界对偶」性质：\n\n$$\\int_{\\Omega}d\\omega=\\oint_{\\partial\\Omega}\\omega.$$\n\n**三个具体化身**：\n\n| 维数 | $\\Omega$ | $\\partial\\Omega$ | 定理 |\n|---|---|---|---|\n| $1$ | 区间 $[a,b]$ | 两个端点 | 微积分基本定理 $\\int_a^bf'=f(b)-f(a)$ |\n| $2$ | 平面区域 | 闭合曲线 | Green 公式 |\n| $3$（曲面） | 曲面 | 闭合曲线 | 经典 Stokes |\n| $3$（体） | 体积 | 闭合曲面 | Gauss 散度定理 |\n\n**四条定理是同一个**——只是 $\\omega$ 的次数不同。\n\n**依赖链**：$d$ 的定义 → 二阶偏导可交换 + 反对称 → $d^{2}=0$ → 边界对偶 → Stokes 统一。\n\n**易错点**：\n\n1. **忘反对称**：如果用的是普通张量积（不带 $\\wedge$），$d^{2}\\neq0$；\n2. **把 $d^{2}=0$ 当物理**：它是代数恒等式，无需验证也不需要条件；\n3. **混淆「闭合」与「恰当」**：$dF=0$ 是**闭合**（closed）；$F=dA$ 是**恰当**（exact）。**恰当 ⇒ 闭合**（因 $d^{2}=0$），但反之不一定（拓扑障碍，见 `E2:maxwell.quantifiers` 第①行）。",
+      "links": [
+        "E2",
+        "E4",
+        "D3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E1:hodge.statement",
+      "type": "statement",
+      "subject": "hodge",
+      "title": "Hodge 星算子：定义、性质与度规依赖",
+      "keywords": [
+        "★：k-形式 → (n−k)-形式",
+        "3D 度规下：★dx=dy∧dz 等（把 1-形式映到 2-形式）",
+        "依赖度规：★ 的分量含 √|det g| 因子",
+        "两次 ★：★★ = (−1)^{k(n−k)}（欧氏），闵氏要多一个符号",
+        "用途：把旋度/散度写成向量（E1 表第二行）",
+        "4D 闵氏：★F 是 F 的「对偶场强」（E/B 互换的角色）"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 8,
+        "line_end": 16
+      },
+      "fill_hint": "陈述本体（★ 的定义）+ 度规依赖（含 √|det g|）+ 两次 ★ 的符号公式与验算。",
+      "content": "**陈述**。\n\n**Hodge 星算子** $\\star$ 把 $k$-形式映到 $(n-k)$-形式：\n\n$$\\star:\\ \\Omega^{k}\\to\\Omega^{n-k}.$$\n\n**3D 欧氏的具体作用**：\n\n$$\\star\\,dx=dy\\wedge dz,\\qquad \\star\\,dy=dz\\wedge dx,\\qquad \\star\\,dz=dx\\wedge dy,$$\n\n$$\\star(dy\\wedge dz)=dx,\\ \\ldots,\\qquad \\star(dx\\wedge dy\\wedge dz)=1.$$\n\n**这就解释了旋度公式的形状**：$d\\omega$ 是 2-形式，取 $\\star$ 后回到 1-形式（可当向量）。\n\n**依赖度规（关键）**：$\\star$ 的显式定义含**度规行列式**的平方根：\n\n$$\\star(dx^{i_1}\\wedge\\cdots\\wedge dx^{i_k})=\\frac{\\sqrt{\\lvert\\det g\\rvert}}{(n-k)!}\\,g^{i_1j_1}\\cdots g^{i_kj_k}\\,\\epsilon_{j_1\\ldots j_k j_{k+1}\\ldots j_n}dx^{j_{k+1}}\\wedge\\cdots\\wedge dx^{j_n}.$$\n\n**所以 $\\star$ 是「度规依赖」的**——这也解释了 `E2` 里「$d\\star F=J$ 依赖度规，而 $dF=0$ 不依赖」。\n\n**两次 $\\star$ 的性质**：\n\n$$\\star\\star=(-1)^{k(n-k)}\\ \\text{(欧氏)}\\quad\\Longrightarrow\\quad \\star\\star=(-1)^{k(n-k)+1}\\ \\text{(闵氏)}.$$\n\n**验算（$n=3$、$k=1$）**：$\\star\\star=(-1)^{1\\cdot2}=+1$ ✅（3D 里 $\\star$ 作用两次回到自身）；**闵氏 $n=3$ 时给 $-1$**。\n\n**闵氏 4D 的用途**：$\\star F$ 称为 $F$ 的**对偶场强**，它把 $\\mathbf{E}\\leftrightarrow\\mathbf{B}$ 的角色互换（乘 $i$ 后是「双旋」）。**这是「$d\\star F=J$ 与 $dF=0$ 可以互相对照」的原因**（也是对偶对称性/磁单极讨论的数学基础）。\n\n**它依赖什么 / 谁依赖它**：度规（$g_{\\mu\\nu}$）；下游：`E2` 的第二组麦克斯韦方程、`E4` 的 Yang–Mills 作用量里的 $\\star$。",
+      "links": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E1:vs-vector-calculus.comparison",
+      "type": "comparison",
+      "subject": "vs-vector-calculus",
+      "title": "分工：向量分析与微分形式怎么选",
+      "keywords": [
+        "向量分析：直观、工程常用，但只在 3D 自然",
+        "微分形式：任意维、坐标无关、定理统一",
+        "代价：形式语言需要适应（楔积、★、指标）",
+        "判据①：3D 欧氏工程计算 → 向量分析",
+        "判据②：4D/弯曲时空/拓扑问题 → 微分形式",
+        "判据③：要统一证明积分定理 → 微分形式"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 4,
+        "line_end": 17
+      },
+      "fill_hint": "对照口径：以「维数/拓扑需求/工程复杂度」三问划界；给麦克斯韦两行 vs 八行的具体对比。",
+      "content": "**两者是同一数学的不同表述。**\n\n| 需求 | 向量分析 | 微分形式 |\n|---|---|---|\n| 3D 欧氏工程计算（梯度/旋度/散度） | ✅ 直观、公式熟悉 | ✅ 但要过 $\\star$ 这一关 |\n| 任意维 | ❌ 只在 $n=3$ 自然（$n=2$ 部分可用） | ✅ 通用 |\n| 弯曲时空/相对论 | ❌ 分量公式繁琐 | ✅ 标准语言 |\n| 统一积分定理 | ❌ 四条定理分开记 | ✅ 一个 Stokes |\n| 拓扑问题（闭合 vs 恰当） | ❌ 无法表达 | ✅ de Rham 上同调 |\n| 教学直觉 | ✅ 好 | ⚠️ 需要先建立「可积对象」的直观 |\n\n**判据（三问定选）**：\n\n1. **维数是 3 吗？** 是 → 向量分析够用（除非要统一性）；不是 → 形式；\n2. **需要「闭合但不恰当」这类区分吗？** 需要（磁单极、拓扑缺陷、de Rham）→ 形式；\n3. **要处理弯曲时空吗？** 要（广义相对论、规范场在曲面上）→ 形式。\n\n**一个实际的判断**：**`E2` 的麦克斯韦方程用形式写法只有两行**（$dF=0$、$d\\star F=J$），而分量写法要写 8 个方程。**所以凡是要「看结构」而不只是「算数值」，形式写法更清晰。**\n\n**反过来的例子**：算一个具体的天线辐射场，用向量分析（$\\nabla\\times\\mathbf{E}$ 等）更快——因为坐标系与度规固定，形式语言的优势体现不出来。\n\n**位置关系**：本条与 `E1:differential-forms.statement` 是一对——那条给「形式是什么」，本条给「和谁比、怎么选」。",
+      "links": [
+        "E1",
+        "E2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "E1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：形式次数与 Hodge 对偶",
+      "keywords": [
+        "模块 form-degrees（档1 前端直渲）",
+        "模式①：3D 中 0/1/2/3-形式的分量数柱状图（1/3/3/1）",
+        "模式②：★ 的对偶箭头图（k ↔ n−k）",
+        "模式③：4D 中 2-形式的 6 个分量网格（vs 4-矢量的 4 个）",
+        "invariant：C(n,k) = C(n,n−k)（组合恒等式，与 ★ 的存在对应）",
+        "预置：n=3 与 n=4 两组"
+      ],
+      "tex_ref": {
+        "file": "notebook/E_Field.tex",
+        "line_start": 4,
+        "line_end": 17
+      },
+      "fill_hint": "档1 依据：组合数是显式可算，前端可算；invariant 用组合恒等式（★ 存在的基础）。",
+      "content": "**档1 演示**（前端直渲），模块 `form-degrees`。\n\n**模式① `component-count`**：$n=3$ 时 $k=0,1,2,3$ 的分量数柱状图 —— $1,3,3,1$。**让「1-形式与 2-形式都是 3 个分量」这个巧合可见**（这正是 3D 里「旋度像向量」的原因）。\n\n**模式② `hodge-duality`**：画 $\\star$ 的对偶箭头：$k\\leftrightarrow n-k$。$n=3$ 时 $0\\leftrightarrow3$、$1\\leftrightarrow2$；$n=4$ 时 $0\\leftrightarrow4$、$1\\leftrightarrow3$、$2\\leftrightarrow2$（**自对偶**）。\n\n**模式③ `4d-two-form`**：$n=4$ 时 2-形式的 6 个独立分量网格（$4\\times4$ 反对称矩阵的上三角），与 4-矢量的 4 个分量并排。**这就是「电磁场为什么不能用 4-矢量表示」的可视化。**\n\n**恒等式（给前端 invariant）**：\n\n$$\\binom{n}{k}=\\binom{n}{n-k}.$$\n\n**这是严格恒等式**（组合恒等式），它**正是 $\\star$ 存在的基础**——因为「$k$-形式与 $(n-k)$-形式空间维数相同」，所以可以做线性对偶。\n\n**参数契约**：\n\n- 预置：$n\\in\\{3,4\\}$、$k\\in\\{0,\\ldots,n\\}$；\n- 与 `E1:differential-forms.statement` 的维数表（3D 的 1/3/3/1、4D 的 $\\binom{4}{2}=6$）保持一致。",
+      "links": [
+        "E2",
+        "E4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

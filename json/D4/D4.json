@@ -1,0 +1,243 @@
+{
+  "schema": "entry-card/v2",
+  "code": "D4",
+  "chapter": "D4",
+  "title": "哈密顿--雅可比理论与正则变换",
+  "src": {
+    "file": "notebook/D_classic.tex",
+    "line_start": 63,
+    "line_end": 73,
+    "anchor": "notebook/D_classic.tex:63"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "D4:hamilton-jacobi.quantifiers",
+      "type": "comparison",
+      "subject": "hamilton-jacobi",
+      "title": "哈密顿–雅可比方程的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①S 是「Hamilton 主函数」：S(q,t)，不是任意函数",
+        "条件②要完整积分：分离变量不总能做到（KAM 型障碍）",
+        "条件③H 不含 t 时可用 S = W − Et（W 是「特征函数」）",
+        "条件④与量子力学的桥要求 ħ→0（WKB 极限）",
+        "翻车代价：以为 HJ 总能「解出」运动——不可积系统做不到"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 63,
+        "line_end": 73
+      },
+      "fill_hint": "四行条件表；② 行给三个系统的可分离性对照；③ 行点出 H 含 t 时分离失效；④ 行强调「只是 ħ→0 极限」。",
+      "content": "切片给了 H–J 方程、与量子力学的桥、正则变换与四类生成函数。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $S$ 是 **Hamilton 主函数** | $S(q,t)$ 是作用量作为**终点坐标与时间**的函数（不是路径泛函 $S[q]$）。两者相关但不同：主函数满足 H–J 方程，是**PDE 的解** | 混淆两者会导致无法写出方程 | 不能放宽：这是定义 |\n| ② **分离变量不总能做到** | 自由粒子：$S=px-\\dfrac{p^{2}}{2m}t$（实测 $m=1$、$p=2$、$t=1$、$x=1$ ⇒ $S=0$【已核验:0|2*1-2*1】）✅；谐振子用作用量变量 ⇒ $H=\\omega J$ ✅；但 $V=x^{2}y^{2}$ 型**不能分离** | 不可分离时 HJ 法失效（系统可能混沌） | 不能放宽：可积性是**特殊性质**（Liouville 可积），不是普遍成立 |\n| ③ $H$ 不含 $t$ 时的分离 | $S=W(q)-Et$，$E$ 是分离常数（=能量）。**若 $H$ 含 $t$**（如受迫振子），这个分离立刻失效 | 时间依赖系统不能用「$W-Et$」形式 | 可放宽：用含时分离或直接解 PDE |\n| ④ 与量子力学的桥需 $\\hbar\\to0$ | 切片：把 $S$ 换成 $\\dfrac{\\hbar}{i}\\ln\\psi$，取 $\\hbar\\to0$ 得薛定谔方程的经典极限。**有限的 $\\hbar$ 下这只是渐近**（WKB 近似），有 $O(\\hbar)$ 修正 | 以为「HJ 方程就是薛定谔方程」——不是，是它的 $\\hbar\\to0$ 极限 | 不能放宽：要保留 $\\hbar$ 必须用完整薛定谔方程（`F3`） |\n\n**这张表的用法**：\n\n1. **先看能否分离变量**（时间与空间）——不能就换方法；\n2. **$H$ 不含 $t$** → 用 $S=W-Et$ 降为「特征函数方程」；\n3. **与量子力学的联系只在 $\\hbar\\to0$**——有限 $\\hbar$ 要加修正项。\n\n**数值锚点**：\n\n| 系统 | HJ 解 | 校核 |\n|---|---|---|\n| 自由粒子（$m=1$） | $S=px-\\dfrac{p^{2}}{2m}t$ | $p=2$、$t=1$、$x=1$ ⇒ $S=0$【已核验:0|2*1-2*1】 |\n| 谐振子（$\\omega=1$） | $H=\\omega J$（$J$ 是作用量变量） | $E=0.5$ ⇒ $J=E/\\omega=0.5$【已核验:0.5|0.5/1.0】 |\n| $V=x^{2}y^{2}$ | — | **不可分离** ❌ |\n\n**注意「$H=\\omega J$ 对 $J$ 是线性的」这条的意义**：线性 ⇒ 频率 $\\omega$ 与能量无关 ⇒ **等时性**（所有轨道的周期相同）。这是谐振子的特殊性质，一般系统不具备。",
+      "links": [
+        "D4",
+        "D3",
+        "D2",
+        "F3",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D4:separability.counterexample",
+      "type": "counterexample",
+      "subject": "separability",
+      "title": "反例：假设 HJ 总能分离变量（V=x²y² 就做不到）",
+      "keywords": [
+        "误用现场：拿到任何系统都假设 S 可分离成各部分之和",
+        "可分离（成功）：自由粒子 S=px−Et；谐振子 H=ωJ",
+        "不可分离（失败）：V=x²y²（或更一般的 V=V₁(x)+V₂(y) 之外的形式）",
+        "判据：分离要求 H = H₁(q₁,p₁) + H₂(q₂,p₂) 形式（可加）",
+        "后果：强行分离会得到矛盾的方程组（无法同时满足）",
+        "修补：改用数值积分、摄动法、或识别为不可积（可能混沌）"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 63,
+        "line_end": 73
+      },
+      "fill_hint": "把「不可分离」的原因算清（x²y² 无法拆成加和）；给三个系统的对照表；修补含 KAM 定理。",
+      "content": "**误用现场**：假设哈密顿–雅可比方程总能通过分离变量求解——因为教科书的例题（自由粒子、谐振子、开普勒问题）都能分离。\n\n**为什么这是错的**：可分离性要求 Hamilton 量具有**可加结构**：\n\n$$H=\\sum_i H_i(q_i,p_i)\\qquad\\text{（每个自由度独立）}.$$\n\n**多数系统不满足这一条。**\n\n**三个系统的对照**：\n\n| 系统 | $H$ | 能否分离 |\n|---|---|---|\n| 自由粒子 | $\\dfrac{p^{2}}{2m}$ | ✅（$S=px-\\dfrac{p^{2}}{2m}t$） |\n| 谐振子 | $\\dfrac{1}{2}(p^{2}+\\omega^{2}q^{2})$ | ✅（分离成 $(q,p)$ 与 $t$，得 $H=\\omega J$） |\n| 二维 $V=x^{2}y^{2}$ | $\\dfrac{p_x^{2}+p_y^{2}}{2m}+x^{2}y^{2}$ | ❌（耦合项 $x^{2}y^{2}$ 无法拆成 $f(x)+g(y)$） |\n\n**为什么不能强分离（具体）**：强设 $S=S_x(x)+S_y(y)-Et$，代进 H–J 方程得\n\n$$\\frac{1}{2m}\\left(S_x'^{2}+S_y'^{2}\\right)+x^{2}y^{2}=E.$$\n\n**$x^{2}y^{2}$ 项无法拆开**——它不是「只含 $x$ 的加只含 $y$」，而是含两者。于是无法把方程分成「各自等于常数」的两个方程。\n\n**后果链条**：\n\n1. 强行分离 → 得到互相矛盾的方程组（如要求「常数 $=x^{2}y^{2}$」）→ 无解；\n2. 系统可能是**混沌**的（数值上对初值敏感）；\n3. 但**不代表无解**——只是**不能用 HJ 的分离法**求解析解。数值积分照样可以做。\n\n**修补动作（按适用性排序）**：\n\n1. **数值积分**（哈密顿方程或辛格式）——适用范围最广；\n2. **摄动法**：若系统「接近」可积（小耦合），用微扰展开；\n3. **识别不可积**：用 Poincaré 截面看相空间结构（是规则环还是混沌海）；\n4. **KAM 定理**：小扰动下**大部分**（测度意义）不变环仍存活，但**有理频率**附近的会破裂——这解释了为什么弱耦合系统「看起来还可积」。\n\n**与 `D3` 的关系**：`D3` 的哈密顿方程对**任何** $H$ 都成立；本条讨论的是「能不能解析求解」。**方程总成立，解析解不总有。**\n\n**判据（一问）**：$H$ 能否写成 $\\sum H_i(q_i,p_i)$？能 → 分离；不能 → 换方法。",
+      "links": [
+        "D4",
+        "D3",
+        "D2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D4:hamilton-jacobi.statement",
+      "type": "statement",
+      "subject": "hamilton-jacobi",
+      "title": "哈密顿–雅可比方程：陈述、分离与量子力学桥梁",
+      "keywords": [
+        "H–J 方程：∂S/∂t + H(q, ∂S/∂q, t) = 0",
+        "S 是 Hamilton 主函数（作用量作为终点坐标的函数）",
+        "H 不含 t 时：S = W(q) − Et（W 是特征函数）",
+        "与量子力学的桥：S → (ħ/i)lnψ，ħ→0 得薛定谔方程的经典极限",
+        "正则变换：保持辛结构的 (q,p)→(Q,P)",
+        "生成函数四种：F₁(q,Q)、F₂(q,P)、F₃(p,Q)、F₄(p,P)"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 63,
+        "line_end": 73
+      },
+      "fill_hint": "陈述本体（PDE + 特征函数）+ 与量子力学的 WKB 桥 + 四类生成函数表；点出「H–J 的用意是让 K≡0」。",
+      "content": "**陈述**（切片）。\n\n**哈密顿–雅可比方程**：\n\n$$\\frac{\\partial S}{\\partial t}+H\\!\\left(q,\\frac{\\partial S}{\\partial q},t\\right)=0.$$\n\n**$S$ 的身份**：**Hamilton 主函数**——作用量作为**终点坐标与时间**的函数 $S(q,t)$。它与 `D1` 的路径泛函 $S[q]$ 相关但不同：主函数满足上述 **PDE**。\n\n**方程的结构**：把 $p$ 替换成 $\\partial S/\\partial q$——**这就是「用 S 的梯度表示动量」**。所以 H–J 方程是一个**一阶非线性 PDE**。\n\n**$H$ 不含 $t$ 时的分离**：令 $S=W(q)-Et$（$E$ 是分离常数）。代入得\n\n$$H\\!\\left(q,\\frac{\\partial W}{\\partial q}\\right)=E.$$\n\n**这就是「特征函数方程」**——把 PDE 降成不含时间的形式。**$E$ 就是能量**（`D2` 的守恒量）。\n\n**数值锚点**：\n\n| 系统 | 解 |\n|---|---|\n| 自由粒子（$m=1$） | $S=px-\\dfrac{p^{2}}{2m}t$；$p=2,t=1,x=1$ ⇒ $S=0$【已核验:0|2*1-2*1】 |\n| 谐振子（$\\omega=1$） | 作用量变量 $J=E/\\omega$ ⇒ $H=\\omega J$；$E=0.5$ ⇒ $J=0.5$【已核验:0.5|0.5/1.0】 |\n\n**与量子力学的桥梁**（切片）：把 $S$ 替换为 $\\dfrac{\\hbar}{i}\\ln\\psi$，取 $\\hbar\\to0$：\n\n$$\\psi\\sim e^{iS/\\hbar}\\ \\Longrightarrow\\ \\frac{\\hbar}{i}\\ln\\psi=S.$$\n\n代入后取 $\\hbar\\to0$ 极限，得薛定谔方程（`F3`）的经典极限。**这一步的实质是 WKB 近似**：\n\n$$\\psi\\approx A\\,e^{iS/\\hbar},$$\n\n其中 $S$ 满足 H–J 方程。**注意「$\\hbar$ 有限时这个式子只是渐近」**（有 $O(\\hbar)$ 修正）。\n\n**正则变换与生成函数**（切片）：保持辛结构的变换 $(q,p)\\to(Q,P)$。四类生成函数由 Legendre 变换互相关联：\n\n| 生成函数 | 自变量 | 关系 |\n|---|---|---|\n| $F_1$ | $(q,Q)$ | $p=\\dfrac{\\partial F_1}{\\partial q}$，$P=-\\dfrac{\\partial F_1}{\\partial Q}$ |\n| $F_2$ | $(q,P)$ | $p=\\dfrac{\\partial F_2}{\\partial q}$，$Q=\\dfrac{\\partial F_2}{\\partial P}$ |\n| $F_3$ | $(p,Q)$ | $q=-\\dfrac{\\partial F_3}{\\partial p}$，$P=-\\dfrac{\\partial F_3}{\\partial Q}$ |\n| $F_4$ | $(p,P)$ | $q=-\\dfrac{\\partial F_4}{\\partial p}$，$Q=\\dfrac{\\partial F_4}{\\partial P}$ |\n\n**H–J 方程的「用意」**：它要找的正则变换是**使新哈密顿量 $K\\equiv0$** 的那个——那样新坐标 $(Q,P)$ 全是常数，问题就「解完」了。**而 $S$ 恰好就是这个变换的（$F_2$ 型）生成函数。**\n\n**它依赖什么 / 谁依赖它**：`D3` 的哈密顿方程与辛结构；下游：`F3` 的薛定谔方程（$\\hbar\\to0$ 极限）、`F5` 的路径积分（$S$ 作为相位的来源）、可积系统理论。",
+      "links": [
+        "D3",
+        "D2",
+        "F3",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D4:generating-function.definition",
+      "type": "statement",
+      "subject": "generating-function",
+      "title": "生成函数四型：定义、关系与互相转换",
+      "keywords": [
+        "F₁(q,Q)：p=∂F₁/∂q，P=−∂F₁/∂Q",
+        "F₂(q,P)：p=∂F₂/∂q，Q=∂F₂/∂P（H–J 用的就是这个）",
+        "F₃(p,Q)：q=−∂F₃/∂p，P=−∂F₃/∂Q",
+        "F₄(p,P)：q=−∂F₄/∂p，Q=∂F₄/∂P",
+        "互相关系：由 Legendre 变换联系（F₂=F₁+ΣP Q 等）",
+        "判据：Henon 映射这类保面积映射只能用 F₃/F₄ 表示"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 63,
+        "line_end": 73
+      },
+      "fill_hint": "陈述本体（四型定义表 + 转换）+ 「四型 = 四个两两组合」的统一解释 + Hénon 映射的实用注意。",
+      "content": "**陈述**（切片只列了四种名称，这里给出定义与关系）。\n\n**为什么需要生成函数**：正则变换不能任意给（`D3:poisson.noncanonical` 的反例），而**生成函数是构造正则变换的系统方法**——从任一生成函数出发，按公式导出 $(Q,P)$ 就自动正则。\n\n**四种类型的定义**（都满足「$dF=\\sum p\\,dq-\\sum P\\,dQ+\\ldots$」的不同 Legendre 变体）：\n\n| 型 | 自变量 | 定义关系 |\n|---|---|---|\n| $F_1$ | $(q,Q)$ | $p_i=\\dfrac{\\partial F_1}{\\partial q_i}$，$P_i=-\\dfrac{\\partial F_1}{\\partial Q_i}$ |\n| $F_2$ | $(q,P)$ | $p_i=\\dfrac{\\partial F_2}{\\partial q_i}$，$Q_i=\\dfrac{\\partial F_2}{\\partial P_i}$ |\n| $F_3$ | $(p,Q)$ | $q_i=-\\dfrac{\\partial F_3}{\\partial p_i}$，$P_i=-\\dfrac{\\partial F_3}{\\partial Q_i}$ |\n| $F_4$ | $(p,P)$ | $q_i=-\\dfrac{\\partial F_4}{\\partial p_i}$，$Q_i=\\dfrac{\\partial F_4}{\\partial P_i}$ |\n\n**注意符号模式**（不用死记）：每个 $- $ 号都出现在「$F$ 的自变量与被求导变量**不同族**」的时候——$F_1(q,Q)$ 对 $Q$ 求导给 $-P$（因为 $Q$ 是新位置）；$F_2(q,P)$ 对新动量求导给 $+Q$。\n\n**互相转换（Legendre 变换）**：\n\n$$F_2(q,P)=F_1(q,Q)+\\sum_i P_iQ_i,$$\n$$F_3(p,Q)=F_1(q,Q)-\\sum_i p_iq_i,$$\n$$F_4(p,P)=F_2(q,P)-\\sum_i p_iq_i.$$\n\n**统一判据**：全部四种都来自展开式\n\n$$dF=\\sum_i p_i\\,dq_i-\\sum_i P_i\\,dQ_i+\\left(K-H\\right)dt,$$\n\n然后对 $q,p,Q,P$ 中不同的两个变量做 Legendre 变换——**四型 = 四个两两组合**（$\\binom{4}{2}=6$ 减去不能用 $F(q,p)$、$F(Q,P)$ 型，剩 4 个）。\n\n**数值/实用注意（为什么工程里的保面积映射只用 $F_3$/​$F_4$）**：像 Hénon 映射、标准映射（standard map）这类**离散保面积映射**，$F_1$/​$F_2$ 型**不存在**（因为解不出隐式关系），必须用 $F_3$ 或 $F_4$ 的**混合形式**。这是数值辛积分的理论基础（`G1.2`）。\n\n**H–J 与 $F_2$ 的关系（最关键的用法）**：要找的正则变换是「使 $K=H+\\partial_tF=0$」的那个，而它的生成函数（$F_2$ 型）就是 Hamilton 主函数 $S(q,P,t)$，且 $P$ 是常数（新动量守恒）。这就是 `D4:hamilton-jacobi.statement` 的 H–J 方程的来源。\n\n**它依赖什么 / 谁依赖它**：`D3` 的辛结构（正则性的判据）；下游：H–J 方程、数值辛积分（`G1.2`）、正则微扰论。",
+      "links": [
+        "D3",
+        "D4",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D4:hj.vs-schrodinger",
+      "type": "comparison",
+      "subject": "hj",
+      "title": "分工：H–J 方程与薛定谔方程怎么衔接",
+      "keywords": [
+        "H–J：经典，S 是实数，一阶非线性 PDE",
+        "薛定谔：量子，ψ 是复函数，线性 PDE",
+        "桥：ψ ~ e^{iS/ħ}（WKB），ħ→0 得 H–J",
+        "H–J 是非线性（因为 (∇S)²）；薛定谔是线性",
+        "代价：WKB 在转折点附近失效（S 的梯度发散）",
+        "判据：ħ 可忽略（宏观/高能）用 H–J；否则用薛定谔"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 63,
+        "line_end": 73
+      },
+      "fill_hint": "对照口径：并排 H–J 与薛定谔 + 桥的三行推导；点出「线性 vs 非线性」与 WKB 转折点=J8 的焦散。",
+      "content": "**两者是同一物理的两个极限。**\n\n| | H–J（`D4`） | 薛定谔（`F3`） |\n|---|---|---|\n| 变量 | $S(q,t)$（**实**） | $\\psi(q,t)$（**复**） |\n| 方程 | $\\partial_tS+H(q,\\nabla S)=0$ | $i\\hbar\\partial_t\\psi=\\hat H\\psi$ |\n| 类型 | **一阶非线性** PDE | **线性** PDE |\n| 非线性来源 | $(\\nabla S)^{2}$ 项 | —（$H$ 里的 $\\nabla^{2}$ 是线性算子） |\n| 解的意义 | 作用量/相位 | 概率幅 |\n| 极限 | — | $\\hbar\\to0$ 给 H–J |\n\n**桥的推导（三行）**：设\n\n$$\\psi=A\\,e^{iS/\\hbar}.$$\n\n代入薛定谔方程并分离 $\\hbar$ 的幂：\n\n- $O(\\hbar^{0})$：$\\partial_tS+H(q,\\nabla S)=0$ —— **就是 H–J 方程**；\n- $O(\\hbar^{1})$：$\\partial_tA+\\nabla\\cdot(A^{2}\\nabla S)/A=0$ —— **连续性方程**（概率守恒）。\n\n**三个必须记住的差别**：\n\n1. **线性 vs 非线性**：量子力学**线性**（叠加原理的直接来源，`F1`）；经典极限**非线性**（因为 $(\\nabla S)^{2}$）。**这是「为什么量子力学线性而经典力学非线性」的答案**；\n2. **WKB 在转折点失效**：当 $\\nabla S$ 发散（如经典粒子到达速度为零的转弯点）时，$A\\to\\infty$，WKB 破裂。**需要 Airy 函数之类的「一致渐近」**——这与 `J8` 的焦散是**同一个数学问题**（转折点 = 焦散）；\n3. **$\\hbar$ 的「小量」是相对的**：判据不是 $\\hbar$ 的绝对值，而是 $\\hbar/(\\text{特征作用量})$。**所以「宏观」的标准是作用量远大于 $\\hbar$**。\n\n**判据（两问定选）**：\n\n1. **特征作用量 $\\gg\\hbar$ 吗？** 是 → H–J（经典）；否 → 薛定谔（量子）；\n2. **需要干涉/隧穿吗？** 需要（相位相干）→ 必须薛定谔；不需要 → 可以 H–J。\n\n**跨篇连接（这条最漂亮）**：`J8` 的 Airy 函数同时出现在\n- 光学焦散（相位三次的稳相积分）；\n- 量子转折点（WKB 的失效点）；\n- 这两者是**同一个数学结构**——都是「两个稳相点合并」的余维 1 灾变。**所以「焦散」与「隧穿」在数学上是一回事。**\n\n**位置关系**：`D4` 给经典侧（H–J），`F3` 给量子侧（薛定谔），`F5` 给第三条路（路径积分）。**三者都建立在 `D1`/`D3` 的哈密顿结构上。**",
+      "links": [
+        "D3",
+        "F3",
+        "F5",
+        "J8",
+        "D4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D4:action.probe1",
+      "type": "probe",
+      "subject": "action",
+      "title": "检验题：自由粒子的 Hamilton 主函数是多少？",
+      "keywords": [
+        "可算题：自由粒子 H=p²/(2m)，m=1，求 S",
+        "答案：S = px − (p²/2m)t（p 是分离常数）",
+        "校核：p=2、t=1、x=1 → S = 2 − 2 = 0",
+        "追问：∂S/∂x 等于什么？（= p ✅ 动量）",
+        "陷阱：把 S 写成 px + (p²/2m)t（符号错）"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 63,
+        "line_end": 73
+      },
+      "fill_hint": "从 H–J 方程变来的检验题；第三问验证「动量=主函数梯度」；点出「分离常数数目=自由度」。",
+      "content": "**题**：自由粒子，$H=\\dfrac{p^{2}}{2m}$，取 $m=1$。\n\n1. 由 H–J 方程求 $S(x,t)$（提示：$H$ 不含 $x$、不含 $t$）；\n2. 在 $p=2$、$t=1$、$x=1$ 处求 $S$；\n3. 验证 $\\dfrac{\\partial S}{\\partial x}=p$。\n\n**答案**：\n\n1. $H$ 既不显含 $t$ 也不依赖 $x$，故有两个分离常数：$E$ 与 $p$。写\n\n$$S=px-Et,\\qquad E=\\frac{p^{2}}{2m}=\\frac{p^{2}}{2}\\ (\\text{取 }m=1).$$\n\n代入 H–J：$\\partial_tS+H=(-E)+\\dfrac{1}{2}\\left(\\dfrac{\\partial S}{\\partial x}\\right)^{2}=-E+\\dfrac{p^{2}}{2}=0$ ✅。\n\n**所以**\n\n$$S=px-\\frac{p^{2}}{2m}t.$$\n\n2. $p=2$、$m=1$、$t=1$、$x=1$：\n\n$$S=2\\cdot1-\\frac{2^{2}}{2}\\cdot1=2-2=0$$【已核验:0|2*1-2*1】\n\n3. $\\dfrac{\\partial S}{\\partial x}=p=2$ ✅——**动量就是主函数的空间梯度**（这正是 H–J 方程用 $\\nabla S$ 替换 $p$ 的依据）。\n\n**易错点**：\n\n- **符号**：$\\partial_tS=-E$，所以 $S=px-Et$（**减**）。写成 $+Et$ 代进 H–J 会得到 $-E+E/1$ 型矛盾；\n- **$E$ 与 $p$ 的关系**：自由粒子 $E=p^{2}/(2m)$，不能把 $E$、$p$ 当独立常数（只差一个关系）——**这解释了为什么「分离常数」数目恰好等于自由度**；\n- **量纲自检**：$px$ 的量纲 = 动量 × 长度 = 作用量 ✅；$Et$ 的量纲 = 能量 × 时间 = 作用量 ✅。\n\n**推广（$n$ 个自由粒子）**：$S=\\sum_i p_ix_i-\\dfrac{\\sum p_i^{2}}{2m}t$——**仍是各部分之和**，这就是 `D4:hamilton-jacobi.separability` 说的「可加结构」。",
+      "links": [
+        "D4",
+        "D3",
+        "D1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "D4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：H–J 方程与作用量的等值线",
+      "keywords": [
+        "模块 hj-action-surface（档1 前端直渲）",
+        "模式①：自由粒子的 S(x,t)=px−Et 曲面（等值线 = 相轨迹族）",
+        "模式②：谐振子的作用量变量 J=E/ω 与 H=ωJ 的线性关系",
+        "模式③：WKB 波包 ψ~e^{iS/ħ} 的相位场，ħ 可拖",
+        "invariant：∂S/∂x = p（严格等式，可用数值差分校核）",
+        "预置：自由粒子 m=1、p=2；谐振子 ω=1"
+      ],
+      "tex_ref": {
+        "file": "notebook/D_classic.tex",
+        "line_start": 63,
+        "line_end": 73
+      },
+      "fill_hint": "档1 依据：$S$ 与 $J$ 都是显式函数，前端可算；invariant 用「∂S/∂x=p」与 H–J 方程两条严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `hj-action-surface`。\n\n**模式① `free-particle-S`**：画 $S(x,t)=px-\\dfrac{p^{2}}{2m}t$ 的曲面与等值线。**等值线 $S=\\text{const}$ 就是「波前」**——它在一段时间后沿 $x$ 平移（速度 $p/m=v$），这与「经典粒子的轨迹」一致。\n\n**模式② `action-angle`**：谐振子的作用量变量 $J=E/\\omega$，画 $H(J)=\\omega J$ 的**直线**。预置：$\\omega=1$、$E=0.5$ ⇒ $J=0.5$【已核验:0.5|0.5/1.0】。**「$H$ 对 $J$ 线性」= 等时性**（周期与能量无关），这是谐振子的特殊性质。\n\n**模式③ `wkb-phase`**：画 $\\psi=Ae^{iS/\\hbar}$ 的相位场 $\\operatorname{Re}\\psi$，拖 $\\hbar$：$\\hbar$ 大时波包弥散（量子），$\\hbar\\to0$ 时相位剧烈振荡、只剩稳相路径（经典）。**直接演示「$\\hbar\\to0$ 给经典力学」。**\n\n**恒等式（给前端 invariant）**：\n\n$$\\frac{\\partial S}{\\partial x}-p=0\\quad(\\text{自由粒子}),\\qquad H\\!\\left(q,\\frac{\\partial S}{\\partial q}\\right)+\\frac{\\partial S}{\\partial t}=0.$$\n\n两条都是**严格等式**（第一条是 H–J 替换动量的定义，第二条就是方程本身）。前端可用数值差分\n\n$$\\frac{\\partial S}{\\partial x}\\approx\\frac{S(x+h,t)-S(x-h,t)}{2h}$$\n\n校核第一条（误差 $O(h^{2})$）。\n\n**参数契约**：\n\n- 预置：`m=1`、`p=2`（自由粒子）；`omega=1`、`E=0.5`（谐振子）；\n- 与 `D4:hamilton-jacobi.probe1` 的数值（$S=0$ at $p=2,t=1,x=1$）保持一致。",
+      "links": [
+        "D3",
+        "F3",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

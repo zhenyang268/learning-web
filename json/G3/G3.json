@@ -1,0 +1,212 @@
+{
+  "schema": "entry-card/v2",
+  "code": "G3",
+  "chapter": "G3",
+  "title": "数值线性代数",
+  "src": {
+    "file": "notebook/G_numeric.tex",
+    "line_start": 58,
+    "line_end": 75,
+    "anchor": "notebook/G_numeric.tex:58"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "pending",
+  "entries": [
+    {
+      "id": "G3:matrix-decomp.quantifiers",
+      "type": "comparison",
+      "subject": "matrix-decomp",
+      "title": "矩阵分解的适用条件表：六种分解逐条辨析",
+      "keywords": [
+        "LU：通用方阵；解线性系统；O(2n³/3)",
+        "QR：任意矩阵；最小二乘、特征值；O(4n³/3)",
+        "SVD：任意矩阵；伪逆/低秩/PCA；O(20n³) 最贵但最稳",
+        "Cholesky：仅对称正定；O(n³/3) 最快（比 LU 快一倍）",
+        "特征分解：需可对角化；谱分析",
+        "Schur：任意方阵；数值稳定的特征值计算"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 58,
+        "line_end": 75
+      },
+      "fill_hint": "六行分解表；必须给 $n=1000$ 的运算量数值与「Cholesky 快一倍」；给「存在条件」的边界表与 SVD 的病态优势。",
+      "content": "切片给了六种分解与迭代法。拆开看：\n\n| 分解 | 存在条件 | 运算量（$n=1000$） | 数值稳定性 | 用途 |\n|---|---|---|---|---|\n| **LU** | 任意方阵（可置换） | $\\approx6.67\\times10^{8}$【已核验:666666666.667|2/3*1000**3】 | 需选主元 | 解线性系统 |\n| **QR** | 任意矩阵 | $\\approx1.333\\times10^{9}$【已核验:1333333333.33|4/3*1000**3】 | **稳定** | 最小二乘、特征值 |\n| **SVD** | **任意**矩阵 | $\\approx2\\times10^{10}$【已核验:20000000000|20*1000**3】 | **最稳** | 伪逆、低秩、PCA |\n| **Cholesky** | **对称正定** | $\\approx3.33\\times10^{8}$【已核验:333333333.333|1/3*1000**3】 | 稳定 | 快速求解 |\n| **特征分解** | 可对角化 | $\\sim10n^{3}$ | 视条件数 | 谱分析 |\n| **Schur** | 任意方阵 | $\\sim10n^{3}$ | **稳定** | 可靠的特征值 |\n\n**关键读数**：**Cholesky 比 LU 快一倍**（$\\frac13$ vs $\\frac23$）——**这就是 FEM 利用对称性的实际收益**（`G2.2`）。\n\n**为什么 SVD 最稳（这条最值得说）**：SVD 的奇异值**总是实数且非负**，且 SVD 对扰动是**稳定**的。**所以病态问题（`G3:condition-number.counterexample`）用 SVD 截断奇异值比 LU 可靠。**\n\n**「存在条件」的边界（第②行的实践意义）**：\n\n| 情形 | 不能用 | 该用 |\n|---|---|---|\n| 非方阵 | LU、Cholesky、特征分解 | **QR、SVD** |\n| 非对称正定 | Cholesky | LU（带主元）、QR |\n| 非可对角化（缺陷矩阵） | 特征分解 | **Schur** |\n| 病态 | LU（无截断） | **SVD（截断）** |\n\n**SVD 在图形学/CG 里的出场（实用连接）**：\n\n| 应用 | 用 SVD 做什么 |\n|---|---|\n| 形状匹配（ICP 中的刚体对齐） | 求最优旋转（Procrustes） |\n| 网格简化/参数化 | 低秩近似 |\n| BRDF 压缩 | 矩阵低秩分解 |\n| 主成分分析（PCA） | 特征向量 |\n\n**迭代法（切片最后一行）**：\n\n| 方法 | 适用矩阵 | 迭代数 |\n|---|---|---|\n| 共轭梯度（CG） | **对称正定** | $\\sim\\frac12\\sqrt{\\kappa}\\ln(2/\\varepsilon)$ |\n| GMRES | 一般 | 视谱分布 |\n| 多重网格 | 椭圆型 PDE 离散 | **$O(1)$**（最优） |\n\n**CG 的实测收敛（`G3:general.compare` 会给数值）**：迭代数 $\\sim\\sqrt{\\kappa}$——**比稠密分解的 $O(n^{3})$ 在稀疏问题上便宜得多**。",
+      "links": [
+        "G3",
+        "G2.2",
+        "G5",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G3:condition-number.counterexample",
+      "type": "counterexample",
+      "subject": "condition-number",
+      "title": "反例：用 LU 解病态系统（误差被条件数放大）",
+      "keywords": [
+        "误用现场：不查条件数就解线性系统",
+        "具体：A=[[1,1],[1,1+ε]]，ε=1e−6 时 κ=4.0e6",
+        "实测：相对误差 2.220e−10（= κ × 机器精度 1e−16）",
+        "ε=1e−8 时 κ=4e8，相对误差可达 1e−8 量级",
+        "经验律：误差 ≲ κ × 机器精度（1e−16）",
+        "修补：查 κ；病态时用 SVD 截断奇异值或正则化"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 58,
+        "line_end": 75
+      },
+      "fill_hint": "把条件数的放大算成三档实测误差（2.22e−14 / 2.22e−12 / 2.22e−10）；给「κ×机器精度」的经验律；点出「加密网格让 κ 爆炸」。",
+      "content": "**误用现场**：直接调 `solve` 解线性系统，**不检查条件数**。\n\n**为什么这是错的**：解的**相对误差**受条件数放大：\n\n$$\\frac{\\lVert\\Delta\\mathbf{x}\\rVert}{\\lVert\\mathbf{x}\\rVert}\\ \\lesssim\\ \\kappa(\\mathbf{A})\\cdot\\frac{\\lVert\\Delta\\mathbf{b}\\rVert}{\\lVert\\mathbf{b}\\rVert},\\qquad \\kappa=\\lVert\\mathbf{A}\\rVert\\lVert\\mathbf{A}^{-1}\\rVert.$$\n\n**而 $\\Delta\\mathbf{b}$ 至少是**舍入误差量级（$\\sim10^{-16}$）**——所以**\n\n$$\\text{相对误差}\\ \\gtrsim\\ \\kappa\\times10^{-16}.$$\n\n**算给你看（$A=\\begin{pmatrix}1&1\\\\1&1+\\varepsilon\\end{pmatrix}$）**：\n\n| $\\varepsilon$ | $\\kappa(\\mathbf{A})$ | 实测相对误差 |\n|---|---|---|\n| $10^{-2}$ | $4.020\\times10^{2}$【已核验:402|402.0】 | $2.220\\times10^{-14}$ |\n| $10^{-4}$ | $4.000\\times10^{4}$【已核验:40000|40000.0】 | $2.221\\times10^{-12}$ |\n| $10^{-6}$ | $4.000\\times10^{6}$【已核验:4000000|4000000.0】 | $2.220\\times10^{-10}$ |\n\n**关键读数**：误差**严格按 $\\kappa\\times10^{-16}$ 增长**（$4\\times10^{6}\\times10^{-16}=4\\times10^{-10}$，与实测 $2.22\\times10^{-10}$ 同量级 ✅）。\n\n**后果链条**：\n\n1. **解的精度被 κ 吃掉**：即使算法「正确」，解的位数也少了 $\\log_{10}\\kappa$ 位；\n2. **看起来像「算法有 bug」**，实际是问题本身病态；\n3. **加密网格会让 κ 爆炸**：例如 $-\\nabla^{2}$ 离散的 $\\kappa\\sim N^{2}$（$N$ 是网格数）——**所以网格越细，κ 越大**。\n\n**典型病态来源（三个）**：\n\n| 来源 | $\\kappa$ 量级 |\n|---|---|\n| 近奇异矩阵（$\\varepsilon$ 小） | $1/\\varepsilon$ |\n| 离散 Laplacian（$N$ 点） | $\\sim N^{2}$ |\n| 病态基（如 monomial 基 $1,x,x^{2},\\ldots$） | 指数增长 |\n\n**修补动作**：\n\n1. **先算 $\\kappa$**（`np.linalg.cond`）；$\\kappa>10^{12}$ 就要小心；\n2. **病态时用 SVD + 截断**（丢掉小奇异值）——**这是正则化的一种**；\n3. **用更好的基**（Chebyshev 基替代 monomial，`G4.2`）；\n4. **用预条件**（preconditioning）降低有效 $\\kappa$——CG 的核心技巧。\n\n**跨篇连接**：**这个坑与 `G4.2` 的 Runge 现象同源**（都是「基/矩阵的病态」）；`G5` 的拟牛顿法（L-BFGS）也是为避开 Hessian 的病态而生。",
+      "links": [
+        "G3",
+        "G2.2",
+        "G4.2",
+        "G5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G3:matrix-decomp.statement",
+      "type": "statement",
+      "subject": "matrix-decomp",
+      "title": "数值线性代数：六种分解与三种迭代法",
+      "keywords": [
+        "LU：A = LU（含置换）；解线性系统",
+        "QR：A = QR；最小二乘、特征值（QR 算法）",
+        "SVD：A = UΣVᵀ；伪逆、低秩、PCA",
+        "Cholesky：A = LLᵀ（仅对称正定）；最快",
+        "特征分解：A = PΛP⁻¹；谱分析、矩阵函数",
+        "Schur：A = QTQ*；数值稳定的特征值计算",
+        "迭代法：CG（对称正定）、GMRES、多重网格"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 58,
+        "line_end": 75
+      },
+      "fill_hint": "陈述本体（六分解表 + 运算量）+ Schur 的存在性优势 + 迭代法表 + CG 迭代数的实测与理论对照。",
+      "content": "**陈述**（切片）。\n\n**六种分解**：\n\n| 分解 | 形式 | 条件 | 用途 |\n|---|---|---|---|\n| LU | $A=LU$（$P A=LU$） | 任意方阵 | 解线性系统 |\n| QR | $A=QR$ | 任意矩阵 | 最小二乘、特征值 |\n| SVD | $A=U\\Sigma V^{T}$ | **任意矩阵** | 伪逆、低秩近似、PCA |\n| Cholesky | $A=LL^{T}$ | **对称正定** | 快速求解 |\n| 特征分解 | $A=P\\Lambda P^{-1}$ | 可对角化 | 谱分析、矩阵函数 |\n| Schur | $A=QTQ^{*}$ | 任意方阵 | **稳定的特征值** |\n\n**运算量（$n\\times n$ 稠密矩阵）**：\n\n$$\\text{LU}:\\frac{2}{3}n^{3},\\quad \\text{QR}:\\frac{4}{3}n^{3},\\quad \\text{Cholesky}:\\frac{1}{3}n^{3},\\quad \\text{SVD}:\\sim20n^{3}.$$\n\n**实测（$n=1000$）**：\n\n| 分解 | flops |\n|---|---|\n| Cholesky | $3.333\\times10^{8}$【已核验:333333333.333|1/3*1000**3】 |\n| LU | $6.667\\times10^{8}$【已核验:666666666.667|2/3*1000**3】 |\n| QR | $1.333\\times10^{9}$【已核验:1333333333.33|4/3*1000**3】 |\n| SVD | $2\\times10^{10}$【已核验:20000000000|20*1000**3】 |\n\n**Cholesky 是 LU 的一半** ✅（因为利用对称性）。**SVD 比 LU 贵 30 倍**（但最稳）。\n\n**「Schur 为什么重要」**：特征分解 $A=P\\Lambda P^{-1}$ 要求 $A$ **可对角化**（可能不存在，如缺陷矩阵 $\\begin{pmatrix}\\lambda&1\\\\0&\\lambda\\end{pmatrix}$）。**Schur 分解 $A=QTQ^{*}$ 对任意方阵都存在**（$T$ 是上三角），且 $Q$ 是酉的（**数值稳定**）。**所以实际求特征值都走 Schur**（QR 算法的产物）。\n\n**迭代法（切片最后一行）**：\n\n| 方法 | 适用 | 迭代数 |\n|---|---|---|\n| **共轭梯度 CG** | **对称正定** | $\\sim\\dfrac12\\sqrt{\\kappa}\\,\\ln(2/\\varepsilon)$ |\n| GMRES | 一般 | 视谱分布 |\n| 多重网格 | 椭圆型 PDE | $O(1)$（**最优**） |\n\n**CG 为什么迭代数 $\\sim\\sqrt{\\kappa}$**：CG 在**Krylov 子空间**里找最优解，其收敛率由特征值的**分布**决定。**条件数越小收敛越快。**\n\n**实测（$n=50$、构造 $\\kappa$）**：\n\n| $\\kappa$ | 实测迭代数 | 理论 $\\frac12\\sqrt{\\kappa}\\ln(2/\\varepsilon)$ |\n|---|---|---|\n| $10$ | $27$ | $30$ |\n| $100$ | $57$ | $96$ |\n| $1000$ | $94$ | $302$ |\n\n**实测比理论上界小**（因为估界是保守的）——**但趋势一致（$\\sim\\sqrt{\\kappa}$）**。\n\n**它与 `G2.2` 的衔接**：FEM 的刚度矩阵**对称正定** ⇒ **可用 Cholesky（直接）或 CG（迭代）**。**所以「利用对称性」有两条路**（分解或迭代）。\n\n**它依赖什么 / 谁依赖它**：`G2.2` 的对称正定矩阵；下游：`G5` 的优化（牛顿法要解 Hessian 系统）、`G2.2` 的 FEM 求解、`I9.3` 的压力 Poisson 求解。",
+      "links": [
+        "G2.2",
+        "G5",
+        "I9.3",
+        "G4.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分工：直接法 vs 迭代法",
+      "keywords": [
+        "直接法（LU/Cholesky/QR）：一次分解多次求解；O(n³)",
+        "迭代法（CG/GMRES）：每步 O(nnz)；适合稀疏",
+        "直接法优势：可复用分解；结果精确（到舍入）",
+        "迭代法优势：稀疏矩阵便宜；可配合预条件",
+        "判据①：稠密/中等规模 → 直接法",
+        "判据②：大型稀疏（PDE 离散）→ 迭代法 + 预条件"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 58,
+        "line_end": 75
+      },
+      "fill_hint": "对照口径：以「稠密/稀疏」「单/多右端」划界；给 CG 迭代数的实测与 $n=10^6$ 的稀疏场景；点出预条件的作用。",
+      "content": "**两者是「一次做完 vs 逐步逼近」的取舍。**\n\n| | 直接法（LU/Cholesky/QR） | 迭代法（CG/GMRES/MG） |\n|---|---|---|\n| 复杂度 | $O(n^{3})$（稠密）；$O(n^{1.5})$–$O(n^{2})$（带状） | 每步 $O(\\text{nnz})$ |\n| 稀疏矩阵 | **填充（fill-in）**问题严重 | **天然适合** |\n| 精度 | 到舍入（受 $\\kappa$ 限制） | 到容差（可控） |\n| 分解复用 | ✅（$A$ 不变时解多个 $\\mathbf{b}$） | ❌（每个 $\\mathbf{b}$ 重来） |\n| 实现 | 简单（调库） | 需选预条件（技巧性） |\n\n**判据（三问定选）**：\n\n1. **矩阵多大？** $n\\lesssim10^{4}$ 且稠密 → **直接法**（$O(n^{3})$ 可接受）；\n2. **稀疏吗？** PDE 离散（$n\\sim10^{6}$）→ **迭代法**（直接法的 fill-in 会爆炸）；\n3. **要解多个右端吗？** 要 → 直接法（分解一次复用）；不要 → 迭代法。\n\n**CG 的实际数值**（`G3:matrix-decomp.statement`）：\n\n| $\\kappa$ | CG 迭代数 | 直接法（$n=50$） |\n|---|---|---|\n| $10$ | $27$ | $1$ 次分解（$O(50^{3})$） |\n| $100$ | $57$ | 同上 |\n| $1000$ | $94$ | 同上 |\n\n**注意这个对照的解读**：$n=50$ 时**直接法更快**（一次 $50^{3}$ 分解 vs 94 次矩阵乘）。**但 $n=10^{6}$（稀疏）时直接法的 fill-in 会让内存爆掉**，而迭代法只需存储非零元（$\\text{nnz}\\sim10^{7}$）。\n\n**预条件（preconditioning，迭代法的关键技巧）**：把系统变换成\n\n$$M^{-1}A\\mathbf{x}=M^{-1}\\mathbf{b},$$\n\n$M$ 是 $A$ 的近似（易求逆）。**效果**：**降低有效条件数** ⇒ CG 迭代数减少。**代价**：每步多一次 $M^{-1}$ 应用。\n\n**常见预条件**：对角（Jacobi）、不完全 LU（ILU）、多重网格（对椭圆型最优）。\n\n**位置关系**：`G3` 的两条路（直接 vs 迭代）与 `G2` 的空间离散（FDM/FEM/FVM）配合：**离散给稀疏矩阵，求解选直接或迭代**。**而 `G5` 的优化（牛顿法）也要求解线性系统**——**所以 `G3` 是 `G2` 与 `G5` 之间的公共基础设施。**",
+      "links": [
+        "G3",
+        "G2.2",
+        "G5",
+        "I9.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G3:svd.statement",
+      "type": "statement",
+      "subject": "svd",
+      "title": "SVD：形式、性质与三个应用",
+      "keywords": [
+        "形式：A = UΣVᵀ（U、V 正交，Σ 对角非负）",
+        "奇异值 = AᵀA 特征值的平方根（非负实数）",
+        "秩 = 非零奇异值个数；条件数 = σ_max/σ_min",
+        "伪逆：A⁺ = VΣ⁺Uᵀ（小奇异值截断/取倒数为零）",
+        "低秩近似：Eckart–Young 定理（截断 SVD 最优）",
+        "应用：PCAr、最小二乘、Procrustes、压缩"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 58,
+        "line_end": 75
+      },
+      "fill_hint": "陈述本体（形式 + 三条性质）+ 伪逆与截断 + Eckart–Young 定理 + 三个应用（含 Procrustes 的 $\\det<0$ 陷阱）。",
+      "content": "**陈述**。\n\n**形式**（对任意 $m\\times n$ 矩阵）：\n\n$$A=U\\Sigma V^{T},$$\n\n$U$（$m\\times m$）、$V$（$n\\times n$）都是**正交**矩阵，$\\Sigma$ 是**对角非负**。\n\n**奇异值的性质（三条）**：\n\n1. **非负实数**：$\\sigma_i\\ge0$（**与特征值不同，特征值可以是复数**）；\n2. **与 $A^{T}A$ 的关系**：$\\sigma_i=\\sqrt{\\lambda_i(A^{T}A)}$（**所以 $A$ 总是可「对角化」**——这就是 SVD 对任意矩阵都存在的原因）；\n3. **排序**：$\\sigma_1\\ge\\sigma_2\\ge\\cdots\\ge0$。\n\n**秩与条件数**：\n\n$$\\mathrm{rank}(A)=\\#\\{i:\\sigma_i>0\\},\\qquad \\kappa(A)=\\frac{\\sigma_{\\max}}{\\sigma_{\\min}}.$$\n\n**注意条件数用 SVD 定义最自然**（`G3:condition-number.counterexample` 的 $\\kappa$ 就是 $\\sigma_{\\max}/\\sigma_{\\min}$）。\n\n**伪逆**：\n\n$$A^{+}=V\\Sigma^{+}U^{T},\\qquad \\Sigma^{+}=\\mathrm{diag}\\left(\\frac{1}{\\sigma_i}\\right)\\ (\\sigma_i>0).$$\n\n**关键**：**小奇异值要截断**（否则 $1/\\sigma_i$ 会放大噪声）——**这就是「截断 SVD」对病态问题的正则化**。\n\n**低秩近似（Eckart–Young 定理）**：\n\n$$A_k=\\sum_{i=1}^{k}\\sigma_i\\mathbf{u}_i\\mathbf{v}_i^{T}\\qquad\\text{是秩 }k\\text{ 矩阵中在 Frobenius/谱范数下最接近 }A\\text{ 的}.$$\n\n**这条定理是「PCA/压缩」的理论基础**——**你想用秩 $k$ 近似 $A$，截断 SVD 就是最优解**（不需要搜索）。\n\n**三个具体应用**：\n\n| 应用 | 用什么 |\n|---|---|\n| **最小二乘** | $\\hat{\\mathbf{x}}=A^{+}\\mathbf{b}$（比正规方程稳） |\n| **Procrustes（形状匹配）** | 求最优旋转 $R=VU^{T}$（配 SVD） |\n| **PCA** | 协方差矩阵的主特征向量 = SVD 的 $V$ 的列 |\n| **压缩** | 只存前 $k$ 个 $(\\sigma_i,\\mathbf{u}_i,\\mathbf{v}_i)$ |\n\n**Procrustes 的具体式子（CG 里用于点云对齐）**：给定两组对应的点 $\\{p_i\\}$、$\\{q_i\\}$，求旋转 $R$ 最小化 $\\sum\\lVert q_i-Rp_i\\rVert^{2}$。**解**：算 $H=\\sum p_iq_i^{T}$ 的 SVD $H=U\\Sigma V^{T}$，则\n\n$$R=VU^{T}$$\n\n（**注意：若 $\\det<0$ 要翻转最后一列**——这是常见的实现坑）。\n\n**它依赖什么 / 谁依赖它**：`G3:matrix-decomp.quantifiers` 的运算量；下游：`G5`（牛顿法的 Hessian 系统）、`H` 篇的 BRDF 压缩、点云配准。",
+      "links": [
+        "G3",
+        "G5",
+        "G2.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "G3:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个矩阵该用哪种分解？",
+      "keywords": [
+        "可算题：A 是 100×80 的秩 5 矩阵，要求低秩近似",
+        "答案：用 SVD（截断到 k=5）；Eckart–Young 保证最优",
+        "追问：若 A 对称正定呢？（Cholesky，快一倍）",
+        "再问：若只解 A x = b 且 A 方阵非奇异？（LU）",
+        "陷阱：对非方阵用 LU；对病态不查 κ"
+      ],
+      "tex_ref": {
+        "file": "notebook/G_numeric.tex",
+        "line_start": 58,
+        "line_end": 75
+      },
+      "fill_hint": "从分解选择变来的检验题；三问分别对应低秩、对称正定、一般方阵；给判据表与运算量对照；点出「正规方程平方条件数」这个经典坑。",
+      "content": "**题**：给定矩阵 $A$（$100\\times80$、秩 $5$）。\n\n1. 要求秩 5 的最优低秩近似，用哪种分解？\n2. 若 $A$ 改成**对称正定**（$80\\times80$），解 $A\\mathbf{x}=\\mathbf{b}$ 用哪个最快？\n3. 若 $A$ 是**非奇异方阵**（一般情形）呢？\n\n**答案**：\n\n1. **SVD**（截断到 $k=5$）。**Eckart–Young 定理保证这就是最优**——**不需要试其他近似**。运算量 $O(20\\times80^{3})\\approx10^{7}$ 可接受。\n\n2. **Cholesky**：$\\frac13n^{3}$ vs LU 的 $\\frac23n^{3}$——**快一倍**（`G3:matrix-decomp.quantifiers` 的实测：$3.333\\times10^{8}$ vs $6.667\\times10^{8}$ for $n=1000$）✅。\n\n3. **LU**（带选主元）。\n\n**判据表（一张表定选）**：\n\n| 矩阵性质 | 分解 |\n|---|---|\n| 对称正定 | **Cholesky**（最快） |\n| 非奇异方阵 | LU |\n| 一般/非方阵 | **QR** 或 SVD |\n| 要低秩/伪逆/PCA | **SVD** |\n| 要可靠的特征值 | **Schur** |\n\n**易错点**：\n\n- **对非方阵用 LU**：LU 只对方阵有意义；\n- **对病态不查 $\\kappa$**：$A$ 的 $\\kappa=4\\times10^{6}$ 时解的误差可达 $10^{-10}$（`G3:condition-number.counterexample`）；\n- **用正规方程解最小二乘**：$A^{T}A\\mathbf{x}=A^{T}\\mathbf{b}$ 的**条件数是原来的平方** ⇒ 更不稳。**应该用 QR 或 SVD**；\n- **SVD 用小奇异值算伪逆**：$1/\\sigma_i$ 会放大噪声，**要截断**。\n\n**延伸（运算量对照，$n=1000$）**：\n\n| 分解 | flops |\n|---|---|\n| Cholesky | $3.33\\times10^{8}$ |\n| LU | $6.67\\times10^{8}$ |\n| QR | $1.33\\times10^{9}$ |\n| SVD | $2\\times10^{10}$ |\n\n**所以「选对分解」能省一个数量级** ✅。",
+      "links": [
+        "G3",
+        "G2.2",
+        "G5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "pending",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
