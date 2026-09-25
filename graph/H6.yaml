@@ -1,0 +1,25 @@
+# graph/H6.yaml — 「H6 采样点集」章（H6.1–H6.2）语义边真源。
+# schema、方向约定与派生边覆盖规则见 A1.yaml 头部。
+notebook_commit: 9ca4702
+
+nodes:
+  H6.1: # 低差异序列
+    # 起点：Koksma–Hlawka + Halton/Sobol/CP 旋转，组内无前序。
+    prereq: []
+    tension: []
+    dual:
+      # 同一采样问题的两种优化目标（H6.2 条目原话）：低差异压星偏差（空间域盒计数、
+      # 最坏情况误差）↔ 蓝噪声压功率谱（频域形状、感知质量）——空间域/频域互为对偶视角。
+      - H6.2
+    applies:
+      - H6.2
+
+  H6.2: # 蓝噪声
+    prereq:
+      # 「与 H6.1 低差异序列对照：RMSE vs 感知质量」——对照表以 H6.1 的差异度语言为参照系。
+      - H6.1
+    tension: []
+    dual:
+      - H6.1
+    # 组内收口；跨章下游（H4 MC 积分、H2 渲染抖动）由派生边承担。
+    applies: []

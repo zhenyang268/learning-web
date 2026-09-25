@@ -1,0 +1,35 @@
+# graph/P3.yaml — 「P3 不等式」章（P3.1–P3.3）语义边真源。
+# schema、方向约定与派生边覆盖规则见 A1.yaml 头部。
+notebook_commit: 9ca4702
+
+nodes:
+  P3.1: # 基础四件套（【必】）
+    # 起点：AM–GM / Cauchy–Schwarz / Young / 三角不等式，组内无前序。
+    prereq: []
+    tension: []
+    dual: []
+    applies:
+      # 下游：放缩盒子里 e^x≥1+x 的证明用凸性（与 AM–GM 同源）、ln(1+x)≤x 是 Young 的特例；
+      # 进阶三件套里 Jensen 是 AM–GM 的推广、Hölder 是 C–S 的换指数版、Gronwall 用 Young(ε)。
+      - P3.2
+      - P3.3
+
+  P3.2: # 放缩盒子（【必】／【熟】）
+    prereq:
+      # 盒子条目多为四件套的函数形态：e^x≥1+x（凸函数切线）、(1+1/n)^n↑e（AM–GM 单调性证明）。
+      - P3.1
+    tension: []
+    dual: []
+    applies:
+      # 下游：Hölder 证明 = 归一化 + 逐点 Young（放缩）；Gronwall 证明乘积分因子后用积分放缩。
+      - P3.3
+
+  P3.3: # 进阶（【熟】· 记结论 + 用法）
+    prereq:
+      # Jensen（凸函数）推广 AM–GM；Hölder 证明用 Young 逐点放缩；Gronwall 用带 ε 的 Young 吸收。
+      - P3.1
+      - P3.2
+    tension: []
+    dual: []
+    # 组内收口；跨章下游（A4.5/A4.6 能量估计、P9.4 决策树、C9.1 误差界）由派生边承担。
+    applies: []

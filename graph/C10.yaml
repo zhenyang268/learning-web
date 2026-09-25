@@ -1,0 +1,40 @@
+# graph/C10.yaml — 「C10 随机微积分」章（C10.1–C10.3）语义边真源。
+# schema、方向约定与派生边覆盖规则见 A1.yaml 头部。
+notebook_commit: 9ca4702
+
+nodes:
+  C10.1: # Wiener 过程与二次变差
+    # 起点：W 的四条性质 + 二次变差 Σ(ΔW)²→t 与乘法表 (dW)²=dt，组内无前序。
+    prereq: []
+    tension:
+      # 「把光滑过程的直觉搬给 W」典型误用（0.01 vs 1 差 100 倍）+ Riemann–Stieltjes
+      # 定义 ∫W dW 失败（一次变差 ∞、左右端点差 1）——经典积分观与布朗世界正面冲突。
+      - C10.2
+    dual: []
+    applies:
+      - C10.2
+      - C10.3
+
+  C10.2: # Itô 积分与 Itô 引理
+    prereq:
+      # Itô 积分的等距性 ‖∫f dW‖² = ∫f² dt 就是二次变差的直接推论；
+      # Itô 引理证明骨架「Taylor + 乘法表 + 取极限」逐项消费 C10.1 的 (dW)²=dt。
+      - C10.1
+    tension:
+      - C10.1
+    # 注：「Itô vs Stratonovich」的对偶在 C10.2 单元内部（同一积分两种选点约定），
+    # C10.3 是 SDE 的应用层，两者不构成跨节点对偶；「SDE（轨道）vs FP（密度）」同理在 C10.3 内部。
+    dual: []
+    applies:
+      - C10.3
+
+  C10.3: # SDE 与 Fokker--Planck
+    prereq:
+      # SDE 积分形式 X_t = X_0 + ∫μ ds + ∫σ dW 的后一项就是 Itô 积分（C10.2）；
+      # GBM 解的 −σ²/2 修正 = Itô 引理应用于 ln X；FP 证明 = Itô 引理 + 分部积分。
+      - C10.2
+    tension: []
+    # 注：「SDE（轨道）vs Fokker–Planck（密度）」的对偶在 C10.3 单元内部，不构成跨节点边。
+    dual: []
+    # 组内收口；跨章下游（M5 朗之万、H8.1 流体、I9）由派生边承担。
+    applies: []

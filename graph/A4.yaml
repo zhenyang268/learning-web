@@ -1,0 +1,71 @@
+# graph/A4.yaml — 「A4 Sobolev 空间与弱解」章（A4.1–A4.6）语义边真源。
+# schema、方向约定与派生边覆盖规则见 A1.yaml 头部。
+# 本章是严格的线性链条：动机 → 弱导数 → Sobolev 空间 → 嵌入 → 弱解 → 正则性，
+# 与 A4.6 的「这条链要记住：弱形式→Lax–Milgram→能量→正则性→经典解」对照条目一致。
+notebook_commit: 9ca4702
+
+nodes:
+  A4.1: # 经典导数的不足
+    # 起点：|x| 角点、激波、光滑列收敛到不光滑——经典框架卡壳的现场。
+    prereq: []
+    tension:
+      # |x| 在 0 处无经典导数（左右差商 −1/+1）——A4.2 的弱导数框架原样接住它
+      # （sign(x) 对账验证，A4.2 的 application 条目）：同一函数在两个框架里的两种判决。
+      - A4.2
+    dual: []
+    applies:
+      - A4.2
+
+  A4.2: # 弱导数
+    prereq:
+      # 动机来源：先见到经典导数在角点/激波处失效，才谈得上「逐点斜率换成整体对账」。
+      - A4.1
+    tension:
+      - A4.1
+    dual: []
+    applies:
+      - A4.3
+
+  A4.3: # Sobolev 空间
+    prereq:
+      # W^{k,p} 定义 =「k 阶弱导数都在 L^p」——弱导数是库存单位，A4.2 是其定义。
+      - A4.2
+    tension: []
+    dual: []
+    applies:
+      # 下游：嵌入定理的主语是 W^{k,p}；弱形式住在 H¹=W^{1,2}。
+      - A4.4
+      - A4.5
+
+  A4.4: # 嵌入定理
+    prereq:
+      # 嵌入/紧嵌入/Poincaré 全部以 W^{k,p} 为主语（「导数库存是硬通货，维数是汇率」）。
+      - A4.3
+    tension: []
+    dual: []
+    applies:
+      # 下游：Lax–Milgram 的强制性 = Poincaré；能量估计的吸收也靠 Poincaré。
+      - A4.5
+      - A4.6
+
+  A4.5: # 弱解与 Lax--Milgram
+    prereq:
+      # Poisson 弱形式住在 H¹（A4.3 的 Hilbert 结构给内积）。
+      - A4.3
+      # 验证两步「C-S 给有界、Poincaré 给强制」——Poincaré 来自 A4.4。
+      - A4.4
+    tension: []
+    dual: []
+    applies:
+      - A4.6
+
+  A4.6: # 正则性提升与能量估计
+    prereq:
+      # 能量估计流水线消费 Poincaré/吸收不等式（A4.4）；
+      # 正则性提升 f∈H^k ⟹ u∈H^{k+2} 以弱解（A4.5）为起点逐级传播。
+      - A4.4
+      - A4.5
+    tension: []
+    dual: []
+    # 章内收口；跨章下游（H8.1 NS 弱解、I 章、de 章）由派生边承担。
+    applies: []
