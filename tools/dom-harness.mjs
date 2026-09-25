@@ -166,14 +166,18 @@ async function runUnit(bundleJs, code) {
   const reqs = () => dom.window.__requests ?? [];
   const p = (s, c, det) => check(`[${code}] ${s}`, c, det);
 
-  // ── 按需加载：启动只拉索引 + 目标单元，**不拉全库**
+  // ── 按需加载：首个请求是索引，之后是当前单元；允许「空闲预取」多拉 **至多 2 个邻居**
+  // （prefetch 是文档化行为：setTimeout/requestIdleCallback 200ms 后拉 idx+1/idx+2，
+  //   与本断言的采样窗口存在时序竞争 —— 之前 <=2 的写法靠机器忙碌偶然变绿）。
+  //   真不变式：**绝不全库拉取**（<=4 条）且索引第一。
   const afterBoot = reqs().slice();
-  p('启动只拉索引 + 当前单元（不拉全库）',
-    afterBoot.length <= 2,
-    `首屏请求 ${afterBoot.length} 条：${afterBoot.join(', ')}`);
+  p('请求总数有界（索引 + 当前 + ≤2 预取邻居，绝不拉全库）',
+    afterBoot.length <= 4,
+    `请求 ${afterBoot.length} 条：${afterBoot.join(', ')}`);
+  p('请求全在 json/ 下（零外部请求）', afterBoot.every((u) => u.startsWith('json/')),
+    afterBoot.filter((u) => !u.startsWith('json/')).join(', '));
   p('首个请求就是索引', afterBoot[0] === 'json/index.json', afterBoot[0] ?? '(无)');
-  p('拉到的正是当前单元', afterBoot.slice(1).every((u) => u === meta.path),
-    afterBoot.slice(1).join(', '));
+  p('第二个请求是当前单元', afterBoot[1] === meta.path, afterBoot.slice(1, 3).join(', '));
 
   // ── 基本渲染
   p('无致命错误浮层', !textOf(overlay).includes('数据索引读取失败'), textOf(overlay).slice(0, 120));

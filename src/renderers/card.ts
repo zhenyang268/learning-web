@@ -2,7 +2,7 @@ import type { Entry, EntryFile } from '../types';
 import { isVizFrontend, slotOf, subjectOf } from '../types';
 import { escapeHtml, renderContent, renderInline, type RenderCtx } from './markdown';
 import { mountViz } from '../viz';
-import { bumpMastery, masteryOf } from '../modules/state';
+import { masteryOf, setMastery } from '../modules/state';
 
 export interface EntryGroup {
   key: string;
@@ -466,8 +466,10 @@ function openRef(
 function wireMastery(card: HTMLElement, group: EntryGroup): void {
   const mEl = card.querySelector('[data-mastery]') as HTMLElement;
   mEl.addEventListener('click', () => {
-    bumpMastery(group.key, 1);
-    const next = masteryOf(group.key);
+    // 0–5 循环（title 承诺的语义）：+1 后对 6 取模，L5 再点回 L0。
+    // 不走 bumpMastery（它内部钳位在 5，会把用户永久卡死在最高档）。
+    const next = (masteryOf(group.key) + 1) % 6;
+    setMastery(group.key, next);
     mEl.innerHTML = `L${next} <span class="bar"><i style="width:${(next / 5) * 100}%"></i></span>`;
     document.dispatchEvent(new CustomEvent('kb:mastery'));
   });
