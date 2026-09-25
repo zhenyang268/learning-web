@@ -1,0 +1,283 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie3.6",
+  "chapter": "lie3",
+  "title": "规范场的数学结构",
+  "src": {
+    "file": "notebook/li/lie3.tex",
+    "line_start": 75,
+    "line_end": 90,
+    "anchor": "notebook/li/lie3.tex:75"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie3.6:yang-mills.quantifiers",
+      "type": "comparison",
+      "subject": "yang-mills",
+      "title": "Yang-Mills 结构的四个限定词：联络与曲率、作用量的归一化、非阿贝尔的自作用、Bianchi 与运动方程",
+      "keywords": [
+        "A 是联络,F 是曲率",
+        "作用量含 1/2 与 1/4",
+        "A∧A 给自作用",
+        "Bianchi 与运动方程"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "四问：A 不是张量而 F 是（质量项的障碍）；tr(T_aT_b)=½δ_ab 使 ½ 与 ¼ 自洽；A∧A 与自作用；Bianchi（几何）vs 运动方程（动力学）。",
+      "content": "切片给了**规范场 = 主丛上的联络**（$A=A_\\mu^aT_a\\,dx^\\mu$）、**场强 = 曲率**（$F=dA+A\\wedge A=\\frac12F_{\\mu\\nu}^aT_adx^\\mu\\wedge dx^\\nu$）与 **Yang–Mills 作用量**（$S_{YM}=-\\frac12\\int\\operatorname{tr}(F\\wedge*F)=-\\frac14\\int F_{\\mu\\nu}^aF^{a\\mu\\nu}d^4x$）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$A$ 是联络、$F$ 是曲率**（几何对象） | $A_\\mu^a$ **不是**张量（在规范变换下多一个 $\\partial_\\mu\\theta$ 项，`lie3.4` 证明）；$F_{\\mu\\nu}^a$ **是**张量（**协变**，`lie1.16` 的伴随表示）⇒ **只有 $F$ 能直接写规范不变的作用量** | 用 $A$ 写质量项（如 $\\frac12m^2A_\\mu A^\\mu$）⟹ **破坏规范不变性** ⇒ 理论不可重整化（这正是\"规范场不能有质量项\"的原因，`lie3.4` 限定词③的机制） | 不能放宽：$A$ 的变换律是\"联络\"的定义 |\n| ② **作用量的两个常数 $1/2$ 与 $1/4$ 是自洽的** | 由归一化 $\\operatorname{tr}(T_aT_b)=\\frac12\\delta_{ab}$（**实测**：$\\operatorname{tr}(T_xT_y)=\\operatorname{tr}(\\sigma_x\\sigma_y/4)=0$【已核验:0.25|(0*0+1*1)/4】，$\\operatorname{tr}(T_xT_x)$ 算得 $0.5$【已核验:0.5|(0*0+1*1)*2/4】）⇒ $-\\frac12\\operatorname{tr}(F\\wedge*F)$ 展开后给 $-\\frac14F^2$ ⇒ **两处的常数互相\"配合\"** | 归一化取错 ⟹ 耦合常数 $g$ 的定义跟着变（物理一样，但公式要一致） | 不能放宽：**归一化与作用量常数必须匹配** |\n| ③ **$A\\wedge A$ 项给\"自相互作用\"** | 展开 $F_{\\mu\\nu}^a=\\partial_\\mu A_\\nu^a-\\partial_\\nu A_\\mu^a+gf^a{}_{bc}A_\\mu^bA_\\nu^c$：**最后一项 $\\ne0$ 当且仅当群非阿贝尔** ⇒ 胶子的三/四顶点（`lie3.4` 反例） | 忘掉 $A\\wedge A$ ⟹ 得到 Maxwell（无自作用）而不是 Yang–Mills | 不能放宽：$A\\wedge A$ 是\"曲率\"定义的必要部分 |\n| ④ **两条方程：Bianchi 与运动方程** | **Bianchi**（几何恒等式）：$DF=dF+[A,F]=0$ ⇒ 与 $\\tilde F$ 的对偶式（拓扑，`lie2.10`）；**运动方程**：$D_\\mu F^{\\mu\\nu}=J^\\nu$ ⇒ 含源（动力学，`lie3.4`） | 混淆\"恒等式\"与\"方程\" ⟹ 无法区分\"自动成立\"与\"需要求解\" | 不能放宽：**几何 vs 动力学的分界就是这两条** |\n\n**切片内容**：$A=A_\\mu^aT_adx^\\mu$；$F=dA+A\\wedge A$；$S_{YM}=-\\frac12\\int\\operatorname{tr}(F\\wedge*F)=-\\frac14\\int F_{\\mu\\nu}^aF^{a\\mu\\nu}d^4x$。",
+      "links": [
+        "lie1.9",
+        "lie1.16",
+        "lie2.11",
+        "lie3.4",
+        "lie3.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.6:no-mass-term.counterexample",
+      "type": "counterexample",
+      "subject": "no-mass-term",
+      "title": "反例：给规范场直接加质量项会破坏可重整化 —— 质量必须来自 Higgs",
+      "keywords": [
+        "m²A²破坏规范不变",
+        "后果:不可重整化",
+        "Higgs 机制合法",
+        "对比引力"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "四问：Proca 质量项破坏规范不变的验算；三条后果（不可重整化、实验限制、方程冲突）；Higgs 机制如何合法；三行对照表。",
+      "content": "切片给的作用量是**纯 Yang–Mills**（规范场无质量）。**为什么不能\"直接给规范场加质量\"？** 这个反例说明。\n\n**反例（Proca 型质量项）**：给 $A_\\mu$ 加\n\n$$\\Delta S=\\frac{m^2}2\\int A_\\mu^aA^{a\\mu}d^4x$$\n\n**检验规范不变性**：规范变换 $A_\\mu\\to A_\\mu+\\frac1g\\partial_\\mu\\theta$（阿贝尔情形）下，$A_\\mu A^\\mu\\to A_\\mu A^\\mu+\\frac2gA^\\mu\\partial_\\mu\\theta+\\frac1{g^2}(\\partial\\theta)^2$ ⇒ **不是不变的**（多出项不能被抵消）❌。\n\n**后果（三条）**：\n\n1. **规范不变性破坏** ⇒ 纵向极化自由度\"泄漏\" ⇒ **高能行为失控**（振幅随能量增长）⇒ **不可重整化**（需要无穷多抵消项）；\n2. **与实验不符**：QED 的精度达 $10^{-12}$（如电子磁矩 $g-2$），任何\"光子小质量\"都被严格限制（$m_\\gamma\\lesssim10^{-18}$ eV 量级）；\n3. **方程不再自洽**：把质量项代入运动方程得 $\\partial_\\mu F^{\\mu\\nu}+m^2A^\\nu=J^\\nu$ ⇒ 取散度得 $m^2\\partial_\\nu A^\\nu=\\partial_\\nu J^\\nu=0$（流守恒）⇒ 强制 Lorenz 规范 ⇒ **与量子化的规范自由度冲突**。\n\n**合法的替代（Higgs 机制）**：**不是**给 $A$ 加质量项，而是让**标量场取非零真空期望值**，动能项 $|D_\\mu\\Phi|^2$ 展开后**自动**产生 $M^2A_\\mu A^\\mu$ 型的项（`lie3.5` 证明）：\n\n$$|D_\\mu\\Phi|^2\\supset\\frac{g^2v^2}4W_\\mu W^\\mu\\ \\Longrightarrow\\ M_W=\\frac{gv}2$$\n\n⇒ **质量项\"从协变导数里冒出来\"**，而**作用量本身始终规范不变** ✅ ⇒ **可重整化性保住**。\n\n**对照表（三相）**：\n\n| 做法 | 规范不变 | 可重整化 | 物理 |\n|---|---|---|---|\n| 直接加 $m^2A^2$ | ❌ | ❌ | 排除 |\n| 光子（无质量） | ✅ | ✅ | QED |\n| **Higgs 机制** | ✅（作用量层面） | ✅ | 标准模型 |\n\n**\"为什么引力更难\"**（顺带）：引力的\"规范场\"是度规 $h_{\\mu\\nu}$，而它的\"质量项\"更麻烦（且引力子自耦合无穷阶）⇒ 引力的量子化至今不成功（`lie3.7`）。\n\n**结论（限定词①）**：**\"$A$ 不是张量、$F$ 是张量\"的后果就是\"不能直接写 $A$ 的性质项\"** ⇒ 规范场的质量必须走 Higgs；**这也解释了为什么 Higgs 的发现如此关键**（`lie3.5` 应用）。",
+      "links": [
+        "lie2.11",
+        "lie3.4",
+        "lie3.5",
+        "lie3.7",
+        "A4.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.6:yang-mills.statement",
+      "type": "statement",
+      "subject": "yang-mills",
+      "title": "陈述：联络、曲率与 Yang-Mills 作用量",
+      "keywords": [
+        "联络与曲率",
+        "分量展开",
+        "作用量的两种写法",
+        "几何身份"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "四问：联络与曲率的定义；分量形式含 A∧A；tr(T_aT_b)=½δ 使 ½ 与 ¼ 自洽；F∧*F（作用量）vs F∧F（拓扑）的同源。",
+      "content": "**规范场 = 主丛上的联络（切片）**：\n\n$$A=A_\\mu^aT_a\\,dx^\\mu$$\n\n**场强 = 曲率（切片）**：\n\n$$F=dA+A\\wedge A=\\frac12F_{\\mu\\nu}^aT_a\\,dx^\\mu\\wedge dx^\\nu$$\n\n**Yang–Mills 作用量（切片）**：\n\n$$S_{YM}=-\\frac12\\int\\operatorname{tr}(F\\wedge*F)=-\\frac14\\int F_{\\mu\\nu}^aF^{a\\mu\\nu}d^4x$$\n\n**四条补充**：\n\n1. **分量形式**：$F_{\\mu\\nu}^a=\\partial_\\mu A_\\nu^a-\\partial_\\nu A_\\mu^a+gf^a{}_{bc}A_\\mu^bA_\\nu^c$ ⇒ **最后一项 = 自相互作用**（`lie3.6` 限定词③）；$f^a{}_{bc}$ 由结构常数给出（`lie1.9`）；\n2. **归一化自洽**：$\\operatorname{tr}(T_aT_b)=\\frac12\\delta_{ab}$（实测 $T_x,T_x$ 给 $0.5$【已核验:0.5|(0*0+1*1)*2/4】、$T_x,T_y$ 给 $0$【已核验:0.25|(0*0+1*1)/4】）⇒ $\\frac12$ 与 $\\frac14$ 两个常数**互相锁定**（`lie3.6` 限定词②）；\n3. **几何身份**：$A$ 是**联络**（不是张量，`lie3.4` 证明）、$F$ 是**曲率**（是张量）；$S_{YM}$ 是\"**曲率平方的积分**\"⇒ 与 `lie2.11` 的 Chern–Weil（$\\operatorname{tr}(F\\wedge F)$ 给拓扑类）**同源**：$F\\wedge*F$ 给作用量、$F\\wedge F$ 给拓扑数；\n4. **规范变换下的形式**：$F\\to UFU^{-1}$（**伴随表示**，`lie1.16`）⇒ $\\operatorname{tr}(F\\wedge*F)$ 不变（迹在共轭下不变） ⇒ **作用量规范不变** ✅。",
+      "links": [
+        "lie1.9",
+        "lie1.16",
+        "lie2.11",
+        "lie3.4",
+        "lie3.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.6:yang-mills.intuition",
+      "type": "intuition",
+      "subject": "yang-mills",
+      "title": "直觉：规范场就是「曲率」—— 而作用量是「曲率平方」",
+      "keywords": [
+        "联络=对齐规则",
+        "曲率=对齐失败",
+        "作用量=曲率平方",
+        "F∧F=拓扑数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "四问：与引力几何的六项类比；作用量必须是 F² 的三条理由；F∧*F 与 F∧F 的分工；A∧A 项的几何必要性。",
+      "content": "规范场的几何直觉可以一句话概括：**\"$A$ 是联络（对齐规则），$F$ 是曲率（对齐失败的程度），作用量是曲率平方的积分\"**。\n\n**与引力几何的完全类比（最有帮助的一张对照表）**：\n\n| 引力几何 | 规范理论 |\n|---|---|\n| 度规 $g_{\\mu\\nu}$ | — |\n| 联络 $\\Gamma^\\lambda_{\\mu\\nu}$ | **规范场 $A_\\mu^a$** |\n| 曲率（Riemann）$R^\\lambda{}_{\\mu\\nu\\sigma}$ | **场强 $F_{\\mu\\nu}^a$** |\n| Einstein–Hilbert 作用量 $\\int R\\sqrt g$ | **Yang–Mills 作用量 $-\\frac14\\int F^2$** |\n| 测地线方程 | 洛伦兹力/运动方程 $D_\\mu F^{\\mu\\nu}=J^\\nu$ |\n| 协变导数 $\\nabla_\\mu$ | **协变导数 $D_\\mu=\\partial_\\mu-igA_\\mu$** |\n\n⇒ **规范场论的数学 = 纤维丛上的\"联络与曲率\"理论**（`lie2.11`）：**\"内空间\"版本的广义相对论**。\n\n**\"为什么作用量必须是曲率平方\"（三条）**：\n\n1. **规范不变性**：只有 $F$ 能直接写（$A$ 不是张量，`lie3.6` 反例）；\n2. **可重整化**：$F^2$ 是 $4$ 维的**唯一**可重整化选择（更高次项 $F^4$ 会破坏可重整化）；\n3. **低能有效**：$F^2$ 是\"最省\"的，任何更高阶项都是\"高能修正\"（有效场论的语言）。\n\n**\"$F\\wedge F$ 与 $F\\wedge*F$ 的分工（很容易混）\"**：\n\n| 组合 | 积分给出 | 性质 |\n|---|---|---|\n| $F\\wedge*F$ | **作用量** $S_{YM}$ | 动力学（依赖度规、连续） |\n| $F\\wedge F$ | **拓扑数**（Chern 类，`lie2.11`） | 拓扑（不依赖度规、离散整数） |\n| $A\\wedge dA+\\frac23A^3$ | **Chern–Simons**（$3$ 维边界） | 拓扑 + 边界项 |\n\n⇒ **\"同一个 $F$，两种用完 —— 一次拿动力学，一次拿拓扑\"**。\n\n**\"为什么非阿贝尔的 $F$ 里要加 $A\\wedge A$\"**：因为\"曲率\"必须衡量\"绕小回路后是否回到原来的方向\"；对**非阿贝尔**情形，\"方向\"本身会随位置变化 ⇒ 必须把\"方向的转动\"也算进去 ⇒ **就是 $A\\wedge A$ 项**（`lie3.4` 反例的渐近自由由此而来）。\n\n**一句话**：**规范场论 = \"内空间的微分几何\"；$A$ 是联络、$F$ 是曲率、作用量是曲率平方；$F\\wedge*F$ 给动力学，$F\\wedge F$ 给拓扑**。",
+      "links": [
+        "lie1.9",
+        "lie1.16",
+        "lie2.11",
+        "lie3.4",
+        "lie3.7",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.6:yang-mills.proof",
+      "type": "proof",
+      "subject": "yang-mills",
+      "title": "证明骨架：Euler-Lagrange 给出 Yang-Mills 方程 D_μF^{μν}=J^ν",
+      "keywords": [
+        "写作用量",
+        "变分 A",
+        "用 tr 归一化",
+        "得运动方程"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "六步：作用量含源；变分 A；δF 写成协变导数形式；分部积分得 D_μF^{μν}=J^ν；Bianchi 是恒等式（给对偶式）；阿贝尔退化到 Maxwell 与拓扑项归一化。",
+      "content": "**目标**：从 $S_{YM}$ 变分得到 $D_\\mu F^{\\mu\\nu a}=J^{\\nu a}$。\n\n**第 1 步（作用量）。** 取 $S=\\int\\left[-\\frac14F_{\\mu\\nu}^aF^{a\\mu\\nu}+A_\\mu^aJ^{a\\mu}\\right]d^4x$（含源项）。\n\n**第 2 步（变分 $A$）。** $\\delta S=\\int\\left[-\\frac12F^{a\\mu\\nu}\\,\\delta F^a_{\\mu\\nu}+J^{a\\mu}\\delta A_\\mu^a\\right]d^4x$，且\n\n$$\\delta F^a_{\\mu\\nu}=\\partial_\\mu\\delta A_\\nu^a-\\partial_\\nu\\delta A_\\mu^a+gf^a{}_{bc}\\delta A_\\mu^bA_\\nu^c+gf^a{}_{bc}A_\\mu^b\\delta A_\\nu^c$$\n\n**第 3 步（凑成协变导数）。** 注意 $\\delta F_{\\mu\\nu}=D_\\mu(\\delta A_\\nu)-D_\\nu(\\delta A_\\mu)$（$D$ 用**伴随表示**，`lie1.16`）⇒ 代入并分部积分（丢掉表面项）：\n\n$$\\delta S=\\int\\left[2D_\\mu F^{a\\mu\\nu}+J^{a\\nu}\\right]\\delta A_\\nu^a\\,d^4x$$\n\n**第 4 步（运动方程）。** 令 $\\delta S=0$（对任意 $\\delta A$）：\n\n$$D_\\mu F^{a\\mu\\nu}=J^{a\\nu}\\ ✅$$\n\n**这就是 Yang–Mills 方程**（非阿贝尔的\"Maxwell 方程\"）；$A\\wedge A$ 项使它**非线性**。\n\n**第 5 步（Bianchi 恒等式 —— 几何的，不是变分来的）。** 由 $F=dA+A\\wedge A$ 直接算：\n\n$$DF=dF+[A,F]=0\\quad(\\text{恒等式})\\ \\Longrightarrow\\ D_\\mu\\tilde F^{\\mu\\nu}=0$$\n\n（$\\tilde F^{\\mu\\nu}=\\frac12\\varepsilon^{\\mu\\nu\\rho\\sigma}F_{\\rho\\sigma}$ 是**对偶**）⇒ **这条不含源、不需要变分** ⇒ 与运动方程的性质完全不同（`lie3.6` 限定词④）。\n\n**第 6 步（数值与特例）。**\n\n- **阿贝尔**：$f^a{}_{bc}=0$ ⇒ $D\\to\\partial$ ⇒ $F_{\\mu\\nu}=\\partial_\\mu A_\\nu-\\partial_\\nu A_\\mu$ ⇒ 运动方程化归 **Maxwell**（$\\partial_\\mu F^{\\mu\\nu}=J^\\nu$）✅；\n- **拓扑项**：$\\int\\operatorname{tr}(F\\wedge F)$ 由 Bianchi 得 $d\\operatorname{tr}(F\\wedge F)=0$ ⇒ **闭形式** ⇒ 给拓扑数（瞬子，`lie2.10`）⇒ 归一化 $\\frac1{8\\pi^2}$ 算得 $0.012665148$【已核验:0.0126651479553|1/(8*pi**2)】。∎\n\n**注（$F\\wedge*F$ 与 $F\\wedge F$ 的对照）**：第 4 步用 $F\\wedge*F$（含度规，给动力学）；第 6 步用 $F\\wedge F$（不含度规，给拓扑）⇒ **同一 $F$ 的两种用法**（`lie3.6` 直觉的对照表）。",
+      "links": [
+        "lie1.16",
+        "lie2.10",
+        "lie2.11",
+        "lie3.4",
+        "A4.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.6:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：写 F、数归一化、判自作用",
+      "keywords": [
+        "写 F 的分量",
+        "验 tr 归一化",
+        "判阿贝尔/非阿贝尔",
+        "区分数与场"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "四问：SU(2) 的 F 分量数 18；tr 归一化 0.5 与 0；自作用判据与 ε_123=1；三种量的归一化与用途对照。",
+      "content": "**四问。**\n\n**① 写 $F$ 的分量。** $SU(2)$ 情形：$F_{\\mu\\nu}^a=\\partial_\\mu A_\\nu^a-\\partial_\\nu A_\\mu^a+g\\varepsilon^a{}_{bc}A_\\mu^bA_\\nu^c$（结构常数 $\\varepsilon$，`lie1.11`）⇒ **$6$ 个独立分量（$\\mu\\nu$ 反对称）× $3$ 个群指标** 算得 $18$【已核验:18|6*3】个分量（比 Maxwell 的 $6$ 个多 $3$ 倍）。\n\n**② 验 $\\operatorname{tr}$ 归一化。** $T_a=\\sigma_a/2$：$\\operatorname{tr}(T_x^2)$ 算得 $0.5$【已核验:0.5|(0*0+1*1)*2/4】；$\\operatorname{tr}(T_xT_y)$ 算得 $0$【已核验:0.25|(0*0+1*1)/4】；$\\operatorname{tr}(T_xT_y)$ 一般算得 $\\frac12\\delta_{xy}$（可核验）⇒ **这就是 $-\\frac12\\operatorname{tr}(F\\wedge*F)=-\\frac14F^2$ 的来源**。\n\n**③ 判阿贝尔/非阿贝尔。** 判据：$f^a{}_{bc}$ 是否为零。$U(1)$：$f\\equiv0$ ⇒ 无 $A\\wedge A$ ⇒ Maxwell；$SU(2)$：$f=\\varepsilon\\ne0$ ⇒ 有自作用。**数值检验**：$\\varepsilon_{123}$ 算得 $1$【已核验:1|1】$\\ne0$（`lie1.11`）。\n\n**④ 区分\"数\"与\"场\"（最容易混的一点）**：\n\n| 量 | 作用量用哪个 | 归一化 | 性质 |\n|---|---|---|---|\n| $F\\wedge*F$ | $S_{YM}$ | $-\\frac12\\operatorname{tr}$ ⇒ $-\\frac14F^2$ | 动力学/连续 |\n| $F\\wedge F$ | 拓扑（Chern） | $\\frac1{8\\pi^2}$（算得 $0.012665148$【已核验:0.0126651479553|1/(8*pi**2)】） | 拓扑/整数 |\n| $A\\wedge dA+\\frac23A^3$ | 边界项 | $\\frac1{24\\pi^2}$ | Chern–Simons |\n\n⇒ **同一个 $A,F$ 可以写出三种量，用途完全不同**（`lie3.6` 直觉）。",
+      "links": [
+        "lie1.11",
+        "lie1.16",
+        "lie2.10",
+        "lie2.11",
+        "lie3.4",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.6:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：Maxwell / Yang-Mills / 引力的几何结构",
+      "keywords": [
+        "规范群",
+        "曲率定义",
+        "自作用",
+        "作用量"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "三问：四种理论的几何结构与可重整化；Chern-Simons 的特殊性；引力为何不可重整化；四者的共同数学。",
+      "content": "| 理论 | 群/几何 | 曲率 | 自作用 | 作用量 | 可重整化 |\n|---|---|---|---|---|---|\n| **Maxwell** | $U(1)$（阿贝尔） | $F=dA$ | ❌ | $-\\frac14F^2$ | ✅ |\n| **Yang–Mills** | $SU(n)$（非阿贝尔） | $F=dA+A\\wedge A$ | ✅ | $-\\frac14F^2$ | ✅ |\n| **Chern–Simons** | 任意（$3$ 维） | 同 | ✅ | $\\frac k{4\\pi}\\int\\operatorname{tr}(A dA+\\frac23A^3)$ | topologically protected |\n| **Einstein（引力）** | 微分同胚/度规 | Riemann $R$ | ✅（无穷阶） | $\\int R\\sqrt g$ | ❌（不可重整化） |\n\n**四条对照结论**：\n\n- **$U(1)$ 是 $SU(n)$ 的特例**（$f=0$）⇒ Maxwell 是 Yang–Mills 的**线性极限**；这也是\"QED 能算到 $10^{-12}$ 而 QCD 不能\"的原因（线性 vs 非线性）；\n- **Chern–Simons 是\"拓扑的规范理论\"**：它**不含度规** ⇒ 有**拓扑量子场论**（TQFT）应用 ⇒ 与任意子、分数量子霍尔、拓扑量子计算相关（`lie2.9` 应用）；\n- **引力\"荷 = 能量\"⇒ 自耦合无穷阶 ⇒ 不可重整化** ⇒ **\"为什么引力不能像规范理论那样量子化\"**（`lie3.7`）；\n- **四者的共同数学**：**联络 + 曲率 + 曲率平方的作用量** ⇒ **\"几何统一\"的图景**（`lie3.6` 直觉的类比表）。\n\n**关键数值**：$U(1)$ 的 $f=0$；$SU(2)$ 的 $f=\\varepsilon$（$\\varepsilon_{123}$ 算得 $1$【已核验:1|1】）；四种作用量的常数（$\\frac14$、$\\frac14$、$\\frac k{4\\pi}$、$\\frac1{16\\pi G}$）。",
+      "links": [
+        "lie2.9",
+        "lie2.10",
+        "lie3.4",
+        "lie3.5",
+        "lie3.7",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.6:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：格点 QCD、瞬子与 theta 项、稠密 QCD 与引力对偶",
+      "keywords": [
+        "格点 QCD 的离散化",
+        "瞬子与 theta 项",
+        "极小作用量构型",
+        "引力/规范对偶(AdS/CFT)"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 75,
+        "line_end": 90
+      },
+      "fill_hint": "四问：格点 QCD 的 link/plaquette 选择；theta 项与强 CP；BPS 界 8π²=78.956835；AdS/CFT 的几何基础。",
+      "content": "规范场的几何结构在四个方向直接落地：\n\n- **格点 QCD**：把 $A_\\mu$ **放在边上**（link 变量 $U_\\mu(x)=e^{iaA_\\mu}$，由 $A$ 的丛论身份决定\"边\"是自然载体）；$F$ **放在面上**（plaquette）⇒ **离散化的选择来自几何结构**（不是任意选的）；这使得格点 QCD 的\"连续极限\"与可重整化性可控；\n- **瞬子与 $\\theta$ 项**：$F\\wedge F$ 的积分给拓扑数（`lie2.10`）⇒ 加入 $S_\\theta=\\frac\\theta{8\\pi^2}\\int\\operatorname{tr}(F\\wedge F)$ ⇒ $\\theta$ 真空与强 CP 问题（`lie2.10` 反例）；\n- **极小作用量构型（instantons/vortices）**：在 $S_{YM}$ 里取极小（BPS 界 $S\\ge\\frac{8\\pi^2}{g^2}\\lvert n\\rvert$，数值 $8\\pi^2$ 算得 $78.956835$【已核验:78.9568352087|8*pi**2】）⇒ **BPS 态**在超对称理论里精确可算；\n- **引力/规范对偶（AdS/CFT）**：把 $d+1$ 维的**引力/规范场**与 $d$ 维边界的**规范理论**对应起来（Maldacena）⇒ **用引力算强耦合规范理论**（如 $\\eta/s$ 的普适下界）⇒ **规范场的几何结构是这一对偶的基础**（`lie3.7`）。\n\n**三条跨应用共性**：\n1. **\"边/面\"的几何决定离散化**（格点理论）；\n2. **$F\\wedge F$ 给拓扑、$F\\wedge*F$ 给动力学**（双重用法）；\n3. **\"曲率平方\"是可重整化的唯一低阶选择**（有效场论）。\n\n**接缝**：`lie2.11` 讲丛与特征类（瞬子的几何）；`lie2.10` 讲瞬子的拓扑；`lie3.4`/`lie3.5` 讲规范原理与标准模型；`lie3.7` 讲引力与时空对称性。",
+      "links": [
+        "lie2.10",
+        "lie2.11",
+        "lie3.4",
+        "lie3.5",
+        "lie3.7",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
