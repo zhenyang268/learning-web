@@ -1,0 +1,217 @@
+{
+  "schema": "entry-card/v2",
+  "code": "M5",
+  "chapter": "M5",
+  "title": "朗之万方程",
+  "src": {
+    "file": "notebook/M_addition.tex",
+    "line_start": 42,
+    "line_end": 48,
+    "anchor": "notebook/M_addition.tex:42"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "M5:langevin.quantifiers",
+      "type": "comparison",
+      "subject": "langevin",
+      "title": "朗之万方程的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①过阻尼 vs 惯性：γẋ 主导（无 mẍ）时给扩散",
+        "条件②涨落耗散定理：噪声强度 2γk_BT 与摩擦同一个 γ",
+        "条件③白噪声：ξ 的时间关联为 δ（无记忆）",
+        "条件④线性 + 高斯噪声：⇒ 解是高斯的（⟨x²⟩ = 2Dt）",
+        "翻车代价：噪声强度写错 ⇒ 平衡分布不是 Boltzmann（FDT 被破坏）"
+      ],
+      "tex_ref": {
+        "file": "notebook/M_addition.tex",
+        "line_start": 42,
+        "line_end": 48
+      },
+      "fill_hint": "四行条件表；② 行必须给 FDT 与 $D=k_BT/\\gamma$ 的实测；给 $D$ 的三档（含 $D\\propto1/a$）与 $\\langle x^2\\rangle$ 的三档（含 $\\sqrt t$ 标度）。",
+      "content": "切片给了方程与涨落耗散定理。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **过阻尼** | $m\\ddot x$ 项被忽略（当 $m/\\gamma\\ll$ 观测时间）⇒ $\\gamma\\dot x=\\sqrt{2\\gamma k_BT}\\,\\xi+F(x)$。**实测**（水、$1$ μm 球、$T=300$ K）：$\\gamma=6\\pi\\eta a=1.884956\\times10^{-8}$ kg/s【已核验:1.88495559215e-08|6*pi*1e-3*1e-6】 | 若保留 $m\\ddot x$，长时间行为不变（**但短时间有「惯性弹道」**） | 可放宽：**保留惯性项 = 完整的 Kramers 方程** |\n| ② **涨落耗散定理（FDT）** | **噪声强度与摩擦系数是同一个 $\\gamma$**：$\\langle\\xi(t)\\xi(t')\\rangle=2\\gamma k_BT\\delta(t-t')$。**实测**：$\\gamma=1.884956\\times10^{-8}$ kg/s ⇒ $D=k_BT/\\gamma=2.197371\\times10^{-13}$ m²/s【已核验:0|1.380649e-23*300/1.884956e-08】 | **若把噪声强度与 $\\gamma$ 独立设定** ⇒ 平衡分布不是 Boltzmann（**会「加热」或「冷却」**） | 不能放宽：**FDT 是平衡的充要条件** |\n| ③ **白噪声** | $\\langle\\xi(t)\\xi(t')\\rangle\\propto\\delta(t-t')$（**无记忆**）。**若噪声有 $O(\\tau)$ 的关联时间** ⇒ 需要有色噪声处理 | 若忽略关联时间（当 $\\tau\\ll$ 观测尺度）⇒ 白噪声近似好；否则错 | 可放宽：有色噪声（**但 $O(\\tau)$ 的修正会改变「Ito vs Stratonovich」的解释**） |\n| ④ **线性 + 高斯** | 方程关于 $x$ 线性、噪声高斯 ⇒ **解是高斯过程** ⇒ $\\lvert\\psi\\rvert$ 完全由 $\\langle x\\rangle$、$\\langle x^{2}\\rangle$ 决定 | 若 $F(x)$ 非线性 ⇒ 分布非高斯（**需要 Fokker–Planck 的完整解**） | 可放宽：非线性 $F$ ⇒ Fokker–Planck（`M5:langevin.statement` 会给） |\n\n**这张表的用法**：\n\n1. **判「过阻尼 vs 惯性」**（看 $m/\\gamma$ 与观测时间）；\n2. **FDT 必须成立**（否则不是平衡）；\n3. **白噪声近似**（在 $\\tau\\ll$ 观测尺度时）。\n\n**扩散系数的三档实测（水，$T=300$ K）**：\n\n| 半径 $a$ | $\\gamma=6\\pi\\eta a$ | $D=k_BT/\\gamma$ |\n|---|---|---|\n| $0.1$ μm | $1.884956\\times10^{-9}$ | $2.197371\\times10^{-12}$ m²/s【已核验:2.19737113025e-12|1.380649e-23*300/(6*pi*1e-3*1e-7)】 |\n| $1$ μm | $1.884956\\times10^{-8}$ | $2.197371\\times10^{-13}$ m²/s【已核验:0|1.380649e-23*300/(6*pi*1e-3*1e-6)】 |\n| $10$ μm | $1.884956\\times10^{-7}$ | $2.197371\\times10^{-14}$ m²/s【已核验:0|1.380649e-23*300/(6*pi*1e-3*1e-5)】 |\n\n**注意 $D\\propto1/a$** ✅（**Stokes 摩擦 $\\gamma\\propto a$**）——**所以「小球扩散快」**。\n\n**均方位移（$\\langle x^{2}\\rangle=2Dt$）**：\n\n| $t$ | $\\langle x^{2}\\rangle$（$a=1$ μm） | $\\sqrt{\\langle x^{2}\\rangle}$ |\n|---|---|---|\n| $10^{-3}$ s | $4.395\\times10^{-16}$ m²【已核验:0|2*2.197371e-13*1e-3】 | $20.96$ nm【已核验:2.09636399511e-08|sqrt(2*2.197371e-13*1e-3)】 |\n| $1$ s | $4.395\\times10^{-13}$ m²【已核验:0|2*2.197371e-13*1】 | $663$ nm【已核验:6.62928502932e-07|sqrt(2*2.197371e-13*1)】 |\n| $100$ s | $4.395\\times10^{-11}$ m²【已核验:4.394742e-11|2*2.197371e-13*100】 | $6.63$ μm【已核验:6.62928502932e-06|sqrt(2*2.197371e-13*100)】 |\n\n**注意 $\\sqrt{\\langle x^{2}\\rangle}\\propto\\sqrt t$** ✅——**这是「扩散」的特征标度**（**与「弹道运动」的 $\\propto t$ 不同**）。",
+      "links": [
+        "M1",
+        "M3",
+        "K4",
+        "L4",
+        "I5",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "M5:fdt-violation.counterexample",
+      "type": "counterexample",
+      "subject": "fdt-violation",
+      "title": "反例：噪声强度与摩擦系数不匹配（破坏 FDT）",
+      "keywords": [
+        "误用现场：取 γ=1 但噪声强度写 2k_BT（漏 γ）",
+        "问题：FDT 要求 ⟨ξξ⟩ = 2γk_BT δ（噪声与摩擦同一个 γ）",
+        "后果①：平衡分布不是 Boltzmann（方差 ≠ k_BT/k_spring）",
+        "后果②：系统被「注入」或「抽走」能量（温度漂移）",
+        "实测：γ=1.885e−8、T=300K 时正确 D=2.197e−13 m²/s",
+        "判据：算平衡 ⟨x²⟩，与 k_BT/k_spring 对照"
+      ],
+      "tex_ref": {
+        "file": "notebook/M_addition.tex",
+        "line_start": 42,
+        "line_end": 48
+      },
+      "fill_hint": "把「破坏 FDT」的后果算成具体数值（$D$ 与平衡方差）；给 FDT 的表达式与「平衡方差 = $k_BT/k$」的校核；点出「摩擦与涨落是同一机制的两面」。",
+      "content": "**误用现场**：**把噪声强度与摩擦系数当成「两个独立参数」**：\n\n$$\\gamma\\dot x=\\sqrt{2k_BT}\\,\\xi\\quad(\\text{错，噪声强度漏了 }\\gamma).$$\n\n**为什么这是错的**：**涨落耗散定理（FDT）要求两者匹配**：\n\n$$\\langle\\xi(t)\\xi(t')\\rangle=2\\gamma k_BT\\,\\delta(t-t'),\\qquad \\gamma\\dot x=\\sqrt{2\\gamma k_BT}\\,\\xi.$$\n\n**所以「摩擦 $\\gamma$」与「噪声强度」是同一个 $\\gamma$** ✅。\n\n**算给你看（水、$1$ μm 球、$T=300$ K）**：\n\n$$\\gamma=6\\pi\\eta a=6\\pi\\times10^{-3}\\times10^{-6}=1.884956\\times10^{-8}\\ \\mathrm{kg/s}$$【已核验:1.88495559215e-08|6*pi*1e-3*1e-6】\n\n$$D=\\frac{k_BT}{\\gamma}=2.197371\\times10^{-13}\\ \\mathrm{m^{2}/s}$$【已核验:0|1.380649e-23*300/1.884956e-08】\n\n**FDT 被破坏的后果（推算）**：**若把噪声强度写成 $2k_BT$（漏 $\\gamma$）**，则有效温度变成\n\n$$T_{\\text{eff}}=\\frac{\\text{噪声强度}}{2\\gamma}=\\frac{2k_BT}{2\\gamma}=\\frac{k_BT}{\\gamma}$$\n\n**这有量纲错误**（$T_{\\text{eff}}$ 不是温度）——**更清楚地说**：**平衡分布的方差由「噪声/摩擦」的比值决定**：\n\n$$\\langle x^{2}\\rangle_{\\text{eq}}=\\frac{\\text{噪声强度}}{2\\gamma k_{\\text{spring}}}.$$\n\n**实测校核（弹簧 $k=10^{-3}$ N/m、$T=300$ K）**：\n\n$$\\langle x^{2}\\rangle_{\\text{eq}}=\\frac{k_BT}{k}=4.141947\\times10^{-18}\\ \\mathrm{m^{2}}$$【已核验:0|1.380649e-23*300/1e-3】\n\n**FDT 成立时才会得到这个值** ✅（**否则会偏**）。\n\n**后果链条（破坏 FDT 的代价）**：\n\n1. **平衡分布不是 Boltzmann**（方差错）；\n2. **能量「漂移」**（若噪声偏大 ⇒ 持续加热；偏小 ⇒ 持续冷却）；\n3. **长时间后偏离物理**（温度标度丢失）。\n\n**判据（一句话）**：**「算出的平衡方差 $=k_BT/k_{\\text{spring}}$ 吗？」** **是 ⇒ FDT 成立** ✅。\n\n**修补动作**：\n\n1. **用 $\\sqrt{2\\gamma k_BT}$ 作为噪声强度**（**不是 $\\sqrt{2k_BT}$**）；\n2. **数值自检**：长时间后测方差，与 $k_BT/k_{\\text{spring}}$ 对照；\n3. **记住 FDT 的物理**：**「摩擦」与「涨落」是同一微观机制的两面**（**所以必然由同一参数决定**）。",
+      "links": [
+        "M5",
+        "M1",
+        "M3",
+        "K4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "M5:langevin.statement",
+      "type": "statement",
+      "subject": "langevin",
+      "title": "朗之万方程：过阻尼形式、FDT 与扩散标度",
+      "keywords": [
+        "完整形式：mẍ = −γẋ + sqrt(2γk_BT)·ξ(t) + F(x)",
+        "过阻尼：ẋ = D/(k_BT)·F + sqrt(2D)·ξ，D = k_BT/γ",
+        "FDT：⟨ξ(t)ξ(t')⟩ = 2γk_BT δ(t−t')",
+        "均方位移：⟨x²⟩ = 2Dt（扩散标度 ∝ √t）",
+        "Stokes 摩擦：γ = 6πηa（⇒ D ∝ 1/a）",
+        "对应 Fokker–Planck：∂P/∂t = ∇·(D∇P − v F/k_BT·P)"
+      ],
+      "tex_ref": {
+        "file": "notebook/M_addition.tex",
+        "line_start": 42,
+        "line_end": 48
+      },
+      "fill_hint": "陈述本体（完整 + 过阻尼 + FDT）+ $D$ 的三档实测 + $\\langle x^2\\rangle$ 的三档（含 $\\sqrt t$ 标度）+ Fokker–Planck 与平衡解。",
+      "content": "**陈述**（切片）。\n\n$$m\\ddot x=-\\gamma\\dot x+\\sqrt{2\\gamma k_BT}\\,\\xi(t)+F(x).$$\n\n**涨落耗散定理（切片）**：**摩擦系数和噪声强度由同一参数 $\\gamma$ 决定。**\n\n**过阻尼极限（最常用）**：**忽略 $m\\ddot x$**：\n\n$$\\dot x=\\frac{D}{k_BT}F(x)+\\sqrt{2D}\\,\\xi(t),\\qquad D=\\frac{k_BT}{\\gamma}.$$\n\n**注意「$\\sqrt{2D}$ 的写法」**：**这是过阻尼形式的噪声强度**（**可与 `M5:langevin.quantifiers` 的 $\\sqrt{2\\gamma k_BT}$ 对照**——**两者等价，因为 $D=k_BT/\\gamma$**）✅。\n\n**扩散系数的实测（水、$T=300$ K）**：\n\n| $a$（μm） | $\\gamma=6\\pi\\eta a$ | $D=k_BT/\\gamma$ |\n|---|---|---|\n| $0.1$ | $1.884956\\times10^{-9}$ | $2.197371\\times10^{-12}$【已核验:2.19737113025e-12|1.380649e-23*300/(6*pi*1e-3*1e-7)】 |\n| $1$ | $1.884956\\times10^{-8}$【已核验:1.88495559215e-08|6*pi*1e-3*1e-6】 | $2.197371\\times10^{-13}$【已核验:0|1.380649e-23*300/(6*pi*1e-3*1e-6)】 |\n| $10$ | $1.884956\\times10^{-7}$ | $2.197371\\times10^{-14}$【已核验:0|1.380649e-23*300/(6*pi*1e-3*1e-5)】 |\n\n**$D\\propto1/a$** ✅——**所以「小粒子扩散快」**（**这与 Stokes 摩擦 $\\gamma\\propto a$ 互为倒数**）。\n\n**均方位移**：\n\n$$\\langle x^{2}\\rangle=2Dt.$$\n\n**实测（$a=1$ μm）**：\n\n| $t$（s） | $\\langle x^{2}\\rangle$ | $\\sqrt{\\langle x^{2}\\rangle}$ |\n|---|---|---|\n| $10^{-3}$ | $4.395\\times10^{-16}$ m²【已核验:0|2*2.197371e-13*1e-3】 | $20.96$ nm【已核验:2.09636399511e-08|sqrt(2*2.197371e-13*1e-3)】 |\n| $1$ | $4.395\\times10^{-13}$ m² | $663$ nm【已核验:6.62928502932e-07|sqrt(2*2.197371e-13*1)】 |\n| $100$ | $4.395\\times10^{-11}$ m² | $6.63$ μm【已核验:6.62928502932e-06|sqrt(2*2.197371e-13*100)】 |\n\n**注意「$t$ 涨 $10^{5}$ 倍、位移涨 $316$ 倍」**（$\\sqrt{10^{5}}=316$）✅——**这是 $\\sqrt t$ 标度**。\n\n**对应 Fokker–Planck 方程**（概率密度的演化）：\n\n$$\\frac{\\partial P}{\\partial t}=\\nabla\\cdot\\left(D\\nabla P-\\frac{DF}{k_BT}P\\right).$$\n\n**注意两项**：**扩散项 $D\\nabla^{2}P$（让它散开）+ 漂移项（让它在力方向流动）** ✅。\n\n**平衡解**：**当 $F=-kx$ 时**，稳态是\n\n$$P_{\\text{eq}}(x)\\propto e^{-kx^{2}/(2k_BT)}\\ \\Longrightarrow\\ \\langle x^{2}\\rangle_{\\text{eq}}=\\frac{k_BT}{k}$$【已核验:0|1.380649e-23*300/1e-3】\n\n**这就是 Boltzmann 分布** ✅——**所以「FDT 成立」等价于「稳态是 Boltzmann」**。\n\n**它依赖什么 / 谁依赖它**：`M1` 的 Boltzmann 分布（FDT 的后果）；`M3` 的 Fokker–Planck（`stochastic` 篇有）。下游：`I5` 的湍流（小尺度噪声）、`L4` 的量子 vs 经典耗散、`F3` 的「非酉演化」（`M5` 是它的经典原型）。",
+      "links": [
+        "M1",
+        "M3",
+        "K4",
+        "L4",
+        "I5",
+        "F3",
+        "M6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "M5:langevin.intuition",
+      "type": "intuition",
+      "subject": "langevin",
+      "title": "直觉：布朗运动 = 「摩擦」与「随机踢」的平衡",
+      "keywords": [
+        "粒子被液体分子踢（随机力）",
+        "同时被液体拖住（摩擦）",
+        "两者来自同一批分子 ⇒ FDT（同一个 γ）",
+        "只踢不拖 ⇒ 永远加速（无平衡）",
+        "只拖不踢 ⇒ 很快停下（无扩散）",
+        "平衡时：拖住的能量 = 踢进来的能量 ⇒ Boltzmann 分布"
+      ],
+      "tex_ref": {
+        "file": "notebook/M_addition.tex",
+        "line_start": 42,
+        "line_end": 48
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「同一批分子的两面」讲 FDT；给「只踢不拖/只拖不踢」的荒诞对照；给与量子耗散（F3）的对照表。",
+      "content": "**切片给了方程与 FDT**。理解的关键是**「同一批分子的两面」**。\n\n**假设给了什么。** 一个小球在水里——**它被水分子碰撞**。\n\n**结论为什么因此成立。** **每个碰撞既「推」也「拖」**：\n\n| 效应 | 数学 | 物理 |\n|---|---|---|\n| 平均效应 | 摩擦 $-\\gamma\\dot x$ | 碰撞的「净拖曳」 |\n| 涨落效应 | 随机力 $\\sqrt{2\\gamma k_BT}\\xi$ | 碰撞的「随机部分」 |\n\n**所以两者必然由同一参数（碰撞强度）决定** ⇒ **FDT** ✅。\n\n**「只踢不拖」或「只拖不踢」的荒诞**：\n\n| 情形 | 后果 |\n|---|---|\n| **只踢不拖**（$\\gamma=0$ 但噪声非零） | 粒子**永远加速**（能量无界） |\n| **只拖不踢**（噪声为零） | 粒子**很快停下**（无扩散） |\n| **两者匹配（FDT）** | **平衡**（Boltzmann 分布） |\n\n**所以 FDT 不是「额外假设」，而是「物理必然」** ✅。\n\n**「为什么扩散与温度有关」**：\n\n$$D=\\frac{k_BT}{\\gamma}.$$\n\n**温度越高 ⇒ 踢得越猛 ⇒ 扩散越快**；**摩擦越大 ⇒ 拖得越狠 ⇒ 扩散越慢** ✅。\n\n**具体感（$1$ μm 球在水里）**：\n\n$$D=2.197371\\times10^{-13}\\ \\mathrm{m^{2}/s}$$【已核验:0|1.380649e-23*300/1.884956e-08】\n\n**$1$ 秒移动约 $663$ nm**（**约半个球径**）——**这是「布朗运动在显微镜下可见」的尺度** ✅（**也是 1905 年 Einstein/Perrin 当年测量的尺度**）。\n\n**「与量子力学的联系」（值得说清）**：\n\n| | 经典（M5） | 量子（F3） |\n|---|---|---|\n| 演化 | 朗之万（含随机力） | 薛定谔（酉） |\n| 「耗散」 | 显式（摩擦项） | **需要「环境」**（`F3:unitarity.counterexample`） |\n| 平衡 | Boltzmann | 热态 $\\rho\\propto e^{-\\beta H}$ |\n| 数学 | Fokker–Planck | Lindblad |\n\n**所以 `M5` 是 `F3` 的「经典原型」**——**两者都在说「如何把耗散引入一个保守系统」**。\n\n**记这个图像**：**布朗运动 = 「摩擦」与「随机踢」的平衡**；两者来自同一批分子 ⇒ FDT；**平衡的结果是 Boltzmann 分布**；$D=k_BT/\\gamma$ 给出「温度越高越快、摩擦越大越慢」。",
+      "links": [
+        "M5",
+        "M1",
+        "M3",
+        "F3",
+        "L4",
+        "K4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "M5:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个粒子 1 秒移动多远？",
+      "keywords": [
+        "可算题：1μm 球在水里（T=300K），1s 的均方位移与位移尺度",
+        "答案：⟨x²⟩ = 2Dt = 4.395e−13 m²；sqrt = 663 nm",
+        "追问：D 是多少？（k_BT/γ = 2.197e−13 m²/s）",
+        "再问：10s 呢？（sqrt(2Dt) = 2.10 μm，因为 ∝√t）",
+        "陷阱：把扩散当弹道（∝t 而非 ∝√t）"
+      ],
+      "tex_ref": {
+        "file": "notebook/M_addition.tex",
+        "line_start": 42,
+        "line_end": 48
+      },
+      "fill_hint": "从朗之万方程变来的检验题；三问给 $D$、$\\langle x^2\\rangle$、10s；给三档尺度对照与「小粒子扩散快」的生物学含义。",
+      "content": "**题**：$1$ μm 半径的球在水里（$\\eta=10^{-3}$ Pa·s、$T=300$ K）。\n\n1. 扩散系数 $D$ 是多少？\n2. $1$ s 的均方位移与「根均方位移」是多少？\n3. $10$ s 呢？\n\n**答案**：\n\n1.\n\n$$\\gamma=6\\pi\\eta a=1.884956\\times10^{-8}\\ \\mathrm{kg/s}$$【已核验:1.88495559215e-08|6*pi*1e-3*1e-6】\n\n$$D=\\frac{k_BT}{\\gamma}=2.197371\\times10^{-13}\\ \\mathrm{m^{2}/s}$$【已核验:0|1.380649e-23*300/1.884956e-08】\n\n2.\n\n$$\\langle x^{2}\\rangle=2Dt=4.394742\\times10^{-13}\\ \\mathrm{m^{2}}$$【已核验:0|2*2.197371e-13*1】\n\n$$\\sqrt{\\langle x^{2}\\rangle}=6.629285\\times10^{-7}\\ \\mathrm{m}=663\\ \\mathrm{nm}$$【已核验:6.62928502932e-07|sqrt(2*2.197371e-13*1)】\n\n3. **$10$ s**：\n\n$$\\langle x^{2}\\rangle=2Dt=4.394742\\times10^{-12}\\ \\mathrm{m^{2}}$$\n\n$$\\sqrt{\\langle x^{2}\\rangle}=2.096364\\times10^{-6}\\ \\mathrm{m}=2.10\\ \\mathrm{\\mu m}$$【已核验:2.09636399511e-06|sqrt(2*2.197371e-13*10)】\n\n**注意「时间涨 $10$ 倍、位移涨 $\\sqrt{10}=3.16$ 倍」** ✅——**这是 $\\sqrt t$ 标度**。\n\n**易错点**：\n\n- **把扩散当弹道**：**扩散是 $\\sqrt t$（不是 $t$）**——**弹道运动才是 $\\propto t$**；\n- **$\\gamma$ 的公式记错**：**Stokes 是 $6\\pi\\eta a$**（**不是 $4\\pi\\eta a$ 或其他**）；\n- **单位换算**：$a$ 要用**米**（$1$ μm $=10^{-6}$ m）；$\\eta$ 用 **Pa·s**。\n\n**延伸（三档尺度对照）**：\n\n| $a$ | $D$ | $1$ s 位移 |\n|---|---|---|\n| $0.1$ μm（病毒） | $2.197\\times10^{-12}$ | $2.10$ μm |\n| $1$ μm（细菌） | $2.197\\times10^{-13}$ | $663$ nm |\n| $10$ μm（细胞） | $2.197\\times10^{-14}$ | $210$ nm |\n\n**注意「小粒子扩散快」**（$D\\propto1/a$）✅——**这是「细胞尺度上扩散高效、宏观尺度上缓慢」的定量表现**（**也是「为什么生命需要主动运输」的物理学理由**）。",
+      "links": [
+        "M5",
+        "M1",
+        "M3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "M5:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：布朗运动轨迹与扩散标度",
+      "keywords": [
+        "模块 brownian-motion（档1 前端直渲）",
+        "模式①：布朗轨迹（随机游走，含多粒子）",
+        "模式②：⟨x²⟩ 对 t（直线，斜率 2D）与 sqrt 对 t（√t 曲线）",
+        "模式③：D ∝ 1/a（不同半径的扩散对比）",
+        "invariant：⟨x²⟩ = 2Dt（严格）；D = k_BT/γ",
+        "预置：a∈{0.1,1,10} μm、T=300K、η=1e−3 Pa·s"
+      ],
+      "tex_ref": {
+        "file": "notebook/M_addition.tex",
+        "line_start": 42,
+        "line_end": 48
+      },
+      "fill_hint": "档1 依据：轨迹与扩散标度都是显式可算，前端可算；invariant 用 $\\langle x^2\\rangle=2Dt$ 与 Stokes–Einstein。",
+      "content": "**档1 演示**（前端直渲），模块 `brownian-motion`。\n\n**模式① `trajectories`**：画多个布朗粒子的轨迹。**它们「各走各的」（随机）但统计上服从 $\\langle x^{2}\\rangle=2Dt$**。\n\n**模式② `scaling`**：并排画：\n- $\\langle x^{2}\\rangle$ 对 $t$：**直线**（斜率 $2D$）；\n- $\\sqrt{\\langle x^{2}\\rangle}$ 对 $t$：**$\\sqrt t$ 曲线**。\n\n**让「扩散 vs 弹道」的标度差别可见。**\n\n**模式③ `size-dependence`**：画 $D$ 对 $a$（双对数）——**斜率 $-1$**。**预置锚点**：$a=0.1$ μm 给 $2.197372\\times10^{-12}$【已核验:2.19737113025e-12|1.380649e-23*300/(6*pi*1e-3*1e-7)】；$a=1$ μm 给 $2.197371\\times10^{-13}$。\n\n**恒等式（给前端 invariant）**：\n\n$$\\langle x^{2}\\rangle=2Dt\\quad(\\text{严格，长时间极限}),\\qquad D=\\frac{k_BT}{6\\pi\\eta a}.$$\n\n**第一条是「统计律」**（长时间下成立；短时间有惯性修正）；第二条是 Stokes–Einstein 关系。\n\n**参数契约**：\n\n- 预置：$a\\in\\{0.1,1,10\\}$ μm、$T=300$ K、$\\eta=10^{-3}$ Pa·s；\n- 与 `M5:probe1` 的数值（$D=2.197\\times10^{-13}$、$663$ nm）保持一致。",
+      "links": [
+        "M5",
+        "M1",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
