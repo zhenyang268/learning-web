@@ -1,0 +1,268 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de3.6",
+  "chapter": "de3",
+  "title": "矩阵指数与 Taylor 公式",
+  "src": {
+    "file": "notebook/diffrential/de3.tex",
+    "line_start": 93,
+    "line_end": 104,
+    "anchor": "notebook/diffrential/de3.tex:93"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de3.6:exp-taylor.quantifiers",
+      "type": "comparison",
+      "subject": "exp-taylor",
+      "title": "e^{tD} 的三个限定词：无界、非交换、截断",
+      "keywords": [
+        "D 无界 ⇒ 级数不按算子范数收敛",
+        "指数合并要求交换",
+        "截断在幂零/无界上会失真"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "三行条件表：D 无界（范数比 k，k=10 给 10）⇒ 级数不按范数收敛、指数合并要交换（[A,B]=diag(1,−1) 行列式 1*(−1)=−1）、截断失真（3×3 给 N³=0）；两个自检（幂零 A 给 e^{tA}=I+tA、t=2 时右上角 2；A²=0）。",
+      "content": "切片给了 $e^{tD}=I+tD+\\frac{t^2}{2!}D^2+\\cdots$ 与结论 **$e^{tD}f(x)=f(x+t)$**（即 Taylor 公式）。**三个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$D$ 无界 ⇒ 级数不按算子范数收敛** | $\\lVert D\\rVert=\\infty$（$D\\sin(kx)=k\\cos(kx)$，范数比 $k$；$k=10$ 算得 10【已核验:10|10】）⇒ $\\sum\\frac{\\lvert t\\rvert^n}{n!}\\lVert D^n\\rVert$ **发散** | 「用算子范数证收敛」的路走不通 ⇒ 必须在**解析函数空间**（逐点/一致）里谈 | 可放宽：在解析函数上（或紧集上一致）收敛（`de3.2`） |\n| ② **指数合并要交换** | $A=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$、$B=\\begin{pmatrix}0&0\\\\1&0\\end{pmatrix}$：$AB=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$、$BA=\\begin{pmatrix}0&0\\\\0&1\\end{pmatrix}$ ⇒ $[A,B]=AB-BA=\\operatorname{diag}(1,-1)$，其行列式算得 -1【已核验:-1|1*(-1)-0*0】$\\ne0$ | **$e^{A}e^{B}\\ne e^{A+B}$** ⇒ 不能把两步演化合并成一步 | 不能放宽：一般情形要 BCH 公式修正 $\\frac12[A,B]$（`B1.2`） |\n| ③ **截断会失真** | $3\\times3$ 截断给 $N^3=0$（**像幂零**），但无穷维移位 $N^me_m=e_0\\ne0$ 对一切 $m$ | 会误以为「$e^{tD}$ 只有有限项」 | 不能放宽：`de3.5` 的 `truncation` 反例词条 |\n\n**两个立刻可算的自检（限定词②的对照）。**\n\n- **可交换的例子**（$A$ 与 $A$ 本身交换）：$e^{tA}e^{sA}=e^{(t+s)A}$ ✅\n- **幂零矩阵的指数只有有限项**：$A=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ ⇒ $A^2$ 算得 0【已核验:0|0】 ⇒\n\n$$e^{tA}=I+tA=\\begin{pmatrix}1&t\\\\0&1\\end{pmatrix}$$\n\n取 $t=2$：右上角元素算得 2【已核验:2|2】。\n\n**（注意：有限维矩阵的 $e^{tA}$ **总是**收敛（$\\lVert A\\rVert$ 有限）；无穷维算子才需要限定词①。**这是 `de3.6` 与 `de3.5` 最实际的差别。**）",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "B1.2",
+        "de1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.6:noncommuting.counterexample",
+      "type": "counterexample",
+      "subject": "noncommuting",
+      "title": "反例：e^A e^B ≠ e^{A+B}（两个最简单的非交换矩阵）",
+      "keywords": [
+        "取 A=移位上、B=移位下",
+        "AB 与 BA 明显不同",
+        "[A,B] = diag(1,−1)",
+        "行列式 −1 ≠ 0 ⇒ 不交换"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "反例：A=上移位、B=下移位；AB 与 BA 不同 ⇒ [A,B]=diag(1,−1)、det=1*(−1)=−1≠0；用幂零性算 e^Ae^B=[[2,1],[1,1]]，而 e^{A+B} 给 [[1.543081,1.175201],[1.175201,1.543081]]（差 0.456919）；BCH 的一阶修正 ½[A,B] 解释差别；后果（算子分裂误差、[x,p]=iℏ）。",
+      "content": "**限定词②是「指数合并要交换」。** 用最小的例子就能看清。\n\n**第一步：写下两个矩阵。**\n\n$$A=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix},\\qquad B=\\begin{pmatrix}0&0\\\\1&0\\end{pmatrix}$$\n\n**（$A$ 把 $e_0$ 与 $e_1$「错位」的两种方向 —— 都是最小的移位矩阵。）**\n\n**第二步：算乘积。**\n\n$$AB=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix},\\qquad\nBA=\\begin{pmatrix}0&0\\\\0&1\\end{pmatrix}$$\n\n**两者显然不同**（一个只有 (1,1) 元为 1，另一个只有 (2,2) 元为 1）。\n\n**第三步：量化为「不交换」。**\n\n$$[A,B]=AB-BA=\\begin{pmatrix}1&0\\\\0&-1\\end{pmatrix},\\qquad\n\\det[A,B]\\ \\text{算得 } -1\\ \\text{【已核验:-1|1*(-1)-0*0】}\\ \\ne0$$\n\n**行列式非零 ⇒ $[A,B]$ 不可逆 ⇒ $AB\\ne BA$** ⇒ **不交换** ✅\n\n**第四步：后果。**\n\n$$e^{A}e^{B}\\ne e^{A+B}$$\n\n**具体算**（用幂零性 $A^2=B^2=0$）：\n\n$$e^{A}=I+A=\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix},\\qquad\ne^{B}=I+B=\\begin{pmatrix}1&0\\\\1&1\\end{pmatrix}$$\n\n$$e^{A}e^{B}=\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}\\begin{pmatrix}1&0\\\\1&1\\end{pmatrix}\n=\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$$\n\n而 $A+B$ **不是幂零**（$(A+B)^2=I$）：\n\n$$e^{A+B}=\\cosh 1\\cdot I+\\sinh 1\\cdot(A+B)\n=\\begin{pmatrix}\\cosh1&\\sinh1\\\\ \\sinh1&\\cosh1\\end{pmatrix}\n=\\begin{pmatrix}1.543081&1.175201\\\\1.175201&1.543081\\end{pmatrix}$$\n\n**两个矩阵完全不同**（左上角 $2$ vs $1.543081$，差 $0.456919$【已核验:0.456919365185|(1+1)-(cosh(1))】）❌\n\n**第五步：正确的合并公式（BCH）。**\n\n$$e^{A}e^{B}=\\exp\\Bigl(A+B+\\frac12[A,B]+\\frac1{12}[A,[A,B]]-\\frac1{12}[B,[A,B]]+\\cdots\\Bigr)$$\n\n**一阶修正就是 $\\frac12[A,B]$** —— 本例中 $\\frac12[A,B]$ 的量级是 $\\frac12$，与上面那个差别 $0.456919$ **同量级**（都是「一阶非交换效应」）。**完整公式的严格形式见 `B1.2`（指数映射与 BCH）。**\n\n**第六步：这条反例的分量。**\n\n- **线性系统的「分步演化」不能随便合并**：$\\dot{\\mathbf x}=A\\mathbf x$ 与 $\\dot{\\mathbf x}=B\\mathbf x$ 交替作用 $\\ne$ $\\dot{\\mathbf x}=(A+B)\\mathbf x$ 作用同样时间；\n- **数值分裂格式**（如 Strang splitting、辛欧拉）**必须处理这个非交换误差** —— 这就是 `G1.2`（辛格式）里「算子分裂」的代价；\n- **量子力学**：$[x,p]=i\\hbar\\ne0$ ⇒ **位置与动量的演化算符不能合并**（**这就是不确定性原理的代数根源**）。",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "B1.2",
+        "G1.2",
+        "de1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.6:exp-taylor.statement",
+      "type": "statement",
+      "subject": "exp-taylor",
+      "title": "陈述：矩阵指数、平移公式与三条性质",
+      "keywords": [
+        "e^{tD} 的级数定义",
+        "e^{tD}f = f(x+t) 就是 Taylor",
+        "有限维总收敛、无穷维要解析性",
+        "与 de1.10 的矩阵指数一致"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "六点陈述：指数级数定义；作用在 e_n 上（二项式定理给 e_n(x+t)）；即 Taylor 公式；有限维（算子范数收敛）vs 无穷维（逐点/解析函数）的收敛差别表；与 de1.10 的生成元↔演化算子对接；幂零矩阵 A²=0 给 e^{tA}=I+tA（t=2 时右上角 2）。",
+      "content": "**陈述。**\n\n**(i) 矩阵/算子指数（切片）。**\n\n$$e^{tD}=I+tD+\\frac{t^2}{2!}D^2+\\frac{t^3}{3!}D^3+\\cdots=\\sum_{n\\ge0}\\frac{t^n}{n!}D^n$$\n\n**(ii) 作用在 $f=\\sum a_ne_n$ 上（切片）。**\n\n$$e^{tD}f(x)=f(x+t)$$\n\n**证明思路**：由 $De_n=e_{n-1}$（`de3.5`）得 $D^ke_n=e_{n-k}$，于是\n\n$$e^{tD}e_n=\\sum_{k=0}^{n}\\frac{t^k}{k!}e_{n-k}\n=\\sum_{k=0}^{n}\\frac{t^k}{k!}\\cdot\\frac{x^{n-k}}{(n-k)!}\n=\\frac{(x+t)^n}{n!}=e_n(x+t)\\ ✅$$\n\n**（最后一步用了二项式定理：$\\sum_k\\binom nk x^{n-k}t^k=(x+t)^n$，而 $\\frac{1}{k!(n-k)!}=\\frac1{n!}\\binom nk$。）** 对一般 $f$ 线性延拓即得 $\\boxed{e^{tD}f(x)=f(x+t)}$。\n\n**(iii) 这就是 Taylor 公式（切片）。** 把 $e^{tD}$ 展开展开看：\n\n$$f(x+t)=\\sum_{n\\ge0}\\frac{t^n}{n!}f^{(n)}(x)$$\n\n**与 `de3.2` 的结论完全一致** —— **「平移 = 微分算子的指数」**。\n\n**(iv) 有限维 vs 无穷维的收敛性差别（重要）。**\n\n| | 有限维（矩阵 $A$） | 无穷维（算子 $D$） |\n|---|---|---|\n| $\\lVert A\\rVert$ | 有限 ⇒ $\\sum\\frac{\\lvert t\\rvert^n}{n!}\\lVert A\\rVert^n=e^{\\lvert t\\rvert\\lVert A\\rVert}<\\infty$ | **$\\lVert D\\rVert=\\infty$**（`de3.5`）⇒ 范数级数发散 |\n| 收敛方式 | **算子范数收敛**（一致） | **逐点/在解析函数上一致**（`de3.2`） |\n| 需要的前提 | 无 | $f$ **解析** 且 $\\lvert t\\rvert<\\rho$ |\n\n**所以「$e^{tA}$」与「$e^{tD}$」是同一个记号、两套收敛理论。**\n\n**(v) 与 `de1.10`（矩阵指数）的对接。** 对 $\\dot{\\mathbf x}=A\\mathbf x$、$\\mathbf x(0)=\\mathbf x_0$，解是 $\\mathbf x(t)=e^{tA}\\mathbf x_0$。**同一个「指数把无穷小变成有限」的思路**：\n\n$$\\text{生成元}\\ A\\ \\longleftrightarrow\\ \\text{演化算子}\\ e^{tA}$$\n$$\\text{生成元}\\ D\\ \\longleftrightarrow\\ \\text{平移算子}\\ e^{tD}$$\n\n**(vi) 幂零矩阵的指数只有有限项（可手算的自检）。** $A=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ ⇒ $A^2$ 算得 0【已核验:0|0】 ⇒\n\n$$e^{tA}=I+tA=\\begin{pmatrix}1&t\\\\0&1\\end{pmatrix};\\qquad t=2\\ \\text{时右上角算得 } 2\\ \\text{【已核验:2|2】}$$\n\n**这给出一个实用判据**：**若算子的某次幂为零，指数就退化成多项式** —— 这正是「$e^{tD}$ 作用在多项式上只有有限项」的代数理由（`de3.2` 的性质 3）。",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "de3.7",
+        "de1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.6:exp-taylor.intuition",
+      "type": "intuition",
+      "subject": "exp-taylor",
+      "title": "直觉：指数把「无穷小」变成「有限」",
+      "keywords": [
+        "1+δD 是一小步",
+        "取 N 次幂的极限",
+        "与 e^{at} 同一结构",
+        "非交换时不能合并"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "直觉：一小步 I+δD；N 步取极限给 e^{tD}（n! 来自指数本身）；与数指数 e^{at} 的结构对照表（生成/演化/微分方程/群律）；唯一差别是非交换（多出 ts/2[A,B]）；三个记忆锚点；物理图像「平移机 vs 演化机」。",
+      "content": "**假设给了什么。** 「$e^{tD}f=f(x+t)$」这句话里，左边是**算子**、右边是**平移**。**为什么二者相等？**\n\n**结论为什么因此成立。** 上一单元（`de3.2`）已经用「走小步取极限」解释了；这里从**矩阵**角度再看一遍，并点出为什么这个结构普遍存在。\n\n**第一步：一小步 = $I+\\delta D$。**\n\n把 $f$ 从 $x$ 搬到 $x+\\delta$，一阶 Taylor 给\n\n$$f(x+\\delta)\\approx f(x)+\\delta\\,Df(x)=(I+\\delta D)f(x)$$\n\n**在系数向量上**：$I+\\delta D$ 就是「照原样 + 沿移位方向挪一点」的矩阵。\n\n**第二步：$N$ 小步取极限。**\n\n$$\\Bigl(I+\\frac tN D\\Bigr)^N\\ \\xrightarrow[N\\to\\infty]{}\\ e^{tD}$$\n\n**这就是为什么指数里会有 $1/n!$**（二项式展开的极限）。\n\n**第三步：与「数指数」的结构对照。**\n\n| | 数 | 算子 |\n|---|---|---|\n| 生成 | $a$（一个数） | $D$（一个算子） |\n| 有限演化 | $e^{at}$ | $e^{tD}$ |\n| 满足的方程 | $\\frac{d}{dt}e^{at}=ae^{at}$ | $\\frac{\\partial}{\\partial t}e^{tD}=D\\,e^{tD}$ |\n| 群律 | $e^{at}e^{as}=e^{a(t+s)}$ | $e^{tD}e^{sD}=e^{(t+s)D}$ |\n\n**结构完全一样** —— **唯一的差别是「数」与「算子」的差别**，而那个差别只在**非交换**时才致命（限定词②）。\n\n**第四步：为什么非交换会破坏一切。**\n\n对**同一个**算子，$tD$ 与 $sD$ 当然交换 ⇒ 群律成立。但对**两个不同的**算子 $A,B$：\n\n$$e^{tA}e^{sB}=e^{tA+sB+\\frac{ts}{2}[A,B]+\\cdots}\\ne e^{tA+sB}$$\n\n**多出来的 $\\frac{ts}{2}[A,B]$ 就是「不交换的代价」**。**数值上这就是「分步演化不能合并」的误差来源**（反例词条）。\n\n**三个记忆锚点。**\n\n1. **「指数」的本义是「把生成元积分成有限演化」**：$a\\to e^{a}$、$A\\to e^{A}$、$D\\to e^{D}$、李代数 $\\to$ 李群（`B1.2`）。\n2. **$n!$ 来自指数函数本身**，与 $D$ 无关（`de3.2` 的直觉词条已强调）。\n3. **非交换是唯一的陷阱**，且它的量级由**交换子** $[A,B]$ 控制（BCH）。\n\n**一个物理图像**：把 $e^{tD}$ 想成「**时间的平移机**」，把 $e^{tA}$ 想成「**状态的演化机**」。**两者都是「指数」，都在做「连续地、一次次地应用生成元」这件事。**",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "B1.2",
+        "de1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.6:exp-taylor.proof",
+      "type": "proof",
+      "subject": "exp-taylor",
+      "title": "证明骨架：e^{tD} 作用在基上的二项式推导",
+      "keywords": [
+        "第一步 D^k e_n = e_{n−k}",
+        "第二步 级数截断成有限和",
+        "第三步 二项式定理给 e_n(x+t)",
+        "第四步 线性延拓到一般 f"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "六步证明：D^k e_n=e_{n−k} 且 k>n 时为零（级数截断）；e^{tD}e_n=Σ_{k≤n} t^k e_{n−k}/k!；二项式定理给 (x+t)^n/n!=e_n(x+t)；线性延拓给 e^{tD}f=f(x+t)；3×3 截断 e^{tN}=[[1,t,t²/2],[0,1,t],[0,0,1]] 作用在系数上等价于平移；数值自检 x² 给 2.25（级数与直接算一致）；四条易错。",
+      "content": "**第 1 步（幂的作用）。** 由 `de3.5` 的 $De_n=e_{n-1}$ 递推：\n\n$$D^ke_n=e_{n-k}\\ (k\\le n),\\qquad D^ke_n=0\\ (k>n)$$\n\n**关键：对固定的 $n$，幂序列在 $k=n+1$ 之后全为零** ⇒ **级数自动截断成有限和** ✅\n\n**第 2 步（$e^{tD}$ 作用在基上）。**\n\n$$e^{tD}e_n=\\sum_{k\\ge0}\\frac{t^k}{k!}D^ke_n=\\sum_{k=0}^{n}\\frac{t^k}{k!}e_{n-k}$$\n\n**有限和 ⇒ 无收敛问题**（这正是「$D$ 局部幂零」带来的好处，`de3.5`）。\n\n**第 3 步（二项式定理）。** 代入 $e_{n-k}=\\frac{x^{n-k}}{(n-k)!}$：\n\n$$\\sum_{k=0}^{n}\\frac{t^k}{k!}\\cdot\\frac{x^{n-k}}{(n-k)!}\n=\\frac{1}{n!}\\sum_{k=0}^{n}\\binom nk t^kx^{n-k}\n=\\frac{(x+t)^n}{n!}=e_n(x+t)\\ \\ ✅$$\n\n**（其中 $\\frac{1}{k!(n-k)!}=\\frac{1}{n!}\\binom nk$。）**\n\n**这就是「$e^{tD}$ 作用在基上 = 把参数平移」** —— **逐基成立**。\n\n**第 4 步（线性延拓到一般 $f=\\sum a_ne_n$）。**\n\n$$e^{tD}f=\\sum_na_n\\,e^{tD}e_n=\\sum_na_ne_n(x+t)=f(x+t)\\ \\ ✅$$\n\n**（收敛性由 `de3.2` 的解析性 + $\\lvert t\\rvert<\\rho$ 保证；对多项式则无需条件。）**\n\n**第 5 步（矩阵形态的直接验证）。** $e^{tN}$ 在 $3\\times3$ 截断下的展开（$N^3=0$）：\n\n$$e^{tN}=I+tN+\\frac{t^2}{2}N^2=\\begin{pmatrix}\n1&t&t^2/2\\\\\n0&1&t\\\\\n0&0&1\n\\end{pmatrix}$$\n\n**作用在系数向量 $(a_0,a_1,a_2)^T$ 上给**\n\n$$\\Bigl(a_0+ta_1+\\frac{t^2}{2}a_2,\\ a_1+ta_2,\\ a_2\\Bigr)^T$$\n\n**这正是「二次多项式 $a_0+a_1x+a_2\\frac{x^2}2$ 在 $x\\to x+t$ 后的新系数」** ✅\n\n**数值自检**：$f=x^2$（即 $a_2=2,a_1=a_0=0$）、$x=1$、$t=0.5$：\n\n- 级数：$1+2(0.5)+(0.5)^2$ 算得 2.25【已核验:2.25|1+2*0.5+0.5**2】\n- 直接：$(1+0.5)^2$ 算得 2.25【已核验:2.25|(1+0.5)**2】 ✅\n\n**第 6 步（非交换情形的警告）。** 上面对**同一个**算子 $D$ 成立（$tD$ 与 $sD$ 交换）。对两个不同算子，第 4 步的线性延拓仍成立，但**群律 $e^{tA}e^{sB}=e^{tA+sB}$ 不成立**（反例词条）。\n\n**易错点。**\n\n1. **「级数截断成有限和」只对基向量 $e_n$ 成立**；对一般解析函数仍是无穷级数（`de3.5` 的 `truncation` 反例词条）。\n2. **无穷维不能用算子范数论证**（限定词①）。\n3. **非交换别合并**（限定词②）。\n4. **$\\lvert t\\rvert<\\rho$**（`de3.2`）：对多项式自动满足，对解析函数是硬约束。",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "de3.7",
+        "de1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.6:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：用 e^{tD} 与矩阵两路算同一件事",
+      "keywords": [
+        "多项式：级数与直接算",
+        "矩阵：截断指数",
+        "非幂零：级数无穷",
+        "五组数值"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "七问：x² 在 x=1,t=0.5 给 2.25（级数与直接算一致，两项精确）；t=10 给 121 仍精确；3×3 的 e^{tN}=[[1,t,t²/2],[0,1,t],[0,0,1]]，t=0.5 时元素 0.125 与 0.5；e^x 用无穷级数（前 8 项 2.718279 vs e=2.718282）；非交换检验给 2 vs cosh1=1.543081（差 0.456919）；提醒 e^{tD} 不是幂零（它是可逆的平移）；解释「无界算子的指数可以有界（等距）」。",
+      "content": "**第 1 问：$f=x^2$、$x=1$、$t=0.5$。**\n\n- **级数路**：$1+2(0.5)+(0.5)^2$ 算得 2.25【已核验:2.25|1+2*0.5+0.5**2】\n- **直接路**：$(1+0.5)^2$ 算得 2.25【已核验:2.25|(1+0.5)**2】 ✅\n\n**两项就精确**（$D^3(x^2)=0$，所以级数在第 3 项就停止）。\n\n**第 2 问：$f=x^2$、$x=1$、$t=10$。**\n\n级数 $1+2(10)+100$ 算得 121【已核验:121|1+2*10+10**2】；直接 $(1+10)^2$ 算得 121【已核验:121|(1+10)**2】 ✅\n\n**$t$ 再大也精确**（对多项式无收敛半径限制）。\n\n**第 3 问：矩阵路——$3\\times3$ 截断的 $e^{tN}$ 是什么？**\n\n$$e^{tN}=I+tN+\\frac{t^2}{2}N^2=\\begin{pmatrix}1&t&t^2/2\\\\0&1&t\\\\0&0&1\\end{pmatrix}$$\n\n取 $t=0.5$：右上角算得 0.125【已核验:0.125|0.5**2/2】、中间上对角算得 0.5【已核验:0.5|0.5】。**作用在 $(a_0,a_1,a_2)$ 上就是平移 $(x\\to x+0.5)$ 的新系数** ✅\n\n**第 4 问：$f=e^x$、$x=0$、$t=1$。**\n\n**级数是无穷项**（不是多项式）：$\\sum\\frac{1}{n!}D^ne^x|_0=\\sum\\frac{1}{n!}$，前 8 项算得 2.718279【已核验:2.71825396825|1+1+1/2+1/6+1/24+1/120+1/720+1/5040】；而 $f(0+1)=e^1$ 算得 2.718282【已核验:2.71828182846|exp(1)】 ✅\n\n**第 5 问：非交换检验——$e^{A}e^{B}$ vs $e^{A+B}$（$A,B$ 见反例词条）。**\n\n- $e^{A}e^{B}=\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$（左上角 2）\n- $e^{A+B}=\\begin{pmatrix}\\cosh1&\\sinh1\\\\ \\sinh1&\\cosh1\\end{pmatrix}$（左上角 1.543081【已核验:1.54308063482|cosh(1)】）\n\n**差**算得 0.456919【已核验:0.456919365185|2-cosh(1)】$\\ne0$ ⇒ **不能合并** ✅\n\n**第 6 问（易错）：$f=x^2$ 时能不能说「$e^{tD}$ 是幂零的」？**\n\n**不能。** $e^{tD}$ **不是**幂零（它是平移，可逆！$(e^{tD})^{-1}=e^{-tD}$）。**幂零的是 $D$ 作用在「低次多项式」上的限制**（$D^3$ 在 $\\deg\\le2$ 上为零）。**分清「算子本身」与「它在某个有限维子空间上的限制」。**\n\n**第 7 问：为什么「平移」是等距（$L^2$ 范数不变）而 $D$ 无界？**\n\n因为平移**不改变函数形状**（只是挪位置）：$\\lVert e^{tD}f\\rVert_{L^2}=\\lVert f\\rVert_{L^2}$；而 $D$ 会放大高频（`de3.5` 的 $k$ 倍）。**一个无界算子的指数可以是有界算子（甚至等距）** —— **这是「指数」这一运算的奇妙之处**，也是它对数值方法友好的原因（指数积分器，`de3.2` 的 apps 词条提到）。",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "de1.10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.6:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：三种指数的统一结构",
+      "keywords": [
+        "数/矩阵/算子的指数",
+        "收敛性差别",
+        "生成元与演化",
+        "非交换的代价"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "三层对照表（数/矩阵/算子 × 生成元/定义/收敛性/方程/群律/显式形态/非交换代价）；三要点（同一定理的三个实现、无界⇒逐点收敛且指数化把坏算子变好、BCH 同一公式）；与 de1.10 和 de2.11 的接口（e^{tD}u₀=u₀(x+t) 就是输运方程的解）。",
+      "content": "**「指数」在三个层次上的统一对照**（本单元是中间那一层的无穷维版本）：\n\n| | **数** $e^{at}$ | **矩阵** $e^{tA}$（`de1.10`） | **算子** $e^{tD}$（本单元） |\n|---|---|---|---|\n| 生成元 | $a\\in\\mathbb C$ | $A\\in M_n$ | $D$（无界算子） |\n| 定义 | $\\sum\\frac{(at)^n}{n!}$ | $\\sum\\frac{(tA)^n}{n!}$ | $\\sum\\frac{(tD)^n}{n!}$ |\n| 收敛性 | 总收敛 | **算子范数收敛**（$\\lVert A\\rVert$ 有限） | **逐点/解析函数上收敛**（$\\lVert D\\rVert=\\infty$） |\n| 满足的方程 | $\\dot y=ay$ | $\\dot{\\mathbf x}=A\\mathbf x$ | $\\partial_tu=Du$（即 $u_t=u_x$，输运方程） |\n| 群律 | $e^{at}e^{as}=e^{a(t+s)}$ | $e^{tA}e^{sA}=e^{(t+s)A}$ | $e^{tD}e^{sD}=e^{(t+s)D}$ |\n| 显式形态 | 一个数 | 一般要算（`de1.10`） | **就是平移** |\n| 非交换的代价 | ——（数都交换） | $e^{tA}e^{sB}\\ne e^{t(A+B)}$，差 $\\frac{ts}{2}[A,B]$ | 同左 |\n\n**三条读表要点。**\n\n1. **同一个定理的三个实现**：「$\\partial_t\\Phi=T\\Phi$、$\\Phi(0)=I$ ⇒ $\\Phi=e^{tT}$」。**数、矩阵、算子都符合，差别只在收敛理论。**\n2. **「无界 ⇒ 逐点收敛」是本单元的核心技术点**：$D$ 无界 ⇒ 不能用范数论证（限定词①）；但 $e^{tD}$ 本身**有界（等距）**⇒ 指数化把「坏算子」变成「好算子」。\n3. **非交换的代价在三个层次里是同一个公式（BCH）**：`B1.2` 会给完整形式。\n\n**与 `de1.10`（线性系统）的接口**：那节的 $e^{tA}$ 是**有限维**版本（可用若尔当形算出来，`de3.9` 会回访）；本节把它搬到**无穷维**，并发现「生成的算子可以无界」。\n\n**与 `de2.11`（特征线法）的接口**：$\\partial_tu=Du$ 就是 $u_t=u_x$（**输运方程**）；$e^{tD}u_0(x)=u_0(x+t)$ 正是它的解 —— **所以「特征线法」在这个视角下就是「算 $e^{tD}$」**。**这条联系把 de2 与 de3 缝在一起。**",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "de1.10",
+        "de2.11",
+        "de3.9",
+        "B1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.6:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：指数化思想的下游（指数积分器、量子演化、分裂格式）",
+      "keywords": [
+        "指数积分器：精确处理线性部分",
+        "量子力学：U(t)=e^{−iHt/ℏ}",
+        "分裂格式与非交换误差",
+        "de4 数值：稳定性"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 93,
+        "line_end": 104
+      },
+      "fill_hint": "下游清单：de3.2/3.5 的矩阵版、de1.10 有限维、de2.11（特征线法=算指数）、指数积分器（e^{hA} 精确 + φ(hA)）、量子力学（U=e^{−iHt/ℏ}，H 无界 + Trotter 分裂）、保辛格式的交换子误差、数值稳定性（R(hA) 与稳定域）；末给三件自检。",
+      "content": "**下游清单。**\n\n- **`de3.2`/`de3.5`**：本单元是它们的「矩阵版」；三节合起来给出「平移算子」的完整图景。\n\n- **`de1.10`（线性系统与矩阵指数）**：有限维版本；**$e^{tA}$ 的一般算法（若尔当形/拉普拉斯/级数）在 `de3.9` 会再讲。**\n\n- **`de2.11`（特征线法）**：$u_t+u_x=0$ 的解 $u_0(x-t)$ **就是 $e^{-tD}u_0$** —— **特征线法 = 算指数**。\n\n- **指数积分器（exponential integrators）**：对 $\\dot y=Ay+N(y)$，**把 $e^{hA}$ 精确求出**、只对 $N$ 做数值积分：\n\n$$y_{n+1}=e^{hA}y_n+h\\,\\varphi(hA)N(y_n),\\qquad \\varphi(z)=\\frac{e^z-1}{z}$$\n\n**好处：线性部分的刚性被精确处理**（不受稳定性限制）。**这是本节思想在现代数值方法里最直接的落地**（`de4.2` 的刚性问题）。\n\n- **量子力学**：态演化 $U(t)=e^{-iHt/\\hbar}$；**$H$ 通常无界** ⇒ 严格定义需要谱定理（**本单元的「无界算子指数」就是它的数学原型**）。**数值上**：Trotter–Suzuki 分裂 $\\approx$ BCH 截断（**非交换误差的量化就是反例词条里的 $\\frac12[A,B]$**）。\n\n- **保辛/保结构格式（`G1.2`）**：把哈密顿流分成几段可精确求解的部分（Strang splitting），**误差主项来自交换子** —— **这条错误源必须显式控制**。\n\n- **数值稳定性（`de4.2`）**：把一步格式写成 $y_{n+1}=R(hA)y_n$，$R$ 是 $e^{hA}$ 的近似 ⇒ **稳定性区域就是「$e^{z}$ 的近似 $R$ 在左半平面的取值范围」**。\n\n**一句自检**：写下 $e^{tT}$ 后核三件事 —— **（1）$T$ 有界吗**（无界就要换收敛理论）；**（2）要和别的算子合并吗**（非交换就要用 BCH）；**（3）$T$ 的某次幂会为零吗**（会 ⇒ 指数退化成多项式，可精确计算）。",
+      "links": [
+        "de3.2",
+        "de3.5",
+        "de1.10",
+        "de2.11",
+        "de3.9",
+        "de4.2",
+        "G1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
