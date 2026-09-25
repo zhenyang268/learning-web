@@ -1,0 +1,529 @@
+{
+  "schema": "entry-card/v2",
+  "code": "I4",
+  "chapter": "I4",
+  "title": "涡量动力学",
+  "src": {
+    "file": "notebook/I_fluid.tex",
+    "line_start": 68,
+    "line_end": 84,
+    "anchor": "notebook/I_fluid.tex:68"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "I4:vorticity.quantifiers",
+      "type": "comparison",
+      "subject": "vorticity",
+      "title": "涡量方程适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①不可压缩：可压缩要把 ∇·u 项收回，拉伸项形状改变",
+        "条件②ν 为常值：变粘度时 ν∇²ω 变成 ∇×(∇·τ)/ρ 的复杂形式",
+        "条件③无斜压项：∇ρ×∇p ≠ 0 时涡量可以「凭空」产生（海风、烟囱）",
+        "条件④三维：拉伸项 (ω·∇)u 在二维恒为零，2D 涡量只能衰减",
+        "翻车代价：2D 里照抄拉伸项写代码，多算一项、还会人为造能量"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 71,
+        "line_end": 76
+      },
+      "fill_hint": "四列条件表是「用前自检清单」；每条反例各有独立词条展开，行号取切片内涡量方程与拉伸项两段。",
+      "content": "涡量方程 $\\dfrac{D\\boldsymbol{\\omega}}{Dt}=(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}+\\nu\\nabla^{2}\\boldsymbol{\\omega}$ 写成一行很漂亮，但它有四个限定词，每一个都能单独翻车。\n\n| 限定词 | 去掉/放松后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 不可压缩（$\\nabla\\cdot\\mathbf{u}=0$） | 取一维压缩波 $u=(u(x,t),0,0)$，$\\omega\\equiv 0$；压缩使流体微团体积伸缩，涡量方程多出的 $-\\boldsymbol{\\omega}(\\nabla\\cdot\\mathbf{u})$ 项在二维也**不再覆盖**拉伸 | 上式不成立，需回到 $\\dfrac{D\\boldsymbol{\\omega}}{Dt}=(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}-\\boldsymbol{\\omega}(\\nabla\\cdot\\mathbf{u})+\\nu\\nabla^{2}\\boldsymbol{\\omega}$ | 可放宽：补上 $-\\boldsymbol{\\omega}(\\nabla\\cdot\\mathbf{u})$ 项，或用与①②无关的原始方程 |\n| ② $\\nu$ 为常值 | 温度不均的空气中 $\\nu(T)$ 随位置变；此时 $\\nu\\nabla^{2}\\boldsymbol{\\omega}$ 不成立，因为 $\\nabla\\times(\\nu\\nabla^{2}\\mathbf{u})\\neq\\nu\\nabla^{2}(\\nabla\\times\\mathbf{u})$ | 扩散项形状错，边界附近涡量分布算错 | 可放宽：写成 $\\nabla\\times(\\nabla\\cdot\\boldsymbol{\\tau})/\\rho$，非线性粘性项 |\n| ③ 无斜压项（正压流） | 海陆风：白天陆地暖空气上升，$\\nabla\\rho$ 与 $\\nabla p$ 不平行，$\\dfrac{\\nabla\\rho\\times\\nabla p}{\\rho^{2}}$ 是**涡量源**，从静止大气生出环流 | 上式预言 $\\boldsymbol{\\omega}$ 只能被拉伸和扩散，不能从无到有 | 不能去掉：斜压项是气象/浮力驱动的核心，必须加回 |\n| ④ 三维（拉伸项存在） | 二维流动里 $\\boldsymbol{\\omega}=(0,0,\\omega_z)$ 且 $\\partial_z\\equiv 0$，故 $(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}=\\omega_z\\partial_z\\mathbf{u}=\\mathbf{0}$ | 拉伸项恒为零；2D 涡量方程退化为 $\\dfrac{D\\omega_z}{Dt}=\\nu\\nabla^{2}\\omega_z$——**纯输运+衰减** | 不可放宽：这是 2D 与 3D 湍流的**结构性差别**（2D 只有逆级联，3D 才有正级联） |\n\n**这张表的用法**：写涡量输运的代码或做无量纲分析之前，先扫一遍四个限定词：\n\n1. 欠在①（流动可压缩，$Ma$ 不小）→ 补 $-\\boldsymbol{\\omega}(\\nabla\\cdot\\mathbf{u})$，或改用守恒形式；\n2. 欠在②（$\\nu$ 随温度/位置变）→ 别写 $\\nu\\nabla^{2}\\boldsymbol{\\omega}$；\n3. 欠在③（有密度分层）→ 加斜压源项，否则算不出浮力驱动的涡；\n4. 欠在④（二维仿真）→ 拉伸项整个删掉，留着就是往系统里注入不存在的能量。",
+      "links": [
+        "I4",
+        "I3",
+        "I9.2",
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.stretch-zero",
+      "type": "counterexample",
+      "subject": "vorticity",
+      "title": "反例：在二维流动里照抄拉伸项（它恒等于零）",
+      "keywords": [
+        "误用现场：2D 代码里写 (ω·∇)u 这一项当涡量源",
+        "具体流场：u = (2y, 0, 0) → ω = (0,0,−2)，拉伸项 = ω_z·∂_z u = 0",
+        "3D 才有的机制：拉伸要求 ω 沿其自身方向有速度梯度 ∂_z u",
+        "2D 涡量最大值定理：|ω(t)|_∞ ≤ |ω(0)|_∞，涡量只减不增",
+        "Taylor–Green：ω_z = 2 sin x sin y 严格按 e^{−2νt} 衰减",
+        "修补：2D 求解器把拉伸项删掉；要涡量增长必须上 3D"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 71,
+        "line_end": 76
+      },
+      "fill_hint": "点出「恒零」而非「很小」；给剪切流的显式计算与二维涡量最大值定理的数值验证，说明这是 2D/3D 的结构差别。",
+      "content": "**误用现场**：写完三维涡量方程 $\\dfrac{D\\boldsymbol{\\omega}}{Dt}=(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}+\\nu\\nabla^{2}\\boldsymbol{\\omega}$ 之后，直接把它当成「通用公式」搬到二维求解器里，拉伸项照抄。\n\n**为什么这是错的**：拉伸项 $(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$ 的分量 $i$ 是 $\\omega_j\\partial_j u_i$。在二维流动里\n\n$$\\boldsymbol{\\omega}=(0,\\,0,\\,\\omega_z),\\qquad \\partial_z\\equiv 0,$$\n\n于是 $(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}=\\omega_z\\,\\partial_z\\mathbf{u}=\\mathbf{0}$。它**不是小量，是精确的零**——二维流动没有 $z$ 方向的变化，也就没有「涡管被拉长」这件事可言。\n\n**具体算给你看**。取平面剪切流 $u_x=2y$、$u_y=u_z=0$：\n\n$$\\omega_z=\\partial_x u_y-\\partial_y u_x=-2,\\qquad \\boldsymbol{\\omega}=(0,0,-2).$$\n\n拉伸项 $=\\omega_z\\,\\partial_z u_x=-2\\cdot 0=0$。把这一项硬写进代码，它算出来是零——但**数值离散之后不是零**：格式误差会给它一个 $O(\\Delta x^2)$ 的伪值，等于往系统里注入一个不存在的涡量源。\n\n**二维不会放大涡量（涡量最大值定理）**。无粘二维流里 $\\dfrac{D\\omega_z}{Dt}=0$，涡量随流体微团搬运；加粘性后\n\n$$\\frac{d}{dt}\\|\\omega_z\\|_\\infty\\le 0,$$\n\n即**涡量上界永不增长**。数值例子：Taylor–Green 涡 $\\omega_z=2\\sin x\\sin y$（$\\nu=0.01$）严格按解析解衰减：\n\n| $t$ | 0 | 10 | 50 | 100 |\n|---|---|---|---|---|\n| $\\omega_z$（中心点） | $2$ | $1.637462$【已核验:1.63746150616|2*exp(-2*0.01*10)】 | $0.735759$【已核验:0.735758882343|2*exp(-2*0.01*50)】 | $0.270671$【已核验:0.270670566473|2*exp(-2*0.01*100)】 |\n\n只减不增。**这就是 2D 湍流与 3D 湍流的分水岭**：3D 的拉伸项把涡管拉细拉长、按角动量守恒把涡量放大，才有能量从大尺度向小尺度的级联（切片里说的「湍流能量级联的关键」）。\n\n**修补动作**：\n\n1. 二维求解器：**整项删掉**，别保留（避免了伪源项）；\n2. 需要涡量增长的演示（拉伸、涡管扭曲）→ 必须上三维；二维只能演示「涡对并合」「涡街」这类输运-扩散现象；\n3. 自检问句：**「涡量方向上有速度梯度吗？」** 没有，拉伸项就是零。",
+      "links": [
+        "I4",
+        "I5",
+        "I3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:kelvin.viscous-decay",
+      "type": "counterexample",
+      "subject": "kelvin",
+      "title": "反例：粘性流动里用 Kelvin 定理说「环量守恒」",
+      "keywords": [
+        "误用现场：有粘流场里引用 Kelvin 定理说 Γ 不随时间变",
+        "具体：Lamb–Oseen 涡，ν=10⁻⁶ m²/s，r=1 mm 圆 (t=0 时环量 Γ₀)",
+        "t=1 s：Γ/Γ₀ = 1 − e^{−0.25} = 0.2212，只剩 22%",
+        "t=100 s：Γ/Γ₀ = 1 − e^{−0.0025} = 0.002497，只剩 0.25%",
+        "机制：粘性把涡量向外扩散，环量从圆内「漏」到圆外",
+        "修补：只对无粘/正压/保守体力流用 Kelvin；有粘改用涡量扩散方程"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 78,
+        "line_end": 81
+      },
+      "fill_hint": "把「无粘」这个限定词变成可算的失效数值；点出「有限圆内环量流失 vs 全平面守恒」这对容易混的说法。",
+      "content": "**误用现场**：在做有粘流动的分析时引用 Kelvin 环量定理「$\\dfrac{D\\Gamma}{Dt}=0$」，据此断言「这个涡的强度不会变」。\n\n**为什么这是错的**：Kelvin 定理的前提是**无粘**（切片原文标注的「无粘」两字就是准用证）。粘性存在时，涡量会从涡核向外扩散，闭合曲线 $C$ 内部的环量持续流失——定理不成立。\n\n**算给你看（Lamb–Oseen 涡）**：把 $\\nu\\to0$ 时的点涡 $\\Gamma_0$ 作为 $t=0$ 的初始条件，其在粘性下的解析解是\n\n$$\\omega_z(r,t)=\\frac{\\Gamma_0}{4\\pi\\nu t}\\exp\\!\\left(-\\frac{r^{2}}{4\\nu t}\\right).$$\n\n取半径 $r$ 的圆，圈内环量\n\n$$\\Gamma(r,t)=\\Gamma_0\\left[1-e^{-r^{2}/(4\\nu t)}\\right].$$\n\n代入 $\\nu=10^{-6}$ m²/s、$r=10^{-3}$ m：\n\n| $t$ | $r^{2}/(4\\nu t)$ | $\\Gamma/\\Gamma_0$ |\n|---|---|---|\n| 1 s | $0.25$【已核验:0.25|0.001**2/(4*1e-6*1)】 | $0.221199$【已核验:0.221199216929|1-exp(-0.001**2/(4*1e-6*1))】 |\n| 10 s | $0.025$【已核验:0.025|0.001**2/(4*1e-6*10)】 | $0.0246901$【已核验:0.0246900879717|1-exp(-0.001**2/(4*1e-6*10))】 |\n| 100 s | $0.0025$【已核验:0.0025|0.001**2/(4*1e-6*100)】 | $0.00249688$【已核验:0.00249687760254|1-exp(-0.001**2/(4*1e-6*100))】 |\n\n1 秒之内丢掉 78% 的环量；100 秒后只剩千分之二点五。**这不是「缓慢衰减」，是指数级塌陷**——时间尺度 $r^{2}/(4\\nu)$ 就是粘性扩散穿过半径 $r$ 需要的时间。\n\n**为什么泄漏**：环量是「圈内涡量的总和」，而粘性扩散把涡量往外挪。对无限大平面，总环量（全平面积分）**仍然守恒**——但**任何有限圆内的**环量都在漏。这两句话不矛盾，这正是误用的根源。\n\n**修补动作**：\n\n1. 有粘流场：改用涡量扩散方程 $\\partial_t\\omega_z=\\nu\\nabla^{2}\\omega_z$，**别引用 Kelvin**；\n2. 判据：粘性时间尺度 $\\tau_\\nu=r^{2}/(4\\nu)$ 与你要观察的时间 $T$ 比——$T\\ll\\tau_\\nu$ 时 Kelvin 是好的近似（这里的 t=1 s 已经 $T=\\tau_\\nu$，不适用）；\n3. 切片里的 VTK（涡量约束）恰恰是在**补偿**这个扩散造成的涡量抹平，属于「人为对抗粘性耗散」，不是「守恒」。",
+      "links": [
+        "I4",
+        "I2",
+        "I9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.statement",
+      "type": "statement",
+      "subject": "vorticity",
+      "title": "涡量方程：陈述、成立条件与三项的物理身份",
+      "keywords": [
+        "定义：ω = ∇×u，量纲 1/s，是「局部转动」的度量",
+        "不可压涡量方程：Dω/Dt = (ω·∇)u + ν∇²ω",
+        "三项身份：拉伸/倾斜（源）+ 粘性扩散（汇）",
+        "输运含义：涡量随流体微团走，再被拉伸和扩散改写",
+        "三维特有：二维里拉伸项恒零（见 vorticity.stretch-zero）",
+        "等价守恒形式：∂ω/∂t = ∇×(u×ω) + ν∇²ω"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 69,
+        "line_end": 75
+      },
+      "fill_hint": "陈述本体 + 四项条件 + 三项身份表；给出编程友好的守恒形式。",
+      "content": "**定义**（切片第 1 行）。涡量\n\n$$\\boldsymbol{\\omega}=\\nabla\\times\\mathbf{u},$$\n\n量纲 $1/\\mathrm{s}$，是流场「局部转动角速度」的两倍。\n\n**陈述**（切片）。对不可压缩牛顿流体（常密度、常粘度），\n\n$$\\frac{D\\boldsymbol{\\omega}}{Dt}=(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}+\\nu\\nabla^{2}\\boldsymbol{\\omega},\\qquad \\frac{D}{Dt}=\\partial_t+\\mathbf{u}\\cdot\\nabla .$$\n\n**成立条件**（四条，缺一不可）：① $\\nabla\\cdot\\mathbf{u}=0$；② $\\nu$ 为常值；③ 正压（无斜压源 $\\nabla\\rho\\times\\nabla p$）；④ 无保守力之外的体积力。逐条的失效反例见 `I4:vorticity.quantifiers`。\n\n**三项的物理身份**：\n\n| 项 | 数学记号 | 身份 | 量纲 |\n|---|---|---|---|\n| 对流 | $\\mathbf{u}\\cdot\\nabla\\boldsymbol{\\omega}$ | 涡量随流体微团搬运 | $1/\\mathrm{s}^2$ |\n| 拉伸/倾斜 | $(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$ | 涡管被拉长变细 → 涡量增强；被倾斜 → 改方向 | $1/\\mathrm{s}^2$ |\n| 粘性扩散 | $\\nu\\nabla^{2}\\boldsymbol{\\omega}$ | 把涡量从涡核抹到周围（见 `I4:kelvin.viscous-decay`） | $1/\\mathrm{s}^2$ |\n\n**等价写法**（编程时更稳）：把对流与拉伸合并，\n\n$$\\frac{\\partial\\boldsymbol{\\omega}}{\\partial t}=\\nabla\\times(\\mathbf{u}\\times\\boldsymbol{\\omega})+\\nu\\nabla^{2}\\boldsymbol{\\omega}.$$\n\n这个形式的好处是**所有项都写成了散度**，有限体积离散时天然守恒（见 `I9.1`）。\n\n**它依赖什么 / 谁依赖它**：拉伸项的存在性来自三维（`I4:vorticity.stretch-zero`）；粘性项来自 `I2` 的牛顿本构。下游：涡量约束（`I4:vorticity.application`）、3D 能量级联（`I5`）、涡方法/SPH 的涡量输运。",
+      "links": [
+        "I2",
+        "I4",
+        "I5",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.intuition",
+      "type": "intuition",
+      "subject": "vorticity",
+      "title": "直觉：拉伸项就是溜冰者收臂——涡管拉细，涡量变强",
+      "keywords": [
+        "涡管 = 一束流线围成的管，涡量沿管轴方向",
+        "拉伸：管子被拉长 → 截面缩小 → 由角动量守恒 ω 增大",
+        "倾斜：速度梯度把涡管扭向别的方向（涡量的方向也在被输运）",
+        "定量：ω/|ω| 的伸长率 = 当地应变率在涡轴上的投影",
+        "二维没有 z 方向的形变 → 涡管不能被拉长 → 拉伸项 = 0",
+        "级联图像：大涡被拉细成小涡，涡量随尺度缩小而增大"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 73,
+        "line_end": 76
+      },
+      "fill_hint": "把抽象的拉伸项落到「涡管 = 旋转细柱、角动量守恒」这个力学图像上；给三个数字锚点（方向性、量纲比 Re、二维为何断链）。",
+      "content": "**切片的定性揭示**：$(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$ 叫「涡量拉伸项」，且「三维特有」。下面讲清它为什么叫拉伸。\n\n**假设给了什么。** 涡量场有个经典几何图像（Helmholtz 涡定理，见 `I4:vorticity.extension`）：把涡线（处处与 $\\boldsymbol{\\omega}$ 相切的曲线）扎成一束，就得到一根**涡管**；涡管强度 $\\Gamma=\\int_{\\text{截面}}\\boldsymbol{\\omega}\\cdot d\\mathbf{A}$ 沿管长恒定。\n\n**结论为什么因此成立。** 转成力学语言：取涡管上一小段，看成一根**细长的旋转柱体**。旋转柱体的角动量 $\\sim\\omega\\,r^{2}$（转动惯量乘角速度）在无粘情况下守恒。若速度梯度把这段管子**沿轴向拉长**，截面半径 $r$ 必然缩小以保持体积（不可压缩），于是\n\n$$\\omega\\propto\\frac{1}{r^{2}},$$\n\n涡量**按截面半径的平方反比增大**。这就是 $(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$ 里的机制：$\\partial u_{\\text{axial}}/\\partial(\\text{axial})\\gt0$ 是拉长，拉长就变强。\n\n**三个数字锚点**：\n\n1. **方向性**：拉伸项对 $\\boldsymbol{\\omega}$ 是「乘以速度的梯度张量」。若速度梯度**沿涡轴**（纯拉伸），涡量方向不变、大小增强；若速度梯度**垂直涡轴**（剪切），涡量方向被扭转、大小可以变也可以不变——这就是「倾斜」（tilting）。\n2. **量纲**：$(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}\\sim\\omega\\cdot U/L$，而分布项 $\\nu\\nabla^{2}\\omega\\sim\\nu\\omega/L^{2}$，两者之比 $UL/\\nu=Re$——**$Re$ 大时拉伸压倒扩散**，这就是为什么涡量在湍流里能持续被放大成小尺度结构。\n3. **为什么二维不行**：二维里没有「涡管沿自身轴被拉长」这个自由度（轴方向是常量 $z$，而流场不随 $z$ 变）。于是从溜冰者收臂到涡管的这条链子在二维断掉了。\n\n**记这个图像**：$(I)\\,\\to$ 拉伸 $\\to(I)\\,\\to$ 拉伸…，每一轮截面缩一半、涡量翻两番。这就是切片里「湍流能量级联的关键」那句的物理内容：**能量不是被搬下去的，是被涡管越拉越细带下去的**。",
+      "links": [
+        "I4",
+        "I5",
+        "I6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.proof",
+      "type": "proof",
+      "subject": "vorticity",
+      "title": "推导骨架：对 Navier–Stokes 取旋，四步得到涡量方程",
+      "keywords": [
+        "第一步：不可压 NS 写成 ∂_t u + (u·∇)u = −∇p/ρ + ν∇²u",
+        "第二步：用 (u·∇)u = ∇(|u|²/2) + ω×u 把对流项改写（Lamb 变换）",
+        "第三步：两边取 ∇×；梯度项梯度旋度为零，ω×u 的旋度展开",
+        "第四步：粘性与对流算子交换，得 Dω/Dt = (ω·∇)u + ν∇²ω",
+        "易错点：Lamb 变换的 ω×u 符号；(u·∇)u = ∇(u²/2) − u×ω 不能记反",
+        "可压缩差异：多出 −ω(∇·u) 项，来自 ∇·u 不为零"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 71,
+        "line_end": 76
+      },
+      "fill_hint": "四步骨架，重点讲 Lamb 变换与「压力为何消失」；易错点包含符号与可压缩差异。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：写下不可压 NS。**\n\n$$\\partial_t\\mathbf{u}+(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}=-\\frac{\\nabla p}{\\rho}+\\nu\\nabla^{2}\\mathbf{u},\\qquad \\nabla\\cdot\\mathbf{u}=0 .$$\n\n理由：这是全部出发点；密度已被吸收进 $\\nu$。\n\n**第二步：Lamb 变换。** 对流项可以重写为\n\n$$(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}=\\nabla\\!\\left(\\tfrac12|\\mathbf{u}|^{2}\\right)+\\boldsymbol{\\omega}\\times\\mathbf{u}.$$\n\n理由：把「对流」拆成「动能梯度」+「涡量交叉项」。这一步是核心——涡量从这里「钻出来」。**注意符号**：等价形式是 $(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}=\\nabla(\\tfrac12|\\mathbf{u}|^2)-\\mathbf{u}\\times\\boldsymbol{\\omega}$，与上式一致（因为 $\\boldsymbol{\\omega}\\times\\mathbf{u}=-\\mathbf{u}\\times\\boldsymbol{\\omega}$），**但写成 $+\\mathbf{u}\\times\\boldsymbol{\\omega}$ 就错了**。\n\n于是 NS 变为\n\n$$\\partial_t\\mathbf{u}+\\boldsymbol{\\omega}\\times\\mathbf{u}=-\\nabla\\!\\left(\\frac{p}{\\rho}+\\tfrac12|\\mathbf{u}|^{2}\\right)+\\nu\\nabla^{2}\\mathbf{u}.$$\n\n**第三步：两边取旋度 $\\nabla\\times$。**\n\n- 左边第一项：$\\nabla\\times\\partial_t\\mathbf{u}=\\partial_t\\boldsymbol{\\omega}$；\n- 左边第二项：$\\nabla\\times(\\boldsymbol{\\omega}\\times\\mathbf{u})=(\\mathbf{u}\\cdot\\nabla)\\boldsymbol{\\omega}-(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}+\\boldsymbol{\\omega}(\\nabla\\cdot\\mathbf{u})-\\mathbf{u}(\\nabla\\cdot\\boldsymbol{\\omega})$。这里 $\\nabla\\cdot\\boldsymbol{\\omega}=\\nabla\\cdot(\\nabla\\times\\mathbf{u})\\equiv 0$ 恒成立，$\\nabla\\cdot\\mathbf{u}=0$（不可压），所以只剩前两项；\n- 右边梯度项：$\\nabla\\times\\nabla(\\cdot)\\equiv 0$（梯度场的旋度为零），**整项消失**——这就是为什么压力从涡量方程里彻底退场；\n- 右边粘性项：$\\nu\\nabla\\times\\nabla^{2}\\mathbf{u}=\\nu\\nabla^{2}(\\nabla\\times\\mathbf{u})=\\nu\\nabla^{2}\\boldsymbol{\\omega}$（旋度与 Laplace 算子可交换）。\n\n**第四步：合并。**\n\n$$\\partial_t\\boldsymbol{\\omega}+(\\mathbf{u}\\cdot\\nabla)\\boldsymbol{\\omega}=(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}+\\nu\\nabla^{2}\\boldsymbol{\\omega},$$\n\n即 $\\dfrac{D\\boldsymbol{\\omega}}{Dt}=(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}+\\nu\\nabla^{2}\\boldsymbol{\\omega}$。\n\n**依赖链**：不可压性（$\\nabla\\cdot\\mathbf{u}=0$）→ Lamb 变换（把涡量引出来）→ $\\nabla\\cdot\\boldsymbol{\\omega}=0$（消掉一项）→ 旋度-梯度正交（消掉压力）。\n\n**易错点**：\n\n1. **Lamb 变换符号**：记成 $(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}=\\nabla(\\cdot)+\\mathbf{u}\\times\\boldsymbol{\\omega}$ 会得到 $(\\nabla\\cdot\\mathbf{u})\\boldsymbol{\\omega}$ 之外的额外项，整个拉伸项符号翻转；\n2. **第三步漏项**：只保留 $(\\mathbf{u}\\cdot\\nabla)\\boldsymbol{\\omega}$ 与 $-(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$ 是对的——但那是因为 $\\nabla\\cdot\\mathbf{u}=0$ **且** $\\nabla\\cdot\\boldsymbol{\\omega}=0$ 两条同时用上。可压缩时第一条不成立，多出 $-\\boldsymbol{\\omega}(\\nabla\\cdot\\mathbf{u})$（这条反例见 `I4:vorticity.quantifiers` 第①行）；\n3. **别把压力项「忘掉」当成普适事实**：压力退出涡量方程**只对正压流**成立；有斜压项时 $\\nabla\\times(\\nabla p/\\rho)\\neq0$，压力回来了。",
+      "links": [
+        "I4",
+        "I1",
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:kelvin.statement",
+      "type": "statement",
+      "subject": "kelvin",
+      "title": "Kelvin 环量定理：无粘流中环量是「粘在流体上」的标签",
+      "keywords": [
+        "陈述：无粘/正压/保守体力下 DΓ/Dt = 0，Γ = ∮_C u·dl",
+        "C 必须是随流体运动的闭合曲线（材料曲线），不是固定轮廓",
+        "Γ 与涡管强度相等（Stokes 定理），故涡管强度守恒",
+        "三条前提：无粘、正压、体积力有势——缺一即失效",
+        "有粘失效的定量：Lamb–Oseen 涡 1 s 内环量只剩 22%",
+        "非正压失效：斜压项 ∇ρ×∇p/ρ² 直接从静止生出环流"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 78,
+        "line_end": 81
+      },
+      "fill_hint": "陈述本体 + 三条前提 + 与涡管强度的等价；强调「材料曲线」这个最常被忽略的限定词。",
+      "content": "**陈述**（切片原文）。对无粘、正压、体积力有势的流动，取随流体运动的闭合材料曲线 $C$，\n\n$$\\Gamma=\\oint_{C}\\mathbf{u}\\cdot d\\mathbf{l},\\qquad \\frac{D\\Gamma}{Dt}=0 .$$\n\n**成立条件**（三条，缺一即失效）：\n\n1. **无粘**（切片原文标注的「无粘」）。有粘时涡量向外扩散，有限圆内环量指数衰减；$r=1$ mm、$\\nu=10^{-6}$ 处时间尺度 $r^2/(4\\nu)=0.25$ s，1 s 后只剩 $22.12\\%$【已核验:0.221199216929|1-exp(-0.001**2/(4*1e-6*1))】；\n2. **正压**。斜压时 $\\dfrac{\\nabla\\rho\\times\\nabla p}{\\rho^{2}}$ 是环量源，海陆风从静止大气生出环流；\n3. **体积力有势**（如重力 $\\mathbf{g}=-\\nabla(gz)$）。非保守的体积力（科氏力在旋转系里的处理要另说）会贡献环量。\n\n**为什么它等价于「涡管强度守恒」**：由 Stokes 定理（斯托克斯定理），$\\Gamma=\\oint_{\\partial S}\\mathbf{u}\\cdot d\\mathbf{l}=\\iint_S\\boldsymbol{\\omega}\\cdot d\\mathbf{A}$。于是「环量守恒」=「穿过材料曲面的涡通量守恒」。这正是 Helmholtz 涡定理的第一条（见 `I4:vorticity.extension`）。\n\n**两个容易记混的点**：\n\n- **$C$ 是材料曲线**：必须随流体一起被搬运、一起形变。取一条固定在空间的圆去测环量，即使无粘也会变（环量会被流动带过那条固定曲线）；\n- **定理说的是「不变」不是「为零」**：初始有环量就一直有；初始为零就一直为零——**这正是「无粘流动不能从静止启动」的根据**。\n\n**它依赖什么 / 谁依赖它**：前提来自（无粘、正压、保守力）三条；反例见 `I4:kelvin.viscous-decay` 与 `I4:vorticity.quantifiers` 第③行。下游：涡管守恒 → Helmholtz 涡定理 → 涡方法（vortex method）与切片里的涡量约束。",
+      "links": [
+        "I4",
+        "I1",
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:kelvin.intuition",
+      "type": "intuition",
+      "subject": "kelvin",
+      "title": "直觉：环量是涡管的「标签」，随流体走但不可凭空产生",
+      "keywords": [
+        "环量 Γ = 沿闭合曲线的速度积分 = 圈内涡量的总和",
+        "无粘时涡线随流体走（「冻结在流体中」）：涡量像染料一样被搬运",
+        "Γ 是拓扑式量：材料曲线被拉长扭歪，Γ 仍不变",
+        "「不能从静止启动」：无粘流动无法自发生成环量",
+        "类比例子：无粘流体的涡是「永久指纹」，不是「临时湍流」",
+        "对比有粘：粘性让涡量扩散，标签会褪色（见 viscous-decay）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 78,
+        "line_end": 81
+      },
+      "fill_hint": "用「染料冻结在流体中」的图像讲涡线冻结；把「不能从静止启动」与真实机翼的启动涡对照，说明粘性的角色。",
+      "content": "**定理给了什么。** 一个**拓扑式的守恒量**：不管你怎样拉扯、扭曲那条材料曲线，只要它是「同一批流体微团」构成的，它圈住的涡量总和就不变。\n\n**这个守恒为什么成立。** 无粘情况下涡线（与 $\\boldsymbol{\\omega}$ 相切的曲线）随流体运动，像被「冻结」在流体里——这就是 Helmholtz 第一定理（涡线冻结）。于是：\n\n1. 涡线不能在流体内部**开始或结束**（$\\nabla\\cdot\\boldsymbol{\\omega}=0$ 是散度为零的另一面）——用流体画的话说，涡管要么闭合成环（涡环），要么终止在边界上；\n2. 涡线随流体走，所以穿过一条材料曲线的涡管数目固定；\n3. 穿过数目固定 $\\Longrightarrow$ 涡通量固定 $\\Longrightarrow$ 环量固定。\n\n**图像**：把涡量想成**掺在流体里的染料**。染料不会凭空出现或消失（无粘），只会随流动被搅拌、被拉伸成越来越细的条纹。环量就是「圈住区域内染料的总量」，圈随流体动，总量就不变。\n\n**为什么「不能从静止启动」这句很重要。** 静止流 $\\mathbf{u}\\equiv0$ 意味着处处 $\\boldsymbol{\\omega}=\\mathbf{0}$、任何圈上 $\\Gamma=0$。由 Kelvin，$\\Gamma$ 永远为零。**结论：无粘流动不可能靠自身从静止产生升力或环流。** 这看着很荒谬（真的机翼明明能产生环流）——原因正是**真实流体有粘性**：粘性在启动瞬间通过边界层的粘附条件，把环量「喂」给流体（这就是经典翼型理论里「启动涡」的来龙去脉，见 `I6`）。\n\n**两层图像并排放**：\n\n| | 无粘（Kelvin 成立） | 有粘（Kelvin 失效） |\n|---|---|---|\n| 涡量 | 冻结在流体中，只有输运与拉伸 | 还会向外扩散 |\n| 环量 | 材料曲线上的 Γ 恒定 | 有限区域内的 Γ 指数衰减 |\n| 从静止启动 | **不可能**产生环量 | 边界层粘附产生启动涡 |\n| 例子 | 理想涡环、2D 涡对并合 | 真实机翼的升力、粘性涡衰减 |\n\n**记这个图像**：无粘世界里的涡是**永久指纹**（谁在哪里、多强，一直跟着走），有粘世界里它是一杯慢慢化开的糖水。Kelvin 定理只管前者。",
+      "links": [
+        "I4",
+        "I1",
+        "I6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.extension",
+      "type": "extension",
+      "subject": "vorticity",
+      "title": "拓展：Helmholtz 涡定理、Biot–Savart 与涡环自诱导",
+      "keywords": [
+        "Helmholtz 三条：涡线冻结、涡管强度沿程恒定、涡管随流体运动",
+        "Biot–Savart：涡量场反解速度 u(x) = ∫ ω×r̂/(4πr²) dV",
+        "二维点涡：u_θ = Γ/(2πr)，Γ=1 时 r=0.5 处 |u|=0.3183 m/s",
+        "涡环自诱导速度：V ≈ Γ/(4πR)(ln(8R/a) − 1/4)",
+        "拉伸的极致：涡环被拉成细丝（细丝极限），对应 3D 级联",
+        "数值用处：涡方法把涡量换成粒子，避免网格耗散"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 76,
+        "line_end": 81
+      },
+      "fill_hint": "拓展词条：把切片的 Kelvin 定理推成 Helmholtz + Biot–Savart 的完整工具箱，附二维点涡与涡环的具体数。",
+      "content": "**拓展：** 切片只给了涡量方程与 Kelvin 定理。把这两条推到底，就是经典的 **Helmholtz 涡定理**（涡定理）与 **Biot–Savart 定律**（毕奥–萨伐尔定律）——它们是「涡量视角」的完整工具箱。\n\n**Helmholtz 三定理**（无粘、正压、保守力，即 Kelvin 的同一套前提）：\n\n1. **涡线冻结**：涡线随流体运动，始终由同一批流体质点组成；\n2. **涡管强度沿程恒定**：同一涡管任意两个截面上的涡通量相等；\n3. **涡管随流体运动**：涡管作为整体被流动搬运。\n\n由 ①③ 可推出 ②，三者其实是 Kelvin 定理的几何化重述。\n\n**Biot–Savart 定律**（把涡量反解成速度）：\n\n$$\\mathbf{u}(\\mathbf{x})=\\frac{1}{4\\pi}\\int\\frac{\\boldsymbol{\\omega}(\\mathbf{x}')\\times(\\mathbf{x}-\\mathbf{x}')}{|\\mathbf{x}-\\mathbf{x}'|^{3}}\\,dV'+\\text{（无旋部分）}.$$\n\n它的用处是：涡量方程的右边含 $\\mathbf{u}$，而 $\\mathbf{u}$ 由涡量通过这个积分给出——于是涡量场可以**自洽地**演化，不需要网格上解压力泊松方程（这正是涡方法的基础）。\n\n**二维点涡的具体数**：取 $\\Gamma=1$ m²/s，诱导速度为纯周向 $u_\\theta=\\dfrac{\\Gamma}{2\\pi r}$：\n\n| $r$ | 0.5 m | 1.0 m | 2.0 m |\n|---|---|---|---|\n| $\\lvert u_\\theta\\rvert$ | $0.318310$【已核验:0.318309886184|1/(2*pi*0.5)】 | $0.159155$【已核验:0.159154943092|1/(2*pi*1.0)】 | $0.0795775$【已核验:0.0795774715459|1/(2*pi*2.0)】 |\n\n半径翻倍，速度减半——$1/r$ 衰减。两个反向点涡（涡对）就会以 $u=\\Gamma/(2\\pi d)$ 的速度相互诱导平移，这就是二维「涡对并合」的机制。\n\n**涡环自诱导**：半径 $R$、管半径 $a$（$a\\ll R$）的涡环沿轴以\n\n$$V\\approx\\frac{\\Gamma}{4\\pi R}\\left(\\ln\\frac{8R}{a}-\\frac{1}{4}\\right)$$\n\n前进。**注意这个公式里的 $a$**：$a\\to0$ 时 $V\\to\\infty$（对数发散）——涡环「自己推自己」跑掉了。这就是「涡环被拉成细丝」的极限行为，也是 3D 级联里小尺度结构越来越快的原因。\n\n**一句话总结**：Kelvin 说「环量不变」，Helmholtz 说「涡管不变」，Biot–Savart 说「涡量决定速度」。三者合起来 = 涡量场的完整动力学（无粘版）。\n\n**注意**：这是**拓展**内容，切片只写到涡量方程与 Kelvin 定理；本节用于建立涡量视角的整体图景。",
+      "links": [
+        "I4",
+        "I1",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.vs-strain",
+      "type": "comparison",
+      "subject": "vorticity",
+      "title": "分工：涡量 ω 与应变率张量 S 各管什么",
+      "keywords": [
+        "ω = ∇×u：速度梯度的反对称部分，贡献「转动」",
+        "S = (∇u+∇uᵀ)/2：对称部分，贡献「形变」（拉伸/剪切）",
+        "速度梯度全部分解：∇u = S + Ω，Ω 的轴就是 ω/2",
+        "涡量管不动形状，应变管改形状——但拉伸项需要两者耦合",
+        "拉伸机制：S 把涡管拉长，ω 才按 1/r² 变强",
+        "判据：问「转不转」看 ω；问「形变多快」看 S 的第二不变量"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 71,
+        "line_end": 76
+      },
+      "fill_hint": "对照口径：不比较谁更「好」，而是说明它们是速度梯度的对称/反对称两半，以及拉伸项为何需要两者耦合。",
+      "content": "**两者不是竞争关系，是**同一个速度梯度的两个部分。\n\n| 需求 | 看 $\\boldsymbol{\\omega}$ | 看应变率 $S$ |\n|---|---|---|\n| **判「有没有转动」** | ✅ $\\boldsymbol{\\omega}=\\nabla\\times\\mathbf{u}$，转动角速度 $=\\boldsymbol{\\omega}/2$ | ❌ $S$ 是对称的，不含转动信息 |\n| **判「形变多快」** | ❌ 完全不反映拉伸 | ✅ $S=\\tfrac12(\\nabla\\mathbf{u}+\\nabla\\mathbf{u}^{T})$，主对角线是拉伸率 |\n| **判「压缩还是膨胀」** | ❌ | ✅ $S$ 的迹 $=\\nabla\\cdot\\mathbf{u}$（不可压时为零） |\n| **涡量会不会被放大** | ⚠️ 只说「涡量多少」 | ✅ 拉伸率沿涡轴的投影决定 $\\omega$ 的增长率 |\n| **二维里谁活着** | ⚠️ 拉伸项恒零，只能被输运+衰减 | ✅ $S$ 照样把涡拉变形（剪切） |\n\n**分解关系（一句话记住）**：\n\n$$\\nabla\\mathbf{u}=\\underbrace{\\tfrac12(\\nabla\\mathbf{u}+\\nabla\\mathbf{u}^{T})}_{S\\ \\text{（对称：形变）}}+\\underbrace{\\tfrac12(\\nabla\\mathbf{u}-\\nabla\\mathbf{u}^{T})}_{\\Omega\\ \\text{（反对称：转动）}},$$\n\n而反对称部分的「轴向量」正好是 $\\boldsymbol{\\omega}/2$。所以**涡量 = 速度梯度反对称部分的轴向量**。\n\n**为什么拉伸项需要两者同时出场**：$(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$ 里既有 $\\boldsymbol{\\omega}$（方向）又有 $\\nabla\\mathbf{u}$（含 $S$ 与 $\\Omega$）。物理上，是 $S$ 的**涡轴方向拉伸率** $\\hat{\\boldsymbol{\\omega}}^{T}S\\hat{\\boldsymbol{\\omega}}$ 决定 $\\lvert\\boldsymbol{\\omega}\\rvert$ 的增减：\n\n$$\\frac{D\\lvert\\boldsymbol{\\omega}\\rvert}{Dt}=\\underbrace{\\hat{\\boldsymbol{\\omega}}^{T}S\\hat{\\boldsymbol{\\omega}}\\cdot\\lvert\\boldsymbol{\\omega}\\rvert}_{\\text{拉伸放大}}\\;+\\;\\underbrace{\\nu\\lvert\\boldsymbol{\\omega}\\rvert\\nabla^{2}\\ln\\lvert\\boldsymbol{\\omega}\\rvert}_{\\text{扩散}}.$$\n\n**判据（两问定选）**：\n\n1. 问「有没有旋」→ 看 $\\boldsymbol{\\omega}$；\n2. 问「拉伸会不会把涡放大、湍流会不会级联」→ 必须看 $S$ 在涡轴上的投影（这也解释了为什么湍流的统计理论要用**应变率自相似**来描述）。\n\n**位置关系**：`I2` 给了应力张量与本构（含 $S$）；本条把 $S$ 与 $\\boldsymbol{\\omega}$ 摆在一起，说明它们共同构成 $\\nabla\\mathbf{u}$，缺一看不全流场。",
+      "links": [
+        "I2",
+        "I4",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.application",
+      "type": "application",
+      "subject": "vorticity",
+      "title": "应用：涡量约束（Vorticity Confinement）在 CG 里补什么",
+      "keywords": [
+        "真实原因：数值格式的耗散把涡量抹平，画面变「糊」",
+        "补偿力：f_conf = ε h (ω × N)/|N|，N = ∇|ω|（涡轴的梯度）",
+        "作用：把涡量「推回」涡轴处，对抗数值扩散",
+        "量级示例：ε=0.1、h=0.01 m、|ω|=100 s⁻¹ → |f| = 0.1 m/s²",
+        "代价：不是物理力，ε 是艺术参数；ε 过大会自激发散",
+        "替代路线：高阶/低耗散格式、涡粒子法、谱方法"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 83,
+        "line_end": 84
+      },
+      "fill_hint": "把切片末尾的 VTK 一句话落成可算的力（给量级示例），并列出替代路线与代价。",
+      "content": "**切片给的一句话**：涡量约束补偿数值耗散对涡量的抹平。下面把它落实成一个可算的力。\n\n**要解决的问题。** 一阶/二阶逆风格式会把涡量当成数值噪声一样抹平（数值粘性），结果是烟柱、尾涡这类「靠涡量撑场面」的效果变得绵软无力。真实流体的涡能维持很久，模拟里却很快糊掉。\n\n**补偿力怎么算。** Steinhoff 的做法是加一个**人为体积力**，方向从涡核指向外（把涡量往涡轴处推）：\n\n$$\\mathbf{f}_{\\text{conf}}=\\varepsilon\\,h\\,(\\boldsymbol{\\omega}\\times\\mathbf{N}),\\qquad \\mathbf{N}=\\frac{\\nabla\\lvert\\boldsymbol{\\omega}\\rvert}{\\lvert\\nabla\\lvert\\boldsymbol{\\omega}\\rvert\\rvert},$$\n\n其中 $h$ 是网格尺寸（量纲修正），$\\varepsilon$ 是无量纲的艺术参数。$\\mathbf{N}$ 指向涡量增强的方向，$\\boldsymbol{\\omega}\\times\\mathbf{N}$ 垂直于两者——这个力把流体微团向涡核「旋」回去，等效于**局部缩小数值粘性**。\n\n**数值量级**（用切片 `I9.4` 同套单位）：取 $\\varepsilon=0.1$、$h=0.01$ m、$\\lvert\\boldsymbol{\\omega}\\rvert=100$ s$^{-1}$，则\n\n$$\\lvert\\mathbf{f}_{\\text{conf}}\\rvert=\\varepsilon h\\lvert\\boldsymbol{\\omega}\\rvert=0.1\\times0.01\\times100=0.1\\ \\mathrm{m/s^{2}}$$【已核验:0.1|0.1*0.01*100】\n\n——和重力同量级。**这个力不是小修正**：它是主导项之一，所以 $\\varepsilon$ 必须用手调。\n\n**代价与边界**：\n\n1. **不是物理力**：它破坏了 $D\\Gamma/Dt=0$（无粘时），也破坏了 `I9.2` 的能量稳定性（会注入能量）；\n2. **$\\varepsilon$ 过大会自激发散**：力与涡量成正比，涡量越大力越大，正反馈；\n3. **只在涡核附近该开**：$\\varepsilon$ 大而 $h$ 粗时，它会把噪声当涡量放大。工程做法是加一个 $\\lvert\\nabla\\lvert\\boldsymbol{\\omega}\\rvert\\rvert$ 阈值门控。\n\n**替代路线**（模拟里更「正派」的选择）：\n\n| 路线 | 原理 | 代价 |\n|---|---|---|\n| 高阶/低耗散格式 | 从源头减少数值扩散 | 实现复杂、易振荡 |\n| 涡粒子法（vortex method） | 不用网格，涡量由粒子携带（Biot–Savart 求速度） | 边界处理难、计算量大 |\n| 谱方法 | 指数精度、无格式耗散 | 只适合周期/简单边界 |\n| **涡量约束** | 事后补一个力 | 便宜、易接、**不物理** |\n\n**依赖关系**：本条建立在 `I4:vorticity.statement`（涡量方程）与 `I4:kelvin.viscous-decay`（要补的是什么）之上；$\\mathbf{f}$ 加入后会破坏 `I9.2` 所要求的离散能量稳定性，两者在实现里要一起看。",
+      "links": [
+        "I4",
+        "I9.2",
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.probe1",
+      "type": "probe",
+      "subject": "vorticity",
+      "title": "检验题：点涡的环量与速度各是多少？",
+      "keywords": [
+        "可算题：Γ=1 m²/s 的点涡，求 r=0.5/1/2 m 处的 |u|",
+        "答案：0.318310 / 0.159155 / 0.0795775 m/s（严格 1/r）",
+        "再问：沿任意绕原点一圈的 Γ 是多少？（答案：恒为 1）",
+        "陷阱：把 u = Γ/(2πr) 写成 u = Γ/r（漏 2π，差 6.2832 倍）",
+        "延伸：两个反向点涡相距 d=1 m 时相互诱导的平移速度"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 69,
+        "line_end": 76
+      },
+      "fill_hint": "从涡量定义与 Kelvin 定理变来的检验题；答案数值全部经回填。",
+      "content": "**题**：平面点涡强度 $\\Gamma=1\\ \\mathrm{m^{2}/s}$（把涡量集中在原点、环量 $\\Gamma$）。\n\n1. 求 $r=0.5,\\ 1,\\ 2$ m 处的周向速度 $\\lvert u_\\theta\\rvert$；\n2. 沿任意一条绕原点的闭合曲线求环量 $\\Gamma$；\n3. 若把公式错写成 $u=\\Gamma/r$，$r=0.5$ m 处的误差是几倍？\n\n**答案**（先自己算，再对）：\n\n1. $u_\\theta=\\dfrac{\\Gamma}{2\\pi r}$：\n\n   - $r=0.5$：$0.318310\\ \\mathrm{m/s}$【已核验:0.318309886184|1/(2*pi*0.5)】\n   - $r=1.0$：$0.159155\\ \\mathrm{m/s}$【已核验:0.159154943092|1/(2*pi*1.0)】\n   - $r=2.0$：$0.0795775\\ \\mathrm{m/s}$【已核验:0.0795774715459|1/(2*pi*2.0)】\n\n   严格 $1/r$：半径翻倍，速度减半。\n\n2. 恒为 $\\Gamma=1$。理由：Stokes 定理，$\\Gamma=\\iint_{\\text{圈内}}\\omega\\,dA$，而点涡的全部涡量（$2\\pi$ 倍的 $\\delta$ 函数）在圈内；速度随 $r$ 变但**积分恰好抵消** $2\\pi r$ 这个周长因子。\n\n3. 错写 $u=\\Gamma/r$ 给 $2$ m/s，正确值 $0.31831$ m/s，**高估** $2\\pi=6.28319$ 倍【已核验:6.28318530718|2*pi】。\n\n**易错点**：\n\n- 漏掉 $2\\pi$ 是最常见的错，量级正好差一个 $2\\pi$；\n- 把「$u$ 随 $r$ 减小而变大」误当成「$\\Gamma$ 也变大」——$\\Gamma$ 是常数，变的只是速度分布；\n- 点涡中心的 $u\\to\\infty$ 不是物理奇点，而是「把涡量塞进零面积」的数学理想化；真实涡核有有限尺寸（见 `I4:kelvin.viscous-decay` 的 Lamb–Oseen 剖面）。",
+      "links": [
+        "I4",
+        "I1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:vorticity.probe2",
+      "type": "probe",
+      "subject": "vorticity",
+      "title": "检验题：Kelvin 定理在粘性下 1 秒内失效多少？",
+      "keywords": [
+        "可算题：ν=10⁻⁶ m²/s，r=1 mm 圆，t=1 s 时 Γ/Γ₀",
+        "答案：r²/(4νt)=0.25，Γ/Γ₀=1−e^{−0.25}=0.2212",
+        "再问：要保住 99% 环量，能等多久？（t ≤ 0.0543 s）",
+        "判据：粘性扩散时间 τν = r²/(4ν) = 0.25 s（本组参数）",
+        "陷阱：拿全平面环量守恒去论证有限圆内环量守恒"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 78,
+        "line_end": 81
+      },
+      "fill_hint": "从 Kelvin 定理的「无粘」限定词变来的定量题；三问都要求写判据再数值验证。",
+      "content": "**题**：Lamb–Oseen 涡（$\\nu=10^{-6}\\ \\mathrm{m^{2}/s}$，初始环量 $\\Gamma_0$），取半径 $r=1$ mm 的圆。\n\n1. 求 $t=1$ s 时圆内的 $\\Gamma/\\Gamma_0$；\n2. 求粘性扩散时间尺度 $\\tau_\\nu=r^{2}/(4\\nu)$；\n3. 要保住 $99\\%$ 环量，最长能观察多久？\n\n**答案**：\n\n1. $\\dfrac{r^{2}}{4\\nu t}=\\dfrac{10^{-6}}{4\\times10^{-6}\\times1}=0.25$【已核验:0.25|0.001**2/(4*1e-6*1)】，故\n\n   $$\\frac{\\Gamma}{\\Gamma_0}=1-e^{-0.25}=0.221199$$【已核验:0.221199216929|1-exp(-0.001**2/(4*1e-6*1))】\n\n   只剩 $22.12\\%$。\n\n2. $\\tau_\\nu=\\dfrac{r^{2}}{4\\nu}=\\dfrac{10^{-6}}{4\\times10^{-6}}=0.25$ s【已核验:0.25|0.001**2/(4*1e-6)】。**$t=1$ s 就是 $4\\tau_\\nu$**，早已进入深度衰减区。\n\n3. 要求 $1-e^{-r^{2}/(4\\nu t)}\\ge0.99$，即 $e^{-x}\\le0.01$，$x\\ge-\\ln0.01=4.60517$【已核验:4.60517018599|-log(0.01)】。于是\n\n   $$t\\le\\frac{r^{2}}{4\\nu\\cdot4.60517}=0.0542868\\ \\mathrm{s}$$【已核验:0.0542868102379|0.001**2/(4*1e-6*4.605170185988091)】\n\n即大约 54 毫秒。\n\n**易错点**：\n\n- **最典型的错**：论证「Lamb–Oseen 涡的总环量（全平面）守恒，所以圆内环量守恒」——前半对，后半错。总环量守恒恰恰是因为泄漏出去的涡量还在平面上，只是不在圈内；\n- 把 $\\tau_\\nu$ 当成「衰减到 $1/e$ 的时间」：由 $1-e^{-x}=1-1/e$ 得 $x=1$，所以 $\\tau_\\nu$ 确实对应 $63.2\\%$【已核验:0.632120558829|1-exp(-1)】的损失，但**损失**到 $1/e$、剩下 $36.8\\%$，不要记反；\n- 要求 $99\\%$ 保住时用 $x=1$（错）而不是 $x=4.605$（对）——差 4.6 倍。",
+      "links": [
+        "I4",
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "I 篇涡量与相关量的对照表（怎么选、错在哪一格）",
+      "keywords": [
+        "涡量 ω=∇×u：局部转动，1/s；只在 3D 有拉伸放大机制",
+        "环量 Γ=∮u·dl=∫ω·dA：区域总量，m²/s；无粘时守恒",
+        "拟涡能 ∫ω²/2 dV：涡量的「能量」，有粘时单调递减",
+        "速度 u：Biot–Savart 由 ω 反解；含无旋部分，涡量看不见它",
+        "应变率 S：速度梯度的对称部分，与 ω 一起构成 ∇u",
+        "选择判据：问转动→ω；问总量守恒→Γ；问耗散→拟涡能；问形变→S"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 69,
+        "line_end": 81
+      },
+      "fill_hint": "单元级对照表；把「哪个量守恒、哪个量在变」作为列，便于前端做总览卡。",
+      "content": "I 篇里与涡量相邻的四个量容易混。这张表用来「见信号选量」。\n\n| 量 | 定义 | 量纲 | 谁守恒 / 怎么变 | 典型翻车 |\n|---|---|---|---|---|\n| 涡量 $\\boldsymbol{\\omega}$ | $\\nabla\\times\\mathbf{u}$ | $1/\\mathrm{s}$ | 3D 可被拉伸放大；2D 只衰减 | 2D 里照抄拉伸项（恒零） |\n| 环量 $\\Gamma$ | $\\oint_C\\mathbf{u}\\cdot d\\mathbf{l}=\\iint_S\\boldsymbol{\\omega}\\cdot d\\mathbf{A}$ | $\\mathrm{m^{2}/s}$ | 无粘（正压、保守力）时守恒 | 有粘时误用守恒；取固定曲线而非材料曲线 |\n| 拟涡能（enstrophy） | $\\tfrac12\\int\\lvert\\boldsymbol{\\omega}\\rvert^{2}dV$ | $1/\\mathrm{s^{2}}$ | 有粘时**单调递减**，是涡量的「能量」 | 把它当成守恒量去校验代码 |\n| 应变率 $S$ | $\\tfrac12(\\nabla\\mathbf{u}+\\nabla\\mathbf{u}^{T})$ | $1/\\mathrm{s}$ | 与涡量共同构成 $\\nabla\\mathbf{u}$ | 用 $S$ 判「转不转」（它对称，不含转动） |\n| 速度 $\\mathbf{u}$ | Biot–Savart 由 $\\boldsymbol{\\omega}$ 反解 | $\\mathrm{m/s}$ | 含无旋部分，涡量完全看不见它 | 以为「涡量定了速度就定了」（差一个调和场） |\n\n**一条血缘链**（从局部到整体）：\n\n$$\\underbrace{\\boldsymbol{\\omega}=\\nabla\\times\\mathbf{u}}_{\\text{局部转动}}\\ \\longrightarrow\\ \\underbrace{\\Gamma=\\iint\\boldsymbol{\\omega}\\cdot d\\mathbf{A}}_{\\text{整体总量}}\\ \\longrightarrow\\ \\underbrace{\\oint\\mathbf{u}\\cdot d\\mathbf{l}}_{\\text{可直接测量}}$$\n\n而 $\\tfrac12\\int\\lvert\\boldsymbol{\\omega}\\rvert^{2}$ 是这条链上的「能量」，$S$ 是与 $\\boldsymbol{\\omega}$ 并列的另一半速度梯度。\n\n**验算锚点**：点涡 $\\Gamma=1$ 在 $r=0.5$ m 处 $u=0.318310$ m/s【已核验:0.318309886184|1/(2*pi*0.5)】——同一条 $\\Gamma$ 配不同的 $r$，检验的是「总量守恒」而不是「速度守恒」。",
+      "links": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "I4 服务的下游章节（一条一句）",
+      "keywords": [
+        "I5 湍流：拉伸项是 3D 能量级联的引擎，Kolmogorov 谱的物理前提",
+        "I9.2 能量稳定：涡量约束会破坏离散能量不等式，须一起评估",
+        "I9.3 散度自由：涡量由流函数给出时天然满足散度自由",
+        "I6 边界层：启动涡与无滑移条件的耦合产生环量",
+        "CG 特效：烟柱/尾涡靠涡量约束（VTK）维持细节",
+        "自检：只要涉及「涡」「旋」「涡量」，先问「几维、有没有粘」"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 69,
+        "line_end": 84
+      },
+      "fill_hint": "单元级应用词条；每条给出「为什么需要它」而不是只说「用到了」。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`I5` 湍流**：3D 能量级联的引擎就是拉伸项——涡管越拉越细、涡量越变越大，能量从大尺度传到小尺度并被粘性吃掉。Kolmogorov 谱 $E(k)\\sim k^{-5/3}$ 的推导前提里，$(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$ 是「不产生也不消耗能量、只搬运尺度」的关键角色。**没有拉伸项就没有 3D 湍流。**\n- **`I9.2` 能量稳定格式**：涡量约束（`I4:vorticity.application`）是人为加的体积力，会破坏切片要求的 $\\dfrac{d}{dt}\\int\\tfrac12\\lvert\\mathbf{u}\\rvert^{2}\\le0$。实现时要把「能量检查」和「$\\varepsilon$ 调参」放在一起看。\n- **`I9.3` 散度自由**：二维流动常用流函数 $\\psi$ 表示，$\\mathbf{u}=(\\partial_y\\psi,-\\partial_x\\psi)$，此时 $\\nabla\\cdot\\mathbf{u}=0$ **精确成立**，而涡量就是 $\\omega_z=-\\nabla^{2}\\psi$——**涡量与散度自由条件天然耦合**，这是 `I9.3` 里「对涡量或流函数求解」那条路的根据。\n- **`I6` 边界层**：真实流场从静止启动时机翼能产生环流，靠的是粘性边界层里的无滑移条件（`I6`）把环量「喂」进来；无粘的 Kelvin 定理明确断言这件事不可能（见 `I4:kelvin.intuition`）。**粘性 + 边界层 = 启动涡的来历。**\n- **`I2` 粘性/应力**：粘性扩散项 $\\nu\\nabla^{2}\\boldsymbol{\\omega}$ 的前提是牛顿本构；非牛顿流体（切片 `I2` 的幂律/宾汉）里这一项形状要改。\n\n**一条自检问句**（触发器）：**看见「涡」「旋」「环量」，先问两件事——几维？有没有粘？** 二维删拉伸项，有粘别引 Kelvin。",
+      "links": [
+        "I2",
+        "I5",
+        "I6",
+        "I9.2",
+        "I9.3",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：涡量场与环量计算器",
+      "keywords": [
+        "模块 vorticity-field（档1 前端直渲，κ 由前端渲染）",
+        "模式①：剪切/点涡/涡对三种预设的涡量场与速度场同框",
+        "模式②：拖动闭合曲线，实时显示 ∮u·dl 与 ∬ω·dA 相等",
+        "模式③：Lamb–Oseen 涡按 e^{-r²/(4νt)} 扩散，Γ(r,t) 曲线可拖动",
+        "失效可视化：2D 模式下拉伸项读数恒为 0，3D 预设下非零"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 69,
+        "line_end": 84
+      },
+      "fill_hint": "档1 依据：涡量、环量、Lamb–Oseen 扩散全是显式函数，前端可算；三种模式对应定义、Stokes 定理、粘性失效三件事。",
+      "content": "**档1 演示**（前端直渲），模块 `vorticity-field`。\n\n**模式① `field-presets`**：三个预设流场各画速度矢量与涡量色图——（a）平面剪切 $u_x=2y$（$\\omega_z=-2$，均匀）；(b）点涡 $\\Gamma=1$（$\\omega$ 集中在原点，$u_\\theta=\\Gamma/2\\pi r$）；(c）涡对（两个反向点涡，展示相互诱导平移）。读数栏给出 $\\omega_z$ 的最大值与所在位置。\n\n**模式② `circulation-loop`**：可拖动/缩放一条闭合曲线 $C$，实时算两个量并对比：\n\n$$\\oint_C\\mathbf{u}\\cdot d\\mathbf{l}\\quad\\text{与}\\quad\\iint_{\\partial S}\\boldsymbol{\\omega}\\cdot d\\mathbf{A},$$\n\n两者必须相等（Stokes 定理）。**这里是恒等式校验的天然位置**：把曲线拖到不同位置，两数始终相等；若代码有 bug（例如 $d\\mathbf{l}$ 方向写反），两数会差一个符号——图上直接看得出来。\n\n**模式③ `lamb-oseen`**：$\\omega_z(r,t)$ 与圈内环量 $\\Gamma(r,t)=\\Gamma_0[1-e^{-r^{2}/(4\\nu t)}]$，$\\nu$ 与 $t$ 可拖。图上标出 $\\tau_\\nu=r^{2}/(4\\nu)$ 与「$\\Gamma$ 掉到 $1/e$」的位置，把 `I4:kelvin.viscous-decay` 的表变成可拖动的曲线。\n\n**失效可视化**：二维预设下，把「拉伸项 $(\\boldsymbol{\\omega}\\cdot\\nabla)\\mathbf{u}$」的读数显示为**精确 0**（并给出 $\\omega_z\\partial_z\\mathbf{u}$ 这一步的中间值也是 0）；切到 3D 预设（如轴向拉伸流 $u_z=2z$）时同一读数变为非零——**让「2D 恒零、3D 非零」这条红线在图上可见**。\n\n**参数契约**：\n\n- 预置：`shear(U=1, gamma=2)`、`point-vortex(Gamma=1, r0=0.01)`、`vortex-pair(Gamma=1, d=1)`；\n- 时间演化：`lamb-oseen(nu=1e-6, Gamma0=1, t_max=1.0)`；\n- 与 `I4:vorticity.probe1`（点涡速度表）、`I4:vorticity.probe2`（环量衰减）的数值保持一致。",
+      "links": [
+        "I4",
+        "I1",
+        "I2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

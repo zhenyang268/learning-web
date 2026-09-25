@@ -1,0 +1,244 @@
+{
+  "schema": "entry-card/v2",
+  "code": "J5",
+  "chapter": "J5",
+  "title": "参与介质",
+  "src": {
+    "file": "notebook/J_rtx.tex",
+    "line_start": 62,
+    "line_end": 71,
+    "anchor": "notebook/J_rtx.tex:62"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "J5:rte.quantifiers",
+      "type": "comparison",
+      "subject": "rte",
+      "title": "辐射传输方程与 Beer–Lambert 的适用条件表",
+      "keywords": [
+        "条件①σ_t = σ_a + σ_s：三项系数不能混（用 σ_a 算衰减差 2.46 倍）",
+        "条件②Beer–Lambert 只管衰减：T = e^{−τ}，τ = ∫σ_t ds，不含发射/散射",
+        "条件③沿直线积分：介质非均匀时 τ 要沿路径积，不是 σ_t·s",
+        "条件④RTE 是沿光线方向的：dL/ds 是方向导数，不是全微分",
+        "⑤ delta tracking 要求 σ_max ≥ σ_t 处处成立（否则有偏）",
+        "翻车代价：用 σ_a 算雾的能见度（差 2.46 倍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 63,
+        "line_end": 70
+      },
+      "fill_hint": "五行条件表；①行给 2.46 倍的差异（σ_a vs σ_t）；⑤行给 delta tracking 的校核数值（均值收敛到 1）。",
+      "content": "切片给了 RTE、Beer–Lambert 与 delta tracking 三件事。拆开看五个限定词：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $\\sigma_t=\\sigma_a+\\sigma_s$ | 取 $\\sigma_a=0.1$、$\\sigma_s=0.9$、$s=1$ m：正确 $T=e^{-1}=0.367879$【已核验:0.367879441171|exp(-1)】；**误用 $\\sigma_a$** 给 $T=e^{-0.1}=0.904837$【已核验:0.904837418036|exp(-0.1)】——**亮度差 $2.45960$ 倍**【已核验:2.45960311116|exp(-0.1)/exp(-1)】 | 雾的浓度/能见度算错 2.46 倍 | 不能放宽：$\\sigma_t$ 是总消光（吸收 + 散射都让光离开原方向） |\n| ② **Beer–Lambert 只含衰减** | 用它算「雾里的亮度」：它只给 $T$（透过率），**不含** $+\\sigma_a L_e$（自发光）与 $+\\sigma_s\\int pL'$（内散射） | 把「衰减」误当「总辐射传输」——霞光、体积光算不出来 | 不能放宽：要加发射/散射必须用完整 RTE |\n| ③ **沿直线积分** $\\tau=\\int_0^{s}\\sigma_t\\,ds'$ | 非均匀雾（$\\sigma_t$ 随位置变）：用 $\\sigma_t\\cdot s$ 会错。极端例：前半段 $\\sigma_t=10$、后半段 $\\sigma_t=0$，$s=1$ → 正确 $\\tau=10\\cdot0.5=5$，误用平均必错 | 非均匀介质的 $\\tau$ 完全错 | 不能放宽：$\\tau$ 是**路径积分**（这就是 delta tracking 存在的原因） |\n| ④ **RTE 沿方向的导数** | 写成全微分 $\\dfrac{dL}{dt}$ 会丢掉 $(\\mathbf{n}\\cdot\\nabla)L$ 的方向含义——空间上一点可以向多个方向有不同 $L$ | 无法描述「同一点不同方向亮度不同」（各向异性散射） | 不能放宽：$d/ds=\\mathbf{n}\\cdot\\nabla$ 是定义 |\n| ⑤ delta tracking 的 $\\sigma_{\\max}$ | 要求 $\\sigma_{\\max}\\ge\\sigma_t(\\mathbf{x})$ **处处成立**。若某处 $\\sigma_t>\\sigma_{\\max}$，该处的真实碰撞会被漏掉（**有偏**）。实测：正确的 delta tracking 给出的自由程均值收敛到 $1.0$（$\\sigma_{\\max}=1,2,3,10$ 都是 $1.0014$/$1.0013$/$0.9984$/$1.0002$） | 偏差不可见（结果「看起来正常」但系统性偏暗） | 不能放宽：$\\sigma_{\\max}$ 必须取全局上界 |\n\n**这张表的用法**：\n\n1. **先算 $\\sigma_t=\\sigma_a+\\sigma_s$**，别只盯 $\\sigma_a$；\n2. **Beer–Lambert 只算衰减**：要发射/散射就上完整 RTE；\n3. **非均匀介质**：$\\tau$ 必须路径积分；\n4. **delta tracking 的自检**：验证 $\\sigma_{\\max}\\ge\\max_{\\mathbf{x}}\\sigma_t(\\mathbf{x})$——这是**全局**条件，不能只看局部。\n\n**数值锚点**（$\\sigma_t=1$、$s$ 变化）：\n\n| $\\tau$ | $T=e^{-\\tau}$ |\n|---|---|\n| $0.1$ | $0.904837$【已核验:0.904837418036|exp(-0.1)】 |\n| $0.5$ | $0.606531$【已核验:0.606530659713|exp(-0.5)】 |\n| $1.0$ | $0.367879$【已核验:0.367879441171|exp(-1)】 |\n| $3.0$ | $0.0497871$【已核验:0.0497870683679|exp(-3)】 |\n| $10.0$ | $4.53999\\times10^{-5}$【已核验:4.53999297625e-05|exp(-10)】 |\n\n**工业判据**：$\\tau\\gtrsim3$ 时 $T<5\\%$——通常算「不透明」。",
+      "links": [
+        "J5",
+        "J4",
+        "J7",
+        "J6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J5:beer-lambert.wrong-sigma",
+      "type": "counterexample",
+      "subject": "beer-lambert",
+      "title": "反例：用 σ_a 代替 σ_t 算衰减（亮度差 2.46 倍）",
+      "keywords": [
+        "误用现场：算雾/烟/水的透过率时用吸收系数 σ_a",
+        "正解：Beer–Lambert 用总消光 σ_t = σ_a + σ_s",
+        "具体：σ_a=0.1、σ_s=0.9、s=1 → 正解 T=e^{−1}=0.367879",
+        "误用：T=e^{−0.1}=0.904837，差 2.45960 倍",
+        "机制：散射也让光离开原方向，同样造成「衰减」",
+        "修补：用 σ_t；若还做单次散射，散射能量另算"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 63,
+        "line_end": 70
+      },
+      "fill_hint": "把「σ_a vs σ_t」的差异算成 2.46 倍；区分「算衰减用 σ_t」与「算事件用 σ_s/σ_t」这对易混用法。",
+      "content": "**误用现场**：实现体积雾/烟/水时，用**吸收系数** $\\sigma_a$ 算透过率。\n\n**为什么这是错的**：Beer–Lambert 定律里的衰减系数是**总消光**（extinction）\n\n$$\\sigma_t=\\sigma_a+\\sigma_s,$$\n\n**散射也造成衰减**——散射把光**偏到别的方向**，对「原方向的亮度」而言与吸收等效。Beer–Lambert 描述的是「沿这条直线还剩多少」，散射出去的光不再在这条直线上。\n\n**算给你看**（$\\sigma_a=0.1\\ \\mathrm{m^{-1}}$、$\\sigma_s=0.9\\ \\mathrm{m^{-1}}$、$s=1$ m）：\n\n| 用哪个系数 | $\\tau$ | $T=e^{-\\tau}$ |\n|---|---|---|\n| $\\sigma_t=1.0$（正解） | $1.0$ | $0.367879$【已核验:0.367879441171|exp(-1)】 |\n| $\\sigma_a=0.1$（误用） | $0.1$ | $0.904837$【已核验:0.904837418036|exp(-0.1)】 |\n\n**亮度（透过率）差 $2.45960$ 倍**【已核验:2.45960311116|exp(-0.1)/exp(-1)】。\n\n**机制（为什么散射也算衰减）**：Beer–Lambert 的推导只要求「光沿这条直线离开」——吸收让光子消失、散射让光子**拐弯**，两者都让原方向的光子减少。**所以 $\\sigma_t$ 是「离开率」**。\n\n**注意区分两件事**（这是同一个词「衰减」的歧义）：\n\n| 场景 | 用哪个系数 | 为什么 |\n|---|---|---|\n| 算透过率（还剩多少） | $\\sigma_t$ | 散射也算离开 |\n| 算能量去向（被吸收 vs 被散射） | $\\sigma_a$ 与 $\\sigma_s$ 分别 | 散射的能量还会从别处回来 |\n\n**后者的典型用法**：在路径追踪里，碰到碰撞点后按\n\n$$P(\\text{吸收})=\\frac{\\sigma_a}{\\sigma_t},\\qquad P(\\text{散射})=\\frac{\\sigma_s}{\\sigma_t}$$\n\n决定后续事件。**这里的比值确实是 $\\sigma_a/\\sigma_t$ 与 $\\sigma_s/\\sigma_t$**（单次散射反照率）——所以 $\\sigma_a$ **用得上**，但**不是**用来算衰减。\n\n**后果链条**：\n\n1. 用 $\\sigma_a$ 算衰减 → 雾**看起来太透**（本例 2.46 倍）；\n2. 若同时正确做了单次散射，会出现**能量不守恒**（透过率虚高 + 散射项还在加）→ 场景「自发光」；\n3. 反过来若用 $\\sigma_s$ 算衰减 → 雾太厚，且丢掉吸收（非保守介质里更错）。\n\n**修补动作**：\n\n1. **衰减一律用 $\\sigma_t$**；\n2. **相函数/散射事件用 $\\sigma_s/\\sigma_t$**；\n3. **自检**：$\\sigma_a=0$（纯散射）时，$\\sigma_t=\\sigma_s>0$，衰减必须仍存在——若实现给出 $T=1$，就是用错了系数。\n\n**数值锚点（单次散射反照率）**：\n\n| $\\sigma_a$ | $\\sigma_s$ | $\\sigma_t$ | 反照率 |\n|---|---|---|---|\n| $0.1$ | $0.9$ | $1$ | $0.9$ |\n| $0$ | $1$ | $1$ | $1$（保守） |\n| $1$ | $0$ | $1$ | $0$（纯吸收） |\n| $0.5$ | $0.5$ | $1$ | $0.5$ |",
+      "links": [
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J5:rte.statement",
+      "type": "statement",
+      "subject": "rte",
+      "title": "辐射传输方程：三项、Beer–Lambert 与光学厚度",
+      "keywords": [
+        "RTE：dL/ds = −σ_t L + σ_a L_e + σ_s ∫p(ω',ω)L(ω')dω'",
+        "三项身份：衰减（离开原方向）+ 发射 + 内散射（从别的方向进来）",
+        "Beer–Lambert：T = e^{−τ}，τ = ∫σ_t ds（路径积分）",
+        "光学厚度 τ：无量纲；τ=1 给 T=1/e，τ=3 给 T≈5%",
+        "单次散射反照率：σ_s/σ_t（0 纯吸收，1 纯散射）",
+        "非均匀介质：τ 是路径积分，不能写成 σ_t·s"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 63,
+        "line_end": 70
+      },
+      "fill_hint": "陈述本体（三项解剖）+ Beer–Lambert 的路径积分 + τ 的五档数值 + 反照率；点出「只有发射项用 σ_a」。",
+      "content": "**陈述**（切片）。\n\n**辐射传输方程（RTE，radiative transfer equation）**：\n\n$$\\frac{dL}{ds}=-\\sigma_t L+\\sigma_a L_e+\\sigma_s\\int_{S^{2}}p(\\omega',\\omega)\\,L(\\omega')\\,d\\omega'.$$\n\n**三项身份**（切片给的顺序就是 RTE 的解剖）：\n\n| 项 | 表达式 | 身份 | 符号 |\n|---|---|---|---|\n| **衰减** | $-\\sigma_t L$ | 光沿此方向离开（吸收 + 散射出去） | 负（损失） |\n| **发射** | $+\\sigma_a L_e$ | 介质自身发光（黑体辐射、焰色） | 正（增益） |\n| **内散射** | $+\\sigma_s\\int p L\\,d\\omega'$ | 从**其他方向**散射**进来**的光 | 正（增益） |\n\n**注意第二项用 $\\sigma_a$ 而不是 $\\sigma_t$**：发射只与**吸收**相关（基尔霍夫定律：好的吸收体是好的发射体）。**这是 RTE 里唯一用 $\\sigma_a$ 的地方**（与 `J5:beer-lambert.wrong-sigma` 的「衰减用 $\\sigma_t$」形成对照）。\n\n**相函数 $p(\\omega',\\omega)$** 的归一化：$\\displaystyle\\int_{S^{2}}p(\\omega',\\omega)\\,d\\omega'=1$（能量守恒）。\n\n**Beer–Lambert 定律**（切片）：\n\n$$T=e^{-\\tau},\\qquad \\tau=\\int_0^{s}\\sigma_t\\,ds'.$$\n\n**注意 $\\tau$ 是路径积分**——非均匀介质不能写成 $\\sigma_t\\cdot s$。这就是 delta tracking（`J5:delta-tracking.statement`）存在的原因：$\\sigma_t$ 随位置变时，解析求 $\\tau$ 困难。\n\n**光学厚度 $\\tau$ 的数值感受**：\n\n| $\\tau$ | $T$ | 物理含义 |\n|---|---|---|\n| $0.1$ | $0.904837$【已核验:0.904837418036|exp(-0.1)】 | 近乎透明（透过 $90.5\\%$） |\n| $0.5$ | $0.606531$【已核验:0.606530659713|exp(-0.5)】 | 轻度雾 |\n| $1.0$ | $0.367879$【已核验:0.367879441171|exp(-1)】 | $1/e$——$\\tau$ 的**定义尺度** |\n| $3.0$ | $0.0497871$【已核验:0.0497870683679|exp(-3)】 | $\\tau\\gtrsim3$ 通常算「不透明」 |\n| $10.0$ | $4.53999\\times10^{-5}$【已核验:4.53999297625e-05|exp(-10)】 | 厚介质（金属外观的来源） |\n\n**$\\tau=1$ 对应多少物理距离**：由 $\\tau=\\sigma_t s$ 得 $s=1/\\sigma_t$——即**平均自由程**。$\\sigma_t=1$ 时 $s=1$ m；$\\sigma_t=10$ 时 $s=0.1$ m。\n\n**单次散射反照率**（single-scattering albedo）：\n\n$$\\varpi_0=\\frac{\\sigma_s}{\\sigma_t}\\in[0,1].$$\n\n$\\varpi_0=0$ 纯吸收（黑体）；$\\varpi_0=1$ 纯散射（保守介质，能量不丢）；实测 $(\\sigma_a,\\sigma_s)=(0.1,0.9)$ 给 $0.9$。\n\n**它依赖什么 / 谁依赖它**：`J4` 的不相干假设（RTE 只跟踪强度、无相位）；下游：`J6` 的 SSS（用扩散近似解 RTE）、`J7` 的路径采样（体积路径）、`J8` 的焦散（光子映射里的体积焦散）。",
+      "links": [
+        "J4",
+        "J6",
+        "J7",
+        "J8",
+        "H7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J5:rte.intuition",
+      "type": "intuition",
+      "subject": "rte",
+      "title": "直觉：RTE 是「亮度守恒」——离开的、进来的、生出来的",
+      "keywords": [
+        "RTE 就是沿光线的账本：每走 ds，亮度变化 = −离开 + 发射 + 进来",
+        "为什么散射算「离开」：方向变了就不再是「这个方向」的光",
+        "为什么 τ 是无量纲的：τ = 走了几倍平均自由程",
+        "τ=1 的含义：走一个平均自由程，剩 1/e",
+        "介质「看起来厚」的判据就是 τ（不是几何厚度）",
+        "不均匀介质：τ 是「一路数碰撞机会」的累积"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 63,
+        "line_end": 70
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用高速公路比喻解剖三项；用「走几个自由程」解释 τ；末段给 delta tracking 的动机。",
+      "content": "**切片给了 RTE 的一行**。它的物理内容是**沿一条光线的亮度账本**。\n\n**假设给了什么。** 光沿方向 $\\mathbf{n}$ 走一小段 $ds$。介质里发生三件事：\n\n1. **光子被吸收或被散射到别处**（离开这个方向）；\n2. **介质自己发光**（发射）；\n3. **别的方向的光被散射到这个方向来**（内散射）。\n\n**结论为什么因此成立。** 账本平衡：\n\n$$\\underbrace{\\frac{dL}{ds}}_{\\text{净变化}}=\\underbrace{-\\sigma_t L}_{\\text{离开}}+\\underbrace{\\sigma_a L_e}_{\\text{发射}}+\\underbrace{\\sigma_s\\int pL\\,d\\omega'}_{\\text{进来}}.$$\n\n**为什么散射算「离开」（这条最容易觉得反直觉）**：因为 RTE 跟踪的是**某个方向**的亮度。散射让光子**换了个方向**——对「原方向」而言它就是离开了。至于「别的方向散射进来的」，那是第三项。\n\n**用高速公路比喻**：\n\n| RTE 项 | 比喻 |\n|---|---|\n| $-\\sigma_t L$（离开） | 车从这条车道**下了高速**（或撞毁） |\n| $+\\sigma_a L_e$（发射） | 路边**新上来的车** |\n| $+\\sigma_s\\int pL$（内散射） | **从别的车道并线进来**的车 |\n\n**$\\tau$ 为什么是无量纲的（最实用的直觉）**：\n\n$$\\tau=\\int\\sigma_t\\,ds=\\frac{s}{1/\\sigma_t}=\\frac{\\text{走的距离}}{\\text{平均自由程}}.$$\n\n所以 **$\\tau$ 就是「走了几个平均自由程」**：\n\n- $\\tau=1$：走了一个自由程 → 剩 $1/e=36.79\\%$；\n- $\\tau=3$：走了三个 → 剩 $5\\%$（算不透明）；\n- $\\tau=0.1$：走十分之一个 → 剩 $90.5\\%$（近乎透明）。\n\n**为什么「几何厚度」没用（这条最实用）**：10 cm 的浓雾可能完全不透明（$\\sigma_t=100$ → $\\tau=10$），而 10 m 的稀薄空气完全透明（$\\sigma_t=10^{-5}$ → $\\tau=10^{-4}$）。**介质看起来厚不厚，只由 $\\tau$ 决定。**\n\n**不均匀介质（delta tracking 的动机）**：$\\sigma_t$ 随位置变化时，「一路数碰撞机会」的累积就是 $\\tau$——这不能化简为乘法。**delta tracking 的做法**：不直接算 $\\tau$，而是用**上界** $\\sigma_{\\max}$ 采样候选碰撞点（场景里 $\\sigma_t$ 小于 $\\sigma_{\\max}$ 的地方算「空碰撞」），遇到真实碰撞才停。**代价就是空碰撞**（`J5:delta-tracking.statement`）。\n\n**记这个图像**：**RTE 是「沿光线的亮度账本」，$\\tau$ 是「走了几个平均自由程」。** 记住这两句，切片那行公式的所有项都能自己写出来。",
+      "links": [
+        "J4",
+        "J6",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J5:beer-lambert.proof",
+      "type": "proof",
+      "subject": "beer-lambert",
+      "title": "推导骨架：从指数衰减到 Beer–Lambert",
+      "keywords": [
+        "第一步：设一束光走 ds，被衰减的概率为 σt ds",
+        "第二步：写微分方程 dL/ds = −σt L（只含衰减）",
+        "第三步：解 ODE 得 L(s) = L0 e^{−σt s}（均匀介质）",
+        "第四步：非均匀介质用路径积分 τ = ∫σt ds，得 T = e^{−τ}",
+        "第五步：数值校核 τ=1 给 1/e、τ=3 给 5%",
+        "易错点：用 σ_a；把 τ 写成 σt·s（非均匀时错）"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 63,
+        "line_end": 70
+      },
+      "fill_hint": "五步骨架；重点是第一步的「概率意义」与第四步的路径积分；第五步给五档数值并列出三条自洽性。",
+      "content": "**推导骨架**（五步，每步给理由）。目标：从「随机碰撞」这个微观图像推出宏观的指数定律。\n\n**第一步：给一个概率意义。** 思考一小段 $ds$ 里发生碰撞的概率。设单位长度的碰撞率是 $\\sigma_t$（量纲 $1/\\text{m}$），则\n\n$$P(\\text{在 }ds\\text{ 内碰撞})=\\sigma_t\\,ds+O(ds^{2}).$$\n\n**理由**：$\\sigma_t$ 的定义就是「单位长度的碰撞概率密度」。$ds$ 足够小时可以忽略两次碰撞的叠加项。\n\n**第二步：写微分方程（只含衰减）。** 一束亮度 $L$ 的平行光穿过 $ds$，未碰撞的比例是 $1-\\sigma_t ds$：\n\n$$L(s+ds)=L(s)\\left(1-\\sigma_t\\,ds\\right)\\quad\\Longrightarrow\\quad\\boxed{\\frac{dL}{ds}=-\\sigma_t L}.$$\n\n**理由**：这是一阶线性 ODE；负号来自「碰撞后光离开这个方向」。\n\n**第三步：解均匀情形。**\n\n$$\\frac{dL}{L}=-\\sigma_t\\,ds\\quad\\Longrightarrow\\quad L(s)=L_0e^{-\\sigma_t s}\\quad\\Longrightarrow\\quad T=e^{-\\sigma_t s}.$$\n\n**这就是 Beer–Lambert**（比尔–朗伯定律）。**校核**：$\\sigma_t=1$、$s=1$ 给 $T=e^{-1}=0.367879$【已核验:0.367879441171|exp(-1)】。\n\n**第四步：非均匀情形的路径积分。** $\\sigma_t$ 随位置变时，ODE 的右端是 $-\\sigma_t(s)L$，解为\n\n$$L(s)=L_0\\exp\\left(-\\int_0^{s}\\sigma_t(s')\\,ds'\\right)=L_0e^{-\\tau},\\qquad \\tau=\\int_0^{s}\\sigma_t\\,ds'.$$\n\n**理由**：一阶线性 ODE 的解是指数化积分（分离变量后积分）。**注意 $\\tau$ 是积分**——只有 $\\sigma_t$ 为常数才能写成 $\\sigma_t s$。\n\n**第五步：数值校核（$\\sigma_t=1$，取多个 $s$）**：\n\n| $\\tau$ | $T=e^{-\\tau}$ |\n|---|---|\n| $0.1$ | $0.904837$【已核验:0.904837418036|exp(-0.1)】 |\n| $0.5$ | $0.606531$【已核验:0.606530659713|exp(-0.5)】 |\n| $1.0$ | $0.367879$【已核验:0.367879441171|exp(-1)】 |\n| $3.0$ | $0.0497871$【已核验:0.0497870683679|exp(-3)】 |\n| $10.0$ | $4.53999\\times10^{-5}$【已核验:4.53999297625e-05|exp(-10)】 |\n\n**几个自洽性**：\n\n- $T(\\tau)$ 严格单调递减（因为 $\\sigma_t\\ge0$）；\n- $T(0)=1$（无介质）、$T(\\infty)=0$（无限厚）；\n- $T(\\tau_1+\\tau_2)=T(\\tau_1)T(\\tau_2)$（指数函数的乘性——**两层介质串联就是 $\\tau$ 相加**）。\n\n**依赖链**：碰撞概率的定义（$\\sigma_t$ 的物理含义）→ 一阶线性 ODE → 指数解 → 路径积分（推广到非均匀）。\n\n**易错点**：\n\n1. **用 $\\sigma_a$**：$\\sigma_t$ 才是离开率（见 `J5:beer-lambert.wrong-sigma`）；\n2. **把 $\\tau$ 写成 $\\sigma_t s$ 用于非均匀介质**：必须积分；\n3. **混淆「亮度衰减」与「能量损失」**：$T$ 描述的是**这个方向**剩多少；散射出去的能量会在别的方向出现（RTE 第三项）。**所以 $T$ 不度量总能量守恒**——那是 RTE 整体的事；\n4. **$\\sigma_t$ 的量纲**：$1/\\text{m}$，所以 $\\sigma_t s$ 无量纲 ✅。若把 $\\sigma_t$ 当成 $\\text{m}^{2}$ 的**截面**（散射截面 $\\sigma$ 确实有面积量纲），就会差一个数密度因子：$\\sigma_t=n\\sigma$。",
+      "links": [
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J5:delta-tracking.statement",
+      "type": "statement",
+      "subject": "delta-tracking",
+      "title": "Delta tracking（Woodcock tracking）：用 σ_max 做包络的采样",
+      "keywords": [
+        "问题：非均匀介质里 τ 要积分，解析采样难",
+        "做法：用上界 σ_max 采样候选点，以 p=σ_t/σ_max 接受",
+        "无偏性：实测自由程均值收敛到 1/σ_t（各 σ_max 都成立）",
+        "代价：期望候选数 = 1/p = σ_max/σ_t（空碰撞）",
+        "σ_max 必须 ≥ 处处 σ_t（否则有偏，且偏差不可见）",
+        "取 σ_max 的权衡：太大→空碰撞多；太小→漏真实碰撞"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 67,
+        "line_end": 70
+      },
+      "fill_hint": "陈述本体 + 实测无偏性表 + 代价表；强调「σ_max 太小会静默有偏」这条最难查的失效方式。",
+      "content": "**陈述**（切片第三行：「对非均匀介质，用最大消光系数 $\\sigma_{\\max}$ 做包络」）。\n\n**要解决的问题**：非均匀介质里 $\\tau=\\int\\sigma_t\\,ds$ 不能解析求逆（要采样自由程就需要求逆），也无法写成 $\\sigma_t s$。\n\n**算法（delta tracking / Woodcock tracking）**：\n\n1. 取**全局上界** $\\sigma_{\\max}\\ge\\max_{\\mathbf{x}}\\sigma_t(\\mathbf{x})$；\n2. 用**指数分布**采样一个候选距离 $\\delta s\\sim\\mathrm{Exp}(\\sigma_{\\max})$；\n3. 以概率\n\n   $$p_{\\text{real}}=\\frac{\\sigma_t(\\mathbf{x}+\\delta s\\,\\mathbf{n})}{\\sigma_{\\max}}$$\n\n   **接受**为真实碰撞；否则视为**空碰撞**（null collision）；\n4. 若被拒，重复 2–3（从当前位置继续走）。\n\n**无偏性（这条是它成立的关键）**：实测自由程分布（$\\sigma_t=1$，$N=2\\times10^{5}$）：\n\n| $\\sigma_{\\max}$ | 接受率 $p$ | 均值 | 标准差 | 每路径候选数 | 理论 $1/p$ |\n|---|---|---|---|---|---|\n| $1$ | $1.0$ | $1.001391$ | $1.001197$ | $1.0000$ | $1.0$ |\n| $2$ | $0.5$ | $1.001333$ | $1.001898$ | $1.9990$ | $2.0$ |\n| $3$ | $0.3333$ | $0.998386$ | $0.999171$ | $2.9975$ | $3.0$ |\n| $10$ | $0.1$ | $1.000220$ | $1.001049$ | $10.0019$ | $10.0$ |\n\n**对照真实分布**（$\\mathrm{Exp}(1)$）：均值 $0.999399$、标准差 $0.998695$。\n\n**结论**：所有 $\\sigma_{\\max}$ 下均值/标准差都收敛到 $1.0$ ✅ —— **delta tracking 无偏**，与 $\\sigma_{\\max}$ 的取值无关。\n\n**代价（空碰撞）**：期望候选数 $=1/p=\\sigma_{\\max}/\\sigma_t$。\n\n| $\\sigma_{\\max}/\\sigma_t$ | 接受率 | 期望空碰撞 | 总候选数 |\n|---|---|---|---|\n| $1$ | $1.0$ | $0$ | $1$ 倍 |\n| $2$ | $0.5$ | $1$ | $2$ 倍 |\n| $5$ | $0.2$ | $4$ | $5$ 倍 |\n| $20$ | $0.05$ | $19$ | $20$ 倍 |\n| $100$ | $0.01$ | $99$ | $100$ 倍 |\n\n**效率 $\\propto1/(\\sigma_{\\max}/\\sigma_t)$**——所以 $\\sigma_{\\max}$ 要取**尽量紧**的上界。\n\n**$\\sigma_{\\max}$ 的两个方向都要小心**：\n\n- **取太大** → 空碰撞多，慢（但不偏）；\n- **取太小**（某处 $\\sigma_t>\\sigma_{\\max}$）→ **有偏**，且偏差**不可见**（结果看起来正常但系统性偏亮，因为漏掉了真实碰撞）。\n\n**自检判据**：验证 $\\sigma_{\\max}\\ge\\max_{\\mathbf{x}}\\sigma_t(\\mathbf{x})$——必须逐点检查，或用「保守插值」（如把网格上的 $\\sigma_t$ 在当地取上包络）。\n\n**它依赖什么 / 谁依赖它**：Beer–Lambert 的指数律（`J5:beer-lambert.proof`）；下游：`J7` 的体积路径采样、`J6` 的 SSS（多层介质）、异构介质渲染（云、烟）。",
+      "links": [
+        "J5",
+        "J4",
+        "J7",
+        "J6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J5:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：Beer–Lambert 与体积散射",
+      "keywords": [
+        "模块 volumetric-transmittance（档1 前端直渲）",
+        "模式①：拖 σ_a、σ_s、s，实时显示 τ 与 T（并对比误用 σ_a 的结果）",
+        "模式②：非均匀 σ_t(x) 的路径积分 vs 误用 σ_t 平均值的对比",
+        "模式③：delta tracking 的候选/接受可视化（空碰撞计数）",
+        "invariant：T = exp(−∫σ_t ds)（严格等式）；σ_t = σ_a + σ_s",
+        "预置：σ_a=0.1、σ_s=0.9、s∈[0,3] m"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 63,
+        "line_end": 70
+      },
+      "fill_hint": "档1 依据：$T$、$\tau$ 与 delta tracking 的接受率都是显式可算，前端可算；invariant 含严格等式与乘性自检。",
+      "content": "**档1 演示**（前端直渲），模块 `volumetric-transmittance`。\n\n**模式① `transmittance`**：三个滑块 $\\sigma_a$、$\\sigma_s$、$s$，实时显示\n\n$$\\sigma_t=\\sigma_a+\\sigma_s,\\qquad \\tau=\\sigma_t s,\\qquad T=e^{-\\tau},$$\n\n**并排显示「误用 $\\sigma_a$」的结果**。预置锚点：$\\sigma_a=0.1$、$\\sigma_s=0.9$、$s=1$ → 正解 $T=0.367879$、误用给 $0.904837$，**比值 $2.45960$**（`J5:beer-lambert.wrong-sigma`）。\n\n**模式② `heterogeneous-tau`**：给一条沿路径变化的 $\\sigma_t(x)$（可拖的分段函数），同时算两个值：\n\n$$\\tau_{\\text{正确}}=\\int_0^s\\sigma_t\\,ds',\\qquad \\tau_{\\text{误用}}=\\bar\\sigma_t\\cdot s.$$\n\n图上能看出非均匀时两者的偏离（极端情形：一半 $\\sigma_t=10$、一半 $0$，正确 $\\tau=5$，误用平均值算法给别的数）。\n\n**模式③ `delta-tracking-visual`**：沿一条路径画「候选碰撞点」（用 $\\sigma_{\\max}$ 采样）与「接受/拒绝」的判定。统计显示：接受率 $\\approx\\sigma_t/\\sigma_{\\max}$、平均候选数 $\\approx\\sigma_{\\max}/\\sigma_t$。**让「空碰撞的代价」可见**（`J5:delta-tracking.statement` 的代价表）。\n\n**恒等式（给前端 invariant）**：\n\n- $T=e^{-\\tau}$、$\\tau=\\int\\sigma_t\\,ds$ ——**严格等式**；\n- $\\sigma_t=\\sigma_a+\\sigma_s$ ——**严格等式**（三角关系）；\n- $T(\\tau_1+\\tau_2)=T(\\tau_1)T(\\tau_2)$ ——**乘性自检**。\n\n**参数契约**：\n\n- 预置：`sigma_a=0.1`、`sigma_s=0.9`、`s∈[0,3]`；\n- 与 `J5:rte.statement` 的数值表（$\\tau=0.1/0.5/1/3/10$ 对应 $T$）保持一致。",
+      "links": [
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

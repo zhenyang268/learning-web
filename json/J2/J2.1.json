@@ -1,0 +1,272 @@
+{
+  "schema": "entry-card/v2",
+  "code": "J2.1",
+  "chapter": "J2",
+  "title": "夫琅禾费衍射（远场）",
+  "src": {
+    "file": "notebook/J_rtx.tex",
+    "line_start": 28,
+    "line_end": 33,
+    "anchor": "notebook/J_rtx.tex:28"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "J2.1:fraunhofer.quantifiers",
+      "type": "comparison",
+      "subject": "fraunhofer",
+      "title": "夫琅禾费衍射的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①远场 z ≫ a²/λ：a=1mm 时需要 z ≫ 1.818 m",
+        "条件②平面波照明：球面波入射会带上额外的波前曲率",
+        "条件③孔径函数 A 是二维的：忽略 y 方向会丢掉环状结构",
+        "条件④「傅里叶变换」的变量是 f=sinθ/λ 不是 θ 本身",
+        "⑤ 单缝与圆孔系数不同：单缝 λ/a；圆孔 1.22λ/D（=u₁λ/(πD)）",
+        "翻车代价：把 θ 当 f 会在大角度处算错位置"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 30,
+        "line_end": 33
+      },
+      "fill_hint": "四行条件表 + 一个混淆点；④行必须给 sin30°=0.5（差 2 倍）；⑤行给两种孔径的不同系数。",
+      "content": "切片只给了一行：衍射图案是**孔径函数的傅里叶变换**。这一行有四个限定词与一个高频混淆点。\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **远场** $z\\gg a^{2}/\\lambda$ | $a=1$ mm、$\\lambda=550$ nm：$a^{2}/\\lambda=1.8182$ m【已核验:1.81818181818|1e-3**2/550e-9】——**实验室桌面上根本不算远场** | 必须用菲涅尔（近场）公式（`J2.2`）；用夫琅禾费会算错图案 | 可放宽：用透镜把无穷远「搬」到焦平面（焦距 $f$ 处即远场） |\n| ② 平面波照明 | 点光源近距离照明：入射波前是球面 → 图案被额外的二次相位调制 | 零点位置不变但强度分布变（等效于换了 $z$） | 可放宽：把光源距离并入有效 $z$（$1/z_{\\text{eff}}=1/z_{\\text{src}}+1/z$） |\n| ③ 孔径函数**二维** | 只算 $x$ 方向一维 sinc：得到的是「无限长狭缝」的图案；真实矩形孔要**两个** sinc 相乘 | 矩形孔的真实图案是两个方向的乘积，一维算会给错 | 不能省：二维矩形孔 $= \\mathrm{sinc}(x)\\cdot\\mathrm{sinc}(y)$ |\n| ④ **变量是 $f=\\sin\\theta/\\lambda$** | 写 $\\mathcal{F}\\{A\\}\\big\\rvert_{\\theta}$（把 $\\theta$ 当频率）：大角度处位置全错。$\\theta=30°$ 时 $\\sin\\theta=0.5$，差 **2 倍** | 大角度时零点位置错 | 不能放宽：$f=\\sin\\theta/\\lambda$ 是严格关系（见 `J2.1:fraunhofer.statement`） |\n| ⑤ 单缝 vs 圆孔系数 | 单缝第一零点 $\\sin\\theta=\\lambda/a$【已核验:0.0055|550e-9/1e-4】；圆孔第一暗环 $\\sin\\theta=1.2197\\lambda/D$（常写 $1.22\\lambda/D$） | 套错公式会差 $1.22$ 倍 | 不能放宽：两个公式不同，因为一个是 sinc 一个是 Bessel |\n\n**这张表的用法**：\n\n1. **先算 $a^{2}/\\lambda$**，与观察距离 $z$ 比——不够远就上透镜（最常用的做法）；\n2. **确认孔径是二维的**：矩形孔写两个 sinc 相乘；\n3. **换算变量**：横轴用 $\\sin\\theta$（不是 $\\theta$），或者在小角度下才可以用 $\\theta\\approx\\sin\\theta$。\n\n**小角度近似何时安全**：$\\sin\\theta\\approx\\theta$ 的相对误差 $\\approx\\theta^{2}/6$。要求误差 $<1\\%$：\n\n$$\\frac{\\theta^{2}}{6}<0.01\\quad\\Longrightarrow\\quad\\theta<0.245\\ \\mathrm{rad}\\approx14°$$\n\n所以**只有 $14°$ 以内**才能把 $\\theta$ 当 $\\sin\\theta$。",
+      "links": [
+        "J2.1",
+        "J2.2",
+        "J1",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J2.1:fraunhofer.theta-vs-sintheta",
+      "type": "counterexample",
+      "subject": "fraunhofer",
+      "title": "反例：把 θ 当成傅里叶频率（大角度处错 2 倍）",
+      "keywords": [
+        "误用现场：写 U(θ) ∝ F{A}(θ)，把 θ 本身当空间频率",
+        "正解：f_x = sinθ_x/λ，即 U ∝ F{A}|_{f=sinθ/λ}",
+        "具体：θ=30° 时 sinθ=0.5，两者相差 2 倍（f 用 0.5/λ 还是 0.524/λ）",
+        "小角度：θ=10° 时 sinθ=0.173648，θ(rad)=0.174533，误差 0.51%",
+        "判据：sinθ ≈ θ 的安全区是 θ ≲ 14°（误差 <1%）",
+        "修补：横轴一律用 sinθ（或 tanθ 若在屏上量位置）"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 30,
+        "line_end": 33
+      },
+      "fill_hint": "把「θ vs sinθ」的差异算成五档具体数（最高 57%），并给出 14° 的判据；点出 tanθ 是第三个容易混的量。",
+      "content": "**误用现场**：实现衍射时写\n\n$$U(\\theta)\\propto\\mathcal{F}\\{A\\}\\Big|_{f=\\theta},$$\n\n把**角度 $\\theta$ 本身**当作空间频率。\n\n**为什么这是错的**：夫琅禾费衍射的正确关系是\n\n$$U(\\theta_x,\\theta_y)\\propto\\mathcal{F}\\{A(x,y)\\}\\Big|_{f_x=\\sin\\theta_x/\\lambda,\\ f_y=\\sin\\theta_y/\\lambda}.$$\n\n**频率是 $\\sin\\theta/\\lambda$，不是 $\\theta$**。\n\n**算给你看**：\n\n| $\\theta$ | $\\sin\\theta$ | 用 $\\theta$（rad） | 相对差异 |\n|---|---|---|---|\n| $10°$ | $0.173648$ | $0.174533$ | $+0.51\\%$ |\n| $30°$ | $0.5$ | $0.523599$ | $+4.72\\%$ |\n| $45°$ | $0.707107$ | $0.785398$ | $+11.1\\%$ |\n| $60°$ | $0.866025$ | $1.047198$ | $+20.9\\%$ |\n| $90°$ | $1.0$ | $1.570796$ | $+57.1\\%$ |\n\n**在 $30°$ 处已经差 4.72%**——如果零点是 $k\\theta$ 的形式，位置错这么多足以让「条纹间距」的读数错掉。而**极限情形**：$\\theta\\to90°$ 时 $\\sin\\theta\\to1$ 但 $\\theta\\to1.571$，差 **57%**。\n\n**小角度为什么看起来没问题**：$10°$ 时只差 $0.51\\%$——这就是「小角度近似」在光学里到处用的原因。但**判据要明确**：\n\n$$\\frac{\\theta^{3}}{6\\theta}=\\frac{\\theta^{2}}{6}<0.01\\quad\\Longrightarrow\\quad\\theta<0.245\\ \\mathrm{rad}=14.0°$$\n\n**超过 $14°$ 就不该用 $\\theta\\approx\\sin\\theta$**。\n\n**两个不同的量（别混）**：\n\n| 量 | 含义 | 什么时候用 |\n|---|---|---|\n| $\\sin\\theta$ | 远场方向余弦 | 衍射公式的**自然变量** |\n| $\\tan\\theta$ | 屏上位置/距离 | 在观测屏上量距离时 |\n| $\\theta$ | 角度 | 只在小角度下等价于前两者 |\n\n**修补动作**：\n\n1. 衍射积分/FFT 的横轴用 $f=\\sin\\theta/\\lambda$（或直接 $k\\sin\\theta$）；\n2. 在屏上量位置时用 $x_{\\text{屏}}=z\\tan\\theta$，换算回 $\\sin\\theta$ 要经过 $\\sin(\\arctan(x/z))$；\n3. **不要**输出「角度为 θ 的条纹」而不说明是 $\\sin\\theta$ 还是 $\\theta$。",
+      "links": [
+        "J2.1",
+        "J2.2",
+        "J1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J2.1:fraunhofer.statement",
+      "type": "statement",
+      "subject": "fraunhofer",
+      "title": "夫琅禾费衍射：傅里叶变换关系与两种孔径的具体式",
+      "keywords": [
+        "核心：U(θ) ∝ F{A(x,y)}|_{f_x=sinθ_x/λ, f_y=sinθ_y/λ}",
+        "1D 单缝：U ∝ sinc(π a sinθ/λ)，零点 sinθ = mλ/a",
+        "2D 矩形孔：两个 sinc 的乘积（可分离）",
+        "圆孔：Airy 图案 ∝ [2J₁(u)/u]²，u = πD sinθ/λ，第一暗环 1.2197λ/D",
+        "成立条件：z ≫ a²/λ（远场）且平面波照明",
+        "透镜的作用：焦平面上天然实现远场（无需真的走很远）"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 30,
+        "line_end": 33
+      },
+      "fill_hint": "陈述 + 四种孔径对照表 + 1.22 的确切来源（u₁/π）+ 数值锚点；强调透镜实现远场。",
+      "content": "**陈述**（切片）。\n\n**核心关系**：\n\n$$U(\\theta_x,\\theta_y)\\propto\\mathcal{F}\\{A(x,y)\\}\\Big|_{f_x=\\theta_x/\\lambda,\\;f_y=\\theta_y/\\lambda},$$\n\n其中 $A$ 是**孔径函数**（在孔径内为 1、外为 0，或一般复透过率）。切片里写的 $f_x=\\theta_x/\\lambda$ 是**小角度版本**（此时 $\\sin\\theta\\approx\\theta$）；严格版是 $f=\\sin\\theta/\\lambda$（见 `J2.1:fraunhofer.theta-vs-sintheta`）。\n\n**四种孔径的具体结果**：\n\n| 孔径 | $U$（振幅） | 强度 | 第一零点/暗环 |\n|---|---|---|---|\n| 一维狭缝（宽 $a$） | $\\mathrm{sinc}\\!\\left(\\dfrac{\\pi a\\sin\\theta}{\\lambda}\\right)$ | $\\mathrm{sinc}^{2}$ | $\\sin\\theta=\\lambda/a$【已核验:0.0055|550e-9/1e-4】 |\n| 二维矩形（$a\\times b$） | 两个 sinc 相乘 | 乘积的平方 | 两方向各自 $\\lambda/a$、$\\lambda/b$ |\n| 圆形（直径 $D$） | $\\dfrac{2J_1(u)}{u}$，$u=\\dfrac{\\pi D\\sin\\theta}{\\lambda}$ | $\\left[\\dfrac{2J_1(u)}{u}\\right]^{2}$ | $u=3.83170597$ ⇒ $\\sin\\theta=1.21967\\dfrac{\\lambda}{D}$ |\n| 双缝（间距 $d$、宽 $a$） | 双缝干涉 $\\times$ 单缝衍射 | 两个因子的乘积 | 干涉峰间距 $\\lambda/d$，被衍射包络调制 |\n\n**圆孔系数 $1.22$ 的确切来源**（这条最值得给出定量）：\n\n$$1.22=\\frac{u_1}{\\pi}=\\frac{3.8317059702075125}{\\pi}=1.21967$$【已核验:1.21966989127|3.8317059702075125/pi】\n\n所以「$1.22\\lambda/D$」的 $1.22$ 是**被四舍五入的** $u_1/\\pi$（用 $1.22$ 的相对误差 $0.0271\\%$【已核验:0.027065416295|(1.22-3.8317059702075125/pi)/(3.8317059702075125/pi)*100】）。\n\n**数值锚点**（$\\lambda=550$ nm、圆孔 $D=2$ mm）：\n\n$$\\sin\\theta_1=1.21967\\times\\frac{550\\times10^{-9}}{2\\times10^{-3}}=3.35409\\times10^{-4}$$【已核验:0.000335409220098|3.8317059702075125*550e-9/(pi*2e-3)】\n\n**成立条件**（两条）：① **远场** $z\\gg a^{2}/\\lambda$；② **平面波照明**。第二条件在实验室里最常用的解法是**加透镜**：透镜的焦平面恰好实现「无穷远」的傅里叶变换。\n\n**它依赖什么 / 谁依赖它**：从 `J1` 的自由空间格林函数 + 菲涅尔近似出发（把格林函数里的 $\\lvert x-x'\\rvert$ 展开到一阶）；下游：`J2.2` 的菲涅尔（近场）、`J8` 的焦散衍射修正、镜头 PSF（点扩散函数）。",
+      "links": [
+        "J1",
+        "J2.2",
+        "J8",
+        "J3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J2.1:fraunhofer.intuition",
+      "type": "intuition",
+      "subject": "fraunhofer",
+      "title": "直觉：远场就是把孔径「重新聚焦」到方向，位置信息丢成角度信息",
+      "keywords": [
+        "机制：把入射波前上每一点当次级子波源（惠更斯原理）",
+        "远场：各子波到观察点的相位差只由方向角决定，与孔径上的位置无关",
+        "于是孔径的空间分布 ↔ 方向分布，正是傅里叶变换",
+        "为什么是 FFT：孔径在位置域，图案在频率域（sinθ/λ）",
+        "为什么用透镜：焦距 f 处天然实现「点源→平行光」的等价",
+        "宽孔径 ↔ 窄图案（与不确定原理同构）"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 30,
+        "line_end": 33
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；把 $r$ 的展开作为核心一步；用 $F=\\pi\\phi_{\\max}$ 串到 J2.2；末段与不确定原理同构。",
+      "content": "**切片的一句话**：衍射图案是孔径函数的傅里叶变换。**它的物理内容就是惠更斯原理 + 远场近似。**\n\n**假设给了什么。** 惠更斯原理：波前上每一点都是**次级子波源**。孔径内每一小块都向外发球面波。\n\n**结论为什么因此成立。** 观察点 $P$ 收到的总振幅 = 各子波的**相干叠加**（要带相位）：\n\n$$U(P)\\propto\\iint_{\\text{孔径}}A(x',y')\\frac{e^{ikr}}{r}\\,dx'dy'.$$\n\n**关键一步（远场简化的核心）**：若 $z$ 远大于孔径尺寸，则\n\n$$r=\\lvert\\mathbf{r}_P-\\mathbf{r}'\\rvert\\approx z-\\frac{\\mathbf{r}_P\\cdot\\mathbf{r}'}{z}=z-\\left(\\sin\\theta_x\\,x'+\\sin\\theta_y\\,y'\\right).$$\n\n代入后\n\n$$U\\propto\\frac{e^{ikz}}{z}\\iint A(x',y')\\,e^{-ik(\\sin\\theta_x x'+\\sin\\theta_y y')}dx'dy'=\\frac{e^{ikz}}{z}\\mathcal{F}\\{A\\}\\big\\rvert_{f=\\sin\\theta/\\lambda}.$$\n\n**这就是傅里叶变换的来历**——注意 $r$ 的展开是**一阶**（线性）的：正是这一阶把「位置 $x'$」与「方向 $\\sin\\theta$」配成对偶变量。\n\n**为什么二阶项可以丢（这区分了夫琅禾费与菲涅尔）**：$r$ 的完整展开还有二阶项 $\\sim(x'^{2}+y'^{2})/(2z)$。它的最大相位贡献是\n\n$$\\phi_{\\max}=\\frac{k\\,a^{2}}{2z}=\\frac{\\pi a^{2}}{\\lambda z}=\\pi F,\\qquad F=\\frac{a^{2}}{\\lambda z}\\ (\\text{菲涅尔数}).$$\n\n要求 $\\phi_{\\max}\\ll1$ 波即 $F\\ll1$——**这就是「远场」条件的定量版本**，也是 `J2.2` 的入口。$a=1$ mm、$\\lambda=550$ nm 时 $a^{2}/\\lambda=1.8182$ m——**桌面实验根本不算远场**（`J2.1:fraunhofer.quantifiers` 第①行）。\n\n**为什么透镜能替代「走很远」**：透镜的作用是把**方向**映射到**焦平面上的位置**（平行光聚焦于同一点）。所以透镜的焦平面天然实现「所有方向同时可见」——**等效于无穷远的观察屏**。这就是实验室里用透镜做傅里叶光学的原因。\n\n**宽孔径 ↔ 窄图案（与不确定原理同构）**：\n\n| 位置域 | 频率域 |\n|---|---|\n| 孔径宽 $a$ | 图案宽 $\\sim\\lambda/a$ |\n| 孔径窄 $a$ | 图案宽 $\\sim\\lambda/a$（**变大**） |\n| 缝无限宽 | 图案是 $\\delta$ 函数（无衍射，几何光学） |\n\n**这正是不确定原理 $\\Delta x\\,\\Delta p\\sim\\hbar$ 的光学版本**：位置域越宽，动量（方向）域越窄。**所以「小孔衍射厉害、大孔近似几何光学」这条经验，与量子力学的测不准关系是同一个数学结构。**\n\n**记这个图像**：**远场观察 = 把「光从哪来」的问题换成「光往哪去」的问题。** 前者是位置、后者是方向，而位置与方向是傅里叶对偶的——这就是衍射图案是傅里叶变换的全部内容。",
+      "links": [
+        "J1",
+        "J2.2",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J2.1:fraunhofer.proof",
+      "type": "proof",
+      "subject": "fraunhofer",
+      "title": "推导骨架：从基尔霍夫积分到傅里叶变换（含 FFT 对拍）",
+      "keywords": [
+        "第一步：基尔霍夫衍射积分（格林函数 + 菲涅尔近似）",
+        "第二步：远场展开 r ≈ z − (x sinθx + y sinθy)",
+        "第三步：丢掉二次相位项（判据 F≪1），得傅里叶变换",
+        "第四步：一维狭缝算得 sinc，零点 sinθ = mλ/a",
+        "第五步：数值对拍——整数采样下方孔的 DFT 零点精确为零",
+        "易错点：横轴用 θ 而非 sinθ；忘二维；把 1.22 当精确值"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 30,
+        "line_end": 33
+      },
+      "fill_hint": "五步骨架，第四步给 sinc 的显式积分；第五步给可执行的 FFT 对拍（含「整数采样」这个关键设置）。",
+      "content": "**推导骨架**（五步，每步给理由），最后一步给出可执行的数值对拍。\n\n**第一步：基尔霍夫衍射积分。** 由 `J1` 的自由空间格林函数，孔径后的场为\n\n$$U(P)=\\frac{1}{i\\lambda}\\iint_{\\text{孔径}}A(x',y')\\,\\frac{e^{ikr}}{r}\\,K(\\chi)\\,dx'dy',$$\n\n其中 $K(\\chi)$ 是倾斜因子（近轴时 $\\approx1$）。**理由**：这是惠更斯原理的数学形式（每个面元发子波）。\n\n**第二步：远场展开 $r$。** 令观察点在 $(x_P,y_P,z)$、面元在 $(x',y')$，则\n\n$$r=\\sqrt{(x_P-x')^{2}+(y_P-y')^{2}+z^{2}}\\approx z-\\left(\\frac{x_P}{z}x'+\\frac{y_P}{z}y'\\right)+\\frac{x'^{2}+y'^{2}}{2z}+\\cdots$$\n\n**理由**：$\\sqrt{z^{2}+R^{2}}\\approx z+R^{2}/(2z)$（$\\lvert\\mathbf{R}\\rvert=(\\Delta x,\\Delta y)$ 是横向位移）。**注意展开到二阶**——这决定了「远场」的判据。\n\n**第三步：丢掉二次项（远场判据）。** 二次项 $\\dfrac{x'^{2}+y'^{2}}{2z}$ 的最大值在孔径边缘，对应相位\n\n$$\\phi_{\\max}=\\frac{k\\,a^{2}}{2z}=\\pi\\frac{a^{2}}{\\lambda z}=\\pi F.$$\n\n要求 $\\phi_{\\max}\\ll1$ 波，即\n\n$$F=\\frac{a^{2}}{\\lambda z}\\ll1\\quad\\Longrightarrow\\quad z\\gg\\frac{a^{2}}{\\lambda}.$$\n\n**这就是「远场」条件**（`J2.1:fraunhofer.quantifiers` 第①行）。满足后 $r\\approx z-(\\sin\\theta_x x'+\\sin\\theta_y y')$（用 $x_P/z=\\tan\\theta_x\\approx\\sin\\theta_x$）。\n\n**第四步：得傅里叶变换与 sinc。**\n\n$$U(\\theta)\\propto\\frac{e^{ikz}}{z}\\iint A(x',y')e^{-ik(\\sin\\theta_x x'+\\sin\\theta_y y')}\\,dx'dy'=\\frac{e^{ikz}}{z}\\mathcal{F}\\{A\\}\\Big|_{f=\\sin\\theta/\\lambda}.$$\n\n**一维狭缝校核**（宽度 $a$）：\n\n$$\\mathcal{F}\\{1_{[-a/2,a/2]}\\}(f)=\\int_{-a/2}^{a/2}e^{-2\\pi ifx'}dx'=\\frac{\\sin(\\pi af)}{\\pi f}=a\\,\\mathrm{sinc}(\\pi af).$$\n\n代入 $f=\\sin\\theta/\\lambda$：\n\n$$U(\\theta)\\propto\\mathrm{sinc}\\!\\left(\\frac{\\pi a\\sin\\theta}{\\lambda}\\right),\\qquad\\text{零点：}\\frac{\\pi a\\sin\\theta}{\\lambda}=m\\pi\\Longrightarrow\\sin\\theta=\\frac{m\\lambda}{a}.$$\n\n**数值锚点**：$a=0.1$ mm、$\\lambda=550$ nm → 一级零点 $\\sin\\theta=5.5\\times10^{-3}$【已核验:0.0055|550e-9/1e-4】，$\\theta=0.315128°$【已核验:0.315126787322|0.0055*180/pi】。\n\n**第五步：数值对拍（可执行的自检）。** 取 $N=4096$ 采样、缝宽恰好 $M=512$ 个采样（这样 DFT 零点落在**整数**频率上，无泄漏）：\n\n| $k$（DFT 索引） | $\\lvert F_k\\rvert/\\lvert F_0\\rvert$ |\n|---|---|\n| $8$（$m=1$） | $0$（精确） |\n| $16$（$m=2$） | $0$（精确） |\n| $24$（$m=3$） | $0$（精确） |\n\n**为什么这样选参数**：缝宽取整数个采样时，方孔是「干净的」周期化函数，DFT 与连续傅里叶变换在采样点上**完全一致**（无离散化泄漏）。若缝宽非整数采样，零点会「泄漏」出非零值（这正是我第一次尝试时得到 $1.957\\times10^{-3}$ 而非零的原因）。\n\n**依赖链**：格林函数（`J1`）→ 衍射积分 → 远场展开 → 丢二次项（$F\\ll1$）→ 傅里叶变换 → 具体孔径。\n\n**易错点**：\n\n1. **横轴用 $\\theta$**：见 `J2.1:fraunhofer.theta-vs-sintheta`（$30°$ 处差 $4.72\\%$）；\n2. **忘二维**：矩形孔要两个 sinc 相乘；\n3. **$1.22$ 当精确值**：它是 $u_1/\\pi=1.21967$ 的舍入（差 $0.0271\\%$）；\n4. **对拍时缝宽非整数采样**：会看到「零点不为零」而误以为公式错——先检查采样是否整数对齐。",
+      "links": [
+        "J1",
+        "J2.2",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J2.1:fraunhofer.vs-fresnel",
+      "type": "comparison",
+      "subject": "fraunhofer",
+      "title": "分工：夫琅禾费（远场）与菲涅尔（近场）怎么选",
+      "keywords": [
+        "判据：菲涅尔数 F = a²/(λz)；F ≪ 1 远场（夫琅禾费）",
+        "夫琅禾费：图案与 z 无关，只是孔径的傅里叶变换",
+        "菲涅尔：图案随 z 变化（近场「自成像」现象）",
+        "透镜特例：无论 z，焦平面总实现夫琅禾费",
+        "计算成本：夫琅禾费一次 FFT；菲涅尔要卷积/传递函数",
+        "选择判据：F<0.1 用夫琅禾费；F≳1 必须菲涅尔"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 28,
+        "line_end": 33
+      },
+      "fill_hint": "对照口径：以菲涅尔数 F 为判据划界；给两种孔径 × 两个 z 的 F 值表；点出透镜的等价性与角谱法。",
+      "content": "**两者是同一个衍射积分的两个展开阶数。**\n\n| | 夫琅禾费（远场） | 菲涅尔（近场） |\n|---|---|---|\n| **判据** | $F=\\dfrac{a^{2}}{\\lambda z}\\ll1$ | $F\\gtrsim1$ |\n| **相位保留** | 只留线性项（$r$ 的一阶） | 保留二次项 |\n| **图案** | 与 $z$ **无关**（只由孔径决定） | **随 $z$ 变化** |\n| **数学** | 傅里叶变换（一次 FFT） | 卷积 / 带二次相位的变换 |\n| **计算成本** | 低（一次 FFT） | 高（要传函或分段积分） |\n| **现象** | 稳定的条纹图案 | 近场自成像（Talbot 效应）、边缘振荡 |\n\n**判据的具体数值**（$\\lambda=550$ nm）：\n\n| $a$ | $a^{2}/\\lambda$ | $z=0.5$ m 时 $F$ | $z=2$ m 时 $F$ |\n|---|---|---|---|\n| $0.1$ mm | $0.0181818$ m【已核验:0.0181818181818|1e-4**2/550e-9】 | $0.0363636$【已核验:0.0363636363636|1e-4**2/(550e-9*0.5)】 | $0.00909091$【已核验:0.00909090909091|1e-4**2/(550e-9*2)】 |\n| $1$ mm | $1.8181818$ m【已核验:1.81818181818|1e-3**2/550e-9】 | $3.63636$【已核验:3.63636363636|1e-3**2/(550e-9*0.5)】 | $0.909091$【已核验:0.909090909091|1e-3**2/(550e-9*2)】 |\n\n**注意 $a=1$ mm 那一行**：$z=0.5$ m 时 $F=3.64$（**强菲涅尔区**）；就算 $z=2$ m，$F=0.909$ 仍不满足 $\\ll1$。**需要 $z>18$ m 才勉强进远场**——这就是为什么实验室一定要用透镜。\n\n**透镜的等价性（最实用的一条）**：透镜把「方向」映射到焦平面位置，所以**焦平面上的图案与 $z$ 无关、恒为夫琅禾费**。判据变成与透镜焦距 $f$ 有关的一个修正（孔径不能太大，否则透镜自身的像差会污染）。\n\n**计算实现的选择**：\n\n| 场景 | 方法 |\n|---|---|\n| $F<0.1$ | 直接 FFT 孔径函数（`J2.1:fraunhofer.proof` 的对拍） |\n| $F\\sim1$ | 菲涅尔积分（`J2.2` 的卷积形式）或分步 FFT（BPM） |\n| $F\\gg1$ | 几何光学（`J1`）足够，衍射是小修正 |\n| 任意 $z$ + 大孔径 | 角谱法（angular spectrum，两次 FFT + 传递函数） |\n\n**位置关系**：`J2.1` 与 `J2.2` 是同一积分的两阶；选择它们的分界就是菲涅尔数 $F$。**`J1` 的 $F\\gg1$ 极限（几何光学）在表的第三行出现**——三者连成一条完整的近似阶梯。",
+      "links": [
+        "J1",
+        "J2.2",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J2.1:fraunhofer.probe1",
+      "type": "probe",
+      "subject": "fraunhofer",
+      "title": "检验题：单缝一级零点的角度是多少？",
+      "keywords": [
+        "可算题：a=0.1 mm、λ=550 nm，求 sinθ 与 θ",
+        "答案：sinθ = λ/a = 5.5×10⁻³，θ = 0.315128°",
+        "追问：圆孔 D=2 mm 的第一暗环呢？（sinθ = 1.21967λ/D = 3.354×10⁻⁴）",
+        "对比：单缝 λ/a vs 圆孔 1.21967λ/D，系数不同",
+        "陷阱：把 1.22 用在单缝上；把 θ 当 sinθ"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 30,
+        "line_end": 33
+      },
+      "fill_hint": "从 sinc 零点变来的检验题；第 3 问暴露「1.22 用在单缝」这个高频错误。",
+      "content": "**题**：$\\lambda=550$ nm。\n\n1. 单缝宽 $a=0.1$ mm，求第一级暗纹的 $\\sin\\theta$ 与 $\\theta$；\n2. 圆孔直径 $D=2$ mm，求第一暗环的 $\\sin\\theta$；\n3. 若误用 $1.22\\lambda/a$ 算单缝，误差多少倍？\n\n**答案**：\n\n1. 单缝零点条件 $\\sin\\theta=m\\lambda/a$，$m=1$：\n\n   $$\\sin\\theta=\\frac{550\\times10^{-9}}{10^{-4}}=5.5\\times10^{-3}$$【已核验:0.0055|550e-9/1e-4】\n\n   $$\\theta=0.315128°$$【已核验:0.315126787322|0.0055*180/pi】\n\n2. 圆孔用 **Bessel** 的零点：\n\n   $$\\sin\\theta=\\frac{u_1\\lambda}{\\pi D}=\\frac{3.83170597\\times550\\times10^{-9}}{\\pi\\times2\\times10^{-3}}=3.35409\\times10^{-4}$$【已核验:0.000335409220098|3.8317059702075125*550e-9/(pi*2e-3)】\n\n   等价写法 $1.21967\\lambda/D$。\n\n3. $1.21967$ 倍（多出 $21.97\\%$【已核验:21.9669891267|(1.2196698912665045-1)*100】）。**注意方向**：单缝的零点是 $\\lambda/a$，圆孔的零点「等效宽度」比 $a$ 小——所以圆孔衍射**更宽**（同样的 $a=D$，圆孔的角半径大 $1.22$ 倍）。\n\n**易错点**：\n\n- **把 $1.22$ 用在单缝上**：那是圆孔的系数（来自 $J_1$ 的零点，不是 $\\mathrm{sinc}$ 的）；\n- **$\\theta$ 与 $\\sin\\theta$ 混用**：此处角度小（$0.315°$），差异 $<0.001\\%$，可忽略；但习惯要养成（见 `J2.1:fraunhofer.theta-vs-sintheta`）；\n- **忘 $m$**：一级零点是 $m=1$，不要写成 $m=0$（$m=0$ 是中心极大）。",
+      "links": [
+        "J2.1",
+        "J2.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J2.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：孔径与衍射图案的傅里叶对偶",
+      "keywords": [
+        "模块 fraunhofer-fft（档1 前端直渲）",
+        "模式①：编辑孔径（单缝/矩形/圆孔/双缝），实时 FFT 显示远场图案",
+        "模式②：拖缝宽，看图案宽度按 1/a 变化（不确定原理）",
+        "模式③：横轴切换 sinθ / θ，比较差异大小",
+        "invariant：单缝零点必须落在 sinθ = mλ/a（严格等式）",
+        "预置：a=0.1/0.5/1 mm、λ=550 nm、圆孔 D=2 mm"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 28,
+        "line_end": 33
+      },
+      "fill_hint": "档1 依据：孔径 FFT 与零点位置都是显式可算，前端可实时渲；invariant 用零点位置的严格等式。",
+      "content": "**档1 演示**（前端直渲），模块 `fraunhofer-fft`。\n\n**模式① `aperture-to-pattern`**：左侧是孔径 $A(x,y)$（可选单缝/矩形/圆孔/双缝，参数可拖），右侧是 $\\lvert\\mathcal{F}\\{A\\}\\rvert^{2}$（远场强度）。**直接演示「衍射图案是孔径的傅里叶变换」**这句话。\n\n**模式② `width-sweep`**：拖动缝宽 $a$，实时看图案宽度按 $1/a$ 收缩/扩张。图示叠加上「$a\\cdot\\Delta\\sin\\theta=\\lambda$」这条关系（不确定原理的光学版）。\n\n**模式③ `theta-axis-toggle`**：横轴可在 $\\theta$（rad）与 $\\sin\\theta$ 之间切换，并显示两者在该点的**相对差异**（$\\theta^{2}/6$）。拖到 $30°$ 时差异 $4.72\\%$——**让「不能用 θ 当横轴」这条红线可见**。\n\n**恒等式（给前端 invariant）**：\n\n$$\\sin\\theta_{m}=\\frac{m\\lambda}{a}\\quad(m=1,2,3)$$\n\n——零点位置是**严格等式**。实现正确时，FFT 在对应频率上应给出 $10^{-15}$ 量级的零；若缝宽取整采样（`J2.1:fraunhofer.proof` 第五步），应为**精确零**。\n\n**圆孔模式**要单独处理（不能用直角 FFT，要用 Hankel 变换或二维极坐标 FFT）——可作为第二阶段的扩展模式，首选实现单缝/矩形/双缝（可分离，直接 2D FFT）。\n\n**参数契约**：\n\n- 预置：`slit(a=1e-4)`、`rect(a=1e-4,b=2e-4)`、`circle(D=2e-3)`、`double-slit(d=5e-4,a=1e-4)`；\n- `lambda=550e-9`；网格 $512^{2}$（FFT 实时）；\n- 与 `J2.1:fraunhofer.probe1` 的数值（$5.5\\times10^{-3}$、$3.35409\\times10^{-4}$）保持一致。",
+      "links": [
+        "J1",
+        "J2.2",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

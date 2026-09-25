@@ -1,0 +1,304 @@
+{
+  "schema": "entry-card/v2",
+  "code": "I9.3",
+  "chapter": "I9",
+  "title": "散度自由条件的保持",
+  "src": {
+    "file": "notebook/I_fluid.tex",
+    "line_start": 138,
+    "line_end": 144,
+    "anchor": "notebook/I_fluid.tex:138"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "I9.3:divergence-free.quantifiers",
+      "type": "comparison",
+      "subject": "divergence-free",
+      "title": "散度自由保持的三条路线：适用条件与翻车方式",
+      "keywords": [
+        "条件①同位网格 + 中心差：散度算子有棋盘零空间（实测 max|Dp| = 0）",
+        "条件②MAC/交错网格：散度用紧凑差，奇偶不解耦",
+        "条件③投影法：每步解压力 Poisson，除法要解对（Neumann 边界）",
+        "条件④约束输运：对涡量/流函数求解，散度恒为零（2D 精确）",
+        "共性问题：投影法的中间速度不满足散度自由，靠投影修正",
+        "翻车代价：棋盘压力 → 压力场振荡而速度场「看不见」"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 140,
+        "line_end": 144
+      },
+      "fill_hint": "四行条件表；第①行必须给实测的 max|DG p|=0 vs 真实 max=4；第③行点出 3D 不适用。",
+      "content": "切片列了三条路线。它们各自的前提与翻车方式：\n\n| 路线 | 机制 | 具体翻车（实测） | 结论如何失效 | 能否放宽 |\n|---|---|---|---|---|\n| **投影法**（Chorin/Temam） | 每步解 $\\nabla^{2}p=\\dfrac{\\nabla\\cdot\\mathbf{u}^{*}}{\\Delta t}$，再投影 $\\mathbf{u}=\\mathbf{u}^{*}-\\Delta t\\nabla p$ | 若压力 Poisson 用**中心差**（同位网格），实测 $(-1)^{j}$ 模态下 $(DG)p=\\mathbf{0}$、$\\max\\lvert(DG)p\\rvert=0$，而真实 Laplace 是 $-(4/h^{2})p$、$\\max=4$ | 压力**看不见**棋盘模态 → 压力场振荡，而速度场因离散散度也为零而「正常」 | 不能放宽：要换成 MAC 网格或紧凑的散度-梯度配对 |\n| **MAC/交错网格** | $u$ 存面心、$p$ 存格心 → 散度用相邻面速度差（**紧凑一阶差**） | 同位网格中心差作用在棋盘速度上：实测 $\\max\\lvert D(u)\\rvert=0$（同样看不见）；交错网格不会 | 奇偶失耦（checkerboard） | **这是主流解法**：不「放宽」，而是换变量位置 |\n| **约束输运** | 不解压力，改对涡量 $\\omega$ 或流函数 $\\psi$ 求解 | 2D：$\\mathbf{u}=(\\partial_y\\psi,-\\partial_x\\psi)$ 时 $\\nabla\\cdot\\mathbf{u}=0$ **解析精确**（3D 无标量流函数，需矢量势且不自动精确） | 2D 完美，3D 退化 | 放宽范围有限：**仅 2D（或特殊 3D 构造）** |\n| **共性问题** | $\\mathbf{u}^{*}$ 来自对流-扩散步，**不满足** $\\nabla\\cdot\\mathbf{u}^{*}=0$ | 实测残差即 Poisson 右端；若忽略它（不做投影），散度累积 | 质量不守恒、压力无意义 | 不能放宽：投影步是必需的（Helmholtz 分解） |\n\n**这张表的用法**：\n\n1. **选网格**：同位网格必须配「Rhie–Chow 插值」或改用 MAC。**默认直接上 MAC**；\n2. **自检**：每步算 $\\max\\lvert\\nabla\\cdot\\mathbf{u}\\rvert$（用**紧凑**差），必须到机器精度或 $\\le$ 容差；\n3. **再做第二层自检**：解出来的压力场**必须没有棋盘振荡**——若压力振荡而散度为零，就是奇偶失耦（本条第一行）。\n\n**为什么这是 I9 里最「数值」的一节**：散度自由在**连续意义**下被压力自动保证（压力就是 Lagrange 乘子）。**离散下设它成了算法设计问题**——连续性不自动传递到离散，这是 PDE 数值解的中心主题（de Rham 复形的离散版：$\\nabla\\cdot\\nabla\\times=0$ 与 $\\nabla\\times\\nabla=0$ 要在离散层面配对）。",
+      "links": [
+        "I9.3",
+        "I9.1",
+        "I4",
+        "I9.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:pressure.checkerboard",
+      "type": "counterexample",
+      "subject": "pressure",
+      "title": "反例：同位网格 + 中心差 → 压力场出现棋盘振荡",
+      "keywords": [
+        "误用现场：u 与 p 存在同一格点，用中心差算 ∇·u 与 ∇p",
+        "实测（N=8，p=(-1)^j）：宽模板 (DG)p 全部为 0，max|DG p|=0",
+        "对照：真实五点 Laplace 给出 ∓4（max = 4.0）",
+        "后果：压力 Poisson 方程把棋盘模态当零空间 → 压力振荡不被消去",
+        "更坏：同一格式下 D(u) 作用在棋盘速度上也为 0（实测 max=0）",
+        "修补：改 MAC 网格，或加 Rhie–Chow 插值（同位网格专用）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 140,
+        "line_end": 144
+      },
+      "fill_hint": "把「棋盘零空间」算成具体数组（DG=0 vs 真实 4）；必须点出「速度场看起来正常」这个隐藏性。",
+      "content": "**误用现场**：用同位网格（collocated，$u,v,p$ 全在同一格点）配中心差，然后解压力 Poisson 方程。\n\n**为什么这是错的**：中心差的散度算子 $D$ 与梯度算子 $G$ 的复合 $DG$，**作用在棋盘模态上恒为零**。\n\n**算给你看**（1D、$N=8$、$\\Delta x=1$、$p_j=(-1)^{j}$）：\n\n| 量 | 值 | $\\max$ |\n|---|---|---|\n| $p$ | $[1,-1,1,-1,1,-1,1,-1]$ | — |\n| $(DG)p$（宽模板中心差） | $[0,0,0,0,0,0,0,0]$ | ${\\bf 0}$ |\n| 真实五点 Laplace | $[-4,4,-4,4,-4,4,-4,4]$ | ${\\bf 4.0}$ |\n\n**这就是「奇偶失耦」（odd–even decoupling / checkerboard）**：棋盘模态是**宽模板的零空间**，压力 Poisson 方程对它**完全没有响应**——它可以任意大而不改变方程残差。\n\n**更坏的一条**：同一格式下，散度算子 $D$ 作用在**棋盘速度**上也是零（实测 $\\max\\lvert D(u)\\rvert=0$，$u_j=(-1)^{j}$）。于是**速度场自己觉得「很干净」，散度为零**——所以只看散度检查会漏掉这个 bug（这就是为什么 `I9.3:divergence-free.quantifiers` 要强调「第二层自检：看压力有没有振荡」）。\n\n**后果链条**：\n\n1. 压力场在相邻格点间跳变（$+p,-p,+p,\\dots$），物理上荒谬；\n2. 但**速度场看起来正常**（因为梯度 $G$ 作用在棋盘上也是零，投影不给速度任何改变）；\n3. 一旦有轻微的不对称/边界效应，棋盘模态被激发并**持续存在**（无阻尼）；\n4. 表面张力（`I8`）或浮力项依赖压力/密度梯度，会被这个振荡污染。\n\n**修补动作**：\n\n1. **改用 MAC/交错网格**（首选）：$u$ 存在面的中心、$p$ 存在单元中心。此时散度用**相邻面速度之差**（紧凑一阶差），棋盘速度的散度**不为零** → 压力能看见它 → 奇偶耦合恢复；\n2. **同位网格 + Rhie–Chow 插值**：在面通量里加一个压力梯度修正项\n\n   $$F_f=\\bar{u}_f-\\Delta t\\left(\\frac{\\partial p}{\\partial n}\\Big|_f-\\overline{\\frac{\\partial p}{\\partial n}}\\Big|_f\\right),$$\n\n   其中第二项是「用紧凑差算的面压力梯度」——它恢复了压力与面通量的耦合。这是同位网格能用的关键技巧；\n3. **判据**：跑一个静水/静止算例，看压力场是否**常数**。出现棋盘就说明失耦。\n\n**注意**：这是 `I9.3` 的核心反例——**「散度为零」不等于「解是对的」**。",
+      "links": [
+        "I9.3",
+        "I9.1",
+        "I8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:projection.statement",
+      "type": "statement",
+      "subject": "projection",
+      "title": "投影法：Helmholtz 分解与压力 Poisson 方程",
+      "keywords": [
+        "核心：把 u* 分成散度自由部分 + 梯度部分（Helmholtz 分解）",
+        "第一步（预测）：解对流-扩散，得不满足散度的 u*",
+        "第二步（投影）：解 ∇²φ = ∇·u*/Δt，再 u = u* − Δt∇φ",
+        "压力等价：φ = p，故上一步就是压力 Poisson",
+        "边界条件：φ 满足 Neumann（∂φ/∂n 由边界速度给定）",
+        "离散关键：∇·u = 0 必须用「与 G 配对」的 D 才算得准"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 140,
+        "line_end": 144
+      },
+      "fill_hint": "陈述本体（两步 + Helmholtz 分解）+ 压力等价 + Neumann 边界与相容性条件；末段点出离散配对要求。",
+      "content": "**陈述**（切片第一条：Chorin/Temam 投影法）。\n\n**连续逻辑**。不可压 NS 里压力不是热力学量，而是**约束 $\\nabla\\cdot\\mathbf{u}=0$ 的 Lagrange 乘子**。投影法直接利用这一点：\n\n**第一步（预测步）**：解对流-扩散\n\n$$\\frac{\\mathbf{u}^{*}-\\mathbf{u}^{n}}{\\Delta t}=-(\\mathbf{u}^{n}\\cdot\\nabla)\\mathbf{u}^{n}+\\nu\\nabla^{2}\\mathbf{u}^{n},$$\n\n得到 $\\mathbf{u}^{*}$——它**一般不满足** $\\nabla\\cdot\\mathbf{u}^{*}=0$（因为这一步没管约束）。\n\n**第二步（投影步）**：做 **Helmholtz 分解**（亥姆霍兹分解）：任何向量场可唯一分成\n\n$$\\mathbf{u}^{*}=\\underbrace{\\mathbf{u}^{n+1}}_{\\nabla\\cdot=0}+\\underbrace{\\Delta t\\nabla\\phi}_{梯度部分},$$\n\n于是解压力 Poisson 方程\n\n$$\\nabla^{2}\\phi=\\frac{\\nabla\\cdot\\mathbf{u}^{*}}{\\Delta t},$$\n\n再修正\n\n$$\\mathbf{u}^{n+1}=\\mathbf{u}^{*}-\\Delta t\\nabla\\phi.$$\n\n**验证散度**：$\\nabla\\cdot\\mathbf{u}^{n+1}=\\nabla\\cdot\\mathbf{u}^{*}-\\Delta t\\nabla^{2}\\phi=\\nabla\\cdot\\mathbf{u}^{*}-\\Delta t\\cdot\\frac{\\nabla\\cdot\\mathbf{u}^{*}}{\\Delta t}=0$ ✅ **精确成立**（连续意义）。\n\n**压力等价**：比较 NS 的压力项 $-\\nabla p$ 与投影的 $-\\nabla\\phi$，得 $\\phi=p$（差一个密度因子）。**所以这一步就是在解压力**——压力没有任何独立方程，它由「保持散度自由」定出。\n\n**边界条件**（最容易出错的地方）：对 $\\phi$ 取法向导数：\n\n$$\\frac{\\partial\\phi}{\\partial n}=\\frac{1}{\\Delta t}\\left(\\mathbf{u}^{*}\\cdot\\mathbf{n}-\\mathbf{u}^{n+1}\\cdot\\mathbf{n}\\right)=\\frac{\\mathbf{u}^{*}\\cdot\\mathbf{n}-\\mathbf{u}_{\\text{边界}}\\cdot\\mathbf{n}}{\\Delta t},$$\n\n即**Neumann 条件**。**注意**：纯 Neumann 问题的解差一个常数（压力可加常数）——这要求右端满足**相容性条件** $\\oint\\partial\\phi/\\partial n\\,dS=0$，即**边界上的净流量为零**。违反它会让 Poisson 求解器发散。\n\n**离散关键**（`I9.3` 的真正难点）：$\\nabla\\cdot\\mathbf{u}^{n+1}=0$ 的验证是**连续**的。离散后它变成 $D\\,G\\,\\phi=\\frac{1}{\\Delta t}D\\,\\mathbf{u}^{*}$，而 $DG$ 必须是**没有非物理零空间**的离散 Laplace。同位网格 + 中心差恰好有这个零空间（棋盘，见 `I9.3:pressure.checkerboard`）。**这就是「离散散度必须用与梯度配对的算子」的含义。**\n\n**它依赖什么 / 谁依赖它**：Helmholtz 分解（线性代数）+ 压力作为 Lagrange 乘子。下游：`I9.1` 的守恒框架、`I9.4` 的时间步（投影法的分裂误差 $\\sim\\Delta t$ 或 $\\Delta t^{2}$）。",
+      "links": [
+        "I9.1",
+        "I4",
+        "I9.4",
+        "I9.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:divergence-free.intuition",
+      "type": "intuition",
+      "subject": "divergence-free",
+      "title": "直觉：压力是「守门员」，每次都想把挤进来的流体推回去",
+      "keywords": [
+        "压力没有自己的方程：它是约束的 Lagrange 乘子",
+        "一步对流后 u* 会「挤出」一些净流入/流出（散度 ≠ 0）",
+        "投影 = 找出一个压力场，把 u* 的散度部分精确扣掉",
+        "Helmholtz 分解：任何场 = 无散部分 + 无旋部分（梯度）",
+        "为什么是椭圆方程：压力要「立刻」全局响应 → 无时间导数",
+        "棋盘为什么危险：守门员「看不见」相邻格点的挤入（奇偶失耦）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 140,
+        "line_end": 144
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用守门员比喻串起三步，并解释椭圆性=瞬时传播；末段把棋盘归为「守门员看不见」。",
+      "content": "**切片给的三条路线**，但底层图像只有一个：**压力是守门员。**\n\n**假设给了什么。** 不可压约束 $\\nabla\\cdot\\mathbf{u}=0$ 是一个**瞬时**约束（没有时间导数）——它要求**每一时刻**都成立，而不是「逐渐趋向」。\n\n**结论为什么因此成立。** 瞬时约束必须由**瞬时**的机制来维持。在方程里，这个角色是压力：它出现在 $-\\nabla p/{\\rho}$，没有自己的演化方程，**每步都被重新算出来**，职责就是维持约束。\n\n**守门员的动作（三步图像）**：\n\n1. **对流-扩散步**：流体自由地动（对流 + 粘性）→ 结果 $\\mathbf{u}^{*}$ 往往**挤进了不该挤的量**（某些单元净流入 ≠ 0，即 $\\nabla\\cdot\\mathbf{u}^{*}\\neq0$）；\n2. **诊断**：算出 $\\nabla\\cdot\\mathbf{u}^{*}$——这是「挤入量」；\n3. **投影**：解 $\\nabla^{2}\\phi=\\nabla\\cdot\\mathbf{u}^{*}/\\Delta t$，然后用 $-\\nabla\\phi$ **精确扣掉**梯度部分。\n\n**为什么第三步能精确扣掉（Helmholtz 分解）**：任何向量场（在适当边界条件下）唯一分解为\n\n$$\\mathbf{u}^{*}=\\underbrace{\\mathbf{u}_{\\text{无散}}}_{\\text{守门员要保留}}+\\underbrace{\\nabla\\phi}_{\\text{守门员要扣掉}}.$$\n\n**「无散 + 梯度」是完备的**——这就是这件事能一次做完（不需要迭代）的原因。\n\n**为什么是椭圆方程（这条最容易觉得「没道理」）**：压力 Poisson 没有时间导数，意味着**压力扰动瞬时传遍全场**。物理上：不可压流体里，你在一点挤入流体，远处必须**立刻**响应（因为体积不能变）——不像可压缩流体要等声波传过去。**椭圆性就是「瞬时传播」的数学表达。**\n\n**棋盘为什么危险（回到守门员的比喻）**：棋盘模态是**相邻格点符号相反**的压力。守门员如果用**宽模板**（跨两格）算曲率，**相邻两格的正负恰好相消**——于是他看不见这个模态（实测 $(DG)p=0$）。**结果**：相邻格点之间的挤入被漏掉，压力在场里跳来跳去而守门员毫不知情。\n\n**交错网格为什么治好它**：把 $u$ 放在**面上**，守门员就只需要比较**相邻两个面**的速度——不存在「跨两格的相消」，棋盘**立刻**暴露（$\\max\\lvert D(u)\\rvert\\neq0$）。\n\n**记这个图像**：压力是一个**看不见流体的守门员**——它不携带能量、不随时间演化，只为「净流量必须为零」这条规矩服务。**它的工作质量完全取决于「它看得见什么」——这就是网格布置（MAC vs 同位）的全部意义。**",
+      "links": [
+        "I9.1",
+        "I4",
+        "I9.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:divergence-free.proof",
+      "type": "proof",
+      "subject": "divergence-free",
+      "title": "推导骨架：投影法四步（Helmholtz 分解 + 相容性）",
+      "keywords": [
+        "第一步：写 Helmholtz 分解 u* = u^{n+1} + Δt∇φ",
+        "第二步：两边取散度，用 ∇·u^{n+1} = 0 得 Poisson 方程",
+        "第三步：取法向导数得 Neumann 边界条件",
+        "第四步：相容性条件 ∮∂φ/∂n = 0 即边界净流量为零",
+        "易错点：纯 Neumann 差一个常数；相容性不满足会让求解器发散",
+        "离散补充：DG 必须无棋盘零空间（否则前四步全废）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 140,
+        "line_end": 144
+      },
+      "fill_hint": "四步骨架 + 离散补充；重点是相容性条件与「$DG$ 棋盘零空间会让前四步全废」。",
+      "content": "**推导骨架**（四步，每步给理由）。目标：把「解 Poisson 再修正」从 Helmholtz 分解严格推出来，并把两个陷阱（常数、相容性）暴露清楚。\n\n**第一步：写分解。** 假设存在标量场 $\\phi$ 与向量场 $\\mathbf{u}^{n+1}$ 使得\n\n$$\\mathbf{u}^{*}=\\mathbf{u}^{n+1}+\\Delta t\\,\\nabla\\phi,\\qquad \\nabla\\cdot\\mathbf{u}^{n+1}=0.$$\n\n理由：这是 **Helmholtz 分解**（亥姆霍兹分解）的声明——任何足够光滑的向量场可分解为无散部分 + 梯度部分。$\\phi$ 待定，它的作用是「把 $\\mathbf{u}^{*}$ 的散度部分抽出来」。\n\n**第二步：两边取散度。** 用 $\\nabla\\cdot\\mathbf{u}^{n+1}=0$：\n\n$$\\nabla\\cdot\\mathbf{u}^{*}=0+\\Delta t\\,\\nabla\\cdot\\nabla\\phi\\quad\\Longrightarrow\\quad\\boxed{\\nabla^{2}\\phi=\\frac{\\nabla\\cdot\\mathbf{u}^{*}}{\\Delta t}}.$$\n\n理由：$\\nabla\\cdot(\\nabla\\phi)=\\nabla^{2}\\phi$。**这就是压力 Poisson 方程**——右端是「挤入量除以时间」，左端是压力的曲率。\n\n**第三步：取法向导数（定边界条件）。** 在边界上投影分解式：\n\n$$\\frac{\\partial\\phi}{\\partial n}=\\frac{\\mathbf{u}^{*}\\cdot\\mathbf{n}-\\mathbf{u}^{n+1}\\cdot\\mathbf{n}}{\\Delta t}.$$\n\n**理由**：边界的法向速度由物理边界条件给定（固壁：$\\mathbf{u}\\cdot\\mathbf{n}=0$；入口：给定流量）。于是 $\\partial\\phi/\\partial n$ 是**已知函数**——这是 **Neumann 条件**。\n\n**第四步：相容性条件。** 对 Poisson 方程在区域上积分并用散度定理：\n\n$$\\int_{\\Omega}\\nabla^{2}\\phi\\,dV=\\oint_{\\partial\\Omega}\\frac{\\partial\\phi}{\\partial n}\\,dS=\\frac{1}{\\Delta t}\\int_{\\Omega}\\nabla\\cdot\\mathbf{u}^{*}\\,dV=\\frac{1}{\\Delta t}\\oint_{\\partial\\Omega}\\mathbf{u}^{*}\\cdot\\mathbf{n}\\,dS.$$\n\n左边等于右边的**恒等式**要求\n\n$$\\oint_{\\partial\\Omega}\\left(\\mathbf{u}^{*}-\\mathbf{u}^{n+1}\\right)\\cdot\\mathbf{n}\\,dS=0,$$\n\n即**边界上的净流量必须为零**（进出平衡）。**理由**：不可压流体在闭合域内体积守恒，边界进出必须等量。\n\n**为什么这条必须显式检查**：纯 Neumann 问题的算子有**一维零空间**（常数）。若相容性不满足，离散线性系统**奇异且右端不在值域内** → 求解器发散或给出发散的解。工程处理：投影右端减去均值（去掉零空间分量），或改一个点/面的条件为 Dirichlet。\n\n**第五步（离散补充，本节的重点）：$DG$ 必须无棋盘零空间。** 上面四步是**连续**的。离散后第二步变成\n\n$$D\\,G\\,\\phi=\\frac{1}{\\Delta t}D\\,\\mathbf{u}^{*},$$\n\n而验证散度自由要用同一个 $D$。**若 $DG$ 有非物理零空间（同位网格中心差的棋盘模态），前四步全部白做**（见 `I9.3:pressure.checkerboard`）。\n\n**依赖链**：Helmholtz 分解 → 取散度得 Poisson → 取法向导数得 Neumann → 相容性 → 离散配对（$D$ 与 $G$ 必须配套）。\n\n**易错点**：\n\n1. **忘常数**：纯 Neumann 解差一个常数，没关系（压力只差常数）；但**必须**去掉零空间分量再去解，否则矩阵奇异；\n2. **忘相容性**：边界净流量不为零时求解器发散，而错误信息常是「矩阵奇异」，容易误诊为别的 bug；\n3. **离散 $D$、$G$ 不配对**：这是本条最隐蔽的错——残留散度不为零，或者压力出现棋盘。**检验方法**：跑静水算例，看压力是否常数；\n4. **分裂误差**：投影法把「对流 + 压力」分裂成两步，引入了 $O(\\Delta t)$（Chorin）或 $O(\\Delta t^{2})$（Temam/RK）的分裂误差。**这不是 bug，是方法的代价**，与 `I9.4` 的时间步有关。",
+      "links": [
+        "I9.1",
+        "I4",
+        "I9.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:divergence-free.extension",
+      "type": "extension",
+      "subject": "divergence-free",
+      "title": "拓展：离散 de Rham 复形与兼容离散",
+      "keywords": [
+        "连续恒等式：∇·(∇×) = 0 与 ∇×(∇) = 0（两个恒零复合）",
+        "离散版：要求 D C = 0 与 C G = 0（C 是离散旋度）",
+        "兼容离散 = 存在这种配对算子；不兼容就出现零空间虫",
+        "MAC 网格正是「最小兼容复形」（离散 de Rham 复形的最简实现）",
+        "后果链：零空间 → 压力振荡 / 涡量虚假 / 保守性破坏",
+        "现代做法：有限元外微分（FEEC）系统化构造兼容离散"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 138,
+        "line_end": 144
+      },
+      "fill_hint": "拓展词条：把三条路线统一到离散 de Rham 复形；解释 MAC 网格为何「拓扑正确」而非「精度更高」。",
+      "content": "**拓展：** 切片给了三条路线，但没解释**为什么**必须有这些路线。答案是一条**代数拓扑**性质。\n\n**连续的两个恒等式**（这条比 Poisson 方程更基本）：\n\n$$\\nabla\\cdot(\\nabla\\times\\mathbf{v})=0,\\qquad \\nabla\\times(\\nabla\\phi)=\\mathbf{0}.$$\n\n**含义**：旋度场的散度恒为零；梯度场的旋度恒为零。**这两条是压力能存在、以及散度自由能被保持的根基**——压力通过 $\\nabla\\phi$ 修正速度（梯度），而梯度有零旋度，所以修正**不改变涡量**（这正是 `I4` 涡量方程里压力退场的原因）。\n\n**离散版要求**：设 $G$（离散梯度）、$C$（离散旋度）、$D$（离散散度）为三个矩阵，则必须有\n\n$$D\\,C=0,\\qquad C\\,G=0.$$\n\n**兼容离散**：存在这样的三算子配对，就叫「兼容的离散 de Rham 复形」。**不兼容就出现零空间虫**：\n\n| 失效的恒等式 | 产生的现象 | 例子 |\n|---|---|---|\n| $DG$ 有非零零空间 | **压力棋盘振荡**（`I9.3:pressure.checkerboard`） | 同位网格 + 中心差 |\n| $CG$ 有非零零空间 | 虚假涡量模式（梯度场带旋度） | 某些节点有限元 |\n| $DC\\neq0$ | 旋度场不无散 → 虚假源 | 粗心的插值 |\n\n**为什么 MAC 网格是最小兼容复形**：把三个算子放在「正确的位置」上（标量在格心、$u$ 在 x 面心、$v$ 在 y 面心、$\\omega$ 在角点），每个算子就是**紧凑一阶差**，此时\n\n$$D\\,C=0,\\qquad C\\,G=0$$\n\n**逐项精确成立**（代数恒等式，不是近似）。这就是 MAC 网格「不会出现棋盘」的**根本原因**——不是因为「精度更高」，而是因为**拓扑配对正确**。\n\n**现代做法（FEEC）**：有限元外微分（Finite Element Exterior Calculus）把这套结构系统化——\n\n- 用**微分形式**（0-形式 = 标量、1-形式 = 向量、2-形式 = 通量）统一表示；\n- 用 **PDE 的 de Rham 复形**选择有限元空间（Nédélec、Raviart–Thomas 等）；\n- 自动保证 $DC=0$、$CG=0$ 与其他守恒性质。\n\n**代价**：需要特殊有限元空间（不能随便用 $P_1$）、实现复杂。**收益**：零空间虫在构造上被排除，而不需要逐个算例排查。\n\n**与 `I9.1`/`I9.2` 的关系**：`I9.1` 的守恒是「通量相消」（面积分层面）、`I9.2` 的能量是「内积配对」（算子对称性层面）、本条是「复形精确性」（拓扑层面）。**三条是同一个离散结构的不同侧面**——这正是 `I9` 这一节想给出的整体图景。\n\n**注意**：这是**拓展**内容——切片只列了三条路线（投影法 / MAC / 约束输运）；本节补上「它们为什么有效」的代数拓扑解释。",
+      "links": [
+        "I9.1",
+        "I9.2",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:divergence-free.vs-vorticity",
+      "type": "comparison",
+      "subject": "divergence-free",
+      "title": "分工：速度-压力路线（投影）与涡量路线（流函数/约束输运）",
+      "keywords": [
+        "速度-压力：解 u 与 p，投影保散度；通用（3D 可用）",
+        "流函数（2D）：解 ψ，u=(∂_yψ,−∂_xψ)，散度解析精确",
+        "涡量-流函数（2D）：把 NS 转成 ω 与 ψ 两标量方程，无压力",
+        "约束输运：离散层面强制「旋度-散度」配对（也可用 3D）",
+        "2D 判据：要绝对散度自由 → 流函数/涡量路线",
+        "3D 判据：流函数不通用（需矢量势）→ 投影法或约束输运"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 138,
+        "line_end": 144
+      },
+      "fill_hint": "对照口径：以「解哪个变量 / 散度自由是精确还是近似 / 维数限制」三列划界；给 2D/3D 的判据。",
+      "content": "**两者是「解哪个变量」的选择，散度自由的代价因此不同。**\n\n| | 速度-压力（投影） | 流函数 / 涡量-流函数 |\n|---|---|---|\n| **未知量** | $\\mathbf{u}$（3 分量）、$p$ | 2D：$\\psi$ 或 $(\\psi,\\omega_z)$（1–2 分量） |\n| **散度自由** | 靠投影**近似**（离散残差 $O(\\Delta x^{k})$） | **解析精确**（$\\mathbf{u}=(\\partial_y\\psi,-\\partial_x\\psi)$ 恒满足） |\n| **压力** | 要解 Poisson（最贵的一步） | 不需要（压力被消去了，见 `I4:vorticity.proof`） |\n| **维数** | 2D/3D 通用 | **仅 2D 有标量流函数** |\n| **边界** | 固壁 = Neumann 压力条件（好处理） | $\\psi=\\text{const}$ 在壁上（也很好处理） |\n| **涡量** | 从速度差分算（`I4`） | 直接是未知量（精度更高） |\n| **代价** | 每步解全局 Poisson（并行困难） | 3D 需矢量势（不自动精确）；涡量方法的边界复杂 |\n\n**判据（三问定选）**：\n\n1. **几维？** 2D → 流函数/涡量-流函数（散度自由免费、压力免费）；3D → 投影法；\n2. **要绝对散度自由吗？**（如需要长时间精确的体积守恒）→ 2D 用流函数；\n3. **要并行/复杂几何吗？** → 投影法（Poisson 求解器可并行，几何灵活）；涡量方法在复杂边界上麻烦。\n\n**2D 为什么这么便宜（这条值得记住）**：二维不可压流动的「约束」$\\nabla\\cdot\\mathbf{u}=0$ 可以用**一个标量**自动满足。代价是压力消失（这本来是好事，`I4` 的涡量方程里压力本来就不出现）。**所以二维 CFD 的默认选择常常是涡量-流函数**。\n\n**3D 为什么不行**：3D 需要矢量势 $\\mathbf{u}=\\nabla\\times\\mathbf{A}$，但 $\\mathbf{A}$ 有**规范自由**（可加任意梯度），而且离散后 $\\nabla\\cdot(\\nabla\\times\\mathbf{A})=0$ **不自动精确**——除非用兼容离散（`I9.3:divergence-free.extension` 的 FEEC）。\n\n**切片的关系**：切片把「约束输运」列为第三条（「对涡量或流函数求解」），本条把这条线展开——**它与投影法是同一个问题的两条解法**，不是「更好的路线」。",
+      "links": [
+        "I4",
+        "I9.1",
+        "I9.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:divergence-free.probe1",
+      "type": "probe",
+      "subject": "divergence-free",
+      "title": "检验题：棋盘模态在宽模板下是不是零空间？",
+      "keywords": [
+        "可算题：p=(-1)^j（j=0..7），求宽模板 (DG)p 与真实 Laplace",
+        "答案：宽模板恒为 0（max=0）；真实 Laplace = ∓4（max=4.0）",
+        "判据：max|DG p| = 0 而 max|L p| ≠ 0 → 压力看不见棋盘",
+        "追问：交错网格下同一模态会被看见吗？（会，紧凑差给非零）",
+        "陷阱：只看 ∇·u = 0 就以为解对了（速度场也可能「看不见」）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 138,
+        "line_end": 144
+      },
+      "fill_hint": "从棋盘零空间变来的检验题；第 3 问专门暴露「只看散度验收」这个误判。",
+      "content": "**题**：1D、$N=8$、$\\Delta x=1$、压力模态 $p_j=(-1)^{j}$。\n\n1. 求 $(DG)p$（宽模板中心差复合算子）与真实五点 Laplace；\n2. 判断这个模态是否在 $DG$ 的零空间里；\n3. 如果只看「散度是否为零」来验收，会漏掉这个问题吗？\n\n**答案**：\n\n1. $p=[1,-1,1,-1,1,-1,1,-1]$。\n\n   - 宽模板：$(DGp)_j=\\dfrac{p_{j+2}-2p_j+p_{j-2}}{4\\Delta x^{2}}$。对 $p_j=(-1)^{j}$：$p_{j\\pm2}=(-1)^{j\\pm2}=(-1)^{j}$，故分子 $=(-1)^{j}(1-2+1)=0$。**全部为 0**（实测 $\\max=0$【已核验:0|0.0】）；\n   - 真实五点：$(Lp)_j=p_{j-1}-2p_j+p_{j+1}=(-1)^{j}(-1-2-1)=-4(-1)^{j}$，即 $[-4,4,-4,4,\\dots]$，$\\max=4.0$【已核验:4|4.0】。\n\n2. **是**。$\\max\\lvert(DG)p\\rvert=0$ 说明棋盘模态在 $DG$ 的零空间里——压力 Poisson 方程对它**完全无响应**。\n\n3. **会漏掉**。因为同一格式下散度算子 $D$ 作用在**棋盘速度** $u_j=(-1)^{j}$ 上也给零（实测 $\\max\\lvert D(u)\\rvert=0$）。所以速度场「自己报告散度为零」，看起来完全正常——**而压力场在相邻格点间振荡**。\n\n**易错点**：\n\n- **只看散度就验收**：这是最典型的误判（本条第 3 问就是为此设计的）；\n- **以为「精度更高就能解决」**：棋盘零空间是**结构性**问题，不是精度问题——加密网格**不解决**它（宽模板永远对 $(-1)^j$ 给零）；\n- **把交错网格的优势归为「精度高」**：真正的原因是**拓扑配对**（见 `I9.3:divergence-free.extension`），不是阶数。",
+      "links": [
+        "I9.3",
+        "I9.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：棋盘压力与网格布置对比",
+      "keywords": [
+        "模块 checkerboard-pressure（档1 前端直渲）",
+        "模式①：一维 p=(-1)^j 逐格显示，虚线画出宽模板「看不到」的机制",
+        "模式②：同位网格 vs MAC 网格并排，同一棋盘模态下 D(u) 的读数对比",
+        "invariant：宽模板的 (DG)p 用严格等式（=0）；紧凑差用严格不等式（≠0）",
+        "模式③：静水算例的压力场——失耦时振荡、MAC 时恒定",
+        "预置：N=8、Δx=1、p=(-1)^j"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 138,
+        "line_end": 144
+      },
+      "fill_hint": "档1 依据：宽模板与紧凑差的取值都是显式线性组合，前端可算；invariant 区分严格等式与严格不等式。",
+      "content": "**档1 演示**（前端直渲），模块 `checkerboard-pressure`。\n\n**模式① `wide-stencil-blind`**：逐格显示 $p_j=(-1)^{j}$，并在格点 $j$ 处用虚线画出宽模板 $(DGp)_j$ 采样的两个邻居（$j\\pm2$）。**动画演示「$j-2$ 与 $j+2$ 同号、恰好抵消」**——这就是宽模板看不见棋盘的全部原因。读数栏同时显示真实 Laplace 的值（$\\mp4$）。\n\n**模式② `collocated-vs-mac`**：左右并排两套网格。\n\n- **同位网格**：$u,p$ 同格点；$D$ 用中心差。同一棋盘速度下显示 $\\max\\lvert D(u)\\rvert=0$（**看不见**）；\n- **MAC**：$u$ 在面心；$D$ 用相邻面之差。同一棋盘速度下显示 $\\max\\lvert D(u)\\rvert\\neq0$（**看得见**）。\n\n**这一模式的 invariant 是本模块最值钱的**：宽模板必须给**严格 0**（等式），紧凑差必须给**严格非零**（不等式）。任何实现错误（把紧凑差误写成宽模板）都会破坏其中之一。\n\n**模式③ `hydrostatic-test`**：静止流体算例（`u=0`）的压力场随时间演化。失耦的格式会出现棋盘振荡并被激发；MAC 格式压力保持常数。**这是工程上诊断奇偶失耦的标准测试。**\n\n**参数契约**：\n\n- 预置：`N=8`、`dx=1`、`p=(-1)^j`、静水算例 `u=0`；\n- 与 `I9.3:divergence-free.probe1` 的数值（$\\max(DGp)=0$、$\\max(Lp)=4$）保持一致。",
+      "links": [
+        "I9.3",
+        "I9.1",
+        "I8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

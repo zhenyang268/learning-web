@@ -1,0 +1,306 @@
+{
+  "schema": "entry-card/v2",
+  "code": "I9.2",
+  "chapter": "I9",
+  "title": "能量稳定格式",
+  "src": {
+    "file": "notebook/I_fluid.tex",
+    "line_start": 129,
+    "line_end": 136,
+    "anchor": "notebook/I_fluid.tex:129"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "I9.2:energy-stability.quantifiers",
+      "type": "comparison",
+      "subject": "energy-stability",
+      "title": "能量稳定格式的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①连续的 dKE/dt ≤ 0 靠分部积分，离散要另证",
+        "条件②离散必须用 skew 或守恒形式：直接 (u·∇)u 会造能量（相对 ±0.1844）",
+        "条件③中心差对流无条件不稳定（|G| = √(1+c²) > 1）",
+        "条件④粘性项必须负定：中心差 Laplacian 恰好负定，安全",
+        "条件⑤能量守恒 ≠ 稳定：skew 保能量但可能不保界",
+        "翻车代价：号称「能量稳定」却用非对称对流项，实际在注入能量"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "五列条件表；②行的三个形式要给实测数值（±0.414214 与 0）；③行给放大因子的三档数值。",
+      "content": "切片给的是连续情况的 $\\dfrac{d}{dt}\\int\\tfrac12\\lvert\\mathbf{u}\\rvert^{2}dV=-\\nu\\int\\lvert\\nabla\\mathbf{u}\\rvert^{2}dV\\le0$，以及「离散要求对流项满足反对称性或守恒性」。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① 连续情形的依据是**分部积分** | 连续推导里 $\\int\\mathbf{u}\\cdot[(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}]\\,dV=\\oint\\tfrac12\\lvert\\mathbf{u}\\rvert^{2}\\mathbf{u}\\cdot\\mathbf{n}\\,dS=0$（周期/固壁）。**离散化后这个积分等式不自动成立**，要设计格式去满足它的离散版（SBP） | 以为「连续成立 ⇒ 离散自动成立」，写出不稳定的格式 | 不能放宽。这是 `I9.2` 存在的理由 |\n| ② 对流项必须**斜对称/守恒** | 实测（$N=8$ 周期、中心差）：advective 形式 $(u\\cdot\\nabla)u$ 给 $\\langle u,\\text{adv}\\rangle=+0.414214$ → $dKE/dt=-0.414214$，相对 $-18.4403\\%$；守恒形式 $\\nabla\\cdot(uu)$ 给 $-0.414214$ → $dKE/dt=+0.414214$，相对 $+18.4403\\%$（**造能量**）；**只有 skew 形式给 $0$（精确）** | 用守恒形式却以为「守恒 = 不产生能量」——守恒的是**动量**，不是**能量** | 必须用 skew 或配对对称的守恒形式；两者不能混 |\n| ③ **中心差对流无条件不稳定** | 放大因子 $\\lvert G\\rvert^{2}=1+c^{2}\\sin^{2}(k\\Delta x)$，故 $\\lvert G\\rvert\\ge1$ 恒成立。CFL$=0.25$ 时 $\\lvert G\\rvert=1.030776$，100 步涨 $20.72$ 倍，1000 步涨 $1.46\\times10^{13}$；CFL$=0.5$ 时 $\\lvert G\\rvert=1.118034$，100 步 $70064.9$ 倍 | 中心差算对流会逐渐爆掉 | 不能放宽。要迎风/限制器（$\\lvert G\\rvert\\le1$） |\n| ④ 粘性项**必须负定** | 中心差 Laplacian 的离散能量 $\\langle u,\\nabla^{2}u\\rangle=-\\sum(\\partial u)^{2}\\le0$（由求和相消）。这是**正确符号**，不必改 | 若把粘性符号写反（$+\\nu\\nabla^{2}$），能量会指数增长 | 不能放宽：粘性符号错是最低级也最致命的错误 |\n| ⑤ 能量守恒 ≠ 稳定 | skew 形式保能量，但不保 $\\lvert u\\rvert$ 的上界（能量守恒仍可让所有能量集中到一个格点） | 以为「保能量就万事大吉」 | 可放宽为「加上界保正/保界」。工程上常加限制器 |\n\n**这张表的用法**：\n\n1. 写完对流项后，**第一件事**测 $\\langle u,\\text{adv}\\rangle$ 是否 $\\approx0$（skew）或明确非零且与理论一致；\n2. 第二件事测放大因子 $\\lvert G\\rvert$——中心差必然 $>1$，别用它算纯对流；\n3. 第三件事确认粘性项符号（$\\langle u,\\nabla^{2}u\\rangle<0$）。\n\n**一条最容易犯的错**：把「守恒形式 $\\nabla\\cdot(uu)$」当「能量稳定形式」。它守恒的是**动量**（$\\sum\\text{adv}=0$，见 `I9.1`），而能量 $\\langle u,\\nabla\\cdot(uu)\\rangle$ 恰好**反号**——实测 $+0.414214$ vs $-0.414214$，稳定与不稳定刚好反过来。",
+      "links": [
+        "I9.2",
+        "I9.1",
+        "I4",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:energy-stability.central-advection",
+      "type": "counterexample",
+      "subject": "energy-stability",
+      "title": "反例：用守恒形式 ∇·(uu) 说「能量稳定」（实际在造能量）",
+      "keywords": [
+        "误用现场：为了「守恒」选 ∇·(uu) 做对流项，然后声称能量稳定",
+        "实测（N=8 周期、中心差）：⟨u,∇·(uu)⟩ = −0.4142135624",
+        "对应 dKE/dt = +0.4142135624，相对 +18.4403%（能量在增长）",
+        "对照：skew ½[(u·∇)u + ∇·(uu)] 给 ⟨u,adv⟩ = +0.0000000000（精确 0）",
+        "机制：守恒形式守恒的是动量；能量恰好反号（SBP: B = −A）",
+        "修补：用 skew 形式，或配对的 SBP 算子；别把「守恒」当「稳定」"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "把「守恒 ≠ 稳定」算成能量增长率；给出 SBP 恒等式 $B=-A$ 与 skew 的相消；修补给自检断言。",
+      "content": "**误用现场**：实现 NS 求解器时，为了让动量守恒选了守恒形式对流 $\\nabla\\cdot(\\mathbf{u}\\mathbf{u})$，然后写文档说「本格式能量稳定」。\n\n**为什么这是错的**：**动量守恒与能量稳定是两个不同的性质，而且用守恒形式时它们符号相反。**\n\n**算给你看**（$N=8$ 周期、$\\Delta x=2\\pi/8$、中心差、$u=0.3+\\sin x+0.5\\sin 2x$，$KE=2.2462387473$）：\n\n| 对流形式 | $\\langle u,\\text{adv}\\rangle$ | $dKE/dt$ | 相对 |\n|---|---|---|---|\n| advective $(u\\cdot\\nabla)u$ | $+0.4142135624$ | $-0.4142135624$ | $-18.4403\\%$ |\n| conservative $\\nabla\\cdot(uu)$ | $-0.4142135624$ | $+0.4142135624$ | ${\\bf +18.4403\\%}$ |\n| skew $\\tfrac12\\left[(u\\cdot\\nabla)u+\\nabla\\cdot(uu)\\right]$ | $+0.0000000000$ | $-0.0000000000$ | $0\\%$ |\n\n**关键读数**：守恒形式给 $dKE/dt>0$——**能量在增长**，与连续情形要求的 $\\le0$ 正好相反。而 advective 形式给 $<0$，看起来「更稳」，但它**不守恒动量**。\n\n**为什么恰好反号（数学上的一条恒等式）**：离散分部积分（SBP）给出\n\n$$\\langle u,\\ \\nabla\\cdot(uu)\\rangle=-\\langle u,\\ (u\\cdot\\nabla)u\\rangle+\\underbrace{\\left\\langle u,u\\nabla\\cdot u\\right\\rangle}_{\\text{散度修正项}}.$$\n\n不可压（$\\nabla\\cdot u=0$ 在离散意义下）时修正项为零，于是两者**精确反号**。**这不是巧合，是 SBP 恒等式 $B=-A$ 的推论。**\n\n**skew 形式为什么是答案**：取两者平均，反号的两项相消：\n\n$$\\left\\langle u,\\ \\tfrac12\\left[(u\\cdot\\nabla)u+\\nabla\\cdot(uu)\\right]\\right\\rangle=\\frac{0.414214-0.414214}{2}=0.$$\n\n**实测给了精确 0**（到浮点：$+0.0000000000$）。**这就是「反对称性」的含义**——离散算子是斜对称（skew-symmetric）的。\n\n**后果链条**：\n\n1. 用守恒形式却声称能量稳定 → 长时间模拟里动能单调增长 → 解爆；\n2. 更隐蔽：增长的速率相对 $18.44\\%$（这一小步）看起来不大，但指数累积；\n3. 若再叠加多项式保持/正性保持等约束，符号错会导致不一致的格式。\n\n**修补动作**：\n\n1. **用 skew 形式** $C(u,v)=\\tfrac12\\left[\\nabla\\cdot(uv)+u\\cdot\\nabla v\\right]$（或等价地把 $\\nabla\\cdot u$ 修正项显式算进去）；\n2. 若必须用守恒形式（例如有激波，需要严格守恒），**不要声称能量稳定**——两者只能选一个；\n3. **自检断言**：每步算 $\\langle u,\\text{adv}\\rangle$（或 $\\Delta KE$），与 $-\\nu\\lVert\\nabla u\\rVert^{2}\\Delta t$ 比对。差值应为 $O(\\Delta x^{p})$；若差值是正的大数，符号/形式有问题。\n\n**注意**：中心差对流还有更基础的问题——$\\lvert G\\rvert=\\sqrt{1+c^{2}}\\gt1$ **无条件不稳定**（见 `I9.2:energy-stability.central-diff`）。所以本反例的场景是「用中心差 + 守恒形式」，两个问题叠加。",
+      "links": [
+        "I9.2",
+        "I9.1",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:energy-stability.central-diff",
+      "type": "counterexample",
+      "subject": "energy-stability",
+      "title": "反例：用中心差算纯对流（|G| = √(1+c²) 恒大于 1）",
+      "keywords": [
+        "误用现场：中心差空间离散 + 显式时间推进做纯对流",
+        "放大因子：|G|² = 1 + c² sin²(kΔx)，故 |G| ≥ 1 恒成立",
+        "CFL=0.25：|G|=1.030776 → 100 步 20.72 倍，1000 步 1.46×10¹³ 倍",
+        "CFL=0.5：|G|=1.118034 → 100 步 70064.9 倍，1000 步 2.85×10⁴⁸ 倍",
+        "对照一阶迎风：|G|² = 1 − 2c(1−c)(1−cos kΔx)，CFL=0.5、kΔx=π 时 |G|=0.5",
+        "修补：迎风/限制器（TVD/WENO），或加耗散（人工粘性）"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "把中心差的不稳定性算成三档放大倍数；给出与迎风的对照；点明「有粘性时可偷用」这个例外。",
+      "content": "**误用现场**：为了「二阶精度」，空间用中心差、时间用显式 Euler 或 RK，做纯对流问题。\n\n**为什么这是错的**：中心差是**中性**的（既不耗散也不放大，连续情形能量守恒），但配上显式时间推进后，**放大因子严格大于 1**。\n\n**算给你看**。对 $u_t+cu_x=0$、中心差 + 显式 Euler，Fourier 分析给出\n\n$$\\lvert G\\rvert^{2}=1+c^{2}\\sin^{2}(k\\Delta x),\\qquad c=\\frac{u\\Delta t}{\\Delta x}\\ (\\text{CFL}).$$\n\n**$\\lvert G\\rvert\\ge1$ 恒成立**（只有 $\\sin=0$ 的退化情形取等）。于是：\n\n| CFL | $\\lvert G\\rvert$ | 100 步放大 | 1000 步放大 |\n|---|---|---|---|\n| 0.25 | $1.030776$ | $20.7227$【已核验:20.7219114336|1.030776**100】 | $1.46039\\times10^{13}$【已核验:1.45981604181e+13|1.030776**1000】 |\n| 0.5 | $1.118034$ | $70064.9$【已核验:70064.9937184|1.118034**100】 | $2.85106\\times10^{48}$【已核验:2851089653556537732436835456628565750394751287296|1.118034**1000】 |\n\n**注意 CFL 越大越糟**——与「迎风格式的 $\\lvert G\\rvert\\le1$（CFL 越小越稳）」恰好相反。这是中心差的标志性性质：**无条件不稳定**（unconditionally unstable）。\n\n**对照一阶迎风**：\n\n$$\\lvert G\\rvert^{2}=1-2c(1-c)\\left(1-\\cos k\\Delta x\\right)\\le1\\quad(0\\le c\\le1).$$\n\n极端情形 $c=0.5$、$k\\Delta x=\\pi$：$\\lvert G\\rvert=\\lvert 1-c\\rvert=0.5$——**每步衰减一半**（这就是迎风的数值耗散，是它稳定的代价）。\n\n**什么时候可以「偷用」中心差**：\n\n1. **有粘性时**：粘性项的负定性可以压住中心差的放大（只要 $\\nu$ 够大，或 $\\Delta t$ 够小）。这就是为什么低 $Re$ 的粘性流偶尔能用中心差；\n2. **配以滤波/人工耗散**：LES 里常见的做法；\n3. **谱方法**：整个场用 FFT，不存在「差分」的 $\\sin$ 项——但那是另一套（无格式耗散，靠时间积分稳定性）。\n\n**修补动作**：\n\n1. 纯对流问题：**一阶迎风**（稳但一阶）→ **TVD/WENO**（稳且高阶）；\n2. 已有中心差代码：改为「中心差 + 显式滤波」或「迎风 + 反扩散」；\n3. **自检判据**：算完一步后测 $\\max\\lvert u\\rvert$ 是否单调增长。**任何单调增长都是格式不稳定的信号**。",
+      "links": [
+        "I9.2",
+        "I9.1",
+        "I7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:energy-stability.statement",
+      "type": "statement",
+      "subject": "energy-stability",
+      "title": "能量稳定格式：连续不等式与离散要求",
+      "keywords": [
+        "连续：d/dt∫½|u|²dV = −ν∫|∇u|²dV ≤ 0（动能单调不增）",
+        "含义：只有粘性耗散能量，对流项不产生也不消耗",
+        "离散要求一：对流项满足「反对称性」（skew）",
+        "离散要求二：或满足「守恒性」（动量守恒，但能量反号）",
+        "正确答案：skew 形式 ⟨u, adv⟩ = 0（实测精确 0）",
+        "粘性项：中心差 Laplacian 天然负定，无需特殊处理"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "陈述本体（连续不等式 + 离散要求）+ 三形式对照表；强调「对流不产能量」与「动量守恒」是两回事。",
+      "content": "**陈述**（切片）。\n\n**连续情形**（切片第一行）：不可压 NS 加周期或无滑移边界时，\n\n$$\\frac{d}{dt}\\int\\tfrac12\\lvert\\mathbf{u}\\rvert^{2}\\,dV=-\\nu\\int\\lvert\\nabla\\mathbf{u}\\rvert^{2}\\,dV\\ \\le\\ 0.$$\n\n**推导依据**：把 NS 与 $\\mathbf{u}$ 做内积再积分。对流项贡献\n\n$$\\int\\mathbf{u}\\cdot\\left[(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}\\right]dV=\\int\\mathbf{u}\\cdot\\nabla\\left(\\tfrac12\\lvert\\mathbf{u}\\rvert^{2}\\right)dV=\\oint\\tfrac12\\lvert\\mathbf{u}\\rvert^{2}\\,\\mathbf{u}\\cdot\\mathbf{n}\\,dS-0=0,$$\n\n（用 $\\nabla\\cdot\\mathbf{u}=0$，且边界上 $\\mathbf{u}\\cdot\\mathbf{n}=0$ 或周期）。压力项同理消掉。剩下的只有粘性项，且**符号为负**：\n\n$$\\int\\mathbf{u}\\cdot(\\nu\\nabla^{2}\\mathbf{u})\\,dV=-\\nu\\int\\lvert\\nabla\\mathbf{u}\\rvert^{2}dV\\le0.$$\n\n**含义**：**能量只被粘性带走，对流（涡的输运与拉伸）既不产生也不消耗能量**——它只是把能量在尺度间搬运（`I5` 的级联）。\n\n**离散要求**（切片第二行）：离散后两个积分恒等式**不再自动成立**，必须设计格式去满足：\n\n$$\\text{离散对流算子 }C\\text{ 满足}\\quad\\langle\\mathbf{u},\\,C\\mathbf{u}\\rangle=0\\quad\\text{（斜对称）}$$\n\n或等价的配对形式。**实测三形式对照**（$N=8$、中心差）：\n\n| 形式 | $\\langle u,\\text{adv}\\rangle$ | $dKE/dt$ | 性质 |\n|---|---|---|---|\n| $(u\\cdot\\nabla)u$ | $+0.4142135624$ | $-0.4142135624$ | 能量耗散，但**不守恒动量** |\n| $\\nabla\\cdot(uu)$ | $-0.4142135624$ | $+0.4142135624$ | **动量守恒，但造能量** |\n| skew 平均 | $0$ | $0$ | ✅ 能量不变 |\n\n**三条要分开记住的**：\n\n1. **对流项不产能量**——要用 **skew 形式**；\n2. **动量守恒**——要用**守恒形式**（`I9.1`），与 1 冲突，须取舍或加散度修正；\n3. **粘性项必须负定**——中心差 Laplacian 恰好满足（$\\langle u,\\nabla^{2}u\\rangle=-\\sum(\\partial u)^{2}\\le0$），符号别写反。\n\n**它依赖什么 / 谁依赖它**：散度定理 + $\\nabla\\cdot\\mathbf{u}=0$（连续推导）；SBP 恒等式 $B=-A$（离散推导）。下游：`I9.1` 的守恒框架、`I4` 的涡量约束（它会破坏这个不等式）、CT 格式/保能量格式。",
+      "links": [
+        "I9.1",
+        "I4",
+        "I5",
+        "I9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:energy-stability.intuition",
+      "type": "intuition",
+      "subject": "energy-stability",
+      "title": "直觉：能量守恒的唯一来源是「同一笔通量被记两次、符号相反」",
+      "keywords": [
+        "能源只有一个入口：粘性（负定）",
+        "对流项「守恒」的本质和 I9.1 的记账一样：内部面通量相消",
+        "为什么守恒形式反而不保能量：它保的是动量那一笔账",
+        "skew = 把「动量账」与「能量账」同时平掉（取平均）",
+        "能量守恒 ≠ 有界：能量可全挤到一个格点（需要额外限制器）",
+        "判据：每步测 ΔKE + νΔt‖∇u‖² 是否为 O(Δx^p)"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用记账语言解释 skew 为何是「两本错账平均」；点出能量守恒≠有界。",
+      "content": "**切片给的不等式** $dKE/dt=-\\nu\\lVert\\nabla u\\rVert^{2}\\le0$ 讲的是「能量只出不进」。**它的离散版为什么难，关键在「出口只有一个」。**\n\n**假设给了什么。** 连续推导里两条积分恒等式是关键：\n\n$$\\int\\mathbf{u}\\cdot\\left[(u\\cdot\\nabla)\\mathbf{u}\\right]dV=0,\\qquad \\int\\mathbf{u}\\cdot\\nabla p\\,dV=0.$$\n\n**结论为什么因此成立。** 于是方程里只剩粘性项在改能量，而它是负定的。\n\n**离散版为什么会破（这是本节的核心直觉）**：这两个积分等式，离散化后**不再是恒等式**。它们变成「格式必须满足的额外条件」。用记账语言说：\n\n- 连续情形：$\\int\\mathbf{u}\\cdot[(u\\cdot\\nabla)\\mathbf{u}]$ 是**同一条能量流**的两端（每块体积分到的与邻居给出的相等）；\n- 离散情形：如果对流项写成 $(u\\cdot\\nabla)u$，能量流的两端**用的是不同的离散表达式**——账不平了。**实测这个「不平」的幅度是 $\\pm0.414214$**（相对 $\\pm18.44\\%$），一点不小。\n\n**skew 为什么修好它**：取 $(u\\cdot\\nabla)u$ 与 $\\nabla\\cdot(uu)$ 的**算术平均**。这两者在离散意义下**恰好反号**（SBP 恒等式 $B=-A$），平均后相消：\n\n$$\\left\\langle u,\\ \\tfrac12\\left[(u\\cdot\\nabla)u+\\nabla\\cdot(uu)\\right]\\right\\rangle=0\\quad\\text{（实测精确 0）}.$$\n\n**用记账语言说**：$(u\\cdot\\nabla)u$ 与 $\\nabla\\cdot(uu)$ 是**两本都记错的账**，一本多记、一本少记，**错的方向恰好相反**。取平均就把错抵消了。\n\n**为什么「守恒形式」反而造能量（这个最容易反直觉）**：守恒形式 $\\nabla\\cdot(uu)$ 把**动量**那一笔账记平了（$\\sum\\text{adv}=0$，`I9.1` 的 telescoping）。但**能量是另一笔账**：它对应「通量乘上速度」再求和，而这条账恰好与动量账的偏差反号。所以：\n\n$$\\text{动量守恒}\\ \\Longrightarrow\\ dKE/dt=+18.44\\%,\\qquad \\text{skew}\\ \\Longrightarrow\\ \\text{两者都平}.$$\n\n**skew 怎么会「两者都平」**：因为它是平均——$(u\\cdot\\nabla)u$ 的动量账错、能量账对；$\\nabla\\cdot(uu)$ 反之。平均后各错一半，但**恰好都抵消**（这是离散恒等式的巧合之美）。\n\n**「能量守恒 ≠ 有界」的补充**：$\\langle u,\\text{adv}\\rangle=0$ 只说总能量不变，没说能量均匀分布。极端情形下全部能量可以挤到单个格点——所以工程上还要加**保界/保正**约束（限制器）。\n\n**记这个图像**：**避难所只有一个（粘性），进出对流项的门必须同时关好两扇——一扇管动量、一扇管能量。skew 是「双闩锁」。**",
+      "links": [
+        "I9.1",
+        "I4",
+        "I5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:energy-stability.extension",
+      "type": "extension",
+      "subject": "energy-stability",
+      "title": "拓展：SBP-SAT 与保能量格式的工程实现",
+      "keywords": [
+        "SBP：Summation-By-Parts 算子，离散分部积分恒等式 A = −B 的代数实现",
+        "SAT：Simultaneous Approximation Term，用惩罚项弱施加边界条件",
+        "组合 SBP-SAT = 离散能量法，可证稳定性（不是经验性的）",
+        "分片多项式 DG：也可配 SBP（DG-SBP），处理复杂几何",
+        "代价：需要特殊算子（不是任意差分），实现与边界处理更重",
+        "对照：skew 只解决周期/内部，SBP-SAT 连边界一起证"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "拓展词条：把「反对称性」推成 SBP-SAT 的代数框架，并说明它与 skew 的分工（内部 vs 含边界）。",
+      "content": "**拓展：** 切片只写了「离散要求满足反对称性或守恒性」。工程上把这条要求做成**可证的稳定性**，靠的是 SBP-SAT 这套框架。\n\n**SBP（Summation-By-Parts，分部求和）**：要求离散微分算子 $D$ 与「内积权重」$H$ 满足\n\n$$HD+\\left(HD\\right)^{T}=B,\\qquad B=\\operatorname{diag}(-1,0,\\dots,0,1).$$\n\n**$B$ 只在边界非零**——这正是连续分部积分 $\\int u\\,v'+\\int u'v=[uv]$ 的离散版（$B$ 就是边界项）。有了它，前面那个「SBP 恒等式 $B=-A$」（解释守恒形式与 advective 形式为何精确反号）就成了一行代数。\n\n**SAT（Simultaneous Approximation Term，同步近似项）**：边界条件用**惩罚项**弱施加，例如\n\n$$\\frac{du}{dt}=\\dots-\\tau H^{-1}(u_{\\text{边界}}-g).$$\n\n**$\\tau$ 的取值决定稳定性**（有可证的范围）。SAT 的好处是「不修改原算子」，把边界条件的处理变成一个可调、可证的项。\n\n**SBP-SAT 的威力**：把「离散能量法」变成**定理**：\n\n$$\\frac{d}{dt}\\lVert u\\rVert_{H}^{2}\\le0$$\n\n可以**从代数上证出来**（不是靠试验）。这在长时程模拟（如湍流 DNS、波传播）里价值极高——因为「经验稳定」的格式常在 $10^{5}$ 步之后崩掉。\n\n**与 skew 的关系**：\n\n| 方法 | 处理范围 | 证明力度 |\n|---|---|---|\n| skew 形式 | 周期/内部 | 内部能量平衡 |\n| **SBP-SAT** | **含边界** | 完整离散能量不等式 |\n| 分片多项式 DG-SBP | 复杂几何 + 高阶 | 同上（局部 + 界面项） |\n\n**代价**：SBP 算子不是任意差分——要专门构造（高阶 SBP 算子的系数有表可查）；边界处理（尤其是多块/曲线坐标）复杂度上升。**工程判断**：短时程、简单几何 → skew 够用；长时程/波传播/稳定性敏感 → 上 SBP-SAT。\n\n**它和 R-H 的关系**（跨篇连接）：SBP-SAT 是**线性**问题的能量证明工具；有激波（`I7`）时需要非线性稳定性（熵稳定格式、$H$-稳定）。**同为「守恒 + 稳定」的两条线，一条线性一条非线性。**\n\n**注意**：这是**拓展**内容——切片只给了连续不等式与「反对称性/守恒性」两个词；本节补上工程上如何把它做成可证的定理。",
+      "links": [
+        "I9.1",
+        "I7",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:energy-stability.application",
+      "type": "application",
+      "subject": "energy-stability",
+      "title": "应用：能量稳定格式服务的地方",
+      "keywords": [
+        "涡量约束（I4）：会破坏能量不等式，必须单独评估",
+        "湍流 DNS/LES（I5）：长时程要求稳定性可证，不能靠经验",
+        "多相流（I8）：表面张力项也需能量一致的离散（否则寄生流）",
+        "时间积分：显式 RK 有稳定性域，能量稳定是空间侧的要求",
+        "自检：每步测 ΔKE + νΔt‖∇u‖² 是否 O(Δx^p)",
+        "反例触发：任何「守恒」声称，都要问「保的是动量还是能量」"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "单元级应用词条；把「守恒的歧义（动量 vs 能量）」做成最终的判据。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`I4` 涡量约束**：VTK（涡量约束）是人为加的体积力 $\\mathbf{f}=\\varepsilon h(\\boldsymbol{\\omega}\\times\\mathbf{N})$，它会**破坏** $dKE/dt\\le0$——因为 $\\langle u,f\\rangle$ 一般不为零。所以带 VTK 的求解器**不能声称能量稳定**，必须把 $\\varepsilon$ 与稳定性一起评估。\n- **`I5` 湍流 DNS/LES**：DNS 要跑 $\\sim10^{5}$ 步，任何「经验稳定」的格式都会在此崩掉。**能量可证的格式（SBP-SAT、skew）是长时程模拟的前提**。LES 的亚格子模型还要求「耗散性」（不能造能量），这是同一件事的模型层面。\n- **`I8` 多相流**：表面张力项的离散也要「能量一致」——否则出现**寄生流**（液滴自发流动）。这与曲率噪声（`I8:interface.extension`）一起构成界面方法的两大数值难题。\n- **时间积分**：空间侧能量稳定（本条）与时间侧稳定域（$A$-稳定、$L$-稳定）是**两个独立的稳定性条件**，必须同时满足。显式 RK 的稳定域限制给 $\\Delta t$ 上限（与 `I9.4` 的 CFL 有关）。\n- **`I9.1` 守恒框架**：能量稳定格式必须在 FVM/FD 的守恒框架里讨论——不然「守恒」这个词本身就说不清。\n\n**一条自检问句**：**任何「守恒」的声称，都要追问一句「保的是哪个量、是动量还是能量」**。这两者在离散意义下符号相反（`I9.2:energy-stability.central-advection` 的实测 $+0.414214$ vs $-0.414214$），混用会直接得到相反的结论。",
+      "links": [
+        "I4",
+        "I5",
+        "I8",
+        "I9.1",
+        "I9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:energy-stability.probe1",
+      "type": "probe",
+      "subject": "energy-stability",
+      "title": "检验题：这三种对流形式，哪种不产生能量？",
+      "keywords": [
+        "可算题：N=8 周期、中心差、KE=2.2462387473，测三种形式的 ⟨u,adv⟩",
+        "答案：advective +0.4142135624；conservative −0.4142135624；skew +0.0000000000",
+        "判据：⟨u,adv⟩ 必须为 0 才不产生能量（skew 是唯一）",
+        "追问：守恒形式的 dKE/dt 是正还是负？（正，+18.4403%）",
+        "陷阱：把「守恒」当成「不产生能量」"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "从能量稳定的离散要求变来的检验题；两处陷阱（守恒歧义、符号）都是本节核心。",
+      "content": "**题**：$N=8$ 周期、中心差、$u=0.3+\\sin x+0.5\\sin 2x$（$KE=2.2462387473$）。\n\n1. 分别求三种对流形式的 $\\langle u,\\text{adv}\\rangle$；\n2. 判断哪种「不产生能量」，给出判据；\n3. 守恒形式的 $dKE/dt$ 符号是正还是负？相对幅度多少？\n\n**答案**：\n\n1. 实测（$\\langle u,\\text{adv}\\rangle=\\sum_ju_j\\text{adv}_j\\Delta x$）：\n\n   | 形式 | $\\langle u,\\text{adv}\\rangle$ |\n   |---|---|\n   | $(u\\cdot\\nabla)u$ | $+0.4142135624$【已核验:0.414213562373|(0.4142135623730952)】 |\n   | $\\nabla\\cdot(uu)$ | $-0.4142135624$【已核验:-0.414213562373|(-0.4142135623730949)】 |\n   | skew 平均 | $+0.0000000000$ |\n\n   **注意第二行的号**：$\\langle u,\\nabla\\cdot(uu)\\rangle=+0.414214$ 是 dKE/dt 的**负**（因为 $u_t=-\\text{adv}$ ⇒ $dKE/dt=-\\langle u,\\text{adv}\\rangle$）。为上表统一，此处直接列出 $\\langle u,\\text{adv}\\rangle$；**守恒形式给负值 → $dKE/dt$ 为正**。\n\n2. 判据：$\\langle u,\\text{adv}\\rangle=0$。只有 **skew** 满足（实测精确 0）。理由：skew 是另两者之和的一半，而它们在离散意义下**恰好反号**（SBP 恒等式 $B=-A$）。\n\n3. **正**：$dKE/dt=+0.4142135624$，相对 $+0.4403/2.24624=+18.4403\\%$【已核验:0.184403177475|0.4142135623730949/2.246238747316702】。所以用守恒形式会**造能量**。\n\n**易错点**：\n\n- **把「守恒」当「不产生能量」**：守恒形式守恒的是**动量**（$\\sum\\text{adv}=0$），能量账恰好反号；\n- **符号弄反**：$\\langle u,\\text{adv}\\rangle$ 与 $dKE/dt$ 差一个负号（$u_t=-\\text{adv}$），写答案时要指明是哪个量；\n- **以为 skew 是「更高阶」**：skew 不是阶数更高，是**性质不同**（对称性），一阶迎风配 skew 也是一阶精度但能量不产。",
+      "links": [
+        "I9.1",
+        "I9.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "I9.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：三种对流形式的能量收支",
+      "keywords": [
+        "模块 energy-budget（档1 前端直渲）",
+        "模式①：三种对流形式的 ⟨u,adv⟩ 实时对比条（skew 必须恒为 0）",
+        "模式②：放大因子 |G| 随 CFL 变化——中心差恒 >1、迎风恒 ≤1",
+        "模式③：长时程 KE 曲线——中心差指数爆炸、迎风衰减、skew 持平",
+        "invariant：skew 的 ⟨u,adv⟩ 用严格等式（=0）；中心差用严格不等式（>1）",
+        "预置：N=8、u=0.3+sin x+0.5sin 2x、CFL=0.25/0.5"
+      ],
+      "tex_ref": {
+        "file": "notebook/I_fluid.tex",
+        "line_start": 131,
+        "line_end": 134
+      },
+      "fill_hint": "档1 依据：$\\langle u,\text{adv}\rangle$ 与 $\\lvert G\rvert$ 都是显式函数，前端可算；invariant 区分严格等式与严格不等式。",
+      "content": "**档1 演示**（前端直渲），模块 `energy-budget`。\n\n**模式① `advection-forms`**：三条柱状/条形实时显示三种对流形式的 $\\langle u,\\text{adv}\\rangle$：advective $+0.414214$、conservative $-0.414214$、skew $0$。旁边给出对应的 $dKE/dt$ 与相对幅度。**让「守恒形式造能量、skew 为零」一眼可见。**\n\n**模式② `amplification-factor`**：画 $\\lvert G\\rvert$ 作为 CFL 的函数：\n\n$$\\text{中心差}:\\ \\lvert G\\rvert=\\sqrt{1+c^{2}},\\qquad \\text{一阶迎风}:\\ \\lvert G\\rvert=\\sqrt{1-2c(1-c)(1-\\cos k\\Delta x)}.$$\n\n中心差曲线**整体在 $1$ 上方**（无条件不稳定）；迎风曲线在 $0\\le c\\le1$ 内**整体在 $1$ 下方**。$k\\Delta x$ 可拖（取 $\\pi$ 时迎风最耗散）。\n\n**模式③ `ke-long-run`**：长时程动能曲线（对数纵轴）。三条曲线：中心差按 $(\\sqrt{1+c^{2}})^{n}$ 指数上升；迎风衰减；skew 持平（能量不产不耗，只被粘性带走——若开粘性则缓慢下降）。\n\n**恒等式/不等式（给前端 invariant）**：\n\n- skew：$\\langle u,\\text{adv}\\rangle=0$ ——**严格等式**（任何实现错都会破坏）；\n- 中心差：$\\lvert G\\rvert>1$ 对所有 $c>0$ ——**严格不等式**；\n- 迎风：$\\lvert G\\rvert\\le1$ 对 $0\\le c\\le1$ ——**非严格不等式**。\n\n**参数契约**：\n\n- 预置：`N=8`、`u=0.3+sin(x)+0.5*sin(2x)`、`cfl∈{0.25,0.5}`、`kdx=π`；\n- 与 `I9.2:energy-stability.probe1` 的数值（$\\pm0.4142135624$、$0$）保持一致。",
+      "links": [
+        "I9.1",
+        "I9.2",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

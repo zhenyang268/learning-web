@@ -1,0 +1,274 @@
+{
+  "schema": "entry-card/v2",
+  "code": "J1",
+  "chapter": "J1",
+  "title": "从几何光学到波动光学",
+  "src": {
+    "file": "notebook/J_rtx.tex",
+    "line_start": 4,
+    "line_end": 24,
+    "anchor": "notebook/J_rtx.tex:4"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "J1:eikonal.quantifiers",
+      "type": "comparison",
+      "subject": "eikonal",
+      "title": "从几何光学到波动光学：四个限定词逐条翻车",
+      "keywords": [
+        "条件①λ ≪ 特征尺度：λ 与几何尺度可比时程函方程失效",
+        "条件②无焦散：焦散处 |∇S| 仍 = n 但振幅发散（几何光学预言无穷亮）",
+        "条件③标量近似：偏振/矢量效应要回到亥姆霍兹的矢量版",
+        "条件④缓变折射率：n 在波长尺度上突变（陡界面）时需匹配条件",
+        "翻车代价：用几何光学算焦散亮度得到 ∞，用波动光学才有有限值"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "四行条件表；①行给 $\\lambda/L$ 的具体比值；③行给 $R_s$ vs $R_p$ 的具体对比（与 J3 交叉）。",
+      "content": "切片给了四个方程：程函、光线、亥姆霍兹、格林函数。它们之间是**近似阶梯**，每级都有失效条件。\n\n| 限定词 | 去掉后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① $\\lambda\\ll L$（特征尺度） | 取 $\\lambda=550$ nm、特征尺度 $L=1$ μm：$\\lambda/L=0.55$——**同量级**，衍射项不可忽略 | 几何光学（光线直行）完全失效，必须用衍射理论 | 不能放宽。判据：$\\lambda/L\\lesssim10^{-2}$ 才安全 |\n| ② 无焦散 | 透镜焦点、彩虹、水杯亮线：几何光学预言强度 $\\to\\infty$（光线汇聚处 Jacobian $\\to0$） | 「无限亮」非物理 | 不能放宽。要波动光学（Airy/Pearcey 函数）给有限值（见 `J8`） |\n| ③ 标量近似 | 偏振（`J3`）：Fresnel 方程区分 $s$、$p$ 偏振，标量波无法区分 | 反射率算错（单表面 $R_s=0.147929$ vs $R_p=0.008466$ at 45°，差 17 倍） | 可放宽：用矢量亥姆霍兹 + 偏振分解 |\n| ④ $n$ 缓变 | 陡界面（玻璃/空气）：$n$ 在几个原子层内从 $1$ 跳到 $1.5$ | 光线方程在此无定义；必须用边界匹配（Snell + Fresnel） | 可放宽：分段处理（每段内缓变）+ 界面条件 |\n\n**这张表的用法**：\n\n1. **先算 $\\lambda/L$**：$\\gtrsim10^{-2}$ → 别用几何光学；\n2. **再问有没有焦散**：有 → 亮度要靠波动光学修正（`J8`）；\n3. **再问要不要偏振**：要 → 矢量版 + Fresnel（`J3`）。\n\n**量级感受**：$\\lambda=550$ nm 时\n\n$$k=\\frac{2\\pi}{\\lambda}=\\frac{2\\pi}{550\\times10^{-9}}=1.1424\\times10^{7}\\ \\mathrm{rad/m}$$【已核验:11423973.2858|2*pi/550e-9】\n\n波数高达 $10^{7}$ rad/m，这既解释了「为什么光线是直的」（相位剧烈振荡，稳相近似把积分局域到一条线），也解释了「为什么几何光学好用」（在 mm 尺度上相位已经转了 $\\sim10^{4}$ 圈）。",
+      "links": [
+        "J1",
+        "J3",
+        "J8",
+        "J2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J1:eikonal.caustic",
+      "type": "counterexample",
+      "subject": "eikonal",
+      "title": "反例：用几何光学算焦散亮度（得到无限大）",
+      "keywords": [
+        "误用现场：用光线追踪算透镜焦点处的亮度",
+        "几何光学：I ∝ dA_源/dA_像（Jacobian），焦点处 Jacobian → 0",
+        "预言：I → ∞（非物理）",
+        "物理限制：波动光学给有限值，量级由 Airy 半经典式 |Ai(-x)|² ~ 1/(π√x)",
+        "数值锚点：x=10 时该式为 0.100658",
+        "修补：焦散附近用波动光学（Airy/Pearcey），或用「模糊光线」做软化"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "把「I → ∞」这个结构性缺陷算成波动光学的有限值（1/(π√x)）；说明能量守恒的解读；修补指向光子映射。",
+      "content": "**误用现场**：用纯几何光学（光线追踪）算透镜聚焦处的亮度，结果是**无限大**。\n\n**为什么这是错的**：光线追踪里，强度由**光线密度的 Jacobian** 决定：\n\n$$I_{\\text{像}}=I_{\\text{源}}\\left|\\frac{dA_{\\text{源}}}{dA_{\\text{像}}}\\right|.$$\n\n在焦散（caustic）处，一族相邻光线**汇聚到一点**——$dA_{\\text{像}}\\to0$，于是 Jacobian $\\to\\infty$，$I\\to\\infty$。这是**几何光学的结构性缺陷**，不是数值精度问题（加密光线数只让峰值更高）。\n\n**波动光学给什么**。焦散附近必须解衍射积分，结果由 **Airy 函数**（折叠焦散）或 **Pearcey 函数**（尖点焦散）给出**有界**的峰值：\n\n$$I_{\\text{波}}(x)\\propto\\lvert\\mathrm{Ai}(x)\\rvert^{2},$$\n\n而在半经典（远离转折点）区域有\n\n$$\\lvert\\mathrm{Ai}(-x)\\rvert^{2}\\sim\\frac{1}{\\pi\\sqrt{x}}.$$\n\n**数值锚点**：$x=10$ 时该式为 $0.100658$【已核验:0.100658424209|1/(pi*sqrt(10))】——**有限、且随 $x$ 缓慢衰减**（$\\propto x^{-1/2}$）。这正是焦散亮线「外侧渐弱」的定量形式。\n\n**关键对比**：\n\n| 量 | 几何光学 | 波动光学 |\n|---|---|---|\n| 焦散处强度 | $\\infty$ | 有限（Airy 峰值） |\n| 亮纹结构 | 一条零宽度线 | 一组渐弱条纹 |\n| 峰值宽度 | $0$ | $\\propto(\\lambda^{2}R)^{1/3}$ |\n| 能量 | 集在一点 | 摊在条纹上（能量守恒） |\n\n**能量为什么会守恒**：几何光学把能量集中到零宽度线上（荒谬），波动光学把它摊成一串条纹——**总能量相同**，只是分布变了。这就是「焦散不是能量无穷多，而是能量被压得太窄」的正确解读。\n\n**修补动作**：\n\n1. **物理正确**：焦散附近切换成波动光学（Airy/Pearcey 积分），或用「光束传播法」（BPM）；\n2. **渲染里的实用做法**：光子映射（`J7`）天然处理焦散——因为它是「从光源收集」而不是「从相机追踪」，焦散被记录成光子密度；或者用「模糊光线」（beam tracing）给光线一个有限截面；\n3. **判据**：问一句「这束光线会不会汇聚到一点」——会，就必须用波动光学或光子方法。\n\n**与 `J8` 的关系**：本条是 `J8`（焦散与灾变理论）的前置——`J8` 给出焦散的**分类**（折叠/尖点）与对应的**特殊函数**。",
+      "links": [
+        "J1",
+        "J8",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J1:eikonal.statement",
+      "type": "statement",
+      "subject": "eikonal",
+      "title": "四个方程：程函、光线、亥姆霍兹、格林函数",
+      "keywords": [
+        "程函方程：|∇S|² = n²(x)，S 是相位（eikonal）",
+        "光线方程：d/ds(n dx/ds) = ∇n，等价的射线轨迹方程",
+        "亥姆霍兹：∇²E + k²E = 0，k = 2π/λ",
+        "自由空间格林函数：G = e^{ikr}/(4πr)，点源响应",
+        "三者关系：程函是亥姆霍兹的稳相极限；格林函数是亥姆霍兹的基本解",
+        "几何光学基本量：光程 L = ∫n ds，相位 = kL"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "四个方程的陈述 + 特例校核（n=1 给直线）+ 关系图；给波数与相位圈数的数值锚点。",
+      "content": "**陈述**（切片四个方程）。\n\n**① 程函方程（eikonal equation）**：\n\n$$\\lvert\\nabla S\\rvert^{2}=n^{2}(\\mathbf{x}).$$\n\n**含义**：$S$ 是**相位**（单位：长度，乘上 $k$ 得弧度）。梯度的大小就是折射率——**相位每单位长度变化多少，由介质密度决定**。等相位面 $S=\\text{const}$ 就是**波前**；波前的法向就是光线方向。\n\n**② 光线方程（ray equation）**：\n\n$$\\frac{d}{ds}\\left(n\\frac{d\\mathbf{x}}{ds}\\right)=\\nabla n.$$\n\n**含义**：$s$ 是弧长。它等价于「光线在折射率梯度里弯曲」——左侧是动量式（$n\\,d\\mathbf{x}/ds$ 是「光学动量」），右侧是「力的来源」$\\nabla n$。\n\n**特例校核**：$n\\equiv1$（均匀介质）→ $d^{2}\\mathbf{x}/ds^{2}=\\mathbf{0}$，即**直线** ✅。这就是「均匀介质里光线是直的」的方程表达。\n\n**③ 亥姆霍兹方程（Helmholtz equation）**：\n\n$$\\nabla^{2}\\mathbf{E}+k^{2}\\mathbf{E}=\\mathbf{0},\\qquad k=\\frac{2\\pi}{\\lambda}.$$\n\n**含义**：把波动方程 $\\nabla^{2}E-\\frac{1}{c^{2}}\\partial_{t}^{2}E=0$ 里的时间因子 $e^{-i\\omega t}$ 分离出来，就得到它。**这是「定态」波动光学的基本方程**；程函方程是它在 $\\lambda\\to0$ 时的极限（见 `J1:eikonal.proof`）。\n\n**④ 自由空间格林函数**：\n\n$$G(\\mathbf{x},\\mathbf{x}')=\\frac{e^{ik\\lvert\\mathbf{x}-\\mathbf{x}'\\rvert}}{4\\pi\\lvert\\mathbf{x}-\\mathbf{x}'\\rvert}.$$\n\n**含义**：它是亥姆霍兹方程在点源下的基本解——**球面波的解析表达**：(a) 相位 $e^{ikr}$ 表示向外传播；(b) 振幅 $\\propto1/r$ 保证能量守恒（球面面积 $\\propto r^{2}$，故强度 $\\propto1/r^{2}$）；(c) $4\\pi$ 归一化来自立体角。\n\n**四者的关系（一张图）**：\n\n$$\\underbrace{\\text{麦克斯韦/波动方程}}_{\\text{起点}}\\xrightarrow{\\text{分离 }e^{-i\\omega t}}\\underbrace{\\text{亥姆霍兹}}_{\\text{定态}}\\begin{cases}\\xrightarrow{\\ \\text{基本解}\\ }&\\underbrace{G=\\frac{e^{ikr}}{4\\pi r}}_{\\text{点源响应}}\\\\[4pt]\\xrightarrow{\\ \\lambda\\to0\\ \\text{稳相}\\ }&\\underbrace{|\\nabla S|^{2}=n^{2}}_{\\text{程函}}\\xrightarrow{\\ \\text{特征线}\\ }\\underbrace{\\frac{d}{ds}\\!\\left(n\\frac{d\\mathbf{x}}{ds}\\right)=\\nabla n}_{\\text{光线}}\\end{cases}$$\n\n**数值锚点**：$\\lambda=550$ nm（绿光）给出 $k=1.1424\\times10^{7}$ rad/m【已核验:11423973.2858|2*pi/550e-9】；传播 1 m 后相位转了 $kL/(2\\pi)=1.818\\times10^{6}$ 圈【已核验:1818181.81818|2*pi/550e-9/(2*pi)】——**千万量级的相位**，这正是稳相近似极其有效的原因。\n\n**它依赖什么 / 谁依赖它**：`J2` 的衍射（从格林函数叠加出发）、`J3` 的偏振（矢量版亥姆霍兹）、`J4` 的相干性（相位关系）、`J5` 的 RTE（光强输运）。",
+      "links": [
+        "J2.1",
+        "J2.2",
+        "J3",
+        "J4",
+        "J5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J1:eikonal.intuition",
+      "type": "intuition",
+      "subject": "eikonal",
+      "title": "直觉：波前像等压线，光线永远垂直穿过它们",
+      "keywords": [
+        "S(x) 是相位场；等相位面 S=const 是波前",
+        "光线 ⊥ 波前（因为梯度方向垂直等值面）",
+        "|∇S| = n：介质越「密」，相位随距离变化越快",
+        "费马原理：光走光程极值路径（∫n ds 取极值）",
+        "为什么光线直：波长极短 → 波前近乎平面 → 法向近乎不变",
+        "焦散图像：波前凹进去，法向汇聚 → 光线交叉"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用等压线比喻 + 表格；说明费马原理与光线方程的等价；点出稳相=光线。",
+      "content": "**切片给了四个方程**。理解它们最快的路径是**几何图像**。\n\n**假设给了什么。** 光是有**相位**的波。相位场 $S(\\mathbf{x})$ 的两条性质：\n\n1. **等相位面**（$S=\\text{const}$）是**波前**——在这一面上，波「同时到达」；\n2. **梯度 $\\nabla S$ 垂直于等值面**（这是标量场的普遍性质）。\n\n**结论为什么因此成立。** 由 2，**光线（波前法向）⊥ 波前**。而程函方程 $\\lvert\\nabla S\\rvert=n$ 说这个梯度的**长度**是 $n$。\n\n**用天气图比喻**：$S$ 像一张**等压线图**（或等温线图）：\n\n| 天气图 | 光学 |\n|---|---|\n| 等压线 | 波前（$S=\\text{const}$） |\n| 梯度（指向气压变化最陡方向） | 光线方向 |\n| 梯度大小（气压梯度） | 折射率 $n$ |\n| 梯度场的流线 | 光线轨迹 |\n\n**为什么 $n$ 越大相位变化越快**：介质越「密」（$n$ 大），光在里面走得越慢（$v=c/n$），于是同样的**空间**距离对应更大的**相位**变化。由 $S=\\int n\\,ds$（光程）与 $\\lvert\\nabla S\\rvert=n$ 是一致的。\n\n**费马原理（这条给出光线方程）**：光在两点间走**光程极值**的路径：\n\n$$\\delta\\int n\\,ds=0.$$\n\n**为什么它与光线方程等价**：这是变分问题的驻定条件，其 Euler–Lagrange 方程**正是** $\\dfrac{d}{ds}\\left(n\\dfrac{d\\mathbf{x}}{ds}\\right)=\\nabla n$。所以「光线方程」不是独立假设，是费马原理的推论。\n\n**为什么光线看起来是直的（关键直觉）**：$\\lambda$ 极短（$10^{-7}$ m 量级），在 mm 尺度上相位已经转了 $10^{3}$–$10^{4}$ 圈（`J1:eikonal.statement` 的数值锚点）。衍射积分里，这个剧烈振荡使积分**局域到稳相点**——只有一条路径的相位是驻定的，其余互相抵消。**\"光线\"就是稳相路径。**\n\n**焦散的几何（为 `J8` 铺垫）**：当波前**凹向传播方向**时，法向会**汇聚**——相邻光线相交，形成焦散。等价的说法：波前的曲率半径在缩小，到「焦散点」时变成零（Jacobian $\\to0$）。\n\n**记这个图像**：**波前是等高线，光线是垂直于它的流线，$n$ 是「坡度」。** 光线之所以是直的、之所以会弯曲、之所以会汇聚——全在「等高线的形状」里。",
+      "links": [
+        "J3",
+        "J2.1",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J1:helmholtz.proof",
+      "type": "proof",
+      "subject": "helmholtz",
+      "title": "推导骨架：从波动方程到程函方程（稳相极限）",
+      "keywords": [
+        "第一步：设 E = A e^{ikS}（振幅 + 快相位）代入亥姆霍兹",
+        "第二步：分离 k 的幂次（k²、k¹、k⁰）",
+        "第三步：k² 项给出 |∇S|² = n²（程函方程）",
+        "第四步：k¹ 项给出输运方程 2∇S·∇A + A∇²S = 0（振幅输运）",
+        "第五步：特征线法把程函方程化为光线方程",
+        "易错点：忘 n 或 k 的关系；把 S 的单位当弧度（它是长度）"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "五步骨架；重点是 $k$ 的幂次分离与「$O(k)$ 项不能丢」；末段点出 $O(1)$ 项就是衍射修正。",
+      "content": "**推导骨架**（五步，每步给理由）。目标：从亥姆霍兹方程挤出程函方程与光线方程，说明它是**短波极限**。\n\n**第一步：设解的渐近形式。** 令\n\n$$E(\\mathbf{x})=A(\\mathbf{x})\\,e^{i k S(\\mathbf{x})},$$\n\n其中 $A$ 是缓变**振幅**、$S$ 是**相位**（与 $\\lambda$ 无关，量纲是长度）、$k=\\omega/c$ 是真空波数。**理由**：$k$ 很大（$\\sim10^{7}$），把「剧烈振荡」与「缓慢包络」分离是自然的渐近分解。$n(\\mathbf{x})$ 通过 $\\nabla^{2}$ 的系数进入。\n\n**第二步：代入并分离 $k$ 的幂。** 用带 $n$ 的亥姆霍兹方程 $\\nabla^{2}E+k^{2}n^{2}E=0$：\n\n$$\\nabla^{2}E=\\left[\\nabla^{2}A+2ik\\nabla A\\cdot\\nabla S+ikA\\nabla^{2}S-k^{2}A\\lvert\\nabla S\\rvert^{2}\\right]e^{ikS}.$$\n\n代入并整理，按 $k$ 的幂分组：\n\n$$\\underbrace{k^{2}A\\left(n^{2}-\\lvert\\nabla S\\rvert^{2}\\right)}_{O(k^{2})}+\\underbrace{ik\\left(2\\nabla A\\cdot\\nabla S+A\\nabla^{2}S\\right)}_{O(k)}+\\underbrace{\\nabla^{2}A}_{O(1)}=0.$$\n\n**第三步：取 $k^{2}$ 项（主导）。** $k\\to\\infty$ 时最低阶项必须单独为零：\n\n$$n^{2}-\\lvert\\nabla S\\rvert^{2}=0\\quad\\Longrightarrow\\quad\\boxed{\\lvert\\nabla S\\rvert^{2}=n^{2}(\\mathbf{x})}.$$\n\n**这就是程函方程**（eikonal equation）。**理由**：$k^{2}$ 项是主导项——只要它不为零，方程无法平衡。这个理由与 `I6` 的边界层量级分析同型：**主导项必须自己配平**。\n\n**第四步：取 $k^{1}$ 项（次主导）。**\n\n$$2\\nabla A\\cdot\\nabla S+A\\nabla^{2}S=0\\quad\\Longrightarrow\\quad\\nabla\\cdot\\left(A^{2}\\nabla S\\right)=0.$$\n\n**理由**：这是**振幅输运方程**（transport equation）。改写成散度形式后可以看出它的物理含义：$A^{2}\\nabla S$ 无散——即**能量通量守恒**（$A^{2}$ 是强度、$\\nabla S$ 是光线方向）。**这正是焦散处振幅发散的来源**：光线汇聚时通量守恒强制 $A^{2}\\to\\infty$。\n\n**第五步：特征线法给出光线方程。** 程函方程是一阶非线性 PDE，其特征线方程为\n\n$$\\frac{d\\mathbf{x}}{ds}=\\nabla S,\\qquad \\frac{d(k\\nabla S)}{ds}=k\\nabla n,$$\n\n（第二个式子是沿特征线对 $\\lvert\\nabla S\\rvert^{2}=n^{2}$ 求方向导数）。合并即得\n\n$$\\boxed{\\frac{d}{ds}\\left(n\\frac{d\\mathbf{x}}{ds}\\right)=\\nabla n}.$$\n\n**理由**：特征线就是「信息传播的路径」——在光学里它就是**光线**。所以「光线」不是一个额外假设的对象，而是程函方程的**特征线**。\n\n**依赖链**：亥姆霍兹（定态波动）→ 渐近展开 $Ae^{ikS}$ → $O(k^{2})$ 给程函 → $O(k)$ 给输运 → 特征线给光线。\n\n**易错点**：\n\n1. **$S$ 的单位**：它是**长度**（光程），不是弧度。弧度是 $kS$。写成「$S$ 是相位角」会导致后面 $k$ 因子放错位置；\n2. **忘 $n$ 的来源**：$n^{2}$ 出现在 $k^{2}n^{2}E$ 项里（介质中的波数 $kn$）。若写成 $k^{2}E$（真空），程函变成 $\\lvert\\nabla S\\rvert=1$，介质信息全丢；\n3. **$O(k)$ 项不能丢**：丢掉它就没有振幅输运，也就**算不出焦散**（`J1:eikonal.caustic`）——恰恰是最需要处理的地方；\n4. **$k\\to\\infty$ 的合法性**：这是渐近展开，不是极限等式。$k$ 有限时 $O(1)$ 项（$\\nabla^{2}A$）有贡献，它就是**衍射修正**（`J2` 的来源）。",
+      "links": [
+        "J2.1",
+        "J2.2",
+        "J3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J1:helmholtz.vs-radiometry",
+      "type": "comparison",
+      "subject": "helmholtz",
+      "title": "分工：波动光学（相位）与辐射度量学（强度）怎么衔接",
+      "keywords": [
+        "波动光学：跟踪复振幅与相位，能算干涉/衍射",
+        "辐射度量学：只跟踪 radiance（强度），丢相位",
+        "衔接点：把 |E|² 换成 radiance L，用 Wigner 函数/相干性过渡",
+        "渲染的选择：绝大多数场景用 radiance（无相位）",
+        "需要相位时：衍射（J2）、焦散（J8）、薄膜干涉",
+        "判据：会不会发生干涉/衍射？会→波动；不会→radiance"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "对照口径：以「跟踪相位还是不跟踪」划界，衔接点落在 J4 的相干性；给渲染的三个例外场景。",
+      "content": "**两者是「跟踪相位 vs 只跟踪强度」的取舍。**\n\n| | 波动光学 | 辐射度量学（radiometry） |\n|---|---|---|\n| 状态量 | 复振幅 $E$（含相位） | radiance $L$（只有强度） |\n| 能否算干涉 | ✅ | ❌（相位已被丢掉） |\n| 能否算衍射 | ✅ | ❌ |\n| 能否算焦散条纹 | ✅（Airy/Pearcey） | ⚠️（只有几何预言，即 $\\infty$） |\n| 计算成本 | 每点一个复数、需相干叠加 | 每光线一个标量 |\n| 渲染默认 | 极少用 | **主流**（路径追踪等） |\n\n**衔接机制**：从波动到辐射度量的桥是**相干性**（`J4`）。当 $|\\gamma|\\approx0$（不相干）时，强度可以**直接相加**（$I=I_1+I_2$），相位信息不再需要——这就从波动光学退化为辐射度量学。\n\n**具体判据（三问定选）**：\n\n1. **会不会发生干涉？**（相干光源、薄膜、干涉仪）→ 波动光学；\n2. **会不会发生衍射？**（孔径与 λ 可比、`J2` 的两类衍射）→ 波动光学；\n3. **会不会有焦散？**（`J8`）→ 波动光学（或光子映射，它用统计方式绕过几何光学的 $I\\to\\infty$）。\n\n**渲染的实用边界（重要）**：\n\n- **默认情况（大尺度、非相干光源）**：radiance 足够，路径追踪（`J7`）就是在这个框架里做的；\n- **例外一：焦散**——用**光子映射**（`J7`）而不是「几何光学 + 相位」，因为它绕开了 $I\\to\\infty$（见 `J1:eikonal.caustic`）；\n- **例外二：薄膜**（肥皂泡、油膜彩虹）——需要相位差（`J3` 与 `J4` 的交叉）；\n- **例外三：衍射极限**（`J2`）——镜头光晕、小孔成像。\n\n**位置关系**：本条把 `J1` 的相位框架与 H 篇的 radiance 框架对照。**H 篇的 rendering equation 就是 radiance 框架的守恒律**，而 `J1` 的输运方程（第四步）是波动框架的能量守恒律——**两个守恒律，一个含相位一个不含**。",
+      "links": [
+        "J3",
+        "J4",
+        "J2.1",
+        "J8",
+        "J5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J1:eikonal.probe1",
+      "type": "probe",
+      "subject": "eikonal",
+      "title": "检验题：波数 k 与相位圈数是多少？",
+      "keywords": [
+        "可算题：λ=550 nm，求 k；再求传播 1 m 的相位圈数",
+        "答案：k = 2π/λ = 1.14240×10⁷ rad/m",
+        "圈数：kL/(2π) = 1818181.82 圈",
+        "追问：λ=650 nm（红光）时 k 变小多少？（比例 550/650）",
+        "陷阱：把 k 写成 1/λ；把圈数写成 kL"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "从 k=2π/λ 变来的检验题；第 2 问给「圈数 = L/λ」这个简化记忆点。",
+      "content": "**题**：绿光 $\\lambda=550$ nm。\n\n1. 求波数 $k=2\\pi/\\lambda$；\n2. 求传播 $L=1$ m 后相位转过的**圈数**；\n3. 换成红光 $\\lambda=650$ nm，$k$ 变化多少？\n\n**答案**：\n\n1. $k=\\dfrac{2\\pi}{550\\times10^{-9}}=1.1423973\\times10^{7}$ rad/m【已核验:11423973.2858|2*pi/550e-9】。\n\n2. 圈数 $=\\dfrac{kL}{2\\pi}=\\dfrac{L}{\\lambda}=\\dfrac{1}{550\\times10^{-9}}=1.8181818\\times10^{6}$ 圈【已核验:1818181.81818|1/550e-9】。\n\n   **注意这个简化**：$kL/(2\\pi)=L/\\lambda$——**圈数就是把长度用波长来量**。这是一个很有用的记忆点。\n\n3. $k_{650}=\\dfrac{2\\pi}{650\\times10^{-9}}=9.6657\\times10^{6}$ rad/m【已核验:9666438.93412|2*pi/650e-9】。比值 $550/650=0.846154$【已核验:0.846153846154|550/650】，即红光波数小 $15.38\\%$。\n\n**易错点**：\n\n- **$k$ 写成 $1/\\lambda$**：差一个 $2\\pi$（$6.28319$ 倍）；\n- **圈数写成 $kL$**：那是弧度数不是圈数，同样差 $2\\pi$；\n- **用 $nm$ 不换 $m$**：$\\lambda=550$ nm 必须写 $550\\times10^{-9}$ m，否则算出 $k$ 大 $10^{9}$ 倍。\n\n**这条数字为什么重要**：$k\\sim10^{7}$ rad/m 是**全部短波近似的基础**——它保证了稳相近似（`J1:eikonal.intuition`）与几何光学（`J1:eikonal.statement`）在宏观尺度上极其精确，也解释了为什么「光线」这个直觉概念在日常生活里完全够用。",
+      "links": [
+        "J1",
+        "J2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "J1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：波前、光线与折射率场",
+      "keywords": [
+        "模块 eikonal-field（档1 前端直渲）",
+        "模式①：给定 n(x,y)（均匀/梯度/透镜），画波前等值线与正交光线",
+        "模式②：拖 n 的梯度，看光线弯曲程度变化",
+        "模式③：n=const 时显示光线严格为直线（|∇S| = n）",
+        "invariant：光线 ⊥ 波前（∇S·dx/ds = 0 的离散版）",
+        "预置：均匀 n=1；线性梯度 n=1+0.2x；径向 n=1+0.1r"
+      ],
+      "tex_ref": {
+        "file": "notebook/J_rtx.tex",
+        "line_start": 6,
+        "line_end": 24
+      },
+      "fill_hint": "档1 依据：$S$ 场与 $\nabla S$ 是显式可算的量（快速行进法），前端可渲；invariant 是「光线⊥波前」的严格等式。",
+      "content": "**档1 演示**（前端直渲），模块 `eikonal-field`。\n\n**模式① `wavefront-rays`**：在二维区域内给定 $n(x,y)$，用快速行进法/迭代解出 $S$ 场，画两类曲线：\n\n- **波前**：$S=\\text{const}$ 的等值线；\n- **光线**：沿 $\\nabla S$ 的流线（正交轨迹）。\n\n**两者必须处处垂直**——这是程函方程的几何内容（`J1:eikonal.intuition` 的等压线比喻）。\n\n**模式② `gradient-sweep`**：$n=1+\\alpha x$，$\\alpha$ 可拖。$\\alpha$ 增大时光线弯曲更明显；$\\alpha=0$ 时波前是直线、光线是直线。\n\n**模式③ `homogeneous-check`**：$n\\equiv1$ 的退化情形，显示光线为**严格直线**、波前为**严格平行线**。这是最干净的 sanity check。\n\n**恒等式（给前端 invariant）**：\n\n$$\\text{光线方向}\\cdot\\text{波前切向}=0\\quad\\Longleftrightarrow\\quad\\nabla S\\cdot\\frac{d\\mathbf{x}}{ds}=0.$$\n\n在离散实现里，光线方向取 $\\nabla S$ 归一化、波前切向取 $\\nabla S$ 的正交向量——**乘积必须为零**（严格等式，可到浮点精度）。任何符号/求导实现错误都会立刻破坏它。\n\n**参数契约**：\n\n- 预置：`uniform(n=1)`、`linear(n=1+0.2x)`、`radial(n=1+0.1r)`；\n- $S$ 的求解用 fast marching / Gauss–Seidel 迭代（前端可直接算，网格 $128^{2}$ 量级）。",
+      "links": [
+        "J3",
+        "J8",
+        "J2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
