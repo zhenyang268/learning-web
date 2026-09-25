@@ -1,0 +1,298 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de1.10",
+  "chapter": "de1",
+  "title": "线性系统",
+  "src": {
+    "file": "notebook/diffrential/de1.tex",
+    "line_start": 242,
+    "line_end": 272,
+    "anchor": "notebook/diffrential/de1.tex:242"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de1.10:linear-system.quantifiers",
+      "type": "comparison",
+      "subject": "linear-system",
+      "title": "线性系统的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①A 是常数矩阵（非常数时要用（非）齐次化或 Magnus 展开）",
+        "条件②e^{At} 用级数定义（总是收敛，对任意 A）",
+        "条件③可对角化时用 P e^{Λt} P⁻¹（最快）",
+        "条件④有若尔当块时含 tᵏe^{λt} 项",
+        "条件⑤Cayley-Hamilton：e^{At} 是 A 的 n−1 次多项式",
+        "翻车代价：几何重数算错 ⇒ 漏掉 t 因子（与 de1.5 重根同源）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "五行条件表；④ 行必须点出「若尔当块给 t^k e^{λt}」；给 $A=[[1,1],[0,1]]$ 的完整核对（代数重数 2、几何重数 1、$e^{At}=e^t(I+tN)$ 的推导）；给三档数值（含 $te^t$）；给 Cayley-Hamilton 的数值核对。",
+      "content": "切片给了通解、矩阵指数与三种计算方法。**最容易错的是「若尔当块」**——逐条拆：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$A$ 是常数矩阵** | **$\\mathbf{x}'=A\\mathbf{x}$**，$A$ 不显含 $t$ | 若 $A=A(t)$ ⇒ **不能直接写 $e^{At}$**（**因为 $A(t_1)$、$A(t_2)$ 不对易**） | 可放宽：**用 Magnus 展开或数值方法** |\n| ② **级数定义** | **$e^{At}=\\sum_{k=0}^{\\infty}\\dfrac{(At)^{k}}{k!}$**——**对任意 $A$ 都收敛**（**因为 $\\lVert(At)^{k}\\rVert/k!\\le(\\lVert A\\rVert t)^{k}/k!$**） | 若以为「只在特殊 $A$ 下收敛」⇒ 不敢用 | 不能放宽：**级数总收敛** |\n| ③ **可对角化** | **$A=P\\Lambda P^{-1}$** ⇒ **$e^{At}=Pe^{\\Lambda t}P^{-1}$** | 若 $A$ 不可对角化仍套 ⇒ **$P$ 不可逆、公式错** | 不能放宽：**要判可对角化** |\n| ④ **若尔当块** | **切片明说**：**「$\\mathbf{e}^{Jt}$ 包含 $t^{k}e^{\\lambda t}$ 项」** | **漏掉 $t$ 因子** ⇒ 与 `de1.5` 重根漏 $xe^{rx}$ 是同一个错 | 不能放宽：**几何重数决定 $t$ 的幂次** |\n| ⑤ **Cayley–Hamilton** | **切片**：**「$e^{At}$ 可表示为 $A$ 的 $n-1$ 次多项式」** | 若以为「要算无穷级数」⇒ 计算量爆炸 | 不能放宽：**$n$ 个基就够了** |\n\n**这张表的用法**：\n\n1. **判 $A$ 是否可对角化**（**算几何重数**）；\n2. **可对角化用 $P e^{\\Lambda t}P^{-1}$**；**否则用若尔当块（须写 $t^{k}$）**；\n3. **可以用 Cayley–Hamilton 把 $e^{At}$ 化到 $n-1$ 次多项式**。\n\n**切片示例的完整核对（$A=\\begin{pmatrix}1&1\\\\ 0&1\\end{pmatrix}$）**：\n\n| 步骤 | 内容 |\n|---|---|\n| 特征值 | $\\lambda=1$【已核验:1|2/2】 |\n| 代数重数 | $2$（**$\\det(A-\\lambda I)=(\\lambda-1)^{2}$**）（**因为 $\\operatorname{tr}A=2$、$\\det A=1$**） |\n| 几何重数 | **$1$**（**因为 $A-I=\\begin{pmatrix}0&1\\\\ 0&0\\end{pmatrix}$ 的零空间维数是 $1$**） |\n| **结论** | **有若尔当块（不可对角化）** ✅ |\n| **矩阵指数** | **$e^{At}=e^{t}\\begin{pmatrix}1&t\\\\ 0&1\\end{pmatrix}$** |\n| **通解** | **$\\mathbf{x}(t)=e^{t}\\begin{pmatrix}C_1+C_2t\\\\ C_2\\end{pmatrix}$** ✅ |\n\n**为什么 $e^{At}=e^{t}(I+tN)$（一句推导）**：**把 $A=I+N$ 分解**，**其中 $N=\\begin{pmatrix}0&1\\\\ 0&0\\end{pmatrix}$ 幂零（$N^{2}=0$）** ⇒ **因为 $I$ 与 $N$ 对易** ⇒\n\n$$e^{At}=e^{(I+N)t}=e^{It}e^{Nt}=e^{t}\\left(I+tN\\right)$$ ✅\n\n**（$e^{Nt}=I+tN$ 是因为 $N^{2}=0$，**级数在第二项就截断**）** ✅\n\n**数值核验（三档 $t$）**：\n\n| $t$ | $e^{t}$ | $e^{At}$ 的 $(1,2)$ 元 $=te^{t}$ |\n|---|---|---|\n| $0$ | $1.000000$ | $0$ |\n| $1$ | $2.718282$【已核验:2.71828182846|exp(1)】 | $2.718282$【已核验:2.71828182846|1*exp(1)】 |\n| $2$ | $7.389056$【已核验:7.38905609893|exp(2)】 | $14.778112$【已核验:14.7781121979|2*exp(2)】 |\n\n**注意 $(1,2)$ 元含因子 $t$** ✅——**这就是「若尔当块的 $t$ 因子」**。\n\n**Cayley–Hamilton 的数值核对**：**$A^{2}-2A+I=0$**（**因为 $\\operatorname{tr}A=2$、$\\det A=1$** ⇒ **特征多项式 $\\lambda^{2}-2\\lambda+1$**）：\n\n$$A^{2}=\\begin{pmatrix}1&2\\\\ 0&1\\end{pmatrix},\\qquad A^{2}-2A+I=\\begin{pmatrix}1-2+1&2-2+0\\\\ 0-0+0&1-2+1\\end{pmatrix}=\\begin{pmatrix}0&0\\\\ 0&0\\end{pmatrix}$$ ✅\n\n**所以「$e^{At}$ 可以用 $I$ 与 $A$ 的线性组合表示」**（**$e^{t}(I+tN)=e^{t}I+e^{t}(tN)$，而 $tN=A-I$** ⇒ **$e^{At}=e^{t}I+e^{t}(A-I)$**）✅",
+      "links": [
+        "de1.5",
+        "de1.8",
+        "de1.9",
+        "de1.11",
+        "de3.5",
+        "de3.9",
+        "de3.6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.10:geom-mult.counterexample",
+      "type": "counterexample",
+      "subject": "geom-mult",
+      "title": "反例：几何重数算错（漏掉 t 因子）",
+      "keywords": [
+        "误用现场：A=[[1,1],[0,1]] 时以为可对角化，写 e^{At} = e^t I",
+        "问题：几何重数是 1（< 代数重数 2）⇒ 不可对角化",
+        "后果：解写成 x = e^t(c1, c2)，漏掉 t 项（解空间只有 1 维）",
+        "实测：代数重数 2、几何重数 1 ⇒ 差 1 ⇒ 缺一个「广义特征向量」",
+        "正确：e^{At} = e^t[[1,t],[0,1]]",
+        "判据：对每个特征值，比较代数重数与几何重数"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "把「几何重数算错」的后果算清（$A=[[1,1],[0,1]]$ 的代数重数 2、几何重数 1；漏 t 则解空间只有 1 维）；给 $t=1$ 的两行数值对照；给「几何重数 = n − rank(A−λI)」的算法。",
+      "content": "**误用现场**：$A=\\begin{pmatrix}1&1\\\\ 0&1\\end{pmatrix}$ 的**特征值只有 $1$**，**于是以为「$e^{At}=e^{t}I$」**。\n\n**为什么这是错的**：**特征值重数 $2$，但「能对角化的条件」还要求几何重数 $=2$**——**而这里几何重数是 $1$**。\n\n**算给你看**：\n\n| 量 | 值 |\n|---|---|\n| 特征多项式 | $\\det(A-\\lambda I)=(1-\\lambda)^{2}$ ⇒ **代数重数 $2$** |\n| $A-I$ | $\\begin{pmatrix}0&1\\\\ 0&0\\end{pmatrix}$ |\n| 几何重数 | $\\dim\\ker(A-I)=$ **$1$**【已核验:1|2-1】 |\n| **是否可对角化** | **❌**（**几何重数 $<$ 代数重数**） |\n\n**「漏掉 $t$ 的后果」**：**若写 $\\mathbf{x}=e^{t}\\mathbf{c}$**（**只有两个常数**），**则**\n\n$$\\mathbf{x}'=e^{t}\\mathbf{c},\\qquad A\\mathbf{x}=e^{t}A\\mathbf{c}$$\n\n**要求 $A\\mathbf{c}=\\mathbf{c}$** ⇒ **$\\mathbf{c}$ 必须是特征向量** ⇒ **只有一维解空间** ⇒ **二阶系统需要二维** ⇒ **不够** ✅\n\n**正确解法（用幂零分解）**：\n\n$$A=I+N,\\qquad N=\\begin{pmatrix}0&1\\\\ 0&0\\end{pmatrix},\\qquad N^{2}=0$$\n\n**所以**（**$I$ 与 $N$ 对易**）：\n\n$$e^{At}=e^{It}e^{Nt}=e^{t}\\left(I+tN\\right)=e^{t}\\begin{pmatrix}1&t\\\\ 0&1\\end{pmatrix}$$ ✅\n\n**通解**：\n\n$$\\mathbf{x}(t)=e^{t}\\begin{pmatrix}C_1+C_2t\\\\ C_2\\end{pmatrix}$$ ✅（**两个常数**）\n\n**数值对照（$t=1$）**：\n\n| 写法 | $\\mathbf{x}(1)$（初值 $(1,1)$） |\n|---|---|\n| **正确** | $e^{1}(1+1\\cdot1,\\ 1)=(5.436564,\\ 2.718282)$ |\n| **漏 $t$** | $e^{1}(1,1)=(2.718282,\\ 2.718282)$ |\n\n**两者差 $2.718282$（第一分量）** ✅\n\n**后果链条（漏 $t$ 的代价）**：\n\n1. **解空间维数不足**（**$1<2$**）⇒ **初值问题不一定有解**；\n2. **与 `de1.5` 的重根漏 $xe^{rx}$ 是同一个错的矩阵版**；\n3. **物理上**：**漏掉了「剪切/拉伸」的动态**（**如 Jordan 型对应的「临界」行为**）。\n\n**判据（一句话）**：**「对每个特征值，几何重数 $=$ 代数重数吗？」** 不等 ⇒ **有若尔当块，必须写 $t^{k}$**。\n\n**修补动作**：\n\n1. **算几何重数**（**$\\dim\\ker(A-\\lambda I)$**，**即 $n-\\operatorname{rank}(A-\\lambda I)$**）；\n2. **不等时用幂零分解或若尔当标准型**（**`de3.9`**）；\n3. **自检**：**通解里的任意常数个数 $=n$ 吗**。",
+      "links": [
+        "de1.10",
+        "de1.5",
+        "de1.9",
+        "de3.5",
+        "de3.9"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.10:linear-system.statement",
+      "type": "statement",
+      "subject": "linear-system",
+      "title": "线性系统：矩阵指数与三种计算方法",
+      "keywords": [
+        "方程：x′ = Ax（A 常数矩阵）",
+        "通解：x(t) = e^{At}c",
+        "矩阵指数：e^{At} = Σ_{k≥0} (At)^k/k!（总收敛）",
+        "可对角化：e^{At} = P e^{Λt} P⁻¹",
+        "若尔当块：e^{Jt} 含 tᵏe^{λt} 项",
+        "Cayley-Hamilton：e^{At} 是 A 的 n−1 次多项式"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "陈述本体（方程 + 通解 + 级数收敛估计 + 三种算法）+ 切片示例的完整表与三档数值 + 可对角化的数值例子 + Cayley-Hamilton 的 $2\\times2$ 用法。",
+      "content": "**陈述**（切片）。\n\n**方程**：\n\n$$\\mathbf{x}'=A\\mathbf{x}$$\n\n**通解（切片）**：\n\n$$\\mathbf{x}(t)=e^{At}\\mathbf{c}$$\n\n**矩阵指数（切片）**：\n\n$$e^{At}=\\sum_{k=0}^{\\infty}\\frac{(At)^{k}}{k!}$$\n\n**「为什么这个级数总收敛」**：**取范数**\n\n$$\\left\\lVert\\frac{(At)^{k}}{k!}\\right\\rVert\\le\\frac{\\lVert A\\rVert^{k}t^{k}}{k!}\\ \\Longrightarrow\\ \\sum_k\\frac{\\lVert A\\rVert^{k}t^{k}}{k!}=e^{\\lVert A\\rVert t}<\\infty$$ ✅\n\n**所以对任意矩阵 $A$、任意 $t$，级数绝对收敛** ✅——**这意味着 $e^{At}$ 总是有定义**。\n\n**三种计算方法（切片）**：\n\n| 情形 | 公式 |\n|---|---|\n| **$A$ 可对角化** | $A=P\\Lambda P^{-1}$ ⇒ **$e^{At}=Pe^{\\Lambda t}P^{-1}$** |\n| **有若尔当块** | **$e^{Jt}$ 含 $t^{k}e^{\\lambda t}$ 项** |\n| **Cayley–Hamilton** | **$e^{At}$ 可表示为 $A$ 的 $n-1$ 次多项式** |\n\n**切片示例**：$\\mathbf{x}'=\\begin{pmatrix}1&1\\\\ 0&1\\end{pmatrix}\\mathbf{x}$。\n\n| 量 | 值 |\n|---|---|\n| 特征值 | $\\lambda=1$ |\n| 代数重数 | $2$ |\n| 几何重数 | **$1$**（**$A-I$ 的零空间是「第一坐标轴」**） |\n| **矩阵指数** | **$e^{At}=e^{t}\\begin{pmatrix}1&t\\\\ 0&1\\end{pmatrix}$** |\n| **通解** | **$\\mathbf{x}(t)=e^{t}\\begin{pmatrix}C_1+C_2t\\\\ C_2\\end{pmatrix}$** ✅ |\n\n**数值核验（三档）**：\n\n| $t$ | $e^{t}$ | $te^{t}$ |\n|---|---|---|\n| $0$ | $1.000000$ | $0$ |\n| $1$ | $2.718282$【已核验:2.71828182846|exp(1)】 | $2.718282$【已核验:2.71828182846|1*exp(1)】 |\n| $2$ | $7.389056$【已核验:7.38905609893|exp(2)】 | $14.778112$【已核验:14.7781121979|2*exp(2)】 |\n\n**「可对角化的数值核对（另一个例子）」**：$A=\\begin{pmatrix}0&1\\\\ -2&-3\\end{pmatrix}$ ⇒ **特征值 $-1,-2$** ⇒\n\n$$e^{At}=Pe^{\\Lambda t}P^{-1},\\qquad P=\\begin{pmatrix}-1&-1\\\\ 2&1\\end{pmatrix}$$\n\n**在 $t=1$**：\n\n$$e^{A}=\\begin{pmatrix}0.600424&0.232544\\\\ -0.465088&-0.097209\\end{pmatrix}$$【已核验:0.600423599106|2*exp(-1)-exp(-2)】\n\n**校核 $t=0$ 给单位阵**（**因为 $P P^{-1}=I$**）✅\n\n**「Cayley–Hamilton 的用法（实用）」**：**对 $2\\times2$ 的 $A$**，**存在函数 $\\alpha(t)$、$\\beta(t)$ 使**\n\n$$e^{At}=\\alpha(t)I+\\beta(t)A$$\n\n**（切片说「$n-1$ 次多项式」，$n=2$ 时就是 $1$ 次**）✅——**所以只需定两个标量函数**（**可由「特征值处的值」解出**）。\n\n**本条的实用价值**：**把「矩阵微分方程」变成「矩阵函数计算」**——**而后者有成熟的算法**（**如 `G4.1` 的 Padé + 缩放-平方**）✅\n\n**它依赖什么 / 谁依赖它**：`de1.5`（标量情形）、`de1.9`（唯一性）、`G3`/`G4.1`（矩阵函数计算）。下游：`de1.11`（稳定性）、`de3.5`–`de3.9`（算子与若尔当视角）、`de4`（数值解）。",
+      "links": [
+        "de1.5",
+        "de1.9",
+        "de1.11",
+        "de3.5",
+        "de3.6",
+        "de3.9",
+        "de4.1",
+        "G3",
+        "G4.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.10:linear-system.intuition",
+      "type": "intuition",
+      "subject": "linear-system",
+      "title": "直觉：解线性系统 = 「算矩阵指数」，而它只是一个级数",
+      "keywords": [
+        "标量 y′ = ay 给 y = e^{at}c",
+        "矩阵版：x′ = Ax 给 x = e^{At}c（完全平行）",
+        "e^{At} 是级数（总收敛），所以「解总存在」",
+        "可对角化时「分解成 n 个标量问题」（最舒服）",
+        "有若尔当块时「标量解之间耦合」⇒ 出现 t 因子",
+        "Cayley-Hamilton：把无穷级数压成 n−1 次多项式"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么因此成立」两段；用「矩阵版与标量版平行」讲清；给「对角化 = 解开耦合」与「若尔当块 = 源项给 t」的对照（含 $y_1'=\\lambda y_1+y_2$ 的两步推导）；给 Cayley-Hamilton 省事的原因。",
+      "content": "**切片给了通解与三种算法**。理解的关键是**「矩阵版与标量版完全平行」**。\n\n**假设给了什么。** **标量方程 $y'=ay$** 的解是 **$y=e^{at}c$**。\n\n**结论为什么因此成立。** **矩阵版只是「把 $a$ 换成 $A$、$c$ 换成向量 $\\mathbf{c}$」**：\n\n$$\\mathbf{x}'=A\\mathbf{x}\\ \\Longrightarrow\\ \\mathbf{x}(t)=e^{At}\\mathbf{c}$$ ✅\n\n**验证（直接代入）**：**因为 $\\dfrac{d}{dt}e^{At}=Ae^{At}$**（**逐项求导级数可证**）⇒ **$\\mathbf{x}'=Ae^{At}\\mathbf{c}=A\\mathbf{x}$** ✅\n\n**「级数总收敛」的意义**：**$e^{At}$ 对任意 $A$ 都有定义** ⇒ **线性系统的解总是全局存在的**（**对比 `de1.9` 的非线性只有局部**）✅\n\n**「可对角化为什么最舒服」**：**换变量 $\\mathbf{y}=P^{-1}\\mathbf{x}$** ⇒\n\n$$\\mathbf{y}'=\\Lambda\\mathbf{y}\\ \\Longrightarrow\\ y_k'=\\lambda_ky_k\\ \\Longrightarrow\\ y_k=c_ke^{\\lambda_kt}$$ ✅\n\n**所以「对角化 = 把耦合的 $n$ 个方程解开成 $n$ 个独立标量方程」** ✅\n\n**「若尔当块为什么出 $t$」**：**不可对角化时「解不开」**，**方程之间还有耦合**\n\n$$y_1'=\\lambda y_1+y_2,\\qquad y_2'=\\lambda y_2$$\n\n**第二个先解**（$y_2=c_2e^{\\lambda t}$），**代入第一个**：\n\n$$y_1'=\\lambda y_1+c_2e^{\\lambda t}\\ \\Longrightarrow\\ y_1=\\left(c_1+c_2t\\right)e^{\\lambda t}$$ ✅\n\n**注意那个 $t$**——**它来自「$y_2$ 作为第一个方程的**源项**」**——**这与 `de1.7` 的「共振乘 $x$」是同一件事** ✅\n\n**「Cayley–Hamilton 为什么能省事」**：**$A$ 满足自己的特征多项式** ⇒ **$A^{n}$ 可以用 $I,A,\\ldots,A^{n-1}$ 表示** ⇒ **$e^{At}$ 的无穷级数「塌缩」成有限项**：\n\n$$e^{At}=\\sum_{k=0}^{n-1}\\alpha_k(t)A^{k}$$ ✅\n\n**所以只需定 $n$ 个标量函数 $\\alpha_k$**（**而不是算无穷级数或求 $P$**）——**这是最实用的算法**。\n\n**记这个图像**：**线性系统 = 「矩阵版的 $y'=ay$」**；**通解 $e^{At}\\mathbf{c}$**；**可对角化 ⇒ 分解成标量**；**若尔当块 ⇒ 出现 $t$（耦合的源项）**；**Cayley–Hamilton ⇒ 压成 $n-1$ 次多项式**。",
+      "links": [
+        "de1.10",
+        "de1.5",
+        "de1.7",
+        "de1.9",
+        "de1.11",
+        "de3.6",
+        "de3.9"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.10:linear-system.proof",
+      "type": "proof",
+      "subject": "linear-system",
+      "title": "推导骨架：可对角化情形的三步推导",
+      "keywords": [
+        "第一步：验证 e^{At} = P e^{Λt} P⁻¹ 满足微分方程与初值",
+        "第二步：用 A = PΛP⁻¹ ⇒ A^k = PΛ^k P⁻¹ ⇒ 级数逐项对应",
+        "第三步：所以 e^{At} = P(Σ(Λt)^k/k!)P⁻¹ = Pe^{Λt}P⁻¹",
+        "第四步：Λ 是对角 ⇒ e^{Λt} 只是每分量的指数",
+        "易错点：A 不可对角化时 P 不可逆；P⁻¹ 与 P 的顺序不能换",
+        "数值校核：A=[[0,1],[-2,-3]], t=1 ⇒ e^A = [[0.600424,0.232544],[-0.465088,-0.097209]]"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "四步骨架；第二步的「$A^k=P\\Lambda^kP^{-1}$」是关键；第三步的「$P$ 可提出」；第四步的逐分量指数；给数值核验（t=0 是单位阵、t=1 的四个数）；易错点含「顺序」与「复特征值」。",
+      "content": "**推导骨架**（四步）。目标：**推出 $e^{At}=Pe^{\\Lambda t}P^{-1}$**。\n\n**第一步：写出分解。**\n\n$$A=P\\Lambda P^{-1}\\qquad(\\Lambda\\ \\text{对角},\\ P\\ \\text{可逆})$$\n\n**前提**：**$A$ 可对角化**（**几何重数 $=$ 代数重数**）✅\n\n**第二步：算 $A^{k}$（关键一步）。**\n\n$$A^{2}=P\\Lambda\\underbrace{P^{-1}P}_{I}\\Lambda P^{-1}=P\\Lambda^{2}P^{-1}\\ \\Longrightarrow\\ A^{k}=P\\Lambda^{k}P^{-1}$$\n\n**理由**：**中间的 $P^{-1}P$ 相消**（**这是「对角化能化简幂次」的原因**）✅\n\n**第三步：代入级数。**\n\n$$e^{At}=\\sum_k\\frac{(At)^{k}}{k!}=\\sum_k\\frac{t^{k}}{k!}P\\Lambda^{k}P^{-1}=P\\left(\\sum_k\\frac{(\\Lambda t)^{k}}{k!}\\right)P^{-1}=Pe^{\\Lambda t}P^{-1}$$ ✅\n\n**理由**：**$P$、$P^{-1}$ 与求和无关，可以提出来** ✅\n\n**第四步：算 $e^{\\Lambda t}$。**\n\n**$\\Lambda=\\operatorname{diag}(\\lambda_1,\\ldots,\\lambda_n)$** ⇒ **$\\Lambda^{k}=\\operatorname{diag}(\\lambda_1^{k},\\ldots,\\lambda_n^{k})$** ⇒\n\n$$e^{\\Lambda t}=\\operatorname{diag}\\left(e^{\\lambda_1t},\\ldots,e^{\\lambda_nt}\\right)$$ ✅\n\n**所以「矩阵指数 = 换到特征基下的逐分量指数」** ✅\n\n**数值核验（$A=\\begin{pmatrix}0&1\\\\ -2&-3\\end{pmatrix}$）**：\n\n| 量 | 值 |\n|---|---|\n| 特征值 | $\\lambda_1=-1$、$\\lambda_2=-2$ |\n| $P$ | $\\begin{pmatrix}-1&-1\\\\ 2&1\\end{pmatrix}$ |\n| $t=0$ | $e^{A\\cdot0}=I$ ✅ |\n| $t=1$ | $\\begin{pmatrix}0.600424&0.232544\\\\ -0.465088&-0.097209\\end{pmatrix}$ |\n\n**依赖链**：对角化（第一步）→ 幂次的化简（第二步）→ 级数逐项（第三步）→ 逐分量指数（第四步）。\n\n**易错点**：\n\n1. **$A$ 不可对角化仍套公式**：**$P$ 不可逆**（**`de1.10:geom-mult.counterexample`**）；\n2. **顺序搞错**：**是 $P(\\ldots)P^{-1}$**（**不是 $P^{-1}(\\ldots)P$**）；\n3. **忘「对角化需要特征向量组完备」**：**对 $n\\times n$ 需要 $n$ 个独立特征向量**；\n4. **复特征值**：**$\\Lambda$ 可以是复对角**（**$P$ 也复**），**但要取实部虚部组合回实数解**（**`de1.5` 的复根分支**）。",
+      "links": [
+        "de1.10",
+        "de1.5",
+        "de1.9",
+        "de1.11",
+        "de3.9",
+        "G3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.10:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个矩阵指数是多少？",
+      "keywords": [
+        "可算题：A = [[1,1],[0,1]] 的 e^{At}",
+        "答案：e^t[[1,t],[0,1]]（有若尔当块）",
+        "追问：代数重数与几何重数？（2 与 1）",
+        "再问：e^{At} 在 t=1 的 (1,2) 元？（2.718282）",
+        "陷阱：以为可对角化，写 e^t I"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "从矩阵指数变来的检验题；三问给重数（2 与 1）、$e^{At}$ 形式、$te^t$ 的数值；延伸给三个 $A$ 的对照表。",
+      "content": "**题**：$A=\\begin{pmatrix}1&1\\\\ 0&1\\end{pmatrix}$。\n\n1. 特征值、代数重数、几何重数。\n2. $e^{At}$。\n3. $t=1$ 时 $e^{At}$ 的 $(1,2)$ 元。\n\n**答案**：\n\n1.\n\n| 量 | 值 |\n|---|---|\n| 特征值 | $\\lambda=1$（**$\\operatorname{tr}A=2$、$\\det A=1$ ⇒ $\\lambda^{2}-2\\lambda+1=(\\lambda-1)^{2}$**） |\n| 代数重数 | $2$ |\n| 几何重数 | **$1$**【已核验:1|2-1】 |\n\n**因为几何重数 $<$ 代数重数** ⇒ **不可对角化、有若尔当块** ✅\n\n2. **用幂零分解 $A=I+N$**（**$N=\\begin{pmatrix}0&1\\\\ 0&0\\end{pmatrix}$，$N^{2}=0$**）：\n\n$$e^{At}=e^{t}\\left(I+tN\\right)=e^{t}\\begin{pmatrix}1&t\\\\ 0&1\\end{pmatrix}$$ ✅\n\n3.\n\n$$e^{1}\\cdot1=2.718282$$【已核验:2.71828182846|1*exp(1)】 ✅\n\n**易错点**：\n\n- **以为可对角化**：**几何重数必须逐一核对**；\n- **漏 $t$ 因子**：**解空间维数会不足**；\n- **$N$ 的幂零次数**：**$N^{2}=0$ 所以级数只有两项**（**若是三阶若尔当块，$N^{3}=0$，要留三项**）。\n\n**延伸（可对角化与不可对角化的对照）**：\n\n| $A$ | 特征值 | 几何重数 | $e^{At}$ |\n|---|---|---|---|\n| $\\begin{pmatrix}1&0\\\\ 0&2\\end{pmatrix}$ | $1,2$ | $2,2$ | $\\operatorname{diag}(e^{t},e^{2t})$ |\n| $\\begin{pmatrix}1&1\\\\ 0&1\\end{pmatrix}$ | $1$（重） | $1$ | $e^{t}\\begin{pmatrix}1&t\\\\ 0&1\\end{pmatrix}$ |\n| $\\begin{pmatrix}0&1\\\\ -2&-3\\end{pmatrix}$ | $-1,-2$ | $1,1$ | $P\\operatorname{diag}(e^{-t},e^{-2t})P^{-1}$ |\n\n**第二行是「唯一出现 $t$」的情形**（**因为它有若尔当块**）✅\n\n**判据（一句话）**：**「几何重数 $=$ 代数重数吗？」** 不等 ⇒ **$e^{At}$ 里会出现 $t$**。",
+      "links": [
+        "de1.10",
+        "de1.5",
+        "de3.9"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.10:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分工：矩阵指数与若尔当/Laplace 的分工",
+      "keywords": [
+        "矩阵指数：直接给通解（常数矩阵）",
+        "若尔当标准型：算法上游（保证分解可行）",
+        "Laplace 变换：对分段外力方便（de3.3）",
+        "判据①：常数 A 且要通解 → 矩阵指数",
+        "判据②：不可对角化 → 先做若尔当分解",
+        "判据③：有外力/初值问题 → Laplace 也很快"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "对照口径：以「要通解 / 不可对角化 / 有外力」三问划界；给三行对照表；给同一系统的三种视角（含「$1/(s−1)^2$ ↔ $te^t$」的对应）。",
+      "content": "**三条路的选择看「要不要外力」与「A 的形状」。**\\n\\n| | 矩阵指数（本条） | 若尔当（`de3.9`） | Laplace（`de3.3`） |\\n|---|---|---|---|\\n| **对象** | **$\\mathbf{x}'=A\\mathbf{x}$** | **任意方阵的「标准型」** | **含外力的初值问题** |\\n| **给出** | **通解 $e^{At}\\mathbf{c}$** | **分解 $A=PJP^{-1}$** | **解 $x(t)$** |\\n| **适合** | **常数 $A$、要通解** | **不可对角化时的算法** | **分段/脉冲外力** |\\n\\n**判据（三问定选）**：\\n\\n1. **要通解吗？** 是 ⇒ **矩阵指数**；\\n2. **不可对角化吗？** ⇒ **先做若尔当分解**（**`de3.9`**）；\\n3. **有外力且要初值问题的解吗？** ⇒ **Laplace 变换也很快**。\\n\\n**同一个系统（$A=\\\\begin{pmatrix}1&1\\\\\\\\ 0&1\\\\end{pmatrix}$）的三种视角**：\\n\\n| 视角 | 结果 |\\n|---|---|\\n| **矩阵指数** | $e^{t}\\\\begin{pmatrix}1&t\\\\\\\\ 0&1\\\\end{pmatrix}$ |\\n| **若尔当** | $J=\\\\begin{pmatrix}1&1\\\\\\\\ 0&1\\\\end{pmatrix}$（**本身已是若尔当型**，$P=I$） |\\n| **Laplace** | 对 $(sI-A)^{-1}$ 求逆变换（**含 $1/(s-1)^{2}$ ⇒ $te^{t}$**） |\\n\\n**三者一致** ✅——**而「$1/(s-1)^{2}$ 的逆变换是 $te^{t}$」正是 Laplace 版的「$t$ 因子」**（**`de3.9` 的若尔当 ↔ 极点阶数**）。\\n\\n**位置关系**：本条与 `de3.5`–`de3.9`（算子视角）、`de3.3`（Laplace）构成「线性系统的三种语言」；`de1.11` 的稳定性则是「从 $e^{At}$ 读出长期行为」。",
+      "links": [
+        "de1.10",
+        "de1.5",
+        "de1.11",
+        "de3.3",
+        "de3.5",
+        "de3.9"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.10:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：线性系统服务的下游章节",
+      "keywords": [
+        "de1.11：稳定性由 A 的特征值实部决定",
+        "de3.5-de3.9：微分算子的矩阵表示与若尔当标准型",
+        "de3.3：Laplace 变换解线性系统（含外力）",
+        "物理：线性振子链、电路网络、Markov 链（转移矩阵）",
+        "de4：数值解（矩阵指数算法的实现）",
+        "自检：先判「A 可对角化吗」"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 242,
+        "line_end": 272
+      },
+      "fill_hint": "单元级应用词条；给五条下游（含「$(sI-A)^{-1}$ 是 $e^{At}$ 的 Laplace 变换」与物理三处）；给一句自检；点出它是「系统理论」的核心。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\\n\\n- **`de1.11` 的稳定性**：**$e^{At}$ 的长期行为由特征值实部决定**——**所以稳定性判据就是「$\\lambda$ 的实部符号」** ✅\\n\\n- **`de3.5`–`de3.9` 的算子视角**：**把 $D=d/dx$ 看成无穷维矩阵**——**`de1.10` 是「有限维版本」**（**`de3.7` 会说明「ODE = 无穷维矩阵方程」**）。\\n\\n- **`de3.3` 的 Laplace 变换**：**含外力时 $(sI-A)^{-1}$ 更方便**——**而 $(sI-A)^{-1}$ 正是「矩阵指数的 Laplace 变换」**：\\n\\n  $$\\mathcal{L}\\left\\{e^{At}\\right\\}=(sI-A)^{-1}$$\\n\\n  **所以「求 $e^{At}$」与「求 $(sI-A)^{-1}$ 的逆变换」是同一件事** ✅\\n\\n- **物理里的三处经典**：\\n\\n  | 系统 | $A$ 的结构 |\\n  |---|---|\\n  | **线性振子链** | **三对角（刚度矩阵）** |\\n  | **电路网络** | **由拓扑决定的稀疏矩阵** |\\n  | **Markov 链** | **转移矩阵（$e^{At}$ 给状态分布演化）** |\\n\\n- **`de4` 的数值解**：**矩阵指数有成熟算法**（**Padé + 缩放-平方**，**`G4.1`**）——**所以「解析公式 + 数值实现」都很方便**。\\n\\n**一条自检问句**：**「$A$ 可对角化吗？」**（**算几何重数**）——**不等就要写 $t^{k}$**。\\n\\n**「为什么这一节是「系统理论」的核心」**：**它把「$n$ 个耦合的一阶方程」变成「一个矩阵函数」** ⇒ **后面 `de1.11`（稳定性）、`de3` 全篇（算子）、`de4`（数值）都建立在它上面** ✅",
+      "links": [
+        "de1.10",
+        "de1.11",
+        "de3.3",
+        "de3.5",
+        "de3.7",
+        "de3.9",
+        "de4.1",
+        "G4.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de1.2",
+  "chapter": "de1",
+  "title": "积分因子的系统求法",
+  "src": {
+    "file": "notebook/diffrential/de1.tex",
+    "line_start": 30,
+    "line_end": 56,
+    "anchor": "notebook/diffrential/de1.tex:30"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de1.2:integrating-factor.quantifiers",
+      "type": "comparison",
+      "subject": "integrating-factor",
+      "title": "积分因子的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①方程形式：M dx + N dy = 0（对称形式，必需）",
+        "条件②恰当判据：M_y ≠ N_x 时才需要 μ",
+        "条件③两种特例：μ 只依赖 x 或只依赖 y（有闭式）",
+        "条件④一般情形：偏微分方程（比原方程更难，通常放弃）",
+        "翻车代价：对「一般情形」硬找 μ ⇒ 转成更难解的一阶 PDE",
+        "示例核验：(3x²+6xy²)dx+(6x²y+4y²)dy 已恰当（M_y=N_x=12xy）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "四行条件表；③ 行必须给两种特例的比值与分母（$M_y-N_x$/$N$ vs $N_x-M_y$/$M$）；④ 行点出「一般情形是一阶线性 PDE」；给示例的完整核验。",
+      "content": "切片给了一般方程与**两种特例**。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **对称形式** | **必须先写成 $M\\,dx+N\\,dy=0$**。**实测**（`de1.2` 示例）：$M=3x^{2}+6xy^{2}$、$N=6x^{2}y+4y^{2}$ | 若停留在 $y'=f(x,y)$ 形式 ⇒ **无法谈「恰当」** | 不能放宽：**恰当性是「1-形式」的性质** |\n| ② **$M_y\\ne N_x$ 才需要 $\\mu$** | **实测**：**示例的 $M_y=12xy=N_x$** ⇒ **已恰当，$\\mu\\equiv1$** | 若对已恰当的方程再找 $\\mu$ ⇒ **白费功夫**（**且会引入多余任意性**） | 不能放宽：**先验恰当性** |\n| ③ **两种特例** | **（a）$\\frac1N(M_y-N_x)=f(x)$ ⇒ $\\mu=e^{\\int f\\,dx}$**；**（b）$\\frac1M(N_x-M_y)=g(y)$ ⇒ $\\mu=e^{\\int g\\,dy}$** | 若不检查「只依赖 $x$ / 只依赖 $y$」⇒ **可能根本不满足特例条件** | 可放宽：**不满足时只能用「凑」（经验法）** |\n| ④ **一般情形是 PDE** | **一般 $\\mu(x,y)$ 满足**：$M\\mu_y-N\\mu_x=\\mu(N_x-M_y)$——**这是一阶线性 PDE** | 若硬解 ⇒ **从 ODE 转到更难的 PDE** | 不能放宽：**所以切片只给两种特例** |\n\n**这张表的用法**：\n\n1. **先验 $M_y=N_x$**（**恰当下直接凑 $F$**）；\n2. **不恰当时试两种特例**；\n3. **都不满足 ⇒ 经验法或放弃闭式**。\n\n**两种特例的推导（切片给了）**：\n\n**设 $\\mu=\\mu(x)$**（**只依赖 $x$**）：**代入 $\\frac{\\partial(\\mu M)}{\\partial y}=\\frac{\\partial(\\mu N)}{\\partial x}$** ⇒\n\n$$\\mu M_y=\\mu' N+\\mu N_x\\ \\Longrightarrow\\ \\frac{\\mu'}{\\mu}=\\frac{M_y-N_x}{N}=:f(x)$$ ⇒ **$\\mu=e^{\\int f(x)dx}$** ✅\n\n**设 $\\mu=\\mu(y)$**：**同理** ⇒ $\\frac{\\mu'}{\\mu}=\\frac{N_x-M_y}{M}=:g(y)$ ⇒ **$\\mu=e^{\\int g(y)dy}$** ✅\n\n**「注意分母」（最容易错的一处）**：\n\n| 特例 | 比值 | 分母 | 积分变量 |\n|---|---|---|---|\n| **$\\mu(x)$** | $\\dfrac{M_y-N_x}{N}$ | **$N$** | $x$ |\n| **$\\mu(y)$** | $\\dfrac{N_x-M_y}{M}$ | **$M$** | $y$ |\n\n**两个比值的分子正好相反**（**$M_y-N_x$ vs $N_x-M_y$**）——**这是最常见的符号错** ✅。\n\n**示例的完整核验（`de1.2` 切片给的例题）**：\n\n$$F=\\int M\\,dx=x^{3}+3x^{2}y^{2}+\\varphi(y),\\qquad \\varphi'(y)=4y^{2}\\ \\Longrightarrow\\ \\varphi=\\frac{4}{3}y^{3}$$\n\n$$\\boxed{F=x^{3}+3x^{2}y^{2}+\\frac{4}{3}y^{3}=C}$$ ✅（**sympy 独立核验一致**：$F=x^{3}+3x^{2}y^{2}+\\frac{4}{3}y^{3}$）\n\n**「为什么这个例子不需要 $\\mu$」**：**因为 $M_y=12xy=N_x$ 已成立**（**切片原文写「验证：…。满足恰当条件」**）——**所以它是「凑全微分」的直接演示** ✅。",
+      "links": [
+        "de1.1",
+        "de1.3",
+        "de1.9",
+        "de3.1",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.2:wrong-ratio.counterexample",
+      "type": "counterexample",
+      "subject": "wrong-ratio",
+      "title": "反例：积分因子的比值分子写反（μ 差一个倒数）",
+      "keywords": [
+        "误用现场：把 μ(x) 的比值写成 (N_x − M_y)/N（分子反了）",
+        "后果：μ 号数相反 ⇒ 乘后仍不恰当",
+        "具体：y' − y = x 写作 (y−x)dx − dy = 0，M_y=1、N_x=0",
+        "正确比值为 (M_y−N_x)/N = 1/(−1) = −1 ⇒ μ = e^{−x}",
+        "若写反得 (0−1)/(−1) = 1 ⇒ μ = e^x（错，乘后不恰当）",
+        "判据：乘上 μ 后必须验证 M̃_y = Ñ_x"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "把「分子写反」的后果算清（给 $y'-y=x$ 上 $\\mu=e^{-x}$ 与 $e^{x}$ 的对照核验）；给一句判据「乘完必验 M̃_y=Ñ_x」。",
+      "content": "**误用现场**：**把 $\\mu(x)$ 的比值分子写成 $N_x-M_y$**（**与 $\\mu(y)$ 的混了**）。\n\n**为什么这是错的**：**两个特例的分子相反**：\n\n$$\\mu(x):\\quad\\frac{\\mu'}{\\mu}=\\frac{M_y-N_x}{N}\\qquad\\qquad\\mu(y):\\quad\\frac{\\mu'}{\\mu}=\\frac{N_x-M_y}{M}$$\n\n**具体（$y'-y=x$）**：**写成对称形式**：\n\n$$\\underbrace{(y-x)}_{M}dx+\\underbrace{(-1)}_{N}dy=0\\ \\Longrightarrow\\ M_y=1,\\ N_x=0$$\n\n| 比值的写法 | 值 | $\\mu$ | 乘后是否恰当 |\n|---|---|---|---|\n| **正确**：$\\dfrac{M_y-N_x}{N}=\\dfrac{1-0}{-1}$ | $-1$ | **$e^{-x}$** | **✅** |\n| **写反**：$\\dfrac{N_x-M_y}{N}=\\dfrac{0-1}{-1}$ | $+1$ | $e^{x}$ | **❌** |\n\n**核验（正确情形）**：**乘 $\\mu=e^{-x}$**：\n\n$$\\underbrace{e^{-x}(y-x)}_{\\tilde M}dx+\\underbrace{(-e^{-x})}_{\\tilde N}dy=0$$\n\n$$\\tilde M_y=e^{-x},\\qquad \\tilde N_x=e^{-x}$$ ✅ **相等 ⇒ 恰当**。\n\n**核验（写反情形）**：**乘 $\\mu=e^{x}$**：\n\n$$\\tilde M_y=e^{x},\\qquad \\tilde N_x=-e^{x}$$ ❌ **不等 ⇒ 仍不恰当**。\n\n**所以「分子写反」会让 $\\mu$ 差一个「倒数关系」**——**且乘后不是恰当形式** ✅。\n\n**后果链条（写反的代价）**：\n\n1. **乘后仍不恰当** ⇒ **后续步骤全废**；\n2. **若硬凑 $F$**，会得到**不满足原方程**的 $F$；\n3. **并且很难发现**（**因为 $\\mu$ 也是个函数**）。\n\n**判据（一句话）**：**「乘上 $\\mu$ 后 $\\tilde M_y=\\tilde N_x$ 吗？」** 是 ⇒ 正确；否 ⇒ **分子写反了**。\n\n**修补动作**：\n\n1. **记住「$\\mu(x)$ 用 $N$ 作分母、分子是 $M_y-N_x$」**；\n2. **乘完必验恰当性**（**这一步不能省**）；\n3. **若不满足，试另一个特例**（**或改用「凑」**）。",
+      "links": [
+        "de1.2",
+        "de1.1",
+        "de1.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.2:integrating-factor.statement",
+      "type": "statement",
+      "subject": "integrating-factor",
+      "title": "积分因子的系统求法与两种特例",
+      "keywords": [
+        "目标：找 μ 使 μM dx + μN dy 成为全微分",
+        "一般方程：Mμ_y − Nμ_x = μ(N_x − M_y)（一阶线性 PDE）",
+        "特例 a：μ = e^{∫f dx}，其中 f = (M_y−N_x)/N（只依赖 x）",
+        "特例 b：μ = e^{∫g dy}，其中 g = (N_x−M_y)/M（只依赖 y）",
+        "示例：F = x³+3x²y²+4y³/3 = C（该例已恰当，μ≡1）",
+        "判据：乘 μ 后必须验证 M̃_y = Ñ_x"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "陈述本体（目标 + 一般方程 + 两种特例表 + 示例）+ 「分子相反分母不同」的记忆点 + sympy 独立核验 + 「一般情形是 PDE」。",
+      "content": "**Speedy reference：积分因子的求法（切片）。**\n\n**目标**：**对 $M\\,dx+N\\,dy=0$（不满足 $M_y=N_x$），找 $\\mu$ 使得**\n\n$$\\frac{\\partial(\\mu M)}{\\partial y}=\\frac{\\partial(\\mu N)}{\\partial x}$$\n\n**展开（切片原文）**：\n\n$$M\\frac{\\partial\\mu}{\\partial y}-N\\frac{\\partial\\mu}{\\partial x}=\\mu\\left(\\frac{\\partial N}{\\partial x}-\\frac{\\partial M}{\\partial y}\\right)$$\n\n**读法**：**左边是「$\\mu$ 的偏导项」、右边是「$\\mu$ 乘一个已知函数」** ——**这是一阶线性 PDE**。\n\n**两种特例（切片原文）**：\n\n| 条件 | $\\mu$ |\n|---|---|\n| $\\dfrac1N\\left(M_y-N_x\\right)=f(x)$（**只依赖 $x$**） | **$\\mu=e^{\\int f(x)dx}$** |\n| $\\dfrac1M\\left(N_x-M_y\\right)=g(y)$（**只依赖 $y$**） | **$\\mu=e^{\\int g(y)dy}$** |\n\n**两式的关系（实用记忆）**：\n\n$$\\underbrace{\\frac{M_y-N_x}{N}}_{\\mu(x)}\\qquad\\text{vs}\\qquad\\underbrace{\\frac{N_x-M_y}{M}}_{\\mu(y)}$$\n\n**「分子相反、分母不同」** ——**这是记忆的关键** ✅。\n\n**切片示例（已恰当，$\\mu\\equiv1$）**：\n\n$$(3x^{2}+6xy^{2})\\,dx+(6x^{2}y+4y^{2})\\,dy=0$$\n\n**验证**（切片原文）：$M_y=12xy$、$N_x=12xy$ ⇒ **满足恰当条件**。\n\n**求 $F$**（切片原文）：\n\n$$F_x=3x^{2}+6xy^{2}\\ \\Longrightarrow\\ F=x^{3}+3x^{2}y^{2}+\\varphi(y)$$\n\n$$F_y=6x^{2}y+\\varphi'(y)=6x^{2}y+4y^{2}\\ \\Longrightarrow\\ \\varphi(y)=\\frac{4}{3}y^{3}$$\n\n$$\\boxed{x^{3}+3x^{2}y^{2}+\\frac{4}{3}y^{3}=C}$$ ✅\n\n**「独立核验（sympy）」**：$\\int M\\,dx=x^{2}(x+3y^{2})=x^{3}+3x^{2}y^{2}$ ✅、$\\varphi'(y)=N-F_y=4y^{2}$ ⇒ $\\varphi=\\frac{4}{3}y^{3}$ ✅——**与切片一致**。\n\n**「为什么这个例子标为「积分因子」小目下」**：**因为它是「恰当」的情形**——**切片用它演示「凑全微分」的标准流程**，**而 $\\mu\\equiv1$ 是「不需要积分因子」的退化情形** ✅。\n\n**「一般情形的难度」（反映在切片只给两种特例）**：**一般 $\\mu(x,y)$ 满足的是一阶线性 PDE**——**它比原 ODE 更难**（**所以实操上要么用两种特例，要么用「凑」的经验法**）。\n\n**它依赖什么 / 谁依赖它**：`de1.1` 的两个动作。下游：`de1.3`（线性方程的标准解法）、`de1.8`（常数变易——**同一技巧的另一形式**）、`de3.1`（Laplace 变换——**第三条路**）。",
+      "links": [
+        "de1.1",
+        "de1.3",
+        "de1.8",
+        "de1.9",
+        "de3.1",
+        "P6.1",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.2:integrating-factor.intuition",
+      "type": "intuition",
+      "subject": "integrating-factor",
+      "title": "直觉：积分因子是「给方程戴上一副合适的眼镜」",
+      "keywords": [
+        "原方程不恰当：两项不成一个 dF",
+        "乘 μ：整体缩放方程（不改解集）",
+        "目标：让缩放后的两项「恰好成 dF」",
+        "为什么两种特例能解：只依赖 x（或 y）时方程退化成一阶 ODE",
+        "为什么一般情形难：μ(x,y) 满足线性 PDE（比原方程难）",
+        "类比：找「积分因子」像找「标准化变量」（de3.1 的 Laplace 也是这类）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「戴眼镜」讲积分因子；给「两种特例的本质是假设少依赖一个变量」；点出「一般情形用特征线法（de2.11）但更麻烦」与「μ=0 处可能丢解」。",
+      "content": "**假设给了什么。** 方程 $M\\,dx+N\\,dy=0$ **不恰当**——**两项拆不成一个 $dF$**。\n\n**结论为什么因此成立。** **乘一个函数 $\\mu$ 不改解集**（**只是「整体缩放」**）——**所以可以「挑一个合适的 $\\mu$」让它恰当** ✅。\n\n**「戴眼镜」的类比**：\n\n| 步骤 | 图像 |\n|---|---|\n| **原方程** | **模糊：看不出是一个 $dF$** |\n| **乘 $\\mu$** | **戴上合适的眼镜** |\n| **恰当** | **看清楚了：$dF=0$** |\n\n**「为什么乘 $\\mu$ 不改解集」（关键一击）**：\n\n**原方程 $M\\,dx+N\\,dy=0$ 的解满足「$dF=0$」**——**而 $\\mu M\\,dx+\\mu N\\,dy=0$ 在 $\\mu\\ne0$ 处与原方程等价**（**同解**）✅。\n\n**注意「在 $\\mu=0$ 处可能有解丢失」**（**如 $\\mu=1/x$ 在 $x=0$ 处**）——**这是积分因子法的已知边界**。\n\n**「两种特例为什么能解」**：\n\n**假设 $\\mu=\\mu(x)$** ⇒ **方程里只剩 $\\mu$ 与 $\\mu'$ 两个未知（都是 $x$ 的函数）** ⇒ **退化成一阶 ODE** ⇒ **可分离** ✅：\n\n$$\\frac{\\mu'}{\\mu}=\\frac{M_y-N_x}{N}$$\n\n**「所以「特例」的本质是「假设 $\\mu$ 少依赖一个变量，从而 PDE 退化成 ODE」** ✅。\n\n**「一般情形为什么难」**：**$\\mu(x,y)$ 满足 $M\\mu_y-N\\mu_x=\\mu(N_x-M_y)$**——**这是一阶线性 PDE**（**一阶线性偏微分方程**）——**而一阶线性 PDE 可以用 `de2.11` 的特征线法解**（**但那比原 ODE 麻烦得多**）✅。\n\n**记这个图像**：**积分因子 = 「给方程戴一副合适的眼镜」**；**乘它不改解集（只是整体缩放）**；**两种特例 = 「假设 $\\mu$ 少依赖一个变量」⇒ PDE 退化成 ODE**；**一般情形是 PDE，比原方程难**。",
+      "links": [
+        "de1.2",
+        "de1.1",
+        "de2.11",
+        "de3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.2:integrating-factor.proof",
+      "type": "proof",
+      "subject": "integrating-factor",
+      "title": "推导骨架：从「恰当条件」推出两种特例（四步）",
+      "keywords": [
+        "第一步：写出恰当条件 ∂(μM)/∂y = ∂(μN)/∂x",
+        "第二步：展开得 Mμ_y − Nμ_x = μ(N_x − M_y)",
+        "第三步：假设 μ = μ(x) ⇒ μ_y = 0 ⇒ 化为可分离 ODE",
+        "第四步：解出 μ = e^{∫(M_y−N_x)/N dx}（同理 μ(y)）",
+        "易错点：展开时 μ_y、μ_x 的项；分母用 N 还是 M",
+        "数值校核：y'−y=x 给 μ = e^{−x}，乘后 M̃_y = Ñ_x = e^{−x}"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "四步骨架；第二步的展开与第三步的「分子换号」是关键；给 $y'-y=x$ 的数值校核；易错点含「f 只依赖 x」这个前提。",
+      "content": "**推导骨架**（四步）。目标：**从恰当条件推出两种特例的公式**。\n\n**第一步：写出恰当条件。**\n\n$$\\frac{\\partial(\\mu M)}{\\partial y}=\\frac{\\partial(\\mu N)}{\\partial x}$$\n\n**理由**：**「$\\mu M\\,dx+\\mu N\\,dy$ 恰当」的定义**（**`de1.1:two-moves.proof` 的第一步**）✅。\n\n**第二步：展开（关键一步）。**\n\n$$M\\mu_y+\\mu M_y=\\mu_x N+\\mu N_x$$\n\n**整理**：\n\n$$M\\mu_y-N\\mu_x=\\mu\\left(N_x-M_y\\right)$$ ✅\n\n**理由**：**乘积法则**——**注意「$\\mu$ 的偏导项」留在左边、「已知项」移到右边**。\n\n**第三步：假设 $\\mu=\\mu(x)$（特例 a）。**\n\n**此时 $\\mu_y=0$** ⇒ **左边只剩 $-N\\mu_x$**：\n\n$$-N\\frac{d\\mu}{dx}=\\mu\\left(N_x-M_y\\right)\\ \\Longrightarrow\\ \\frac{d\\mu}{\\mu}=\\frac{M_y-N_x}{N}\\,dx$$ ✅\n\n**注意符号**：**右边 $N_x-M_y$ 被 $-N$ 除 ⇒ 变成 $M_y-N_x$**（**这一步最容易错**）。\n\n**第四步：解出 $\\mu$。**\n\n$$\\ln\\lvert\\mu\\rvert=\\int\\frac{M_y-N_x}{N}dx\\ \\Longrightarrow\\ \\mu=e^{\\int f(x)dx},\\qquad f(x):=\\frac{M_y-N_x}{N}$$ ✅\n\n**（「$f$ 只依赖 $x$」是这一步成立的前提——否则右边的积分含 $y$，矛盾。）**\n\n**特例 b（$\\mu=\\mu(y)$）同理**：**$\\mu_x=0$** ⇒\n\n$$M\\frac{d\\mu}{dy}=\\mu(N_x-M_y)\\ \\Longrightarrow\\ \\mu=e^{\\int g(y)dy},\\qquad g(y):=\\frac{N_x-M_y}{M}$$ ✅\n\n**数值校核（$y'-y=x$）**：\n\n$$M=y-x,\\ N=-1\\ \\Longrightarrow\\ M_y=1,\\ N_x=0\\ \\Longrightarrow\\ f=\\frac{1-0}{-1}=-1$$\n\n$$\\mu=e^{\\int(-1)dx}=e^{-x}$$ ✅\n\n**乘后验证**：$\\tilde M=e^{-x}(y-x)$、$\\tilde N=-e^{-x}$ ⇒\n\n$$\\tilde M_y=e^{-x},\\qquad \\tilde N_x=e^{-x}$$ ✅ **相等**\n\n**依赖链**：恰当条件（第一步）→ 展开（第二步）→ 假设 $x$ 依赖（第三步）→ 解 ODE（第四步）。\n\n**易错点**：\n\n1. **第三步的符号**：**$-N\\mu_x=\\mu(N_x-M_y)$ 整理后给 $f=(M_y-N_x)/N$**（**分子换号**）；\n2. **分母是 $N$ 还是 $M$**：**$\\mu(x)$ 用 $N$、$\\mu(y)$ 用 $M$**；\n3. **忘了验证「$f$ 只依赖 $x$」**：**若 $f$ 含 $y$，说明该特例不适用**；\n4. **乘完不验恰当性**：**必须验 $\\tilde M_y=\\tilde N_x$**。",
+      "links": [
+        "de1.1",
+        "de1.2",
+        "de1.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.2:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分工：积分因子的三种找法",
+      "keywords": [
+        "特例 a（μ 只依赖 x）：最常用，一阶 ODE，可分离",
+        "特例 b（μ 只依赖 y）：对称地，也常出现",
+        "经验法（凑）：靠观察方程结构（如把 μ 猜成 x^m y^n）",
+        "一般情形：一阶线性 PDE（比原方程难，通常不用）",
+        "判据①：先验 M_y = N_x（恰当则 μ ≡ 1）",
+        "判据②：不恰当时先试两种特例，再试经验法"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "对照口径：以「三种找法 + 一般情形」的阶梯划界；给三问判据与「经验法的典型形式」表；点出「线性方程落在特例 a」。",
+      "content": "**积分因子的三种找法（本条的实操阶梯）。**\n\n| 方法 | 前提 | 难度 |\n|---|---|---|\n| **先验恰当** | **$M_y=N_x$** | **零**（**$\\mu\\equiv1$，直接凑 $F$**） |\n| **特例 a** | **$(M_y-N_x)/N$ 只依赖 $x$** | **低**（**一个积分**） |\n| **特例 b** | **$(N_x-M_y)/M$ 只依赖 $y$** | **低** |\n| **经验法（凑）** | **靠观察**（**如猜 $\\mu=x^{m}y^{n}$**） | **中**（**无系统程序**） |\n| **一般情形** | — | **高**（**一阶线性 PDE**） |\n\n**判据（三问阶梯）**：\n\n1. **$M_y=N_x$ 吗？** 是 ⇒ **结束（$\\mu=1$）**；\n2. **比值只依赖一个变量吗？** 是 ⇒ **特例 a/b**；\n3. **都不是** ⇒ **试经验法**（**或接受「无闭式」**）。\n\n**「经验法的典型形式」（值得记住）**：\n\n| 方程的样子 | 试的 $\\mu$ |\n|---|---|\n| **齐次型**（$M$、$N$ 同次） | **$\\mu=\\dfrac{1}{xM+yN}$** |\n| **含 $x^{a}y^{b}$ 的结构** | **$\\mu=x^{m}y^{n}$**（**定 $m$、$n$**） |\n| **线性方程** | **$\\mu=e^{\\int p\\,dx}$**（**特例 a 的实例**） |\n\n**「为什么线性方程落在特例 a」**：**$y'+py=q$ 写作 $(py-q)dx+dy=0$** ⇒\n\n$$\\frac{M_y-N_x}{N}=\\frac{p-0}{1}=p(x)\\ \\Longrightarrow\\ \\mu=e^{\\int p\\,dx}$$ ✅（**正是 `de1.3` 的公式**）\n\n**位置关系**：本条是 `de1.2` 的单元级对照；它是 `de1.3`（线性方程）的前置，也是 `de1.8`（常数变易）的对照对象。",
+      "links": [
+        "de1.2",
+        "de1.1",
+        "de1.3",
+        "de1.8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.2:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：积分因子服务的下游章节",
+      "keywords": [
+        "de1.3：线性方程的标准解法（μ = e^{∫p dx}）",
+        "de1.8：常数变易法（同一技巧的另一形式）",
+        "de2.15：PDE 的积分因子（一阶线性 PDE 的特例）",
+        "de3.1：Laplace 变换（把线性 ODE 化为代数）",
+        "Q10：恰当性 ⟺ 闭形式恰当（M_y = N_x ⟺ dω = 0）",
+        "自检：乘 μ 后必须验证 M̃_y = Ñ_x"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "单元级应用词条；给五条下游（含 Q10 的「恰当=闭形式恰当」互证）；给「枢纽位置」表；点出「de1.2 是技巧最集中一节」。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`de1.3` 的线性方程**：**$\\mu=e^{\\int p\\,dx}$ 就是特例 a**（**切片 `de1.3` 的例题里 $\\mu=x^{2}$**）✅。\n- **`de1.8` 的常数变易**：**同一技巧的「先解齐次、再让常数变函数」形式**——**两者给出同一结果**（**`de1.3` 的两个方法演示了这一点**）。\n- **`de2.15` 的 PDE 版本**：**一阶线性 PDE 的积分因子**（**与本节的一般方程同型**）。\n- **`de3.1` 的 Laplace 变换**：**第三条路**（**把 ODE 化为代数方程**）——**`de3` 的标题「两种『将微分方程化为代数』的方法」之一**。\n- **`Q10` 的正当性**：**「恰当」$\\Longleftrightarrow$「闭形式是恰当的」**——**$M_y=N_x$ 正是 $d\\omega=0$ 的坐标形式** ✅（**`Q10:closed-not-exact.counterexample`**）。\n\n**一条自检问句**：**「乘 $\\mu$ 后 $\\tilde M_y=\\tilde N_x$ 吗？」**——**这是唯一的验收标准**。\n\n**「本条的「枢纽位置」」**：\n\n| 方向 | 内容 |\n|---|---|\n| **它依赖** | `de1.1` 的两个动作（凑全微分的机制） |\n| **它服务** | `de1.3`（线性方程）、`de1.8`（常数变易）、`de2.15`（PDE） |\n| **它与 `Q10` 互证** | **恰当性 = 闭形式的恰当性** |\n\n**所以「`de1.2` 是 de1 篇里「技巧最集中」的一节」** ✅——**后面 `de1.3`–`de1.8` 都是它的实例或变形。",
+      "links": [
+        "de1.2",
+        "de1.1",
+        "de1.3",
+        "de1.8",
+        "de2.15",
+        "de3.1",
+        "Q10",
+        "P6.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.2:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个方程恰当吗？积分因子是多少？",
+      "keywords": [
+        "可算题：(3x²+6xy²)dx + (6x²y+4y²)dy = 0 是否恰当？",
+        "答案：∂M/∂y = 12xy = ∂N/∂x ⇒ 恰当，不必用积分因子",
+        "追问：y dx − x dy = 0 呢？（不恰当；1/N(∂M/∂y−∂N/∂x) = −2/x ⇒ μ = 1/x²）",
+        "再问：μ = 1/x² 后解是什么？（y/x = C，即 y = Cx）",
+        "陷阱：把「恰当条件」写成 ∂M/∂x = ∂N/∂y（对角写反）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 30,
+        "line_end": 56
+      },
+      "fill_hint": "从积分因子变来的检验题；三问给「恰当（12xy）」「μ=1/x²」「y=Cx」；给 (1,1) 处的四项核验数值与 μ 的两档数值；易错点含「恰当条件写反」。",
+      "content": "**题**：判断恰当性并求积分因子。\n\n1. $(3x^{2}+6xy^{2})dx+(6x^{2}y+4y^{2})dy=0$：恰当吗？\n2. $y\\,dx-x\\,dy=0$：恰当吗？若不恰当，求积分因子。\n3. 第 2 问积分后的解。\n\n**答案**：\n\n1. **$M=3x^{2}+6xy^{2}$、$N=6x^{2}y+4y^{2}$**：\n\n$$\\frac{\\partial M}{\\partial y}=12xy,\\qquad \\frac{\\partial N}{\\partial x}=12xy$$\n\n**实测（$(x,y)=(1,1)$）**：$12\\times1\\times1=12$【已核验:12|12*1*1】——**两者相等** ⇒ **恰当** ✅（**不需要积分因子**）\n\n**所以直接找 $F$**：\n\n$$F=x^{3}+3x^{2}y^{2}+\\frac{4}{3}y^{3}=C$$\n\n**核验（$(1,1)$）**：\n\n| 量 | 值 |\n|---|---|\n| $\\partial F/\\partial x$ | $3x^{2}+6xy^{2}\\big\\vert_{(1,1)}=9$【已核验:9|3*1**2+6*1*1**2】 |\n| $M(1,1)$ | $3+6=9$【已核验:9|3*1**2+6*1*1**2】 |\n| $\\partial F/\\partial y$ | $6x^{2}y+4y^{2}\\big\\vert_{(1,1)}=10$【已核验:10|6*1**2*1+4*1**2】 |\n| $N(1,1)$ | $6\\times1\\times1+4\\times1^{2}=10$【已核验:10|6*1**2*1+4*1**2】 |\n\n**两行都吻合** ✅\n\n2. **$M=y$、$N=-x$** ⇒\n\n$$\\frac{\\partial M}{\\partial y}=1,\\qquad \\frac{\\partial N}{\\partial x}=-1$$\n\n**不相等** ⇒ **不恰当** ✅\n\n**按切片第一种特殊情况**：\n\n$$\\frac{1}{N}\\left(\\frac{\\partial M}{\\partial y}-\\frac{\\partial N}{\\partial x}\\right)=\\frac{1}{-x}\\left(1-(-1)\\right)=-\\frac{2}{x}=f(x)$$\n\n**只依赖 $x$** ⇒ **$\\mu=e^{\\int f\\,dx}=e^{-2\\ln x}=x^{-2}=\\dfrac{1}{x^{2}}$** ✅\n\n**数值（$x=1$、$x=2$）**：$f(1)=-2$【已核验:-2|-2/1】、$\\mu(1)=1$【已核验:1|1/1**2】、$\\mu(2)=0.25$【已核验:0.25|1/2**2】\n\n**核验「乘 $\\mu$ 后恰当」**：$\\mu M=y/x^{2}$、$\\mu N=-1/x$ ⇒\n\n$$\\frac{\\partial(y/x^{2})}{\\partial y}=\\frac{1}{x^{2}},\\qquad \\frac{\\partial(-1/x)}{\\partial x}=\\frac{1}{x^{2}}$$ ✅ 相等\n\n3. **解**：$F$ 满足 $\\partial F/\\partial x=y/x^{2}$ ⇒ $F=-y/x+\\varphi(y)$；**再用 $\\partial F/\\partial y=-1/x=\\varphi'(y)$** ⇒ **$\\varphi$ 为常数** ⇒\n\n$$-\\frac{y}{x}=C\\ \\Longleftrightarrow\\ y=Cx$$ ✅\n\n**（这与「$y\\,dx=x\\,dy$ ⇒ $dy/y=dx/x$ ⇒ $\\ln y=\\ln x+C$」一致**）✅\n\n**易错点**：\n\n- **恰当条件写反**：**是 $\\partial M/\\partial y=\\partial N/\\partial x$**（**$M$ 配 $y$、$N$ 配 $x$**）；\n- **积分因子里 $M$、$N$ 的位置**：**切片给的是 $\\dfrac{1}{N}\\left(\\dfrac{\\partial M}{\\partial y}-\\dfrac{\\partial N}{\\partial x}\\right)$**（**换一个就会差符号**）；\n- **$-2\\ln x$ 的化简**：**$e^{-2\\ln x}=x^{-2}$**（**不是 $e^{-2}x$**）。",
+      "links": [
+        "de1.2",
+        "de1.1",
+        "de1.3",
+        "de1.5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
