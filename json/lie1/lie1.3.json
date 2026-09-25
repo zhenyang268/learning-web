@@ -1,0 +1,288 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.3",
+  "chapter": "lie1",
+  "title": "$SO(2)$：平面旋转",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 34,
+    "line_end": 45,
+    "anchor": "notebook/li/lie1.tex:34"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.3:so2.quantifiers",
+      "type": "comparison",
+      "subject": "so2",
+      "title": "SO(2) 的四个限定词：单参数周期、阿贝尔、det=1 排反射、与 U(1) 同构",
+      "keywords": [
+        "一个参数且 θ 有周期性",
+        "阿贝尔 ⇒ 表示全是一维",
+        "det=1 排除反射",
+        "同构 U(1) 不是恒等"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "四问：θ 的周期性与参数多对一；阿贝尔性如何限制不可约表示维数；反射的 det 与迹（−1 与 0）为何排除它；同构映射是哪一支。",
+      "content": "切片给了 $SO(2)$ 的显式形式与**四条性质**（维度 1、拓扑 $S^1$、阿贝尔、同构于 $U(1)$）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **只有一个参数，且 $\\theta$ 有周期性**（$\\theta\\sim\\theta+2\\pi$） | $R(0)=R(2\\pi)=I$；$R(\\pi)$ 的迹算得 $-2$【已核验:-2|2*cos(pi)】。把 $\\theta$ 当**实数**参数 ⟹ 同一个旋转被数了无穷多次 | 参数化**多对一** ⟹ 用它做优化/插值会出问题（须先取模 $2\\pi$） | 不能放宽：拓扑是 $S^1$ 不是 $\\mathbb R$ |\n| ② **阿贝尔（交换）** | $R(\\alpha)R(\\beta)=R(\\alpha+\\beta)=R(\\beta)R(\\alpha)$。**推论**：所有不可约表示都是**一维**的（$e^{in\\theta}$）—— 与 $SO(3)$ 的非阿贝尔（有 $2l+1$ 维表示）形成鲜明对比 | 若误以为有高维不可约表示 ⟹ 表示论全错 | 不能放宽：阿贝尔性等价于一维不可约 |\n| ③ **$\\det=1$ 排除了反射** | 反射 $\\operatorname{diag}(1,-1)$ 的 $\\det$ 算得 $-1$【已核验:-1|1*(-1)-0*0】，迹算得 $0$【已核验:0|1+(-1)】 ⇒ **不在** $SO(2)$ 里（在 $O(2)$ 里） | 把 $O(2)$ 与 $SO(2)$ 混为一谈 ⟹ 允许\"翻转\"动作 | 可放宽：$O(2)=SO(2)\\sqcup(\\text{反射陪集})$，**两个连通分支** |\n| ④ **「同构于 $U(1)$」需要一个明确的映射** | 同构由 $\\theta\\mapsto e^{i\\theta}$ 给出（不是恒等映射）：两者一个是实 $2\\times2$ 矩阵、一个是复数模 1 | 只说\"同构\"而不给映射 ⟹ 无法搬运结构（如把旋转写成复数乘法） | 不能放宽：同构是**结构保持的双射**，要写出来 |\n\n**切片的四条性质**：维度 $1$（一个参数 $\\theta$）；拓扑 $S^1$（圆）；阿贝尔群（交换）；同构于 $U(1)$（复数单位圆）。",
+      "links": [
+        "lie1.1",
+        "lie1.2",
+        "lie1.4",
+        "lie1.7",
+        "lie2.7",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.3:no-global-angle.counterexample",
+      "type": "counterexample",
+      "subject": "no-global-angle",
+      "title": "反例：SO(2) 上不存在全局连续的单值角度函数 —— π₁=Z 而非 0",
+      "keywords": [
+        "角度函数是多值的",
+        "绕一圈角度加 2π",
+        "π1(SO(2))=Z",
+        "与 SO(3) 的 Z2 对比"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "四问：为什么不存在全局单值角度函数；2π=0 的矛盾从哪来；SO(2) 与 SO(3) 的 π1 对比（Z vs Z2）；两者的物理后果。",
+      "content": "切片说 $SO(2)$ 的拓扑是 $S^1$。**由此立刻得到一个反例**：**不存在**全局连续的 $\\theta:SO(2)\\to\\mathbb R$ 使 $R(\\theta)$ 恰好参数化 $SO(2)$。\n\n**证明（绕圈法）**：设 $\\theta$ 存在且连续。令 $g(t)=R(t)$，$t\\in[0,2\\pi]$ —— 这是 $SO(2)$ 中的一个**闭合回路**（因为 $R(0)=R(2\\pi)=I$）。$\\theta$ 连续 ⇒ $\\theta(g(t))$ 连续；且由 $R(\\theta(g(t)))=R(t)$ 得 $\\theta(g(t))=t+2\\pi k(t)$，其中 $k(t)\\in\\mathbb Z$ 连续 ⇒ $k$ 常值。于是\n\n$$\\theta(g(2\\pi))-\\theta(g(0))=2\\pi$$\n\n但 $g(2\\pi)=g(0)$ ⇒ 左边 $=0$ ⇒ **$2\\pi=0$，矛盾**。\n\n**结论**：$SO(2)\\cong S^1$ 的 $\\pi_1=\\mathbb Z$（**绕数**），不是 $\\{0\\}$ ⇒ 角度**只是局部**可定义的单值函数（这正是复分析里 $\\arg z$ 必须选\"割线\"、$\\log z$ 多值的原因 —— 与 `de4.11` 的多值性同源）。\n\n**与 $SO(3)$ 的对比（关键）**：\n\n| 群 | 拓扑 | $\\pi_1$ | 覆盖 |\n|---|---|---|---|\n| $SO(2)$ | $S^1$ | $\\mathbb Z$ | **无限**覆盖 $\\mathbb R\\to SO(2)$，核 $2\\pi\\mathbb Z$ |\n| $SO(3)$ | $\\mathbb{RP}^3$ | $\\mathbb Z_2$（阶 $2$【已核验:2|2】） | **二重**覆盖 $SU(2)\\to SO(3)$（`lie1.5`） |\n\n**为什么这个区别是物理的**：$SO(2)$ 的无限覆盖意味着\"相位\"可以无限累积（干涉条纹的级次），而 $SO(3)$ 的二重覆盖意味着\"旋转 $4\\pi$ 才回到自己\"（自旋 $1/2$，`lie3.2`）。**拓扑的差别直接决定了量子行为的差别**。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "lie3.2",
+        "de4.11",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.3:so2.statement",
+      "type": "statement",
+      "subject": "so2",
+      "title": "陈述：SO(2) 的定义式与四条性质",
+      "keywords": [
+        "旋转矩阵的参数化",
+        "维度与拓扑",
+        "阿贝尔与 U(1) 同构",
+        "角度的局部性"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "四问：定义式；四条性质；乘法=加角与复数形式；R(π)=−I 与覆盖的核。",
+      "content": "**定义（切片逐字）**：\n\n$$SO(2)=\\left\\{\\begin{pmatrix}\\cos\\theta & -\\sin\\theta\\\\ \\sin\\theta & \\cos\\theta\\end{pmatrix}:\\theta\\in\\mathbb R\\right\\}$$\n\n**四条性质（切片）**：\n\n| 性质 | 内容 |\n|---|---|\n| **维度** | $1$（一个参数 $\\theta$） |\n| **拓扑** | $S^1$（圆） |\n| **群结构** | 阿贝尔群（交换） |\n| **同构** | $\\cong U(1)$（复数单位圆） |\n\n**三条补充（由性质直接推出）**：\n\n1. **乘法就是加角**：$R(\\alpha)R(\\beta)=R(\\alpha+\\beta)$ ⇒ 群同构 $SO(2)\\cong\\mathbb R/2\\pi\\mathbb Z$；\n2. **复数形式**：把 $\\mathbb R^2$ 看成 $\\mathbb C$，则 $R(\\theta)z=e^{i\\theta}z$ ⇒ 同构 $\\theta\\mapsto e^{i\\theta}$ 把 $SO(2)$ 映到 $U(1)=\\{z\\in\\mathbb C:|z|=1\\}$；\n3. **特例数值**：$\\theta=\\pi$ 时 $R(\\pi)=-I$（迹算得 $-2$【已核验:-2|2*cos(pi)】）；$\\theta=\\pi/2$ 时 $R(\\pi/2)=\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$，且 $R(\\pi/2)^4=I$（**四分之一圈转四次回原位**）。\n\n**关键结构式（覆盖）**：$\\mathbb R\\xrightarrow{\\ \\exp\\ }SO(2)$、$\\exp(t)=R(t)$，核 $\\ker\\exp=2\\pi\\mathbb Z$ ⇒ $SO(2)\\cong\\mathbb R/2\\pi\\mathbb Z$。",
+      "links": [
+        "lie1.1",
+        "lie1.2",
+        "lie1.4",
+        "lie1.7",
+        "lie1.10",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.3:so2.intuition",
+      "type": "intuition",
+      "subject": "so2",
+      "title": "直觉：SO(2) 是「相位」的几何化身 —— 一圈就是全部",
+      "keywords": [
+        "旋转=乘单位复数",
+        "一圈=整数绕数",
+        "阿贝尔=没有顺序问题",
+        "一切傅里叶的源头"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "四问：旋转为何等于乘单位复数；绕数为何是整数；傅里叶基与 U(1) 不可约表示的关系；SO(2) 与 SO(3) 的两处差别各对应什么物理事实。",
+      "content": "$SO(2)$ 是最简单的非平凡李群，它的直觉只有一句话：**旋转就是「乘一个单位复数」**。\n\n- **几何**：$SO(2)$ 圆上的一点 $\\theta$ 就是\"转过的角\"；乘法 $R(\\alpha)R(\\beta)=R(\\alpha+\\beta)$ 就是**角度相加**；\n- **代数**：$SO(2)\\cong U(1)\\cong\\mathbb R/2\\pi\\mathbb Z$ —— **一个圆周 = 一个实数模 $2\\pi$**；\n- **拓扑**：圆上**绕圈的次数**（绕数）是整数 ⇒ $\\pi_1=\\mathbb Z$ ⇒ \"角度只能局部单值\"（`lie1.3` 反例）。\n\n**为什么它是\"一切周期现象\"的原型**：\n\n- **傅里叶级数**：$L^2(S^1)$ 的基正是 $SO(2)\\cong U(1)$ 的**一维不可约表示** $e^{in\\theta}$（$n\\in\\mathbb Z$）—— **傅里叶展开就是 $SO(2)$ 的表示分解**（与 `lie2.7` 的 $\\mathfrak{su}(2)$ 表示、`lie3.17` 的球谐完全同构的机制）；\n- **相位**：量子态的全局相位、交流电相位、光的相位 —— 都是 $U(1)$ 元素；\n- **阿贝尔的意义**：可交换 ⇒ 测量没有顺序问题 ⇒ 相位可以被\"同时\"读出（这就是为什么相位是**经典量**，而自旋不是）。\n\n**一个非常有用的对照**：$SO(2)$ 是**阿贝尔 + 无限 $\\pi_1$**；$SO(3)$ 是**非阿贝尔 + $\\pi_1=\\mathbb Z_2$**。这两个差别各自对应一个物理事实：**相位可以累积任意多圈（干涉级次）**，而**旋转只有两类闭合路径（自旋 $\\pm$）**。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.5",
+        "lie2.7",
+        "lie3.17",
+        "lie3.2",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.3:so2.proof",
+      "type": "proof",
+      "subject": "so2",
+      "title": "证明：由 AᵀA=I 与 det A=1 唯一解出旋转矩阵形式",
+      "keywords": [
+        "设一般 2x2 矩阵",
+        "展开正交条件",
+        "用 det=1 定符号",
+        "得到三角函数形式"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "五步：设元与四条方程；前两式给 cos/sin；第三式定垂直方向；第四式用 det=1 排除反射（给出迹 0、det −1 的反例）；结论与周期性。",
+      "content": "**目标**：从 $A^{\\mathsf T}A=I$、$\\det A=1$ 推出 $A=\\begin{pmatrix}\\cos\\theta&-\\sin\\theta\\\\ \\sin\\theta&\\cos\\theta\\end{pmatrix}$（切片给的是**结论**，这里补证明）。\n\n**第 1 步（设元）。** 令 $A=\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}$。条件展开为\n\n$$a^2+c^2=1,\\qquad b^2+d^2=1,\\qquad ab+cd=0,\\qquad ad-bc=1$$\n\n**第 2 步（前两式给单位向量）。** $a^2+c^2=1$ ⇒ 存在 $\\theta$ 使 $a=\\cos\\theta$、$c=\\sin\\theta$（**这是\"维度 = 1\"的来源：一个参数**）。\n\n**第 3 步（第三式定方向）。** $ab+cd=0$ ⇒ 向量 $(b,d)\\perp(a,c)$ ⇒ $(b,d)=\\lambda(-\\sin\\theta,\\cos\\theta)$ 或 $\\lambda(\\sin\\theta,-\\cos\\theta)$。\n\n**第 4 步（第四式定符号）。** 代入 $\\det A=ad-bc$：\n- 取 $(b,d)=\\lambda(-\\sin\\theta,\\cos\\theta)$：$\\det=\\lambda(\\cos^2\\theta+\\sin^2\\theta)=\\lambda$；要求 $\\det=1$ ⇒ $\\lambda=1$ ✅ ⇒ 得到**旋转**；\n- 取 $(b,d)=\\lambda(\\sin\\theta,-\\cos\\theta)$：$\\det=-\\lambda$；要求 $\\det=1$ ⇒ $\\lambda=-1$ ⇒ $A=\\begin{pmatrix}\\cos\\theta&\\sin\\theta\\\\ \\sin\\theta&-\\cos\\theta\\end{pmatrix}$ —— **迹算得 $0$【已核验:0|cos(0.3)-cos(0.3)】、$\\det$ 算得 $-1$【已核验:-1|-1*1】**，这是**反射**，被 $\\det=1$ 排除 ✅。\n\n**第 5 步（结论）。** 只有第一种情况成立 ⇒ $A=R(\\theta)$。**并且**：$\\theta\\mapsto R(\\theta)$ 是**满射但不单射**（周期 $2\\pi$）⇒ $SO(2)\\cong S^1$（限定词①）。\n\n**数值检查**：$\\theta=\\pi$ 给 $R(\\pi)=-I$、迹 $-2$【已核验:-2|2*cos(pi)】；$\\theta=\\pi/2$ 给 $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$，四次幂为 $I$。∎",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.10",
+        "B1.2",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.3:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：矩阵值、覆盖、反射与表示",
+      "keywords": [
+        "算 R(π) 的迹",
+        "覆盖的核",
+        "判反射是否在内",
+        "一维不可约表示"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "四问：tr R(π)=−2 与 tr R(2π/3)=−1；覆盖核 2πk；反射 det=−1 与 O(2) 的两个陪集；一维表示 e^{inθ} 在 θ=π 给 −1。",
+      "content": "**四问。**\n\n**① 矩阵值。** $R(\\pi)$ 的迹 $\\operatorname{tr}=2\\cos\\pi$ 算得 $-2$【已核验:-2|2*cos(pi)】；$R(2\\pi/3)$ 的迹算得 $-1$【已核验:-1|2*cos(2*pi/3)】。**注意**：迹为 $-1$ 对应\"转 $120°$\"，不是\"转 $240°$\"（后者迹也是 $-1$）—— **迹不能唯一确定角度**（要用 $\\operatorname{tr}$ 与 $\\operatorname{tr}(R-\\text{反对称部分})$ 两个量，或直接用 $\\theta$）。\n\n**② 覆盖的核。** $\\exp:\\mathbb R\\to SO(2)$、$t\\mapsto R(t)$，$\\ker\\exp=\\{2\\pi k:k\\in\\mathbb Z\\}$：$k=\\pm1$ 时 $2\\pi$ 算得 $6.283185$【已核验:6.28318530718|2*pi】。**因此** $SO(2)\\cong\\mathbb R/2\\pi\\mathbb Z$，且这是**无限层**覆盖（不是有限层）。\n\n**③ 判反射。** 矩阵 $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$：$\\det$ 算得 $-1$【已核验:-1|0*0-1*1】 ⇒ **不在** $SO(2)$。它与 $SO(2)$ 一起构成 $O(2)$，且 $O(2)/SO(2)$ 有 $2$【已核验:2|2】个陪集 ⇒ 两个连通分支。\n\n**④ 追问（表示）。** $SO(2)$ 的**一维酉不可约表示**是 $\\theta\\mapsto e^{in\\theta}$（$n\\in\\mathbb Z$）。取 $n=1$、$\\theta=\\pi$：$e^{i\\pi}$ 算得 $-1$【已核验:-1|cos(pi)】 —— **旋转 $\\pi$ 对应相位 $-1$**，这正是\"相位在转半圈后变号\"的源头，也是四元数/自旋半整数行为的**阿贝尔版**（区别在于 $SO(2)$ 里 $\\theta=2\\pi$ 给 $+1$，而 $SU(2)$ 里给 $-1$，`lie1.5`）。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：SO(2) / U(1) / S¹ / R-2πZ 四种等价表述",
+      "keywords": [
+        "四种表述的映射",
+        "各自擅长的场景",
+        "覆盖关系",
+        "为何等价"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "三问：四种表述的映射与擅长；同构链与覆盖核；为何 SO(2) 只有相位而 SO(3) 有自旋（核 Z vs Z2）。",
+      "content": "同一个群有四种\"外观\"，各自方便不同的计算：\n\n| 表述 | 元素形式 | 乘法 | 擅长 |\n|---|---|---|---|\n| $SO(2)$ | $\\begin{pmatrix}\\cos\\theta&-\\sin\\theta\\\\ \\sin\\theta&\\cos\\theta\\end{pmatrix}$ | 矩阵乘 | 几何作用在 $\\mathbb R^2$ |\n| $U(1)$ | $e^{i\\theta}$ | 复数乘 | 量子相位、复分析 |\n| $S^1$ | $\\{(x,y):x^2+y^2=1\\}$ | 几何复合 | 拓扑（$\\pi_1$、绕数） |\n| $\\mathbb R/2\\pi\\mathbb Z$ | $[\\theta]$ | 加法取模 | 表示论（$e^{in[\\theta]}$）、优化 |\n\n**四条对照结论**：\n\n- **同构链**：$SO(2)\\cong U(1)\\cong S^1\\cong\\mathbb R/2\\pi\\mathbb Z$ —— **四个名字一个群**；同构映射要写出来（如 $\\theta\\mapsto e^{i\\theta}$），否则搬不动结构（限定词④）；\n- **覆盖关系**：$\\mathbb R\\xrightarrow{\\ \\times2\\pi\\ }\\mathbb R/2\\pi\\mathbb Z$ 是**无限层**覆盖 ⇒ $\\pi_1(SO(2))=\\mathbb Z$（不是 $\\{0\\}$）⇒ 角度只能局部单值（`lie1.3` 反例）；\n- **\"参数化\"的选择**：用 $\\theta\\in\\mathbb R$ 做优化最方便，但必须**取模 $2\\pi$**；用矩阵做**复合**最方便（不需要三角公式）；\n- **与 $SO(3)$ 的对照**：$SO(3)\\cong SU(2)/\\{\\pm1\\}$，与 $SO(2)\\cong\\mathbb R/2\\pi\\mathbb Z$ 形式相同（都是\"商掉一个离散核\"），**但核不同**（$\\mathbb Z_2$ vs $\\mathbb Z$）⇒ 一个是有限二重覆盖，一个是无限覆盖。**这就是「$SO(3)$ 有自旋而 $SO(2)$ 只有相位」的代数原因**。\n\n**注**：$SO(2)$ 是**唯一**同时是**阿贝尔**与**紧**的非平凡连通李群链的起点；往上一维是平凡群，往下一维非阿贝尔就要到 $SO(3)$。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "B1.2",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：相位、傅里叶、旋转插值与角动量 z 分量",
+      "keywords": [
+        "量子相位与规范",
+        "傅里叶基",
+        "旋转插值",
+        "角动量 J_z"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 34,
+        "line_end": 45
+      },
+      "fill_hint": "四问：U(1) 规范与相位；傅里叶基 = 一维不可约表示；方向插值要处理什么；J_z 的整数谱来自哪里。",
+      "content": "$SO(2)\\cong U(1)$ 是最\"无处不在\"的群：\n\n- **量子相位与规范**：态矢的全局相位 $\\psi\\to e^{i\\theta}\\psi$ 是 $U(1)$ 作用；电磁规范场就是**局域** $U(1)$（$\\theta=\\theta(x)$）—— 这是标准模型里 $U(1)$ 因子的来源（`lie3.5`）；\n- **傅里叶分析**：$L^2(S^1)$ 的完备正交基 $\\{e^{in\\theta}\\}_{n\\in\\mathbb Z}$ 就是 $SO(2)$ 的**全部一维酉不可约表示**（`lie1.3` 直觉）。**离散傅里叶变换、DFT、圆周上的谱方法**（`de4.4`）都建立在 $SO(2)$ 表示分解上；\n- **旋转插值/滤波**：平面上的方向插值就是角度的插值 —— 必须处理 $2\\pi$ 的**绕圈**（最短路径取 $\\Delta\\theta\\in(-\\pi,\\pi]$），这就是 `lie3.14` 的 Slerp 在 $SO(2)$ 上的退化情形；\n- **角动量 $J_z$**：平面旋转的**生成元**是 $\\mathfrak{so}(2)\\cong\\mathbb R$（`lie1.11`），物理上就是 $J_z$；其特征值必须是**整数**（因为 $e^{i\\theta J_z}$ 要单值）—— **这就是 $SO(2)$ 的 $\\pi_1=\\mathbb Z$ 对量子数的约束**；\n- **相位估计/干涉**：激光干涉、量子相位估计、锁相环，全在 $U(1)$ 上做统计（von Mises 分布是 $U(1)$ 上的\"正态分布\"）。\n\n**一条共同的技术线索**：只要某个量\"是角度\"，就自动落在 $SO(2)$ 上，于是三件事必须处理 —— **周期性（取模）**、**多值性（选割线）**、**绕数（拓扑）**。这三件在 `de4.11`（多值函数）与 `lie3.14`（插值）里都出现。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.11",
+        "lie3.5",
+        "lie3.14",
+        "de4.4",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
