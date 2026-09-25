@@ -1,0 +1,300 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de1.12",
+  "chapter": "de1",
+  "title": "Sturm–Liouville 问题",
+  "src": {
+    "file": "notebook/diffrential/de1.tex",
+    "line_start": 295,
+    "line_end": 328,
+    "anchor": "notebook/diffrential/de1.tex:295"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de1.12:sturm-liouville.quantifiers",
+      "type": "comparison",
+      "subject": "sturm-liouville",
+      "title": "Sturm–Liouville 问题的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①自伴形式：−(p y′)′ + q y = λ w y（必须是这个形状）",
+        "条件②p > 0、w > 0 在区间内：保证「权重」为正且可除",
+        "条件③边界条件：齐次（如 y(a) = y(b) = 0）",
+        "条件④结论：λ 离散、实数、趋于 ∞",
+        "条件⑤正交性：∫ y_m y_n w dx = 0（m ≠ n），关于权重 w",
+        "翻车代价：忘权重 w ⇒ 正交性写错（如 Legendre 不带 w 也正交，但一般不对）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "五行条件表；⑤ 行必须点出「忘权重 w」的坑；给五行经典例子的对照表（含 Bessel 的 $w=x$）；给正交性的两套实测（sin 的 π/2 与 0、Legendre 的 2/3/2/5/2/7）；给 λ 实与 λ→∞ 的一句话理由。",
+      "content": "切片给了标准形式、三条性质与五行经典例子。**「权重 $w$」是最容易漏的**——逐条拆：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **自伴形式** | **$-(py')'+qy=\\lambda wy$**——**必须写成「导数在外面」的形式** | 若保留 $y''$ 的一般形式 ⇒ **看不出自伴性**（**需先乘积分因子化成标准形**） | 不能放宽：**标准形是前提** |\n| ② **$p>0$、$w>0$** | **保证 $w$ 可作权重** | 若 $w$ 变号 ⇒ **「正交性」失去正定内积的意义** | 不能放宽：**$w>0$ 是内积的基础** |\n| ③ **齐次边界条件** | **如 $y(a)=y(b)=0$**（**或周期、或自然边界**） | 若边界非齐次 ⇒ **特征值问题不「自伴」** | 可放宽：**非齐次可先化齐次** |\n| ④ **$\\lambda$ 离散、实数、$\\to\\infty$** | **实测**：$-y''=\\lambda y$、$[0,\\pi]$、$y=0$ 端点 ⇒ **$\\lambda_n=n^{2}$**：$1,4,9,\\ldots$ | 若以为「特征值可以连续」⇒ 与「离散谱」矛盾 | 不能放宽：**这是「正则 S–L 问题」的结论**（**奇异时谱可以连续**） |\n| ⑤ **关于 $w$ 正交** | **$\\int_a^b y_my_nw\\,dx=0$（$m\\ne n$）**。**实测（$\\sin$ 情形，$w=1$）**：$\\int_0^{\\pi}\\sin(mx)\\sin(nx)dx$ 在 $(m,n)=(1,1)$ 给 $\\pi/2$、$(1,2)$ 与 $(2,3)$ 都给 $0$ | **忘 $w$** ⇒ **一般不对**（**如 Bessel 的 $w=x$、Legendre 的 $w=1$**——**后者恰好为 $1$ 故易被忽略**） | 不能放宽：**权重是定义的一部分** |\n\n**这张表的用法**：\n\n1. **先化成自伴标准形**（**$-(py')'+qy=\\lambda wy$**）；\n2. **确认 $p>0$、$w>0$**；\n3. **按 $w$ 算正交性内积**。\n\n**五行经典例子的核对（切片给的，这里补具体常数）**：\n\n| 方程 | 区间/边界 | 特征函数 | 特征值 | 权重 $w$ |\n|---|---|---|---|---|\n| $-y''=\\lambda y$ | $[0,\\pi]$，端点为零 | $\\sin(nx)$ | $n^{2}$：$1,4,9$ | $1$ |\n| $-y''=\\lambda y$ | **周期** | $e^{inx}$ | $n^{2}$ | $1$ |\n| **Bessel** | $[0,1]$ | $J_\\nu(\\sqrt\\lambda x)$ | **$\\alpha_n^{2}$** | **$x$** |\n| **Legendre** | $[-1,1]$ | $P_n(x)$ | $n(n+1)$ | **$1$** |\n| $-y''+x^{2}y=\\lambda y$ | $\\mathbb R$ | $H_n(x)e^{-x^{2}/2}$ | $2n+1$ | $1$ |\n\n**注意「Bessel 的权重是 $x$」**——**这正是 `de1.15` 的「$\\int_0^1xJ_\\nu(\\alpha_mx)J_\\nu(\\alpha_nx)dx=0$」里的那个 $x$** ✅\n\n**正交性的数值实测**：\n\n**（a）$\\sin$（$w=1$，$[0,\\pi]$）**：\n\n| $(m,n)$ | $\\int_0^{\\pi}\\sin(mx)\\sin(nx)dx$ |\n|---|---|\n| $(1,1)$ | $\\pi/2=1.570796$【已核验:1.57079632679|pi/2】 |\n| $(1,2)$ | $0$【已核验:0|0】 |\n| $(2,3)$ | $0$【已核验:0|0】 |\n\n**（b）Legendre（$w=1$，$[-1,1]$）**：\n\n$$\\int_{-1}^{1}P_mP_n\\,dx=\\frac{2}{2n+1}\\delta_{mn}$$\n\n| $n$ | $\\int_{-1}^{1}P_n^{2}dx$ |\n|---|---|\n| $0$ | $2$【已核验:2|2/1】 |\n| $1$ | $2/3=0.666667$【已核验:0.666666666667|2/3】 |\n| $2$ | $2/5=0.4$【已核验:0.4|2/5】 |\n| $3$ | $2/7=0.285714$【已核验:0.285714285714|2/7】 |\n\n**交叉项（$P_0\\cdot P_2$）给 $0$**【已核验:0|0】 ✅\n\n**「为什么特征值必须是实数」（一句话）**：**对自伴算子，$\\lambda=\\dfrac{\\int\\left(p\\lvert y'\\rvert^{2}+q\\lvert y\\rvert^{2}\\right)}{\\int w\\lvert y\\rvert^{2}}$**——**分子分母都是实的自伴量** ⇒ **$\\lambda$ 实** ✅\n\n**「为什么 $\\lambda\\to\\infty$」（一句话）**：**特征函数要「塞进」有限区间** ⇒ **振荡越多，需要的曲率越大**（**$\\lambda$ 越大**）——**而振荡次数无上界** ⇒ **$\\lambda_n\\to\\infty$** ✅",
+      "links": [
+        "de1.5",
+        "de1.7",
+        "de1.8",
+        "de1.13",
+        "de1.15",
+        "de1.16",
+        "de1.17",
+        "de2.10",
+        "A2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.12:wrong-weight.counterexample",
+      "type": "counterexample",
+      "subject": "wrong-weight",
+      "title": "反例：忘权重 w（正交性写错）",
+      "keywords": [
+        "误用现场：对 Bessel 方程直接用 ∫_0^1 J_m J_n dx = 0（漏了 x）",
+        "正解：权重是 w = x，即 ∫_0^1 x J_ν(α_m x) J_ν(α_n x) dx = 0",
+        "后果：用错内积 ⇒ 展开系数算错（分母也错）",
+        "对照：Legendre 的 w = 1（所以「恰好」不用写）",
+        "判据：从自伴形式看 w 的系数",
+        "修补：先化成 -(p y′)′ + qy = λ w y，读出 w"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "把「忘权重」的后果算清（Bessel 的 $w=x$ 来自标准形；漏 x 则分母错，$n=1$ 时正确分母 0.1347）；给「为什么容易漏」的三条原因；给「化标准形读 w」的判据。",
+      "content": "**误用现场**：**对 Bessel 方程直接用「不带权重的正交性」**：\n\n$$\\int_0^1J_\\nu(\\alpha_mx)J_\\nu(\\alpha_nx)\\,dx=0\\quad(\\text{错}).$$\n\n**为什么这是错的**：**Bessel 方程的标准形里权重是 $w=x$**——**正确写法是**\n\n$$\\int_0^1\\underbrace{x}_{=w}J_\\nu(\\alpha_mx)J_\\nu(\\alpha_nx)\\,dx=0$$ ✅\n\n**「$w=x$ 从哪来」**：**把 Bessel 方程 $x^{2}y''+xy'+(x^{2}-\\nu^{2})y=0$ 化成标准形**：\n\n**除以 $x$**：\n\n$$xy''+y'+\\left(x-\\frac{\\nu^{2}}{x}\\right)y=0\\ \\Longrightarrow\\ \\left(xy'\\right)'+\\left(x-\\frac{\\nu^{2}}{x}\\right)y=0$$\n\n**即 $-(py')'+qy=\\lambda wy$ 的形式**（**这里 $\\lambda=1$、$p=x$、$w=x$**）⇒ **$w=x$** ✅\n\n**「用错的后果（定量）」**：**展开系数**\n\n$$c_n=\\frac{\\int f(x)J_\\nu(\\alpha_nx)\\,dx}{\\text{（分母）}}$$\n\n**分母应是 $\\int_0^1xJ_\\nu^{2}dx$**——**若漏 $x$，分母会错**：\n\n| 量 | 正确 | 漏 $x$ |\n|---|---|---|\n| 分母 | $\\int_0^1xJ_0^{2}(\\alpha_nx)dx=\\dfrac{J_1^{2}(\\alpha_n)}{2}$ | $\\int_0^1J_0^{2}(\\alpha_nx)dx$（**不同值**） |\n\n**具体数值（$n=1$，$\\alpha_1=2.404826$）**：\n\n| 量 | 值 |\n|---|---|\n| $\\alpha_1$ | $2.404826$ |\n| $J_1(\\alpha_1)$ | $0.5191$ |\n| **正确分母** $\\dfrac{J_1^{2}(\\alpha_1)}{2}$ | $0.1347$【已核验:0.134732405|0.5191**2/2】 |\n\n**所以「漏 $x$ 会让分母错」** ✅\n\n**「为什么容易漏」**：\n\n1. **Legendre 的 $w=1$**（**教材常用它举例**）⇒ **形成「不用写 $w$」的习惯**；\n2. **$w$ 在标准形里以 $w y$ 出现**（**不是显式的「权重」字样**）；\n3. **许多例子的 $p$ 与 $w$ 相同**（**如 Bessel**）⇒ **更易混**。\n\n**判据（一句话）**：**「化成 $-(py')'+qy=\\lambda wy$ 后，$y$ 前面的系数是什么？」** 那就是 $w$。\n\n**修补动作**：\n\n1. **永远先化标准形**（**除 $p$、把导数写成 $(py')'$**）；\n2. **写下 $w$**（**哪怕它是 $1$**）；\n3. **算内积时带 $w$**。",
+      "links": [
+        "de1.12",
+        "de1.15",
+        "de1.16",
+        "de1.17"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.12:sturm-liouville.statement",
+      "type": "statement",
+      "subject": "sturm-liouville",
+      "title": "Sturm–Liouville 问题：标准形、三条性质与经典例子",
+      "keywords": [
+        "标准形：−(p y′)′ + q y = λ w y（加齐次边界条件）",
+        "特征值：λ₁ < λ₂ < … → ∞（离散、实数）",
+        "正交性：∫_a^b y_m y_n w dx = 0（m ≠ n）",
+        "完备性：{y_n} 是 L²_w[a,b] 的完备正交基",
+        "五类经典例子：sin/e^{inx}/Bessel/Legendre/Hermite",
+        "权重 w：Bessel 是 x；Legendre 是 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "陈述本体（标准形 + 三条性质）+ 两套正交性实测数值 + 「完备性展开的系数公式（含 w）」+ 五行经典例子的完整表（补特征值与 w）；点出「五行的意义」与 de2.10/H5 的接口。",
+      "content": "**陈述**（切片）。\n\n**标准形式（切片）**：\n\n$$-\\left(p(x)y'\\right)'+q(x)y=\\lambda w(x)y$$\n\n**加上边界条件**（**如 $y(a)=y(b)=0$**）。\n\n**三条性质（切片）**：\n\n| # | 性质 |\n|---|---|\n| ① | **特征值 $\\lambda_1<\\lambda_2<\\cdots\\to\\infty$（离散、实数）** |\n| ② | **特征函数关于权重 $w$ 正交**：$\\int_a^by_my_nw\\,dx=0$（$m\\ne n$） |\n| ③ | **特征函数构成 $L^{2}_{w}[a,b]$ 的完备正交基** |\n\n**「三条性质的分量」（值得逐条量化）**：\n\n**① 离散 + 实数 + $\\to\\infty$**——**实测（$\\sin$ 情形）**：$\\lambda_n=n^{2}$ ⇒ $1,4,9,16,\\ldots$ ⇒ **严格递增且无界** ✅\n\n**② 正交性**——**实测两套**：\n\n$$\\int_0^{\\pi}\\sin(mx)\\sin(nx)dx=\\frac{\\pi}{2}\\delta_{mn}\\quad(w=1)$$\n\n| $(m,n)$ | 值 |\n|---|---|\n| $(1,1)$ | $\\pi/2=1.570796$【已核验:1.57079632679|pi/2】 |\n| $(1,2)$ | $0$ |\n\n$$\\int_{-1}^{1}P_mP_n\\,dx=\\frac{2}{2n+1}\\delta_{mn}\\quad(w=1)$$\n\n| $n$ | $\\int P_n^{2}dx$ |\n|---|---|\n| $0$ | $2$【已核验:2|2/1】 |\n| $1$ | $0.666667$【已核验:0.666666666667|2/3】 |\n| $2$ | $0.4$【已核验:0.4|2/5】 |\n\n**③ 完备性** ⇒ **任意 $f\\in L^{2}_{w}$ 可展开**：\n\n$$f=\\sum_nc_ny_n,\\qquad c_n=\\frac{\\int_a^bfy_nw\\,dx}{\\int_a^by_n^{2}w\\,dx}$$ ✅\n\n**注意分母里的 $w$**——**这是「带权内积」的直接体现** ✅\n\n**五类经典例子（切片表，补权重与特征值）**：\n\n| 方程 | 区间/边界 | 特征函数 | 特征值 | $w$ |\n|---|---|---|---|---|\n| $-y''=\\lambda y$ | $[0,\\pi]$，端点为零 | $\\sin(nx)$ | **$n^{2}$** | $1$ |\n| $-y''=\\lambda y$ | **周期** | $e^{inx}$ | **$n^{2}$** | $1$ |\n| **Bessel** | $[0,1]$ | $J_\\nu(\\sqrt\\lambda x)$ | **$\\alpha_n^{2}$** | **$x$** |\n| **Legendre** | $[-1,1]$ | $P_n(x)$ | **$n(n+1)$** | **$1$** |\n| $-y''+x^{2}y=\\lambda y$ | $\\mathbb R$ | $H_n(x)e^{-x^{2}/2}$ | **$2n+1$** | $1$ |\n\n**「这五行的意义」（切片虽未展开但很关键）**：**它们说明「所有的经典正交函数系都是 S–L 问题的特征函数」** ⇒ **正交性不是「巧合」，而是「自伴算子的必然」** ✅\n\n**「与 `de2.10` 的关系」**：**分离变量法解 PDE 时，空间部分恰好给 S–L 问题** ⇒ **所以「特征函数展开」是 PDE 的标准工具**（**`de2.10`**）✅\n\n**它依赖什么 / 谁依赖它**：`de1.5`（二阶线性方程的框架）、`A2.4`（自伴算子与谱定理）。下游：`de1.13`–`de1.17`（级数解给特殊函数）、`de2.10`（分离变量）、`H5`（球谐，**Legendre 的球面版本**）。",
+      "links": [
+        "de1.5",
+        "de1.13",
+        "de1.15",
+        "de1.16",
+        "de1.17",
+        "de2.10",
+        "H5",
+        "A2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.12:sturm-liouville.intuition",
+      "type": "intuition",
+      "subject": "sturm-liouville",
+      "title": "直觉：Sturm–Liouville = 「把『正交基』的来历讲清楚」",
+      "keywords": [
+        "Fourier 级数用 sin/cos 正交；Legendre 用 P_n 正交——为什么？",
+        "答：它们都是「自伴算子」的特征函数",
+        "自伴 ⇒ 不同特征值的特征函数正交（线性代数里学过的）",
+        "所以「正交性」不是巧合，是结构必然",
+        "w 的角色：把「非标准的内积」调回来（Bessel 要乘 x）",
+        "λ→∞：振荡越多的函数需要越大的 λ（区间有限）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么因此成立」两段；给「自伴 ⇒ 正交」的一行推导；用「$w$ 拉直非均匀坐标」讲权重的来历（Bessel 的 x 来自柱坐标体积元）；给 λ→∞ 的图像。",
+      "content": "**切片给了标准形与三条性质**。理解的关键是**「自伴 ⇒ 正交」**。\n\n**假设给了什么。** **我们有一堆「奇怪的正交函数系」**（**$\\sin$、$P_n$、$J_\\nu$、$H_n$**）——**它们各自有不同的区间、不同的权重。**\n\n**结论为什么因此成立。** **它们都是某个自伴算子的特征函数** ⇒ **正交性由「自伴」保证** ✅\n\n**「自伴 ⇒ 正交」的推导（一行）**：**设 $\\mathcal L$ 自伴、$\\mathcal Ly_m=\\lambda_mwy_m$** ⇒\n\n$$\\lambda_m\\langle y_m,y_n\\rangle_w=\\langle\\mathcal Ly_m,y_n\\rangle_w=\\langle y_m,\\mathcal Ly_n\\rangle_w=\\lambda_n\\langle y_m,y_n\\rangle_w$$\n\n**所以 $(\\lambda_m-\\lambda_n)\\langle y_m,y_n\\rangle_w=0$** ⇒ **$\\lambda_m\\ne\\lambda_n$ 时内积为零** ✅\n\n**「注意这里的 $\\langle\\cdot,\\cdot\\rangle_w$ 是**带权内积**」**——**这就是 $w$ 的来源**：\n\n$$\\langle f,g\\rangle_w=\\int_a^bfgw\\,dx$$\n\n**「$w$ 的作用（几何图像）」**：**它把「非均匀的坐标」拉直**——**如 Bessel 在柱坐标里，「径向」本来就不是均匀的**（**$r\\,dr$ 而不是 $dr$**）⇒ **$w=x$ 正是「柱坐标的体积元因子」** ✅\n\n**「$\\lambda\\to\\infty$ 的图像」**：**区间长度固定，特征函数必须「首尾相接」**：\n\n| $n$ | $\\sin(nx)$ 在 $[0,\\pi]$ 上的半波数 | $\\lambda_n=n^{2}$ |\n|---|---|---|\n| $1$ | $1$ | $1$ |\n| $2$ | $2$ | $4$ |\n| $3$ | $3$ | $9$ |\n\n**振荡越多 ⇒ 曲率越大 ⇒ $\\lambda$ 越大** ⇒ **而无上界** ⇒ **$\\lambda_n\\to\\infty$** ✅\n\n**「为什么这个视角有用」**：**它把「找正交基」变成「解特征值问题」** ⇒ **而后者有统一的工具**（**`A2.4` 的谱定理**）——**所以「特殊函数」不是「一堆需要背的公式」，而是「一个理论的实例」** ✅\n\n**记这个图像**：**S–L 问题 = 「自伴算子的特征值问题」**；**正交性由自伴性保证**；**$w$ 是「内积的权重」（来自坐标的不均匀）**；**$\\lambda\\to\\infty$ 因为「振荡次数无界」**；**五类经典函数都是它的实例**。",
+      "links": [
+        "de1.12",
+        "de1.5",
+        "de1.15",
+        "de1.16",
+        "de2.10",
+        "A2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.12:sturm-liouville.proof",
+      "type": "proof",
+      "subject": "sturm-liouville",
+      "title": "推导骨架：自伴性 ⇒ 正交性（三步）",
+      "keywords": [
+        "第一步：把方程写成算子形式 Ly = λ w y",
+        "第二步：用 Lagrange 恒等式证明 L 自伴（边界项为零）",
+        "第三步：对 (Ly_m, y_n)_w = (y_m, Ly_n)_w 取差 ⇒ (λ_m − λ_n)(y_m, y_n)_w = 0",
+        "第四步：λ_m ≠ λ_n ⇒ 正交",
+        "易错点：忘「边界项为零」（这正是要齐次边界条件的原因）",
+        "数值校核：∫_0^π sin(mx)sin(nx)dx 给 π/2（m=n）与 0（m≠n）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "三步骨架；第二步的分部积分与「边界项为零」是核心（并说明这正是要齐次边界条件的原因）；给数值核验（π/2 与 0）；易错点含「忘边界项」与「重特征值要 Gram-Schmidt」。",
+      "content": "**推导骨架**（三步）。目标：**证明「关于 $w$ 正交」**。\n\n**第一步：算子形式。**\n\n$$\\mathcal Ly:=-\\left(py'\\right)'+qy,\\qquad \\mathcal Ly=\\lambda wy$$\n\n**理由**：**把标准形写成算子方程**（**注意 $\\lambda$ 与 $w$ 都留在这里，为了用**带权内积**）✅\n\n**第二步：自伴性（关键一步）。**\n\n**计算 $\\langle\\mathcal Ly_m,y_n\\rangle-\\langle y_m,\\mathcal Ly_n\\rangle$**：\n\n$$\\int_a^b\\left[\\left(-\\left(py_m'\\right)'+qy_m\\right)y_n-y_m\\left(-\\left(py_n'\\right)'+qy_n\\right)\\right]dx$$\n\n**$q$ 项相消** ⇒ **剩下**\n\n$$\\int_a^b\\left[-y_n\\left(py_m'\\right)'+y_m\\left(py_n'\\right)'\\right]dx=\\left[-py_my_n'+py_n y_m'\\right]_a^b$$\n\n**（这一步用分部积分）**——**边界项是**\n\n$$\\left[p\\left(y_m'y_n-y_my_n'\\right)\\right]_a^b$$\n\n**若边界条件使 $y(a)=y(b)=0$**（**或 $y'$ 也如此、或周期**）⇒ **边界项为零** ⇒\n\n$$\\langle\\mathcal Ly_m,y_n\\rangle=\\langle y_m,\\mathcal Ly_n\\rangle$$ ✅ **（自伴）**\n\n**注意「边界项为零」正是**为什么**要齐次边界条件** ✅\n\n**第三步：代入特征方程。**\n\n**$\\mathcal Ly_m=\\lambda_mwy_m$、$\\mathcal Ly_n=\\lambda_nwy_n$** ⇒\n\n$$\\lambda_m\\int y_my_nw\\,dx=\\lambda_n\\int y_my_nw\\,dx\\ \\Longrightarrow\\ \\left(\\lambda_m-\\lambda_n\\right)\\int_a^by_my_nw\\,dx=0$$\n\n**所以 $\\lambda_m\\ne\\lambda_n$ ⇒ $\\int_a^by_my_nw\\,dx=0$** ✅\n\n**（重根情形的处理**：**若 $\\lambda_m=\\lambda_n$，可用 Gram–Schmidt 在特征子空间内正交化**）\n\n**数值核验**：\n\n| $(m,n)$ | $\\int_0^{\\pi}\\sin(mx)\\sin(nx)dx$ |\n|---|---|\n| $(1,1)$ | $1.570796$【已核验:1.57079632679|pi/2】 |\n| $(1,2)$ | $0$【已核验:0|0】 |\n\n**依赖链**：算子形式（第一步）→ 分部积分得自伴（第二步）→ 代入特征方程（第三步）。\n\n**易错点**：\n\n1. **忘「边界项为零」**：**它依赖齐次边界条件**（**非齐次时要先化齐次**）；\n2. **忘 $w$**：**内积是带权的**（**`de1.12:wrong-weight.counterexample`**）；\n3. **$q$ 与 $p$ 的角色**：**$q$ 在分部积分里相消，$p$ 决定边界项**；\n4. **重特征值**：**此时只保证「特征子空间内可选正交基」**（**Gram–Schmidt**）。",
+      "links": [
+        "de1.12",
+        "de1.5",
+        "de1.8",
+        "de2.10",
+        "A2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.12:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个正交积分是多少？",
+      "keywords": [
+        "可算题：∫_0^π sin(2x)sin(3x)dx",
+        "答案：0（m ≠ n 正交）",
+        "追问：∫_0^π sin²(2x)dx 呢？（π/2 = 1.570796）",
+        "再问：∫_{−1}^1 P_2(x)² dx 呢？（2/5 = 0.4）",
+        "陷阱：把 ∫sin²(nx)dx 算成 π（应为 π/2）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "从正交性变来的检验题；三问给 0、π/2、2/5；延伸给「∫sin²(nx) 与 n 无关」的三档表；易错点含「算成 π」。",
+      "content": "**题**：算正交积分。\n\n1. $\\int_0^{\\pi}\\sin(2x)\\sin(3x)\\,dx$\n2. $\\int_0^{\\pi}\\sin^{2}(2x)\\,dx$\n3. $\\int_{-1}^{1}P_2(x)^{2}dx$\n\n**答案**：\n\n1. **$0$** ✅（**$m=2\\ne n=3$，正交**）【已核验:0|0】\n\n2. **$\\dfrac{\\pi}{2}=1.570796$**【已核验:1.57079632679|pi/2】 ✅\n\n**推导**：$\\sin^{2}(2x)=\\dfrac{1-\\cos4x}{2}$ ⇒ **积分**：\n\n$$\\int_0^{\\pi}\\frac{1-\\cos4x}{2}dx=\\frac{\\pi}{2}-\\frac{1}{2}\\left[\\frac{\\sin4x}{4}\\right]_0^{\\pi}=\\frac{\\pi}{2}$$ ✅\n\n3. **$\\dfrac{2}{2\\times2+1}=\\dfrac{2}{5}=0.4$**【已核验:0.4|2/5】 ✅\n\n**（$P_2(x)=\\dfrac{3x^{2}-1}{2}$，$\\int_{-1}^{1}\\dfrac{(3x^{2}-1)^{2}}{4}dx=\\dfrac{1}{4}\\cdot\\dfrac{8}{5}=\\dfrac{2}{5}$）**\n\n**易错点**：\n\n- **把 $\\int\\sin^{2}(nx)dx$ 算成 $\\pi$**：**正确是 $\\pi/2$**（**因为 $\\sin^{2}$ 的平均值是 $1/2$**）；\n- **忘区间**：**$\\int_0^{\\pi}$ 与 $\\int_0^{2\\pi}$ 的结果不同**；\n- **Legendre 忘因子**：**是 $\\dfrac{2}{2n+1}$**（**不是 $\\dfrac{1}{2n+1}$**）。\n\n**延伸（三档 $\\int\\sin^{2}(nx)dx$ 的对照）**：\n\n| $n$ | $\\int_0^{\\pi}\\sin^{2}(nx)dx$ |\n|---|---|\n| $1$ | $\\pi/2=1.570796$ |\n| $2$ | $\\pi/2$ |\n| $n$（任意） | **$\\pi/2$（与 $n$ 无关）** |\n\n**注意「与 $n$ 无关」**——**这是「每个特征函数的 $L^{2}$ 范数相同」的表现**（**归一化后都是 $1$**）✅\n\n**判据（一句话）**：**「两个指标相同吗？」** 同 ⇒ **算范数**（$\\pi/2$ 或 $2/(2n+1)$）；不同 ⇒ **$0$**。",
+      "links": [
+        "de1.12",
+        "de1.16",
+        "de1.15"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.12:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "分工：五种经典正交系的对照（区间、权重、特征值）",
+      "keywords": [
+        "sin/e^{inx}：区间 [0,π] 或周期；w=1；λ=n²",
+        "Legendre：区间 [−1,1]；w=1；λ=n(n+1)",
+        "Bessel：区间 [0,1]；w=x；λ=α_n²",
+        "Hermite：区间 R；w=1；λ=2n+1",
+        "判据①：区间是球面 → Legendre；柱面 → Bessel",
+        "判据②：看 PDE 的对称性选坐标系"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "对照口径：以「区间 + 权重」划界，并连到 PDE 的对称性；给五行完整对照表（含特征值与来源）；给三问判据与两个「为什么」；点出与 de2.10/H5 的关系。",
+      "content": "**五种正交系的差别只在「区间 + 权重」。**\\n\\n| 正交系 | 区间 | 权重 $w$ | 特征值 | 来源（PDE 的对称性） |\\n|---|---|---|---|---|\\n| $\\sin(nx)$ | $[0,\\pi]$ | $1$ | $n^{2}$ | **一维区间（Dirichlet）** |\\n| $e^{inx}$ | **周期** | $1$ | $n^{2}$ | **一维环（周期）** |\\n| $P_n(x)$ | $[-1,1]$ | $1$ | $n(n+1)$ | **球坐标的角向** |\\n| $J_\\nu(\\alpha_nx)$ | $[0,1]$ | **$x$** | $\\alpha_n^{2}$ | **柱坐标的径向** |\\n| $H_n(x)e^{-x^{2}/2}$ | $\\mathbb R$ | $1$ | $2n+1$ | **谐振子（全直线）** |\\n\\n**判据（三问定选）**：\\n\\n1. **区间是什么？** $[-1,1]$ ⇒ **Legendre**；$[0,1]$ 且带 $x$ 权重 ⇒ **Bessel**；$\\mathbb R$ ⇒ **Hermite**；\\n2. **边界条件？** **Dirichlet ⇒ $\\sin$**；**周期 ⇒ $e^{inx}$**；\\n3. **几何对称性？** **球 ⇒ Legendre**；**柱 ⇒ Bessel**。\\n\\n**「为什么区间 $[-1,1]$ 对应球坐标」**：**球坐标的角向变量是 $\\cos\\theta\\in[-1,1]$** ⇒ **Legendre 方程的自变量天然是 $x=\\cos\\theta$** ✅（**`de1.16`**）\\n\\n**「为什么 $[0,1]$ 带 $x$ 权重对应柱坐标」**：**柱坐标的径向体积元是 $r\\,dr$** ⇒ **多出一个 $r$** ✅（**`de1.15`**）\\n\\n**所以「看到 PDE 的对称性，就知道该用哪套正交系」** ✅\\n\\n**位置关系**：本条汇总 `de1.13`–`de1.17` 的五类；`de2.10` 的分离变量会给「怎么从 PDE 走到这些方程」的完整流程；`H5` 的球谐是 Legendre 在球面上的二维版本。",
+      "links": [
+        "de1.12",
+        "de1.13",
+        "de1.15",
+        "de1.16",
+        "de1.17",
+        "de2.10",
+        "H5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de1.12:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：Sturm–Liouville 理论服务的下游章节",
+      "keywords": [
+        "de2.10：分离变量法（空间部分给 S–L 问题）",
+        "de1.13-de1.17：级数解给出具体特殊函数",
+        "H5：球谐（Legendre 在球面的二维推广）",
+        "de2.14：Green 函数与特征函数展开（等价的两条路）",
+        "物理：弦振动、热传导、量子束缚态的能级",
+        "自检：先化标准形，读出 p、q、w"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de1.tex",
+        "line_start": 295,
+        "line_end": 328
+      },
+      "fill_hint": "单元级应用词条；给五条下游（含热方程的完整解法、H5 的球谐关系、de2.14 的 Green 函数展开公式、物理三处）；给一句自检；点出本节的枢纽地位。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\\n\\n- **`de2.10` 的分离变量法**：**设 $u=T(t)X(x)$ ⇒ 空间部分（加上齐次边界）恰好是 S–L 问题** ⇒ **所以「特征函数展开」是 PDE 的标准解法** ✅\\n\\n  **具体（热方程）**：$u_t=u_{xx}$、$u(0)=u(1)=0$ ⇒ **$X''=-\\lambda X$ ⇒ $X_n=\\sin(n\\pi x)$、$\\lambda_n=n^{2}\\pi^{2}$** ⇒\\n\\n  $$u(x,t)=\\sum_nc_ne^{-n^{2}\\pi^{2}t}\\sin(n\\pi x)$$ ✅\\n\\n- **`de1.13`–`de1.17` 的特殊函数**：**它们就是「各种 S–L 问题的特征函数」** ⇒ **本条是「统一视角」，那几节是「具体实例」**。\\n\\n- **`H5` 的球谐**：**$Y_l^{m}$ 是「球面上 Laplace 算子的特征函数」**——**其「极角部分」就是 Legendre（`de1.16`）**：\\n\\n  $$Y_l^{m}(\\theta,\\phi)\\propto P_l^{m}(\\cos\\theta)e^{im\\phi}$$\\n\\n- **`de2.14` 的 Green 函数**：**「特征函数展开」与「Green 函数」是同一件事的两种写法**：\\n\\n  $$G(x,\\xi)=\\sum_n\\frac{y_n(x)y_n(\\xi)}{\\lambda_n\\lVert y_n\\rVert_w^{2}}$$\\n\\n  **（这是「按特征函数展开」的 Green 函数）** ✅\\n\\n- **物理三处经典**：\\n\\n  | 问题 | 空间算子 | 特征值 |\\n  |---|---|---|\\n  | **弦振动** | $-\\partial_x^{2}$ | **$n^{2}\\pi^{2}$** |\\n  | **热传导** | $-\\partial_x^{2}$ | 同上（**衰减率**） |\\n  | **量子束缚态** | $-\\partial_x^{2}+V$ | **离散能级**（**这就是「能量量子化」的数学内容**） |\\n\\n**一条自检问句**：**「先化标准形 $-(py')'+qy=\\lambda wy$，读出 $p$、$q$、$w$」**。\\n\\n**「为什么这一节是 `de1` 的枢纽」**：**它把前面（`de1.5`–`de1.8` 的二阶线性方程）与后面（`de1.13`–`de1.18` 的级数与 Green 函数）缝在一起**：**「特殊函数」= 「S–L 的特征函数」；「展开」= 「按特征基展开」；「Green 函数」= 「展开的另一种写法」** ✅",
+      "links": [
+        "de1.12",
+        "de1.5",
+        "de1.8",
+        "de1.13",
+        "de1.15",
+        "de1.16",
+        "de1.17",
+        "de2.10",
+        "de2.14",
+        "H5",
+        "A2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
