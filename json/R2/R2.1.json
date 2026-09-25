@@ -1,0 +1,279 @@
+{
+  "schema": "entry-card/v2",
+  "code": "R2.1",
+  "chapter": "R2",
+  "title": "围道积分",
+  "src": {
+    "file": "notebook/R_complex.tex",
+    "line_start": 50,
+    "line_end": 52,
+    "anchor": "notebook/R_complex.tex:50"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "R2.1:contour-integral.quantifiers",
+      "type": "comparison",
+      "subject": "contour-integral",
+      "title": "围道积分的适用条件表：四条逐条翻车",
+      "keywords": [
+        "条件①参数化：∮f(z)dz = ∫_a^b f(z(t))z'(t)dt（与实积分同构）",
+        "条件②可求长曲线：长度有限（否则积分无定义）",
+        "条件③分段光滑：尖点处要分段处理",
+        "条件④方向：反向会让积分变号（不是绝对值）",
+        "翻车代价：忘 z'(t) 因子 ⇒ 量纲/数值全错"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "四条条件表；① 行必须给 $\\oint dz/z=2\\pi i$ 的完整参数化计算；④ 行给正向/反向的 $\\pm2\\pi i$；给三档常用参数化的 $z'(t)$ 表。",
+      "content": "切片只有一句话：**$\\oint_{\\gamma}f(z)\\,dz$ 按参数化 $z(t)$ 定义为 $\\int_{a}^{b}f(z(t))z'(t)\\,dt$，与实数积分同构**。**这句话短，但每条都要拆**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **参数化公式** | **关键是 $z'(t)$ 因子**。**实测（$\\oint_{\\lvert z\\rvert=1}dz/z$）**：$z=e^{it}$ ⇒ $dz=ie^{it}dt$ ⇒ $\\int_{0}^{2\\pi}\\dfrac{ie^{it}}{e^{it}}dt=2\\pi i$ | 若漏 $z'(t)$ ⇒ **得到 $\\int dz=\\int ie^{it}dt$（错）** | 不能放宽：**$dz=z'(t)dt$ 是换元** |\n| ② **可求长** | **曲线的长度 $\\int\\lvert z'\\rvert dt$ 有限**。**反例**：**分形边界（如 Koch 曲线）长度无限** ⇒ 沿它积分无定义 | 若对不可求长曲线积分 ⇒ 无定义 | 可放宽：**可求长是标准假设**（**Jordan 曲线足够**） |\n| ③ **分段光滑** | **允许有限个角点（分段 $C^{1}$）**。**处理方式**：**分段积分再相加** | 若在角点处「直接求导」⇒ 导数不存在 | 可放宽：**分段光滑够用** |\n| ④ **方向** | **反向 $\\gamma^{-}$ 给 $\\int_{\\gamma^{-}}f\\,dz=-\\int_{\\gamma}f\\,dz$** | 若以为「方向无关」⇒ **符号错**（**而 $2\\pi i$ 变 $-2\\pi i$**） | 不能放宽：**方向是积分的一部分** |\n\n**这张表的用法**：\n\n1. **参数化**（**写出 $z(t)$ 与 $z'(t)$**）；\n2. **检查可求长**；\n3. **注意方向**。\n\n**核心算例（$\\oint_{\\lvert z\\rvert=1}dz/z$）**：\n\n$$z(t)=e^{it},\\quad t\\in[0,2\\pi];\\qquad z'(t)=ie^{it}$$\n\n$$\\oint_{\\lvert z\\rvert=1}\\frac{dz}{z}=\\int_{0}^{2\\pi}\\frac{ie^{it}}{e^{it}}dt=\\int_{0}^{2\\pi}i\\,dt=2\\pi i$$ ✅\n\n**注意「$e^{it}$ 相消」**——**这就是「$1/z$ 的积分只依赖绕圈数」的原因** ✅。\n\n**方向的核对**：\n\n| 方向 | 积分 |\n|---|---|\n| **逆时针**（正向） | $2\\pi i$ |\n| **顺时针**（反向） | $-2\\pi i$ |\n\n**所以「方向会让结果变号」** ✅。\n\n**「与实积分的『同构』」**：**实积分是 $\\int f(x)dx$**；**复积分是 $\\int f(z(t))z'(t)dt$**——**后者仍是「实参数 $t$ 上的积分」**（**被积函数复值**）⇒ **可以拆成实部与虚部** ✅。\n\n**具体**：$\\int_{a}^{b}\\left(u(t)+iv(t)\\right)dt=\\int_{a}^{b}u\\,dt+i\\int_{a}^{b}v\\,dt$——**所以「复积分 = 两个实积分」**。\n\n**「常用参数化」（三档）**：\n\n| 曲线 | 参数化 | $z'(t)$ |\n|---|---|---|\n| **单位圆** | $z=e^{it}$，$t\\in[0,2\\pi]$ | $ie^{it}$ |\n| **半径 $R$ 的圆** | $z=Re^{it}$ | $iRe^{it}$ |\n| **线段（$a\\to b$）** | $z=a+(b-a)t$，$t\\in[0,1]$ | $b-a$ |\n\n**注意「线段的 $z'$ 是常数」**——**所以线段上的积分最简单** ✅。",
+      "links": [
+        "R1",
+        "R2.2",
+        "R2.3",
+        "R4.1",
+        "Q10",
+        "A3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.1:contour-integral.statement",
+      "type": "statement",
+      "subject": "contour-integral",
+      "title": "围道积分：参数化定义与三个例子",
+      "keywords": [
+        "定义：∮_γ f(z)dz = ∫_a^b f(z(t))z'(t)dt",
+        "与实积分同构（实参数 + 复值被积函数）",
+        "可拆成实部与虚部两个实积分",
+        "方向：反向变号（γ⁻ 给负）",
+        "单位圆：z=e^{it}，dz=ie^{it}dt",
+        "线段：z'(t) 是常数（最简单）"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "陈述本体（定义 + 「同构」三层含义 + 拆分公式）+ 三个例子的逐步计算（含例③= i 与「路径无关」）+ 方向的处理。",
+      "content": "**陈述**（切片）。\n\n$$\\oint_{\\gamma}f(z)\\,dz=\\int_{a}^{b}f(z(t))\\,z'(t)\\,dt,\\qquad\\gamma:\\ z(t),\\ t\\in[a,b]$$\n\n**切片的一句话**：**与实数积分同构。**\n\n**「同构」的三层含义**：\n\n| 层次 | 内容 |\n|---|---|\n| **① 仍是实参数积分** | 变量是 $t$（实数） |\n| **② 被积函数复值** | 可拆成两个实积分 |\n| **③ 保持线性与可加性** | $\\int(\\alpha f+\\beta g)=\\alpha\\int f+\\beta\\int g$；**分段相加** |\n\n**拆分公式**：\n\n$$\\int_{a}^{b}\\left(u(t)+iv(t)\\right)dt=\\int_{a}^{b}u(t)\\,dt+i\\int_{a}^{b}v(t)\\,dt$$\n\n**所以「复积分没有新东西」**——**只是「复值函数的实变量积分」** ✅。\n\n**三个例子（逐步算）**：\n\n**例①（单位圆的周长积分）**：$\\oint_{\\lvert z\\rvert=1}dz=\\int_{0}^{2\\pi}ie^{it}dt=i\\left[e^{it}\\right]_{0}^{2\\pi}=0$。\n\n**注意结果是 $0$**（**绕一圈回到原点**）——**这符合直觉**（**因为 $1$ 是常数函数的「恰当形式」**）✅。\n\n**例②（$1/z$）**：$\\oint_{\\lvert z\\rvert=1}\\dfrac{dz}{z}=2\\pi i$——**不为零**（**`R2.2` 会给它「洞」的解释**）。\n\n**例③（线段的积分）**：$\\int_{0}^{1+i}z\\,dz$（**从 $0$ 到 $1+i$ 的直线**）：\n\n$$z(t)=(1+i)t,\\quad dz=(1+i)dt\\ \\Longrightarrow\\ \\int_{0}^{1}(1+i)t\\cdot(1+i)dt=(1+i)^{2}\\int_{0}^{1}t\\,dt=2i\\cdot\\frac12=i$$ ✅\n\n**注意「例③ 与路径无关」**（**因为 $z^{2}/2$ 是 $z$ 的原函数**）——**这是 `R2.2` 的 Cauchy 定理的实例**（**$z$ 在整个平面全纯**）。\n\n**方向的处理**：\n\n$$\\int_{\\gamma^{-}}f\\,dz=-\\int_{\\gamma}f\\,dz$$\n\n**理由**：**反向参数化给 $z'(t)$ 变号** ✅。\n\n**「为什么方向重要」（与 `R4` 的接口）**：**留数定理的 $2\\pi i\\sum\\mathrm{Res}$ 是「正向」的结果**——**所以「正向」是约定（逆时针）** ✅。",
+      "links": [
+        "R1",
+        "R2.2",
+        "R2.3",
+        "R4.1",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.1:contour-integral.intuition",
+      "type": "intuition",
+      "subject": "contour-integral",
+      "title": "直觉：复积分 = 「沿曲线累积复值」——参数化把它变成普通积分",
+      "keywords": [
+        "「沿曲线的积分」本身没有定义（曲线是二维的对象）",
+        "参数化把「曲线」变成「区间」（一维）",
+        "代价：必须带 z'(t) 因子（换元的 Jacobian）",
+        "所以复积分不神秘——就是「实参数 + 复值」的积分",
+        "方向影响符号（反向变号）",
+        "「与路径无关」当且仅当有原函数（R2.2 会给条件）"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「曲线拉直成区间」讲参数化；给「三种参数化」的对照（前两行相同、第三行反向）；给原函数与路径无关。",
+      "content": "**切片给了一句话的定义**。理解的关键是**「参数化的作用」**。\n\n**假设给了什么。** 我们想「沿一条曲线 $f$ 的积分」——**但曲线不是区间，没有「$dx$」**。\n\n**结论为什么因此成立。** **把曲线「拉直」成区间**：\n\n$$\\underbrace{\\gamma:\\ z(t),\\ t\\in[a,b]}_{\\text{曲线（1 维对象）}}\\quad\\Longrightarrow\\quad\\underbrace{\\int_{a}^{b}\\ldots dt}_{\\text{区间上的积分}}$$\n\n**代价是 $z'(t)$**——**它是「速度向量」**（**描述「曲线怎么走」**）✅。\n\n**几何图像（很好用）**：\n\n$$f(z)\\,dz=\\underbrace{f(z)}_{\\text{被积的「密度」}}\\times\\underbrace{z'(t)dt}_{dz\\ \\text{（弧长的复版本）}}$$\n\n**所以「复积分 = 密度 × 位移」的累积** ✅。\n\n**「为什么必须带 $z'$」**：\n\n**$dz=z'(t)dt$**——**这是「换元公式」**（**与实积分的 $du=u'(x)dx$ 同型**）。\n\n**若漏掉它**：**相当于「用 $t$ 的单位来度量 $z$ 的变化」** ⇒ **结果依赖参数化的速度（错误）**。\n\n**具体（同一个圆，不同参数化）**：\n\n| 参数化 | $z'(t)$ | $\\oint dz/z$ |\n|---|---|---|\n| $z=e^{it}$，$t\\in[0,2\\pi]$ | $ie^{it}$ | **$2\\pi i$** ✅ |\n| $z=e^{2it}$，$t\\in[0,\\pi]$ | $2ie^{2it}$ | **$2\\pi i$** ✅（**同一个曲线**） |\n| $z=e^{-it}$，$t\\in[0,2\\pi]$ | $-ie^{-it}$ | **$-2\\pi i$**（**反向！**） |\n\n**前两行相同**（**同一个曲线、同一方向**）——**这说明结果只依赖「曲线 + 方向」，不依赖参数化** ✅。\n\n**「路径无关」的图像**：\n\n**若 $f$ 有原函数 $F$**（**$F'=f$**），**则**\n\n$$\\int_{\\gamma}f\\,dz=F(z(b))-F(z(a))$$\n\n**只依赖端点**（**与路径无关**）——**这与实积分的 Newton–Leibniz 完全同型** ✅。\n\n**「什么时候有原函数」**（**`R2.2` 的核心**）：**$f$ 在单连通域上全纯** ⇒ **有原函数**（**Cauchy 定理的推论**）。\n\n**记这个图像**：**复积分 = 「参数化 + $z'(t)$」= 「区间上的复值积分」**；**结果只依赖「曲线 + 方向」**；**有原函数时路径无关（Newton–Leibniz 的复版）**。",
+      "links": [
+        "R2.1",
+        "R2.2",
+        "R4.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个围道积分是多少？",
+      "keywords": [
+        "可算题：∮_{|z|=1} dz/z = ?",
+        "答案：2πi（参数化 z=e^{it} 给 ∫_0^{2π} i dt = 2πi）",
+        "追问：反向呢？（−2πi）",
+        "再问：∮_{|z|=1} dz = ?（0——绕一圈回到原点）",
+        "陷阱：漏掉 z'(t) 因子；忘方向"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "从围道积分定义变来的检验题；三问给 $2\\pi i$/$-2\\pi i$/$0$；延伸给「只有 $z^{-1}$ 存活」的表（这是 R4.1 留数的来源）。",
+      "content": "**题**：算围道积分。\n\n1. $\\oint_{\\lvert z\\rvert=1}\\dfrac{dz}{z}$\n2. 同上但反向\n3. $\\oint_{\\lvert z\\rvert=1}dz$\n\n**答案**：\n\n1. **$2\\pi i$** ✅。**参数化 $z=e^{it}$**：\n\n$$\\oint\\frac{dz}{z}=\\int_{0}^{2\\pi}\\frac{ie^{it}}{e^{it}}dt=\\int_{0}^{2\\pi}i\\,dt=2\\pi i$$\n\n2. **$-2\\pi i$** ✅（**反向给负**）。\n\n3. **$0$** ✅：\n\n$$\\oint dz=\\int_{0}^{2\\pi}ie^{it}dt=i\\cdot\\left[\\frac{e^{it}}{i}\\right]_{0}^{2\\pi}=e^{2\\pi i}-e^{0}=1-1=0$$\n\n**易错点**：\n\n- **漏 $z'(t)$**：**会得到 $\\int_{0}^{2\\pi}dt/z(t)$（无量纲异常）**；\n- **忘方向**：**第 1、2 问只差符号**；\n- **把 $\\oint dz$ 算成 $2\\pi$**：**那是「弧长」不是「$dz$ 的积分」**（**后者给 $0$**）。\n\n**延伸（与「次数」的关系）**：\n\n| 被积函数 | $\\oint_{\\lvert z\\rvert=1}$ |\n|---|---|\n| $z^{n}$（$n\\ne-1$） | **$0$** |\n| $z^{-1}$ | **$2\\pi i$** |\n\n**理由**：**$\\int_{0}^{2\\pi}e^{i(n+1)t}dt$** —— **$n+1\\ne0$ 时是「整圈」的积分 ⇒ $0$；$n+1=0$ 时是 $2\\pi$** ✅。\n\n**所以「只有 $z^{-1}$ 项存活」**——**这正是 `R4.1` 的「留数就是 $c_{-1}$」的原因** ✅。",
+      "links": [
+        "R2.1",
+        "R2.2",
+        "R4.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：围道积分的参数化",
+      "keywords": [
+        "模块 contour-integral（档1 前端直渲）",
+        "模式①：曲线 γ 与它的参数化（显示 z(t) 轨迹）",
+        "模式②：反向 γ⁻ 的符号（±2πi）",
+        "模式③：不同参数化给同一结果（速度不影响）",
+        "invariant：∮_{|z|=1} dz/z = 2πi（与参数化无关，只依赖方向）",
+        "预置：单位圆、半径 R 圆、线段"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "档1 依据：参数化积分是显式可算，前端可算；invariant 用「结果与参数化无关」这个性质。",
+      "content": "**档1 演示**（前端直渲），模块 `contour-integral`。\n\n**模式① `parameterize`**：画曲线 $\\gamma$ 与参数 $t$ 的对应（**动画：$t$ 从 $a$ 到 $b$，点 $z(t)$ 沿曲线移动**）。\n\n**模式② `orientation`**：同一个圆的正向/反向，**显示 $\\pm2\\pi i$**。\n\n**模式③ `reparametrize`**：同一个曲线用不同速度参数化（$z=e^{it}$ vs $z=e^{2it}$），**显示结果相同**。\n\n**恒等式（给前端 invariant）**：\n\n$$\\oint_{\\lvert z\\rvert=1}\\frac{dz}{z}=2\\pi i\\quad(\\text{严格，与参数化无关}).$$\n\n**这是严格等式**——**实现正确时，改变参数化不应改变结果（只改变「积分区间」）**。\n\n**参数契约**：\n\n- 预置：单位圆、半径 $R$ 的圆、线段；\n- 与 `R2.1:probe1` 的数值（$0$、$2\\pi i$、$-2\\pi i$）保持一致。",
+      "links": [
+        "R2.1",
+        "R2.2",
+        "R4.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.1:z-power.statement",
+      "type": "statement",
+      "subject": "z-power",
+      "title": "z 的幂沿单位圆的积分：只有 z⁻¹ 存活",
+      "keywords": [
+        "∮_{|z|=1} z^n dz = 0（n ≠ −1）",
+        "∮_{|z|=1} z^{−1} dz = 2πi",
+        "理由：∫_0^{2π} e^{i(n+1)t}dt 的整圈积分",
+        "这是「留数 = c_{−1}」的直接来源（R4.1）",
+        "也是 Fourier 正交性 dx 的复版本",
+        "对一般闭合曲线：只留绕圈数的贡献"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "陈述 + 完整计算（两种情形）+ 「只有 n=−1 存活」的两个理由（无原函数 / Fourier 正交）+ 「对一般曲线是 2πik」。",
+      "content": "**陈述**。这是围道积分最有用的一条计算规则。\n\n**计算（$n\\in\\mathbb Z$）**：\n\n$$\\oint_{\\lvert z\\rvert=1}z^{n}\\,dz=\\int_{0}^{2\\pi}e^{int}\\cdot ie^{it}dt=i\\int_{0}^{2\\pi}e^{i(n+1)t}dt$$\n\n**分两种情形**：\n\n| 情形 | $\\int_{0}^{2\\pi}e^{i(n+1)t}dt$ | 结果 |\n|---|---|---|\n| $n+1\\ne0$（**即 $n\\ne-1$**） | **整圈周期的指数 ⇒ $0$** | **$0$** |\n| $n=-1$ | $\\int_{0}^{2\\pi}1\\,dt=2\\pi$ | **$2\\pi i$** |\n\n**所以**：\n\n$$\\oint_{\\lvert z\\rvert=1}z^{n}dz=\\begin{cases}0&n\\ne-1\\\\ 2\\pi i&n=-1\\end{cases}$$ ✅\n\n**「为什么只有 $n=-1$ 存活」**：\n\n**$z^{-1}=1/z$** 是**唯一**「绕一圈后变化不为零」的幂函数（**因为 $\\int d\\theta=2\\pi$**）——**而 $z^{n}$（$n\\ne-1$）有原函数 $z^{n+1}/(n+1)$** ⇒ **积分只依赖端点** ⇒ **绕一圈给 $0$** ✅。\n\n**「与 Fourier 正交性的关系」**：\n\n$$\\int_{0}^{2\\pi}e^{i(n+1)t}dt=2\\pi\\delta_{n+1,0}$$\n\n**这就是 Fourier 基的正交性**（**只是这里用复指数写**）✅——**所以「留数定理」本质上是「Fourier 正交性 + 逐项积分」**。\n\n**「对一般闭合曲线」**：**若 $\\gamma$ 绕原点 $k$ 圈**（**正向**），**则**\n\n$$\\oint_{\\gamma}z^{n}dz=\\begin{cases}0&n\\ne-1\\\\ 2\\pi ik&n=-1\\end{cases}$$\n\n**注意「$k$ 是绕圈数（绕数）」**——**所以「$2\\pi ik$ 记录了拓扑信息」** ✅（**与 `Q8` 的 $\\pi_{1}=\\mathbb Z$ 一致**）。\n\n**它的用途（三条）**：\n\n1. **留数的计算基础**（`R4.1`）；\n2. **Cauchy 积分公式的推导**（`R2.3`）；\n3. **判定「哪个奇点贡献多少」**。",
+      "links": [
+        "R2.1",
+        "R4.1",
+        "R2.3",
+        "Q8",
+        "R8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.1:probe2.probe2",
+      "type": "probe",
+      "subject": "probe2",
+      "title": "检验题：z 的三次方沿单位圆的积分？",
+      "keywords": [
+        "可算题：∮_{|z|=1} z³ dz = ?",
+        "答案：0（因为 3 ≠ −1）",
+        "追问：∮_{|z|=1} z^{−1} dz = ?（2πi）",
+        "再问：∮_{|z|=1} (z² + 1/z) dz = ?（2πi——只有 1/z 项存活）",
+        "陷阱：以为「多项式项的积分都不为零」"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "从幂函数积分变来的检验题；三问给 0/$2\\pi i$/$2\\pi i$；延伸给「$z^{-2}$ 也给 0」与留数是 $c_{-1}$ 的联系。",
+      "content": "**题**：算幂函数的围道积分。\n\n1. $\\oint_{\\lvert z\\rvert=1}z^{3}dz$\n2. $\\oint_{\\lvert z\\rvert=1}z^{-1}dz$\n3. $\\oint_{\\lvert z\\rvert=1}\\left(z^{2}+\\dfrac1z\\right)dz$\n\n**答案**：\n\n1. **$0$** ✅（**因为 $3\\ne-1$**）。\n\n2. **$2\\pi i$** ✅。\n\n3. **$2\\pi i$** ✅——**逐项积分**：\n\n$$\\oint z^{2}dz+\\oint\\frac{dz}{z}=0+2\\pi i=2\\pi i$$\n\n**易错点**：\n\n- **以为「多项式项的积分都不为零」**：**只有 $z^{-1}$ 存活**；\n- **忘了「逐项可加」**：**复积分是线性的**；\n- **对 $z^{-2}$ 也以为非零**：**$\\oint z^{-2}dz=0$**（**因为 $-2\\ne-1$**）——**这与「二阶极点留数为零」一致**（`R4.1`）。\n\n**延伸（$z^{-2}$ 那一项为什么零）**：\n\n$$\\oint_{\\lvert z\\rvert=1}\\frac{dz}{z^{2}}=\\int_{0}^{2\\pi}\\frac{ie^{it}}{e^{2it}}dt=i\\int_{0}^{2\\pi}e^{-it}dt=i\\cdot0=0$$ ✅\n\n**所以「二阶极点的留数是 $c_{-2}$，不是 $c_{-1}$」**——**而 $c_{-1}$ 才是留数** ✅（**`R4.1` 会给具体公式**）。",
+      "links": [
+        "R2.1",
+        "R4.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.1:general.application",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：围道积分服务的下游章节",
+      "keywords": [
+        "R2.2：Cauchy 定理（围道积分为零的条件）",
+        "R2.3：Cauchy 公式（用围道积分表示 f 的值）",
+        "R4.1：留数定理（围道积分 = 2πi ΣRes）",
+        "R4.3：三类实积分的标准套路",
+        "de3：Laplace 反演（沿竖直直线的围道积分）",
+        "Q10：∮ω ≠ 0 ⇒ 闭而不恰当"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 50,
+        "line_end": 52
+      },
+      "fill_hint": "单元级应用词条；给六条下游（含 de3 的 Laplace 反演与 Q10 的闭 vs 恰当）；给「本条的枢纽地位」表。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`R2.2` 的 Cauchy 定理**：**「单连通域上全纯 ⇒ 围道积分为零」**——**围道积分是它的语言** ✅。\n\n- **`R2.3` 的 Cauchy 公式**：**$f(a)=\\dfrac1{2\\pi i}\\oint\\dfrac{f(z)}{z-a}dz$**——**用围道积分**表示**内部值**。\n\n- **`R4.1` 的留数定理**：**$\\oint=2\\pi i\\sum\\mathrm{Res}$**——**`R2.1` 的「只有 $z^{-1}$ 存活」是它的基础** ✅。\n\n- **`R4.3` 的三类实积分**：**把实积分转成围道积分**（**扇形/半圆闭合**）——**所以 `R2.1` 是「套路的第一步」**。\n\n- **`de3` 的 Laplace 反演**：**$f(t)=\\dfrac1{2\\pi i}\\int_{c-i\\infty}^{c+i\\infty}e^{st}F(s)ds$**——**沿竖直直线的围道积分**（**闭合后用留数**）。\n\n- **`Q10` 的闭 vs 恰当**：**$\\oint\\omega\\ne0$ 说明「闭而不恰当」**——**而 $\\oint$ 就是围道积分** ✅。\n\n**一条自检问句**：**「参数化写对了吗（含 $z'$）？」**——**这是全部围道积分计算的第一步**。\n\n**「本条的枢纽地位」**：\n\n| 依赖 | 内容 |\n|---|---|\n| **本章内** | `R2.2`–`R4.3` **全部**以围道积分为语言 |\n| **跨章（分析）** | `de3` 的 Laplace 反演 |\n| **跨章（拓扑）** | `Q10` 的「闭 vs 恰当」判据 |\n\n**所以「`R2.1` 定义了整个复分析章的『积分语言』」** ✅。",
+      "links": [
+        "R2.1",
+        "R2.2",
+        "R2.3",
+        "R4.1",
+        "R4.3",
+        "R8",
+        "Q10"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

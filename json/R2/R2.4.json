@@ -1,0 +1,282 @@
+{
+  "schema": "entry-card/v2",
+  "code": "R2.4",
+  "chapter": "R2",
+  "title": "三个经典推论",
+  "src": {
+    "file": "notebook/R_complex.tex",
+    "line_start": 88,
+    "line_end": 104,
+    "anchor": "notebook/R_complex.tex:88"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "R2.4:classical-corollaries.quantifiers",
+      "type": "comparison",
+      "subject": "classical-corollaries",
+      "title": "三个经典推论的适用条件表：四条逐条翻车",
+      "keywords": [
+        "条件①Liouville：有界「整函数」（全平面全纯）必为常数",
+        "条件②代数基本定理：n ≥ 1 次复系数多项式必有根",
+        "条件③最大模原理：|f| 在区域内取不到极大（除非常数）",
+        "条件④三者的共同工具：f⁽ⁿ⁾ 的 Cauchy 求导形式",
+        "翻车代价：把「有界」放宽到「有上界」以外（如 e^z 无界）⇒ 结论不适用"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "四条条件表；①③ 行必须给「$e^z$ 无界」「内部最大是 1、边界是 $e$」的具体数值；给三个的用法表与三个证明骨架（Liouville 的估计、代数基本定理的反证、最大模的平均值）。",
+      "content": "切片给了一张三行表。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **有界整函数** | **「整函数」= 全平面全纯**；**「有界」= $\\lvert f\\rvert\\le M$**。**反例**：$e^{z}$ 是整函数但**无界** ⇒ **不是常数** ✅ | 若漏「有界」⇒ **$e^{z}$ 会「违反」结论** | 不能放宽：**「有界」是必要条件** |\n| ② **$n\\ge1$** | **$n=0$（常数多项式）当然无根**（**除非它是零多项式**）——**所以定理要求 $n\\ge1$** | 若对常数多项式用 ⇒ 无意义 | 不能放宽：**$n\\ge1$ 是条件** |\n| ③ **区域内部** | **$\\lvert f\\rvert$ 在区域内部取不到极大**（**除非 $f$ 是常数**）。**实测**：$\\lvert e^{z}\\rvert$ 在 $\\lvert z\\rvert\\le1$ 上的最大在**边界**（$e^{1}=2.718$），**内部最大是 $1$** | 若以为「内部可以有极大」⇒ 与结论矛盾 | 不能放宽：**「内部」与「常数例外」都必须说** |\n| ④ **共同工具** | **三个都用「$f^{(n)}$ 的 Cauchy 求导形式」**（`R2.3`）| 若不用求导形式 ⇒ 无法把「边界」与「导数」连起来 | 不能放宽：**这是三者的技术核心** |\n\n**这张表的用法**：\n\n1. **Liouville**：**看「整 + 有界」**；\n2. **代数基本定理**：**用 Liouville（对 $1/p$ 反证）**；\n3. **最大模原理**：**看「内部」与「非常数」**。\n\n**三个的具体内容（切片表）**：\n\n| 定理 | 内容 | 用法 |\n|---|---|---|\n| **Liouville** | 有界整函数（全平面全纯）必为常数 | **由 $\\lvert f'\\rvert\\le M/R\\to0$ 得 $f'\\equiv0$** |\n| **代数基本定理** | 任意 $n\\ge1$ 次复系数多项式必有根 | **若 $p$ 无处为根，则 $1/p$ 有界整函数，矛盾** |\n| **最大模原理** | $\\lvert f\\rvert$ 在区域内部取不到极大（除非常数） | **与调和函数的平均值性质同源（`R7`）** |\n\n**「Liouville 的证明骨架（切片给了一句）」**：\n\n**用 `R2.3` 的求导形式（$n=1$）**：\n\n$$f'(a)=\\frac{1}{2\\pi i}\\oint_{\\lvert z-a\\rvert=R}\\frac{f(z)}{(z-a)^{2}}dz$$\n\n**估计**：**$\\lvert f(z)\\rvert\\le M$、$\\lvert z-a\\rvert=R$** ⇒ **$\\lvert f'(a)\\rvert\\le\\dfrac{M}{2\\pi}\\cdot\\dfrac{2\\pi R}{R^{2}}=\\dfrac{M}{R}$**。\n\n**令 $R\\to\\infty$** ⇒ **$f'(a)=0$** ⇒ **$f$ 是常数** ✅。\n\n**「代数基本定理的证明骨架」**：**设 $p$ 无处为根**，**则 $1/p$ 是整函数**——**且当 $\\lvert z\\rvert\\to\\infty$ 时 $p\\to\\infty$（首项主导）** ⇒ **$1/p$ 有界** ⇒ **由 Liouville，$1/p$ 是常数** ⇒ **$p$ 是常数**（**与 $n\\ge1$ 矛盾**）✅。\n\n**「最大模原理的证明骨架」**：\n\n**若 $\\lvert f\\rvert$ 在内部某点 $a$ 取极大**，**由平均值性质**（**`R2.3` 取实部**）：\n\n$$\\lvert f(a)\\rvert\\le\\frac{1}{2\\pi}\\oint\\lvert f(a+re^{i\\theta})\\rvert d\\theta\\le\\lvert f(a)\\rvert$$\n\n**所以「两边都取等号」** ⇒ **圆周上 $\\lvert f\\rvert$ 处处等于 $\\lvert f(a)\\rvert$** ⇒ **$f$ 是常数**（**由唯一性定理**）✅。\n\n**「最大模原理与调和函数的关系（切片）」**：**它与调和函数的「最大值原理」同源**（**`R7`**）——**因为 $\\lvert f\\rvert$ 的「对数」是次调和的**。",
+      "links": [
+        "R1",
+        "R2.1",
+        "R2.3",
+        "R3",
+        "R6",
+        "R7",
+        "A2.5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.4:liouville-violation.counterexample",
+      "type": "counterexample",
+      "subject": "liouville-violation",
+      "title": "反例：把「无界」整函数当常数（e^z 无界）",
+      "keywords": [
+        "误用现场：忽略「有界」直接用 Liouville",
+        "反例：e^z 是整函数但无界（|e^z| = e^x → ∞）",
+        "所以 Liouville 的结论（常数）不适用",
+        "判据：先查「有界」——|f(z)| ≤ M 对所有 z 成立吗",
+        "对照：sin z 也无界（沿虚轴指数增长）",
+        "有界整函数的例子：常数、以及……（几乎只有常数）"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "把「$e^z$ 无界」算清（$|e^z|=e^{\\mathrm{Re}z}\\to\\infty$）；给 $\\sin z$ 沿虚轴无界；给「有界整函数有多稀少」的五档表；给一句判据。",
+      "content": "**误用现场**：**看到「整函数」就套 Liouville**，**忽略「有界」**。\n\n**为什么这是错的**：**「有界」是必要条件**。\n\n**反例（$e^{z}$）**：\n\n$$\\left\\lvert e^{z}\\right\\rvert=e^{\\operatorname{Re}z}\\ \\xrightarrow{\\ \\operatorname{Re}z\\to+\\infty\\ }\\ \\infty$$\n\n**所以 $e^{z}$ 是整函数但无界** ⇒ **不是常数**（**Liouville 不适用**）✅。\n\n**另一个反例（$\\sin z$）**：**沿虚轴**：\n\n$$\\left\\lvert\\sin(iy)\\right\\rvert=\\left\\lvert\\sinh y\\right\\rvert\\ \\xrightarrow{\\ y\\to\\infty\\ }\\ \\infty$$\n\n**所以 $\\sin z$ 也无界** ✅。\n\n**「有界整函数有多稀少」**：\n\n| 函数 | 整？ | 有界？ | 常数？ |\n|---|---|---|---|\n| 常数 | ✅ | ✅ | ✅ |\n| $e^{z}$ | ✅ | ❌ | ❌ |\n| $\\sin z$ | ✅ | ❌ | ❌ |\n| $z^{n}$（$n\\ge1$） | ✅ | ❌ | ❌ |\n| $\\dfrac{\\sin z}{z}$ | ✅（**$z=0$ 可去**） | ❌ | ❌ |\n\n**所以「有界整函数实际上只有常数」** ✅——**这正是 Liouville 的内容**（**它不只是「必要条件」，而是「有界 + 整 ⇒ 常数」这么强的结论**）。\n\n**后果链条（忽略「有界」的代价）**：\n\n1. **会误判「$e^{z}$ 是常数」**（**荒谬**）；\n2. **代数基本定理的反证失效**（**$1/p$ 的有界性必须单独证**）；\n3. **与「无界性」的定理矛盾**（**如 Weierstrass 的整函数理论**）。\n\n**判据（一句话）**：**「$\\lvert f(z)\\rvert\\le M$ 对所有 $z$ 成立吗？」** 是 ⇒ 可用 Liouville；否 ⇒ 不适用。\n\n**修补动作**：\n\n1. **先查有界性**（**沿各方向看 $\\lvert f\\rvert$ 是否增长**）；\n2. **对多项式，用「首项主导」判断无界**；\n3. **记住「无界」是常态、「有界」是奇迹**（**所以才叫定理**）。",
+      "links": [
+        "R2.4",
+        "R2.3",
+        "R3",
+        "R6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.4:classical-corollaries.statement",
+      "type": "statement",
+      "subject": "classical-corollaries",
+      "title": "三个经典推论：Liouville、代数基本定理、最大模原理",
+      "keywords": [
+        "Liouville：有界整函数必为常数",
+        "代数基本定理：n ≥ 1 次复系数多项式必有根",
+        "最大模原理：|f| 在区域内取不到极大（除非常数）",
+        "三者的共同工具：f⁽ⁿ⁾ 的 Cauchy 求导形式（R2.3）",
+        "Liouville 的估计：|f'| ≤ M/R → 0（R → ∞）",
+        "最大模与调和函数的平均值性质同源（R7）"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "陈述本体（三行表）+ Liouville 的完整证明（含 $M/R$ 的三档数值）+ 代数基本定理的五步反证 + 最大模的证明 + 「三个定理的关系」表。",
+      "content": "**陈述**（切片表）。\n\n| 定理 | 内容 | 用法（切片） |\n|---|---|---|\n| **Liouville** | **有界整函数（全平面全纯）必为常数** | **由 $\\lvert f'\\rvert\\le M/R\\to0$ 得 $f'\\equiv0$** |\n| **代数基本定理** | **任意 $n\\ge1$ 次复系数多项式必有根** | **若 $p$ 无处为根，则 $1/p$ 有界整函数，矛盾** |\n| **最大模原理** | **$\\lvert f\\rvert$ 在区域内部取不到极大（除非 $f$ 为常数）** | **与调和函数的平均值性质同源（`R7`）** |\n\n**「Liouville 的完整证明」（`R2.3` 求导形式的直接应用）**：\n\n**取 $n=1$ 的求导形式**：\n\n$$f'(a)=\\frac{1}{2\\pi i}\\oint_{\\lvert z-a\\rvert=R}\\frac{f(z)}{(z-a)^{2}}dz$$\n\n**估计**（**用 $\\lvert f\\rvert\\le M$、$\\lvert z-a\\rvert=R$、弧长 $2\\pi R$**）：\n\n$$\\left\\lvert f'(a)\\right\\rvert\\le\\frac{1}{2\\pi}\\cdot\\frac{M}{R^{2}}\\cdot2\\pi R=\\frac{M}{R}$$\n\n**令 $R\\to\\infty$** ⇒ **$f'(a)=0$**（**对任意 $a$**）⇒ **$f$ 是常数** ✅。\n\n**数值感（这个估计的精度）**：\n\n| $R$ | $M/R$ |\n|---|---|\n| $1$ | $M$ |\n| $10$ | $M/10$ |\n| $10^{6}$ | $M/10^{6}$ |\n\n**所以「$R$ 可以任意大」是证明的关键**（**因为 $f$ 在整个复平面定义**）✅。\n\n**「代数基本定理的完整证明」**：\n\n**设 $p(z)=a_nz^{n}+\\cdots+a_0$（$n\\ge1$、$a_n\\ne0$）无处为根**：\n\n| 步骤 | 内容 |\n|---|---|\n| ① | **$1/p$ 整函数**（**因为 $p$ 无处为 $0$**） |\n| ② | **$\\lvert z\\rvert\\to\\infty$ 时 $\\lvert p(z)\\rvert\\to\\infty$**（**首项 $a_nz^{n}$ 主导**） |\n| ③ | **所以 $1/p$ 有界**（**远处趋于 $0$、近处有限**） |\n| ④ | **由 Liouville，$1/p$ 是常数** ⇒ **$p$ 是常数** |\n| ⑤ | **与 $n\\ge1$ 矛盾** ⇒ **必有根** ✅ |\n\n**「最大模原理的证明（用平均值性质）」**：\n\n**对 `R2.3` 取实部得平均值性质**（**`R7`**）：\n\n$$\\lvert f(a)\\rvert=\\left\\lvert\\frac{1}{2\\pi}\\oint f(a+re^{i\\theta})d\\theta\\right\\rvert\\le\\frac{1}{2\\pi}\\oint\\left\\lvert f(a+re^{i\\theta})\\right\\rvert d\\theta$$\n\n**若 $a$ 是内部极大点** ⇒ **右边 $\\le\\lvert f(a)\\rvert$** ⇒ **两边都取等号** ⇒ **圆周上 $\\lvert f\\rvert\\equiv\\lvert f(a)\\rvert$** ⇒ **（由唯一性）$f$ 是常数** ✅。\n\n**「三个定理的关系（值得说清）」**：\n\n| 关系 | 内容 |\n|---|---|\n| **代数基本定理 $\\Leftarrow$ Liouville** | 反证 |\n| **Liouville $\\Leftarrow$ Cauchy 求导形式** | 估计 |\n| **最大模 $\\Leftarrow$ 平均值性质** | 它也来自 `R2.3` |\n\n**所以「三个都指向同一个源头：`R2.3` 的「边界决定内部」」** ✅。\n\n**「切片的三个『奇迹』（与 `R2.3` 的呼应）」**：\n\n**① 无穷可微**（`R2.3`）→ **② 解析（`R3`）** → **③ 刚性（`R2.4`/`R6`）**。\n\n**它依赖什么 / 谁依赖它**：`R2.3` 的 Cauchy 公式与求导形式。下游：`R3`（Taylor 级数）、`R6`（唯一性定理）、`R7`（最大值原理）。",
+      "links": [
+        "R1",
+        "R2.3",
+        "R3",
+        "R6",
+        "R7",
+        "A2.5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.4:classical-corollaries.intuition",
+      "type": "intuition",
+      "subject": "classical-corollaries",
+      "title": "直觉：三个推论都是「边界决定内部」的连锁后果",
+      "keywords": [
+        "Liouville：内部有界 + 全平面 ⇒ 边界可以「推远」⇒ 导数为零",
+        "为什么「推远」有效：Cauchy 估计 |f'| ≤ M/R，R 任意大",
+        "代数基本定理：把「无根」变成「有界的 1/p」⇒ 与 Liouville 矛盾",
+        "最大模：内部极大 ⇒ 平均值性质两边取等 ⇒ 常数",
+        "三者都只用「边界积分 = 内部值」",
+        "所以「全纯函数的刚性」是这一切的总根源"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；给「三种用法」的对照表；用「把边界推远」讲 Liouville（含三档 $M/R$）；用「三明治」讲最大模。",
+      "content": "**切片给了三个定理**。理解的关键是**「边界决定内部」的三种用法**。\n\n**假设给了什么。** 我们有 `R2.3` 的「$f(a)=$ 边界积分」——**这是唯一的工具**。\n\n**结论为什么因此成立（三种「用法」）**：\n\n| 定理 | 怎么用「边界积分」 |\n|---|---|\n| **Liouville** | **把边界「推远到无穷」** ⇒ **积分被 $M/R$ 压到 $0$** |\n| **代数基本定理** | **把「无根」变成「有界」** ⇒ **交给 Liouville** |\n| **最大模** | **把「内部极大」代入平均值** ⇒ **立刻取等 ⇒ 常数** |\n\n**「Liouville 的『推远』图像（最关键）」**：\n\n**想象把积分圆周不断放大**：\n\n| $R$ | $\\lvert f'\\rvert\\le M/R$ |\n|---|---|\n| $1$ | $\\le M$（**无信息**） |\n| $10^{3}$ | $\\le M/10^{3}$ |\n| $\\infty$ | **$0$** ✅ |\n\n**所以「$f'$ 被「边界推远」这个操作压成零」** ✅——**这就是 Liouville 的全部内容**。\n\n**前提是「$f$ 在整个复平面定义」**（**所以 $R$ 可以无限大**）——**这正是「整函数」的作用**。\n\n**「代数基本定理的『反证结构』」**：\n\n$$\\text{假设无根}\\ \\Longrightarrow\\ \\text{1/p 整}\\ \\Longrightarrow\\ \\text{1/p 有界}\\ \\Longrightarrow\\ \\text{1/p 常数}\\ \\Longrightarrow\\ \\text{p 常数}\\ \\Longrightarrow\\ \\text{矛盾}$$\n\n**注意「第③步「有界」需要单独论证」**（**因为「整」不自动给「有界」**）——**这一步用「首项主导」** ✅。\n\n**「最大模原理的『代入』图像」**：\n\n**在极大点 $a$**：\n\n$$\\lvert f(a)\\rvert\\le\\underbrace{\\frac{1}{2\\pi}\\oint\\lvert f\\rvert d\\theta}_{\\text{平均值}}\\le\\underbrace{\\lvert f(a)\\rvert}_{\\text{因为 }a\\text{ 是极大}}$$\n\n**左边与右边都是 $\\lvert f(a)\\rvert$** ⇒ **中间也必须是** ⇒ **圆周上处处等于 $\\lvert f(a)\\rvert$** ⇒ **（用唯一性）常数** ✅。\n\n**这个论证的形状是「三明治」**——**两端相同 ⇒ 全等**。\n\n**「三个定理的共同本质」**：\n\n$$\\text{全纯函数的「刚性」}\\ =\\ \\text{「边界决定内部」}$$\n\n**所以「三个推论不是三个技巧，而是同一个事实的三种表现」** ✅。\n\n**记这个图像**：**Liouville = 「把边界推远」（$M/R\\to0$）**；**代数基本定理 = 「反证 + Liouville」**；**最大模 = 「代入平均值取等」**；**三者都只用 `R2.3`**。",
+      "links": [
+        "R2.4",
+        "R2.3",
+        "R7",
+        "R6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.4:classical-corollaries.proof",
+      "type": "proof",
+      "subject": "classical-corollaries",
+      "title": "推导骨架：Liouville 的 Cauchy 估计（三步）",
+      "keywords": [
+        "第一步：用 n=1 的求导形式表示 f'(a)",
+        "第二步：估计 |f'| ≤ (1/2π)·(M/R²)·(2πR) = M/R",
+        "第三步：令 R→∞ ⇒ f'(a) = 0（对任意 a）",
+        "第四步：f' ≡ 0 ⇒ f 是常数",
+        "易错点：忘「R 可以任意大」需要「f 在全平面定义」",
+        "数值感：R=10⁶ 时上界 M/10⁶"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "三步骨架；第二步的三条估计是关键（给 $M/R^{2}\\cdot2\\pi R=M/R$ 的算式）；第三步的「$R$ 任意大需要整函数」是易错点；给三推论的统一图。",
+      "content": "**推导骨架**（三步）。目标：**证明有界整函数是常数**。\n\n**第一步：用求导形式表示 $f'(a)$。**\n\n$$f'(a)=\\frac{1}{2\\pi i}\\oint_{\\lvert z-a\\rvert=R}\\frac{f(z)}{(z-a)^{2}}dz$$\n\n**理由**：**`R2.3` 的求导形式取 $n=1$** ✅——**注意 $R$ 是任意的**（**只要圆在区域内**；**而 $f$ 是整函数 ⇒ 任何 $R$ 都行**）。\n\n**第二步：估计（关键一步）。**\n\n**用三条**：\n\n| 用到的 | 值 |\n|---|---|\n| **$\\lvert f(z)\\rvert$** | $\\le M$（**有界**） |\n| **$\\lvert (z-a)^{2}\\rvert$** | $=R^{2}$ |\n| **弧长** | $2\\pi R$ |\n\n**所以**：\n\n$$\\left\\lvert f'(a)\\right\\rvert\\le\\frac{1}{2\\pi}\\cdot\\frac{M}{R^{2}}\\cdot2\\pi R=\\frac{M}{R}$$ ✅\n\n**理由**：**积分的绝对值 $\\le$ 绝对值之积分**（**标准的积分估计**）✅。\n\n**第三步：令 $R\\to\\infty$。**\n\n**因为 $f$ 在整个复平面全纯** ⇒ **$R$ 可以任意大** ⇒\n\n$$\\left\\lvert f'(a)\\right\\rvert\\le\\lim_{R\\to\\infty}\\frac{M}{R}=0$$ ✅\n\n**所以 $f'(a)=0$**（**对任意 $a$**）⇒ **$f$ 是常数** ✅。\n\n**数值感（上界的衰减）**：\n\n| $R$ | $M/R$ |\n|---|---|\n| $1$ | $M$ |\n| $10$ | $M/10$ |\n| $10^{6}$ | $M/10^{6}$ |\n| $\\to\\infty$ | **$0$** |\n\n**依赖链**：求导形式（第一步）→ 积分估计（第二步）→ 取极限（第三步）。\n\n**易错点**：\n\n1. **忘「$R$ 可以任意大」需要「整函数」**：**若 $f$ 只在圆盘内全纯，$R$ 有上界 ⇒ 结论不成立**（**这正是「整」的作用**）；\n2. **积分估计的方向**：**是「$\\le$」（不是「$=$」）**；\n3. **以为「需要 $f$ 可微」**：**$f'$ 的存在由 `R2.3` 保证**（**不需要额外假设**）。\n\n**「三个推论的统一」**：\n\n$$\\underbrace{\\text{Cauchy 求导形式}}_{\\text{R2.3}}\\ \\Longrightarrow\\ \\begin{cases}\\text{Liouville}&(\\text{推远边界})\\\\ \\text{代数基本定理}&(\\text{反证})\\\\ \\text{最大模}&(\\text{代入平均值})\\end{cases}$$\n\n**所以「`R2.4` 是 `R2.3` 的三个应用」** ✅。",
+      "links": [
+        "R2.3",
+        "R2.4",
+        "R7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.4:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个函数是常数吗？",
+      "keywords": [
+        "可算题：f(z) = sin z / z，是常数吗？",
+        "答案：不是（虽整且有界？——其实无界，因为沿虚轴 sinh y 增长）",
+        "追问：f(z) = e^{-z²} 呢？（整，但无界——沿实轴变 0，沿虚轴爆炸）",
+        "再问：有没有非平凡的有界整函数？（没有——Liouville）",
+        "陷阱：以为「看起来有界」就有界（要检查所有方向）"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "从 Liouville 变来的检验题；三问给「整但无界」「整但无界（沿虚轴）」「没有」；延伸给四函数的三项检查表（含「有界但不整」的情形）。",
+      "content": "**题**：判断是否可用 Liouville（**即是否为「有界整函数」**）。\n\n1. $f(z)=\\dfrac{\\sin z}{z}$\n2. $f(z)=e^{-z^{2}}$\n3. 有没有非平凡的有界整函数？\n\n**答案**：\n\n1. **整**（**$z=0$ 是可去奇点**）**但无界**（**沿虚轴：$\\left\\lvert\\dfrac{\\sinh y}{iy}\\right\\rvert\\to\\infty$**）⇒ **不是常数** ✅。\n\n2. **整但无界**：**沿实轴 $e^{-x^{2}}\\to0$**（**看似有界**），**但沿虚轴**：\n\n$$\\left\\lvert e^{-(iy)^{2}}\\right\\rvert=\\left\\lvert e^{y^{2}}\\right\\rvert=e^{y^{2}}\\ \\to\\ \\infty$$ ✅\n\n**所以「看一个方向有界不代表有界」**——**这是本条的要点**。\n\n3. **没有** —— **由 Liouville，有界整函数必为常数** ✅。\n\n**易错点**：\n\n- **以为「沿一个方向有界」就是有界**：**$e^{-z^{2}}$ 是反例**（**沿实轴趋于 $0$、沿虚轴爆炸**）；\n- **忘「$z=0$ 可去」也算整**：**第 1 问的 $\\sin z/z$ 确实是整函数**；\n- **把「无界」当「不整」**：**两者独立**。\n\n**延伸（三个函数的三项检查）**：\n\n| 函数 | 整？ | 有界？ | 常数？ |\n|---|---|---|---|\n| $\\sin z/z$ | ✅ | ❌ | ❌ |\n| $e^{-z^{2}}$ | ✅ | ❌ | ❌ |\n| $1/(1+z^{2})$ | ❌（**$\\pm i$ 有极点**） | ✅ | — |\n| 任意常数 | ✅ | ✅ | ✅ |\n\n**注意第三行**：**有界但不是整函数**（**所以 Liouville 也不适用**）✅——**「整」与「有界」缺一不可**。\n\n**判据（一句话）**：**「整个复平面上全纯且 $\\lvert f\\rvert$ 有上界？」** 两者都满足 ⇒ 常数。",
+      "links": [
+        "R2.4",
+        "R2.3",
+        "R3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：Liouville 与最大模原理",
+      "keywords": [
+        "模块 liouville-maxmod（档1 前端直渲）",
+        "模式①：把积分圆周 R 推远，|f'| ≤ M/R → 0",
+        "模式②：|f| 的最大值在边界（最大模原理）",
+        "模式③：有界 vs 无界整函数的对照（常数 vs e^z）",
+        "invariant：|f'(a)| ≤ M/R（Cauchy 估计，严格）",
+        "预置：e^z、sin z、cos z、常数"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "档1 依据：Cauchy 估计与最大模都是显式可算，前端可算；invariant 用 $|f'|\\le M/R$ 这个严格不等式。",
+      "content": "**档1 演示**（前端直渲），模块 `liouville-maxmod`。\n\n**模式① `push-boundary`**：拖 $R$ 增大，**显示 $\\lvert f'\\rvert$ 的上界 $M/R$ 随之减小**。**在 $R\\to\\infty$ 时给 $0$**。\n\n**模式② `max-on-boundary`**：画 $\\lvert e^{z}\\rvert$ 在圆盘 $\\lvert z\\rvert\\le1$ 上：**最大值在边界（$e^{1}=2.718$）、内部最大是 $1$**。\n\n**模式③ `bounded-vs-unbounded`**：并排显示常数函数（**有界**）与 $e^{z}$（**沿正实轴无界**）。\n\n**恒等式（给前端 invariant）**：\n\n$$\\left\\lvert f'(a)\\right\\rvert\\le\\frac{M}{R}\\quad(\\text{Cauchy 估计，严格}).$$\n\n**这是严格不等式**——**实现正确时，随 $R$ 增大上界必须单调下降且趋于 $0$**。\n\n**参数契约**：\n\n- 预置：$e^{z}$、$\\sin z$、$\\cos z$、常数函数；$R\\in[1,10^{6}]$；\n- 与 `R2.4:classical-corollaries.statement` 的数值（$M/R$ 表）保持一致。",
+      "links": [
+        "R2.4",
+        "R2.3",
+        "R7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R2.4:general.application",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：三个推论服务的下游章节",
+      "keywords": [
+        "R3：Taylor 级数（无穷可微是前提）",
+        "R6：唯一性定理（刚性）",
+        "R7：最大值原理（与调和函数的同源）",
+        "P8.4：Γ 函数的解析延拓（整函数理论的应用）",
+        "C 篇：整函数与 Fourier 变换的整性",
+        "自检：先查「整」与「有界」两个条件"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 88,
+        "line_end": 104
+      },
+      "fill_hint": "单元级应用词条；给五条下游（含 P8.4 的 Γ 与 C 篇的整性）；给「三个推论的实用性排序」表。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`R3` 的 Taylor 级数**：**「全纯 ⇒ 无穷可微」**（**`R2.3`**）⇒ **局部幂级数展开合法**——**`R3` 的前提**。\n\n- **`R6` 的唯一性定理**：**「局部决定整体」**——**刚性的直接后果**；**也给出解析延拓的合法性**。\n\n- **`R7` 的最大值原理**：**与调和函数的「最大值原理」同源**——**都是「内部取不到极大」**。\n\n- **`P8.4` 的 $\\Gamma$ 函数**：**它的解析延拓与极点结构**——**整函数/亚纯函数的理论在这里落地**。\n\n- **`C` 篇的整性**：**Fourier 变换把「紧支」变成「整函数」**——**整函数理论在分析里反复出现**。\n\n**一条自检问句**：**「$f$ 是整函数吗？有界吗？」**——**两个条件缺一不可**（**`R2.4:probe1` 的第 3 行是「有界但不整」的例子**）。\n\n**「三个推论的『实用性』排序」**：\n\n| 推论 | 用得多吗 |\n|---|---|\n| **最大模原理** | ⭐⭐⭐（**谐波函数、椭圆 PDE 里常见**） |\n| **代数基本定理** | ⭐⭐（**概念上重要、计算上少用**） |\n| **Liouville** | ⭐⭐（**证明定理的工具**） |\n\n**所以「最大模原理是最常用的」** ✅——**它直接给出「解的唯一性」与「极值位置」**。\n\n**位置关系**：本条与 `R2.3`（Cauchy 公式与求导形式）、`R2.4:classical-corollaries.proof`（Liouville 的估计）配套——**三者构成「公式 → 推论 → 证明」的小闭环**。",
+      "links": [
+        "R2.4",
+        "R2.3",
+        "R3",
+        "R6",
+        "R7",
+        "P8.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

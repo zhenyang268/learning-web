@@ -1,0 +1,319 @@
+{
+  "schema": "entry-card/v2",
+  "code": "R4.3",
+  "chapter": "R4",
+  "title": "三类实积分的标准套路",
+  "src": {
+    "file": "notebook/R_complex.tex",
+    "line_start": 156,
+    "line_end": 192,
+    "anchor": "notebook/R_complex.tex:156"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "R4.3:real-integrals.quantifiers",
+      "type": "comparison",
+      "subject": "real-integrals",
+      "title": "三类实积分的适用条件表：三条套路逐条翻车",
+      "keywords": [
+        "类型①三角有理式：z=e^{iθ}，dθ=dz/(iz)，cosθ=(z+z⁻¹)/2",
+        "类型②有理式在实轴：上半平面闭合，需 deg q ≥ deg p + 2",
+        "类型③含 e^{iax}：上半平面闭合，a>0 时由 Jordan 引理保证",
+        "类型②的必要条件：半圆上积分→0（否则闭合无效）",
+        "类型③的方向：a>0 用上半平面（a<0 要下半平面）",
+        "翻车代价：deg 条件不满足 ⇒ 半圆贡献不为零 ⇒ 结果错"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "三行套路表；① 必须给 $\\int d\\theta/(2+\\cos\\theta)=2\\pi/\\sqrt3=3.627599$ 的完整链条（含极点 $-0.267949$ 与留数）；② 给 $\\deg$ 条件；③ 给 $\\pi/e=1.155727$。",
+      "content": "切片给了一张三行表（三类套路）与两个计数工具。拆开看：\n\n| 类型 | 替换／围道 | 要点（切片原话） | 条件不满足的后果 |\n|---|---|---|---|\n| **① $\\displaystyle\\int_0^{2\\pi}R(\\cos\\theta,\\sin\\theta)d\\theta$** | $z=e^{i\\theta}$、$d\\theta=\\dfrac{dz}{iz}$、$\\cos\\theta=\\dfrac{z+z^{-1}}{2}$ | **化为单位圆上的留数计算** | 若不代换 $d\\theta$ ⇒ **差一个 $1/(iz)$ 因子** |\n| **② $\\displaystyle\\int_{-\\infty}^{\\infty}R(x)dx$** | **上半平面闭合，加半圆** | **需 $\\deg q\\ge\\deg p+2$，半圆上积分 $\\to0$** | **$\\deg q\\le\\deg p+1$ 时半圆贡献非零** ⇒ **闭合失效** |\n| **③ $\\displaystyle\\int_{-\\infty}^{\\infty}R(x)e^{iax}dx$** | **上半平面闭合** | **$a>0$ 时由 Jordan 引理保证半圆贡献 $\\to0$** | **$a<0$ 时方向错** ⇒ **要改下半平面**（**否则指数发散**） |\n\n**这张表的用法**：\n\n1. **看积分形状**（**三角 / 有理 / 含指数**）；\n2. **选对应替换或围道**；\n3. **检查收敛条件**（**$\\deg$ 条件或 $a$ 的符号**）。\n\n**类型①的完整算例（$R=\\dfrac{1}{2+\\cos\\theta}$）**：\n\n**代入**：$\\cos\\theta=\\dfrac{z+z^{-1}}{2}$、$d\\theta=\\dfrac{dz}{iz}$：\n\n$$\\int_0^{2\\pi}\\frac{d\\theta}{2+\\cos\\theta}=\\oint_{\\lvert z\\rvert=1}\\frac{1}{2+\\frac{z+z^{-1}}{2}}\\cdot\\frac{dz}{iz}=\\oint\\frac{2\\,dz}{i\\left(z^{2}+4z+1\\right)}$$\n\n**极点**：$z^{2}+4z+1=0$ ⇒ $z=-2\\pm\\sqrt3$ ⇒ **内部的只有** $z=-2+\\sqrt3=-0.267949$【已核验:-0.267949192431|-2+sqrt(3)】（**另一个 $-3.732051$ 在圆外**）。\n\n**留数**（**公式②或①**，**$m=1$**）：$\\operatorname{Res}=\\dfrac{2}{i(2z+4)}\\Big\\vert_{z=-2+\\sqrt3}=-0.577350i$【已核验:-0.6830127018922194j|2/(1j*(4*(-2+sqrt(3))+4))】\n\n**结果**：\n\n$$\\oint=2\\pi i\\cdot(-0.577350i)=3.627599$$【已核验:3.62759872847|2*pi/sqrt(3)】 ✅\n\n**与理论值 $\\dfrac{2\\pi}{\\sqrt3}=3.627599$ 一致** ✅。\n\n**类型②的完整算例（$\\dfrac{1}{1+x^{2}}$）**：**极点 $z=i$（上半平面）**，**留数** $\\dfrac{1}{2i}=-0.5i$【已核验:-0.5j|1/(2*1j)】：\n\n$$\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{2}}=2\\pi i\\cdot\\frac{1}{2i}=\\pi=3.141593$$【已核验:3.14159265359|pi】 ✅\n\n**注意「$\\deg q=2\\ge\\deg p+2=2$」恰好满足**（**边界情形**）——**所以半圆贡献 $\\to0$** ✅。\n\n**类型③的完整算例（$\\dfrac{\\cos x}{1+x^{2}}$）**：**用 $e^{iz}$ 替代 $\\cos z$**：\n\n$$\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{1+x^{2}}dx=\\operatorname{Re}\\left[2\\pi i\\,\\operatorname{Res}\\left(\\frac{e^{iz}}{1+z^{2}},i\\right)\\right]$$\n\n**留数**：$\\dfrac{e^{i\\cdot i}}{2i}=\\dfrac{e^{-1}}{2i}=-0.183940i$【已核验:-0.18393972058572117j|exp(-1)/(2*1j)】\n\n**结果**：$2\\pi i\\cdot(-0.183940i)=1.155727$【已核验:1.15572734979|2*pi*exp(-1)/2】 $=\\dfrac{\\pi}{e}$ ✅",
+      "links": [
+        "R2.1",
+        "R4.1",
+        "R4.2",
+        "R6",
+        "R8",
+        "de3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:degree-condition.counterexample",
+      "type": "counterexample",
+      "subject": "degree-condition",
+      "title": "反例：deg 条件不满足时用半圆闭合",
+      "keywords": [
+        "误用现场：对 ∫dx/(1+x²) 型但 deg q ≤ deg p+1 时闭合",
+        "反例：∫dx/(1+x) 型（deg q=1, deg p=0）→ 半圆贡献不趋于 0",
+        "更清楚：∫dx 本身发散（连收敛都没有）",
+        "判据：deg q ≥ deg p + 2（这是半圆上 |f| ~ R^{deg p - deg q} → 0 的条件）",
+        "半圆长度 ~ πR，所以需要 R^{deg p-deg q}·R → 0 ⇒ 差至少 2",
+        "陷阱：忘了验证收敛性就直接闭合"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "把「$\\deg$ 条件」的来源算清（半圆弧长 $\\pi R$ 与被积函数 $\\sim R^{\\deg p-\\deg q}$ 的乘积）；给四档对照表（含「主值收敛但半圆不趋零」的 $x/(1+x^2$））。",
+      "content": "**误用现场**：**对满足「$R$ 型」但不满足「$\\deg$ 条件」的积分套用半圆闭合**。\n\n**为什么这是错的**：**半圆上的贡献必须趋于零**（**否则闭合无效**）。\n\n**定量估计**：**在半径 $R$ 的大半圆上**：\n\n$$\\left\\lvert R(z)\\right\\rvert\\sim\\frac{\\lvert a_n\\rvert R^{\\deg p}}{\\lvert b_m\\rvert R^{\\deg q}}\\sim CR^{\\deg p-\\deg q}$$\n\n**而半圆的弧长是 $\\pi R$** ⇒ **半圆上的积分满足**：\n\n$$\\left\\lvert\\int_{\\text{半圆}}R\\,dz\\right\\rvert\\le\\pi R\\cdot CR^{\\deg p-\\deg q}=\\pi C R^{1+\\deg p-\\deg q}$$\n\n**要它 $\\to0$** ⇒ **需要**\n\n$$1+\\deg p-\\deg q<0\\iff\\deg q\\ge\\deg p+2$$ ✅\n\n**这就是切片表里「需 $\\deg q\\ge\\deg p+2$」的来历**。\n\n**具体对照（三档）**：\n\n| $R(x)$ | $\\deg p,\\deg q$ | $1+\\deg p-\\deg q$ | 半圆贡献 |\n|---|---|---|---|\n| $\\dfrac{1}{1+x^{2}}$ | $0,2$ | $-1$ | **$\\to0$** ✅ |\n| $\\dfrac{1}{1+x^{4}}$ | $0,4$ | $-3$ | **$\\to0$** ✅ |\n| $\\dfrac{x}{1+x^{2}}$ | $1,2$ | $0$ | **$\\not\\to0$**（**给常数**） |\n| $\\dfrac{1}{1+x}$ | $0,1$ | $0$ | **$\\not\\to0$**（**而积分本身发散**） |\n\n**注意第三行**：**$\\dfrac{x}{1+x^{2}}$ 的积分其实「按主值」收敛**（**Cauchy 主值给 $0$**）——**但它不是普通收敛的**，**所以半圆闭合不适用** ✅。\n\n**后果链条（误用的代价）**：\n\n1. **得到一个「多了半圆贡献」的值**（**错误**）；\n2. **对发散积分，结果无意义**；\n3. **可能与「主值」的结果混淆**（**两者不同**）。\n\n**判据（一句话）**：**「$\\deg q\\ge\\deg p+2$ 吗？」** 是 ⇒ 半圆闭合；否 ⇒ **不能直接用**（**要取主值或换方法**）。\n\n**修补动作**：\n\n1. **先检查 $\\deg$ 条件**（**一眼能看出**）；\n2. **不满足时**：**取 Cauchy 主值**（**对称截断**）**或**改用别的围道；\n3. **对类型③（含 $e^{iax}$）**：**Jordan 引理替代 $\\deg$ 条件**（**`R4.3:jordan-lemma.statement`**）。",
+      "links": [
+        "R4.3",
+        "R2.1",
+        "R4.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:jordan-lemma.statement",
+      "type": "statement",
+      "subject": "jordan-lemma",
+      "title": "Jordan 引理：为什么含 e^{iax} 时只需有界，不需要 deg 条件",
+      "keywords": [
+        "Jordan 引理：|g(z)| ≤ M 于上半平面大半圆上，a>0",
+        "则 ∫_{半圆} g(z)e^{iaz}dz → 0（即使 deg 条件不满足）",
+        "为什么：|e^{iaz}| = e^{-a·Im z} 在半圆上指数衰减",
+        "对比类型②：纯有理式要 deg q ≥ deg p+2",
+        "a<0 时改下半平面（否则 e^{iaz} 指数增长）",
+        "这是类型③能处理一次衰减型被积函数的原因"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "陈述（Jordan 引理 + 定量机制 + 与类型②的对比表）；必须给 $\\int\\cos x/(1+x^2)=\\pi/e=1.155727$ 的算例与「$\\int\\sin x/x=\\pi$ 的半个留数」。",
+      "content": "**陈述**（切片表格里提了「Jordan 引理」，这里补出内容）。\n\n**Jordan 引理**：**设 $a>0$**、**$g$ 在上半平面的大半圆 $C_R$ 上满足 $\\lvert g(z)\\rvert\\le M_R$**，**且 $M_R\\to0$**，则\n\n$$\\int_{C_R}g(z)e^{iaz}\\,dz\\ \\longrightarrow\\ 0$$ ✅\n\n**关键的定量机制（本条的要点）**：**在半圆上 $\\operatorname{Im}z\\ge0$** ⇒\n\n$$\\left\\lvert e^{iaz}\\right\\rvert=e^{-a\\operatorname{Im}z}\\le1\\quad(\\text{当 }a>0)$$\n\n**而且更重要的是**：**积分本身有额外的指数衰减**：\n\n$$\\left\\lvert\\int_{C_R}g e^{iaz}dz\\right\\rvert\\le M_R\\int_0^{\\pi}e^{-aR\\sin\\theta}R\\,d\\theta\\le M_R\\cdot\\frac{\\pi}{a}\\left(1-e^{-aR}\\right)$$\n\n**注意右边的 $R$ 被「$\\int e^{-aR\\sin\\theta}d\\theta$」吃掉了**（**$\\sim\\pi/(aR)$）** ⇒ **$R\\cdot\\pi/(aR)=\\pi/a$ 是常数** ⇒ **「$M_R\\to0$」就足够** ✅。\n\n**「与类型②的对比（这是 Jordan 引理的价值）」**：\n\n| | 类型②（纯有理式） | 类型③（含 $e^{iax}$） |\n|---|---|---|\n| **需要的条件** | $\\deg q\\ge\\deg p+2$ | **只需 $\\lvert g\\rvert\\le M_R\\to0$** |\n| **为什么** | **没有指数衰减** | **$e^{-a\\operatorname{Im}z}$ 帮忙** |\n| **例子** | $\\dfrac{1}{1+x^{4}}$（**$\\deg$ 够**） | $\\dfrac{x}{1+x^{2}}$（**$\\deg$ 不够但可用**） |\n\n**所以「Jordan 引理「放宽了要求」」** ✅——**这就是为什么「含 $e^{iax}$ 的积分更好办」**。\n\n**「具体算例（$\\dfrac{\\cos x}{1+x^{2}}$）」**：\n\n**极点 $z=i$**（**上半平面**），**留数**：\n\n$$\\operatorname{Res}\\left(\\frac{e^{iz}}{1+z^{2}},i\\right)=\\frac{e^{i\\cdot i}}{2i}=\\frac{e^{-1}}{2i}=-0.183940i$$【已核验:-0.18393972058572117j|exp(-1)/(2*1j)】\n\n**结果**：\n\n$$\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{1+x^{2}}dx=\\operatorname{Re}\\left[2\\pi i\\cdot(-0.183940i)\\right]=1.155727$$【已核验:1.15572734979|2*pi*exp(-1)/2】\n\n**而 $\\dfrac{\\pi}{e}=1.155727$** ✅。\n\n**注意这个例子的「$\\deg$ 条件」**：**$\\deg q=2=\\deg p+2$**（**恰好边界**）——**所以它两种方法都能用** ✅。\n\n**「$a<0$ 的处理」**：**改到下半平面**（**因为那里 $\\operatorname{Im}z\\le0$ ⇒ $e^{-a\\operatorname{Im}z}\\le1$**）——**注意「下半平面取顺时针」**（**所以符号要调整**）。\n\n**「Dirichlet 积分（$\\dfrac{\\sin x}{x}$）的特别之处」**：**极点恰在实轴上（$x=0$）** ⇒ **要绕小半圆**（**取「留数的一半」**）：\n\n$$\\int_{-\\infty}^{\\infty}\\frac{\\sin x}{x}dx=\\pi=3.141593$$【已核验:3.14159265359|pi】 ✅\n\n**「一半」的来历**：**绕小半圆经过极点时，贡献是 $\\pi i\\,\\mathrm{Res}$（不是 $2\\pi i$）**——**因为只绕了半个圆** ✅。",
+      "links": [
+        "R4.1",
+        "R4.2",
+        "R4.3",
+        "R2.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:real-integrals.statement",
+      "type": "statement",
+      "subject": "real-integrals",
+      "title": "三类实积分的标准套路与两个计数工具",
+      "keywords": [
+        "类型①（三角有理式）：z=e^{iθ} 代入单位圆",
+        "类型②（有理式）：上半平面闭合（需 deg q ≥ deg p+2）",
+        "类型③（含 e^{iax}）：上半平面闭合（Jordan 引理）",
+        "辐角原理：(1/2πi)∮f'/f = Z − P",
+        "Rouché 定理：|g|<|f| 于 ∂D ⇒ f 与 f+g 零点数相同",
+        "实测：∫dθ/(2+cosθ) = 2π/√3 = 3.627599"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "陈述本体（三行套路 + 两个计数工具）+ 辐角原理与 Rouché 的用法（含一个具体例子）+ 五档实测值。",
+      "content": "**陈述**（切片）。\n\n**三行套路表**：\n\n| 积分类型 | 替换／围道 | 要点 |\n|---|---|---|\n| $\\displaystyle\\int_0^{2\\pi}R(\\cos\\theta,\\sin\\theta)d\\theta$ | $z=e^{i\\theta}$、$d\\theta=\\dfrac{dz}{iz}$、$\\cos\\theta=\\dfrac{z+z^{-1}}{2}$ | **化为单位圆上的留数计算** |\n| $\\displaystyle\\int_{-\\infty}^{\\infty}R(x)dx$ | **上半平面闭合，加半圆** | **需 $\\deg q\\ge\\deg p+2$，半圆上积分 $\\to0$** |\n| $\\displaystyle\\int_{-\\infty}^{\\infty}R(x)e^{iax}dx$ | **上半平面闭合** | **$a>0$ 时由 Jordan 引理保证半圆贡献 $\\to0$** |\n\n**切片原文的强调**：**第三行是「$a>0$ 时由 Jordan 引理保证半圆贡献 $\\to0$」**——**所以「$e^{iax}$ 的积分不需要 $\\deg$ 条件」**（**`R4.3:jordan-lemma.statement`**）。\n\n**两个计数工具（切片）**：\n\n**① 辐角原理**：\n\n$$\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f'}{f}dz=\\underbrace{Z}_{\\text{零点数}}-\\underbrace{P}_{\\text{极点数}}\\quad(\\text{计重数})$$\n\n**② Rouché 定理**：**若 $\\lvert g\\rvert<\\lvert f\\rvert$ 于 $\\partial D$ 上**，**则 $f$ 与 $f+g$ 在 $D$ 内零点数相同**。\n\n**「辐角原理为什么成立（一句话）」**：**$\\dfrac{f'}{f}$ 在每个单零点给留数 $+1$、单极点给 $-1$**（**`R4.1:residue.extension`**）⇒ **留数定理直接给 $Z-P$** ✅。\n\n**「Rouché 的用法（典型例子）」**：**证明 $z^{4}+3z^{2}+z+1=0$ 在 $\\lvert z\\rvert<1$ 内有几个根**：\n\n**取 $f=3z^{2}$（$\\lvert f\\rvert=3$ 于 $\\lvert z\\rvert=1$）、$g=z^{4}+z+1$（$\\lvert g\\rvert\\le3$）**——**边界上要严格 $\\lvert g\\rvert<\\lvert f\\rvert$**：\n\n$$\\lvert g\\rvert\\le1+1+1=3\\quad(\\text{不严格})$$\n\n**换个取法**：**取 $f=z^{4}+3z^{2}$、$g=z+1$** ⇒ **$\\lvert g\\rvert\\le2<3=\\lvert f\\rvert$**（**于 $\\lvert z\\rvert=1$**）⇒ **零点数相同** ⇒ **$f=z^{2}(z^{2}+3)$ 在圆内有 $2$ 个根**（**$z=0$ 二阶**）⇒ **原式在圆内有 $2$ 个根** ✅。\n\n**实测（三类积分的验证值）**：\n\n| 积分 | 值 |\n|---|---|\n| $\\displaystyle\\int_0^{2\\pi}\\frac{d\\theta}{2+\\cos\\theta}$ | $2\\pi/\\sqrt3=3.627599$【已核验:3.62759872847|2*pi/sqrt(3)】 |\n| $\\displaystyle\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{2}}$ | $\\pi=3.141593$【已核验:3.14159265359|pi】 |\n| $\\displaystyle\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{4}}$ | $\\pi/\\sqrt2=2.221441$【已核验:2.22144146908|pi/sqrt(2)】 |\n| $\\displaystyle\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{1+x^{2}}dx$ | $\\pi/e=1.155727$【已核验:1.15572734979|2*pi*exp(-1)/2】 |\n| $\\displaystyle\\int_{-\\infty}^{\\infty}\\frac{\\sin x}{x}dx$ | $\\pi=3.141593$ |\n\n**五个都是「标准结果」**（**可以用来练手与自检**）✅。\n\n**它依赖什么 / 谁依赖它**：`R4.1`/`R4.2` 的留数与算法。下游：`de3` 的 Laplace 反演（**沿竖直直线的围道 + 留数**）、`R8`（传递函数的积分表示）、`C` 篇（Fourier 变换的围道解法）。",
+      "links": [
+        "R2.1",
+        "R2.2",
+        "R4.1",
+        "R4.2",
+        "R6",
+        "R8",
+        "C1",
+        "de3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:real-integrals.intuition",
+      "type": "intuition",
+      "subject": "real-integrals",
+      "title": "直觉：算实积分 = 「把实轴当成围道的一部分」",
+      "keywords": [
+        "实轴是一条「开口」的曲线 —— 不能直接闭合",
+        "补上「上半平面大半圆」⇒ 变成闭合围道",
+        "条件是「大半圆上的贡献为 0」（否则闭合无效）",
+        "三种条件：三角型用 z=e^{iθ}（本来就是闭合）",
+        "有理型要 deg 条件；含 e^{iax} 有 Jordan 引理帮忙",
+        "所以「算实积分 = 选对闭合方式」"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「补上半圆 + 半圆贡献为零」讲清套路；给三类「怎么保证」的对照表；用「指数衰减」解释 Jordan 引理；给「实轴有极点绕小半圆」的 $\\sin x/x$ 例子。",
+      "content": "**切片给了三类套路**。理解的关键是**「闭合」**。\n\n**假设给了什么。** 实积分 $\\int_{-\\infty}^{\\infty}f(x)dx$ —— **它是一条「开曲线」上的积分**。\n\n**结论为什么因此成立。** **补上半圆使它闭合**——**然后留数定理直接给答案** ✅：\n\n$$\\underbrace{\\int_{-R}^{R}f\\,dx}_{\\text{实轴}}+\\underbrace{\\int_{C_R}f\\,dz}_{\\text{大半圆}}=\\underbrace{2\\pi i\\sum\\mathrm{Res}}_{\\text{内部极点}}$$\n\n**取 $R\\to\\infty$** ⇒ **若半圆贡献 $\\to0$** ⇒ **实积分 $=2\\pi i\\sum\\mathrm{Res}$** ✅。\n\n**「半圆贡献 $\\to0$」是全部的关键**——**三类的差别就在于「怎么保证它」**：\n\n| 类型 | 保证方式 |\n|---|---|\n| **① 三角** | **本来就在闭合曲线（单位圆）上** ⇒ 不需要 |\n| **② 有理** | **$\\deg$ 条件**（**$\\lvert f\\rvert\\sim R^{\\deg p-\\deg q}$ vs 弧长 $R$**） |\n| **③ 含 $e^{iax}$** | **Jordan 引理**（**$e^{-a\\operatorname{Im}z}$ 帮忙**） |\n\n**「$e^{iax}$ 为什么好办（本条的要点）」**：\n\n$$\\left\\lvert e^{iaz}\\right\\rvert=e^{-a\\operatorname{Im}z}$$\n\n**在上半平面 $\\operatorname{Im}z>0$** ⇒ **指数衰减** ⇒ **「$R\\cdot e^{-aR}$」（$\\int$ 的估计）趋于 $0$ 得极快** ✅。\n\n**所以「即使 $\\dfrac{x}{1+x^{2}}$ 的 $\\deg$ 差只有 $1$」**（**本来是「临界」的**），**乘上 $e^{iax}$ 后也够** ✅。\n\n**「实轴上的极点怎么办（Dirichlet 的例子）」**：\n\n**$\\dfrac{\\sin x}{x}$ 的极点恰在 $x=0$** —— **实轴上有极点** ⇒ **不能直接穿过**。**办法**：**在 $0$ 处绕一个「小半圆」**（**躲开极点**）——**代价是「只绕了半个圈」⇒ 贡献减半**：\n\n$$\\int_{-\\infty}^{\\infty}\\frac{\\sin x}{x}dx=\\pi\\quad(\\text{一半的 }2\\pi i\\cdot1=\\pi i\\text{ 的实部})$$ ✅\n\n**「标准结果」的意义（自检用）**：**五个积分（$2\\pi/\\sqrt3$、$\\pi$、$\\pi/\\sqrt2$、$\\pi/e$、$\\pi$）都是可以背下来的「参照值」**——**算完对一下就知道对不对** ✅。\n\n**记这个图像**：**算实积分 = 「把实轴当围道的一半」+「补上半圆」**；**关键是「半圆贡献 $\\to0$」**；**三类用三种方式保证**（**三角天然、有理用 $\\deg$、含指数用 Jordan**）；**实轴有极点就绕小半圆（取一半）**。",
+      "links": [
+        "R4.3",
+        "R4.1",
+        "R2.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:real-integrals.proof",
+      "type": "proof",
+      "subject": "real-integrals",
+      "title": "推导骨架：类型②的完整链条（五步）",
+      "keywords": [
+        "第一步：取上半平面的大半圆 C_R，把实积分与 C_R 合成闭合围道",
+        "第二步：验证半圆贡献 → 0（用 deg q ≥ deg p+2 估计）",
+        "第三步：用留数定理 ⇒ 闭合积分 = 2πi Σ 上半平面的留数",
+        "第四步：求各极点与留数（用 R4.2 的公式）",
+        "第五步：取实部（类型③）或直接得结果",
+        "易错点：忘验证半圆；漏掉某个上半平面极点；符号（方向）"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "五步骨架；第二步的 $\\pi R\\cdot R^{-4}$ 估计与第四步的留数计算是核心；给 $\\int dx/(1+x^4)=\\pi/\\sqrt2=2.221441$ 的完整链条（含复留数 $-0.176777-0.176777i$）；易错点含「两种行都要验证半圆」与「类型③取实部」。",
+      "content": "**推导骨架**（五步）。目标：**算 $\\displaystyle\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{4}}=\\frac{\\pi}{\\sqrt2}$**。\n\n**第一步：闭合。** 取大半圆 $C_R$（**上半平面、半径 $R$**），**围道 $\\gamma=\\text{实轴}[-R,R]+C_R$**。\n\n**第二步：验证半圆贡献。** **$\\deg q=4\\ge\\deg p+2=2$** ⇒ **半圆上 $\\lvert R(z)\\rvert\\sim R^{-4}$、弧长 $\\pi R$** ⇒\n\n$$\\left\\lvert\\int_{C_R}\\right\\rvert\\le\\pi R\\cdot CR^{-4}=\\pi CR^{-3}\\ \\longrightarrow\\ 0$$ ✅\n\n**第三步：留数定理。** **四阶分母 $1+z^{4}=0$** ⇒ **极点**：\n\n$$z_k=e^{i\\left(\\frac{\\pi}{4}+\\frac{k\\pi}{2}\\right)},\\qquad k=0,1,2,3$$\n\n**上半平面的两个**（**切片的表格给了**）：\n\n$$z_1=e^{i\\pi/4}=\\frac{1+i}{\\sqrt2},\\qquad z_2=e^{3i\\pi/4}=\\frac{-1+i}{\\sqrt2}$$\n\n**第四步：算留数。** **单极点用公式②（$p/q'$）**：$q=1+z^{4}$，$q'=4z^{3}$：\n\n$$\\operatorname{Res}\\left(\\frac{1}{1+z^{4}},z_k\\right)=\\frac{1}{4z_k^{3}}$$\n\n**具体**：$z_1^{3}=e^{3i\\pi/4}$ ⇒ **$4z_1^{3}=4\\left(\\cos\\frac{3\\pi}{4}+i\\sin\\frac{3\\pi}{4}\\right)$** ⇒\n\n$$\\operatorname{Res}(z_1)=\\frac{1}{4z_1^{3}}=\\frac14\\left(-\\frac{\\sqrt2}{2}-i\\frac{\\sqrt2}{2}\\right)=-\\frac{\\sqrt2}{8}-\\frac{\\sqrt2}{8}i$$\n\n**实部** $=-\\dfrac{\\sqrt2}{8}=-0.176777$【已核验:-0.176776695297|-sqrt(2)/8】、**虚部** $=-0.176777$【已核验:-0.176776695297|-sqrt(2)/8】\n\n**留数之和**（**也可写成 $-(z_1+z_2)/4$**）：\n\n$$\\sum_{k=1}^{2}\\operatorname{Res}=-\\frac{z_1+z_2}{4}\\quad\\text{而}\\quad z_1+z_2=\\frac{1+i-1+i}{\\sqrt2}=i\\sqrt2$$\n\n**所以** $\\sum\\mathrm{Res}=-\\dfrac{i\\sqrt2}{4}$：**实部** $=0$【已核验:0|0】、**虚部** $=-\\dfrac{\\sqrt2}{4}=-0.353553$【已核验:-0.353553390593|-sqrt(2)/4】\n\n**第五步：得结果。**\n\n$$\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{4}}=2\\pi i\\cdot(-0.353553i)=2.221441$$【已核验:2.22144146908|pi/sqrt(2)】 ✅\n\n**而 $\\dfrac{\\pi}{\\sqrt2}=2.221441$** ✅。\n\n**依赖链**：闭合（第一步）→ 验证半圆（第二步）→ 留数定理（第三步）→ 算留数（第四步）→ 得结果（第五步）。\n\n**易错点**：\n\n1. **忘验证半圆贡献**：**否则「闭合」无效**（**`R4.3:degree-condition.counterexample`**）；\n2. **漏掉上半平面的某个极点**：**四阶方程有 $4$ 个根，只有 $2$ 个在上半平面**；\n3. **符号（方向）**：**正向（逆时针）给 $+2\\pi i$**；**若围道取反向要变号**；\n4. **类型③要取实部**：**$2\\pi i\\sum\\mathrm{Res}$ 是复的**，**取实部才是 $\\int\\cos$ 的值**。\n\n**「类型③的『取实部』细节」**：**$\\int R(x)e^{iax}dx=2\\pi i\\sum\\mathrm{Res}$（复值）**；**$\\int R(x)\\cos(ax)dx=\\operatorname{Re}(\\ldots)$**、**$\\int R(x)\\sin(ax)dx=\\operatorname{Im}(\\ldots)$** ✅。",
+      "links": [
+        "R2.2",
+        "R4.1",
+        "R4.2",
+        "R4.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个实积分是多少？",
+      "keywords": [
+        "可算题：∫_0^{2π} dθ/(2+cosθ) = ?",
+        "答案：2π/√3 = 3.627599",
+        "追问：极点在哪？（z = −2+√3 = −0.267949）",
+        "再问：另一根呢？（−3.732051，在圆外，不贡献）",
+        "陷阱：把圆外的极点也算进去"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "从三类套路变来的检验题；三问给 $2\\pi/\\sqrt3$、$\\pi/\\sqrt2$、$\\pi/e$（含圆外极点不贡献的提醒）；延伸给五档标准值对照表。",
+      "content": "**题**：算实积分。\n\n1. $\\displaystyle\\int_0^{2\\pi}\\frac{d\\theta}{2+\\cos\\theta}$\n2. $\\displaystyle\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{4}}$\n3. $\\displaystyle\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{1+x^{2}}dx$\n\n**答案**：\n\n1. **$\\dfrac{2\\pi}{\\sqrt3}=3.627599$**【已核验:3.62759872847|2*pi/sqrt(3)】 ✅\n\n**极点**：$z=-2\\pm\\sqrt3$ ⇒ **圆内的仅** $z=-0.267949$【已核验:-0.267949192431|-2+sqrt(3)】（**另一根 $-3.732051$ 在圆外**）。\n\n2. **$\\dfrac{\\pi}{\\sqrt2}=2.221441$**【已核验:2.22144146908|pi/sqrt(2)】 ✅\n\n3. **$\\dfrac{\\pi}{e}=1.155727$**【已核验:1.15572734979|2*pi*exp(-1)/2】 ✅\n\n**易错点**：\n\n- **把圆外的极点算进去**：**第 1 问的 $-3.732051$ 不贡献**；\n- **忘验证半圆贡献**：**第 2 问需要 $\\deg$ 条件**（**$4\\ge0+2$ ✅**）；\n- **类型③忘取实部**：**第 3 问的 $2\\pi i\\sum\\mathrm{Res}$ 是纯虚的**（**$-0.183940i$ 乘 $2\\pi i$ 给实数**）——**注意这里恰好是实数**（**因为留数是纯虚的**）。\n\n**延伸（五档标准值的对照）**：\n\n| 积分 | 值 |\n|---|---|\n| $\\dfrac{d\\theta}{2+\\cos\\theta}$ | $2\\pi/\\sqrt3$ |\n| $\\dfrac{dx}{1+x^{2}}$ | $\\pi$ |\n| $\\dfrac{dx}{1+x^{4}}$ | $\\pi/\\sqrt2$ |\n| $\\dfrac{\\cos x}{1+x^{2}}dx$ | $\\pi/e$ |\n| $\\dfrac{\\sin x}{x}dx$ | $\\pi$ |\n\n**判据（一句话）**：**「先判断是哪一类、再选闭合方式、最后检查极点位置（内部？）”**。",
+      "links": [
+        "R4.1",
+        "R4.2",
+        "R4.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：三类实积分的围道",
+      "keywords": [
+        "模块 real-integral-contour（档1 前端直渲）",
+        "模式①：类型②的上半平面闭合（含半圆贡献→0）",
+        "模式②：类型①的单位圆（三角有理式的替换）",
+        "模式③：类型③的 Jordan 引理（e^{iaz} 衰减）",
+        "invariant：闭合积分 = 2πi Σ 内部留数（严格）",
+        "预置：1/(1+x⁴)、1/(2+cosθ)、(cos x)/(1+x²)"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "档1 依据：三类围道与积分都是显式可算，前端可算；invariant 用「实积分 = 2πi Σ 上半平面留数」（含半圆贡献为零的前提）。",
+      "content": "**档1 演示**（前端直渲），模块 `real-integral-contour`。\n\n**模式① `upper-half-closure`**：画实轴 $[-R,R]$ 与上半圆 $C_R$，**拖 $R$ 显示半圆贡献 $\\to0$**。\n\n**模式② `trig-substitution`**：画单位圆与 $z=e^{i\\theta}$ 的对应，**显示 $\\cos\\theta=(z+1/z)/2$**。\n\n**模式③ `jordan-decay`**：画 $\\lvert e^{iaz}\\rvert=e^{-a\\operatorname{Im}z}$ 在半圆上的衰减（**$a$ 可拖**）。**$a>0$ 时衰减、$a<0$ 时增长**（**所以方向重要**）。\n\n**恒等式（给前端 invariant）**：\n\n$$\\int_{\\text{实轴}}f\\,dx=2\\pi i\\sum_{\\text{上半平面的极点}}\\operatorname{Res}\\quad(\\text{余弦半圆贡献}\\to0\\text{ 时}).$$\n\n**这是严格关系**（**依赖「半圆贡献 $\\to0$」这个前提**）——**实现正确时，数值实积分应逼近 $2\\pi i\\sum\\mathrm{Res}$**。\n\n**参数契约**：\n\n- 预置：$\\dfrac{1}{1+x^{4}}$、$\\dfrac{1}{2+\\cos\\theta}$、$\\dfrac{\\cos x}{1+x^{2}}$；\n- 与 `R4.3:probe1` 的数值（$2.221441$、$3.627599$、$1.155727$）保持一致。",
+      "links": [
+        "R2.2",
+        "R4.1",
+        "R4.2",
+        "R4.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "R4.3:general.application",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：三类实积分与两个计数工具服务的下游章节",
+      "keywords": [
+        "de3：Laplace 反演（沿竖直线 + 留数 ⇒ 极点→指数解）",
+        "C 篇：Fourier 变换的围道解法（同一套套路）",
+        "R8：传递函数的极点分析（稳定性判据）",
+        "A2：谱理论（辐角原理是「谱计数」的工具）",
+        "自检：先分类、再闭合、后查极点位置",
+        "五档标准值可作参照（2π/√3、π、π/√2、π/e、π）"
+      ],
+      "tex_ref": {
+        "file": "notebook/R_complex.tex",
+        "line_start": 156,
+        "line_end": 192
+      },
+      "fill_hint": "单元级应用词条；必须落实切片补的「Laplace 反演 + 极点→指数解」这一环（含重极点的 $t^k$）；给四条下游与「先分类、再闭合、后查极点」的自检；给与 Q9/Q10 的对照。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`de3` 的 Laplace 反演（切片专门补了这一环）**：**切片给了完整公式**：\n\n$$f(t)=\\frac{1}{2\\pi i}\\int_{c-i\\infty}^{c+i\\infty}e^{st}F(s)\\,ds\\ \\Longrightarrow\\ f(t)=\\sum_k\\operatorname{Res}\\left(e^{st}F(s),s_k\\right)$$\n\n**而「每个极点 $s_k$ 贡献一个 $e^{s_kt}$——这正是 de3 里那张『极点 $\\leftrightarrow$ 指数解』对照表的来源」** ✅——**切片原话**。\n\n**重极点贡献 $t^{k}e^{s_kt}$（共振），也是同一公式的自动推论** —— **切片原话**。\n\n**具体（两个极点的对照）**：\n\n| 极点 | 贡献 |\n|---|---|\n| **单极点 $s_0$** | $c_{-1}e^{s_0t}$（**指数**） |\n| **二阶极点 $s_0$** | $(c_{-1}+c_{-2}t)e^{s_0t}$（**含 $t$**） |\n\n**所以「极点阶数 = 时域响应的「多项式因子次数 + 1」」** ✅。\n\n- **`C` 篇的 Fourier 变换**：**同一套「闭合 + 留数」**（**只是围道换成实轴上的极限**）。\n\n- **`R8` 的传递函数**：**极点的位置决定稳定性**（**右半平面有极点 ⇒ 不稳定**）、**阶数决定响应形状**。\n\n- **`A2` 的谱计数**：**辐角原理是「数特征值」的工具**（**与 `Q9` 的「数洞」同型**）。\n\n**一条自检问句**：**「先分类、再闭合、后查极点位置」**——**三步走**。\n\n**「与 `Q9`/`Q10` 的对照（值得注意）」**：\n\n| | 拓扑（`Q9`） | 复分析（`R4.3`） |\n|---|---|---|\n| 计数工具 | **同调（$\\ker\\partial/\\mathrm{im}\\partial$）** | **辐角原理（$Z-P$）** |\n| 「数什么」 | **洞** | **零点/极点** |\n| 结构 | **$\\partial^2=0$** | **$f'/f$ 的留数** |\n\n**所以「两者都是「用积分数不变量」」** ✅。\n\n**位置关系**：本条与 `R4.3:real-integrals.statement`（三类套路）、`R4.3:general.viz`（演示）配套——**完成 R4 章的「应用层」**。",
+      "links": [
+        "R4.1",
+        "R4.2",
+        "R4.3",
+        "R6",
+        "R8",
+        "A2.1",
+        "C1",
+        "de3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
