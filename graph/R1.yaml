@@ -1,0 +1,21 @@
+# graph/R1.yaml — 「R1 全纯性与 C-R 方程」语义边真源（R 章起点单元）。
+# schema、方向约定与派生覆盖规则见 A1.yaml 头部。
+#
+# R1 是复分析章的入口。派生边（links 编号在前）给它挂上了 Q10/A2.5/A3/A4.1/H1 六条
+# 「对照引用」假前置（R1 的词条 links 大量指向后续章节做对照，编号序规则误读为依赖），
+# 必须覆盖。statement 声明块原文：「它依赖什么：复数与 P5 的 Euler 公式。
+# 下游：R2（Cauchy 定理与公式）、R3（Laurent）、R5（共形）、R7（二维 PDE）、Q10（H^1 与调和共轭）」。
+notebook_commit: 62a761e
+
+nodes:
+  R1: # 全纯性与 C-R 方程
+    prereq:
+      # 「它依赖什么：复数与 P5 的 Euler 公式」——复数运算属于预备知识不入图；
+      # P5.1 即 Euler 公式（e^{iθ} = cosθ + i sinθ），是指数函数全纯性的样板。
+      - P5.1
+    tension: []
+    dual: []
+    applies:
+      # 下游 R2/R3/R5/R7 已由各自 prereq 声明（R2.2/R3/R5/R7 的 yaml 或派生）。
+      # Q10（de Rham 上同调）是声明块点名的下游（H^1 与调和共轭），别处不承载，在此写。
+      - Q10

@@ -152,4 +152,61 @@ nodes:
       - de1.6
     tension: []
     dual: []
-    applies: [] # 声明的下游 de1.15–de1.17（Bessel/Legendre/统一视角）尚未入库，入库后补
+    applies:
+      # Frobenius 方法的两大应用：Bessel（正则奇点 s=1/2 型）与 Legendre。
+      - de1.15
+      - de1.16
+
+  de1.15: # Bessel 方程
+    prereq:
+      # 「它依赖什么：de1.12（S-L 框架）、de1.13/de1.14（Frobenius 展开正是
+      # 求解手段；Bessel 方程 x=0 是正则奇点）」。
+      # 跨章：P8.4（Stirling 公式）——J_ν 大宗量渐近的收尾工具，多条声明一致点名。
+      # 注：links 里的 de2.10（未入库）与 H5（球谐函数是应用而非前修）不采。
+      - de1.12
+      - de1.13
+      - de1.14
+      - P8.4
+    tension: []
+    dual: []
+    applies:
+      # 球谐函数/球 Bessel 在 H5 中被使用。
+      - H5
+
+  de1.16: # Legendre 方程
+    prereq:
+      # 「它依赖什么：de1.12（S-L 框架）、de1.13/de1.14（Frobenius；
+      # x=±1 正则奇点）」，de1.15 为并行特例但统一视角前需要两个样本
+      # （声明里 de1.15 出现在 de1.16 的依赖列表）。
+      - de1.12
+      - de1.13
+      - de1.14
+      - de1.15
+    tension: []
+    dual: []
+    applies:
+      # 球谐函数 P_l^m 由 Legendre 方程生成（H5、F4 角动量多处引用）。
+      - H5
+
+  de1.17: # 特殊函数的统一视角
+    prereq:
+      # 统一视角=回头总结 Bessel/Legendre 两类正则奇点样本 + S-L 框架，
+      # 声明一致列出 de1.12/de1.15/de1.16。
+      - de1.12
+      - de1.15
+      - de1.16
+    tension: []
+    dual: []
+    applies: []
+
+  de1.18: # Green 函数方法（ODE 版本）
+    prereq:
+      # 「它依赖什么：de1.8（常数变易法——Green 函数是其「点源推广」，声明反复点名）、
+      # de1.12（S-L 自伴框架，Green 函数的对称性来自自伴性）、de1.7（待定系数，
+      # 分段拼解时的特解手段，两条声明列出）」。
+      - de1.8
+      - de1.12
+      - de1.7
+    tension: []
+    dual: []
+    applies: []
