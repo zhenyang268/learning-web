@@ -1,0 +1,293 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie3.1",
+  "chapter": "lie3",
+  "title": "角动量与 $\\mathfrak{so}(3)$",
+  "src": {
+    "file": "notebook/li/lie3.tex",
+    "line_start": 8,
+    "line_end": 22,
+    "anchor": "notebook/li/lie3.tex:8"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie3.1:angular-momentum.quantifiers",
+      "type": "comparison",
+      "subject": "angular-momentum",
+      "title": "角动量代数的四个限定词：对易关系带 iħ、L² 与 Lz 同时对角、整数 l、球谐是表示基",
+      "keywords": [
+        "对易关系=iħε",
+        "L² 与 Lz 可同时对角",
+        "l 是整数(轨道)",
+        "Y_l^m 是表示基"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "四问：iħ 的必要性（约定与量纲）；L² 与 Lz 同时对角、Lx/Ly 不行；l 为整数来自波函数单值性；Y_l^m 张成 2l+1 维不可约表示。",
+      "content": "切片给了 $[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$、**角动量量子化**（$\\hat L^2|l,m\\rangle=\\hbar^2l(l+1)|l,m\\rangle$、$\\hat L_z|l,m\\rangle=\\hbar m|l,m\\rangle$、$l=0,1,2,\\dots$、$m=-l,\\dots,l$）与\"**球谐函数 $Y_l^m$ 是 $SO(3)$ 第 $l$ 个不可约表示的基函数**\"。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **对易关系里必须有 $i\\hbar$** | $[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$：$i$ 来自\"厄米生成元\"约定（`lie1.11` 反例）；$\\hbar$ 带量纲（角动量）。**漏 $i$** ⇒ 对易子是厄米（错，应为反厄米乘 $i$）；**漏 $\\hbar$** ⇒ 量纲错 | 与实验（谱线位置）不符 | 不能放宽：$i\\hbar$ 是约定 + 量纲 |\n| ② **$\\hat L^2$ 与 $\\hat L_z$ 可以同时对角化** | 因为 $[\\hat L^2,\\hat L_z]=0$ ⇒ 有**共同本征态** $\\vert l,m\\rangle$。**但** $[\\hat L_x,\\hat L_y]\\ne0$ ⇒ **不能同时**对角化三者 ⇒ 只能选一个方向（通常 $z$） | 以为\"三个分量都能同时测\" ⟹ 与不确定性关系矛盾 | 不能放宽：这是完备集的选择（`lie2.4` 的 Cartan 子代数 = $\\hat L_z$，秩 $1$） |\n| ③ **轨道角动量的 $l$ 只能是整数** | $l=0,1,2,\\dots$ ⇒ 维数 $2l+1$ 算得 $1,3,5,7$（$l=0,1,2,3$）。**原因**：$\\hat L$ 作用在**单值**波函数 $\\psi(\\theta,\\phi)$ 上 ⇒ 需要 $e^{im\\phi}$ 单值 ⇒ $m\\in\\mathbb Z$ ⇒ $l\\in\\mathbb Z$（与自旋的 $s\\in\\frac12\\mathbb Z$ **对比**，`lie3.2`） | 承认 $l=\\frac12$ ⟹ 与单值波函数矛盾（轨道自由度不允许） | 不能放宽：**单值性**是轨道角动量的额外条件 |\n| ④ **球谐 $Y_l^m$ 是第 $l$ 个不可约表示的基** | 对固定 $l$，$\\{Y_l^m:m=-l,\\dots,l\\}$ 张成 $2l+1$ 维空间（$l=2$ 时算得 $5$【已核验:5|2*2+1】）⇒ **正是 $SO(3)$ 的第 $l$ 个不可约表示**（`lie2.7`）；且 $SO(3)$ 作用（旋转）在这组基上是**块对角**的 | 把不同 $l$ 混在一起 ⟹ 旋转不再是块对角（表示可约化） | 不能放宽：$l$ 是不可约表示的标签 |\n\n**切片内容**：对易关系；三条量子化结果；球谐 = 不可约表示基函数。",
+      "links": [
+        "lie1.11",
+        "lie2.4",
+        "lie2.7",
+        "lie3.2",
+        "lie3.17",
+        "de4.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.1:integer-l.counterexample",
+      "type": "counterexample",
+      "subject": "integer-l",
+      "title": "反例：轨道角动量不允许 l=1/2 —— 因为它作用在单值波函数上",
+      "keywords": [
+        "单值性 ⇒ m 整数",
+        "⇒ l 整数",
+        "自旋则允许半整数",
+        "差别在「作用于谁」"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "四问：从 Lz 本征方程与单值性推出 m 整数；l=1/2 时波函数变号的反证；自旋为何不受限制（作用在内部空间）；两者的四点对照。",
+      "content": "切片写 $l=0,1,2,\\dots$ —— **为什么轨道角动量没有半整数？** 这个反例对比 $\\mathfrak{so}(3)$ 与 $\\mathfrak{su}(2)$ 的用处差别。\n\n**推导**：轨道角动量 $\\hat L_z=-i\\hbar\\partial_\\phi$ 作用在**波函数** $\\psi(r,\\theta,\\phi)$ 上。本征方程 $\\hat L_z\\psi=\\hbar m\\psi$ 给\n\n$$\\psi\\propto e^{im\\phi}$$\n\n**单值性要求** $\\psi(\\phi+2\\pi)=\\psi(\\phi)$ ⇒ $e^{2\\pi im}=1$ ⇒ **$m\\in\\mathbb Z$** ⇒ 由 $m=-l,\\dots,l$ 且 $l$ 与 $m$ 的差为整数 ⇒ **$l\\in\\mathbb Z$** ✅。\n\n**反例（若允许 $l=\\frac12$）**：则 $m=\\pm\\frac12$ ⇒ $\\psi\\propto e^{\\pm i\\phi/2}$ ⇒ 绕 $\\phi\\to\\phi+2\\pi$ 后\n\n$$e^{\\pm i(\\phi+2\\pi)/2}=e^{\\pm i\\phi/2}\\cdot e^{\\pm i\\pi}=-e^{\\pm i\\phi/2}$$\n\n⇒ **波函数变号**（**不是**单值的）⇒ **不能作为空间波函数** ❌（**在三维空间里\"转一圈\"必须回到自己**）。\n\n**自旋为什么可以**：因为**自旋不是\"空间波函数\"的函数** —— 自旋态住在**内部的两维空间**（`lie3.2`），**不需要单值性**（它的\"旋转\"是 $SU(2)$ 的作用，允许 $-1$）。**关键区别**：\n\n| | 轨道角动量 | 自旋 |\n|---|---|---|\n| 作用在什么上 | 空间波函数 $\\psi(\\mathbf r)$ | 内部旋量空间 |\n| 单值性要求 | ✅ **有**（空间函数） | ❌ **无** |\n| $l$ 或 $s$ 的取值 | **整数** | **整数或半整数** |\n| 群 | $SO(3)$ 的表示 | $SU(2)$ 的表示（半整数时） |\n\n**\"为什么自旋必须存在\"的另一种说法**：因为**$SU(2)$ 比 $SO(3)$ 大**（双层），而**\"作用在旋量上\"这件事不要求单值** ⇒ **半整数表示有物理实现**（`lie3.2`）。\n\n**数值对照**：$l=1$ 的三重态（$m=-1,0,1$，维数算得 $3$【已核验:3|2*1+1】）vs 自旋 $s=\\frac12$ 的二重态（$m=\\pm\\frac12$，维数算得 $2$【已核验:2|2*0.5+1】）—— **后者在空间旋转下变号**（`lie1.5` 反例）。\n\n**结论（限定词③）**：**\"$l$ 为整数\"是\"波函数单值\"的后果**；自旋没有这个约束 ⇒ **半整数自旋合法**。",
+      "links": [
+        "lie1.3",
+        "lie1.5",
+        "lie2.7",
+        "lie3.2",
+        "lie2.4",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.1:angular-momentum.statement",
+      "type": "statement",
+      "subject": "angular-momentum",
+      "title": "陈述：角动量代数、量子化与球谐",
+      "keywords": [
+        "对易关系",
+        "三条量子化",
+        "球谐与表示",
+        "维数与简并"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "四问：对易关系与三条量子化；四个 2l+1 值（1/3/5/7）；Casimir 与升降算符；Wigner D 矩阵与球谐。",
+      "content": "**对易关系（切片）**：$\\hat L$ 满足 $\\mathfrak{so}(3)$ 代数\n\n$$[\\hat L_i,\\hat L_j]=i\\hbar\\varepsilon_{ijk}\\hat L_k$$\n\n**不可约表示 → 角动量量子化（切片）**：\n\n- $\\hat L^2|l,m\\rangle=\\hbar^2\\,l(l+1)\\,|l,m\\rangle$；\n- $\\hat L_z|l,m\\rangle=\\hbar m\\,|l,m\\rangle$；\n- $l=0,1,2,\\dots$；$m=-l,\\dots,l$。\n\n**球谐（切片）**：球谐函数 $Y_l^m$ 是 $SO(3)$ 第 $l$ 个**不可约表示的基函数**。\n\n**四条补充**：\n\n1. **维数与简并**：固定 $l$ 的态数是 $2l+1$：$l=0$ 算得 $1$【已核验:1|2*0+1】、$l=1$ 算得 $3$【已核验:3|2*1+1】、$l=2$ 算得 $5$【已核验:5|2*2+1】、$l=3$ 算得 $7$【已核验:7|2*3+1】 ⇒ **无外场时能级 $(2l+1)$ 重简并**；\n2. **Casimir 唯一标记 $l$**：$\\hat L^2$ 与所有 $\\hat L_i$ 对易 ⇒ 它的本征值 $\\hbar^2l(l+1)$ **标记不可约表示**（`lie1.15`）；$l=1$ 时 $\\hbar^2l(l+1)$ 的系数算得 $2$【已核验:2|1*(1+1)】；\n3. **升降算符**：$\\hat L_\\pm=\\hat L_x\\pm i\\hat L_y$，$[\\hat L_z,\\hat L_\\pm]=\\pm\\hbar\\hat L_\\pm$ ⇒ 改变 $m$ 一单位（`lie2.4` 的\"根空间\"）；$\\hat L_\\pm|l,\\pm l\\rangle=0$（最高/最低权态，`lie2.6`）；\n4. **球谐是\"块对角\"的**：旋转 $g\\in SO(3)$ 把 $Y_l^m$ 变成 $\\sum_{m'}D^{(l)}_{m'm}(g)Y_l^{m'}$ ⇒ **矩阵 $D^{(l)}$ 是 $2l+1$ 维不可约表示**（**Wigner D 矩阵**）⇒ 这就是 `lie3.17` 的\"球谐 = $SO(3)$ 不可约表示基\"。",
+      "links": [
+        "lie1.11",
+        "lie1.15",
+        "lie2.4",
+        "lie2.6",
+        "lie2.7",
+        "lie3.2",
+        "lie3.17",
+        "de4.8",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.1:angular-momentum.intuition",
+      "type": "intuition",
+      "subject": "angular-momentum",
+      "title": "直觉：角动量是「能同时测多少」与「按整数跳」的组合",
+      "keywords": [
+        "Lz 是唯一可选的Cartan方向",
+        "L± 是升降",
+        "l 标表示,m 标态",
+        "球谐是几何实现"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "四问：为何只能同时测一个方向（秩 1）；L± 与 2l+1；球谐与 −Δ_{S²} 特征函数的关系；四条「数数规则」。",
+      "content": "角动量代数的直觉可以拆成**三句**：\n\n**第一句：只能同时测一个方向。** 因为 $[\\hat L_x,\\hat L_y]\\ne0$，三个分量**不能**同时确定 ⇒ 选定 $\\hat L_z$ 为\"读数方向\"（**Cartan 子代数只有一维**，秩算得 $1$【已核验:1|1】）。**这是\"角动量矢量不能有确定方向\"的代数表达**（只有 $\\hat L^2$ 与**一个**分量可同时确定）。\n\n**第二句：量子数按整数跳。** $\\hat L_\\pm$ 把 $m$ 变成 $m\\pm1$（**\"根\"$\\pm\\alpha$ 的物理实现**，`lie2.4`）；从 $m=+l$ 出发往下走，走 $2l$ 步到 $m=-l$ ⇒ **$2l+1$ 个态** ⇒ 维数算得 $2l+1$【已核验:3|2*1+1】（$l=1$）。\n\n**第三句：球谐是\"几何版的基\"**。把 $\\hat L_z=-i\\hbar\\partial_\\phi$ 与 $\\hat L^2$（球面拉普拉斯）**同时对角化** ⇒ 本征函数就是 $Y_l^m(\\theta,\\phi)$ ⇒\n\n$$\\hat L^2Y_l^m=\\hbar^2l(l+1)Y_l^m,\\qquad \\hat L_zY_l^m=\\hbar m\\,Y_l^m$$\n\n**这等于说**：**$Y_l^m$ 就是 $SO(3)$ 的不可约表示的基**（切片原话）—— 而\"球面上的调和函数\"正是 `de4.8` 里\"$-\\Delta_{S^2}$ 的特征函数\"，两处是同一件事（`de4.12` 三角关系的一个实例）。\n\n**\"为什么角动量出现在一切有球对称的问题里\"**：因为**球对称 ⇒ 旋转群 $SO(3)$ 作用 ⇒ 状态按 $SO(3)$ 的不可约表示分类** ⇒ **$Y_l^m$ 是唯一的自然基** ⇒ 从原子光谱（`lie3.3`）到图形学的球谐光照（`lie3.17`）都用同一套基。\n\n**一个立刻可用的\"数数规则\"**：\n\n| 问 | 答 |\n|---|---|\n| 角动量 $l$ 有几个态？ | $2l+1$ |\n| 能级简并度（无外场）？ | $2l+1$ |\n| 加上自旋（$s$）后？ | $(2l+1)(2s+1)$（CG 分解，`lie2.7`） |\n| 外磁场下分裂成几条？ | $2l+1$（Zeeman，`lie2.7` 应用） |\n\n**一句话**：**角动量 = \"只能测一个方向（秩 $1$）+ 按整数跳（根 $\\pm\\alpha$）\"；球谐是这套代数在球面上的具体实现，也是 $SO(3)$ 不可约表示的基**。",
+      "links": [
+        "lie1.11",
+        "lie2.4",
+        "lie2.6",
+        "lie3.17",
+        "de4.8",
+        "de4.12",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.1:angular-momentum.proof",
+      "type": "proof",
+      "subject": "angular-momentum",
+      "title": "证明骨架：由对易关系推出 m 的整数步与 2l+1 维",
+      "keywords": [
+        "选共同本征态",
+        "算 L± 的升降性",
+        "边界终止条件",
+        "给出 2l+1"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "六步：取共同本征态；L± 升降性；L² 的恒等式；最高态终止给 λ=l(l+1) 与 2l+1 个态；单值性给 l 整数；l=1,2 的维数与 Casimir 数值。",
+      "content": "**目标**：从对易关系推出 $m=-l,\\dots,l$（$2l+1$ 个）与 $l$ 的整数性（轨道情形）。\n\n**第 1 步（共同本征态）。** 因 $[\\hat L^2,\\hat L_z]=0$，可取共同本征态 $|l,m\\rangle$：$\\hat L^2|l,m\\rangle=\\hbar^2\\lambda|l,m\\rangle$、$\\hat L_z|l,m\\rangle=\\hbar m|l,m\\rangle$。\n\n**第 2 步（$L_\\pm$ 的升降性）。** 由 $[\\hat L_z,\\hat L_\\pm]=\\pm\\hbar\\hat L_\\pm$：\n\n$$\\hat L_z(\\hat L_\\pm|l,m\\rangle)=\\hbar(m\\pm1)(\\hat L_\\pm|l,m\\rangle)$$\n\n⇒ $\\hat L_\\pm|l,m\\rangle\\propto|l,m\\pm1\\rangle$（**升降一单位**）。\n\n**第 3 步（$\\hat L^2$ 的恒等式）。** 由 $\\hat L^2=\\hat L_z^2+\\frac12(\\hat L_+\\hat L_-+\\hat L_-\\hat L_+)$ 与 $[\\hat L_+,\\hat L_-]=2\\hbar\\hat L_z$：\n\n$$\\hat L^2=\\hat L_z^2+\\hbar\\hat L_z+\\hat L_-\\hat L_+=\\hat L_z^2-\\hbar\\hat L_z+\\hat L_+\\hat L_-$$\n\n**第 4 步（终止与范数）。** 对固定 $l$，$m$ 有上界（否则 $\\hat L^2$ 的本征值会越来越大，与固定 $\\lambda$ 矛盾）⇒ 存在最高态 $|l,l\\rangle$ 满足 $\\hat L_+|l,l\\rangle=0$。代入第 3 步第一式：\n\n$$\\hbar^2\\lambda=\\hbar^2l^2+\\hbar^2l=\\hbar^2l(l+1)\\ \\Rightarrow\\ \\lambda=l(l+1)\\ ✅$$\n\n同理最低态给 $\\lambda=l(l+1)$，且最低权是 $-l$ ⇒ **$m=-l,\\dots,l$ 共 $2l+1$ 个** ✅。\n\n**第 5 步（$l$ 的整数性 —— 轨道情形）。** 轨道角动量作用在**单值波函数**上：$\\hat L_z=-i\\hbar\\partial_\\phi$ 的本征函数 $e^{im\\phi}$ 的单值性 ⇒ $m\\in\\mathbb Z$ ⇒ $l\\in\\mathbb Z$ ✅（`lie3.1` 反例）。**自旋情形**无此约束 ⇒ $s\\in\\frac12\\mathbb Z_{\\ge0}$（`lie3.2`）。\n\n**第 6 步（数值）。** $l=1$：$m=-1,0,1$ ⇒ 维数算得 $2\\cdot1+1=3$【已核验:3|2*1+1】；Casimir 系数 $l(l+1)$ 算得 $2$【已核验:2|1*(1+1)】；$l=2$ 算得 $5$【已核验:5|2*2+1】与 $6$【已核验:6|2*(2+1)】。∎\n\n**推论**：**\"$2l+1$ 个态 + Casimir 值 $l(l+1)$\"完全由对易关系决定** ⇒ 与具体实现（波函数/矩阵）无关 ⇒ 这就是\"代数方法\"的威力。",
+      "links": [
+        "lie1.11",
+        "lie2.4",
+        "lie2.6",
+        "lie2.7",
+        "lie3.2",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：数态、算 Casimir、判整数性",
+      "keywords": [
+        "数 2l+1",
+        "算 Casimir",
+        "判 l 是否合法",
+        "写球谐个数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "四问：l=2/l=4 的态数；Casimir 12 与 20；合法性问题（整数 l vs 半整数 s）；球谐累计数 (L+1)² 的 9 与 16。",
+      "content": "**四问。**\n\n**① 数态。** $l=2$ 的态数算得 $5$【已核验:5|2*2+1】；$l=4$ 算得 $9$【已核验:9|2*4+1】。**加上自旋 $s=\\frac12$**（`lie3.2`）后总数 $(2l+1)(2s+1)$：$l=1$、$s=\\frac12$ 算得 $6$【已核验:6|3*2】（即 $p$ 轨道的 $6$ 个自旋轨道）。\n\n**② 算 Casimir。** $\\hat L^2$ 的本征值系数 $l(l+1)$：$l=3$ 算得 $12$【已核验:12|3*(3+1)】；$l=4$ 算得 $20$【已核验:20|4*(4+1)】 ⇒ **这是标记不可约表示的数字**（`lie1.15`）。\n\n**③ 判 $l$ 是否合法。** 轨道角动量：$l$ 必须**非负整数**：$l=2$ ✅；$l=\\frac32$ ❌（单值性不允许，`lie3.1` 反例）；$l=-1$ ❌（$m$ 范围会空）。**自旋**：$s=\\frac32$ ✅（`lie3.2`）。\n\n**④ 写球谐个数。** 到 $l\\le L$ 为止的球谐函数总数 $\\sum_{l=0}^{L}(2l+1)=(L+1)^2$：$L=2$ 算得 $9$【已核验:9|(2+1)**2】：这就是图形学里常用的\"**$L=2$ 球谐光照有 9 个系数**\"（`lie3.17`/`lie3.18`）；$L=3$ 算得 $16$【已核验:16|(3+1)**2】。",
+      "links": [
+        "lie1.15",
+        "lie2.6",
+        "lie2.7",
+        "lie3.2",
+        "lie3.17",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：轨道角动量 / 自旋 / 总角动量",
+      "keywords": [
+        "对易关系",
+        "量子数取值",
+        "作用空间",
+        "简并度"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "三问：轨道/自旋/总角动量的五项对照；CG 耦合的态数守恒（6=2+4）；为何总角动量才守恒；图形学只用整数阶球谐的原因。",
+      "content": "| 项目 | 轨道 $\\hat L$ | 自旋 $\\hat S$ | 总角动量 $\\hat J=\\hat L+\\hat S$ |\n|---|---|---|---|\n| **对易关系** | $i\\hbar\\varepsilon$（$\\mathfrak{so}(3)$） | $i\\hbar\\varepsilon$（$\\mathfrak{su}(2)$） | 同 |\n| **量子数** | $l\\in\\mathbb Z_{\\ge0}$ | $s\\in\\frac12\\mathbb Z_{\\ge0}$ | $\\lvert l-s\\rvert\\le j\\le l+s$ |\n| **作用空间** | 空间波函数 | **内部**旋量空间 | 直积（耦合后） |\n| **态数** | $2l+1$【已核验:3|2*1+1】 | $2s+1$ | $2j+1$ |\n| **单值性** | **要求**（⇒ 整数） | 不要求 | 视 $j$ 而定 |\n\n**四条对照结论**：\n\n- **三者的对易关系完全相同**（$\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$，`lie1.12`）⇒ **代数层面不可区分**；区别只在**作用空间**与**单值性**（`lie3.1` 反例）；\n- **耦合规则是 CG 级数**（`lie2.7`）：$l\\otimes s=\\bigoplus_{j=|l-s|}^{l+s}j$ ⇒ 态数守恒 $(2l+1)(2s+1)=\\sum(2j+1)$：$l=1,s=\\frac12$ 给 $3\\cdot2$ 算得 $6$【已核验:6|3*2】，右边 $j=\\frac12,\\frac32$ 给 $2+4$ 算得 $6$【已核验:6|2+4】 ✅（**这就是自旋-轨道耦合的光谱项分裂**）；\n- **\"总角动量\"才是守恒量**：因为 $[\\hat J^2,\\hat H]$ 含自旋-轨道项时才为零 ⇒ 光谱项按 $\\hat J$ 分类（$^{2S+1}L_J$ 记号）；\n- **图形学的读法**：$L$（球谐）**只**用整数（因为要单值）；$s$（旋量）**允许**半整数 ⇒ 渲染里\"整数阶球谐\"的合法性就来自限定词③。\n\n**关键数值**：$j$ 的区间个数与态数：$l=1,s=\\frac12$ ⇒ $j\\in\\{\\frac12,\\frac32\\}$，态数 $2+4$ 算得 $6$【已核验:6|2+4】。",
+      "links": [
+        "lie1.12",
+        "lie2.7",
+        "lie3.2",
+        "lie3.17",
+        "lie3.18",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：原子光谱、选择定则、球谐光照与旋转不变性",
+      "keywords": [
+        "原子光谱与光谱项",
+        "选择定则",
+        "球谐光照",
+        "旋转不变特征"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 8,
+        "line_end": 22
+      },
+      "fill_hint": "四问：光谱项记号与分裂；选择定则是表示论问题；球谐光照的 9 个系数与 Wigner D；Casimir 作旋转不变特征。",
+      "content": "角动量代数在四个方向直接落地：\n\n- **原子光谱**：能级按 $l$ 分裂、按 $m$ 在磁场中 Zeeman 分裂（$2l+1$ 条）；**光谱项记号** $^{2S+1}L_J$ 就是 $($自旋多重度$)$（轨道字母）$($总角动量$)$；**跃迁能量差**由 Casimir 项与自旋-轨道项给出；\n- **选择定则**：$\\Delta l=\\pm1$、$\\Delta m=0,\\pm1$（电偶极）—— **来自 $Y_l^m$ 的乘积积分**（CG 系数为零的判据）：$\\int Y_{l'}^{m'}Y_1^mY_l^{m'}$ 型积分只在特定组合非零 ⇒ **\"哪些跃迁被允许\"是表示论问题**；\n- **球谐光照（CG）**：环境光/辐射传输用 $L\\le2$ 的球谐（$9$ 个系数，`lie3.1` 探针④）；**旋转光照 = 旋转 $D^{(l)}$ 矩阵**（**Wigner D**）⇒ 实时重打光靠\"旋转 9 个系数\"（`lie3.17`/`lie3.18`）；\n- **旋转不变特征**：$L^2$（Casimir）在旋转下不变 ⇒ 可作**特征描述子**（球谐功率谱、形状描述子，`de4.8`）。\n\n**三条跨应用共性**：\n1. **$2l+1$ = 分裂条数**（谱线、表示维数、系数个数）；\n2. **CG 系数 = 耦合/选择定则**（原子与图形学通用）；\n3. **Wigner D = 旋转的矩阵实现**（从光谱到渲染的同一工具）。\n\n**接缝**：`lie3.2` 讲自旋（$\\mathfrak{su}(2)$ 的半整数）; `lie3.3` 讲氢原子的隐藏 $SO(4)$（$n^2$ 简并）；`lie3.17`/`lie3.18` 把球谐用到渲染；`de4.8`/`de4.12` 讲\"球谐 = $SO(3)$ 不可约表示基\"的三角关系。",
+      "links": [
+        "lie2.4",
+        "lie2.7",
+        "lie3.2",
+        "lie3.3",
+        "lie3.17",
+        "lie3.18",
+        "de4.8",
+        "de4.12",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
