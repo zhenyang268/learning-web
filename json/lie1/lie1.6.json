@@ -1,0 +1,285 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.6",
+  "chapter": "lie1",
+  "title": "$SE(3)$：三维刚体运动",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 86,
+    "line_end": 98,
+    "anchor": "notebook/li/lie1.tex:86"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.6:se3.quantifiers",
+      "type": "comparison",
+      "subject": "se3",
+      "title": "SE(3) 的四个限定词：4x4 齐次形式、半直积非直积、流形是乘积但群不是、平移被旋转带着走",
+      "keywords": [
+        "齐次坐标的 4x4 形式",
+        "半直积 ≠ 直积",
+        "作为流形是乘积",
+        "旋转改变平移方向"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "四问：为什么必须 4×4 齐次形式；半直积与直积的具体差别（-3 vs 2）；流形乘积与群半直积为何不矛盾；SE(3) 不紧的后果。",
+      "content": "切片给了 $SE(3)$ 的 $4\\times4$ 显式形式与三条性质（维度 6、作为流形是 $SO(3)\\times\\mathbb R^3$、半直积 $SO(3)\\ltimes\\mathbb R^3$），并点出 CG 用途。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **必须用齐次坐标（$4\\times4$）才能写成矩阵** | 纯粹的 $(R,\\mathbf t)$ 不是矩阵：$(R_1,\\mathbf t_1)\\cdot(R_2,\\mathbf t_2)=(R_1R_2,\\ R_1\\mathbf t_2+\\mathbf t_1)$。**加上最后一行的 $(\\mathbf 0^{\\mathsf T},1)$** 后，这个复合**恰好等于矩阵乘**（右下角 $1$ 保证仿射性）。行列式算得 $1$【已核验:1|1*1-0*0】 | 直接用 $(R,\\mathbf t)$ 做链式相乘 ⟹ 容易漏掉 $R_1\\mathbf t_2$ 的旋转 | 可放宽：用四元数 + 平移的\"手写复合\"，但要写对顺序 |\n| ② **是半直积，不是直积** | 若 $SE(3)=SO(3)\\times\\mathbb R^3$（直积）则两者可交换。**反例**：取 $A=(R,\\mathbf 0)$（绕 $z$ 转 $90°$）、$B=(I,(2,3,4))$：$A\\cdot B$ 的平移第一分量算得 $-3$【已核验:-3|-1*3】，而 $B\\cdot A$ 给出 $2$ ⇒ **不同**（差算得 $5$【已核验:5|2-(-1*3)】） | 用直积写复合 ⟹ 平移方向错（不随旋转转） | 不能放宽：$\\mathbf t$ 是 $SO(3)$ 的**表示空间**（`lie1.16` 的伴随） |\n| ③ **作为流形是乘积，作为群不是** | 拓扑上 $SE(3)\\cong SO(3)\\times\\mathbb R^3$（整体平凡纤维丛！）；但**群结构**是半直积。这两件事**同时成立**且不矛盾 | 混同\"流形同胚\"与\"群同构\" ⟹ 以为 $SE(3)$ 是直积 | 不能放宽：拓扑与代数要分开看 |\n| ④ **$\\mathbb R^3$ 是非紧因子 ⇒ $SE(3)$ 不紧** | $\\mathbf t$ 可以任意大 ⇒ 无界 ⇒ 不紧 ⇒ **无 Haar 概率测度**（`lie1.2` 反例同源）。维度算得 $3+3=6$【已核验:6|3+3】 | 对 $SE(3)$ 做\"群平均\" ⟹ 发散 | 可放宽：只在紧子群/有限体积上平均 |\n\n**切片三条性质**：维度 $6$（3 旋转 + 3 平移）；拓扑 $SO(3)\\times\\mathbb R^3$（作为流形）；半直积结构 $SE(3)=SO(3)\\ltimes\\mathbb R^3$。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie1.10",
+        "lie1.16",
+        "lie3.15",
+        "lie3.16",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.6:half-direct-order.counterexample",
+      "type": "counterexample",
+      "subject": "half-direct-order",
+      "title": "反例：SE(3) 非交换 —— 先转后移 ≠ 先移后转",
+      "keywords": [
+        "复合顺序敏感",
+        "平移被旋转带偏",
+        "数值：-3 vs 2",
+        "机器人学的经典 bug"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "四问：复合法则；A·B 与 B·A 的平移差（-3 vs 2，差 5）；几何读法（左乘=世界系）；为什么叫半直积。",
+      "content": "切片说 $SE(3)=SO(3)\\ltimes\\mathbb R^3$ 是**半直积**。**这个\"半\"字的全部内容**就是下面这个反例。\n\n**构造**：取 $A=(R,\\mathbf 0)$，其中 $R$ 是绕 $z$ 轴转 $90°$；取 $B=(I,\\mathbf t)$，$\\mathbf t=(2,3,4)$。\n\n**按半直积法则复合**：$(R_1,\\mathbf t_1)(R_2,\\mathbf t_2)=(R_1R_2,\\ R_1\\mathbf t_2+\\mathbf t_1)$。\n\n- $A\\cdot B=(R,\\ R\\mathbf t+\\mathbf 0)=(R,\\ R\\mathbf t)$。$R\\mathbf t$ 的第一分量算得 $-3$【已核验:-3|-1*3】（因为 $R$ 把 $(2,3,4)$ 转成 $(-3,2,4)$）；\n- $B\\cdot A=(R,\\ I\\cdot\\mathbf 0+\\mathbf t)=(R,\\ (2,3,4))$，第一分量是 $2$ ⇒ **两者差值算得 $5$**【已核验:5|2-(-1*3)】。\n\n**结论**：$A\\cdot B\\ne B\\cdot A$ ⇒ $SE(3)$ **非交换**。而且差别**只出现在平移部分**（旋转部分都是 $R$）—— 这就是\"**平移被旋转带着走**\"。\n\n**几何读法（必背）**：\n- $A\\cdot B$ = **先做 $B$ 再做 $A$**（矩阵从右往左作用）= \"先在原坐标系平移，再整体旋转\" ⇒ 平移**被旋转转过**；\n- $B\\cdot A$ = 先在原坐标系旋转，再沿**世界坐标**平移。\n\n**这是机器人学/图形学最常见的 bug**：把\"工具坐标系下的平移\"与\"世界坐标系下的平移\"搞混。**工程约定记法**：**左乘 = 在世界系操作，右乘 = 在自身（体）坐标系操作**。\n\n**为什么是\"半\"直积**：直积要求两个因子都正则（$\\mathbf t$ 部分不被 $R$ 影响）；半直积只要求 $\\mathbb R^3$ 是 $SO(3)$ 的**表示空间**（`lie1.16` 的伴随表示），且 $R$ 确实作用于它。**\"旋转作用于平移\"就是那个\"半\"**。",
+      "links": [
+        "lie1.4",
+        "lie1.16",
+        "lie3.15",
+        "lie3.16",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.6:se3.statement",
+      "type": "statement",
+      "subject": "se3",
+      "title": "陈述：SE(3) 的定义、三条性质与齐次坐标的意义",
+      "keywords": [
+        "4x4 齐次矩阵形式",
+        "维度与拓扑",
+        "半直积结构",
+        "CG 用途"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "四问：齐次形式与三条性质；齐次坐标为何让平移变线性；体积保持；平移子群正规且商为 SO(3)。",
+      "content": "**定义（切片逐字）**：\n\n$$SE(3)=\\left\\{\\begin{pmatrix}R&\\mathbf t\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}:R\\in SO(3),\\ \\mathbf t\\in\\mathbb R^3\\right\\}$$\n\n**三条性质（切片）**：\n\n| 性质 | 内容 | 依据 |\n|---|---|---|\n| **维度** | $6$（3 旋转 + 3 平移） | 算得 $3+3=6$【已核验:6|3+3】；也等于 $\\frac{3\\cdot4}2$ 算得 $6$【已核验:6|3*(3+1)/2】 |\n| **拓扑** | $SO(3)\\times\\mathbb R^3$（作为流形） | $\\mathbf t$ 可自由取值 ⇒ 整体是乘积（平凡丛） |\n| **群结构** | **半直积** $SE(3)=SO(3)\\ltimes\\mathbb R^3$ | $R\\mathbf t$ 的出现（`lie1.6` 反例） |\n\n**在 CG 中（切片）**：刚体变换、骨骼动画、相机运动。\n\n**三条补充**：\n\n1. **齐次坐标的作用**：把仿射变换\"变成线性变换\" —— 在 $\\mathbb R^4$ 的**超平面 $w=1$** 上作用，于是\"平移\"也成了矩阵乘法。**这是整个图形学管线的基础**；\n2. **保持体积**：$\\det\\begin{pmatrix}R&\\mathbf t\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}=\\det R\\cdot1=1$ ⇒ 刚体变换**不改变体积**（算得 $1$【已核验:1|1*1-0*0】）；\n3. **子群与商**：平移子群 $\\mathbb R^3\\triangleleft SE(3)$ 是**正规**的，且 $SE(3)/\\mathbb R^3\\cong SO(3)$ ⇒ 这是 $SE(3)$ 的半直积分解的群论形式。\n\n**关键数值**：$\\dim SE(3)$ 算得 $6$【已核验:6|3+3】；$SE(3)$ 的**李代数** $\\mathfrak{se}(3)$ 也是 6 维（旋量/螺旋坐标，`lie3.16`）。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie1.10",
+        "lie1.16",
+        "lie3.15",
+        "lie3.16",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.6:se3.intuition",
+      "type": "intuition",
+      "subject": "se3",
+      "title": "直觉：SE(3) 是「姿态 + 位置」的六自由度 —— 理解左乘/右乘",
+      "keywords": [
+        "6 自由度=3 转 3 移",
+        "体坐标系 vs 世界坐标系",
+        "链式相乘",
+        "螺旋运动视角"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "四问：6 自由度的含义；左乘/右乘的世界系与体系；螺旋运动视角；为什么半直积在链式相乘时暴露。",
+      "content": "$SE(3)$ 的直觉只有一件事要说清：**它是\"三维世界里搬动刚体\"的全部动作**，共 6 个自由度（3 个转 + 3 个移）。\n\n**两条最重要的工程直觉**：\n\n1. **左乘 / 右乘的世界系 / 体系含义**（`lie1.6` 反例的结论）：\n   - $T_{\\text{new}}=T\\cdot\\Delta$：$\\Delta$ 在**当前（体）坐标系**里表达 ⇒ 常用于\"沿自身方向前进\"；\n   - $T_{\\text{new}}=\\Delta\\cdot T$：$\\Delta$ 在**世界坐标系**里表达 ⇒ 常用于\"绕世界轴旋转\"；\n2. **链式相乘的顺序**：从基座到末端 $T_{\\text{ee}}=T_1T_2\\cdots T_n$（每步右乘一个关节变换）—— 这就是正运动学（`lie3.16`）。\n\n**两个思考工具**：\n\n- **螺旋运动视角**（Chasles 定理）：任何刚体运动都是\"绕某条轴的螺旋\"（转 + 沿轴移）。**6 维的李代数 $\\mathfrak{se}(3)$ 元素恰好编码\"轴 + 螺距\"** ⇒ 这就是 `lie3.16` 的核心，也是\"6 维\"最深的理解；\n- **齐次坐标视角**：把 $\\mathbb R^3$ 的点嵌入 $\\mathbb R^4$ 的 $w=1$ 超平面，于是**平移成了\"高维旋转的痕迹\"**。\n\n**为什么 6 维而 $SO(3)\\times\\mathbb R^3$ 也是 6 维**：维数相同但**群结构不同**（半直积 vs 直积）——这正是\"同样多自由度，操作顺序的规则不同\"。**这个区别在链式相乘时会暴露**。\n\n**一个非常实用的记忆**：**$SE(3)$ 的\"半\"就在于\"平移的方向依赖姿态\"**。只要你的代码里出现\"我沿自身前进 1 米\"这种句子，你就已经在用半直积结构了。",
+      "links": [
+        "lie1.4",
+        "lie1.10",
+        "lie1.16",
+        "lie3.15",
+        "lie3.16",
+        "B1.2",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.6:se3.proof",
+      "type": "proof",
+      "subject": "se3",
+      "title": "证明：4x4 齐次矩阵的乘法恰好实现 (R1,t1)∘(R2,t2)=(R1R2, R1t2+t1)",
+      "keywords": [
+        "写出两个齐次矩阵",
+        "分块乘法",
+        "识别右下角",
+        "得到半直积法则"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "五步：设两元素；分块乘法；用 0ᵀR=0ᵀ 化简；识别出半直积法则；闭包与逆的验算（含行列式 1 的数值检查）。",
+      "content": "**目标**：证明齐次 $4\\times4$ 矩阵的乘法**自动**给出半直积法则（切片没给证明）。\n\n**第 1 步（设两个元素）。**\n\n$$T_1=\\begin{pmatrix}R_1&\\mathbf t_1\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix},\\qquad T_2=\\begin{pmatrix}R_2&\\mathbf t_2\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}$$\n\n**第 2 步（分块乘法）。** 把 $4\\times4$ 分成 $3\\times3$、$3\\times1$、$1\\times3$、$1\\times1$ 四块：\n\n$$T_1T_2=\\begin{pmatrix}R_1R_2 & R_1\\mathbf t_2+\\mathbf t_1\\cdot 1\\\\ \\mathbf 0^{\\mathsf T}R_2+1\\cdot\\mathbf 0^{\\mathsf T} & \\mathbf 0^{\\mathsf T}\\mathbf t_2+1\\cdot1\\end{pmatrix}$$\n\n**第 3 步（化简）。** 利用 $\\mathbf 0^{\\mathsf T}R_2=\\mathbf 0^{\\mathsf T}$、$\\mathbf 0^{\\mathsf T}\\mathbf t_2=0$：\n\n$$T_1T_2=\\begin{pmatrix}R_1R_2 & R_1\\mathbf t_2+\\mathbf t_1\\\\ \\mathbf 0^{\\mathsf T} & 1\\end{pmatrix}$$\n\n**第 4 步（识别）。** 这正好是半直积法则 $(R_1,\\mathbf t_1)(R_2,\\mathbf t_2)=(R_1R_2,\\ R_1\\mathbf t_2+\\mathbf t_1)$ ✅ —— **齐次坐标让\"仿射复合\"变成了纯矩阵乘法**，这就是限定词①的意义。\n\n**第 5 步（闭包与逆）。**\n\n- **闭包**：$R_1R_2\\in SO(3)$（群）、$R_1\\mathbf t_2+\\mathbf t_1\\in\\mathbb R^3$ ⇒ 仍在 $SE(3)$ ✅；\n- **逆**：$T^{-1}=\\begin{pmatrix}R^{\\mathsf T}&-R^{\\mathsf T}\\mathbf t\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}$ —— 验算平移部分：$R^{\\mathsf T}\\cdot(-R^{\\mathsf T}\\mathbf t)+\\mathbf 0=-R^{\\mathsf T}\\mathbf t$ 对应 $T^{-1}=(-R^{\\mathsf T}\\mathbf t)$ ✅，旋转部分 $R^{\\mathsf T}R=I$ ✅；\n\n**数值检查**：$T_1$ 的行列式 $\\det R_1\\cdot1$ 算得 $1$【已核验:1|1*1-0*0】⇒ 保体积；非交换的数值见 `lie1.6` 反例（$-3$ vs $2$）。∎",
+      "links": [
+        "lie1.4",
+        "lie1.16",
+        "lie3.15",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.6:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：维度、复合顺序、逆与行列式",
+      "keywords": [
+        "算维度",
+        "判左右乘含义",
+        "求逆",
+        "验保体积"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "四问：SE(3)/SE(2) 的维度；左乘=世界系的判据；逆的平移部分是 −Rᵀt；保体积来自 det R=1。",
+      "content": "**四问。**\n\n**① 维度。** $SE(3)$ 由 $3+3$ 算得 $6$【已核验:6|3+3】；换算成公式 $\\frac{n(n+1)}2$ 取 $n=3$ 算得 $6$【已核验:6|3*(3+1)/2】。**注意**：$SE(2)$ 是 $3$【已核验:3|2+1】维（2 转 + … 实际上是 1 旋转 + 2 平移 = 3）。\n\n**② 复合顺序。** 给定 $T$（相机位姿）与 $\\Delta=R_y(\\pi/2)$（绕**世界** $y$ 轴转 $90°$）：应写 $T'=\\Delta\\,T$（**左乘**）。若写成 $T\\Delta$，则变成\"绕相机自身 $y$ 轴转\" —— **两者一般不同**（因为 $T$ 的旋转部分非平凡）。\n\n**③ 求逆。** $T=\\begin{pmatrix}R&\\mathbf t\\\\ \\mathbf 0^{\\mathsf T}&1\\end{pmatrix}$ 的逆的平移部分是 $-R^{\\mathsf T}\\mathbf t$。取 $R=I$、$\\mathbf t=(1,2,3)$：$-R^{\\mathsf T}\\mathbf t$ 算得 $(-1,-2,-3)$ ⇒ 逆矩阵**不是** $\\mathbf t\\to-\\mathbf t$ 那么简单（当 $R\\ne I$ 时）。**工程后果**：反变换不是\"取相反数\"，必须用 $-R^{\\mathsf T}\\mathbf t$。\n\n**④ 追问（保体积）。** $\\det T=\\det R$（因为分块三角）⇒ 算得 $1$【已核验:1|1*1-0*0】 ⇒ $SE(3)$ 变换**保持体积**。**对照**：$GL(3)$ 的一般变换会改变体积（$\\det\\ne1$）；$SL(3)$ 才保体积（`lie1.2` 表）。**这正是\"刚体变换不改形状\"的代数表达**。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie3.15",
+        "lie3.16",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.6:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：SE(3) / SO(3)×R³ / SIM(3) / Aff(3) 四类变换群",
+      "keywords": [
+        "包含的变换类型",
+        "维度",
+        "保持什么",
+        "典型用途"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "三问：四类变换群保什么；维度如何算（6/7/12）；工程上为何用群维度而非矩阵元个数。",
+      "content": "| 群 | 变换 | 维度 | 保持 | 用途 |\n|---|---|---|---|---|\n| $SO(3)$ | 旋转 | $3$【已核验:3|3*(3-1)/2】 | 长度、原点 | 姿态 |\n| $SE(3)$ | 旋转 + 平移（**刚体**） | $6$【已核验:6|3+3】 | 长度、体积、夹角 | 刚体运动、相机 |\n| $\\mathrm{Sim}(3)$ | 刚体 + **均匀缩放** | $7$【已核验:7|3+3+1】 | 夹角、形状（长度按比例） | 单目 SLAM（尺度未知） |\n| $\\mathrm{Aff}(3)$ | 一般可逆仿射 | $12$【已核验:12|3*3+3】 | 平行性、体积比 | 一般形变（会剪切） |\n\n**四条对照结论**：\n\n- **层层放宽**：$SO(3)\\subset SE(3)\\subset\\mathrm{Sim}(3)\\subset\\mathrm{Aff}(3)$ —— 每往上一层多几个自由度，代价是少保一些几何量；\n- **$SE(3)$ 的\"半直积\"性质**在 $\\mathrm{Sim}(3)$ 上继续成立（$SO(3)\\ltimes(\\mathbb R^3\\times\\mathbb R_{>0})$ 类似），但 $\\mathrm{Aff}(3)$ 里线性部分是 $GL(3)$，**不保持长度**（限定词③的对照）；\n- **工程上最关键的两个是 $SE(3)$ 与 $\\mathrm{Sim}(3)$**：位姿估计用 $SE(3)$；单目 SLAM 用 $\\mathrm{Sim}(3)$（因为尺度不可观测）；\n- **维度是选型的第一个指标**：优化变量个数 = 群维度（$SE(3)$ 用 6 维李代数，而非 12 个矩阵元 —— 避免冗余与约束漂移）。\n\n**关键数值**：$\\dim SE(3)$ 算得 $6$【已核验:6|3+3】；$\\dim\\mathrm{Sim}(3)$ 算得 $7$【已核验:7|3+3+1】；$\\dim\\mathrm{Aff}(3)$ 算得 $12$【已核验:12|3*3+3】。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie3.15",
+        "lie3.16",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.6:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：骨骼动画、相机运动、机器人正逆运动学与 SLAM",
+      "keywords": [
+        "骨骼动画的层级变换",
+        "相机位姿与视图矩阵",
+        "机器人链式相乘",
+        "SLAM 的位姿图优化"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 86,
+        "line_end": 98
+      },
+      "fill_hint": "四问：骨骼动画的连乘与左/右乘；视图矩阵的逆为何是 −Rᵀt；机器人逆解为何在李代数上；SLAM 为何用 6 维误差。",
+      "content": "$SE(3)$ 是\"一切三维摆位\"的通用语言：\n\n- **骨骼动画（CG）**：骨架是**树结构**，每根骨头有局部位姿 $T_i$ ⇒ 世界变换 = 从根到叶的**连乘** $T_{\\text{root}}T_1\\cdots T_i$；蒙皮（skinning）把顶点用这些矩阵混合。**左乘/右乘的区别就是\"世界系还是父骨骼坐标系\"**（`lie1.6` 直觉）；\n- **相机运动**：视图矩阵是 $T_{\\text{cam}}^{-1}$（世界 → 相机）；逆的平移部分是 $-R^{\\mathsf T}\\mathbf t$（不是 $-\\mathbf t$）—— 这是渲染器里最常写错的一行；\n- **机器人正/逆运动学**：$T_{\\text{ee}}=T_1(\\theta_1)\\cdots T_n(\\theta_n)$；**逆解**要在李代数上做牛顿迭代（$\\mathfrak{se}(3)$ 的 6 维误差，`lie3.16`）；螺旋理论把每个关节写成\"绕轴的螺旋\"；\n- **SLAM / 位姿图优化**：节点是位姿 $T\\in SE(3)$，边是相对位姿约束；优化在**李代数上做增量**（$T\\leftarrow T\\exp(\\delta)$），这样误差才是 6 维无约束的 —— 单目 SLAM 则用 $\\mathrm{Sim}(3)$（含尺度）；\n- **卷积/滤波的推广**：在 $SE(3)$ 上做非欧几里得卷积（等变网络，`lie3.19`）与粒子滤波（姿态采样）。\n\n**三条跨应用共性**：\n1. **复合 = 矩阵乘**（顺序敏感，左乘/右乘含义不同）；\n2. **求逆要用 $-R^{\\mathsf T}\\mathbf t$**（不是 $-\\mathbf t$）；\n3. **优化在 $\\mathfrak{se}(3)$ 上做**（6 维，避免约束与奇异）。\n\n**接缝**：$\\mathfrak{se}(3)$ 的螺旋坐标与指数映射是 `lie3.16`；刚体变换的实现与插值是 `lie3.15`；等变网络是 `lie3.19`。",
+      "links": [
+        "lie1.4",
+        "lie1.5",
+        "lie1.10",
+        "lie3.15",
+        "lie3.16",
+        "lie3.19",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

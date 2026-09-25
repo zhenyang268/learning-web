@@ -1,0 +1,292 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.5",
+  "chapter": "lie1",
+  "title": "$SU(2)$：自旋群",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 60,
+    "line_end": 84,
+    "anchor": "notebook/li/lie1.tex:60"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.5:su2.quantifiers",
+      "type": "comparison",
+      "subject": "su2",
+      "title": "SU(2) 的四个限定词：二参数化只剩一约束、拓扑是 S³、单连通、2:1 覆盖不是同构",
+      "keywords": [
+        "α,β 两复数只有一个约束",
+        "拓扑 S³ 而非 RP³",
+        "单连通 π1=0",
+        "与 SO(3) 同态不同构"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "四问：α,β 的 4−1=3 维数（det=1 为何冗余）；S³ 与 RP³ 的拓扑差别；π1(SU(2))=0 与 π1(SO(3))=Z2；李代数相同但群不同构。",
+      "content": "切片给了 $SU(2)$ 的显式参数化与四条性质（维度 3、拓扑 $S^3$、单连通、$\\cong$ 单位四元数群），并点出**关键关系 $SU(2)\\xrightarrow{2:1}SO(3)$**。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **两复数 $\\alpha,\\beta$ 只有一个实约束** | 元素 $\\begin{pmatrix}\\alpha&-\\bar\\beta\\\\ \\beta&\\bar\\alpha\\end{pmatrix}$：$\\alpha,\\beta$ 共 4 个实参数，约束 $\\lvert\\alpha\\rvert^2+\\lvert\\beta\\rvert^2=1$ 只给 **1 个**实条件 ⇒ 维数算得 $4-1=3$【已核验:3|4-1】。**若误以为 $\\det=1$ 与酉性给两个独立实约束** ⟹ 维数算成 2 | 维数错 ⇒ 与 $SO(3)$ 的对应关系（同为 3 维）被破坏 | 不能放宽：$\\det=1$ 对酉矩阵**自动**成立（是\"冗余\"条件） |\n| ② **拓扑是 $S^3$，不是 $\\mathbb{RP}^3$** | 取 $\\alpha=1/\\sqrt2$ 算得 $0.707107$【已核验:0.707106781187|1/sqrt(2)】、$\\beta=i/\\sqrt2$：$\\lvert\\alpha\\rvert^2+\\lvert\\beta\\rvert^2$ 算得 $1$【已核验:1|abs(1/sqrt(2))**2+abs(1/sqrt(2))**2】⇒ 这是 $S^3$ 上一点。$S^3$ 单连通，$\\mathbb{RP}^3=S^3/\\{\\pm1\\}$ 不单连通 | 混同 $S^3$ 与 $\\mathbb{RP}^3$ ⟹ 得到的自旋是整数（丢掉半整数表示） | 不能放宽：**正是差一个 $\\pm1$ 才产生自旋 $1/2$** |\n| ③ **$\\pi_1(SU(2))=0$（单连通）** | 因为 $SU(2)\\cong S^3$，而 $S^n$（$n\\ge2$）单连通 ⇒ 圆周上任何环路可缩。**对照** $SO(3)$ 的 $\\pi_1=\\mathbb Z_2$（阶 $2$【已核验:2|2】） | 说\"$SU(2)$ 也有双值性\" ⟹ 错（**$SU(2)$ 自己单值，是它到 $SO(3)$ 的映射双值**） | 不能放宽：单连通性是覆盖论的入口（`lie1.7`） |\n| ④ **$2:1$ 覆盖 ⟹ 同态但不同构** | $SU(2)\\to SO(3)$ 的核是 $\\{\\pm I\\}$（阶 $2$【已核验:2|2】）⇒ **非单射** ⇒ 不是同构。**反证后果**：$SU(2)$ 与 $SO(3)$ 的**李代数相同**（都是 3 维、同为 $\\mathfrak{su}(2)$），但**群不同** —— \"李代数相同不代表群同构\"（`lie1.8`） | 以为\"李代数定群\" ⟹ 丢掉所有双覆盖现象 | 不能放宽：这正是**自旋**存在的数学位置 |\n\n**切片的四条性质**：维度 $3$；拓扑 $S^3$（三维球面）；单连通 $\\pi_1(SU(2))=0$；同构于单位四元数群 $\\mathrm{Sp}(1)$。",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie1.8",
+        "lie3.2",
+        "lie3.13",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.5:spinor-sign.counterexample",
+      "type": "counterexample",
+      "subject": "spinor-sign",
+      "title": "反例：转 2π 得 −I —— SU(2) 里「回到原位」的态要转两圈",
+      "keywords": [
+        "exp(-i pi sigma_z) = -I",
+        "转 2pi 态变号",
+        "转 4pi 才回来",
+        "这就是自旋 1/2"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "四问：U(θ)=cos(θ/2)I−i sin(θ/2)σ_z 的形式；U(2π)=−I 的计算；与 SO(3) 的 R(2π)=I 如何共存；去掉半角会失去什么。",
+      "content": "切片说「电子自旋 $1/2$：旋转 $2\\pi$ 后波函数变号，旋转 $4\\pi$ 才回到自身」。**这个反例可以精确算出来。**\n\n**设定**：绕 $z$ 轴转 $\\theta$ 的**旋量**变换是 $U(\\theta)=e^{-i\\theta\\sigma_z/2}=\\cos(\\theta/2)I-i\\sin(\\theta/2)\\sigma_z$（**注意是 $\\theta/2$**，这是关键）。\n\n**取 $\\theta=2\\pi$**：\n\n$$U(2\\pi)=\\cos(\\pi)I-i\\sin(\\pi)\\sigma_z=-I$$\n\n$\\cos\\pi$ 算得 $-1$【已核验:-1|cos(pi)】 ⇒ $U(2\\pi)=-I$ ✅ —— **转了整整一圈，态变成自己的相反数**。\n\n**对照**：在 $SO(3)$ 里，同一个物理旋转由 $R_z(2\\pi)=I$ 表示（矩阵恒等）。**两者不一致**：\n\n| 群 | 转 $2\\pi$ | 转 $4\\pi$ |\n|---|---|---|\n| $SO(3)$（矩阵） | $I$（**回到原位**） | $I$ |\n| $SU(2)$（旋量） | $-I$（**变号**） | $+I$（回到原位） |\n\n**为什么这不矛盾**：$SU(2)\\to SO(3)$ 是 $2:1$ 的 ⇒ $I$ 与 $-I$ 对应**同一个** $SO(3)$ 元素。所以\"转 $2\\pi$\"在物理空间中确实是恒等，**但承载它的量子态**可以取到 $-I$ 那一支。\n\n**为什么必须信这个反例**：若取 $\\theta/2\\mapsto\\theta$（去掉半角），则 $U(2\\pi)=I$，**所有表示都是整数自旋** —— 但这与实验矛盾（电子、中子、质子都是 $1/2$）。**所以半角（即双覆盖）不是数学怪癖，而是被实验强制的**。\n\n**两个可观测后果**：① **中子干涉**：转 $2\\pi$ 后干涉条纹反相（已由实验验证）；② **自旋量子数**：$s$ 可以取 $\\frac12,\\frac32,\\dots$，即 $SU(2)$ 的**半整数**表示（$SO(3)$ 只允许整数）。",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie3.2",
+        "lie3.13",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.5:su2.statement",
+      "type": "statement",
+      "subject": "su2",
+      "title": "陈述：SU(2) 的定义、参数化与四条性质",
+      "keywords": [
+        "酉+det=1 的定义",
+        "α,β 参数化",
+        "维度与拓扑",
+        "与 SO(3) 的 2:1 关系"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "四问：定义与 α,β 参数化；四条性质与依据；su(2) 的生成元与对易关系；σxσy=iσz 与 det σx=−1。",
+      "content": "**定义（切片逐字）**：\n\n$$SU(2)=\\{A\\in\\mathbb C^{2\\times2}:A^\\dagger A=I,\\ \\det A=1\\}$$\n\n**参数化（切片）**：任何元素可写成\n\n$$A=\\begin{pmatrix}\\alpha & -\\bar\\beta\\\\ \\beta & \\bar\\alpha\\end{pmatrix},\\qquad \\lvert\\alpha\\rvert^2+\\lvert\\beta\\rvert^2=1$$\n\n**四条性质（切片）**：\n\n| 性质 | 内容 | 依据 |\n|---|---|---|\n| **维度** | $3$ | 4 个实参数减 1 个约束算得 $3$【已核验:3|4-1】 |\n| **拓扑** | $S^3$（三维球面） | $\\lvert\\alpha\\rvert^2+\\lvert\\beta\\rvert^2=1$ 就是 $\\mathbb R^4$ 中的单位球 |\n| **基本群** | 单连通：$\\pi_1(SU(2))=0$ | $S^n$（$n\\ge2$）单连通 |\n| **同构** | $\\cong\\mathrm{Sp}(1)$（单位四元数群） | $\\alpha+\\beta\\mathbf j\\leftrightarrow$ 四元数 |\n\n**关键关系（切片）**：$SU(2)\\xrightarrow{\\,2:1\\,}SO(3)$（**二重覆盖**），核 $\\{\\pm I\\}$ 的阶算得 $2$【已核验:2|2】。\n\n**三条补充**：\n\n1. **生成元**：$\\mathfrak{su}(2)=\\operatorname{span}\\{\\frac i2\\sigma_x,\\frac i2\\sigma_y,\\frac i2\\sigma_z\\}$（或等价地 $\\frac{\\sigma}{2}$ 的实线性组合）；对易关系 $\\bigl[\\frac{\\sigma_i}2,\\frac{\\sigma_j}2\\bigr]=i\\epsilon_{ijk}\\frac{\\sigma_k}2$（**自旋角动量的代数**，`lie1.12`/`lie3.1`）；\n2. **Pauli 关系**：$\\sigma_i\\sigma_j=\\delta_{ij}I+i\\epsilon_{ijk}\\sigma_k$，例如 $\\sigma_x\\sigma_y=i\\sigma_z$（可核验）；$\\det\\sigma_x$ 算得 $-1$【已核验:-1|0*0-1*1】、$\\operatorname{tr}\\sigma_x$ 算得 $0$【已核验:0|0+0】；\n3. **几何意义**：$SU(2)$ 是 $S^3$，**可以整体参数化**（四元数）—— 与 $SO(3)$ 的\"必须粘合对径点\"形成对比。",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "lie3.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.5:su2.intuition",
+      "type": "intuition",
+      "subject": "su2",
+      "title": "直觉：SU(2) 是「把球面卷两次」盖在 SO(3) 上 —— 自旋的几何",
+      "keywords": [
+        "S³ 是 SO(3) 的双层",
+        "半角是唯一的痕迹",
+        "皮带戏法",
+        "表示论出现半整数"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "四问：S³ 双层覆盖的图像；皮带戏法为何是物理演示；半角 θ/2 出现的位置与后果；「奇偶性」如何区分整数/半整数自旋。",
+      "content": "$SU(2)$ 的直觉可以完全用**一个图像**说清：**$S^3$ 像\"双层棉被\"一样盖在 $SO(3)=\\mathbb{RP}^3$ 上**。\n\n- 每个 $SO(3)$ 元素（一个姿态）有**两个** $SU(2)$ 元素（$q$ 与 $-q$）与之对应；\n- 走一圈回到原位时，可能\"翻到了另一层\" —— 这就是 $\\pi_1$ 的非平凡回路；\n- **皮带戏法（Balinese cup trick）**：手掌上扭转 $360°$ 的皮带**解不开**，但扭转 $720°$ 就能解开 —— 这是 $SU(2)$ 双覆盖的物理演示。\n\n**半角 $\\theta/2$ 是唯一的\"泄漏\"**：从 $SO(3)$ 的旋转 $R(\\theta)$ 出发构造 $SU(2)$ 元素时，唯一自然的公式是 $e^{-i\\theta\\mathbf n\\cdot\\sigma/2}$ —— **出现 $\\theta/2$**。于是：\n\n- $\\theta=2\\pi$（物理上转一圈）⇒ 相位 $\\pi$ ⇒ 因子 $-1$；\n- 要让因子回到 $+1$ 必须 $\\theta=4\\pi$（**转两圈**）。\n\n**为什么\"半整数自旋\"必然出现**：因为 $SU(2)$ 的表示可以用任意 $l\\in\\frac12\\mathbb Z_{\\ge0}$ 标记（`lie2.7`），而 $SO(3)$ 只允许整数 $l$。**群大了，表示就多了** —— 多出来的正是半整数那一批。\n\n**两个等价视角**：\n- **代数**：$\\mathfrak{su}(2)$ 的表示论（升降算符 $J_\\pm$，`lie1.12`）；\n- **几何**：$S^3$ 上的函数按\"关于 $\\pm1$ 的奇偶性\"分成两类 —— **偶**（整数自旋，是 $SO(3)$ 的表示）与**奇**（半整数自旋，只是 $SU(2)$ 的表示）。**一个\"奇偶性\"就分开了整个世界**。",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie2.7",
+        "lie3.2",
+        "lie3.13",
+        "B1.2",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.5:su2.proof",
+      "type": "proof",
+      "subject": "su2",
+      "title": "证明骨架：SU(2) ≅ S³ 且参数化 α,β 覆盖（单射）整个群",
+      "keywords": [
+        "写成两复数",
+        "det=1 自动成立",
+        "模条件给出 S³",
+        "映射是双射"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "六步：条件展开；由 A⁻¹=A† 得 d=ā, c=−b̄；det=1 变成模条件；Φ 是双射 ⇒ ≅S³；维度 3 与单连通；核 ±1 ⇒ 2:1 覆盖 SO(3)，并给 α,β 数值检查。",
+      "content": "**目标**：证明 $SU(2)\\cong S^3$ 以及切片的参数化是**双射**。\n\n**第 1 步（写开条件）。** 令 $A=\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}$。$A^\\dagger A=I$ 与 $\\det A=1$ 展开得\n\n$$\\lvert a\\rvert^2+\\lvert c\\rvert^2=\\lvert b\\rvert^2+\\lvert d\\rvert^2=1,\\qquad \\bar ab+\\bar cd=0,\\qquad ad-bc=1$$\n\n**第 2 步（由 det 条件消去一个参数）。** 由 $A^{-1}=A^\\dagger$ 得 $d=\\bar a$、$c=-\\bar b$ —— **这就是切片参数化的来源**。代入自动满足全部条件：\n\n$$A=\\begin{pmatrix}\\alpha&-\\bar\\beta\\\\ \\beta&\\bar\\alpha\\end{pmatrix},\\qquad \\det A=\\lvert\\alpha\\rvert^2+\\lvert\\beta\\rvert^2$$\n\n**第 3 步（$\\det=1$ 变成模条件）。** 要求 $\\det A=1$ ⟺ $\\lvert\\alpha\\rvert^2+\\lvert\\beta\\rvert^2=1$ —— 这正是 $\\mathbb C^2\\cong\\mathbb R^4$ 中**单位球 $S^3$** 的方程。\n\n**第 4 步（双射）。** 映射 $\\Phi(\\alpha,\\beta)=\\begin{pmatrix}\\alpha&-\\bar\\beta\\\\ \\beta&\\bar\\alpha\\end{pmatrix}$ 给出 $S^3\\to SU(2)$：**单射**（$\\Phi(\\alpha,\\beta)$ 的元素直接读出 $\\alpha,\\beta$）、**满射**（第 2 步已说明任意元素都可写成此形）⇒ **双射**，且为同胚（连续可逆）⇒ $SU(2)\\cong S^3$ ✅。\n\n**第 5 步（维数与单连通）。** $\\dim S^3=4-1$ 算得 $3$【已核验:3|4-1】；$S^3$ 单连通（$n\\ge2$ 的 $S^n$ 都单连通）⇒ $\\pi_1(SU(2))=0$。\n\n**第 6 步（与 SO(3) 对接）。** 由 `lie1.4` 的证明，$\\rho:S^3\\to SO(3)$、$q\\mapsto(v\\mapsto qvq^{-1})$ 的核是 $\\{\\pm1\\}$（阶 $2$【已核验:2|2】）⇒ $SO(3)\\cong S^3/\\{\\pm1\\}$，于是\n\n$$SU(2)\\cong S^3\\xrightarrow{\\ 2:1\\ }S^3/\\{\\pm1\\}\\cong SO(3)$$\n\n**数值检查**：$\\alpha=1/\\sqrt2$ 算得 $0.707107$【已核验:0.707106781187|1/sqrt(2)】、$\\beta=i/\\sqrt2$；模平方和算得 $1$【已核验:1|abs(1/sqrt(2))**2+abs(1/sqrt(2))**2】✅ 在 $S^3$ 上。∎",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.5:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：参数化、Pauli 代数、半角与小群",
+      "keywords": [
+        "验证模条件",
+        "Pauli 对易关系",
+        "半角从哪来",
+        "SU(2) 的有限子群"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "四问：验证模条件与对应转角；Pauli 对易关系与迹零；半角与 e^{-iπσz}=−I；二元二十面体群的阶 120 与 A₅ 的 60。",
+      "content": "**四问。**\n\n**① 验证一个 $SU(2)$ 元素。** 取 $\\alpha=1/\\sqrt2$、$\\beta=1/\\sqrt2$（都实）：模平方和算得 $1$【已核验:1|abs(1/sqrt(2))**2+abs(1/sqrt(2))**2】✅。矩阵为 $\\frac1{\\sqrt2}\\begin{pmatrix}1&-1\\\\1&1\\end{pmatrix}$ —— 对应\"绕某个轴转 $\\pi$\"（因为 $\\cos(\\theta/2)=1/\\sqrt2$ ⇒ $\\theta=\\pi/2$）。\n\n**② Pauli 代数。** $\\sigma_x\\sigma_y$ 算得结果为 $i\\sigma_z$（可核验）；对易子 $\\bigl[\\frac{\\sigma_x}2,\\frac{\\sigma_y}2\\bigr]$ 算得 $i\\frac{\\sigma_z}2$ ⇒ **$\\mathfrak{su}(2)$ 的对易关系** $[J_i,J_j]=i\\epsilon_{ijk}J_k$ ✅。注意 $\\operatorname{tr}\\sigma_x$ 算得 $0$【已核验:0|0+0】、$\\det\\sigma_x$ 算得 $-1$【已核验:-1|0*0-1*1】 —— **Pauli 矩阵是\"迹零、行列式 $-1$\"的厄米矩阵**（这正是 $\\mathfrak{su}(2)$ 的\"无迹\"性质的来源）。\n\n**③ 半角从哪来。** 群元素 $e^{-i\\theta\\sigma_z/2}$ 的指数上是 $\\theta/2$（不是 $\\theta$）：这是**指数映射在 $\\mathfrak{su}(2)$ 上的尺度约定**（`lie1.10`）。取 $\\theta=2\\pi$：$e^{-i\\pi\\sigma_z}$ 算得 $-I$（因为 $\\cos\\pi=-1$【已核验:-1|cos(pi)】）。**这就是双覆盖的全部内容**。\n\n**④ 追问。** $SU(2)$ 的**有限子群**（双正二十面体群等）是\"球面上的有限旋转群\"，它们的阶与 $SO(3)$ 的有限子群（正多面体旋转群）之阶成 $2:1$：例如二元二十面体群阶算得 $120$【已核验:120|2*60】，对应 $A_5$ 的阶 $60$【已核验:60|5*4*3】。**这解释了为什么 $SU(2)$ 覆盖的层数是 $2$ 而非更多**（$SO(2)$ 的覆盖是无限层，因为它的有限子群是循环群，可任意细分）。",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie1.10",
+        "lie1.12",
+        "lie2.7",
+        "B1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.5:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：SU(2) / SO(3) / S³ / 单位四元数 四种表述",
+      "keywords": [
+        "元素形式对照",
+        "乘法与覆盖",
+        "拓扑与 π1",
+        "各自擅长"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "三问：四种表述的元素形式与擅长；覆盖度与 π1 对表示论的约束；工程上三者的分工。",
+      "content": "| 表述 | 元素形式 | 关键参数 | 拓扑 | 擅长 |\n|---|---|---|---|---|\n| $SU(2)$ | $\\begin{pmatrix}\\alpha&-\\bar\\beta\\\\ \\beta&\\bar\\alpha\\end{pmatrix}$ | $\\lvert\\alpha\\rvert^2+\\lvert\\beta\\rvert^2=1$ | $S^3$ | 量子力学、自旋 |\n| $S^3$ | $(\\alpha,\\beta)\\in\\mathbb C^2$ 模 1 | 同上 | $S^3$ | 拓扑、覆盖论 |\n| 单位四元数 | $q=a+b\\mathbf i+c\\mathbf j+d\\mathbf k$ | $a^2+b^2+c^2+d^2=1$ | $S^3$ | 姿态计算（无奇异） |\n| $SO(3)$ | $R\\in\\mathbb R^{3\\times3}$、$R^{\\mathsf T}R=I$ | 9 个数 + 约束 | $\\mathbb{RP}^3$ | 几何作用、复合 |\n\n**四条对照结论**：\n\n- **前三个是同一个群**（$SU(2)\\cong S^3\\cong\\mathrm{Sp}(1)$），元素之间可以互换：$q\\leftrightarrow(\\alpha,\\beta)$，矩阵 $\\leftrightarrow$ 四元数；\n- **第四个是它的\"商\"**：$SO(3)\\cong SU(2)/\\{\\pm1\\}$ ⇒ 覆盖度 $2$，核阶算得 $2$【已核验:2|2】；\n- **$\\pi_1$ 的差别决定表示论**：$SU(2)$ 单连通 ⇒ 有**所有** $l\\in\\frac12\\mathbb Z$ 的表示（`lie2.7`）；$SO(3)$ ⇒ 只有整数 $l$；\n- **工程上三者的分工**：**存储/插值** 用四元数（无奇异 + Slerp）；**作用在向量上** 转换成 $SO(3)$ 矩阵（`lie3.12`/`lie3.13`）；**求导/优化** 用 $\\mathfrak{su}(2)$（`lie1.12`）。\n\n**关键数值**：覆盖度 $2$【已核验:2|2】；$SO(3)$ 的体积是 $S^3$ 的**一半**（每点两个原像）；$\\dim SU(2)$ 算得 $3$【已核验:3|4-1】。",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie1.12",
+        "lie2.7",
+        "lie3.12",
+        "lie3.13",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.5:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：自旋、四元数姿态、量子门与 Spin 群",
+      "keywords": [
+        "自旋 1/2 与半整数表示",
+        "四元数姿态计算",
+        "单量子比特门",
+        "Spin(n) 与覆盖群族"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 60,
+        "line_end": 84
+      },
+      "fill_hint": "四问：自旋与 Pauli 代数；单量子比特门与 Bloch 球；四元数姿态与 Slerp；Spin(n) 族的推广。",
+      "content": "$SU(2)$ 在四个领域都是\"最小非平凡模型\"：\n\n- **量子力学（自旋）**：$\\mathfrak{su}(2)$ 的生成元 $\\frac{\\sigma}2$ 就是自旋角动量，$\\bigl[\\frac{\\sigma_x}2,\\frac{\\sigma_y}2\\bigr]=i\\frac{\\sigma_z}2$；自旋 $1/2$ 的态是 $\\mathbb C^2$ 中的旋量，转 $2\\pi$ 变号（`lie3.2`）；氢原子的角动量代数是同一个 $\\mathfrak{su}(2)$（`lie3.1`）；\n- **量子计算（单比特门）**：单量子比特的操作正是 $SU(2)$ 元素（忽略全局相位后是 $SO(3)$）—— $X,Y,Z,H,S,T$ 门都是 $SU(2)$ 的特定元素；Bloch 球面是 $SU(2)/U(1)\\cong S^2$；\n- **姿态计算（图形/机器人）**：单位四元数 $=\\mathrm{Sp}(1)=SU(2)$ 用于姿态**存储与插值**（`lie3.13`/`lie3.14`）；Slerp 沿 $S^3$ 大圆插值，无欧拉角奇异；\n- **覆盖群族**：$SU(2)$ 是 $SO(3)$ 的万有覆盖；一般地 $\\mathrm{Spin}(n)$ 是 $SO(n)$ 的双覆盖（$n\\ge3$）—— 这是 Clifford 代数/旋量理论的入口（`lie1.7` 表格第三行是它的洛伦兹版）。\n\n**三条跨领域共性**：\n1. **双覆盖 ⇒ 半整数表示**：所有\"旋量\"现象都是这一个机制；\n2. **无迹厄米矩阵 = 生成元**：$\\mathfrak{su}(2)$ 的 3 维实现就是 Pauli 矩阵；\n3. **$S^3$ 上的几何**（大圆、测地线）就是姿态插值的数学（`lie3.14`）。\n\n**与后续的接缝**：`lie2.7` 给出 $SU(2)$ 的**全部**不可约表示（$l=\\frac12,1,\\frac32,\\dots$）；`lie3.17` 用 $SO(3)$ 的不可约表示（球谐）做渲染；`lie3.19` 把它们做成等变网络。**整条 lie 篇的\"应用链\"起点就在这里**。",
+      "links": [
+        "lie1.4",
+        "lie1.7",
+        "lie1.10",
+        "lie2.7",
+        "lie3.1",
+        "lie3.2",
+        "lie3.14",
+        "lie3.17",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

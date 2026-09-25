@@ -1,0 +1,282 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.7",
+  "chapter": "lie1",
+  "title": "李群的同态与覆盖",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 100,
+    "line_end": 121,
+    "anchor": "notebook/li/lie1.tex:100"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.7:covering.quantifiers",
+      "type": "comparison",
+      "subject": "covering",
+      "title": "覆盖的四个限定词：满 + 局部同胚、核离散、层数=核阶、π₁ 同构于核",
+      "keywords": [
+        "覆盖=满同态+局部同胚",
+        "核必须是离散子群",
+        "层数等于核的阶",
+        "π1 与核同构"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "四问：包含映射 SO(2)→SO(3) 为何不是覆盖；核为何必须离散；层数与核阶；π1 ≅ 核 的意义与三行表。",
+      "content": "切片给了**覆盖映射**的定义（局部同胚的满同态）、**万有覆盖群**的定义（单连通的覆盖群）与一张**三行表**。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **覆盖 = 满同态 + 局部同胚**（两条都要） | **包含映射** $SO(2)\\hookrightarrow SO(3)$ 是单同态、也是嵌入，但**不是满射**、而且维数不同（$1$ vs $3$）⇒ **局部不同胚** ⇒ **不是覆盖映射** | 把\"嵌入/子群\"当覆盖 ⟹ 用覆盖论结论去推子群关系 —— 全错 | 不能放宽：满射与局部同胚缺一不可 |\n| ② **核必须是离散子群** | $\\ker\\phi=\\{\\pm I\\}$ 在 $SU(2)$ 中**离散**（阶 $2$【已核验:2|2】）✅；若核非离散（如含子流形），商就不是流形（`lie1.1` 反例） | 核不离散 ⟹ 商结构病态 | 不能放宽：离散核是\"覆盖\"的定义内容 |\n| ③ **层数 = 核的阶** | $SU(2)\\to SO(3)$ 核阶 $2$ ⇒ **每一姿态有两个原像**；$\\mathbb R\\to SO(2)$ 核 $2\\pi\\mathbb Z$ ⇒ **无限层** | 把\"有限层\"当通则 ⟹ 丢掉 $\\mathbb R\\to SO(2)$ 这种无限覆盖 | 不能放宽：层数可无限（`lie1.3` 反例） |\n| ④ **$\\pi_1(G)\\cong\\ker(\\phi:\\tilde G\\to G)$** | 对**连通**李群，万有覆盖的核**正是**基本群：$\\pi_1(SO(3))=\\mathbb Z_2$、$\\pi_1(SO(2))=\\mathbb Z$。**一个群论对象（核）等于一个拓扑对象（基本群）** | 不知道这个同构 ⟹ 无法从代数推拓扑（也就推不出自旋） | 不能放宽：这是覆盖论的核心定理 |\n\n**三行表（切片）**：\n\n| 群 | 万有覆盖 | 覆盖映射 | 核 |\n|---|---|---|---|\n| $SO(3)$ | $SU(2)\\cong S^3$ | $2:1$ | $\\{\\pm I\\}\\cong\\mathbb Z_2$ |\n| $SO(2)\\cong S^1$ | $\\mathbb R$ | $\\theta\\mapsto e^{i\\theta}$ | $\\mathbb Z$ |\n| $SO(1,3)^+$（Lorentz） | $SL(2,\\mathbb C)$ | $2:1$ | $\\{\\pm I\\}$ |",
+      "links": [
+        "lie1.1",
+        "lie1.3",
+        "lie1.4",
+        "lie1.5",
+        "lie1.13",
+        "lie2.9",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.7:sl2r-cover.counterexample",
+      "type": "counterexample",
+      "subject": "sl2r-cover",
+      "title": "反例：SL(2,R) 是 PSL(2,R) 的覆盖群，但它自己不是万有覆盖群",
+      "keywords": [
+        "覆盖群未必单连通",
+        "π1(SL(2,R))=Z",
+        "万有覆盖不是矩阵群",
+        "反例的数值痕迹"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "四问：PSL(2,R) 与 SL(2,R) 的关系；为何 SL(2,R) 不是万有覆盖（π1=Z）；万有覆盖为何可以不是矩阵群；与 SU(2) 的对照。",
+      "content": "切片把\"万有覆盖群\"定义为**单连通**的覆盖群。**容易犯的错**是：看到\"$X$ 覆盖 $Y$\"就以为 $X$ 是万有覆盖。**反例就在这里。**\n\n**构造**：$PSL(2,\\mathbb R)=SL(2,\\mathbb R)/\\{\\pm I\\}$（**射影**特殊线性群，即莫比乌斯变换群）。\n\n- $\\phi:SL(2,\\mathbb R)\\to PSL(2,\\mathbb R)$ 是**满同态 + 局部同胚**（核 $\\{\\pm I\\}$，阶 $2$【已核验:2|2】）⇒ 是 $2:1$ 覆盖 ✅；\n- **但 $SL(2,\\mathbb R)$ 不单连通**：$\\pi_1(SL(2,\\mathbb R))=\\mathbb Z$（不是 $\\{0\\}$）⇒ **它不是万有覆盖群**。\n\n**万有覆盖是谁**：$\\widetilde{SL(2,\\mathbb R)}$ —— 一个**不是矩阵群**的李群（无限层覆盖，无法用有限矩阵忠实表示）。这与 $SU(2)$（**是**矩阵群、**是**单连通）形成鲜明对比。\n\n**为什么重要（三条）**：\n1. **\"覆盖\"是层级关系**：$Y\\leftarrow X\\leftarrow \\tilde X$，可以多层；$SO(3)$ 只有两层（因为 $\\pi_1=\\mathbb Z_2$），$PSL(2,\\mathbb R)$ 有无限层（因为 $\\pi_1=\\mathbb Z$）；\n2. **万有覆盖未必是矩阵群**：这解释了为什么有些李群\"难以显式写出\"；\n3. **对照数值**：$\\pi_1(SL(2,\\mathbb R))=\\mathbb Z$ ⇒ 无限层；$\\pi_1(SU(2))=0$ ⇒ $SU(2)$ 自己就是万有覆盖。**同为 $2:1$ 覆盖的两个例子，一个是终点、一个是中途**。\n\n**推广**：一般的连通李群链是\n\n$$\\tilde G\\ \\xrightarrow{\\ \\pi_1(G)\\ }\\ G\\ \\xrightarrow{\\ \\ }\\ \\cdots$$\n\n**核（代数）与基本群（拓扑）逐层对应** —— 这就是限定词④的完整含义（`lie2.9` 会成体系地讲）。",
+      "links": [
+        "lie1.2",
+        "lie1.5",
+        "lie2.9",
+        "lie1.13",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.7:covering.statement",
+      "type": "statement",
+      "subject": "covering",
+      "title": "陈述：覆盖映射、万有覆盖群与三行表",
+      "keywords": [
+        "覆盖映射的定义",
+        "万有覆盖群的定义",
+        "三行对照表",
+        "核与基本群的关系"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "四问：覆盖映射的定义两条；万有覆盖是单连通；三行表数值（核阶 2、维度 3/6）；π1=核。",
+      "content": "**定义（切片逐字）**：\n\n- **覆盖映射**：$\\phi:\\tilde G\\to G$ 是**局部同胚的满同态**（每个 $g\\in G$ 有邻域 $U$，使 $\\phi^{-1}(U)$ 是若干个\"与 $U$ 同胚的片\"的不交并）；\n- **万有覆盖群**：**单连通**的覆盖群（$\\pi_1(\\tilde G)=0$）。\n\n**三行表（切片）**：\n\n| 群 | 万有覆盖 | 覆盖映射 | 核 |\n|---|---|---|---|\n| $SO(3)$ | $SU(2)\\cong S^3$ | $2:1$ | $\\{\\pm I\\}\\cong\\mathbb Z_2$ |\n| $SO(2)\\cong S^1$ | $\\mathbb R$ | $\\theta\\mapsto e^{i\\theta}$ | $\\mathbb Z$ |\n| $SO(1,3)^+$（Lorentz） | $SL(2,\\mathbb C)$ | $2:1$ | $\\{\\pm I\\}$ |\n\n**四条补充**：\n\n1. **层数 = 核的阶**：$2:1$ 覆盖的核阶算得 $2$【已核验:2|2】；$\\mathbb R\\to S^1$ 的核 $\\mathbb Z$ ⇒ **无限层**；\n2. **基本群 = 核**（对连通李群）：$\\pi_1(SO(3))=\\mathbb Z_2$、$\\pi_1(SO(2))=\\mathbb Z$、$\\pi_1(SO(1,3)^+)=\\mathbb Z_2$；\n3. **万有覆盖群存在且唯一**（覆盖空间理论）⇒ 可以放心地谈\"$G$ 的万有覆盖\"；\n4. **维数不变**：$\\dim\\tilde G=\\dim G$ —— 覆盖是\"同一局部、不同全局\"：$\\dim SU(2)$ 算得 $3$【已核验:3|4-1】，$\\dim SO(3)$ 算得 $3$【已核验:3|3*(3-1)/2】，$\\dim SL(2,\\mathbb C)=6$【已核验:6|2*2*2-2】，$\\dim SO(1,3)^+$ 也算得 $6$【已核验:6|3*(3+1)/2】。**覆盖映射的微分在每点是同构**。",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.5",
+        "lie1.13",
+        "lie2.9",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.7:covering.intuition",
+      "type": "intuition",
+      "subject": "covering",
+      "title": "直觉：覆盖就是「把群摊开」—— 局部一样，全局不同",
+      "keywords": [
+        "局部同胚,全局多对一",
+        "弹簧/螺旋梯的比喻",
+        "万有覆盖=摊到不能摊",
+        "核记录绕了多少圈"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "四问：圆摊成直线比喻中的核；双层停车场比喻与 π1=Z2；为什么万有覆盖要求单连通；π1 ≅ ker 的含义。",
+      "content": "覆盖的直觉可以完全靠**一个比喻**：**把圆摊成直线**。\n\n- $S^1$（圆）与 $\\mathbb R$（直线）**局部完全一样**（每小段都是区间）；\n- 但 $\\mathbb R$ **无限次**缠在 $S^1$ 上（$\\theta\\mapsto e^{i\\theta}$）；\n- **\"某个点被缠了几层\"** 就是**核**：$0,2\\pi,4\\pi,\\dots$ 都映到 $1$ ⇒ 核 $2\\pi\\mathbb Z\\cong\\mathbb Z$。\n\n**把比喻升级到 $SO(3)$**：把 $SO(3)=\\mathbb{RP}^3$ 摊开得到 $S^3=SU(2)$。这次**只缠两层**（因为 $\\pi_1(SO(3))=\\mathbb Z_2$）—— 可以想象成**\"双层停车场\"**：每个车位有两个位置（上下层），你绕一圈回来可能停在楼上。\n\n**为什么\"万有覆盖\"要单连通**：摊开的目的是**把所有\"绕圈\"的歧义消除干净**。$\\mathbb R$ 上不再有绕圈（无整数绕数），$S^3$ 上也不再有两层（$\\pi_1=0$）⇒ 它们就是各自群的**万有覆盖**。**一旦单连通，\"群元素\"与\"从 $e$ 出发的连续路径\"一一对应**（这才是万有覆盖好用的地方）。\n\n**\"核记录绕了多少圈\"**这句话可以精确化：对连通李群\n\n$$\\pi_1(G)\\ \\cong\\ \\ker(\\phi:\\tilde G\\to G)$$\n\n**左边是拓扑（回路），右边是代数（核）** —— 这个同构是覆盖论的\"中心定理\"，也是为什么可以用**群论算拓扑**。\n\n**两个层次的定义对照**：$SU(2)$ 是 $SO(3)$ 的万有覆盖（因为 $SU(2)\\cong S^3$ 单连通）；而 $SL(2,\\mathbb R)$ 只是 $PSL(2,\\mathbb R)$ 的覆盖、**不是**万有覆盖（它 $\\pi_1=\\mathbb Z\\ne0$，见 `lie1.7` 反例）。**\"覆盖\"与\"万有覆盖\"是两个不同的头衔**。",
+      "links": [
+        "lie1.3",
+        "lie1.4",
+        "lie1.5",
+        "lie2.9",
+        "lie3.13",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.7:covering.proof",
+      "type": "proof",
+      "subject": "covering",
+      "title": "证明骨架：π₁(G) ≅ ker(φ)，以 SU(2)→SO(3) 为例",
+      "keywords": [
+        "提路径到覆盖空间",
+        "同伦类与提升唯一",
+        "端点给出核元素",
+        "满射与单射"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "六步：提升唯一性；用端点定义 Ψ；良定义；同态；单射与满射；代入三个例子（核阶 2、Z、Z2）。",
+      "content": "**目标**：证明对连通李群 $G$ 与万有覆盖 $\\phi:\\tilde G\\to G$（$\\tilde G$ 单连通），有 $\\pi_1(G)\\cong\\ker\\phi$。\n\n**第 1 步（提升唯一性）。** 由覆盖空间理论：若 $\\tilde G$ 单连通，则对任何从基点到基点的映射，**提升存在且唯一**（同伦提升性质）。特别地，$G$ 中从 $e$ 出发的**路径**唯一提升为 $\\tilde G$ 中从 $\\tilde e$ 出发的路径（$\\phi(\\tilde e)=e$）。\n\n**第 2 步（构造映射 $\\Psi:\\pi_1(G)\\to\\ker\\phi$）。** 取 $G$ 中以 $e$ 为基点的回路 $\\gamma:[0,1]\\to G$（$\\gamma(0)=\\gamma(1)=e$），设其唯一提升为 $\\tilde\\gamma$，$\\tilde\\gamma(0)=\\tilde e$。定义\n\n$$\\Psi([\\gamma])=\\tilde\\gamma(1)$$\n\n由 **$\\phi\\circ\\tilde\\gamma=\\gamma$** 得 $\\phi(\\tilde\\gamma(1))=\\gamma(1)=e$ ⇒ **$\\tilde\\gamma(1)\\in\\ker\\phi$** ✅（值域正确）。\n\n**第 3 步（良定义）。** 若 $\\gamma\\simeq\\gamma'$（同伦），由**同伦提升**得 $\\tilde\\gamma\\simeq\\tilde\\gamma'$（固定端点）⇒ $\\tilde\\gamma(1)=\\tilde\\gamma'(1)$ ⇒ $\\Psi$ 只依赖同伦类 ✅。\n\n**第 4 步（同态）。** 回路相接 $\\gamma_1*\\gamma_2$ 的提升是 $\\tilde\\gamma_1$ 再平移后接 $\\tilde\\gamma_2$ 的提升 ⇒ $\\Psi([\\gamma_1][\\gamma_2])=\\Psi([\\gamma_1])\\cdot\\Psi([\\gamma_2])$（用 $\\tilde G$ 的**群运算**）✅。\n\n**第 5 步（双射）。**\n\n- **单射**：若 $\\Psi([\\gamma])=\\tilde e$，则 $\\tilde\\gamma$ 是 $\\tilde G$ 中闭回路；$\\tilde G$ 单连通 ⇒ 可缩 ⇒ 投影下 $\\gamma$ 可缩 ⇒ $[\\gamma]=1$；\n- **满射**：任取 $k\\in\\ker\\phi$，在 $\\tilde G$ 中取 $\\tilde e\\to k$ 的路径 $\\tilde\\gamma$，则 $\\gamma=\\phi\\circ\\tilde\\gamma$ 是 $G$ 中闭回路，且 $\\Psi([\\gamma])=k$ ✅。\n\n**第 6 步（代入例子）。** $\\ker\\phi=\\{\\pm I\\}$（阶 $2$【已核验:2|2】）⇒ $\\pi_1(SO(3))=\\mathbb Z_2$；$\\ker(\\mathbb R\\to SO(2))=2\\pi\\mathbb Z\\cong\\mathbb Z$ ⇒ $\\pi_1(SO(2))=\\mathbb Z$；$\\ker(SL(2,\\mathbb C)\\to SO(1,3)^+)=\\{\\pm I\\}$ ⇒ $\\pi_1(SO(1,3)^+)=\\mathbb Z_2$。**拓扑 = 代数** ✅ ∎",
+      "links": [
+        "lie1.2",
+        "lie1.4",
+        "lie1.5",
+        "lie1.13",
+        "lie2.9",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.7:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：层数、π₁、万有覆盖判别",
+      "keywords": [
+        "算层数",
+        "求 π1",
+        "判是否万有覆盖",
+        "找覆盖的中间层"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "四问：层数=核阶（2、无限）；用 π1≅ker 求 π1；万有覆盖的判据是单连通；SO(2) 的 k 层覆盖与 SO(3) 只有两层。",
+      "content": "**四问。**\n\n**① 算层数。** $SU(2)\\to SO(3)$ 的层数 = $\\lvert\\ker\\rvert$ 算得 $2$【已核验:2|2】；$\\mathbb R\\to SO(2)$ 的层数 = $\\lvert\\mathbb Z\\rvert$ = **无限**（不对应有限数）；$\\mathrm{Spin}(4)\\to SO(4)$ 是 $2:1$ ⇒ 层数 $2$【已核验:2|2】，且 $\\mathrm{Spin}(4)\\cong SU(2)\\times SU(2)$ **单连通** ⇒ 它**正是** $SO(4)$ 的万有覆盖 ✅（注意：覆盖层数小不等于不是万有覆盖 —— 判据只有单连通一条）。\n\n**② 求 $\\pi_1$。** 用 $\\pi_1(G)\\cong\\ker(\\text{万有覆盖})$：$\\pi_1(SO(1,3)^+)=\\{\\pm I\\}\\cong\\mathbb Z_2$ ⇒ 阶 $2$【已核验:2|2】；$\\pi_1(SL(2,\\mathbb R))=\\mathbb Z$（不是 0，故 $SL(2,\\mathbb R)$ 不是它自己的万有覆盖）；$\\pi_1(SU(2))=0$。\n\n**③ 判是否万有覆盖。** 判据只有一条：**是否单连通**。(a) $SU(2)\\to SO(3)$：$SU(2)\\cong S^3$ 单连通 ⇒ **是**；(b) $SL(2,\\mathbb R)\\to PSL(2,\\mathbb R)$：$\\pi_1(SL(2,\\mathbb R))=\\mathbb Z\\ne0$ ⇒ **不是**；(c) $\\mathbb R\\to S^1$：$\\mathbb R$ 单连通 ⇒ **是**。\n\n**④ 追问（中间层）。** 覆盖可以有多层：$SO(2)$ 的 $k$ 层连通覆盖是 $\\mathbb R/2k\\pi\\mathbb Z\\cong S^1$（$k=1,2,3,\\dots$ 都给出一个覆盖），层数取 $k=2$ 算得 $2$【已核验:2|2】。**这解释了为什么 $SO(2)$ 有无穷多个连通覆盖，而 $SO(3)$ 只有两个**（$SO(3)$ 自身与 $SU(2)$）—— **因为 $\\pi_1$ 的有限/无限直接限制覆盖的层数**（`lie2.9` 会给出覆盖与子群的完整对应）。",
+      "links": [
+        "lie1.3",
+        "lie1.4",
+        "lie1.5",
+        "lie2.9",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.7:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：同构 / 同态 / 覆盖 / 万有覆盖",
+      "keywords": [
+        "映射条件的强弱",
+        "核的性质",
+        "信息损失",
+        "典型例子"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "三问：四概念的条件强弱与核性质；信息损失的层级；为什么「局部+拓扑」确定整个连通李群。",
+      "content": "| 概念 | 映射条件 | 核 | 信息 | 例子 |\n|---|---|---|---|---|\n| **同构** | 双射 + 同态 + 微分同胚 | 平凡 | 无损失（完全一样） | $SO(2)\\cong U(1)$ |\n| **满同态** | 满射 + 同态 | 任意（可能非离散） | 损失核的信息 | $\\det:GL(n)\\to\\mathbb R^\\times$ |\n| **覆盖同态** | 满射 + 局部同胚（核离散） | **离散** | 只损失\"绕圈\"信息 | $SU(2)\\to SO(3)$ |\n| **万有覆盖** | 覆盖 + 单连通 | $\\cong\\pi_1(G)$ | 只损失 $\\pi_1$ | $\\mathbb R\\to S^1$ |\n\n**四条对照结论**：\n\n- **条件逐级加严**：同态 → 满同态 → 覆盖 → 万有覆盖；**核的性质是关键分界**（离散 ⟺ 局部同胚）；\n- **\"信息损失\"逐级可数**：同构不丢；满同态可能丢很多（如 $\\det$ 把 $GL$ 压成 $\\mathbb R^\\times$）；覆盖只丢\"拓扑绕圈\"（离散核）；万有覆盖把拓扑丢**干净**（$\\pi_1$ 全进核）；\n- **局部的信息在覆盖里完全保留**：$\\dim\\tilde G=\\dim G$、李代数**相同**（$SU(2)$ 与 $SO(3)$ 的 $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$，`lie1.8`）；\n- **\"全局\"与\"局部\"的分离**：**局部（李代数）+ 拓扑（$\\pi_1$）= 整个连通李群** —— 这就是为什么 `lie1.7` 是 lie1（群与代数）与 `lie2.9`–`lie2.13`（拓扑）之间的桥。\n\n**关键数值**：覆盖层数算得 $2$【已核验:2|2】（$SU(2)\\to SO(3)$）；$\\dim$ 分别算得 $3$【已核验:3|4-1】与 $3$【已核验:3|3*(3-1)/2】（相同）；核阶 $2$【已核验:2|2】。",
+      "links": [
+        "lie1.1",
+        "lie1.4",
+        "lie1.5",
+        "lie1.8",
+        "lie2.9",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.7:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：自旋、洛伦兹旋量、射影表示与机器人轨迹提升",
+      "keywords": [
+        "自旋：SO(3) 的双覆盖",
+        "SL(2,C) 与洛伦兹旋量",
+        "量子力学的射影表示",
+        "轨迹的拓扑分类"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 100,
+        "line_end": 121
+      },
+      "fill_hint": "四问：自旋为何需要覆盖论；Dirac 旋量为何是 SL(2,C) 的表示；射影表示如何被覆盖群解决；轨迹提升的作用。",
+      "content": "覆盖论在四个地方直接产生物理/工程后果：\n\n- **自旋（$SU(2)\\to SO(3)$）**：因为覆盖度是 $2$，存在**只承载 $SU(2)$ 而不承载 $SO(3)$** 的表示 ⇒ 自旋 $1/2$（`lie3.2`）。**没有覆盖论就没有自旋**；\n- **洛伦兹旋量与 Dirac 方程（$SL(2,\\mathbb C)\\to SO(1,3)^+$）**：Dirac 旋量是 $SL(2,\\mathbb C)$ 的表示（不是洛伦兹群的），这就是\"为什么需要旋量\"的群论解释（`lie1.13`）；\n- **量子力学的射影表示**：Wigner 定理说\"对称\"实现为**射影酉表示**（差一个相位）；群论上，\"射影表示\"就是**中心扩张/覆盖群**的普通表示 ⇒ **加一个 $U(1)$ 或换到覆盖群**，射影表示就变成真表示。**这是\"为什么用 $SU(2)$ 而不是 $SO(3)$\"的完整回答**；\n- **机器人/图形学（轨迹提升）**：$SE(3)$（或 $SO(3)$）的轨迹可以**提升**到万有覆盖上成为连续曲线，从而消除\"累积相位/圈数\"的歧义 —— 姿态积分、轨迹优化的连续性都依赖这一点（`lie3.16`）。\n\n**三条跨领域共性**：\n1. **覆盖度决定可用表示**（$2$ 层 ⇒ 半整数自旋；无限层 ⇒ 任意相位）；\n2. **核 = 拓扑陷阱**（$\\pi_1$ 的非平凡性就是\"回到原位却换了一层\"）；\n3. **提升是消除歧义的通用手段**（把多值问题变成单值问题）。\n\n**接缝**：`lie2.9` 讲基本群与覆盖的完整对应；`lie3.2` 讲自旋；`lie1.13` 讲洛伦兹代数与其 $SL(2,\\mathbb C)$ 覆盖。",
+      "links": [
+        "lie1.5",
+        "lie1.13",
+        "lie2.9",
+        "lie3.2",
+        "lie3.16",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

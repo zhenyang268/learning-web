@@ -1,0 +1,292 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie1.8",
+  "chapter": "lie1",
+  "title": "李代数的定义",
+  "src": {
+    "file": "notebook/li/lie1.tex",
+    "line_start": 123,
+    "line_end": 131,
+    "anchor": "notebook/li/lie1.tex:123"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie1.8:lie-algebra.quantifiers",
+      "type": "comparison",
+      "subject": "lie-algebra",
+      "title": "李代数的四个限定词：双线性反对称、Jacobi 不能省、括号来自对易子、代数不能定群",
+      "keywords": [
+        "反对称不等于 Jacobi",
+        "Jacobi 是独立条件",
+        "括号来自向量场对易子",
+        "同一代数可对应不同群"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "四问：反对称是否蕴含 Jacobi（反例 [x,y]=z,[y,z]=y）；括号的来源为何使 Jacobi 自动；su(2)≅so(3) 但 SU(2)≇SO(3)；T_eG 的含义。",
+      "content": "切片给了**李代数**的定义（向量空间 + 双线性李括号 $[\\cdot,\\cdot]$，满足 ① 反对称 $[X,Y]=-[Y,X]$、② Jacobi 恒等式）以及与李群的关系（$\\mathfrak g=T_eG$，括号来自向量场对易子）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **反对称是独立条件** | 反对称等价于 $[X,X]=0$（当基域特征 $\\ne2$）。**但**只给反对称**不够** —— 见限定词②的反例 | 只查反对称 ⟹ 放进非李代数 | 不能放宽：定义要求 |\n| ② **Jacobi 恒等式不能省** | 在基 $x,y,z$ 上定义 $[x,y]=z$、$[y,z]=y$、$[z,x]=0$（反对称 + 双线性）：三项之和 $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=[x,y]+0+[z,z]$ **算得 $z\\ne0$** ⇒ **不是李代数** | 漏查 Jacobi ⟹ 「括号」不来自任何群/结合代数，指数映射全失效 | 不能放宽：Jacobi 是\"括号能来自结合代数\"的充要条件 |\n| ③ **括号来自向量场对易子（或矩阵对易子）** | 若 $G$ 是矩阵群，$\\mathfrak g$ 是矩阵集合，括号就是 $[A,B]=AB-BA$ ⇒ **Jacobi 自动成立**（见证明）。**抽象定义里的 Jacobi 就是这件事的公理化** | 不明白来源 ⟹ 无法用\"对易子\"计算具体括号 | 不能放宽：对易子是标准实现 |\n| ④ **李代数不能决定李群** | $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$（都是 3 维、同构）**但** $SU(2)\\ncong SO(3)$（差一个 $\\mathbb Z_2$，`lie1.7`） | 以为\"代数同构 ⇒ 群同构\" ⟹ 丢掉全部双覆盖/自旋现象 | 不能放宽：**代数管局部，群还要管拓扑** |\n\n**切片内容**：李代数 $\\mathfrak g$ 是向量空间 + 双线性 $[\\cdot,\\cdot]:\\mathfrak g\\times\\mathfrak g\\to\\mathfrak g$，满足反对称与 Jacobi；**李群与李代数的关系**：$\\mathfrak g=T_eG$，李括号来自**向量场的对易子**。",
+      "links": [
+        "lie1.1",
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "lie1.10",
+        "lie1.11",
+        "lie1.12",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.8:non-lie-bracket.counterexample",
+      "type": "counterexample",
+      "subject": "non-lie-bracket",
+      "title": "反例：反对称但破坏 Jacobi —— 三个基上的括号造不出李代数",
+      "keywords": [
+        "[x,y]=z, [y,z]=y, [z,x]=0",
+        "Jacobi 三项之和 = z ≠ 0",
+        "反例为何重要",
+        "矩阵对易子不会这样"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "四问：反例的括号定义；Jacobi 三项之和算得什么（z）；为什么矩阵对易子自动满足 Jacobi（相消论证）；这个反例的实际意义。",
+      "content": "切片把 Jacobi 与反对称并列为**两个条件**。**为什么不能只用反对称？** 这个反例给出答案。\n\n**构造**：取 3 维向量空间，基 $x,y,z$，用双线性 + 反对称**唯一地**定义括号：\n\n$$[x,y]=z,\\qquad [y,z]=y,\\qquad [z,x]=0$$\n\n（另有 $[x,x]=[y,y]=[z,z]=0$，以及反对称给出的 $[y,x]=-z$、$[z,y]=-y$、$[x,z]=0$。）\n\n**检查反对称**：✅ 成立（按构造）。\n\n**检查 Jacobi**（对三元组 $(x,y,z)$）：\n\n$$\\underbrace{[x,[y,z]]}_{=[x,y]=z}+\\underbrace{[y,[z,x]]}_{=[y,0]=0}+\\underbrace{[z,[x,y]]}_{=[z,z]=0}=z\\ne0$$\n\n**三项之和算得 $z$（不为零）** ⇒ **Jacobi 不成立** ⇒ **这不是李代数**。\n\n**为什么这件事很要紧**：李括号的**公理化目的是**「让括号能来自某个结合代数的对易子 $[A,B]=AB-BA$」。而**矩阵对易子自动满足 Jacobi**（见证明），所以 Jacobi 正是这个\"来源\"的必要条件；上面的反例说明它**不是**反对称的推论 —— **它真的是一条独立条件**。\n\n**对照：为什么矩阵对易子不会出问题**。对 $[A,B]=AB-BA$：\n\n$$[A,[B,C]]=ABC-ACB-BCA+CBA$$\n\n把 $(A,B,C)$ 循环置换后三项相加，每个单项式（如 $ABC$）都在某处**恰好出现两次且符号相反** ⇒ 全部相消 ⇒ **恒为 0** ✅。**Jacobi 就是\"结合律\"在括号语言里的影子**。\n\n**教训（限定词②）**：写\"李代数\"时**必须**验证 Jacobi。在矩阵群的实际场景里它免费成立，但在**抽象构造**（如自定义括号、商、扩张）里必须逐条查 —— 这也是为什么\"李代数分类\"要从**结构常数**的 Jacobi 约束开始（`lie1.9`）。",
+      "links": [
+        "lie1.9",
+        "lie1.11",
+        "lie1.12",
+        "lie2.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.8:lie-algebra.statement",
+      "type": "statement",
+      "subject": "lie-algebra",
+      "title": "陈述：李代数的定义（反对称 + Jacobi）与 g=T_eG",
+      "keywords": [
+        "向量空间 + 双线性括号",
+        "反对称与 Jacobi",
+        "李群-李代数关系",
+        "维数与实现"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "四问：定义的两条；g=T_eG 与左不变向量场；四个维度数值（3/3/6/6）；为何 su(2)≅so(3) 而群不同构。",
+      "content": "**定义（切片逐字）**：**李代数** $\\mathfrak g$ 是向量空间，配备双线性运算 $[\\cdot,\\cdot]:\\mathfrak g\\times\\mathfrak g\\to\\mathfrak g$（**李括号**），满足：\n\n1. **反对称**：$[X,Y]=-[Y,X]$（等价于 $[X,X]=0$）；\n2. **Jacobi 恒等式**：$[X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0$。\n\n**李群与李代数的关系（切片）**：$\\mathfrak g=T_eG$（李群在**单位元处**的切空间），李括号来自**向量场的对易子**。\n\n**四条补充**：\n\n1. **维数相等**：$\\dim\\mathfrak g=\\dim G$。数值：$\\dim\\mathfrak{so}(3)$ 算得 $3$【已核验:3|3*(3-1)/2】、$\\dim\\mathfrak{su}(2)$ 算得 $3$【已核验:3|2**2-1】、$\\dim\\mathfrak{se}(3)$ 算得 $6$【已核验:6|3+3】、$\\dim\\mathfrak{sl}(2,\\mathbb C)$（实）算得 $6$【已核验:6|2*2*2-2】；\n2. **左不变向量场**：$\\mathfrak g$ 与 $G$ 上的**左不变向量场**一一对应（这正是\"括号来自对易子\"的来处）；\n3. **矩阵实现**：若 $G$ 是矩阵群，则 $\\mathfrak g$ 是矩阵集合、$[A,B]=AB-BA$（`lie1.11`–`lie1.14` 全是这一类）；\n4. **指数映射**：$\\exp:\\mathfrak g\\to G$（`lie1.10`）—— **李代数是\"群的线性化\"**，局部信息全在 $\\mathfrak g$。\n\n**关键结论（限定词④）**：$\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$ 但 $SU(2)\\ncong SO(3)$ ⇒ **李代数决定\"局部\"，群还需要拓扑（$\\pi_1$）**。",
+      "links": [
+        "lie1.1",
+        "lie1.4",
+        "lie1.5",
+        "lie1.7",
+        "lie1.10",
+        "lie1.11",
+        "lie1.12",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.8:lie-algebra.intuition",
+      "type": "intuition",
+      "subject": "lie-algebra",
+      "title": "直觉：李代数是群的「线性化」—— 无穷小变换的对易子",
+      "keywords": [
+        "群弯,代数直",
+        "无穷小变换=T_eG",
+        "对易子=非交换的痕迹",
+        "局部-全局分离"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "四问：为什么必须线性化；无穷小变换与左不变向量场；括号为何反对称；Jacobi 与结合律；局部+拓扑的图景。",
+      "content": "李代数的直觉只有一句话：**把弯曲的群在单位元处拉直**。\n\n**为什么必须拉直**：群 $G$ 是非线性的（球面、$\\mathbb{RP}^3$…），不好做线性代数。但**切空间** $T_eG$ 是**向量空间**，可以加、可以数、可以做线性代数 —— 这就是\"线性化\"。\n\n**\"无穷小变换\"的精确含义**：取一条过 $e$ 的曲线 $g(t)$，$\\dot g(0)=X\\in\\mathfrak g$ 就是\"从 $e$ 出发的瞬时变化率\"。由左不变性，$X$ 可以\"搬\"到整条群上成为左不变向量场 ⇒ **一个 $X$ 对应族里的一族无穷小变换**。\n\n**括号从哪来**：两个无穷小变换 $X,Y$ 的**复合顺序**一般不可交换，其\"不可交换的量\"就是 $[X,Y]$：\n\n$$[\\text{先 }X\\text{ 后 }Y]-[\\text{先 }Y\\text{ 后 }X]\\ \\sim\\ [X,Y]$$\n\n**这就是为什么括号是反对称的**（交换顺序变号）。而对**矩阵群**，这个量就直接是 $AB-BA$。\n\n**为什么 Jacobi 必然成立**（直觉版）：因为括号来自\"复合的差\"，而**复合有结合律**（$A(BC)=(AB)C$）；Jacobi 正是结合律在这个差里的影子（`lie1.8` 反例给出了\"若强行自定义括号就未必成立\"）。\n\n**\"代数管局部、群管拓扑\"的图景**：\n\n$$\\underbrace{\\mathfrak g=T_eG}_{\\text{局部，线性}}\\quad+\\quad\\underbrace{\\pi_1(G)}_{\\text{全局，拓扑}}\\quad=\\quad\\underbrace{G_0}_{\\text{单位分支}}$$\n\n- $\\mathfrak{su}(2)$ 与 $\\mathfrak{so}(3)$ **同构**（局部一样）；\n- 但 $SU(2)$ 单连通、$SO(3)$ 的 $\\pi_1=\\mathbb Z_2$ ⇒ **群不同**（`lie1.7`）。\n\n**一句话**：**李代数就是\"无穷小变换的线性空间 + 它们不交换的规律\"**；而一切\"线性代数化\"的威力（特征值、表示、Killing 形式）都从这里开始（`lie1.15`）。",
+      "links": [
+        "lie1.1",
+        "lie1.5",
+        "lie1.7",
+        "lie1.10",
+        "lie1.11",
+        "lie1.15",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.8:lie-algebra.proof",
+      "type": "proof",
+      "subject": "lie-algebra",
+      "title": "证明：矩阵对易子自动满足 Jacobi（数值逐项核对）",
+      "keywords": [
+        "展开 [A,[B,C]]",
+        "循环置换",
+        "六项两两相消",
+        "具体矩阵验证"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "五步：展开一项为四项；循环置换；六项逐对相消（只用结合律）；用 A=diag(1,2), B, C 核对 (2,2) 元素 0/1/−1 合计 0；反面对照说明 Jacobi 的必要性。",
+      "content": "**目标**：证明对**结合代数**（如矩阵代数）定义 $[A,B]=AB-BA$ 时，Jacobi 恒等式**自动**成立。这是限定词③的严格内容。\n\n**第 1 步（展开一项）。**\n\n$$[A,[B,C]]=A(BC-CB)-(BC-CB)A=ABC-ACB-BCA+CBA$$\n\n**第 2 步（循环置换并相加）。** 同理\n\n$$[B,[C,A]]=BCA-BAC-CAB+ACB,\\qquad [C,[A,B]]=CAB-CBA-ABC+BAC$$\n\n**第 3 步（求和相消）。** 把三项相加，逐项配对：\n\n- $ABC$：第 1 式 $+ABC$，第 3 式 $-ABC$ ⇒ **相消**；\n- $ACB$：第 1 式 $-ACB$，第 2 式 $+ACB$ ⇒ **相消**；\n- $BCA$：第 1 式 $-BCA$，第 2 式 $+BCA$ ⇒ **相消**；\n- $CBA$：第 1 式 $+CBA$，第 3 式 $-CBA$ ⇒ **相消**；\n- $CAB,BAC$：同理各自相消。\n\n**六项全消** ⇒ $[A,[B,C]]+[B,[C,A]]+[C,[A,B]]=0$ ✅。**关键只用了一步：结合律**（让 $A(BC)=(AB)C$ 从而可以\"读成同一个字\"）。\n\n**第 4 步（具体矩阵核对）。** 取 $A=\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}$、$B=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$、$C=\\begin{pmatrix}0&0\\\\1&0\\end{pmatrix}$，逐项算出三者的 **$(2,2)$ 元素**分别是 $0$、$1$、$-1$，合计算得 $0$【已核验:0|0+1-1】 ✅ —— 与恒等式一致。（三者的 $(1,2)$ 元素分别是 $0,0,0$。）\n\n**第 5 步（反面对照）。** 若**不用**对易子而自定义括号（`lie1.8` 反例的 $[x,y]=z$、$[y,z]=y$），则第 3 步的相消**不会发生** ⇒ Jacobi 失效。**因此 Jacobi 不是\"多余的美化\"，而是\"括号来自结合代数\"的必要条件**。∎\n\n**推论**：任何结合代数（矩阵、算子、Clifford 代数）**自动**给出一个李代数 ⇒ 这是造李代数最常见的办法，也是为什么 $\\mathfrak{gl}(n)$、$\\mathfrak{su}(n)$ 这些\"矩阵李代数\"最方便使用。",
+      "links": [
+        "lie1.9",
+        "lie1.11",
+        "lie1.12",
+        "lie1.14",
+        "A1.2",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.8:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：验证条件、数维度、判同构",
+      "keywords": [
+        "验证 Jacobi",
+        "数切空间维度",
+        "判两个代数是否同构",
+        "代数同构而群不同构"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "四问：验证一组括号；四个维度数值（3/8/6/6）；比较结构常数判同构；同一代数的多个群与万有覆盖的商。",
+      "content": "**四问。**\n\n**① 验证条件。** 给定括号 $[e_1,e_2]=0$、$[e_1,e_3]=e_2$、$[e_2,e_3]=0$（反对称延拓）：Jacobi 对 $(e_1,e_2,e_3)$ 的三项为 $0+0+[e_3,0]$ **算得 $0$** ⇒ 通过；但这样的括号是\"阿贝尔化\"的（多数括号为零）—— 它是李代数（**幂零**的，`lie2.1`）。\n\n**② 数维度。** $\\mathfrak{so}(3)$ 算得 $3$【已核验:3|3*(3-1)/2】；$\\mathfrak{su}(3)$ 算得 $8$【已核验:8|3**2-1】；$\\mathfrak{se}(3)$ 算得 $6$【已核验:6|3+3】；$\\mathfrak{sl}(2,\\mathbb C)$（实维数）算得 $6$【已核验:6|2*2*2-2】。**规则**：$\\dim\\mathfrak g=\\dim G$ —— **切空间与流形同维**。\n\n**③ 判同构。** $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$：都是 3 维且结构常数相同（$\\epsilon_{ijk}$）⇒ **同构**。**判据**：写成结构常数 $[X_i,X_j]=c_{ij}^kX_k$ 后比较（`lie1.9`）。\n\n**④ 追问。** 同一个李代数可以对应**多个**李群：$\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$ 对应 $SU(2)$、$SO(3)$，以及它们的任意覆盖（`lie1.7`）。**规则**：固定 $\\mathfrak g$ 后，所有\"以 $\\mathfrak g$ 为李代数的连通李群\"恰是**万有覆盖的商**（按离散正规子群商）。**所以\"代数定局部、离散子群定全局\"**。",
+      "links": [
+        "lie1.1",
+        "lie1.2",
+        "lie1.7",
+        "lie1.9",
+        "lie1.12",
+        "lie2.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.8:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：李代数 / 结合代数 / Jordan 代数 / 一般双线性括号",
+      "keywords": [
+        "运算条件对照",
+        "典型例子",
+        "能否指数化",
+        "用途"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "三问：四类运算条件与例子；为什么从结合到李很自然而反向不行；Jacobi 作为分界线。",
+      "content": "| 结构 | 运算条件 | 典型例子 | 指数化 | 用途 |\n|---|---|---|---|---|\n| **李代数** | 反对称 + **Jacobi** | $\\mathfrak{so}(3)$、$\\mathfrak{su}(2)$、矩阵对易子 | ✅ $\\exp:\\mathfrak g\\to G$ | 连续对称、量子力学 |\n| **结合代数** | 结合律 $(ab)c=a(bc)$ | 矩阵代数、算子代数、Clifford 代数 | 部分 | 通用计算；**给出**李代数 |\n| **Jordan 代数** | 交换 + $(ab)a^2=a(ba^2)$ | 厄米矩阵 + 反对易积 | 部分 | 量子力学可观测代数 |\n| **一般双线性反对称** | 只有反对称 | `lie1.8` 的反例 | ❌ 一般不行 | 无（括号不来自群） |\n\n**四条对照结论**：\n\n- **从结合代数到李代数很自然**（取 $AB-BA$，Jacobi 自动）；**反向不行**（李代数一般不结合）⇒ **结合代数是\"更强\"的结构**；\n- **Jacobi 是分界线**：去掉它就从\"李代数\"掉到\"一般双线性反对称\"，**指数映射与群都消失**（`lie1.8` 反例）；\n- **Jordan 代数**给出第三个方向（用反对易 $\\{A,B\\}=AB+BA$）：它刻画**可观测量的代数**，与李代数（刻画**对称/生成元**）互补；\n- **所有\"经典\"物理代数**都是这三类之一：$\\mathfrak{su}(n)$（李）、矩阵代数（结合）、厄米矩阵（Jordan）。\n\n**关键数值**：$\\dim\\mathfrak{so}(3)$ 算得 $3$【已核验:3|3*(3-1)/2】、$\\dim\\mathfrak{su}(2)$ 算得 $3$【已核验:3|2**2-1】 —— **同维且同构**（这是 $\\mathfrak{su}(2)\\cong\\mathfrak{so}(3)$ 的数值侧面）。",
+      "links": [
+        "lie1.5",
+        "lie1.9",
+        "lie1.11",
+        "lie1.12",
+        "lie2.1",
+        "A1.2",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie1.8:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：量子对易关系、控制论、机器人雅可比与结构常数",
+      "keywords": [
+        "量子力学的对易关系",
+        "非完整系统的控制",
+        "机器人雅可比与 so(3)",
+        "结构常数与不变量"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie1.tex",
+        "line_start": 123,
+        "line_end": 131
+      },
+      "fill_hint": "四问：量子对易关系为何是李括号；Poisson 括号与矩映射；非完整系统的可控性由括号决定；Killing/Casimir 的来源。",
+      "content": "李代数是\"无穷小对称\"的通用语言，四类应用：\n\n- **量子力学（对易关系）**：$[\\hat x,\\hat p]=i\\hbar$、$[J_i,J_j]=i\\hbar\\epsilon_{ijk}J_k$、$[a,a^\\dagger]=1$ —— **全部是李括号**。整个量子力学的\"代数方法\"就是在李代数里做表示论（`lie2.7`）；可观测量的守恒律来自\"与哈密顿量对易\"（$[H,A]=0$）；\n- **几何与力学**：Poisson 括号 $\\{f,g\\}$ 是一个李括号（无穷维），矩映射与守恒律（`lie3.11`）建立在它上面；\n- **控制论与机器人**：非完整约束系统的能达性由**李括号生成**（Chow–Rashevskii 定理：括号的生成空间维数决定可控子空间）；机器人的雅可比与误差在李代数上表达（$\\mathfrak{so}(3)/\\mathfrak{se}(3)$，`lie3.16`）；\n- **不变量**：Killing 形式、Casimir 算子（`lie1.15`/`lie2.x`）都由结构常数算出 —— 它们是\"李代数自身的几何\"。\n\n**三条跨领域共性**：\n1. **括号 = 不可交换性的度量**（愈大愈\"远离阿贝尔\"）；\n2. **生成元 = 切空间的基**（$\\mathfrak{su}(2)$ 的基就是 $\\sigma/2$，`lie1.12`）；\n3. **Jacobi = 结构自洽**（保证存在对应的群）。\n\n**接缝**：`lie1.9` 把括号写成**结构常数**（可计算的表格）；`lie1.10` 讲指数映射（从代数回到群）；`lie1.11`–`lie1.14` 给出四类经典代数的显式矩阵实现。",
+      "links": [
+        "lie1.9",
+        "lie1.10",
+        "lie1.11",
+        "lie1.12",
+        "lie1.15",
+        "lie2.7",
+        "lie3.11",
+        "lie3.16",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
