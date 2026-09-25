@@ -1,0 +1,266 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de2.3",
+  "chapter": "de2",
+  "title": "经典对称性对应的标准解法",
+  "src": {
+    "file": "notebook/diffrential/de2.tex",
+    "line_start": 34,
+    "line_end": 47,
+    "anchor": "notebook/diffrential/de2.tex:34"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de2.3:sym-table.quantifiers",
+      "type": "comparison",
+      "subject": "sym-table",
+      "title": "四种标准解法的适用条件表：每一条都能找出「看起来能、其实不能」的方程",
+      "keywords": [
+        "缺 x ⇒ 令 p=y′ 降阶",
+        "缺 y ⇒ 令 p=y′ 降阶",
+        "齐次 ⇒ 设 u=y/x",
+        "Euler ⇒ 换 t=ln x",
+        "判据是「生成元」而非「字面缺项」"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 34,
+        "line_end": 47
+      },
+      "fill_hint": "五行条件表：四种「对称性↔解法」配对的限定词与反例（含 5 vs 9 的不齐次反例、Euler 右端非零）；强调「判据看生成元不看字面」，并区分 p 作为 y 的函数 vs x 的函数。",
+      "content": "切片的表把**四个对称性**与**四条解法**一一配对。**每条配对的限定词都要单独核实**：\n\n| 对称性 / 生成元 | 对应解法 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|---|\n| **$x$ 平移** $\\partial_x$ | 缺 $x$ ⇒ 令 $p=y'(y)$，方程降为 $(y,p)$ 的一阶（$y''=p\\,dp/dy$） | 方程 $y''+y\\,y'=0$（**字面缺 $x$**）：正确做法给 $p=(1-y^2)/2$，在 $y=0$ 处算得 0.5【已核验:0.5|(1-0**2)/2】；**若误把 $p$ 当 $p(x)$**（用 $y''=dp/dx$）⇒ 得 $p'+yp=0$，右边**仍含未知函数 $y$**，解不下去 | 变量关系搞错 ⇒ 降阶后仍卡住 | 不能放宽：$p$ **必须是 $y$ 的函数** |\n| **$y$ 平移** $\\partial_y$ | 缺 $y$ ⇒ 令 $p=y'(x)$，$y''=dp/dx$ | 方程 $y''=2xy'$（**字面缺 $y$**）：正确做法给 $p'=2xp$ ⇒ $p=Ce^{x^2}$；若误把 $p$ 当 $p(y)$（用 $y''=p\\,dp/dy$）⇒ 得 $dp/dy=2x$，**左边对 $y$ 求导、右边含 $x$** ⇒ 无意义 | 降阶彻底失败（变量错配） | 不能放宽：$p$ **必须是 $x$ 的函数** |\n| **位似** $x\\partial_x+y\\partial_y$ | 齐次 $y'=f(y/x)$ ⇒ 设 $u=y/x$ | $y'=\\dfrac{x^2+y}{x-y}$：在 $(2,1)$ 处算得 5【已核验:5|(2**2+1)/(2-1)】，在 $(4,2)$ 处算得 9【已核验:9|(4**2+2)/(4-2)】 —— **两值不等 ⇒ 不齐次** | 硬设 $u=y/x$ ⇒ 得到**错误的通解** | 不能放宽：齐次性是「零次齐次」的严格条件 |\n| **$x$ 缩放** $x\\partial_x$ | Euler 方程 ⇒ 换 $t=\\ln x$ | $x^2y''+3xy'+y=x^2$：**左侧是 Euler 型但右侧非零** | 换 $t=\\ln x$ 后变成**常系数非齐次**方程，还要再用待定系数/常数变易 | 可放宽：仍可解，只是多一步 |\n\n**四条解法的「合格判据」统一成一句话**：**看生成元，不看字面。**「缺 $x$」的真正含义是「$\\partial_x$ 是方程的一个对称性」，而由 `de2.2` 的判据可知，**它并不等价于「方程里没写 $x$」**（例如 $y'-y=0$ 显含 $y$，但 $\\partial_x$ 仍是它的对称性）。\n\n**「缺 $x$ ⇒ $p=y'$」的合法含义**：$\\partial_x$ 是生成元 ⇒ 可用 $y$ 当自变量消去 $x$，此时 $y'=p(y)$、$y''=p\\,dp/dy$。\n\n**「缺 $y$ ⇒ $p=y'$」的合法含义**：$\\partial_y$ 是生成元 ⇒ 可用 $x$ 当自变量，此时 $y'=p(x)$、$y''=dp/dx$。\n\n**两者的差别在于「$p$ 是 $y$ 的函数还是 $x$ 的函数」——这是本表最容易搞错的一点。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.4",
+        "de1.6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.3:not-homogeneous.counterexample",
+      "type": "counterexample",
+      "subject": "not-homogeneous",
+      "title": "反例：看着像齐次其实不是（5 变 9 的两个数）",
+      "keywords": [
+        "齐次＝零次齐次 f(λx,λy)=f(x,y)",
+        "数值判据：换 λ 后值必须不变",
+        "(x²+y)/(x−y) 在 (2,1) 给 5、(4,2) 给 9",
+        "硬设 u=y/x 会给出错误通解"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 40,
+        "line_end": 42
+      },
+      "fill_hint": "反例：g=(x²+y)/(x−y) 在 (2,1) 给 5、在 (4,2) 给 9 ⇒ 不齐次，不能设 u=y/x；对照 (x+y)/(x−y) 两值都给 3 ⇒ 齐次；解释硬设时右侧会残留 x 导致「假分离」；给多项式次数判据。",
+      "content": "**第三行的限定词是「齐次」（零次齐次）。** 「方程里同时出现 $x$ 与 $y$ 的同次幂」是**错觉式判据**，正确判据是**数值不变量**。\n\n**第一步：写下正确判据。**\n\n对 $y'=g(x,y)$，齐次 ⟺ $g(\\lambda x,\\lambda y)=g(x,y)$ 对一切 $\\lambda>0$。**取 $\\lambda=2$ 就是一个可以手算的检验。**\n\n**第二步：反例。**\n\n$$g(x,y)=\\frac{x^2+y}{x-y}$$\n\n- $(x,y)=(2,1)$：$g=\\dfrac{4+1}{2-1}$，算得 5【已核验:5|(2**2+1)/(2-1)】\n- $(x,y)=(4,2)$（即 $\\lambda=2$）：$g=\\dfrac{16+2}{4-2}$，算得 9【已核验:9|(4**2+2)/(4-2)】\n\n**$5\\ne9$ ⇒ 不齐次** ⇒ **不能设 $u=y/x$**。\n\n**第三步：对照一个真齐次的例子。**\n\n$$g(x,y)=\\frac{x+y}{x-y},\\qquad\ng(2,1)=\\frac{3}{1}\\ \\text{算得 } 3\\ \\text{【已核验:3|(2+1)/(2-1)】},\\qquad\ng(4,2)=\\frac{6}{2}\\ \\text{算得 } 3\\ \\text{【已核验:3|(4+2)/(4-2)】}$$\n\n**两个值相等 ⇒ 齐次** ✅ 所以可以设 $u=y/x$（这正是 `probe1` 要做的题）。\n\n**第四步：为什么「硬设」会给出错误答案。**\n\n设 $y=ux$ 时用了 $y'=u+xu'$，并**假设** $u$ 只依赖 $x$（即 $y/x$ 是自变量的函数）。若 $g$ 不齐次，代入后得到的 $u$ 方程里会**残留 $x$**：\n\n$$u+xu'=g(x,ux)$$\n\n右边只有当 $g$ 齐次时才等于 $g(1,u)$。**不齐次时右边是 $x$ 与 $u$ 的混杂物**，于是「分离变量」这一步**根本不成立**——最终得到的是一个**看似分离、实际无法积分**的式子；若强行积分（把 $x$ 当常数）就得到错误的通解。\n\n**第五步：更一般的判据（避免逐点验算）。**\n\n把 $g$ 写成 $g(x,y)=\\dfrac{P(x,y)}{Q(x,y)}$（$P,Q$ 为多项式）。**齐次 ⟺ $P,Q$ 是同次齐次多项式**。上例 $P=x^2+y$（次数混杂）⇒ 立即判否；而下例 $P=x+y$、$Q=x-y$ 都是 1 次齐次 ⇒ 判是。**用次数判断最快，用 λ=2 验算最稳。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.3:sym-table.statement",
+      "type": "statement",
+      "subject": "sym-table",
+      "title": "陈述：四对「对称性 ↔ 生成元 ↔ 解法」与不变量表",
+      "keywords": [
+        "四行标准对照",
+        "每行给不变量 r 与时间 s",
+        "解法本质是「换到 (r,s) 坐标」",
+        "与 de2.4 三步法的接口"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 34,
+        "line_end": 47
+      },
+      "fill_hint": "四行对照表扩展到 5 列（对称性、生成元、解法、不变量 r、时间 s），并给出 x∂_x+y∂_y 作用在 y/x 与 ln x 上的两个验算式；点明「解法=换到 (r,s) 坐标」。",
+      "content": "**陈述（切片表的展开版）。**\n\n| 对称性 | 生成元 $\\mathbf{v}$ | 对应解法 | 不变量 $r$（$\\mathbf{v}r=0$） | 时间 $s$（$\\mathbf{v}s=1$） |\n|---|---|---|---|---|\n| $x$ 平移 | $\\partial_x$ | 缺 $x$ ⇒ $p=y'$，用 $x$ 作自变量 | $y$（以及 $y'$） | $x$ |\n| $y$ 平移 | $\\partial_y$ | 缺 $y$ ⇒ $p=y'$，用 $y$ 作自变量 | $x$（以及 $y'$） | $y$ |\n| 位似 $(x,y)\\to(\\lambda x,\\lambda y)$ | $x\\partial_x+y\\partial_y$ | 齐次 ⇒ $u=y/x$ | $y/x$ | $\\ln x$ |\n| $x$ 单独缩放 | $x\\partial_x$ | Euler ⇒ $t=\\ln x$ | $y$ | $\\ln x$ |\n\n**四行的统一读法**：\n\n- **$r$ 是「轨道标签」**（沿流不变）：$x$ 平移下 $y$ 不变；位似下 $y/x$ 不变。\n- **$s$ 是「走多远」**（沿流以单位速度前进）：$\\ln x$ 满足 $\\mathbf{v}(\\ln x)=x\\cdot(1/x)=1$，$x$ 满足 $\\mathbf{v}(x)=1$。\n- **解法 = 换到 $(r,s)$ 坐标**，于是关于 $x$ 的 $n$ 阶方程变成关于 $s$ 的 $n-1$ 阶方程（因为 $s$ 是唯一的「真自变量」，$r$ 只作为参数/因变量）。\n\n**两个必须核对的验算式（照抄即可用）**：\n\n$$\\mathbf{v}\\Bigl(\\frac yx\\Bigr)=x\\cdot\\Bigl(-\\frac{y}{x^2}\\Bigr)+y\\cdot\\frac1x=0,\\qquad\n\\mathbf{v}(\\ln x)=x\\cdot\\frac1x=1$$\n\n**与 `de2.4` 的接口**：`de2.4` 的三步法就是「按本表求出 $(r,s)$，再把方程改写」。**本单元给词典，`de2.4` 给流程。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.4",
+        "de1.6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.3:sym-table.intuition",
+      "type": "intuition",
+      "subject": "sym-table",
+      "title": "直觉：为什么「缺 x」就该令 p = y′",
+      "keywords": [
+        "缺 x ⇒ x 不是真正的自变量",
+        "用 y 当自变量就消掉 x",
+        "y′ = p(y)，y″ = p dp/dy",
+        "两套写法的分水岭"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 34,
+        "line_end": 47
+      },
+      "fill_hint": "直觉两步：方程不含 x ⇒ 用 y 当自变量；y′=p(y)、y″=p dp/dy ⇒ 得关于 p 的一阶方程；反例方向（缺 y）用 p=p(x)、y″=dp/dx；给「两套写法不能混」的对照表与「谁被消掉谁退休」的记忆法。",
+      "content": "**假设给了什么。** 方程 $F(x,y,y',y'')=0$ **不显含 $x$**。直觉上「没有 $x$」意味着「$x$ 不长在方程里」，但**方程为什能被降阶**这件事需要说清楚。\n\n**结论为什么因此成立。** 两步：\n\n**第一步：既然方程不含 $x$，那就把 $x$ 从「自变量」的位置上换掉。**\n\n方程只认 $(y,y',y'')$ 三个量的关系。**若能把 $y',y''$ 都用 $y$ 表示，方程就变成一个关于 $y$ 的一阶方程**：\n\n$$y'=p(y)\\quad\\Longrightarrow\\quad y''=\\frac{d}{dx}p(y)=p'(y)\\cdot y'=p\\,\\frac{dp}{dy}$$\n\n**第二步：代入后 $x$ 自动消失。**\n\n$$F(y,\\ p,\\ p\\,\\tfrac{dp}{dy})=0$$\n\n这是**关于 $p$ 的一阶方程**（自变量 $y$）——**降了一阶**✅ 而且这里 $x$ 确实一个都不剩。\n\n**反过来（缺 $y$ 的情形）**：方程不含 $y$ ⇒ 把 $y$ 从「未知函数」的位置换掉：\n\n$$y'=p(x)\\quad\\Longrightarrow\\quad y''=\\frac{dp}{dx}$$\n\n代入得 $F(x,p,p')=0$，也是**一阶**，自变量仍是 $x$。\n\n**分水岭（最容易错的一点）**：\n\n| 缺什么 | $p$ 是什么的函数 | $y''$ 写成 | 自变量 |\n|---|---|---|---|\n| 缺 $x$（$\\partial_x$ 是生成元） | $p=p(y)$ | $p\\,\\dfrac{dp}{dy}$ | $y$ |\n| 缺 $y$（$\\partial_y$ 是生成元） | $p=p(x)$ | $\\dfrac{dp}{dx}$ | $x$ |\n\n**两套写法不能混用**——把「缺 $x$」的题写成 $p'=dp/dx$ 会立刻错，因为原来 $y''$ 里的 $y'$ 已经变成 $p$，链式法则要求对 $y$ 求导。\n\n**一个记忆法**：**「谁被消掉，谁就从自变量的位置上退下来」。** 缺 $x$ ⇒ $x$ 退休，$y$ 上位当自变量；缺 $y$ ⇒ $y$ 退休，$x$ 继续当自变量。**$p$ 永远是「留下的那个量的函数」。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de1.4",
+        "de1.6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.3:sym-table.proof",
+      "type": "proof",
+      "subject": "sym-table",
+      "title": "证明骨架：从生成元推出四条解法（用不变量统一证明）",
+      "keywords": [
+        "第一步 每个生成元配一组 (r,s)",
+        "第二步 用链式法则把导数换成 d/ds",
+        "第三步 检验方程降阶",
+        "易错点：s 必须满足 vs = 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 34,
+        "line_end": 47
+      },
+      "fill_hint": "四步证明：Jacobi 行列式非零（位似给 −1/x²）；换坐标把 d/dx 翻成 d/ds；由 vr=0 得 r=r(s) 并算出 dr/ds=y′−r ⇒ 齐次给 f(r)−r；四行各自的结论；四条易错（vs=1、r 选不唯一、行列式、vr=0 不等于常数）。",
+      "content": "**目标**：证明表中四行的解法都是「同一动作」的实例 —— 即**用不变量 $(r,s)$ 换坐标**。\n\n**第 1 步（行列式条件：$(r,s)$ 是局部坐标）。** 需要 Jacobi 行列式非零：\n\n$$\\frac{\\partial(r,s)}{\\partial(x,y)}=r_xs_y-r_ys_x\\ne0$$\n\n对位似：$r=y/x$、$s=\\ln x$，$r_x=-y/x^2$、$r_y=1/x$、$s_x=1/x$、$s_y=0$，行列式 $=(-y/x^2)\\cdot0-(1/x)(1/x)=-1/x^2\\ne0$ ✅\n\n**第 2 步（换坐标：把 $d/dx$ 翻译成 $d/ds$）。** 因为 $\\mathbf{v}s=1$，沿流有 $ds/dx$ 的关系；一般地，设 $y$ 作为 $s$ 的函数、$r$ 作为参数，则\n\n$$y'=\\frac{dy}{dx}=\\frac{dy}{ds}\\cdot\\frac{ds}{dx},\\qquad\ny''=\\frac{d}{dx}\\Bigl(\\frac{dy}{ds}\\frac{ds}{dx}\\Bigr)$$\n\n**对位似**（$s=\\ln x\\Rightarrow ds/dx=1/x$，$r=y/x$）：写出 $y=xr$、$y'=r+xr'$。\n\n**第 3 步（$r$ 的方程只含 $r$ 与 $dr/ds$）。** 关键观察：因为 $r$ 沿流不变（$\\mathbf{v}r=0$），$r$ 只可能依赖「时间」$s$，即 $r=r(s)$。于是\n\n$$\\frac{dr}{ds}=\\frac{dr/dx}{ds/dx}=\\frac{(y/x)'}{1/x}=\\frac{(y'-y/x)\\cdot(1/x)}{1/x}\\cdot\\frac1{1}=\\frac{y'-r}{1}$$\n\n更直接地，用 $r=y/x$、$y=xr$、$y'=r+xr'$ 与 $ds/dx=1/x$：\n\n$$\\frac{dr}{ds}=\\frac{dr/dx}{1/x}=x\\cdot\\frac{d}{dx}\\Bigl(\\frac yx\\Bigr)=x\\cdot\\frac{y'x-y}{x^2}=y'-\\frac yx=y'-r$$\n\n**把 $y'=f(r)$ 代入（齐次方程）即得 $\\dfrac{dr}{ds}=f(r)-r$** —— 这正是切片示例给的式子 ✅ ∎\n\n**第 4 步（四条解法各自的结论）。**\n\n- 缺 $x$：$\\mathbf{v}=\\partial_x$ ⇒ $r=y$、$s=x$ ⇒ $dr/ds=y'=p$ ⇒ 方程化为 $F(y,p,p\\,dp/dy)$（把 $dp/ds$ 用 $dp/dy\\cdot p$ 换）。\n- 缺 $y$：$\\mathbf{v}=\\partial_y$ ⇒ $r=x$、$s=y$ … 注意这里要取「$x$ 作自变量」的对偶写法，得到 $F(x,p,dp/dx)$。\n- 位似：$\\mathbf{v}=x\\partial_x+y\\partial_y$ ⇒ $r=y/x$、$s=\\ln x$ ⇒ $dr/ds=f(r)-r$。\n- $x$ 缩放：$\\mathbf{v}=x\\partial_x$ ⇒ $r=y$、$s=\\ln x$ ⇒ Euler 方程化为常系数。\n\n**易错点。**\n\n1. **$s$ 必须满足 $\\mathbf{v}s=1$**：取 $s=x$（$\\mathbf{v}=x\\partial_x+y\\partial_y$ 时 $\\mathbf{v}x=x\\ne1$）会让 $dr/ds$ 里**残留 $x$**，降阶失败（见 `de2.4` 的反例词条）。\n2. **$r,s$ 的选取不唯一**：$r\\mapsto R(r)$（可逆）也满足 $\\mathbf{v}R=0$，但会让 $dr/ds$ 变形；**取最简单的那个**。\n3. **行列式非零**：若 $r,s$ 相关（如取 $s=r\\cdot$(别的)），换坐标非法。\n4. **别把 $\\mathbf{v}r=0$ 与「$r$ 是常数」混淆**：$\\mathbf{v}r=0$ 只说明 $r$ **沿轨道不变**，不同轨道上的 $r$ 值不同 —— 这正是它能当坐标的原因。",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.3:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：用 u = y/x 解 (x+y)/(x−y) 并数值核验",
+      "keywords": [
+        "先验齐次（两值相等）",
+        "化为可分离 u 方程",
+        "在 x=1, y=0.5 处核验 y′=3"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 40,
+        "line_end": 47
+      },
+      "fill_hint": "四问：先验齐次（g(2,1)=g(4,2)=3）；化为 u+xu′=（1+u)/(1−u) ⇒ x u′=(1+u²)/(1−u) 可分离 ⇒ arctan u − ½ln(1+u²)=ln|x|+C（附求导验证）；在 x=1,y=0.5 处两边都得 3；提醒 |1−u²| 型分母要分段。",
+      "content": "**题**：解 $y'=\\dfrac{x+y}{x-y}$。\n\n**第 1 问：先验齐次。**\n\n$g(2,1)$ 算得 3【已核验:3|(2+1)/(2-1)】，$g(4,2)$ 算得 3【已核验:3|(4+2)/(4-2)】，**两值相等 ⇒ 齐次** ✅ 可以设 $u=y/x$。\n\n**第 2 问：化为可分离。**\n\n取 $y=xu$，则 $y'=u+xu'$。代入：\n\n$$u+xu'=\\frac{1+u}{1-u}\\quad\\Longrightarrow\\quad\nxu'=\\frac{1+u}{1-u}-u=\\frac{(1+u)-u(1-u)}{1-u}=\\frac{1+u^2}{1-u}$$\n\n**分子 $1+u^2$ 恒不为零 ⇒ 可分离**：\n\n$$\\frac{1-u}{1+u^2}\\,du=\\frac{dx}{x}\n\\quad\\Longrightarrow\\quad\n\\arctan u-\\frac12\\ln(1+u^2)=\\ln|x|+C$$\n\n（左边求导验证：$\\dfrac{d}{du}\\bigl[\\arctan u-\\tfrac12\\ln(1+u^2)\\bigr]=\\dfrac{1}{1+u^2}-\\dfrac{u}{1+u^2}=\\dfrac{1-u}{1+u^2}$ ✅）\n\n**第 3 问：在 $x=1$、$y=0.5$（即 $u=0.5$）处核验。**\n\n- **方程的左边** $u+xu'$：由上面的 $xu'=\\dfrac{1+u^2}{1-u}$，取 $u=0.5$：$\\dfrac{1.25}{0.5}$，加上 $u$ 后算得 3【已核验:3|0.5+(1+0.5**2)/(1-0.5)】\n- **方程的右边** $\\dfrac{x+y}{x-y}$：算得 3【已核验:3|(1+0.5)/(1-0.5)】\n\n**两边都是 $3$ ⇒ $y'(1)=3$** ✅\n\n**第 4 问：常数 $C$ 与积分常数。**\n\n由第 2 问，$u$ 满足隐式关系；给出初始条件 $u(1)=0.5$ 即可定 $C$。**注意这里不必算出 $C$ 的显式值** —— 用数值核验斜率一致就已经验证了降阶后的方程正确。\n\n**第 5 问（易错）：为什么不能用 $\\ln(1+u^2)$ 的绝对值？**\n\n$1+u^2>0$ 恒成立，所以去掉绝对值合法。**若分母换成 $1-u^2$，就必须讨论 $|u|<1$ 与 $|u|>1$ 两个区间**——这是这类题最常见的失分点。",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.3:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：四条解法的选择判据与识别信号",
+      "keywords": [
+        "先找对称性再选解法",
+        "缺项≠对称性",
+        "识别信号：幂次、比例、Euler 形",
+        "无法降阶时的退路"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 34,
+        "line_end": 47
+      },
+      "fill_hint": "识别信号对照表（四行）+ Euler 判据的更正（每项形如 c x^k y^(k)，不是幂次相等）+ 三条选择原则 + 与 de2.4 的分工。",
+      "content": "**拿到一个方程，如何快速选到正确解法？**\n\n| 识别信号（快速自查） | 对称性 | 解法 | 降阶后 |\n|---|---|---|---|\n| 方程里**没有 $x$**（只出现 $y,y',y''$） | $\\partial_x$ | $p=y'(y)$，$y''=p\\,dp/dy$ | 一阶，自变量 $y$ |\n| 方程里**没有 $y$**（只出现 $x,y',y''$） | $\\partial_y$ | $p=y'(x)$，$y''=dp/dx$ | 一阶，自变量 $x$ |\n| 把 $x,y$ 同时乘 $\\lambda$ 后方程**不变** | $x\\partial_x+y\\partial_y$ | $u=y/x$ | 可分离，自变量 $\\ln x$ |\n| 各项的「$x$ 的幂 ×（$y$ 或其导数的阶）」**恒定** | $x\\partial_x$ | $t=\\ln x$ | 常系数 |\n\n**第 4 行给一个可操作的判据**：Euler 方程的特征是**每一项的「$x$ 幂次 + $y$ 的导数阶」相等**。例如 $x^2y''+3xy'+y$：三项分别是 $2+2=4$、$1+1=2$、$0+0=0$ —— **不等**！它其实是 Euler 方程的**标准形**（$x^ky^{(k)}$ 系数为常数即可，不必幂次相等）。**正确判据**：每一项形如 $c\\,x^{k}y^{(k)}$（$k$ 与导数阶相同）。\n\n**三条选择原则。**\n\n1. **先看「最高阶导数的系数」**：含 $x$ 的幂 ⇒ 试 $t=\\ln x$；常数 ⇒ 试缺项降阶。\n2. **再看「齐次性」**：$y'=g(y/x)$ 型 ⇒ $u=y/x$。\n3. **都不满足时**：方程可能**没有**这些对称性（`de2.2` 的决定方程组会给出结论），此时回到 `de1.5`–`de1.8` 的常系数/变系数方法（幂级数 `de1.13`、Frobenius `de1.14`）。\n\n**与 `de2.4` 的分工**：本表是「**查词典**」（四个已命名的对称性），`de2.4` 是「**走流程**」（对任意 $\\mathbf{v}$ 求 $(r,s)$ 再降阶）。**词典能覆盖的题目占绝大多数。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.4",
+        "de1.5",
+        "de1.6",
+        "de1.13",
+        "de1.14"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.3:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：四条解法的下游去向",
+      "keywords": [
+        "de1.4/de1.6 是被解释者",
+        "de2.4 是通用化",
+        "de3 的算子视角",
+        "物理：守恒量与相似解"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 34,
+        "line_end": 47
+      },
+      "fill_hint": "下游清单：de1.4（可降阶，本节给理由）、de1.6（Euler 的 t=ln x 获几何含义）、de1.2/de1.3（齐次⇒u=y/x）、de2.4（升格为通用流程）、de3（线性化使方法可计算）、物理（自相似解与量纲分析）；末给回代自检。",
+      "content": "**下游清单。**\n\n- **`de1.4` 的可降阶方程**：本节表格的第 1、2 行正是 `de1.4` 里那几条「缺 $x$ / 缺 $y$」技巧的**对称性解释**——`de1.4` 给操作，本节给理由。\n\n- **`de1.6` 的 Euler 方程**：表格第 4 行。`de1.6` 里的 $t=\\ln x$ 换元在此获得生成元 $x\\partial_x$ 的几何含义（「把乘性缩放读成加性平移」）。\n\n- **`de1.2`/`de1.3` 的齐次方程与积分因子**：表格第 3 行。齐次方程 $y'=f(y/x)$ 的「$u=y/x$」就是位似生成元的不变量。\n\n- **`de2.4` 的通用流程**：本节是「四个特例」，`de2.4` 把「四个特例」升格成「任意生成元都能走的三步流程」。\n\n- **`de3` 的算子视角**：`de3.1` 的「把微分方程化为代数」在对称性方法里表现为「决定方程组是线性 PDE 组」——**对称性方法可计算，靠的就是线性化**。\n\n- **物理：守恒量与相似解**：位似对称性给「标度不变 ⇒ 自相似解」（例：扩散方程的自相似解 $x/\\sqrt{t}$）；$x$ 缩放给「量纲分析」。**本节的四个生成元在物理里就是四条守恒律/相似性原理。**\n\n**一句自检**：写完解法后**回代原方程验一次**（用一个具体点的数值），比检查推导更省事——**这是 `probe1` 那种做法。**",
+      "links": [
+        "de1.2",
+        "de1.3",
+        "de1.4",
+        "de1.6",
+        "de2.4",
+        "de3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de2.4",
+  "chapter": "de2",
+  "title": "用对称性降阶的一般步骤",
+  "src": {
+    "file": "notebook/diffrential/de2.tex",
+    "line_start": 49,
+    "line_end": 69,
+    "anchor": "notebook/diffrential/de2.tex:49"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de2.4:reduce.quantifiers",
+      "type": "comparison",
+      "subject": "reduce",
+      "title": "三步降阶法的限定词表：最容易错的是 s 的选取",
+      "keywords": [
+        "三步：找 v → 找 (r,s) → 换坐标",
+        "r 须满足 v r = 0",
+        "s 须满足 v s = 1（不是随便取）",
+        "换坐标须 Jacobi 非零",
+        "r、s 的选取不唯一"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 49,
+        "line_end": 69
+      },
+      "fill_hint": "五行条件表：v 须真是对称性、r 须 vr=0、s 须 vs=1（反例：s=x 给 vs=1/2 与 dr/ds=2/1，未降阶）、Jacobi 非零、r/s 不唯一；特别点出 ③ 最常翻车。",
+      "content": "切片给了**三步**：① 找对称性 $\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$；② 找不变量 $r$（$\\mathbf{v}r=0$）与 $s$（$\\mathbf{v}s=1$）；③ 在新坐标 $(r,s)$ 下方程降一阶。**三步里有五个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$\\mathbf{v}$ 必须是真的对称性** | 若用 $x\\partial_y$ 去降 $y'=0$（它不是对称性，见 `de2.2`） | 降阶后的方程**与原方程不同解** | 不能放宽：这是前提 |\n| ② **$r$ 须满足 $\\mathbf{v}r=0$** | $\\mathbf{v}=x\\partial_x+y\\partial_y$、误取 $r=x$：$\\mathbf{v}x=x\\ne0$ | $r$ **沿轨道变化** ⇒ 它不是轨道标签，换坐标后方程不闭合 | 不能放宽：这是「不变量」的定义 |\n| ③ **$s$ 须满足 $\\mathbf{v}s=1$** | 同 $\\mathbf{v}$ 误取 $s=x$：$\\mathbf{v}x=x$，在 $x=1$ 处为 1【已核验:1|1】、在 $x=2$ 处为 2【已核验:2|2】 —— **不是常数** | $dr/ds$ 里**残留 $x$**：取 $f(u)=u^2$、$r=2$、$x=1$ 时 $dr/ds$ 算得 2【已核验:2|(2**2-2)/1】，$x=2$ 时算得 1【已核验:1|(2**2-2)/2】 ⇒ **没降阶** | 不能放宽：$s$ 必须是「以单位速度走过的路程」 |\n| ④ **$(r,s)$ 是局部坐标**（Jacobi 非零） | 取 $r=y/x$、$s=y/x+1$（两者相关） | Jacobi $=0$ ⇒ 换坐标非法，$dr/ds$ 无意义 | 不能放宽：微分同胚要求 |\n| ⑤ **$r,s$ 的选取不唯一** | 取 $r=(y/x)^2$ 也满足 $\\mathbf{v}r=0$（因 $\\mathbf{v}(r^k)=0$） | 可分离性保持，但 $dr/ds$ 会多出 $\\sqrt{r}$，**积分变麻烦** | 可放宽：换更简单的 $r$ 即可 |\n\n**用法**：① 是输入（由 `de2.2` 保证）；② ③ 是**两个必须逐个验算的条件**（把 $\\mathbf{v}$ 作用上去看是不是 $0$ 和 $1$）；④ 通常自动满足；⑤ 是「优化自由度」，**选最简单的 $r$**。**③ 是本表最常翻车的一条**——它容易被误当成「随便找个第二坐标」。",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.4:wrong-timelike.counterexample",
+      "type": "counterexample",
+      "subject": "wrong-timelike",
+      "title": "反例：取 s = x 而不是 ln x，降阶失败（残留 x）",
+      "keywords": [
+        "v = x∂_x + y∂_y 下 v x = x ≠ 1",
+        "dr/ds = (f(r) − r)/x 仍含 x",
+        "取 f(u)=u² 给出两个不同值 2 与 1",
+        "换 s = ln x 后恒为 2"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 55,
+        "line_end": 67
+      },
+      "fill_hint": "反例：v=x∂_x+y∂_y 下 r=y/x 合格（算得 0），但取 s=x 给 v x=x（x=1 时 1、x=2 时 2）⇒ dr/ds=(f(r)−r)/x 残留 x；取 f(u)=u²、r=2 得 2 与 1 两个值 ⇒ 失败；换 s=ln x 后恒为 2；解释「乘性流的自然时间是 ln x」。",
+      "content": "**限定词③是「$\\mathbf{v}s=1$」。** 直觉上「$r$ 已选好，$s$ 随便配一个就行」——**错**。\n\n**第一步：写下 $\\mathbf{v}$ 与 $r$。**\n\n$$\\mathbf{v}=x\\,\\partial_x+y\\,\\partial_y,\\qquad r=\\frac yx$$\n\n$r$ 合格：$\\mathbf{v}(y/x)=x\\cdot(-y/x^2)+y\\cdot(1/x)=0$ ✅（取 $x=2,y=3$ 算得 0【已核验:0|-3/2+2*3/4】）\n\n**第二步：错误地取 $s=x$。**\n\n$$\\mathbf{v}(x)=x\\cdot1+y\\cdot0=x$$\n\n**在 $x=1$ 处算得 1【已核验:1|1】，在 $x=2$ 处算得 2【已核验:2|2】——不是常数 $1$** ⇒ $s$ 不合格。\n\n**第三步：看后果（残留 $x$，未降阶）。**\n\n$s=x$ 时 $ds/dx=1$，于是\n\n$$\\frac{dr}{ds}=\\frac{dr/dx}{ds/dx}=\\frac{(y/x)'}{1}=x\\cdot\\frac{d}{dx}\\Bigl(\\frac yx\\Bigr)=y'-\\frac yx=f(r)-r$$\n\n**注意最后一步没除以 $x$：因为 $ds/dx=1$，而不是 $1/x$。** 展开写成「对 $x$ 的显式依赖」：\n\n$$\\frac{dr}{ds}=\\frac{f(r)-r}{x}$$\n\n**右边显含 $x$ ⇒ 这不是一个只含 $r$ 的方程 ⇒ 降阶失败。**\n\n**第四步：给具体数值。**\n\n取 $f(u)=u^2$（即 $y'=(y/x)^2$）、$r=2$：\n\n- 在 $x=1$ 处：$dr/ds=(4-2)/1$，算得 2【已核验:2|(2**2-2)/1】\n- 在 $x=2$ 处：$dr/ds=(4-2)/2$，算得 1【已核验:1|(2**2-2)/2】\n\n**同一个 $r$ 给出两个不同的 $dr/ds$ ⇒ 右边不是 $r$ 的函数** ✅（这就是「失败」的判据。）\n\n**第五步：换 $s=\\ln x$ 立刻成功。**\n\n$$\\mathbf{v}(\\ln x)=x\\cdot\\frac1x=1\\ \\ ✅$$\n\n此时 $ds/dx=1/x$，\n\n$$\\frac{dr}{ds}=\\frac{dr/dx}{1/x}=x\\cdot\\frac{d}{dx}\\Bigl(\\frac yx\\Bigr)=y'-r=f(r)-r$$\n\n取 $f(r)-r=r^2-r$ 在 $r=2$ 处，算得 2【已核验:2|2**2-2】，**恒为 2（与 $x$ 无关）** ⇒ **降阶成功** ✅\n\n**第六步：为什么 $\\ln x$ 是「正确的时间」。**\n\n因为 $\\mathbf{v}=x\\partial_x+y\\partial_y$ 的流是**乘性缩放** $x\\mapsto e^\\varepsilon x$。要让「走过的时间」与流参数 $\\varepsilon$ 一致，需要 $s=e^{\\varepsilon}x$ 型 —— 即 $s=\\ln x$（因为 $\\ln(e^\\varepsilon x)=\\ln x+\\varepsilon$，**恰好以单位速度前进**）。**乘性流的自然时间是 $\\ln x$，这是 $s$ 的选择规则。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.4:reduce.statement",
+      "type": "statement",
+      "subject": "reduce",
+      "title": "陈述：三步降阶法与不变量 (r, s) 的定义",
+      "keywords": [
+        "三步流程",
+        "r 与 s 的定义式",
+        "梯度条件（两个一阶 PDE）",
+        "齐次示例的完整代入"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 49,
+        "line_end": 69
+      },
+      "fill_hint": "三步法陈述：vr=0 定 r、vs=1 定 s（各有一个自由度）、换坐标降一阶；齐次示例完整代入得 dr/ds=f(r)−r 并验证两条验算式；澄清「降一阶」在一阶方程上的准确含义（化为可分离）。",
+      "content": "**陈述（三步降阶法）。** 设 $\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$ 是 $n$ 阶 ODE $F(x,y,\\ldots,y^{(n)})=0$ 的一个对称性。\n\n**第 1 步：找不变量 $r$。** 解一阶 PDE\n\n$$\\mathbf{v}r=\\xi\\,r_x+\\eta\\,r_y=0$$\n\n一个非平凡解（特征线法）即可。**含义**：$r$ 沿 $\\mathbf{v}$ 的轨道为常数 ⇒ $r$ 是「轨道标签」。\n\n**第 2 步：找时间 $s$。** 解\n\n$$\\mathbf{v}s=\\xi\\,s_x+\\eta\\,s_y=1$$\n\n**含义**：$s$ 沿轨道以单位速度前进 ⇒ $s$ 是「沿轨道的路程」。\n\n（两式联立给出 $r,s$ 各一个自由度：$r\\mapsto R(r)$ 与 $s\\mapsto s+G(r)$ 都合法。）\n\n**第 3 步：换坐标并降阶。** 把 $y$ 看成 $s$ 的函数、$r$ 看成参数，写出 $y',y'',\\ldots$ 关于 $r,s$ 的表达式；因为 $r,s$ 只依赖「轨道 + 路程」，方程化为\n\n$$G\\Bigl(r,\\ \\frac{dr}{ds},\\ \\frac{d^2r}{ds^2},\\ldots\\Bigr)=0$$\n\n即**关于 $r(s)$ 的 $(n-1)$ 阶方程**。\n\n**切片示例的完整代入（齐次方程 $y'=f(y/x)$）。**\n\n- $\\mathbf{v}=x\\partial_x+y\\partial_y$\n- $r=y/x$（验证：$x(-y/x^2)+y(1/x)=0$ ✅）\n- $s=\\ln x$（验证：$x\\cdot(1/x)=1$ ✅）\n- 代入：$y=xr$、$y'=r+xr'$；由 $r=r(s)$ 与 $ds/dx=1/x$ 得 $xr'=dr/ds$，于是\n\n$$y'=r+\\frac{dr}{ds}\\quad\\Longrightarrow\\quad\nf(r)=r+\\frac{dr}{ds}\\quad\\Longrightarrow\\quad\n\\frac{dr}{ds}=f(r)-r$$\n\n**这是一个一阶可分离方程**（切片原文给的正是它）——**阶数从 $1$ 降到 $0$（即化为求积分）**。\n\n**注意「降一阶」的含义**：原方程含 $y'$（一阶），新方程只含 $dr/ds$（仍是一阶，但**关于 $r$ 与 $s$ 的方程自变量只有一个**）——**严格地说，降阶指的是「未知函数的个数」或「方程的有效阶」，对一阶方程则表现为「化为可分离」。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.4:reduce.intuition",
+      "type": "intuition",
+      "subject": "reduce",
+      "title": "直觉：为什么换成 (r, s) 就能少一阶",
+      "keywords": [
+        "轨道坐标 + 路程坐标",
+        "方程在轨道间传递信息",
+        "s 是唯一的真自变量",
+        "r 只是「标签的演化」"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 49,
+        "line_end": 69
+      },
+      "fill_hint": "直觉：$(r,s)$ 是顺流坐标；对称性 ⇒ 方程不显含 s ⇒ 只含 r 与 dr/ds ⇒ 与「不显含 x ⇒ 令 p=y′」同构；降阶的几何来源是「商掉对称方向」；三个困惑（谁当自变量、为何规范成 vs=1、r 的身份变化）。",
+      "content": "**假设给了什么。** 我们知道 $\\mathbf{v}$ 是方程的对称性，即**流把解映成解**。这意味着：如果你沿着一条轨道走，看到的方程结构是同一套。\n\n**结论为什么因此成立。** 把它翻译成坐标语言：\n\n**第一步：$(r,s)$ 是一套「顺流坐标」。**\n\n- $r$ 沿流不变（$\\mathbf{v}r=0$）——它是**「哪一条轨道」**的编号；\n- $s$ 沿流以单位速度增长（$\\mathbf{v}s=1$）——它是**「在轨道上走了多远」**。\n\n于是平面被分成「一族轨道（$r=\\text{const}$）」+「沿轨道的坐标 $s$」。**这正是把解曲线族参数化的自然方式。**\n\n**第二步：对称性让「不同轨道上的问题长一样」。**\n\n因为流把解映成解，而流恰好就是「$r$ 不动、$s$ 平移」这个动作 —— 所以**方程在不同 $s$ 处必须长得一样**。用数学说：方程里**不能显含 $s$**（否则「$s$ 平移」就不是对称性了）。\n\n**第三步：于是方程只含 $r$ 与它对 $s$ 的导数。**\n\n$$G\\Bigl(r,\\frac{dr}{ds}\\Bigr)=0$$\n\n**这是「一阶且不显含 $s$」的形式** —— 与 `de2.3` 里「不显含 $x$ ⇒ 令 $p=y'$ 降阶」是**同一件事**！只不过现在「原来的自变量」是 $x,y$，而「新的自变量」是 $s$。\n\n**第四步：所以降阶的本质是「把对称性方向从自变量里删掉」。**\n\n一个方向被「商掉」了（因为方程沿它不变），剩下的独立变量就少一个。**$n$ 维 ⇒ $n-1$ 维**，这就是「降一阶」的几何来源。\n\n**三个常见困惑。**\n\n1. **为什么是 $s$ 当自变量而不是 $r$？** 因为方程**显含** $\\frac{dr}{ds}$ 这类导数、**不显含** $s$；$r$ 扮演的是「新的未知函数」。**谁是自变量，看的是方程里谁不出现。**\n2. **$s$ 为什么必须满足 $\\mathbf{v}s=1$ 而不是 $\\mathbf{v}s=$ 任意非零函数？** 若 $\\mathbf{v}s=g(r)$，可以把 $s$ 换成 $\\tilde s=\\int ds/g$ 使 $\\mathbf{v}\\tilde s=1$。**所以「$=1$」是一个规范化选择**，为的是让公式里不出现多余因子。\n3. **换成 $(r,s)$ 后 $r$ 还是「$y/x$」吗？** 是，但**角色变了**：原来是「$y$ 与 $x$ 的比值」，现在是「新的未知函数（依赖 $s$）」。**同一个表达式，换了身份。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3",
+        "de1.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.4:reduce.proof",
+      "type": "proof",
+      "subject": "reduce",
+      "title": "证明骨架：换坐标后方程确实不显含 s",
+      "keywords": [
+        "第一步 写出坐标变换的 Jacobi",
+        "第二步 把 d/dx 用 (r,s) 表示",
+        "第三步 用 vr=0、vs=1 得关键恒等式",
+        "第四步 说明方程不显含 s"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 55,
+        "line_end": 69
+      },
+      "fill_hint": "五步证明：Jacobi 非零；用 d/dx=(ds/dx)d/ds 换导；澄清 vr=0 是「沿流不变」而非「r 为常数」（vd r/dε=0 但 r(s) 可变）；流在 (r,s) 下是 (r,s+ε) ⇒ 方程不显含 s；令 q=dr/ds、d²r/ds²=q dq/dr 降阶；四条易错。",
+      "content": "**目标**：证明「$\\mathbf{v}$ 是对称性 ⇒ 换到 $(r,s)$ 后方程不显含 $s$，于是可降阶」。\n\n**第 1 步（坐标变换）。** 设 $r,s$ 是 $(x,y)$ 的函数且 Jacobi 行列式 $J=r_xs_y-r_ys_x\\ne0$。则局部可逆：$(x,y)=(x(r,s),y(r,s))$。\n\n**第 2 步（把对 $x$ 的导数换成对 $s$ 的导数）。** 设解曲线在 $(r,s)$ 坐标下写成 $r=r(s)$。则 $y$ 是 $(r(s),s)$ 的复合函数：\n\n$$y'=\\frac{dy}{dx}=y_r\\,r'\\frac{ds}{dx}+y_s\\frac{ds}{dx}+\\cdots$$\n\n**具体用恒等式更清楚**：把「沿曲线求 $d/dx$」写成对 $s$ 求导乘以 $ds/dx$，即 $\\dfrac{d}{dx}=\\dfrac{ds}{dx}\\dfrac{d}{ds}$（因为 $r$ 是 $s$ 的函数）。\n\n**第 3 步（关键恒等式：$\\mathbf{v}r=0$ 的正确读法）。** 沿 $\\mathbf{v}$ 的流（流参数 $\\varepsilon$）有\n\n$$\\frac{dr}{d\\varepsilon}=\\mathbf{v}r=0,\\qquad \\frac{ds}{d\\varepsilon}=\\mathbf{v}s=1$$\n\n**先说清一个易混淆点**：$\\dfrac{dr}{d\\varepsilon}=0$ 说明「**沿流** $r$ 不变」，即 $r$ 是轨道标签；它**不等于**「解曲线上的 $r(s)$ 是常数」。原因：解曲线在 $(x,y)$ 平面上运动时**同时改变轨道**，所以 $r(s)$ 一般随 $s$ 变化（否则轨道就唯一了，整个平面只剩一条轨道）。\n\n**而这正是我们能写出 $dr/ds$ 的根据**：$r$ 只通过「轨道 + 路程」依赖状态，在固定轨道上 $r$ 是常数，所以解曲线上的 $r$ 只能是 $s$ 的函数：$r=r(s)$，且\n\n$$\\frac{dr}{ds}=\\frac{dr/dx}{ds/dx}=\\frac{(y/x)'}{1/x}=x\\cdot\\frac{d}{dx}\\Bigl(\\frac yx\\Bigr)=y'-\\frac yx=y'-r$$\n\n**这就是切片示例里 $\\dfrac{dr}{ds}=f(r)-r$ 的来源。**\n\n**第 4 步（方程不显含 $s$）。** 设解曲线族在流 $\\phi_\\varepsilon$ 下保持不变。在 $(r,s)$ 坐标下 $\\phi_\\varepsilon$ 正是 $(r,s)\\mapsto(r,s+\\varepsilon)$（$r$ 不动、$s$ 平移）。于是若 $G(r(s),s)=0$ 定义解族，则经 $s\\mapsto s+\\varepsilon$ 后仍必须定义同一族 ⇒ **$G$ 不能显含 $s$**（否则平移 $s$ 会改变方程）。**所以 $G=G(r,dr/ds,\\ldots)$** ✅ ∎\n\n**第 5 步（降阶落地）。** 因为 $G$ 不显含 $s$，可令 $q=\\dfrac{dr}{ds}$ 并把它看成 $r$ 的函数（与 `de2.3` 中「不显含 $x$ ⇒ 令 $p=y'$」完全同构）：\n\n$$\\frac{d^2r}{ds^2}=q\\,\\frac{dq}{dr}$$\n\n于是 $n-1$ 阶方程中的最高阶导数被降掉一阶。**对 $n=1$（切片示例）就直接化为可分离方程 $\\dfrac{dr}{ds}=f(r)-r$。** ∎\n\n**易错点。**\n\n1. **「$\\mathbf{v}r=0$」不等于「$r$ 是常数」**（第 3 步）；这是本单元最容易混淆的一点。\n2. **$s$ 要满足 $\\mathbf{v}s=1$**，不能取任意与 $r$ 独立的函数（否则 $\\frac{dr}{ds}$ 里残留旧坐标，见反例词条）。\n3. **$J\\ne0$** 才可换坐标。\n4. **解曲线的存在区间**：降阶后解出的 $r(s)$ 要回到 $(x,y)$ 时可能只覆盖原区间的一段（例如 $\\ln x$ 要求 $x>0$）。",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3",
+        "de1.4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.4:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：完整解 y′ = y/x + (y/x)²（三步走一遍）",
+      "keywords": [
+        "v 与 (r,s) 的选取",
+        "dr/ds = r² 可分离",
+        "解 y = −x/(ln x + C)",
+        "在 x = e 处核验 y′ = 0"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 55,
+        "line_end": 67
+      },
+      "fill_hint": "完整三步：v=x∂_x+y∂_y、r=y/x、s=ln x ⇒ dr/ds=r² ⇒ r=−1/(s+C) ⇒ y=−x/(ln x+C)；在 x=e 处核验 r=−1、y=−2.718282、两边 y′ 都为 0；进阶：取 r̃=r² 会得到 dr̃/ds=2r̃^{3/2}，说明 r 应取最简单者。",
+      "content": "**题**：用三步降阶法解 $y'=\\dfrac yx+\\Bigl(\\dfrac yx\\Bigr)^2$，即 $y'=f(u)$、$f(u)=u+u^2$、$u=y/x$。\n\n**第 1 步：找 $\\mathbf{v}$。**\n\n方程只依赖 $y/x$（位似不变量）⇒ $\\mathbf{v}=x\\partial_x+y\\partial_y$。\n\n**第 2 步：找 $(r,s)$。**\n\n- $r=y/x$：$\\mathbf{v}r=0$ ✅（取 $x=2,y=3$ 算得 0【已核验:0|-3/2+2*3/4】）\n- $s=\\ln x$：$\\mathbf{v}s=1$ ✅\n\n**第 3 步：换坐标并降阶。**\n\n由 `de2.3` 的结论（$y=xr$、$y'=r+\\frac{dr}{ds}$）：\n\n$$\\frac{dr}{ds}=f(r)-r=(r+r^2)-r=r^2$$\n\n**这是可分离方程**：\n\n$$\\frac{dr}{r^2}=ds\\quad\\Longrightarrow\\quad-\\frac1r=s+C\\quad\\Longrightarrow\\quad r=-\\frac{1}{s+C}$$\n\n代回 $r=y/x$、$s=\\ln x$：\n\n$$\\boxed{\\ y=-\\frac{x}{\\ln x+C}\\ }$$\n\n**数值核验（取 $C=0$、$x=e$）。**\n\n- $s=\\ln e=1$，$r=-\\dfrac{1}{1+0}$，算得 -1【已核验:-1|-1/1】\n- 所以 $y(e)=xr=e\\cdot(-1)$，算得 -2.718282【已核验:-2.71828182846|-e/1】\n- 右边 $\\dfrac yx+\\bigl(\\dfrac yx\\bigr)^2=r+r^2$，算得 0【已核验:0|(-1)+(-1)**2】\n- 左边 $y'$：由 $y=-\\dfrac x{\\ln x}$，$y'=-\\dfrac{\\ln x-1}{(\\ln x)^2}$，在 $x=e$（$\\ln e=1$）处算得 0【已核验:0|-(log(e)-1)/log(e)**2】\n\n**左边 $=0$、右边 $=0$ ⇒ 一致** ✅\n\n**第 4 问（进阶）：换个 $r$ 会怎样？**\n\n取 $\\tilde r=u^2=r^2$（也满足 $\\mathbf{v}\\tilde r=0$）。则 $\\tilde r'\\big|_s=2rr'=2r\\cdot r^2=2r^3=2\\tilde r^{3/2}$，于是\n\n$$\\frac{d\\tilde r}{ds}=2\\tilde r^{3/2}$$\n\n**仍可分离，但多了 $\\tilde r^{3/2}$**（积分多换一次元）。**这印证了「$r$ 的选取不唯一，但要挑最简单的」。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3",
+        "de1.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.4:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：三步降阶法 vs 四条标准解法",
+      "keywords": [
+        "三步法是通用流程",
+        "四条解法是特例词典",
+        "流程更慢但覆盖更广",
+        "何时该用哪个"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 49,
+        "line_end": 69
+      },
+      "fill_hint": "两栏对照表（输入/中间步骤/覆盖范围/速度/典型场景/失败模式）+ 「何时必须用三步法」三条 + 「三步法是母流程、四条解法是特例」的关系 + 一个快判据。",
+      "content": "**两组工具的定位对照。**\n\n| 维度 | 四条标准解法（`de2.3`） | 三步降阶法（本单元） |\n|---|---|---|\n| **输入** | 已命名的对称性（缺 $x$、缺 $y$、齐次、Euler） | **任意**生成元 $\\mathbf{v}=\\xi\\partial_x+\\eta\\partial_y$ |\n| **中间步骤** | 无需计算 $(r,s)$（表里已给） | 必须解两个一阶 PDE：$\\mathbf{v}r=0$、$\\mathbf{v}s=1$ |\n| **覆盖范围** | 常见题型的 90% | **全部**有对称性的方程 |\n| **速度** | 一眼可辨，直接套 | 要解 PDE，慢 |\n| **典型场景** | 考试/作业里的标准题 | 研究/复杂方程/需要找新对称性时 |\n| **失败模式** | 「看着像其实不是」（见 `de2.3` 的 5 vs 9 反例） | $s$ 取错 ⇒ 残留旧坐标（见 `wrong-timelike` 反例） |\n\n**什么时候必须用三步法？**\n\n1. 对称性**不是**表里那四种（例如 $\\mathbf{v}=y\\partial_x$ 或 $\\mathbf{v}=\\partial_x+\\partial_y$）；\n2. 需要**先找对称性**（用 `de2.2` 的决定方程组），找到的 $\\mathbf{v}$ 往往是「斜的」（$\\xi,\\eta$ 都不平凡）；\n3. 需要判断「能不能降阶」以及「降到多少阶」（对称性的个数决定降阶次数）。\n\n**两者的关系**：三步法是**母流程**，四条标准解法是**它在这四个特殊 $\\mathbf{v}$ 上的展开**。**记住母流程，四个特例可以现场推出来**；反之只记特例，遇到「斜的」对称性就无从下手。\n\n**一个判据**：如果 $(\\xi,\\eta)$ 里至少一个是常数而另一个为零（即 $\\mathbf{v}$ 是「正方向」的），大概率能直接套表；否则走三步法。",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.4:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：降阶流程的下游与推广",
+      "keywords": [
+        "de2.3 是特例展开",
+        "PDE 侧：相似解降维",
+        "高阶方程：多个对称性连降",
+        "de3：算子视角"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 49,
+        "line_end": 69
+      },
+      "fill_hint": "下游清单：de2.3 是特例展开、de2.2 提供找对称性这一步、多个对称性连降（n 阶有 k 个对称性可降到 n−k 阶）、PDE 相似解（热方程 t^{−1/2}φ(x/√t)）、de3 算子视角、量纲分析；末给「回代验证」自检。",
+      "content": "**下游清单。**\n\n- **`de2.3` 的四条解法**：都是本流程在特殊 $\\mathbf{v}$ 上的实例（缺 $x$：$r=y$、$s=x$；缺 $y$：对偶写法；位似：$r=y/x$、$s=\\ln x$；$x$ 缩放：$r=y$、$s=\\ln x$）。\n\n- **`de2.2` 的决定方程组**：三步法的第 1 步「找对称性」由 `de2.2` 提供。**两者合起来才是完整工作流**：决定方程组 → 对称性清单 → 逐个降阶。\n\n- **高阶方程：多个对称性连降。** 若 $n$ 阶方程有 $k$ 个线性无关的对称性，**最多可以连降到 $n-k$ 阶**（每降一次换一组新坐标，要求生成元在新坐标下仍然「正」。）**这是「四阶方程降到二阶甚至一阶」的标准手段。**\n\n- **PDE 侧：相似解（self-similar solutions）。** 把同一个思路用在偏微分方程上，得到「相似解」：例如热方程 $u_t=u_{xx}$ 有尺度对称性，令 $u=t^{-1/2}\\phi(\\xi)$、$\\xi=x/\\sqrt t$ 就把 PDE 化成 ODE —— **这与本单元的「换成 $(r,s)$ 降一维」是同一个动作。**\n\n- **`de3` 的算子视角**：`de3.1` 把「求对称性」表述为「解一个线性算子方程」。**决定方程组是线性的，这是整套方法可计算的原因。**\n\n- **物理与应用**：量纲分析（Buckingham π 定理）本质上是「找缩放对称性的不变量」；流体中的自相似解（Blasius 解）、爆破解都属于本流程。\n\n**一句自检**：三步走完后**必须回代**：「把新坐标下的方程换回原坐标，是否等价于原方程？」**不验证的话，$s$ 取错（残留旧坐标）这类错误会被漏掉。**",
+      "links": [
+        "de2.1",
+        "de2.2",
+        "de2.3",
+        "de3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
