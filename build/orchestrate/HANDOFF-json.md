@@ -99,3 +99,28 @@
      application / viz / probe。
 - **子任务无需重跑**：本会话未用 `wbdispatch`（直生成更快且无 429 风险）。
   下一批 `batch_klmqr`（48 单元）可继续沿用同一模式。
+
+### 2026-09-25 · batch_klmqr 完成 K/L/M/Q/R 五篇（+48 单元 → 185/318）
+
+- **本会话产出 48 单元**（WorkBuddy 会话内直接自生成，模型 `glm-5.3-flashx`）：
+  - K 篇 **6 单元**：K1 K2 K3.1 K3.2 K4 K5 → commit **5bc6296**（含白名单补 sinh/cosh/tanh/asin/atan/degrees/comb/perm/prod）
+  - L 篇 **9 单元**：L1–L9 → 同 commit **5bc6296**
+  - M 篇 **7 单元**：M1–M7 → commit **00adc3f**
+  - Q 篇 **13 单元**：Q1–Q11（含 Q9.1/9.2/9.3） → commit **d21cc0d**
+  - R 篇 **13 单元**：R1 R2.1–R2.4 R3 R4.1–R4.3 R5 R6 R7 R8 → commit **99f347a**
+- **进度：185/318（剩 133）**；48 单元逐个 verify 全绿（CRIT 0 / MAJ 0），
+  数值 100% 回填（K/L 约 150 处、M 约 200 处、Q 约 120 处、R 约 100 处，全部与校验器独立复算一致）。
+- **本会话新踩的坑（都是「踩过才知道」的）**：
+  1. **复数值不能当断言目标**：`【待核验:1/(4*exp(1j*pi/4)**3)】` 报
+     `must be real number, not complex`。**必须把复留数拆成实部/虚部两条实数断言**
+     （`-sqrt(2)/8`、`0`、`-sqrt(2)/4`）。R4.3 曾因此报 3 处 CRIT。
+  2. **`\\begin{cases}` 之类的环境与「双反斜杠检测」冲突**：`has_stray_double_backslash`
+     只剥 `\begin{}...\end{}` 的**单反斜杠**形式；若 JSON 里写成 `\\begin{cases}`，
+     整体剥不掉 ⇒ 换行符 `\\` 被判为「过度转义」⇒ **MAJ**。**最省事的做法是
+     不写 cases/matrix 环境，改用「并列列表」表达分支**（R2.2 改后用并列列表通过）。
+  3. **`ent()` 的 `type_` 与 `subject` 不能同名拼接**：写 `ent(..., "gamma.extension", "extension", ...)`
+     会生成 id `R6:gamma.extension.extension` ⇒ **CRIT id 格式非法**（id 只允许
+     `<code>:<subject>.<slot>` 两段）。**slot 不要重复 subject**。
+  4. **keywords 严格 3–7 条**：我几次写到 8 条 ⇒ MAJ。**起草时按 5 条写**最稳。
+  5. **`\mathrm{Res}` 里的 `\r` 转义**：在普通（非 r）字符串里 `"\mathrm"` 会被解释成
+     `\r`+`mathrm`。**脚本里一律用 r-string 写 content**（本会话已统一）。
