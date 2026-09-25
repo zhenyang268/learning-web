@@ -1,0 +1,263 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de2.14",
+  "chapter": "de2",
+  "title": "Green 函数方法（PDE 版本）",
+  "src": {
+    "file": "notebook/diffrential/de2.tex",
+    "line_start": 268,
+    "line_end": 285,
+    "anchor": "notebook/diffrential/de2.tex:268"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de2.14:green-pde.quantifiers",
+      "type": "comparison",
+      "subject": "green-pde",
+      "title": "PDE 版 Green 函数的四个限定词：区域几何决定核的形状",
+      "keywords": [
+        "基本解只到相差调和函数",
+        "有界区域必须减掉调和修正项",
+        "2D 与 3D 的对数/幂衰减本质不同",
+        "边界项的符号与外法向一致"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "四行条件表：基本解只到相差调和函数、有界域须减镜像项（不减则边界值 0.039789≠0）、2D/3D 本质差别（3D 在 r=10 给 0.007958 vs 2D 在 R=10/100 给 −0.366468/−0.732936 发散）、边界项符号与外法向；半空间镜像法给 G=1/(6π)=0.053052 与边界 0。",
+      "content": "切片给了**三个公式**：3D 的 $G=\\frac{1}{4\\pi r}$、2D 的 $G=-\\frac{1}{2\\pi}\\ln r$、以及解的表示式。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **基本解只到相差调和函数** | $\\Delta G=\\delta$ 的解在 $r\\ne0$ 处可加任意调和函数 $h$（$\\Delta h=0$）；例如 3D 加常数 $C$ 仍满足 $\\Delta(G+C)=\\delta$ | **基本解 intrinsically 不唯一** ⇒ 必须靠边界条件/衰减条件挑定 | 不能放宽：这是 PDE 的基本解与 ODE 的基本解的最大差别 |\n| ② **有界区域必须减掉镜像项** | 半空间 $z>0$、Dirichlet：若只用自由空间 $G$，则边界点 $z=0$ 处 $r=2$ 给 $G=\\frac{1}{4\\pi\\cdot2}$ 算得 0.039789【已核验:0.039788735773|1/(4*pi*2)】$\\ne0$ | **边界条件被破坏**（Dirichlet 要求 $G\\vert_{\\partial\\Omega}=0$） | 不能放宽：边界条件是核的一部分 |\n| ③ **2D 与 3D 的本质差别** | 3D 在 $r=10$ 处 $G=\\frac{1}{40\\pi}$ 算得 0.007958【已核验:0.00795774715459|1/(40*pi)】（衰减到 $r^{-1}$）；2D 在 $\\rho=R$ 处 $G=-\\frac{\\ln R}{2\\pi}$：$R=10$ 给 -0.366468【已核验:-0.36646779944|-log(10)/(2*pi)】、$R=100$ 给 -0.732936【已核验:-0.732935598879|-log(100)/(2*pi)】 —— **$\\to-\\infty$** | 2D 的 $G$ **在不穷远处发散** ⇒ 无界区域的 2D 问题**必须另加正规化/常数**，不能直接要求「$G\\to0$」 | 不能放宽：这是 2D 调和函数「不能同时在有限处有奇性又在无穷远衰减」的必然 |\n| ④ **边界项符号与外法向一致** | 解的表示式里 $\\bigl[G\\,\\partial_nu-u\\,\\partial_nG\\bigr]$ 的符号依赖 $n$ 取**外法向**；取内法向会整体反号 | 边界贡献算成相反数（解错一个可观的量） | 不能放宽：$n$ 的约定必须统一 |\n\n**一句话总结**：**ODE 的 Green 函数由边界条件唯一确定（`de1.18` 的四条件）；PDE 的 Green 函数由区域几何唯一确定**——所以「求 $G$」在 PDE 里就是「解一个带 $\\delta$ 源、带齐次边界的边值问题」。\n\n**两个立刻可算的数值（半空间 Dirichlet 的镜像法）**：取源 $\\mathbf x'=(0,0,2)$、观测点 $\\mathbf x=(0,0,1)$：$r=1$、镜像距离 $r'=3$ ⇒\n\n$$G=\\frac{1}{4\\pi}-\\frac{1}{12\\pi}=\\frac{1}{6\\pi},\\quad \\text{算得 } 0.053052\\ \\text{【已核验:0.0530516476973|1/(6*pi)】}$$\n\n**边界点** $\\mathbf x=(0,0,0)$：$r=r'=2$ ⇒ $G=\\frac{1}{8\\pi}-\\frac{1}{8\\pi}$ 算得 0【已核验:0|1/(4*pi*2)-1/(4*pi*2)】 ✅ **齐次 Dirichlet 满足**。",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.14:no-mirror.counterexample",
+      "type": "counterexample",
+      "subject": "no-mirror",
+      "title": "反例：不减镜像项，Green 函数在边界上不为零",
+      "keywords": [
+        "自由空间 G 在边界上不为零",
+        "Dirichlet 要求 G|∂Ω = 0",
+        "边界点给 0.039789 而非 0",
+        "镜像项正好把它抹掉"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "反例：3D 半空间 Dirichlet，只用自由空间 G ⇒ 边界上 r=2 给 0.039789≠0；加反号镜像项后边界给 1/(8π)−1/(8π)=0；内部 (0,0,1) 处 r=1、r″=3 给 1/(6π)=0.053052（小于 0.079577）；Dirichlet 用减、Neumann 用加；结构 G=G₀−h 且 h 由 de2.8 的边值问题保证。",
+      "content": "**限定词②是「有界区域必须减掉调和修正项」。** 这一条的来源是：**自由空间的基本解对任何区域都满足 $\\Delta G=\\delta$，但一般不满足区域的边界条件**。\n\n**第一步：写下反例（3D 半空间，Dirichlet）。**\n\n$$\\Omega=\\{z>0\\},\\qquad \\Delta u=f\\ \\text{于}\\ \\Omega,\\qquad u\\big|_{\\partial\\Omega}=0$$\n\n**第二步：只用自由空间基本解。**\n\n$$G_0(\\mathbf x,\\mathbf x')=\\frac{1}{4\\pi\\vert\\mathbf x-\\mathbf x'\\vert}$$\n\n取**边界上**的点 $\\mathbf x=(0,0,0)$、源在 $\\mathbf x'=(0,0,2)$：距离 $r=2$ ⇒\n\n$$G_0=\\frac{1}{4\\pi\\cdot2},\\quad \\text{算得 } 0.039789\\ \\text{【已核验:0.039788735773|1/(4*pi*2)】}\\ \\ne0\\ ❌$$\n\n**但 Dirichlet 要求 $G\\vert_{\\partial\\Omega}=0$** ⇒ **$G_0$ 不是这个区域的 Green 函数**。\n\n**第三步：加上镜像项。**\n\n把源关于平面 $z=0$ **镜像**到 $\\mathbf x''=(0,0,-2)$，取\n\n$$G(\\mathbf x,\\mathbf x')=\\frac{1}{4\\pi\\vert\\mathbf x-\\mathbf x'\\vert}-\\frac{1}{4\\pi\\vert\\mathbf x-\\mathbf x''\\vert}$$\n\n**验证边界为零**：对 $z=0$ 上任一点，它到 $\\mathbf x'$ 与到 $\\mathbf x''$ 的距离**相等**（因为 $\\mathbf x'$ 与 $\\mathbf x''$ 关于该平面对称）⇒ 两项相减为 $0$ ✅\n\n取 $\\mathbf x=(0,0,0)$：$r=2$、$r''=2$ ⇒ $G=\\frac{1}{8\\pi}-\\frac{1}{8\\pi}$ 算得 0【已核验:0|1/(4*pi*2)-1/(4*pi*2)】 ✅\n\n**第四步：区域内部的数值。**\n\n取 $\\mathbf x=(0,0,1)$（区域内）：\n\n- $r=\\vert(0,0,1)-(0,0,2)\\vert=1$\n- $r''=\\vert(0,0,1)-(0,0,-2)\\vert=3$\n\n$$G=\\frac{1}{4\\pi}-\\frac{1}{12\\pi}=\\frac{3-1}{12\\pi}=\\frac{1}{6\\pi},\\quad \\text{算得 } 0.053052\\ \\text{【已核验:0.0530516476973|1/(6*pi)】}$$\n\n**比 $G_0=\\frac{1}{4\\pi}$ 的 0.079577 小** —— 镜像项**减掉了一部分**（物理上：$\\delta$ 源与它的「反号像源」共同作用）✅\n\n**第五步：为什么「减」而不是「加」。**\n\nDirichlet 的镜像是**反号**的（像源与真源符号相反），所以是**减**；Neumann（$\\partial_nG=0$）的镜像是**同号**的（**加**）。**判据**：代边界条件进去看符号是否配对。\n\n**第六步：这条反例的分量。**\n\n- 它说明 **「Green 函数 = 基本解 − 调和修正」** 这个结构：$G=G_0-h$，其中 $h$ 调和且 $h\\vert_{\\partial\\Omega}=G_0\\vert_{\\partial\\Omega}$；\n- **调和修正的存在性由 `de2.8` 的 Dirichlet 边值问题理论保证**（解存在唯一）；\n- **几何复杂时 $h$ 求不出** ⇒ 这时用**边界元法**（`de4`）数值求解，`de2.14` 的表示式正是它的出发点。\n\n**一句话**：**自由空间的基本解只是「半个」Green 函数；另一半（调和修正）由区域几何决定。**",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.15",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.14:green-pde.statement",
+      "type": "statement",
+      "subject": "green-pde",
+      "title": "陈述：基本解、镜像法与解的表示",
+      "keywords": [
+        "3D 与 2D 的基本解",
+        "有界区域的 G = 基本解 − 调和修正",
+        "解的表示（Green 第二恒等式）",
+        "镜像法的正负号规则"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "五点陈述：3D/2D 基本解与数值；常数的归一化来历；有界区域 G=G₀−h（半空间/球/圆盘三种可手算形状）；解的表示与 Dirichlet/Neumann 下边界项如何简化；球内 Poisson 例 u=(1−r²)/6 给 0.166667 与 0.125。",
+      "content": "**陈述。**\n\n**(i) 基本解（切片）。** 自由空间里 $\\Delta G=\\delta(\\mathbf x-\\mathbf x')$ 的解：\n\n$$n=3:\\quad G(\\mathbf x,\\mathbf x')=\\frac{1}{4\\pi\\vert\\mathbf x-\\mathbf x'\\vert},\n\\qquad\nn=2:\\quad G(\\mathbf x,\\mathbf x')=-\\frac{1}{2\\pi}\\ln\\vert\\mathbf x-\\mathbf x'\\vert$$\n\n**数值**：3D 在 $r=1$ 处算得 0.079577【已核验:0.0795774715459|1/(4*pi)】，$r=2$ 处算得 0.039789【已核验:0.039788735773|1/(8*pi)】；2D 在 $r=2$ 处算得 -0.110318【已核验:-0.110317800076|-log(2)/(2*pi)】。\n\n**(ii) 常数 $\\frac{1}{4\\pi}$ 与 $-\\frac{1}{2\\pi}$ 的来历。** 都来自**归一化**：要求 $\\int_{\\partial B_\\epsilon}\\partial_nG\\,dS=1$（即「单位点源」）。3D：$\\partial_nG=-\\frac{1}{4\\pi\\epsilon^2}$、$\\vert\\partial B_\\epsilon\\vert=4\\pi\\epsilon^2$ ⇒ 乘积 $-1$（配符号约定后得 $1$）；2D 同理。**换记号（$+$ 或 $-$）不改变结论，但必须前后一致。**\n\n**(iii) 有界区域的 Green 函数。**\n\n$$G_\\Omega=G_0-h,\\qquad \\Delta h=0\\ \\text{于}\\ \\Omega,\\quad h\\big|_{\\partial\\Omega}=G_0\\big|_{\\partial\\Omega}$$\n\n（Dirichlet 情形；Neumann 情形把边界条件换成 $\\partial_nh$ 的对应条件。）\n\n**三个具体形状（都可手算）**：\n- **半空间** $z>0$：$h$ 由一个**反号镜像源**给出（见反例词条）；\n- **球** $\\vert\\mathbf x\\vert<R$（3D）：由**反演镜像源**给出（Kelvin 变换）：$G=\\frac{1}{4\\pi r}-\\frac{R}{4\\pi\\vert\\mathbf x'\\vert\\,\\vert\\mathbf x-\\mathbf x^*\\vert}$，$\\mathbf x^*=\\frac{R^2}{\\vert\\mathbf x'\\vert^2}\\mathbf x'$；\n- **圆盘**（2D）：同构的反演。\n\n**(iv) 解的表示（切片，Green 第二恒等式）。**\n\n$$u(\\mathbf x)=\\int_\\Omega G(\\mathbf x,\\mathbf x')f(\\mathbf x')\\,d\\mathbf x'\n+\\oint_{\\partial\\Omega}\\Bigl[G\\,\\frac{\\partial u}{\\partial n}-u\\,\\frac{\\partial G}{\\partial n}\\Bigr]dS$$\n\n**读法**：第一项是**「内部源的贡献」**（体源卷积），第二项是**「边界数据的贡献」**：\n\n- **Dirichlet**（$u\\vert_{\\partial\\Omega}=g$ 已知、$\\partial_nu$ 未知）：因 $G\\vert_{\\partial\\Omega}=0$，第二项化为 $-\\oint g\\,\\partial_nG\\,dS$ ⇒ **只用已知的 $g$**；\n- **Neumann**：因 $\\partial_nG\\vert_{\\partial\\Omega}=0$，第二项化为 $\\oint G\\,\\partial_nu\\,dS$ ⇒ **只用已知的 $\\partial_nu$**。\n\n**这就是「边界条件被吸进核」的准确含义** ✅（对照 `de1.18` 的一维情形。）\n\n**(v) 一个可核对的例子（3D 单位球内 $\\Delta u=-1$、$u\\vert_{\\partial B}=0$）。** 径向解：\n\n$$u(r)=\\frac{1-r^2}{6}:\\qquad u(0)\\ \\text{算得 } 0.166667\\ \\text{【已核验:0.166666666667|(1-0**2)/6】},\\qquad\nu(0.5)\\ \\text{算得 } 0.125\\ \\text{【已核验:0.125|(1-0.5**2)/6】}$$\n\n**自检**：$\\Delta u$ 的径向形式 $u''+\\frac{2}{r}u'$ 作用在 $\\frac{1-r^2}{6}$ 上给 $-1$ ✅",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.15",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.14:green-pde.intuition",
+      "type": "intuition",
+      "subject": "green-pde",
+      "title": "直觉：G 是「区域里的点源响应」+「镜像」",
+      "keywords": [
+        "基本解是无穷空间里的点源响应",
+        "区域的边界像镜子",
+        "Dirichlet：镜子反号",
+        "Neumann：镜子同号"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "直觉三步：基本解解决奇性（与形状无关）；区域只影响非奇性部分 ⇒ G=G₀−h 且 h 调和 ⇒ 求 G 变成 de2.8 的 Dirichlet 问题；平面边界时 h 由镜像给出（Dirichlet 反号减、Neumann 同号加，因为到真源与像源的距离在边界上相等）；三点对照（de1.18 一维、de2.8 存在性、de2.15 边界元）。",
+      "content": "**假设给了什么。** 我们要求一个**带边界条件的区域**里「点源」的响应。**为什么可以先求无穷空间的解，再「修」一下？**\n\n**结论为什么因此成立。** 三步：\n\n**第一步：基本解已经解决了「奇性」。**\n\n$G_0=\\frac{1}{4\\pi r}$ 在 $r\\to0$ 时发散得**恰到好处**：$\\Delta G_0=\\delta$。**这一部分与区域的形状无关**（奇性是局部的）。\n\n**第二步：区域只影响「非奇性部分」。**\n\n令 $G=G_0-h$。则 $\\Delta G=\\delta-\\Delta h=\\delta$（只要 $\\Delta h=0$）⇒ **$h$ 可以是任何调和函数**。于是「求 $G$」的问题变成：\n\n$$\\text{找一个调和 }h\\text{，使 }G\\ \\text{满足边界条件}$$\n\n**这是一个 `de2.8` 的 Dirichlet 边值问题**（边界数据 $=G_0\\vert_{\\partial\\Omega}$）。**这就是「区域几何决定核」的准确含义。**\n\n**第三步：为什么边界像镜子。**\n\n在**平面**边界的情形，$h$ 有一个绝妙的显式解：**把源关于边界面反射**，用「像源」产生 $h$。\n\n- **Dirichlet**（要求 $G=0$ 在边界上）：需要一个**符号相反**的像源，让两项在边界上相消 ⇒ **减**；\n- **Neumann**（要求 $\\partial_nG=0$ 在边界上）：需要一个**符号相同**的像源，让法向导数在边界上相消 ⇒ **加**。\n\n**为什么这样有效**：「到真源的距离」与「到像源的距离」在边界平面上**相等**（对称性）⇒ 两项在边界上的值是**同一常数**（只是符号不同）⇒ 相减必为零。**这是对称性的直接产物，不是巧合。**\n\n**三个对照记忆点。**\n\n1. **与 `de1.18`（ODE 版）对照**：一维时「区域几何」退化成「区间」，$h$ 是一次函数（调和的一维解），镜像变成「关于端点的反射」。**四条件（两边界 + 连续 + 跳跃）在一维等价于「基本解 − 线性修正」。**\n2. **与 `de2.8` 对照**：求 $h$ 就是解一个 Dirichlet 问题 ⇒ **Green 函数的存在性完全依赖 `de2.8` 的边值问题理论**（存在唯一 + 极值原理）。\n3. **与 `de2.15` 对照**：Green 函数也满足一个**变分刻画**（能量最小）⇒ 数值上可用有限元求 $h$（这就是**边界元法**的思想：只离散边界）。\n\n**一句话**：**$G$ = 「点源响应」+「边界对它的回声」。**",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.15",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.14:green-pde.proof",
+      "type": "proof",
+      "subject": "green-pde",
+      "title": "证明骨架：Green 第二恒等式给出解的表示",
+      "keywords": [
+        "第一步 写下 Green 第二恒等式",
+        "第二步 代入 Δu=f 与 ΔG=δ",
+        "第三步 得到解的表示",
+        "第四步 边界项按条件类型简化"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "五步证明：Green 第二恒等式（散度定理）；代入 Δu=f 与 ΔG=−δ 得 −u−∫Gf=∮(u∂ₙG−G∂ₙu)；整理成切片给的表示式；Dirichlet/Neumann 各自只剩已知数据；球内 Poisson 例 u=(1−r²)/6 代回 Δu=−1 自检、给 0.166667 与 0.125；四条易错。",
+      "content": "**第 1 步（Green 第二恒等式）。** 对光滑 $u,G$：\n\n$$\\int_\\Omega\\bigl(u\\,\\Delta G-G\\,\\Delta u\\bigr)dV\n=\\oint_{\\partial\\Omega}\\Bigl(u\\,\\partial_nG-G\\,\\partial_nu\\Bigr)dS$$\n\n**理由**：对向量场 $\\mathbf F=u\\nabla G-G\\nabla u$ 用散度定理，$\\nabla\\cdot\\mathbf F=u\\Delta G+\\nabla u\\cdot\\nabla G-\\nabla G\\cdot\\nabla u-G\\Delta u=u\\Delta G-G\\Delta u$。∎\n\n**第 2 步（代入）。** 设 $\\Delta u=f$、$G$ 取为**关于 $\\mathbf x$ 的 Green 函数**（即 $\\Delta_{\\mathbf x}G=-\\delta(\\mathbf x-\\mathbf x')$，注意符号约定）。把它代入并把 $\\mathbf x$ 换成 $\\mathbf x'$、$\\mathbf x'$ 换成 $\\mathbf x$（互换积分变量）：\n\n$$\\int_\\Omega\\bigl(u(\\mathbf x')\\,\\Delta_{\\mathbf x'}G-G\\,\\Delta u\\bigr)dV'\n=\\oint_{\\partial\\Omega}\\Bigl(u\\,\\partial_{n'}G-G\\,\\partial_{n'}u\\Bigr)dS'$$\n\n**左端第二项** $=\\int_\\Omega(-G f)dV'$；**左端第一项** $=\\int_\\Omega u(\\mathbf x')\\cdot(-\\delta(\\mathbf x'-\\mathbf x))dV'=-u(\\mathbf x)$。\n\n**第 3 步（解出 $u$）。** 整理：\n\n$$-u(\\mathbf x)-\\int_\\Omega Gf\\,dV'=\\oint_{\\partial\\Omega}\\bigl(u\\,\\partial_nG-G\\,\\partial_nu\\bigr)dS'$$\n\n$$\\Longrightarrow\\quad\nu(\\mathbf x)=\\int_\\Omega Gf\\,dV'+\\oint_{\\partial\\Omega}\\bigl(G\\,\\partial_nu-u\\,\\partial_nG\\bigr)dS'\\ \\ ✅$$\n\n**与切片给的表示式一致**（若采用 $\\Delta G=+\\delta$ 的约定，中间会多一个整体负号，最终式子形状相同）。\n\n**第 4 步（边界项按条件类型简化）。**\n\n- **Dirichlet**：$G\\vert_{\\partial\\Omega}=0$ ⇒ 边界项 $=\\oint(-u\\,\\partial_nG)dS=-\\oint g\\,\\partial_nG\\,dS$。**只含已知的 $g$**（这正是 Dirichlet 的 Green 函数之所以好用的原因：$\\partial_nu$ 未知但不出现）。\n- **Neumann**：$\\partial_nG\\vert_{\\partial\\Omega}=0$ ⇒ 边界项 $=\\oint G\\,\\partial_nu\\,dS=\\oint Gg\\,dS$。**同样只含已知量。**\n\n**「求 Green 函数」=「让边界项里只留下已知数据」** —— 这就是 Green 函数方法的全部动机。∎\n\n**第 5 步（数值自检：球内 Poisson）。** 3D 单位球、$f\\equiv1$、$u\\vert_{\\partial B}=0$。由对称性设 $u=u(r)$，$\\Delta u=u''+\\frac{2}{r}u'=-1$。检验 $u=\\frac{1-r^2}{6}$：\n\n$$u'=-\\frac r3,\\quad u''=-\\frac13,\\quad\n\\Delta u=-\\frac13+\\frac{2}{r}\\Bigl(-\\frac r3\\Bigr)=-\\frac13-\\frac23=-1\\ ✅$$\n\n$u(0)$ 算得 0.166667【已核验:0.166666666667|(1-0**2)/6】、$u(0.5)$ 算得 0.125【已核验:0.125|(1-0.5**2)/6】，满足 $u(1)=0$ ✅\n\n**易错点。**\n\n1. **符号约定**（$\\Delta G=\\pm\\delta$）要前后一致；不一致会让整体符号翻转。\n2. **$\\partial_n$ 必须取外法向**（限定词④）。\n3. **2D 的 $G$ 在无穷远发散**（限定词③）：无界 2D 问题要另加正规化；**3D 的 $G\\to0$** 才可以直接用衰减条件。\n4. **解析解只对少数几何存在**（半空间、球、圆盘）；一般几何要数值（边界元/有限元）。",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.15",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.14:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：镜像法与球内 Poisson 的四组数",
+      "keywords": [
+        "半空间镜像：内部与边界",
+        "不减镜像的错值",
+        "2D 对数发散",
+        "球内解的两个值"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "七问：半空间镜像在 (0,0,1) 给 1/(6π)=0.053052、边界给 0；忘镜像项给 0.039789≠0；2D 对数在 ρ=1/2/10/100 给 0/−0.110318/−0.366468/−0.732936（每 10 倍减 0.3665、无界）；3D 在 ρ=1/10 给 0.079577/0.007958（ρ^{-1} 衰减）；球内 (1−r²)/6 给 0.166667 与 0.125；判据是「把边界点代进 G₀」；平面镜像 2D/3D 相同、球用反演但 3D 多一个 R/|x'| 因子。",
+      "content": "**第 1 问：3D 半空间 $z>0$、Dirichlet，源在 $(0,0,2)$。求 $G$ 在 $(0,0,1)$ 与 $(0,0,0)$ 处。**\n\n镜像源在 $(0,0,-2)$。\n\n- $\\mathbf x=(0,0,1)$：$r=1$、$r''=3$ ⇒ $\\frac{1}{4\\pi}-\\frac{1}{12\\pi}=\\frac{1}{6\\pi}$，算得 0.053052【已核验:0.0530516476973|1/(6*pi)】\n- $\\mathbf x=(0,0,0)$（边界）：$r=r''=2$ ⇒ 两项相减，算得 0【已核验:0|1/(4*pi*2)-1/(4*pi*2)】\n\n**第 2 问：若忘记镜像项，边界上会算成多少？**\n\n$$G_0=\\frac{1}{4\\pi\\cdot2},\\quad \\text{算得 } 0.039789\\ \\text{【已核验:0.039788735773|1/(4*pi*2)】}\\ \\ne0$$\n\n**Dirichlet 要求 0** ⇒ 错值 0.039789 与真值 0 的差就是这个被漏掉的**调和修正的边界值**。\n\n**第 3 问：2D 的对数核在远处什么行为？**\n\n$G=-\\frac{\\ln\\rho}{2\\pi}$（$\\rho=\\vert\\mathbf x-\\mathbf x'\\vert$）：\n\n| $\\rho$ | $G$ |\n|---|---|\n| $1$ | -0.0【已核验:0|-log(1)/(2*pi)】 |\n| $2$ | -0.110318【已核验:-0.110317800076|-log(2)/(2*pi)】 |\n| $10$ | -0.366468【已核验:-0.36646779944|-log(10)/(2*pi)】 |\n| $100$ | -0.732936【已核验:-0.732935598879|-log(100)/(2*pi)】 |\n\n**每增大 10 倍，$G$ 减掉 $\\frac{\\ln 10}{2\\pi}$（约 0.3665）—— 线性下滑、无界** ⇒ 2D 无界区域必须另加正规化（限定词③）。\n\n**第 4 问：3D 的衰减对照。**\n\n$\\frac{1}{4\\pi\\rho}$：$\\rho=1$ 给 0.079577【已核验:0.0795774715459|1/(4*pi)】、$\\rho=10$ 给 0.007958【已核验:0.00795774715459|1/(40*pi)】。**按 $\\rho^{-1}$ 衰减（$10$ 倍距离 ⇒ 强度降到 $\\frac{1}{10}$）** ⇒ 3D 可以直接要求「$G\\to0$」✅\n\n**第 5 问：球内 Poisson 方程 $\\Delta u=-1$（$u\\vert_{\\partial B}=0$）。**\n\n$$u(r)=\\frac{1-r^2}{6}:\\quad u(0)\\ \\text{算得 } 0.166667\\ \\text{【已核验:0.166666666667|(1-0**2)/6】},\\quad u(0.5)\\ \\text{算得 } 0.125\\ \\text{【已核验:0.125|(1-0.5**2)/6】}$$\n\n**第 6 问（易错）：什么时候可以直接用自由空间的基本解？**\n\n**只有当区域是整个空间（或无界且源的影响以「$G\\to0$」的方式衰减，且没有边界）**。只要出现边界，就必须减调和修正项（限定词②）。**判据**：把边界点代进 $G_0$，看是否满足边界条件；不满足就必须修。\n\n**第 7 问：三维与二维的「像」一样吗？**\n\n半空间的**平面**镜像在 2D/3D 都一样（关于直线/平面反射）；**球/圆盘**的镜像都用**反演**（Kelvin 变换），但 3D 的系数还多一个 $\\frac{R}{\\vert\\mathbf x'\\vert}$ 因子（因为 3D 的 $G$ 是 $r^{-1}$，反演会改变尺度）。**这就是「常数 $\\frac{1}{4\\pi}$ 与 $-\\frac{1}{2\\pi}$ 带来的差异」。**",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.14:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：ODE 版 vs PDE 版 Green 函数",
+      "keywords": [
+        "一维四条件 vs 高维几何",
+        "基本解的唯一性差别",
+        "边界条件如何进核",
+        "求解路径"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "两栏对照表（方程/定义/基本解/唯一性/修正项/对称性/边界项/显式可求/与谱的关系 × 2）；三要点（最大差别是唯一性：一维四条件 vs 高维需边界补齐；修正项 1D 是一次函数 vs 高维是边值问题；共同结构「基本解−调和修正」+ 自伴对称）；与 de2.15/边界元的接口。",
+      "content": "**把 `de1.18`（ODE 版）与本单元（PDE 版）并排**：\n\n| 维度 | **ODE 版**（`de1.18`） | **PDE 版**（本单元） |\n|---|---|---|\n| 方程 | $Ly=f$（$L$ 二阶常微分算子） | $\\Delta u=f$（或一般椭圆算子） |\n| 定义 | $L_xG=\\delta(x-\\xi)$ + **齐次边界** | $\\Delta_{\\mathbf x}G=\\delta(\\mathbf x-\\mathbf x')$ + 齐次边界 |\n| 基本解 | 一维：分段**线性**（$L=-\\frac{d^2}{dx^2}$ 时 $G_0=-\\frac12\\vert x-\\xi\\vert$ 型） | 3D $r^{-1}$ / 2D $\\ln r$ |\n| 唯一性 | **由四条件唯一确定**（两边界 + 连续 + 跳跃） | **基本解不唯一**（只到相差调和函数）；**加边界条件后才唯一** |\n| 「修正项」 | 一次函数（一维调和函数） | 调和函数（求解 = `de2.8` 的 Dirichlet 问题） |\n| 对称性 | $G(x,\\xi)=G(\\xi,x)$（自伴） | 同（对称核） |\n| 边界项 | 跳跃条件 $-\\frac{1}{p(\\xi)}$ | $\\oint\\bigl[G\\partial_nu-u\\partial_nG\\bigr]dS$ |\n| 显式可求的情形 | **大部分常系数情形** | **半空间 / 球 / 圆盘**（镜像/反演）；一般几何需数值 |\n| 与谱的关系 | $G=\\sum\\varphi_n(x)\\varphi_n(\\xi)/\\lambda_n$ | 同（`de2.8`/`de2.10` 的特征函数展开） |\n\n**三条读表要点。**\n\n1. **最大差别是「唯一性」**：一维的跳跃条件 + 连续性把 $G$ 钉死（`de1.18` 的四条件）；高维没有「跳跃条件」这种东西，**基本解只能定到相差调和函数**，必须靠边界条件补齐。\n2. **「修正项」的复杂度**：一维是一次函数（手算），高维是**整个调和函数空间里的一个边值问题**（可能只能数值求）。**这就是「维度提升带来的复杂度跃迁」**（`de3.14` 会专门讲）。\n3. **共同结构**：两者都是「**基本解 − 调和修正**」，都靠**对称性**（自伴）保证核的对称。\n\n**与后续单元的接口**：`de2.15` 的弱形式给 Green 函数的**变分刻画**（能量最小）；数值上「只离散边界」的方法（**边界元法**）正是从本单元的表示式出发 —— **因为内部已经由 $G$ 解析地处理掉了**。",
+      "links": [
+        "de1.18",
+        "de2.8",
+        "de2.9",
+        "de2.15"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.14:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：PDE 版 Green 函数的下游（边界元、位势论、传播子）",
+      "keywords": [
+        "边界元法：只离散边界",
+        "静电场镜像法",
+        "热核与传播子",
+        "de2.15 的能量刻画"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 268,
+        "line_end": 285
+      },
+      "fill_hint": "下游清单：de1.18 的维度提升、de2.8 的存在唯一性、de2.15 的能量刻画、边界元法（只离散边界 + 奇异核/FMM/对称压缩）、位势论与静电镜像法（单层/双层位势）、热核与传播子；末给三件自检（边界代一遍、符号与外法向、2D 对数核正规化）。",
+      "content": "**下游清单。**\n\n- **`de1.18` 的 ODE 版**：本单元是它的**维度提升**；两者的共同结构是「基本解 − 调和修正」。\n\n- **`de2.8` 的存在唯一性**：求调和修正项 $h$ 就是一个 Dirichlet 边值问题 ⇒ **Green 函数的存在性依赖 `de2.8` 的理论**（极值原理 + 唯一性）。\n\n- **`de2.15` 的变分刻画**：Green 函数也可由**能量最小**定出（Dirichlet 原理）；数值上求 $h$ 用有限元/边界元。\n\n- **边界元法（BEM）**：把解的表示式代入边界，得到一个**只含边界未知量**的积分方程 ⇒ **只需离散 $\\partial\\Omega$**（降一维）。**这是 Green 函数方法在工程里最大的回报**；代价是核是奇异的（要处理弱奇异积分）。\n\n- **位势论与静电学**：\n  - **镜像法**（本单元）就是「导体平面/球面附近的点电荷」；3D 的 $G$ 就是**库仑势**；\n  - **单层/双层位势**：$\\oint G\\sigma\\,dS$ 与 $\\oint\\partial_nG\\,\\mu\\,dS$ 分别对应「面电荷分布」与「偶极层」——**本单元表示式的两项正好是它们的组合**。\n\n- **热核与传播子**：把 $\\Delta$ 换成 $\\Delta_t=\\partial_t-\\Delta$（或波动算子），同一套「基本解 + 边界修正」的结构给出（`de2.7`/`de2.12` 的热核、`de2.6` 的波核）；量子场论里叫**传播子**。\n\n- **数值实现要点**：\n  1. 核的**奇异积分**要用专门的求积（Duffy 变换、奇性抽取）；\n  2. 近场与远场分开处理（远场用多极展开加速，**FMM**）；\n  3. **对称性**（$G(\\mathbf x,\\mathbf x')=G(\\mathbf x',\\mathbf x)$）可用于压缩存储。\n\n**一句自检**：写下 $G$ 后核三件事 —— **（1）边界上真的满足齐次条件吗**（代边界点算一遍）；**（2）符号与外法向一致吗**；**（3）是 2D 还是 3D**（对数核要另做正规化）。",
+      "links": [
+        "de1.18",
+        "de2.6",
+        "de2.7",
+        "de2.8",
+        "de2.15"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

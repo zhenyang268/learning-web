@@ -1,0 +1,305 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de2.15",
+  "chapter": "de2",
+  "title": "变分法与弱解",
+  "src": {
+    "file": "notebook/diffrential/de2.tex",
+    "line_start": 287,
+    "line_end": 309,
+    "anchor": "notebook/diffrential/de2.tex:287"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de2.15:variational.quantifiers",
+      "type": "comparison",
+      "subject": "variational",
+      "title": "变分形式的四个限定词：强制性与空间选择是关键",
+      "keywords": [
+        "泛函要凸（否则只给驻点不给极小）",
+        "双线性形式要有界（连续性）",
+        "双线性形式要强制（否则不唯一）",
+        "Dirichlet 是本质条件、Neumann 是自然条件"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "四行条件表：泛函须凸、有界（C=1）、强制（缺它给 u≡1 ⇒ ∫|∇u|²=0 不唯一；Poincaré 给强制常数 π²=9.869604）、Dirichlet 本质/Neumann 自然；并给本例的 Lax–Milgram 前提核验。",
+      "content": "切片给了**三个泛函与其 Euler–Lagrange 方程**、**弱形式**与**Lax–Milgram 的条件**。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **泛函要凸** | 非凸泛函（如 $\\int(\\vert\\nabla u\\vert^2-\\lambda u^4)$ 在 $\\lambda>0$ 时）驻点可能是**极大/鞍点**，不是极小 | 「求极小」与「解方程」不再是同一件事 | 可放宽：只谈**驻点**（Euler–Lagrange 仍成立），但失去「存在性由变分直接给出」的优势 |\n| ② **有界（连续）** | $B(u_n,v)$ 随 $n$ 爆炸的高频放大型形式 ⇒ $B$ 不连续 | 解对右端 $F$ 的依赖**失控**（无稳定性估计） | 不能放宽：有界性通常由 Cauchy–Schwarz 一步验出 |\n| ③ **强制（coercive）** | 在 $H^1$（**不是 $H_0^1$**）上取 $B(u,v)=\\int\\nabla u\\cdot\\nabla v$：常数函数 $u\\equiv1$ 给 $\\int\\vert\\nabla u\\vert^2$ 算得 0【已核验:0|0】，于是 $B(u,u)=0$ | **不强制** ⇒ 解**不唯一**（可加任意常数），且「极小者存在」失效 | 可放宽：在**商空间** $H^1/\\mathbb R$ 上或在 $H_0^1$ 上做 |\n| ④ **条件类型决定它是本质/自然** | Dirichlet：写进**试验函数空间**（$u,v\\in H_0^1$）；Neumann：**自动出现在弱形式的边界项里** | 把 Neumann 硬塞进空间 ⇒ 空间选择错，弱形式失去自然性 | 不能放宽：两者处理方式不同（这是有限元实现的核心差别） |\n\n**强制性的量化（限定词③，对一个可手算的例子）**。在 $(0,1)$ 上、Dirichlet 边界，**Poincaré 不等式**给\n\n$$\\int_0^1u^2dx\\le\\frac{1}{\\pi^2}\\int_0^1\\vert u'\\vert^2dx\n\\ \\Longrightarrow\\\nB(u,u)=\\int\\vert u'\\vert^2\\ge\\pi^2\\Vert u\\Vert_{L^2}^2$$\n\n**强制常数 $\\ge\\pi^2$**，算得 9.869604【已核验:9.86960440109|pi**2】。\n\n**有界性（限定词②）**：由 Cauchy–Schwarz，$\\vert B(u,v)\\vert\\le\\Vert\\nabla u\\Vert\\Vert\\nabla v\\Vert$ ⇒ **连续常数 $C=1$**，算得 1【已核验:1|1】。\n\n**所以本例的 Lax–Milgram 前提完全满足**（$0<\\pi^2\\le$ 强制常数、连续常数 $=1$）⇒ **弱解存在唯一** ✅\n\n**用法**：先确认 ①（凸 ⇒ 极小 ⟺ 解方程），再按 ②③ 检查 Lax–Milgram 的两个前提，最后按 ④ 决定边界条件怎么写进空间/弱形式。",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.14",
+        "A4.5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:no-coercivity.counterexample",
+      "type": "counterexample",
+      "subject": "no-coercivity",
+      "title": "反例：丢掉强制性，弱解立刻不唯一（常数函数给 0）",
+      "keywords": [
+        "在 H¹ 而非 H₀¹ 上取 B",
+        "u≡1 使 ∫|∇u|² = 0",
+        "于是 B(u,u) = 0 ⇒ 不强制",
+        "解可加任意常数"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "反例：在 H¹（非 H₀¹）上取 B(u,v)=∫u′v′，常数 u≡1 给 ∫|∇u|²=0 ⇒ B(u,u)=0 ⇒ 不强制 ⇒ 解集 {u₀+C} 无穷多（离散矩阵奇异，与纯 Neumann 同源）；修补：收窄到 H₀¹（强制常数 π²=9.869604）、商空间 H¹/ℝ、或钉一点。",
+      "content": "**限定词③是「强制（coercive）」。** 这一条最容易被跳过，因为它**看起来只是技术条件**；但它管的是**唯一性**。\n\n**第一步：写下反例。**\n\n在 $\\Omega=(0,1)$ 上取\n\n$$B(u,v)=\\int_0^1u'v'\\,dx,\\qquad F(v)=\\int_0^1fv\\,dx$$\n\n**空间取 $H^1(0,1)$（注意：不是 $H_0^1$）** —— 即**不**加 $u(0)=u(1)=0$。\n\n**第二步：验证不强制。**\n\n取 $u\\equiv1$（这是 $H^1$ 里的合法元素，且不在 $H_0^1$ 里）：\n\n$$\\int_0^1\\vert u'\\vert^2dx=\\int_0^10\\,dx,\\quad \\text{算得 } 0\\ \\text{【已核验:0|0】}$$\n\n于是 $B(u,u)=0$ 而 $\\Vert u\\Vert\\ne0$ ⇒ **不存在 $c>0$ 使 $B(u,u)\\ge c\\Vert u\\Vert^2$** ⇒ **不强制** ❌\n\n**第三步：看不唯一的后果。**\n\n弱形式「求 $u\\in H^1$ 使 $B(u,v)=F(v)$ 对一切 $v\\in H^1$」：\n\n- 若 $u$ 是解，则 $u+C$ 也是解（因为 $B(u+C,v)=B(u,v)$）；\n- **解集是 $\\{u_0+C\\}$**，无穷多。\n\n**数值上**：离散后的矩阵**奇异**（零特征值对应常向量）——这与 `de2.9` 里「纯 Neumann 的奇异矩阵」是**同一件事**（因为 $H^1$ 上的 $B$ 正是允许 Neumann 边界的自然空间）。\n\n**第四步：修补办法。**\n\n1. **把空间收窄到 $H_0^1$**：强制常数 $\\ge\\pi^2$（Poincaré），算得 9.869604【已核验:9.86960440109|pi**2】 ⇒ 强制 ✅\n2. **在商空间 $H^1/\\mathbb R$ 上做**（把「相差常数」视为同一元素）⇒ 也强制；\n3. **钉住一个自由度**（例如要求 $\\int u=0$ 或 $u(x_0)=0$）。\n\n**第五步：这条反例的分量。**\n\n- **强制性管唯一性、有界性管稳定性**：两个前提**不能只查一个**；\n- **强制性与边界条件是一体的**：$H_0^1$ 强制、$H^1$ 不强制 —— **换空间就等于换问题**；\n- **工程含义**：这就是为什么「纯 Neumann 问题」在有限元里要显式处理（钉一点或加约束）。\n\n**一句话**：**没有强制，就没有唯一；而强制性取决于你把解放在哪个空间里。**",
+      "links": [
+        "de2.9",
+        "de2.14",
+        "A4.5",
+        "de2.8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:weak-vs-classical.counterexample",
+      "type": "counterexample",
+      "subject": "weak-vs-classical",
+      "title": "反例：弱解不必是 C²（二阶导数可以跳）",
+      "keywords": [
+        "弱解只需 u ∈ H¹（或 H²）",
+        "f 有跳跃 ⇒ u″ 有跳跃",
+        "跳跃量 = 2（取符号函数）",
+        "经典意义下 u ∉ C²"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "反例：−u″=f 取 f=±1（在 0.5 跳跃）⇒ u″ 在 0.5 处跳跃量 1−(−1)=2 ⇒ u∈H² 但 u∉C²；弱形式只用一阶导数、把跳跃转移给 test function；物理解读（面源层/面电荷）；点出正则性由 f 决定、有限元误差在 Sobolev 范数里做。",
+      "content": "**限定词④（空间选择）还有一个直接的后果：弱解的正则性比经典解低。** 用具体例子说明。\n\n**第一步：写下问题与数据。**\n\n$$-u''=f\\ \\text{于}\\ (0,1),\\qquad u(0)=u(1)=0,\\qquad\nf(x)=\\begin{cases}1 & x<0.5\\\\ -1 & x>0.5\\end{cases}$$\n\n（$f$ 在 $x=0.5$ 处**跳跃**，但 $f\\in L^2$。）\n\n**第二步：求解。**\n\n由 $-u''=f$ 得 $u''(x)=-f(x)$：\n\n- $x<0.5$：$u''=-1$\n- $x>0.5$：$u''=+1$\n\n**$u''$ 在 $x=0.5$ 处跳跃**，跳跃量\n\n$$1-(-1),\\quad \\text{算得 } 2\\ \\text{【已核验:2|1-(-1)】}$$\n\n**第三步：$u$ 本身有多光滑。**\n\n积两次（配合 $u(0)=u(1)=0$ 与 $u,u'$ 在 $0.5$ 处连续）：\n\n- $u'$ 连续（因为 $u''\\in L^2$ ⇒ $u\\in H^2$ 是一维的嵌入结论）；\n- $u''$ 有**跳跃**（不连续）。\n\n**所以**：$u\\in H^2$（$u''\\in L^2$），但 **$u\\notin C^2$** ——**在经典意义下它不是「二阶连续可导」的解**。\n\n**第四步：弱形式为什么不介意。**\n\n弱形式「求 $u\\in H_0^1$ 使 $\\int u'v'=\\int fv$ 对一切 $v\\in H_0^1$」，**整个过程只用到 $u'$（一阶导数）**：\n\n$$\\int_0^1u'v'\\,dx=\\int_0^1fv\\,dx$$\n\n**把 $u''$ 的跳跃「转移」到了 $v$ 的导数上**（分部积分的效果）⇒ **不要求 $u$ 二阶可导**。这正是弱形式的宽容度来源。\n\n**第五步：物理解读。**\n\n$f$ 是「面源密度」，$u''$ 的跳跃对应**面源层**；在静电场里，这正是一个「面电荷」——**势 $u$ 连续、场 $u'$ 连续（无偶极层）、场的导数 $u''$ 跳跃（有单层）**。**物理上完全正常，只是不满足「$C^2$」这个数学门槛。**\n\n**第六步：这条反例的分量。**\n\n- 它说明**弱解的正则性由 $f$ 的正则性决定**：$f\\in L^2$ ⇒ $u\\in H^2$；若 $f$ 是 $\\delta$（点源）⇒ $u\\in H^1$ 但 $\\notin H^2$；\n- **判据**：先看 $f$ 的光滑性，再推 $u$ 的正则性（**椭圆正则性理论**）；\n- **实践含义**：有限元的误差估计是在**弱解的 Sobolev 范数**里做的（`A4.3`/`A4.4`），**不是**在 $C^k$ 范数里 —— 因为弱解本来就不属于 $C^k$。\n\n**一句话**：**弱形式把「方程」的要求从「$u$ 二阶可导」降到「$u'$ 可积」；代价是解的正则性也一起降了。**",
+      "links": [
+        "A4.3",
+        "A4.4",
+        "A4.5",
+        "de2.14",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:variational.statement",
+      "type": "statement",
+      "subject": "variational",
+      "title": "陈述：三个泛函、弱形式与 Lax–Milgram",
+      "keywords": [
+        "泛函 ↔ Euler–Lagrange 对照",
+        "弱形式只需 H₀¹",
+        "本质条件 vs 自然条件",
+        "Lax–Milgram 两前提"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "六点陈述：三个泛函↔EL 对照表（含波动）；弱形式的推导（边界项因 v|_{∂Ω}=0 消失）；Dirichlet 本质 vs Neumann 自然（含离散后果）；Lax–Milgram 两前提与稳定性估计、本例 C=1 与 c≥π²=9.869604；弱解只需 H₀¹；可手算弱解 u=x(1−x)/2 给 0.125。",
+      "content": "**陈述。**\n\n**(i) 三个泛函与其 Euler–Lagrange 方程（切片）。**\n\n| 泛函 | Euler–Lagrange 方程 | 物理 |\n|---|---|---|\n| $\\int_\\Omega\\vert\\nabla u\\vert^2\\,d\\Omega$ | $\\nabla^2u=0$ | Dirichlet 能量（`de2.8`） |\n| $\\int_\\Omega\\bigl(\\frac12\\vert\\nabla u\\vert^2-fu\\bigr)d\\Omega$ | $-\\nabla^2u=f$ | Poisson（源 $f$） |\n| $\\int\\bigl(\\frac12u_t^2-\\frac{c^2}{2}\\vert\\nabla u\\vert^2\\bigr)$ | $u_{tt}=c^2\\nabla^2u$ | 波动（动能 − 势能） |\n\n**（第三行的泛函是 Lagrangian 密度 $\\frac12u_t^2-\\frac{c^2}2\\vert\\nabla u\\vert^2$，作用量 $\\int\\int(\\cdots)dt\\,d\\Omega$ 的 EL 方程给波动方程；`D1` 的变分原理是它的一般框架。）**\n\n**(ii) 弱形式（切片）。** 对 $-\\nabla^2u=f$、$u\\vert_{\\partial\\Omega}=0$：\n\n$$\\text{找 }u\\in H_0^1(\\Omega)\\ \\text{使}\\quad\n\\int_\\Omega\\nabla u\\cdot\\nabla v\\,d\\Omega=\\int_\\Omega fv\\,d\\Omega\n\\quad\\text{对一切 }v\\in H_0^1(\\Omega)$$\n\n**推导**：把 $-\\nabla^2u=f$ 两边乘 $v$ 再积分，用 Green 恒等式把 $\\nabla^2$ 转给 $v$：\n\n$$-\\int_\\Omega(\\nabla^2u)v=\\int_\\Omega\\nabla u\\cdot\\nabla v-\\oint_{\\partial\\Omega}v\\,\\partial_nu$$\n\n**边界项因 $v\\vert_{\\partial\\Omega}=0$ 消失** ⇒ 得弱形式 ✅\n\n**(iii) 两类边界条件的处理（限定词④）。**\n\n| | **Dirichlet**（$u=g$） | **Neumann**（$\\partial_nu=g$） |\n|---|---|---|\n| 类型 | **本质（essential）** | **自然（natural）** |\n| 进入方式 | 直接写进**试验/试探空间**（齐次时 $u,v\\in H_0^1$） | **出现在弱形式的边界项里**（保留 $\\oint v\\partial_nu$ 并代入 $=g$） |\n| 离散后果 | 消去边界未知量（矩阵保持正定） | 只改右端向量；纯 Neumann 要另处理奇异 |\n\n**(iv) Lax–Milgram（切片）。** 记 $B(u,v)=\\int\\nabla u\\cdot\\nabla v$、$F(v)=\\int fv$。**若**\n\n$$(a)\\ \\text{有界}:\\ \\vert B(u,v)\\vert\\le C\\Vert u\\Vert\\Vert v\\Vert;\\qquad\n(b)\\ \\text{强制}:\\ B(u,u)\\ge c\\Vert u\\Vert^2\\ (c>0)$$\n\n**则弱解存在且唯一**，且满足稳定性估计\n\n$$\\Vert u\\Vert\\le\\frac1c\\Vert F\\Vert$$\n\n**本例的常数**：$C=1$（算得 1【已核验:1|1】）、$c\\ge\\pi^2$（算得 9.869604【已核验:9.86960440109|pi**2】）。\n\n**(v) 与经典解的差别。** 弱解只需 $u\\in H_0^1$（一阶导数可积）；**不要求二阶可导**（见本单元反例词条）。**这就是「弱」的含义：把对方程的要求降到最低。**\n\n**(vi) 一个可手算的弱解（照 `probe1` 走）。** $-\\nabla^2u=1$ 于 $(0,1)$、$u(0)=u(1)=0$ ⇒ $u=\\frac{x(1-x)}2$，在 $x=0.5$ 处算得 0.125【已核验:0.125|0.5*0.5/2】。",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.14",
+        "A4.5",
+        "D1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:variational.intuition",
+      "type": "intuition",
+      "subject": "variational",
+      "title": "直觉：解方程 = 找能量最低的构型",
+      "keywords": [
+        "弹性膜：稳态 = 能量最小",
+        "弱形式 = 对一切方向的一阶条件",
+        "两前提 = 存在性 + 唯一性",
+        "本质/自然条件 = 空间里 vs 式子里的差别"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "直觉三步：弹性膜能量 E=∫(½|∇u|²−fu)；一阶变分为零给弱形式（只需一阶导数）；有界=稳定性、强制=存在唯一（与 x²/e^x/x⁴−x² 三个一维对照）；Dirichlet 写进空间=本质、Neumann 出现在弱形式=自然；三点对照（三条路同解、与极值原理的整体性对照、与 D1 的作用量原理同框架）。",
+      "content": "**假设给了什么。** 一个边值问题 $-\\Delta u=f$、$u\\vert_{\\partial\\Omega}=0$。**为什么它可以等价于「最小化一个能量」？**\n\n**结论为什么因此成立。** 三步：\n\n**第一步：物理图像（弹性膜）。**\n\n把 $u$ 想成**绷紧的弹性膜的高度**，$\\vert\\nabla u\\vert^2$ 是**弹性能密度**（越陡越费能量），$fu$ 是**外力做的功**。总能量\n\n$$E(u)=\\int_\\Omega\\Bigl(\\frac12\\vert\\nabla u\\vert^2-fu\\Bigr)d\\Omega$$\n\n**膜的平衡形状就是让 $E$ 最小的那个 $u$**（这就是「最小势能原理」）。\n\n**第二步：一阶条件（变分）。** 在极小点，沿任何允许方向 $v$ 的一阶变分为零：\n\n$$\\frac{d}{dt}E(u+tv)\\Bigr|_{t=0}=0\n\\quad\\Longleftrightarrow\\quad\n\\int\\nabla u\\cdot\\nabla v=\\int fv\\quad\\text{对一切允许的 }v$$\n\n**这就是弱形式** —— **它对 $u$ 的要求只是「一阶导数可积」**（因为式子里只有一阶导数）。\n\n**第三步：为什么需要「有界 + 强制」。**\n\n这是泛函分析用来替代「$\\mathbb R^n$ 上凸函数必有唯一极小」的两件工具：\n\n- **有界（连续）**：保证 $B$ 是「好」的线性算子（能量不会突然爆炸）⇒ **稳定性**；\n- **强制（coercive）**：保证能量**真在无穷远处增长**（像 $x^2$ 而不是 $x$ 那样）⇒ **极小者存在且唯一**。\n\n**对照一维函数**：$\\phi(x)=x^2$ 有唯一极小（对应「强制」）；$\\phi(x)=e^x$ 没有极小（对应「不强制」，能量可以一直降下去）；$\\phi(x)=x^4-x^2$ 有两个极小（对应「非凸」，`de2.15` 的限定词①）。\n\n**两类边界条件的差别（本质 vs 自然）。**\n\n- **Dirichlet**：膜的**边缘被钉在指定高度**。这是「允许的形状集合」的限制 ⇒ 写进**空间**（$H_0^1$）⇒ **本质条件**。\n- **Neumann**：膜的**边缘被指定斜率**（例如自由端）。这是「能量的边界项」的贡献 ⇒ 出现在**弱形式里**（变分时自然冒出来）⇒ **自然条件**。\n\n**「自然」这个词很贴切：它不需要你额外声明，只要写对能量泛函，变分时它自己就出现了。**\n\n**三个对照记忆点。**\n\n1. **与 `de1.18`/`de2.14` 的 Green 函数对照**：三条路（Green 函数 / 特征函数展开 / 变分）在同一个问题上给出同一个解；**变分是最不依赖「显式求逆」的一条**（所以数值上最通用）。\n2. **与 `de2.8` 的极值原理对照**：极值原理说「调和函数的极值在边界」（**值**的性质）；变分说「解是能量最小」（**全局**性质）。**两条都体现了椭圆问题的「整体性」。**\n3. **与 `D1`（作用量原理）对照**：ODE/PDE 的变分原理与力学的最小作用量原理是同一个框架；**「对称性 ⇒ 守恒量」（Noether）也从这里出发**。",
+      "links": [
+        "de2.8",
+        "de2.14",
+        "A4.5",
+        "D1",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:variational.proof",
+      "type": "proof",
+      "subject": "variational",
+      "title": "证明骨架：Euler–Lagrange 推导、弱形式与 Lax–Milgram",
+      "keywords": [
+        "第一步 一阶变分给弱形式",
+        "第二步 从弱形式回推方程（分部积分）",
+        "第三步 Lax–Milgram 给存在唯一",
+        "第四步 Poincaré 给强制常数"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "五步证明：一阶变分给弱形式；分部积分回推 −Δu=f（两方向等价）；Lax–Milgram 给存在唯一与 ‖u‖≤C‖F‖；用 sin 级数证 Poincaré 给 c≥π²=9.869604、C=1；自检弱解 x(1−x)/2 给 0.125；四条易错（空间收窄、v 齐次边界、Neumann 是自然条件、Poincaré 常数随区域）。",
+      "content": "**第 1 步（一阶变分 $\\to$ 弱形式）。** 取 $E(u)=\\int\\bigl(\\frac12\\vert\\nabla u\\vert^2-fu\\bigr)$，$u\\in H_0^1$，方向 $v\\in H_0^1$：\n\n$$\\frac{d}{dt}E(u+tv)\\Bigr|_{t=0}\n=\\int\\nabla u\\cdot\\nabla v-\\int fv$$\n\n**理由**：$\\frac{d}{dt}\\frac12\\vert\\nabla(u+tv)\\vert^2\\big|_{0}=\\nabla u\\cdot\\nabla v$。**令它为零（对一切 $v$）**：\n\n$$\\int\\nabla u\\cdot\\nabla v=\\int fv\\qquad\\forall v\\in H_0^1\\ \\ ✅\\ \\text{（弱形式）}$$\n\n**第 2 步（弱形式 $\\to$ 方程：为什么等价）。** 若 $u$ 足够光滑，对第一项**分部积分**（Green 恒等式）：\n\n$$\\int\\nabla u\\cdot\\nabla v=-\\int(\\Delta u)v+\\oint v\\,\\partial_nu\n\\quad\\underset{v\\vert_{\\partial\\Omega}=0}{=}-\\int(\\Delta u)v$$\n\n代入弱形式：$\\int(-\\Delta u-f)v=0$ 对一切 $v$ ⇒（取 $v$ 逼近任意符号的局部函数）**$-\\Delta u=f$ 几乎处处成立** ✅ **两个方向都通 ⇒ 等价。**\n\n**第 3 步（Lax–Milgram）。** 记 $H=H_0^1(\\Omega)$（配 $\\Vert u\\Vert^2=\\int\\vert\\nabla u\\vert^2$，由 Poincaré 等价于标准 $H^1$ 范数）。$B$、$F$ 都是 $H$ 上的连续线性/双线性泛函。设 $B$ 有界且强制，则映射 $u\\mapsto B(u,\\cdot)$ 是 $H\\to H^*$ 的**有界可逆线性算子**（强制 ⇒ 单射且像闭、Lax–Milgram 的构造）：\n\n$$u=B^{-1}F\\ \\text{存在唯一，且}\\ \\Vert u\\Vert\\le\\frac1c\\Vert F\\Vert\\ \\ ✅$$\n\n**证明要点**：强制 ⇒ $B(u,u)\\ge c\\Vert u\\Vert^2$ ⇒ 映射是「单调」的 ⇒ 单射；再用 Riesz 表示定理 + 压缩映射（或直接用 Lax–Milgram 定理）得满射。\n\n**第 4 步（Poincaré 给强制常数）。** 对 $u\\in H_0^1(0,1)$：\n\n$$\\int_0^1\\vert u\\vert^2dx\\le\\frac1{\\pi^2}\\int_0^1\\vert u'\\vert^2dx$$\n\n（证明：把 $u$ 展开成 $\\sum b_n\\sin(n\\pi x)$，则 $\\Vert u\\Vert^2=\\sum b_n^2/2$、$\\Vert u'\\Vert^2=\\sum b_n^2(n\\pi)^2/2$ ⇒ 比值 $\\le1/\\pi^2$。）于是\n\n$$B(u,u)=\\int\\vert u'\\vert^2\\ge\\pi^2\\Vert u\\Vert^2_{L^2}\\ \\Longrightarrow\\ c\\ge\\pi^2\\ \\text{（算得 9.869604【已核验:9.86960440109|pi**2】）}\\ ✅$$\n\n**有界性**：$\\vert B(u,v)\\vert\\le\\Vert\\nabla u\\Vert\\Vert\\nabla v\\Vert$ ⇒ $C=1$（算得 1【已核验:1|1】）✅\n\n**第 5 步（自检：算一个具体弱解）。** $-\\nabla^2u=1$ 于 $(0,1)$、$u(0)=u(1)=0$ ⇒ $u=\\frac{x(1-x)}2$：\n\n- 代回方程：$u''=-1$ ⇒ $-u''=1$ ✅\n- 边界：$u(0)=u(1)=0$ ✅\n- 值：$u(0.5)$ 算得 0.125【已核验:0.125|0.5*0.5/2】✅\n- 弱形式：$\\int_0^1u'v'=\\int_0^1(\\frac12-x)v'=\\bigl[(\\frac12-x)v\\bigr]_0^1+\\int_0^1v=\\int_0^1v$（边界项因 $v(0)=v(1)=0$ 为零）✅\n\n**易错点。**\n\n1. **空间必须收窄**（$H_0^1$ 而非 $H^1$），否则不强制（本单元反例词条）。\n2. **试验函数 $v$ 必须满足齐次边界**（否则分部积分的边界项不消失，弱形式要多一项）。\n3. **Neumann 条件不要塞进空间**（它是自然条件，出现在弱形式的边界项里）。\n4. **强制性常数与区域有关**：Poincaré 常数在细长区域上很大（$\\sim L^2/\\pi^2$），数值上会影响条件数。",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.14",
+        "A4.5",
+        "de1.12"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：Rayleigh 商、强制常数与弱解取值",
+      "keywords": [
+        "算 Rayleigh 商 ≥ λ₁",
+        "与 π² 比较给相对误差",
+        "弱解在 x=1/2 的值",
+        "四组数"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "七问：Rayleigh 商用 x(1−x) 给 ∫u′²=1/3、∫u²=1/30、商 10 ≥ π²=9.869604（相对误差 0.013212≈1.32%）；强制常数 ≥π²、有界常数 1；弱解 x(1−x)/2 给 0.125 且 −u″=1；验证 ∫u′v′=∫fv；解释 Rayleigh 商给上界（+ Rayleigh–Ritz）；用 sin(πx) 代得 π² 印证。",
+      "content": "**第 1 问：用 $u=x(1-x)$ 估 λ₁ 的下界。**\n\nRayleigh 商\n\n$$R(u)=\\frac{\\int_0^1\\vert u'\\vert^2dx}{\\int_0^1u^2dx}$$\n\n$u'=1-2x$ ⇒ $\\int_0^1(1-2x)^2dx$ 算得 0.333333【已核验:0.333333333333|1/3】；$\\int_0^1x^2(1-x)^2dx$ 算得 0.033333【已核验:0.0333333333333|1/30】。于是\n\n$$R(u)\\ \\text{算得 } 10\\ \\text{【已核验:10|(1/3)/(1/30)】}$$\n\n**第 2 问：与真特征值比较。**\n\n一维 Dirichlet 的 $\\lambda_1=\\pi^2$，算得 9.869604【已核验:9.86960440109|pi**2】。**$R(u)=10\\ge9.869604$ ✅**（Rayleigh 商确实给上界）。\n\n**相对误差**算得 0.013212【已核验:0.0132118364234|(10-pi**2)/pi**2】≈ 1.32%。**一个多项式试探函数就把 $\\lambda_1$ 估到 1.3% 以内** —— 这是 Rayleigh–Ritz 方法的威力。\n\n**第 3 问：强制常数。**\n\nPoincaré 给 $\\int u^2\\le\\frac1{\\pi^2}\\int\\vert u'\\vert^2$ ⇒ $B(u,u)\\ge\\pi^2\\Vert u\\Vert_{L^2}^2$，所以**强制常数 $c\\ge\\pi^2$**，算得 9.869604【已核验:9.86960440109|pi**2】。\n\n**有界常数**：由 $\\vert B(u,v)\\vert\\le\\Vert\\nabla u\\Vert\\Vert\\nabla v\\Vert$ 得 $C=1$，算得 1【已核验:1|1】。\n\n**Lax–Milgram 的两前提都满足**（$0<\\pi^2$ 且 $C$ 有限）⇒ 弱解存在唯一 ✅\n\n**第 4 问：$-u''=1$、$u(0)=u(1)=0$ 的解。**\n\n$$u=\\frac{x(1-x)}2:\\qquad\nu(0.5)\\ \\text{算得 } 0.125\\ \\text{【已核验:0.125|0.5*0.5/2】},\\qquad\nu''=-1\\ ({\\Rightarrow}-u''=1\\ ✅)$$\n\n**第 5 问：为什么 $\\int_0^1u'v'$ 与 $\\int_0^1fv$ 相等？**\n\n$\\int_0^1(\\frac12-x)v'dx=\\bigl[(\\frac12-x)v\\bigr]_0^1+\\int_0^1v\\,dx=\\int_0^1v\\,dx$（边界项为零因为 $v(0)=v(1)=0$）。**而 $f\\equiv1$ ⇒ 右端也是 $\\int_0^1v$** ✅\n\n**第 6 问（易错）：Rayleigh 商为什么给的是「上界」而不是下界？**\n\n因为\n\n$$\\lambda_1=\\min_{u\\ne0}\\frac{\\int\\vert u'\\vert^2}{\\int u^2}$$\n\n**任何**测试函数都给出 $\\ge\\lambda_1$ 的值（商的最小值才是 $\\lambda_1$）⇒ **每个测试函数给一个上界**。**要提高精度就取更多/更好的测试函数**（Rayleigh–Ritz / Galerkin 的出发点，`de4.3`）。\n\n**第 7 问：把 $u=\\sin(\\pi x)$ 代进去会怎样？**\n\n$\\int_0^1\\pi^2\\cos^2(\\pi x)dx=\\pi^2/2$、$\\int_0^1\\sin^2(\\pi x)dx=1/2$ ⇒ 商 $=\\pi^2$，算得 9.869604【已核验:9.86960440109|pi**2】 —— **正好等于 $\\lambda_1$**（因为 $\\sin(\\pi x)$ 就是特征函数）✅",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "A4.5",
+        "de1.12",
+        "de4.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：变分法 vs 分离变量 vs Green 函数",
+      "keywords": [
+        "三条解椭圆问题的路",
+        "对区域的要求",
+        "数值上的可推广性",
+        "输出形式"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "三路对照表（前提/区域要求/输出/边界条件/数值可推广性/附加结论/场景 × 3）+ 三要点（不挑区域是最大优势、三条路同一解但附加结论不同、变分唯一能处理非线性）+ 与 de2.14（Dirichlet 原理）和 A4.5 的接口。",
+      "content": "**同一个椭圆边值问题，三条路**（本单元是第三条）：\n\n| 维度 | **变分法/弱形式**（本单元） | **分离变量**（`de2.10`） | **Green 函数**（`de2.14`） |\n|---|---|---|---|\n| 前提 | 算子对称 + 泛函凸 + Lax–Milgram | 区域**可分离** + **齐次**边界 | 会求（或数值求）$G$ |\n| 对区域的要求 | **几乎无要求**（任意形状） | 强（矩形/圆/柱…） | 中（半空间/球/圆盘可解析） |\n| 输出 | 解的存在唯一 + 能量刻画（**不显式**） | 无穷级数（**显式**） | 积分核（**显式**） |\n| 边界条件 | Dirichlet 进空间（本质）、Neumann 进弱形式（自然） | 边界决定特征函数 | **吸进核** |\n| 数值可推广性 | **最强**（有限元 `de4.3`） | 弱（规则区域） | 中（边界元，奇异核处理麻烦） |\n| 附加结论 | 能量最小、稳定性估计 | 模态/频率、Gibbs 现象 | 点源响应、边界贡献 |\n| 典型场景 | 一般区域、材料不均匀、非线性（半线性） | 模态分析、规则域 | 位势问题、边界层 |\n\n**三条读表要点。**\n\n1. **变分法的最大优势是「不挑区域」**：它不需要显式求 $G$，也不需要区域可分离 ⇒ **工程上（有限元）唯一可行的一条**。\n2. **三条路在同一个问题上给出同一个解**：分离变量的级数 = Green 函数的谱展开 = 变分问题的极小者（`de1.18`/`de2.10` 的等价性；本单元给第三条腿）。**但各自的「附加结论」不同**：模态/频率（分离变量）、点源响应（Green）、稳定性与存在唯一（变分）。\n3. **变分法是唯一能直接处理「非线性」的**：把能量泛函写成非二次的，Euler–Lagrange 就给半线性方程（但这时凸性/强制性要重新检查，见限定词①）。\n\n**与 `de2.14` 的接口**：Green 函数本身也满足一个变分刻画（**Dirichlet 原理**：$h$ 是使能量最小的调和函数）；数值上「只离散边界」的边界元与「离散整个区域」的有限元，正是这两条路各自的数值化。\n\n**与 `A4.5`（Lax–Milgram）的接口**：本单元是 `A4.5` 在 PDE 上的第一次完整应用；**「有界 + 强制 ⇒ 存在唯一」这条定理是整个椭圆理论的枢纽**。",
+      "links": [
+        "de2.8",
+        "de2.9",
+        "de2.10",
+        "de2.14",
+        "A4.5",
+        "de4.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de2.15:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：变分法与弱解的下游（有限元、最优化、物理）",
+      "keywords": [
+        "有限元 = Galerkin 离散",
+        "变分原理与最小作用量",
+        "Noether 与守恒律",
+        "正则性理论"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de2.tex",
+        "line_start": 287,
+        "line_end": 309
+      },
+      "fill_hint": "下游清单：de4.3 有限元（Galerkin 离散 + Sobolev 范数误差估计）、A4.5 Lax–Milgram、de2.14 的 Dirichlet 原理与边界元、D1/D2 变分原理与 Noether、最优化与机器学习（凸泛函/正则项/热流下降）、椭圆正则性（弱解→经典解的桥梁）；末给四件自检。",
+      "content": "**下游清单。**\n\n- **`de4.3` 有限元法**：把 $H_0^1$ 换成**有限维子空间** $V_h$（分片多项式），求解 $B(u_h,v_h)=F(v_h)$ 对一切 $v_h\\in V_h$。**这就是 Galerkin 方法** —— **本单元的弱形式是它的全部理论基础**，误差估计在 Sobolev 范数里做（`A4.3`/`A4.4`）。\n\n- **`A4.5` Lax–Milgram**：本单元是它最标准的应用场景；**「有界 + 强制」的检验是每个椭圆问题的例行公事**。\n\n- **`de2.14` Green 函数**：Green 函数满足 **Dirichlet 原理**（能量最小的调和函数）⇒ 边界元法是这条路的数值化。\n\n- **`D1` 最小作用量原理与 `D2` Noether 定理**：本单元的能量泛函是**静态版**；把时间维度加进去就是作用量 $S=\\int L\\,dt$（`D1`），**对称性 ⇒ 守恒量**（`D2`）。**「变分原理」是力学与场论的统一语言。**\n\n- **最优化与机器学习**：$E(u)=\\int(\\frac12\\vert\\nabla u\\vert^2-fu)$ 是**凸泛函** ⇒ 可以梯度下降（对应热流 $u_t=\\Delta u-f$ 的长时间极限）；**正则项（如 TV、$\\vert\\nabla u\\vert$ 的 $L^1$ 版）就是能量泛函的设计**（图像处理/逆问题的变分方法）。\n\n- **椭圆正则性理论**：$f\\in L^2$ ⇒ $u\\in H^2$；$f\\in C^\\infty$ ⇒ $u\\in C^\\infty$（**内部**）。**这是「弱解」到「经典解」的桥梁**：先在最宽的空间里拿到弱解（存在唯一容易），再用正则性理论往上升。\n\n**一句自检**：写下弱形式后核四件事 —— **（1）双线性形式有界吗**（Cauchy–Schwarz 一般够）；**（2）强制吗**（空间选对了吗）；**（3）试验函数的边界条件与本质条件一致吗**；**（4）Neumann 条件放进弱形式的边界项里了吗**。",
+      "links": [
+        "de2.14",
+        "A4.3",
+        "A4.4",
+        "A4.5",
+        "D1",
+        "D2",
+        "de4.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
