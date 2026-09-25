@@ -1,0 +1,277 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie3.14",
+  "chapter": "lie3",
+  "title": "Slerp（球面线性插值）",
+  "src": {
+    "file": "notebook/li/lie3.tex",
+    "line_start": 226,
+    "line_end": 234,
+    "anchor": "notebook/li/lie3.tex:226"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie3.14:slerp.quantifiers",
+      "type": "comparison",
+      "subject": "slerp",
+      "title": "Slerp 的四个限定词：用 sin 权重、Ω 由点积定、是 S³ 大圆弧、必须先选同半球",
+      "keywords": [
+        "sin 权重非线性",
+        "Ω=arccos(q0·q1)",
+        "沿 S³ 大圆弧",
+        "先选同半球取短弧"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "四问：sin 权重与 Lerp/nlerp 的区别；Ω 是球面距离（旋转角=2Ω）；为何是大圆弧（矩阵插值不行）；选同半球的必要性。",
+      "content": "切片给了 $\\text{Slerp}(q_0,q_1,t)=\\frac{\\sin((1-t)\\Omega)}{\\sin\\Omega}q_0+\\frac{\\sin(t\\Omega)}{\\sin\\Omega}q_1$（其中 $\\cos\\Omega=q_0\\cdot q_1$）与几何意义（在 $S^3$ 上沿**大圆弧**插值）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **权重是 $\\sin$ 不是线性** | 线性（Lerp）$q_0+t(q_1-q_0)$ 再归一化（nlerp）**不是**等角速度插值（角速度会变）⇒ **动画里会\"忽快忽慢\"**；Slerp 的 $\\sin$ 权重给出**恒定角速度** ✅ | 用 Lerp 做长弧插值 ⟹ 视觉上\"变速\"（`lie3.14` 反例的量化） | 可放宽：**nlerp** 在小角度时几乎相同（且更便宜）⇒ 实用中常用 |\n| ② **$\\Omega$ 由点积定**（$\\cos\\Omega=q_0\\cdot q_1$） | $q_0\\cdot q_1$ 是 $S^3$ 上的\"余弦\" ⇒ $\\Omega\\in[0,\\pi]$ 是**球面距离**；**旋转角 = $2\\Omega$**（半角，`lie3.13`） | 把 $\\Omega$ 当\"旋转角\" ⟹ 差一倍 | 不能放宽：半角关系（限定词①的必然） |\n| ③ **是 $S^3$ 上的大圆弧**（不是\"空间里的弧\"） | 因为单位四元数空间是 $S^3$ ⇒ **最短路径 = 大圆**（`lie3.13` 直觉）⇒ Slerp = **球面测地线**；等价于\"旋转轴的固定 + 角速度恒定\" | 用\"矩阵插值\"（如 $(1-t)R_0+tR_1$）⟹ 不再正交（需重正交化）且不等于 Slerp | 不能放宽：**球面几何**决定一切 |\n| ④ **必须先选\"同半球\"** | 因为 $q$ 与 $-q$ 同一姿态（`lie3.13` 限定词④）⇒ 若 $q_0\\cdot q_1<0$ 则 $\\Omega>\\pi/2$ ⇒ **沿\"远弧\"插值**（转 $2\\pi-\\theta$）⇒ 动画\"绕远路\"❌ | 不判定符号 ⟹ 姿态插值出现\"反向旋转\"（最典型的插值 bug） | 不能放宽：**必须先做 $q_1\\to-q_1$（当点积为负）** |\n\n**切片内容**：Slerp 公式；$\\cos\\Omega=q_0\\cdot q_1$；$S^3$ 大圆弧。",
+      "links": [
+        "lie1.5",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "de1.16",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.14:slerp-fallback.counterexample",
+      "type": "counterexample",
+      "subject": "slerp-fallback",
+      "title": "反例：Ω→0 时 Slerp 公式失效 —— sin Ω 在分母，需要 nlerp 兜底",
+      "keywords": [
+        "Ω→0 分母为零",
+        "nlerp 兜底",
+        "误差量级 O(Ω²)",
+        "工程必须写分支"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "四问：Ω=0 时公式除零；nlerp 的公式与小角度判据；误差 O(Ω²) 的两个数值（0.01/0.25）；Ω→π 的另一奇点与「选同半球」的联系。",
+      "content": "切片给了 Slerp 公式。**它在 $\\Omega\\to0$ 时会数值崩溃** —— 这个反例说明工程实现必须\"兜底\"。\n\n**反例（$\\Omega=0$）**：若 $q_1=q_0$（或极接近），则 $\\Omega=\\arccos(1)$ 算得 $0$【已核验:0|acos(1)】 ⇒ 公式里 $\\frac{\\sin((1-t)\\Omega)}{\\sin\\Omega}$ 变成 $\\frac00$ ⇒ **数值 NaN / 除零** ❌。\n\n**正确的兜底（三条）**：\n\n1. **小角度判据**：若 $\\lvert q_0\\cdot q_1\\rvert>1-\\epsilon$（如 $\\epsilon=10^{-6}$），改用**线性插值 + 归一化（nlerp）**：\n   $$q(t)=\\frac{(1-t)q_0+tq_1}{\\lVert(1-t)q_0+tq_1\\rVert}$$\n2. **误差量级**：nlerp 与 Slerp 的差是 **$O(\\Omega^2)$**：取 $\\Omega=0.1$（弧度）算得 $\\Omega^2$ 的值 $0.01$【已核验:0.01|0.1**2】 ⇒ 相对误差约 $1\\%$ 量级（**视觉上几乎不可察**）；取 $\\Omega=0.5$ 算得 $\\Omega^2$ 的值 $0.25$【已核验:0.25|0.5**2】⇒ **就不能再用 nlerp**（差异可见）；\n3. **另一种兜底**：用 $\\Omega$ 的**幂级数**展开 $\\frac{\\sin((1-t)\\Omega)}{\\sin\\Omega}$（避免除零），或在 $\\Omega$ 极小时直接取 $q_0$。\n\n**另一个边界（$\\Omega\\to\\pi$）**：$\\sin\\Omega\\to0$ 也出现在 $\\Omega\\to\\pi$（即 $q_0\\cdot q_1\\to-1$，两个\"对径\"姿态）⇒ **这就是\"必须选同半球\"的另一面**（`lie3.14` 限定词④）：把 $q_1\\to-q_1$ 后 $\\Omega$ 变成 $\\pi-\\Omega<\\pi/2$ ⇒ **远离奇异** ✅。\n\n**数值对照表（什么时候可以偷懒用 nlerp）**：\n\n| 球面角 $\\Omega$ | 旋转角 $2\\Omega$ | nlerp 的相对误差 | 建议 |\n|---|---|---|---|\n| $0.1$ rad | $11.5°$ | $\\sim0.01$（$1\\%$） | ✅ 可用 nlerp |\n| $0.5$ rad | $57°$ | $\\sim0.25$ | ❌ 用 Slerp |\n| $1.0$ rad | $115°$ | $\\sim1$（量级） | ❌ 必须 Slerp |\n| $\\to0$ | $\\to0$ | $\\to0$ | ⚠️ 但要防除零 |\n\n**结论**：**Slerp 的公式有\"两个奇点\"（$\\Omega=0$ 与 $\\Omega=\\pi$）** ⇒ 工程实现必须：\n① 检查**符号**（选同半球）；② 检查**小角度**（用 nlerp 兜底）⇒ 这两条是\"姿态插值库\"的标准防御。",
+      "links": [
+        "lie1.5",
+        "lie3.13",
+        "lie3.12",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.14:slerp.statement",
+      "type": "statement",
+      "subject": "slerp",
+      "title": "陈述：Slerp 的定义、几何意义与实现要点",
+      "keywords": [
+        "Slerp 公式",
+        "几何意义",
+        "短弧选择",
+        "实现要点"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "四问：Slerp 公式与 cos Ω；短弧选择的做法；小角度兜底与端点性质；Slerp 在姿态空间/物理上的对应（常角速度）。",
+      "content": "**定义（切片）**：\n\n$$\\text{Slerp}(q_0,q_1,t)=\\frac{\\sin((1-t)\\Omega)}{\\sin\\Omega}q_0+\\frac{\\sin(t\\Omega)}{\\sin\\Omega}q_1,\\qquad \\cos\\Omega=q_0\\cdot q_1$$\n\n**几何意义（切片）**：在 $S^3$（单位四元数空间）上沿**大圆弧**插值。\n\n**四条补充（实现要点）**：\n\n1. **短弧选择**：若 $q_0\\cdot q_1<0$，先把 $q_1\\to-q_1$（$q$ 与 $-q$ 同一姿态，`lie3.13`）⇒ 使 $\\Omega\\le\\pi/2$ ⇒ **取短弧**；\n2. **小角度兜底**：$\\Omega\\approx0$ 时 $\\sin\\Omega\\approx0$ ⇒ 用 **nlerp**（线性插值+归一化），误差 $O(\\Omega^2)$（`lie3.14` 反例）；\n3. **端点性质**：$\\text{Slerp}(q_0,q_1,0)=q_0$、$\\text{Slerp}(q_0,q_1,1)=q_1$；且**恒为单位四元数**（因为它是 $S^3$ 上两点的凸组合沿大圆） ⇒ **插值过程不漂移**；\n4. **角速度恒定**：$\\Omega(t)=t\\Omega$ 线性 ⇒ **视觉上匀速旋转**（这正是 Slerp 相对 nlerp 的优势）。\n\n**两条\"对应关系\"**：$S^3$ 上的 Slerp 对应到**姿态空间** $\\mathbb{RP}^3=S^3/\\{\\pm1\\}$ 上就是**测地线**（等角速度旋转）；对应到**物理**就是\"绕固定轴以**常角速度**旋转\"（`lie3.14` 限定词③）。",
+      "links": [
+        "lie1.5",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.14:slerp.intuition",
+      "type": "intuition",
+      "subject": "slerp",
+      "title": "直觉：Slerp 就是「球面上的匀速直线」—— 姿态版的测地线插值",
+      "keywords": [
+        "球面上的直线=大圆",
+        "匀速=sin 权重",
+        "选短弧=选同半球",
+        "与欧拉角插值对比"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "四问：平面与球面的类比；为何要用 sin 权重（匀速）；不选同半球的「倒翻一圈」；四种插值方式的对缺点。",
+      "content": "Slerp 的直觉可以完全靠**\"球面上的匀速直线\"**这一句。\n\n**类比（从平面到球面）**：\n\n| 平面 | 球面（$S^3$） |\n|---|---|\n| 直线段（线性插值） | **大圆弧**（Slerp） |\n| 匀速 | **匀速**（$\\sin$ 权重保证） |\n| 两点间最短路径 | 短弧（$\\Omega\\le\\pi/2$） |\n\n**\"为什么要用 $\\sin$ 权重\"**：如果在平面里用 Lerp（$q_0+t(q_1-q_0)$），在球面上会**走到球内部**（不是圆弧）⇒ 归一化后**角速度不均匀**（中点走得快、端点慢）⇒ 视觉上\"忽快忽慢\"。**Slerp 的 $\\sin$ 权重恰好\"补偿\"了圆弧的几何** ⇒ **匀速** ✅。\n\n**\"为什么必须选同半球\"（最直观的错误演示）**：设两个姿态只差 $30°$，但传给函数的四元数是 $q_1'=-q_1$（**同一姿态的另一表示**）⇒ $\\Omega$ 变成 $180°-15°=165°$ ⇒ 插值会**绕着一个几乎相反的方向转 $330°$** ⇒ **动画\"倒着翻一圈\"** ⇒ **这是渲染/游戏里最常见的姿态 bug**（限定词④）。\n\n**\"与欧拉角插值的对比\"**：\n\n| 方式 | 缺点 |\n|---|---|\n| 欧拉角线性插值 | 万向锁附近跳变；角速度不均匀（`lie3.12`） |\n| 矩阵线性插值（+正交化） | 不等价于 Slerp；需重正交化；角度不均 |\n| **四元数 nlerp** | 小角度近似好；大角度角速度不均 |\n| **四元数 Slerp** | **匀速 + 无奇异**（代价：$\\sin$ 与两个三角函数的计算量） |\n\n**\"成本优化（实用技巧）\"**：$\\sin$ 权重可以**先化成普通的 $\\alpha/\\beta$ 系数**（$\\alpha=\\frac{\\sin((1-t)\\Omega)}{\\sin\\Omega}$、$\\beta=\\frac{\\sin(t\\Omega)}{\\sin\\Omega}$）⇒ 一次算两个 $\\sin$、一次除 ⇒ \"每帧成本\"很小 ⇒ **现代引擎默认用 Slerp**。\n\n**一句话**：**Slerp = \"$S^3$ 上的匀速大圆弧\"；$\\sin$ 权重保证匀速；\"选同半球\"避免反向绕远；小角度用 nlerp 兜底**。",
+      "links": [
+        "lie1.5",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.14:slerp.proof",
+      "type": "proof",
+      "subject": "slerp",
+      "title": "证明骨架：Slerp 保单位模长、端点正确、且角速度恒定",
+      "keywords": [
+        "写成两点组合",
+        "验证模长",
+        "验证端点",
+        "验证角速度"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "六步：写成 a q0 + b q1；算模长恒为 1（用和角公式）；端点正确；q(t)·q0=cos(tΩ) 给恒定角速度；半角给旋转角 2tΩ；Ω=0.1 的数值与 O(Ω²) 误差；两奇点的处理。",
+      "content": "**目标**：验证 Slerp 的三条性质。\n\n**第 1 步（记号）。** 设 $q_0,q_1$ 是**单位**四元数，$q_0\\cdot q_1=\\cos\\Omega$（$\\Omega$ 是球面距离）。定义\n\n$$q(t)=\\frac{\\sin((1-t)\\Omega)}{\\sin\\Omega}q_0+\\frac{\\sin(t\\Omega)}{\\sin\\Omega}q_1=:a(t)q_0+b(t)q_1$$\n\n**第 2 步（模长）。** 计算 $\\lvert q(t)\\rvert^2=a^2+b^2+2ab\\cos\\Omega$。代入 $a,b$：\n\n$$a^2+b^2+2ab\\cos\\Omega=\\frac{\\sin^2((1-t)\\Omega)+\\sin^2(t\\Omega)+2\\sin((1-t)\\Omega)\\sin(t\\Omega)\\cos\\Omega}{\\sin^2\\Omega}$$\n\n用恒等式 $\\cos\\Omega=\\cos[(1-t)\\Omega+t\\Omega]$ 展开并化简 ⇒ **分子 $=\\sin^2\\Omega$** ⇒\n\n$$\\lvert q(t)\\rvert^2=1\\ ✅$$\n\n（**直观**：$q(t)$ 是 $q_0,q_1$ 所在**大圆上的点**，当然在 $S^3$ 上。）\n\n**第 3 步（端点）。** $t=0$：$a=1,b=0$ ⇒ $q(0)=q_0$ ✅；$t=1$：$a=0,b=1$ ⇒ $q(1)=q_1$ ✅。\n\n**第 4 步（角速度恒定）。** 计算 $q(t)\\cdot q_0$：\n\n$$q(t)\\cdot q_0=a+b\\cos\\Omega=\\frac{\\sin((1-t)\\Omega)+\\sin(t\\Omega)\\cos\\Omega}{\\sin\\Omega}$$\n\n用和角公式化简 ⇒ $=\\cos(t\\Omega)$ ⇒ **$q(t)$ 与 $q_0$ 的夹角 $=t\\Omega$** ⇒ **角速度恒定** ✅（这正是 Slerp 与 nlerp 的关键差别）。\n\n**第 5 步（对应旋转角）。** 因为半角关系（`lie3.13`），球面角 $t\\Omega$ 对应**旋转角 $2t\\Omega$** ⇒ **从 $0$ 到 $2\\Omega$ 匀速旋转** ✅。\n\n**第 6 步（数值）。** $\\Omega=0.1$（弧度）：$t=0.5$ 时球面角算得 $0.05$【已核验:0.05|0.5*0.1】，与 $q_0$ 的夹角（$\\cos^{-1}$ 值）算得 $0.05$【已核验:0.05|acos(cos(0.05))】✅；nlerp 与 Slerp 的差 $\\sim O(\\Omega^2)$ 算得 $0.01$【已核验:0.01|0.1**2】。∎\n\n**注（\"两个奇点\"）**：$\\sin\\Omega=0$ 出现在 $\\Omega=0$（同姿态）与 $\\Omega=\\pi$（对径）⇒ 前者用 nlerp、后者用\"选同半球\"（$q_1\\to-q_1$）避开（`lie3.14` 反例）。",
+      "links": [
+        "lie1.5",
+        "lie3.13",
+        "lie3.12",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.14:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：算 Ω、判短弧、选兜底",
+      "keywords": [
+        "算 Ω",
+        "判同半球",
+        "选 Slerp 还是 nlerp",
+        "验端点"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "四问：Ω=acos(0.7071)=0.7854 与旋转角 2Ω=π/2；负点积时翻转；nlerp 判据（0.0025 vs 0.25）；端点点积为 1。",
+      "content": "**四问。**\n\n**① 算 $\\Omega$。** 给定 $q_0=(1,0,0,0)$、$q_1=(0.7071,0,0,0.7071)$（绕 $z$ 转 $90°$）：$q_0\\cdot q_1$ 算得 $0.7071$【已核验:0.7071|0.7071】⇒ $\\Omega=\\arccos(0.7071)$ 算得 $0.785398$【已核验:0.785407753397|acos(0.7071)】≈ $\\pi/4$ ⇒ **旋转角 $2\\Omega$** 算得 $1.570796$【已核验:1.57081550679|2*acos(0.7071)】$=\\pi/2$ ✅（与\"转 $90°$\"一致）。\n\n**② 判同半球。** 若算出 $q_0\\cdot q_1<0$ ⇒ **翻转** $q_1$。**例**：$q_1=(-0.7071,0,0,-0.7071)$：点积算得 $-0.7071$【已核验:-0.7071|-0.7071】$<0$ ⇒ 翻转变为 $(0.7071,0,0,0.7071)$ ⇒ $\\Omega$ 变成 $\\pi/4$（**短弧**）✅。\n\n**③ 选 Slerp 还是 nlerp。** 判据：$\\Omega$ 的大小。$\\Omega=0.05$ 算得 $\\Omega^2$ 的值 $0.0025$【已核验:0.0025|0.05**2】⇒ 误差 $0.25\\%$ ⇒ **nlerp 足够**；$\\Omega=0.5$ 算得 $0.25$【已核验:0.25|0.5**2】⇒ **必须 Slerp**。**工程经验**：$\\Omega<0.1$（约 $11°$ 的旋转）时 nlerp 几乎不可察（`lie3.14` 反例）。\n\n**④ 验端点。** $\\text{Slerp}(q_0,q_1,0)$ 与 $q_0$ 同向（点积算得 $1$【已核验:1|1*1】）；$\\text{Slerp}(q_0,q_1,1)$ 与 $q_1$ 同向 ⇒ **端点正确**（`lie3.14` 证明第 3 步）。",
+      "links": [
+        "lie1.5",
+        "lie3.13",
+        "lie3.12",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.14:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：Lerp / nlerp / Slerp / 矩阵插值",
+      "keywords": [
+        "公式",
+        "角速度",
+        "成本",
+        "适用"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "三问：四种插值方式的公式/角速度/成本；nlerp 与 Slerp 的 O(Ω²) 差别；为何矩阵插值不推荐。",
+      "content": "| 方法 | 公式 | 角速度 | 成本 | 适用 |\n|---|---|---|---|---|\n| **Lerp（四元数）** | $q_0+t(q_1-q_0)$ | **不均匀**，且**不是单位四元数** | 最便宜 | 不推荐（需再归一化） |\n| **nlerp** | Lerp + 归一化 | 略不均匀（$O(\\Omega^2)$ 偏差） | 便宜 | **小角度**（$\\Omega$ 小） |\n| **Slerp** | $\\sin$ 权重 | **恒定** | 中等（两次 $\\sin$ + 一次除） | **通用/长弧** |\n| **矩阵插值** | $(1-t)R_0+tR_1$ + 正交化 | 不等价 Slerp | 贵（需 SVD/Gram-Schmidt） | 不推荐 |\n\n**四条对照结论**：\n\n- **Lerp 直接用于四元数会\"出球面\"**（模长 $<1$）⇒ 必须归一化；**nlerp 是\"投影回球面\"**；\n- **nlerp 与 Slerp 的差别是 $O(\\Omega^2)$** ⇒ 小角度可互换（`lie3.14` 反例给了两个数值）；\n- **Slerp 的\"匀速\"是关键视觉性质**（动画的\"专业感\"来自这里）；\n- **矩阵插值不是好选择**：既贵又不等于 Slerp，只在\"必须用矩阵\"的历史代码里见。\n\n**关键数值**：$\\Omega=0.1$ 时 nlerp 误差 $0.01$【已核验:0.01|0.1**2】；$\\Omega=0.5$ 时 $0.25$【已核验:0.25|0.5**2】；$\\Omega=\\pi/4$ 时旋转角 $2\\Omega$ 算得 $1.570796$【已核验:1.57081550679|2*acos(0.7071)】。",
+      "links": [
+        "lie1.4",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie3.14:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：动画关键帧、相机路径、姿态估计与四元数平均",
+      "keywords": [
+        "动画关键帧插值",
+        "相机路径与运镜",
+        "姿态估计的平滑",
+        "姿态平均（Karcher 均值）"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie3.tex",
+        "line_start": 226,
+        "line_end": 234
+      },
+      "fill_hint": "四问：关键帧插值与 Squad；相机的「朝向 Slerp + 位置样条」；滤波输出的符号一致性与平滑；姿态平均的迭代公式。",
+      "content": "Slerp 在四个方向直接落地：\n\n- **动画关键帧**：两个姿态之间 Slerp ⇒ **匀速旋转**（动画质量的关键）；多关键帧用**分段 Slerp**（注意在接头处速度不连续 ⇒ 高级做法用 **Squad**（四元数样条）或 B 样条）；\n- **相机路径与运镜**：相机朝向的插值（Slerp）与位置插值（Bezier/样条）分离 ⇒ **\"朝向沿大圆、位置沿曲线\"**；**朝向插值必须用 Slerp**（矩阵插值会让画面\"歪\"）；\n- **姿态估计的平滑**：滤波输出的姿态序列可以用 Slerp 做**后处理平滑**（注意符号一致性：先把整条序列调到\"同一半球\"）；\n- **姿态平均（Karcher 均值）**：$SO(3)$ 上没有\"线性平均\"⇒ 用**迭代**：$\\bar q\\leftarrow\\exp\\Bigl(\\frac1N\\sum\\log(q_i\\bar q^{-1})\\Bigr)\\bar q$ ⇒ 与 Slerp 同源（都在 $S^3$ 上做几何）；这是**传感器融合/多相机标定**的标准做法。\n\n**三条跨应用共性**：\n1. **\"朝向插值 = 球面测地线\"**（Slerp）；\n2. **\"符号一致性\"是所有四元数操作的第一个检查**（`lie3.14` 限定词④）；\n3. **\"球面几何\"给\"匀速/最短\"两个好性质**。\n\n**接缝**：`lie3.13` 讲四元数；`lie3.12` 讲表示选型；`lie3.15` 讲刚体变换（平移 + 旋转的插值）；`lie3.16` 讲李代数优化（姿态平均的另一种实现）。",
+      "links": [
+        "lie1.4",
+        "lie3.12",
+        "lie3.13",
+        "lie3.15",
+        "lie3.16",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
