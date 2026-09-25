@@ -29,3 +29,6 @@ build/prompts/review_*.md
 build/prompts/fix*.md
 build/prompts/arbitrate_*.md
 !build/prompts/gen_prefix.md
+
+# codebuddy --bg 托管会话工作树（运行时产物）
+.codebuddy/

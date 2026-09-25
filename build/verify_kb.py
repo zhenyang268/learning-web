@@ -64,8 +64,10 @@ SAFE_ENV = {
     "sin": math.sin, "cos": math.cos, "tan": math.tan,
     "gamma": math.gamma, "lgamma": math.lgamma, "erf": math.erf,
     "erfc": math.erfc, "factorial": math.factorial, "inf": math.inf,
+    # 模型常写 math.pi / math.sqrt(...) 前缀形式（2026-09-24 H5 实测 13 处）
+    "math": math,
 }
-SAFE_TOKEN = re.compile(r"""^[\w\s+\-*/%^<>=!,:.\[\]()'"~]+$""")
+SAFE_TOKEN = re.compile(r"""^[\w\s+\-*/%^<>=!,:.\[\]()'"~&|]+$""")
 
 def eval_expr(expr: str):
     e = expr.replace("^", "**")
@@ -78,6 +80,11 @@ def fmt(v) -> str:
         return str(v)
     if isinstance(v, int):
         return str(v)
+    # 二元组/列表 = 向量值验证（2026-09-24 H8.1 实测：【待核验:(1-0.5*1, 0-0.5*1)】）
+    if isinstance(v, (tuple, list)):
+        return "(" + ", ".join(fmt(x) for x in v) + ")"
+    if not isinstance(v, float):
+        return str(v)  # 兜底：Decimal 等数值类型不崩
     if abs(v - round(v)) < 1e-12:
         return str(round(v))
     return f"{v:.12g}"
@@ -197,6 +204,9 @@ def settle_numerics(path: Path, corrections: list) -> list[str]:
         except Exception as exc:
             errs.append(f"CRIT {path.stem}: 待核验表达式无法求值 {expr!r} ({exc})")
             return m.group(0)
+        if isinstance(val, (tuple, list)):
+            # 向量值验证：无法与单一声称值数值比对，只做格式化回填
+            return f"【已核验:{fmt(val)}|{expr}】"
         claimed = check_claim(m.string[:m.start()])
         if claimed is not None and not close_enough(claimed, val):
             mismatches.append({"expr": expr, "claimed": claimed, "actual": val})

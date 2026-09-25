@@ -45,9 +45,21 @@ for b in "${BATCHES[@]}"; do
   done
   if [ ${#existing} -gt 0 ]; then
     echo "[$b] verify_kb 回填数值（${#existing} 单元）..."
-    VERIFY_NO_AUDIT=1 uv run python build/verify_kb.py "${existing[@]}" 2>&1 | tail -2
+    VERIFY_NO_AUDIT=1 uv run python build/verify_kb.py "${existing[@]}" > /tmp/verify_$b.log 2>&1
+    vrc=$?
+    tail -2 /tmp/verify_$b.log
+    if [ $vrc -ne 0 ]; then
+      # 2026-09-24 加固：verify 不过就绝不 commit（此前 tail -2 不看退出码，
+      # H8.1 缺 status/generated_by 的坏数据就这样混进了库）
+      echo "!!! [$b] verify_kb 未过（exit=$vrc），不提交。完整输出：/tmp/verify_$b.log"
+      echo "!!! 主控需人工修复 CRIT/MAJ 后重跑（幂等：已落盘单元不会重派）。"
+      exit 3
+    fi
     echo "[$b] inject_meta..."
     uv run python build/inject_meta.py "${existing[@]}" 2>&1 | tail -1
+    # inject_meta 后复验（它改写文件，可能引入新问题）
+    VERIFY_NO_AUDIT=1 uv run python build/verify_kb.py "${existing[@]}" > /tmp/verify2_$b.log 2>&1 || {
+      echo "!!! [$b] inject_meta 后复验未过，不提交。见 /tmp/verify2_$b.log"; exit 3; }
     git_commit "feat: $b 入库（${#existing} 单元，串行 glm-flash + 数值回填）"
   else
     echo "[$b] 无落盘单元，跳过 verify/commit"

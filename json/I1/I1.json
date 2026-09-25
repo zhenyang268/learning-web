@@ -25,7 +25,7 @@
         "④换拉格朗日视角不是另一条定律，是等价改写 Dρ/Dt = −ρ∇·u"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 6,
         "line_end": 9
       },
@@ -51,7 +51,7 @@
         "⑤(ρu)⊗u 与 u⊗(ρu) 互为转置，一般不相等"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 11,
         "line_end": 14
       },
@@ -77,12 +77,12 @@
         "修补：不可压缩（∇·u=0）时两种写法相等；可压缩必须保留完整散度"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 6,
         "line_end": 9
       },
       "fill_hint": "完整计算四步：正确项、错误项、失效数值（带待核验标记）、修补条件；结尾连到有限体积法为什么直接离散守恒形式",
-      "content": "误用方式：把连续性方程里的 $\\nabla\\cdot(\\rho\\mathbf{u})$ 「顺手展开」成 $\\mathbf{u}\\cdot\\nabla\\rho$——这是初学最经典的丢项。\n\n正确的展开恒等式（逐项乘开即可验证）：\n$$\\nabla\\cdot(\\rho\\mathbf{u}) = \\mathbf{u}\\cdot\\nabla\\rho + \\rho\\,\\nabla\\cdot\\mathbf{u}.$$\n被丢掉的第二项 $\\rho\\,\\nabla\\cdot\\mathbf{u}$ 是「密度 × 体积膨胀率」：流体团膨胀时密度被稀释，这部分贡献藏在散度里。\n\n完整失效计算（1D）：取 $\\rho(x,t)=e^{-t}$（与 $x$ 无关），$u(x,t)=x$。\n1. 正确通量项：$\\partial_x(\\rho u) = \\partial_x(e^{-t}x) = e^{-t}$，在 $t=1$ 处 $\\approx 0.36788$【待核验:exp(-1)】；\n2. $\\partial_t\\rho = -e^{-t}$，在 $t=1$ 处 $\\approx -0.36788$【待核验:-exp(-1)】；\n3. 正确方程：$-0.36788 + 0.36788 = 0$ ✓ 成立；\n4. 错误写法：$u\\,\\partial_x\\rho = x \\cdot 0 = 0$，方程左端变成 $-0.36788 \\neq 0$，偏差 $0.36788$【待核验:exp(-1)】——直接崩溃。\n\n失效机制：这个流场 $\\nabla\\cdot u = 1 \\neq 0$（每个流体团体积按 $e^t$ 膨胀），密度本应被稀释；但 $\\rho$ 恰好空间均匀，稀释的全部信号都集中在被丢掉的 $\\rho\\,\\nabla\\cdot\\mathbf{u}$ 项里，一丢就丢掉了唯一的物理。\n\n修补条件：不可压缩（$\\nabla\\cdot\\mathbf{u}=0$）时 $\\nabla\\cdot(\\rho\\mathbf{u}) = \\mathbf{u}\\cdot\\nabla\\rho$，两种写法等价；可压缩场合必须保留完整散度形式。这也是有限体积法直接离散守恒形式而非展开形式的原因（见 I9.1）：离散层面丢项 = 离散层面违反质量守恒。",
+      "content": "误用方式：把连续性方程里的 $\\nabla\\cdot(\\rho\\mathbf{u})$ 「顺手展开」成 $\\mathbf{u}\\cdot\\nabla\\rho$——这是初学最经典的丢项。\n\n正确的展开恒等式（逐项乘开即可验证）：\n$$\\nabla\\cdot(\\rho\\mathbf{u}) = \\mathbf{u}\\cdot\\nabla\\rho + \\rho\\,\\nabla\\cdot\\mathbf{u}.$$\n被丢掉的第二项 $\\rho\\,\\nabla\\cdot\\mathbf{u}$ 是「密度 × 体积膨胀率」：流体团膨胀时密度被稀释，这部分贡献藏在散度里。\n\n完整失效计算（1D）：取 $\\rho(x,t)=e^{-t}$（与 $x$ 无关），$u(x,t)=x$。\n1. 正确通量项：$\\partial_x(\\rho u) = \\partial_x(e^{-t}x) = e^{-t}$，在 $t=1$ 处 $\\approx 0.36788$【已核验:0.367879441171|exp(-1)】；\n2. $\\partial_t\\rho = -e^{-t}$，在 $t=1$ 处 $\\approx -0.36788$【已核验:-0.367879441171|-exp(-1)】；\n3. 正确方程：$-0.36788 + 0.36788 = 0$ ✓ 成立；\n4. 错误写法：$u\\,\\partial_x\\rho = x \\cdot 0 = 0$，方程左端变成 $-0.36788 \\neq 0$，偏差 $0.36788$【已核验:0.367879441171|exp(-1)】——直接崩溃。\n\n失效机制：这个流场 $\\nabla\\cdot u = 1 \\neq 0$（每个流体团体积按 $e^t$ 膨胀），密度本应被稀释；但 $\\rho$ 恰好空间均匀，稀释的全部信号都集中在被丢掉的 $\\rho\\,\\nabla\\cdot\\mathbf{u}$ 项里，一丢就丢掉了唯一的物理。\n\n修补条件：不可压缩（$\\nabla\\cdot\\mathbf{u}=0$）时 $\\nabla\\cdot(\\rho\\mathbf{u}) = \\mathbf{u}\\cdot\\nabla\\rho$，两种写法等价；可压缩场合必须保留完整散度形式。这也是有限体积法直接离散守恒形式而非展开形式的原因（见 I9.1）：离散层面丢项 = 离散层面违反质量守恒。",
       "links": [
         "I9.1"
       ],
@@ -106,12 +106,12 @@
         "数值教训：非守恒格式在激波处累积误差、算错激波速度（I9.1/I7）"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 11,
         "line_end": 14
       },
       "fill_hint": "先给 1D 展开恒等式（指出差额项恰为 u 乘连续性方程残差），再走完整数值算例；结尾连到有限体积法必须离散守恒形式",
-      "content": "误用方式：把守恒形式 $\\partial_t(\\rho\\mathbf{u})+\\nabla\\cdot(\\rho\\mathbf{u}\\otimes\\mathbf{u})=\\nabla\\cdot\\boldsymbol{\\sigma}+\\rho\\mathbf{g}$ 与非守恒形式 $\\rho\\frac{D\\mathbf{u}}{Dt}=\\nabla\\cdot\\boldsymbol{\\sigma}+\\rho\\mathbf{g}$ 当成无条件等价，随手互换。\n\n1D 展开恒等式（逐项乘开验证）：\n$$\\partial_t(\\rho u) + \\partial_x(\\rho u^2) = \\rho\\left(\\partial_t u + u\\,\\partial_x u\\right) + u\\left(\\partial_t\\rho + \\partial_x(\\rho u)\\right).$$\n最后一个括号正是连续性方程的残差——它就是两种形式相等的**全部差额**。\n\n完整失效计算（1D，故意违反质量守恒）：取 $\\rho = e^{-t}$，$u \\equiv 1$（常数）。\n1. 质量残差：$\\partial_t\\rho + \\partial_x(\\rho u) = -e^{-t} + 0$，$t=1$ 处 $\\approx -0.36788$【待核验:-exp(-1)】；\n2. 守恒形式左端：$\\partial_t(\\rho u) = -e^{-t}$（$t=1$ 处 $\\approx -0.36788$【待核验:-exp(-1)】）；$\\partial_x(\\rho u^2) = \\partial_x(e^{-t}) = 0$；合计 $\\approx -0.36788$；\n3. 非守恒形式：$\\rho\\,Du/Dt = e^{-t}\\cdot(\\partial_t u + u\\,\\partial_x u) = e^{-t}\\cdot 0 = 0$；\n4. 两者之差 $= u \\times$ 质量残差 $= 1\\times(-0.36788) \\approx -0.36788$——与恒等式预言的值精确一致。\n\n结论：质量守恒一破，两种形式是**两个不同的方程**，解自然不同。等价性不是形式的性质，而是解的性质（解满足连续性方程）。\n\n修补与深挖：\n- 数学上：仅当 $\\partial_t\\rho+\\nabla\\cdot(\\rho\\mathbf{u})=0$ 时两种形式相等；\n- 数值上：有限体积法必须离散守恒形式——非守恒格式的离散误差会随激波移动不断累积，给出**错误的激波速度**（见 I9.1、I7）；\n- 原则推广：一切守恒律（质量、动量、能量、角动量）都优先写守恒形式，「守恒形式优先」与守恒的物理绑定，非守恒形式是解出来之后的奢侈品。",
+      "content": "误用方式：把守恒形式 $\\partial_t(\\rho\\mathbf{u})+\\nabla\\cdot(\\rho\\mathbf{u}\\otimes\\mathbf{u})=\\nabla\\cdot\\boldsymbol{\\sigma}+\\rho\\mathbf{g}$ 与非守恒形式 $\\rho\\frac{D\\mathbf{u}}{Dt}=\\nabla\\cdot\\boldsymbol{\\sigma}+\\rho\\mathbf{g}$ 当成无条件等价，随手互换。\n\n1D 展开恒等式（逐项乘开验证）：\n$$\\partial_t(\\rho u) + \\partial_x(\\rho u^2) = \\rho\\left(\\partial_t u + u\\,\\partial_x u\\right) + u\\left(\\partial_t\\rho + \\partial_x(\\rho u)\\right).$$\n最后一个括号正是连续性方程的残差——它就是两种形式相等的**全部差额**。\n\n完整失效计算（1D，故意违反质量守恒）：取 $\\rho = e^{-t}$，$u \\equiv 1$（常数）。\n1. 质量残差：$\\partial_t\\rho + \\partial_x(\\rho u) = -e^{-t} + 0$，$t=1$ 处 $\\approx -0.36788$【已核验:-0.367879441171|-exp(-1)】；\n2. 守恒形式左端：$\\partial_t(\\rho u) = -e^{-t}$（$t=1$ 处 $\\approx -0.36788$【已核验:-0.367879441171|-exp(-1)】）；$\\partial_x(\\rho u^2) = \\partial_x(e^{-t}) = 0$；合计 $\\approx -0.36788$；\n3. 非守恒形式：$\\rho\\,Du/Dt = e^{-t}\\cdot(\\partial_t u + u\\,\\partial_x u) = e^{-t}\\cdot 0 = 0$；\n4. 两者之差 $= u \\times$ 质量残差 $= 1\\times(-0.36788) \\approx -0.36788$——与恒等式预言的值精确一致。\n\n结论：质量守恒一破，两种形式是**两个不同的方程**，解自然不同。等价性不是形式的性质，而是解的性质（解满足连续性方程）。\n\n修补与深挖：\n- 数学上：仅当 $\\partial_t\\rho+\\nabla\\cdot(\\rho\\mathbf{u})=0$ 时两种形式相等；\n- 数值上：有限体积法必须离散守恒形式——非守恒格式的离散误差会随激波移动不断累积，给出**错误的激波速度**（见 I9.1、I7）；\n- 原则推广：一切守恒律（质量、动量、能量、角动量）都优先写守恒形式，「守恒形式优先」与守恒的物理绑定，非守恒形式是解出来之后的奢侈品。",
       "links": [
         "I9.1",
         "I7"
@@ -136,12 +136,12 @@
         "修补：先问「谁在测量」——流体团用 D/Dt，固定位置用 ∂/∂t"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 16,
         "line_end": 19
       },
       "fill_hint": "完整算 Dρ/Dt 的两项抵消与固定点读数 −1（带待核验标记）；结尾给「谁在测量」的判断口诀",
-      "content": "误用方式：把「不可压缩 $\\Rightarrow D\\rho/Dt = 0$」（每个流体团密度不变）读成「密度场不随时间变（$\\partial_t\\rho = 0$）」。前者是跟着流体团说的，后者是站在固定点说的，两者可以同时为「一个成立一个不成立」。\n\n反例（1D）：取 $u(x,t) = \\cos t$——注意 $\\nabla\\cdot u = \\partial_x(\\cos t) = 0$，**严格不可压缩**；再取被搬运的密度斑\n$$\\rho(x,t) = 1 + \\sin\\big(x - \\sin t\\big).$$\n（形状不变的斑沿轨迹 $x(t) = x_0 + \\sin t$ 来回平移。）\n\n计算随体读数 $D\\rho/Dt$：\n- $\\partial_t\\rho = -\\cos t\\,\\cos(x - \\sin t)$（链式法则，内层导数 $-\\cos t$）；\n- $\\partial_x\\rho = \\cos(x - \\sin t)$，故 $u\\,\\partial_x\\rho = \\cos t\\,\\cos(x - \\sin t)$；\n- 相加：$D\\rho/Dt = 0$ ✓——每个流体团的密度确实不变。\n\n计算固定点读数 $\\partial_t\\rho$：在 $(x,t) = (0,0)$ 处 $\\partial_t\\rho = -\\cos(0)\\cos(0) = -1$【待核验:-cos(0)*cos(0-sin(0))】——固定位置的温度计读数正以速率 $-1$ 下降，与「密度不变」的断言偏差整整 $1$。\n\n失效机制：斑在动。固定点先后被斑的不同部分扫过，读数自然变化；但斑的每个质点自始至终携带同一个密度值。两个观察者看到的不是同一个量。\n\n修补口诀——先问「谁在测量」：\n- 涉及流体团自身的量（本构关系、随体输运、加速度）用 $D/Dt$；\n- 涉及固定位置的量（边界条件、外部观测）用 $\\partial/\\partial t$；\n- 两者由对流项 $\\mathbf{u}\\cdot\\nabla$ 换算，谁也替代不了谁。",
+      "content": "误用方式：把「不可压缩 $\\Rightarrow D\\rho/Dt = 0$」（每个流体团密度不变）读成「密度场不随时间变（$\\partial_t\\rho = 0$）」。前者是跟着流体团说的，后者是站在固定点说的，两者可以同时为「一个成立一个不成立」。\n\n反例（1D）：取 $u(x,t) = \\cos t$——注意 $\\nabla\\cdot u = \\partial_x(\\cos t) = 0$，**严格不可压缩**；再取被搬运的密度斑\n$$\\rho(x,t) = 1 + \\sin\\big(x - \\sin t\\big).$$\n（形状不变的斑沿轨迹 $x(t) = x_0 + \\sin t$ 来回平移。）\n\n计算随体读数 $D\\rho/Dt$：\n- $\\partial_t\\rho = -\\cos t\\,\\cos(x - \\sin t)$（链式法则，内层导数 $-\\cos t$）；\n- $\\partial_x\\rho = \\cos(x - \\sin t)$，故 $u\\,\\partial_x\\rho = \\cos t\\,\\cos(x - \\sin t)$；\n- 相加：$D\\rho/Dt = 0$ ✓——每个流体团的密度确实不变。\n\n计算固定点读数 $\\partial_t\\rho$：在 $(x,t) = (0,0)$ 处 $\\partial_t\\rho = -\\cos(0)\\cos(0) = -1$【已核验:-1|-cos(0)*cos(0-sin(0))】——固定位置的温度计读数正以速率 $-1$ 下降，与「密度不变」的断言偏差整整 $1$。\n\n失效机制：斑在动。固定点先后被斑的不同部分扫过，读数自然变化；但斑的每个质点自始至终携带同一个密度值。两个观察者看到的不是同一个量。\n\n修补口诀——先问「谁在测量」：\n- 涉及流体团自身的量（本构关系、随体输运、加速度）用 $D/Dt$；\n- 涉及固定位置的量（边界条件、外部观测）用 $\\partial/\\partial t$；\n- 两者由对流项 $\\mathbf{u}\\cdot\\nabla$ 换算，谁也替代不了谁。",
       "status": "drafted",
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -163,7 +163,7 @@
         "微分形式要求光滑；激波处只能用积分形式（I7）"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 6,
         "line_end": 9
       },
@@ -193,7 +193,7 @@
         "两者由 ∇·(ρu) = u·∇ρ + ρ∇·u 换算，丢后半项即经典误用"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 6,
         "line_end": 9
       },
@@ -219,7 +219,7 @@
         "易错点：V 必须固定才能交换 d/dt；「任意 V」不可省"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 6,
         "line_end": 9
       },
@@ -248,7 +248,7 @@
         "非守恒形式 ρDu/Dt = ∇·σ+ρg 仅在质量守恒成立时等价"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 11,
         "line_end": 14
       },
@@ -277,7 +277,7 @@
         "⊗ 顺序有讲究：(ρu)⊗u 与 u⊗(ρu) 互为转置"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 11,
         "line_end": 14
       },
@@ -303,7 +303,7 @@
         "动量方程非守恒形式 ρDu/Dt = ∇·σ+ρg 中 Du/Dt 就是流体团加速度"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 16,
         "line_end": 19
       },
@@ -329,7 +329,7 @@
         "CG 落点：烟/染料输运 = Dρ/Dt = 0 的数值实现（半拉格朗日回溯，de4.5）"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 16,
         "line_end": 19
       },
@@ -358,12 +358,12 @@
         "易错点：矢量场对流项是 (u·∇)a；第4步是换皮肤不是新物理"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 16,
         "line_end": 19
       },
       "fill_hint": "四步骨架：轨迹、链式法则、显式验证（带待核验数值）、连续性方程变形；易错点强调矢量括号与「同一定律两种皮肤」",
-      "content": "推导骨架：物质导数 = 沿流体轨迹的全导数（链式法则）；它的主要应用之一是把连续性方程改写成随体形式。\n\n第 1 步（轨迹）：设流体团的轨迹 $\\mathbf{X}(t)$ 满足 $\\dfrac{d\\mathbf{X}}{dt} = \\mathbf{u}(\\mathbf{X}(t), t)$——「流体团的速度就是当地流场」这句物理定义写成 ODE。\n\n第 2 步（链式法则）：任取场 $\\phi$，\n$$\\frac{d}{dt}\\phi(\\mathbf{X}(t), t) = \\partial_t\\phi + \\dot{\\mathbf{X}}\\cdot\\nabla\\phi = \\partial_t\\phi + \\mathbf{u}\\cdot\\nabla\\phi = \\frac{D\\phi}{Dt}.$$\n第二步代入第 1 步。所以 $D/Dt$ 没有任何新数学，就是复合函数求导。\n\n第 3 步（显式验证，1D，$u=x$）：轨迹方程 $dX/dt = X$ 给 $X(t) = X_0 e^t$。取 $X_0 = 1$：$X(1) = e \\approx 2.71828$【待核验:exp(1)】。取 $\\phi = x$：$D\\phi/Dt = 0 + x\\cdot 1 = x$；沿轨迹直接算 $d\\phi/dt = dX/dt = X(t)$，$t=1$ 处 $\\approx 2.71828$——两种算法吻合 ✓。\n\n第 4 步（连续性方程变形）：乘积法则展开\n$$\\nabla\\cdot(\\rho\\mathbf{u}) = \\mathbf{u}\\cdot\\nabla\\rho + \\rho\\,\\nabla\\cdot\\mathbf{u},$$\n代入连续性方程 $\\partial_t\\rho + \\nabla\\cdot(\\rho\\mathbf{u}) = 0$：\n$$\\underbrace{\\partial_t\\rho + \\mathbf{u}\\cdot\\nabla\\rho}_{D\\rho/Dt} + \\rho\\,\\nabla\\cdot\\mathbf{u} = 0 \\iff \\frac{D\\rho}{Dt} = -\\rho\\,\\nabla\\cdot\\mathbf{u}.$$\n\n易错点：\n- 矢量场的物质导数是 $(\\mathbf{u}\\cdot\\nabla)\\mathbf{a}$：算子 $\\mathbf{u}\\cdot\\nabla$ 是标量算子，先构成再作用于 $\\mathbf{a}$ 的每个分量，括号位置不能动；\n- 第 4 步是「展开 + 认出物质导数」两个动作，不是新物理——质量守恒与 $D\\rho/Dt=-\\rho\\nabla\\cdot\\mathbf{u}$ 是同一条定律的两种皮肤；$\n- 第 3 步显式验证的价值：确认「沿轨迹求导」与「算子 $\\partial_t + u\\,\\partial_x$」给出同一数值，防止把 $D/Dt$ 当成抽象符号死记。",
+      "content": "推导骨架：物质导数 = 沿流体轨迹的全导数（链式法则）；它的主要应用之一是把连续性方程改写成随体形式。\n\n第 1 步（轨迹）：设流体团的轨迹 $\\mathbf{X}(t)$ 满足 $\\dfrac{d\\mathbf{X}}{dt} = \\mathbf{u}(\\mathbf{X}(t), t)$——「流体团的速度就是当地流场」这句物理定义写成 ODE。\n\n第 2 步（链式法则）：任取场 $\\phi$，\n$$\\frac{d}{dt}\\phi(\\mathbf{X}(t), t) = \\partial_t\\phi + \\dot{\\mathbf{X}}\\cdot\\nabla\\phi = \\partial_t\\phi + \\mathbf{u}\\cdot\\nabla\\phi = \\frac{D\\phi}{Dt}.$$\n第二步代入第 1 步。所以 $D/Dt$ 没有任何新数学，就是复合函数求导。\n\n第 3 步（显式验证，1D，$u=x$）：轨迹方程 $dX/dt = X$ 给 $X(t) = X_0 e^t$。取 $X_0 = 1$：$X(1) = e \\approx 2.71828$【已核验:2.71828182846|exp(1)】。取 $\\phi = x$：$D\\phi/Dt = 0 + x\\cdot 1 = x$；沿轨迹直接算 $d\\phi/dt = dX/dt = X(t)$，$t=1$ 处 $\\approx 2.71828$——两种算法吻合 ✓。\n\n第 4 步（连续性方程变形）：乘积法则展开\n$$\\nabla\\cdot(\\rho\\mathbf{u}) = \\mathbf{u}\\cdot\\nabla\\rho + \\rho\\,\\nabla\\cdot\\mathbf{u},$$\n代入连续性方程 $\\partial_t\\rho + \\nabla\\cdot(\\rho\\mathbf{u}) = 0$：\n$$\\underbrace{\\partial_t\\rho + \\mathbf{u}\\cdot\\nabla\\rho}_{D\\rho/Dt} + \\rho\\,\\nabla\\cdot\\mathbf{u} = 0 \\iff \\frac{D\\rho}{Dt} = -\\rho\\,\\nabla\\cdot\\mathbf{u}.$$\n\n易错点：\n- 矢量场的物质导数是 $(\\mathbf{u}\\cdot\\nabla)\\mathbf{a}$：算子 $\\mathbf{u}\\cdot\\nabla$ 是标量算子，先构成再作用于 $\\mathbf{a}$ 的每个分量，括号位置不能动；\n- 第 4 步是「展开 + 认出物质导数」两个动作，不是新物理——质量守恒与 $D\\rho/Dt=-\\rho\\nabla\\cdot\\mathbf{u}$ 是同一条定律的两种皮肤；$\n- 第 3 步显式验证的价值：确认「沿轨迹求导」与「算子 $\\partial_t + u\\,\\partial_x$」给出同一数值，防止把 $D/Dt$ 当成抽象符号死记。",
       "status": "drafted",
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -383,12 +383,12 @@
         "偏差恰为被丢的 ρ∂ₓu = e⁻¹ 项"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 6,
         "line_end": 9
       },
       "fill_hint": "两问分别对应 mass.quantifiers ① 行的正反两面；答案数值带待核验标记供前端折叠",
-      "content": "题目（1D）：取 $\\rho = e^{-t}$，$u = x$。\n1. 在 $t=1$ 处分别计算 $\\partial_t\\rho$ 与 $\\partial_x(\\rho u)$，验证连续性方程成立；\n2. 若把通量误写成 $u\\,\\partial_x\\rho$，方程左端变成多少？偏差多大？它等于哪一项？\n\n参考答案：\n1. $\\partial_t\\rho\\big|_{t=1} = -e^{-1} \\approx -0.36788$【待核验:-exp(-1)】；$\\partial_x(e^{-t}x) = e^{-t}$，$t=1$ 处 $\\approx 0.36788$【待核验:exp(-1)】；两项之和恰为 $0$ ✓；\n2. $u\\,\\partial_x\\rho = x\\cdot 0 = 0$，方程左端 $= -0.36788 \\neq 0$，偏差 $0.36788$【待核验:exp(-1)】——它恰好等于被丢掉的 $\\rho\\,\\partial_x u = e^{-t}\\cdot 1$ 项（在 $t=1$ 处同值）。",
+      "content": "题目（1D）：取 $\\rho = e^{-t}$，$u = x$。\n1. 在 $t=1$ 处分别计算 $\\partial_t\\rho$ 与 $\\partial_x(\\rho u)$，验证连续性方程成立；\n2. 若把通量误写成 $u\\,\\partial_x\\rho$，方程左端变成多少？偏差多大？它等于哪一项？\n\n参考答案：\n1. $\\partial_t\\rho\\big|_{t=1} = -e^{-1} \\approx -0.36788$【已核验:-0.367879441171|-exp(-1)】；$\\partial_x(e^{-t}x) = e^{-t}$，$t=1$ 处 $\\approx 0.36788$【已核验:0.367879441171|exp(-1)】；两项之和恰为 $0$ ✓；\n2. $u\\,\\partial_x\\rho = x\\cdot 0 = 0$，方程左端 $= -0.36788 \\neq 0$，偏差 $0.36788$【已核验:0.367879441171|exp(-1)】——它恰好等于被丢掉的 $\\rho\\,\\partial_x u = e^{-t}\\cdot 1$ 项（在 $t=1$ 处同值）。",
       "status": "drafted",
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -408,12 +408,12 @@
         "差额项 u×质量残差 = 0（该流场满足连续性方程）"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 11,
         "line_end": 14
       },
       "fill_hint": "与 momentum.forms 的反例对偶：同一个流场在质量守恒成立时两形式一致；数值带待核验标记",
-      "content": "题目（1D，取 $\\rho = e^{-t}$，$u = x$，在 $t=1,\\ x=2$ 处）：该流场满足连续性方程（见 mass.probe1）。验证动量方程的守恒形式与非守恒形式给出同一个值：\n1. 守恒形式：计算 $\\partial_t(\\rho u) + \\partial_x(\\rho u^2)$；\n2. 非守恒形式：计算 $\\rho\\,Du/Dt$；\n3. 对照两者，并指出差额项的值。\n\n参考答案：\n1. $\\partial_t(e^{-t}x)\\big|_{x=2,t=1} = -2e^{-1} \\approx -0.73576$【待核验:-2*exp(-1)】；$\\partial_x(e^{-t}x^2) = 2xe^{-t}\\big|_{x=2,t=1} = 4e^{-1} \\approx 1.47152$【待核验:4*exp(-1)】；合计 $\\approx 0.73576$【待核验:2*exp(-1)】；\n2. $Du/Dt = \\partial_t u + u\\,\\partial_x u = 0 + x\\cdot 1 = 2$，故 $\\rho\\,Du/Dt = e^{-1}\\times 2 \\approx 0.73576$【待核验:2*exp(-1)】；\n3. 两值相等 ✓——差额项 $u\\times(\\partial_t\\rho+\\partial_x(\\rho u))$ 为零，因为该流场满足连续性方程。对比 momentum.forms 的反例（$u\\equiv 1$ 破坏质量守恒时差额 $=-0.36788$），可见等价性完全由质量守恒决定。",
+      "content": "题目（1D，取 $\\rho = e^{-t}$，$u = x$，在 $t=1,\\ x=2$ 处）：该流场满足连续性方程（见 mass.probe1）。验证动量方程的守恒形式与非守恒形式给出同一个值：\n1. 守恒形式：计算 $\\partial_t(\\rho u) + \\partial_x(\\rho u^2)$；\n2. 非守恒形式：计算 $\\rho\\,Du/Dt$；\n3. 对照两者，并指出差额项的值。\n\n参考答案：\n1. $\\partial_t(e^{-t}x)\\big|_{x=2,t=1} = -2e^{-1} \\approx -0.73576$【已核验:-0.735758882343|-2*exp(-1)】；$\\partial_x(e^{-t}x^2) = 2xe^{-t}\\big|_{x=2,t=1} = 4e^{-1} \\approx 1.47152$【已核验:1.47151776469|4*exp(-1)】；合计 $\\approx 0.73576$【已核验:0.735758882343|2*exp(-1)】；\n2. $Du/Dt = \\partial_t u + u\\,\\partial_x u = 0 + x\\cdot 1 = 2$，故 $\\rho\\,Du/Dt = e^{-1}\\times 2 \\approx 0.73576$【已核验:0.735758882343|2*exp(-1)】；\n3. 两值相等 ✓——差额项 $u\\times(\\partial_t\\rho+\\partial_x(\\rho u))$ 为零，因为该流场满足连续性方程。对比 momentum.forms 的反例（$u\\equiv 1$ 破坏质量守恒时差额 $=-0.36788$），可见等价性完全由质量守恒决定。",
       "status": "drafted",
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -433,12 +433,12 @@
         "两种算法一致验证 D/Dt = ∂ₜ + u∂ₓ 的正确性"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 16,
         "line_end": 19
       },
       "fill_hint": "三问分别练轨迹方程、算子求导、沿轨迹求导的对拍；答案数值带待核验标记",
-      "content": "题目（1D，$u = x$）：流体团从 $x_0 = 2$ 出发。\n1. 求它在 $t=1$ 时的位置；\n2. 用物质导数算 $D(x^2)/Dt$ 在该时刻该位置的值；\n3. 用轨迹法（先写出 $x(t)$ 再对 $t$ 求导）核对第 2 问。\n\n参考答案：\n1. 轨迹方程 $dX/dt = X$ 给 $X(t) = 2e^t$，$X(1) = 2e \\approx 5.43656$【待核验:2*exp(1)】；\n2. $D(x^2)/Dt = \\partial_t(x^2) + u\\,\\partial_x(x^2) = 0 + x\\cdot 2x = 2x^2$；代入 $x = 2e$：$2\\times 4e^2 \\approx 59.11245$【待核验:8*exp(2)】；\n3. 沿轨迹 $x(t)^2 = 4e^{2t}$，$d/dt = 8e^{2t}$，$t=1$ 处 $\\approx 59.11245$【待核验:8*exp(2)】——两种算法一致 ✓。",
+      "content": "题目（1D，$u = x$）：流体团从 $x_0 = 2$ 出发。\n1. 求它在 $t=1$ 时的位置；\n2. 用物质导数算 $D(x^2)/Dt$ 在该时刻该位置的值；\n3. 用轨迹法（先写出 $x(t)$ 再对 $t$ 求导）核对第 2 问。\n\n参考答案：\n1. 轨迹方程 $dX/dt = X$ 给 $X(t) = 2e^t$，$X(1) = 2e \\approx 5.43656$【已核验:5.43656365692|2*exp(1)】；\n2. $D(x^2)/Dt = \\partial_t(x^2) + u\\,\\partial_x(x^2) = 0 + x\\cdot 2x = 2x^2$；代入 $x = 2e$：$2\\times 4e^2 \\approx 59.11245$【已核验:59.1124487914|8*exp(2)】；\n3. 沿轨迹 $x(t)^2 = 4e^{2t}$，$d/dt = 8e^{2t}$，$t=1$ 处 $\\approx 59.11245$【已核验:59.1124487914|8*exp(2)】——两种算法一致 ✓。",
       "status": "drafted",
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -459,7 +459,7 @@
         "动量方程的非守恒形式必须借质量守恒才能写出"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 5,
         "line_end": 20
       },
@@ -488,7 +488,7 @@
         "de2.11：不可压时连续性方程化为输运方程 Dρ/Dt = 0，特征线求解"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 5,
         "line_end": 20
       },
@@ -522,7 +522,7 @@
         "判据：Q1 无前端模块 / Q2 需迭代积分 / Q3 需两套读数对拍"
       ],
       "tex_ref": {
-        "file": "I_fluid.tex",
+        "file": "notebook/I_fluid.tex",
         "line_start": 16,
         "line_end": 19
       },

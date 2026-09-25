@@ -33,6 +33,9 @@ cd /Users/apple/develop/learning/learning-web && uv run python -c "import json;p
    `= 0.00829596【待核验:abs(factorial(10)-sqrt(2*pi*10)*(10/e)^10)/factorial(10)】`
    - 可用名字：`sum range abs min max int float round len sorted enumerate zip all any
      sqrt pi e exp log log2 log10 sin cos tan gamma lgamma erf erfc factorial inf`；`^` 会被换成 `**`。
+   - **禁写 `math.` 前缀**：直接 `pi`、`sqrt(3)`，不要 `math.pi`、`math.sqrt(3)`（2026-09-24 H5 实测 13 处因此回填失败）。
+   - **标记必须以 `】` 收尾**：写成 `]`、`))` 收尾会让标记匹配不上、静默漏回填（2026-09-24 H6.1/I3 实测）。
+   - **禁止空壳标记 `【待核验】`**：没有表达式就无法重算回填；不确定怎么算就把数值断言从 keywords/content 里删掉，不要挂空标记（2026-09-24 H6.1 实测 5 处）。
    - **校验器会核对**：标记前若紧跟 `=`/`≈`/`~` 的数值，必须与重算值一致（相对容差 1%），否则报 CRIT。
      **先算准再写**，不要把「大约是」写成等号。
    - 避免溢出：`factorial(n)` 在 `n ≥ 171` 时 `OverflowError`（会被记为 CRIT）。
