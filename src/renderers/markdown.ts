@@ -157,7 +157,23 @@ export function renderContent(src: string, ctx?: RenderCtx): string {
     .map((block) => {
       const b = block.trim();
       if (!b) return '';
-      const lines = b.split('\n');
+      let lines = b.split('\n');
+      // 表格行内含硬换行（json 内容在单元格中途断行，实测 lie1.15）：
+      // 一行表格被拆成「| 开头的行 + 不以 | 开头的续行」，整块过不了表格判定，
+      // 退化成段落（限定词表整个消失）。这里把续行并回上一行（markdown 语义：
+      // 换行 = 空格）。只有首行是 | 时才做，段落块不受影响。
+      if (/^\s*\|/.test(lines[0]) && lines.some((l) => !/^\s*\|/.test(l))) {
+        const joined: string[] = [];
+        for (const l of lines) {
+          const prev = joined[joined.length - 1];
+          if (prev !== undefined && /^\s*\|/.test(prev) && !/^\s*\|/.test(l)) {
+            joined[joined.length - 1] = `${prev.trimEnd()} ${l.trim()}`;
+          } else {
+            joined.push(l);
+          }
+        }
+        lines = joined;
+      }
       if (lines.every((l) => /^\s*\|/.test(l))) return renderTable(lines, ctx);
       if (/^\s*[-*]\s+/.test(lines[0]) && lines.every((l) => /^\s*[-*]\s+/.test(l) || /^\s{2,}\S/.test(l))) {
         const items = lines

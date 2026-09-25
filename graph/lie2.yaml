@@ -1,0 +1,120 @@
+# graph/lie2.yaml — 「lie2 半单性·表示论·拓扑」章语义边真源（全 13 单元覆盖）。
+# schema、方向约定与派生覆盖规则见 A1.yaml 头部。
+# G2.1 伪链接噪声的说明见 lie1.yaml 头部（本章同剥）。
+notebook_commit: 860977e
+
+nodes:
+  lie2.1: # 单李代数与半单李代数
+    prereq:
+      # Killing 形式判半单（lie1.15:7）。
+      - lie1.15
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.2: # 经典李代数系列
+    prereq:
+      # 半单分类的 A/B/C/D 系（lie2.1:6）；su(n) 是主角（lie1.14:5）。
+      - lie2.1
+      - lie1.14
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.3: # 例外李代数
+    prereq:
+      # G2/F4/E6/E7/E8 在经典系之外的奇迹（lie2.2:8）。
+      - lie2.2
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.4: # Cartan 子代数与根
+    prereq:
+      # 极大交换环（lie2.2:8）；so(3) 的对角化样板（lie1.11:6）。
+      - lie2.2
+      - lie1.11
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.5: # Dynkin 图
+    prereq:
+      # 根系的组合画像（lie2.4:7）；例外代数靠它分类（lie2.3:7）。
+      - lie2.4
+      - lie2.3
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.6: # 权与最高权
+    prereq:
+      # 根的语言（lie2.4:8、lie2.5:8）。
+      - lie2.4
+      - lie2.5
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.7: # su(2) 的表示
+    prereq:
+      # 最高权理论的最小实现（lie2.6:7）；自旋表示（lie1.12:7）。
+      - lie2.6
+      - lie1.12
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.8: # su(3) 的表示与粒子物理
+    prereq:
+      # 权图（lie2.6:8）、su(n) 推广（lie1.14:7）、su(2) 样板（lie2.7:6）。
+      - lie2.6
+      - lie2.7
+      - lie1.14
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.9: # 基本群
+    prereq:
+      # SO(3) 的 π₁=Z/2 与 SU(2) 覆盖（lie1.7:7）；旋转/自旋群实例（lie1.5:6 / lie1.3:6）。
+      - lie1.7
+      - lie1.5
+      - lie1.3
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.10: # 高阶同伦群
+    prereq: [lie2.9]
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.11: # 纤维丛与拓扑
+    prereq:
+      # 主丛 = 群作用在底空间上（lie2.9:8、lie2.10:8）。
+      - lie2.9
+      - lie2.10
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.12: # de Rham 上同调
+    prereq:
+      # 流形侧的工具链（lie2.11:8——丛上的微分形式）；
+      # 跨章 Q10（de Rham 上同调的拓扑章版本——同主题先修，最关键的跨章边）。
+      - lie2.11
+      - Q10
+    tension: []
+    dual: []
+    applies: []
+
+  lie2.13: # 同调与流形
+    prereq:
+      # 上同调 → 同调（lie2.12:8）；丛/流形背景（lie2.11:8）。
+      - lie2.12
+      - lie2.11
+    tension: []
+    dual: []
+    applies: []
