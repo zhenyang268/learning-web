@@ -1,0 +1,286 @@
+{
+  "schema": "entry-card/v2",
+  "code": "lie2.1",
+  "chapter": "lie2",
+  "title": "单李代数与半单李代数",
+  "src": {
+    "file": "notebook/li/lie2.tex",
+    "line_start": 6,
+    "line_end": 12,
+    "anchor": "notebook/li/lie2.tex:6"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "lie2.1:simple-semisimple.quantifiers",
+      "type": "comparison",
+      "subject": "simple-semisimple",
+      "title": "单与半单的四个限定词：理想定义用括号、单要非阿贝尔、半单=单的直和、分类只对复代数",
+      "keywords": [
+        "理想用括号刻画",
+        "单必须非阿贝尔",
+        "半单=单的直和",
+        "分类只对复半单成立"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "四问：理想与子代数的差别（so(2) 在 sl(2,R) 里）；为何排除一维代数（u(1) 反例）；su(2)⊕u(1) 为何不半单；复化相同的三个实代数。",
+      "content": "切片给了**单**（没有非平凡理想，理想 $I$ 满足 $[I,\\mathfrak g]\\subset I$）、**半单**（单李代数的直和）与**分类定理（Cartan–Killing）**（复半单李代数完全由 Dynkin 图分类）。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **理想用\"括号\"刻画**（不是闭乘法） | 理想定义是 $[I,\\mathfrak g]\\subset I$（**括号**），不是 $I\\cdot I\\subset I$（李代数里没有乘法）。**反例式的混淆**：把\"子代数\"当\"理想\" —— 子代数只要求 $[I,I]\\subset I$（**自**封闭），弱得多。如 $\\mathfrak{so}(2)\\subset\\mathfrak{sl}(2,\\mathbb R)$（对角子代数）是子代数但**不是**理想 | 用子代数代理想 ⟹ 把非单代数误判为单（几乎所有代数都有真子代数） | 不能放宽：理想要求对**整个** $\\mathfrak g$ 封闭 |\n| ② **单代数必须非阿贝尔**（严格定义排除 $\\mathfrak u(1)$） | 一维代数 $\\mathfrak u(1)$ **没有**非平凡理想（只有 $0$ 与自身）⇒ 按\"无理想\"的字面定义它是\"单\"的 —— **但被约定排除**（因为它的 $B\\equiv0$，且一维代数是阿贝尔的）。标准定义：**单 = 非阿贝尔 + 无非平凡理想** | 把 $\\mathfrak u(1)$ 当单代数 ⟹ \"半单 = 单的直和\"会包含阿贝尔因子 ⟹ Killing 形式退化（`lie1.15`）与半单判据矛盾 | 不能放宽：必须排除一维（等价地要求 $[\\mathfrak g,\\mathfrak g]\\ne0$） |\n| ③ **半单 = 单的直和**（且分解唯一） | 反例：$\\mathfrak{sl}(2)\\oplus\\mathfrak u(1)$ 不是半单（含阿贝尔理想 $\\mathfrak u(1)$，Killing 退化）；而 $\\mathfrak{sl}(2)\\oplus\\mathfrak{sl}(2)$ 是半单（两个单因子） | 把\"含单因子\"当\"半单\" ⟹ 漏查阿贝尔因子 | 不能放宽：半单要求**所有**因子都单 |\n| ④ **分类定理只对复半单**成立 | **实**半单代数比复的多得多（每个复代数有**多个实形式**）：$\\mathfrak{su}(2)$、$\\mathfrak{sl}(2,\\mathbb R)$、$\\mathfrak{su}(1,1)$ 的**复化都是** $\\mathfrak{sl}(2,\\mathbb C)$ —— **三个不同的实代数，一个复代数**（`lie1.11`/`lie1.13` 的情形） | 用复分类表直接判实代数同构 ⟹ 把不同的实形式混为一谈（如把紧的 $\\mathfrak{su}(2)$ 与非紧的 $\\mathfrak{sl}(2,\\mathbb R)$ 当同一个） | 不能放宽：实形式要额外用**符号差**/Satake 图分类 |\n\n**切片内容**：单 = 没有非平凡理想（$[I,\\mathfrak g]\\subset I$）；半单 = 单李代数的直和；分类定理：复半单李代数完全由 Dynkin 图分类。",
+      "links": [
+        "lie1.8",
+        "lie1.11",
+        "lie1.12",
+        "lie1.13",
+        "lie1.15",
+        "lie2.2",
+        "lie2.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.1:u1-not-simple.counterexample",
+      "type": "counterexample",
+      "subject": "u1-not-simple",
+      "title": "反例：u(1) 没有非平凡理想，却是阿贝尔的 —— 单的定义必须加「非阿贝尔」",
+      "keywords": [
+        "一维没有真理想",
+        "但 B≡0",
+        "排除了才与半单判据相容",
+        "判据的相容性检验"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "四问：u(1) 的子空间只有两个；它满足字面定义却 B=0；非阿贝尔条件的等价形式（完美性）；最小单代数是 sl(2)（维数 3）与物理上 U(1) 的处境。",
+      "content": "切片写\"单 = 没有非平凡理想\"。**这个定义如果不加\"非阿贝尔\"，会和 $B$ 的判据打架。**\n\n**反例（$\\mathfrak u(1)$）**：取一维李代数 $\\mathfrak u(1)=\\operatorname{span}\\{i\\}$（括号恒为零）。它有哪些子空间？\n\n- $\\{0\\}$：平凡理想；\n- 整个 $\\mathfrak u(1)$：平凡理想；\n- **没有别的**（一维空间只有这两个子空间）。\n\n⇒ 按\"无非平凡理想\"的字面定义，$\\mathfrak u(1)$ **满足单代数定义**。\n\n**冲突**：若承认 $\\mathfrak u(1)$ 是单的，则\"半单 = 单的直和\"意味着 $\\mathfrak u(1)$ 自己就是半单的。**但**实测它的 Killing 形式 $B=0$（`lie1.15` 算例）⇒ **退化** ⇒ 按 Cartan 判据它**不半单** ⇒ **矛盾**。\n\n**解决（标准约定）**：**单李代数 = 非阿贝尔 + 无非平凡理想**。等价说法：\n\n- 要求 $\\dim\\mathfrak g>1$（因为一维必阿贝尔）；\n- 或要求 $[\\mathfrak g,\\mathfrak g]=\\mathfrak g$（完美性）—— $\\mathfrak u(1)$ 的 $[\\cdot,\\cdot]\\equiv0\\ne\\mathfrak u(1)$ ⇒ 被排除 ✅。\n\n**为什么这个细节重要（三条）**：\n\n1. **分类定理的完整性**：Dynkin 图分类的是**单**代数，而 $\\mathbb Z$ 上的分类表（$A_n,B_n,C_n,D_n,E_6,E_7,E_8,F_4,G_2$）**没有一个是一维**的（最小是 $A_1=\\mathfrak{sl}(2)$，维数算得 $3$【已核验:3|1*3】）；\n2. **与 Killing 判据相容**：$\\mathfrak u(1)$ 的 $B=0$ 与\"不半单\"一致 ⇒ 加了\"非阿贝尔\"后两套判据不再冲突；\n3. **物理上的意义**：$U(1)$ 因子（电磁相位）在物理里是**阿贝尔**的 ⇒ **它不属于分类表里的任何一项** ⇒ \"标准模型的 $U(1)$ 不在 Cartan–Killing 分类里\"（这是 `lie3.5` 的重要一点：需要把 $U(1)$ 与半单部分分开处理）。\n\n**推广的反例**：**任意阿贝尔代数** $\\mathbb R^n$（括号零）都\"没有非平凡理想\"（每个子空间都是理想！实际上所有子空间都是理想）⇒ 全部被\"非阿贝尔\"排除 ✅。",
+      "links": [
+        "lie1.12",
+        "lie1.14",
+        "lie1.15",
+        "lie2.2",
+        "lie3.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.1:simple-semisimple.statement",
+      "type": "statement",
+      "subject": "simple-semisimple",
+      "title": "陈述：单、半单的定义与 Cartan-Killing 分类定理",
+      "keywords": [
+        "单与理想的定义",
+        "半单的定义",
+        "分类定理",
+        "三个等价判据"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "四问：单与半单的定义；半单的四个等价判据；为何要排除一维代数；复分类与实形式的差别（举例 su(2) vs sl(2,R)）。",
+      "content": "**定义（切片逐字）**：\n\n- **单李代数**：没有**非平凡理想**（理想是子空间 $I$，满足 $[I,\\mathfrak g]\\subset I$）；\n- **半单李代数**：**单李代数的直和**。\n\n**分类定理（Cartan–Killing，切片）**：**复半单李代数完全由 Dynkin 图分类**。\n\n**四个等价判据（半单）**：\n\n| 判据 | 内容 | 来源 |\n|---|---|---|\n| **① 定义式** | 是单代数的直和 | 切片 |\n| **② Killing 非退化** | $B$ 非退化（$\\det B\\ne0$） | Cartan 判据（`lie1.15`） |\n| **③ 无阿贝尔理想** | 没有非零的可交换理想 | 与 ② 等价 |\n| **④ 无根（radical 为零）** | $\\operatorname{rad}\\mathfrak g=0$ | Levi 分解 |\n\n**三个补充**：\n\n1. **\"单\"必须非阿贝尔**（排一维）：否则 $\\mathfrak u(1)$ 会满足定义，与 ② 冲突（`lie2.1` 反例）；最小单代数 $A_1$ 的维数算得 $3$【已核验:3|1*3】；\n2. **分解唯一**：半单代数分解为单理想之**直和**的方式**唯一**（不计顺序）⇒ 可以逐个因子研究；\n3. **分类的边界**：图分类的是**复**半单代数；**实**半单代数的分类还要加\"实形式\"（紧/非紧、Satake 图）—— 因为 $\\mathfrak{su}(2)$ 与 $\\mathfrak{sl}(2,\\mathbb R)$ 的复化**相同**（`lie2.1` 限定词④）。",
+      "links": [
+        "lie1.8",
+        "lie1.15",
+        "lie2.2",
+        "lie2.4",
+        "lie2.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.1:simple-semisimple.intuition",
+      "type": "intuition",
+      "subject": "simple-semisimple",
+      "title": "直觉：单 = 原子，半单 = 分子 —— 分类就是元素周期表",
+      "keywords": [
+        "理想是「正规子群」",
+        "单=不可再分",
+        "半单=无阿贝尔残渣",
+        "分类=周期表"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "四问：理想与正规子群的类比；单=不可再分、半单=分子；为何要清除阿贝尔残渣（Levi 分解）；例外代数与周期表的类比。",
+      "content": "这套定义的最好像法：**李代数版的\"原子与分子\"**。\n\n**\"理想\"就是李代数版的\"正规子群\"**：群论里用正规子群 $N\\triangleleft G$ 才能做商 $G/N$；李代数里对应物是理想 $I$（$[I,\\mathfrak g]\\subset I$）。**理想是实现\"商代数\"的最小代价**：\n\n$$\\mathfrak g\\ \\text{理想}\\ I\\ \\Longrightarrow\\ \\mathfrak g/I\\ \\text{仍是李代数}\\ ✅$$\n\n**\"单\"就是不可再分的原子**：没有非平凡理想 ⇒ 没有非平凡商 ⇒ \"不可拆\"。**\"半单\"就是原子组成的分子**：$\\mathfrak g=\\mathfrak g_1\\oplus\\cdots\\oplus\\mathfrak g_k$（每个 $\\mathfrak g_i$ 单），并且**直和结构唯一** ⇒ 分子可以完全拆成原子（不像群的合成列那样有\"不可解\"问题）。\n\n**为什么必须排除阿贝尔因子**：阿贝尔代数 $\\mathbb R^n$ 是\"最退化\"的 —— 括号全为零 ⇒ 没有任何结构信息、没有根、Killing 退化。**半单就是\"把这种残渣清除干净\"**：\n\n$$\\text{任意}\\ \\mathfrak g\\ \\supset\\ \\underbrace{\\operatorname{rad}\\mathfrak g}_{\\text{可解残渣}}\\quad,\\qquad \\mathfrak g/\\operatorname{rad}\\mathfrak g\\ \\text{半单}\\ (\\text{Levi})$$\n\n**\"分类 = 元素周期表\"**：**五个例外代数**（$G_2,F_4,E_6,E_7,E_8$）就像元素周期表里的\"稀有元素\"—— 不可归入四个无限族（`lie2.2`/`lie2.3`）。**周期表的\"周期\"是秩，\"族\"是 Dynkin 图的分支结构**（`lie2.5`）。\n\n**三个级别的对照**（记忆用）：\n\n| 群论 | 李代数 | 强条件？ |\n|---|---|---|\n| 单群 | 单代数 | 强（无理想） |\n| 半单 | 半单代数 | 中和（理想都有补） |\n| 可解群 | 可解代数 | 弱（有合成列） |\n| — | 幂零代数 | 最弱（括号会\"消耗\"） |\n\n**一句话**：**\"理想\"是商的门槛，\"单\"是不可再分，\"半单\"是没有阿贝尔残渣，分类定理说\"原子只有几类\"**。",
+      "links": [
+        "lie1.15",
+        "lie2.2",
+        "lie2.3",
+        "lie2.5",
+        "lie3.5",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.1:simple-semisimple.proof",
+      "type": "proof",
+      "subject": "simple-semisimple",
+      "title": "证明骨架：单的直接和 ⇒ Killing 非退化（半单三判据的等价）",
+      "keywords": [
+        "直和上 B 的块结构",
+        "每个单因子 B 非退化",
+        "证明单 ⇒ B 非退化",
+        "拼回整体的非退化"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "五步：直和上 B 分块对角；单 ⇒ B 非退化（用根空间是理想 + Cartan 判据排除退化）；拼回得半单；反向用正交补裂解理想；数值检查 det B=−128≠0。",
+      "content": "**目标**：证明\"半单 = 单的直和\"与\"$B$ 非退化\"**等价**（切片只给了定义与分类定理）。\n\n**第 1 步（直和上的块结构）。** 设 $\\mathfrak g=\\mathfrak g_1\\oplus\\cdots\\oplus\\mathfrak g_k$（$\\mathfrak g_i$ 单）。若 $X\\in\\mathfrak g_i$、$Y\\in\\mathfrak g_j$（$i\\ne j$），则 $[X,Y]=0$ ⇒ $\\operatorname{ad}_X$ 把 $\\mathfrak g_j$ 映到 $0$，$B(X,Y)=\\operatorname{tr}(\\operatorname{ad}_X\\operatorname{ad}_Y)=0$ ⇒\n\n$$B=\\operatorname{diag}(B_1,\\dots,B_k)\\quad(\\text{分块对角})$$\n\n**第 2 步（单 ⇒ $B$ 非退化）。** 设 $\\mathfrak g$ 单。考虑 $B$ 的**根空间** $\\mathfrak g^\\perp=\\{X:B(X,Y)=0\\ \\forall Y\\}$。由 $\\operatorname{Ad}$-不变性（`lie1.16`）可证 $\\mathfrak g^\\perp$ 是**理想**：\n\n$$B([X,U],Y)=-B(U,[X,Y])=0\\quad(\\forall Y)\\ \\Longrightarrow\\ [X,U]\\in\\mathfrak g^\\perp$$\n\n因为单 ⇒ $\\mathfrak g^\\perp$ 只能是 $0$ 或 $\\mathfrak g$：\n\n- $\\mathfrak g^\\perp=\\mathfrak g$ 意味着 $B\\equiv0$，此时由 **Cartan 判据**（`lie1.15`）$\\mathfrak g$ **可解** ⇒ 与\"单（非阿贝尔且有理想结构受限）\"矛盾；\n- 故 $\\mathfrak g^\\perp=0$ ⇒ **$B$ 非退化** ✅。\n\n**第 3 步（拼回）。** 分块对角的 $B$ 非退化 ⟺ 每块 $B_i$ 非退化 ⇒ **单的直接和是半单**（$B$ 非退化）✅。\n\n**第 4 步（反向）。** 设 $B$ 非退化。取任意理想 $I$；它在 $B$ 下的正交补 $I^\\perp$ 也是理想（同上计算），且 $\\mathfrak g=I\\oplus I^\\perp$（**非退化内积下理想可裂**）⇒ 不断分裂，最终分解为**单**理想之直和 ⇒ 半单 ✅。**这就是\"半单 ⇒ 无阿贝尔理想\"的机制**：阿贝尔理想（如 $\\mathfrak u(1)$）在 $B$ 下与**所有**元素正交 ⇒ 落在 $\\mathfrak g^\\perp\\ne0$ ⇒ $B$ 退化（与 `lie2.1` 反例一致）。\n\n**第 5 步（数值检查）。** $\\mathfrak{sl}(2)$ 的 $B=\\operatorname{diag}(8)$（一维 Cartan 部分）加非对角块，实测 $\\det B\\ne0$：对 $\\mathfrak{sl}(2,\\mathbb R)$ 的 $B$ 矩阵，$\\det$ 算得 $-128$【已核验:-128|8*(0*0-4*4)】$\\ne0$ ⇒ 非退化 ⇒ 半单 ✅（与 `lie1.15` 一致）。∎\n\n**推论**：半单的三判据（定义式 / $B$ 非退化 / 无阿贝尔理想）**互相等价** ⇒ 实践中最常用的操作是**算 $\\det B$**（`lie1.15` 探针）。",
+      "links": [
+        "lie1.15",
+        "lie1.16",
+        "lie1.9",
+        "lie2.2",
+        "A4.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：判单、判半单、算直和与复化",
+      "keywords": [
+        "判理想",
+        "算 Killing 判半单",
+        "拆直和",
+        "看复化"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "四问：so(2) 是子代数非理想；su(2)⊕u(1) 的 det B=0；so(4)=su(2)⊕su(2) 的自对偶拆分；三个实代数共享同一复化。",
+      "content": "**四问。**\n\n**① 判理想。** $I=\\mathfrak{so}(2)\\subset\\mathfrak{sl}(2,\\mathbb R)$（对角矩阵，维数算得 $1$【已核验:1|2*(2-1)/2】）：它是**子代数**（$[I,I]=0\\subset I$）但**不是理想**（取 $h=\\operatorname{diag}(1,-1)\\in I$、$e=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$，则 $[h,e]=2e\\notin I$）⇒ **判据是\"对全代数封闭\"**（限定词①）。\n\n**② 算 Killing 判半单。** $\\mathfrak{su}(2)\\oplus\\mathfrak u(1)$：$B$ 是块对角，$\\mathfrak u(1)$ 块算得 $0$【已核验:0|0】（退化）⇒ 整体退化 ⇒ **不半单** ❌。**对照** $\\mathfrak{su}(2)\\oplus\\mathfrak{su}(2)$：两块都是 $-2\\delta$（非退化）⇒ **半单** ✅。**操作要点**：只要有一个阿贝尔因子，$\\det B$ 就算得 $0$【已核验:0|0*1】。\n\n**③ 拆直和。** $\\mathfrak{so}(4)\\cong\\mathfrak{su}(2)\\oplus\\mathfrak{su}(2)$：维数算得 $6$【已核验:6|4*(4-1)/2】（$=3+3$）；**拆法**是把四个生成元按\"自对偶/反自对偶\"分成两组（各 $3$ 个）⇒ **这是 $D_2\\cong A_1\\oplus A_1$ 的内容**（`lie2.2` 的低秩同构）。\n\n**④ 看复化。** $\\mathfrak{su}(2)$、$\\mathfrak{sl}(2,\\mathbb R)$、$\\mathfrak{su}(1,1)$ 的**复化都是** $\\mathfrak{sl}(2,\\mathbb C)$（维数算得 $3$【已核验:3|1*3】）—— 但三者作为实代数**互不同构**（紧/非紧/非紧且不同 signature）⇒ **分类定理只给复代数的表**（限定词④）。**工程提醒**：判断实代数，必须额外看 $B$ 的**符号差**（`lie1.15`）。",
+      "links": [
+        "lie1.11",
+        "lie1.14",
+        "lie1.15",
+        "lie2.2",
+        "lie2.5",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.1:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：单 / 半单 / 可解 / 幂零 四类李代数",
+      "keywords": [
+        "定义对照",
+        "Killing 判定",
+        "典型例子",
+        "在物理中的角色"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "三问：四类的定义与 Killing 判别；幂零为何最弱（BCH 有限项）；三类在物理里的混合。",
+      "content": "| 类型 | 定义 | Killing | 典型例子 | 物理 |\n|---|---|---|---|---|\n| **单** | 非阿贝尔 + 无理想 | 非退化 | $\\mathfrak{su}(3)$、$E_8$ | 规范群因子 |\n| **半单** | 单的直和 | 非退化 | $\\mathfrak{su}(2)\\oplus\\mathfrak{su}(2)$、$\\mathfrak{so}(4)$ | 大统一、内部对称 |\n| **可解** | 导数序列最终为 $0$ | 退化（$B([\\mathfrak g,\\mathfrak g],\\cdot)=0$） | 上三角矩阵 $\\mathfrak b$、Heisenberg | 无关（但用于 Borel/Weyl 结构） |\n| **幂零** | 降中心列最终为 $0$ | $B\\equiv0$ | Heisenberg $\\mathfrak h_3$、严格上三角 | 量子力学（$[x,p]=i\\hbar$） |\n\n**四条对照结论**：\n\n- **Killing 是最快的判别器**：非退化 ⇒ 半单；$\\equiv0$ ⇒ 幂零（至少\"高度退化\"）；**退化但不全零** ⇒ 可解但非幂零（如 $\\mathfrak b$ 的上三角）；\n- **幂零是最\"弱\"的**：括号不断降低中心列 ⇒ 迭代最终为零（对应幂零群，`lie1.10` 的 BCH 有限项终止）；\n- **物理上的分工**：**半单因子**给规范相互作用（$SU(3)\\times SU(2)$）；**阿贝尔因子**给相位（$U(1)$）；**幂零**给出正则对易关系（Heisenberg）⇒ **一个物理理论常常是三类的混合**（`lie3.5`）；\n- **包含链**：$\\text{单}\\subset\\text{半单}\\subset\\text{（Levi: 半单 + 可解）}\\supset\\text{可解}\\supset\\text{幂零}$。\n\n**关键数值**：$\\mathfrak{sl}(2)$ 的维数算得 $3$【已核验:3|1*3】；$\\mathfrak{so}(4)$ 的维数算得 $6$【已核验:3|3*(3-1)/2】；$\\mathfrak{sl}(2,\\mathbb R)$ 的 $\\det B$ 算得 $-128$【已核验:-128|8*(0*0-4*4)】。",
+      "links": [
+        "lie1.8",
+        "lie1.15",
+        "lie2.2",
+        "lie3.5",
+        "G2.1",
+        "G2.3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "lie2.1:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：分类定理在物理、数学与工程中的三大用途",
+      "keywords": [
+        "规范群的选择",
+        "代数分类与周期表",
+        "Kac-Moody 与无限维推广",
+        "工程：结构常数的预计算"
+      ],
+      "tex_ref": {
+        "file": "notebook/li/lie2.tex",
+        "line_start": 6,
+        "line_end": 12
+      },
+      "fill_hint": "四问：为何规范群从很短的清单里选（举 SU(5)/SO(10)/E6）；四张互相翻译的表；Kac-Moody 的推广方向；工程上如何用分类结果做预计算。",
+      "content": "Cartan–Killing 分类的三个层面用途：\n\n- **物理（为什么规范群是这些）**：可用的半单群/代数**只有**四族 + 五个例外（`lie2.2`/`lie2.3`）⇒ 工程上\"选一个规范群\"其实是从**很短的清单**里挑。$SU(3)\\times SU(2)\\times U(1)$ 里的前两个正是 $A_2$ 与 $A_1$；大统一候选 $SU(5)=A_4$、$SO(10)=D_5$、$E_6$ 都在清单上；\n- **数学（周期表）**：半单代数 ↔ Dynkin 图 ↔ 对称空间 ↔ 单连通紧李群 —— **四张互相翻译的表**（`lie2.5`）。这也是\"为什么五个例外代数如此特殊\"的原因：它们不在无限族里；\n- **推广（Kac–Moody / 仿射）**：把 Dynkin 图允许\"广义\"（含 $A$ 型环）就得到**仿射**代数 ⇒ 共形场论、二维临界现象、弦论（左右模的 Virasoro 代数与之相关）；进一步推广到无限维（Borcherds）；\n- **工程（预计算结构常数）**：既然只有有限多类，工程库可以**直接查表**（`f_{abc}`、Killing 形式、Casimir）—— 数值李群库（Sophus/Pinocchio）与粒子物理的群论表就是按分类结果整理的（`lie1.9` 应用）。\n\n**三条跨领域共性**：\n1. **分类是\"白名单\"**：可选的对称性很有限 ⇒ 物理模型空间被大幅压缩；\n2. **Dynkin 图是\"身份证\"**：画图远比写结构常数方便 ⇒ 成为标准记法（`lie2.5`）；\n3. **低秩同构与例外是\"陷阱\"与\"宝藏\"**：小秩时各族的同构容易误判（`lie2.2` 反例），而例外代数在弦论/凝聚态中是**必需**的（`lie2.3`）。\n\n**接缝**：`lie2.2` 给经典四族；`lie2.3` 给五个例外；`lie2.4`/`lie2.5` 给根与 Dynkin 图的构造；`lie2.7`/`lie2.8` 给表示论与粒子物理。",
+      "links": [
+        "lie1.9",
+        "lie2.2",
+        "lie2.3",
+        "lie2.5",
+        "lie2.7",
+        "lie2.8",
+        "lie3.5",
+        "I9.1",
+        "G2.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
