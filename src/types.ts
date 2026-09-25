@@ -123,6 +123,26 @@ export interface UnitMeta {
   cards: string[];
   /** 本单元所有词条 links 的并集（依赖图只用它） */
   links: string[];
+  /**
+   * 语义边真源（`graph/<L>.yaml`）**构建期烘进来的那一份**。
+   *
+   * 为什么要烘：右栏「依赖◂」与 frontier「今天该学」原先只吃 links 的编号序启发式，
+   * 于是 A1.2 的真实上游 A1.4 不显示、P3.1 凭空多 16 个假上游、26 个地基单元被压住
+   * （实测）。而浏览器侧现拉 yaml 会撞「零外部请求」红线（dom-harness 把非 json/ 的
+   * fetch 全判为外部），所以走构建期注入 —— 与 KaTeX 预渲染（决策 D8）同一哲学。
+   *
+   * **字段存在即代表该单元被 yaml 覆盖**（哪怕四类边全空，如 A1.1 的 prereq: []）：
+   * 覆盖组内的编号序派生 prereq 一律作废，以 yaml 为准（与 mergeGraph 同一规则）。
+   */
+  sem?: UnitSem;
+}
+
+/** 四类语义边（DESIGN §8.2）；构建期从 graph/<L>.yaml 提取 */
+export interface UnitSem {
+  prereq: string[];
+  applies: string[];
+  tension: string[];
+  dual: string[];
 }
 
 export function unitMetaOf(file: EntryFile): UnitMeta {

@@ -10,7 +10,9 @@ const GRAPH_DIR = path.join(ROOT, 'graph');
 const OUT_GRAPH_DIR = path.join(ROOT, 'dist', 'graph');
 
 function indexPayload(): string {
-  return JSON.stringify(buildIndex(JSON_DIR));
+  // 语义边真源（graph/*.yaml）构建期烘进索引：右栏「依赖◂」与 frontier 因此吃真源，
+  // 不再是编号序猜测（详见 kb-index.ts 的 attachSem）。
+  return JSON.stringify(buildIndex(JSON_DIR, GRAPH_DIR));
 }
 
 /** graph/ 语义边真源的清单（字母列表）。yaml 缺失是常态（逐章补），前端按清单探测 + 降级。 */

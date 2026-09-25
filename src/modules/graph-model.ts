@@ -160,10 +160,16 @@ export function deriveEdges(units: UnitMeta[], known: ReadonlySet<string>): Dire
 /* ------------------------------------------------------------ 合并 */
 
 /**
- * 合并派生边 + 语义边。prereq 的覆盖规则：
- * **同一章节组**（groupKey = 代号去 .k）里只要 yaml 给过任何节点，
- * 该组内节点间的派生 prereq 全部作废、以 yaml 为准（yaml 是真源）；
- * 跨组边（yaml 没写的）保留派生。applies 两类来源直接并集去重。
+ * 合并派生边 + 语义边。prereq 的覆盖规则（**与 modules/graph.ts 的 buildGraphFromMeta 同一规则**，
+ * 改一处必须同步改另一处，否则右栏与图谱视图会给出互相矛盾的依赖）：
+ *
+ * 被 yaml 列进 nodes 的单元 → 它的派生 prereq **全部作废**（不分同组跨组），prereq 以 yaml 为准；
+ * 未被 yaml 覆盖的单元 → 保留 links 派生（向后兼容：新章节入库即可用，不必等 yaml）。
+ * applies 两类来源直接并集去重。
+ *
+ * 为什么「全部作废」而不是只作废同组：links 是「相关引用」不是「依赖」，对工具篇是反向的
+ * （P3.1 的 links 指向 A1.5/C1/H1…，含义是「这个放缩用在那些证明里」），按编号序猜 prereq
+ * 会给起点单元凭空造出十几条入边。
  */
 export function mergeGraph(
   units: UnitMeta[],
@@ -177,7 +183,7 @@ export function mergeGraph(
   const yamlStatus: MergedGraph['yamlStatus'] = [];
   const semDirected: DirectedEdge[] = [];
   const semUndirected: UndirectedEdge[] = [];
-  const yamlGroups = new Set<string>(); // yaml 覆盖到的章节组（如 A1）
+  const yamlNodes = new Set<string>(); // yaml 覆盖到的单元（如 P3.1）
 
   for (const letter of [...semYamls.keys()].sort()) {
     const y = semYamls.get(letter);
@@ -188,7 +194,9 @@ export function mergeGraph(
     }
     semDirected.push(...r.directed);
     semUndirected.push(...r.undirected);
-    for (const node of Object.keys(y.nodes ?? {})) yamlGroups.add(node.split('.')[0]);
+    for (const node of Object.keys(y.nodes ?? {})) {
+      if (known.has(node)) yamlNodes.add(node);
+    }
     yamlStatus.push({
       letter,
       ok: r.problems.length === 0,
@@ -196,10 +204,13 @@ export function mergeGraph(
     });
   }
 
-  // 派生 prereq 边：from 与 to 同组、且该组被 yaml 覆盖 → 作废（yaml 是真源）；跨组保留
-  const derived = deriveEdges(units, known).filter(
-    (e) => !(yamlGroups.has(e.to.split('.')[0]) && e.from.split('.')[0] === e.to.split('.')[0]),
-  );
+  // 派生 prereq 边：目标是 yaml 覆盖的单元 → **全部作废**（不分同组跨组）。
+  // 为什么比「同组作废」更狠：links 是「相关引用」不是「依赖」，对工具篇是反向的 ——
+  // P3.1 的 links 指向 A1.5/C1/H1…（含义是「这个放缩用在那些证明里」），
+  // 派生边却按编号序猜成 prereq，图谱视图会给起点单元画出十几条入箭头，
+  // 而右栏（modules/graph.ts，同一规则）说它是起点 —— 两处必须一致。
+  // yaml 的 prereq（含「起点 = 空」）是逐单元显式声明，以它为准。
+  const derived = deriveEdges(units, known).filter((e) => !yamlNodes.has(e.to));
 
   // 有向边去重（prereq: from→to 唯一；语义边优先保留）
   const dirMap = new Map<string, DirectedEdge>();

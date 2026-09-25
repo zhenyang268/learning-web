@@ -1,4 +1,4 @@
-import type { Entry, EntryFile, UnitMeta } from '../types';
+import type { Entry, EntryFile, UnitMeta, UnitSem } from '../types';
 
 export interface LoadIssue {
   /** 哪个文件（json/A1/A1.3.json） */
@@ -46,9 +46,22 @@ export async function loadIndex(): Promise<UnitMeta[]> {
       title: typeof u.title === 'string' ? u.title : u.code,
       cards: Array.isArray(u.cards) ? u.cards.filter((c): c is string => typeof c === 'string') : [],
       links: Array.isArray(u.links) ? u.links.filter((c): c is string => typeof c === 'string') : [],
+      sem: parseSem(u.sem),
     });
   }
   return units;
+}
+
+/**
+ * 索引里烘进来的语义边（构建期 attachSem 产出）。逐字段校验，坏数据当没有
+ * —— 缺 sem 的单元退回 links 派生，绝不因为一个坏字段让整份索引崩掉。
+ */
+function parseSem(raw: unknown): UnitSem | undefined {
+  if (typeof raw !== 'object' || raw === null) return undefined;
+  const s = raw as Record<string, unknown>;
+  const arr = (v: unknown): string[] =>
+    Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : [];
+  return { prereq: arr(s.prereq), applies: arr(s.applies), tension: arr(s.tension), dual: arr(s.dual) };
 }
 
 function validateFile(raw: unknown, path: string, issues: LoadIssue[]): EntryFile | null {

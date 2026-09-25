@@ -262,7 +262,10 @@ function apply(): void {
   prefetch(code);
 }
 
-/** 图谱视图：占据阅读区，右栏放说明。数据 = 索引元数据 + graph/*.yaml（异步，降级不白屏）。 */
+/**
+ * 图谱视图：占据阅读区，右栏放说明。
+ * 数据 = 索引元数据（语义边已在**构建期烘进索引**，故本视图零请求）。
+ */
 function renderGraphView(): void {
   elReader.innerHTML = `<div class="card pagehead">
       <h1>知识图谱 <em>四类语义边 · 三层缩放</em></h1>
@@ -278,14 +281,15 @@ function renderGraphView(): void {
       <h4 style="margin-top:16px">三层缩放</h4>
       <p class="kv">字母块（A/B/DE…）→ 章节组（A1/A2…）→ 单元节点。点节点下钻，L3 点节点跳阅读。</p>
       <h4 style="margin-top:16px">数据来源</h4>
-      <p class="kv">派生边：json 词条 links（启发式）；语义边真源：<span class="mono">graph/&lt;letter&gt;.yaml</span>（逐章人工草拟+校验，已建 <span data-role="yamlcount">…</span> 章）。yaml 覆盖组内 prereq 以 yaml 为准。</p>
+      <p class="kv">语义边真源 <span class="mono">graph/&lt;章&gt;.yaml</span>（逐章人工草拟 + <span class="mono">check:graph</span> 校验）在<b>构建期烘进索引</b>，运行期零请求；未被 yaml 覆盖的单元退回 links 派生边（编号序启发式）。已覆盖 <span data-role="yamlcount">…</span> 章。</p>
+      <p class="kv"><b>与右栏同源</b>：右栏「依赖◂」和顶部「今天该学」吃的是同一份真源，被 yaml 覆盖的单元其 prereq 完全以 yaml 为准（编号序猜测作废）。</p>
       <p class="kv dim">节点下弧线 = 掌握度（与右栏同源）；红色节点 = prereq 环（数据错误，需修 yaml）。</p>
     </div>`;
   const host = document.getElementById('graph-host');
   if (!host) return;
   void loadMergedGraph(units).then((merged) => {
     if (currentCode() !== 'graph') return; // 用户已跳走，不画
-    // 右栏「已建 N 章」用真实 yamlStatus 填（原来写死「现只有 A1」，铺开后就过期了）
+    // 「已覆盖 N 章」用真实 yamlStatus 填（原来写死「现只有 A1」，铺开后就过期了）
     const cnt = elAside.querySelector<HTMLElement>('[data-role=yamlcount]');
     const okCount = merged.yamlStatus.filter((s) => s.ok).length;
     if (cnt) cnt.textContent = `${okCount}/${merged.yamlStatus.length}`;

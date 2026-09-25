@@ -324,6 +324,38 @@ nav .box {
   padding: 14px 10px;
   position: sticky;
   top: 76px;
+  /* 目录独立滚动：137 个单元的目录比视口高，若与正文共享 body 滚动条，
+     滚目录会把正文一起推走、滚正文目录又跟着跑（用户实测的「互相影响」）。
+     sticky + 自身 overflow-y 才是两个独立滚动区；
+     overscroll-behavior: contain 是关键——滚到底/到顶时不把滚动链传给父级。 */
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line2) transparent;
+}
+
+/* 目录自己的细滚动条（Webkit）。只在 hover 时显形，平时留一条淡轨，
+   避免玻璃面板上挂一根粗白条抢视觉。 */
+nav .box::-webkit-scrollbar,
+aside .box::-webkit-scrollbar {
+  width: 7px;
+}
+
+nav .box::-webkit-scrollbar-track,
+aside .box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+nav .box::-webkit-scrollbar-thumb,
+aside .box::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 99px;
+}
+
+nav .box:hover::-webkit-scrollbar-thumb,
+aside .box:hover::-webkit-scrollbar-thumb {
+  background: var(--line2);
 }
 
 nav h4 {
@@ -861,6 +893,12 @@ aside .box {
   margin-bottom: 18px;
   position: sticky;
   top: 76px;
+  /* 与左栏同理：probe 多 / 依赖 chip 多时右栏会超视口，给它自己的滚动区 */
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line2) transparent;
 }
 
 aside h4 {
@@ -1256,6 +1294,10 @@ p .badge {
   nav .box,
   aside .box {
     position: static;
+    /* 单列堆叠时目录不再需要自己的滚动区：限高会把长目录切进一个小窗里，
+       反而多出一个滚动条。交回整页滚动。 */
+    max-height: none;
+    overflow-y: visible;
   }
 
   .eitem {

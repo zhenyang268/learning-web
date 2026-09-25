@@ -432,7 +432,9 @@ async function main() {
   const args = argv.filter((a) => !a.startsWith('-'));
 
   const kbIndex = await requireTs('src/modules/kb-index.ts');
-  INDEX = kbIndex.buildIndex(JSON_DIR);
+  // graph/ 显式传入（锚定仓库根，不随 HARNESS_JSON 漂移）——语义边烘进索引后，
+  // 右栏/frontier 的断言才是在验真源而不是编号序启发式。
+  INDEX = kbIndex.buildIndex(JSON_DIR, path.join(ROOT, 'graph'));
   ALL_CODES = INDEX.units.map((u) => u.code);
   const indexKb = (JSON.stringify({ units: INDEX.units }).length / 1024).toFixed(1);
 

@@ -106,7 +106,19 @@ vite.config.ts  tsconfig.json  package.json  index.html
 6. 顺手：图谱右栏「语义边真源现只有 A1」过期文案 → 动态 `N/M` 计数；
    aside.ts 掌握度圆环、styles.css 37 处硬编码 alpha 色值 → `color-mix(var(--x))` 主题化。
 
-### P2 mastery 注入：**阻塞（真源缺失）**
+### P2 mastery 注入：**用户已否决，不做（2026-09-25 11:32）**
+
+原方案想用 ns-progress.md 的 L0–L5 六层状态映射到 318 个小目的 mastery。**用户明确否掉**：
+「不需要，除非很明确的关联性，这个不是完全对应的也没问题」——L 层级与小目之间没有明确
+对应关系，宁可不注入。
+
+**现状即终态**：`src/modules/state.ts` 的 mastery 初值恒 0、只靠交互累积（点卡片掌握度
++1，localStorage 持久化）。**下一个接手的 agent 不要再尝试 P2**，除非用户主动给出
+小目级的确定性真源（逐条打勾表落到文件里）。
+
+（下面保留当时的排查记录，供追溯。）
+
+#### 当时的排查：真源缺失
 
 TASKBOOK §12.4 说「mastery 从 ns-progress.md 注入（那里有 P 组打勾表）」，但实测
 `learning-todo/ns-progress.md`（86 行全文读过）**没有逐小目 mastery/打勾表**——只有
