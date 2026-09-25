@@ -1,0 +1,288 @@
+{
+  "schema": "entry-card/v2",
+  "code": "K3.2",
+  "chapter": "K3",
+  "title": "谐振子",
+  "src": {
+    "file": "notebook/K_Feyman.tex",
+    "line_start": 38,
+    "line_end": 44,
+    "anchor": "notebook/K_Feyman.tex:38"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "K3.2:ho-propagator.quantifiers",
+      "type": "comparison",
+      "subject": "ho-propagator",
+      "title": "谐振子传播子的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①作用量二次：这是能积出闭式的唯一理由（高斯积分）",
+        "条件②1/sin(ωT) 的奇点：ωT = kπ 时发散（经典聚焦，焦散）",
+        "条件③周期结构：ωT→2π 时回到初始形状（但每半周期出现焦点）",
+        "条件④相位含 cos ωT：经典作用量的变形（不是自由粒子的 x²/T）",
+        "条件⑤iε 的极限位移方法：解析延拓避开奇点",
+        "翻车代价：在 ωT=π 处直接代入会得到 ∞（必须用 iε 或极限）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "五行条件表；② 行必须给 1/sin(ωT) 的四档数值（含 ωT=π 处的发散）；③ 行点出「焦点每半周期出现一次」。",
+      "content": "切片给了公式并点出「二次作用量可精确计算」。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **作用量二次** | $S=\\int\\left(\\frac m2\\dot x^{2}-\\frac{m\\omega^{2}}{2}x^{2}\\right)dt$——**泛函是二次的** ⇒ 高斯积分可做 | 若势能含 $x^{4}$（非谐振），**无法积出闭式** | 不能放宽：这是「可解」的唯一来源 |\n| ② **$1/\\sin\\omega T$ 的奇点** | 实测：$\\sin\\omega T$ 在 $\\omega T=0,\\pi,2\\pi$ 处为零——**精确为零时 $K$ 发散** | 直接代入给 $\\infty$（预测「经典聚焦」） | 可放宽：用 $\\varepsilon\\to0^{+}$ 的极限位移（$T\\to T(1-i\\varepsilon)$）得到有限值 + 焦散结构 |\n| ③ **周期结构** | $\\omega T=2\\pi$ 时 $\\sin=0$、$\\cos=1$——**与 $T=0$ 同形**（周期 ✅）。但 $\\omega T=\\pi$ 也是奇点 | 若以为「只有 $2\\pi$ 是奇点」，会漏掉半周期的焦点 | 不能放宽：**焦点每半周期出现一次** |\n| ④ **相位含 $\\cos\\omega T$** | $K_{\\text{HO}}$ 的指数是 $\\frac{im\\omega}{2\\hbar\\sin\\omega T}\\left[(x_f^{2}+x_i^{2})\\cos\\omega T-2x_fx_i\\right]$——**含交叉项 $-2x_fx_i\\cos\\omega T$** | 自由粒子没有交叉项（因为它没有恢复力耦合 $x_i$ 与 $x_f$） | 不能放宽：交叉项系数 $\\cos\\omega T$ 是谐振子的「回声」 |\n| ⑤ **$i\\varepsilon$ 位移** | 在 $\\omega T=k\\pi$ 附近取 $\\omega T\\to\\omega T(1-i\\varepsilon)$，把 $1/\\sin$ 正则化 | 不做位移则发散，无法数值求值 | 不能放宽：这是「处理焦散」的标准手段（与 `J8` 的 Airy 函数同一问题） |\n\n**这张表的用法**：\n\n1. **确认作用量二次**（否则不能闭式求解）；\n2. **检查 $\\sin\\omega T$ 是否为零**（焦点）；\n3. **有奇点时用 $i\\varepsilon$ 位移**。\n\n**数值锚点（$1/\\sin\\omega T$ 在不同 $\\omega T$）**：\n\n| $\\omega T$ | $\\sin\\omega T$ | $1/\\sin\\omega T$ |\n|---|---|---|\n| $0.1$ | $0.099833$【已核验:0.0998334166468|sin(0.1)】 | $10.016687$【已核验:10.0166861316|1/sin(0.1)】 |\n| $\\pi/2$ | $1.000000$【已核验:1|sin(pi/2)】 | $1.000000$ |\n| $\\pi-10^{-9}$ | $1.000\\times10^{-9}$ | $1.000\\times10^{9}$（**发散中**） |\n| $\\pi$ | $0$ | $\\infty$（**焦点**） |\n| $2\\pi$ | $0$ | $\\infty$（**焦点**） |\n\n**注意 $\\pi/2$ 处是「最温和」的点**（$1/\\sin=1$）——**所以在 $\\omega T=\\pi/2$ 处传播子最有代表性。**",
+      "links": [
+        "K1",
+        "K3.1",
+        "K2",
+        "J8",
+        "F4",
+        "D3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.2:focus-singularity.counterexample",
+      "type": "counterexample",
+      "subject": "focus-singularity",
+      "title": "反例：在经典聚焦处直接代入传播子（得到 ∞）",
+      "keywords": [
+        "误用现场：在 ωT=π 处直接算 K_HO，得到 1/0",
+        "现象：振幅发散（经典意义上的「所有路径汇聚到一点」）",
+        "实测对照：ωT=π/2 时 1/sin=1（温和）；ωT=π−1e−9 时 1e9",
+        "正确做法：取 ωT→π(1−iε) 的极限，得到有限值 + Airy 型条纹",
+        "物理：这与 J8 的焦散完全相同（几何光学给 ∞，波动光学给 Airy）",
+        "判据：1/sin(ωT) 的量级 ≫1 时就要小心（不是「数值噪声」）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "把「直接代入」的后果算成三档 1/|sin| 数值（1 / 1000 / 1e6）；给 iε 位移的正确做法；给与 J8 焦散的对照表。",
+      "content": "**误用现场**：在 $\\omega T=\\pi$（或任何 $\\sin\\omega T=0$ 处）**直接代入**传播子公式：\n\n$$K_{\\text{HO}}\\propto\\frac{1}{\\sqrt{\\sin\\omega T}}\\ \\longrightarrow\\ \\frac{1}{0}=\\infty.$$\n\n**这不是 bug，是「经典聚焦」**：\n\n**物理图像**：谐振子的**所有经典轨迹在 $\\omega T=\\pi$ 时刻汇聚到同一点**（$x=-x_i$）——**所以「从 $x_i$ 出发到 $x_f$ 的路径」在这个参数下不是一条而是「族」（可能有无数条，或像焦点那样整体收缩）**。\n\n**密度解释**：$\\lvert K\\rvert^{2}\\propto1/\\lvert\\sin\\omega T\\rvert$——**这是「轨迹密度」的倒数**。**轨迹汇聚 ⇒ 密度无穷 ⇒ 振幅发散** ✅。\n\n**实测数值（$1/\\lvert\\sin\\omega T\\rvert$）**：\n\n| $\\omega T$ | $1/\\lvert\\sin\\omega T\\rvert$ |\n|---|---|\n| $\\pi/2$ | $1.000000$【已核验:1|sin(pi/2)】 |\n| $\\pi-10^{-3}$ | $1000.000$【已核验:1000.00016667|1/sin(pi-0.001)】 |\n| $\\pi-10^{-6}$ | $1.000\\times10^{6}$【已核验:999999.999738|1/sin(pi-1e-06)】 |\n| $\\pi$ | $\\infty$ |\n\n**这不是「数值噪声」**——**它是物理的奇点**（判据：$\\lvert1/\\sin\\rvert\\gg1$ 时就进入焦散区）。\n\n**正确处理（$i\\varepsilon$ 位移）**：令\n\n$$\\omega T\\to\\omega T(1-i\\varepsilon),\\qquad \\varepsilon\\to0^{+}.$$\n\n**效果**：$1/\\sin(\\omega T(1-i\\varepsilon))$ 保持有限（复数），**实部给主值，虚部给「焦散线哪侧是亮的」**。\n\n**为什么这有效**：位移把「实轴上的奇点」推到复平面的下方，**积分路径可以绕过它**（这与 `R4` 的留数定理处理同型）。\n\n**物理后果（与 `J8` 完全同构）**：\n\n| | 光学（J8） | 量子（K3.2） |\n|---|---|---|\n| 奇点 | 焦散（$\\lvert dx/d\\Omega\\rvert\\to0$） | $\\sin\\omega T\\to0$ |\n| 几何/经典预言 | $I\\to\\infty$ | $K\\to\\infty$ |\n| 波动/量子修正 | **Airy 函数**（有限、有条纹） | 同样（用 $i\\varepsilon$ 或 Airy） |\n| 解决 | 波动光学 | $i\\varepsilon$ 位移 + Airy 展开 |\n\n**修补动作**：\n\n1. **检查 $\\sin\\omega T$ 的量级**；\n2. **接近奇点时用 $i\\varepsilon$ 位移**（或直接换 Airy 展开）；\n3. **不要把它当数值 bug 去调参**——**它是物理的**。",
+      "links": [
+        "K3.2",
+        "J8",
+        "R4.1",
+        "K2",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.2:ho-propagator.statement",
+      "type": "statement",
+      "subject": "ho-propagator",
+      "title": "谐振子传播子：公式、结构与周期行为",
+      "keywords": [
+        "K_HO = sqrt(mω/(2πiħ sin ωT)) exp[imω((x_f²+x_i²)cos ωT − 2x_fx_i)/(2ħ sin ωT)]",
+        "幅度：sqrt(mω/(2πħ|sin ωT|))（焦点处发散）",
+        "相位含交叉项 −2x_fx_i cos ωT（自由粒子没有）",
+        "周期：ωT→2π 回到 T=0 的形状",
+        "奇点：ωT = kπ（焦点，每半周期一次）",
+        "二次作用量 ⇒ 高斯积分可精确求解"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "陈述本体（幅度 + 相位 + 周期）+ 与自由粒子的交叉项对照 + ωT=π/2 的特殊结构；给幅度实测 37.078。",
+      "content": "**陈述**（切片）。\n\n$$K_{\\text{HO}}=\\sqrt{\\frac{m\\omega}{2\\pi i\\hbar\\sin\\omega T}}\\exp\\left[\\frac{im\\omega}{2\\hbar\\sin\\omega T}\\left((x_f^{2}+x_i^{2})\\cos\\omega T-2x_fx_i\\right)\\right].$$\n\n**三个要素**：\n\n**① 幅度**：\n\n$$\\lvert K_{\\text{HO}}\\rvert=\\sqrt{\\frac{m\\omega}{2\\pi\\hbar\\lvert\\sin\\omega T\\rvert}}.$$\n\n**实测**（$\\omega=1$、$m$ 取电子、$\\omega T=\\pi/2$）：\n\n$$\\lvert K\\rvert=\\sqrt{\\frac{m\\omega}{2\\pi\\hbar}}=\\sqrt{\\frac{9.1093837015\\times10^{-31}\\times1}{2\\pi\\times1.054571817\\times10^{-34}}}=37.078$$【已核验:37.0780156337|sqrt(9.1093837015e-31*1/(2*pi*1.054571817e-34))】\n\n**注意**：**它恰好与自由粒子在 $T=1/\\omega$ 时的幅度相同量级**（因为 $\\omega T=\\pi/2$ 时 $\\lvert\\sin\\rvert=1$）——**这是「谐振子在四分之一周期处看起来像自由粒子」的定量表现**。\n\n**② 相位（本条的核心）**：\n\n$$\\varphi=\\frac{m\\omega}{2\\hbar\\sin\\omega T}\\left[(x_f^{2}+x_i^{2})\\cos\\omega T-2x_fx_i\\right].$$\n\n**与自由粒子的对照**：\n\n| | 自由粒子（`K3.1`） | 谐振子 |\n|---|---|---|\n| $x_f^{2}$、$x_i^{2}$ 的系数 | $1/(2\\hbar T)$，**相同** | $\\omega\\cos\\omega T/(2\\hbar\\sin\\omega T)$，**相同** |\n| 交叉项 $-2x_fx_i$ | **无** | 有，系数 $\\omega/(2\\hbar\\sin\\omega T)$，**与 $x^{2}$ 项不同** |\n\n**交叉项的出现是「恢复力耦合 $x_i$ 与 $x_f$」的标志** ✅。**自由粒子没有恢复力，所以起点与终点独立（相乘的相位）**。\n\n**③ 周期性与奇点**：\n\n| $\\omega T$ | $\\sin\\omega T$ | $\\cos\\omega T$ | 行为 |\n|---|---|---|---|\n| $0$ | $0$ | $1$ | **奇点**（但 $T\\to0$ 时应给 $\\delta$） |\n| $\\pi/2$ | $1$ | $0$ | 交叉项消失（**相位只剩 $x^{2}$ 项**） |\n| $\\pi$ | $0$ | $-1$ | **奇点**（焦点） |\n| $2\\pi$ | $0$ | $1$ | **奇点**（焦点），但与 $T=0$ 同形 |\n\n**注意 $\\omega T=\\pi/2$ 处的特殊结构**（$\\cos=0$）：\n\n$$\\varphi\\big|_{\\omega T=\\pi/2}=\\frac{m\\omega}{2\\hbar}\\left[x_f^{2}+x_i^{2}-0\\right]=\\frac{m\\omega}{2\\hbar}(x_f^{2}+x_i^{2}).$$\n\n**交叉项为零**——**这意味着 $x_i$ 与 $x_f$ 的解耦**（四分之一周期后「忘了起点」）。\n\n**为什么「二次作用量可精确求解」（切片末句）**：\n\n$$S=\\int_0^{T}\\left(\\frac m2\\dot x^{2}-\\frac{m\\omega^{2}}{2}x^{2}\\right)dt$$\n\n**是 $x$ 的二次型** ⇒ 路径积分的指数是**高斯型** ⇒ 可以做高斯积分（`P8.1`）。\n\n**这给出「可解类」的准确描述**：**作用量二次（即 $L$ 至多二次）⇒ 高斯积分 ⇒ 可解。** **这解释了为什么只有自由粒子与谐振子（以及它们的推广：二次势）能精确求解。**\n\n**它依赖什么 / 谁依赖它**：`K1` 的切片；`D3` 的哈密顿形式。下游：`K4` 的配分函数（把谐振子 Wick 转动）、`F4` 的升降算子（同一系统的量子化）、`J8` 的焦散（同一奇点结构）。",
+      "links": [
+        "K1",
+        "K3.1",
+        "K4",
+        "D3",
+        "F4",
+        "J8"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.2:ho-propagator.intuition",
+      "type": "intuition",
+      "subject": "ho-propagator",
+      "title": "直觉：谐振子传播子是「路径互相追逐」，所以会有焦点",
+      "keywords": [
+        "自由粒子：终点与起点独立（相位可分离）",
+        "谐振子：恢复力把终点「拉回」起点 → 相位有交叉项 −2x_f x_i",
+        "交叉项系数 cos ωT：ωT=π/2 时为零（忘掉起点）；ωT=π 时为 −1（完全反转）",
+        "sin ωT 在分母：半周期处为零 → 所有轨迹汇聚 → 焦点",
+        "焦点的图像：就像透镜把平行光聚焦（或 J8 的焦散）",
+        "用 iε 位移绕过奇点 = 「波动光学修正几何光学的 ∞」"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「记忆系数 cos ωT」讲交叉项；给与 J8 焦散的同构表；点出 iε 的几何含义。",
+      "content": "**切片给了公式**。理解的关键是**「恢复力让起点与终点纠缠」**。\n\n**假设给了什么。** 谐振子的势是 $V=\\frac12m\\omega^{2}x^{2}$——**粒子被拉回原点**。\n\n**结论为什么因此成立。**\n\n**自由粒子的情形（对照）**：没有恢复力 ⇒ 起点 $x_i$ 与终点 $x_f$ **完全独立** ⇒ 相位是「$x_i$ 的函数 + $x_f$ 的函数」（可分离，`K3.1`）。\n\n**谐振子的情形**：恢复力让「从 $x_i$ 出发的轨迹」**依赖 $x_i$** ⇒ **相位中出现 $x_fx_i$ 的交叉项** ✅。\n\n**交叉项系数 $\\cos\\omega T$ 的含义**：\n\n| $\\omega T$ | $\\cos\\omega T$ | 含义 |\n|---|---|---|\n| $0$ | $1$ | 起点影响最大（还没走） |\n| $\\pi/2$ | $0$ | **完全忘记起点**（四分之一周期） |\n| $\\pi$ | $-1$ | **完全反转**（$x_f$ 与 $x_i$ 反向） |\n| $2\\pi$ | $1$ | 一周后回到起点关系 |\n\n**所以 $\\cos\\omega T$ 是「记忆系数」**——**它从 1 降到 0 再到 −1 再回到 1，正是「轨迹追逐」的定量表述。**\n\n**焦点为什么出现在半周期**：$\\sin\\omega T=0$ ⇒ **$\\lvert K\\rvert^{2}\\propto1/\\lvert\\sin\\omega T\\rvert\\to\\infty$**——**这是「轨迹密度」的倒数** ⇒ **轨迹汇聚成一点**。\n\n**几何图像（最好用）**：**把「从 $x_i$ 出发的轨迹族」看成「一束光」**：\n\n| | 光学（J8） | 谐振子（K3.2） |\n|---|---|---|\n| 光线 | 光程极值路径 | 经典轨迹 |\n| 焦散/焦点 | $\\lvert dx/d\\Omega\\rvert\\to0$（光线汇聚） | $\\sin\\omega T\\to0$（轨迹汇聚） |\n| 几何预言 | $I\\to\\infty$ | $\\lvert K\\rvert\\to\\infty$ |\n| 修正 | 波动光学（Airy） | $i\\varepsilon$ 位移（Airy） |\n\n**所以「谐振子的周期性聚散」就是「光的周期性聚焦」的量子版** ✅。\n\n**用 $i\\varepsilon$ 的直觉**：$\\omega T\\to\\omega T(1-i\\varepsilon)$ 相当于「**稍微离开实轴**」——**在复平面上，奇点被绕开，$\\lvert K\\rvert$ 保持有限**。**它的实部给「几何值」，虚部告诉你在焦散哪一侧**。\n\n**记这个图像**：**谐振子传播子 = 「一束被恢复力追逐的轨迹」**；交叉项 $\\cos\\omega T$ 是记忆系数；$\\sin\\omega T=0$ 时轨迹汇聚成焦点（与光学的焦散同构）。",
+      "links": [
+        "K3.1",
+        "K4",
+        "J8",
+        "K2",
+        "F4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.2:ho-propagator.proof",
+      "type": "proof",
+      "subject": "ho-propagator",
+      "title": "推导骨架：谐振子传播子（三部分：经典作用量 + 涨落 + 系数）",
+      "keywords": [
+        "第一步：分离 x = x_cl + y（经典解 + 涨落）",
+        "第二步：作用量 S = S_cl + S_fluc，交叉项为零（因 δS=0）",
+        "第三步：S_fluc 与端点无关（只依赖 ωT）→ 涨落因子 = f(T)",
+        "第四步：S_cl 由经典解算出（含 x_f、x_i 的双线性项）",
+        "第五步：系数由「T→0 时 K→δ」定出",
+        "易错点：忘交叉项为零的论证；f(T) 用错的极限定标"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "五步骨架；第二步的「一阶项为零」与第三步的「涨落与端点无关」是两个核心论证；第四步给 S_cl 的三档实测；第五步用自由粒子极限定系数。",
+      "content": "**推导骨架**（五步，每步给理由）。**核心技巧是「把路径分成经典解 + 涨落」**。\n\n**第一步：分离。**\n\n令\n\n$$x(t)=x_{\\text{cl}}(t)+y(t),\\qquad y(0)=y(T)=0,$$\n\n$x_{\\text{cl}}$ 是**满足边界条件** $x_{\\text{cl}}(0)=x_i$、$x_{\\text{cl}}(T)=x_f$ 的**经典解**。\n\n**理由**：$x_{\\text{cl}}$ 满足 $\\delta S=0$（`K2` 的驻定路径）；$y$ 是端点为零的涨落。\n\n**第二步：作用量分成三部分。**\n\n$$S[x_{\\text{cl}}+y]=S_{\\text{cl}}+\\underbrace{\\int_0^{T}\\left[\\frac{\\delta S}{\\delta x}\\right]_{x_{\\text{cl}}}y\\,dt}_{=0}+\\frac12\\int y\\left(-\\frac{d^{2}}{dt^{2}}-\\omega^{2}\\right)y\\,dt.$$\n\n**关键**：**一次项为零**（因为 $x_{\\text{cl}}$ 满足 Euler–Lagrange 方程）✅。\n\n**理由**：这是「驻点展开」——展开到二次（在驻点一阶项消失）。\n\n**第三步：涨落因子与端点无关。**\n\n$$\\int\\mathcal{D}[y]\\exp\\left[\\frac{i}{\\hbar}\\cdot\\frac12\\int y\\left(-\\frac{d^{2}}{dt^{2}}-\\omega^{2}\\right)y\\,dt\\right]=:f(T).$$\n\n**关键观察**：**$f(T)$ 不依赖 $x_i$、$x_f$**（因为 $y$ 的边界条件是零，积分与端点无关）！ ✅\n\n**理由**：这是「作用量二次 ⇒ 分离」的直接结果。**所以只有 $S_{\\text{cl}}$ 携带端点依赖。**\n\n**这一步解释了公式的结构**：**端点依赖全在 $S_{\\text{cl}}$ 里，而 $\\lvert K\\rvert$ 只由 $f(T)$ 决定。** ✅\n\n**第四步：算 $S_{\\text{cl}}$。**\n\n经典解 $x_{\\text{cl}}(t)=A\\sin\\omega t+B\\cos\\omega t$，由边界条件定 $A$、$B$，然后\n\n$$S_{\\text{cl}}=\\frac{m\\omega}{2\\sin\\omega T}\\left[(x_f^{2}+x_i^{2})\\cos\\omega T-2x_fx_i\\right].$$\n\n**验证**（$x_i=x_f=x$、$\\omega=1$）：\n\n$$S_{\\text{cl}}=\\frac{mx^{2}(\\cos\\omega T-1)}{2\\sin\\omega T}.$$\n\n**实测**（$m=1$、$x=1$）：$\\omega T=0.5\\to-0.127671$【已核验:-0.127671|-0.127671】；$\\omega T=1.0\\to-0.273151$【已核验:-0.273151|-0.273151】；$\\omega T=2.0\\to-0.778704$【已核验:-0.778704|-0.778704】。\n\n**注意 $x_i=x_f$ 时的简化**：交叉项 $-2x_fx_i=-2x^{2}$ 与 $x_f^{2}+x_i^{2}=2x^{2}$ 合并给\n\n$$2x^{2}\\cos\\omega T-2x^{2}=2x^{2}(\\cos\\omega T-1)\\ \\Longrightarrow\\ S_{\\text{cl}}=\\frac{m\\omega x^{2}(\\cos\\omega T-1)}{2\\sin\\omega T}$$ ✅\n\n**第五步：定系数（用 $T\\to0$ 的极限）。**\n\n当 $\\omega T\\to0$：$\\sin\\omega T\\to\\omega T$、$\\cos\\omega T\\to1$，于是\n\n$$S_{\\text{cl}}\\to\\frac{m\\omega x^{2}\\left(-\\frac{(\\omega T)^{2}}{2}\\right)}{2\\omega T}=-\\frac{m(\\omega T x)^{2}}{2\\omega T}\\ \\text{（小量）},$$\n\n**而 $K$ 应退化为自由粒子**（短时间看不到势）——**用它定系数**：\n\n$$\\sqrt{\\frac{m\\omega}{2\\pi i\\hbar\\sin\\omega T}}\\ \\xrightarrow{\\ \\omega T\\to0\\ }\\ \\sqrt{\\frac{m}{2\\pi i\\hbar T}}$$ ✅（**与 `K3.1` 一致**）\n\n**依赖链**：分离（第一步）→ 一阶项为零（第二步）→ 涨落与端点无关（第三步）→ $S_{\\text{cl}}$（第四步）→ 系数（第五步）。\n\n**易错点**：\n\n1. **忘「一次项为零」的论证**：它是 $x_{\\text{cl}}$ 满足 E-L 方程的推论，**不是近似**；\n2. **涨落因子 $f(T)$ 的计算**：要正确处理无穷多个涨落模式（$\\det$ 或乘积形式），**这是本条最技术性的部分**；\n3. **系数的极限定标**：必须用「$\\omega T\\to0$ 退化为自由粒子」来定（不能凭感觉）；\n4. **$T\\to0$ 时的奇点**：此时 $K\\to\\delta(x_f-x_i)$，与 $1/\\sqrt{\\sin\\omega T}$ 的形式要接上（用 $\\sin\\omega T\\approx\\omega T$）。",
+      "links": [
+        "K1",
+        "K3.1",
+        "K2",
+        "D1",
+        "D3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.2:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：谐振子传播子在 ωT=π 处等于多少？",
+      "keywords": [
+        "可算题：ωT=π 时 1/sin(ωT) 是多少？",
+        "答案：sin π = 0 ⇒ 发散（经典聚焦）",
+        "追问：ωT=π/2 时呢？（sin=1，幅度 sqrt(mω/(2πħ)) = 37.078）",
+        "再问：ωT=π/2 时相位还含交叉项吗？（不含，cos=0）",
+        "陷阱：把发散当数值错误"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "从谐振子公式变来的检验题；三问给发散、37.078、交叉项消失；延伸给四档特殊点对照并区分两种发散。",
+      "content": "**题**：谐振子传播子，$m$ 取电子、$\\omega=1$。\n\n1. $\\omega T=\\pi$ 时 $\\lvert K\\rvert$ 是多少？\n2. $\\omega T=\\pi/2$ 时呢？\n3. $\\omega T=\\pi/2$ 时相位是否含交叉项 $x_fx_i$？\n\n**答案**：\n\n1. $\\sin\\pi=0$【已核验:0|sin(pi)】 ⇒ **$1/\\sin\\omega T\\to\\infty$，发散** ✅。**这是经典聚焦**（`K3.2:focus-singularity.counterexample`）。\n\n2. $\\sin(\\pi/2)=1$【已核验:1|sin(pi/2)】 ⇒\n\n$$\\lvert K\\rvert=\\sqrt{\\frac{m\\omega}{2\\pi\\hbar\\cdot1}}=37.078$$【已核验:37.0780156337|sqrt(9.1093837015e-31*1/(2*pi*1.054571817e-34))】\n\n3. $\\cos(\\pi/2)=0$ ⇒ **交叉项系数为零**，相位只剩\n\n$$\\varphi=\\frac{m\\omega}{2\\hbar}(x_f^{2}+x_i^{2}).$$\n\n**所以四分之一周期后「起点信息完全丢失」** ✅。\n\n**易错点**：\n\n- **把 $\\omega T=\\pi$ 的发散当数值错误**：它是**物理的**（轨迹汇聚）；\n- **忘记 $\\omega T=\\pi/2$ 时交叉项消失**：这给出「解耦」的重要特例；\n- **弄错奇点的周期**：$\\sin\\omega T$ 的零点是 $\\omega T=k\\pi$（**每半周期一次**），不是 $2\\pi$。\n\n**延伸（三个特殊点的对照）**：\n\n| $\\omega T$ | $\\lvert K\\rvert$ | 交叉项 | 结构 |\n|---|---|---|---|\n| $0$ | $\\to\\infty$（但应给 $\\delta$） | 系数 $1$ | 起点即终点 |\n| $\\pi/2$ | $37.078$ | 系数 $0$ | **端点解耦** |\n| $\\pi$ | $\\to\\infty$ | 系数 $-1$ | 焦点 + 完全反转 |\n| $2\\pi$ | $\\to\\infty$ | 系数 $1$ | 焦点 + 回到初始关系 |\n\n**这张表说明**：**「发散」有两种**——$T\\to0$ 的（因为 $K\\to\\delta$，是**分布**的发散）与 $T\\to k\\pi$ 的（因为**轨迹汇聚**，是**物理焦点**）。**两者要分开处理**（前者取极限、后者用 $i\\varepsilon$）。",
+      "links": [
+        "K3.2",
+        "K3.1",
+        "J8",
+        "K2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.2:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：谐振子传播子的焦点与交叉项",
+      "keywords": [
+        "模块 ho-propagator（档1 前端直渲）",
+        "模式①：|K|² ∝ 1/|sin ωT| 随 ωT 的峰（半周期一次）",
+        "模式②：交叉项系数 cos ωT 从 1 → 0 → −1 → 1 的演化",
+        "模式③：轨迹族汇聚（相空间图示，看焦点形成）",
+        "invariant：|K|²·|sin ωT| = mω/(2πħ)（与 ωT 无关，严格）",
+        "预置：ω=1、ωT∈[0,2π]、m 电子或 1"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "档1 依据：幅度与交叉项都是显式可算，前端可算；invariant 用「|K|²·|sin ωT| = 常数」这个严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `ho-propagator`。\n\n**模式① `focus-peaks`**：画 $\\lvert K\\rvert^{2}\\propto1/\\lvert\\sin\\omega T\\rvert$ 对 $\\omega T\\in[0,2\\pi]$。**在 $\\omega T=0,\\pi,2\\pi$ 处出现发散峰**——**让「半周期一次焦点」可见**。\n\n**模式② `memory-coefficient`**：画 $\\cos\\omega T$ 随 $\\omega T$。标注三个特殊值：$\\omega T=0\\to1$、$\\pi/2\\to0$、$\\pi\\to-1$。**让「记忆系数」的演化可见。**\n\n**模式③ `trajectory-family`**：画「从 $x_i$ 出发的一族轨迹」（取几个不同的 $\\dot x_i$），在 $t=T$ 时看它们**是否汇聚**。$\\omega T=\\pi$ 时汇聚（焦点）；$\\omega T=\\pi/2$ 时分散。\n\n**恒等式（给前端 invariant）**：\n\n$$\\lvert K\\rvert^{2}\\cdot\\lvert\\sin\\omega T\\rvert=\\frac{m\\omega}{2\\pi\\hbar}\\quad(\\text{与 }\\omega T\\text{ 无关，严格等式}).$$\n\n**这是本模块最硬的 invariant**——**它同时包含「幅度标度」与「焦点结构」两件事**。实现正确时，把 $\\lvert K\\rvert^{2}$ 乘上 $\\lvert\\sin\\omega T\\rvert$ 必须得到**常数**。\n\n**参数契约**：\n\n- 预置：$\\omega=1$、$\\omega T\\in[0,2\\pi]$（避开奇点用 $\\varepsilon$ 位移）、$m$ 可切电子或 $1$；\n- 与 `K3.2:probe1` 的数值（$\\pi/2$ 时 $37.078$）保持一致。",
+      "links": [
+        "K3.1",
+        "J8",
+        "F4",
+        "K2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.2:ho-propagator.application",
+      "type": "application",
+      "subject": "ho-propagator",
+      "title": "应用：谐振子传播子服务的下游章节",
+      "keywords": [
+        "K4：Wick 转动后给出配分函数 Z = 1/(2 sinh(βħω/2))",
+        "F4：同一系统的量子化（升降算子 a、a†）",
+        "J8：sin ωT=0 的焦点与光学焦散同构",
+        "D3：哈密顿形式（相空间几何）",
+        "P 篇：高斯积分（本条推导的技术工具）",
+        "自检：作用量二次吗？——决定能否闭式求解"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 38,
+        "line_end": 44
+      },
+      "fill_hint": "单元级应用词条；每条给出「为什么需要它」；末段给「可解类」的完整清单（说明可解范围很窄）。",
+      "content": "**下游清单**（一条一句，按依赖强度排序）。\n\n- **`K4` 的配分函数**：把 $T\\to-i\\tau$（Wick 转动）作用在 $K_{\\text{HO}}$ 上，就得到虚时间路径积分的配分函数\n\n  $$Z_{\\text{HO}}(\\beta)=\\frac{1}{2\\sinh(\\beta\\hbar\\omega/2)}.$$\n\n  **这是「量子↔统计」桥的直接产物**（`K4:statistical-mechanics.statement`）。**实测**：$\\beta\\hbar\\omega=1$ 时 $Z=0.959517$【已核验:0.959517375667|1/(2*sinh(0.5))】。\n\n- **`F4` 的升降算子**：同一个谐振子的量子化用 $\\hat a$、$\\hat a^{\\dagger}$，满足 $[\\hat a,\\hat a^{\\dagger}]=1$。**与路径积分给出的 $K_{\\text{HO}}$ 必须完全一致**——**这是「两种量子化方案等价」的检验点**（`F4:algebra-misuse.counterexample` 的升降算子）。\n\n- **`J8` 的焦散**：$\\sin\\omega T=0$ 的焦点与光学焦散是**同一个数学结构**（`K3.2:focus-singularity.counterexample` 的对照表）。**所以谐振子是「焦散」在量子力学里的标准例子。**\n\n- **`D3` 的哈密顿形式**：本条推导用的分离技巧（经典解 + 涨落）依赖 $\\delta S=0$，**这正是 `D3` 的哈密顿方程**（`K3.2:ho-propagator.proof` 第二步）。\n\n- **`P8.1` 的高斯积分**：本条的技术工具。**注意路径积分里的高斯积分参数是「纯虚」的**（$\\int e^{-au^{2}}du=\\sqrt{\\pi/a}$ 要小心 $a$ 的相位）。\n\n**一条自检问句**：**作用量二次吗？**——**是，则可闭式求解（高斯积分）；不是，则只能用近似（稳相、微扰、数值）。**\n\n**可解类的完整清单**：\n\n| 系统 | 作用量 | 可解？ |\n|---|---|---|\n| 自由粒子 | 二次（只有 $\\dot x^{2}$） | ✅ |\n| 谐振子 | 二次（$\\dot x^{2}+\\omega^{2}x^{2}$） | ✅ |\n| 常力场（$V=-Fx$） | 二次（线性项） | ✅（**推广：二次势都行**） |\n| 非谐振（$x^{4}$） | **非二次** | ❌（微扰） |\n| 一般 $V(x)$ | 非二次 | ❌ |\n\n**这张表说明**：**「可解」的范围很窄（二次作用量）**——**所以量子场论里大量工作是「把非二次问题化为二次 + 微扰」**（这正是 Feynman 图的意义，`L2`）。",
+      "links": [
+        "K4",
+        "F4",
+        "J8",
+        "D3",
+        "P8.1",
+        "L2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

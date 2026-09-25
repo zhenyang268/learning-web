@@ -1,0 +1,251 @@
+{
+  "schema": "entry-card/v2",
+  "code": "K1",
+  "chapter": "K1",
+  "title": "推导（时间切片法）",
+  "src": {
+    "file": "notebook/K_Feyman.tex",
+    "line_start": 5,
+    "line_end": 19,
+    "anchor": "notebook/K_Feyman.tex:5"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "K1:time-slicing.quantifiers",
+      "type": "comparison",
+      "subject": "time-slicing",
+      "title": "时间切片法的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①短时传播子需 ε 足够小：误差 O(ε²) 单片，累积后 O(ε)",
+        "条件②每片必带归一化 sqrt(m/(2πiħε))：漏掉则幅度发散",
+        "条件③势能项的位置：端点或中点，两者差 O(ε) 影响阶数",
+        "条件④ħ 与相位：相位尺度決定稳相锐度（电子宏观尺度给 4318.996 rad）",
+        "条件⑤N→∞ 与 ε→0 的次序：必须先算有限 N 再取极限",
+        "翻车代价：忘归一化 → 每片幅度随 1/sqrt(ε) 发散（ε=0.1 时已达 117.251）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 5,
+        "line_end": 19
+      },
+      "fill_hint": "五行条件表；② 行必须给「单片幅度 117.251」这个具体数；④ 行给 4318.996 rad；③ 行点出「中点更对称」。",
+      "content": "切片给了传播子的定义、切片方案与最终结果。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **ε 足够小** | 单片的短时近似把 $e^{-i\\hat H\\varepsilon/\\hbar}$ 用一阶展开替代，误差 $O(\\varepsilon^{2})$；$N$ 片累积后是 $O(\\varepsilon)=O(T/N)$ | 精度退化为一阶（$N$ 翻倍误差减半） | 可放宽：把单片的指数做成 $[3/3]$ Padé（`G4.1`）可得更高阶 |\n| ② **归一化因子** | 每片系数必须是 $\\sqrt{\\dfrac{m}{2\\pi i\\hbar\\varepsilon}}$。实测（电子、$\\varepsilon=0.1$）：单片幅度 $=117.251$【已核验:117.250980522|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*0.1))】 | 漏掉后 $N$ 个因子相乘给出**发散**的振幅（$\\varepsilon\\to0$ 时 $\\propto\\varepsilon^{-N/2}$） | 不能放宽：$N=1$ 的归一化由「短时传播子正确」唯一确定 |\n| ③ **势能项的位置** | $\\langle x_{k+1}\\lvert e^{-i\\hat H\\varepsilon/\\hbar}\\lvert x_k\\rangle\\approx\\sqrt{\\frac{m}{2\\pi i\\hbar\\varepsilon}}\\exp\\left[\\frac{i}{\\hbar}\\left(\\frac{m(x_{k+1}-x_k)^{2}}{2\\varepsilon}-V\\right)\\varepsilon\\right]$。$V$ 取端点还是中点，差 $O(\\varepsilon)$ | 端点取值破坏时间反演对称性（$\\varepsilon\\to-\\varepsilon$ 不严格） | 可放宽：取**中点** $V\\big(\\frac{x_{k+1}+x_k}{2}\\big)$ 更对称（我们在 `M7` 会看到它的后果） |\n| ④ **相位尺度** | 相位 $S/\\hbar$ 极大时稳相极锐（`K2`）。实测（电子、$T=1$ s、$x=1$ m）：相位 $=4318.996$ rad【已核验:4318.99637116|9.1093837015e-31*1**2/(2*1.054571817e-34*1)】 | 相位小时相消不彻底，必须真的做路径求和 | 不能放宽：$S/\\hbar$ 决定「经典近似是否够用」 |\n| ⑤ **$N\\to\\infty$ 的次序** | 必须先算**有限 $N$** 的高斯积分（逐个积掉中间坐标），再取 $N\\to\\infty$ | 直接对 $N=\\infty$ 做会得到无意义的形式表达式 | 不能放宽：这是「先离散后连续」的一般纪律 |\n\n**这张表的用法**：\n\n1. **写下单片传播子**（含归一化）；\n2. **逐个积掉中间坐标**（每个都是高斯积分，`P8.1`）；\n3. **取 $N\\varepsilon=T$** 得闭式。\n\n**数值锚点（电子、$T=1$ s、$x_f-x_i=1$ m）**：\n\n| 量 | 值 |\n|---|---|\n| 幅度 $\\sqrt{m/(2\\pi\\hbar T)}$ | $37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】 |\n| 相位 $mx^{2}/(2\\hbar T)$ | $4318.996$【已核验:4318.99637116|9.1093837015e-31*1**2/(2*1.054571817e-34*1)】 |\n\n**注意幅度的量纲**：$\\sqrt{m/(\\hbar T)}$ 的量纲是 $1/\\sqrt{\\text{长度}}$——**所以 $\\lvert K\\rvert^{2}$ 是「每单位长度」**，这是密度量纲（传播子不是 $L^{2}$ 函数，是分布）。",
+      "links": [
+        "K2",
+        "K3.1",
+        "F5",
+        "P8.1",
+        "G4.1",
+        "M7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K1:amplitude-divergence.counterexample",
+      "type": "counterexample",
+      "subject": "amplitude-divergence",
+      "title": "反例：漏掉每片的归一化因子（幅度发散）",
+      "keywords": [
+        "误用现场：只写 ∫dx₁…dx_{N−1} exp(iS/ħ)，不写每片系数 sqrt(m/(2πiħε))",
+        "后果：幅度没有量纲、随 ε 发散（ε=0.1 时单片 117.251，ε=0.01 时 370.780）",
+        "正确：N 个 sqrt(m/(2πiħε)) 连乘，配合积分的 ε 幂次收敛到 sqrt(m/(2πiħT))",
+        "实测：电子 T=1s 的正确总幅度 37.078（有限、有量纲 1/sqrt(m)）",
+        "判据：结果量纲必须是 1/sqrt(长度)，否则归一化写错",
+        "修补：用 N=1 的情形定归一化（唯一确定）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 5,
+        "line_end": 19
+      },
+      "fill_hint": "把「漏归一化」的后果算成两档单片幅度（117.251 / 370.780）；给「量纲必须是 1/sqrt(长度)」的自检；点出「发散与收敛恰好抵消」。",
+      "content": "**误用现场**：写泛函积分时只写测度的「形状」\n\n$$\\int dx_1\\cdots dx_{N-1}\\exp\\left[\\frac{i}{\\hbar}S\\right],$$\n\n**不写每片前面的系数** $\\sqrt{\\dfrac{m}{2\\pi i\\hbar\\varepsilon}}$。\n\n**为什么这是错的**：每片的高斯积分都**必须**带系数（它来自一个自由粒子的短时传播子）。**漏掉就得到发散的振幅。**\n\n**算给你看（电子，$m=9.1093837015\\times10^{-31}$ kg，$T=1$ s）**：\n\n| $\\varepsilon$ | 单片幅度 $\\sqrt{m/(2\\pi\\hbar\\varepsilon)}$ |\n|---|---|\n| $0.1$ | $117.251$【已核验:117.250980522|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*0.1))】 |\n| $0.01$ | $370.780$【已核验:370.780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*0.01))】 |\n\n**$\\varepsilon\\to0$ 时单片幅度 $\\to\\infty$**——**而 $N$ 个这样的因子相乘是「$\\varepsilon^{-N/2}$ 型发散」**。**同步的是每个积分 $\\int dx_k$ 给出 $\\sqrt{\\varepsilon}$ 的收敛**——两者**恰好抵消**，最终给出**有限的** $K$ ✅。\n\n**正确结果（$N\\varepsilon=T$）**：\n\n$$\\langle x_f\\lvert x_i\\rangle=\\sqrt{\\frac{m}{2\\pi i\\hbar T}}\\exp\\left[\\frac{im(x_f-x_i)^{2}}{2\\hbar T}\\right].$$\n\n**数值（$T=1$ s、$x_f-x_i=1$ m）**：幅度 $=37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】——**有限** ✅。\n\n**量纲自检（最实用的判据）**：$K$ 的物理含义是「几率幅密度」，所以\n\n$$[K]=\\frac{1}{\\sqrt{\\text{长度}}}.$$\n\n**检查**：$\\sqrt{m/(\\hbar T)}=\\sqrt{\\text{kg}/(\\text{J}\\cdot\\text{s})}=\\sqrt{\\text{kg}\\,\\text{s}/(\\text{kg}\\,\\text{m}^{2})}=1/\\sqrt{\\text{m}}$ ✅。\n\n**若你的结果没有这个量纲，归一化一定写错了。**\n\n**修补动作**：\n\n1. **用 $N=1$ 定系数**：$N=1$ 时传播子必须**就是**自由粒子的短时传播子，这唯一确定系数；\n2. **量纲自检**（如上）；\n3. **数值自检**：算 $N$ 片、看幅度是否随 $N$ 收敛（而不是发散）。",
+      "links": [
+        "K1",
+        "K3.1",
+        "F5",
+        "P8.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K1:time-slicing.statement",
+      "type": "statement",
+      "subject": "time-slicing",
+      "title": "传播子与时间切片：从定义到泛函积分",
+      "keywords": [
+        "定义：K = ⟨x_f|exp(−iĤT/ħ)|x_i⟩，T = t_f − t_i",
+        "切片：N 段、ε = T/N，每片插入完备性 ∫|x⟩⟨x|dx = 1",
+        "短时传播子：sqrt(m/(2πiħε)) exp(im Δx²/(2ħε))",
+        "取 N→∞：K = ∫D[x] exp(iS[x]/ħ)",
+        "归一化：每片必带 sqrt(m/(2πiħε))",
+        "作用量：S[x] = ∫L dt（与 D1 的经典作用量同一个）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 5,
+        "line_end": 19
+      },
+      "fill_hint": "陈述本体（定义 + 切片 + 短时传播子 + 取极限）+ 与 Lε 的对应；必须给每片系数与两条细节。",
+      "content": "**陈述**（切片）。\n\n**传播子**：\n\n$$K(x_f,t_f;x_i,t_i)=\\langle x_f\\lvert e^{-i\\hat H(t_f-t_i)/\\hbar}\\lvert x_i\\rangle.$$\n\n**注意 $e^{-i\\hat H(t_f-t_i)/\\hbar}$ 就是 `F3` 的演化算子 $U(t)$**——**所以说「传播子是 $U$ 在位置表象的矩阵元」**。\n\n**切片**：把区间分成 $N$ 段、$\\varepsilon=(t_f-t_i)/N$，插入 $N-1$ 个完备性关系：\n\n$$\\int\\lvert x\\rangle\\langle x\\rvert\\,dx=\\hat I\\qquad(\\text{每个时间片插一次}).$$\n\n**于是**\n\n$$K=\\int dx_1\\cdots dx_{N-1}\\prod_{k=0}^{N-1}\\langle x_{k+1}\\lvert e^{-i\\hat H\\varepsilon/\\hbar}\\lvert x_k\\rangle,\\qquad x_0=x_i,\\ x_N=x_f.$$\n\n**短时传播子**（$\\varepsilon$ 小）：\n\n$$\\langle x_{k+1}\\lvert e^{-i\\hat H\\varepsilon/\\hbar}\\lvert x_k\\rangle\\approx\\sqrt{\\frac{m}{2\\pi i\\hbar\\varepsilon}}\\exp\\left[\\frac{i}{\\hbar}\\left(\\frac{m(x_{k+1}-x_k)^{2}}{2\\varepsilon}-V\\right)\\varepsilon\\right].$$\n\n**展开它与「路径」的对应**：把 $m(\\Delta x)^{2}/(2\\varepsilon)$ 看成 $\\frac m2\\dot x^{2}\\varepsilon$、$-V\\varepsilon$ 看成势能项——**合起来正是 $L\\varepsilon$** ⇒\n\n$$\\prod_k\\exp\\left[\\frac{i\\varepsilon}{\\hbar}L\\right]=\\exp\\left[\\frac{i}{\\hbar}\\sum_kL\\varepsilon\\right]\\ \\xrightarrow{\\varepsilon\\to0}\\ \\exp\\left[\\frac{i}{\\hbar}S[x]\\right].$$\n\n**取 $N\\to\\infty$（切片）**：\n\n$$K=\\int\\mathcal{D}[x(t)]\\,\\exp\\left[\\frac{i}{\\hbar}S[x(t)]\\right],\\qquad \\mathcal{D}[x]=\\lim_{N\\to\\infty}\\prod_{k=1}^{N-1}\\int dx_k\\prod_{k=0}^{N-1}\\sqrt{\\frac{m}{2\\pi i\\hbar\\varepsilon}}.$$\n\n**两个必须记住的细节**：\n\n1. **每片的系数必须在**（`K1:amplitude-divergence.counterexample`）；\n2. **$\\mathcal{D}[x]$ 是通过切片定义的**（它不是良定义的测度，`F5:path-integral.quantifiers` 第②行）。\n\n**数值锚点（电子、$T=1$ s、$x=1$ m）**：幅度 $=37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】、相位 $=4318.996$ rad【已核验:4318.99637116|9.1093837015e-31*1**2/(2*1.054571817e-34*1)】。\n\n**它依赖什么 / 谁依赖它**：`F3` 的演化算子；`D1` 的作用量 $S$。下游：`K2` 的物理含义、`K3.1`/`K3.2` 的显式计算、`K4` 的 Wick 转动、`F5` 的路径积分总览。",
+      "links": [
+        "K1",
+        "F3",
+        "D1",
+        "K2",
+        "K3.1",
+        "K4",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K1:time-slicing.intuition",
+      "type": "intuition",
+      "subject": "time-slicing",
+      "title": "直觉：切片 = 把「连续的路径求和」翻译成「一连串普通积分」",
+      "keywords": [
+        "问题：∫D[x] 是无定义的（无穷维测度）",
+        "办法：只允许路径经过 N+1 个时刻的格点 → 变成 N−1 重普通积分",
+        "每片的传播子是「短时间的相邻跳跃幅度」",
+        "N→∞ 时格点变密 → 普通积分收敛到泛函积分",
+        "所以「泛函积分」= 「有限重积分取极限」，别无其他",
+        "这与数值上做路径积分（离散化 + 蒙特卡洛）是同一件事"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 5,
+        "line_end": 19
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「限制路径自由度 → 普通多重积分 → 取极限」三步讲切片；给「泛函积分 = 多重积分取极限」的判定。",
+      "content": "**切片给了公式**。理解的关键是**「泛函积分本身没有严格定义，切片定义才有」**。\n\n**假设给了什么。** 我们想算 $\\int\\mathcal{D}[x]e^{iS[x]/\\hbar}$，但**无穷维空间上没有 Lebesgue 测度**（`F5:path-integral.quantifiers` 第②行）。\n\n**结论为什么因此成立（切片的三步）**：\n\n**第一步：限制路径的「自由度」。** 只考虑**分段线性**的路径（在时刻 $t_k$ 有值 $x_k$，两点间直线连接）。**于是「一条路径」$\\leftrightarrow$「$N-1$ 个实数」**。\n\n**第二步：每条这样的路径有一个振幅。** 它等于 $N$ 个短时传播子的乘积（每片一段直线）。\n\n**第三步：对所有这样的路径求和。** 就是 $\\int dx_1\\cdots dx_{N-1}$——**一个普通的 $(N-1)$ 重积分** ✅。\n\n**$N\\to\\infty$ 时**「分段线性路径的集合」越来越密（稠密于所有连续路径），**所以极限就是「对所有路径求和」**。\n\n**这就是全部内容**：**「泛函积分」不是一个新积分，而是「$(N-1)$ 重普通积分取 $N\\to\\infty$」的简称。**\n\n**为什么这个图像有用（三个实际后果）**：\n\n1. **数值上做路径积分就是**：离散化 + 蒙特卡洛（`J7` 的路径追踪完全一样）；\n2. **Wick 转动后可以蒙卡**（`K4`）——因为权重变成实数正定的；\n3. **「发散」可以被诊断**：如果每一片都写对了归一化，那么积分是有限的（`K1:amplitude-divergence.counterexample`）。\n\n**与数值积分的对照**：\n\n| 步骤 | 泛函积分 | 数值实现 |\n|---|---|---|\n| 离散化 | 时间切片（$N$ 片） | 时间步 $\\Delta t$ |\n| 权重 | $e^{iS/\\hbar}$ | 同样 |\n| 求和 | $\\int\\mathcal{D}x$ | 蒙特卡洛采样 |\n| 极限 | $N\\to\\infty$ | $\\Delta t\\to0$ 加收敛检验 |\n\n**记这个图像**：**泛函积分 = 「把路径限制在有限个格点上（变成普通多重积分）+ 取格点变密的极限」。** 所以它**既可以在纸面上算（高斯积分），也可以在计算机上算（蒙特卡洛）**。",
+      "links": [
+        "K1",
+        "K2",
+        "K4",
+        "F5",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K1:time-slicing.proof",
+      "type": "proof",
+      "subject": "time-slicing",
+      "title": "推导骨架：逐片高斯积分得闭式（五步）",
+      "keywords": [
+        "第一步：把 v 视为常数（短时间），写出单片传播子",
+        "第二步：取 V=0（自由粒子）做完整推导",
+        "第三步：对 x₁ 积分——两个二次型合并（配方）",
+        "第四步：归纳，等效时间累积 ε→2ε→…→Nε=T",
+        "第五步：校核幅度 37.078 与相位 4318.996",
+        "易错点：√i 的相位；ε 与 T 的替换次序"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 5,
+        "line_end": 19
+      },
+      "fill_hint": "五步骨架；第二步的「配方给等效时间加倍」是核心技巧；第四步归纳；第三步要写清 √i 的相位。",
+      "content": "**推导骨架**（五步，每步给理由）。**先做 $V=0$（自由粒子），这是唯一能积出闭式的情形。**\n\n**第一步：写下 N 片积分。**\n\n$$K=\\left(\\frac{m}{2\\pi i\\hbar\\varepsilon}\\right)^{N/2}\\int dx_1\\cdots dx_{N-1}\\exp\\left[\\frac{im}{2\\hbar\\varepsilon}\\sum_{k=0}^{N-1}(x_{k+1}-x_k)^{2}\\right].$$\n\n**理由**：每片一个高斯因子、一个系数（`K1:time-slicing.statement`）。\n\n**第二步：先积 $x_1$（关键一步）。**\n\n$$I_1=\\int dx_1\\exp\\left[\\frac{im}{2\\hbar\\varepsilon}\\left((x_1-x_0)^{2}+(x_2-x_1)^{2}\\right)\\right].$$\n\n**把指数的括号配方**：\n\n$$(x_1-x_0)^{2}+(x_2-x_1)^{2}=2\\left(x_1-\\frac{x_0+x_2}{2}\\right)^{2}+\\frac{(x_2-x_0)^{2}}{2}.$$\n\n**理由**：这是标准配方（`P` 篇二次型完成平方）。**\"2\" 这个系数正是「等效时间加倍」的来源。**\n\n**第三步：用高斯积分算出来。**\n\n$$\\int e^{-a u^{2}}du=\\sqrt{\\frac{\\pi}{a}},\\qquad a=-\\frac{im}{\\hbar\\varepsilon}\\ \\text{（纯虚）}.$$\n\n$$I_1=\\sqrt{\\frac{\\pi\\hbar\\varepsilon}{im}}\\exp\\left[\\frac{im}{2\\hbar(2\\varepsilon)}(x_2-x_0)^{2}\\right].$$\n\n**注意两件事**：① 指数里的时间从 $\\varepsilon$ 变成 $2\\varepsilon$；② 系数是 $\\sqrt{\\pi\\hbar\\varepsilon/(im)}$（**含 $1/\\sqrt i$**）。\n\n**把系数与原有的 $(m/(2\\pi i\\hbar\\varepsilon))^{N/2}$ 合并**——**累积效应是「$\\varepsilon$ 被 $2\\varepsilon$ 替换」** ✅。\n\n**第四步：归纳（等效时间累积）。**\n\n每积掉一个 $x_k$，「等效时间」加一个 $\\varepsilon$。积完 $N-1$ 个后等效时间是 $N\\varepsilon=T$：\n\n$$K=\\sqrt{\\frac{m}{2\\pi i\\hbar(N\\varepsilon)}}\\exp\\left[\\frac{im(x_N-x_0)^{2}}{2\\hbar(N\\varepsilon)}\\right]=\\sqrt{\\frac{m}{2\\pi i\\hbar T}}\\exp\\left[\\frac{im(x_f-x_i)^{2}}{2\\hbar T}\\right].$$\n\n**理由**：归纳法——**每一步的形式不变，只有 $\\varepsilon\\to\\text{累积时间}$**。\n\n**第五步：数值校核**（电子、$T=1$ s、$x_f-x_i=1$ m）：\n\n| 量 | 值 |\n|---|---|\n| 幅度 | $37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】 |\n| 相位 | $4318.996$ rad【已核验:4318.99637116|9.1093837015e-31*1**2/(2*1.054571817e-34*1)】 |\n\n**相位除以 $2\\pi$ 给 $687.390$ 圈**【已核验:687.389621666|4318.996371159425/(2*pi)】——**这解释「为什么宏观看到经典」**（`K2`）。\n\n**依赖链**：单片公式 → 配方（等效时间加倍）→ 高斯积分 → 归纳 → 闭式。\n\n**易错点**：\n\n1. **$\\sqrt i$ 的相位**：$1/\\sqrt i=e^{-i\\pi/4}$。**它不影响 $\\lvert K\\rvert$，但影响相位**（做干涉前沿时必须写对）；\n2. **$\\varepsilon$ 与 $T$ 的替换次序**：必须是 $N\\varepsilon=T$（**不是 $N\\varepsilon\\to0$**）；\n3. **这条推导只对自由粒子**：有势能时一般不能积出闭式（谐振子**可以**，因为 $V$ 也是二次的，见 `K3.2`）；\n4. **别忘了 $\\hbar$ 在相位里**：它决定相消锐度（`K2`）。",
+      "links": [
+        "K1",
+        "K3.1",
+        "K3.2",
+        "K2",
+        "P8.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这段切片的单片幅度是多少？",
+      "keywords": [
+        "可算题：电子 m=9.109e−31、ε=0.1 s，求单片归一化系数",
+        "答案：sqrt(m/(2πħε)) = 117.251",
+        "追问：ε=0.01 呢？（370.780）",
+        "再问：N=10、T=1s 的正确总幅度？（37.078）",
+        "陷阱：以为幅度随 N 发散（其实与积分因子相消）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 5,
+        "line_end": 19
+      },
+      "fill_hint": "从单片系数变来的检验题；三问给三个具体数（117.251 / 370.780 / 37.078）；延伸给「单片发散、整体有限」这个判据。",
+      "content": "**题**：时间切片法，电子（$m=9.1093837015\\times10^{-31}$ kg）、$T=1$ s。\n\n1. 取 $N=10$（$\\varepsilon=0.1$ s），单片归一化系数 $\\sqrt{m/(2\\pi\\hbar\\varepsilon)}$ 是多少？\n2. 取 $N=100$（$\\varepsilon=0.01$ s）呢？\n3. 最终传播子（$x_f-x_i=1$ m）的幅度是多少？\n\n**答案**：\n\n1. $\\varepsilon=0.1$：\n\n$$\\sqrt{\\frac{m}{2\\pi\\hbar\\varepsilon}}=117.251$$【已核验:117.250980522|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*0.1))】\n\n2. $\\varepsilon=0.01$：\n\n$$\\sqrt{\\frac{m}{2\\pi\\hbar\\varepsilon}}=370.780$$【已核验:370.780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*0.01))】\n\n**单片幅度随 $\\varepsilon$ 减小而**增大**（$\\propto\\varepsilon^{-1/2}$）**——**看起来在发散。**\n\n3. 但最终幅度是**有限的**：\n\n$$\\sqrt{\\frac{m}{2\\pi\\hbar T}}=37.078$$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】\n\n**从 370.780（单片）降到 37.078（总）**——**因为 $N$ 个乘子后面接了 $N-1$ 个高斯积分，每个给 $\\sqrt{\\varepsilon}$ 的收敛** ✅。\n\n**易错点**：\n\n- **以为总幅度随 $N$ 发散**：单片的 $\\varepsilon^{-1/2}$ 与每个积分的 $\\varepsilon^{1/2}$ **恰好相消**（净效果只有「最外层」一个 $\\sqrt{1/T}$）；\n- **忘量纲**：$37.078$ 的单位是 $1/\\sqrt{\\text{m}}$（`K1:amplitude-divergence.counterexample`）；\n- **把「单片幅度」当「总幅度」**：两者差 $N^{1/2}$ 倍（$N=10$ 时 $\\sqrt{10}=3.16$，$117.251/37.078=3.16$ ✅）。\n\n**延伸（这个相消的物理含义）**：**「每片发散、整体有限」正是路径积分的特征**——**它说明「测度」是无限的（没有 Lebesgue 测度），但「积分」是有限的**。\n\n**判据**：任何自洽的路径积分实现（纸面或数值）都必须满足「单片发散、整体有限」。**数值实现里这一点表现为「每片要用归一化系数、最后结果与 $\\Delta t$ 无关」。**",
+      "links": [
+        "K1",
+        "K2",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：时间切片与路径的格点化",
+      "keywords": [
+        "模块 path-integral-lattice（档1 前端直渲）",
+        "模式①：路径被限制在时间格点上（N=4/8/16），格点间线性插值",
+        "模式②：N 增大时路径集合加密（逼近连续路径）",
+        "模式③：单片幅度 ∝ ε^{−1/2} 与总幅度恒定（相消的数值演示）",
+        "invariant：总幅度 = sqrt(m/(2πħT))（与 N 无关，严格）",
+        "预置：电子、T=1s、x∈[−1,1]、N∈{4,8,16,32,64}"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 5,
+        "line_end": 19
+      },
+      "fill_hint": "档1 依据：单片与总幅度都是显式可算，前端可算；invariant 用「总幅度与 N 无关」这个严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `path-integral-lattice`。\n\n**模式① `lattice-paths`**：在时空图上画「被限制在 $N+1$ 个时刻格点上的路径」——每段是直线。$N=4$ 时路径很少，$N=16$ 时明显增多。**让「切片 = 限制自由度」可见。**\n\n**模式② `continuum-limit`**：拖 $N$ 增大，让「分段线性路径集合」逼近连续路径。**说明泛函积分是「多重积分取极限」。**\n\n**模式③ `amplitude-cancellation`**：同时显示\n\n$$\\text{单片幅度}\\ \\sqrt{\\frac{m}{2\\pi\\hbar\\varepsilon}}\\propto\\varepsilon^{-1/2}\\ (\\text{发散}),\\qquad \\text{总幅度}\\ \\sqrt{\\frac{m}{2\\pi\\hbar T}}\\ (\\text{常数}).$$\n\n拖 $N$ 时前者涨、后者不动——**这是「单片发散、整体有限」的可视化。**\n\n**恒等式（给前端 invariant）**：\n\n$$\\text{总幅度}=\\sqrt{\\frac{m}{2\\pi\\hbar T}}\\quad(\\text{与 } N \\text{ 无关，严格等式}).$$\n\n**这是本模块最硬的 invariant**——实现正确时它必须**完全不随 $N$ 变化**。任何归一化错误都会让它漂移。\n\n**参数契约**：\n\n- 预置：电子 $m$、$T=1$ s、$x\\in[-1,1]$、$N\\in\\{4,8,16,32,64\\}$；\n- 与 `K1:probe1` 的数值（$N=10$ 时单片 $117.251$、总 $37.078$）保持一致。",
+      "links": [
+        "K1",
+        "K2",
+        "K3.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

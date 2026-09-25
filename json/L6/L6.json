@@ -1,0 +1,247 @@
+{
+  "schema": "entry-card/v2",
+  "code": "L6",
+  "chapter": "L6",
+  "title": "S 矩阵",
+  "src": {
+    "file": "notebook/L_Feyman.tex",
+    "line_start": 54,
+    "line_end": 60,
+    "anchor": "notebook/L_Feyman.tex:54"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "L6:s-matrix.quantifiers",
+      "type": "comparison",
+      "subject": "s-matrix",
+      "title": "S 矩阵的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①S = T exp(−i∫H_int)：时间排序指数（L2 的级数）",
+        "条件②渐近态：入/出态是「很久以前/以后」的自由态",
+        "条件③矩阵元：⟨f|S|i⟩ = δ_fi + i(2π)⁴δ⁴(p_f−p_i)M_fi",
+        "条件④δ⁴ 的物理：整体动量守恒（不参与物理）",
+        "条件⑤幺正性 SS† = I：概率守恒（光学定理的来源）",
+        "翻车代价：忘 δ_fi（未散射部分）⇒ 丢掉弹性前向散射"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 54,
+        "line_end": 60
+      },
+      "fill_hint": "五行条件表；③ 行必须点出「两项：δ_fi + 散射」；④ 行必须解释「δ⁴ 是无限体积的产物」；⑤ 行给光学定理。",
+      "content": "切片给了 $S$ 的定义与矩阵元分解。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **$S=T\\exp\\left(-i\\int\\mathcal{H}_{\\text{int}}\\right)$** | 这是 **Dyson 级数（`L2`）的指数形式**（时间排序） | 若忘了 $T$ ⇒ 差 $n!$ 倍（`L2:missing-time-order.counterexample`） | 不能放宽：定义性的 |\n| ② **渐近态** | 入态 $\\lvert i\\rangle$ 是「$t\\to-\\infty$ 时的自由态」、出态 $\\lvert f\\rangle$ 是「$t\\to+\\infty$ 时的自由态」 | 若用「时刻 $t$ 的态」，$S$ 的定义无意义（$S$ 是「从远过去到远未来」的映射） | 不能放宽：这是「散射」的定义域 |\n| ③ **矩阵元分解** | $\\langle f\\lvert S\\rvert i\\rangle=\\delta_{fi}+i(2\\pi)^{4}\\delta^{4}(p_f-p_i)\\mathcal{M}_{fi}$。**两项**：未散射（$\\delta_{fi}$）+ 散射（$\\mathcal{M}$） | **漏 $\\delta_{fi}$** ⇒ 丢掉「没有散射」的贡献（弹性前向散射的振幅会错） | 不能放宽：**「$S=1+iT$」是标准分解** |\n| ④ **$\\delta^{4}$ 的含义** | 整体动量守恒——**它是「无限体积的产物」**，**不属于物理振幅**（所以把它剥出 $\\mathcal{M}$） | 若把 $\\delta^{4}$ 当物理 ⇒ 截面会是「$\\delta$ 函数的平方」（无意义） | 不能放宽：**必须把 $\\delta^{4}$ 剥掉**（这也解释「概率为什么不归一化」） |\n| ⑤ **幺正性** | $SS^{\\dagger}=I$。**它的直接后果是光学定理**：$\\mathrm{Im}\\,\\mathcal{M}(s,0)\\propto\\sigma_{\\text{tot}}$ | 若 $S$ 非幺正 ⇒ 概率不守恒（必须显式验证） | 不能放宽：**幺正性是量子力学的基本要求** |\n\n**这张表的用法**：\n\n1. **写下 $S$ 的指数形式**（时间排序）；\n2. **剥出 $\\delta^{4}$** 定义 $\\mathcal{M}$；\n3. **验证幺正性**（可用光学定理做自检）。\n\n**$\\delta_{fi}$ 的物理（这条最容易被忽略）**：\n\n$$\\langle f\\lvert S\\rvert i\\rangle=\\underbrace{\\delta_{fi}}_{\\text{没散射}}+\\underbrace{i(2\\pi)^{4}\\delta^{4}(p_f-p_i)\\mathcal{M}_{fi}}_{\\text{散射}}$$\n\n**$\\delta_{fi}$ 项对应「粒子直接穿过、什么都不发生」**——**它是概率守恒（$S$ 幺正）的必需项** ✅。\n\n**「把 $\\delta^{4}$ 剥掉」的具体含义**：\n\n$$\\text{概率}=\\lvert\\langle f\\lvert S\\rvert i\\rangle\\rvert^{2}\\ \\text{含 }\\left[\\delta^{4}(0)\\right]^{2}=\\delta^{4}(0)\\times\\text{无限体积}$$\n\n**这是「散射概率本身不归一化」的来源**——**物理量应该是「单位时间单位面积的跃迁率」（截面）**，**所以要把 $\\delta^{4}$ 换成「通量因子」**：\n\n$$\\sigma\\propto\\frac{\\lvert\\mathcal{M}\\rvert^{2}}{\\text{flux}}$$\n\n**这就是「截面」的定义方式**（也是 `L6:s-matrix.statement` 会细说的部分）。",
+      "links": [
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L6:missing-delta-fi.counterexample",
+      "type": "counterexample",
+      "subject": "missing-delta-fi",
+      "title": "反例：漏掉 S 矩阵的 δ_fi 项（丢掉未散射贡献）",
+      "keywords": [
+        "误用现场：只写 ⟨f|S|i⟩ = i(2π)⁴δ⁴(p_f−p_i)M_fi",
+        "问题：丢掉了「粒子直接穿过（没散射）」的部分",
+        "后果①：违反幺正性（SS† = I 不成立）",
+        "后果②：光学定理失效（前向振幅的虚部与总截面脱节）",
+        "正确：⟨f|S|i⟩ = δ_fi + i(2π)⁴δ⁴(p_f−p_i)M_fi",
+        "判据：检查 ⟨i|S|i⟩ 的模长是否 ≤1（应为 1 加相位）"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 54,
+        "line_end": 60
+      },
+      "fill_hint": "把「漏 δ_fi」的后果说成三条（幺正性、光学定理、前向振幅）；给「Σ|S_fi|²=1」的数值自检；给光学定理的表达式。",
+      "content": "**误用现场**：把 $S$ 矩阵元写成\n\n$$\\langle f\\lvert S\\rvert i\\rangle=i(2\\pi)^{4}\\delta^{4}(p_f-p_i)\\mathcal{M}_{fi}\\quad(\\text{漏了 }\\delta_{fi}).$$\n\n**为什么这是错的**：**$S$ 必须包含「什么都不发生」的情形**。\n\n**正确的分解**：\n\n$$S=I+iT\\quad\\Longrightarrow\\quad\\langle f\\lvert S\\rvert i\\rangle=\\underbrace{\\delta_{fi}}_{\\text{单位算子}}+\\underbrace{i(2\\pi)^{4}\\delta^{4}(p_f-p_i)\\mathcal{M}_{fi}}_{\\text{散射}}$$\n\n**漏 $\\delta_{fi}$ 的后果（三条）**：\n\n**① 幺正性被破坏**：\n\n$$SS^{\\dagger}=\\left(I+iT\\right)\\left(I-iT^{\\dagger}\\right)=I+i\\left(T-T^{\\dagger}\\right)+TT^{\\dagger}.$$\n\n**幺正性要求** $T-T^{\\dagger}=iTT^{\\dagger}$——**若 $S$ 里没有 $I$，这个等式就无法成立** ✅。\n\n**② 光学定理失效**：\n\n$$\\mathrm{Im}\\,\\mathcal{M}(s,0)=\\frac{\\sqrt{s}}{2}\\sigma_{\\text{tot}}\\quad(\\text{光学定理}).$$\n\n**它来自 $T-T^{\\dagger}=iTT^{\\dagger}$ 的「对角元」**——**而这一项依赖 $S=I+iT$ 的分解**。\n\n**③ 弹性前向散射的振幅错**：**$\\langle i\\lvert S\\rvert i\\rangle$（前向弹性）的「未散射部分」是主导项**——**漏掉它会让前向振幅完全错**。\n\n**具体判据（数值自检）**：**对任何完备的正交基**，\n\n$$\\sum_f\\left\\lvert\\langle f\\lvert S\\rvert i\\rangle\\right\\rvert^{2}=1$$\n\n**（概率守恒）**。**若漏 $\\delta_{fi}$，这个和会小于 1**（漏掉了「没散射」的贡献）。\n\n**修补动作**：\n\n1. **永远写 $S=I+iT$**；\n2. **用幺正性自检**（$\\sum_f\\lvert S_{fi}\\rvert^{2}=1$）；\n3. **用光学定理核对**（$\\mathrm{Im}\\,\\mathcal{M}(s,0)$ 与 $\\sigma_{\\text{tot}}$ 的关系）。\n\n**历史注（值得知道）**：**「$S=1+iT$」这个分解在 1950 年代（Heisenberg、Feynman）被反复强调**——**因为「散射振幅的虚部」与「总截面」的关系（光学定理）是量子力学最强的自洽性检验之一。**",
+      "links": [
+        "L6",
+        "L2",
+        "L3",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L6:s-matrix.statement",
+      "type": "statement",
+      "subject": "s-matrix",
+      "title": "S 矩阵：定义、矩阵元分解与幺正性",
+      "keywords": [
+        "定义：S = T exp(−i∫d⁴x H_int(x))",
+        "矩阵元：⟨f|S|i⟩ = δ_fi + i(2π)⁴δ⁴(p_f−p_i)M_fi",
+        "δ⁴：整体动量守恒（不属物理振幅，要剥掉）",
+        "幺正性：SS† = I ⇒ 光学定理",
+        "光学定理：Im M(s,0) = (√s/2)σ_tot",
+        "截面：σ ∝ |M|²/通量因子"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 54,
+        "line_end": 60
+      },
+      "fill_hint": "陈述本体（定义 + 四项分解）+ 「为什么必须剥 δ⁴」的定量说明 + 光学定理 + $\\mathcal{M}$ 的量纲讨论。",
+      "content": "**陈述**（切片）。\n\n**定义**：\n\n$$S=T\\exp\\left(-i\\int d^{4}x\\,\\mathcal{H}_{\\text{int}}(x)\\right).$$\n\n**注意**：**这就是 `L2` 的 Dyson 级数**（写成指数形式）✅。\n\n**矩阵元（切片）**：\n\n$$\\langle f\\lvert S\\rvert i\\rangle=\\delta_{fi}+i(2\\pi)^{4}\\delta^{4}(p_f-p_i)\\mathcal{M}_{fi}.$$\n\n**三项的读法**：\n\n| 项 | 含义 |\n|---|---|\n| $\\delta_{fi}$ | **没散射**（粒子直接穿过） |\n| $i$ | 约定的 $i$（与 Feynman 规则配套） |\n| $(2\\pi)^{4}\\delta^{4}(p_f-p_i)$ | **整体动量守恒**（剥掉后才得物理振幅） |\n| $\\mathcal{M}_{fi}$ | **不变的散射振幅**（矩阵元，物理量） |\n\n**为什么必须「剥掉 $\\delta^{4}$」**：\n\n**概率含** $\\left[\\delta^{4}(p_f-p_i)\\right]^{2}$——**而** $\\delta^{4}(0)=$（无限体积 / 无限时间）。**所以概率本身不归一化**（**这是 `L6:s-matrix.quantifiers` 第④行说的「无限体积的产物」**）。\n\n**正确的物理量是「跃迁率」或「截面」**：\n\n$$\\sigma\\propto\\frac{\\lvert\\mathcal{M}\\rvert^{2}}{\\text{flux}},\\qquad \\text{flux}\\sim2\\sqrt{s}\\ (\\text{质心系}).$$\n\n**幺正性与光学定理**：\n\n$$SS^{\\dagger}=I\\ \\Longrightarrow\\ 2\\,\\mathrm{Im}\\,\\mathcal{M}(s,0)=\\frac{\\sqrt{s}}{2}\\cdot\\ldots$$\n\n**标准形式**：\n\n$$\\mathrm{Im}\\,\\mathcal{M}(s,0)=\\frac{\\sqrt{s}}{2}\\,\\sigma_{\\text{tot}}(s)\\quad(\\text{光学定理}).$$\n\n**为什么这条重要（三条）**：\n\n1. **它是自洽性检验**（任何振幅计算都必须满足）；\n2. **它把「虚部」与「可观测量（截面）」连起来**；\n3. **它的来源是概率守恒**（$SS^{\\dagger}=I$）——**这是 `L6:missing-delta-fi.counterexample` 的后果之一**。\n\n**$\\mathcal{M}$ 的物理量纲与「无量纲化」**：\n\n**散射截面** $\\sigma$ 的量纲是**面积**；**微分截面** $\\dfrac{d\\sigma}{d\\Omega}$ 是**面积/立体角**。\n\n**实事上「$\\mathcal{M}$ 是无量纲的」（在自然单位 $\\hbar=c=1$ 下）**——**因为 $\\delta^{4}$ 带了 $\\text{能量}^{-4}$ 的量纲，正好与相空间抵消**。\n\n**它依赖什么 / 谁依赖它**：`L2` 的 Dyson 级数、`L3` 的 Feynman 规则（算 $\\mathcal{M}$）。下游：截面计算、`L7` 的圈修正（$\\mathrm{Im}\\,\\mathcal{M}$ 与发散的关系）、光学定理的应用。",
+      "links": [
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L7",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L6:s-matrix.intuition",
+      "type": "intuition",
+      "subject": "s-matrix",
+      "title": "直觉：S 矩阵 = 「从远过去到远未来的完整映射」",
+      "keywords": [
+        "入态：t→−∞ 的自由态（粒子相距无穷远）",
+        "出态：t→+∞ 的自由态",
+        "S 把入态映射到出态（包含「没散射」的情形）",
+        "S = I + iT：「没散射」+「散射」",
+        "幺正性：概率守恒（入态的概率总和流向出态）",
+        "为什么用 δ⁴：无限体积的产物，必须剥掉才是物理量"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 54,
+        "line_end": 60
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「远过去/远未来都是自由态」讲清；给「$S=I+iT$ 的物理分解」；点出「δ⁴(0) = 体积 × 时间」这个直觉。",
+      "content": "**切片给了定义与矩阵元**。理解的关键是**「无穷远处的自由态」**。\n\n**假设给了什么。** 实验上，「散射实验」是**把粒子从远处送来、让它们相互作用、再飞到远处测得**。\n\n**结论为什么因此成立。** **「远处」= 没有相互作用 = 自由态**——**所以入态与出态都是自由态**（虽然它们由相互作用联系）✅。\n\n**「$S$ 是映射」的图像**：\n\n$$\\lvert\\text{出}\\rangle=S\\lvert\\text{入}\\rangle.$$\n\n| 情形 | 描述 | $S$ 的那一部分 |\n|---|---|---|\n| 什么都没发生 | 粒子直穿 | **$I$（$\\delta_{fi}$）** |\n| 发生了散射 | 状态改变 | $iT$ |\n\n**所以 $S=I+iT$ 不是「技巧」，是「物理的必然分解」** ✅。\n\n**幺正性的图像（很好用）**：**「入态的概率总和 = 出态的概率总和」**：\n\n$$\\sum_f\\left\\lvert\\langle f\\lvert S\\rvert i\\rangle\\right\\rvert^{2}=1.$$\n\n**这句话的含义**：**「要么散射到某个末态、要么什么都没发生」——把所有可能性加起来是 1** ✅。\n\n**$\\delta^{4}$ 的「无限体积」直觉**：\n\n**动量守恒的 $\\delta$ 函数是「对全空间积分」的结果**：\n\n$$\\int d^{4}x\\,e^{i(p_f-p_i)\\cdot x}=(2\\pi)^{4}\\delta^{4}(p_f-p_i).$$\n\n**当 $p_f=p_i$ 时右边是 $(2\\pi)^{4}\\delta^{4}(0)=$（体积 × 时间）**——**所以「$\\delta^{4}(0)$ 物理上是无限大」**。\n\n**这就解释了「散射概率不归一」**——**也解释了为什么「截面（单位面积上的概率）」才是正确的物理量** ✅。\n\n**记这个图像**：**$S$ = 「从远过去到远未来的映射」**；$S=I+iT$ 分「没散射」与「散射」；**幺正性 = 概率守恒**；$\\delta^{4}$ = 无限体积的产物（要剥掉）。",
+      "links": [
+        "L6",
+        "L2",
+        "L3",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L6:s-matrix.proof",
+      "type": "proof",
+      "subject": "s-matrix",
+      "title": "推导骨架：从 S 的定义到光学定理（四步）",
+      "keywords": [
+        "第一步：写出 S = 1 + iT（分离「没散射」）",
+        "第二步：用幺正性 SS† = I 得 T − T† = iTT†",
+        "第三步：取 ⟨i|T†|i⟩ 的期望值（插入完备基）",
+        "第四步：左边给 Im M，右边给 Σ|M|² → 光学定理",
+        "易错点：忘「插入完备基」；把 T 与 M 混淆（T 含 δ⁴）",
+        "数值校核：Σ_f |S_fi|² = 1（概率守恒）"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 54,
+        "line_end": 60
+      },
+      "fill_hint": "四步骨架；第二步的「T − T† = iTT†」与第三步的「插入完备基」是两个核心；第四步的「δ⁴ 两边约掉」是关键；给概率守恒的数值自检。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：分离「没散射」。**\n\n$$S=I+iT\\quad\\Longrightarrow\\quad S^{\\dagger}=I-iT^{\\dagger}.$$\n\n**理由**：$S$ 里必有单位算子（`L6:missing-delta-fi.counterexample`）✅。\n\n**第二步：用幺正性。**\n\n$$SS^{\\dagger}=\\left(I+iT\\right)\\left(I-iT^{\\dagger}\\right)=I+i\\left(T-T^{\\dagger}\\right)+TT^{\\dagger}=I.$$\n\n$$\\Longrightarrow\\quad T-T^{\\dagger}=iTT^{\\dagger}.$$\n\n**理由**：**这就是幺正性的「$T$ 矩阵形式」** ✅。\n\n**第三步：取矩阵元（在入态上取期望值）。**\n\n$$\\langle i\\lvert\\left(T-T^{\\dagger}\\right)\\rvert i\\rangle=i\\langle i\\lvert TT^{\\dagger}\\rvert i\\rangle.$$\n\n**右边**（插入完备基 $\\sum_f\\lvert f\\rangle\\langle f\\rvert=I$）：\n\n$$\\langle i\\lvert TT^{\\dagger}\\rvert i\\rangle=\\sum_f\\left\\lvert\\langle f\\lvert T\\rvert i\\rangle\\right\\rvert^{2}.$$\n\n**理由**：**这正是「所有散射末态的概率之和」** ✅。\n\n**第四步：得到光学定理。**\n\n**左边**：$\\langle i\\lvert T\\rvert i\\rangle$ 与前向振幅成正比（$\\langle i\\lvert T^{\\dagger}\\rvert i\\rangle$ 是它的共轭），**所以左边 $=2\\,\\mathrm{Im}\\,\\mathcal{M}(s,0)$ 乘 $\\delta^{4}$**。\n\n**右边**：$\\sum_f\\lvert\\mathcal{M}\\rvert^{2}$ 乘 $\\delta^{4}\\times\\delta^{4}$——**但两边的 $\\delta^{4}$ 结构相同（都是整体动量守恒）**，**所以可以约掉**，剩下\n\n$$2\\,\\mathrm{Im}\\,\\mathcal{M}(s,0)=\\frac{\\sqrt{s}}{2}\\sigma_{\\text{tot}}$$\n\n**（右边与总截面成正比，因为 $\\sum_f\\lvert\\mathcal{M}\\rvert^{2}$ 就是总截面的分子）** ✅\n\n**理由**：这是**「把 $\\delta^{4}$ 换成相空间测度」的标准步骤**（**与 `L6:s-matrix.statement` 的「剥 $\\delta^{4}$」同一操作**）。\n\n**数值自检**：**概率守恒**\n\n$$\\sum_f\\left\\lvert\\langle f\\lvert S\\rvert i\\rangle\\right\\rvert^{2}=1$$\n\n——**这是「幺正性」最直接的数值形式**（可用它检验任何 $S$ 的计算）✅。\n\n**依赖链**：$S=I+iT$ → 幺正性（第二步）→ 插入完备基（第三步）→ 光学定理（第四步）。\n\n**易错点**：\n\n1. **忘「插入完备基」**：$\\langle i\\lvert TT^{\\dagger}\\rvert i\\rangle$ 必须展开成 $\\sum_f$（否则看不出与截面的关系）；\n2. **把 $T$ 与 $\\mathcal{M}$ 混淆**：**$T$ 含 $\\delta^{4}$，$\\mathcal{M}$ 不含**（剥掉后才是物理振幅）；\n3. **忘「$\\delta^{4}$ 的两边约掉」**：这一步是「无限体积」变成「有限物理量」的关键；\n4. **忘了 $\\delta_{fi}$**：见 `L6:missing-delta-fi.counterexample`。",
+      "links": [
+        "L6",
+        "L2",
+        "L3",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L6:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：这个散射过程的总截面是多少？",
+      "keywords": [
+        "可算题：已知 |M|² 与通量，求截面（量纲）",
+        "答案：σ ∝ |M|²/flux；两体相空间给 1/(16π s) 型因子",
+        "追问：光学定理给 Im M(s,0) 与 σ_tot 的关系？",
+        "再问：Σ_f |S_fi|² 等于多少？（1，概率守恒）",
+        "陷阱：忘 δ_fi（丢「没散射」）；把 δ⁴ 当物理"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 54,
+        "line_end": 60
+      },
+      "fill_hint": "从 S 矩阵变来的检验题；三问给截面公式、概率守恒、δ_fi 的物理；延伸给「M / dσ/dΩ / σ_tot」三量对照与光学定理的价值。",
+      "content": "**题**：$2\\to2$ 散射。\n\n1. 截面 $\\sigma$ 与 $\\lvert\\mathcal{M}\\rvert^{2}$ 的关系是什么（量纲）？\n2. 概率守恒给什么等式？\n3. $\\delta_{fi}$ 项对应什么物理过程？\n\n**答案**：\n\n1. **两体微分截面（质心系）**：\n\n$$\\frac{d\\sigma}{d\\Omega}=\\frac{\\left\\lvert\\mathcal{M}\\right\\rvert^{2}}{64\\pi^{2}s},\\qquad s\\ \\text{是质心能量平方}.$$\n\n**量纲**：$\\lvert\\mathcal{M}\\rvert^{2}$ 无量纲（自然单位）、$s$ 是能量平方 ⇒ $\\dfrac{d\\sigma}{d\\Omega}$ 是**面积/立体角** ✅。\n\n2.\n\n$$\\sum_f\\left\\lvert\\langle f\\lvert S\\rvert i\\rangle\\right\\rvert^{2}=1$$\n\n**（幺正性 / 概率守恒）**。\n\n3. **「粒子直接穿过、什么都没发生」**——**弹性前向散射的「主导项」**（`L6:missing-delta-fi.counterexample`）。\n\n**易错点**：\n\n- **忘 $\\delta_{fi}$**：会让 $\\sum_f\\lvert S_{fi}\\rvert^{2}<1$（不守恒）；\n- **把 $\\delta^{4}$ 当物理**：截面会是「$\\delta$ 函数」（无意义）；\n- **单位制混淆**：自然单位（$\\hbar=c=1$）下公式最简；SI 要多写 $\\hbar$、$c$。\n\n**延伸（三个相关量的对照）**：\n\n| 量 | 公式 | 量纲 |\n|---|---|---|\n| 散射振幅 $\\mathcal{M}$ | （定义） | 无量纲（自然单位） |\n| 微分截面 $\\dfrac{d\\sigma}{d\\Omega}$ | $\\dfrac{\\lvert\\mathcal{M}\\rvert^{2}}{64\\pi^{2}s}$ | 面积/立体角 |\n| 总截面 $\\sigma_{\\text{tot}}$ | $\\displaystyle\\int\\frac{d\\sigma}{d\\Omega}d\\Omega$ | 面积 |\n\n**光学定理把「振幅的虚部」与「总截面」连起来**：\n\n$$\\mathrm{Im}\\,\\mathcal{M}(s,0)=\\frac{\\sqrt{s}}{2}\\sigma_{\\text{tot}}.$$\n\n**它的价值**：**不用算所有末态就能得到总截面**（只要知道前向振幅的虚部）——**这是「自洽性检验」的最实用形式**。",
+      "links": [
+        "L6",
+        "L3",
+        "L7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L6:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：S 矩阵、幺正性与光学定理",
+      "keywords": [
+        "模块 s-matrix-unitarity（档1 前端直渲）",
+        "模式①：S = δ_fi + i(2π)⁴δ⁴M 的两项分解（示意图）",
+        "模式②：Σ_f|S_fi|² = 1 的柱状图（概率守恒）",
+        "模式③：光学定理的两边对照（Im M vs σ_tot）",
+        "invariant：Σ_f |S_fi|² = 1（严格，幺正性）",
+        "预置：简单玩具模型（二通道）"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 54,
+        "line_end": 60
+      },
+      "fill_hint": "档1 依据：概率与光学定理都是显式可算，前端可算；invariant 用「概率和 = 1」这个最硬的严格关系。",
+      "content": "**档1 演示**（前端直渲），模块 `s-matrix-unitarity`。\n\n**模式① `s-decomposition`**：把 $S_{fi}=\\delta_{fi}+i(2\\pi)^{4}\\delta^{4}\\mathcal{M}_{fi}$ **画成两项**（左「直穿」箭头、右「散射」顶点）。**让「$S=I+iT$」的物理分解可见。**\n\n**模式② `probability-sum`**：柱状图画各末态的概率 $\\lvert S_{fi}\\rvert^{2}$，**显示它们的和恒为 1**（拖参数时也保持）。**这是幺正性的可视化。**\n\n**模式③ `optical-theorem`**：并排显示 $\\mathrm{Im}\\,\\mathcal{M}(s,0)$ 与 $\\dfrac{\\sqrt{s}}{2}\\sigma_{\\text{tot}}$，**两者应相等**。\n\n**恒等式（给前端 invariant）**：\n\n$$\\sum_f\\left\\lvert\\langle f\\lvert S\\rvert i\\rangle\\right\\rvert^{2}=1\\quad(\\text{严格，幺正性}),\\qquad \\mathrm{Im}\\,\\mathcal{M}(s,0)=\\frac{\\sqrt{s}}{2}\\sigma_{\\text{tot}}.$$\n\n**两条都是严格关系**（第二条由第一条推出）；**实现正确时，概率之和必须恒为 1**（任何偏离都是 bug）。\n\n**参数契约**：\n\n- 预置：二通道玩具模型（如弹性 + 非弹性）；\n- 与 `L6:probe1` 的数值（概率和为 1）保持一致。",
+      "links": [
+        "L2",
+        "L3",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

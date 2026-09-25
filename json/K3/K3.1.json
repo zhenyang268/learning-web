@@ -1,0 +1,283 @@
+{
+  "schema": "entry-card/v2",
+  "code": "K3.1",
+  "chapter": "K3",
+  "title": "自由粒子",
+  "src": {
+    "file": "notebook/K_Feyman.tex",
+    "line_start": 32,
+    "line_end": 36,
+    "anchor": "notebook/K_Feyman.tex:32"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "K3.1:free-propagator.quantifiers",
+      "type": "comparison",
+      "subject": "free-propagator",
+      "title": "自由粒子传播子的适用条件表：四个限定词逐条翻车",
+      "keywords": [
+        "条件①线性色散：ω = ħk²/(2m)（抛物线，群速度 = 2×相速度）",
+        "条件②幅度 ∝ 1/sqrt(T)：T→0 时发散（但 |K|²·dx 归一化良好）",
+        "条件③相位 ∝ x²/T：完全二次（这就是它能积出闭式的原因）",
+        "条件④无势能：有 V 时一般不能积出闭式（谐振子例外）",
+        "翻车代价：用伽利略变换 ω=ck 处理电子（那是光子，不是薛定谔）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "四行条件表；① 行必须点出「群速度 = 2×相速度」；② 行给 T=1 与 T=4 的幅度对照；④ 行点出「二次作用量是唯一可解类」。",
+      "content": "切片给了一个公式。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **线性色散** | 自由薛定谔方程给 $\\omega=\\hbar k^{2}/(2m)$（**抛物线**，`F6:quantum-cg.quantifiers` 第③行）。**相速度** $\\omega/k=\\hbar k/(2m)$、**群速度** $d\\omega/dk=\\hbar k/m$——**两者差 2 倍** | 若误用光的 $\\omega=ck$，会得到错误的波包速度 | 不能放宽：这是薛定谔方程的直接推论 |\n| ② **幅度 $\\propto1/\\sqrt T$** | $\\lvert K\\rvert=\\sqrt{m/(2\\pi\\hbar T)}$。实测：$T=1$ s 时 $37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】、$T=4$ s 时 $18.539$【已核验:18.5390078168|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*4))】 | 若写成 $\\propto1/T$，会差一个 $\\sqrt T$ | 不能放宽：$\\lvert K\\rvert^{2}\\propto1/T$ 正是「扩散」的标度 |\n| ③ **相位完全二次** | 相位是 $mx^{2}/(2\\hbar T)$——**关于 $x$ 二次** | 若相位含更高次项（如 $x^{3}$），**积分不再是高斯型** | 不能放宽：这正是「自由粒子可精确求解」的原因 |\n| ④ **无势能** | 有 $V(x)$ 时作用量非二次 ⇒ 一般无法积出闭式。**例外**：二次势（谐振子，`K3.2`） | 误以为「所有路径积分都能算」 | 可放宽：二次作用量 + 高斯积分 = 可解（这是**唯一**的一般可解类） |\n\n**这张表的用法**：\n\n1. **检查作用量是否二次**（决定能否闭式求解）；\n2. **幅度用 $T^{-1/2}$**（不要用 $T^{-1}$）；\n3. **群速度用 $\\hbar k/m$**（不要用相速度）。\n\n**数值锚点（幅度的 $T^{-1/2}$ 标度）**：\n\n| $T$（s） | $\\lvert K\\rvert=\\sqrt{m/(2\\pi\\hbar T)}$ |\n|---|---|\n| $0.25$ | $74.156$【已核验:74.1560312674|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*0.25))】 |\n| $1$ | $37.078$ |\n| $4$ | $18.539$ |\n\n**$T$ 涨 4 倍、幅度减半** ✅（$\\sqrt4=2$）。\n\n**相位（同 $x=1$ m）**：\n\n| $T$ | 相位 $mx^{2}/(2\\hbar T)$ |\n|---|---|\n| $1$ | $4318.996$ |\n| $4$ | $1079.749$【已核验:1079.74909279|9.1093837015e-31*1**2/(2*1.054571817e-34*4)】 |\n\n**相位 $\\propto1/T$** ✅——**注意幅度 $\\propto T^{-1/2}$、相位 $\\propto T^{-1}$，两者标度不同。**",
+      "links": [
+        "K1",
+        "K3.2",
+        "F3",
+        "F6",
+        "J1",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.1:free-propagator.statement",
+      "type": "statement",
+      "subject": "free-propagator",
+      "title": "自由粒子传播子：公式、标度与含义",
+      "keywords": [
+        "K_free = sqrt(m/(2πiħT)) exp(im(x_f−x_i)²/(2ħT))，T = t_f−t_i",
+        "幅度 ∝ T^{−1/2}（扩散标度）",
+        "相位 ∝ (x_f−x_i)²/T（二次）",
+        "|K|² 是「扩散核」：方差 = ħT/m",
+        "高斯波包保持高斯（自由演化）",
+        "群速度 ħk/m；相速度 ħk/(2m)（相差 2 倍）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "陈述本体（幅度 + 相位 + |K|²）+ 色散关系与群/相速度 + 高斯波包的扩散公式；给两档幅度的实测。",
+      "content": "**陈述**（切片）。\n\n$$K_{\\text{free}}=\\sqrt{\\frac{m}{2\\pi i\\hbar(t_f-t_i)}}\\exp\\left[\\frac{im(x_f-x_i)^{2}}{2\\hbar(t_f-t_i)}\\right].$$\n\n**三个要素（这是本条的全部内容）**：\n\n**① 幅度**：\n\n$$\\lvert K\\rvert=\\sqrt{\\frac{m}{2\\pi\\hbar T}}$$\n\n**标度**：$\\propto T^{-1/2}$。**实测**：$T=1$ s $\\to37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】；$T=4$ s $\\to18.539$【已核验:18.5390078168|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*4))】。\n\n**② 相位**：\n\n$$\\frac{m(x_f-x_i)^{2}}{2\\hbar T}$$\n\n**标度**：$\\propto1/T$。**实测**（$x=1$ m）：$T=1$ s $\\to4318.996$；$T=4$ s $\\to1079.749$【已核验:1079.74909279|9.1093837015e-31*1**2/(2*1.054571817e-34*4)】。\n\n**③ $\\lvert K\\rvert^{2}$ 是扩散核**：\n\n$$\\lvert K(x,t)\\rvert^{2}=\\frac{m}{2\\pi\\hbar T}.$$\n\n**注意它不依赖 $x$！**——**因为自由粒子没有经典偏好位置**（`K2` 的驻点分析里，$x=0$ 以外的路径都是鞍点/相消，但模长均匀）。**这与「一个自由粒子以等概率出现在任何位置」的图像一致**（不过要小心：$\\lvert K\\rvert^{2}$ 是 $T$ 时刻的**几率密度**，其初值是 $\\delta$ 函数）。\n\n**方差**：把 $\\lvert K\\rvert^{2}$ 看作扩散方程的解：\n\n$$\\frac{\\partial\\lvert K\\rvert^{2}}{\\partial T}=D\\frac{\\partial^{2}\\lvert K\\rvert^{2}}{\\partial x^{2}},\\qquad D=\\frac{\\hbar}{2m}???$$\n\n**更清楚的做法**：把 $\\lvert K\\rvert^{2}$ 写成高斯形式的**相位含 $i$**——\n\n$$\\lvert K\\rvert^{2}=\\frac{m}{2\\pi\\hbar T}.$$\n\n**注意「$\\lvert K\\rvert^{2}$ 均匀」是自由粒子的特殊性**：$K$ 本身是「纯相位」的（模长与 $x$ 无关）——**$e^{imx^{2}/(2\\hbar T)}$ 是纯相位因子** ✅。\n\n**色散关系（`K3.1:free-propagator.quantifiers` 第①行）**：\n\n$$\\omega=\\frac{\\hbar k^{2}}{2m},\\qquad v_{\\text{phase}}=\\frac{\\omega}{k}=\\frac{\\hbar k}{2m},\\qquad v_{\\text{group}}=\\frac{d\\omega}{dk}=\\frac{\\hbar k}{m}.$$\n\n**两者的差（2 倍）正是「薛定谔是色散的」的定量表达**（`F6`）。\n\n**高斯波包保持高斯（重要性质）**：若初态是高斯（`F2` 的最小不确定态），自由演化后**仍是高斯**，只是宽度增长：\n\n$$\\sigma(t)^{2}=\\sigma_0^{2}+\\left(\\frac{\\hbar t}{2m\\sigma_0}\\right)^{2}.$$\n\n**这是「量子波包扩散」的标准结果**——**也是 `J2.2` 菲涅尔衍射的同一数学**（那里是「高斯光束的衍射」）。\n\n**它依赖什么 / 谁依赖它**：`K1` 的泛函积分（推导）；`F2` 的高斯波包。下游：`K3.2`（有势能的可解例）、`K4`（Wick 转动）、`I4` 的涡量扩散（数学同型）。",
+      "links": [
+        "K1",
+        "K3.2",
+        "F2",
+        "F3",
+        "F6",
+        "J2.2",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.1:free-propagator.proof",
+      "type": "proof",
+      "subject": "free-propagator",
+      "title": "推导骨架：自由粒子传播子的高斯积分（四步）",
+      "keywords": [
+        "第一步：写下 N 片积分（每片一个高斯因子）",
+        "第二步：配方——两个二次型合并给「等效时间加倍」",
+        "第三步：逐个积分，ε 累积为 Nε=T",
+        "第四步：校核标度（幅度 T^{−1/2}、相位 T^{−1}）",
+        "易错点：忘每片系数；把等效时间当成 ε",
+        "数值校核：37.078（T=1）、18.539（T=4）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "四步骨架；第二步的配方式是核心；第三步要说清「N 个 ε^{−1/2} 与 N−1 个 ε^{1/2} 相消」；第四步给两档比值（2.000 / 4.000）。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：写下 N 片积分。**\n\n$$K=\\left(\\frac{m}{2\\pi i\\hbar\\varepsilon}\\right)^{N/2}\\int dx_1\\cdots dx_{N-1}\\exp\\left[\\frac{im}{2\\hbar\\varepsilon}\\sum_{k=0}^{N-1}(x_{k+1}-x_k)^{2}\\right].$$\n\n**理由**：`K1:time-slicing.statement` 的切片公式（$V=0$ 时直接得到）。\n\n**第二步：配方（核心一步）。**\n\n$$(x_1-x_0)^{2}+(x_2-x_1)^{2}=2\\underbrace{\\left(x_1-\\frac{x_0+x_2}{2}\\right)^{2}}_{\\text{积掉后消失}}+\\underbrace{\\frac{(x_2-x_0)^{2}}{2}}_{\\text{新的二次型}}.$$\n\n**理由**：完成平方。**注意新二次型的系数是 $1/2$**——**这就是「等效时间加倍」的代数来源**：\n\n$$\\frac{1}{\\varepsilon}+\\frac{1}{\\varepsilon}=\\frac{2}{\\varepsilon}\\quad\\Longleftrightarrow\\quad \\varepsilon\\to2\\varepsilon.$$\n\n**第三步：逐个积分（归纳）。**\n\n每积掉一个 $x_k$「等效时间」加一个 $\\varepsilon$。积完 $N-1$ 个后是 $N\\varepsilon=T$：\n\n$$K=\\left(\\frac{m}{2\\pi i\\hbar\\cdot N\\varepsilon}\\right)^{1/2}\\exp\\left[\\frac{im(x_N-x_0)^{2}}{2\\hbar\\cdot N\\varepsilon}\\right].$$\n\n**理由**：**归纳法——形式不变，只有 $\\varepsilon\\to$ 累积时间。**\n\n**关于系数的累积（容易搞错的地方）**：起始系数是 $(m/(2\\pi i\\hbar\\varepsilon))^{N/2}$（$N$ 个 $\\varepsilon^{-1/2}$）；每次积分给一个 $\\sqrt{\\varepsilon}$（来自 $\\sqrt{\\pi\\hbar\\varepsilon/(im)}$）。**净效果**：\n\n$$\\varepsilon^{-N/2}\\times\\varepsilon^{(N-1)/2}=\\varepsilon^{-1/2}\\ \\Longrightarrow\\ \\text{只剩一个 }\\varepsilon^{-1/2}\\to T^{-1/2}.$$\n\n**所以「$N$ 个 $\\varepsilon^{-1/2}$ 与 $N-1$ 个 $\\varepsilon^{1/2}$ 相消，只剩一个」** ✅（`K1:probe1` 的数值验证）。\n\n**第四步：数值校核。**\n\n| 量 | $T=1$ s | $T=4$ s |\n|---|---|---|\n| 幅度 | $37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】 | $18.539$【已核验:18.5390078168|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*4))】 |\n| 相位（$x=1$） | $4318.996$ | $1079.749$【已核验:1079.74909279|9.1093837015e-31*1**2/(2*1.054571817e-34*4)】 |\n\n**幅度比 $=2.000$**【已核验:2|37.07801563368732/18.53900781684366】；**相位比 $=4.000$**【已核验:4|4318.996371159425/1079.7490927898562】——**分别对应 $T^{1/2}$ 与 $T$ 的标度** ✅。\n\n**依赖链**：切片（第一步）→ 配方（第二步）→ 归纳（第三步）→ 标度校核（第四步）。\n\n**易错点**：\n\n1. **忘每片系数**：会得到发散（`K1:amplitude-divergence.counterexample`）；\n2. **把等效时间当 $\\varepsilon$**：最终时间必须是 $N\\varepsilon=T$；\n3. **混淆两个标度**：**幅度 $\\propto T^{-1/2}$、相位 $\\propto T^{-1}$**——它们是不同的幂次；\n4. **$1/\\sqrt i$ 的相位**：$1/\\sqrt i=e^{-i\\pi/4}$，模长为 1 但相位是 $-\\pi/4$。",
+      "links": [
+        "K1",
+        "K3.2",
+        "F2",
+        "P8.1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：T 涨 4 倍后幅度和相位各变多少？",
+      "keywords": [
+        "可算题：T 从 1s 变 4s，求幅度比与相位比",
+        "答案：幅度比 = 2（∝T^{−1/2}）；相位比 = 4（∝T^{−1}）",
+        "追问：x 从 1m 变 2m 呢？（相位 ×4，因为 ∝x²）",
+        "再问：群速度与相速度之比？（2）",
+        "陷阱：把两个标度混为一谈（都是 T^{−1}）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "从传播子标度变来的检验题；四问分别考幅度标度、相位标度、x 的二次标度、群/相速度比；延伸给两个标度的物理含义。",
+      "content": "**题**：自由粒子传播子，电子、$x_f-x_i=1$ m。\n\n1. $T$ 从 $1$ s 变到 $4$ s，幅度变多少倍？\n2. 相位变多少倍？\n3. $x$ 从 $1$ m 变到 $2$ m（$T=1$ s），相位变多少倍？\n4. 群速度与相速度之比是多少？\n\n**答案**：\n\n1. 幅度 $\\propto T^{-1/2}$：\n\n$$\\frac{\\lvert K(T=1)\\rvert}{\\lvert K(T=4)\\rvert}=\\frac{37.078}{18.539}=2.000$$【已核验:2|37.07801563368732/18.53900781684366】\n\n2. 相位 $\\propto T^{-1}$：\n\n$$\\frac{\\varphi(T=1)}{\\varphi(T=4)}=\\frac{4318.996}{1079.749}=4.000$$【已核验:4|4318.996371159425/1079.7490927898562】\n\n3. 相位 $\\propto x^{2}$，所以 $x$ 翻倍 ⇒ **相位 $\\times4$**：\n\n$$\\varphi(x=2)=4\\times4318.996=17275.985$$【已核验:17275.9854846|4*4318.996371159425】\n\n4. 群速度 $=\\hbar k/m$、相速度 $=\\hbar k/(2m)$ ⇒ **比值 $=2$**。\n\n**易错点**：\n\n- **把幅度与相位的标度混为一谈**：幅度 $T^{-1/2}$、相位 $T^{-1}$——**差一个 $\\sqrt T$**；\n- **相位对 $x$ 的标度**：$\\propto x^{2}$（**不是 $x$**）；\n- **忘了「群速度 = 2×相速度」**：这是薛定谔色散的特征（`F6` 的对照表）；**对光子两者相等**。\n\n**延伸（这两个标度的物理含义）**：\n\n| 量 | 标度 | 物理含义 |\n|---|---|---|\n| 幅度 $T^{-1/2}$ | 扩散 | 波包展开（`K3.1:free-propagator.statement` 的高斯扩散） |\n| 相位 $T^{-1}$ | 色散 | 不同波数的相位旋转速率不同 |\n\n**它们的乘积**（幅度² × 相位）给出「波包中心的速度」$\\hbar k/m$——**这就是半经典极限下的经典轨迹**（`K2`）。",
+      "links": [
+        "K3.1",
+        "K2",
+        "F6"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：自由粒子的传播子与波包扩散",
+      "keywords": [
+        "模块 free-propagator（档1 前端直渲）",
+        "模式①：相位 mx²/(2ħT) 的等相位线（抛物线族）",
+        "模式②：高斯波包宽度 σ(t)² = σ₀² + (ħt/2mσ₀)²",
+        "模式③：幅度 T^{−1/2} 与相位 T^{−1} 的标度对比",
+        "invariant：|K|²·(2πħT/m) = 1（归一化）；σ(t)²−σ₀² = (ħt/2mσ₀)²",
+        "预置：电子、x∈[−1,1]、T∈[0.25,4]"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "档1 依据：相位与波包宽度都是显式可算，前端可算；invariant 用高斯扩散律；必须说明「|K|² 常数 ⇒ 不能归一化」这个坑。",
+      "content": "**档1 演示**（前端直渲），模块 `free-propagator`。\n\n**模式① `phase-parabolas`**：画相位 $\\varphi(x)=mx^{2}/(2\\hbar T)$ 对 $x$（在不同 $T$）。**是一族开口向上的抛物线，$T$ 越大越平**。**让「相位二次」可见**。\n\n**模式② `wavepacket-spread`**：高斯波包宽度\n\n$$\\sigma(t)^{2}=\\sigma_0^{2}+\\left(\\frac{\\hbar t}{2m\\sigma_0}\\right)^{2}.$$\n\n拖时间，看波包扩散。**初宽 $\\sigma_0$ 越小，扩散越快**（$t\\ll$ 时 $dh/dt$ 对 $\\sigma_0$ 是 $-\\hbar/(2m\\sigma_0^{2})<0$）——**这是 `F2` 的「压缩初宽换快速扩散」**。\n\n**模式③ `scaling-compare`**：同一张图上画 $\\lvert K\\rvert$（$\\propto T^{-1/2}$）与 $\\varphi$（$\\propto T^{-1}$），横轴为 $T$。**两条曲线的幂次不同**——让读者看清「不能混为一谈」。\n\n**恒等式（给前端 invariant）**：\n\n$$\\int\\lvert K(x,T)\\rvert^{2}dx=1\\ \\text{（归一化？见下注）},\\qquad \\sigma(t)^{2}-\\sigma_0^{2}=\\left(\\frac{\\hbar t}{2m\\sigma_0}\\right)^{2}.$$\n\n**注意第一条**：$\\lvert K\\rvert^{2}$ 是**常数**（不依赖 $x$），所以 $\\int\\lvert K\\rvert^{2}dx$ **发散**——**这是「传播子不是 $L^{2}$ 函数、是分布」的直接表现**（`K1:time-slicing.quantifiers` 的量纲讨论）。\n\n**所以本模块的严格 invariant 是第二条**（高斯扩散律，恒等式，可数值验证）。\n\n**参数契约**：\n\n- 预置：电子、$x\\in[-1,1]$、$T\\in\\{0.25,0.5,1,2,4\\}$、$\\sigma_0\\in\\{0.01,0.1,1\\}$；\n- 与 `K3.1:probe1` 的数值（幅度比 $2.000$、相位比 $4.000$）保持一致。",
+      "links": [
+        "K1",
+        "K2",
+        "K3.2",
+        "F2",
+        "J2.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.1:free-propagator.intuition",
+      "type": "intuition",
+      "subject": "free-propagator",
+      "title": "直觉：传播子是「一个极瘦的高斯在扩散」，但相位在打旋",
+      "keywords": [
+        "短时刻：K ≈ δ(x_f−x_i)（粒子「还没动」）",
+        "长时刻：幅度 ∝ T^{−1/2}（越来越矮）、相位 ∝ x²/T（越来越平）",
+        "「矮」是扩散（像热核）；「打旋」是量子相位",
+        "为什么纯相位：自由粒子没有偏好位置 → |K|² 与 x 无关",
+        "与热核的对照：热核 exp(−x²/(4DT)) 是实数；这里是虚指数",
+        "Wick 转动 t→−iτ 就把后者变成前者（K4）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「矮=扩散、打旋=相位」讲清；给与热核的对照表与 Wick 转动的显式验证。",
+      "content": "**切片给了一个公式**。理解的关键是**「扩散 + 打旋」两件事同时发生**。\n\n**假设给了什么。** 粒子从 $x_i$ 出发，$T$ 时刻在 $x_f$ 的振幅。\n\n**结论为什么因此成立。**\n\n**先看短时刻（$T\\to0$）**：相位 $mx^{2}/(2\\hbar T)\\to\\infty$（除 $x_f=x_i$ 外）——**快速振荡 ⇒ 相消 ⇒ 只有 $x_f\\approx x_i$ 有贡献**。所以 $K\\to\\delta(x_f-x_i)$（粒子还没动）✅。**这是「初始条件是 $\\delta$ 函数」的含义。**\n\n**长时刻**：\n\n| 量 | 行为 |\n|---|---|\n| 幅度 | $\\propto T^{-1/2}$（**越来越矮**） |\n| 相位 | $\\propto x^{2}/T$（**越来越平**） |\n\n**「矮」= 扩散**：$\\lvert K\\rvert^{2}$ 的**积分**（即总几率）保持不变，但「高度」下降——**这是 $1/T$ 的扩散标度**（与热传导核同型）。\n\n**「打旋」= 量子相位**：$e^{imx^{2}/(2\\hbar T)}$ 是**纯相位**——**它的模长与 $x$ 无关** ✅。**这就是 $\\lvert K\\rvert^{2}$ 是常数的原因。**\n\n**与热核的对照（这是理解 Wick 转动的钥匙）**：\n\n| | 热核（扩散方程） | 量子传播子 |\n|---|---|---|\n| 表达式 | $\\dfrac{1}{\\sqrt{4\\pi DT}}e^{-x^{2}/(4DT)}$ | $\\sqrt{\\dfrac{m}{2\\pi i\\hbar T}}e^{imx^{2}/(2\\hbar T)}$ |\n| 权重 | **实数、衰减** | **纯相位** |\n| 物理 | 概率密度扩散 | 振幅的相位旋转 |\n| 关系 | — | **$T\\to-i\\tau$（Wick）后变成热核**（`K4`） |\n\n**具体验证（Wick 转动的对应）**：令 $T=-i\\tau$，则\n\n$$\\frac{imx^{2}}{2\\hbar T}=\\frac{imx^{2}}{2\\hbar(-i\\tau)}=\\frac{imx^{2}\\cdot i}{2\\hbar\\tau}=-\\frac{mx^{2}}{2\\hbar\\tau}.$$\n\n**指数从「纯虚」变成「负实数」** ✅——**这正是热核的形式**（$D=\\hbar/(2m)$）。\n\n**记这个图像**：**自由传播子 = 「一个极瘦的高斯在扩散」+「相位在打旋」**；扩散给 $T^{-1/2}$ 的幅度，打旋给 $x^{2}/T$ 的相位；**Wick 转动把「打旋」变成「衰减」**。",
+      "links": [
+        "K1",
+        "K2",
+        "K4",
+        "I4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.1:wrong-scaling.counterexample",
+      "type": "counterexample",
+      "subject": "wrong-scaling",
+      "title": "反例：把幅度写成 ∝1/T（差一个 sqrt(T)）",
+      "keywords": [
+        "误用现场：凭「扩散的直觉」把幅度写成 m/(2πħT)",
+        "正确：sqrt(m/(2πħT))，即 ∝T^{−1/2}",
+        "实测对照：T=1 → 37.078；T=4 → 18.539（比值 2，不是 4）",
+        "后果：算几率密度时 |K|² 会差一个因子 T",
+        "判据：|K|² 的量纲应是 1/长度（因 K 是 1/sqrt(长度)）",
+        "修补：记住 K 本身是「振幅密度」的平方根，不是密度"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "把错式的后果算成两档数值对照（37.078 vs 1.375e3）；给量纲自检；点出「混淆振幅与密度标度」这个最可能的成因。",
+      "content": "**误用现场**：凭「扩散核的直觉」（热核是 $\\propto1/\\sqrt T$ 的？**其实也是**）或干脆凭「量纲感觉」，把幅度写成\n\n$$\\lvert K\\rvert\\propto\\frac{m}{2\\pi\\hbar T}\\quad(\\text{错，多了 }\\sqrt T).$$\n\n**为什么这是错的**：正确形式是\n\n$$\\lvert K\\rvert=\\sqrt{\\frac{m}{2\\pi\\hbar T}}\\quad\\Longrightarrow\\quad \\lvert K\\rvert\\propto T^{-1/2}.$$\n\n**算给你看**（电子，$x=1$ m）：\n\n| $T$（s） | 正确 $\\lvert K\\rvert$ | 错式 $m/(2\\pi\\hbar T)$ |\n|---|---|---|\n| $1$ | $37.078$【已核验:37.0780156337|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1))】 | $1.375\\times10^{3}$ |\n| $4$ | $18.539$【已核验:18.5390078168|sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*4))】 | $343.86$ |\n\n**正确的比值是 $2.000$**【已核验:2|37.07801563368732/18.53900781684366】；**错式的比值是 $4.000$**——**两者相差一个 $\\sqrt T$**。\n\n**更直接的理由（量纲）**：\n\n$$\\lvert K\\rvert^{2}=\\text{几率密度}\\ \\Longrightarrow\\ [\\lvert K\\rvert^{2}]=\\frac{1}{\\text{长度}}\\ \\Longrightarrow\\ [\\lvert K\\rvert]=\\frac{1}{\\sqrt{\\text{长度}}}.$$\n\n**检查**：$\\sqrt{m/(\\hbar T)}=\\sqrt{\\text{kg}/(\\text{J}\\cdot\\text{s})}=1/\\sqrt{\\text{m}}$ ✅。**而 $m/(\\hbar T)$ 的量纲是 $1/(\\text{m}^{2}\\cdot\\text{s})$——错的。**\n\n**为什么会犯这个错（三个原因）**：\n\n1. **热核的 $\\sqrt T$ 容易被忽略**：很多人记得「$\\propto1/\\sqrt T$」但写成 $\\propto1/T$；\n2. **混淆「振幅」与「几率密度」**：$\\lvert K\\rvert^{2}\\propto1/T$ 是**对的**（密度）；$\\lvert K\\rvert\\propto1/\\sqrt T$ 也是对的（振幅）。**错的是把「密度的标度」用到「振幅」上**；\n3. **不看量纲**：这是最有效的自检手段却没做。\n\n**后果链条**：\n\n1. 归一化会错（$\\int\\lvert K\\rvert^{2}$ 的因子错）；\n2. 与数值结果比对时出现「差一个 $\\sqrt T$ 的偏离」，容易被误诊为「数值精度问题」；\n3. 在半经典近似里，这个因子直接乘在 $1/\\sqrt{\\partial^{2}S}$ 上（`K2:physical-meaning.statement`），会给出错的振幅。\n\n**修补动作**：\n\n1. **记住 $\\lvert K\\rvert\\propto T^{-1/2}$、$\\lvert K\\rvert^{2}\\propto T^{-1}$**（两个标度不同）；\n2. **量纲自检**（如上）；\n3. **数值自检**：$T$ 涨 4 倍，幅度应减半（**不是减到 1/4**）。",
+      "links": [
+        "K3.1",
+        "K1",
+        "K2",
+        "K4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K3.1:probe2.probe2",
+      "type": "probe",
+      "subject": "probe2",
+      "title": "检验题：自由传播子的 |K|² 是什么？",
+      "keywords": [
+        "可算题：求 T=1s、电子自由传播子的 |K|²",
+        "答案：|K|² = m/(2πħT) = 1374.78（与 x 无关）",
+        "追问：它是归一化的几率密度吗？（不是——∫|K|²dx 发散）",
+        "再问：真正的几率密度怎么得到？（初态 ψ₀ 与 K 卷积后再取模平方）",
+        "陷阱：把 |K|² 当几率密度（它不归一化）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 32,
+        "line_end": 36
+      },
+      "fill_hint": "从 |K|² 的性质变来的检验题；三问考察常数性、不归一性；延伸给「K / |K|² / |ψ|²」三者的关系表。",
+      "content": "**题**：自由粒子传播子，电子、$T=1$ s。\n\n1. 求 $\\lvert K\\rvert^{2}$。\n2. 它依赖 $x$ 吗？\n3. $\\int\\lvert K\\rvert^{2}dx$ 等于多少？\n\n**答案**：\n\n1.\n\n$$\\lvert K\\rvert^{2}=\\frac{m}{2\\pi\\hbar T}=\\sqrt{\\frac{m}{2\\pi\\hbar T}}^{2}=37.078^{2}=1374.78$$【已核验:1374.77924333|(sqrt(9.1093837015e-31/(2*pi*1.054571817e-34*1)))**2】\n\n2. **不依赖 $x$**——**因为 $K$ 是纯相位因子**（`K3.1:free-propagator.intuition`）。\n\n3. **发散**（$\\int_{-\\infty}^{\\infty}1374.78\\,dx=\\infty$）✅。\n\n**为什么会「发散」（这是本条的要点）**：**$K$ 不是 $L^{2}$ 函数，它是一个「分布」**——它是「位置本征态 $\\lvert x_i\\rangle$ 在 $T$ 时刻的波函数」，而**位置本征态本身不正则（不可归一化）**。\n\n**正确的几率密度怎么得到**：把初态 $\\psi_0$（可归一化）与传播子卷积：\n\n$$\\psi(x,T)=\\int K(x,T;x',0)\\psi_0(x')dx'.$$\n\n**然后 $\\lvert\\psi(x,T)\\rvert^{2}$ 才是归一化的几率密度** ✅。\n\n**具体（高斯初态，$\\sigma_0$ 宽）**：\n\n$$\\lvert\\psi(x,T)\\rvert^{2}=\\frac{1}{\\sqrt{2\\pi}\\sigma(T)}\\exp\\left[-\\frac{x^{2}}{2\\sigma(T)^{2}}\\right],\\qquad \\sigma(T)^{2}=\\sigma_0^{2}+\\left(\\frac{\\hbar T}{2m\\sigma_0}\\right)^{2}.$$\n\n**验证归一化**：$\\int\\lvert\\psi\\rvert^{2}dx=1$ ✅（与 $T$ 无关——**这正是 `F3` 的概率守恒**）。\n\n**易错点**：\n\n- **把 $\\lvert K\\rvert^{2}$ 当几率密度**：它不归一（积分发散）；\n- **忘了「要卷积」**：$\\lvert K\\rvert^{2}$ 本身不是可观测量（它是「从精确位置出发」的理想化）；\n- **对 $-x$ 的对称性**：$\\lvert K\\rvert^{2}$ 与 $x$ 无关，所以**看不出任何方向偏好**——**这是自由粒子的对称性**。\n\n**延伸（三个量的关系）**：\n\n| 量 | 归一化？ | 依赖 $x$？ |\n|---|---|---|\n| $K$（传播子） | ❌ | 只有相位依赖 |\n| $\\lvert K\\rvert^{2}$ | ❌（积分发散） | ❌（常数） |\n| $\\lvert\\psi(x,T)\\rvert^{2}$（卷积后） | ✅ | ✅（高斯） |\n\n**这条对照表说明**：**「从精确位置出发」的理想化必然导致不可归一**——**所以实际计算必须从可归一的初态出发。**",
+      "links": [
+        "K3.1",
+        "K1",
+        "K2",
+        "F2",
+        "F3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

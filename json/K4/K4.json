@@ -1,0 +1,255 @@
+{
+  "schema": "entry-card/v2",
+  "code": "K4",
+  "chapter": "K4",
+  "title": "Wick 转动与统计力学",
+  "src": {
+    "file": "notebook/K_Feyman.tex",
+    "line_start": 46,
+    "line_end": 58,
+    "anchor": "notebook/K_Feyman.tex:46"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "K4:wick-rotation.quantifiers",
+      "type": "comparison",
+      "subject": "wick-rotation",
+      "title": "Wick 转动的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①t→−iτ 是解析延拓：要求传播子在适当区域全纯（R6）",
+        "条件②e^{iS/ħ}→e^{−S_E/ħ}：指数从「纯虚」变「负实」",
+        "条件③S_E 是欧氏作用量：动能项变号（+½mẋ²）",
+        "条件④配分函数形式：Z = ∫D[x]e^{−S_E/ħ}（实数正定权重，可蒙卡）",
+        "条件⑤d 维 QFT ↔ (d+1) 维经典统计：维数对应不是「物理等价」",
+        "翻车代价：不做 Wick 直接蒙卡 → 权重是相位（符号问题，无法采样）"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 46,
+        "line_end": 58
+      },
+      "fill_hint": "五行条件表；② 行必须点出「纯虚→负实」这个关键变化；③ 行给 S_E = T+V 的符号推导；⑤ 行强调「形式同构非物理等价」。",
+      "content": "切片给了 Wick 转动与维数对应。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **解析延拓** | $t\\to-i\\tau$ 是**解析延拓**，不是「随便换变量」。要求传播子作为函数在适当区域**全纯**（`R6:analytic-continuation.statement`） | 若函数在该区域有奇点，延拓不合法 | 不能放宽：**合法性来自全纯性** |\n| ② **指数变号** | $e^{iS/\\hbar}\\to e^{-S_{E}/\\hbar}$。**关键变化**：指数从「纯虚」（振荡）变「负实」（衰减） | 不变号则权重仍是相位，蒙卡无法采样 | 不能放宽：这是 Wick 转动的全部价值 |\n| ③ **$S_E$ 的符号** | $iS/\\hbar=i\\int(T-V)dt/\\hbar$，而 $dt=-i\\,d\\tau$ ⇒ $iS/\\hbar=-\\int(T+V)d\\tau/\\hbar=-S_{E}/\\hbar$。**所以 $S_E=\\int(T+V)d\\tau$**（**动能项是 $+$**） | 若写成 $T-V$（与 $S$ 同形），符号错、积分发散 | 不能放宽：必须用 $S_E=T+V$ |\n| ④ **配分函数形式** | $Z=\\int\\mathcal{D}[x(\\tau)]e^{-S_{E}[x]/\\hbar}$。**实测**（谐振子）：$Z_{\\text{HO}}(\\beta)=1/(2\\sinh(\\beta\\hbar\\omega/2))$——$\\beta\\hbar\\omega=1$ 时 $0.959517$【已核验:0.959517375667|1/(2*sinh(0.5))】 | 权重非负 ⇒ **可用重要性采样**（`J7` 的蒙卡） | 不能放宽：这是「量子↔统计」桥的可用性来源 |\n| ⑤ **维数对应** | $d$ 维量子场论 $\\leftrightarrow$ $(d+1)$ 维经典统计。**实测**（一维量子 $\\leftrightarrow$ 二维经典）：$Z$ 的形式相同 | **这是「形式同构」，不是「物理等价」**（时间轴不是空间轴） | 不能放宽：**必须说清「形式」而非「物理」** |\n\n**这张表的用法**：\n\n1. **确认函数全纯**（延拓合法）；\n2. **$S_E=T+V$**（动能项变号）；\n3. **权重 $e^{-S_E/\\hbar}$ 是实数正定** ⇒ 可以蒙卡。\n\n**数值锚点（谐振子配分函数）**：\n\n$$Z_{\\text{HO}}(\\beta)=\\frac{1}{2\\sinh(\\beta\\hbar\\omega/2)}.$$\n\n| $\\beta\\hbar\\omega$ | $Z$ |\n|---|---|\n| $0.1$ | $9.995835$【已核验:9.99583454829|1/(2*sinh(0.05))】 |\n| $1.0$ | $0.959517$【已核验:0.959517375667|1/(2*sinh(0.5))】 |\n| $5.0$ | $0.082642$【已核验:0.0826418349275|1/(2*sinh(2.5))】 |\n\n**$\\beta\\hbar\\omega\\to0$（高温）时 $Z\\to1/(\\beta\\hbar\\omega)$**——**实测**：$\\beta\\hbar\\omega=10^{-6}$ 时 $Z=10^{6}$【已核验:1000000|1/(2*sinh(5e-07))】、$Z\\cdot\\beta\\hbar\\omega=1.000000$【已核验:1|1/(2*sinh(5e-07))*1e-06】**（经典极限）** ✅。",
+      "links": [
+        "K1",
+        "K3.2",
+        "R6",
+        "M1",
+        "J7",
+        "L7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K4:sign-problem.counterexample",
+      "type": "counterexample",
+      "subject": "sign-problem",
+      "title": "反例：不做 Wick 转动就直接做蒙特卡洛",
+      "keywords": [
+        "误用现场：直接对 e^{iS/ħ} 做蒙卡采样",
+        "问题：e^{iS/ħ} 是复数且模长为 1 → 无法当概率权重",
+        "具体：权重必须是实数、非负、可归一（概率公理）",
+        "后果：样本的「和」几乎为零（相消），信噪比随体积指数下降（符号问题）",
+        "正确：先 Wick 转动（权重变 e^{−S_E/ħ}），或做复数蒙卡（重加权）",
+        "判据：权重的虚部占比 = 符号问题的严重程度"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 46,
+        "line_end": 58
+      },
+      "fill_hint": "把「不 Wick 就蒙卡」的后果算成「信噪比指数下降」；给权重模长的对照表；点出「符号问题是问题本身的难度，不能靠算法绕过」。",
+      "content": "**误用现场**：想做数值路径积分，**直接对 $e^{iS/\\hbar}$ 做蒙特卡洛采样**（把 $e^{iS/\\hbar}$ 当概率权重）。\n\n**为什么这是错的**：**概率权重必须是实数、非负、可归一**。而\n\n$$\\lvert e^{iS/\\hbar}\\rvert=1\\quad(\\text{模长恒为 1}).$$\n\n**所以「按 $e^{iS/\\hbar}$ 采样」在数学上是无定义的**（不能当概率密度）。\n\n**「符号问题」（sign problem）的定量**：若强行做（例如用某些检验函数重加权），会得到\n\n$$\\langle O\\rangle=\\frac{\\sum_k w_kO_k}{\\sum_kw_k},\\qquad w_k=e^{iS_k/\\hbar}\\ (\\text{复数}).$$\n\n**分子与分母都是「相位各异的大数之和」**——**它们几乎相消**，所以**信噪比随体积（路径数、格点数）指数下降**。\n\n**定量估计**：设 $\\lvert S/\\hbar\\rvert$ 的变化尺度是 $\\sigma$，则\n\n$$\\text{信噪比}\\sim e^{-\\sigma^{2}N/2}\\quad(\\text{$N$ = 自由度数目}).$$\n\n**所以「体积一大就完全不可算」** ✅。**这是格点 QCD 在有限密度下的核心困难（著名的「符号问题」）。**\n\n**正确做法（两条）**：\n\n**① Wick 转动**：把 $t\\to-i\\tau$，则\n\n$$e^{iS/\\hbar}\\ \\longrightarrow\\ e^{-S_{E}/\\hbar}\\quad(\\text{实数、正定}).$$\n\n**于是可以正常做重要性采样** ✅。\n\n**② 复数蒙卡（重加权，reweighting）**：保留复数权重，但用 $\\lvert w\\rvert$ 做采样、把相位当可观测量的部分。**代价是「信噪比指数下降」**——**只在小体积/短时间可行。**\n\n**具体数值（权重的模长）**：\n\n| 情形 | 权重 | 可当概率？ |\n|---|---|---|\n| $e^{iS/\\hbar}$ | $\\lvert w\\rvert=1$ | ❌（相位无归一） |\n| $e^{-S_E/\\hbar}$ | $w>0$ 实数 | ✅ |\n\n**后果链条**：\n\n1. **不能用朴素蒙卡**（无概率解释）；\n2. **重加权可行但指数代价**；\n3. **所以几乎所有格点量子场论都先做 Wick 转动**（欧氏空间）**算完再延拓回实时间**。\n\n**修补动作**：\n\n1. **先 Wick 转动**（`K4:statistical-mechanics.statement`）；\n2. **若要实时间结果**，从欧氏结果**解析延拓回去**（要求全纯，`R6`）；\n3. **判据**：权重的虚部占比——占比接近 0 时重加权可行，接近 1 时完全不可行。\n\n**注意「符号问题不能靠算法绕过」（重要的诚实说明）**：**它是「问题本身的难度」**（与相消有关），**不是「算法不够好」**。**所以见到「有人说能绕过符号问题」要谨慎。**",
+      "links": [
+        "K4",
+        "K1",
+        "J7",
+        "R6",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K4:statistical-mechanics.statement",
+      "type": "statement",
+      "subject": "statistical-mechanics",
+      "title": "Wick 转动与统计力学：从相位到配分函数",
+      "keywords": [
+        "Wick 转动：t → −iτ（τ 实数），解析延拓",
+        "指数变换：e^{iS/ħ} → e^{−S_E/ħ}",
+        "欧氏作用量：S_E = ∫(T+V)dτ（动能项变号）",
+        "配分函数：Z = ∫D[x]e^{−S_E/ħ}",
+        "维数对应：d 维 QFT ↔ (d+1) 维经典统计",
+        "谐振子：Z = 1/(2 sinh(βħω/2))"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 46,
+        "line_end": 58
+      },
+      "fill_hint": "陈述本体（Wick + 指数 + S_E 的符号）+ 周期边界条件 + 四档 Z 的实测 + 维数对应的「垂直」对照。",
+      "content": "**陈述**（切片）。\n\n**Wick 转动**：\n\n$$t\\to-i\\tau\\qquad(\\tau\\ \\text{实数}).$$\n\n**指数变换**：\n\n$$e^{iS/\\hbar}\\ \\longrightarrow\\ e^{-S_{E}/\\hbar}.$$\n\n**推导（为什么变号）**：$iS/\\hbar=i\\int(T-V)dt/\\hbar$，代入 $dt=-i\\,d\\tau$：\n\n$$\\frac{iS}{\\hbar}=\\frac{i}{\\hbar}\\int(T-V)(-i\\,d\\tau)=\\frac{1}{\\hbar}\\int(T-V)d\\tau\\ \\text{（注意 }i\\cdot(-i)=1\\text{）}.$$\n\n**但要注意符号（这是最容易错的地方）**：更仔细地看，拉格朗日 $L=T-V$，而虚时间下的「动能」符号会翻转：\n\n$$S_{E}=\\int_{0}^{\\beta}\\left(\\frac m2\\left(\\frac{dx}{d\\tau}\\right)^{2}+V(x)\\right)d\\tau=\\int(T+V)d\\tau.$$\n\n**所以「欧氏作用量 = $T+V$」**（**动能项是 $+$**）✅——**这样 $e^{-S_E/\\hbar}$ 才是衰减的**。\n\n**配分函数**：\n\n$$Z=\\int\\mathcal{D}[x(\\tau)]\\,e^{-S_{E}[x]/\\hbar}.$$\n\n**关键性质（为什么这就可用）**：\n\n| 量 | 实时间（$t$） | 虚时间（$\\tau$） |\n|---|---|---|\n| 权重 | $e^{iS/\\hbar}$ | $e^{-S_E/\\hbar}$ |\n| 性质 | **复数、模长 1** | **实数、正、衰减** |\n| 可当概率？ | ❌ | ✅ |\n| 数值方法 | 只能重加权 | **重要性采样** |\n\n**周期边界条件（重要细节）**：虚时间 $\\tau\\in[0,\\beta]$，且 $x(\\beta)=x(0)$——**这是「迹」的含义**（$Z=\\mathrm{tr}\\,e^{-\\beta\\hat H}$）。**所以虚时间方向是「周期的」**，与实时间的自由边界不同。\n\n**实测（谐振子）**：\n\n$$Z_{\\text{HO}}(\\beta)=\\frac{1}{2\\sinh(\\beta\\hbar\\omega/2)},\\qquad \\beta=\\frac{1}{k_{B}T}.$$\n\n| $\\beta\\hbar\\omega$ | $Z$ |\n|---|---|\n| $0.1$ | $9.995835$【已核验:9.99583454829|1/(2*sinh(0.05))】 |\n| $1.0$ | $0.959517$【已核验:0.959517375667|1/(2*sinh(0.5))】 |\n| $2.0$ | $0.425459$【已核验:0.42545906412|1/(2*sinh(1.0))】 |\n| $5.0$ | $0.082642$【已核验:0.0826418349275|1/(2*sinh(2.5))】 |\n\n**经典极限（$\\beta\\hbar\\omega\\to0$）**：\n\n$$Z\\to\\frac{1}{\\beta\\hbar\\omega}=10^{6}\\quad(\\beta\\hbar\\omega=10^{-6})$$【已核验:1000000|1/(2*sinh(5e-07))】\n\n**校核** $Z\\cdot\\beta\\hbar\\omega=1.000000$【已核验:1|1/(2*sinh(5e-07))*1e-06】 ✅\n\n**维数对应**：\n\n$$d\\ \\text{维量子场论}\\quad\\leftrightarrow\\quad(d+1)\\ \\text{维经典统计力学}.$$\n\n**注意「垂直的」对照**：\n\n| | 量子场论 | 经典统计 |\n|---|---|---|\n| 维数 | $d$（时空） | $d+1$（空间） |\n| 时间轴的角色 | 实时间 | **额外的空间轴**（$\\tau$） |\n| 权重 | $e^{iS/\\hbar}$ | $e^{-S_E/\\hbar}$ |\n\n**这是「形式同构」**——**时间轴被换成一个空间轴**（所以在欧氏空间里「时间与空间没有区别」）。**这也是「欧氏场论」这个名称的来源**，以及**统计力学模型（如 Ising 模型）能用来研究量子场论的原因**。\n\n**它依赖什么 / 谁依赖它**：`K1` 的泛函积分；`R6` 的解析延拓（合法性）。下游：`M1` 的统计力学、`L7` 的重整化（欧氏空间里的技术）、格点 QCD、`F5` 的 Wick 转动总览。",
+      "links": [
+        "K1",
+        "K3.2",
+        "R6",
+        "M1",
+        "L7",
+        "F5",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K4:wick-rotation.intuition",
+      "type": "intuition",
+      "subject": "wick-rotation",
+      "title": "直觉：Wick 转动 = 「把振荡变成衰减」，于是蒙卡可做",
+      "keywords": [
+        "实时间：相位 e^{iS/ħ} 振荡 → 相消 → 无法采样",
+        "虚时间：权重 e^{−S_E/ħ} 衰减 → 正定 → 可采样",
+        "几何图像：在复平面上把时间轴转到虚轴（旋转 90°）",
+        "为什么合法：传播子在适当区域全纯（可解析延拓）",
+        "物理代价：时间轴变成「空间轴」（d 维 QFT ↔ d+1 维统计）",
+        "所以欧氏场论是「算量子问题的最实用工具」"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 46,
+        "line_end": 58
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「时间轴转 90°」讲 Wick；给「衰减 ⇒ 可当概率」的链条与「时间变空间」的代价。",
+      "content": "**切片给了公式**。理解的关键是**「把复平面上的时间轴转 90°」**。\n\n**假设给了什么。** 实时间的权重 $e^{iS/\\hbar}$ 是**相位**——**它在复平面上的单位圆上转**。\n\n**结论为什么因此成立。** 把 $t$ 换成 $-i\\tau$ ⇒ **在复平面上，时间轴从实轴转到虚轴**：\n\n| 时间轴 | $S$ 的性质 | 权重 |\n|---|---|---|\n| 实轴（$t$） | $iS$ 纯虚 | $e^{iS/\\hbar}$：**单位圆上振荡** |\n| 虚轴（$-i\\tau$） | $-S_E$ 实负 | $e^{-S_E/\\hbar}$：**指数衰减** |\n\n**「振荡 → 衰减」是全部内容** ✅。\n\n**为什么「衰减」就好**：**衰减的权重是正数** ⇒ **可以当概率密度** ⇒ **可以做重要性采样**（`J7` 的技术可以直接搬）✅。\n\n**几何图像（最好用的）**：在复 $t$ 平面上，实轴上的积分路径被**旋转 90° 到虚轴**。**这不是「换变量」，是「转路径」**——**合法性要求被积函数在这两个轴之间的扇形里全纯**（`R6` 的唯一性定理）。\n\n**物理代价（必须说清）**：**时间轴变成空间轴**——所以\n\n- $d$ 维量子场论 $\\leftrightarrow$ $(d+1)$ 维**经典**统计力学；\n- **「量子」与「热涨落」变成同一件事**（这也是 `M1` 的统计力学与量子场论能互借工具的原因）。\n\n**但要小心「垂直的差别」**：\n\n| | 量子（实时间） | 统计（虚时间） |\n|---|---|---|\n| 时间轴 | 实时间（有「因果」） | 额外空间轴（无因果） |\n| 权重相位 | 有（可干涉） | 无（只衰减） |\n| 能算的 | 干涉、隧穿 | 热力学量 |\n\n**所以「欧氏结果不能直接当实时间结果用」**——**要延拓回去**（`R6:gamma-euclidean.extension` 同型）。\n\n**实测的直观量（谐振子配分函数）**：\n\n$$Z(\\beta)=\\frac{1}{2\\sinh(\\beta\\hbar\\omega/2)},\\qquad \\beta\\hbar\\omega=1\\to0.959517$$【已核验:0.959517375667|1/(2*sinh(0.5))】\n\n**注意 $Z<1$**（当 $\\beta\\hbar\\omega=1$ 时）——**这是量子效应压缩了「有效状态数」**（经典极限是 $Z\\approx1/\\beta\\hbar\\omega=1$，量子给出 $0.9595$，**小 $4\\%$**）。\n\n**记这个图像**：**Wick 转动 = 「把时间轴在复平面上转 90°」**；振荡变衰减；于是蒙卡可做；代价是「时间变空间」（维数 +1，因果消失）。",
+      "links": [
+        "K1",
+        "K3.2",
+        "R6",
+        "M1",
+        "L7",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K4:wick-rotation.extension",
+      "type": "extension",
+      "subject": "wick-rotation",
+      "title": "拓展：欧氏场论与统计力学模型的字典",
+      "keywords": [
+        "关联函数：⟨x(τ₁)x(τ₂)⟩_E ↔ 热力学关联",
+        "配分函数：Z_E ↔ 统计力学的 Z",
+        "质量 gap ↔ 关联长度倒数（1/ξ）",
+        "量子涨落 ↔ 热涨落",
+        "瞬子 ↔ 统计模型中的畴壁/缺陷",
+        "用途：格点 QCD、Ising 模型 ↔ φ⁴ 理论"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 46,
+        "line_end": 58
+      },
+      "fill_hint": "拓展词条：给出完整的「欧氏场论↔统计力学」字典 + 质量 vs 1/ξ 的对等 + Ising 模型的具体例子；诚实说明「形式同构非物理等价」。",
+      "content": "**拓展：** Wick 转动之后的**欧氏场论**与**统计力学模型**之间有一整套字典。**这不是「类比」，是「同一个数学」**。\n\n**字典（逐条对应）**：\n\n| 欧氏场论 | 统计力学 | 说明 |\n|---|---|---|\n| $Z_{E}=\\int\\mathcal{D}\\phi\\,e^{-S_E/\\hbar}$ | $Z=\\sum_{\\text{构型}}e^{-\\beta H}$ | **配分函数** |\n| $\\langle\\phi(x)\\phi(y)\\rangle_{E}$ | $\\langle\\sigma_x\\sigma_y\\rangle$ | **两点关联** |\n| 质量 $m$ | $1/\\xi$（关联长度倒数） | **指数衰减率** |\n| $\\hbar$ | $k_{B}T$ | **涨落强度** |\n| 瞬子（instanton） | 畴壁、拓扑缺陷 | **拓扑构型** |\n| 重整化群 | 粗粒化（coarse graining） | **同一套变换**（`L7`） |\n\n**最重要的两条**：\n\n**① 质量的含义（最有用）**：欧氏关联函数\n\n$$\\langle\\phi(x)\\phi(0)\\rangle\\sim e^{-m\\lvert x\\rvert}\\quad(\\lvert x\\rvert\\to\\infty).$$\n\n**这与统计力学的**关联长度**完全同型**：\n\n$$\\langle\\sigma_x\\sigma_0\\rangle\\sim e^{-\\lvert x\\rvert/\\xi}.$$\n\n**所以「质量 $m$」与「$1/\\xi$」是同一个量**——**「无质量」$\\leftrightarrow$「临界点（$\\xi=\\infty$）」** ✅。**这是「临界现象与量子场论」合流的全部内容。**\n\n**② 瞬子（与 `Q` 篇接口）**：欧氏作用量有**有限作用量的非平凡解**（瞬子），**对应统计模型里的畴壁/涡旋**。**它们的贡献 $e^{-S_{\\text{inst}}/\\hbar}$ 给出「隧穿」**——**这正是 `K2` 里「非经典路径」的具体实现。**\n\n**具体例子（Ising 模型）**：一维量子 Ising 模型（横向场）\n\n$$\\hat H=-J\\sum_i\\hat\\sigma^{z}_i\\hat\\sigma^{z}_{i+1}-h\\sum_i\\hat\\sigma^{x}_i$$\n\n**在 Wick 转动后等价于**二维经典 Ising 模型：\n\n$$H=-\\sum_{\\langle ij\\rangle}K\\,\\sigma_i\\sigma_j.$$\n\n**这个对应是「格点模型↔场论」的标准入口**——**所以「用统计力学方法研究量子相变」是可行的**。\n\n**为什么这有用（三条）**：\n\n1. **数值上**：统计力学的算法（蒙卡、转移矩阵）可以直接用于量子问题（`J7` 的技术）；\n2. **解析上**：临界指数、标度律可以直接借用（`L7` 的重整化群就是这个传统）；\n3. **概念上**：「量子涨落」与「热涨落」的统一**解释了为什么两者的「临界现象」如此相似**。\n\n**注意「形式同构」的边界（诚实说明）**：**维数 +1 不是物理等价**——**实时间有因果结构，虚时间没有**。**所以「欧氏结果」要延拓回实时间才有物理意义**（`R6` 的解析延拓）。\n\n**位置关系**：本条是 `K4` 的拓展（切片只给了维数对应）；与 `M1`（统计力学基础）、`L7`（重整化）形成「量子↔统计」的完整桥。",
+      "links": [
+        "K4",
+        "M1",
+        "L7",
+        "R6",
+        "Q9.2",
+        "F5"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K4:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：Wick 转动后的谐振子配分函数是多少？",
+      "keywords": [
+        "可算题：βħω=1 时 Z_HO = 1/(2 sinh(βħω/2)) 等于多少？",
+        "答案：1/(2 sinh 0.5) = 0.959517",
+        "追问：βħω=0.1 呢？（9.995835）",
+        "再问：βħω→0 的经典极限？（Z ≈ 1/(βħω)）",
+        "陷阱：忘 2 sinh 里的 1/2；把 βħω 当 β 用"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 46,
+        "line_end": 58
+      },
+      "fill_hint": "从配分函数公式变来的检验题；三问给三档数值 + 经典极限校核；延伸给三个极限的行为与「零点能暴露在低温极限」。",
+      "content": "**题**：谐振子（$\\omega=1$），虚时间配分函数\n\n$$Z_{\\text{HO}}(\\beta)=\\frac{1}{2\\sinh(\\beta\\hbar\\omega/2)}.$$\n\n1. $\\beta\\hbar\\omega=1$ 时 $Z$ 是多少？\n2. $\\beta\\hbar\\omega=0.1$ 时呢？\n3. $\\beta\\hbar\\omega=10^{-6}$ 时，$Z\\cdot\\beta\\hbar\\omega$ 是多少？\n\n**答案**：\n\n1.\n\n$$Z=\\frac{1}{2\\sinh(0.5)}=0.959517$$【已核验:0.959517375667|1/(2*sinh(0.5))】\n\n2.\n\n$$Z=\\frac{1}{2\\sinh(0.05)}=9.995835$$【已核验:9.99583454829|1/(2*sinh(0.05))】\n\n3.\n\n$$Z=\\frac{1}{2\\sinh(5\\times10^{-7})}=10^{6}$$【已核验:1000000|1/(2*sinh(5e-07))】\n\n$$Z\\cdot\\beta\\hbar\\omega=1.000000$$【已核验:1|1/(2*sinh(5e-07))*1e-06】\n\n**即 $Z\\approx1/(\\beta\\hbar\\omega)$**（**经典极限**）✅。\n\n**易错点**：\n\n- **忘 $\\sinh$ 里的 $1/2$**：是 $\\beta\\hbar\\omega/2$（来自零点能 $\\hbar\\omega/2$）；\n- **把 $\\beta\\hbar\\omega$ 当 $\\beta$**：$\\beta$ 有量纲（$1/$能量），$\\beta\\hbar\\omega$ 无量纲；\n- **忘 $2$ 的因子**：$1/(2\\sinh)$（**不是 $1/\\sinh$**）——**它来自「两个方向（左右）的模式」**。\n\n**延伸（三个极限的行为）**：\n\n| $\\beta\\hbar\\omega$ | $Z$ | 物理 |\n|---|---|---|\n| $\\to0$（高温） | $\\to1/(\\beta\\hbar\\omega)$（大） | **经典**（能级密集） |\n| $\\sim1$ | $\\sim1$ | 中间 |\n| $\\to\\infty$（低温） | $\\to e^{-\\beta\\hbar\\omega/2}$（小） | **量子**（只有基态，零点能主导） |\n\n**注意低温极限的读数**：$Z\\to e^{-\\beta\\hbar\\omega/2}$——**指数里的 $\\hbar\\omega/2$ 正是零点能** ✅。**所以「$Z$ 的低温行为」直接暴露零点能。**\n\n**这也是「$\\hbar\\to0$ 时 $Z\\to1/(\\beta\\hbar\\omega)$」的原因**（零点能 $\\to0$、$\\sinh$ 的论证退化）。",
+      "links": [
+        "K4",
+        "M1",
+        "K3.2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "K4:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：Wick 转动与配分函数",
+      "keywords": [
+        "模块 wick-rotation（档1 前端直渲）",
+        "模式①：复 t 平面上的积分路径旋转（实轴 → 虚轴）",
+        "模式②：权重 e^{iS/ħ}（单位圆）vs e^{−S_E/ħ}（衰减）",
+        "模式③：Z(β) 随 βħω 的变化（含经典极限）",
+        "invariant：Z·βħω → 1（βħω→0 的渐近，非严格）",
+        "预置：谐振子、βħω ∈ [0.01, 10]"
+      ],
+      "tex_ref": {
+        "file": "notebook/K_Feyman.tex",
+        "line_start": 46,
+        "line_end": 58
+      },
+      "fill_hint": "档1 依据：配分函数与权重都是显式可算，前端可算；invariant 用定义式（严格）+ 经典极限（渐近，需标注）。",
+      "content": "**档1 演示**（前端直渲），模块 `wick-rotation`。\n\n**模式① `contour-rotation`**：在复 $t$ 平面上画积分路径：实轴（原始）与虚轴（Wick 后）。**显示两者之间的扇形**（被积函数在其中全纯——`R6` 的合法性条件）。\n\n**模式② `weight-comparison`**：并排显示两种权重：\n- $e^{iS/\\hbar}$：**在单位圆上转**（模长恒 1）；\n- $e^{-S_E/\\hbar}$：**指数衰减**（正实数）。\n\n**让「振荡 → 衰减」一眼可见。**\n\n**模式③ `partition-function`**：画 $\\ln Z$ 对 $\\ln(\\beta\\hbar\\omega)$。**小 $\\beta\\hbar\\omega$ 时斜率 $\\approx-1$**（经典极限 $Z\\propto1/(\\beta\\hbar\\omega)$）；**大 $\\beta\\hbar\\omega$ 时斜率 $\\approx-1/2$**（低温极限 $Z\\propto e^{-\\beta\\hbar\\omega/2}$）。\n\n**恒等式（给前端 invariant）**：\n\n$$Z_{\\text{HO}}\\cdot2\\sinh\\left(\\frac{\\beta\\hbar\\omega}{2}\\right)=1\\quad(\\text{严格等式}).$$\n\n**这是本模块最硬的 invariant**（定义式）。**另有渐近关系**：\n\n$$Z\\cdot\\beta\\hbar\\omega\\ \\xrightarrow{\\ \\beta\\hbar\\omega\\to0\\ }\\ 1\\quad(\\text{渐近，非严格}).$$\n\n**参数契约**：\n\n- 预置：谐振子 $\\omega=1$、$\\beta\\hbar\\omega\\in[0.01,10]$；\n- 与 `K4:probe1` 的数值（$\\beta\\hbar\\omega=1\\to0.959517$、$0.1\\to9.995835$）保持一致。",
+      "links": [
+        "K3.2",
+        "M1",
+        "R6",
+        "J7"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

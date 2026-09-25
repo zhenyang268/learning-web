@@ -1,0 +1,252 @@
+{
+  "schema": "entry-card/v2",
+  "code": "L1",
+  "chapter": "L1",
+  "title": "二次量子化",
+  "src": {
+    "file": "notebook/L_Feyman.tex",
+    "line_start": 4,
+    "line_end": 15,
+    "anchor": "notebook/L_Feyman.tex:4"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "L1:second-quantization.quantifiers",
+      "type": "comparison",
+      "subject": "second-quantization",
+      "title": "二次量子化的适用条件表：五个限定词逐条翻车",
+      "keywords": [
+        "条件①Fock 空间：直和 C ⊕ H ⊕ Sym²(H) ⊕ …（不是固定粒子数）",
+        "条件②玻色子用对易子 [a,a†]=δ：多粒子态对称",
+        "条件③费米子用反对易子 {a,a†}=δ：多粒子态反对称（泡利原理）",
+        "条件④单粒子态维数 d：玻色子 n 粒子维数 C(n+d−1,d−1)；费米子 C(d,n)",
+        "条件⑤真空 |0⟩：a|0⟩=0（被湮灭算子杀掉）",
+        "翻车代价：费米子用对易子 → 可以挤无限多个粒子（丢掉泡利原理）"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 4,
+        "line_end": 15
+      },
+      "fill_hint": "五行条件表；②③ 行必须给出对易子/反对易子的后果对比；④ 行给两套组合数的实测表（含费米子的 0）。",
+      "content": "切片给了 Fock 空间与两种对易关系。拆开看：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **Fock 空间** | $\\mathcal{F}=\\mathbb{C}\\oplus\\mathcal{H}\\oplus(\\mathcal{H}\\otimes_{s}\\mathcal{H})\\oplus\\cdots$——**直和**（粒子数不同的态并列） | 若只用固定 $N$ 的 $\\mathcal{H}^{\\otimes N}$，无法描述产生/湮灭 | 不能放宽：这是「粒子数可变」的形式化 |\n| ② **玻色子的对易子** | $[a(\\mathbf p),a^{\\dagger}(\\mathbf p')]=\\delta(\\mathbf p-\\mathbf p')$（**对易子**）。**后果**：$a^{\\dagger}a^{\\dagger}\\lvert0\\rangle\\neq0$（可以有两个同态粒子） | 若用反对易子，会出现「$a^{\\dagger}a^{\\dagger}=0$」——**玻色子被错误禁掉** | 不能放宽：**对易子给玻色统计** |\n| ③ **费米子的反对易子** | $\\{a(\\mathbf p),a^{\\dagger}(\\mathbf p')\\}=\\delta$（**反对易子**）。**后果**：$a^{\\dagger}a^{\\dagger}=0$ ⇒ **不能占据两个同态**（泡利原理） | 若用对易子，**粒子可以无限堆积**（丢掉泡利原理、丢掉物质稳定性） | 不能放宽：**反对易子给费米统计** |\n| ④ **维数** | 单粒子 $d$ 个态时：玻色子 $n$ 粒子有 $\\binom{n+d-1}{d-1}$ 个态（**实测 $d=3$：$1,3,6,10,15,\\ldots$**【已核验:1|comb(2,2)】【已核验:3|comb(3,2)】【已核验:6|comb(4,2)】【已核验:10|comb(5,2)】【已核验:15|comb(6,2)】）；费米子有 $\\binom{d}{n}$ 个（**实测 $d=3$：$1,3,3,1,0,\\ldots$**【已核验:1|comb(3,0)】【已核验:3|comb(3,1)】【已核验:3|comb(3,2)】【已核验:1|comb(3,3)】） | 若混用两套计数会算错熵/态密度 | 不能放宽：这是统计的直接后果 |\n| ⑤ **真空** | $a\\lvert0\\rangle=0$（湮灭算子**杀掉**真空）；$|n\\rangle\\propto(a^{\\dagger})^{n}\\lvert0\\rangle$ | 若 $a\\lvert0\\rangle\\neq0$，会有「负粒子数」 | 不能放宽：这是 Fock 空间的基 |\n\n**这张表的用法**：\n\n1. **先定统计**（玻色 → 对易子；费米 → 反对易子）；\n2. **维数用对应的组合数**；\n3. **真空由 $a\\lvert0\\rangle=0$ 定义**。\n\n**维数的实测表（$d=3$）**：\n\n| $n$ | 玻色子 $\\binom{n+2}{2}$ | 费米子 $\\binom{3}{n}$ |\n|---|---|---|\n| $0$ | $1$ | $1$ |\n| $1$ | $3$ | $3$ |\n| $2$ | $6$ | $3$ |\n| $3$ | $10$ | $1$ |\n| $4$ | $15$ | $\\mathbf{0}$（泡利原理） |\n\n**注意费米子第 4 行是 0** ✅——**$d=3$ 个单粒子态最多放 3 个费米子**（每个态一个）。**这正是「物质为什么占体积」的量子来源。**\n\n**为什么这个「0」重要（物理含义）**：**费米子不能堆积** ⇒ **原子有确定的「大小」** ⇒ **物质稳定**。**若费米子是玻色子，所有电子会坍缩到基态**（灾难）。",
+      "links": [
+        "L2",
+        "L3",
+        "F1",
+        "F2",
+        "F4",
+        "M1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L1:pauli-violation.counterexample",
+      "type": "counterexample",
+      "subject": "pauli-violation",
+      "title": "反例：费米子用对易子（丢掉泡利原理）",
+      "keywords": [
+        "误用现场：给电子（费米子）用 [a,a†]=1（玻色子关系）",
+        "后果①：a†a† ≠ 0 → 两个电子可占据同一态（违反泡利）",
+        "后果②：d=3 个态可放任意多电子（维数从 C(3,n) 变 C(n+2,2)）",
+        "后果③：原子会无限堆积电子 → 物质坍缩",
+        "正确：{a,a†}=1 → a†a†=0（同态最多一个）",
+        "判据：检查 a†|0⟩ 与 a†a†|0⟩ 是否为零"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 4,
+        "line_end": 15
+      },
+      "fill_hint": "把「用对易子」的后果算成两套计数对照（6 vs 3、15 vs 0）；给三条物理后果（含白矮星）；给「反对易子的判据」与维数自检。",
+      "content": "**误用现场**：给**电子**（费米子）用**玻色子**的对易关系：\n\n$$[\\hat a,\\hat a^{\\dagger}]=1\\quad(\\text{错，电子应用 }\\{\\hat a,\\hat a^{\\dagger}\\}=1).$$\n\n**为什么这是错的**：**对易子允许「同态多占」**：\n\n$$\\hat a^{\\dagger}\\hat a^{\\dagger}\\lvert0\\rangle$$\n\n**在玻色统计下不为零**（可以有两个粒子在同一态），**而费米统计下恒为零**：\n\n$$\\{\\hat a,\\hat a^{\\dagger}\\}=1\\ \\Longrightarrow\\ \\hat a^{\\dagger}\\hat a^{\\dagger}=\\frac12\\{\\hat a^{\\dagger},\\hat a^{\\dagger}\\}=0$$ ✅\n\n**状态计数（定量对照，$d=3$ 个单粒子态）**：\n\n| $n$（粒子数） | 对易子（玻色） | 反对易子（费米） |\n|---|---|---|\n| $2$ | $6$【已核验:6|comb(4,2)】 | $3$【已核验:3|comb(3,2)】 |\n| $3$ | $10$【已核验:10|comb(5,2)】 | $1$【已核验:1|comb(3,3)】 |\n| $4$ | $15$【已核验:15|comb(6,2)】 | $\\mathbf{0}$【已核验:0|comb(3,4)】 |\n| $10$ | $66$【已核验:66|comb(12,2)】 | $\\mathbf{0}$ |\n\n**关键读数**：**费米子 $n>d$ 时态数为 0** ✅——**这是泡利原理的代数表述。**\n\n**物理后果链条（三条，都很严重）**：\n\n1. **无泡利原理** ⇒ **所有电子可以坍缩到最低能级**（原子「塌陷」，原子体积由核决定而非电子壳层）；\n2. **无「费米海」** ⇒ 金属、白矮星的「电子简并压」消失 ⇒ **白矮星会坍缩**；\n3. **统计力学全错**（`M1` 的费米–狄拉克分布换成了玻色–爱因斯坦）。\n\n**为什么「反对易子」是必需的（一条判据）**：**要求「交换两个粒子 ⇒ 波函数变号」**：\n\n$$\\lvert\\ldots,\\mathbf p,\\ldots,\\mathbf p',\\ldots\\rangle=-\\lvert\\ldots,\\mathbf p',\\ldots,\\mathbf p,\\ldots\\rangle.$$\n\n**这就给出了 $\\{\\hat a,\\hat a^{\\dagger}\\}=1$**（代数上的等价条件）。\n\n**修补动作**：\n\n1. **先定统计**（自旋半整数 → 费米；整数 → 玻色）；\n2. **检查 $\\hat a^{\\dagger}\\hat a^{\\dagger}\\lvert0\\rangle$**——**费米子必须为零**；\n3. **维数自检**：$\\binom{d}{n}$（费米）vs $\\binom{n+d-1}{d-1}$（玻色）。",
+      "links": [
+        "L1",
+        "F4",
+        "M1",
+        "L2"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L1:second-quantization.statement",
+      "type": "statement",
+      "subject": "second-quantization",
+      "title": "二次量子化：Fock 空间与产生/湮灭算子",
+      "keywords": [
+        "Fock 空间：F = C ⊕ H ⊕ Sym²(H) ⊕ …（粒子数不固定）",
+        "玻色子：[a(p), a†(p')] = δ(p−p')",
+        "费米子：{a(p), a†(p')} = δ(p−p')",
+        "数算子 N = a†a；本征值 0,1,2,…（玻色）/ 0,1（费米）",
+        "粒子数基 |n⟩ ∝ (a†)ⁿ|0⟩（玻色）",
+        "场算子：φ(x) = Σ_p (a_p e^{ipx} + a†_p e^{−ipx})"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 4,
+        "line_end": 15
+      },
+      "fill_hint": "陈述本体（Fock 空间 + 两种对易关系 + 数算子）+ 两套维数表（含 d=3 的实测）+ 「一次 vs 二次量子化」的对照。",
+      "content": "**陈述**（切片）。\n\n**Fock 空间**：\n\n$$\\mathcal{F}=\\mathbb{C}\\oplus\\mathcal{H}\\oplus\\left(\\mathcal{H}\\otimes_{s}\\mathcal{H}\\right)\\oplus\\cdots$$\n\n**读法**：$\\mathbb{C}$ 是真空（0 粒子）、$\\mathcal{H}$ 是 1 粒子、$\\mathcal{H}\\otimes_{s}\\mathcal{H}$ 是**对称化**的 2 粒子……**直和表示「粒子数不同的态并列」** ✅。\n\n**产生/湮灭算子（两种统计）**：\n\n$$\\text{玻色子：}\\ [\\hat a(\\mathbf p),\\hat a^{\\dagger}(\\mathbf p')]=\\delta(\\mathbf p-\\mathbf p'),$$\n\n$$\\text{费米子：}\\ \\{\\hat a(\\mathbf p),\\hat a^{\\dagger}(\\mathbf p')\\}=\\delta(\\mathbf p-\\mathbf p').$$\n\n**数算子**：\n\n$$\\hat N=\\hat a^{\\dagger}\\hat a.$$\n\n| 统计 | $\\hat N$ 的本征值 | 理由 |\n|---|---|---|\n| 玻色 | $0,1,2,3,\\ldots$ | $[\\hat a,\\hat a^{\\dagger}]=1$ |\n| 费米 | $0,1$（**只有两个**） | $\\hat a^{\\dagger}\\hat a^{\\dagger}=0$ |\n\n**维数（$d$ 个单粒子态、$n$ 个粒子）**：\n\n| 统计 | 维数 | $d=3$ 时的值（$n=0,1,2,3,4$） |\n|---|---|---|\n| 玻色 | $\\binom{n+d-1}{d-1}$ | $1,3,6,10,15$【已核验:1|comb(2,2)】【已核验:3|comb(3,2)】【已核验:6|comb(4,2)】【已核验:10|comb(5,2)】【已核验:15|comb(6,2)】 |\n| 费米 | $\\binom{d}{n}$ | $1,3,3,1,0$【已核验:0|comb(3,4)】 |\n\n**场算子（「二次量子化」这个名字的来源）**：\n\n$$\\hat\\phi(x)=\\sum_{\\mathbf p}\\left(\\hat a_{\\mathbf p}e^{i\\mathbf p\\cdot\\mathbf x}+\\hat a^{\\dagger}_{\\mathbf p}e^{-i\\mathbf p\\cdot\\mathbf x}\\right).$$\n\n**注意**：**$\\hat\\phi(x)$ 本身是算子**（不是波函数）——**它「产生或湮灭在 $x$ 处的粒子」**。**这就是「二次」的含义**：\n\n| | 一次量子化 | 二次量子化 |\n|---|---|---|\n| 波函数 | $\\psi(x)$（**数**） | $\\hat\\phi(x)$（**算子**） |\n| 粒子数 | 固定 | **可变** |\n| 薛定谔方程 | $i\\hbar\\partial_t\\psi=\\hat H\\psi$ | 场算子的方程（如 Klein–Gordon） |\n\n**为什么需要「二次」（动机）**：**相对论与多体问题都要求粒子数可变**（粒子可以产生/湮灭）——**一次量子化的固定 $N$ 框架做不到。**\n\n**它依赖什么 / 谁依赖它**：`F1`/`F2` 的算符语言；`F4` 的角动量（自旋统计定理）。下游：`L2` 的 Dyson 级数、`L3` 的 Feynman 规则、`L5` 的 Wick 定理、`M1` 的量子统计。",
+      "links": [
+        "F1",
+        "F2",
+        "F4",
+        "L2",
+        "L3",
+        "L5",
+        "M1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L1:second-quantization.intuition",
+      "type": "intuition",
+      "subject": "second-quantization",
+      "title": "直觉：二次量子化 = 「波函数本身变成算子」",
+      "keywords": [
+        "一次量子化：ψ 是数（粒子数固定）",
+        "二次量子化：φ̂ 是算子（能产生/湮灭粒子）",
+        "为什么需要：相对论要求粒子数可变（产生、湮灭）",
+        "Fock 空间 = 「所有粒子数的态并列」",
+        "两种统计 = 两种对易关系（对易 vs 反对易）",
+        "「占据数」视角：|n₁n₂…⟩ 比「第 i 个粒子的坐标」更基本"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 4,
+        "line_end": 15
+      },
+      "fill_hint": "「假设给了什么 / 结论为什么成立」两段；用「波函数升格为算子 + 占据数视角」讲清；给两种统计的分布对照（与 M1 接口）。",
+      "content": "**切片给了 Fock 空间与两种对易关系**。理解的关键是**「波函数升格为算子」**。\n\n**假设给了什么。** 一次量子化里，**波函数 $\\psi(\\mathbf x)$ 是一个数（复值函数）**；$\\lvert\\psi(\\mathbf x)\\rvert^{2}$ 是概率密度。\n\n**结论为什么因此成立。** 二次量子化把**同一个符号**变成**算子**：\n\n$$\\psi(\\mathbf x)\\ \\longrightarrow\\ \\hat\\phi(\\mathbf x)=\\sum_{\\mathbf p}\\left(\\hat a_{\\mathbf p}e^{i\\mathbf p\\mathbf x}+\\hat a^{\\dagger}_{\\mathbf p}e^{-i\\mathbf p\\mathbf x}\\right).$$\n\n**它的作用**：**$\\hat\\phi^{\\dagger}(\\mathbf x)$ 在 $x$ 处「造」一个粒子**、$\\hat\\phi(\\mathbf x)$ 「灭」一个。**所以「粒子数」不再是参数，而是算子的结果** ✅。\n\n**「占据数」视角（这是最实用的图像）**：\n\n| | 一次量子化 | 二次量子化 |\n|---|---|---|\n| 状态标签 | 第 $i$ 个粒子的坐标 $\\mathbf x_i$ | **占据数** $n_1,n_2,\\ldots$ |\n| 粒子身份 | **区分**（可以问「哪个粒子在哪」） | **不可区分**（只有「某态有几个」） |\n| 对称性 | 要手工对称化 | **自动**（由 $\\hat a$ 的代数保证） |\n\n**「占据数」为什么是对的（关键一击）**：**量子粒子本来就是不可区分的**——**所以「哪个粒子在哪」根本不是可观测的**。**$|n_1n_2\\cdots\\rangle$ 只记录「每个态有几个」，这正是物理上合法的问题** ✅。\n\n**两种统计的「一句话差别」**：\n\n$$\\text{玻色}:\\ [\\hat a,\\hat a^{\\dagger}]=1\\ \\Longrightarrow\\ \\text{同态可多占};\\qquad \\text{费米}:\\ \\{\\hat a,\\hat a^{\\dagger}\\}=1\\ \\Longrightarrow\\ \\text{同态最多一个}.$$\n\n**它的物理后果（最有价值的两条）**：\n\n1. **玻色子的集体行为**：激光、超流、玻色–爱因斯坦凝聚（**同态多占 ⇒ 宏观占据**）；\n2. **费米子的排斥**：原子壳层、金属的费米海、白矮星的电子简并压（**同态一个 ⇒ 逐级填充**）。\n\n**与 `M1` 统计力学的连接**：**这两种占据规则直接给出两种统计分布**：\n\n| 统计 | 分布 | 公式 |\n|---|---|---|\n| 玻色–爱因斯坦 | $\\bar n=\\dfrac{1}{e^{\\beta(E-\\mu)}-1}$ | 分母 $-1$ |\n| 费米–狄拉克 | $\\bar n=\\dfrac{1}{e^{\\beta(E-\\mu)}+1}$ | 分母 $+1$ |\n| （经典极限） | 麦克斯韦–玻尔兹曼 | $e^{-\\beta(E-\\mu)}$ |\n\n**记这个图像**：**二次量子化 = 「波函数变成算子」**；状态用**占据数**标记（因为粒子不可区分）；两种对易关系给出两种统计；**玻色子可堆积（激光）、费米子排斥（物质稳定）**。",
+      "links": [
+        "F1",
+        "F2",
+        "F4",
+        "M1",
+        "L2",
+        "L3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L1:second-quantization.proof",
+      "type": "proof",
+      "subject": "second-quantization",
+      "title": "推导骨架：从两种对易关系到两套维数（四步）",
+      "keywords": [
+        "第一步：由 [a,a†]=1 得 a|n⟩ = √n |n−1⟩、a†|n⟩ = √(n+1)|n+1⟩",
+        "第二步：玻色子 n 可任意大 ⇒ 每个态是「无上限的盒子」",
+        "第三步：n 个不可区分粒子放入 d 个盒子（可重复）⇒ C(n+d−1,d−1)",
+        "第四步：费米子 {a,a†}=1 得 a†a†=0 ⇒ 每盒最多 1 个 ⇒ C(d,n)",
+        "易错点：玻色子维数用 C(d,n)（那是「每盒最多一」的错念）；费米子忘了反对称",
+        "数值校核：d=3 时玻色 1,3,6,10,15；费米 1,3,3,1,0"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 4,
+        "line_end": 15
+      },
+      "fill_hint": "四步骨架；第一步的 √n 因子与第四步的「反对易 ⇒ 最多一个」是两个核心；给 d=3 的两套实测；易错点含「玻色维数用错组合数」。",
+      "content": "**推导骨架**（四步，每步给理由）。\n\n**第一步：玻色子的升降规则。**\n\n由 $[\\hat a,\\hat a^{\\dagger}]=1$ 与 $\\lvert n\\rangle\\propto(\\hat a^{\\dagger})^{n}\\lvert0\\rangle$：\n\n$$\\hat a\\lvert n\\rangle=\\sqrt n\\,\\lvert n-1\\rangle,\\qquad \\hat a^{\\dagger}\\lvert n\\rangle=\\sqrt{n+1}\\,\\lvert n+1\\rangle.$$\n\n**理由**：由对易关系可推出 $\\hat N\\hat a^{\\dagger}=\\hat a^{\\dagger}(\\hat N+1)$，于是 $\\hat a^{\\dagger}\\lvert n\\rangle$ 是 $\\hat N=n+1$ 的本征态；系数由**归一化**定出（$\\sqrt{n+1}$）✅。\n\n**关键**：**$\\sqrt n$ 的因子是必需的**（否则态不正则）——**这与 `F4` 的 $\\hat L_{\\pm}$ 用 $\\sqrt{l(l+1)-m(m+1)}$ 同型**。\n\n**第二步：$n$ 无上限。**\n\n**理由**：$[\\hat a,\\hat a^{\\dagger}]=1$ 没有阻止 $\\hat a^{\\dagger}$ 反复作用 ⇒ **$n=0,1,2,\\ldots$ 无上限** ✅。\n\n**第三步：玻色子的维数（组合计数）。**\n\n$n$ 个**不可区分**的粒子放入 $d$ 个态（**可重复**）——这是「组合」问题：\n\n$$\\text{维数}=\\binom{n+d-1}{d-1}.$$\n\n**理由**：这是「隔板法」（stars and bars）——把 $n$ 个球与 $d-1$ 个隔板排列。\n\n**实测（$d=3$）**：\n\n| $n$ | $\\binom{n+2}{2}$ |\n|---|---|\n| $0$ | $1$【已核验:1|comb(2,2)】 |\n| $1$ | $3$【已核验:3|comb(3,2)】 |\n| $2$ | $6$【已核验:6|comb(4,2)】 |\n| $3$ | $10$【已核验:10|comb(5,2)】 |\n\n**第四步：费米子的维数。**\n\n由 $\\{\\hat a,\\hat a^{\\dagger}\\}=1$：\n\n$$\\hat a^{\\dagger}\\hat a^{\\dagger}=\\frac12\\left\\{\\hat a^{\\dagger},\\hat a^{\\dagger}\\right\\}=0\\ \\Longrightarrow\\ \\text{同态最多一个}.$$\n\n于是从 $d$ 个态里**选** $n$ 个（**不重复**）：\n\n$$\\text{维数}=\\binom{d}{n},\\qquad n>d\\ \\Longrightarrow\\ \\text{维数}=0.$$\n\n**实测（$d=3$）**：$1,3,3,1,0$【已核验:0|comb(3,4)】 ✅\n\n**依赖链**：对易关系 → 升降规则（第一步）→ $n$ 的上限（第二步/第四步）→ 组合计数（第三步/第四步）。\n\n**易错点**：\n\n1. **玻色子维数写成 $\\binom{d}{n}$**：那是「每盒最多一」（费米）的计数。**玻色子可重复，所以是 $\\binom{n+d-1}{d-1}$**；\n2. **费米子忘了反对称**：$\\binom{d}{n}$ 的「选」是**组合**（不是排列）——因为**交换不产生新态**（反对称）；\n3. **$\\sqrt n$ 因子的来源**：它是归一化常数（不是物理输入）；\n4. **$d\\to\\infty$（连续动量）**：组合数公式退化，改用「每个 $\\mathbf p$ 独立的占据数」的连续描述。",
+      "links": [
+        "L1",
+        "F4",
+        "F2",
+        "M1"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L1:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "检验题：3 个态里放 4 个粒子有多少种方式？",
+      "keywords": [
+        "可算题：d=3 个单粒子态，放 n=4 个粒子，玻色与费米各有多少态？",
+        "答案：玻色 15（C(4+2,2)）；费米 0（C(3,4)=0，泡利原理禁掉）",
+        "追问：n=2 呢？（玻色 6、费米 3）",
+        "再问：费米子 n=3 呢？（1——三个态各放一个）",
+        "陷阱：把费米子算成「有态」（应该为 0）"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 4,
+        "line_end": 15
+      },
+      "fill_hint": "从维数公式变来的检验题；三问给 15/0/6；延伸给「可区分 vs 玻色 vs 费米」的三方对照（81/15/0）并连到 M3 的熵。",
+      "content": "**题**：单粒子有 $d=3$ 个态，放 $n=4$ 个粒子。\n\n1. 玻色子有多少个态？\n2. 费米子呢？\n3. $n=2$ 时两者各是多少？\n\n**答案**：\n\n1. **玻色子**（可重复）：\n\n$$\\binom{n+d-1}{d-1}=\\binom{4+2}{2}=15$$【已核验:15|comb(6,2)】\n\n2. **费米子**（每态最多一个）：\n\n$$\\binom{d}{n}=\\binom{3}{4}=\\mathbf{0}$$【已核验:0|comb(3,4)】\n\n**没有这样的态** ✅——**这是泡利原理**（`L1:pauli-violation.counterexample`）。\n\n3. $n=2$：玻色 $\\binom{2+2}{2}=6$【已核验:6|comb(4,2)】；费米 $\\binom{3}{2}=3$【已核验:3|comb(3,2)】。\n\n**易错点**：\n\n- **把费米子算成「有态」**：$\\binom{3}{4}$ 在组合意义下为 $0$（**不是 $-1$ 也不是「无穷」**）；\n- **玻色子用 $\\binom{d}{n}$**：那是费米计数。**玻色子可重复 → $\\binom{n+d-1}{d-1}$**；\n- **忘了「不可区分」**：若粒子可区分，应是 $d^{n}=3^{4}=81$【已核验:81|3**4】（**差得多**）。\n\n**延伸（三个计数的对照，$d=3$、$n=4$）**：\n\n| 情形 | 公式 | 值 |\n|---|---|---|\n| 可区分粒子 | $d^{n}$ | $81$【已核验:81|3**4】 |\n| 不可区分、玻色 | $\\binom{n+d-1}{d-1}$ | $15$【已核验:15|comb(6,2)】 |\n| 不可区分、费米 | $\\binom{d}{n}$ | $0$【已核验:0|comb(3,4)】 |\n\n**这张表说明「不可区分」带来的巨大压缩**：$81\\to15$（玻色）、$81\\to0$（费米）。**而「$0$」是量子力学最强的约束之一。**\n\n**与 `M3` 的连接**：**熵 $S=k_{B}\\ln\\Omega$**——**$\\Omega$ 就是这张表的数**。**所以「三种统计」给出三个不同的熵，这正是「统计力学三种分布」的来源**（`M1` 的玻色/费米分布）。",
+      "links": [
+        "L1",
+        "M1",
+        "M3",
+        "F4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "L1:general.viz",
+      "type": "viz",
+      "subject": "general",
+      "title": "演示槽位：Fock 空间与两种统计的态计数",
+      "keywords": [
+        "模块 fock-counting（档1 前端直渲）",
+        "模式①：d=3 个态、n 个粒子的态数（三种统计对比曲线）",
+        "模式②：占据数图示（玻色允许堆积、费米每态最多一）",
+        "模式③：n>d 时费米态数归零（泡利原理）",
+        "invariant：费米态数 = C(d,n)（n>d 时为 0）；玻色 = C(n+d−1,d−1)",
+        "预置：d∈{2,3,4,5}、n∈{0,…,8}"
+      ],
+      "tex_ref": {
+        "file": "notebook/L_Feyman.tex",
+        "line_start": 4,
+        "line_end": 15
+      },
+      "fill_hint": "档1 依据：组合数都是显式可算，前端可算；invariant 用两条组合恒等式（含 n>d 时为 0）。",
+      "content": "**档1 演示**（前端直渲），模块 `fock-counting`。\n\n**模式① `state-counting`**：画三种统计的态数对 $n$（$d$ 固定）：\n\n- **可区分**：$d^{n}$（指数增长）；\n- **玻色**：$\\binom{n+d-1}{d-1}$（多项式增长）；\n- **费米**：$\\binom{d}{n}$（**先增后归零**）。\n\n**让「三种统计的差别」一眼可见** ✅。\n\n**模式② `occupancy-diagram`**：画占据数图示：\n- 玻色：同一个态可以有很多点堆叠；\n- 费米：每个态最多一个点。\n\n**模式③ `pauli-cutoff`**：拖 $n$ 超过 $d$，费米态数的曲线**突然降到 0**。**这就是泡利原理的图像。**\n\n**恒等式（给前端 invariant）**：\n\n$$\\Omega_{\\text{费米}}=\\binom{d}{n}\\ (=0\\ \\text{当}\\ n>d),\\qquad \\Omega_{\\text{玻色}}=\\binom{n+d-1}{d-1}.$$\n\n**两条都是严格等式**（组合恒等式）；**实现正确时，$n>d$ 处必须精确为 0**（不是「接近 0」）。\n\n**参数契约**：\n\n- 预置：$d\\in\\{2,3,4,5\\}$、$n\\in\\{0,\\ldots,8\\}$；\n- 与 `L1:probe1` 的数值（$d=3$、$n=4$ 时 $15/0$）保持一致。",
+      "links": [
+        "L1",
+        "M1",
+        "M3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}

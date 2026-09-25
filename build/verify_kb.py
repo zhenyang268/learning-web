@@ -62,8 +62,18 @@ SAFE_ENV = {
     "sqrt": math.sqrt, "pi": math.pi, "e": math.e, "exp": math.exp,
     "log": math.log, "log2": math.log2, "log10": math.log10,
     "sin": math.sin, "cos": math.cos, "tan": math.tan,
+    # 双曲（2026-09-25 K4/M1 实测：统计力学的 Z=1/(2 sinh(βħω/2)) 需要）
+    "sinh": math.sinh, "cosh": math.cosh, "tanh": math.tanh,
+    # 反三角与角度换算（2026-09-25 J3 实测：此前缺白名单，被迫把角度断言
+    # 改写成「其三角函数值」这种绕行写法；补上后可直接写 asin/atan/degrees）
+    "asin": math.asin, "acos": math.acos, "atan": math.atan,
+    "atan2": math.atan2, "degrees": math.degrees, "radians": math.radians,
     "gamma": math.gamma, "lgamma": math.lgamma, "erf": math.erf,
     "erfc": math.erfc, "factorial": math.factorial, "inf": math.inf,
+    # 组合与连乘（2026-09-25 L1 实测：Fock 空间态计数 C(n+d-1,d-1) / C(d,n) 需要）
+    "comb": math.comb, "perm": math.perm, "prod": math.prod,
+    "asinh": math.asinh, "acosh": math.acosh, "atanh": math.atanh,
+    "deg": math.degrees,
     # 模型常写 math.pi / math.sqrt(...) 前缀形式（2026-09-24 H5 实测 13 处）
     "math": math,
 }
