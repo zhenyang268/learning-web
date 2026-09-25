@@ -36,8 +36,7 @@
         "lie2.4",
         "lie2.6",
         "lie2.8",
-        "lie3.1",
-        "G2.1"
+        "lie3.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -70,8 +69,7 @@
         "lie1.12",
         "lie2.6",
         "lie3.2",
-        "B1.2",
-        "G2.1"
+        "B1.2"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -104,8 +102,7 @@
         "lie2.4",
         "lie2.6",
         "lie2.8",
-        "lie3.1",
-        "G2.1"
+        "lie3.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -139,7 +136,6 @@
         "lie2.8",
         "lie3.1",
         "lie3.2",
-        "G2.1",
         "G2.3"
       ],
       "generated_by": {
@@ -172,8 +168,7 @@
         "lie1.12",
         "lie2.6",
         "lie2.8",
-        "A4.1",
-        "G2.1"
+        "A4.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -204,8 +199,7 @@
         "lie1.5",
         "lie1.12",
         "lie2.6",
-        "lie2.8",
-        "G2.1"
+        "lie2.8"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -240,7 +234,6 @@
         "lie2.8",
         "lie3.1",
         "lie3.2",
-        "G2.1",
         "G2.3"
       ],
       "generated_by": {
@@ -275,8 +268,7 @@
         "lie3.2",
         "lie3.12",
         "lie3.17",
-        "I9.1",
-        "G2.1"
+        "I9.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",

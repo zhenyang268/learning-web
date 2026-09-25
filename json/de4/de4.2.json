@@ -33,8 +33,7 @@
         "de2.11",
         "de4.1",
         "de4.3",
-        "G1.1",
-        "G2.1"
+        "G1.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -65,8 +64,7 @@
         "de2.7",
         "de4.1",
         "de3.6",
-        "G1.1",
-        "G2.1"
+        "G1.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -98,7 +96,6 @@
         "de4.1",
         "de3.6",
         "G1.1",
-        "G2.1",
         "de4.3"
       ],
       "generated_by": {
@@ -130,8 +127,7 @@
         "de2.11",
         "de2.6",
         "de4.1",
-        "G1.1",
-        "G2.1"
+        "G1.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -163,8 +159,7 @@
         "de2.11",
         "de3.3",
         "de4.1",
-        "G1.1",
-        "G2.1"
+        "G1.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -194,8 +189,7 @@
       "links": [
         "de4.1",
         "de2.6",
-        "G1.1",
-        "G2.1"
+        "G1.1"
       ],
       "generated_by": {
         "model": "glm-5.3-flashx",
@@ -227,7 +221,6 @@
         "de3.6",
         "G1.1",
         "G1.2",
-        "G2.1",
         "de4.3"
       ],
       "generated_by": {
