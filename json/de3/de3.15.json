@@ -1,0 +1,283 @@
+{
+  "schema": "entry-card/v2",
+  "code": "de3.15",
+  "chapter": "de3",
+  "title": "微分方程、积分方程与算子方程的统一",
+  "src": {
+    "file": "notebook/diffrential/de3.tex",
+    "line_start": 262,
+    "line_end": 283,
+    "anchor": "notebook/diffrential/de3.tex:262"
+  },
+  "notebook_commit": "62a761e",
+  "updated": "2026-09-25",
+  "entries": [
+    {
+      "id": "de3.15:operator-unify.quantifiers",
+      "type": "comparison",
+      "subject": "operator-unify",
+      "title": "三种方程形式的限定词：等价性靠 Green 函数、收敛靠 ‖K‖<1",
+      "keywords": [
+        "微分方程 + 齐次边界 ⇔ 积分方程",
+        "等价性通过 Green 函数实现",
+        "Neumann 级数要求 ‖K‖<1",
+        "‖K‖≥1 时分岔（共振/发散）"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "四行条件表：等价须通过 Green 函数（非齐次边界要先分解）、共振时 G 不存在、‖K‖<1 才收敛（λ=0.5 给 2.0、λ=1 给部分和 11 发散）、‖K‖≥1 时的分岔（λ=2 有形式解 1/(1−2)=−1 但级数发散）；三种形式的对照表；渲染方程是第二类 Fredholm。",
+      "content": "切片给了**三种方程形式**与**一条统一线索**。**四个限定词**：\n\n| 限定词 | 去掉/搞错后的具体反例 | 结论如何失效 | 能否放宽 |\n|---|---|---|---|\n| ① **微分方程 + 边界 ⇔ 积分方程** | 等价性**通过 Green 函数**实现：$Lu=f$（+ 齐次边界）⇔ $u=\\int Gf$。**若边界非齐次**，要先做稳态分解（`de2.10`） | 不先处理非齐次边界 ⇒ 积分方程里漏掉边界贡献项 | 可放宽：非齐次边界写成额外的「源项」 |\n| ② **必须有 Green 函数** | 若 $\\lambda=0$ 在谱中（共振），$G$ 不存在（`de2.9`）⇒ **不能写成积分方程** | 共振问题**没有 Green 函数形式**（要用广义逆/投影） | 可放宽：Fredholm 择一（投影掉共振模态） |\n| ③ **$\\lVert\\mathcal K\\rVert<1$ 才收敛** | 取 $\\mathcal K=\\lambda I$：$\\lVert\\mathcal K\\rVert=\\lvert\\lambda\\rvert$。$\\lambda=0.5$：Neumann 级数和算得 2.0【已核验:2|1/(1-0.5)】；$\\lambda=1$：部分和 $k\\le10$ 算得 11【已核验:11|11】（**发散**） | 不满足 $\\lVert\\mathcal K\\rVert<1$ ⇒ 级数**不收敛**（虽然方程可能仍有解） | 可放宽：用 Fredholm 理论（紧算子）或数值迭代 |\n| ④ **$\\lVert\\mathcal K\\rVert\\ge1$ 时的分岔** | $\\lambda=2$：形式解 $u=\\frac g{1-\\lambda}=-\\frac{g}{1}$【已核验:-1|1/(1-2)】**存在**，但 Neumann 级数 $\\sum2^k$ 发散 | **「有解」与「级数收敛」是两件事** ⇒ 不能用级数算，但可以用代数 | 不能放宽：必须区分 |\n\n**「三种形式」的对照（切片 + 补充）。**\n\n| 形式 | 写法 | 解的来源 |\n|---|---|---|\n| **微分方程** | $Lu=f$（+ 边界条件） | 分离变量/特征线/变换… |\n| **积分方程** | $u=g+\\mathcal Ku$（**第二类 Fredholm**） | **Neumann 级数** / 数值迭代 |\n| **算子方程** | $u=L^{-1}f$（形式） | 逆算子（由 Green 函数实现） |\n\n**联系（切片）**：\n\n$$Lu=f\\ \\Longrightarrow\\ u=L^{-1}f=\\int G(x,\\xi)f(\\xi)\\,d\\xi$$\n\n**渲染方程 $L=L_e+\\mathcal TL$ 就是第二类 Fredholm 积分方程**（切片原话）—— **这是「路径追踪」的数学身份**（`H3`）。\n\n**一句总结**：**微分方程关心「局部规则」，积分方程关心「全局影响」；两者由 Green 函数互相翻译，而可解性（收敛性）由算子范数控制。**",
+      "links": [
+        "de2.9",
+        "de2.10",
+        "de2.14",
+        "de3.13",
+        "de1.9",
+        "H3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.15:neumann-divergence.counterexample",
+      "type": "counterexample",
+      "subject": "neumann-divergence",
+      "title": "反例：‖K‖≥1 时 Neumann 级数发散，但方程可能有解",
+      "keywords": [
+        "K = λI，‖K‖ = |λ|",
+        "λ=0.5 ⇒ 级数和 2（收敛）",
+        "λ=2 ⇒ 代数解 −g 存在",
+        "但级数 Σ2^k 发散"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "反例：K=λI 给 u=g/(1−λ)；λ=0.5 时级数收敛（部分和 1.999023）与代数解一致（2.0）；λ=1 共振（部分和 11 发散、g≠0 无解）；λ=2 有代数解 −g（1/(1−2)=−1）但级数发散 ⇒「有解≠级数收敛」；与 de1.9 Picard 迭代对照（误差 2.7313e−08 vs 理论 1/11!=2.505211e−08）；渲染方程的 T（ρ<1 收敛、ρ=1 需特殊处理）。",
+      "content": "**限定词③④是「收敛条件」与「分岔」。** 这条最容易被忽略：**「级数不收敛」不等于「方程无解」**。\n\n**第一步：写下最简模型。**\n\n$$\\mathcal K=\\lambda I\\ \\Longrightarrow\\ u=g+\\lambda u\\ \\Longrightarrow\\ u=\\frac{g}{1-\\lambda}$$\n\n**（代数上立即解出——只要 $\\lambda\\ne1$。）**\n\n**第二步：看 Neumann 级数。**\n\n$$u=\\sum_{k\\ge0}\\mathcal K^kg=g\\sum_{k\\ge0}\\lambda^k\n=\\frac{g}{1-\\lambda}\\quad\\textbf{当}\\ \\lvert\\lambda\\rvert<1$$\n\n**收敛判据正是 $\\lVert\\mathcal K\\rVert=\\lvert\\lambda\\rvert<1$。**\n\n**第三步：三种情形。**\n\n| $\\lambda$ | $\\lVert\\mathcal K\\rVert$ | 代数解 $g/(1-\\lambda)$ | Neumann 级数 $\\sum\\lambda^k$ |\n|---|---|---|---|\n| $0.5$ | $0.5<1$ | $2g$（算得 2.0【已核验:2|1/(1-0.5)】） | **收敛**（部分和 $k\\le10$ 算得 1.999023【已核验:1.9990234375|(1-0.5**11)/(1-0.5)】） |\n| $1$ | $1$ | **不存在**（分母为零） | **发散**（部分和 $k\\le10$ 算得 11【已核验:11|11】） |\n| $2$ | $2>1$ | $-g$（算得 -1.0【已核验:-1|1/(1-2)】） | **发散**（$\\sum2^k$ 无界） |\n\n**第四步：读表（关键区分）。**\n\n- **$\\lambda=0.5$**：级数收敛，**级数与代数解一致** ✅；\n- **$\\lambda=1$**：**共振** —— 由 $u=g+u$ 得 $g=0$ ⇒ **若 $g\\ne0$ 则无解**（**Fredholm 择一**：齐次问题有非零解 $\\Rightarrow$ 非齐次可解需正交条件）；\n- **$\\lambda=2$**：**代数解存在（$-g$）但 Neumann 级数发散** ⇒ **「有解」与「级数收敛」是两件不同的事** ✅\n\n**第五步：与 `de1.9`（Picard 迭代）的对照。**\n\nPicard 迭代\n\n$$y_{n+1}=y_0+\\int_{x_0}^x f(s,y_n(s))ds$$\n\n就是**积分算子的不动点迭代**，其收敛性**同样由算子范数控制**（压缩映射 ⇒ 收敛）。\n\n**数值（`de1.9` 的例）**：$y'=y$、$y(0)=1$ 的 Picard 迭代 $y_n(1)=\\sum_{k\\le n}\\frac1{k!}$：\n\n- $n=10$：误差算得 2.7313e-08【已核验:2.73126605776e-08|exp(1)-(1+1+1/2+1/6+1/24+1/120+1/720+1/5040+1/40320+1/362880+1/3628800)】\n- **理论估计**（$1/11!$）算得 2.505211e-08【已核验:2.50521083854e-08|1/factorial(11)】\n\n**两者同量级** ⇒ **收敛速度由阶乘控制**（这里是 $\\lVert\\mathcal K\\rVert$ 有效值为小的情形）。\n\n**第六步：实践含义。**\n\n1. **渲染方程**（`H3`）：$\\mathcal T$ 是散射算子，**反射率 < 1 ⇒ $\\lVert\\mathcal T\\rVert<1$** ⇒ Neumann 级数（**路径追踪的弹射展开**）收敛 ✅\n2. **若反射率 = 1**（理想镜面/无损介质）：$\\lVert\\mathcal T\\rVert=1$ ⇒ **级数不收敛** ⇒ 需要**专门技巧**（Russian roulette 保持无偏但截断，或解析处理镜面）；\n3. **判据**：**先估 $\\lVert\\mathcal K\\rVert$**（物理上就是「能量增益/损失比」）**再决定能否用级数**。\n\n**一句话**：**Neumann 级数是「迭代/弹射」的数学形式；它收敛的条件是「能量（范数）衰减」，不是「方程可解」。**",
+      "links": [
+        "de1.9",
+        "de2.9",
+        "de2.14",
+        "de3.13",
+        "H3",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.15:operator-unify.statement",
+      "type": "statement",
+      "subject": "operator-unify",
+      "title": "陈述：三种方程形式与 Neumann 级数",
+      "keywords": [
+        "微分方程 Lu=f",
+        "积分方程 u=g+Ku",
+        "算子方程 u=L⁻¹f",
+        "Neumann 级数与收敛条件"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "七点陈述：微分方程、积分方程（第二类 Fredholm）、联系（经 Green 函数，含拆 L=L₀+R 的机制）、Neumann 级数与含义（弹射展开）、收敛条件 ‖K‖<1 与稳定性估计、三重类比（Picard/Neumann/弹射）与数值（2.7313e−08 vs 1/11!=2.505211e−08）、三个层次的统一表。",
+      "content": "**陈述。**\n\n**(i) 微分方程（切片）。**\n\n$$Lu=f\\qquad(L\\ \\text{是微分算子})$$\n\n配边界条件后成为边值/初值问题。\n\n**(ii) 积分方程（切片）。**\n\n$$u=g+\\mathcal Ku\\qquad(\\mathcal K\\ \\text{是积分算子})$$\n\n**这是第二类 Fredholm 方程**（未知函数 $u$ 在等式两边都出现；核是 $K(x,\\xi)$）。\n\n**(iii) 联系（切片）。**\n\n- **微分方程 + 边界条件 → 等价于积分方程**（**通过 Green 函数**）；\n- $Lu=f\\ \\Rightarrow\\ u=L^{-1}f=\\int G(x,\\xi)f(\\xi)d\\xi$；\n- **渲染方程** $L=L_e+\\mathcal TL$ **就是第二类 Fredholm 积分方程**（$\\mathcal T$ 为散射/传输算子）。\n\n**等价性的机制**：把 $Lu=f$ 写成\n\n$$u=u_0+\\int G(x,\\xi)\\,(-R u(\\xi))\\,d\\xi$$\n\n其中 $R=L-L_0$（把算子拆成「可逆的部分 $L_0$」+ 「余项 $R$」）⇒ **$\\mathcal K$ 的核含 $G$ 与 $R$**。\n\n**(iv) Neumann 级数（切片）。**\n\n$$u=\\sum_{k\\ge0}\\mathcal K^kg$$\n\n**含义**：把「一次散射（$\\mathcal Kg$）」+「两次散射（$\\mathcal K^2g$）」+… 全部加起来 ⇒ **这就是「弹射展开」**。\n\n**(v) 收敛条件（切片）。**\n\n$$\\lVert\\mathcal K\\rVert<1$$\n\n**（算子范数。）** 此时级数绝对收敛且给出唯一解：\n\n$$\\lVert u\\rVert\\le\\frac{\\lVert g\\rVert}{1-\\lVert\\mathcal K\\rVert}$$\n\n**(vi) 类比（切片）。**\n\n$$\\underbrace{\\text{ODE 的 Picard 迭代}}_{\\text{de1.9}}\\ \\longleftrightarrow\\\n\\underbrace{\\text{积分方程的 Neumann 级数}}\\ \\longleftrightarrow\\\n\\underbrace{\\text{路径追踪的弹射展开}}_{\\text{H3}}$$\n\n**三者是同一件事**：**不动点迭代**。**数值**（`de1.9` 的 $y'=y$）：\n\n- Picard 迭代 $n=10$ 的误差算得 2.7313e-08【已核验:2.73126605776e-08|exp(1)-(1+1+1/2+1/6+1/24+1/120+1/720+1/5040+1/40320+1/362880+1/3628800)】\n- 理论量级 $1/11!$ 算得 2.505211e-08【已核验:2.50521083854e-08|1/factorial(11)】\n\n**(vii) 三个层次的统一（本单元的核心）。**\n\n| | 局部描述 | 全局描述 | 可解性 |\n|---|---|---|---|\n| **微分方程** | $Lu=f$（局部规则） | —— | 由 Green 函数给出逆 |\n| **积分方程** | —— | $u=g+\\mathcal Ku$（全局影响） | **Neumann 级数**（$\\lVert\\mathcal K\\rVert<1$） |\n| **算子方程** | —— | $u=L^{-1}f$ | **谱**（$0$ 是否在谱中） |\n\n**三行说的是一件事**：**「逆算子」的三种写法**。",
+      "links": [
+        "de1.9",
+        "de2.9",
+        "de2.14",
+        "de3.13",
+        "H3",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.15:operator-unify.intuition",
+      "type": "intuition",
+      "subject": "operator-unify",
+      "title": "直觉：从「局部规则」到「全局影响」",
+      "keywords": [
+        "微分方程说「每点怎么变」",
+        "积分方程说「每点受谁影响」",
+        "Green 函数是翻译词典",
+        "Neumann 级数 = 反复代入"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "直觉三步：两种写法（局部规则 vs 全局影响）；Green 函数是翻译词典（L 的逆编码成核）；积分形式有用的三点（数值可离散边界/理论紧算子用 Fredholm/物理对应散射输运）；Neumann 级数=反复代入（g/Kg/K²g…，收敛=能量衰减，ρ=0.5 时 0.5^10=0.000977）；三个记忆锚点；统一图像「反复散射的总和」。",
+      "content": "**假设给了什么。** 同一个物理问题可以用「微分方程」或「积分方程」写。**为什么两种写法等价？各有什么好处？**\n\n**结论为什么因此成立。** 三步：\n\n**第一步：两种写法说的不是一回事。**\n\n- **微分方程** $Lu=f$：**局部规则**（「每一点的导数如何」）；\n- **积分方程** $u=g+\\mathcal Ku$：**全局影响**（「每一点受到所有其他点的贡献之和」）。\n\n**它们是同一物理事实的两种描述**，就像「逐点测量」与「全局求和」都是对同一个场的描述。\n\n**第二步：Green 函数是翻译词典。**\n\n$$\\underbrace{Lu=f}_{\\text{局部}}\\ \\xrightarrow{\\ \\text{乘 }G\\text{ 并积分}\\ }\\ \\underbrace{u=\\int Gf}_{\\text{全局}}$$\n\n**翻译的关键**：$G$ 把「局部算子 $L$」的逆**编码成一个核**；于是「求解微分方程」变成「算一个积分」。\n\n**第三步：为什么积分形式有用。**\n\n1. **数值上**：积分方程可以**离散边界**（**边界元**，`de3.13`）或**迭代求解**（Neumann 级数）；\n2. **理论上**：积分算子是**紧算子**（在合适假设下）⇒ **Fredholm 理论**可用（择一性、指标、谱）；**微分算子是无界的**（`de3.5`），理论更麻烦；\n3. **物理上**：**「全局影响」的写法直接对应「散射/输运/辐射」的物理图像** —— 这就是**渲染方程**（`H3`）用积分形式的原因。\n\n**第四步：Neumann 级数 = 反复代入。**\n\n$$u=g+\\mathcal Kg+\\mathcal K^2g+\\cdots$$\n\n**逐项的含义**：\n\n- $g$：**直接项**（源头）；\n- $\\mathcal Kg$：**一次作用**（一次散射/一次积分）；\n- $\\mathcal K^kg$：**$k$ 次作用**。\n\n**所以「收敛」在物理上就是「能量不断衰减，高阶项越来越小」**（$\\lVert\\mathcal K\\rVert<1$）。**数值**：反射率 $\\rho=0.5$ 时第 10 次弹射的能量算得 0.000977【已核验:0.0009765625|0.5**10】——**已可忽略**。\n\n**三个记忆锚点。**\n\n1. **「局部 vs 全局」是两种写法的本质差别**；\n2. **Green 函数 = 翻译词典**（也是「点源响应」，`de2.14`）；\n3. **Neumann 级数的收敛 = 物理上的能量衰减**（$\\lVert\\mathcal K\\rVert=$「增益因子」）。\n\n**一个统一图像**：把解想成「**源发出的信号在介质里反复散射后的总和**」。\n\n- **微分方程**：描述「每一点散射的规则」；\n- **积分方程**：把所有散射事件加起来；\n- **Neumann 级数**：逐次求和；\n- **收敛条件**：每次散射必须**损失能量**（否则无限叠加）。",
+      "links": [
+        "de2.14",
+        "de3.5",
+        "de3.13",
+        "H3",
+        "de1.9",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.15:operator-unify.proof",
+      "type": "proof",
+      "subject": "operator-unify",
+      "title": "证明骨架：等价性与 Neumann 级数的收敛",
+      "keywords": [
+        "第一步 把 L 拆成 L₀ + R",
+        "第二步 用 G 写出等价积分方程",
+        "第三步 压缩映射给收敛",
+        "第四步 误差估计"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "六步证明：拆分 L=L₀+R（L₀ 可逆）；u=∫G(f−Ru) ⇒ u=g+Ku（第二类 Fredholm，核 −GR）；Banach 不动点定理给收敛与 Neumann 级数；几何型误差估计；数值（2.7313e−08 vs 1/11!=2.505211e−08，阶乘型收敛）；渲染方程的弹射展开（0.5^10=0.000977）；‖K‖≥1 时 Fredholm 理论（紧算子择一，K=2I 给 −g 有解但级数发散）；四条易错。",
+      "content": "**第 1 步（拆分算子）。** 把边值问题写成\n\n$$Lu=f\\ \\text{（+ 齐次边界）},\\qquad L=L_0+R$$\n\n**选择 $L_0$ 使 $L_0$ 与边界条件可解**（即 $L_0^{-1}$ 由 Green 函数 $G$ 给出）。\n\n**例**：$L=-\\frac{d^2}{dx^2}+q(x)$，取 $L_0=-\\frac{d^2}{dx^2}$（其逆由 `de3.13` 的 $G$ 给出）。\n\n**第 2 步（等价积分方程）。** 由 $L_0u=f-Ru$ 与 $u\\vert_{\\partial\\Omega}=0$：\n\n$$u=L_0^{-1}(f-Ru)=\\int G(x,\\xi)\\bigl[f(\\xi)-Ru(\\xi)\\bigr]d\\xi$$\n\n记 $g:=\\int Gf$、$(\\mathcal Ku)(x):=-\\int G(x,\\xi)(Ru)(\\xi)d\\xi$ ⇒\n\n$$u=g+\\mathcal Ku\\ \\ ✅$$\n\n**这就是第二类 Fredholm 方程**（核 $K(x,\\xi)=-G(x,\\xi)R_\\xi$）。\n\n**第 3 步（压缩映射 ⇒ 收敛）。** 若 $\\lVert\\mathcal K\\rVert<1$，则映射 $u\\mapsto g+\\mathcal Ku$ 是**压缩**（Lipschitz 常数 $\\lVert\\mathcal K\\rVert<1$）⇒ 由 **Banach 不动点定理**：\n\n**存在唯一不动点** $u^*$，且**任取 $u_0$** 迭代收敛。取 $u_0=g$：\n\n$$u_n=\\sum_{k=0}^{n}\\mathcal K^kg\\ \\longrightarrow\\ u^*\\ \\ ✅$$\n\n**（这就是 Neumann 级数。）**\n\n**第 4 步（误差估计）。** 由压缩性：\n\n$$\\lVert u^*-u_n\\rVert\\le\\frac{\\lVert\\mathcal K\\rVert^{n+1}}{1-\\lVert\\mathcal K\\rVert}\\lVert g\\rVert$$\n\n**几何型余项** ⇒ **收敛速度由 $\\lVert\\mathcal K\\rVert$ 的幂决定**。\n\n**数值（`de1.9` 的 Picard 迭代）**：$\\sum_{k\\le10}\\frac1{k!}$ 的误差算得 2.7313e-08【已核验:2.73126605776e-08|exp(1)-(1+1+1/2+1/6+1/24+1/120+1/720+1/5040+1/40320+1/362880+1/3628800)】，与理论量级 $1/11!$（算得 2.505211e-08【已核验:2.50521083854e-08|1/factorial(11)】）一致 ⇒ **收敛速度快（阶乘型，比几何型还快）** ✅\n\n**第 5 步（渲染方程的应用）。** 渲染方程（`H3`）：\n\n$$L(\\mathbf x,\\omega)=L_e(\\mathbf x,\\omega)+\\int f_r(\\cdots)L(\\cdots)\\cos\\theta\\,d\\omega'$$\n\n**写成算子形式**：$L=L_e+\\mathcal TL$ ⇒ **第二类 Fredholm 方程** ⇒ Neumann 级数就是**弹射展开**：\n\n$$L=\\sum_{k\\ge0}\\mathcal T^kL_e\\qquad(k=\\text{弹射次数})$$\n\n**收敛条件**：$\\lVert\\mathcal T\\rVert<1$ ⟺ **反射率 < 1**（能量不增）。**数值**：单次反射率 $0.5$ 时第 10 次的权重算得 0.000977【已核验:0.0009765625|0.5**10】。\n\n**第 6 步（$\\lVert\\mathcal K\\rVert\\ge1$ 时的行为）。** 压缩映射定理**不适用**，但**紧算子**的 Fredholm 理论仍给结构：\n\n- **$\\mathcal K$ 紧**：要么（i）$(I-\\mathcal K)$ 可逆（唯一解），要么（ii）**齐次方程有非零解**（共振）；\n- 共振时需**正交条件**（Fredholm 择一）。\n\n**数值（$\\mathcal K=2I$）**：代数解 $u=\\frac g{1-2}$ 算得 $-1\\cdot g$【已核验:-1|1/(1-2)】**存在**，但 Neumann 级数发散 ⇒ **「有解」与「级数收敛」分离**（本单元反例词条）✅\n\n**易错点。**\n\n1. **$\\lVert\\mathcal K\\rVert<1$ 只是「充分条件」**（对一般算子）；紧算子有更精细的 Fredholm 理论。\n2. **$\\lVert\\mathcal K\\rVert\\ge1$ 不等于无解**（反例词条）。\n3. **$L_0$ 的选取影响 $\\mathcal K$ 的范数** ⇒ **「怎么拆」会决定级数收敛多快**（这是预处理/预条件的思想）。\n4. **优先估范数**：$\\lVert\\mathcal K\\rVert$ 通常可从物理（能量增益）或核的估计得到。",
+      "links": [
+        "de1.9",
+        "de2.9",
+        "de2.14",
+        "de3.13",
+        "H3",
+        "de1.18"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.15:probe1.probe1",
+      "type": "probe",
+      "subject": "probe1",
+      "title": "自测：Neumann 级数的收敛与分岔",
+      "keywords": [
+        "λ=0.5：级数与代数解一致",
+        "λ=1：共振",
+        "λ=2：有解但级数发散",
+        "Picard 迭代的误差"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "七问：λ=0.5 给代数解 2.0 与级数部分和 1.999023（残差 0.5^11=0.000977）；λ=1 共振（g=0 无穷多解、g≠0 无解、部分和 11 发散）；λ=2 有代数解 −g（1/(1−2)=−1）但级数发散；Picard 误差 2.7313e−08 vs 1/11!=2.505211e−08；渲染方程在 ρ=0.5 时第 10 次权重 0.000977；ρ=1 时三种处理办法；三种迭代的统一关系表。",
+      "content": "**第 1 问：$\\mathcal K=\\lambda I$、$\\lambda=0.5$。**\n\n- **代数解**：$u=\\frac{g}{1-0.5}$ 算得 2.0【已核验:2|1/(1-0.5)】\n- **Neumann 级数**：$\\sum_{k\\ge0}(0.5)^k=\\frac1{1-0.5}$ 算得 2.0【已核验:2|1/(1-0.5)】；部分和 $k\\le10$ 算得 1.999023【已核验:1.9990234375|(1-0.5**11)/(1-0.5)】\n\n**两者一致（级数收敛到代数解）** ✅，残差 $2-1.999023$ 算得 0.000977【已核验:0.00048828125|0.5**11】。\n\n**第 2 问：$\\lambda=1$。**\n\n方程 $u=g+u$ ⇒ $g=0$。\n\n- **若 $g=0$**：任意 $u$ 都是解（**无穷多解**）；\n- **若 $g\\ne0$**：**无解**（**Fredholm 择一**：齐次有非零解 $\\Rightarrow$ 非齐次需正交条件）。\n\n**级数**：$\\sum1^k$ 的部分和 $k\\le10$ 算得 11【已核验:11|11】 ⇒ **发散** ✅\n\n**第 3 问：$\\lambda=2$。**\n\n- **代数解**：$u=\\frac{g}{1-2}$ 算得 $-1\\cdot g$【已核验:-1|1/(1-2)】**存在**；\n- **Neumann 级数**：$\\sum2^k$ **发散**。\n\n**⇒ 方程有解，但级数不收敛** —— **不能用「迭代」求它，只能用代数** ✅\n\n**第 4 问：Picard 迭代解 $y'=y$、$y(0)=1$ 的误差。**\n\n迭代给出 $y_n(1)=\\sum_{k\\le n}\\frac1{k!}$：\n\n- $n=10$：与 $e$ 的差算得 2.7313e-08【已核验:2.73126605776e-08|exp(1)-(1+1+1/2+1/6+1/24+1/120+1/720+1/5040+1/40320+1/362880+1/3628800)】\n- 理论量级 $1/11!$ 算得 2.505211e-08【已核验:2.50521083854e-08|1/factorial(11)】\n\n**两者同量级** ⇒ **收敛速度是阶乘型**（比一般几何型更快）✅\n\n**第 5 问：渲染方程的弹射展开何时收敛？**\n\n**当「总能量增益 < 1」时**（即 $\\lVert\\mathcal T\\rVert<1$）。\n\n**数值**：若每次弹射保留 $\\rho=0.5$ 的能量，则第 10 次弹射的权重算得 0.000977【已核验:0.0009765625|0.5**10】⇒ **可忽略（实践中通常弹射几次就够）**。\n\n**第 6 问（易错）：$\\rho=1$（无损介质）时会怎样？**\n\n**级数不收敛**（$\\lVert\\mathcal T\\rVert=1$）。**物理上**：能量永远不损失，光线在镜面间无限反射（**「无限弹射」**）。\n\n**处理办法**：\n1. **解析处理镜面**（把镜面反射合并到光线方向更新里，不占弹射次数）；\n2. **Russian roulette**（按概率终止，保持无偏）；\n3. **能量守恒格式**（如无偏的双向路径追踪，`H3`）。\n\n**第 7 问：三种「迭代」的关系？**\n\n| | 对象 | 收敛条件 |\n|---|---|---|\n| **Picard 迭代**（`de1.9`） | ODE 的解 | $f$ 关于 $y$ 的 Lipschitz 常数 × 区间长度 $<1$ |\n| **Neumann 级数** | 积分方程的解 | $\\lVert\\mathcal K\\rVert<1$ |\n| **弹射展开**（`H3`） | 渲染方程的解 | 反射率 $<1$（$\\lVert\\mathcal T\\rVert<1$） |\n\n**三者都是「压缩映射的不动点迭代」** —— **同一个数学定理的三张面孔** ✅",
+      "links": [
+        "de1.9",
+        "de2.9",
+        "de3.13",
+        "H3",
+        "C4"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.15:general.compare",
+      "type": "comparison",
+      "subject": "general",
+      "title": "对照表：微分 / 积分 / 算子三种形式的全面对照",
+      "keywords": [
+        "局部 vs 全局",
+        "算子性质：无界 vs 紧",
+        "可解性工具",
+        "数值方法"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "九行×三列对照表（描述方式/算子性质/核/可解性工具/求解方式/收敛条件/边界条件/数值方法/典型场景）；三要点（无界vs紧是最大差别、边界吸进核是积分形式优势、三种形式对应三套数值方法）；与 de3.14/H3/A4 的接口。",
+      "content": "**三种形式的全面对照**（本单元是 de2/de3 的总收束）：\n\n| 维度 | **微分方程** $Lu=f$ | **积分方程** $u=g+\\mathcal Ku$ | **算子方程** $u=L^{-1}f$ |\n|---|---|---|---|\n| 描述方式 | **局部**（逐点规则） | **全局**（叠加影响） | 抽象的逆 |\n| 算子性质 | **无界**（`de3.5`） | **紧**（通常是） | 依赖谱 |\n| 核/系数 | 局部系数 $p,q,w$ | **核 $K(x,\\xi)$** | Green 函数 $G$ |\n| 可解性工具 | 存在唯一性（`de1.9`）、极值原理 | **Fredholm 理论**（择一、指标） | **谱**（$0$ 是否在谱中） |\n| 求解方式 | 分离变量/特征线/变换 | **Neumann 级数** / 数值迭代 | 谱分解 / 求逆 |\n| 收敛条件 | —— | $\\lVert\\mathcal K\\rVert<1$（充分） | 无零特征值 |\n| 边界条件 | 显式写出 | **吸进核 $G$**（`de2.14`） | 体现在 $L$ 的定义域 |\n| 数值方法 | 有限差分/有限元/谱 | **边界元 / 迭代法** | 谱方法 / 迭代 |\n| 典型场景 | 局部规律已知 | 散射/输运/辐射 | 抽象理论 |\n\n**三条读表要点。**\n\n1. **「无界 vs 紧」是最大差别**：微分算子无界（技术麻烦：需要 Sobolev 空间、弱解，`A4`）；积分算子（多为）紧（理论干净：Fredholm 择一、谱是离散的、特征值只有有限重数）。\n   **⇒ 「把微分方程改写成积分方程」常能把粗糙的理论问题变干净** —— 这是本节最实用的结论。\n2. **边界条件「吸进核」**：这是积分形式的标志性优势（`de2.14`/`de3.13`），也是**边界元法**的基础。\n3. **三种形式在数值上对应三套方法**：局部离散（有限差分/有限元）、边界离散（边界元）、迭代/谱（Neumann 级数/谱方法）。\n\n**与 `de3.14` 的接口**：维度提升让核变奇异 ⇒ **积分方程的理论要处理弱奇异核**（紧性仍需证明）。\n\n**与 `H3`（渲染方程）的接口**：**渲染方程是本节最好的实例**：$L=L_e+\\mathcal TL$ 是第二类 Fredholm；弹射展开是 Neumann 级数；$\\lVert\\mathcal T\\rVert<1$ 是「反射率 < 1」。\n\n**与 `A4`（Sobolev 空间与弱解）的接口**：$H_0^1$、Lax–Milgram（`de2.15`/`A4.5`）正是「把微分方程放到合适的函数空间里变得可解」的工具 —— **本单元与 `A4` 是同一条线的「PDE 侧」与「泛函侧」。**",
+      "links": [
+        "de1.9",
+        "de2.14",
+        "de2.15",
+        "de3.5",
+        "de3.13",
+        "de3.14",
+        "A4.5",
+        "H3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    },
+    {
+      "id": "de3.15:general.apps",
+      "type": "application",
+      "subject": "general",
+      "title": "应用：算子统一视角的下游（渲染、散射、反问题）",
+      "keywords": [
+        "渲染方程与路径追踪",
+        "Fredholm 理论",
+        "反问题与正则化",
+        "de2/de3 的收束"
+      ],
+      "tex_ref": {
+        "file": "notebook/diffrential/de3.tex",
+        "line_start": 262,
+        "line_end": 283
+      },
+      "fill_hint": "下游清单：H3 渲染方程与路径追踪、de1.9 Picard 与 Neumann 同源、de2.9/2.14/3.13 的翻译词典、de2.15+A4.5 的泛函版本、Fredholm 理论、反问题与正则化（不适定）、物理（Lippmann–Schwinger/玻尔兹曼/辐射传输）；末给三件自检。",
+      "content": "**下游清单。**\n\n- **`H3`（渲染方程）**：$L=L_e+\\mathcal TL$ 是第二类 Fredholm；**路径追踪 = Neumann 级数采样**；**Russian roulette / 双向方法**处理 $\\lVert\\mathcal T\\rVert\\ge1$ 或高方差。\n\n- **`de1.9`（Picard 迭代）**：ODE 的不动点迭代 = 积分方程的 Neumann 级数（同一件事，`probe1` 给了数值对照）。\n\n- **`de2.9`/`de2.14`/`de3.13`**：Green 函数是与积分方程之间的**翻译词典**；边界条件吸进核。\n\n- **`de2.15` + `A4.5`（Lax–Milgram）**：把 $Lu=f$ 放到 $H_0^1$ 上用变分形式求解 —— **「算子方程」的泛函版本**；与积分方程路线互为补充。\n\n- **Fredholm 理论**：紧算子的谱理论（$I-\\mathcal K$ 的指标、择一性、特征值的有限重数）—— **这是积分方程的「线性代数」**。\n\n- **反问题与正则化**：$u=\\int Gf$（已知 $u$ 求 $f$）通常是**不适定**的（`de2.7` 的倒向热方程就是例子）⇒ 需要**正则化**（Tikhonov、迭代正则化）；**Fredholm 方程的理论给出反问题的框架**。\n\n- **物理**：\n  - **散射理论**：Lippmann–Schwinger 方程就是第二类 Fredholm（$u=u_0+G_0Vu$）；\n  - **玻尔兹曼方程**：输运问题的积分形式；\n  - **辐射传输**：渲染方程的天体物理版本。\n\n**一句自检**：把问题写成积分方程前核三件事 —— **（1）有 Green 函数吗**（无共振）；**（2）$\\lVert\\mathcal K\\rVert$ 是多少**（能估就估）；**（3）$\\lVert\\mathcal K\\rVert<1$ 吗**（否则换方法：Fredholm 理论 / 数值线性代数 / 正则化）。",
+      "links": [
+        "de1.9",
+        "de2.7",
+        "de2.9",
+        "de2.14",
+        "de2.15",
+        "de3.13",
+        "A4.5",
+        "H3"
+      ],
+      "generated_by": {
+        "model": "glm-5.3-flashx",
+        "date": "2026-09-25",
+        "reviewed": false
+      },
+      "status": "drafted"
+    }
+  ]
+}
