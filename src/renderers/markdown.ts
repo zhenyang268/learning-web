@@ -152,12 +152,40 @@ function renderTable(lines: string[], ctx?: RenderCtx): string {
 /** 极简 markdown → HTML：段落 / 列表 / 表格 / 行间公式 / 行内公式 */
 export function renderContent(src: string, ctx?: RenderCtx): string {
   if (!src) return '';
-  const blocks = src.replace(/\r\n/g, '\n').split(/\n{2,}/);
+  const raw = src.replace(/\r\n/g, '\n').split(/\n{2,}/);
+  // 标题行独占拆块：总纲里「### 2.1 三基对比」下面**不空行**直接跟表格/列表，
+  // 不拆的话标题会把整块拖进段落分支（表格/列表消失）。把每个标题行拆成独立块。
+  const blocks: string[] = [];
+  for (const b of raw) {
+    if (!/^#{1,3}\s/m.test(b)) {
+      blocks.push(b);
+      continue;
+    }
+    let cur: string[] = [];
+    for (const l of b.split('\n')) {
+      if (/^#{1,3}\s/.test(l)) {
+        if (cur.length) blocks.push(cur.join('\n'));
+        blocks.push(l);
+        cur = [];
+      } else {
+        cur.push(l);
+      }
+    }
+    if (cur.length) blocks.push(cur.join('\n'));
+  }
   return blocks
     .map((block) => {
       const b = block.trim();
       if (!b) return '';
       let lines = b.split('\n');
+      // 标题（总纲文档用）：## → h2、### → h3（# 已由页头承载，同样降为 h2）
+      const hm = lines[0].match(/^(#{1,3})\s+(.*)$/);
+      if (hm && lines.length === 1) {
+        const lvl = hm[1].length === 1 ? 2 : hm[1].length;
+        return `<h${lvl} class="md-h">${renderInline(hm[2], ctx)}</h${lvl}>`;
+      }
+      // 分隔线（独占一行的 ---）
+      if (/^\s*-{3,}\s*$/.test(b)) return '<hr>';
       // 表格行内含硬换行（json 内容在单元格中途断行，实测 lie1.15）：
       // 一行表格被拆成「| 开头的行 + 不以 | 开头的续行」，整块过不了表格判定，
       // 退化成段落（限定词表整个消失）。这里把续行并回上一行（markdown 语义：
@@ -175,12 +203,53 @@ export function renderContent(src: string, ctx?: RenderCtx): string {
         lines = joined;
       }
       if (lines.every((l) => /^\s*\|/.test(l))) return renderTable(lines, ctx);
-      if (/^\s*[-*]\s+/.test(lines[0]) && lines.every((l) => /^\s*[-*]\s+/.test(l) || /^\s{2,}\S/.test(l))) {
-        const items = lines
-          .filter((l) => /^\s*[-*]\s+/.test(l))
-          .map((l) => `<li>${renderInline(l.replace(/^\s*[-*]\s+/, ''), ctx)}</li>`)
+      // 无序列表（保持旧判定：除子弹行外只允许缩进续行/空行/$$ 行，避免改变
+      // 既有 318 单元的行为）。新增：任务项 - [ ]、缩进编号子列表
+      // （总纲 1.4「四大护法」的 1.–4. 挂在子弹下面；旧实现会把它们静默丢弃）、
+      // 夹在子弹间的 $$ 块（总纲 1.6 Orlicz 阶梯公式）并回上一条子弹。
+      if (
+        /^\s*[-*]\s+/.test(lines[0]) &&
+        lines.every((l) => /^\s*[-*]\s+/.test(l) || /^\s{2,}\S/.test(l) || /^\s*\$\$/.test(l) || !l.trim())
+      ) {
+        const items: Array<{ html: string; task: boolean; sub: string[] }> = [];
+        for (const l of lines) {
+          const bm = l.match(/^\s*[-*]\s+(.*)$/);
+          if (bm) {
+            const t = bm[1];
+            const task = t.startsWith('[ ] ') || t.startsWith('[x] ');
+            items.push({
+              html: renderInline(task ? t.slice(4) : t, ctx),
+              task,
+              sub: [],
+            });
+            continue;
+          }
+          const t = l.trim();
+          if (!t) continue;
+          if (!items.length) {
+            items.push({ html: renderInline(t, ctx), task: false, sub: [] });
+            continue;
+          }
+          const nm = t.match(/^(\d+[.)])\s+(.*)$/);
+          if (nm) {
+            items[items.length - 1].sub.push(
+              `${escapeHtml(nm[1])} ${renderInline(nm[2], ctx)}`,
+            );
+          } else {
+            // 非编号续行（含 $$ 数学块）：并回上一条子弹的内容
+            const last = items[items.length - 1];
+            last.html += `<br>${renderInline(t, ctx)}`;
+          }
+        }
+        const lis = items
+          .map(
+            (it) =>
+              `<li${it.task ? ' class="task"' : ''}>${it.task ? '<span class="cb">☐</span> ' : ''}${it.html}${
+                it.sub.length ? `<ol class="steps sub">${it.sub.map((s) => `<li>${s}</li>`).join('')}</ol>` : ''
+              }</li>`,
+          )
           .join('');
-        return `<ul>${items}</ul>`;
+        return `<ul>${lis}</ul>`;
       }
       if (/^\s*\d+[.)]\s+/.test(lines[0]) && lines.length > 1) {
         const items = lines

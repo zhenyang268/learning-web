@@ -388,3 +388,18 @@ cycleNodes, yamlStatus}，不是按节点索引的对象）。
   消失）。修法：首行为 `|` 的块里，把不以 `|` 开头的续行并回上一行。
 - 终态闸门：graph 1659/0 · sem-sync 11/0（318 单元/229 带 sem/59 yaml）·
   tsc 0 · viz 3523/0 · harness 318/318 · 13188 断言 0 · standalone 10.61MB/318。
+
+### 7.13 总纲页替换图谱视图（2026-09-26，用户指示）
+
+- **#graph 路由页面整体替换**为《现代分析学总纲 v3.0》（用户三版笔记 + 校订意见的
+  合并去重版，落盘 `src/content/syllabus.ts`，String.raw 保 LaTeX 反斜杠）。
+  顶栏按钮「⬡ 图谱」→「📘 总纲」；右栏放标记图例（⚠️ 校订 / ➕ 补充 / ✅ 已核对）。
+- **原图谱渲染器未删**：`renderers/graph.ts` + `modules/graph-data.ts` 留在仓里
+  （不再被 main.ts import）。恢复 = renderGraphView 换回 mountGraph 版 + 两行 import。
+  数据侧零影响：graph/*.yaml 真源、check-graph、check-sem-sync、右栏依赖、frontier 照旧。
+- **markdown.ts 三处增强**（都是通用能力，非 total 专属）：
+  ① 标题行独占拆块（`### 2.1` 下不空行直接跟表格会把整块拖进段落分支）；
+  ② `---` 分隔线、任务项 `- [ ]`；
+  ③ 列表块里的缩进编号子列表（旧实现静默丢弃）与夹在子弹间的 `$$` 数学块
+  （旧行为：整块守卫不过 → 全变段落）。
+- harness 第 8 节快照断言同步：总纲页标题/收尾齐全 + 表格 ≥2 + 无 `$$` 裸泄漏。

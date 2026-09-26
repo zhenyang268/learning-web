@@ -8,11 +8,10 @@ import { renderHeader } from './shell/header';
 import { renderSidebar } from './shell/sidebar';
 import { renderAside } from './shell/aside';
 import { difficultyOf, groupEntries, renderCard, type KbIndex } from './renderers/card';
-import { mountGraph } from './renderers/graph';
-import { loadMergedGraph } from './modules/graph-data';
 import { mountOverlay } from './renderers/overlay';
-import { escapeHtml, renderInline } from './renderers/markdown';
+import { renderContent, escapeHtml, renderInline } from './renderers/markdown';
 import { displayCode } from './modules/codes';
+import { SYLLABUS_MD, SYLLABUS_TITLE, SYLLABUS_VERSION } from './content/syllabus';
 
 const elHeader = document.getElementById('header')!;
 const elFrontier = document.getElementById('frontier')!;
@@ -285,38 +284,29 @@ function prereqEmptyNote(code: string): string | undefined {
 }
 
 /**
- * 图谱视图：占据阅读区，右栏放说明。
- * 数据 = 索引元数据（语义边已在**构建期烘进索引**，故本视图零请求）。
+ * 总纲页（2026-09-26 起**替换**原知识图谱视图，路由 #graph 不变）：
+ * 内容 = 用户校订合并的《现代分析学总纲 v3.0》（src/content/syllabus.ts 落盘）。
+ * 原图谱渲染器（renderers/graph.ts + modules/graph-data.ts）保留在仓里未删，
+ * 恢复 = 把本函数换回 mountGraph 那版 + 恢复两行 import；数据侧真源与闸门
+ * （graph/*.yaml、check-graph、check-sem-sync）不受影响，右栏依赖/拓扑序照旧。
  */
 function renderGraphView(): void {
   elReader.innerHTML = `<div class="card pagehead">
-      <h1>知识图谱 <em>四类语义边 · 三层缩放</em></h1>
-      <div class="meta"><span class="tag">graph</span><span>prereq / tension / dual / applies</span></div>
+      <h1>📘 总纲 <em>${escapeHtml(SYLLABUS_TITLE)} · ${escapeHtml(SYLLABUS_VERSION)}</em></h1>
+      <div class="meta"><span class="tag">syllabus</span><span>三版笔记合并 · 用户校订版</span></div>
     </div>
-    <div class="card graphhost" id="graph-host"><p class="dim">图谱加载中…</p></div>`;
+    <div class="card docview">${renderContent(SYLLABUS_MD)}</div>`;
   elAside.innerHTML = `<div class="box">
-      <h4>怎么读这张图</h4>
-      <p class="kv"><b style="color:var(--cyan)">prereq</b> 实线箭头 = 学习顺序（左→右，必须无环）</p>
-      <p class="kv"><b style="color:var(--pink)">tension</b> 虚线 = 反例/约束互相打脸</p>
-      <p class="kv"><b style="color:var(--violet)">dual</b> 点线 = 对偶路径（顶下↔底上）</p>
-      <p class="kv"><b style="color:var(--green)">applies</b> 长虚线 = 下游应用</p>
-      <h4 style="margin-top:16px">三层缩放</h4>
-      <p class="kv">字母块（A/B/DE…）→ 章节组（A1/A2…）→ 单元节点。点节点下钻，L3 点节点跳阅读。</p>
-      <h4 style="margin-top:16px">数据来源</h4>
-      <p class="kv">语义边真源 <span class="mono">graph/&lt;章&gt;.yaml</span>（逐章人工草拟 + <span class="mono">check:graph</span> 校验）在<b>构建期烘进索引</b>，运行期零请求；未被 yaml 覆盖的单元退回 links 派生边（编号序启发式）。已覆盖 <span data-role="yamlcount">…</span> 章。</p>
-      <p class="kv"><b>与右栏同源</b>：右栏「依赖◂」和顶部「今天该学」吃的是同一份真源，被 yaml 覆盖的单元其 prereq 完全以 yaml 为准（编号序猜测作废）。</p>
-      <p class="kv dim">节点下弧线 = 掌握度（与右栏同源）；红色节点 = prereq 环（数据错误，需修 yaml）。</p>
+      <h4>标记图例</h4>
+      <p class="kv"><b style="color:var(--red)">⚠️</b> 校订过的地方（原文有硬伤，本版已改）</p>
+      <p class="kv"><b style="color:var(--green)">➕</b> 补充的内容（原文没有）</p>
+      <p class="kv"><b style="color:var(--cyan)">✅</b> 已核对无误</p>
+      <h4 style="margin-top:16px">这份总纲是什么</h4>
+      <p class="kv">三版笔记 + 全部校订意见的<b>合并去重版</b>：空间（测度/$L^p$/Sobolev/变分）→ 坐标系（泰勒/傅里叶/拉普拉斯与若尔当）→ 地基五支柱，最后给双轴顶层架构与待办清单。</p>
+      <h4 style="margin-top:16px">与知识库的关系</h4>
+      <p class="kv">本页是<b>人读的总纲</b>；左侧目录 318 个单元是<b>机读的知识库</b>（词条四问 + 语义边真源 <span class="mono">graph/*.yaml</span>）。两套并行：总纲给主线，单元卡给证明细节。</p>
+      <p class="kv dim">原知识图谱视图已由本页替换；图谱数据与全部校验闸门仍在，恢复只需还原一个渲染函数。</p>
     </div>`;
-  const host = document.getElementById('graph-host');
-  if (!host) return;
-  void loadMergedGraph(units).then((merged) => {
-    if (currentCode() !== 'graph') return; // 用户已跳走，不画
-    // 「已覆盖 N 章」用真实 yamlStatus 填（原来写死「现只有 A1」，铺开后就过期了）
-    const cnt = elAside.querySelector<HTMLElement>('[data-role=yamlcount]');
-    const okCount = merged.yamlStatus.filter((s) => s.ok).length;
-    if (cnt) cnt.textContent = `${okCount}/${merged.yamlStatus.length}`;
-    mountGraph(host, { merged, masteryOf: masteryByCode });
-  });
 }
 
 /* ------------------------------------------------------------------ 启动 */

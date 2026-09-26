@@ -1450,3 +1450,65 @@ p .badge {
   fill: var(--red);
   font-size: 13px;
 }
+
+/* ───────────────────────── 总纲文档页（#graph 路由，2026-09-26 替换原图谱视图） */
+
+.docview {
+  line-height: 1.75;
+}
+
+.docview h2.md-h,
+.docview h3.md-h {
+  color: var(--cyan);
+  margin: 22px 0 10px;
+  letter-spacing: 0.02em;
+}
+
+.docview h2.md-h {
+  font-size: 1.18rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--cyan) 26%, transparent);
+}
+
+.docview h3.md-h {
+  font-size: 1.02rem;
+  margin-top: 16px;
+}
+
+.docview hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 18px 0;
+}
+
+.docview ul {
+  margin: 8px 0;
+  padding-left: 1.3em;
+}
+
+.docview ul li {
+  margin: 4px 0;
+}
+
+.docview ul li.task {
+  list-style: none;
+  margin-left: -1.1em;
+}
+
+.docview ul li.task .cb {
+  color: var(--cyan);
+  margin-right: 4px;
+}
+
+.docview ol.steps.sub {
+  margin: 6px 0 2px;
+  padding-left: 1.4em;
+}
+
+.docview ol.steps.sub li {
+  margin: 3px 0;
+}
+
+.docview p {
+  margin: 8px 0;
+}

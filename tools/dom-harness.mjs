@@ -464,20 +464,25 @@ async function runStandalone() {
     !/"graph\/[A-Za-z0-9]+\.yaml":/.test(html),
     '快照里仍内联着 yaml —— 应已移除（语义边在索引里）');
 
-  // 图谱视图真能画出来（曾被 ResizeObserver 未特征检测卡在「加载中…」）
+  // #graph 路由已替换为「总纲 v3.0」文档页（2026-09-26，用户指示）：
+  // 验证文档真渲染出来（首块标题、中间表格、收尾待办都在，KaTeX 无裸 $ 泄漏）。
   dom.window.location.hash = '#graph';
   const t1 = Date.now();
+  let docTxt = '';
   while (Date.now() - t1 < 3000) {
-    if (d.querySelectorAll('#graph-host .gnode').length > 0) break;
+    docTxt = textOf(d.getElementById('reader'));
+    if (docTxt.includes('第一块') && docTxt.includes('待办清单')) break;
     await sleep(10);
   }
-  check('快照图谱视图能渲染（不卡在「加载中」）',
-    d.querySelectorAll('#graph-host .gnode').length > 0,
-    `gnode=${d.querySelectorAll('#graph-host .gnode').length} · ${textOf(d.getElementById('graph-host')).slice(0, 40)}`);
-  const gnote = d.querySelector('#graph-host [data-role=note]');
-  check('快照图谱无语义边降级提示（yamlStatus 全 ok）',
-    !gnote || gnote.hidden !== false,
-    gnote ? textOf(gnote).slice(0, 80) : '');
+  check('快照总纲页能渲染（首块与收尾章节齐全）',
+    docTxt.includes('第一块') && docTxt.includes('待办清单') && docTxt.includes('顶层架构'),
+    docTxt.slice(0, 60));
+  check('快照总纲页表格已渲染（三基对比 + 顶层架构）',
+    d.querySelectorAll('#reader .mdtable').length >= 2,
+    `tables=${d.querySelectorAll('#reader .mdtable').length}`);
+  check('快照总纲页数学未裸泄漏（无未处理的 $ 字样残块）',
+    !/\$\$/.test(docTxt),
+    docTxt.match(/.{0,30}\$\$.{0,30}/)?.[0] ?? '');
   dom.window.close();
 }
 

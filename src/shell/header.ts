@@ -27,7 +27,7 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
       <div class="logo">learning-web</div>
       <div class="chapters"></div>
       <div class="warnslot"></div>
-      <button class="graphbtn" data-graph="1" title="知识图谱（三层缩放）">⬡ 图谱</button>
+      <button class="graphbtn" data-graph="1" title="总纲 v3.0（现代分析学主纲；原知识图谱页已由它替换）">📘 总纲</button>
       <label class="search">
         <span class="ico">🔍</span>
         <input type="search" placeholder="筛选单元代号 / 标题…" autocomplete="off" spellcheck="false">
