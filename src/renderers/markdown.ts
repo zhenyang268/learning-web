@@ -52,17 +52,18 @@ export function renderInline(src: string, ctx?: RenderCtx): string {
   // 公式先用占位符「摘出去」，转义/强调/引用处理完再放回 ——
   // 否则 **粗体包着公式**（如 **$m$ 阶极点**）会被公式切割成两段，
   // 两个 ** 分家，字面量裸奔。
-  const stash: string[] = [];
-  const staged = src.replace(MATH, (m) => {
-    stash.push(m);
+  // ⚠️ stash 必须在替换回调里**当场存捕获组**（tex/display）：
+  // 恢复时若对全局正则用 .match() 重匹配，/g 的 match 不返回捕获组，
+  // tex 会永远是空串 —— 全页公式渲染成空 KaTeX（2026-09-28 实测事故）。
+  const stash: Array<{ tex: string; display: boolean }> = [];
+  const staged = src.replace(MATH, (_m, disp?: string, inline?: string) => {
+    stash.push({ tex: disp ?? inline ?? '', display: disp !== undefined });
     return `\u0000${stash.length - 1}\u0000`;
   });
   const out = emphasis(passText(escapeHtml(staged), onText));
   return out.replace(/\u0000(\d+)\u0000/g, (_m, i: string) => {
-    const whole = stash[Number(i)] ?? '';
-    const mm = whole.match(MATH);
-    const tex = mm?.[1] ?? mm?.[2] ?? '';
-    return renderMath(tex, mm?.[1] !== undefined);
+    const hit = stash[Number(i)];
+    return hit ? renderMath(hit.tex, hit.display) : '';
   });
 }
 

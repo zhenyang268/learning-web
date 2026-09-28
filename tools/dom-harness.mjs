@@ -486,6 +486,14 @@ async function runStandalone() {
   check('快照总纲页围栏图已渲染（总关系图 pre）',
     d.querySelectorAll('#reader pre.md-pre').length >= 1,
     `pre=${d.querySelectorAll('#reader pre.md-pre').length}`);
+  // 空公式防线（2026-09-28 事故：renderInline 占位符重构后对全局正则用 .match()
+  // 重取捕获组，/g 的 match 不返回组，tex 恒空串，全页公式渲染成空 KaTeX ——
+  // span 数量断言抓不住它，必须验 annotation 内容非空）：
+  const anns = [...d.querySelectorAll('#reader annotation')];
+  const filled = anns.filter((a) => a.textContent.trim().length > 0);
+  check('快照总纲页公式内容非空（annotation 全部有 tex）',
+    anns.length >= 200 && filled.length === anns.length,
+    `非空 ${filled.length}/${anns.length}`);
   check('快照总纲页数学未裸泄漏（无未处理的 $ 字样残块）',
     !/\$\$/.test(docTxt),
     docTxt.match(/.{0,30}\$\$.{0,30}/)?.[0] ?? '');
