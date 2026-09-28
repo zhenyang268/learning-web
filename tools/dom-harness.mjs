@@ -477,9 +477,15 @@ async function runStandalone() {
   check('快照总纲页能渲染（首块与收尾章节齐全）',
     docTxt.includes('第一块') && docTxt.includes('待办清单') && docTxt.includes('顶层架构'),
     docTxt.slice(0, 60));
-  check('快照总纲页表格已渲染（三基对比 + 顶层架构）',
-    d.querySelectorAll('#reader .mdtable').length >= 2,
+  check('快照总纲附篇能渲染（变换一条线：总脉络/速查/总结）',
+    docTxt.includes('变换一条线') && docTxt.includes('关键公式速查') && docTxt.includes('倒谱'),
+    docTxt.slice(-60));
+  check('快照总纲页表格已渲染（三基对比 + 速查表 + 顶层架构）',
+    d.querySelectorAll('#reader .mdtable').length >= 3,
     `tables=${d.querySelectorAll('#reader .mdtable').length}`);
+  check('快照总纲页围栏图已渲染（总关系图 pre）',
+    d.querySelectorAll('#reader pre.md-pre').length >= 1,
+    `pre=${d.querySelectorAll('#reader pre.md-pre').length}`);
   check('快照总纲页数学未裸泄漏（无未处理的 $ 字样残块）',
     !/\$\$/.test(docTxt),
     docTxt.match(/.{0,30}\$\$.{0,30}/)?.[0] ?? '');

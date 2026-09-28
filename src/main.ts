@@ -302,7 +302,7 @@ function renderGraphView(): void {
       <p class="kv"><b style="color:var(--green)">➕</b> 补充的内容（原文没有）</p>
       <p class="kv"><b style="color:var(--cyan)">✅</b> 已核对无误</p>
       <h4 style="margin-top:16px">这份总纲是什么</h4>
-      <p class="kv">三版笔记 + 全部校订意见的<b>合并去重版</b>：空间（测度/$L^p$/Sobolev/变分）→ 坐标系（泰勒/傅里叶/拉普拉斯与若尔当）→ 地基五支柱，最后给双轴顶层架构与待办清单。</p>
+      <p class="kv">三版笔记 + 全部校订意见的<b>合并去重版</b>：空间（测度/$L^p$/Sobolev/变分）→ 坐标系（泰勒/傅里叶/拉普拉斯与若尔当）→ 地基五支柱，最后给双轴顶层架构与待办清单。末尾<b>附篇「变换一条线」</b>：傅里叶/拉普拉斯 → 正交性 → 留数 → 若尔当 → 同态/倒谱。</p>
       <h4 style="margin-top:16px">与知识库的关系</h4>
       <p class="kv">本页是<b>人读的总纲</b>；左侧目录 318 个单元是<b>机读的知识库</b>（词条四问 + 语义边真源 <span class="mono">graph/*.yaml</span>）。两套并行：总纲给主线，单元卡给证明细节。</p>
       <p class="kv dim">原知识图谱视图已由本页替换；图谱数据与全部校验闸门仍在，恢复只需还原一个渲染函数。</p>

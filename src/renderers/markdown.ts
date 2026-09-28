@@ -49,17 +49,21 @@ const MATH = /\$\$([\s\S]+?)\$\$|\$([^$\n]+?)\$/g;
 /** 行内渲染：先切出数学段（不转义）再转义文本段，避免 &amp; 污染公式 */
 export function renderInline(src: string, ctx?: RenderCtx): string {
   const onText = ctx?.text;
-  let out = '';
-  let last = 0;
-  for (const m of src.matchAll(MATH)) {
-    const start = m.index ?? 0;
-    out += emphasis(passText(escapeHtml(src.slice(last, start)), onText));
-    const tex = m[1] ?? m[2] ?? '';
-    out += renderMath(tex, m[1] !== undefined);
-    last = start + m[0].length;
-  }
-  out += emphasis(passText(escapeHtml(src.slice(last)), onText));
-  return out;
+  // 公式先用占位符「摘出去」，转义/强调/引用处理完再放回 ——
+  // 否则 **粗体包着公式**（如 **$m$ 阶极点**）会被公式切割成两段，
+  // 两个 ** 分家，字面量裸奔。
+  const stash: string[] = [];
+  const staged = src.replace(MATH, (m) => {
+    stash.push(m);
+    return `\u0000${stash.length - 1}\u0000`;
+  });
+  const out = emphasis(passText(escapeHtml(staged), onText));
+  return out.replace(/\u0000(\d+)\u0000/g, (_m, i: string) => {
+    const whole = stash[Number(i)] ?? '';
+    const mm = whole.match(MATH);
+    const tex = mm?.[1] ?? mm?.[2] ?? '';
+    return renderMath(tex, mm?.[1] !== undefined);
+  });
 }
 
 /**
@@ -157,13 +161,13 @@ export function renderContent(src: string, ctx?: RenderCtx): string {
   // 不拆的话标题会把整块拖进段落分支（表格/列表消失）。把每个标题行拆成独立块。
   const blocks: string[] = [];
   for (const b of raw) {
-    if (!/^#{1,3}\s/m.test(b)) {
+    if (!/^#{1,4}\s/m.test(b)) {
       blocks.push(b);
       continue;
     }
     let cur: string[] = [];
     for (const l of b.split('\n')) {
-      if (/^#{1,3}\s/.test(l)) {
+      if (/^#{1,4}\s/.test(l)) {
         if (cur.length) blocks.push(cur.join('\n'));
         blocks.push(l);
         cur = [];
@@ -179,10 +183,23 @@ export function renderContent(src: string, ctx?: RenderCtx): string {
       if (!b) return '';
       let lines = b.split('\n');
       // 标题（总纲文档用）：## → h2、### → h3（# 已由页头承载，同样降为 h2）
-      const hm = lines[0].match(/^(#{1,3})\s+(.*)$/);
+      // 围栏代码块（``` 或 ~~~，总纲附篇的「总关系图」是 ASCII 树）：
+      // 必须在最前面截获，否则块内的 # / | / > 行会被别的分支吃掉。
+      if (/^\s*(```|~~~)/.test(lines[0])) {
+        const inner = lines.filter((l) => !/^\s*(```|~~~)/.test(l)).join('\n');
+        return `<pre class="md-pre">${escapeHtml(inner)}</pre>`;
+      }
+      const hm = lines[0].match(/^(#{1,4})\s+(.*)$/);
       if (hm && lines.length === 1) {
         const lvl = hm[1].length === 1 ? 2 : hm[1].length;
         return `<h${lvl} class="md-h">${renderInline(hm[2], ctx)}</h${lvl}>`;
+      }
+      // 引用块（连续 > 行；总纲附篇的「总脉络一句话」与各节结论句）
+      if (lines.every((l) => !l.trim() || /^\s*>/.test(l)) && lines.some((l) => /^\s*>/.test(l))) {
+        const qs = lines
+          .filter((l) => /^\s*>/.test(l))
+          .map((l) => renderInline(l.replace(/^\s*>\s?/, ''), ctx));
+        return `<blockquote>${qs.join('<br>')}</blockquote>`;
       }
       // 分隔线（独占一行的 ---）
       if (/^\s*-{3,}\s*$/.test(b)) return '<hr>';

@@ -1512,3 +1512,30 @@ p .badge {
 .docview p {
   margin: 8px 0;
 }
+
+/* 总纲附篇（2026-09-27 并入）：引用块与围栏代码块 */
+.docview blockquote {
+  margin: 10px 0;
+  padding: 8px 14px;
+  border-left: 3px solid var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 8%, transparent);
+  border-radius: 0 10px 10px 0;
+}
+
+.docview pre.md-pre {
+  margin: 10px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  font-size: 12.5px;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.docview h4.md-h {
+  color: var(--pink);
+  margin: 14px 0 6px;
+  font-size: 0.98rem;
+}

@@ -155,4 +155,361 @@ $$\operatorname{Res}_{s=a}\left[\frac{n!}{(s-a)^{n+1}}e^{st}\right]=\frac{1}{n!}
 - [ ] 极小化序列"四大护法"各配一个失败反例
 - [ ] ➕ 把修订后的 5 处硬伤在原文标注 diff
 - [ ] ➕ 双正交基 / Gelfand 三元组 / 留数导出 $t^n$ 各做一张卡片
+
+---
+
+## 附 · 变换一条线：傅里叶 / 拉普拉斯 / 留数 / 若尔当 / 倒谱
+
+> **傅里叶/拉普拉斯变换是用"复指数"去拆函数；正交性保证不同频率不互相干扰；复分析里的留数定理负责把 $s$ 域极点变回 $t$ 域；若尔当矩阵的重特征值导致高阶极点，于是时域出现多项式乘指数；如果成分是相乘而不是相加，就先取对数，把乘法变成加法，这就是同态系统和倒谱。**
+
+### 一、拉普拉斯变换基础
+
+#### 1. 定义
+
+$$F(s)=\mathcal L\{f(t)\}=\int_0^\infty f(t)e^{-st}\,dt$$
+
+逆变换：
+
+$$f(t)=\frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty}F(s)e^{st}\,ds$$
+
+#### 2. $s$ 是什么
+
+$$s=\sigma+i\omega$$
+
+- $\sigma$：实部，控制衰减或增长；
+- $\omega$：虚部，角频率，控制振荡；
+- $s$ 是复频率变量，不是固定值。
+
+#### 3. $\sigma$ 和 $\omega$ 怎么确定
+
+- $\sigma$ 由收敛域决定，必须让积分收敛；
+- $\omega$ 通常取所有实数 $-\infty$ 到 $+\infty$；
+- 逆变换时，$s$ 沿竖线 $s=c+i\omega$ 走，$c$ 选在收敛域内。
+
+#### 4. 和傅里叶变换的关系
+
+令 $s=\sigma+i\omega$：
+
+$$F(\sigma+i\omega)=\int_0^\infty \bigl(f(t)e^{-\sigma t}\bigr)e^{-i\omega t}\,dt$$
+
+所以：
+
+> 拉普拉斯变换 = 先乘指数衰减因子 $e^{-\sigma t}$，再做傅里叶变换。
+> 傅里叶变换是拉普拉斯变换在虚轴 $s=i\omega$ 上的特例。
+
+#### 5. 负次方从哪来
+
+基本对应：
+
+$$\mathcal L\{1\}=\frac1s,\qquad \mathcal L\{t\}=\frac1{s^2},\qquad \mathcal L\{t^n\}=\frac{n!}{s^{n+1}}$$
+
+更一般：
+
+$$\mathcal L\{t^n e^{\lambda t}\}=\frac{n!}{(s-\lambda)^{n+1}}$$
+
+逆变换：
+
+$$\frac1{(s-\lambda)^{m+1}}\longleftrightarrow\frac{t^m}{m!}e^{\lambda t}$$
+
+所以：
+
+> 拉普拉斯变换不是"定义上添加负次方"，但它的像函数经常是 $s-\lambda$ 的负次方。负次方越高，时域多项式次数越高。
+
+### 二、正交性与连续正交
+
+#### 1. 正交的意义
+
+正交 = 不同成分互不干扰。
+
+- 普通向量正交：内积为 0，投影时互不污染；
+- 函数正交：可以把混合信号干净地拆成独立成分；
+- 傅里叶变换能分析频谱，就是因为不同频率的复指数正交。
+
+#### 2. 复共轭横杠
+
+内积里第二个函数要取复共轭：
+
+$$\langle f,g\rangle=\int f(t)\overline{g(t)}\,dt$$
+
+复共轭：
+
+$$\overline{a+bi}=a-bi$$
+
+对复指数：
+
+$$\overline{e^{i\omega t}}=e^{-i\omega t}$$
+
+作用：让函数和自己的内积变成正实数，正确衡量"长度"。
+
+#### 3. 离散正交基
+
+傅里叶级数：
+
+$$e^{in\omega_0 t},\qquad n=0,\pm1,\pm2,\dots$$
+
+满足：
+
+$$\int_0^T e^{in\omega_0 t}\overline{e^{im\omega_0 t}}\,dt=T\delta_{nm}$$
+
+不同频率内积为 0，相同频率不为 0。
+
+#### 4. 连续正交
+
+傅里叶变换用的基：
+
+$$e^{i\omega t},\qquad \omega\in(-\infty,\infty)$$
+
+指标连续，所以求和变积分：
+
+$$\int_{-\infty}^{\infty}e^{i\omega t}\overline{e^{i\omega' t}}\,dt=2\pi\delta(\omega-\omega')$$
+
+$\delta$ 是狄拉克 δ 函数，相当于连续版的 $\delta_{nm}$。
+
+傅里叶逆变换：
+
+$$f(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty}F(\omega)e^{i\omega t}\,d\omega$$
+
+这就是把函数写成所有连续频率基的叠加。
+
+#### 5. 拉普拉斯变换是不是正交基？
+
+不是。
+
+- 傅里叶变换的 $e^{i\omega t}$ 更接近广义连续正交基；
+- 拉普拉斯变换的 $e^{st}$ 有衰减因子，通常不是平方可积；
+- 拉普拉斯变换是积分变换，有类似广义正交关系，但一般不叫正交基。
+
+### 三、复数积分与复分析
+
+#### 1. 两种复数积分
+
+**第一种：实变量，复值函数**。比如傅里叶变换：
+
+$$\int_{-\infty}^{\infty} f(t)e^{-i\omega t}\,dt$$
+
+积分变量 $t$ 是实数，结果带复数。实部虚部分开即可。
+
+**第二种：复平面路径积分**。比如拉普拉斯逆变换：
+
+$$\int_{c-i\infty}^{c+i\infty}F(s)e^{st}\,ds$$
+
+积分变量 $s$ 是复数，沿复平面一条竖线走。
+
+#### 2. 解析函数
+
+如果复变函数 $f(z)$ 可导，且满足柯西-黎曼方程：
+
+$$\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y},\qquad \frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}$$
+
+则称 $f(z)$ 解析。
+
+#### 3. 柯西积分定理
+
+解析函数沿闭合路径积分为 0：
+
+$$\oint_\gamma f(z)\,dz=0$$
+
+所以积分与路径无关，只跟起点、终点、以及是否绕过奇点有关。
+
+#### 4. 和格林公式的关系
+
+是的，路径无关本质就是格林公式 + 柯西-黎曼方程。复数积分拆成两个实线积分：
+
+$$\oint f(z)\,dz=\oint (u\,dx-v\,dy)+i\oint(v\,dx+u\,dy)$$
+
+用格林公式转成二重积分，再用柯西-黎曼方程，二重积分变成 0。有奇点时，格林公式不适用，留下奇点贡献，这就是留数。
+
+#### 5. 洛朗级数
+
+在奇点 $z_0$ 附近：
+
+$$f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n$$
+
+展开成：
+
+$$\cdots+\frac{a_{-2}}{(z-z_0)^2}+\frac{a_{-1}}{z-z_0}+a_0+a_1(z-z_0)+\cdots$$
+
+留数就是：
+
+$$\operatorname{Res}(f,z_0)=a_{-1}$$
+
+#### 6. 留数怎么算
+
+**一阶极点**：$f(z)=\dfrac{g(z)}{z-a}$，$g(a)\ne0$ 时
+
+$$\operatorname{Res}(f,a)=\lim_{z\to a}(z-a)f(z)=g(a)$$
+
+**$m$ 阶极点**：$f(z)=\dfrac{g(z)}{(z-a)^m}$ 时
+
+$$\operatorname{Res}(f,a)=\frac{1}{(m-1)!}\lim_{z\to a}\frac{d^{m-1}}{dz^{m-1}}\left[(z-a)^m f(z)\right]$$
+
+**本质奇点**：做洛朗展开，找 $a_{-1}$。
+
+#### 7. 留数定理
+
+$$\oint_\gamma f(z)\,dz=2\pi i\sum_k \operatorname{Res}(f,z_k)$$
+
+路径内所有奇点的留数之和乘 $2\pi i$。
+
+#### 8. 为什么只有留数项有积分？
+
+绕奇点一圈 $\oint (z-z_0)^n\,dz$：
+
+- $n=-1$ 时：$\oint \frac{1}{z-z_0}\,dz=2\pi i$
+- $n\ne -1$ 时：$\oint (z-z_0)^n\,dz=0$
+
+因为参数化后 $(z-z_0)^n dz=i r^{n+1} e^{i(n+1)\theta}\,d\theta$：当 $n\ne -1$，$e^{i(n+1)\theta}$ 绕一整圈正负抵消；当 $n=-1$，变成 $1$，积分给出 $2\pi i$。所以只有 $\frac{1}{z-z_0}$ 项存活，这个系数就是留数。
+
+#### 9. 用留数算拉普拉斯逆变换
+
+$$f(t)=\sum_k \operatorname{Res}\left(F(s)e^{st},s_k\right)$$
+
+例子：
+
+$$\frac{1}{s-\lambda}\longleftrightarrow e^{\lambda t}\qquad \frac{1}{(s-\lambda)^2}\longleftrightarrow t e^{\lambda t}\qquad \frac{1}{(s-\lambda)^3}\longleftrightarrow \frac{t^2}{2}e^{\lambda t}$$
+
+一般：
+
+$$\frac{1}{(s-\lambda)^{m+1}}\longleftrightarrow\frac{t^m}{m!}e^{\lambda t}$$
+
+### 四、若尔当矩阵与拉普拉斯变换
+
+#### 1. 若尔当块
+
+$$J=\begin{pmatrix}\lambda&1&0\\0&\lambda&1\\0&0&\lambda\end{pmatrix}=\lambda I+N$$
+
+$N$ 是幂零矩阵，非对角 $1$ 表示耦合。
+
+#### 2. 解线性微分方程
+
+$\dot x=Ax$，拉普拉斯变换：
+
+$$(sI-A)X(s)=x(0)\qquad\Rightarrow\qquad X(s)=(sI-A)^{-1}x(0)$$
+
+#### 3. 若尔当块导致高阶极点
+
+二阶若尔当块：
+
+$$J=\begin{pmatrix}\lambda&1\\0&\lambda\end{pmatrix}\qquad (sI-J)^{-1}=\begin{pmatrix}\frac1{s-\lambda} & \frac1{(s-\lambda)^2}\\0 & \frac1{s-\lambda}\end{pmatrix}$$
+
+逆变换：
+
+$$e^{Jt}=\begin{pmatrix}e^{\lambda t} & t e^{\lambda t}\\0 & e^{\lambda t}\end{pmatrix}$$
+
+所以：
+
+> 若尔当块的非对角 $1$ → 拉普拉斯像函数出现高阶负次方 $(s-\lambda)^{-k}$ → 逆变换后时域出现 $t^{k-1}e^{\lambda t}$。
+
+重特征值、若尔当块、多项式乘指数、高阶极点，是一回事的不同表现。若尔当基通常不是正交基，而是广义特征向量基。
+
+### 五、乘法叠加与对数
+
+#### 1. 加法叠加
+
+$y(t)=f(t)+g(t)$：傅里叶/拉普拉斯变换线性，$Y=F+G$，可以直接拆。
+
+#### 2. 乘法叠加
+
+$y(t)=f(t)\cdot g(t)$：傅里叶变换后是卷积
+
+$$Y(\omega)=\frac{1}{2\pi}(F*G)(\omega)$$
+
+不好直接拆。
+
+#### 3. 取对数把乘法变加法
+
+$$\ln y(t)=\ln f(t)+\ln g(t)$$
+
+然后做傅里叶变换：
+
+$$\mathcal F\{\ln y\}=\mathcal F\{\ln f\}+\mathcal F\{\ln g\}$$
+
+又能拆了。注意：复数对数有多值问题，工程上通常处理幅度和相位，或用解析信号。
+
+#### 4. 现实对应：同态系统与倒谱
+
+倒谱：
+
+$$C(\tau)=\mathcal F^{-1}\{\ln|\mathcal F\{y(t)\}|\}$$
+
+用途：
+
+- 语音：声带激励 × 声道滤波器 → 倒谱域分开；
+- 图像：光照 × 反射率 → 取对数后变成加法，同态滤波；
+- 概率：独立事件概率相乘 → 对数概率相加；
+- 信息论：概率相乘 → 信息量相加；
+- 电路：级联传递函数相乘 → dB 相加；
+- 化学：pH = -lg[H⁺]，浓度相乘对应 pH 相加。
+
+### 六、总关系图
+
+~~~text
+时域加法叠加
+    → 傅里叶/拉普拉斯变换（线性）
+    → 频域/ s域相加
+    → 可直接拆成分
+
+时域乘法叠加
+    → 先取对数
+    → 乘法变加法
+    → 再做变换
+    → 同态系统 / 倒谱
+
+拉普拉斯变换
+    → s = σ + iω
+    → σ 由收敛域定，ω 取实数
+    → 逆变换沿竖线 s = c + iω
+    → 极点对应特征值 λ
+    → 留数定理算逆变换
+
+若尔当矩阵
+    → 重特征值 λ
+    → 若尔当块 λI + N
+    → (sI - J)^(-1) 出现 (s-λ)^(-k)
+    → 逆变换出现 t^(k-1) e^(λt)
+
+复分析
+    → 解析函数
+    → 柯西-黎曼方程
+    → 闭合路径积分为 0
+    → 路径无关 = 格林公式 + 柯西-黎曼
+    → 奇点处洛朗展开
+    → 留数 = a_(-1)
+    → 留数定理：闭合积分 = 2πi Σ 留数
+    → 只有 (z-z₀)^(-1) 项绕一圈留下 2πi
+
+正交性
+    → 内积 + 复共轭
+    → 不同频率内积为 0
+    → 离散：δ_nm
+    → 连续：δ(ω-ω')
+    → 傅里叶变换 = 连续正交展开
+    → 拉普拉斯变换不是普通正交基，是积分变换
+~~~
+
+### 七、关键公式速查
+
+| 主题 | 公式 |
+|---|---|
+| 拉普拉斯变换 | $F(s)=\int_0^\infty f(t)e^{-st}dt$ |
+| 拉普拉斯逆变换 | $f(t)=\frac1{2\pi i}\int_{c-i\infty}^{c+i\infty}F(s)e^{st}ds$ |
+| s 分解 | $s=\sigma+i\omega$ |
+| 基本对应 | $\frac1{(s-\lambda)^{m+1}}\leftrightarrow \frac{t^m}{m!}e^{\lambda t}$ |
+| 若尔当块逆 | $(sI-J)^{-1}$ 出现 $(s-\lambda)^{-k}$ |
+| 复共轭 | $\overline{a+bi}=a-bi$ |
+| 连续正交 | $\int e^{i\omega t}\overline{e^{i\omega't}}dt=2\pi\delta(\omega-\omega')$ |
+| 柯西积分定理 | $\oint_\gamma f(z)dz=0$（解析） |
+| 留数定理 | $\oint_\gamma f(z)dz=2\pi i\sum \operatorname{Res}(f,z_k)$ |
+| 一阶极点留数 | $\operatorname{Res}(f,a)=\lim_{z\to a}(z-a)f(z)$ |
+| m 阶极点留数 | $\frac1{(m-1)!}\lim_{z\to a}\frac{d^{m-1}}{dz^{m-1}}[(z-a)^m f(z)]$ |
+| 乘法变加法 | $\ln(fg)=\ln f+\ln g$ |
+| 倒谱 | $C(\tau)=\mathcal F^{-1}\{\ln|\mathcal F\{y\}|\}$ |
+
+### 八、最后一句话总结
+
+今天的内容可以浓缩成三句话：
+
+1. **拉普拉斯变换是积分变换，不是正交基；傅里叶变换才是连续正交展开。**
+2. **复分析里的留数定理负责把 $s$ 域极点变回时域；若尔当块的高阶极点对应 $t^m e^{\lambda t}$。**
+3. **加法叠加直接变换；乘法叠加先取对数，把乘法变成加法，这就是同态系统和倒谱的现实对应。**
 `;
