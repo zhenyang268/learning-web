@@ -157,11 +157,34 @@ function renderTable(lines: string[], ctx?: RenderCtx): string {
 export function renderContent(src: string, ctx?: RenderCtx): string {
   if (!src) return '';
   const raw = src.replace(/\r\n/g, '\n').split(/\n{2,}/);
+  // 未闭合围栏跨块合并：总关系图这类 ASCII 图里有空行，\n{2,} 会把一个围栏
+  // 切成「开围栏块 + …+ 闭围栏块」，后半段掉进段落分支（~~~ 裸奔、图断成两截）。
+  // 凡以 ~~~/``` 开头的块，若块内没有闭合围栏行，就把后续块并进来直到闭合。
+  const joined: string[] = [];
+  let pending: string | null = null;
+  for (const b of raw) {
+    if (pending !== null) {
+      pending += '\n\n' + b;
+      if ((b.match(/^\s*(```|~~~)/gm) ?? []).length > 0) {
+        joined.push(pending);
+        pending = null;
+      }
+      continue;
+    }
+    const fences = (b.match(/^\s*(```|~~~)/gm) ?? []).length;
+    if (/^\s*(```|~~~)/.test(b) && fences % 2 === 1) {
+      pending = b; // 只有开围栏，没有闭围栏 → 跨块
+      continue;
+    }
+    joined.push(b);
+  }
+  if (pending !== null) joined.push(pending);
   // 标题行独占拆块：总纲里「### 2.1 三基对比」下面**不空行**直接跟表格/列表，
   // 不拆的话标题会把整块拖进段落分支（表格/列表消失）。把每个标题行拆成独立块。
   const blocks: string[] = [];
-  for (const b of raw) {
-    if (!/^#{1,4}\s/m.test(b)) {
+  for (const b of joined) {
+    // 围栏块整体不拆（块内的 # / | / > 行是图/代码的一部分）
+    if (!/^#{1,4}\s/m.test(b) || /^\s*(```|~~~)/.test(b)) {
       blocks.push(b);
       continue;
     }
