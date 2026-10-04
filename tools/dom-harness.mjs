@@ -480,6 +480,9 @@ async function runStandalone() {
   check('快照总纲附篇能渲染（变换一条线：总脉络/速查/总结）',
     docTxt.includes('变换一条线') && docTxt.includes('关键公式速查') && docTxt.includes('倒谱'),
     docTxt.slice(-60));
+  check('快照总纲附三能渲染（矩阵微积分与自动微分）',
+    docTxt.includes('交换性避难所') && docTxt.includes('backward 公式库') && docTxt.includes('视角转换七组'),
+    docTxt.slice(-80));
   check('快照总纲页表格已渲染（三基对比 + 速查表 + 顶层架构）',
     d.querySelectorAll('#reader .mdtable').length >= 3,
     `tables=${d.querySelectorAll('#reader .mdtable').length}`);
