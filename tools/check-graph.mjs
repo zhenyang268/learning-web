@@ -20,8 +20,10 @@ const require = createRequire(import.meta.url);
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, 'json');
-const GRAPH_DIR = path.join(ROOT, 'graph');
+// 数据根在 main 处按 --subject 从 src/subjects.ts 取（唯一真源，本文件不写第二份路径）
+let JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, 'json');
+let GRAPH_DIR = path.join(ROOT, 'graph');
+let REL_PREFIX = 'json/';
 
 let pass = 0;
 let fail = 0;
@@ -34,9 +36,9 @@ function check(name, cond, detail = '') {
   }
 }
 
-async function loadModel() {
+async function loadTs(entry) {
   const res = await esbuild.build({
-    entryPoints: [path.join(ROOT, 'src', 'modules', 'graph-model.ts')],
+    entryPoints: [path.join(ROOT, entry)],
     bundle: true,
     write: false,
     format: 'cjs',
@@ -84,7 +86,7 @@ function scanUnits() {
     if (!fs.statSync(dir).isDirectory()) continue;
     for (const name of fs.readdirSync(dir).sort()) {
       if (!name.endsWith('.json') || name === 'index.json') continue;
-      const rel = `json/${chapter}/${name}`;
+      const rel = `${REL_PREFIX}${chapter}/${name}`;
       const d = readJsonWithRetry(path.join(dir, name), rel);
       if (!d) continue;
       if (typeof d.code !== 'string') {
@@ -117,14 +119,26 @@ function loadYamls() {
   return out;
 }
 
-const { mergeGraph, normalizeSemYaml } = await loadModel();
+// 数据根从学科配置取（`--subject cs408` 直接复用同一套闸门）
+const SUBJECT_ID = (() => {
+  const i = process.argv.indexOf('--subject');
+  return i >= 0 ? process.argv[i + 1] : 'math';
+})();
+const subjectsMod = await loadTs('src/subjects.ts');
+const SUBJ = SUBJECT_ID === 'cs408' ? subjectsMod.CS408 : subjectsMod.MATH;
+REL_PREFIX = SUBJ.dataRoot;
+JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, SUBJ.dataRoot.replace(/\/$/, ''));
+GRAPH_DIR = path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, ''));
+
+const { mergeGraph, normalizeSemYaml } = await loadTs('src/modules/graph-model.ts');
 const units = scanUnits();
 const yamls = loadYamls();
 
-check('json/ 索引非空', units.length > 0, `${units.length} 单元`);
+console.log(`[check-graph] 学科 ${SUBJ.id} · 数据根 ${SUBJ.dataRoot} · 语义边根 ${SUBJ.graphRoot}`);
+check(`${SUBJ.dataRoot} 索引非空`, units.length > 0, `${units.length} 单元`);
 
 if (yamls.size === 0) {
-  console.log('graph/ 下没有 yaml —— 跳过语义边检查（派生边自检仍然跑）。');
+  console.log(`${SUBJ.graphRoot} 下没有 yaml —— 跳过语义边检查（派生边自检仍然跑）。`);
 }
 
 const known = new Set(units.map((u) => u.code));

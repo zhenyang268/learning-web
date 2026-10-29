@@ -26,8 +26,6 @@ const require = createRequire(import.meta.url);
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, 'json');
-const GRAPH_DIR = path.join(ROOT, 'graph');
 
 let pass = 0;
 let fail = 0;
@@ -61,8 +59,19 @@ const modelMod = await loadTs('src/modules/graph-model.ts');
 const kbMod = await loadTs('src/modules/kb-index.ts');
 const dataMod = await loadTs('src/modules/graph-data.ts');
 
+// 数据根从学科配置取（`--subject cs408` 复用同一套对拍闸门）
+const SUBJECT_ID = (() => {
+  const i = process.argv.indexOf('--subject');
+  return i >= 0 ? process.argv[i + 1] : 'math';
+})();
+const subjectsMod = await loadTs('src/subjects.ts');
+const SUBJ = SUBJECT_ID === 'cs408' ? subjectsMod.CS408 : subjectsMod.MATH;
+const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, SUBJ.dataRoot.replace(/\/$/, ''));
+const GRAPH_DIR = path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, ''));
+console.log(`[check-sem-sync] 学科 ${SUBJ.id} · 数据根 ${SUBJ.dataRoot} · 语义边根 ${SUBJ.graphRoot}`);
+
 // ── 索引（含烘入的语义边）
-const idx = kbMod.buildIndex(JSON_DIR, GRAPH_DIR);
+const idx = kbMod.buildIndex(JSON_DIR, GRAPH_DIR, SUBJ.dataRoot);
 const units = idx.units;
 check('索引非空', units.length > 0, `${units.length} 单元`);
 

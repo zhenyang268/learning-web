@@ -19,7 +19,7 @@
 | 本文 | 硬规则、分级判据、目录、命令 | 每次会话开始 |
 | `DESIGN.md` | 决策记录、数据流、数据结构、契约样例、规模策略、风险明细、A1 切片验收 | 动 renderers / viz 注册表 / 契约 / `build/` 之前 |
 | `TASKBOOK.md` | 知识库自动生成流水线 + 前端的**施工任务书**（批次、子 agent 分工、P 篇特化） | 参与知识库生成 / 前端开发任务时；完工后归档 |
-| `build/orchestrate/HANDOFF-json.md` | 知识库生成线**进度真源**（当前 85/318）+ 已知坑清单 | 接手 JSON 生成线时先读 |
+| `build/orchestrate/HANDOFF-json.md` | 知识库生成线**进度真源**（**318/318 已完成**；文内 §1 的 85/318 是旧快照，以 §6 日志为准）+ 已知坑清单 | 接手 JSON 生成线时先读 |
 | `build/orchestrate/RUNBOOK-cli.md` | 生成线**执行手册**：会话内 `wb*` 命令（--bg 派发，D17）/ 外部终端 `batch_*`（D16） | 要跑生成/评审/修复时 |
 | `build/orchestrate/HANDOFF-frontend.md` | 前端线接力任务书 | 接手前端时 |
 | `build/orchestrate/MASTER_PROMPT.md` | **主控 prompt**（主 agent=glm-5.3 规划，flash 级模型经 `--bg` 执行 JSON/前端任务） | 开总编排会话时整篇贴入 |
@@ -56,9 +56,14 @@
 
 ```
 1. $LEARNING_NOTEBOOK      环境变量（优先，CI / worktree 场景）
-2. ../notebook             相对本仓父目录（常规开发场景）
+2. ../math-notebook        相对本仓父目录（常规开发场景）
 3. 解析失败 → 立即报错退出，不要静默 fallback 到任何默认路径
 ```
+
+> **路径漂移校正（2026-10-30）**：本文早期版本写的是 `../notebook`，
+> 父仓实际目录名是 **`math-notebook/`**（父仓 `README.md` 也专门点过这条）。
+> 快照里的 `tex_ref.file` 仍以 `notebook/<...>` 形式记录（历史产物口径，`build/verify_kb.py`
+> 会统一加前缀），**两者不是一回事**：磁盘目录叫 `math-notebook`，词条里的引用前缀叫 `notebook/`。
 
 ### 1.2 构建时快照 + 溯源
 
@@ -162,6 +167,11 @@
 learning-web/
   AGENTS.md              # 本文（规约）
   DESIGN.md              # 设计（决策、数据结构、契约、验收）
+  index.html             # 数学站入口（多页应用之一）
+  cs408.html             # 408 子站入口（共用外壳，数据根独立）
+  cs408/                 # 408 的数据根（与数学的 json/ + graph/ 完全分开）
+    json/<章>/<code>.json
+    graph/<章>.yaml
   build/                 # 【Q2 已决】转换脚本全部在本仓，不经 Flask
     read_notebook.py     # 解析 §1.1 路径、读 .tex、写 provenance.json
     filter_codename.py   # 抽代号、合成子编号、建反向链接、转 vizslot
@@ -176,10 +186,16 @@ learning-web/
   example/               # 多模型流水线演示样例（2026-09-24 起，lie 交互导读）
     lie/                 # 唯一实例：说明与生成链见 example/lie/README.md，不入正式流水线
   src/
-    shell/               # 三栏布局 · 导航 · 路由 · 主题
-    renderers/           # doc.ts（KaTeX 正文）· graph.ts · plot2d.ts
+    app.ts               # 应用主体（storage 与渲染全在这里）
+    main.ts              # 数学入口（3 行：boot(MATH)）
+    main-cs408.ts        # 408 入口（3 行：boot(CS408)）
+    subjects.ts          # 学科配置表：数据根 / 语义边根 / 总纲 / 互链（唯一真源）
+    shell/               # 三栏布局 · 导航 · 路由 · 主题（含 patchMastery 增量刷新）
+    renderers/           # card.ts · markdown.ts（KaTeX + LRU）· graph.ts
     viz/                 # 演示模块，按 §2 判据分 frontend/backend
-    modules/             # registry: module → { source, endpoint, version, renderer }
+      registry.ts        # 浏览器侧：模块名 → 动态 import（按需取 chunk）
+      specs-all.ts       # 静态汇总，**只给 Node 工具**，浏览器入口禁止 import
+    modules/             # loader / kb-index（多学科参数化）· graph · state · attr
     types.ts             # ConceptNode 等接口（§4，定义见 DESIGN.md §8）
   dist/                  # 构建产物，gitignore，可完全重建
   vite.config.ts         # dev proxy /api → learning-viz Flask:5000（仅计算模块）
@@ -204,6 +220,11 @@ uv run python build/build_graph.py --chapter A1 --out dist/graph/A1.json
 
 # dev（前端 + 代理到 learning-viz 的计算端点）
 npm run dev                 # Vite，proxy /api → :5000
+npm run check               # 类型 + graph + sem-sync + viz + 全量 DOM 断言（318 单元）
+npm run check:cs408         # 408 子站复用同一套闸门（--subject cs408）
+npm run audit               # 全量体检（只读，产出 build/logs/health-frontend-*.md）
+npm run audit:content       # 内容体检（verify_kb --dry-run，不回填）
+npm run build               # tsc → vite（多入口）→ 字体瘦身 → standalone 快照
 ```
 
 **Python 一律走父仓的 uv 环境**（父仓 `AGENTS.md` 第七节）：
@@ -254,9 +275,34 @@ npm run dev                 # Vite，proxy /api → :5000
 
 - **禁 CDN。** KaTeX / Mermaid / 图表库全部内联或 vendored，产物必须断网可用。
 - standalone HTML 遵守 §3 的三条约束（内联数据 / IIFE / 无 CDN；细则见 `DESIGN.md` §9.1）。
+- **`dist/` 有两种形态，不要混**（2026-10-30 定，方案 A）：
+  `knowledge.html` 全内联（普通 `<script>` + gzip 数据 + base64 字体）＝**唯一分发物，双击即开**；
+  `dist/index.html` / `cs408.html` 是**开发形态**（`type="module"` + 运行时 `fetch json/`）⇒ **必须 HTTP**。
+  报告「双击白屏」时先确认打开的是哪个文件 —— 开发形态双击必然白屏，不是产物损坏。
+  `json/` 是**只读数据集的唯一真源**（等价只读文件型数据库，`index.json` 是物化索引），
+  **不是可从 tex 重建的中间态**，不得以「产物有了」为由删除。
 - **不引入 UI 框架**（React/Vue）。决策 D2：Vite + Vanilla TS，
   理由是单人维护 + 需要 HMR 调 Canvas/WebGL，框架是额外心智负担。
 - 渲染器**只绘制不计算**（§2.1 的粘合前提）。
+
+### 双学科（D18）
+
+- **学科差异只允许出现在 `src/subjects.ts`**。渲染器 / viz / markdown / state
+  **一律不许出现 `if (subject === ...)`** —— 一旦按学科分叉，两边的 bug 会各自演化。
+- 数据根、语义边根、总纲、互链都从学科配置取；`dataRoot` 形参一律**带默认值**
+  （`buildIndex(jsonDir, graphDir, relPrefix = 'json/')`），数学侧老调用方零改动。
+- 两站**互不加载对方数据**：`cs408.html` 只 fetch `cs408/json/*`，
+  数学站首屏的请求数不因 408 新增而增加（`--subject` 参数化闸门即为此而设）。
+
+### 性能（D19–D21）
+
+- **不许把静态 specs 拉回主包**：浏览器入口**禁止** import `viz/specs-all.ts`
+  （那是 Node 工具专用）。改 viz 注册表后必须跑 `npm run check:viz`。
+- 阅读区重渲染必须走 `beginRender()`（递增 `renderToken` + 回收 viz 句柄 + 置 `data-ready=0`）；
+  自己写 `elReader.innerHTML = ...` 而不调它，等于放弃取消与句柄回收。
+- 公式缓存**有界**（`MATH_CACHE_MAX = 4000`），不要再加无上限的 Map。
+- 掌握度变动**只准走 `refreshMasteryLight()`**（一行 + 一个字母块 + 横幅），
+  不许退回 `refreshChrome()` 那种整树重建 —— 判据见 `dom-harness` 的 MutationObserver 断言。
 
 ### 符号书写
 

@@ -5,20 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && npm run build:standalone",
+    "build": "tsc --noEmit && vite build && npm run build:prune-fonts && npm run build:standalone",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "build:standalone": "node tools/build-standalone.mjs",
+    "build:prune-fonts": "node tools/prune-katex-fonts.mjs",
     "check:viz": "node tools/viz-model-check.mjs",
     "check:graph": "node tools/check-graph.mjs",
     "check:sem-sync": "node tools/check-sem-sync.mjs",
-    "check": "tsc --noEmit && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all"
+    "check:cs408": "node tools/check-graph.mjs --subject cs408 && node tools/check-sem-sync.mjs --subject cs408 && node tools/dom-harness.mjs --subject cs408 --all",
+    "check": "tsc --noEmit && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all",
+    "audit": "node tools/dom-harness.mjs --audit",
+    "audit:content": "uv run python build/verify_kb.py --dry-run --out build/logs/health-content.json"
   },
   "dependencies": {
     "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",
+    "jsdom": "^28.1.0",
     "katex": "^0.18.9",
     "typescript": "^5.9.3",
     "vite": "^7.3.6"

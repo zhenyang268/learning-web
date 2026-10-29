@@ -34,6 +34,21 @@
 | **D16** | LLM 调用走 **`codebuddy` CLI 直连多模型**（`deepseek-v4.1-flash` 批量生成 / `glm-5.3` 评审 / `kimi-k3-2` 仲裁），总控脚本 `build/orchestrate/pipeline.zsh` 在 **WorkBuddy 之外的终端/tmux 运行**；WorkBuddy 会话内**禁止**嵌套执行 `codebuddy -p`（前台） | 实测（2026-09-24）：子 agent 通道只有 GLM-5.3（填其他型号名静默回退）；CLI `-p` 直连真实路由但嵌套进沙盒会假死且 `nohup+disown` 进程组必被回收。文件契约 + done 标记 + 外部总控是当时唯一稳定结构（后被 D17 补充） |
 | **D17** | WorkBuddy 会话内执行用 **`codebuddy --bg` 托管后台会话 + transcript 回收**：pipeline.zsh 的 `wbdispatch/wbreview/wbcollect/wbstatus` 命令派发 `kb-<kind>-<code>` 命名的 `--bg` 会话，由 `build/orchestrate/collect_bg.py` 从 `~/.workbuddy/projects/<cwd-slug>/<sessionId>.jsonl` 提取最后一条 assistant 输出落盘 | 实测（2026-09-24）：`--bg` 会话在沙盒里能跑完生成，但 `~/.workbuddy/logs/<name>.log` 恒 0 字节、`jobs/<id>/state.json` 的 state 常被误标 `failed`（进程被沙盒回收）——**transcript 是唯一可靠输出真源**，回收器按「PID 死活 + transcript 有无输出」判定，不信 state。D16 的前台禁令不变；外部终端 `batch*` 前台链路保留为备选（额度紧时两条路别同时跑） |
 
+| **D18** | **双学科 = 同仓多入口**（`index.html` 数学 / `cs408.html` 408），数据根与语义边根完全分开；学科差异只出现在 `src/subjects.ts` 一张表里 | 若共用一个 hash 命名空间，`#/OS1.1` 与 `#/A1.3` 会迫使 `byCode` 全局唯一、字母块聚合混算、frontier 跨学科比较掌握度 —— 三处都要加学科维度且漏一处就串味。分入口后这三处**零改动**，代价只是多一个 HTML 与一个 3 行入口文件 |
+| **D19** | **性能三条约定**：① 卡片 tab 懒渲染（首屏只拼 `.pane.on`）；② 阅读区分帧挂载（首卡同步、其余每帧 2 张，`renderToken` 防交错）；③ 公式缓存改有界 LRU（4000 条） | 实测（2026-10-30）全库首屏只需渲染 58.1% 的词条，最大的 A1.3 只需 18.6%；无上限的 `mathCache` 与 318 节点的侧栏整树重建是「浏览久了变卡」「点一下卡一下」的直接来源 |
+| **D20** | viz 规格改**按需动态 import**（`viz/registry.ts` 只留 loader map，静态汇总迁 `viz/specs-all.ts` 供 Node 工具） | specs 源 237KB 全静态入主包，而多数单元不挂演示；拆包后主包 436KB → 350KB，specs 变成 2.5–25KB 的分包。**风险点**：Node 侧工具依赖静态汇总，所以 `specs-all.ts` 绝不能被浏览器入口 import（由 `check:viz` 的 loader/实现同步断言兜住） |
+| **D21** | 单文件快照 `knowledge.html` 的内联数据改 **gzip + base64**，运行时用 `DecompressionStream` 解压（缺该能力时给明确文案，不白屏） | `file://` 不能 fetch，单文件无法按需取数据，只能压文本量：10.63MB → 4.35MB。实测这份语料（中文 + LaTeX）gzip 比只有 2.1–2.5:1，达不到当初估的 3.5:1，故预算由 4.2MB 修订为 4.5MB |
+
+> **D12 复核（2026-10-30，方案 A）**：内容线已冻结（318/318，2026-09-25 收工），
+> 「改 JSON 秒级可见」这条**从架构约束降级为开发期顺手** —— 它当初服务的是内容迭代，
+> 该场景已两个月未发生。`json/` 的运行时角色保留，但理由变成「内容真源必须可达」，
+> 不再是「内容天天在改」。据此定两种产物的定位：
+> `dist/knowledge.html`（全内联）= **唯一分发物，双击即开**；
+> `dist/index.html` / `cs408.html`（`type="module"` + 运行时 fetch）= **开发形态，必须 HTTP**。
+> 「双击白屏」按打开错形态处理，不要再去修产物。
+> 另：**`json/` 不得删除** —— 它是那 9.7MB 原创词条的唯一载体（tex 仅 5687 行，
+> 直觉/反例/probe 均为生成物），等价于只读文件型数据库而非可重建的中间态。
+
 > **D6 与旧的 `learning-viz/python/notes_pipeline/` 方案冲突，以后者为准已废弃。**
 > 该目录及其 `DESIGN.md` 已从 `learning-viz` 移除；`learning-viz` 只保留计算模块的后端
 > （Flask `/api/viz/*`）与本地渲染。
@@ -341,6 +356,23 @@ frontier = { n | n.mastery < 3 且 n 的所有 prereq 满足 mastery >= 3 }
 | 节点 | 探针、源文件行号、挂载的演示 | 点击节点 |
 
 **生成命令按章节切分**：`build.py --chapter A1`，不默认全量。
+
+### 9.3 实测规模与性能判据（2026-10-30）
+
+| 指标 | 改动前 | 改动后 | 量法 |
+|---|---|---|---|
+| 首屏渲染词条占比 | 100% | **58.1%**（A1.3 仅 18.6%） | 按 tab 分组统计 `statement` 组 / 全部 |
+| 切换单元首卡时延 | — | 96–139ms | `dom-harness` 的 `runRace` 打点（jsdom） |
+| 切换单元全部就绪 | — | 560–1015ms | 同上（**jsdom 口径**，真浏览器另测） |
+| 主包（含 KaTeX） | 436KB | **350KB** | `vite build` 输出 |
+| 分包（specs） | 全在主包 | 2.5–25KB × 12 | 同上 |
+| `dist/assets` 字体 | 1.02MB（woff2+woff+ttf） | **250KB**（仅 woff2） | `du -sh dist/assets` |
+| `knowledge.html` | 10.63MB | **4.35MB** | 构建日志 |
+| 掌握度点击的侧栏 DOM 变更 | 318 节点整树重建 | **≤3 节点** | `dom-harness` 的 MutationObserver 断言 |
+
+> **时延阈值按 jsdom 口径放宽**（首卡 400ms / 全部就绪 1600ms）：jsdom 没有真实排版引擎、
+> 单元 JSON 走磁盘同步读，同一份代码连跑三次能差 2.5 倍。它只当**回归护栏**；
+> 真浏览器预算仍是首卡 200ms / 全部 800ms。
 
 ---
 

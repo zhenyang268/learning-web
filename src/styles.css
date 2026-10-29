@@ -458,6 +458,23 @@ nav .m {
   padding-bottom: 20px;
 }
 
+/* 跨行行间公式块（renderers/markdown.ts 的 splitDisplayBlocks）：
+   以前这类公式会退化成裸文本；现在成块渲染，宽公式给横向滚动而不是把卡片撑破。 */
+.math-display {
+  margin: 12px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* 离屏卡片不参与布局与绘制（111KB 单元有 20+ 张卡，全部排版很贵）。
+   与 renderReader 的分帧挂载互补：首卡立刻可交互，其余滚动到视野内才排版。
+   contain-intrinsic-size 用 auto：浏览器记住上一次实测高度，避免滚动条抖动。
+   注意不能用 contain:strict —— 那会把卡内的 sticky/绝对定位也一起关掉。 */
+.card:not(.pagehead) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 240px;
+}
+
 .pagehead h1 {
   font-size: 27px;
   font-weight: 800;
@@ -1318,6 +1335,13 @@ p .badge {
   font-size: 13px;
   cursor: pointer;
   white-space: nowrap;
+}
+
+/* 跨站入口（数学 ↔ 408）：复用 graphbtn 的外观，<a> 需要补回无下划线与行高 */
+a.graphbtn.crosssite {
+  text-decoration: none;
+  line-height: 1.4;
+  color: var(--tx2);
 }
 
 .graphbtn:hover,

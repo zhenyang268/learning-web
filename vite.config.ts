@@ -2,24 +2,28 @@ import { defineConfig, type Plugin, type ViteDevServer } from 'vite';
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildIndex } from './src/modules/kb-index';
+import { SUBJECTS, type Subject } from './src/subjects';
 
 const ROOT = import.meta.dirname;
-const JSON_DIR = path.join(ROOT, 'json');
-const OUT_JSON_DIR = path.join(ROOT, 'dist', 'json');
-const GRAPH_DIR = path.join(ROOT, 'graph');
-const OUT_GRAPH_DIR = path.join(ROOT, 'dist', 'graph');
+const OUT = path.join(ROOT, 'dist');
 
-function indexPayload(): string {
-  // 语义边真源（graph/*.yaml）构建期烘进索引：右栏「依赖◂」与 frontier 因此吃真源，
-  // 不再是编号序猜测（详见 kb-index.ts 的 attachSem）。
-  return JSON.stringify(buildIndex(JSON_DIR, GRAPH_DIR));
+/** 学科配置里是「相对站点根的路径」，这里换成绝对路径 */
+const abs = (rel: string): string => path.join(ROOT, rel.replace(/\/$/, ''));
+
+/**
+ * 每个学科各一份索引（元数据，几 KB），dev 即时生成、build 落盘。
+ * 语义边真源（`<graphRoot>*.yaml`）构建期烘进索引：运行期零 yaml 请求。
+ */
+function subjectIndex(subject: Subject): string {
+  return JSON.stringify(buildIndex(abs(subject.dataRoot), abs(subject.graphRoot), subject.dataRoot));
 }
 
-/** graph/ 语义边真源的清单（字母列表）。yaml 缺失是常态（逐章补），前端按清单探测 + 降级。 */
-function graphIndexPayload(): string {
+/** 某个学科 dataRoot 下的 yaml 清单（前端按清单探测 + 降级） */
+function subjectGraphIndex(subject: Subject): string {
+  const dir = abs(subject.graphRoot);
   const letters: string[] = [];
-  if (fs.existsSync(GRAPH_DIR)) {
-    for (const name of fs.readdirSync(GRAPH_DIR).sort()) {
+  if (fs.existsSync(dir)) {
+    for (const name of fs.readdirSync(dir).sort()) {
       if (name.endsWith('.yaml')) letters.push(name.slice(0, -'.yaml'.length));
     }
   }
@@ -33,63 +37,81 @@ function reload(server: ViteDevServer) {
 }
 
 /**
- * json/ 是运行时数据（不打进 bundle，改 JSON 秒级刷新）：
- * - dev：中间件即时生成 /json/index.json（**只含元数据**，几 KB）；监听 json/ 变化触发整页刷新
- * - build：把 json/ 原样拷进 dist/json/，并落一份 index.json
+ * 数据层插件（多学科）：
+ * - dev：中间件即时生成 `<dataRoot>index.json` 与 `<graphRoot>index.json`（**只含元数据**）；
+ *   单元正文与 408 的数据目录本身就是站点根下的静态文件，Vite 直接伺服，无需中间件。
+ * - build：各学科的数据根整体拷进 dist（数学 `json/`、408 `cs408/json/`），并落一份索引。
  *
- * 索引里带 code/chapter/title/cards/links —— 侧栏、依赖图、frontier、掌握度聚合都只吃它，
- * 于是启动不必拉全库；词条正文由前端在切换单元时按需 fetch。
+ * 这样两个站点各拉各的数据，`cs408.html` 的首屏不会因为数学 318 个单元变重。
  */
 function kbJson(): Plugin {
+  const indexUrl = (s: Subject): string => `/${s.dataRoot}index.json`;
+  const graphIndexUrl = (s: Subject): string => `/${s.graphRoot}index.json`;
+
   return {
     name: 'kb-json',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = (req.url ?? '').split('?')[0];
-        if (url === '/json/index.json') {
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.setHeader('Cache-Control', 'no-store');
-          res.end(indexPayload());
-          return;
-        }
-        if (url === '/graph/index.json') {
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.setHeader('Cache-Control', 'no-store');
-          res.end(graphIndexPayload());
-          return;
-        }
-        if (url.startsWith('/graph/') && url.endsWith('.yaml')) {
-          const abs = path.join(GRAPH_DIR, path.basename(url));
-          if (fs.existsSync(abs)) {
-            res.setHeader('Content-Type', 'text/yaml; charset=utf-8');
+        for (const subject of SUBJECTS) {
+          if (url === indexUrl(subject)) {
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
             res.setHeader('Cache-Control', 'no-store');
-            res.end(fs.readFileSync(abs, 'utf8'));
+            res.end(subjectIndex(subject));
             return;
           }
-          res.statusCode = 404;
-          res.end('');
-          return;
+          if (url === graphIndexUrl(subject)) {
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.setHeader('Cache-Control', 'no-store');
+            res.end(subjectGraphIndex(subject));
+            return;
+          }
+        }
+        // graph/*.yaml 原文（调试用）：按学科的 graphRoot 前缀分派
+        for (const subject of SUBJECTS) {
+          const prefix = `/${subject.graphRoot}`;
+          if (url.startsWith(prefix) && url.endsWith('.yaml')) {
+            const file = path.join(abs(subject.graphRoot), path.basename(url));
+            if (fs.existsSync(file)) {
+              res.setHeader('Content-Type', 'text/yaml; charset=utf-8');
+              res.setHeader('Cache-Control', 'no-store');
+              res.end(fs.readFileSync(file, 'utf8'));
+              return;
+            }
+            res.statusCode = 404;
+            res.end('');
+            return;
+          }
         }
         next();
       });
-      for (const dir of [JSON_DIR, GRAPH_DIR]) {
-        if (!fs.existsSync(dir)) continue;
-        server.watcher.add(dir);
-        server.watcher.on('change', (f) => {
-          if (typeof f === 'string' && f.startsWith(dir)) reload(server);
-        });
+      for (const subject of SUBJECTS) {
+        for (const dir of [abs(subject.dataRoot), abs(subject.graphRoot)]) {
+          if (!fs.existsSync(dir)) continue;
+          server.watcher.add(dir);
+          server.watcher.on('change', (f) => {
+            if (typeof f === 'string' && f.startsWith(dir)) reload(server);
+          });
+        }
       }
     },
     closeBundle() {
-      fs.rmSync(OUT_JSON_DIR, { recursive: true, force: true });
-      fs.rmSync(OUT_GRAPH_DIR, { recursive: true, force: true });
-      if (fs.existsSync(GRAPH_DIR)) {
-        fs.cpSync(GRAPH_DIR, OUT_GRAPH_DIR, { recursive: true });
-        fs.writeFileSync(path.join(OUT_GRAPH_DIR, 'index.json'), graphIndexPayload());
+      for (const subject of SUBJECTS) {
+        const dataDir = abs(subject.dataRoot);
+        const graphDir = abs(subject.graphRoot);
+        const outData = path.join(OUT, subject.dataRoot);
+        const outGraph = path.join(OUT, subject.graphRoot);
+        fs.rmSync(outData, { recursive: true, force: true });
+        fs.rmSync(outGraph, { recursive: true, force: true });
+        if (fs.existsSync(graphDir)) {
+          fs.cpSync(graphDir, outGraph, { recursive: true });
+          fs.writeFileSync(path.join(outGraph, 'index.json'), subjectGraphIndex(subject));
+        }
+        if (fs.existsSync(dataDir)) {
+          fs.cpSync(dataDir, outData, { recursive: true });
+          fs.writeFileSync(path.join(outData, 'index.json'), subjectIndex(subject));
+        }
       }
-      if (!fs.existsSync(JSON_DIR)) return;
-      fs.cpSync(JSON_DIR, OUT_JSON_DIR, { recursive: true });
-      fs.writeFileSync(path.join(OUT_JSON_DIR, 'index.json'), indexPayload());
     },
   };
 }
@@ -98,5 +120,16 @@ export default defineConfig({
   base: './',
   plugins: [kbJson()],
   server: { port: 5173, host: '127.0.0.1' },
-  build: { outDir: 'dist', emptyOutDir: true, target: 'es2022' },
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    target: 'es2022',
+    rollupOptions: {
+      // 多入口：数学站 + 408 子站（共用一套外壳与渲染器，各自独立打包的入口脚本）
+      input: {
+        main: path.join(ROOT, 'index.html'),
+        cs408: path.join(ROOT, 'cs408.html'),
+      },
+    },
+  },
 });

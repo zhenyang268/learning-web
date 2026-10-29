@@ -3,6 +3,7 @@ r"""pass 2 确定性校验：结构合规 + 代号/links 存在性 + 数值【�
 
 用法（在 learning-web 下）：
   uv run python build/verify_kb.py [code ...]     # 不带参数 = 校验全部生成的 v2 文件（不含 A1.3 v1 样例）
+  uv run python build/verify_kb.py --dry-run ...  # 体检模式：只报告，不回填、不写 corrections.json
 
 检查项：
   1. json.tool 可解析
@@ -46,6 +47,8 @@ ID_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
 TYPES = {"statement", "proof", "intuition", "extension", "counterexample",
          "comparison", "application", "viz", "probe"}
 MARK_RE = re.compile(r"【待核验:([^】]+)】")
+# 任意待核验/已核验标记（含空壳与畸形）：用于「有标记但拿不出表达式」的体检
+ANY_MARK_RE = re.compile(r"【(待核验|已核验)([^】]{0,120})】")
 # 畸形标记：标记起点之后 300 字符内（不跨行、不跨下一个标记）找不到 】 收尾
 BAD_MARK_RE = re.compile(r"【(?:待核验|已核验)(?![^【\n]{0,300}】)")
 # 回填后仍残留的未处理标记
@@ -108,7 +111,14 @@ def close_enough(claimed: float, actual: float) -> bool:
     return False
 
 def check_claim(text_before: str):
-    """从标记前的文本里取断言值。取不到（没有关系符）返回 None。"""
+    """从标记前的文本里取断言值。取不到（没有关系符）返回 None。
+
+    先把**已经出现过的标记整段删掉**再找（2026-10-30 修）：
+    相邻两个标记 `…【待核验:-(10>=5)】【待核验:-(10>=11)】` 时，前一个标记的表达式里
+    自带 `=5)`，会被 CLAIM_RE 当成「声称值 5」，于是与后一个标记的重算值 0 冲突出 CRIT。
+    那是校验器自己的假阳性（A1.3:mct.nonneg 实测），不是数据错。
+    """
+    text_before = re.sub(r"【[^】]*】", "", text_before)
     m = CLAIM_RE.search(text_before)
     if not m:
         return None
@@ -159,6 +169,19 @@ def verify_file(path: Path) -> list[str]:
             errs.append(f"MAJ {code} {eid}: content 含环境外的双反斜杠（疑似 JSON 过度转义）")
         if isinstance(ent.get("content"), str) and BAD_MARK_RE.search(ent["content"]):
             errs.append(f"CRIT {code} {eid}: 数值标记未用 】 收尾（写成 ] / ) 会静默漏过回填）")
+        # 空壳/畸形标记（2026-10-29 体检新增）：GEN_BRIEF §2.4 禁写「【待核验】」——
+        # 没有表达式就无法重算，等于把一条**永远未核验**的数值断言留在正文里给用户看。
+        # 此前 verify_file 只查「】 缺失」与「求值失败」，这类标记一路静默通过。
+        if isinstance(ent.get("content"), str):
+            for mm in ANY_MARK_RE.finditer(ent["content"]):
+                head, body = mm.group(1), mm.group(2)
+                if head == "待核验":
+                    ok = re.match(r"^:[^】：]+$", body) is not None
+                else:
+                    ok = re.match(r"^:[^】]*\|.+$", body) is not None
+                if not ok:
+                    errs.append(f"MAJ {code} {eid}: 空壳/畸形数值标记 {mm.group(0)[:24]}"
+                                f"（无表达式，无法重算回填）")
         if ent.get("status") != "drafted":
             errs.append(f"CRIT {code} {eid}: status 应为 drafted")
         kw = ent.get("keywords")
@@ -199,8 +222,12 @@ def verify_file(path: Path) -> list[str]:
                 errs.append(f"MAJ {code} {eid}: viz 既非档1 也非档2 写法")
     return errs
 
-def settle_numerics(path: Path, corrections: list) -> list[str]:
-    """重算【待核验:expr】并回填，同时对照标记前的断言值。无标记时不动文件。"""
+def settle_numerics(path: Path, corrections: list, dry: bool = False) -> list[str]:
+    """重算【待核验:expr】并回填，同时对照标记前的断言值。无标记时不动文件。
+
+    dry=True（体检模式）时只重算与比对，**不写回文件**，但仍把「本应回填多少处」记入 corrections，
+    这样体检能报出「32 个文件积压了 N 处未回填」而不擅自改动内容。
+    """
     text = path.read_text(encoding="utf-8")
     if "【待核验:" not in text:
         return []
@@ -237,13 +264,25 @@ def settle_numerics(path: Path, corrections: list) -> list[str]:
             return errs
         # 记录回填与纠错审计
         before = [(m.start(), m.group(1)) for m in MARK_RE.finditer(text)]
+        if dry:
+            corrections.append({"file": str(path.relative_to(WEB)), "markers": len(before),
+                                "mismatches": mismatches, "dry_run": True})
+            return errs
         path.write_text(new_text, encoding="utf-8")
         corrections.append({"file": str(path.relative_to(WEB)), "markers": len(before),
                             "mismatches": mismatches})
     return errs
 
 def main() -> None:
-    args = sys.argv[1:]
+    argv = sys.argv[1:]
+    dry = "--dry-run" in argv
+    out_path = None
+    if "--out" in argv:
+        i = argv.index("--out")
+        out_path = Path(argv[i + 1]) if i + 1 < len(argv) else None
+    args = [a for a in argv if not a.startswith("--")]
+    if out_path:
+        args = [a for a in args if a != str(out_path)]
     if args:
         files = [WEB / "json" / a.split(".")[0] / f"{a}.json" for a in args]
     else:
@@ -257,9 +296,10 @@ def main() -> None:
             all_errs.append(f"CRIT {f}: 文件不存在")
             continue
         all_errs += verify_file(f)
-        all_errs += settle_numerics(f, corrections)
-    (STATE / "verify" / "corrections.json").write_text(
-        json.dumps(corrections, ensure_ascii=False, indent=1), encoding="utf-8")
+        all_errs += settle_numerics(f, corrections, dry=dry)
+    if not dry:
+        (STATE / "verify" / "corrections.json").write_text(
+            json.dumps(corrections, ensure_ascii=False, indent=1), encoding="utf-8")
     crit = [e for e in all_errs if e.startswith("CRIT")]
     maj = [e for e in all_errs if e.startswith("MAJ")]
     for e in all_errs:
@@ -267,7 +307,21 @@ def main() -> None:
     n_mark = sum(c["markers"] for c in corrections)
     n_bad = sum(len(c["mismatches"]) for c in corrections)
     print(f"\n== {len(files)} 文件：CRIT {len(crit)} · MAJ {len(maj)} · 数值回填 {n_mark} 处"
-          f"（其中不一致 {n_bad}） ==")
+          f"（其中不一致 {n_bad}）{'  [dry-run 未写回]' if dry else ''} ==")
+    if out_path:
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps({
+            "generated": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
+            "dry_run": dry,
+            "files": len(files),
+            "crit": len(crit),
+            "maj": len(maj),
+            "marker_backlog": n_mark,
+            "mismatches": n_bad,
+            "errors": all_errs,
+            "corrections": corrections,
+        }, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"报告：{out_path}")
     sys.exit(1 if crit else 0)
 
 if __name__ == "__main__":

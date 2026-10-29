@@ -15,8 +15,15 @@ const REQUIRED_ENTRY_FIELDS = ['id', 'type'] as const;
 /** 两级代号：A1.3 / B2 / P10 / de1.7 / lie3.28 合法（前缀可多字母）；A1.3.2 非法 */
 const CODE_RE = /^[A-Za-z]+\d+(?:\.\d+)?$/;
 
+/**
+ * 取 JSON。**不要加 `cache: 'no-store'`**（2026-10-30 去掉）：
+ * 那会让每次刷新把索引 + 当前单元全部重下（最大单元 111KB）。
+ * 现在走浏览器默认策略 —— dev 下 vite 中间件仍发 `Cache-Control: no-store`，
+ * 改 JSON 依旧秒刷；生产静态托管下走 ETag 条件请求，命中就 304。
+ * 一行改动同时满足两种场景，比加环境判断或自写缓存层简单。
+ */
 async function fetchJson(url: string): Promise<unknown> {
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
   const text = await res.text();
   try {
@@ -31,9 +38,10 @@ async function fetchJson(url: string): Promise<unknown> {
  * 只拉索引（几 KB）：含 code/chapter/title/cards/links，
  * 侧栏、依赖图、frontier、掌握度聚合都够用 —— **启动不再拉全库**。
  */
-export async function loadIndex(): Promise<UnitMeta[]> {
-  const data = (await fetchJson('json/index.json')) as { units?: unknown };
-  if (!Array.isArray(data.units)) throw new Error('json/index.json 缺少 units 数组');
+export async function loadIndex(dataRoot = 'json/'): Promise<UnitMeta[]> {
+  const indexUrl = `${dataRoot}index.json`;
+  const data = (await fetchJson(indexUrl)) as { units?: unknown };
+  if (!Array.isArray(data.units)) throw new Error(`${indexUrl} 缺少 units 数组`);
   const units: UnitMeta[] = [];
   for (const raw of data.units) {
     if (typeof raw !== 'object' || raw === null) continue;

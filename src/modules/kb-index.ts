@@ -45,15 +45,21 @@ function readUnitFile(abs: string, relPath: string): EntryFile | null {
   return file;
 }
 
-/** 扫出 json/<chapter>/<code>.json（相对路径，已排序） */
-export function scanUnitPaths(jsonDir: string): string[] {
+/**
+ * 扫出 `<relPrefix><chapter>/<code>.json`（相对路径，已排序）。
+ *
+ * `relPrefix` 是**站点根到数据根的相对前缀**，带尾斜杠：数学 `json/`、408 `cs408/json/`。
+ * 这个值会原样进索引的 `path` 字段，浏览器直接拿它 fetch —— 所以它必须是
+ * 「相对站点根」的路径，而不是仅文件名。默认值让数学侧所有老调用方零改动。
+ */
+export function scanUnitPaths(jsonDir: string, relPrefix = 'json/'): string[] {
   if (!fs.existsSync(jsonDir)) return [];
   const out: string[] = [];
   for (const chapter of fs.readdirSync(jsonDir).sort()) {
     const dir = path.join(jsonDir, chapter);
     if (!fs.statSync(dir).isDirectory()) continue;
     for (const name of fs.readdirSync(dir).sort()) {
-      if (name.endsWith('.json') && name !== 'index.json') out.push(`json/${chapter}/${name}`);
+      if (name.endsWith('.json') && name !== 'index.json') out.push(`${relPrefix}${chapter}/${name}`);
     }
   }
   return out;
@@ -146,10 +152,10 @@ export function attachSem(units: UnitMeta[], graphDir: string): void {
  *                  一旦 HARNESS_JSON 指到别处就找不到 yaml → 语义边**静默全丢**（不报错，
  *                  界面悄悄退回编号序启发式）。调用方（vite/standalone/harness）都手里有仓库根。
  */
-export function buildIndex(jsonDir: string, graphDir: string): KbIndexPayload {
+export function buildIndex(jsonDir: string, graphDir: string, relPrefix = 'json/'): KbIndexPayload {
   const units: UnitMeta[] = [];
-  for (const rel of scanUnitPaths(jsonDir)) {
-    const file = readUnitFile(path.join(jsonDir, rel.slice('json/'.length)), rel);
+  for (const rel of scanUnitPaths(jsonDir, relPrefix)) {
+    const file = readUnitFile(path.join(jsonDir, rel.slice(relPrefix.length)), rel);
     if (file?.code) units.push(unitMetaOf(file));
   }
   units.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));

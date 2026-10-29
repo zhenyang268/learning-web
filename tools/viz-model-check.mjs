@@ -35,9 +35,22 @@ function check(name, cond, detail = '') {
   }
 }
 
+/**
+ * 一次打包同时取两样东西：
+ *   静态汇总（specs / registry / validateTree）来自 `specs-all.ts`（只给 Node 用）；
+ *   浏览器侧的 `vizLoaders`（模块名 → 动态 import）来自 `registry.ts`，
+ *   用来核对「映射表与实现同步」——这是拆包后最容易漂移的一处。
+ */
 async function loadRegistry() {
   const res = await esbuild.build({
-    entryPoints: [path.join(ROOT, 'src', 'viz', 'registry.ts')],
+    stdin: {
+      contents: [
+        `export * from './src/viz/specs-all';`,
+        `export { vizLoaders } from './src/viz/registry';`,
+      ].join('\n'),
+      resolveDir: ROOT,
+      loader: 'ts',
+    },
     bundle: true,
     write: false,
     format: 'cjs',
@@ -99,9 +112,18 @@ function finite(v, pathStr, issues, depth = 0) {
 
 async function main() {
   const reg = await loadRegistry();
-  const { specs, registry, implementedModules, validateTree } = reg;
+  const { specs, registry, implementedModules, validateTree, vizLoaders } = reg;
 
   console.log(`\n模块 ${implementedModules().length} 个 / 规格 ${specs.length} 条\n`);
+
+  /* 0. 动态加载映射表与实现同步（拆包后的主要风险点） */
+  const loaderKeys = Object.keys(vizLoaders);
+  const implKeys = implementedModules();
+  const noLoader = implKeys.filter((k) => !loaderKeys.includes(k));
+  const deadLoader = loaderKeys.filter((k) => !implKeys.includes(k));
+  check('每个已实现模块都在 vizLoaders 里（浏览器能按需取到）', noLoader.length === 0, noLoader.join(', '));
+  check('vizLoaders 没有多余条目', deadLoader.length === 0, deadLoader.join(', '));
+  check('vizLoaders 无重复注册', new Set(loaderKeys).size === loaderKeys.length);
 
   /* 1. 模块名与模式 key */
   const seen = new Set();

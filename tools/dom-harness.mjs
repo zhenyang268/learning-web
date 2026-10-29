@@ -11,9 +11,13 @@
  *   → 跑起来后对真实 DOM 断言；期望值一律从 json/ 真数据推导，不写死
  *
  * 用法（在 learning-web 目录）：
- *   NODE_PATH=<托管 node workspace>/node_modules node tools/dom-harness.mjs [代号…]
- *   node tools/dom-harness.mjs --all      # 遍历全库每个已生成的单元
+ *   node tools/dom-harness.mjs [代号…]
+ *   node tools/dom-harness.mjs --all      # 遍历全库每个已生成的单元（断言模式）
+ *   node tools/dom-harness.mjs --audit    # 全量体检：不断言，**收集问题**落结构化清单
  * 环境变量：HARNESS_JSON=<dir> 指向另一份 json/（默认 <repo>/json）
+ *
+ * 断言模式与体检模式的分工：前者答「有没有回归」，后者答「318 个单元里哪些坏了、坏在哪一级」。
+ * 体检只读 json/ 与 dist/，不改任何内容文件。
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,7 +29,22 @@ const { JSDOM } = require('jsdom');
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, 'json');
+
+/**
+ * 学科（`--subject math|cs408`，默认 math）。
+ * 两站是同仓多入口：入口 HTML 与入口 TS 各一个，数据根不同，其余完全共用。
+ * 默认 math 保证既有调用（`npm run check`）行为一字不变。
+ */
+const SUBJECT_ID = (() => {
+  const i = process.argv.indexOf('--subject');
+  return i >= 0 ? process.argv[i + 1] : 'math';
+})();
+const DATA_ROOT = SUBJECT_ID === 'cs408' ? 'cs408/json/' : 'json/';
+const ENTRY_HTML = SUBJECT_ID === 'cs408' ? 'cs408.html' : 'index.html';
+const ENTRY_TS = SUBJECT_ID === 'cs408' ? 'src/main-cs408.ts' : 'src/main.ts';
+const INDEX_URL = `${DATA_ROOT}index.json`;
+
+const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, DATA_ROOT.replace(/\/$/, ''));
 
 let pass = 0;
 let fail = 0;
@@ -68,7 +87,7 @@ let bundleCache = null;
 async function bundle() {
   if (bundleCache) return bundleCache;
   const result = await esbuild.build({
-    entryPoints: [path.join(ROOT, 'src', 'main.ts')],
+    entryPoints: [path.join(ROOT, ENTRY_TS)],
     bundle: true,
     write: false,
     format: 'iife',
@@ -86,22 +105,25 @@ async function bundle() {
 
 /** 把根 index.html 的 module 脚本换成内联 IIFE，并注入 fetch polyfill */
 function buildPage(bundleJs) {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const html = fs.readFileSync(path.join(ROOT, ENTRY_HTML), 'utf8');
   const shim = `
     window.__requests = [];
+    window.__miss = [];
     window.fetch = function (input) {
       const url = typeof input === 'string' ? input : input.url;
       const clean = String(url).split('?')[0];
       window.__requests.push(clean);
       let body = null;
-      if (clean === 'json/index.json') {
+      const root = window.__dataRoot;
+      if (clean === root + 'index.json') {
         body = window.__indexJson;
-      } else if (clean.startsWith('json/')) {
-        const abs = window.__jsonDir + '/' + clean.slice(5);
+      } else if (clean.startsWith(root)) {
+        const abs = window.__jsonDir + '/' + clean.slice(root.length);
         try { body = window.__fs.readFileSync(abs, 'utf8'); } catch (e) { body = null; }
         if (window.__mutate) body = window.__mutate(clean, body);
       }
       if (body === null) {
+        window.__miss.push(clean);
         return Promise.resolve({ ok: false, status: 404, statusText: 'Not Found',
           text: () => Promise.resolve('') });
       }
@@ -109,14 +131,17 @@ function buildPage(bundleJs) {
         text: () => Promise.resolve(body) });
     };
   `;
-  const marker = '<script type="module" src="/src/main.ts"></script>';
-  if (!html.includes(marker)) throw new Error(`index.html 缺少入口脚本标记：${marker}`);
+  const marker = `<script type="module" src="/${ENTRY_TS}"></script>`;
+  if (!html.includes(marker)) throw new Error(`${ENTRY_HTML} 缺少入口脚本标记：${marker}`);
   // 只内联 shim（它引用 window 上的全局）；bundle 稍后由 mount() 手动 eval，
   // 这样「注入全局」一定发生在应用启动之前 ——
   // 否则启动时那次 fetch 会在 JSDOM 构造期读到还没赋值的 __indexJson。
   void bundleJs;
   return html.replace(marker, () => `<script>${shim}</script>`);
 }
+
+/** 上一次 mount 的时延（毫秒）：分帧挂载后，首卡与「全部卡片就绪」是两个不同的时刻 */
+let mountTiming = { firstMs: 0, readyMs: 0 };
 
 async function mount(bundleJs, opts = {}) {
   const dom = new JSDOM(buildPage(bundleJs), {
@@ -126,18 +151,37 @@ async function mount(bundleJs, opts = {}) {
   });
   dom.window.__fs = fs;
   dom.window.__jsonDir = JSON_DIR;
+  dom.window.__dataRoot = DATA_ROOT;
   dom.window.__indexJson = JSON.stringify({ units: INDEX.units });
   if (opts.mutate) dom.window.__mutate = opts.mutate;
+  const t0 = Date.now();
   dom.window.eval(bundleJs);
   // 启动是异步的：索引 → 目标单元按需拉取 → 渲染。等渲染真出现（而不是固定 sleep）
   const d = dom.window.document;
   const reader = d.getElementById('reader');
-  const t0 = Date.now();
+  let firstMs = 0;
+  let readyMs = 0;
   while (Date.now() - t0 < (opts.timeout ?? 3000)) {
     const txt = reader.textContent ?? '';
-    if (reader.children.length > 0 && !txt.includes('按需加载') && !txt.includes('加载中')) break;
-    await sleep(10);
+    // 页头 + 首卡 = 2 个子节点：这一时刻是「点完目录有东西看」的真实起点
+    if (!firstMs && reader.children.length > 1) firstMs = Date.now() - t0;
+    // data-ready 由 renderReader 在分帧挂载全部结束后置 1；缺省视为就绪（兼容旧渲染路径）
+    if (
+      reader.children.length > 0 &&
+      reader.dataset.ready !== '0' &&
+      !txt.includes('按需加载') &&
+      !txt.includes('加载中')
+    ) {
+      readyMs = Date.now() - t0;
+      break;
+    }
+    await sleep(5);
   }
+  // viz 模块改成动态 import 后先是 `.viz-loading` 占位、到位再替换：
+  // 等它落定再让断言跑，否则「演示已渲染」会误报（chunk 在真实浏览器里还要走网络）
+  const t1 = Date.now();
+  while (Date.now() - t1 < 800 && reader.querySelectorAll('.viz-loading').length) await sleep(10);
+  mountTiming = { firstMs, readyMs };
   await sleep(opts.settle ?? 10);
   return dom;
 }
@@ -174,9 +218,9 @@ async function runUnit(bundleJs, code) {
   p('请求总数有界（索引 + 当前 + ≤2 预取邻居，绝不拉全库）',
     afterBoot.length <= 4,
     `请求 ${afterBoot.length} 条：${afterBoot.join(', ')}`);
-  p('请求全在 json/ 下（零外部请求）', afterBoot.every((u) => u.startsWith('json/')),
-    afterBoot.filter((u) => !u.startsWith('json/')).join(', '));
-  p('首个请求就是索引', afterBoot[0] === 'json/index.json', afterBoot[0] ?? '(无)');
+  p('请求全在 json/ 下（零外部请求）', afterBoot.every((u) => u.startsWith(DATA_ROOT)),
+    afterBoot.filter((u) => !u.startsWith(DATA_ROOT)).join(', '));
+  p('首个请求就是索引', afterBoot[0] === INDEX_URL, afterBoot[0] ?? '(无)');
   p('第二个请求是当前单元', afterBoot[1] === meta.path, afterBoot.slice(1, 3).join(', '));
 
   // ── 基本渲染
@@ -343,8 +387,24 @@ async function runUnit(bundleJs, code) {
   }
 
   // ── 零外部请求
-  const external = reqs().filter((u) => !u.startsWith('json/'));
+  const external = reqs().filter((u) => !u.startsWith(DATA_ROOT));
   p('零外部请求（断网可用）', external.length === 0, external.slice(0, 5).join(', '));
+
+  // ── 掌握度 +1 只该动「目录那一行 + 顶栏那个字母块」，**不许**整树重建目录
+  //    （判据：sidebar DOM 变更节点数 ≤3；见 2026-10-30 增量刷新）
+  const masteryEl = reader.querySelector('.card [data-mastery]');
+  const sideEl = d.getElementById('sidebar');
+  if (masteryEl && sideEl) {
+    const mrecs = [];
+    const mo = new dom.window.MutationObserver((list) => mrecs.push(...list));
+    mo.observe(sideEl, { childList: true, subtree: true, characterData: true, attributes: true });
+    masteryEl.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    mo.disconnect();
+    p('掌握度 +1 不重建侧栏根节点', !mrecs.some((r) => r.target === sideEl),
+      `records=${mrecs.length}`);
+    const touched = new Set(mrecs.map((r) => r.target));
+    p('掌握度 +1 只触及 ≤3 个侧栏节点', touched.size <= 3, `触及 ${touched.size} 个`);
+  }
 
   // ── 切换单元：新单元**必须**被拉；额外的只允许是「空闲预取相邻单元」（上限 2）
   const other = INDEX.units.find((u) => u.code !== code);
@@ -362,7 +422,7 @@ async function runUnit(bundleJs, code) {
     p('不重拉已看过的单元', !added.includes(meta.path), added.join(', '));
     // 真正的指标：按需加载没有退化成全量 —— 全程拉过的单元文件数要远小于全库
     const fetchedUnits = new Set(
-      reqs().filter((u) => u !== 'json/index.json' && u.startsWith('json/')),
+      reqs().filter((u) => u !== INDEX_URL && u.startsWith(DATA_ROOT)),
     );
     p('全程拉过的单元文件数远小于全库（未退化成全量）',
       fetchedUnits.size <= 8 && fetchedUnits.size < INDEX.units.length,
@@ -385,7 +445,7 @@ async function runUnit(bundleJs, code) {
 
 async function runErrorPath(bundleJs, code) {
   const meta = INDEX.units.find((u) => u.code === code);
-  const target = meta?.path ?? `json/${code.split('.')[0]}/${code}.json`;
+  const target = meta?.path ?? `${DATA_ROOT}${code.split('.')[0]}/${code}.json`;
   const dom = await mount(bundleJs, {
     hash: code,
     mutate: (p2, body) => (p2 === target ? '{ "schema": "entry-card/v2", ' : body),
@@ -396,6 +456,49 @@ async function runErrorPath(bundleJs, code) {
   check('浮层指明文件名', overlayText.includes(`${code}.json`), overlayText.slice(0, 160));
   check('坏 JSON 时侧栏仍渲染（索引没坏）',
     bd.querySelectorAll('#sidebar .node').length === INDEX.units.length);
+  dom.window.close();
+}
+
+/* --------------------------------------------- 分帧挂载的并发正确性（D-D） */
+
+/**
+ * 分帧挂载唯一的正确性风险：两次渲染交错往同一个容器里 append。
+ * 这里**不等待**首单元挂完就切走，检验 renderToken 守卫是否真的让旧批次停手。
+ * 用全库卡片最多的两个单元，把窗口拉到最大。
+ */
+async function runRace(bundleJs, codeA, codeB) {
+  const dom = await mount(bundleJs, { hash: codeA, timeout: 5000 });
+  const d = dom.window.document;
+  const reader = d.getElementById('reader');
+  // 立刻切走，不等 A 挂完：旧批次必须停手，且新单元要能正常就绪
+  const t0 = Date.now();
+  dom.window.location.hash = `#/${codeB}`;
+  let firstMs = 0;
+  let readyMs = 0;
+  while (Date.now() - t0 < 5000) {
+    const h1 = textOf(reader.querySelector('.pagehead h1'));
+    const mine = h1.includes(codeB);
+    if (!firstMs && mine && reader.children.length > 1) firstMs = Date.now() - t0;
+    if (mine && reader.dataset.ready === '1') {
+      readyMs = Date.now() - t0;
+      break;
+    }
+    await sleep(5);
+  }
+  console.log(`  切换时延：首卡 ${firstMs}ms · 全部就绪 ${readyMs}ms`);
+  check('快速连切后正文是后者（旧批次已停手）',
+    textOf(reader.querySelector('.pagehead h1')).includes(codeB),
+    textOf(reader.querySelector('.pagehead h1')).slice(0, 40));
+  const groups = [...reader.querySelectorAll('.card[data-group]')].map((c) => c.getAttribute('data-group'));
+  check('快速连切后卡片不重复',
+    new Set(groups).size === groups.length, `卡片 ${groups.length} 个，去重后 ${new Set(groups).size} 个`);
+  check('快速连切后全部卡片就绪（data-ready=1）', reader.dataset.ready === '1', reader.dataset.ready ?? '(无)');
+  // 时延阈值按 **jsdom 口径**放宽（真浏览器预算另见计划表：首卡 200ms / 全部就绪 800ms）。
+  // 实测同一份代码连跑三次：首卡 97 / 103 / 257ms，全部就绪 627 / 710 / 812 / 1075ms ——
+  // jsdom 没有真实排版引擎、单元 JSON 走磁盘同步读，机器负载能让数字翻 2.5 倍。
+  // 因此这里只当**回归护栏**（防止退回「全量同步渲染」那种量级），不当性能预算。
+  check('切到重单元后首卡就位（jsdom ≤400ms）', firstMs > 0 && firstMs <= 400, `${firstMs}ms`);
+  check('切到重单元后全部卡片就绪（jsdom ≤1600ms）', readyMs > 0 && readyMs <= 1600, `${readyMs}ms`);
   dom.window.close();
 }
 
@@ -413,17 +516,28 @@ async function runStandalone() {
   }
   console.log('\n8) standalone 单文件快照 dist/knowledge.html');
   const html = fs.readFileSync(file, 'utf8');
-  const inlineUnits = (html.match(/"json\/[A-Za-z0-9.]+\/[A-Za-z0-9.]+\.json":/g) ?? []).length;
 
   check('无 <script src> / <link href>（零外部请求）',
     !/<(script|link)[^>]*(src|href)=/.test(html));
   check('无外部 url() 引用（字体已 base64 内联）', !/url\((?!data:|#)/.test(html));
-  check('数据已内联', inlineUnits >= 1, `内联 ${inlineUnits} 个单元`);
+  // 2026-10-30 起数据是 gzip+base64 块（原先 9.7MB 明文内联，解析太贵）
+  check('数据已内联（gzip base64 块存在）',
+    /window\.__kbPayload\s*=\s*"[A-Za-z0-9+/=]{5000,}"/.test(html),
+    `HTML ${(html.length / 1048576).toFixed(2)}MB`);
+  check('快照体积 ≤4.5MB（解压前的传输/解析成本）', html.length <= 4.5 * 1024 * 1024,
+    `${(html.length / 1048576).toFixed(2)}MB`);
 
   const dom = new JSDOM(html, {
     url: `file://${file}`,
     runScripts: 'dangerously',
     pretendToBeVisual: true,
+    // jsdom 不实现 DecompressionStream / Response / Blob.stream：
+    // 注入 Node 的同名实现，快照才能走**真实**的解压路径（而不是绕过它）
+    beforeParse(window) {
+      window.DecompressionStream = globalThis.DecompressionStream;
+      window.Response = globalThis.Response;
+      window.Blob = globalThis.Blob;
+    },
   });
   const d = dom.window.document;
   const reader = d.getElementById('reader');
@@ -437,29 +551,25 @@ async function runStandalone() {
   check('快照无致命浮层',
     !textOf(d.getElementById('overlay-root')).includes('数据索引读取失败'));
   check('快照顶栏字母块非空', d.querySelectorAll('#header .chapters b').length > 0);
-  check('快照左栏节点数 == 内联单元数',
-    d.querySelectorAll('#sidebar .node').length === inlineUnits,
-    `nodes=${d.querySelectorAll('#sidebar .node').length} inline=${inlineUnits}`);
   check('快照首屏不是空页',
     textOf(reader.querySelector('.pagehead h1')).length > 0,
     textOf(reader.querySelector('.pagehead h1')).slice(0, 40));
 
+  // 内联数据解压后的真值：shim 会把解析结果挂到 __kbPack（供自检/排障）
+  const pack = dom.window.__kbPack;
+  const inlineUnits = pack ? Object.keys(pack.data).length : 0;
+  check('内联数据解压成功（gzip → 318 单元）', inlineUnits >= 1,
+    pack ? `${inlineUnits} 个单元` : (dom.window.__kbFatal ?? '未生成 __kbPack'));
+  check('快照左栏节点数 == 内联单元数',
+    d.querySelectorAll('#sidebar .node').length === inlineUnits,
+    `nodes=${d.querySelectorAll('#sidebar .node').length} inline=${inlineUnits}`);
+
   // ── 语义边在快照里仍然有效（2026-09-25：快照曾静默丢掉 graph/*.yaml 的语义边，
-  //    现在语义边是**构建期烘进索引**的，所以断言索引里带 sem 字段 + 图谱视图画得出来）
-  //    注意：__indexJson 是被 JSON.stringify 二次转义后写进脚本的字符串字面量，
-  //    所以不能直接 grep `"sem":` —— 必须把内联索引**解析出来**再数（否则是脆断言）。
-  const idxMatch = /window\.__indexJson\s*=\s*("(?:[^"\\]|\\.)*");/.exec(html);
-  let inlineSem = 0;
-  let inlineIdxUnits = 0;
-  if (idxMatch) {
-    try {
-      const parsed = JSON.parse(JSON.parse(idxMatch[1]));
-      inlineIdxUnits = parsed.units?.length ?? 0;
-      inlineSem = (parsed.units ?? []).filter((u) => u && typeof u.sem === 'object' && u.sem !== null).length;
-    } catch { /* 解析失败 → inlineSem 保持 0，由下面的断言报错 */ }
-  }
+  //    现在语义边是**构建期烘进索引**的，所以断言索引里带 sem 字段）
+  const idxUnits = pack?.index ?? [];
+  const inlineSem = idxUnits.filter((u) => u && typeof u.sem === 'object' && u.sem !== null).length;
   check('内联索引带语义边（sem 已烘入，不靠运行期 fetch graph/*）', inlineSem > 0,
-    `内联索引 ${inlineIdxUnits} 单元中带 sem 的 ${inlineSem} 个${idxMatch ? '' : ' · 未定位到 __indexJson'}`);
+    `内联索引 ${idxUnits.length} 单元中带 sem 的 ${inlineSem} 个`);
   check('快照不依赖 graph/*.yaml 数据（运行期零 graph 请求）',
     !/"graph\/[A-Za-z0-9]+\.yaml":/.test(html),
     '快照里仍内联着 yaml —— 应已移除（语义边在索引里）');
@@ -503,31 +613,307 @@ async function runStandalone() {
   dom.window.close();
 }
 
+/* ------------------------------------------------- 全量体检（--audit） */
+
+/**
+ * 体检 ≠ 断言。断言模式回答「有没有回归」，体检模式回答
+ * 「318 个单元里**哪些**坏了、坏在**哪一级**、能不能一起修」。
+ *
+ * 分级口径（与 build/logs/health-*.md 一致）：
+ *   P0 致命   —— 白屏 / 渲染崩溃 / 公式排版失败 / 空公式 / 数据不可读。用户看到的就是坏页面。
+ *   P1 内容错 —— 空正文、links 悬空、id 前缀不符、viz 模块未注册、请求 404、待核验未回填。
+ *   P2 结构   —— tab/pane 数不符、空面板、$$ 未配对、公式裸泄漏、页头代号不符。
+ *
+ * 只读：不改 json/、不改 dist/。产物落 build/logs/。
+ */
+
+const LEVEL_RANK = { P0: 0, P1: 1, P2: 2 };
+
+function readUnitData(code) {
+  const abs = path.join(JSON_DIR, code.split('.')[0], `${code}.json`);
+  try {
+    const raw = fs.readFileSync(abs, 'utf8');
+    return { data: JSON.parse(raw), bytes: Buffer.byteLength(raw) };
+  } catch (err) {
+    return { data: null, bytes: 0, error: err.message };
+  }
+}
+
+/** 数据侧：不需要 DOM 就能判定的契约问题 */
+function dataIssues(code, unit, regs) {
+  const out = [];
+  const add = (level, kind, detail = '') => out.push({ level, kind, detail });
+  if (!Array.isArray(unit.entries) || unit.entries.length === 0) {
+    add('P0', '无词条', 'entries 为空或非数组');
+    return out;
+  }
+  const codes = new Set(ALL_CODES);
+  for (const e of unit.entries) {
+    const id = e?.id ?? '(无 id)';
+    if (!e?.content || !String(e.content).trim()) add('P1', '空正文', id);
+    if (typeof e?.id === 'string' && !e.id.startsWith(`${code}:`)) {
+      add('P1', 'id 前缀不符', `${id} 应为 ${code}:…`);
+    }
+    const kw = e?.keywords;
+    if (!Array.isArray(kw) || kw.length < 3 || kw.length > 7) {
+      add('P1', 'keywords 越界', `${id} = ${Array.isArray(kw) ? kw.length : '非数组'}`);
+    }
+    for (const lk of e?.links ?? []) {
+      if (!codes.has(lk)) add('P1', 'links 悬空', `${id} → ${lk}`);
+    }
+    const v = e?.viz;
+    if (v && typeof v === 'object') {
+      if (v.status === 'planned-backend') {
+        if ('module' in v) add('P2', 'viz 档2 多写 module', id);
+      } else if (typeof v.module === 'string') {
+        if (!regs.has(v.module)) add('P1', 'viz 模块未注册', `${id} → ${v.module}`);
+      } else {
+        add('P1', 'viz 无 module', id);
+      }
+    }
+    if (typeof e?.content === 'string') {
+      if (e.content.includes('【待核验')) add('P1', '待核验未回填', id);
+      const dd = (e.content.match(/\$\$/g) ?? []).length;
+      if (dd % 2) add('P2', '$$ 未配对', `${id} 出现 ${dd} 处`);
+    }
+  }
+  return out;
+}
+
+/** DOM 侧：只读已渲染的 DOM，不做任何交互（体检要跑 318 遍，交互留给断言模式） */
+function domIssues(dom, code, entryIds) {
+  const out = [];
+  const add = (level, kind, detail = '') => out.push({ level, kind, detail });
+  const d = dom.window.document;
+  const reader = d.getElementById('reader');
+
+  const overlayText = textOf(d.getElementById('overlay-root'));
+  if (/失败|错误|Cannot|Error/.test(overlayText)) add('P0', '错误浮层', overlayText.slice(0, 120));
+  if (!reader || reader.children.length === 0) {
+    add('P0', '白屏', '阅读区无子节点');
+    return out;
+  }
+
+  const h1 = textOf(reader.querySelector('.pagehead h1'));
+  if (!h1) add('P0', '缺页头', '.pagehead h1 为空');
+  else if (!h1.includes(code)) add('P2', '页头代号不符', h1.slice(0, 40));
+
+  // 卡片 tab 已改懒渲染：非当前面板在首次切过去之前是空占位。
+  // 必须逐个点开再检查，否则「公式是否排版成功」只验了 1/n 的内容（会漏掉大部分公式）。
+  // 点击是同步的（fillPane 当场拼 HTML），所以这里不需要等待。
+  for (const btn of [...reader.querySelectorAll('.card .tabs button')]) {
+    btn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+  }
+
+  // KaTeX 开的是 throwOnError:false，所以失败公式会渲染成 .katex-error：
+  // title 是 ParseError 原文，textContent 是被拒的 TeX —— 两样都要抄进清单，否则「19 处报错」不可修。
+  const kerrEls = [...reader.querySelectorAll('.katex-error')];
+  if (kerrEls.length) {
+    const samples = kerrEls.slice(0, 3).map((el) => {
+      const msg = (el.getAttribute('title') ?? '').replace(/^ParseError:\s*/, '').slice(0, 70);
+      return `${textOf(el).slice(0, 60)} ⟵ ${msg}`;
+    });
+    add('P0', 'KaTeX 报错', `${kerrEls.length} 处：${samples.join(' ／ ')}`);
+  }
+  const kfail = reader.querySelectorAll('.katex-fail').length;
+  if (kfail) add('P0', 'KaTeX 抛错', `${kfail} 处`);
+  const anns = [...reader.querySelectorAll('.katex annotation')];
+  const emptyAnn = anns.filter((a) => !a.textContent.trim()).length;
+  if (emptyAnn) add('P0', 'KaTeX 空公式', `${emptyAnn}/${anns.length}`);
+
+  const cards = [...reader.querySelectorAll('.card')].filter((c) => !c.classList.contains('pagehead'));
+  if (!cards.length) add('P0', '无卡片', '');
+  for (const c of cards) {
+    const tb = c.querySelectorAll('.tabs button').length;
+    const pn = c.querySelectorAll('.pane').length;
+    if (tb !== pn) add('P2', 'tab/pane 数不符', `${tb} tab vs ${pn} pane`);
+    if (c.querySelectorAll('.pane.on').length > 1) add('P2', '多面板同时展开', '');
+    const emptyPanes = [...c.querySelectorAll('.pane')].filter((p) => textOf(p).length < 4).length;
+    if (emptyPanes) add('P2', '空面板', `${emptyPanes} 个`);
+  }
+
+  const txt = textOf(reader);
+  const unreg = (txt.match(/尚未在前端注册/g) ?? []).length;
+  if (unreg) add('P1', 'viz 未注册占位', `${unreg} 处`);
+  const mountFail = (txt.match(/模块挂载失败/g) ?? []).length;
+  if (mountFail) add('P1', 'viz 挂载失败', `${mountFail} 处`);
+  if (/\$\$/.test(txt)) {
+    add('P2', '公式裸泄漏', (txt.match(/.{0,20}\$\$.{0,20}/) ?? [''])[0]);
+  }
+
+  const codeSet = new Set(ALL_CODES);
+  const badGoto = [...reader.querySelectorAll('[data-goto]')]
+    .map((el) => el.getAttribute('data-goto'))
+    .filter((g) => g && !codeSet.has(g));
+  if (badGoto.length) add('P1', 'data-goto 悬空', [...new Set(badGoto)].slice(0, 5).join(','));
+
+  const badRef = [...reader.querySelectorAll('[data-ref]')]
+    .map((el) => el.getAttribute('data-ref'))
+    .filter((r) => r && !entryIds.has(r));
+  if (badRef.length) add('P1', 'data-ref 悬空', [...new Set(badRef)].slice(0, 5).join(','));
+
+  const miss = [...new Set(dom.window.__miss ?? [])];
+  if (miss.length) add('P1', '请求 404', miss.slice(0, 5).join(','));
+
+  return out;
+}
+
+async function runAudit(bundleJs, codes) {
+  const regsMod = await requireTs('src/viz/registry.ts');
+  const regs = new Set(regsMod.implementedModules());
+  const rows = [];
+  const t0 = Date.now();
+
+  for (let i = 0; i < codes.length; i += 1) {
+    const code = codes[i];
+    const row = { code, issues: [] };
+    const { data, bytes, error } = readUnitData(code);
+    row.bytes = bytes;
+    row.entries = data?.entries?.length ?? 0;
+    if (error) row.issues.push({ level: 'P0', kind: 'JSON 不可读', detail: error });
+    if (data) row.issues.push(...dataIssues(code, data, regs));
+    const entryIds = new Set((data?.entries ?? []).map((e) => e?.id).filter(Boolean));
+
+    let dom = null;
+    try {
+      dom = await mount(bundleJs, { hash: code, timeout: 2500, settle: 5 });
+      row.firstMs = mountTiming.firstMs;
+      row.readyMs = mountTiming.readyMs;
+      row.issues.push(...domIssues(dom, code, entryIds));
+    } catch (err) {
+      row.issues.push({ level: 'P0', kind: '渲染崩溃', detail: err.message });
+    } finally {
+      dom?.window.close();
+    }
+    rows.push(row);
+    if (process.stdout.isTTY) process.stdout.write(`\r体检 ${i + 1}/${codes.length} ${code.padEnd(8)}`);
+  }
+  if (process.stdout.isTTY) process.stdout.write('\r');
+
+  const count = { P0: 0, P1: 0, P2: 0 };
+  const byKind = new Map();
+  for (const r of rows) {
+    for (const it of r.issues) {
+      count[it.level] = (count[it.level] ?? 0) + 1;
+      const key = `${it.level} ${it.kind}`;
+      byKind.set(key, (byKind.get(key) ?? 0) + 1);
+    }
+  }
+  const clean = rows.filter((r) => r.issues.length === 0).length;
+  // 首卡时延是「切词条卡不卡」的正向指标（分帧挂载后它与「全部就绪」分开计）
+  const pct = (arr, q) => {
+    const s = [...arr].filter((n) => n > 0).sort((a, b) => a - b);
+    return s.length ? s[Math.min(s.length - 1, Math.floor(s.length * q))] : 0;
+  };
+  const firsts = rows.map((r) => r.firstMs ?? 0);
+  const readys = rows.map((r) => r.readyMs ?? 0);
+  const summary = {
+    generated: new Date().toISOString(),
+    units: rows.length,
+    clean,
+    counts: count,
+    latency: {
+      firstP50: pct(firsts, 0.5),
+      firstP95: pct(firsts, 0.95),
+      firstMax: Math.max(0, ...firsts),
+      readyP50: pct(readys, 0.5),
+      readyP95: pct(readys, 0.95),
+      readyMax: Math.max(0, ...readys),
+    },
+    kinds: [...byKind.entries()]
+      .map(([k, n]) => ({ level: k.slice(0, 2), kind: k.slice(3), n }))
+      .sort((a, b) => LEVEL_RANK[a.level] - LEVEL_RANK[b.level] || b.n - a.n),
+    seconds: Math.round((Date.now() - t0) / 1000),
+  };
+
+  const outDir = path.join(ROOT, 'build', 'logs');
+  fs.mkdirSync(outDir, { recursive: true });
+  const stamp = new Date().toISOString().slice(0, 10);
+  const suffix = SUBJECT_ID === 'math' ? '' : `-${SUBJECT_ID}`;
+  const jsonPath = path.join(outDir, `health-frontend${suffix}-${stamp}.json`);
+  fs.writeFileSync(jsonPath, `${JSON.stringify({ summary, rows }, null, 1)}\n`, 'utf8');
+
+  const md = [];
+  md.push(`# 前端体检${suffix} · ${stamp}`, '');
+  md.push(`- 单元 ${summary.units} 个，完全干净 ${clean} 个，用时 ${summary.seconds}s`);
+  md.push(`- P0 致命 ${count.P0 ?? 0} · P1 内容 ${count.P1 ?? 0} · P2 结构 ${count.P2 ?? 0}`);
+  const lat = summary.latency;
+  md.push(
+    `- 时延（jsdom，含索引加载）：首卡 p50 ${lat.firstP50}ms / p95 ${lat.firstP95}ms / max ${lat.firstMax}ms；` +
+      `全部卡片就绪 p50 ${lat.readyP50}ms / p95 ${lat.readyP95}ms / max ${lat.readyMax}ms`,
+  );
+  md.push('', '## 按类型统计', '', '| 级别 | 类型 | 条数 |', '| --- | --- | --- |');
+  for (const k of summary.kinds) md.push(`| ${k.level} | ${k.kind} | ${k.n} |`);
+  md.push('', '## 问题单元（按级别与条数排序）', '');
+  const sorted = rows
+    .filter((r) => r.issues.length)
+    .sort((a, b) => {
+      const rank = (r) => Math.min(...r.issues.map((i) => LEVEL_RANK[i.level]));
+      return rank(a) - rank(b) || b.issues.length - a.issues.length;
+    });
+  for (const r of sorted) {
+    md.push(`### ${r.code} · ${r.issues.length} 条 · ${(r.bytes / 1024).toFixed(0)}KB / ${r.entries} 词条`, '');
+    for (const it of r.issues) md.push(`- \`${it.level}\` ${it.kind}${it.detail ? ` — ${it.detail}` : ''}`);
+    md.push('');
+  }
+  const mdPath = path.join(outDir, `health-frontend${suffix}-${stamp}.md`);
+  fs.writeFileSync(mdPath, `${md.join('\n')}\n`, 'utf8');
+
+  console.log(`\n体检 ${summary.units} 个单元：干净 ${clean} / 有问题 ${summary.units - clean}`);
+  console.log(`P0 ${count.P0 ?? 0} · P1 ${count.P1 ?? 0} · P2 ${count.P2 ?? 0}（${summary.seconds}s）`);
+  console.log(
+    `首卡 p50 ${summary.latency.firstP50}ms / p95 ${summary.latency.firstP95}ms · ` +
+      `全部就绪 p50 ${summary.latency.readyP50}ms / p95 ${summary.latency.readyP95}ms`,
+  );
+  for (const k of summary.kinds.slice(0, 12)) console.log(`  ${k.level} ${k.kind.padEnd(18)} ${k.n}`);
+  console.log(`\n清单：${path.relative(ROOT, mdPath)} ／ ${path.relative(ROOT, jsonPath)}`);
+  return count.P0 ?? 0;
+}
+
 /* ------------------------------------------------------------ 主流程 */
 
 async function main() {
   const argv = process.argv.slice(2);
   const all = argv.includes('--all');
-  const args = argv.filter((a) => !a.startsWith('-'));
+  const audit = argv.includes('--audit');
+  // 代号参数：跳过所有 flag **以及 --subject 的取值**（否则 'cs408' 会被当成代号）
+  const args = [];
+  for (let i = 0; i < argv.length; i += 1) {
+    const a = argv[i];
+    if (a === '--subject') {
+      i += 1;
+      continue;
+    }
+    if (a.startsWith('-')) continue;
+    args.push(a);
+  }
 
   const kbIndex = await requireTs('src/modules/kb-index.ts');
-  // graph/ 显式传入（锚定仓库根，不随 HARNESS_JSON 漂移）——语义边烘进索引后，
+  const subjects = await requireTs('src/subjects.ts');
+  const SUBJ = SUBJECT_ID === 'cs408' ? subjects.CS408 : subjects.MATH;
+  // 语义边根从学科配置取（锚定仓库根，不随 HARNESS_JSON 漂移）——语义边烘进索引后，
   // 右栏/frontier 的断言才是在验真源而不是编号序启发式。
-  INDEX = kbIndex.buildIndex(JSON_DIR, path.join(ROOT, 'graph'));
+  INDEX = kbIndex.buildIndex(JSON_DIR, path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, '')), DATA_ROOT);
   ALL_CODES = INDEX.units.map((u) => u.code);
   const indexKb = (JSON.stringify({ units: INDEX.units }).length / 1024).toFixed(1);
 
-  const codes = all
-    ? ALL_CODES
-    : args.length
-      ? args
+  // 显式代号优先（体检时先用几个单元试跑）；否则 --all / --audit 才铺全库
+  const codes = args.length
+    ? args
+    : all || audit
+      ? ALL_CODES
       : process.env.HARNESS_CODE
         ? [process.env.HARNESS_CODE]
         : ['A1.3'];
   const bundleJs = await bundle();
   const kb = (bundleJs.length / 1024).toFixed(0);
-  console.log(`\n索引 ${INDEX.units.length} 单元 / ${indexKb} KB · bundle ${kb} KB`);
+  console.log(`\n[${SUBJ.id}] 索引 ${INDEX.units.length} 单元 / ${indexKb} KB · bundle ${kb} KB`);
   if (all) console.log(`遍历全库 ${codes.length} 个已生成单元\n`);
+
+  if (audit) {
+    const p0 = await runAudit(bundleJs, codes);
+    process.exit(p0 ? 1 : 0);
+  }
 
   const multi = codes.length > 1;
   const summary = [];
@@ -548,7 +934,25 @@ async function main() {
     if (multi) console.log(`${df ? '✗' : '✓'} ${code.padEnd(8)} PASS ${pass - before.pass}  FAIL ${df}`);
   }
 
-  await runStandalone();
+  // 体积最大的两个单元：分帧窗口最大，交错写入最容易暴露，时延也最有代表性
+  const sizeOf = (u) => {
+    try {
+      return fs.statSync(path.join(JSON_DIR, u.path.slice('json/'.length))).size;
+    } catch {
+      return 0;
+    }
+  };
+  const heaviest = [...INDEX.units]
+    .sort((a, b) => sizeOf(b) - sizeOf(a))
+    .slice(0, 2)
+    .map((u) => u.code);
+  if (heaviest.length === 2) {
+    console.log(`\n分帧挂载并发检验：${heaviest[0]} → ${heaviest[1]}（不等待即切走）`);
+    await runRace(bundleJs, heaviest[0], heaviest[1]);
+  }
+
+  // standalone 快照只有数学站有（408 暂不产单文件）
+  if (SUBJECT_ID === 'math') await runStandalone();
 
   console.log(`\n${'-'.repeat(52)}`);
   if (multi) {

@@ -2,6 +2,7 @@ import type { UnitMeta } from '../types';
 import { escapeHtml } from '../renderers/markdown';
 import { codeKey } from '../modules/graph';
 import { displayCode } from '../modules/codes';
+import { attrEscape } from '../modules/attr';
 
 export interface SidebarModel {
   units: UnitMeta[];
@@ -18,13 +19,17 @@ export interface SidebarModel {
  */
 let lastQuery = '';
 
+/** 单元所属章（只有一个口径：renderSidebar 与 patchSidebarMastery 共用） */
+const chapterOf = (u: { code: string; chapter?: string }): string =>
+  u.chapter || u.code.split('.')[0] || u.code;
+
 export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   const q = (model.query ?? '').trim().toLowerCase();
   const byChapter = new Map<string, UnitMeta[]>();
   for (const u of model.units) {
     // 搜索匹配同时覆盖内部码（Q8）与显示码（Q8.1），两种输入都能命中
     if (q && !`${u.code} ${displayCode(u.code)} ${u.title}`.toLowerCase().includes(q)) continue;
-    const chapter = u.chapter || u.code.split('.')[0] || u.code;
+    const chapter = chapterOf(u);
     const list = byChapter.get(chapter) ?? [];
     list.push(u);
     byChapter.set(chapter, list);
@@ -61,7 +66,7 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
         ? units.reduce((s, u) => s + model.masteryOf(u.code), 0) / (units.length * 5)
         : 0;
       return `
-      <h4>${escapeHtml(chapter)}<i class="cbar" style="transform:scaleX(${avg.toFixed(3)})"></i></h4>
+      <h4 data-chapter="${escapeHtml(chapter)}">${escapeHtml(chapter)}<i class="cbar" style="transform:scaleX(${avg.toFixed(3)})"></i></h4>
       ${units
         .map((u) => {
           const m = model.masteryOf(u.code);
@@ -101,4 +106,33 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
       else if (cBot > box.scrollTop + box.clientHeight) box.scrollTop = cBot - box.clientHeight + 8;
     }
   }
+}
+
+/**
+ * 掌握度变动后的**增量刷新**（2026-10-30）：
+ * 只改两处 —— 该单元那一行的 `L` 值与 `done` 标记、所属章的进度条 `scaleX`。
+ *
+ * 为什么必须这样：原先点一次掌握度会走 renderSidebar 整树重建（318 个节点 innerHTML）
+ * 并触发 3 次强制 reflow（scrollHeight / clientHeight / offsetTop）——用户最容易感知的卡顿。
+ * 这里只做 O(1) 节点文本更新，不动 DOM 结构，因此滚动位置与搜索框状态天然不受影响。
+ *
+ * @returns 是否找到了该行（搜索过滤掉了就是 false，调用方据此决定要不要退化成整树重建）
+ */
+export function patchSidebarMastery(host: HTMLElement, model: SidebarModel, code: string): boolean {
+  const node = host.querySelector<HTMLElement>(`.node[data-goto="${attrEscape(code)}"]`);
+  if (!node) return false;
+  const m = model.masteryOf(code);
+  const mEl = node.querySelector<HTMLElement>('.m');
+  if (mEl) mEl.textContent = `L${m}`;
+  node.classList.toggle('done', m >= 3);
+
+  const chapter = chapterOf(model.units.find((u) => u.code === code) ?? { code });
+  const bar = host.querySelector<HTMLElement>(`h4[data-chapter="${attrEscape(chapter)}"] .cbar`);
+  if (bar) {
+    // 章进度按**全量**单元算（不受搜索过滤影响），与 renderSidebar 的口径一致
+    const units = model.units.filter((u) => chapterOf(u) === chapter);
+    const avg = units.length ? units.reduce((s, u) => s + model.masteryOf(u.code), 0) / (units.length * 5) : 0;
+    bar.style.transform = `scaleX(${avg.toFixed(3)})`;
+  }
+  return true;
 }

@@ -1,13 +1,26 @@
 import katex from 'katex';
 
-/** KaTeX 结果按 (tex, displayMode) 记忆化：同一公式在重渲染/跨单元时只排一次版 */
+/**
+ * KaTeX 结果按 (tex, displayMode) 记忆化：同一公式在重渲染/跨单元时只排一次版。
+ *
+ * 容量上限（2026-10-30）：全库 9.7MB 正文里有数万条公式，无上限的 Map 会随浏览线性吃内存
+ * （体检定位到的「浏览久了越来越卡」来源之一）。改成**有界 LRU**：
+ * 命中即移到队尾，超限从队首淘汰。4000 条 × 平均几百字节 ≈ 数 MB，够覆盖跨单元复用，
+ * 又把长会话的内存封住。
+ */
+const MATH_CACHE_MAX = 4000;
 const mathCache = new Map<string, string>();
 
 /** KaTeX 运行时本地渲染（禁 CDN，零外部请求；字体随 katex 包打包；打包期亦可复用） */
 export function renderMath(tex: string, displayMode: boolean): string {
   const key = `${displayMode ? 'D' : 'I'}\u0000${tex}`;
   const hit = mathCache.get(key);
-  if (hit !== undefined) return hit;
+  if (hit !== undefined) {
+    // 命中即提升为「最近使用」（Map 的迭代序就是插入序）
+    mathCache.delete(key);
+    mathCache.set(key, hit);
+    return hit;
+  }
   let out: string;
   try {
     out = katex.renderToString(tex, {
@@ -21,6 +34,10 @@ export function renderMath(tex: string, displayMode: boolean): string {
     out = `<code class="katex-fail" title="${escapeHtml((err as Error).message)}">${escapeHtml(tex)}</code>`;
   }
   mathCache.set(key, out);
+  if (mathCache.size > MATH_CACHE_MAX) {
+    const oldest = mathCache.keys().next().value;
+    if (oldest !== undefined) mathCache.delete(oldest);
+  }
   return out;
 }
 
@@ -44,7 +61,23 @@ export interface RenderCtx {
   tableClass?: string;
 }
 
-const MATH = /\$\$([\s\S]+?)\$\$|\$([^$\n]+?)\$/g;
+/**
+ * 行内 / 行间公式。
+ *
+ * ⚠️ 行内分支必须放行 `\$`（2026-10-30 修 R3）：正文里写「1 美元」是 `$\$1$`，
+ * 原先 `[^$\n]+?` 遇到 `\$` 里的 `$` 就收尾，交给 KaTeX 的是单个 `\`，
+ * 报 `Unexpected character: '\'`，整条公式变成空白（H2 / P4.3 实测）。
+ */
+const MATH = /\$\$([\s\S]+?)\$\$|\$((?:\\\$|[^$\n])+?)\$/g;
+
+/**
+ * 行间公式的配对扫描（可跨行）。
+ *
+ * 数据里有两种写法：`$$A$$` 单行，和 `$$\nA\n$$` / 段落中间断行的 `$$A\nB$$`。
+ * 后者若按行喂 `renderInline`，`$$` 永远配不上对，公式与定界符会**当文本显示**
+ * （体检的 P2「公式裸泄漏」27 处，2026-10-30 修 R2）。
+ */
+const DISPLAY_SCAN = /\$\$([\s\S]+?)\$\$/g;
 
 /** 行内渲染：先切出数学段（不转义）再转义文本段，避免 &amp; 污染公式 */
 export function renderInline(src: string, ctx?: RenderCtx): string {
@@ -154,6 +187,38 @@ function renderTable(lines: string[], ctx?: RenderCtx): string {
   return `<div class="mdtable"><table${cls}><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table></div>`;
 }
 
+/** 段落：逐行行内渲染，行间用 <br>（与原有段落分支同一行为，抽出来给跨行公式复用） */
+function renderParagraph(text: string, ctx?: RenderCtx): string {
+  const lines = text.split('\n').filter((l) => l.trim().length > 0);
+  if (!lines.length) return '';
+  return `<p>${lines.map((l) => renderInline(l, ctx)).join('<br>')}</p>`;
+}
+
+/**
+ * 块内**跨行**行间公式：切成「文本段 + 公式块」分别渲染。
+ * 返回 null 表示块里没有跨行公式，调用方继续走原有分支（单行 `$$A$$` 仍由 renderInline 处理）。
+ */
+function splitDisplayBlocks(block: string, ctx?: RenderCtx): string | null {
+  if (!block.includes('$$')) return null;
+  const out: string[] = [];
+  let last = 0;
+  let found = false;
+  DISPLAY_SCAN.lastIndex = 0;
+  for (let m = DISPLAY_SCAN.exec(block); m; m = DISPLAY_SCAN.exec(block)) {
+    const body = m[1];
+    if (!body.includes('\n')) continue; // 单行公式：留给 renderInline，行为不变
+    found = true;
+    const before = block.slice(last, m.index);
+    if (before.trim()) out.push(renderParagraph(before, ctx));
+    out.push(`<div class="math-display">${renderMath(body, true)}</div>`);
+    last = m.index + m[0].length;
+  }
+  if (!found) return null;
+  const tail = block.slice(last);
+  if (tail.trim()) out.push(renderParagraph(tail, ctx));
+  return out.join('');
+}
+
 /** 极简 markdown → HTML：段落 / 列表 / 表格 / 行间公式 / 行内公式 */
 export function renderContent(src: string, ctx?: RenderCtx): string {
   if (!src) return '';
@@ -212,6 +277,13 @@ export function renderContent(src: string, ctx?: RenderCtx): string {
       if (/^\s*(```|~~~)/.test(lines[0])) {
         const inner = lines.filter((l) => !/^\s*(```|~~~)/.test(l)).join('\n');
         return `<pre class="md-pre">${escapeHtml(inner)}</pre>`;
+      }
+      // 跨行行间公式：必须在这里拦下 —— 再往下走，表格/列表/段落分支都是**按行**处理，
+      // 跨行的 `$$…$$` 配不上对，定界符与公式会原样当文本显示（体检 R2）。
+      // 以 `|` 开头的块留给表格分支（表格里不会有多行公式）。
+      if (!/^\s*\|/.test(lines[0])) {
+        const split = splitDisplayBlocks(b, ctx);
+        if (split !== null) return split;
       }
       const hm = lines[0].match(/^(#{1,4})\s+(.*)$/);
       if (hm && lines.length === 1) {
@@ -298,8 +370,14 @@ export function renderContent(src: string, ctx?: RenderCtx): string {
           .join('');
         return `<ol class="steps">${items}</ol>`;
       }
-      if (/^\$\$[\s\S]+\$\$$/.test(b)) return renderMath(b.slice(2, -2), true);
-      return `<p>${lines.map((l) => renderInline(l, ctx)).join('<br>')}</p>`;
+      // 整块行间公式：**必须只有一对 `$$`**（2026-10-30 修 R1）。
+      // 原判据只要是「以 $$ 开头、以 $$ 结尾」就吃下整块，于是两行公式
+      // `$$A$$\n$$B$$` 也命中，slice(2,-2) 只砍首尾各一个 $$，送进 KaTeX 的是 `A$$\n$$B`
+      // → `Can't use function '$' in math mode`（14 个单元、19 处报错的主因）。
+      if ((b.match(/\$\$/g) ?? []).length === 2 && /^\$\$[\s\S]+\$\$$/.test(b)) {
+        return `<div class="math-display">${renderMath(b.slice(2, -2), true)}</div>`;
+      }
+      return renderParagraph(b, ctx);
     })
     .join('');
 }

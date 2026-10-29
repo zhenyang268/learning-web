@@ -1,14 +1,21 @@
 import type { Entry, EntryFile } from '../types';
 import { isVizFrontend, slotOf, subjectOf } from '../types';
 import { escapeHtml, renderContent, renderInline, type RenderCtx } from './markdown';
-import { mountViz } from '../viz';
+import { mountViz, type VizHandle } from '../viz';
 import { masteryOf, setMastery } from '../modules/state';
+import { attrEscape } from '../modules/attr';
 
 export interface EntryGroup {
   key: string;
   label: string;
   subject: string;
   entries: Entry[];
+}
+
+/** 卡片渲染结果：元素 + 它挂的 viz 句柄（句柄必须由调用方在重渲染前 destroy） */
+export interface RenderedCard {
+  el: HTMLElement;
+  viz: VizHandle[];
 }
 
 /** 全库上下文：判断跨代号引用是否落在已生成的数据里 */
@@ -225,7 +232,24 @@ function renderQuantifiers(group: EntryGroup, ctx: RenderCtx): string {
     <div class="qbody" data-q="${escapeHtml(q.id)}">${renderContent(q.content, ctx)}</div>`;
 }
 
-export function renderCard(file: EntryFile, group: EntryGroup, index: KbIndex): HTMLElement {
+/** 面板填充器（按卡）：switchTab 首次进入某个 pane 时用它补内容 */
+const paneFillers = new WeakMap<HTMLElement, (idx: number) => void>();
+/** 词条 id → 所在 pane 序号（按卡）：openRef 要先把目标面板切出来再定位 */
+const entryPanes = new WeakMap<HTMLElement, Map<string, number>>();
+
+/**
+ * Tab 懒渲染（2026-10-30）：
+ * 首屏只拼 `.pane.on` 的内容，其余面板留空占位（`data-lazy="1"`），首次切过去时才渲染。
+ * 111KB 单元有 7 个 tab、几十条词条，原本全量拼进 DOM 并同步跑 KaTeX —— 其中大半根本不可见。
+ * 代价：切 tab 的那一下有一次极短同步填充（单 pane 通常 3–8 条）。数据没变，只是推迟排版。
+ */
+export function renderCard(
+  file: EntryFile,
+  group: EntryGroup,
+  index: KbIndex,
+  /** 难度由调用方算一次传进来（apply 里已经整组算过，避免每卡重复 difficultyOf） */
+  diff?: { level: 1 | 2 | 3; source: 'data' | 'derived' },
+): RenderedCard {
   const card = document.createElement('div');
   card.className = 'card';
   card.dataset.group = group.key;
@@ -247,14 +271,14 @@ export function renderCard(file: EntryFile, group: EntryGroup, index: KbIndex): 
   const vizEntries = group.entries.filter((e) => e.viz || e.type === 'viz');
 
   const mastery = masteryOf(group.key);
-  const diff = difficultyOf(group);
+  const diffInfo = diff ?? difficultyOf(group);
 
   card.innerHTML = `
     <div class="thead">
-      <span class="dot" style="background:${difficultyColor(diff.level)};box-shadow:0 0 8px ${difficultyColor(
-        diff.level,
-      )}" title="难度 ${diff.level}/3（${
-        diff.source === 'data' ? '词条字段' : '由结构推导 · 词条未提供 difficulty'
+      <span class="dot" style="background:${difficultyColor(diffInfo.level)};box-shadow:0 0 8px ${difficultyColor(
+        diffInfo.level,
+      )}" title="难度 ${diffInfo.level}/3（${
+        diffInfo.source === 'data' ? '词条字段' : '由结构推导 · 词条未提供 difficulty'
       }）"></span>
       <h2>${renderInline(group.label, ctx)}${group.subject !== 'general' ? ` <span class="dim mono">${escapeHtml(group.subject)}</span>` : ''}</h2>
       <div class="mastery" data-mastery="${escapeHtml(group.key)}" title="点击 +1（0–5 循环）；数据契约无 mastery 字段，初值 0">
@@ -272,26 +296,48 @@ export function renderCard(file: EntryFile, group: EntryGroup, index: KbIndex): 
         .join('')}
     </div>
     ${tabs
-      .map(({ type }, i) => {
-        const entries = type === '__more' ? more : byType.get(type) ?? [];
-        return `<div class="pane${i === 0 ? ' on' : ''}" data-pane="${i}">${
-          entries.map((e) => entryBlock(e, ctx, index.codes)).join('') ||
-          '<p class="dim">该类型暂无词条</p>'
-        }</div>`;
-      })
+      .map(
+        ({ type }, i) =>
+          `<div class="pane${i === 0 ? ' on' : ''}" data-pane="${i}"${
+            i === 0 ? '' : ' data-lazy="1"'
+          }>${i === 0 ? paneBody(type === '__more' ? more : byType.get(type) ?? []) : ''}</div>`,
+      )
       .join('')}`
         : ''
     }
     ${renderQuantifiers(group, ctx)}
     <div class="vizslot"></div>`;
 
+  function paneBody(entries: Entry[]): string {
+    return (
+      entries.map((e) => entryBlock(e, ctx, index.codes)).join('') ||
+      '<p class="dim">该类型暂无词条</p>'
+    );
+  }
+
+  /** 首次切到某个 pane 时补渲染；已填过的直接跳过（`data-lazy` 被删掉即是标记） */
+  const filler = (idx: number): void => {
+    const pane = card.querySelector<HTMLElement>(`.pane[data-pane="${idx}"]`);
+    if (!pane || pane.dataset.lazy !== '1') return;
+    const type = tabs[idx]?.type;
+    pane.innerHTML = paneBody(type === '__more' ? more : byType.get(type ?? '') ?? []);
+    delete pane.dataset.lazy;
+  };
+  paneFillers.set(card, filler);
+
+  const paneOf = new Map<string, number>();
+  tabs.forEach(({ type }, i) => {
+    for (const e of type === '__more' ? more : byType.get(type) ?? []) paneOf.set(e.id, i);
+  });
+  entryPanes.set(card, paneOf);
+
   enhanceQuantTable(card, group.entries.find(isQuantifiers), tools);
   wireTabs(card);
   wireRefs(card, file, ctx, index.codes);
   wireMastery(card, group);
-  mountVizSlots(card, vizEntries);
+  const viz = mountVizSlots(card, vizEntries);
 
-  return card;
+  return { el: card, viz };
 }
 
 /* -------------------------------------------------------- 限定词表行增强 */
@@ -356,6 +402,8 @@ function textOfRow(el: HTMLElement): string {
 function switchTab(card: HTMLElement, idx: number): void {
   const tabBar = card.querySelector('.tabs');
   if (!tabBar) return;
+  // 懒面板：先补内容再切（顺序反了会看到一闪而过的空白）
+  paneFillers.get(card)?.(idx);
   tabBar.querySelectorAll('button').forEach((b) => b.classList.toggle('on', Number(b.dataset.tab) === idx));
   card.querySelectorAll<HTMLElement>('.pane').forEach((p) =>
     p.classList.toggle('on', Number(p.dataset.pane) === idx),
@@ -427,6 +475,23 @@ function expandRow(
   row.after(tr);
 }
 
+/** flash 高亮的定时器按元素记账：同一元素连点时清掉上一个，避免裸 setTimeout 叠在脱离文档的节点上 */
+const flashTimers = new WeakMap<HTMLElement, number>();
+
+function flashEntry(el: HTMLElement): void {
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('flash');
+  const prev = flashTimers.get(el);
+  if (prev !== undefined) window.clearTimeout(prev);
+  flashTimers.set(
+    el,
+    window.setTimeout(() => {
+      el.classList.remove('flash');
+      flashTimers.delete(el);
+    }, 1200),
+  );
+}
+
 function openRef(
   card: HTMLElement,
   file: EntryFile,
@@ -440,22 +505,19 @@ function openRef(
     expandRow(file, ctx, codes, row);
     return;
   }
-  const target = card.querySelector<HTMLElement>(`.entry[data-id="${CSS.escape(id)}"]`);
+  // 目标可能躺在别的 tab 里，而且那个面板可能还没渲染（懒加载）：
+  // 先按「词条 → pane 序号」把它切出来，再定位。
+  const paneIdx = entryPanes.get(card)?.get(id);
+  if (paneIdx != null) switchTab(card, paneIdx);
+  const target = card.querySelector<HTMLElement>(`.entry[data-id="${attrEscape(id)}"]`);
   if (target) {
-    // 目标可能躺在别的 tab 里：先把它所在的面板切出来
-    const pane = target.closest<HTMLElement>('.pane');
-    if (pane?.dataset.pane != null) switchTab(card, Number(pane.dataset.pane));
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    target.classList.add('flash');
-    window.setTimeout(() => target.classList.remove('flash'), 1200);
+    flashEntry(target);
     return;
   }
   // 目标不在本卡（如 general.* 自成卡）→ 在阅读区里全局找
-  const global = document.querySelector<HTMLElement>(`.entry[data-id="${CSS.escape(id)}"]`);
+  const global = document.querySelector<HTMLElement>(`.entry[data-id="${attrEscape(id)}"]`);
   if (global) {
-    global.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    global.classList.add('flash');
-    window.setTimeout(() => global.classList.remove('flash'), 1200);
+    flashEntry(global);
     return;
   }
   // 目标没渲染出来 → 退化到全局跳转
@@ -475,8 +537,11 @@ function wireMastery(card: HTMLElement, group: EntryGroup): void {
   });
 }
 
-function mountVizSlots(card: HTMLElement, vizEntries: Entry[]): void {
-  const slot = card.querySelector('.vizslot') as HTMLElement;
+/** 挂载本卡的全部 viz，**返回句柄**交给上层在重渲染前 destroy */
+function mountVizSlots(card: HTMLElement, vizEntries: Entry[]): VizHandle[] {
+  const slot = card.querySelector('.vizslot') as HTMLElement | null;
+  if (!slot) return [];
+  const handles: VizHandle[] = [];
   for (const e of vizEntries) {
     // 每个 viz 独占一个容器：mountViz 内部会用 innerHTML 覆写宿主，
     // 若把整个 .vizslot 交给它，同一张卡里的第二个 viz 会把第一个冲掉。
@@ -491,6 +556,9 @@ function mountVizSlots(card: HTMLElement, vizEntries: Entry[]): void {
         }
       </div>`;
     slot.append(holder);
-    if (e.viz) mountViz(holder, e.viz);
+    if (!e.viz) continue;
+    const h = mountViz(holder, e.viz);
+    if (h) handles.push(h);
   }
+  return handles;
 }
