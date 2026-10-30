@@ -9,6 +9,8 @@ export interface HeaderModel {
   query: string;
   /** 另一个学科的入口（数学 ↔ 408 互链）；不传则不渲染 */
   crossLink?: { label: string; href: string };
+  /** 该学科有没有「切入点」文档（`#angles`）；没有就不渲染那个按钮 */
+  hasAngles?: boolean;
   onSearch(query: string): void;
 }
 
@@ -37,7 +39,12 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
             )} 站点（数据根完全独立，互不加载）">⇄ ${escapeHtml(model.crossLink.label)}</a>`
           : ''
       }
-      <button class="graphbtn" data-graph="1" title="总纲页（人读主线；原知识图谱视图已由它替换）">📘 总纲</button>
+      <button class="graphbtn" data-graph="1" title="总纲：数学大观（四条主轴 / 两个出口 / 交叉点）">📘 总纲</button>
+      ${
+        model.hasAngles
+          ? `<button class="graphbtn" data-angles="1" title="切入点：作者选定的一条切入线（不是全学科总纲）">🧭 切入点</button>`
+          : ''
+      }
       <label class="search">
         <span class="ico">🔍</span>
         <input type="search" placeholder="筛选单元代号 / 标题…" autocomplete="off" spellcheck="false">
@@ -50,8 +57,10 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
   (host.querySelector('.warnslot') as HTMLElement).innerHTML = model.errorCount
     ? `<div class="warnchip" title="见右下角数据问题浮层">⚠ ${model.errorCount}</div>`
     : '';
-  const gbtn = host.querySelector<HTMLElement>('.graphbtn');
+  const gbtn = host.querySelector<HTMLElement>('.graphbtn[data-graph]');
   if (gbtn) gbtn.classList.toggle('on', model.current === 'graph');
+  const abtn = host.querySelector<HTMLElement>('.graphbtn[data-angles]');
+  if (abtn) abtn.classList.toggle('on', model.current === 'angles');
   if (searchEl.value !== model.query) searchEl.value = model.query;
 }
 

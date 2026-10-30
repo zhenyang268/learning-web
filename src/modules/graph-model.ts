@@ -12,7 +12,8 @@
  *     （A1.4 编号第 4 但是 A1.2 的上游），不覆盖会造假环。
  */
 import type { UnitMeta } from '../types';
-import { codeKey, letterOf } from './graph';
+import { letterOf } from './graph';
+import { cmpCode as cmpOrder } from './taxonomy';
 
 /* ------------------------------------------------------------------ 类型 */
 
@@ -135,13 +136,16 @@ export function normalizeSemYaml(
 
 /* ------------------------------------------------------------ 派生边 */
 
+/**
+ * 学习顺序比较 —— 与 `modules/graph.ts` 共用同一个口径（taxonomy 的域序 → 章序 → 单元序）。
+ * 2026-10-30 重排后**不能再用字符串序**：派生边按「谁在前谁是前序」判定，
+ * 字符串序（CG < EQ、MP < NM）会造出环，两处规则若不一致还会让「右栏 ⟷ 图谱」互相打脸。
+ */
 function cmpCode(a: string, b: string): number {
-  const ka = codeKey(a);
-  const kb = codeKey(b);
-  if (ka[0] !== kb[0]) return ka[0] < kb[0] ? -1 : 1;
-  if (ka[1] !== kb[1]) return ka[1] - kb[1];
-  return ka[2] - kb[2];
+  return cmpOrder(a, b);
 }
+
+
 
 /**
  * 启发式派生边（**未被 yaml 覆盖的单元**才用）。规则必须与

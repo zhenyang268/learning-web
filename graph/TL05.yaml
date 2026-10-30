@@ -1,0 +1,52 @@
+# graph/P5.yaml — 「TL05 三角与复数」章（TL05.1–TL05.4）语义边真源。
+# schema、方向约定与派生边覆盖规则见 A1.yaml 头部。
+notebook_commit: 9ca4702
+
+nodes:
+  TL05.1: # 三角公式
+    # 起点：和角/倍角/辅助角/积化和差，组内无前序。
+    prereq: []
+    tension: []
+    dual: []
+    applies:
+      # 下游：Euler 公式把和角公式统一为指数乘法（e^{i(A+B)}=e^{iA}e^{iB}）；
+      # 正交性证明「积化和差一句话」直接用 TL05.1；降幂恒等式是三角积分的发动机。
+      - TL05.2
+      - TL05.3
+      - TL05.4
+
+  TL05.2: # Euler 公式与复数（【必】）
+    prereq:
+      # e^{iθ}=cosθ+isinθ 的右边就是三角函数；De Moivre（n 倍角批发商）是倍角公式的复数化。
+      - TL05.1
+    tension: []
+    dual:
+      # 三角形式（cosθ+isinθ，几何：单位圆上的点）↔ 指数形式（e^{iθ}，代数：乘法引擎）——
+      # 同一对象的两种表示，Euler 公式是桥。
+      - TL05.3
+    applies:
+      # 下游：正交性的复数版 {e^{inx}} 是 TL05.2 的直接推论。
+      - TL05.3
+
+  TL05.3: # 三角正交性（【熟】· Fourier 前置）
+    prereq:
+      # 证明 = 积化和差（TL05.1）+ 复数版用 Euler 公式（TL05.2）。
+      - TL05.1
+      - TL05.2
+    tension: []
+    dual:
+      - TL05.2
+    applies:
+      # 下游：常用三角积分的「定积分套餐：整圈只留直流」与 TL05.3 对账（正交性 = 积分 kills 交叉项）。
+      - TL05.4
+
+  TL05.4: # 常用三角积分（【必】）
+    prereq:
+      # ∫sin²/∫cos²/∫sin cos 的推导 = 降幂（TL05.1）一次 + 积分一行；
+      # 「定积分套餐：整圈只留直流（与 TL05.3 对账）」直接引用正交性。
+      - TL05.1
+      - TL05.3
+    tension: []
+    dual: []
+    # 组内收口；跨章下游（AN02.3 Fourier、CG05.1 球谐、TL07.2 积分技术）由派生边承担。
+    applies: []

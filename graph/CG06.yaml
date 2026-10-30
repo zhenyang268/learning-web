@@ -1,0 +1,25 @@
+# graph/H6.yaml — 「CG06 采样点集」章（CG06.1–CG06.2）语义边真源。
+# schema、方向约定与派生边覆盖规则见 A1.yaml 头部。
+notebook_commit: 9ca4702
+
+nodes:
+  CG06.1: # 低差异序列
+    # 起点：Koksma–Hlawka + Halton/Sobol/CP 旋转，组内无前序。
+    prereq: []
+    tension: []
+    dual:
+      # 同一采样问题的两种优化目标（CG06.2 条目原话）：低差异压星偏差（空间域盒计数、
+      # 最坏情况误差）↔ 蓝噪声压功率谱（频域形状、感知质量）——空间域/频域互为对偶视角。
+      - CG06.2
+    applies:
+      - CG06.2
+
+  CG06.2: # 蓝噪声
+    prereq:
+      # 「与 CG06.1 低差异序列对照：RMSE vs 感知质量」——对照表以 CG06.1 的差异度语言为参照系。
+      - CG06.1
+    tension: []
+    dual:
+      - CG06.1
+    # 组内收口；跨章下游（CG04.1 MC 积分、CG02.1 渲染抖动）由派生边承担。
+    applies: []

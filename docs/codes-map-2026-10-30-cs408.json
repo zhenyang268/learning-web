@@ -1,0 +1,27 @@
+{
+  "generated": "2026-10-30T11:29:10.619Z",
+  "scheme": "<域2字母><章2位>.<单元序>",
+  "subject": "cs408",
+  "chapters": [
+    {
+      "oldChapter": "OS1",
+      "newChapter": "OS01",
+      "domain": "OS",
+      "units": 1,
+      "titles": [
+        "进程与线程"
+      ]
+    }
+  ],
+  "units": [
+    {
+      "oldCode": "OS1.1",
+      "newCode": "OS01.1",
+      "oldChapter": "OS1",
+      "newChapter": "OS01",
+      "domain": "OS",
+      "title": "进程与线程",
+      "entries": 10
+    }
+  ]
+}

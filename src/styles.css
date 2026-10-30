@@ -368,8 +368,94 @@ nav h4 {
   overflow: hidden;
 }
 
-/* 章节进度：一条贴着 h4 底边的细条，scaleX 表示该章平均掌握度 */
-nav h4 .cbar {
+/* ── 三层目录（域 → 章 → 单元，2026-10-30）：单元节点懒渲染，章是 <details> ── */
+nav .dom {
+  margin-bottom: 6px;
+}
+
+nav .domhead {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 8px 10px 9px;
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+nav .domlabel {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--tx2);
+}
+
+nav .dommeta {
+  font-size: 10.5px;
+  letter-spacing: 0;
+}
+
+/* 域总进度：与章的 cbar 同一条视觉语言，贴在 domhead 底边 */
+nav .domhead .dbar {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  opacity: .55;
+  transform-origin: left center;
+  transition: transform .3s;
+}
+
+nav details.chap > summary {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 10px 7px;
+  border-radius: 8px;
+  cursor: pointer;
+  list-style: none;
+  overflow: hidden;
+}
+
+nav details.chap > summary::-webkit-details-marker {
+  display: none;
+}
+
+nav details.chap > summary:hover {
+  background: var(--glass);
+}
+
+nav details.chap[open] > summary .chcode {
+  color: var(--cyan);
+}
+
+nav .chcode {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 11.5px;
+  color: var(--tx3);
+  letter-spacing: 0;
+  flex: none;
+}
+
+nav .chtitle {
+  font-size: 11.5px;
+  color: var(--tx3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+nav details.chap .units {
+  padding-left: 6px;
+}
+
+/* 章节进度：一条贴着 h4/summary 底边的细条，scaleX 表示该章平均掌握度 */
+nav h4 .cbar,
+nav details.chap .cbar {
   position: absolute;
   left: 10px;
   right: 10px;

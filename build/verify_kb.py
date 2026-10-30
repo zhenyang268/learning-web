@@ -34,7 +34,10 @@ from pathlib import Path
 WEB = Path(__file__).resolve().parent.parent
 STATE = WEB / "build" / "state"
 SLICES = json.loads((STATE / "slices.json").read_text(encoding="utf-8"))
-VALID_CODES = {u["code"] for u in SLICES["units"]}
+# 全库代号以 **json/ 实际存在的文件** 为准（2026-10-30 代号重排后：
+# slices.json 记的是旧代号（A1.3），它属于生成线的派生物，不能反过来定义「合法代号」，
+# 否则重排后每一条 links 都会被误报为「不在全库清单」）。
+VALID_CODES = {p.stem for p in (WEB / "json").rglob("*.json")}
 SLICE_RANGE = {u["code"]: (u["line_start"], u["line_end"]) for u in SLICES["units"]}
 SLICE_FILE = {u["code"]: u["file"] for u in SLICES["units"]}
 

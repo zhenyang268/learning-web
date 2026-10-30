@@ -1,0 +1,4127 @@
+{
+  "generated": "2026-10-30T11:28:49.341Z",
+  "scheme": "<域2字母><章2位>.<单元序>",
+  "subject": "math",
+  "chapters": [
+    {
+      "oldChapter": "A1",
+      "newChapter": "AN01",
+      "domain": "AN",
+      "units": 5,
+      "titles": [
+        "黎曼积分的本质与局限",
+        "勒贝格积分的构造",
+        "三大收敛定理（MCT / Fatou / DCT）"
+      ]
+    },
+    {
+      "oldChapter": "A2",
+      "newChapter": "AN02",
+      "domain": "AN",
+      "units": 5,
+      "titles": [
+        "赋范空间与巴拿赫空间",
+        "希尔伯特空间",
+        "正交基与傅里叶分析"
+      ]
+    },
+    {
+      "oldChapter": "A3",
+      "newChapter": "AN03",
+      "domain": "AN",
+      "units": 1,
+      "titles": [
+        "微分学的高阶推广：微分形式"
+      ]
+    },
+    {
+      "oldChapter": "A4",
+      "newChapter": "AN04",
+      "domain": "AN",
+      "units": 6,
+      "titles": [
+        "经典导数的不足",
+        "弱导数",
+        "Sobolev 空间"
+      ]
+    },
+    {
+      "oldChapter": "B1",
+      "newChapter": "AG01",
+      "domain": "AG",
+      "units": 3,
+      "titles": [
+        "群的基本概念",
+        "李群与李代数",
+        "表示论基础"
+      ]
+    },
+    {
+      "oldChapter": "B2",
+      "newChapter": "AG13",
+      "domain": "AG",
+      "units": 4,
+      "titles": [
+        "曲线与曲面",
+        "流形与切空间",
+        "黎曼几何"
+      ]
+    },
+    {
+      "oldChapter": "C1",
+      "newChapter": "PR01",
+      "domain": "PR",
+      "units": 1,
+      "titles": [
+        "概率的测度论基础"
+      ]
+    },
+    {
+      "oldChapter": "C2",
+      "newChapter": "PR02",
+      "domain": "PR",
+      "units": 1,
+      "titles": [
+        "重要分布族"
+      ]
+    },
+    {
+      "oldChapter": "C3",
+      "newChapter": "PR03",
+      "domain": "PR",
+      "units": 1,
+      "titles": [
+        "多维分布与独立性"
+      ]
+    },
+    {
+      "oldChapter": "C4",
+      "newChapter": "PR04",
+      "domain": "PR",
+      "units": 1,
+      "titles": [
+        "条件期望与鞅"
+      ]
+    },
+    {
+      "oldChapter": "C5",
+      "newChapter": "PR05",
+      "domain": "PR",
+      "units": 1,
+      "titles": [
+        "随机过程"
+      ]
+    },
+    {
+      "oldChapter": "C6",
+      "newChapter": "PR06",
+      "domain": "PR",
+      "units": 5,
+      "titles": [
+        "四种收敛模式",
+        "反例博物馆：为什么箭头不可逆",
+        "一致可积性：让「依概率」升到 $L^1$"
+      ]
+    },
+    {
+      "oldChapter": "C7",
+      "newChapter": "PR07",
+      "domain": "PR",
+      "units": 3,
+      "titles": [
+        "定义与基本性质",
+        "算例：正态分布",
+        "中心极限定理（CLT）"
+      ]
+    },
+    {
+      "oldChapter": "C8",
+      "newChapter": "PR08",
+      "domain": "PR",
+      "units": 3,
+      "titles": [
+        "基本对象",
+        "Metropolis--Hastings 与 MLT",
+        "随机游走"
+      ]
+    },
+    {
+      "oldChapter": "C9",
+      "newChapter": "PR09",
+      "domain": "PR",
+      "units": 2,
+      "titles": [
+        "估计量、偏差与误差量级",
+        "方差缩减技术"
+      ]
+    },
+    {
+      "oldChapter": "C10",
+      "newChapter": "PR10",
+      "domain": "PR",
+      "units": 3,
+      "titles": [
+        "Wiener 过程与二次变差",
+        "Itô 积分与 Itô 引理",
+        "SDE 与 Fokker--Planck"
+      ]
+    },
+    {
+      "oldChapter": "D1",
+      "newChapter": "PH01",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "拉格朗日力学"
+      ]
+    },
+    {
+      "oldChapter": "D2",
+      "newChapter": "PH02",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "Noether 定理"
+      ]
+    },
+    {
+      "oldChapter": "D3",
+      "newChapter": "PH03",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "哈密顿力学"
+      ]
+    },
+    {
+      "oldChapter": "D4",
+      "newChapter": "PH04",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "哈密顿--雅可比理论与正则变换"
+      ]
+    },
+    {
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "units": 18,
+      "titles": [
+        "核心思想",
+        "积分因子的系统求法",
+        "一阶线性方程的完整示例"
+      ]
+    },
+    {
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "units": 15,
+      "titles": [
+        "单参数李群与无穷小生成元",
+        "对称性条件与延拓",
+        "经典对称性对应的标准解法"
+      ]
+    },
+    {
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "units": 15,
+      "titles": [
+        "两种「将微分方程化为代数」的方法",
+        "Taylor 展开的算子视角",
+        "Laplace 变换的算子视角"
+      ]
+    },
+    {
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "units": 13,
+      "titles": [
+        "基本格式",
+        "稳定性",
+        "有限元法"
+      ]
+    },
+    {
+      "oldChapter": "E1",
+      "newChapter": "PH05",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "向量分析的微分形式统一"
+      ]
+    },
+    {
+      "oldChapter": "E2",
+      "newChapter": "PH06",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "麦克斯韦方程的微分形式表述"
+      ]
+    },
+    {
+      "oldChapter": "E3",
+      "newChapter": "PH07",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "闵可夫斯基时空"
+      ]
+    },
+    {
+      "oldChapter": "E4",
+      "newChapter": "PH08",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "规范场论初步"
+      ]
+    },
+    {
+      "oldChapter": "F1",
+      "newChapter": "PH13",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "希尔伯特空间与态"
+      ]
+    },
+    {
+      "oldChapter": "F2",
+      "newChapter": "PH14",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "可观测量与算子"
+      ]
+    },
+    {
+      "oldChapter": "F3",
+      "newChapter": "PH15",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "薛定谔方程"
+      ]
+    },
+    {
+      "oldChapter": "F4",
+      "newChapter": "PH16",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "角动量与自旋"
+      ]
+    },
+    {
+      "oldChapter": "F5",
+      "newChapter": "PH17",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "路径积分（Feynman 表述）"
+      ]
+    },
+    {
+      "oldChapter": "F6",
+      "newChapter": "PH18",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "量子力学与 CG 的交叉"
+      ]
+    },
+    {
+      "oldChapter": "G1",
+      "newChapter": "NM01",
+      "domain": "NM",
+      "units": 2,
+      "titles": [
+        "经典 RK4",
+        "辛积分器"
+      ]
+    },
+    {
+      "oldChapter": "G2",
+      "newChapter": "NM02",
+      "domain": "NM",
+      "units": 3,
+      "titles": [
+        "有限差分法（FDM）",
+        "有限元法（FEM）",
+        "谱方法"
+      ]
+    },
+    {
+      "oldChapter": "G3",
+      "newChapter": "NM03",
+      "domain": "NM",
+      "units": 1,
+      "titles": [
+        "数值线性代数"
+      ]
+    },
+    {
+      "oldChapter": "G4",
+      "newChapter": "NM04",
+      "domain": "NM",
+      "units": 2,
+      "titles": [
+        "Padé 近似",
+        "切比雪夫逼近"
+      ]
+    },
+    {
+      "oldChapter": "G5",
+      "newChapter": "NM05",
+      "domain": "NM",
+      "units": 1,
+      "titles": [
+        "优化"
+      ]
+    },
+    {
+      "oldChapter": "H1",
+      "newChapter": "CG01",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "离散微分几何"
+      ]
+    },
+    {
+      "oldChapter": "H2",
+      "newChapter": "CG02",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "渲染方程与 BRDF"
+      ]
+    },
+    {
+      "oldChapter": "H3",
+      "newChapter": "CG03",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "路径空间公式化"
+      ]
+    },
+    {
+      "oldChapter": "H4",
+      "newChapter": "CG04",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "蒙特卡洛积分"
+      ]
+    },
+    {
+      "oldChapter": "H5",
+      "newChapter": "CG05",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "球谐函数在 CG 中的应用"
+      ]
+    },
+    {
+      "oldChapter": "H6",
+      "newChapter": "CG06",
+      "domain": "CG",
+      "units": 2,
+      "titles": [
+        "低差异序列",
+        "蓝噪声"
+      ]
+    },
+    {
+      "oldChapter": "H7",
+      "newChapter": "CG07",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "辐射度量学"
+      ]
+    },
+    {
+      "oldChapter": "H8",
+      "newChapter": "CG08",
+      "domain": "CG",
+      "units": 3,
+      "titles": [
+        "流体模拟",
+        "刚体模拟",
+        "布料与软体"
+      ]
+    },
+    {
+      "oldChapter": "I1",
+      "newChapter": "CG09",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "守恒律"
+      ]
+    },
+    {
+      "oldChapter": "I2",
+      "newChapter": "CG10",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "应力张量与粘性"
+      ]
+    },
+    {
+      "oldChapter": "I3",
+      "newChapter": "CG11",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "雷诺数"
+      ]
+    },
+    {
+      "oldChapter": "I4",
+      "newChapter": "CG12",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "涡量动力学"
+      ]
+    },
+    {
+      "oldChapter": "I5",
+      "newChapter": "CG13",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "湍流"
+      ]
+    },
+    {
+      "oldChapter": "I6",
+      "newChapter": "CG14",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "边界层"
+      ]
+    },
+    {
+      "oldChapter": "I7",
+      "newChapter": "CG15",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "可压缩流与激波"
+      ]
+    },
+    {
+      "oldChapter": "I8",
+      "newChapter": "CG16",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "自由表面与多相流"
+      ]
+    },
+    {
+      "oldChapter": "I9",
+      "newChapter": "CG17",
+      "domain": "CG",
+      "units": 4,
+      "titles": [
+        "有限体积法——天然守恒",
+        "能量稳定格式",
+        "散度自由条件的保持"
+      ]
+    },
+    {
+      "oldChapter": "J1",
+      "newChapter": "CG18",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "从几何光学到波动光学"
+      ]
+    },
+    {
+      "oldChapter": "J2",
+      "newChapter": "CG19",
+      "domain": "CG",
+      "units": 2,
+      "titles": [
+        "夫琅禾费衍射（远场）",
+        "菲涅尔衍射（近场）"
+      ]
+    },
+    {
+      "oldChapter": "J3",
+      "newChapter": "CG20",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "偏振"
+      ]
+    },
+    {
+      "oldChapter": "J4",
+      "newChapter": "CG21",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "相干性"
+      ]
+    },
+    {
+      "oldChapter": "J5",
+      "newChapter": "CG22",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "参与介质"
+      ]
+    },
+    {
+      "oldChapter": "J6",
+      "newChapter": "CG23",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "次表面散射（SSS）"
+      ]
+    },
+    {
+      "oldChapter": "J7",
+      "newChapter": "CG24",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "路径采样策略"
+      ]
+    },
+    {
+      "oldChapter": "J8",
+      "newChapter": "CG25",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "焦散与灾变理论"
+      ]
+    },
+    {
+      "oldChapter": "K1",
+      "newChapter": "PH19",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "推导（时间切片法）"
+      ]
+    },
+    {
+      "oldChapter": "K2",
+      "newChapter": "PH20",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "物理含义"
+      ]
+    },
+    {
+      "oldChapter": "K3",
+      "newChapter": "PH21",
+      "domain": "PH",
+      "units": 2,
+      "titles": [
+        "自由粒子",
+        "谐振子"
+      ]
+    },
+    {
+      "oldChapter": "K4",
+      "newChapter": "PH22",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "Wick 转动与统计力学"
+      ]
+    },
+    {
+      "oldChapter": "K5",
+      "newChapter": "PH23",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "与路径追踪的类比"
+      ]
+    },
+    {
+      "oldChapter": "L1",
+      "newChapter": "PH24",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "二次量子化"
+      ]
+    },
+    {
+      "oldChapter": "L2",
+      "newChapter": "PH25",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "Dyson 级数"
+      ]
+    },
+    {
+      "oldChapter": "L3",
+      "newChapter": "PH26",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "Feynman 规则"
+      ]
+    },
+    {
+      "oldChapter": "L4",
+      "newChapter": "PH27",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "QED"
+      ]
+    },
+    {
+      "oldChapter": "L5",
+      "newChapter": "PH28",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "Wick 定理"
+      ]
+    },
+    {
+      "oldChapter": "L6",
+      "newChapter": "PH29",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "S 矩阵"
+      ]
+    },
+    {
+      "oldChapter": "L7",
+      "newChapter": "PH30",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "重整化"
+      ]
+    },
+    {
+      "oldChapter": "L8",
+      "newChapter": "PH31",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "规范固定与鬼场"
+      ]
+    },
+    {
+      "oldChapter": "L9",
+      "newChapter": "PH32",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "与渲染的类比"
+      ]
+    },
+    {
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "units": 16,
+      "titles": [
+        "李群的定义与维度",
+        "经典李群",
+        "$SO(2)$：平面旋转"
+      ]
+    },
+    {
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "units": 13,
+      "titles": [
+        "单李代数与半单李代数",
+        "经典李代数系列",
+        "例外李代数"
+      ]
+    },
+    {
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "units": 28,
+      "titles": [
+        "角动量与 $\\mathfrak{so}(3)$",
+        "自旋与 $\\mathfrak{su}(2)$",
+        "氢原子与 $SO(4)$"
+      ]
+    },
+    {
+      "oldChapter": "M1",
+      "newChapter": "PH09",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "统计力学基础"
+      ]
+    },
+    {
+      "oldChapter": "M2",
+      "newChapter": "PH10",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "黑体辐射"
+      ]
+    },
+    {
+      "oldChapter": "M3",
+      "newChapter": "PH11",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "信息论与熵"
+      ]
+    },
+    {
+      "oldChapter": "M4",
+      "newChapter": "NM06",
+      "domain": "NM",
+      "units": 1,
+      "titles": [
+        "线性互补问题（LCP）"
+      ]
+    },
+    {
+      "oldChapter": "M5",
+      "newChapter": "PH12",
+      "domain": "PH",
+      "units": 1,
+      "titles": [
+        "朗之万方程"
+      ]
+    },
+    {
+      "oldChapter": "M6",
+      "newChapter": "CG26",
+      "domain": "CG",
+      "units": 1,
+      "titles": [
+        "离散外微分（DEC）"
+      ]
+    },
+    {
+      "oldChapter": "M7",
+      "newChapter": "NM07",
+      "domain": "NM",
+      "units": 1,
+      "titles": [
+        "变分积分器"
+      ]
+    },
+    {
+      "oldChapter": "N1",
+      "newChapter": "MP01",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "分析"
+      ]
+    },
+    {
+      "oldChapter": "N2",
+      "newChapter": "MP02",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "代数"
+      ]
+    },
+    {
+      "oldChapter": "N3",
+      "newChapter": "MP03",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "概率"
+      ]
+    },
+    {
+      "oldChapter": "N4",
+      "newChapter": "MP04",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "力学"
+      ]
+    },
+    {
+      "oldChapter": "N5",
+      "newChapter": "MP05",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "量子"
+      ]
+    },
+    {
+      "oldChapter": "N6",
+      "newChapter": "MP06",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "渲染"
+      ]
+    },
+    {
+      "oldChapter": "N7",
+      "newChapter": "MP07",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第一阶段：夯实基础（1--2 个月）"
+      ]
+    },
+    {
+      "oldChapter": "N8",
+      "newChapter": "MP08",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第二阶段：核心数学物理（2--3 个月）"
+      ]
+    },
+    {
+      "oldChapter": "N9",
+      "newChapter": "MP09",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第三阶段：量子与场论（2--3 个月）"
+      ]
+    },
+    {
+      "oldChapter": "N10",
+      "newChapter": "MP10",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第四阶段：计算与 CG（持续）"
+      ]
+    },
+    {
+      "oldChapter": "N11",
+      "newChapter": "MP11",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "章节与教材对照索引"
+      ]
+    },
+    {
+      "oldChapter": "N12",
+      "newChapter": "MP12",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第一层 · 承重墙（八项）"
+      ]
+    },
+    {
+      "oldChapter": "N13",
+      "newChapter": "MP13",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第二层 · 支撑（十二项）"
+      ]
+    },
+    {
+      "oldChapter": "N14",
+      "newChapter": "MP14",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第三层 · 工具（八项）"
+      ]
+    },
+    {
+      "oldChapter": "N15",
+      "newChapter": "MP15",
+      "domain": "MP",
+      "units": 1,
+      "titles": [
+        "第四层 · 延伸（七项）"
+      ]
+    },
+    {
+      "oldChapter": "P1",
+      "newChapter": "TL01",
+      "domain": "TL",
+      "units": 4,
+      "titles": [
+        "核心思想：差分法（telescoping）",
+        "必备公式",
+        "推导示范（$\\sum k^2$，必须会复述）"
+      ]
+    },
+    {
+      "oldChapter": "P2",
+      "newChapter": "TL02",
+      "domain": "TL",
+      "units": 5,
+      "titles": [
+        "乘法公式族（【必】）",
+        "配方（【必】）",
+        "因式分解与多项式（【熟】）"
+      ]
+    },
+    {
+      "oldChapter": "P3",
+      "newChapter": "TL03",
+      "domain": "TL",
+      "units": 3,
+      "titles": [
+        "基础四件套（【必】）",
+        "放缩盒子（【必】／【熟】）",
+        "进阶（【熟】· 记结论 $+$ 用法）"
+      ]
+    },
+    {
+      "oldChapter": "P4",
+      "newChapter": "TL04",
+      "domain": "TL",
+      "units": 3,
+      "titles": [
+        "数列",
+        "极限三件套（【必】）",
+        "常用极限（【必】）"
+      ]
+    },
+    {
+      "oldChapter": "P5",
+      "newChapter": "TL05",
+      "domain": "TL",
+      "units": 4,
+      "titles": [
+        "三角公式",
+        "Euler 公式与复数（【必】）",
+        "三角正交性（【熟】· Fourier 前置）"
+      ]
+    },
+    {
+      "oldChapter": "P6",
+      "newChapter": "TL06",
+      "domain": "TL",
+      "units": 4,
+      "titles": [
+        "行列式（【必】）",
+        "消元与求逆（【必】）",
+        "特征值与二次型（【必】／【熟】）"
+      ]
+    },
+    {
+      "oldChapter": "P7",
+      "newChapter": "TL07",
+      "domain": "TL",
+      "units": 5,
+      "titles": [
+        "必背 Maclaurin 表（【必】）",
+        "积分技术（【必】）",
+        "常用原函数小表（【必】）"
+      ]
+    },
+    {
+      "oldChapter": "P8",
+      "newChapter": "TL08",
+      "domain": "TL",
+      "units": 4,
+      "titles": [
+        "高斯积分（【必】· 全分析最有名的技巧）",
+        "Γ 函数（Euler 第二积分）（【必】）",
+        "Beta 函数（Euler 第一积分）（【熟】）"
+      ]
+    },
+    {
+      "oldChapter": "P9",
+      "newChapter": "TL09",
+      "domain": "TL",
+      "units": 4,
+      "titles": [
+        "分部积分移导数（【必】· 能量法的发动机）",
+        "能量法流水线（【必】· 必须会走全流程）",
+        "渐近记号（【必】）"
+      ]
+    },
+    {
+      "oldChapter": "P10",
+      "newChapter": "TL10",
+      "domain": "TL",
+      "units": 1,
+      "titles": [
+        "必修优先级总表"
+      ]
+    },
+    {
+      "oldChapter": "Q1",
+      "newChapter": "AG02",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "为什么需要拓扑"
+      ]
+    },
+    {
+      "oldChapter": "Q2",
+      "newChapter": "AG03",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "拓扑空间与基"
+      ]
+    },
+    {
+      "oldChapter": "Q3",
+      "newChapter": "AG04",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "连续性与同胚"
+      ]
+    },
+    {
+      "oldChapter": "Q4",
+      "newChapter": "AG05",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "分离公理与可数性"
+      ]
+    },
+    {
+      "oldChapter": "Q5",
+      "newChapter": "AG06",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "紧性"
+      ]
+    },
+    {
+      "oldChapter": "Q6",
+      "newChapter": "AG07",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "连通性"
+      ]
+    },
+    {
+      "oldChapter": "Q7",
+      "newChapter": "AG08",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "商空间"
+      ]
+    },
+    {
+      "oldChapter": "Q8",
+      "newChapter": "AG09",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "同伦与基本群"
+      ]
+    },
+    {
+      "oldChapter": "Q9",
+      "newChapter": "AG10",
+      "domain": "AG",
+      "units": 3,
+      "titles": [
+        "链条与边界算子",
+        "同调群与 Betti 数",
+        "Euler 特征"
+      ]
+    },
+    {
+      "oldChapter": "Q10",
+      "newChapter": "AG11",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "de Rham 上同调"
+      ]
+    },
+    {
+      "oldChapter": "Q11",
+      "newChapter": "AG12",
+      "domain": "AG",
+      "units": 1,
+      "titles": [
+        "小结"
+      ]
+    },
+    {
+      "oldChapter": "R1",
+      "newChapter": "AN05",
+      "domain": "AN",
+      "units": 1,
+      "titles": [
+        "全纯性与 C-R 方程"
+      ]
+    },
+    {
+      "oldChapter": "R2",
+      "newChapter": "AN06",
+      "domain": "AN",
+      "units": 4,
+      "titles": [
+        "围道积分",
+        "Cauchy 积分定理",
+        "Cauchy 积分公式"
+      ]
+    },
+    {
+      "oldChapter": "R3",
+      "newChapter": "AN07",
+      "domain": "AN",
+      "units": 1,
+      "titles": [
+        "幂级数、Laurent 级数与奇点"
+      ]
+    },
+    {
+      "oldChapter": "R4",
+      "newChapter": "AN08",
+      "domain": "AN",
+      "units": 3,
+      "titles": [
+        "定义与定理",
+        "怎么算留数",
+        "三类实积分的标准套路"
+      ]
+    },
+    {
+      "oldChapter": "R5",
+      "newChapter": "AN09",
+      "domain": "AN",
+      "units": 1,
+      "titles": [
+        "共形映射"
+      ]
+    },
+    {
+      "oldChapter": "R6",
+      "newChapter": "AN10",
+      "domain": "AN",
+      "units": 1,
+      "titles": [
+        "解析延拓与多值函数"
+      ]
+    },
+    {
+      "oldChapter": "R7",
+      "newChapter": "AN11",
+      "domain": "AN",
+      "units": 1,
+      "titles": [
+        "与 PDE 的接口：二维为什么特殊"
+      ]
+    },
+    {
+      "oldChapter": "R8",
+      "newChapter": "AN12",
+      "domain": "AN",
+      "units": 1,
+      "titles": [
+        "小结：复分析概念在两线上的落点"
+      ]
+    }
+  ],
+  "units": [
+    {
+      "oldCode": "A1.1",
+      "newCode": "AN01.1",
+      "oldChapter": "A1",
+      "newChapter": "AN01",
+      "domain": "AN",
+      "title": "黎曼积分的本质与局限",
+      "entries": 17
+    },
+    {
+      "oldCode": "A1.2",
+      "newCode": "AN01.2",
+      "oldChapter": "A1",
+      "newChapter": "AN01",
+      "domain": "AN",
+      "title": "勒贝格积分的构造",
+      "entries": 16
+    },
+    {
+      "oldCode": "A1.3",
+      "newCode": "AN01.3",
+      "oldChapter": "A1",
+      "newChapter": "AN01",
+      "domain": "AN",
+      "title": "三大收敛定理（MCT / Fatou / DCT）",
+      "entries": 45
+    },
+    {
+      "oldCode": "A1.4",
+      "newCode": "AN01.4",
+      "oldChapter": "A1",
+      "newChapter": "AN01",
+      "domain": "AN",
+      "title": "测度论基础",
+      "entries": 18
+    },
+    {
+      "oldCode": "A1.5",
+      "newCode": "AN01.5",
+      "oldChapter": "A1",
+      "newChapter": "AN01",
+      "domain": "AN",
+      "title": "$L^p$ 空间",
+      "entries": 19
+    },
+    {
+      "oldCode": "A2.1",
+      "newCode": "AN02.1",
+      "oldChapter": "A2",
+      "newChapter": "AN02",
+      "domain": "AN",
+      "title": "赋范空间与巴拿赫空间",
+      "entries": 12
+    },
+    {
+      "oldCode": "A2.2",
+      "newCode": "AN02.2",
+      "oldChapter": "A2",
+      "newChapter": "AN02",
+      "domain": "AN",
+      "title": "希尔伯特空间",
+      "entries": 12
+    },
+    {
+      "oldCode": "A2.3",
+      "newCode": "AN02.3",
+      "oldChapter": "A2",
+      "newChapter": "AN02",
+      "domain": "AN",
+      "title": "正交基与傅里叶分析",
+      "entries": 11
+    },
+    {
+      "oldCode": "A2.4",
+      "newCode": "AN02.4",
+      "oldChapter": "A2",
+      "newChapter": "AN02",
+      "domain": "AN",
+      "title": "有界线性算子与谱理论",
+      "entries": 12
+    },
+    {
+      "oldCode": "A2.5",
+      "newCode": "AN02.5",
+      "oldChapter": "A2",
+      "newChapter": "AN02",
+      "domain": "AN",
+      "title": "分布（广义函数）",
+      "entries": 9
+    },
+    {
+      "oldCode": "A3",
+      "newCode": "AN03.1",
+      "oldChapter": "A3",
+      "newChapter": "AN03",
+      "domain": "AN",
+      "title": "微分学的高阶推广：微分形式",
+      "entries": 11
+    },
+    {
+      "oldCode": "A4.1",
+      "newCode": "AN04.1",
+      "oldChapter": "A4",
+      "newChapter": "AN04",
+      "domain": "AN",
+      "title": "经典导数的不足",
+      "entries": 7
+    },
+    {
+      "oldCode": "A4.2",
+      "newCode": "AN04.2",
+      "oldChapter": "A4",
+      "newChapter": "AN04",
+      "domain": "AN",
+      "title": "弱导数",
+      "entries": 9
+    },
+    {
+      "oldCode": "A4.3",
+      "newCode": "AN04.3",
+      "oldChapter": "A4",
+      "newChapter": "AN04",
+      "domain": "AN",
+      "title": "Sobolev 空间",
+      "entries": 11
+    },
+    {
+      "oldCode": "A4.4",
+      "newCode": "AN04.4",
+      "oldChapter": "A4",
+      "newChapter": "AN04",
+      "domain": "AN",
+      "title": "嵌入定理",
+      "entries": 12
+    },
+    {
+      "oldCode": "A4.5",
+      "newCode": "AN04.5",
+      "oldChapter": "A4",
+      "newChapter": "AN04",
+      "domain": "AN",
+      "title": "弱解与 Lax--Milgram",
+      "entries": 9
+    },
+    {
+      "oldCode": "A4.6",
+      "newCode": "AN04.6",
+      "oldChapter": "A4",
+      "newChapter": "AN04",
+      "domain": "AN",
+      "title": "正则性提升与能量估计",
+      "entries": 8
+    },
+    {
+      "oldCode": "B1.1",
+      "newCode": "AG01.1",
+      "oldChapter": "B1",
+      "newChapter": "AG01",
+      "domain": "AG",
+      "title": "群的基本概念",
+      "entries": 12
+    },
+    {
+      "oldCode": "B1.2",
+      "newCode": "AG01.2",
+      "oldChapter": "B1",
+      "newChapter": "AG01",
+      "domain": "AG",
+      "title": "李群与李代数",
+      "entries": 12
+    },
+    {
+      "oldCode": "B1.3",
+      "newCode": "AG01.3",
+      "oldChapter": "B1",
+      "newChapter": "AG01",
+      "domain": "AG",
+      "title": "表示论基础",
+      "entries": 12
+    },
+    {
+      "oldCode": "B2.1",
+      "newCode": "AG13.1",
+      "oldChapter": "B2",
+      "newChapter": "AG13",
+      "domain": "AG",
+      "title": "曲线与曲面",
+      "entries": 12
+    },
+    {
+      "oldCode": "B2.2",
+      "newCode": "AG13.2",
+      "oldChapter": "B2",
+      "newChapter": "AG13",
+      "domain": "AG",
+      "title": "流形与切空间",
+      "entries": 11
+    },
+    {
+      "oldCode": "B2.3",
+      "newCode": "AG13.3",
+      "oldChapter": "B2",
+      "newChapter": "AG13",
+      "domain": "AG",
+      "title": "黎曼几何",
+      "entries": 11
+    },
+    {
+      "oldCode": "B2.4",
+      "newCode": "AG13.4",
+      "oldChapter": "B2",
+      "newChapter": "AG13",
+      "domain": "AG",
+      "title": "纤维丛（Fiber Bundle）",
+      "entries": 9
+    },
+    {
+      "oldCode": "C1",
+      "newCode": "PR01.1",
+      "oldChapter": "C1",
+      "newChapter": "PR01",
+      "domain": "PR",
+      "title": "概率的测度论基础",
+      "entries": 11
+    },
+    {
+      "oldCode": "C10.1",
+      "newCode": "PR10.1",
+      "oldChapter": "C10",
+      "newChapter": "PR10",
+      "domain": "PR",
+      "title": "Wiener 过程与二次变差",
+      "entries": 15
+    },
+    {
+      "oldCode": "C10.2",
+      "newCode": "PR10.2",
+      "oldChapter": "C10",
+      "newChapter": "PR10",
+      "domain": "PR",
+      "title": "Itô 积分与 Itô 引理",
+      "entries": 17
+    },
+    {
+      "oldCode": "C10.3",
+      "newCode": "PR10.3",
+      "oldChapter": "C10",
+      "newChapter": "PR10",
+      "domain": "PR",
+      "title": "SDE 与 Fokker--Planck",
+      "entries": 17
+    },
+    {
+      "oldCode": "C2",
+      "newCode": "PR02.1",
+      "oldChapter": "C2",
+      "newChapter": "PR02",
+      "domain": "PR",
+      "title": "重要分布族",
+      "entries": 12
+    },
+    {
+      "oldCode": "C3",
+      "newCode": "PR03.1",
+      "oldChapter": "C3",
+      "newChapter": "PR03",
+      "domain": "PR",
+      "title": "多维分布与独立性",
+      "entries": 10
+    },
+    {
+      "oldCode": "C4",
+      "newCode": "PR04.1",
+      "oldChapter": "C4",
+      "newChapter": "PR04",
+      "domain": "PR",
+      "title": "条件期望与鞅",
+      "entries": 9
+    },
+    {
+      "oldCode": "C5",
+      "newCode": "PR05.1",
+      "oldChapter": "C5",
+      "newChapter": "PR05",
+      "domain": "PR",
+      "title": "随机过程",
+      "entries": 11
+    },
+    {
+      "oldCode": "C6.1",
+      "newCode": "PR06.1",
+      "oldChapter": "C6",
+      "newChapter": "PR06",
+      "domain": "PR",
+      "title": "四种收敛模式",
+      "entries": 11
+    },
+    {
+      "oldCode": "C6.2",
+      "newCode": "PR06.2",
+      "oldChapter": "C6",
+      "newChapter": "PR06",
+      "domain": "PR",
+      "title": "反例博物馆：为什么箭头不可逆",
+      "entries": 10
+    },
+    {
+      "oldCode": "C6.3",
+      "newCode": "PR06.3",
+      "oldChapter": "C6",
+      "newChapter": "PR06",
+      "domain": "PR",
+      "title": "一致可积性：让「依概率」升到 $L^1$",
+      "entries": 10
+    },
+    {
+      "oldCode": "C6.4",
+      "newCode": "PR06.4",
+      "oldChapter": "C6",
+      "newChapter": "PR06",
+      "domain": "PR",
+      "title": "三大定理之外的收敛定理",
+      "entries": 12
+    },
+    {
+      "oldCode": "C6.5",
+      "newCode": "PR06.5",
+      "oldChapter": "C6",
+      "newChapter": "PR06",
+      "domain": "PR",
+      "title": "Borel--Cantelli 与两种大数定律",
+      "entries": 16
+    },
+    {
+      "oldCode": "C7.1",
+      "newCode": "PR07.1",
+      "oldChapter": "C7",
+      "newChapter": "PR07",
+      "domain": "PR",
+      "title": "定义与基本性质",
+      "entries": 16
+    },
+    {
+      "oldCode": "C7.2",
+      "newCode": "PR07.2",
+      "oldChapter": "C7",
+      "newChapter": "PR07",
+      "domain": "PR",
+      "title": "算例：正态分布",
+      "entries": 14
+    },
+    {
+      "oldCode": "C7.3",
+      "newCode": "PR07.3",
+      "oldChapter": "C7",
+      "newChapter": "PR07",
+      "domain": "PR",
+      "title": "中心极限定理（CLT）",
+      "entries": 15
+    },
+    {
+      "oldCode": "C8.1",
+      "newCode": "PR08.1",
+      "oldChapter": "C8",
+      "newChapter": "PR08",
+      "domain": "PR",
+      "title": "基本对象",
+      "entries": 16
+    },
+    {
+      "oldCode": "C8.2",
+      "newCode": "PR08.2",
+      "oldChapter": "C8",
+      "newChapter": "PR08",
+      "domain": "PR",
+      "title": "Metropolis--Hastings 与 MLT",
+      "entries": 16
+    },
+    {
+      "oldCode": "C8.3",
+      "newCode": "PR08.3",
+      "oldChapter": "C8",
+      "newChapter": "PR08",
+      "domain": "PR",
+      "title": "随机游走",
+      "entries": 15
+    },
+    {
+      "oldCode": "C9.1",
+      "newCode": "PR09.1",
+      "oldChapter": "C9",
+      "newChapter": "PR09",
+      "domain": "PR",
+      "title": "估计量、偏差与误差量级",
+      "entries": 15
+    },
+    {
+      "oldCode": "C9.2",
+      "newCode": "PR09.2",
+      "oldChapter": "C9",
+      "newChapter": "PR09",
+      "domain": "PR",
+      "title": "方差缩减技术",
+      "entries": 17
+    },
+    {
+      "oldCode": "D1",
+      "newCode": "PH01.1",
+      "oldChapter": "D1",
+      "newChapter": "PH01",
+      "domain": "PH",
+      "title": "拉格朗日力学",
+      "entries": 8
+    },
+    {
+      "oldCode": "D2",
+      "newCode": "PH02.1",
+      "oldChapter": "D2",
+      "newChapter": "PH02",
+      "domain": "PH",
+      "title": "Noether 定理",
+      "entries": 7
+    },
+    {
+      "oldCode": "D3",
+      "newCode": "PH03.1",
+      "oldChapter": "D3",
+      "newChapter": "PH03",
+      "domain": "PH",
+      "title": "哈密顿力学",
+      "entries": 7
+    },
+    {
+      "oldCode": "D4",
+      "newCode": "PH04.1",
+      "oldChapter": "D4",
+      "newChapter": "PH04",
+      "domain": "PH",
+      "title": "哈密顿--雅可比理论与正则变换",
+      "entries": 7
+    },
+    {
+      "oldCode": "E1",
+      "newCode": "PH05.1",
+      "oldChapter": "E1",
+      "newChapter": "PH05",
+      "domain": "PH",
+      "title": "向量分析的微分形式统一",
+      "entries": 8
+    },
+    {
+      "oldCode": "E2",
+      "newCode": "PH06.1",
+      "oldChapter": "E2",
+      "newChapter": "PH06",
+      "domain": "PH",
+      "title": "麦克斯韦方程的微分形式表述",
+      "entries": 7
+    },
+    {
+      "oldCode": "E3",
+      "newCode": "PH07.1",
+      "oldChapter": "E3",
+      "newChapter": "PH07",
+      "domain": "PH",
+      "title": "闵可夫斯基时空",
+      "entries": 7
+    },
+    {
+      "oldCode": "E4",
+      "newCode": "PH08.1",
+      "oldChapter": "E4",
+      "newChapter": "PH08",
+      "domain": "PH",
+      "title": "规范场论初步",
+      "entries": 7
+    },
+    {
+      "oldCode": "F1",
+      "newCode": "PH13.1",
+      "oldChapter": "F1",
+      "newChapter": "PH13",
+      "domain": "PH",
+      "title": "希尔伯特空间与态",
+      "entries": 9
+    },
+    {
+      "oldCode": "F2",
+      "newCode": "PH14.1",
+      "oldChapter": "F2",
+      "newChapter": "PH14",
+      "domain": "PH",
+      "title": "可观测量与算子",
+      "entries": 7
+    },
+    {
+      "oldCode": "F3",
+      "newCode": "PH15.1",
+      "oldChapter": "F3",
+      "newChapter": "PH15",
+      "domain": "PH",
+      "title": "薛定谔方程",
+      "entries": 7
+    },
+    {
+      "oldCode": "F4",
+      "newCode": "PH16.1",
+      "oldChapter": "F4",
+      "newChapter": "PH16",
+      "domain": "PH",
+      "title": "角动量与自旋",
+      "entries": 7
+    },
+    {
+      "oldCode": "F5",
+      "newCode": "PH17.1",
+      "oldChapter": "F5",
+      "newChapter": "PH17",
+      "domain": "PH",
+      "title": "路径积分（Feynman 表述）",
+      "entries": 7
+    },
+    {
+      "oldCode": "F6",
+      "newCode": "PH18.1",
+      "oldChapter": "F6",
+      "newChapter": "PH18",
+      "domain": "PH",
+      "title": "量子力学与 CG 的交叉",
+      "entries": 6
+    },
+    {
+      "oldCode": "G1.1",
+      "newCode": "NM01.1",
+      "oldChapter": "G1",
+      "newChapter": "NM01",
+      "domain": "NM",
+      "title": "经典 RK4",
+      "entries": 8
+    },
+    {
+      "oldCode": "G1.2",
+      "newCode": "NM01.2",
+      "oldChapter": "G1",
+      "newChapter": "NM01",
+      "domain": "NM",
+      "title": "辛积分器",
+      "entries": 8
+    },
+    {
+      "oldCode": "G2.1",
+      "newCode": "NM02.1",
+      "oldChapter": "G2",
+      "newChapter": "NM02",
+      "domain": "NM",
+      "title": "有限差分法（FDM）",
+      "entries": 8
+    },
+    {
+      "oldCode": "G2.2",
+      "newCode": "NM02.2",
+      "oldChapter": "G2",
+      "newChapter": "NM02",
+      "domain": "NM",
+      "title": "有限元法（FEM）",
+      "entries": 7
+    },
+    {
+      "oldCode": "G2.3",
+      "newCode": "NM02.3",
+      "oldChapter": "G2",
+      "newChapter": "NM02",
+      "domain": "NM",
+      "title": "谱方法",
+      "entries": 8
+    },
+    {
+      "oldCode": "G3",
+      "newCode": "NM03.1",
+      "oldChapter": "G3",
+      "newChapter": "NM03",
+      "domain": "NM",
+      "title": "数值线性代数",
+      "entries": 6
+    },
+    {
+      "oldCode": "G4.1",
+      "newCode": "NM04.1",
+      "oldChapter": "G4",
+      "newChapter": "NM04",
+      "domain": "NM",
+      "title": "Padé 近似",
+      "entries": 7
+    },
+    {
+      "oldCode": "G4.2",
+      "newCode": "NM04.2",
+      "oldChapter": "G4",
+      "newChapter": "NM04",
+      "domain": "NM",
+      "title": "切比雪夫逼近",
+      "entries": 7
+    },
+    {
+      "oldCode": "G5",
+      "newCode": "NM05.1",
+      "oldChapter": "G5",
+      "newChapter": "NM05",
+      "domain": "NM",
+      "title": "优化",
+      "entries": 7
+    },
+    {
+      "oldCode": "H1",
+      "newCode": "CG01.1",
+      "oldChapter": "H1",
+      "newChapter": "CG01",
+      "domain": "CG",
+      "title": "离散微分几何",
+      "entries": 12
+    },
+    {
+      "oldCode": "H2",
+      "newCode": "CG02.1",
+      "oldChapter": "H2",
+      "newChapter": "CG02",
+      "domain": "CG",
+      "title": "渲染方程与 BRDF",
+      "entries": 12
+    },
+    {
+      "oldCode": "H3",
+      "newCode": "CG03.1",
+      "oldChapter": "H3",
+      "newChapter": "CG03",
+      "domain": "CG",
+      "title": "路径空间公式化",
+      "entries": 13
+    },
+    {
+      "oldCode": "H4",
+      "newCode": "CG04.1",
+      "oldChapter": "H4",
+      "newChapter": "CG04",
+      "domain": "CG",
+      "title": "蒙特卡洛积分",
+      "entries": 25
+    },
+    {
+      "oldCode": "H5",
+      "newCode": "CG05.1",
+      "oldChapter": "H5",
+      "newChapter": "CG05",
+      "domain": "CG",
+      "title": "球谐函数在 CG 中的应用",
+      "entries": 14
+    },
+    {
+      "oldCode": "H6.1",
+      "newCode": "CG06.1",
+      "oldChapter": "H6",
+      "newChapter": "CG06",
+      "domain": "CG",
+      "title": "低差异序列",
+      "entries": 13
+    },
+    {
+      "oldCode": "H6.2",
+      "newCode": "CG06.2",
+      "oldChapter": "H6",
+      "newChapter": "CG06",
+      "domain": "CG",
+      "title": "蓝噪声",
+      "entries": 15
+    },
+    {
+      "oldCode": "H7",
+      "newCode": "CG07.1",
+      "oldChapter": "H7",
+      "newChapter": "CG07",
+      "domain": "CG",
+      "title": "辐射度量学",
+      "entries": 17
+    },
+    {
+      "oldCode": "H8.1",
+      "newCode": "CG08.1",
+      "oldChapter": "H8",
+      "newChapter": "CG08",
+      "domain": "CG",
+      "title": "流体模拟",
+      "entries": 20
+    },
+    {
+      "oldCode": "H8.2",
+      "newCode": "CG08.2",
+      "oldChapter": "H8",
+      "newChapter": "CG08",
+      "domain": "CG",
+      "title": "刚体模拟",
+      "entries": 18
+    },
+    {
+      "oldCode": "H8.3",
+      "newCode": "CG08.3",
+      "oldChapter": "H8",
+      "newChapter": "CG08",
+      "domain": "CG",
+      "title": "布料与软体",
+      "entries": 16
+    },
+    {
+      "oldCode": "I1",
+      "newCode": "CG09.1",
+      "oldChapter": "I1",
+      "newChapter": "CG09",
+      "domain": "CG",
+      "title": "守恒律",
+      "entries": 19
+    },
+    {
+      "oldCode": "I2",
+      "newCode": "CG10.1",
+      "oldChapter": "I2",
+      "newChapter": "CG10",
+      "domain": "CG",
+      "title": "应力张量与粘性",
+      "entries": 16
+    },
+    {
+      "oldCode": "I3",
+      "newCode": "CG11.1",
+      "oldChapter": "I3",
+      "newChapter": "CG11",
+      "domain": "CG",
+      "title": "雷诺数",
+      "entries": 14
+    },
+    {
+      "oldCode": "I4",
+      "newCode": "CG12.1",
+      "oldChapter": "I4",
+      "newChapter": "CG12",
+      "domain": "CG",
+      "title": "涡量动力学",
+      "entries": 16
+    },
+    {
+      "oldCode": "I5",
+      "newCode": "CG13.1",
+      "oldChapter": "I5",
+      "newChapter": "CG13",
+      "domain": "CG",
+      "title": "湍流",
+      "entries": 10
+    },
+    {
+      "oldCode": "I6",
+      "newCode": "CG14.1",
+      "oldChapter": "I6",
+      "newChapter": "CG14",
+      "domain": "CG",
+      "title": "边界层",
+      "entries": 11
+    },
+    {
+      "oldCode": "I7",
+      "newCode": "CG15.1",
+      "oldChapter": "I7",
+      "newChapter": "CG15",
+      "domain": "CG",
+      "title": "可压缩流与激波",
+      "entries": 10
+    },
+    {
+      "oldCode": "I8",
+      "newCode": "CG16.1",
+      "oldChapter": "I8",
+      "newChapter": "CG16",
+      "domain": "CG",
+      "title": "自由表面与多相流",
+      "entries": 10
+    },
+    {
+      "oldCode": "I9.1",
+      "newCode": "CG17.1",
+      "oldChapter": "I9",
+      "newChapter": "CG17",
+      "domain": "CG",
+      "title": "有限体积法——天然守恒",
+      "entries": 8
+    },
+    {
+      "oldCode": "I9.2",
+      "newCode": "CG17.2",
+      "oldChapter": "I9",
+      "newChapter": "CG17",
+      "domain": "CG",
+      "title": "能量稳定格式",
+      "entries": 9
+    },
+    {
+      "oldCode": "I9.3",
+      "newCode": "CG17.3",
+      "oldChapter": "I9",
+      "newChapter": "CG17",
+      "domain": "CG",
+      "title": "散度自由条件的保持",
+      "entries": 9
+    },
+    {
+      "oldCode": "I9.4",
+      "newCode": "CG17.4",
+      "oldChapter": "I9",
+      "newChapter": "CG17",
+      "domain": "CG",
+      "title": "时间步长约束",
+      "entries": 8
+    },
+    {
+      "oldCode": "J1",
+      "newCode": "CG18.1",
+      "oldChapter": "J1",
+      "newChapter": "CG18",
+      "domain": "CG",
+      "title": "从几何光学到波动光学",
+      "entries": 8
+    },
+    {
+      "oldCode": "J2.1",
+      "newCode": "CG19.1",
+      "oldChapter": "J2",
+      "newChapter": "CG19",
+      "domain": "CG",
+      "title": "夫琅禾费衍射（远场）",
+      "entries": 8
+    },
+    {
+      "oldCode": "J2.2",
+      "newCode": "CG19.2",
+      "oldChapter": "J2",
+      "newChapter": "CG19",
+      "domain": "CG",
+      "title": "菲涅尔衍射（近场）",
+      "entries": 8
+    },
+    {
+      "oldCode": "J3",
+      "newCode": "CG20.1",
+      "oldChapter": "J3",
+      "newChapter": "CG20",
+      "domain": "CG",
+      "title": "偏振",
+      "entries": 8
+    },
+    {
+      "oldCode": "J4",
+      "newCode": "CG21.1",
+      "oldChapter": "J4",
+      "newChapter": "CG21",
+      "domain": "CG",
+      "title": "相干性",
+      "entries": 7
+    },
+    {
+      "oldCode": "J5",
+      "newCode": "CG22.1",
+      "oldChapter": "J5",
+      "newChapter": "CG22",
+      "domain": "CG",
+      "title": "参与介质",
+      "entries": 7
+    },
+    {
+      "oldCode": "J6",
+      "newCode": "CG23.1",
+      "oldChapter": "J6",
+      "newChapter": "CG23",
+      "domain": "CG",
+      "title": "次表面散射（SSS）",
+      "entries": 7
+    },
+    {
+      "oldCode": "J7",
+      "newCode": "CG24.1",
+      "oldChapter": "J7",
+      "newChapter": "CG24",
+      "domain": "CG",
+      "title": "路径采样策略",
+      "entries": 8
+    },
+    {
+      "oldCode": "J8",
+      "newCode": "CG25.1",
+      "oldChapter": "J8",
+      "newChapter": "CG25",
+      "domain": "CG",
+      "title": "焦散与灾变理论",
+      "entries": 7
+    },
+    {
+      "oldCode": "K1",
+      "newCode": "PH19.1",
+      "oldChapter": "K1",
+      "newChapter": "PH19",
+      "domain": "PH",
+      "title": "推导（时间切片法）",
+      "entries": 7
+    },
+    {
+      "oldCode": "K2",
+      "newCode": "PH20.1",
+      "oldChapter": "K2",
+      "newChapter": "PH20",
+      "domain": "PH",
+      "title": "物理含义",
+      "entries": 6
+    },
+    {
+      "oldCode": "K3.1",
+      "newCode": "PH21.1",
+      "oldChapter": "K3",
+      "newChapter": "PH21",
+      "domain": "PH",
+      "title": "自由粒子",
+      "entries": 8
+    },
+    {
+      "oldCode": "K3.2",
+      "newCode": "PH21.2",
+      "oldChapter": "K3",
+      "newChapter": "PH21",
+      "domain": "PH",
+      "title": "谐振子",
+      "entries": 8
+    },
+    {
+      "oldCode": "K4",
+      "newCode": "PH22.1",
+      "oldChapter": "K4",
+      "newChapter": "PH22",
+      "domain": "PH",
+      "title": "Wick 转动与统计力学",
+      "entries": 7
+    },
+    {
+      "oldCode": "K5",
+      "newCode": "PH23.1",
+      "oldChapter": "K5",
+      "newChapter": "PH23",
+      "domain": "PH",
+      "title": "与路径追踪的类比",
+      "entries": 8
+    },
+    {
+      "oldCode": "L1",
+      "newCode": "PH24.1",
+      "oldChapter": "L1",
+      "newChapter": "PH24",
+      "domain": "PH",
+      "title": "二次量子化",
+      "entries": 7
+    },
+    {
+      "oldCode": "L2",
+      "newCode": "PH25.1",
+      "oldChapter": "L2",
+      "newChapter": "PH25",
+      "domain": "PH",
+      "title": "Dyson 级数",
+      "entries": 7
+    },
+    {
+      "oldCode": "L3",
+      "newCode": "PH26.1",
+      "oldChapter": "L3",
+      "newChapter": "PH26",
+      "domain": "PH",
+      "title": "Feynman 规则",
+      "entries": 7
+    },
+    {
+      "oldCode": "L4",
+      "newCode": "PH27.1",
+      "oldChapter": "L4",
+      "newChapter": "PH27",
+      "domain": "PH",
+      "title": "QED",
+      "entries": 6
+    },
+    {
+      "oldCode": "L5",
+      "newCode": "PH28.1",
+      "oldChapter": "L5",
+      "newChapter": "PH28",
+      "domain": "PH",
+      "title": "Wick 定理",
+      "entries": 7
+    },
+    {
+      "oldCode": "L6",
+      "newCode": "PH29.1",
+      "oldChapter": "L6",
+      "newChapter": "PH29",
+      "domain": "PH",
+      "title": "S 矩阵",
+      "entries": 7
+    },
+    {
+      "oldCode": "L7",
+      "newCode": "PH30.1",
+      "oldChapter": "L7",
+      "newChapter": "PH30",
+      "domain": "PH",
+      "title": "重整化",
+      "entries": 7
+    },
+    {
+      "oldCode": "L8",
+      "newCode": "PH31.1",
+      "oldChapter": "L8",
+      "newChapter": "PH31",
+      "domain": "PH",
+      "title": "规范固定与鬼场",
+      "entries": 7
+    },
+    {
+      "oldCode": "L9",
+      "newCode": "PH32.1",
+      "oldChapter": "L9",
+      "newChapter": "PH32",
+      "domain": "PH",
+      "title": "与渲染的类比",
+      "entries": 6
+    },
+    {
+      "oldCode": "M1",
+      "newCode": "PH09.1",
+      "oldChapter": "M1",
+      "newChapter": "PH09",
+      "domain": "PH",
+      "title": "统计力学基础",
+      "entries": 8
+    },
+    {
+      "oldCode": "M2",
+      "newCode": "PH10.1",
+      "oldChapter": "M2",
+      "newChapter": "PH10",
+      "domain": "PH",
+      "title": "黑体辐射",
+      "entries": 6
+    },
+    {
+      "oldCode": "M3",
+      "newCode": "PH11.1",
+      "oldChapter": "M3",
+      "newChapter": "PH11",
+      "domain": "PH",
+      "title": "信息论与熵",
+      "entries": 6
+    },
+    {
+      "oldCode": "M4",
+      "newCode": "NM06.1",
+      "oldChapter": "M4",
+      "newChapter": "NM06",
+      "domain": "NM",
+      "title": "线性互补问题（LCP）",
+      "entries": 6
+    },
+    {
+      "oldCode": "M5",
+      "newCode": "PH12.1",
+      "oldChapter": "M5",
+      "newChapter": "PH12",
+      "domain": "PH",
+      "title": "朗之万方程",
+      "entries": 6
+    },
+    {
+      "oldCode": "M6",
+      "newCode": "CG26.1",
+      "oldChapter": "M6",
+      "newChapter": "CG26",
+      "domain": "CG",
+      "title": "离散外微分（DEC）",
+      "entries": 6
+    },
+    {
+      "oldCode": "M7",
+      "newCode": "NM07.1",
+      "oldChapter": "M7",
+      "newChapter": "NM07",
+      "domain": "NM",
+      "title": "变分积分器",
+      "entries": 6
+    },
+    {
+      "oldCode": "N1",
+      "newCode": "MP01.1",
+      "oldChapter": "N1",
+      "newChapter": "MP01",
+      "domain": "MP",
+      "title": "分析",
+      "entries": 8
+    },
+    {
+      "oldCode": "N10",
+      "newCode": "MP10.1",
+      "oldChapter": "N10",
+      "newChapter": "MP10",
+      "domain": "MP",
+      "title": "第四阶段：计算与 CG（持续）",
+      "entries": 6
+    },
+    {
+      "oldCode": "N11",
+      "newCode": "MP11.1",
+      "oldChapter": "N11",
+      "newChapter": "MP11",
+      "domain": "MP",
+      "title": "章节与教材对照索引",
+      "entries": 8
+    },
+    {
+      "oldCode": "N12",
+      "newCode": "MP12.1",
+      "oldChapter": "N12",
+      "newChapter": "MP12",
+      "domain": "MP",
+      "title": "第一层 · 承重墙（八项）",
+      "entries": 6
+    },
+    {
+      "oldCode": "N13",
+      "newCode": "MP13.1",
+      "oldChapter": "N13",
+      "newChapter": "MP13",
+      "domain": "MP",
+      "title": "第二层 · 支撑（十二项）",
+      "entries": 6
+    },
+    {
+      "oldCode": "N14",
+      "newCode": "MP14.1",
+      "oldChapter": "N14",
+      "newChapter": "MP14",
+      "domain": "MP",
+      "title": "第三层 · 工具（八项）",
+      "entries": 6
+    },
+    {
+      "oldCode": "N15",
+      "newCode": "MP15.1",
+      "oldChapter": "N15",
+      "newChapter": "MP15",
+      "domain": "MP",
+      "title": "第四层 · 延伸（七项）",
+      "entries": 6
+    },
+    {
+      "oldCode": "N2",
+      "newCode": "MP02.1",
+      "oldChapter": "N2",
+      "newChapter": "MP02",
+      "domain": "MP",
+      "title": "代数",
+      "entries": 7
+    },
+    {
+      "oldCode": "N3",
+      "newCode": "MP03.1",
+      "oldChapter": "N3",
+      "newChapter": "MP03",
+      "domain": "MP",
+      "title": "概率",
+      "entries": 6
+    },
+    {
+      "oldCode": "N4",
+      "newCode": "MP04.1",
+      "oldChapter": "N4",
+      "newChapter": "MP04",
+      "domain": "MP",
+      "title": "力学",
+      "entries": 6
+    },
+    {
+      "oldCode": "N5",
+      "newCode": "MP05.1",
+      "oldChapter": "N5",
+      "newChapter": "MP05",
+      "domain": "MP",
+      "title": "量子",
+      "entries": 7
+    },
+    {
+      "oldCode": "N6",
+      "newCode": "MP06.1",
+      "oldChapter": "N6",
+      "newChapter": "MP06",
+      "domain": "MP",
+      "title": "渲染",
+      "entries": 7
+    },
+    {
+      "oldCode": "N7",
+      "newCode": "MP07.1",
+      "oldChapter": "N7",
+      "newChapter": "MP07",
+      "domain": "MP",
+      "title": "第一阶段：夯实基础（1--2 个月）",
+      "entries": 6
+    },
+    {
+      "oldCode": "N8",
+      "newCode": "MP08.1",
+      "oldChapter": "N8",
+      "newChapter": "MP08",
+      "domain": "MP",
+      "title": "第二阶段：核心数学物理（2--3 个月）",
+      "entries": 6
+    },
+    {
+      "oldCode": "N9",
+      "newCode": "MP09.1",
+      "oldChapter": "N9",
+      "newChapter": "MP09",
+      "domain": "MP",
+      "title": "第三阶段：量子与场论（2--3 个月）",
+      "entries": 6
+    },
+    {
+      "oldCode": "P1.1",
+      "newCode": "TL01.1",
+      "oldChapter": "P1",
+      "newChapter": "TL01",
+      "domain": "TL",
+      "title": "核心思想：差分法（telescoping）",
+      "entries": 11
+    },
+    {
+      "oldCode": "P1.2",
+      "newCode": "TL01.2",
+      "oldChapter": "P1",
+      "newChapter": "TL01",
+      "domain": "TL",
+      "title": "必备公式",
+      "entries": 12
+    },
+    {
+      "oldCode": "P1.3",
+      "newCode": "TL01.3",
+      "oldChapter": "P1",
+      "newChapter": "TL01",
+      "domain": "TL",
+      "title": "推导示范（$\\sum k^2$，必须会复述）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P1.4",
+      "newCode": "TL01.4",
+      "oldChapter": "P1",
+      "newChapter": "TL01",
+      "domain": "TL",
+      "title": "常用技巧",
+      "entries": 19
+    },
+    {
+      "oldCode": "P10",
+      "newCode": "TL10.1",
+      "oldChapter": "P10",
+      "newChapter": "TL10",
+      "domain": "TL",
+      "title": "必修优先级总表",
+      "entries": 11
+    },
+    {
+      "oldCode": "P2.1",
+      "newCode": "TL02.1",
+      "oldChapter": "P2",
+      "newChapter": "TL02",
+      "domain": "TL",
+      "title": "乘法公式族（【必】）",
+      "entries": 11
+    },
+    {
+      "oldCode": "P2.2",
+      "newCode": "TL02.2",
+      "oldChapter": "P2",
+      "newChapter": "TL02",
+      "domain": "TL",
+      "title": "配方（【必】）",
+      "entries": 11
+    },
+    {
+      "oldCode": "P2.3",
+      "newCode": "TL02.3",
+      "oldChapter": "P2",
+      "newChapter": "TL02",
+      "domain": "TL",
+      "title": "因式分解与多项式（【熟】）",
+      "entries": 11
+    },
+    {
+      "oldCode": "P2.4",
+      "newCode": "TL02.4",
+      "oldChapter": "P2",
+      "newChapter": "TL02",
+      "domain": "TL",
+      "title": "部分分式分解（【必】· 积分／Laplace／传递函数全靠它）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P2.5",
+      "newCode": "TL02.5",
+      "oldChapter": "P2",
+      "newChapter": "TL02",
+      "domain": "TL",
+      "title": "根式、指数与对数（【必】）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P3.1",
+      "newCode": "TL03.1",
+      "oldChapter": "P3",
+      "newChapter": "TL03",
+      "domain": "TL",
+      "title": "基础四件套（【必】）",
+      "entries": 29
+    },
+    {
+      "oldCode": "P3.2",
+      "newCode": "TL03.2",
+      "oldChapter": "P3",
+      "newChapter": "TL03",
+      "domain": "TL",
+      "title": "放缩盒子（【必】／【熟】）",
+      "entries": 21
+    },
+    {
+      "oldCode": "P3.3",
+      "newCode": "TL03.3",
+      "oldChapter": "P3",
+      "newChapter": "TL03",
+      "domain": "TL",
+      "title": "进阶（【熟】· 记结论 $+$ 用法）",
+      "entries": 26
+    },
+    {
+      "oldCode": "P4.1",
+      "newCode": "TL04.1",
+      "oldChapter": "P4",
+      "newChapter": "TL04",
+      "domain": "TL",
+      "title": "数列",
+      "entries": 20
+    },
+    {
+      "oldCode": "P4.2",
+      "newCode": "TL04.2",
+      "oldChapter": "P4",
+      "newChapter": "TL04",
+      "domain": "TL",
+      "title": "极限三件套（【必】）",
+      "entries": 21
+    },
+    {
+      "oldCode": "P4.3",
+      "newCode": "TL04.3",
+      "oldChapter": "P4",
+      "newChapter": "TL04",
+      "domain": "TL",
+      "title": "常用极限（【必】）",
+      "entries": 19
+    },
+    {
+      "oldCode": "P5.1",
+      "newCode": "TL05.1",
+      "oldChapter": "P5",
+      "newChapter": "TL05",
+      "domain": "TL",
+      "title": "三角公式",
+      "entries": 16
+    },
+    {
+      "oldCode": "P5.2",
+      "newCode": "TL05.2",
+      "oldChapter": "P5",
+      "newChapter": "TL05",
+      "domain": "TL",
+      "title": "Euler 公式与复数（【必】）",
+      "entries": 15
+    },
+    {
+      "oldCode": "P5.3",
+      "newCode": "TL05.3",
+      "oldChapter": "P5",
+      "newChapter": "TL05",
+      "domain": "TL",
+      "title": "三角正交性（【熟】· Fourier 前置）",
+      "entries": 10
+    },
+    {
+      "oldCode": "P5.4",
+      "newCode": "TL05.4",
+      "oldChapter": "P5",
+      "newChapter": "TL05",
+      "domain": "TL",
+      "title": "常用三角积分（【必】）",
+      "entries": 9
+    },
+    {
+      "oldCode": "P6.1",
+      "newCode": "TL06.1",
+      "oldChapter": "P6",
+      "newChapter": "TL06",
+      "domain": "TL",
+      "title": "行列式（【必】）",
+      "entries": 12
+    },
+    {
+      "oldCode": "P6.2",
+      "newCode": "TL06.2",
+      "oldChapter": "P6",
+      "newChapter": "TL06",
+      "domain": "TL",
+      "title": "消元与求逆（【必】）",
+      "entries": 12
+    },
+    {
+      "oldCode": "P6.3",
+      "newCode": "TL06.3",
+      "oldChapter": "P6",
+      "newChapter": "TL06",
+      "domain": "TL",
+      "title": "特征值与二次型（【必】／【熟】）",
+      "entries": 11
+    },
+    {
+      "oldCode": "P6.4",
+      "newCode": "TL06.4",
+      "oldChapter": "P6",
+      "newChapter": "TL06",
+      "domain": "TL",
+      "title": "正交化（【熟】）",
+      "entries": 11
+    },
+    {
+      "oldCode": "P7.1",
+      "newCode": "TL07.1",
+      "oldChapter": "P7",
+      "newChapter": "TL07",
+      "domain": "TL",
+      "title": "必背 Maclaurin 表（【必】）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P7.2",
+      "newCode": "TL07.2",
+      "oldChapter": "P7",
+      "newChapter": "TL07",
+      "domain": "TL",
+      "title": "积分技术（【必】）",
+      "entries": 15
+    },
+    {
+      "oldCode": "P7.3",
+      "newCode": "TL07.3",
+      "oldChapter": "P7",
+      "newChapter": "TL07",
+      "domain": "TL",
+      "title": "常用原函数小表（【必】）",
+      "entries": 10
+    },
+    {
+      "oldCode": "P7.4",
+      "newCode": "TL07.4",
+      "oldChapter": "P7",
+      "newChapter": "TL07",
+      "domain": "TL",
+      "title": "多重积分（【熟】）",
+      "entries": 11
+    },
+    {
+      "oldCode": "P7.5",
+      "newCode": "TL07.5",
+      "oldChapter": "P7",
+      "newChapter": "TL07",
+      "domain": "TL",
+      "title": "微分（【必】）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P8.1",
+      "newCode": "TL08.1",
+      "oldChapter": "P8",
+      "newChapter": "TL08",
+      "domain": "TL",
+      "title": "高斯积分（【必】· 全分析最有名的技巧）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P8.2",
+      "newCode": "TL08.2",
+      "oldChapter": "P8",
+      "newChapter": "TL08",
+      "domain": "TL",
+      "title": "Γ 函数（Euler 第二积分）（【必】）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P8.3",
+      "newCode": "TL08.3",
+      "oldChapter": "P8",
+      "newChapter": "TL08",
+      "domain": "TL",
+      "title": "Beta 函数（Euler 第一积分）（【熟】）",
+      "entries": 13
+    },
+    {
+      "oldCode": "P8.4",
+      "newCode": "TL08.4",
+      "oldChapter": "P8",
+      "newChapter": "TL08",
+      "domain": "TL",
+      "title": "Stirling 公式（【熟】）",
+      "entries": 14
+    },
+    {
+      "oldCode": "P9.1",
+      "newCode": "TL09.1",
+      "oldChapter": "P9",
+      "newChapter": "TL09",
+      "domain": "TL",
+      "title": "分部积分移导数（【必】· 能量法的发动机）",
+      "entries": 15
+    },
+    {
+      "oldCode": "P9.2",
+      "newCode": "TL09.2",
+      "oldChapter": "P9",
+      "newChapter": "TL09",
+      "domain": "TL",
+      "title": "能量法流水线（【必】· 必须会走全流程）",
+      "entries": 15
+    },
+    {
+      "oldCode": "P9.3",
+      "newCode": "TL09.3",
+      "oldChapter": "P9",
+      "newChapter": "TL09",
+      "domain": "TL",
+      "title": "渐近记号（【必】）",
+      "entries": 15
+    },
+    {
+      "oldCode": "P9.4",
+      "newCode": "TL09.4",
+      "oldChapter": "P9",
+      "newChapter": "TL09",
+      "domain": "TL",
+      "title": "决策树：证明里该掏哪个不等式？（【熟】）",
+      "entries": 16
+    },
+    {
+      "oldCode": "Q1",
+      "newCode": "AG02.1",
+      "oldChapter": "Q1",
+      "newChapter": "AG02",
+      "domain": "AG",
+      "title": "为什么需要拓扑",
+      "entries": 6
+    },
+    {
+      "oldCode": "Q10",
+      "newCode": "AG11.1",
+      "oldChapter": "Q10",
+      "newChapter": "AG11",
+      "domain": "AG",
+      "title": "de Rham 上同调",
+      "entries": 7
+    },
+    {
+      "oldCode": "Q11",
+      "newCode": "AG12.1",
+      "oldChapter": "Q11",
+      "newChapter": "AG12",
+      "domain": "AG",
+      "title": "小结",
+      "entries": 6
+    },
+    {
+      "oldCode": "Q2",
+      "newCode": "AG03.1",
+      "oldChapter": "Q2",
+      "newChapter": "AG03",
+      "domain": "AG",
+      "title": "拓扑空间与基",
+      "entries": 6
+    },
+    {
+      "oldCode": "Q3",
+      "newCode": "AG04.1",
+      "oldChapter": "Q3",
+      "newChapter": "AG04",
+      "domain": "AG",
+      "title": "连续性与同胚",
+      "entries": 6
+    },
+    {
+      "oldCode": "Q4",
+      "newCode": "AG05.1",
+      "oldChapter": "Q4",
+      "newChapter": "AG05",
+      "domain": "AG",
+      "title": "分离公理与可数性",
+      "entries": 7
+    },
+    {
+      "oldCode": "Q5",
+      "newCode": "AG06.1",
+      "oldChapter": "Q5",
+      "newChapter": "AG06",
+      "domain": "AG",
+      "title": "紧性",
+      "entries": 6
+    },
+    {
+      "oldCode": "Q6",
+      "newCode": "AG07.1",
+      "oldChapter": "Q6",
+      "newChapter": "AG07",
+      "domain": "AG",
+      "title": "连通性",
+      "entries": 6
+    },
+    {
+      "oldCode": "Q7",
+      "newCode": "AG08.1",
+      "oldChapter": "Q7",
+      "newChapter": "AG08",
+      "domain": "AG",
+      "title": "商空间",
+      "entries": 7
+    },
+    {
+      "oldCode": "Q8",
+      "newCode": "AG09.1",
+      "oldChapter": "Q8",
+      "newChapter": "AG09",
+      "domain": "AG",
+      "title": "同伦与基本群",
+      "entries": 6
+    },
+    {
+      "oldCode": "Q9.1",
+      "newCode": "AG10.1",
+      "oldChapter": "Q9",
+      "newChapter": "AG10",
+      "domain": "AG",
+      "title": "链条与边界算子",
+      "entries": 8
+    },
+    {
+      "oldCode": "Q9.2",
+      "newCode": "AG10.2",
+      "oldChapter": "Q9",
+      "newChapter": "AG10",
+      "domain": "AG",
+      "title": "同调群与 Betti 数",
+      "entries": 8
+    },
+    {
+      "oldCode": "Q9.3",
+      "newCode": "AG10.3",
+      "oldChapter": "Q9",
+      "newChapter": "AG10",
+      "domain": "AG",
+      "title": "Euler 特征",
+      "entries": 8
+    },
+    {
+      "oldCode": "R1",
+      "newCode": "AN05.1",
+      "oldChapter": "R1",
+      "newChapter": "AN05",
+      "domain": "AN",
+      "title": "全纯性与 C-R 方程",
+      "entries": 8
+    },
+    {
+      "oldCode": "R2.1",
+      "newCode": "AN06.1",
+      "oldChapter": "R2",
+      "newChapter": "AN06",
+      "domain": "AN",
+      "title": "围道积分",
+      "entries": 8
+    },
+    {
+      "oldCode": "R2.2",
+      "newCode": "AN06.2",
+      "oldChapter": "R2",
+      "newChapter": "AN06",
+      "domain": "AN",
+      "title": "Cauchy 积分定理",
+      "entries": 8
+    },
+    {
+      "oldCode": "R2.3",
+      "newCode": "AN06.3",
+      "oldChapter": "R2",
+      "newChapter": "AN06",
+      "domain": "AN",
+      "title": "Cauchy 积分公式",
+      "entries": 8
+    },
+    {
+      "oldCode": "R2.4",
+      "newCode": "AN06.4",
+      "oldChapter": "R2",
+      "newChapter": "AN06",
+      "domain": "AN",
+      "title": "三个经典推论",
+      "entries": 8
+    },
+    {
+      "oldCode": "R3",
+      "newCode": "AN07.1",
+      "oldChapter": "R3",
+      "newChapter": "AN07",
+      "domain": "AN",
+      "title": "幂级数、Laurent 级数与奇点",
+      "entries": 8
+    },
+    {
+      "oldCode": "R4.1",
+      "newCode": "AN08.1",
+      "oldChapter": "R4",
+      "newChapter": "AN08",
+      "domain": "AN",
+      "title": "定义与定理",
+      "entries": 8
+    },
+    {
+      "oldCode": "R4.2",
+      "newCode": "AN08.2",
+      "oldChapter": "R4",
+      "newChapter": "AN08",
+      "domain": "AN",
+      "title": "怎么算留数",
+      "entries": 8
+    },
+    {
+      "oldCode": "R4.3",
+      "newCode": "AN08.3",
+      "oldChapter": "R4",
+      "newChapter": "AN08",
+      "domain": "AN",
+      "title": "三类实积分的标准套路",
+      "entries": 9
+    },
+    {
+      "oldCode": "R5",
+      "newCode": "AN09.1",
+      "oldChapter": "R5",
+      "newChapter": "AN09",
+      "domain": "AN",
+      "title": "共形映射",
+      "entries": 8
+    },
+    {
+      "oldCode": "R6",
+      "newCode": "AN10.1",
+      "oldChapter": "R6",
+      "newChapter": "AN10",
+      "domain": "AN",
+      "title": "解析延拓与多值函数",
+      "entries": 9
+    },
+    {
+      "oldCode": "R7",
+      "newCode": "AN11.1",
+      "oldChapter": "R7",
+      "newChapter": "AN11",
+      "domain": "AN",
+      "title": "与 PDE 的接口：二维为什么特殊",
+      "entries": 8
+    },
+    {
+      "oldCode": "R8",
+      "newCode": "AN12.1",
+      "oldChapter": "R8",
+      "newChapter": "AN12",
+      "domain": "AN",
+      "title": "小结：复分析概念在两线上的落点",
+      "entries": 6
+    },
+    {
+      "oldCode": "de1.1",
+      "newCode": "EQ01.1",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "核心思想",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.2",
+      "newCode": "EQ01.2",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "积分因子的系统求法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.3",
+      "newCode": "EQ01.3",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "一阶线性方程的完整示例",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.4",
+      "newCode": "EQ01.4",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "可降阶的高阶方程",
+      "entries": 9
+    },
+    {
+      "oldCode": "de1.5",
+      "newCode": "EQ01.5",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "二阶线性常系数方程",
+      "entries": 9
+    },
+    {
+      "oldCode": "de1.6",
+      "newCode": "EQ01.6",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "Euler 方程（等维方程）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.7",
+      "newCode": "EQ01.7",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "待定系数法（常系数）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.8",
+      "newCode": "EQ01.8",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "常数变易法（通用）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.9",
+      "newCode": "EQ01.9",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "存在唯一性定理",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.10",
+      "newCode": "EQ01.10",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "线性系统",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.11",
+      "newCode": "EQ01.11",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "稳定性理论",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.12",
+      "newCode": "EQ01.12",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "Sturm–Liouville 问题",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.13",
+      "newCode": "EQ01.13",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "常点展开",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.14",
+      "newCode": "EQ01.14",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "Frobenius 方法（正则奇点）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.15",
+      "newCode": "EQ01.15",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "Bessel 方程",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.16",
+      "newCode": "EQ01.16",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "Legendre 方程",
+      "entries": 8
+    },
+    {
+      "oldCode": "de1.17",
+      "newCode": "EQ01.17",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "特殊函数的统一视角",
+      "entries": 9
+    },
+    {
+      "oldCode": "de1.18",
+      "newCode": "EQ01.18",
+      "oldChapter": "de1",
+      "newChapter": "EQ01",
+      "domain": "EQ",
+      "title": "Green 函数方法（ODE 版本）",
+      "entries": 10
+    },
+    {
+      "oldCode": "de2.1",
+      "newCode": "EQ02.1",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "单参数李群与无穷小生成元",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.2",
+      "newCode": "EQ02.2",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "对称性条件与延拓",
+      "entries": 9
+    },
+    {
+      "oldCode": "de2.3",
+      "newCode": "EQ02.3",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "经典对称性对应的标准解法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.4",
+      "newCode": "EQ02.4",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "用对称性降阶的一般步骤",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.5",
+      "newCode": "EQ02.5",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "二阶线性 PDE 的分类",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.6",
+      "newCode": "EQ02.6",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "波动方程（双曲型）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.7",
+      "newCode": "EQ02.7",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "热方程（抛物型）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.8",
+      "newCode": "EQ02.8",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "Laplace 方程（椭圆型）",
+      "entries": 9
+    },
+    {
+      "oldCode": "de2.9",
+      "newCode": "EQ02.9",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "边界条件",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.10",
+      "newCode": "EQ02.10",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "分离变量法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.11",
+      "newCode": "EQ02.11",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "特征线法（双曲型）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.12",
+      "newCode": "EQ02.12",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "Fourier 变换",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.13",
+      "newCode": "EQ02.13",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "Laplace 变换",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.14",
+      "newCode": "EQ02.14",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "Green 函数方法（PDE 版本）",
+      "entries": 8
+    },
+    {
+      "oldCode": "de2.15",
+      "newCode": "EQ02.15",
+      "oldChapter": "de2",
+      "newChapter": "EQ02",
+      "domain": "EQ",
+      "title": "变分法与弱解",
+      "entries": 9
+    },
+    {
+      "oldCode": "de3.1",
+      "newCode": "EQ03.1",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "两种「将微分方程化为代数」的方法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.2",
+      "newCode": "EQ03.2",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "Taylor 展开的算子视角",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.3",
+      "newCode": "EQ03.3",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "Laplace 变换的算子视角",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.4",
+      "newCode": "EQ03.4",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "复平面上的联系",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.5",
+      "newCode": "EQ03.5",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "微分算子的矩阵表示",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.6",
+      "newCode": "EQ03.6",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "矩阵指数与 Taylor 公式",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.7",
+      "newCode": "EQ03.7",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "ODE 作为无穷维矩阵方程",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.8",
+      "newCode": "EQ03.8",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "特征值问题的无穷维矩阵视角",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.9",
+      "newCode": "EQ03.9",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "若尔当标准型的无穷维推广",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.10",
+      "newCode": "EQ03.10",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "生成函数与转移矩阵",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.11",
+      "newCode": "EQ03.11",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "方法总览",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.12",
+      "newCode": "EQ03.12",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "分离变量在不同坐标系",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.13",
+      "newCode": "EQ03.13",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "Green 函数的构造方法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.14",
+      "newCode": "EQ03.14",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "从 ODE 到 PDE：维度提升的关键变化",
+      "entries": 8
+    },
+    {
+      "oldCode": "de3.15",
+      "newCode": "EQ03.15",
+      "oldChapter": "de3",
+      "newChapter": "EQ03",
+      "domain": "EQ",
+      "title": "微分方程、积分方程与算子方程的统一",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.1",
+      "newCode": "EQ04.1",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "基本格式",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.2",
+      "newCode": "EQ04.2",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "稳定性",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.3",
+      "newCode": "EQ04.3",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "有限元法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.4",
+      "newCode": "EQ04.4",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "谱方法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.5",
+      "newCode": "EQ04.5",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "半拉格朗日方法",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.6",
+      "newCode": "EQ04.6",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "微分方程在渲染中的出现",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.7",
+      "newCode": "EQ04.7",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "微分方程在物理模拟中的出现",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.8",
+      "newCode": "EQ04.8",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "微分方程在几何处理中的出现",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.9",
+      "newCode": "EQ04.9",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "五条核心线索",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.10",
+      "newCode": "EQ04.10",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "知识网络",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.11",
+      "newCode": "EQ04.11",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "从局部到全局的三条路径",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.12",
+      "newCode": "EQ04.12",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "微分方程 ↔ 代数 ↔ 几何的三角关系",
+      "entries": 8
+    },
+    {
+      "oldCode": "de4.13",
+      "newCode": "EQ04.13",
+      "oldChapter": "de4",
+      "newChapter": "EQ04",
+      "domain": "EQ",
+      "title": "最终统一",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.1",
+      "newCode": "AG14.1",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "李群的定义与维度",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.2",
+      "newCode": "AG14.2",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "经典李群",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.3",
+      "newCode": "AG14.3",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$SO(2)$：平面旋转",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.4",
+      "newCode": "AG14.4",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$SO(3)$：三维旋转",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.5",
+      "newCode": "AG14.5",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$SU(2)$：自旋群",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.6",
+      "newCode": "AG14.6",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$SE(3)$：三维刚体运动",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.7",
+      "newCode": "AG14.7",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "李群的同态与覆盖",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.8",
+      "newCode": "AG14.8",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "李代数的定义",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.9",
+      "newCode": "AG14.9",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "结构常数",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.10",
+      "newCode": "AG14.10",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "指数映射",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.11",
+      "newCode": "AG14.11",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$\\mathfrak{so}(3)$",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.12",
+      "newCode": "AG14.12",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$\\mathfrak{su}(2)$",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.13",
+      "newCode": "AG14.13",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$\\mathfrak{so}(1,3)$：Lorentz 代数",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.14",
+      "newCode": "AG14.14",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "$\\mathfrak{su}(n)$",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.15",
+      "newCode": "AG14.15",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "Killing 形式与半单性",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie1.16",
+      "newCode": "AG14.16",
+      "oldChapter": "lie1",
+      "newChapter": "AG14",
+      "domain": "AG",
+      "title": "伴随表示",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.1",
+      "newCode": "AG15.1",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "单李代数与半单李代数",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.2",
+      "newCode": "AG15.2",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "经典李代数系列",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.3",
+      "newCode": "AG15.3",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "例外李代数",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.4",
+      "newCode": "AG15.4",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "Cartan 子代数与根",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.5",
+      "newCode": "AG15.5",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "Dynkin 图",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.6",
+      "newCode": "AG15.6",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "权与最高权",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.7",
+      "newCode": "AG15.7",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "$\\mathfrak{su}(2)$ 的表示",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.8",
+      "newCode": "AG15.8",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "$\\mathfrak{su}(3)$ 的表示与粒子物理",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.9",
+      "newCode": "AG15.9",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "基本群",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.10",
+      "newCode": "AG15.10",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "高阶同伦群",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.11",
+      "newCode": "AG15.11",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "纤维丛与拓扑",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.12",
+      "newCode": "AG15.12",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "de Rham 上同调",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie2.13",
+      "newCode": "AG15.13",
+      "oldChapter": "lie2",
+      "newChapter": "AG15",
+      "domain": "AG",
+      "title": "同调与流形",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.1",
+      "newCode": "AG16.1",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "角动量与 $\\mathfrak{so}(3)$",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.2",
+      "newCode": "AG16.2",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "自旋与 $\\mathfrak{su}(2)$",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.3",
+      "newCode": "AG16.3",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "氢原子与 $SO(4)$",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.4",
+      "newCode": "AG16.4",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "规范对称性 → 力",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.5",
+      "newCode": "AG16.5",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "标准模型的群结构",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.6",
+      "newCode": "AG16.6",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "规范场的数学结构",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.7",
+      "newCode": "AG16.7",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "广义相对论与时空对称性",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.8",
+      "newCode": "AG16.8",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "凝聚态物理",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.9",
+      "newCode": "AG16.9",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "对称性方法求解 ODE",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.10",
+      "newCode": "AG16.10",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "对称性方法求解 PDE",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.11",
+      "newCode": "AG16.11",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "守恒律与矩映射",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.12",
+      "newCode": "AG16.12",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "旋转的多种表示",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.13",
+      "newCode": "AG16.13",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "四元数与 $SU(2)$",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.14",
+      "newCode": "AG16.14",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "Slerp（球面线性插值）",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.15",
+      "newCode": "AG16.15",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "刚体变换",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.16",
+      "newCode": "AG16.16",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "$\\mathfrak{se}(3)$ 与螺旋运动",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.17",
+      "newCode": "AG16.17",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "球谐函数 = $SO(3)$ 不可约表示基",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.18",
+      "newCode": "AG16.18",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "球谐在渲染中的应用",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.19",
+      "newCode": "AG16.19",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "等变神经网络",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.20",
+      "newCode": "AG16.20",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "曲面上的对称性",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.21",
+      "newCode": "AG16.21",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "离散微分几何中的群结构",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.22",
+      "newCode": "AG16.22",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "网格拓扑",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.23",
+      "newCode": "AG16.23",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "Hairy Ball 定理",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.24",
+      "newCode": "AG16.24",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "同调与网格分析",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.25",
+      "newCode": "AG16.25",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "三条主线的交汇",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.26",
+      "newCode": "AG16.26",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "核心对应表",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.27",
+      "newCode": "AG16.27",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "学习路径建议",
+      "entries": 8
+    },
+    {
+      "oldCode": "lie3.28",
+      "newCode": "AG16.28",
+      "oldChapter": "lie3",
+      "newChapter": "AG16",
+      "domain": "AG",
+      "title": "推荐参考",
+      "entries": 8
+    }
+  ]
+}

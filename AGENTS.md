@@ -72,21 +72,27 @@
 `notebook_dirty: true` 或 commit 变化 = 图谱可能与笔记不一致，需重建；
 同一份 `notebook_commit` 还用于校验 `graph/*.yaml` 是否过期（§3.1）。
 
-### 1.3 代号即主键
+### 1.3 代号即主键（2026-10-30 重排，三级可 Derive）
 
-章节代号（`A1`、`H4`、`G1.1`）是节点主键与前端路由 ID。
-父仓 `AGENTS.md` 第四节已警告 `§NN.N` 全局编号会因插入 `.tex` 而整体位移 ——
-**代号不会**，因此一律用代号，禁止用编译后的全局编号。
+**代号格式：`<域 2 字母><章 2 位>.<单元序>`**，例 `AN03.2` = 分析域 · 第 3 章 · 第 2 单元。
 
-`\subsubsection` 源码里无显式代号，由 filter 按出现顺序合成 `X#.k`。
+| 层级 | 从代号怎么取 | 上限 |
+|---|---|---|
+| 域 | 前 2 字母（`AN`/`AG`/`PR`/`EQ`/`PH`/`NM`/`CG`/`TL`/`MP`） | 9 个 |
+| 章 | 前 4 字符（`AN03`） | 132 个 |
+| 单元 | 全串（`AN03.2`） | 318 个 |
 
-> **层级只有两级** `[校正 C2]`：`A1`（subsection）→ `A1.4`（其第 4 个 subsubsection）。
-> 形如 `A1.1.3` 的三级代号**不存在**，见到即改。
-> 实测印证：`partN.tex` 的教材对照表已在用 `A1.5`（= A1 的第 5 个小目「$L^p$ 空间」）。
-
-> **漂移风险**：合成编号在插入新 `\subsubsection` 时会移动。
-> 对策：对**需要被长期引用的锚点**，在 `.tex` 标题里写死代号
-> （`\subsubsection{G1.1 经典 RK4}`），filter 优先采信显式代号。
+- **唯一真源**：`src/modules/taxonomy.ts` 的 `DOMAINS`（域 → 该域有哪些章、按学习顺序）。
+  加章只改这里，然后跑 `node tools/remap-codes.mjs`（默认干跑，`--apply` 才写）。
+- **学习顺序也由它定义**：派生依赖（`links` → `prereq`）按 `cmpCode` 判先后，
+  不用字符串序 —— 字符串序把 `CG` 排在 `EQ` 前、`MP` 排在 `NM` 前，会直接造出**环**
+  （2026-10-30 实测：PH 系 37 个单元成环，拓扑序只覆盖 281/318）。
+- **旧代号 → 新代号**：`docs/codes-map-2026-10-30.md`（人读，拿去反馈给 `.tex`）与
+  `docs/codes-map-2026-10-30.json`（机器读）。掌握度的旧键由 `src/modules/legacy-codes.ts`
+  在启动时一次性迁移，**不迁就等于清空用户的进度**。
+- **禁止**：在新内容里写旧代号（`A1.3`/`P3.1`/`lie2.7`）；写三级以上（`AN03.2.1` 不存在）。
+- 旧规则（`X#.k` 两级、由 `.tex` 的 `\subsubsection` 合成）只用于**迁移前**的历史产物，
+  不再作为新增内容的规则。
 
 ---
 
@@ -189,14 +195,25 @@ learning-web/
     app.ts               # 应用主体（storage 与渲染全在这里）
     main.ts              # 数学入口（3 行：boot(MATH)）
     main-cs408.ts        # 408 入口（3 行：boot(CS408)）
-    subjects.ts          # 学科配置表：数据根 / 语义边根 / 总纲 / 互链（唯一真源）
-    shell/               # 三栏布局 · 导航 · 路由 · 主题（含 patchMastery 增量刷新）
+    subjects.ts          # 学科配置表：数据根 / 语义边根 / 总纲 / 切入点 / 互链（唯一真源）
+    shell/               # 三栏布局 · 导航 · 路由 · 主题
+      sidebar.ts         # 三层目录（域 → 章 → 单元），单元懒渲染
     renderers/           # card.ts · markdown.ts（KaTeX + LRU）· graph.ts
     viz/                 # 演示模块，按 §2 判据分 frontend/backend
       registry.ts        # 浏览器侧：模块名 → 动态 import（按需取 chunk）
       specs-all.ts       # 静态汇总，**只给 Node 工具**，浏览器入口禁止 import
-    modules/             # loader / kb-index（多学科参数化）· graph · state · attr
+    modules/
+      taxonomy.ts        # **代号与分层唯一真源**（域 → 章 → 学习顺序 → cmpCode）
+      legacy-codes.ts    # 旧代号 → 新代号（只服务掌握度迁移，不再增长）
+      loader.ts · kb-index.ts（多学科参数化）· graph.ts · graph-model.ts · state.ts · attr.ts
+    content/
+      syllabus.ts        # 总纲（数学大观：四条主轴 / 两个出口 / 交叉点 / 切入点 / 路线）
+      angles.ts          # 切入点（原「现代分析学总纲」，一条具体路线，`#angles` 路由）
+      syllabus-cs408.ts # 408 总纲占位
     types.ts             # ConceptNode 等接口（§4，定义见 DESIGN.md §8）
+docs/
+    codes-map-2026-10-30.md   # 旧 → 新代号对照表（反馈给 .tex 用）
+    codes-map-2026-10-30.json # 同上，机器读
   dist/                  # 构建产物，gitignore，可完全重建
   vite.config.ts         # dev proxy /api → learning-viz Flask:5000（仅计算模块）
 ```
@@ -293,6 +310,17 @@ npm run build               # tsc → vite（多入口）→ 字体瘦身 → st
   （`buildIndex(jsonDir, graphDir, relPrefix = 'json/')`），数学侧老调用方零改动。
 - 两站**互不加载对方数据**：`cs408.html` 只 fetch `cs408/json/*`，
   数学站首屏的请求数不因 408 新增而增加（`--subject` 参数化闸门即为此而设）。
+
+### 分层与代号（D22）
+
+- **代号、域、学习顺序只有一个来源**：`src/modules/taxonomy.ts`。
+  不许在别处硬编码「哪个章属于哪个域」或「谁先学」。
+- 侧栏是**三层**（域 → 章 → 单元），单元节点**懒渲染**（章展开时才插）。
+  不许退回「318 个单元一次性平铺」——那是内存与可读性同时崩的做法。
+- 改章序 / 加章：改 `DOMAINS` → `node tools/remap-codes.mjs`（先干跑核对）→
+  `--apply` → 重跑 `npm run check` + `npm run audit`。**迁移后必须重生成对照表**，
+  否则 `.tex` 与本仓会各说各话。
+- 总纲与切入点**不许合并**：`#graph` 讲全局（大观图），`#angles` 讲一条路（切入线）。
 
 ### 性能（D19–D21）
 

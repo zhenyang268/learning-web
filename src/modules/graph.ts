@@ -1,4 +1,5 @@
 import type { UnitMeta } from '../types';
+import { cmpCode as cmpOrder } from './taxonomy';
 
 /**
  * 代号比较键：字母前缀 → 章节号 → 小目号（无小目记 0，即节级排在最前）。
@@ -25,12 +26,15 @@ export function letterOf(code: string): string {
   return (m ? m[1] : code).toUpperCase();
 }
 
+/**
+ * 学习顺序比较：**只认 taxonomy 的域序 → 章序 → 单元序**。
+ *
+ * 2026-10-30 重排后不能再用字符串序：派生依赖按「谁在前谁是前序」判定，
+ * 字符串序把 CG 排在 EQ 前、MP 排在 NM 前，跨域 links 会直接造出环
+ * （实测 PH 系 37 个单元成环，拓扑序只覆盖 281/318）。
+ */
 function cmpCode(a: string, b: string): number {
-  const ka = codeKey(a);
-  const kb = codeKey(b);
-  if (ka[0] !== kb[0]) return ka[0] < kb[0] ? -1 : 1;
-  if (ka[1] !== kb[1]) return ka[1] - kb[1];
-  return ka[2] - kb[2];
+  return cmpOrder(a, b);
 }
 
 export interface Graph {

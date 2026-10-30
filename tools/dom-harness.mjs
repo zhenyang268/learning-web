@@ -248,7 +248,18 @@ async function runUnit(bundleJs, code) {
   const cards = [...reader.querySelectorAll('.card')].filter((c) => !c.classList.contains('pagehead'));
   p('定理卡已渲染', cards.length > 0, `cards=${cards.length}`);
   p('顶栏字母块非空', d.querySelectorAll('#header .chapters b').length > 0);
-  p('左栏节点数 == 索引单元数',
+  // 侧栏改成「域 → 章 → 单元」三层且单元懒渲染（2026-10-30）：默认只展开当前章，
+  // 所以首屏节点数应 **≤** 单元数；展开全部章之后必须一个不少（懒渲染不能丢内容）。
+  const nodesLazy = d.querySelectorAll('#sidebar .node').length;
+  p('左栏分层懒渲染（首屏节点数 ≤ 单元数）',
+    nodesLazy > 0 && nodesLazy <= INDEX.units.length,
+    `nodes=${nodesLazy} units=${INDEX.units.length}`);
+  p('当前单元在左栏可见且高亮', !!selfNode);
+  p('左栏有域分组（域 → 章 → 单元三层）', d.querySelectorAll('#sidebar .dom').length > 0,
+    `domains=${d.querySelectorAll('#sidebar .dom').length}`);
+  for (const det of d.querySelectorAll('#sidebar details.chap')) det.setAttribute('open', '');
+  await sleep(10); // <details> 的 toggle 事件是异步派发的，等一拍再数
+  p('展开全部章后左栏节点数 == 索引单元数',
     d.querySelectorAll('#sidebar .node').length === INDEX.units.length,
     `nodes=${d.querySelectorAll('#sidebar .node').length} units=${INDEX.units.length}`);
   p('右栏有掌握度/依赖/被用于',
@@ -454,8 +465,10 @@ async function runErrorPath(bundleJs, code) {
   const overlayText = textOf(bd.getElementById('overlay-root'));
   check('坏 JSON → 浮层可见（绝不白屏）', overlayText.length > 0);
   check('浮层指明文件名', overlayText.includes(`${code}.json`), overlayText.slice(0, 160));
+  // 侧栏是分层懒渲染的（2026-10-30）：只验「结构还在」，不再拿节点数当单元数
   check('坏 JSON 时侧栏仍渲染（索引没坏）',
-    bd.querySelectorAll('#sidebar .node').length === INDEX.units.length);
+    bd.querySelectorAll('#sidebar .dom').length > 0 && bd.querySelectorAll('#sidebar .node').length > 0,
+    `doms=${bd.querySelectorAll('#sidebar .dom').length} nodes=${bd.querySelectorAll('#sidebar .node').length}`);
   dom.window.close();
 }
 
@@ -560,9 +573,12 @@ async function runStandalone() {
   const inlineUnits = pack ? Object.keys(pack.data).length : 0;
   check('内联数据解压成功（gzip → 318 单元）', inlineUnits >= 1,
     pack ? `${inlineUnits} 个单元` : (dom.window.__kbFatal ?? '未生成 __kbPack'));
-  check('快照左栏节点数 == 内联单元数',
-    d.querySelectorAll('#sidebar .node').length === inlineUnits,
-    `nodes=${d.querySelectorAll('#sidebar .node').length} inline=${inlineUnits}`);
+  // 侧栏三层 + 单元懒渲染（2026-10-30）：首屏只渲染当前章的单元
+  check('快照左栏分层渲染（域分组 + 节点数 ≤ 内联单元数）',
+    d.querySelectorAll('#sidebar .dom').length > 0 &&
+      d.querySelectorAll('#sidebar .node').length > 0 &&
+      d.querySelectorAll('#sidebar .node').length <= inlineUnits,
+    `doms=${d.querySelectorAll('#sidebar .dom').length} nodes=${d.querySelectorAll('#sidebar .node').length} inline=${inlineUnits}`);
 
   // ── 语义边在快照里仍然有效（2026-09-25：快照曾静默丢掉 graph/*.yaml 的语义边，
   //    现在语义边是**构建期烘进索引**的，所以断言索引里带 sem 字段）
@@ -574,37 +590,52 @@ async function runStandalone() {
     !/"graph\/[A-Za-z0-9]+\.yaml":/.test(html),
     '快照里仍内联着 yaml —— 应已移除（语义边在索引里）');
 
-  // #graph 路由已替换为「总纲 v3.0」文档页（2026-09-26，用户指示）：
-  // 验证文档真渲染出来（首块标题、中间表格、收尾待办都在，KaTeX 无裸 $ 泄漏）。
+  // 2026-10-30 起两个文档页分开：
+  //   #graph  = 总纲（数学大观 v1：四条主轴 / 两个出口 / 交叉点 / 五个切入点 / 四阶段）
+  //   #angles = 切入点（原「现代分析学总纲 v3.0」，一条具体路线，不是全学科总纲）
   dom.window.location.hash = '#graph';
   const t1 = Date.now();
   let docTxt = '';
   while (Date.now() - t1 < 3000) {
     docTxt = textOf(d.getElementById('reader'));
-    if (docTxt.includes('第一块') && docTxt.includes('待办清单')) break;
+    if (docTxt.includes('四条主轴') && docTxt.includes('交叉点')) break;
     await sleep(10);
   }
-  check('快照总纲页能渲染（首块与收尾章节齐全）',
-    docTxt.includes('第一块') && docTxt.includes('待办清单') && docTxt.includes('顶层架构'),
+  check('快照总纲页能渲染（四条主轴 / 两个出口 / 交叉点齐全）',
+    docTxt.includes('四条主轴') && docTxt.includes('出口') && docTxt.includes('交叉点') &&
+      docTxt.includes('五个切入点'),
     docTxt.slice(0, 60));
-  check('快照总纲附篇能渲染（变换一条线：总脉络/速查/总结）',
-    docTxt.includes('变换一条线') && docTxt.includes('关键公式速查') && docTxt.includes('倒谱'),
-    docTxt.slice(-60));
-  check('快照总纲附三能渲染（矩阵微积分与自动微分）',
-    docTxt.includes('交换性避难所') && docTxt.includes('backward 公式库') && docTxt.includes('视角转换七组'),
-    docTxt.slice(-80));
-  check('快照总纲页表格已渲染（三基对比 + 速查表 + 顶层架构）',
+  check('快照总纲页表格已渲染（域表 + 交叉点表 + 路线表）',
     d.querySelectorAll('#reader .mdtable').length >= 3,
     `tables=${d.querySelectorAll('#reader .mdtable').length}`);
-  check('快照总纲页围栏图已渲染（总关系图 pre）',
+  check('快照总纲页大观图已渲染（围栏 pre）',
     d.querySelectorAll('#reader pre.md-pre').length >= 1,
     `pre=${d.querySelectorAll('#reader pre.md-pre').length}`);
+
+  // 切入点页：原总纲正文（三块 + 三篇附文），verifying 「拆出去的那份还在」
+  dom.window.location.hash = '#angles';
+  const t2 = Date.now();
+  let angTxt = '';
+  while (Date.now() - t2 < 3000) {
+    angTxt = textOf(d.getElementById('reader'));
+    if (angTxt.includes('第一块') && angTxt.includes('待办清单')) break;
+    await sleep(10);
+  }
+  check('快照切入点页能渲染（首块与收尾章节齐全）',
+    angTxt.includes('第一块') && angTxt.includes('待办清单') && angTxt.includes('顶层架构'),
+    angTxt.slice(0, 60));
+  check('快照切入点附篇能渲染（变换一条线：总脉络/速查/总结）',
+    angTxt.includes('变换一条线') && angTxt.includes('关键公式速查') && angTxt.includes('倒谱'),
+    angTxt.slice(-60));
+  check('快照切入点附三能渲染（矩阵微积分与自动微分）',
+    angTxt.includes('交换性避难所') && angTxt.includes('backward 公式库') && angTxt.includes('视角转换七组'),
+    angTxt.slice(-80));
   // 空公式防线（2026-09-28 事故：renderInline 占位符重构后对全局正则用 .match()
   // 重取捕获组，/g 的 match 不返回组，tex 恒空串，全页公式渲染成空 KaTeX ——
   // span 数量断言抓不住它，必须验 annotation 内容非空）：
   const anns = [...d.querySelectorAll('#reader annotation')];
   const filled = anns.filter((a) => a.textContent.trim().length > 0);
-  check('快照总纲页公式内容非空（annotation 全部有 tex）',
+  check('快照切入点页公式内容非空（annotation 全部有 tex）',
     anns.length >= 200 && filled.length === anns.length,
     `非空 ${filled.length}/${anns.length}`);
   check('快照总纲页数学未裸泄漏（无未处理的 $ 字样残块）',

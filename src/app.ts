@@ -95,6 +95,7 @@ function refreshChrome(): void {
     errorCount: issues.length + (fatal ? 1 : 0),
     query: searchQuery,
     crossLink: current.crossLink,
+    hasAngles: !!current.angles,
     onSearch: (q) => {
       searchQuery = q;
       refreshSidebar();
@@ -349,7 +350,11 @@ function apply(): void {
   const code = currentCode();
   refreshChrome();
   if (code === 'graph') {
-    renderGraphView();
+    docView('graph');
+    return;
+  }
+  if (code === 'angles') {
+    docView('angles');
     return;
   }
   const meta = metaOf(code);
@@ -403,36 +408,56 @@ function prereqEmptyNote(code: string): string | undefined {
  * 内容由学科配置提供（数学 = 《现代分析学总纲 v3.0》）。408 侧是占位总纲。
  * 该学科没有总纲（`syllabus === null`）时给一句明确说明，不白屏。
  */
-function renderGraphView(): void {
+function docView(kind: 'graph' | 'angles'): void {
   beginRender();
   elReader.dataset.ready = '1';
-  const syl = current.syllabus;
-  if (!syl) {
+  const doc = kind === 'angles' ? current.angles : current.syllabus;
+  const label = kind === 'angles' ? '切入点' : '总纲';
+  if (!doc) {
     elReader.innerHTML = `<div class="card pagehead">
-        <h1>📘 总纲 <em>${escapeHtml(current.title)}</em></h1>
-        <div class="meta"><span class="tag">syllabus</span><span>该学科暂未提供总纲页</span></div>
-        <p class="kv dim">左侧目录仍然可用；总纲待补。</p>
+        <h1>📘 ${label} <em>${escapeHtml(current.title)}</em></h1>
+        <div class="meta"><span class="tag">${kind}</span><span>该学科暂未提供这一页</span></div>
+        <p class="kv dim">左侧目录仍然可用。</p>
       </div>`;
     elAside.innerHTML = '';
     return;
   }
   elReader.innerHTML = `<div class="card pagehead">
-      <h1>📘 总纲 <em>${escapeHtml(syl.title)} · ${escapeHtml(syl.version)}</em></h1>
-      <div class="meta"><span class="tag">syllabus</span><span>${escapeHtml(current.title)}</span></div>
+      <h1>📘 ${label} <em>${escapeHtml(doc.title)} · ${escapeHtml(doc.version)}</em></h1>
+      <div class="meta"><span class="tag">${kind}</span><span>${escapeHtml(current.title)}</span></div>
     </div>
-    <div class="card docview">${renderContent(syl.md)}</div>`;
-  elAside.innerHTML = `<div class="box">
+    <div class="card docview">${renderContent(doc.md)}</div>`;
+  elAside.innerHTML =
+    kind === 'angles'
+      ? `<div class="box">
       <h4>标记图例</h4>
       <p class="kv"><b style="color:var(--red)">⚠️</b> 校订过的地方（原文有硬伤，本版已改）</p>
       <p class="kv"><b style="color:var(--green)">➕</b> 补充的内容（原文没有）</p>
       <p class="kv"><b style="color:var(--cyan)">✅</b> 已核对无误</p>
-      <h4 style="margin-top:16px">这份总纲是什么</h4>
-      <p class="kv">三版笔记 + 全部校订意见的<b>合并去重版</b>：空间（测度/$L^p$/Sobolev/变分）→ 坐标系（泰勒/傅里叶/拉普拉斯与若尔当）→ 地基五支柱，最后给双轴顶层架构与待办清单。末尾三篇附文：<b>附一「变换一条线」</b>（傅里叶/拉普拉斯 → 正交性 → 留数与积分路径 → 若尔当 → 频率分辨率 → 同态/倒谱 → 语音合成）；<b>附二「复分析的几何本质」</b>（旋转 + 缩放 → 柯西–黎曼 → 共形/拟共形 → 代数结构决定命运 → 谱理论）；<b>附三「矩阵微积分与自动微分」</b>（Fréchet 导数 → 对偶数 → 探针体系 → JVP/VJP → tr 与交换律 → backward 公式库）。</p>
-      <h4 style="margin-top:16px">与知识库的关系</h4>
-      <p class="kv">本页是<b>人读的总纲</b>；左侧目录 318 个单元是<b>机读的知识库</b>（词条四问 + 语义边真源 <span class="mono">graph/*.yaml</span>）。两套并行：总纲给主线，单元卡给证明细节。</p>
-      <p class="kv dim">原知识图谱视图已由本页替换；图谱数据与全部校验闸门仍在，恢复只需还原一个渲染函数。</p>
+      <h4 style="margin-top:16px">这一页是什么</h4>
+      <p class="kv">这是<b>作者选定的一条切入线</b>（现代分析学：微积分 → 测度 → $L^p$ → Sobolev），
+      不是全学科总纲 —— 它以前被放在「总纲」的位置上，2026-10-30 拆分独立成页。</p>
+      <p class="kv">想知道<b>整个数学怎么长在一起</b>，看顶栏的「总纲」；<br>想知道<b>这条路怎么走</b>，就是本页。</p>
+      <p class="kv dim">代号已换新体系（域 2 字母 + 章 2 位 + 单元序），文中的引用随之更新。</p>
+    </div>`
+      : `<div class="box">
+      <h4>怎么读这张图</h4>
+      <p class="kv">四条主轴（分析 / 代数几何 / 概率 / 物理量子）<b>并列，不排先后</b>；
+      真正的顺序由你要去的出口决定。</p>
+      <p class="kv">两个出口：<b>数值与计算</b>（PDE 求解）、<b>图形学</b>（渲染与仿真）。
+      出口不是「应用举例」，它们会反过来要求主轴补刀。</p>
+      <h4 style="margin-top:16px">代号规则</h4>
+      <p class="kv"><span class="mono">AN03.2</span> = 分析域 · 第 3 章 · 第 2 单元。
+      代号自带层级，所以左侧目录是「域 → 章 → 单元」三层，318 个单元不再平铺。</p>
+      <h4 style="margin-top:16px">与「切入点」的区别</h4>
+      <p class="kv">本页讲<b>全局</b>；顶栏的「切入点」讲<b>一条具体路线</b>（现代分析学那条）。
+      两者以前是同一份文档，现在分开。</p>
+      <p class="kv dim">这张图是作者观点，不是教材目录：分支归属与先后顺序都可以被证伪，欢迎改。</p>
     </div>`;
 }
+
+
+
 
 /* ------------------------------------------------------------------ 启动 */
 
@@ -472,10 +497,14 @@ export async function boot(subject: Subject = MATH): Promise<void> {
 }
 
 document.addEventListener('click', (ev) => {
-  const graphBtn = (ev.target as HTMLElement).closest<HTMLElement>('[data-graph]');
-  if (graphBtn) {
-    // 图谱视图：再点一次回上一个阅读单元（没有就回 frontier）
-    location.hash = currentCode() === 'graph' ? `#/${lastRead || frontierOf(graph, masteryByCode) || units[0]?.code || ''}` : '#graph';
+  // 总纲 / 切入点 两个文档页共用一套开关逻辑：再点一次回上一个阅读单元
+  const docBtn = (ev.target as HTMLElement).closest<HTMLElement>('[data-graph],[data-angles]');
+  if (docBtn) {
+    const target = docBtn.hasAttribute('data-angles') ? 'angles' : 'graph';
+    location.hash =
+      currentCode() === target
+        ? `#/${lastRead || frontierOf(graph, masteryByCode) || units[0]?.code || ''}`
+        : `#${target}`;
     return;
   }
   const retry = (ev.target as HTMLElement).closest<HTMLElement>('[data-retry]');
