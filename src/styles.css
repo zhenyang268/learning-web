@@ -544,6 +544,17 @@ nav .m {
   padding-bottom: 20px;
 }
 
+/* 溯源线索（DESIGN D26）：⌾ 上悬停才显示「笔记文件:行区间 · commit」。
+   本站已与 .tex 解耦，这些信息不该占据版面，但要能查到。 */
+.trace {
+  cursor: help;
+  opacity: .7;
+}
+
+.trace:hover {
+  opacity: 1;
+}
+
 /* 跨行行间公式块（renderers/markdown.ts 的 splitDisplayBlocks）：
    以前这类公式会退化成裸文本；现在成块渲染，宽公式给横向滚动而不是把卡片撑破。 */
 .math-display {

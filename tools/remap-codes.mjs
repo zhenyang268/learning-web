@@ -236,8 +236,12 @@ async function main() {
 
   const md = [];
   md.push(`# 代号对照表（${CS408 ? '408' : '数学'}）· ${STAMP}`, '');
-  md.push('> 新代号 = `<域2字母><章2位>.<单元序>`。本表由 `tools/remap-codes.mjs` 生成，');
-  md.push('> 用途：把新标号反馈回 `../math-notebook` 的 `.tex`，让笔记与本仓同步。', '');
+  md.push('> 新代号 = `<域2字母><章2位>.<单元序>`。本表由 `tools/remap-codes.mjs` 生成。');
+  md.push('>');
+  md.push('> **这是一次性迁移档案，不是同步协议**（2026-10-31，DESIGN D26）：本仓已与');
+  md.push('> `../math-notebook` 的 `.tex` 解耦，新代号**不回写笔记**。代号表达的是本仓自己的');
+  md.push('> 阅读顺序，`.tex` 的 `\\subsubsection` 是写作顺序，两者不是一回事。');
+  md.push('> 本表只用于「查旧文 / 对历史记录」。', '');
   md.push('## 域', '', '| 域 | 名称 | 章数 | 说明 |', '| --- | --- | --- | --- |');
   for (const dom of tax.DOMAINS) {
     const n = dom.chapters.filter((c) => chapterMap.has(c)).length;

@@ -3,6 +3,7 @@ import type { Graph } from '../modules/graph';
 import { escapeHtml, renderInline } from '../renderers/markdown';
 import { isProbeDone, toggleProbe } from '../modules/state';
 import { displayCode } from '../modules/codes';
+import { attrEscape } from '../modules/attr';
 
 export interface AsideModel {
   file: EntryFile;
@@ -78,10 +79,20 @@ export function renderAside(host: HTMLElement, model: AsideModel): void {
       }
 
       <h4 style="margin-top:18px">本节元信息</h4>
-      <p class="kv mono">${escapeHtml(file.schema ?? '—')} · ${escapeHtml(displayCode(code))}</p>
-      ${srcText ? `<p class="kv mono">src ${escapeHtml(srcText)}</p>` : ''}
-      ${file.notebook_commit ? `<p class="kv mono">commit ${escapeHtml(file.notebook_commit)}</p>` : ''}
-      ${file.updated ? `<p class="kv mono">updated ${escapeHtml(file.updated)}</p>` : ''}
+      <p class="kv mono">${escapeHtml(file.schema ?? '—')} · ${escapeHtml(displayCode(code))}${
+        file.updated ? ` · updated ${escapeHtml(file.updated)}` : ''
+      }</p>
+      ${
+        // 溯源（笔记文件:行区间 + commit）收成一行悬停线索（DESIGN D26）：
+        // json 已是唯一真源，这两项只在「要回原文核对」时才需要，不该常驻右栏
+        srcText || file.notebook_commit
+          ? `<p class="kv mono dim trace" title="${attrEscape(
+              [srcText ? `笔记 ${srcText}` : '', file.notebook_commit ? `commit ${file.notebook_commit}` : '']
+                .filter(Boolean)
+                .join(' · '),
+            )}">⌾ 溯源</p>`
+          : ''
+      }
     </div>`;
 
   host.querySelectorAll<HTMLElement>('[data-probe]').forEach((el) => {

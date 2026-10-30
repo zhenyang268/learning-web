@@ -33,11 +33,17 @@ from pathlib import Path
 
 WEB = Path(__file__).resolve().parent.parent
 STATE = WEB / "build" / "state"
-SLICES = json.loads((STATE / "slices.json").read_text(encoding="utf-8"))
 # 全库代号以 **json/ 实际存在的文件** 为准（2026-10-30 代号重排后：
 # slices.json 记的是旧代号（A1.3），它属于生成线的派生物，不能反过来定义「合法代号」，
 # 否则重排后每一条 links 都会被误报为「不在全库清单」）。
 VALID_CODES = {p.stem for p in (WEB / "json").rglob("*.json")}
+
+# slices.json 是生成线的派生物、**不入库**（.gitignore: build/state/）。
+# 换台机器 clone 下来它就不存在 —— 原先在模块级直接 read_text 会直接崩，
+# 或（更糟）被误以为「区间校验通过了」。这里显式降级并在运行时打印跳过提示。
+_SLICES_PATH = STATE / "slices.json"
+RANGE_CHECK = _SLICES_PATH.exists()
+SLICES = {"units": []} if not RANGE_CHECK else json.loads(_SLICES_PATH.read_text(encoding="utf-8"))
 SLICE_RANGE = {u["code"]: (u["line_start"], u["line_end"]) for u in SLICES["units"]}
 SLICE_FILE = {u["code"]: u["file"] for u in SLICES["units"]}
 
@@ -198,7 +204,11 @@ def verify_file(path: Path) -> list[str]:
                                    and isinstance(tr.get("line_start"), int)
                                    and isinstance(tr.get("line_end"), int)):
             errs.append(f"MAJ {code} {eid}: tex_ref 应为 {{file,line_start,line_end}} 或 null")
-        elif tr is not None:
+        elif tr is not None and RANGE_CHECK and prefix in SLICE_FILE:
+            # 没有 slices.json、或该代号不在切片表里 → **不做**区间/文件一致性校验
+            # （而不是静默当通过，更不是拿空串去比出 2900 条假 MAJ）：
+            # 2026-10-30 代号重排后，slices.json 记的全是旧代号（A1.3），
+            # 对不上就说明基准已过期，由 main() 统一打印一次提示。
             want = norm_tex_file(SLICE_FILE.get(prefix, ""))
             if want and tr.get("file") != want:
                 errs.append(f"MAJ {code} {eid}: tex_ref.file 应为 {want}，实为 {tr.get('file')}")
@@ -277,6 +287,12 @@ def settle_numerics(path: Path, corrections: list, dry: bool = False) -> list[st
     return errs
 
 def main() -> None:
+    if not RANGE_CHECK:
+        print(f"注意：{_SLICES_PATH.relative_to(WEB)} 不存在（生成线派生物，不入库）——"
+              f" 跳过 tex_ref 的行区间与文件一致性校验；其余检查照常。")
+    elif not (VALID_CODES & set(SLICE_FILE)):
+        print("注意：slices.json 里的代号与当前 json/ 完全不重合（代号重排前的旧表）——"
+              " 区间校验对本库已失效，已跳过；tex_ref 保留为溯源线索即可。")
     argv = sys.argv[1:]
     dry = "--dry-run" in argv
     out_path = None

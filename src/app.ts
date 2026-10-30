@@ -15,6 +15,7 @@ import {
   type KbIndex,
 } from './renderers/card';
 import type { VizHandle } from './viz';
+import { attrEscape } from './modules/attr';
 import { mountOverlay } from './renderers/overlay';
 import { renderContent, escapeHtml, renderInline } from './renderers/markdown';
 import { displayCode } from './modules/codes';
@@ -219,12 +220,22 @@ function renderReader(
     : '—';
   const head = document.createElement('div');
   head.className = 'card pagehead';
+  // 溯源信息（笔记文件:行区间 / notebook_commit）**不再占页头版面**（2026-10-31，DESIGN D26）：
+  // 本站已与 .tex 笔记解耦，json 是唯一真源；这些字段只在悬停时作为线索出现，
+  // 需要回原文时还能找到，但不再让「A_analysis.tex:42–56 · commit 9ca4702」占据首屏视线。
+  const trace = [srcText !== '—' ? `笔记 ${srcText}` : '', file.notebook_commit ? `commit ${file.notebook_commit}` : '']
+    .filter(Boolean)
+    .join(' · ');
   head.innerHTML = `
     <h1>${escapeHtml(displayCode(file.code ?? ''))} <em>${renderInline(file.title ?? '')}</em></h1>
     <div class="meta">
-      <span>src: ${escapeHtml(srcText)}</span>
       <span class="tag">${escapeHtml(file.schema ?? '—')}</span>
-      <span>词条 ${file.entries.length} · commit ${escapeHtml(file.notebook_commit ?? '—')}</span>
+      <span>词条 ${file.entries.length}</span>
+      ${
+        trace
+          ? `<span class="trace" title="${attrEscape(trace)}">⌾ 溯源</span>`
+          : ''
+      }
     </div>`;
   elReader.innerHTML = '';
   elReader.append(head);

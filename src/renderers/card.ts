@@ -205,7 +205,11 @@ function entryBlock(entry: Entry, ctx: RenderCtx, codes: Set<string>): string {
         <span class="tag">${escapeHtml(entry.type)}</span>
         ${entry.status ? `<span class="tag${entry.status === 'reviewed' || entry.status === 'published' ? ' ok' : ''}">${escapeHtml(entry.status)}</span>` : ''}
         ${gen ? `<span class="dim mono">${escapeHtml(gen)}</span>` : ''}
-        ${tex ? `<span class="dim mono">${escapeHtml(tex)}</span>` : ''}
+        ${
+          // tex_ref 降级为悬停线索（DESIGN D26）：本站已与 .tex 解耦，
+          // 「A_analysis.tex:147–147」不该占每条词条的会标位置
+          tex ? `<span class="dim mono trace" title="${attrEscape(tex)}">⌾</span>` : ''
+        }
         ${linkChips(entry, codes)}
       </div>
       ${entry.seed ? `<blockquote class="seed">${renderInline(entry.seed, ctx)}</blockquote>` : ''}
