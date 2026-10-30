@@ -17,13 +17,10 @@
 | 文件 | 内容 | 什么时候读 |
 |---|---|---|
 | 本文 | 硬规则、分级判据、目录、命令 | 每次会话开始 |
-| `DESIGN.md` | 决策记录、数据流、数据结构、契约样例、规模策略、风险明细、A1 切片验收 | 动 renderers / viz 注册表 / 契约 / `build/` 之前 |
-| `TASKBOOK.md` | 知识库自动生成流水线 + 前端的**施工任务书**（批次、子 agent 分工、P 篇特化） | 参与知识库生成 / 前端开发任务时；完工后归档 |
-| `build/orchestrate/HANDOFF-json.md` | 知识库生成线**进度真源**（**318/318 已完成**；文内 §1 的 85/318 是旧快照，以 §6 日志为准）+ 已知坑清单 | 接手 JSON 生成线时先读 |
-| `build/orchestrate/RUNBOOK-cli.md` | 生成线**执行手册**：会话内 `wb*` 命令（--bg 派发，D17）/ 外部终端 `batch_*`（D16） | 要跑生成/评审/修复时 |
-| `build/orchestrate/HANDOFF-frontend.md` | 前端线接力任务书 | 接手前端时 |
-| `build/orchestrate/MASTER_PROMPT.md` | **主控 prompt**（主 agent=glm-5.3 规划，flash 级模型经 `--bg` 执行 JSON/前端任务） | 开总编排会话时整篇贴入 |
-| `build/prompts/frontend_task.md` | 前端子任务 prompt 模板（配 `wbtask` 用） | 派前端开发任务时 |
+| `DESIGN.md` | 决策记录、数据流、数据结构、契约样例、规模策略、风险明细、A1 切片验收 | 动 renderers / viz 注册表 / 契约之前 |
+| `build/archive/README.md` | **内容生成线的归档说明**：这条线已跑完（318/318），代码留档不再维护；同时列出「仍然在用的」 | 想改内容、或好奇 json 怎么来的 |
+| `build/archive/TASKBOOK.md` | 生成线施工任务书 v1.4（三 pass 流程、批次、P 篇特化）—— **历史档案** | 只在考据生成流程时读 |
+| `build/archive/orchestrate/` | 生成线总控：`pipeline.zsh`（D16/D17）、批次定义、交接文档（`HANDOFF-json.md` 是当时的进度真源） | 同上，历史档案 |
 | `../AGENTS.md`（父仓） | 代号体系、符号规范、环境坑、红线 | 任何时候都要遵守 |
 | `../dev-progress.md` | 进度唯一真源 | 判断某个模块是否已解锁 |
 | `../learning-todo/ns-progress.md` | 数学线关卡与掌握度真源 | 读掌握度状态时 |
@@ -32,8 +29,9 @@
 
 | 事实 | 唯一真源 | 本仓怎么处理 |
 |---|---|---|
-| 笔记内容 | `../notebook/*.tex` | **只读**，构建时快照，产物入本仓 `dist/` |
-| 知识图谱的边与探针 | `graph/<chapter>.yaml`（**本仓**，见 §3.1） | 本仓维护，随 `build/` 一起迭代 |
+| 词条正文 | `json/<chapter>/<code>.json`（**本仓**） | **唯一真源**（D26）；改内容直接改这里，再跑 `npm run audit:content` |
+| 原始笔记 | `../math-notebook/*.tex` | **只读且已解耦**：本站不读它，只在要回原文核对时用 `⌾ 溯源` 里给出的 文件:行区间 |
+| 知识图谱的边与探针 | `graph/<chapter>.yaml`（**本仓**，见 §3.1） | 本仓维护 |
 | 学习词条占位 | `json/<chapter>/<code>.json`（**本仓**） | 阶段一只追加关键词（`DESIGN.md` §16） |
 | 掌握度状态 | `../learning-todo/ns-progress.md` | **只读** + 生成待粘贴的 diff，不直接写 |
 | 进度与 Gate | `../dev-progress.md` | 只读 |
@@ -186,12 +184,16 @@ learning-web/
   cs408/                 # 408 的数据根（与数学的 json/ + graph/ 完全分开）
     json/<章>/<code>.json
     graph/<章>.yaml
-  build/                 # 【Q2 已决】转换脚本全部在本仓，不经 Flask
-    read_notebook.py     # 解析 §1.1 路径、读 .tex、写 provenance.json
-    filter_codename.py   # 抽代号、合成子编号、建反向链接、转 vizslot
-    build_graph.py       # graph/<chapter>.yaml + .tex → dist/graph/<chapter>.json
-    build_html.py        # → dist/graph/<chapter>.html（standalone，见 §3）
+  build/
+    verify_kb.py         # **仍在用**：内容校验器（npm run audit:content 调它，只读模式）
     vendored/            # KaTeX JS + CSS + 字体（离线，禁 CDN；见 §7 公式渲染）
+    logs/ state/ slices/ # 报告与生成线派生物（.gitignore 忽略）
+    archive/             # **内容生成线归档**（318/318 完工，不再维护）
+      README.md          #   归档说明 + 「仍然在用的有哪些」
+      slice_notebook.py  #   按 .tex 切片（输入端已解耦，D26）
+      make_prefix.py inject_meta.py
+      orchestrate/       #   pipeline.zsh（D16/D17）、批次定义、交接文档
+      prompts/ TASKBOOK.md
   graph/                 # 【Q1 已决】图谱语义边的真源（本仓）
     <chapter>.yaml
   json/                  # 学习词条占位库（阶段一：只记关键词，DESIGN.md §16）
@@ -228,29 +230,32 @@ docs/
 
 > `build/` 与 `src/` 是**两套互不依赖的产物**：`build/` 出静态文件（Python），
 > `src/` 出 web 外壳（Vite）。`build/` 的产物**不经 Flask**（§10 问题 Q2）。
+>
+> 2026-10-31 起 `build/` 只剩 `verify_kb.py` 一个活脚本，其余全部归档到
+> `build/archive/`：内容线 318/318 已完工，且本站已与 `.tex` 解耦（D26），
+> 那条链路的输入端不再需要。
 
 ---
 
 ## 6. 命令
 
 ```bash
-# 构建单章（默认不全量，见 §3）
-uv run python build/build_html.py --chapter A1
-
-# 指定 notebook 路径（worktree / CI 场景）
-LEARNING_NOTEBOOK=/path/to/notebook uv run python build/build_html.py --chapter A1
-
-# 只出数据不出 HTML（供 web 外壳消费）
-uv run python build/build_graph.py --chapter A1 --out dist/graph/A1.json
-
-# dev（前端 + 代理到 learning-viz 的计算端点）
+# 日常开发（本站是纯前端：改 json/ 秒级可见）
 npm run dev                 # Vite，proxy /api → :5000
 npm run check               # 类型 + graph + sem-sync + viz + 全量 DOM 断言（318 单元）
 npm run check:cs408         # 408 子站复用同一套闸门（--subject cs408）
-npm run audit               # 全量体检（只读，产出 build/logs/health-frontend-*.md）
+npm run audit               # 前端全量体检（只读，产出 build/logs/health-frontend-*.md）
 npm run audit:content       # 内容体检（verify_kb --dry-run，不回填）
 npm run build               # tsc → vite（多入口）→ 字体瘦身 → standalone 快照
+
+# 改代号（先干跑核对，再 --apply；会重排 json/ 与 graph/）
+node tools/remap-codes.mjs
+node tools/remap-codes.mjs --apply
 ```
+
+> **内容生成线已归档**（`build/archive/`，318/318 完工，不再维护）。
+> 早前文档里的 `build/build_html.py` / `build/build_graph.py` 早就不存在了，
+> 别照着敲 —— 现在改内容就是直接改 `json/`，然后跑 `npm run audit:content`。
 
 **Python 一律走父仓的 uv 环境**（父仓 `AGENTS.md` 第七节）：
 `uv run xxx` 跑命令、`uv add xxx` 装包。

@@ -37,11 +37,10 @@ learning/  ──构建──▶  .so + python 绑定  ──被调用──▶ 
 | 文件 | 一句话 |
 |---|---|
 | `AGENTS.md` | **本仓入口**：文档地图与真源、上游依赖解析、四问判据、目录、命令、硬规则、红线、风险 |
-| `DESIGN.md` | 设计：决策记录 D1–D17、数据流、`provenance.json`、契约样例、A1 切片验收判据 |
-| `TASKBOOK.md` | 知识库自动生成 + 前端的施工任务书（v1.4） |
-| `build/orchestrate/HANDOFF-json.md` | 知识库生成线进度真源（**318/318 已完成**，文内 §1 的 85/318 是旧快照，以 §6 日志为准） |
-| `build/orchestrate/RUNBOOK-cli.md` | 生成线执行手册：会话内 `--bg` 派发 / 外部终端两条通道 |
-| `build/orchestrate/HANDOFF-frontend.md` | 前端线接力任务书 |
+| `DESIGN.md` | 设计：决策记录 D1–D26、数据流、`provenance.json`、契约样例、A1 切片验收判据 |
+| `docs/codes-map-2026-10-30.md` | 旧 → 新代号对照表（**一次性迁移档案**，不回写 `.tex`） |
+| `build/verify_kb.py` | 内容校验器（`npm run audit:content`）—— `build/` 下唯一还在用的脚本 |
+| `build/archive/` | 内容生成线归档（318/318 完工，不再维护）：见其中的 `README.md` |
 | `graph/<chapter>.yaml` | 知识图谱语义边真源（**本仓**，决策 D7） |
 | `../AGENTS.md`（父仓） | 代号体系、符号规范、环境坑、三子仓红线 |
 | `../dev-progress.md` | 进度唯一真源 |
