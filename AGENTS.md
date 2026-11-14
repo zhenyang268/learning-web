@@ -29,8 +29,8 @@
 
 | 事实 | 唯一真源 | 本仓怎么处理 |
 |---|---|---|
-| 词条正文 | `json/<chapter>/<code>.json`（**本仓**） | **唯一真源**（D26）；改内容直接改这里，再跑 `npm run audit:content` |
-| 原始笔记 | `../math-notebook/*.tex` | **只读且已解耦**：本站不读它，只在要回原文核对时用 `⌾ 溯源` 里给出的 文件:行区间 |
+| 词条正文 | `../notebook/*.tex`（**源**） | 每轮生成到 `json/`；**改内容改 tex**，再重新生成（D26） |
+| 原始笔记 | `../notebook/*.tex` | **源**：`json/` 由它生成；运行时不读，回原文核对走 `⌾ 溯源` 的文件:行区间 |
 | 知识图谱的边与探针 | `graph/<chapter>.yaml`（**本仓**，见 §3.1） | 本仓维护 |
 | 学习词条占位 | `json/<chapter>/<code>.json`（**本仓**） | 阶段一只追加关键词（`DESIGN.md` §16） |
 | 掌握度状态 | `../learning-todo/ns-progress.md` | **只读** + 生成待粘贴的 diff，不直接写 |
@@ -47,13 +47,13 @@
 
 ## 1. 上游依赖：如何引用父仓 notebook
 
-### 1.1 与笔记仓的关系（2026-10-31 起：**已解耦**）
+### 1.1 与笔记仓的关系：源 → 产物
 
-**`json/` 是本站唯一真源。** 运行时不读任何 `.tex`：`src/` 里对笔记的引用只剩
-三处**悬停线索**（页头 `⌾ 溯源`、右栏 `⌾ 溯源`、词条会标的 `⌾`），数据来自
-`src.file` / `tex_ref` / `notebook_commit` 三个字段，删掉它们页面照样工作。
+**`json/` 是 `notebook/*.tex` 的构建产物**：每轮重新生成并覆盖，**改内容改 `.tex`，不改 `json/`**。
+运行时不读任何 `.tex`：`src/` 里对笔记的引用只剩三处**悬停线索**（页头 `⌾ 溯源`、右栏 `⌾ 溯源`、
+词条会标的 `⌾`），数据来自 `src.file` / `tex_ref` / `notebook_commit` 三个字段，删掉它们页面照样工作。
 
-只在**要回原文核对**时才需要笔记仓。这时按下列顺序解析，找到即停：
+要回原文核对时，按下列顺序解析，找到即停：
 
 ```
 1. $LEARNING_NOTEBOOK      环境变量（优先，CI / worktree 场景）
@@ -190,7 +190,7 @@ learning-web/
     logs/ state/ slices/ # 报告与生成线派生物（.gitignore 忽略）
     archive/             # **内容生成线归档**（318/318 完工，不再维护）
       README.md          #   归档说明 + 「仍然在用的有哪些」
-      slice_notebook.py  #   按 .tex 切片（输入端已解耦，D26）
+      slice_notebook.py  #   按 .tex 切片（源，D26）
       make_prefix.py inject_meta.py
       orchestrate/       #   pipeline.zsh（D16/D17）、批次定义、交接文档
       prompts/ TASKBOOK.md
@@ -309,7 +309,7 @@ node tools/remap-codes.mjs --apply
   `knowledge.html` 全内联（普通 `<script>` + gzip 数据 + base64 字体）＝**唯一分发物，双击即开**；
   `dist/index.html` / `cs408.html` 是**开发形态**（`type="module"` + 运行时 `fetch json/`）⇒ **必须 HTTP**。
   报告「双击白屏」时先确认打开的是哪个文件 —— 开发形态双击必然白屏，不是产物损坏。
-  `json/` 是**只读数据集的唯一真源**（等价只读文件型数据库，`index.json` 是物化索引），
+  `json/` 是**只读数据集**（由 `.tex` 生成的产物，`index.json` 是物化索引），
   **不是可从 tex 重建的中间态**，不得以「产物有了」为由删除。
 - **不引入 UI 框架**（React/Vue）。决策 D2：Vite + Vanilla TS，
   理由是单人维护 + 需要 HMR 调 Canvas/WebGL，框架是额外心智负担。
