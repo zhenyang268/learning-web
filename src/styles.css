@@ -373,6 +373,26 @@ nav .dom {
   margin-bottom: 6px;
 }
 
+/* 侧栏第一级：五个分组（基础 / 结构 / 物理 / 计算 / 索引） */
+nav .grphead {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 12px 10px 2px;
+  margin-top: 10px;
+  border-top: 1px solid var(--line2);
+}
+nav .grplabel {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--tx2);
+  opacity: .8;
+}
+nav .grpmeta {
+  font-size: 10px;
+  opacity: .45;
+}
+
 nav .domhead {
   position: relative;
   display: flex;

@@ -3,7 +3,17 @@ import { escapeHtml } from '../renderers/markdown';
 import { codeKey } from '../modules/graph';
 import { displayCode } from '../modules/codes';
 import { attrEscape } from '../modules/attr';
-import { chapterOf, domainLabel, domainOf, domainRank } from '../modules/taxonomy';
+import {
+  chapterOf,
+  domainLabel,
+  domainOf,
+  domainRank,
+  GROUPS,
+  groupLabel,
+  groupOf,
+  groupRank,
+  type GroupId,
+} from '../modules/taxonomy';
 
 export interface SidebarModel {
   units: UnitMeta[];
@@ -130,19 +140,46 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   const domains = [...byDomain.entries()].sort((a, b) => domainRank(a[0]) - domainRank(b[0]));
   for (const [, chaps] of domains) chaps.sort((a, b) => (a < b ? -1 : 1));
 
-  host.innerHTML = `<div class="box">${domains
-    .map(([dom, chaps]) => {
-      const all = chaps.flatMap((c) => byChapter.get(c) ?? []);
-      const avg = progressOfList(all, model.masteryOf);
-      return `<div class="dom" data-dom="${escapeHtml(dom)}">
-        <div class="domhead" title="${escapeHtml(domainLabel(dom))}">
-          <span class="domlabel">${escapeHtml(domainLabel(dom))}</span>
-          <span class="dim dommeta">${chaps.length} 章 · ${all.length} 单元</span>
-          <i class="dbar" style="transform:scaleX(${avg.toFixed(3)})"></i>
+  // 域 → 组（侧栏第一级）；组保持 GROUPS 的定义顺序，组内仍按 domainRank
+  const byGroup = new Map<GroupId, [string, string[]][]>();
+  for (const entry of domains) {
+    const g = groupOf(entry[0]);
+    const list = byGroup.get(g) ?? [];
+    list.push(entry);
+    byGroup.set(g, list);
+  }
+  const groups = [...byGroup.entries()].sort((a, b) => groupRank(a[0]) - groupRank(b[0]));
+
+  host.innerHTML = `<div class="box">${groups
+    .map(([g, doms]) => {
+      const chapCount = doms.reduce((n, [, chaps]) => n + chaps.length, 0);
+      const unitCount = doms.reduce(
+        (n, [, chaps]) => n + chaps.reduce((m, c) => m + (byChapter.get(c)?.length ?? 0), 0),
+        0,
+      );
+      const blurb = GROUPS.find((x) => x.id === g)?.blurb ?? '';
+      const inner = doms
+        .map(([dom, chaps]) => {
+          const all = chaps.flatMap((c) => byChapter.get(c) ?? []);
+          const avg = progressOfList(all, model.masteryOf);
+          return `<div class="dom" data-dom="${escapeHtml(dom)}">
+            <div class="domhead" title="${escapeHtml(domainLabel(dom))}">
+              <span class="domlabel">${escapeHtml(domainLabel(dom))}</span>
+              <span class="dim dommeta">${chaps.length} 章 · ${all.length} 单元</span>
+              <i class="dbar" style="transform:scaleX(${avg.toFixed(3)})"></i>
+            </div>
+            ${chaps
+              .map((c) => renderChapter(c, byChapter.get(c) ?? [], model, c === curChapter))
+              .join('')}
+          </div>`;
+        })
+        .join('');
+      return `<div class="grp" data-grp="${escapeHtml(g)}">
+        <div class="grphead" title="${escapeHtml(blurb)}">
+          <span class="grplabel">${escapeHtml(groupLabel(g))}</span>
+          <span class="dim grpmeta">${doms.length} 域 · ${chapCount} 章 · ${unitCount} 单元</span>
         </div>
-        ${chaps
-          .map((c) => renderChapter(c, byChapter.get(c) ?? [], model, c === curChapter))
-          .join('')}
+        ${inner}
       </div>`;
     })
     .join('')}</div>`;

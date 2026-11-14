@@ -21,6 +21,23 @@
  * 迁移完成后它只剩「历史注释」的作用，不要再往这里加新内容。
  */
 
+/** 侧栏的第一级：把 9 个域归成 5 组。域仍是内容的归属单位，代号不变。 */
+export type GroupId = 'fundamentals' | 'structure' | 'physics' | 'computing' | 'meta';
+
+export interface Group {
+  id: GroupId;
+  label: string;
+  blurb: string;
+}
+
+export const GROUPS: Group[] = [
+  { id: 'fundamentals', label: '基础', blurb: '手算技法与极限/积分 —— 其余各线的前置' },
+  { id: 'structure', label: '结构', blurb: '对称与随机：描述世界的两种骨架' },
+  { id: 'physics', label: '物理', blurb: '方程与物理：从 ODE 到场论' },
+  { id: 'computing', label: '计算', blurb: '数值方法与图形学：落到机器的部分' },
+  { id: 'meta', label: '索引', blurb: '关于知识库本身：阶段、清单、教材对照' },
+];
+
 export interface Domain {
   /** 两位域代号（与 408 的 OS/CO/CN/DS 同一套格式） */
   id: string;
@@ -28,6 +45,8 @@ export interface Domain {
   label: string;
   /** 一句话说明这条线在干什么（总纲与目录顶部用） */
   blurb: string;
+  /** 所属分层组（侧栏第一级） */
+  group: GroupId;
   /** 该域内的章，**按学习顺序**排列；旧章名，只用于一次性迁移 */
   chapters: string[];
 }
@@ -35,54 +54,63 @@ export interface Domain {
 export const DOMAINS: Domain[] = [
   {
     id: 'AN',
+    group: 'fundamentals',
     label: '分析',
     blurb: '测度与积分 → 泛函与 L^p → Sobolev → 微分形式 → 复分析。整条线的主题是「把极限与积分说清楚」。',
     chapters: ['A1', 'A2', 'A3', 'A4', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8'],
   },
   {
     id: 'AG',
+    group: 'structure',
     label: '代数与几何',
     blurb: '群与表示 → 点集拓扑 → 流形与黎曼几何 → 李群与李代数。回答「对称性长什么样」。',
     chapters: ['B1', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'B2', 'lie1', 'lie2', 'lie3'],
   },
   {
     id: 'PR',
+    group: 'structure',
     label: '概率与随机',
     blurb: '测度论概率 → 分布族 → 条件期望与鞅 → 收敛模式 → 极限定理 → 蒙特卡洛 → SDE。',
     chapters: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10'],
   },
   {
     id: 'EQ',
+    group: 'physics',
     label: '微分方程',
     blurb: 'ODE 与线性系统 → 稳定性 → 分离变量与特征线 → 变换法 → 数值格式。',
     chapters: ['de1', 'de2', 'de3', 'de4'],
   },
   {
     id: 'PH',
+    group: 'physics',
     label: '物理与量子',
     blurb: '分析力学 → 数学物理（电磁/相对论/规范场）→ 统计与信息 → 量子力学 → 路径积分 → 量子场论。',
     chapters: ['D1', 'D2', 'D3', 'D4', 'E1', 'E2', 'E3', 'E4', 'M1', 'M2', 'M3', 'M5', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'K1', 'K2', 'K3', 'K4', 'K5', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9'],
   },
   {
     id: 'NM',
+    group: 'computing',
     label: '数值与计算',
     blurb: '时间积分 → 空间离散（FDM/FEM/谱）→ 数值线代 → 逼近 → 优化 → 接触与变分积分器。',
     chapters: ['G1', 'G2', 'G3', 'G4', 'G5', 'M4', 'M7'],
   },
   {
     id: 'CG',
+    group: 'computing',
     label: '图形学',
     blurb: '离散微分几何 → 渲染方程与采样 → 物理仿真 → 流体 → 光学与参与介质。',
     chapters: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'M6'],
   },
   {
     id: 'TL',
+    group: 'fundamentals',
     label: '工具与技法',
     blurb: '手算工具箱：求和、因式、放缩、极限、三角、线代、积分、特殊函数、能量法。**不是定理集，是兵器谱**。',
     chapters: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10'],
   },
   {
     id: 'MP',
+    group: 'meta',
     label: '路线与索引',
     blurb: '学习阶段、承重墙清单、教材对照。这一域是**元内容**（关于知识库本身），不是数学。',
     chapters: ['N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7', 'N8', 'N9', 'N10', 'N11', 'N12', 'N13', 'N14', 'N15'],
@@ -140,4 +168,18 @@ export function cmpCode(a: string, b: string): number {
   const ka = orderKey(a);
   const kb = orderKey(b);
   return ka[0] - kb[0] || ka[1] - kb[1] || ka[2] - kb[2];
+}
+
+/** 域 → 所属组；未知域归到 meta（侧栏末尾，不干扰阅读顺序） */
+export function groupOf(domainId: string): GroupId {
+  return DOMAINS.find((d) => d.id === domainId)?.group ?? 'meta';
+}
+
+/** 组的显示顺序（按 GROUPS 定义，不按字典序） */
+export function groupRank(g: GroupId): number {
+  return GROUPS.findIndex((x) => x.id === g);
+}
+
+export function groupLabel(g: GroupId): string {
+  return GROUPS.find((x) => x.id === g)?.label ?? g;
 }
