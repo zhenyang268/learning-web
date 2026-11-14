@@ -16,7 +16,7 @@ import { SYLLABUS_408_MD, SYLLABUS_408_TITLE, SYLLABUS_408_VERSION } from './con
 
 export interface Subject {
   /** 站点 id，只用于日志与入口区分 */
-  id: 'math' | 'cs408';
+  id: 'math' | 'cs408' | 'math1' | 'projects';
   /** 站点标题（写进 <title>） */
   title: string;
   /** 数据根，相对站点根、带尾斜杠：'json/' | 'cs408/json/' */
@@ -48,6 +48,41 @@ export const MATH: Subject = {
   angles: { md: ANGLES_MD, title: ANGLES_TITLE, version: ANGLES_VERSION },
 };
 
+/**
+ * 数一考研（`kaoyan/json/`）。
+ *
+ * 与 408 是**两套考纲主键**（`M1-*` vs `408-*`），所以拆站不合并：
+ * 合站会让「代号 → 侧栏第一级」同时承担两个坐标系。
+ * 暂不提供总纲与切入点（`null`），顶栏那两个按钮不渲染。
+ */
+export const MATH1: Subject = {
+  id: 'math1',
+  title: 'learning-web · 数一考研',
+  dataRoot: 'kaoyan/json/',
+  graphRoot: 'kaoyan/graph/',
+  entryHtml: 'math1.html',
+  crossLink: { label: '408 考研', href: './cs408.html' },
+  syllabus: null,
+  angles: null,
+};
+
+/**
+ * 工程线（`projects/json/`）。
+ *
+ * 单元是 `OUTLINE + NOTES` 两件套，长度量级与词条完全不同，
+ * 混进考试线会让「单元 = 一小节」这个前提失效。
+ */
+export const PROJECTS: Subject = {
+  id: 'projects',
+  title: 'learning-web · 工程线',
+  dataRoot: 'projects/json/',
+  graphRoot: 'projects/graph/',
+  entryHtml: 'projects.html',
+  crossLink: { label: '数学', href: './index.html' },
+  syllabus: null,
+  angles: null,
+};
+
 export const CS408: Subject = {
   id: 'cs408',
   title: 'learning-web · 408 考研',
@@ -60,4 +95,4 @@ export const CS408: Subject = {
 };
 
 /** 构建脚本（vite 插件 / standalone）遍历用 */
-export const SUBJECTS: readonly Subject[] = [MATH, CS408];
+export const SUBJECTS: readonly Subject[] = [MATH, CS408, MATH1, PROJECTS];

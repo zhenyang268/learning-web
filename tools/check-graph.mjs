@@ -125,7 +125,8 @@ const SUBJECT_ID = (() => {
   return i >= 0 ? process.argv[i + 1] : 'math';
 })();
 const subjectsMod = await loadTs('src/subjects.ts');
-const SUBJ = SUBJECT_ID === 'cs408' ? subjectsMod.CS408 : subjectsMod.MATH;
+// 2026-11-14：站点从 2 个扩到 4 个，别再写 `cs408 ? CS408 : MATH` 的三元
+const SUBJ = subjectsMod.SUBJECTS.find((s) => s.id === SUBJECT_ID) ?? subjectsMod.MATH;
 REL_PREFIX = SUBJ.dataRoot;
 JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, SUBJ.dataRoot.replace(/\/$/, ''));
 GRAPH_DIR = path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, ''));

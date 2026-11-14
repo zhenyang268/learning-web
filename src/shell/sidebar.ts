@@ -12,6 +12,9 @@ import {
   groupLabel,
   groupOf,
   groupRank,
+  LINES,
+  lineOfChapter,
+  sectionKeyOf,
   type GroupId,
 } from '../modules/taxonomy';
 
@@ -129,46 +132,75 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
     return;
   }
 
-  // 域 → 章
-  const byDomain = new Map<string, string[]>();
+  // 线 → 章（2026-11-14）：域层过重（PH 32 章、CG 26 章），中间插「线」。
+  // 线只做分组与排序、不进代号：`lineOfChapter` 查 `content-map.json`；
+  // 没登记的章（考研 / 工程线）退回「域」当第二级，`.dom` 容器保持不变。
+  interface Sec {
+    key: string;
+    label: string;
+    domain: string;
+    rank: number;
+    chaps: string[];
+  }
+  const secs = new Map<string, Sec>();
   for (const chap of byChapter.keys()) {
     const dom = domainOf(chap) || 'ZZ';
-    const list = byDomain.get(dom) ?? [];
-    list.push(chap);
-    byDomain.set(dom, list);
+    const line = lineOfChapter(chap);
+    const key = line ? `line:${line.id}` : `dom:${dom}`;
+    const sec = secs.get(key) ?? {
+      key,
+      label: line ? line.label : domainLabel(dom),
+      domain: dom,
+      rank: line ? LINES.findIndex((l) => l.id === line.id) : domainRank(dom),
+      chaps: [],
+    };
+    sec.chaps.push(chap);
+    secs.set(key, sec);
   }
-  const domains = [...byDomain.entries()].sort((a, b) => domainRank(a[0]) - domainRank(b[0]));
-  for (const [, chaps] of domains) chaps.sort((a, b) => (a < b ? -1 : 1));
+  const sections = [...secs.values()];
+  for (const s of sections) {
+    s.chaps.sort((a, b) => {
+      const line = lineOfChapter(a);
+      if (line) {
+        const ia = line.chapters.indexOf(a);
+        const ib = line.chapters.indexOf(b);
+        if (ia !== ib) return ia - ib;
+      }
+      return a < b ? -1 : 1;
+    });
+  }
+  sections.sort((a, b) => domainRank(a.domain) - domainRank(b.domain) || a.rank - b.rank);
 
-  // 域 → 组（侧栏第一级）；组保持 GROUPS 的定义顺序，组内仍按 domainRank
-  const byGroup = new Map<GroupId, [string, string[]][]>();
-  for (const entry of domains) {
-    const g = groupOf(entry[0]);
+  // 线/域 → 组（侧栏第一级）；组保持 GROUPS 定义顺序
+  const byGroup = new Map<GroupId, Sec[]>();
+  for (const sec of sections) {
+    const g = groupOf(sec.domain);
     const list = byGroup.get(g) ?? [];
-    list.push(entry);
+    list.push(sec);
     byGroup.set(g, list);
   }
   const groups = [...byGroup.entries()].sort((a, b) => groupRank(a[0]) - groupRank(b[0]));
 
   host.innerHTML = `<div class="box">${groups
     .map(([g, doms]) => {
-      const chapCount = doms.reduce((n, [, chaps]) => n + chaps.length, 0);
+      const chapCount = doms.reduce((n, s) => n + s.chaps.length, 0);
       const unitCount = doms.reduce(
-        (n, [, chaps]) => n + chaps.reduce((m, c) => m + (byChapter.get(c)?.length ?? 0), 0),
+        (n, s) => n + s.chaps.reduce((m, c) => m + (byChapter.get(c)?.length ?? 0), 0),
         0,
       );
       const blurb = GROUPS.find((x) => x.id === g)?.blurb ?? '';
       const inner = doms
-        .map(([dom, chaps]) => {
-          const all = chaps.flatMap((c) => byChapter.get(c) ?? []);
+        .map((sec) => {
+          const all = sec.chaps.flatMap((c) => byChapter.get(c) ?? []);
           const avg = progressOfList(all, model.masteryOf);
-          return `<div class="dom" data-dom="${escapeHtml(dom)}">
-            <div class="domhead" title="${escapeHtml(domainLabel(dom))}">
-              <span class="domlabel">${escapeHtml(domainLabel(dom))}</span>
-              <span class="dim dommeta">${chaps.length} 章 · ${all.length} 单元</span>
+          const label = sec.label;
+          return `<div class="dom" data-dom="${escapeHtml(sec.domain)}" data-sec="${escapeHtml(sec.key)}">
+            <div class="domhead" title="${escapeHtml(label)}">
+              <span class="domlabel">${escapeHtml(label)}</span>
+              <span class="dim dommeta">${sec.chaps.length} 章 · ${all.length} 单元</span>
               <i class="dbar" style="transform:scaleX(${avg.toFixed(3)})"></i>
             </div>
-            ${chaps
+            ${sec.chaps
               .map((c) => renderChapter(c, byChapter.get(c) ?? [], model, c === curChapter))
               .join('')}
           </div>`;
@@ -247,9 +279,11 @@ export function patchSidebarMastery(host: HTMLElement, model: SidebarModel, code
   const bar = host.querySelector<HTMLElement>(`.chap[data-chap="${attrEscape(chap)}"] .cbar`);
   if (bar) bar.style.transform = `scaleX(${progressOfList(units, model.masteryOf).toFixed(3)})`;
 
-  const dom = domainOf(code);
-  const domUnits = model.units.filter((u) => domainOf(u.code) === dom);
-  const dbar = host.querySelector<HTMLElement>(`.dom[data-dom="${attrEscape(dom)}"] .dbar`);
-  if (dbar) dbar.style.transform = `scaleX(${progressOfList(domUnits, model.masteryOf).toFixed(3)})`;
+  // 第二级可能是「线」也可能是「域」（同一个 AN 域被拆成两条线就是两个 .dom），
+  // 所以按 `data-sec` 定位，不能按 `data-dom` —— 否则只刷到第一条线。
+  const sec = sectionKeyOf(code);
+  const secUnits = model.units.filter((u) => sectionKeyOf(u.code) === sec);
+  const dbar = host.querySelector<HTMLElement>(`.dom[data-sec="${attrEscape(sec)}"] .dbar`);
+  if (dbar) dbar.style.transform = `scaleX(${progressOfList(secUnits, model.masteryOf).toFixed(3)})`;
   return true;
 }

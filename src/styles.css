@@ -1680,3 +1680,41 @@ a.graphbtn.crosssite {
   margin: 14px 0 6px;
   font-size: 0.98rem;
 }
+
+/* ---------------------------------------------------------- doc-card 文档 */
+/* 搬运来的内容按「节」排，不做卡片分页：标题层级沿用 level，正文复用 markdown 渲染。 */
+.docsec {
+  margin: 0 0 20px;
+  padding-left: 12px;
+  border-left: 2px solid transparent;
+}
+
+.docsec-heading {
+  margin-bottom: 8px;
+  border-left-color: var(--line);
+}
+
+.dochead {
+  margin: 18px 0 8px;
+  font-size: 1.02rem;
+  line-height: 1.45;
+  color: var(--pink);
+}
+
+.docsec-l0 > .docbody > :first-child,
+.docsec-l2 > .docbody > :first-child {
+  margin-top: 0;
+}
+
+.docsec .mirror {
+  margin-left: 8px;
+  font-size: 0.78em;
+  font-weight: 400;
+  color: var(--dim);
+  border-bottom: 1px dashed currentColor;
+  cursor: pointer;
+}
+
+.docsec .mirror:hover {
+  color: var(--pink);
+}

@@ -65,7 +65,7 @@ const SUBJECT_ID = (() => {
   return i >= 0 ? process.argv[i + 1] : 'math';
 })();
 const subjectsMod = await loadTs('src/subjects.ts');
-const SUBJ = SUBJECT_ID === 'cs408' ? subjectsMod.CS408 : subjectsMod.MATH;
+const SUBJ = subjectsMod.SUBJECTS.find((s) => s.id === SUBJECT_ID) ?? subjectsMod.MATH;
 const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, SUBJ.dataRoot.replace(/\/$/, ''));
 const GRAPH_DIR = path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, ''));
 console.log(`[check-sem-sync] 学科 ${SUBJ.id} · 数据根 ${SUBJ.dataRoot} · 语义边根 ${SUBJ.graphRoot}`);
@@ -76,8 +76,14 @@ const units = idx.units;
 check('索引非空', units.length > 0, `${units.length} 单元`);
 
 const covered = units.filter((u) => u.sem);
-check('语义边已烘入索引（graphDir 没传错）', covered.length > 0,
-  `${covered.length}/${units.length} 单元带 sem —— 若为 0 说明 graph/ 没找到，会静默退回启发式`);
+if (fs.existsSync(GRAPH_DIR)) {
+  check('语义边已烘入索引（graphDir 没传错）', covered.length > 0,
+    `${covered.length}/${units.length} 单元带 sem —— 若为 0 说明 graph/ 没找到，会静默退回启发式`);
+} else {
+  // 语义边是**人工标注**，新数据根（数一 / 工程线）先只有单元、没有 yaml 是正常状态。
+  // 目录存在时仍然必须 >0（防止「目录建了但烘入坏了」静默退回启发式）。
+  console.log(`SKIP 语义边烘入检查 —— ${SUBJ.graphRoot} 尚未建立（下一期人工标注）`);
+}
 
 // ── A 路：右栏 / frontier
 const gA = graphMod.buildGraphFromMeta(units);

@@ -1,0 +1,1063 @@
+{
+  "schema": "content-map/v1",
+  "updated": "2026-11-14",
+  "note": "整站内容总图的唯一真源：站点 / 组 / 线 / 章 / 数值库映射 / 路线页 / 修正项。规则与理由见 docs/content-map.md，本文件只写事实。",
+  "sites": [
+    {
+      "id": "math",
+      "title": "数学",
+      "entryHtml": "index.html",
+      "dataRoot": "json/",
+      "graphRoot": "graph/",
+      "syllabus": true,
+      "crossLinks": [
+        {
+          "label": "408 考研",
+          "href": "./cs408.html"
+        },
+        {
+          "label": "数一考研",
+          "href": "./math1.html"
+        },
+        {
+          "label": "工程线",
+          "href": "./projects.html"
+        }
+      ],
+      "status": "present"
+    },
+    {
+      "id": "cs408",
+      "title": "408 考研",
+      "entryHtml": "cs408.html",
+      "dataRoot": "cs408/json/",
+      "graphRoot": "cs408/graph/",
+      "syllabus": true,
+      "crossLinks": [
+        {
+          "label": "数学",
+          "href": "./index.html"
+        },
+        {
+          "label": "数一考研",
+          "href": "./math1.html"
+        },
+        {
+          "label": "工程线",
+          "href": "./projects.html"
+        }
+      ],
+      "status": "present"
+    },
+    {
+      "id": "math1",
+      "title": "数一考研",
+      "entryHtml": "math1.html",
+      "dataRoot": "kaoyan/json/",
+      "graphRoot": "kaoyan/graph/",
+      "syllabus": false,
+      "crossLinks": [
+        {
+          "label": "数学",
+          "href": "./index.html"
+        },
+        {
+          "label": "408 考研",
+          "href": "./cs408.html"
+        },
+        {
+          "label": "工程线",
+          "href": "./projects.html"
+        }
+      ],
+      "status": "present"
+    },
+    {
+      "id": "projects",
+      "title": "工程线",
+      "entryHtml": "projects.html",
+      "dataRoot": "projects/json/",
+      "graphRoot": "projects/graph/",
+      "syllabus": false,
+      "crossLinks": [
+        {
+          "label": "数学",
+          "href": "./index.html"
+        },
+        {
+          "label": "408 考研",
+          "href": "./cs408.html"
+        },
+        {
+          "label": "数一考研",
+          "href": "./math1.html"
+        }
+      ],
+      "status": "present"
+    }
+  ],
+  "groups": [
+    {
+      "id": "fundamentals",
+      "label": "基础",
+      "blurb": "手算技法与极限/积分 —— 其余各线的前置",
+      "order": 1
+    },
+    {
+      "id": "structure",
+      "label": "结构",
+      "blurb": "对称与随机：描述世界的两种骨架",
+      "order": 2
+    },
+    {
+      "id": "physics",
+      "label": "物理",
+      "blurb": "方程与物理：从 ODE 到场论",
+      "order": 3
+    },
+    {
+      "id": "computing",
+      "label": "计算",
+      "blurb": "数值方法与图形学：落到机器的部分",
+      "order": 4
+    },
+    {
+      "id": "numeric",
+      "label": "数值库",
+      "blurb": "主仓数值库的镜像：每个模块讲清数学背景、设计取舍与数值判据",
+      "order": 5
+    },
+    {
+      "id": "meta",
+      "label": "索引",
+      "blurb": "关于知识库本身：阶段、清单、教材对照",
+      "order": 6
+    }
+  ],
+  "lines": [
+    {
+      "id": "an-measure",
+      "label": "测度与积分",
+      "group": "fundamentals",
+      "domain": "AN",
+      "blurb": "把极限与积分说清楚的第一步",
+      "chapters": [
+        "AN01",
+        "AN02",
+        "AN03",
+        "AN04"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "an-complex",
+      "label": "复分析",
+      "group": "fundamentals",
+      "domain": "AN",
+      "blurb": "解析性、围道积分、留数与共形映射",
+      "chapters": [
+        "AN05",
+        "AN06",
+        "AN07",
+        "AN08",
+        "AN09",
+        "AN10",
+        "AN11",
+        "AN12"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "tl-algebra",
+      "label": "手算武器·代数",
+      "group": "fundamentals",
+      "domain": "TL",
+      "blurb": "求和、因式、放缩、线代：算得快的那一半",
+      "chapters": [
+        "TL01",
+        "TL02",
+        "TL03",
+        "TL06"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "tl-analysis",
+      "label": "手算武器·分析与特殊函数",
+      "group": "fundamentals",
+      "domain": "TL",
+      "blurb": "极限、三角、积分、特殊函数、能量法",
+      "chapters": [
+        "TL04",
+        "TL05",
+        "TL07",
+        "TL08",
+        "TL09",
+        "TL10"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ag-group",
+      "label": "群与表示",
+      "group": "structure",
+      "domain": "AG",
+      "blurb": "对称性的代数描述",
+      "chapters": [
+        "AG01"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ag-topology",
+      "label": "点集与代数拓扑",
+      "group": "structure",
+      "domain": "AG",
+      "blurb": "连续、紧、连通、同调与上同调",
+      "chapters": [
+        "AG02",
+        "AG03",
+        "AG04",
+        "AG05",
+        "AG06",
+        "AG07",
+        "AG08",
+        "AG09",
+        "AG10",
+        "AG11",
+        "AG12"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ag-manifold",
+      "label": "流形与黎曼",
+      "group": "structure",
+      "domain": "AG",
+      "blurb": "曲线曲面、切空间、度量与曲率",
+      "chapters": [
+        "AG13"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ag-lie",
+      "label": "李群与李代数",
+      "group": "structure",
+      "domain": "AG",
+      "blurb": "连续对称性的线性化",
+      "chapters": [
+        "AG14",
+        "AG15",
+        "AG16"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "pr-basic",
+      "label": "概率基础",
+      "group": "structure",
+      "domain": "PR",
+      "blurb": "测度论概率、分布族、条件期望、随机过程",
+      "chapters": [
+        "PR01",
+        "PR02",
+        "PR03",
+        "PR04",
+        "PR05"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "pr-limit",
+      "label": "极限定理与随机模拟",
+      "group": "structure",
+      "domain": "PR",
+      "blurb": "收敛模式、CLT、蒙特卡洛、SDE",
+      "chapters": [
+        "PR06",
+        "PR07",
+        "PR08",
+        "PR09",
+        "PR10"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "eq-ode",
+      "label": "微分方程与数值格式",
+      "group": "physics",
+      "domain": "EQ",
+      "blurb": "解法、对称性、变换法与离散格式",
+      "chapters": [
+        "EQ01",
+        "EQ02",
+        "EQ03",
+        "EQ04"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ph-mechanics",
+      "label": "分析力学",
+      "group": "physics",
+      "domain": "PH",
+      "blurb": "拉格朗日、Noether、哈密顿、正则变换",
+      "chapters": [
+        "PH01",
+        "PH02",
+        "PH03",
+        "PH04"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ph-field",
+      "label": "电磁与相对论",
+      "group": "physics",
+      "domain": "PH",
+      "blurb": "向量分析、麦克斯韦、闵可夫斯基、规范场",
+      "chapters": [
+        "PH05",
+        "PH06",
+        "PH07",
+        "PH08"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ph-stat",
+      "label": "统计与信息",
+      "group": "physics",
+      "domain": "PH",
+      "blurb": "统计力学、黑体辐射、信息论、朗之万",
+      "chapters": [
+        "PH09",
+        "PH10",
+        "PH11",
+        "PH12"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ph-quantum",
+      "label": "量子力学",
+      "group": "physics",
+      "domain": "PH",
+      "blurb": "态与算子、薛定谔、自旋、路径积分入口",
+      "chapters": [
+        "PH13",
+        "PH14",
+        "PH15",
+        "PH16",
+        "PH17",
+        "PH18"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ph-path",
+      "label": "路径积分",
+      "group": "physics",
+      "domain": "PH",
+      "blurb": "时间切片、自由粒子与谐振子、Wick 转动",
+      "chapters": [
+        "PH19",
+        "PH20",
+        "PH21",
+        "PH22",
+        "PH23"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "ph-qft",
+      "label": "量子场论",
+      "group": "physics",
+      "domain": "PH",
+      "blurb": "二次量子化、Feynman 规则、重整化、规范固定",
+      "chapters": [
+        "PH24",
+        "PH25",
+        "PH26",
+        "PH27",
+        "PH28",
+        "PH29",
+        "PH30",
+        "PH31",
+        "PH32"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nm-discretize",
+      "label": "时间与空间离散",
+      "group": "computing",
+      "domain": "NM",
+      "blurb": "RK、辛积分、FDM / FEM / 谱方法",
+      "chapters": [
+        "NM01",
+        "NM02"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nm-linalg",
+      "label": "数值线代与逼近",
+      "group": "computing",
+      "domain": "NM",
+      "blurb": "分解的数值性质、Padé 与切比雪夫逼近",
+      "chapters": [
+        "NM03",
+        "NM04"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nm-opt",
+      "label": "优化与变分",
+      "group": "computing",
+      "domain": "NM",
+      "blurb": "优化、互补问题、变分积分器",
+      "chapters": [
+        "NM05",
+        "NM06",
+        "NM07"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "cg-geometry",
+      "label": "几何与渲染方程",
+      "group": "computing",
+      "domain": "CG",
+      "blurb": "离散微分几何、BRDF、路径空间、采样",
+      "chapters": [
+        "CG01",
+        "CG02",
+        "CG03",
+        "CG04",
+        "CG05",
+        "CG06",
+        "CG07",
+        "CG08"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "cg-fluid",
+      "label": "流体",
+      "group": "computing",
+      "domain": "CG",
+      "blurb": "守恒律、粘性、涡量、湍流、可压缩流",
+      "chapters": [
+        "CG09",
+        "CG10",
+        "CG11",
+        "CG12",
+        "CG13",
+        "CG14",
+        "CG15",
+        "CG16",
+        "CG17"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "cg-optics",
+      "label": "光学与介质",
+      "group": "computing",
+      "domain": "CG",
+      "blurb": "波动光学、衍射、偏振、参与介质与次表面散射",
+      "chapters": [
+        "CG18",
+        "CG19",
+        "CG20",
+        "CG21",
+        "CG22",
+        "CG23",
+        "CG24",
+        "CG25"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "cg-dec",
+      "label": "离散外微分",
+      "group": "computing",
+      "domain": "CG",
+      "blurb": "DEC：把微分形式落到网格上",
+      "chapters": [
+        "CG26"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-contract",
+      "label": "契约与容差",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "机器精度、误差传播、条件数、收敛阶 —— 全库判据的公共分母",
+      "chapters": [
+        "NL01"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-value",
+      "label": "值与代数",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "矩阵是线性映射、复数是旋转加缩放、分解是让判据有地方落",
+      "chapters": [
+        "NL02",
+        "NL03",
+        "NL04"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-transform",
+      "label": "变换与分布",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "傅里叶与级数、概率与特殊函数：同一个正交基的两端",
+      "chapters": [
+        "NL05",
+        "NL06"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-diff",
+      "label": "微分与积分器",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "对偶数、雅可比布局、反向模式、时间积分的阶与稳定性",
+      "chapters": [
+        "NL07",
+        "NL08"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-geometry",
+      "label": "几何与李群",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "叉积与 hat、Rodrigues、四元数、双覆盖与插值",
+      "chapters": [
+        "NL09"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-discrete",
+      "label": "离散与求解",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "网格与自由度、P1 刚度、Dirichlet、CSR、CG",
+      "chapters": [
+        "NL10",
+        "NL11"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-form",
+      "label": "张量与形式",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "形状与步长、视图与广播；k-形式、外微分、Stokes",
+      "chapters": [
+        "NL12",
+        "NL13"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "nl-bridge",
+      "label": "工程切入线",
+      "group": "numeric",
+      "domain": "NL",
+      "blurb": "六个结构动作：换基、线性化、谱、流、投影、离散",
+      "chapters": [
+        "NL14",
+        "NL15",
+        "NL16",
+        "NL17",
+        "NL18"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "mp-road",
+      "label": "路线图",
+      "group": "meta",
+      "domain": "MP",
+      "blurb": "四阶段推进与各线入口",
+      "chapters": [
+        "MP01",
+        "MP02",
+        "MP03",
+        "MP04",
+        "MP05",
+        "MP06",
+        "MP07",
+        "MP08",
+        "MP09",
+        "MP10"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "mp-index",
+      "label": "承重墙与索引",
+      "group": "meta",
+      "domain": "MP",
+      "blurb": "四层承重墙、教材对照",
+      "chapters": [
+        "MP11",
+        "MP12",
+        "MP13",
+        "MP14",
+        "MP15"
+      ],
+      "status": "present"
+    }
+  ],
+  "numericChapters": [
+    {
+      "code": "NL01",
+      "title": "契约与容差",
+      "surveyEntries": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5",
+        "A6"
+      ],
+      "libraryFiles": [
+        "src/core/scalar.hpp",
+        "src/core/scalar_traits.hpp",
+        "src/core/common.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "默认容差 DefaultTol(n) = 8n·eps，是全库唯一默认容差",
+          "where": "notebook/math/survey/p2-foundation.tex（A2）｜graphics/src/core/scalar.hpp"
+        },
+        {
+          "claim": "阈值反推 R = e_tol / e_worst ∈ [10^1, 10^6]",
+          "where": "notebook/math/survey/p11-audit.tex"
+        },
+        {
+          "claim": "容差三要素：相对 / 绝对 / 尺度，判据一律写成带三要素的不等式",
+          "where": "notebook/math/survey/p12-axes.tex §轴二"
+        }
+      ]
+    },
+    {
+      "code": "NL02",
+      "title": "值与代数",
+      "surveyEntries": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7",
+        "L8",
+        "L9",
+        "L10"
+      ],
+      "libraryFiles": [
+        "src/core/matrix.hpp",
+        "src/linalg/operator.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "L9（行列式）是唯一「缺位」条目：库里既无位置也无规划",
+          "where": "notebook/math/survey/p11-audit.tex §缺口"
+        }
+      ]
+    },
+    {
+      "code": "NL03",
+      "title": "稠密分解",
+      "surveyEntries": [
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N5",
+        "N6",
+        "N7",
+        "N8",
+        "N9",
+        "N10",
+        "N11",
+        "N12",
+        "N13"
+      ],
+      "libraryFiles": [
+        "src/linalg/solve.hpp",
+        "src/linalg/inverse.hpp",
+        "src/linalg/qr.hpp",
+        "src/linalg/cholesky.hpp",
+        "src/linalg/svd.hpp",
+        "src/linalg/eigen.hpp",
+        "src/linalg/expm.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "主元判零 abs2(p) ≤ tol^2，tol = DefaultTol(n)",
+          "where": "graphics/src/linalg/solve.hpp"
+        }
+      ]
+    },
+    {
+      "code": "NL04",
+      "title": "复数",
+      "surveyEntries": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6"
+      ],
+      "libraryFiles": [
+        "src/core/complex.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "不用 std::complex 的三条理由（Smith 除法、标量概念、traits 特化）",
+          "where": "graphics/src/core/complex.hpp ① 段"
+        }
+      ]
+    },
+    {
+      "code": "NL05",
+      "title": "变换与级数",
+      "surveyEntries": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6",
+        "H7",
+        "H8",
+        "H9",
+        "H10",
+        "H11"
+      ],
+      "libraryFiles": [
+        "src/math/fourier.hpp",
+        "src/math/series.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "归一化 1/N 的位置决定卷积定理与 Parseval 的常数",
+          "where": "graphics/src/math/fourier.hpp"
+        }
+      ]
+    },
+    {
+      "code": "NL06",
+      "title": "概率与特殊函数",
+      "surveyEntries": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ],
+      "libraryFiles": [
+        "src/math/prob.hpp",
+        "src/math/special.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "特征函数是「符号相反的那个傅里叶变换」",
+          "where": "notebook/math/survey/p6-prob.tex"
+        }
+      ]
+    },
+    {
+      "code": "NL07",
+      "title": "微分与自动微分",
+      "surveyEntries": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5"
+      ],
+      "libraryFiles": [
+        "src/autodiff/dual.hpp",
+        "src/autodiff/dual_matrix.hpp",
+        "src/autodiff/grad_graph.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "列向量 + 分子布局：J_ij = ∂y_i/∂x_j，链式法则自然序 J_{f∘g} = J_f·J_g",
+          "where": "graphics/docs/standard/01-numerics.md D19（2026-10-19 修订）"
+        }
+      ]
+    },
+    {
+      "code": "NL08",
+      "title": "时间积分",
+      "surveyEntries": [
+        "D6",
+        "D7",
+        "D8"
+      ],
+      "libraryFiles": [
+        "src/math/ode.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "RK4 四阶：h 减半误差降 16 倍；辛结构看能量漂移而非局部误差",
+          "where": "graphics/src/math/ode.hpp"
+        }
+      ]
+    },
+    {
+      "code": "NL09",
+      "title": "几何与李群",
+      "surveyEntries": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9",
+        "G10"
+      ],
+      "libraryFiles": [
+        "src/linalg/so3.hpp",
+        "src/quat/quaternion.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "四元数双覆盖 q 与 −q 表示同一旋转，插值须取短弧",
+          "where": "graphics/src/quat/quaternion.hpp"
+        }
+      ]
+    },
+    {
+      "code": "NL10",
+      "title": "离散化",
+      "surveyEntries": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ],
+      "libraryFiles": [
+        "NOW#1 grid.hpp",
+        "NOW#3 assemble.hpp"
+      ],
+      "status": "unbuilt",
+      "depthAnchors": [
+        {
+          "claim": "1D P1 在节点上精确、2D 不精确 —— 判据不能互相套用",
+          "where": "graphics/NOW.md §0.7 S1/S2"
+        }
+      ]
+    },
+    {
+      "code": "NL11",
+      "title": "稀疏与迭代",
+      "surveyEntries": [
+        "F7",
+        "F8",
+        "F9"
+      ],
+      "libraryFiles": [
+        "NOW#2 sparse.hpp",
+        "NOW#4 cg.hpp"
+      ],
+      "status": "unbuilt",
+      "depthAnchors": [
+        {
+          "claim": "CG 的收敛界由条件数 κ 给出；Krylov 子空间 = 投影",
+          "where": "notebook/math/bridges/br0_skeleton.tex §BR0.3"
+        }
+      ]
+    },
+    {
+      "code": "NL12",
+      "title": "张量",
+      "surveyEntries": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7"
+      ],
+      "libraryFiles": [
+        "src/core/tensor.hpp"
+      ],
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "strides 是形状与视图的唯一真源；视图别名是最核心的判据",
+          "where": "graphics/src/core/tensor.hpp ① 段"
+        }
+      ]
+    },
+    {
+      "code": "NL13",
+      "title": "微分形式",
+      "surveyEntries": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7"
+      ],
+      "libraryFiles": [
+        "NOW#9 forms.hpp"
+      ],
+      "status": "unbuilt",
+      "depthAnchors": [
+        {
+          "claim": "d∘d = 0 与 Stokes ∫_∂M ω = ∫_M dω 是离散后的两条精确恒等式",
+          "where": "graphics/NOW.md 阶段 A"
+        }
+      ]
+    },
+    {
+      "code": "NL14",
+      "title": "BR0 骨架：六个动作",
+      "surveyEntries": [],
+      "libraryFiles": [],
+      "bridgeFile": "notebook/math/bridges/br0_skeleton.tex",
+      "status": "present",
+      "depthAnchors": [
+        {
+          "claim": "六个结构动作 S1–S6 各自带可算判据；凑不出判据的节点是装饰",
+          "where": "notebook/math/bridges/README.md §2"
+        }
+      ],
+      "note": "含 appendix_foundations.tex（基础条目速查，不算篇目）"
+    },
+    {
+      "code": "NL15",
+      "title": "BR1 从 slerp 到测地线（S4）",
+      "surveyEntries": [],
+      "libraryFiles": [],
+      "bridgeFile": "notebook/math/bridges/br1_slerp_geodesic.tex",
+      "status": "present"
+    },
+    {
+      "code": "NL16",
+      "title": "BR2 正交基、傅里叶与正态特征函数（S3）",
+      "surveyEntries": [],
+      "libraryFiles": [],
+      "bridgeFile": "notebook/math/bridges/br2_fourier_gauss.tex",
+      "status": "present"
+    },
+    {
+      "code": "NL17",
+      "title": "BR3 ODE/PDE/张量/李群：一张网（跨 S1–S6）",
+      "surveyEntries": [],
+      "libraryFiles": [],
+      "bridgeFile": "notebook/math/bridges/br3_ode_pde_tensor_lie.tex",
+      "status": "present"
+    },
+    {
+      "code": "NL18",
+      "title": "BR4 概率论的双向地图（S5）",
+      "surveyEntries": [],
+      "libraryFiles": [],
+      "bridgeFile": "notebook/math/bridges/br4_probability_map.tex",
+      "status": "present"
+    }
+  ],
+  "routePage": {
+    "id": "route",
+    "title": "路线",
+    "tracks": [
+      {
+        "id": "math",
+        "label": "数学切入线",
+        "summary": "从经典微积分到算子代数的一条具体路线（现有切入点正文，单页不拆单元）",
+        "source": "src/content/angles.ts"
+      },
+      {
+        "id": "engineering",
+        "label": "工程切入线",
+        "summary": "六个结构动作把数学与库连起来；正文只在数值库章存一份，这里只引用标题与首句",
+        "chapters": [
+          "NL14",
+          "NL15",
+          "NL16",
+          "NL17",
+          "NL18"
+        ]
+      }
+    ]
+  },
+  "fixups": [
+    {
+      "id": "cs408-os01",
+      "what": "cs408/json/OS01/OS01.1.json 的内容实为 408-OS-0201 进程与线程",
+      "action": "导入期重建为 OS02.1，词条 id 前缀同步改动，并改 cs408/graph/OS01.yaml 的节点键",
+      "owner": "import"
+    },
+    {
+      "id": "survey-jacobian-path",
+      "what": "survey p11 的文件表写 autodiff/jacobian.hpp，实际文件是 autodiff/dual_matrix.hpp",
+      "action": "以实际文件为准；notebook 只读，不改源，仅在导入报告里记录",
+      "owner": "import"
+    },
+    {
+      "id": "cs408-src-prefix",
+      "what": "OS01.1.json 的 src.file 前缀 `11408-notebook/modules/OS1.md` 已失效",
+      "action": "导入期改为 notebook/kaoyan/note/408/os/<KP>-<考点名>.md",
+      "owner": "import"
+    },
+    {
+      "id": "co0401-pairing",
+      "what": "408-CO-0401 源文件里 `**思路**` 13 处、`**坑**` 12 处，违反 kaoyan 的「一一配对」规则",
+      "action": "notebook 只读，不改源；已在 docs 记档，等源侧补一条「坑」",
+      "owner": "notebook"
+    },
+    {
+      "id": "drill41-backspace",
+      "what": "408 拔高 41 的源文件里 `\\bmod` 的 `\\b` 是退格控制字符（U+0008，2 处），肉眼不可见，KaTeX 直接失败",
+      "action": "导入期把「退格 + mod」还原成 `\\bmod`（import 修正，已在 build/importer/README.md 登记）；源侧建议重打这两处",
+      "owner": "notebook"
+    }
+  ]
+}

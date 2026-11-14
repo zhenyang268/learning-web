@@ -1,19 +1,23 @@
 /**
- * 生成 standalone 单文件快照：dist/knowledge.html
+ * 生成 standalone 单文件快照：**每个学科一份** + 一个索引页。
+ *
+ *   dist/knowledge.html          数学（含数值库）
+ *   dist/knowledge-cs408.html    408 考研
+ *   dist/knowledge-math1.html    数一考研
+ *   dist/knowledge-projects.html 工程线
+ *   dist/knowledge-index.html    索引页（纯链接，file:// 可开）
  *
  * 约束（DESIGN §9.1）：数据内联 + IIFE + **零外部请求**，file:// 双击即开。
  * 做法：
- *   1. 用 esbuild 把 src/main.ts 打成 IIFE（CSS 导入置空，样式单独内联）；
- *   2. 索引（元数据）与各单元原文都内联进一个 fetch shim —— 与 dev 外壳共用同一套加载逻辑
- *      （main.ts 里只有 fetch，不感知数据来自网络还是内存）；单元正文仍是**按需 JSON.parse**；
- *   3. KaTeX 的 CSS 与字体（woff2）以 data URI 内联。**每个 @font-face 只留一份 woff2** ——
- *      原 CSS 为每个字面列了 woff2/woff/ttf 三个 url，全部替成同一个 data URI 会让体积×3
- *      （实测 0.99 MB → 0.33 MB）。
+ *   1. 用 esbuild 把该学科的入口 TS 打成 IIFE（CSS 导入置空，样式单独内联）；
+ *   2. 索引与各单元原文都内联进一个 fetch shim —— 与 dev 外壳共用同一套加载逻辑；
+ *   3. KaTeX 的 CSS 与字体（woff2）以 data URI 内联，每个 @font-face 只留一份 woff2。
  *
- * 与 dev 外壳是两套产物：dev 侧走 fetch json/（改 JSON 秒级刷新），
- * 本快照是「打包给以后看」的那一份。
+ * 为什么分学科而不是一份全塞：全塞约 15 MB，双击要等十几秒；
+ * 分学科后每份 1–5 MB，发给人时只发他要看的那一份。
  *
- * 用法：node tools/build-standalone.mjs   （或 npm run build:standalone）
+ * 用法：node tools/build-standalone.mjs           # 全部
+ *       node tools/build-standalone.mjs --subject cs408
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,10 +29,9 @@ const require = createRequire(import.meta.url);
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const JSON_DIR = path.join(ROOT, 'json');
-const OUT = path.join(ROOT, 'dist', 'knowledge.html');
+const OUT_DIR = path.join(ROOT, 'dist');
 
-/** 复用生产代码的索引规则（散装 .ts 打成 CJS 再 require） */
+/** 复用生产代码的规则（散装 .ts 打成 CJS 再 require） */
 async function requireTs(entry) {
   const res = await esbuild.build({
     entryPoints: [path.join(ROOT, entry)],
@@ -80,9 +83,9 @@ function inlinedKatexCss() {
   return out;
 }
 
-async function bundleApp() {
+async function bundleApp(entryTs) {
   const res = await esbuild.build({
-    entryPoints: [path.join(ROOT, 'src', 'main.ts')],
+    entryPoints: [path.join(ROOT, entryTs)],
     bundle: true,
     write: false,
     format: 'iife',
@@ -124,42 +127,21 @@ const page = (title, style, shim, app) => `<!DOCTYPE html>
 </html>
 `;
 
-async function main() {
-  const GRAPH_DIR = path.join(ROOT, 'graph');
-  const kbIndex = await requireTs('src/modules/kb-index.ts');
-  // 语义边真源 graph/*.yaml **构建期烘进索引**（attachSem）——
-  // 单文件快照因此自带四类语义边，运行期零请求，不必再内联一份 yaml。
-  const index = kbIndex.buildIndex(JSON_DIR, GRAPH_DIR);
-  const units = index.units.map((u) => u.path);
+/** 学科 → 入口 TS 与输出文件名（入口命名沿用仓库约定） */
+function layoutOf(subject) {
+  const entryTs = subject.entryHtml === 'index.html' ? 'src/main.ts' : `src/main-${subject.id}.ts`;
+  const outName = subject.id === 'math' ? 'knowledge.html' : `knowledge-${subject.id}.html`;
+  return { entryTs, outName };
+}
 
-  // 存**解析后的对象**而不是文件原文：原文内联会被 JSON.stringify 二次转义
-// （多一层 \" 与 \n），实测 6.66MB → 5.20MB，gzip 后 base64 少 0.12MB。
-// 代价是运行期每个单元多一次 JSON.stringify —— 相比省下的体积可以忽略。
-const data = {};
-  for (const p of units) data[p] = JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
-  const indexJson = JSON.stringify({ units: index.units });
-
-  const semUnits = index.units.filter((u) => u.sem).length;
-  console.log(`  语义边：${semUnits}/${index.units.length} 单元烘入索引（graph/ ${fs.existsSync(GRAPH_DIR) ? fs.readdirSync(GRAPH_DIR).filter((n) => n.endsWith('.yaml')).length : 0} 个 yaml）`);
-
-  // 数据 gzip + base64 后内联：9.7MB 原文 → 约 3.4MB base64（2026-10-30）。
-  // 为什么不是分包：file:// 不能 fetch（DESIGN §9.1），单文件天然无法按需取，只能压文本量。
-  const rawJson = JSON.stringify({ index: index.units, data });
-  const gzBytes = zlib.gzipSync(Buffer.from(rawJson, 'utf8'), { level: 9 });
-  const payload = gzBytes.toString('base64');
-  console.log(
-    `  内联数据：原始 ${(rawJson.length / 1024 / 1024).toFixed(2)} MB → gzip ${(gzBytes.length / 1024 / 1024).toFixed(2)} MB` +
-      ` → base64 ${(payload.length / 1024 / 1024).toFixed(2)} MB（${(rawJson.length / gzBytes.length).toFixed(1)}:1）`,
-  );
-
-  const shim = `
-    // standalone：索引 + 单元原文压成一个 base64 gzip 块内联；fetch 只认内联表，其余一律 404。
-    // 解压走 DecompressionStream（Chrome 80+/Safari 16.4+/Firefox 113+，file:// 下可用），
-    // 缺失时**不白屏**：fetch 直接 reject，main.ts 的致命浮层会把这条消息显示出来。
+function buildShim(payload, dataRoot, unitCount) {
+  // 单元路径在索引里已经带数据根前缀（`cs408/json/…`），所以 shim 只按原串匹配。
+  const rootIndex = `${dataRoot}index.json`;
+  return `
     (function () {
       window.__kbPayload = "${payload}";
       window.__kbPack = null;
-      window.__kbStandalone = { units: ${index.units.length}, gzip: true };
+      window.__kbStandalone = { units: ${unitCount}, gzip: true, dataRoot: "${dataRoot}" };
       var missing = typeof DecompressionStream === 'undefined' || typeof Response === 'undefined' || typeof Blob === 'undefined';
       var PACK = null;
       function pack() {
@@ -181,7 +163,7 @@ const data = {};
         })
           .then(function (text) {
             var parsed = JSON.parse(text);
-            window.__kbPack = parsed; // 供自检/排障读内联数据，不必再扒 HTML
+            window.__kbPack = parsed;
             return parsed;
           });
         return PACK;
@@ -192,9 +174,7 @@ const data = {};
         return pack().then(
           function (p) {
             var body = null;
-            // p.index / p.data 里是**解析后的对象**（省体积），这里再序列化回文本，
-            // 保持「fetch 返回文本、由 loader 统一 JSON.parse」这条不变式
-            if (clean === 'json/index.json') body = JSON.stringify({ units: p.index });
+            if (clean === "${rootIndex}") body = JSON.stringify({ units: p.index });
             else if (Object.prototype.hasOwnProperty.call(p.data, clean)) body = JSON.stringify(p.data[clean]);
             if (body === null) {
               return { ok: false, status: 404, statusText: 'Not Found',
@@ -207,30 +187,113 @@ const data = {};
         );
       };
     })();`;
+}
 
-  console.log('standalone 组装中…');
-  const app = await bundleApp();
+async function buildSubject(subject, kbIndex, katexCss, appCss) {
+  const { entryTs, outName } = layoutOf(subject);
+  const dataDir = path.join(ROOT, subject.dataRoot.replace(/\/$/, ''));
+  const graphDir = path.join(ROOT, subject.graphRoot.replace(/\/$/, ''));
+  const relPrefix = subject.dataRoot; // 索引里的 path 必须带数据根前缀，浏览器才 fetch 得到
+
+  const index = kbIndex.buildIndex(dataDir, graphDir, relPrefix);
+  const units = index.units.map((u) => u.path);
+  const data = {};
+  for (const p of units) data[p] = JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
+
+  const semUnits = index.units.filter((u) => u.sem).length;
+  const yamlCount = fs.existsSync(graphDir)
+    ? fs.readdirSync(graphDir).filter((n) => n.endsWith('.yaml')).length
+    : 0;
+  console.log(`\n[${subject.id}] ${subject.title}`);
+  console.log(`  语义边：${semUnits}/${index.units.length} 单元（${yamlCount} 个 yaml）`);
+
+  const rawJson = JSON.stringify({ index: index.units, data });
+  const gzBytes = zlib.gzipSync(Buffer.from(rawJson, 'utf8'), { level: 9 });
+  const payload = gzBytes.toString('base64');
+  console.log(
+    `  内联数据：原始 ${(rawJson.length / 1024 / 1024).toFixed(2)} MB → gzip ${(gzBytes.length / 1024 / 1024).toFixed(2)} MB` +
+      ` → base64 ${(payload.length / 1024 / 1024).toFixed(2)} MB（${(rawJson.length / gzBytes.length).toFixed(1)}:1）`,
+  );
+
+  const app = await bundleApp(entryTs);
+  const outPath = path.join(OUT_DIR, outName);
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  fs.writeFileSync(
+    outPath,
+    page(`${subject.title} · 知识库快照`, `${katexCss}\n${appCss}`, buildShim(payload, relPrefix, index.units.length), app),
+  );
+
+  const mb = (n) => `${(n / 1024 / 1024).toFixed(2)} MB`;
+  const total = fs.statSync(outPath).size;
+  console.log(`  已写入 dist/${outName}（${mb(total)}）· 单元 ${index.units.length}`);
+  if (total > 5.5 * 1024 * 1024) {
+    console.warn(`  ⚠ 超过 5.5MB 预算（${mb(total)}）—— 检查是否漏了 gzip 或内联了多余文件`);
+  }
+  return { subject, outName, total, units: index.units.length };
+}
+
+/** 索引页：纯链接，file:// 可开，不依赖任何数据 */
+function buildLanding(built) {
+  const rows = built
+    .map(
+      (b) => `<a class="row" href="./${b.outName}">
+      <span class="t">${b.subject.title}</span>
+      <span class="d">${b.units} 单元 · ${(b.total / 1024 / 1024).toFixed(2)} MB</span>
+    </a>`,
+    )
+    .join('\n');
+  const html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>learning-web · 快照索引</title>
+<style>
+  :root{color-scheme:dark}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;
+    background:#0f1116;color:#e6e8ee;font:16px/1.6 -apple-system,"PingFang SC",sans-serif}
+  main{width:min(560px,86vw);padding:40px 0}
+  h1{font-size:20px;margin:0 0 6px}
+  p{color:#8b93a7;margin:0 0 28px;font-size:13px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:16px 18px;margin-bottom:10px;border:1px solid #262a35;border-radius:12px;
+    background:#151822;color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
+  .row:hover{border-color:#4b5567;transform:translateY(-1px)}
+  .t{font-weight:600}
+  .d{color:#8b93a7;font-size:12.5px}
+</style>
+</head>
+<body>
+<main>
+  <h1>learning-web · 单文件快照</h1>
+  <p>每份都是独立文件：数据、字体、样式全部内联，双击即开，不联网。</p>
+  ${rows}
+</main>
+</body>
+</html>
+`;
+  const out = path.join(OUT_DIR, 'knowledge-index.html');
+  fs.writeFileSync(out, html);
+  console.log(`\n索引页：dist/knowledge-index.html（${built.length} 份快照）`);
+}
+
+async function main() {
+  const argv = process.argv.slice(2);
+  const only = argv.includes('--subject') ? argv[argv.indexOf('--subject') + 1] : null;
+
+  const { SUBJECTS } = await requireTs('src/subjects.ts');
+  const kbIndex = await requireTs('src/modules/kb-index.ts');
   const katexCss = inlinedKatexCss();
   const appCss = fs.readFileSync(path.join(ROOT, 'src', 'styles.css'), 'utf8');
 
-  fs.mkdirSync(path.dirname(OUT), { recursive: true });
-  fs.writeFileSync(OUT, page('learning-web · 知识库快照', `${katexCss}\n${appCss}`, shim, app));
+  const targets = SUBJECTS.filter((s) => !only || s.id === only);
+  if (!targets.length) throw new Error(`未知学科：${only}`);
 
-  const mb = (n) => `${(n / 1024 / 1024).toFixed(2)} MB`;
-  const total = fs.statSync(OUT).size;
-  console.log(`standalone 已写入 ${path.relative(ROOT, OUT)}（${mb(total)}）`);
-  console.log(`  单元 ${index.units.length} 个 · 索引 ${(indexJson.length / 1024).toFixed(1)} KB`);
-  console.log(
-    `  内联数据 ${mb(payload.length)}（gzip）· KaTeX CSS ${mb(katexCss.length)} · app ${mb(app.length + appCss.length)}`,
-  );
-  // 预算 4.5MB（原估 4.2MB）。实测这份语料（中文 + LaTeX）gzip 比只有 2.1–2.5:1，
-  // 不是当初估的 3.5:1 —— 9.7MB 级正文压不到 3MB 出头。当前构成：
-  // 内联数据 3.45MB（base64 已含 33% 膨胀）＋ KaTeX CSS 0.35 ＋ app 0.53。
-  // 还想再降只有一条路：把 app JS 也 gzip 成 base64、运行时解压后 eval（可省约 0.35MB），
-  // 代价是快照内的报错栈变得不可读，暂不做。
-  if (total > 4.5 * 1024 * 1024) {
-    console.warn(`  ⚠ 超过 4.5MB 预算（${mb(total)}）—— 检查是否漏了 gzip 或内联了多余文件`);
+  const built = [];
+  for (const subject of targets) {
+    built.push(await buildSubject(subject, kbIndex, katexCss, appCss));
   }
+  if (!only) buildLanding(built);
 }
 
 main().catch((e) => {

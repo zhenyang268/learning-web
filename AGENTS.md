@@ -18,6 +18,7 @@
 |---|---|---|
 | 本文 | 硬规则、分级判据、目录、命令 | 每次会话开始 |
 | `DESIGN.md` | 决策记录、数据流、数据结构、契约样例、规模策略、风险明细、A1 切片验收 | 动 renderers / viz 注册表 / 契约之前 |
+| `src/content/content-map.json` + `docs/content-map.md` | **整站内容总图**：站点 / 组 / 线 / 章 / 数值库映射（事实在 json，理由在 md） | 加站、加章、加线、改数值库映射之前 |
 | `build/archive/README.md` | **内容生成线的归档说明**：这条线已跑完（318/318），代码留档不再维护；同时列出「仍然在用的」 | 想改内容、或好奇 json 怎么来的 |
 | `build/archive/TASKBOOK.md` | 生成线施工任务书 v1.4（三 pass 流程、批次、P 篇特化）—— **历史档案** | 只在考据生成流程时读 |
 | `build/archive/orchestrate/` | 生成线总控：`pipeline.zsh`（D16/D17）、批次定义、交接文档（`HANDOFF-json.md` 是当时的进度真源） | 同上，历史档案 |
@@ -88,7 +89,10 @@
 | 章 | 前 4 字符（`AN03`） | 132 个 |
 | 单元 | 全串（`AN03.2`） | 318 个 |
 
-- **唯一真源**：`src/modules/taxonomy.ts` 的 `DOMAINS`（域 → 该域有哪些章、按学习顺序）。
+- **导航层级是「组 → 线 → 章 → 单元」**（2026-11-14 加线）：线只做分组与排序、**不进代号**，
+  所以加线不迁移任何代号；线表在 `src/content/content-map.json`，理由见 `docs/content-map.md`。
+- **唯一真源**：章清单与线在 `src/content/content-map.json`（`taxonomy.ts` 的 `LINES` 由它导入）；
+  `DOMAINS.legacyChapters` 是**旧章名遗留**，只给 `tools/remap-codes.mjs` 用，**不许写现代号**。
   加章只改这里，然后跑 `node tools/remap-codes.mjs`（默认干跑，`--apply` 才写）。
 - **学习顺序也由它定义**：派生依赖（`links` → `prereq`）按 `cmpCode` 判先后，
   不用字符串序 —— 字符串序把 `CG` 排在 `EQ` 前、`MP` 排在 `NM` 前，会直接造出**环**
@@ -184,8 +188,12 @@ learning-web/
   cs408/                 # 408 的数据根（与数学的 json/ + graph/ 完全分开）
     json/<章>/<code>.json
     graph/<章>.yaml
+  kaoyan/json/           # 数一考研数据根（408 之外的另一门，主键前缀不同）
+  projects/json/         # 工程线数据根（两件套：OUTLINE + NOTES）
   build/
     verify_kb.py         # **仍在用**：内容校验器（npm run audit:content 调它，只读模式）
+    verify_docs.py       # doc-card/v1 四类校验（npm run verify:docs）
+    importer/            # notebook → json 的搬运线（npm run import:docs；规则见其 README）
     vendored/            # KaTeX JS + CSS + 字体（离线，禁 CDN；见 §7 公式渲染）
     logs/ state/ slices/ # 报告与生成线派生物（.gitignore 忽略）
     archive/             # **内容生成线归档**（318/318 完工，不再维护）
@@ -213,10 +221,11 @@ learning-web/
       registry.ts        # 浏览器侧：模块名 → 动态 import（按需取 chunk）
       specs-all.ts       # 静态汇总，**只给 Node 工具**，浏览器入口禁止 import
     modules/
-      taxonomy.ts        # **代号与分层唯一真源**（域 → 章 → 学习顺序 → cmpCode）
+      taxonomy.ts        # **代号与分层唯一真源**（组 → 线 → 章 → 学习顺序 → cmpCode）
       legacy-codes.ts    # 旧代号 → 新代号（只服务掌握度迁移，不再增长）
       loader.ts · kb-index.ts（多学科参数化）· graph.ts · graph-model.ts · state.ts · attr.ts
     content/
+      content-map.json   # **整站内容总图唯一真源**（站点 / 组 / 线 / 章 / 数值库映射 / 修正项）
       syllabus.ts        # 总纲（数学大观：四条主轴 / 两个出口 / 交叉点 / 切入点 / 路线）
       angles.ts          # 切入点（原「现代分析学总纲」，一条具体路线，`#angles` 路由）
       syllabus-cs408.ts # 408 总纲占位
@@ -242,7 +251,10 @@ docs/
 ```bash
 # 日常开发（本站是纯前端：改 json/ 秒级可见）
 npm run dev                 # Vite，proxy /api → :5000
-npm run check               # 类型 + graph + sem-sync + viz + 全量 DOM 断言（318 单元）
+npm run check               # 类型 + content-map + graph + sem-sync + viz + 全量 DOM 断言（318 单元）
+npm run check:content-map   # 内容总图闸门：章覆盖 / 组归属 / survey 编号全集 / 落点 / 站点唯一
+npm run import:docs         # notebook → json（408 / 数一 / 工程线 / 数值库），重跑幂等
+npm run verify:docs         # doc-card/v1 四类校验：结构 / 覆盖 / 源一致性 / 无损
 npm run check:cs408         # 408 子站复用同一套闸门（--subject cs408）
 npm run audit               # 前端全量体检（只读，产出 build/logs/health-frontend-*.md）
 npm run audit:content       # 内容体检（verify_kb --dry-run，不回填）
@@ -306,7 +318,9 @@ node tools/remap-codes.mjs --apply
 - **禁 CDN。** KaTeX / Mermaid / 图表库全部内联或 vendored，产物必须断网可用。
 - standalone HTML 遵守 §3 的三条约束（内联数据 / IIFE / 无 CDN；细则见 `DESIGN.md` §9.1）。
 - **`dist/` 有两种形态，不要混**（2026-10-30 定，方案 A）：
-  `knowledge.html` 全内联（普通 `<script>` + gzip 数据 + base64 字体）＝**唯一分发物，双击即开**；
+  **每个学科一份单文件**（普通 `<script>` + gzip 数据 + base64 字体），双击即开：
+  `knowledge.html`（数学）/`knowledge-cs408.html` /`knowledge-math1.html` /`knowledge-projects.html`，
+  外加 `knowledge-index.html` 索引页（纯链接，file:// 也能开）；
   `dist/index.html` / `cs408.html` 是**开发形态**（`type="module"` + 运行时 `fetch json/`）⇒ **必须 HTTP**。
   报告「双击白屏」时先确认打开的是哪个文件 —— 开发形态双击必然白屏，不是产物损坏。
   `json/` 是**只读数据集**（由 `.tex` 生成的产物，`index.json` 是物化索引），

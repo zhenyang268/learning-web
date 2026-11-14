@@ -18,8 +18,10 @@ import type { VizHandle } from './viz';
 import { attrEscape } from './modules/attr';
 import { mountOverlay } from './renderers/overlay';
 import { renderContent, escapeHtml, renderInline } from './renderers/markdown';
+import { renderDocHtml } from './renderers/doc';
 import { displayCode } from './modules/codes';
 import { MATH, type Subject } from './subjects';
+import { cmpCode } from './modules/taxonomy';
 
 /**
  * 当前学科。**全应用只有这一个开关**（由入口文件传给 boot）：
@@ -191,6 +193,10 @@ function beginRender(): number {
   renderToken += 1;
   disposeViz();
   elReader.dataset.ready = '0';
+  // 「加载中」必须用**属性**表达，不能用正文文字：工程线笔记里本来就有
+  // 「资源按需加载」这类正常内容，靠 textContent.includes('按需加载') 会假阳性
+  // （2026-11-14 实测：CG04.2 / CS01.2 明明渲染完了仍被判为卡住）。
+  delete elReader.dataset.loading;
   return renderToken;
 }
 
@@ -213,6 +219,15 @@ function renderReader(
   groups: EntryGroup[],
   diffs: Array<{ level: 1 | 2 | 3; source: 'data' | 'derived' }>,
 ): void {
+  // 搬运来的文档走文档渲染（连续段落 + 标题层级），不套词条卡片：
+  // 分页会把「考法 → 题」的上下文切断，也会把 4 万字的 NOTES 切碎。
+  if ((file as unknown as { schema?: string }).schema === 'doc-card/v1') {
+    beginRender();
+    elReader.innerHTML = renderDocHtml(file);
+    elReader.dataset.ready = '1';
+    return;
+  }
+
   const token = beginRender();
   const src = file.src;
   const srcText = src?.file
@@ -268,6 +283,7 @@ function renderLoading(meta: UnitMeta): void {
       <div class="meta"><span class="tag">加载中</span><span>${escapeHtml(meta.path)}</span></div>
       <p class="kv dim">按需加载：只拉这一个单元的词条（其余单元仍在索引里，不占带宽）。</p>
     </div>`;
+  elReader.dataset.loading = '1';
   elReader.dataset.ready = '1';
   elAside.innerHTML = '';
 }
@@ -385,8 +401,10 @@ function apply(): void {
   }
   // 分组与难度各算一次：原先 renderReader 内部又 groupEntries 一遍，
   // 旁边再 map(difficultyOf) 一遍，同一批词条被扫了两次（体检定位到的重复计算）。
-  const groups = groupEntries(file);
-  const diffs = groups.map((g) => difficultyOf(g));
+  // doc-card 走文档渲染，不参与「卡片分组 / 难度推导」——原先这两步白算一遍再被丢弃
+  const isDoc = (file as unknown as { schema?: string }).schema === 'doc-card/v1';
+  const groups = isDoc ? [] : groupEntries(file);
+  const diffs = isDoc ? [] : groups.map((g) => difficultyOf(g));
   renderReader(file, groups, diffs);
   const difficulty = diffs.length ? Math.max(...diffs.map((d) => d.level)) : 1;
   renderAside(elAside, { file, graph, masteryOf: masteryByCode, difficulty, prereqEmptyNote: prereqEmptyNote(code) });
@@ -419,11 +437,38 @@ function prereqEmptyNote(code: string): string | undefined {
  * 内容由学科配置提供（数学 = 《现代分析学总纲 v3.0》）。408 侧是占位总纲。
  * 该学科没有总纲（`syllabus === null`）时给一句明确说明，不白屏。
  */
+/**
+ * 「路线」页的第二段：工程切入线（bridges）。
+ *
+ * 为什么只给入口：bridges 正文只存在数值库单元（NL14–NL18）一处。
+ * 在这里再贴一遍就是第二份真源，改一处忘一处必然漂移。
+ */
+function bridgeTrack(): string {
+  const list = units
+    .filter((u) => /^NL1[4-8]$/.test(u.chapter))
+    .sort((a, b) => cmpCode(a.code, b.code));
+  if (!list.length) return '';
+  const items = list
+    .map(
+      (u) =>
+        `<li><a data-goto="${attrEscape(u.code)}">${escapeHtml(displayCode(u.code))} ${renderInline(
+          u.title,
+        )}</a></li>`,
+    )
+    .join('');
+  return `<div class="card docview">
+    <h2 class="md-h">工程切入线 · 六个结构动作</h2>
+    <p class="kv dim">换基 / 线性化 / 谱 / 流 / 投影 / 离散 —— 正文在数值库章，这里只给入口，不复制。</p>
+    <ul class="bridgelist">${items}</ul>
+  </div>`;
+}
+
 function docView(kind: 'graph' | 'angles'): void {
   beginRender();
   elReader.dataset.ready = '1';
   const doc = kind === 'angles' ? current.angles : current.syllabus;
-  const label = kind === 'angles' ? '切入点' : '总纲';
+  // 2026-11-14：入口从「切入点」升级为「路线」—— 数学切入线（本页正文）+ 工程切入线（bridges 单元）
+  const label = kind === 'angles' ? '路线' : '总纲';
   if (!doc) {
     elReader.innerHTML = `<div class="card pagehead">
         <h1>📘 ${label} <em>${escapeHtml(current.title)}</em></h1>
@@ -437,7 +482,9 @@ function docView(kind: 'graph' | 'angles'): void {
       <h1>📘 ${label} <em>${escapeHtml(doc.title)} · ${escapeHtml(doc.version)}</em></h1>
       <div class="meta"><span class="tag">${kind}</span><span>${escapeHtml(current.title)}</span></div>
     </div>
-    <div class="card docview">${renderContent(doc.md)}</div>`;
+    <div class="card docview">${renderContent(doc.md)}</div>${
+      kind === 'angles' ? bridgeTrack() : ''
+    }`;
   elAside.innerHTML =
     kind === 'angles'
       ? `<div class="box">
@@ -460,8 +507,8 @@ function docView(kind: 'graph' | 'angles'): void {
       <h4 style="margin-top:16px">代号规则</h4>
       <p class="kv"><span class="mono">AN03.2</span> = 分析域 · 第 3 章 · 第 2 单元。
       代号自带层级，所以左侧目录是「域 → 章 → 单元」三层，318 个单元不再平铺。</p>
-      <h4 style="margin-top:16px">与「切入点」的区别</h4>
-      <p class="kv">本页讲<b>全局</b>；顶栏的「切入点」讲<b>一条具体路线</b>（现代分析学那条）。
+      <h4 style="margin-top:16px">与「路线」的区别</h4>
+      <p class="kv">本页讲<b>全局</b>；顶栏的「路线」讲<b>一条具体路线</b>（现代分析学那条）。
       两者以前是同一份文档，现在分开。</p>
       <p class="kv dim">这张图是作者观点，不是教材目录：分支归属与先后顺序都可以被证伪，欢迎改。</p>
     </div>`;

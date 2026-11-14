@@ -31,17 +31,26 @@ const esbuild = require('esbuild');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 /**
- * 学科（`--subject math|cs408`，默认 math）。
- * 两站是同仓多入口：入口 HTML 与入口 TS 各一个，数据根不同，其余完全共用。
+ * 学科（`--subject math|cs408|math1|projects`，默认 math）。
+ * 四站是同仓多入口：入口 HTML / 入口 TS / 数据根各一套，其余完全共用。
  * 默认 math 保证既有调用（`npm run check`）行为一字不变。
+ *
+ * 这里必须写一张静态表：subjects.ts 在后面才用 esbuild 载入，模块级拿不到。
+ * 表只影响 harness 自己的路径，真源仍是 subjects.ts（`npm run check:content-map` 校验站点唯一性）。
  */
 const SUBJECT_ID = (() => {
   const i = process.argv.indexOf('--subject');
   return i >= 0 ? process.argv[i + 1] : 'math';
 })();
-const DATA_ROOT = SUBJECT_ID === 'cs408' ? 'cs408/json/' : 'json/';
-const ENTRY_HTML = SUBJECT_ID === 'cs408' ? 'cs408.html' : 'index.html';
-const ENTRY_TS = SUBJECT_ID === 'cs408' ? 'src/main-cs408.ts' : 'src/main.ts';
+const ENTRY = {
+  math: { root: 'json/', html: 'index.html', ts: 'src/main.ts' },
+  cs408: { root: 'cs408/json/', html: 'cs408.html', ts: 'src/main-cs408.ts' },
+  math1: { root: 'kaoyan/json/', html: 'math1.html', ts: 'src/main-math1.ts' },
+  projects: { root: 'projects/json/', html: 'projects.html', ts: 'src/main-projects.ts' },
+}[SUBJECT_ID] ?? { root: 'json/', html: 'index.html', ts: 'src/main.ts' };
+const DATA_ROOT = ENTRY.root;
+const ENTRY_HTML = ENTRY.html;
+const ENTRY_TS = ENTRY.ts;
 const INDEX_URL = `${DATA_ROOT}index.json`;
 
 const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, DATA_ROOT.replace(/\/$/, ''));
@@ -210,6 +219,22 @@ async function runUnit(bundleJs, code) {
   const reqs = () => dom.window.__requests ?? [];
   const p = (s, c, det) => check(`[${code}] ${s}`, c, det);
 
+  // ── 等首屏**真正**渲染完再断言
+  // 固定 10ms 的 settle 只够挂载，工程线单篇 NOTES 上百 KB、上千条公式，KaTeX 在 jsdom 里
+  // 逐条同步渲染，断言会跑到「加载中」面板上（那样后面的断言全是假绿）。这里按体积给预算。
+  const unitSize = fs.statSync(path.join(JSON_DIR, meta.path.replace(DATA_ROOT, ''))).size;
+  const readyBudget = unitSize > 50_000 ? 15_000 : 5_000;
+  const tReady = Date.now();
+  while (
+    Date.now() - tReady < readyBudget &&
+    (reader.dataset.loading === '1' || reader.dataset.ready !== '1')
+  ) {
+    await sleep(50);
+  }
+  p('首屏在预算内渲染完成（不卡在加载中）',
+    reader.dataset.loading !== '1',
+    `等了 ${Date.now() - tReady}ms / 上限 ${readyBudget}ms`);
+
   // ── 按需加载：首个请求是索引，之后是当前单元；允许「空闲预取」多拉 **至多 2 个邻居**
   // （prefetch 是文档化行为：setTimeout/requestIdleCallback 200ms 后拉 idx+1/idx+2，
   //   与本断言的采样窗口存在时序竞争 —— 之前 <=2 的写法靠机器忙碌偶然变绿）。
@@ -245,8 +270,25 @@ async function runUnit(bundleJs, code) {
       selfNode?.querySelector('.code')?.textContent === code,
       `got=${selfNode?.querySelector('.code')?.textContent}`);
   }
+  const isDoc = unit.schema === 'doc-card/v1';
   const cards = [...reader.querySelectorAll('.card')].filter((c) => !c.classList.contains('pagehead'));
-  p('定理卡已渲染', cards.length > 0, `cards=${cards.length}`);
+  if (isDoc) {
+    // 搬运来的文档按「节」渲染，不出词条卡；断言改成「节数 == 词条数、标题层级在」
+    const secs = [...reader.querySelectorAll('.docsec')];
+    p('文档分节已渲染（节数 == 词条数）', secs.length === unit.entries.length,
+      `sections=${secs.length} entries=${unit.entries.length}`);
+    const heads = reader.querySelectorAll('.dochead');
+    const wantHeads = unit.entries.filter((e) => (e.level ?? 2) > 0 && (e.title ?? '').trim()).length;
+    p('小节标题全部渲染', heads.length === wantHeads, `heads=${heads.length} want=${wantHeads}`);
+    const mirrors = reader.querySelectorAll('.mirror');
+    const wantMirror = unit.entries.filter((e) => e.mirror_of).length;
+    p('真题镜像指针数量一致', mirrors.length === wantMirror, `mirrors=${mirrors.length} want=${wantMirror}`);
+    p('镜像指针指向真题单元',
+      [...mirrors].every((a) => /^EX\d{2}\.\d$/.test(a.getAttribute('data-goto') ?? '')),
+      [...mirrors].slice(0, 3).map((a) => a.getAttribute('data-goto')).join(','));
+  } else {
+    p('定理卡已渲染', cards.length > 0, `cards=${cards.length}`);
+  }
   p('顶栏字母块非空', d.querySelectorAll('#header .chapters b').length > 0);
   // 侧栏改成「域 → 章 → 单元」三层且单元懒渲染（2026-10-30）：默认只展开当前章，
   // 所以首屏节点数应 **≤** 单元数；展开全部章之后必须一个不少（懒渲染不能丢内容）。
@@ -266,15 +308,17 @@ async function runUnit(bundleJs, code) {
     textOf(aside).includes('依赖') && textOf(aside).includes('被用于'));
   p('frontier 横幅已算出', textOf(d.getElementById('frontier')).includes('今天该学'));
 
-  // ── 四问 tab
-  const tabsAll = cards.flatMap((c) => [...c.querySelectorAll('.tabs button')]);
-  if (unit.entries.some((e) => ['statement', 'intuition', 'proof', 'application'].includes(e.type))) {
-    p('四问 tab 存在', tabsAll.length > 0, tabsAll.slice(0, 8).map(textOf).join('/'));
+  // ── 四问 tab（仅 entry-card；doc-card 没有分页）
+  if (!isDoc) {
+    const tabsAll = cards.flatMap((c) => [...c.querySelectorAll('.tabs button')]);
+    if (unit.entries.some((e) => ['statement', 'intuition', 'proof', 'application'].includes(e.type))) {
+      p('四问 tab 存在', tabsAll.length > 0, tabsAll.slice(0, 8).map(textOf).join('/'));
+    }
+    p('tab 数 == 面板数（逐卡）',
+      cards.every((c) => c.querySelectorAll('.pane').length === c.querySelectorAll('.tabs button').length));
+    p('默认每卡至多一个面板展开',
+      cards.every((c) => c.querySelectorAll('.pane.on').length <= 1));
   }
-  p('tab 数 == 面板数（逐卡）',
-    cards.every((c) => c.querySelectorAll('.pane').length === c.querySelectorAll('.tabs button').length));
-  p('默认每卡至多一个面板展开',
-    cards.every((c) => c.querySelectorAll('.pane.on').length <= 1));
 
   // ── 限定词拆解（灵魂词条）：走真数据、默认可见、可点行锚到真实词条
   const qTableLines = quant ? (quant.content?.match(/^\s*\|/gm)?.length ?? 0) : 0;
@@ -336,10 +380,14 @@ async function runUnit(bundleJs, code) {
   const cross = refs.filter((r) => r.dataset.goto);
   p('跨代号引用带 cross 样式', cross.length === 0 || cross.every((r) => r.classList.contains('cross')));
 
-  // ── 徽标
+  // ── 徽标（entry-card/v2 契约）
+  // `doc-card/v1` 是从 notebook 搬运的文档，词条没有 generated_by / status 两字段
+  // （它们不是模型生成的内容），因此这两条只对 v2 生效；页面本身仍要被完整断言。
   const allText = textOf(reader);
-  p('显示 status 徽标', allText.includes('drafted'));
-  p('显示 generated_by', /glm|deepseek|kimi/.test(allText));
+  if (unit.schema !== 'doc-card/v1') {
+    p('显示 status 徽标', allText.includes('drafted'));
+    p('显示 generated_by', /glm|deepseek|kimi/.test(allText));
+  }
 
   // ── viz
   const vizRendered = reader.querySelectorAll('.vizslot .vizitem .viz').length;
@@ -445,8 +493,14 @@ async function runUnit(bundleJs, code) {
     await sleep(350);
     const back = reqs().slice(n1);
     p('切回已看过的单元不重拉它的文件', !back.includes(meta.path), back.join(', '));
+    // 等「加载中」消失，而不是死等 350ms：工程线单篇 NOTES 可达数万字，
+    // 固定睡眠在慢机上会把「渲染慢」误判成「缓存失效」。超过 3s 仍加载中才算 FAIL。
+    // 判据看 `data-loading`，不看正文文字：笔记里本来就可能出现「按需加载」四个字。
+    const t0 = Date.now();
+    while (Date.now() - t0 < readyBudget && reader.dataset.loading === '1') await sleep(50);
     p('切回后正文直接就位（不再出现加载中）',
-      !(reader.textContent ?? '').includes('按需加载'));
+      reader.dataset.loading !== '1',
+      `等了 ${Date.now() - t0}ms`);
   }
 
   return dom;
@@ -533,13 +587,15 @@ async function runRace(bundleJs, codeA, codeB) {
  * dist/knowledge.html 是「双击即开」的单文件快照（DESIGN §9.1）：
  * 数据内联 + IIFE + 零外部请求。这里在 jsdom 里真加载一遍，确认它不是空壳。
  */
-async function runStandalone() {
-  const file = path.join(ROOT, 'dist', 'knowledge.html');
+async function runStandalone(subj) {
+  // 2026-11-14：单文件快照按学科拆开（math 仍叫 knowledge.html，其余 knowledge-<id>.html）
+  const name = SUBJECT_ID === 'math' ? 'knowledge.html' : `knowledge-${SUBJECT_ID}.html`;
+  const file = path.join(ROOT, 'dist', name);
   if (!fs.existsSync(file)) {
-    console.log('\n8) standalone 快照 —— 未生成（跳过；npm run build:standalone）');
+    console.log(`\n8) standalone 快照 —— 未生成（跳过；npm run build:standalone -- --subject ${SUBJECT_ID}）`);
     return;
   }
-  console.log('\n8) standalone 单文件快照 dist/knowledge.html');
+  console.log(`\n8) standalone 单文件快照 dist/${name}`);
   const html = fs.readFileSync(file, 'utf8');
 
   check('无 <script src> / <link href>（零外部请求）',
@@ -596,8 +652,17 @@ async function runStandalone() {
   //    现在语义边是**构建期烘进索引**的，所以断言索引里带 sem 字段）
   const idxUnits = pack?.index ?? [];
   const inlineSem = idxUnits.filter((u) => u && typeof u.sem === 'object' && u.sem !== null).length;
-  check('内联索引带语义边（sem 已烘入，不靠运行期 fetch graph/*）', inlineSem > 0,
-    `内联索引 ${idxUnits.length} 单元中带 sem 的 ${inlineSem} 个`);
+  // 语义边是人工标注：math 与 cs408 有 yaml，数一 / 工程线还没有（下一期），不能一律要求 >0
+  const graphDir = path.join(ROOT, subj.graphRoot.replace(/\/$/, ''));
+  const yamlCount = fs.existsSync(graphDir)
+    ? fs.readdirSync(graphDir).filter((n) => n.endsWith('.yaml')).length
+    : 0;
+  if (yamlCount > 0) {
+    check('内联索引带语义边（sem 已烘入，不靠运行期 fetch graph/*）', inlineSem > 0,
+      `内联索引 ${idxUnits.length} 单元中带 sem 的 ${inlineSem} 个`);
+  } else {
+    check('无 yaml 时语义边为 0 且不报错（下一期人工标注）', inlineSem === 0, `sem=${inlineSem}`);
+  }
   check('快照不依赖 graph/*.yaml 数据（运行期零 graph 请求）',
     !/"graph\/[A-Za-z0-9]+\.yaml":/.test(html),
     '快照里仍内联着 yaml —— 应已移除（语义边在索引里）');
@@ -605,6 +670,16 @@ async function runStandalone() {
   // 2026-10-30 起两个文档页分开：
   //   #graph  = 总纲（数学大观 v1：四条主轴 / 两个出口 / 交叉点 / 五个切入点 / 四阶段）
   //   #angles = 切入点（原「现代分析学总纲 v3.0」，一条具体路线，不是全学科总纲）
+  if (SUBJECT_ID !== 'math') {
+    // 非数学站没有「数学大观」总纲与切入点：只验空态说明，不套数学的断言
+    dom.window.location.hash = '#graph';
+    await sleep(60);
+    const txt = textOf(d.getElementById('reader'));
+    check('无总纲时给出说明而不是白屏', txt.length > 0, txt.slice(0, 50));
+    dom.window.close();
+    return;
+  }
+
   dom.window.location.hash = '#graph';
   const t1 = Date.now();
   let docTxt = '';
@@ -933,7 +1008,7 @@ async function main() {
 
   const kbIndex = await requireTs('src/modules/kb-index.ts');
   const subjects = await requireTs('src/subjects.ts');
-  const SUBJ = SUBJECT_ID === 'cs408' ? subjects.CS408 : subjects.MATH;
+  const SUBJ = subjects.SUBJECTS.find((s) => s.id === SUBJECT_ID) ?? subjects.MATH;
   // 语义边根从学科配置取（锚定仓库根，不随 HARNESS_JSON 漂移）——语义边烘进索引后，
   // 右栏/frontier 的断言才是在验真源而不是编号序启发式。
   INDEX = kbIndex.buildIndex(JSON_DIR, path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, '')), DATA_ROOT);
@@ -995,7 +1070,8 @@ async function main() {
   }
 
   // standalone 快照只有数学站有（408 暂不产单文件）
-  if (SUBJECT_ID === 'math') await runStandalone();
+  // 每个学科都有自己的单文件快照（knowledge.html / knowledge-<id>.html），逐站验
+  await runStandalone(SUBJ);
 
   console.log(`\n${'-'.repeat(52)}`);
   if (multi) {

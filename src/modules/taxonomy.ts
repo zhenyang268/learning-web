@@ -20,9 +20,26 @@
  * 换号的红线：`chapters` 里的**旧章名**只用于一次性迁移（`tools/remap-codes.mjs`），
  * 迁移完成后它只剩「历史注释」的作用，不要再往这里加新内容。
  */
+import contentMap from '../content/content-map.json';
 
-/** 侧栏的第一级：把 9 个域归成 5 组。域仍是内容的归属单位，代号不变。 */
-export type GroupId = 'fundamentals' | 'structure' | 'physics' | 'computing' | 'meta';
+/**
+ * 侧栏的第一级：把域归成组。**组的清单以 `src/content/content-map.json` 为准**
+ * （`check-content-map.mjs` 校验该表），这里的联合类型与它保持同步。
+ *
+ * 2026-11-14 增 `numeric`：数值库是**关于库本身**的一条线（API 形状 / 容差 / 异常 / 状态），
+ * 与「计算」组（数学怎么离散：FDM/FEM/图形学）是两个视角，不能互相折叠。
+ */
+export type GroupId =
+  | 'fundamentals'
+  | 'structure'
+  | 'physics'
+  | 'computing'
+  | 'numeric'
+  | 'meta'
+  | 'exam408'
+  | 'exam1'
+  | 'examKit'
+  | 'project';
 
 export interface Group {
   id: GroupId;
@@ -35,7 +52,12 @@ export const GROUPS: Group[] = [
   { id: 'structure', label: '结构', blurb: '对称与随机：描述世界的两种骨架' },
   { id: 'physics', label: '物理', blurb: '方程与物理：从 ODE 到场论' },
   { id: 'computing', label: '计算', blurb: '数值方法与图形学：落到机器的部分' },
+  { id: 'numeric', label: '数值库', blurb: '主仓数值库的镜像：每个模块讲清数学背景、设计取舍与数值判据' },
   { id: 'meta', label: '索引', blurb: '关于知识库本身：阶段、清单、教材对照' },
+  { id: 'exam408', label: '408 考纲', blurb: '数据结构 / 组成原理 / 操作系统 / 计算机网络' },
+  { id: 'exam1', label: '数一考纲', blurb: '高等数学 / 线性代数 / 概率统计' },
+  { id: 'examKit', label: '备考工具', blurb: '真题、拔高题线、速学稿、分层表' },
+  { id: 'project', label: '工程线', blurb: '按项目分组：系统 / 体系结构 / 语言 / 算法 / 工程方法 / 图形' },
 ];
 
 export interface Domain {
@@ -47,8 +69,14 @@ export interface Domain {
   blurb: string;
   /** 所属分层组（侧栏第一级） */
   group: GroupId;
-  /** 该域内的章，**按学习顺序**排列；旧章名，只用于一次性迁移 */
-  chapters: string[];
+  /**
+   * **迁移期遗留的旧章名**（`A1` / `lie2` / `de3` …），只被 `tools/remap-codes.mjs` 读。
+   *
+   * **它不是「这一域有哪些章」的真源**：章清单在 `src/content/content-map.json` 的 `lines` 里，
+   * 由 `LINES` / `lineOfChapter` 查。两条清单对不上是正常的（旧名 vs `AN03` 现代号），
+   * 但**现代号不许再写在这里** —— `check-content-map.mjs` 会拦下字面 `chapters: [` 数组。
+   */
+  legacyChapters: string[];
 }
 
 export const DOMAINS: Domain[] = [
@@ -57,63 +85,247 @@ export const DOMAINS: Domain[] = [
     group: 'fundamentals',
     label: '分析',
     blurb: '测度与积分 → 泛函与 L^p → Sobolev → 微分形式 → 复分析。整条线的主题是「把极限与积分说清楚」。',
-    chapters: ['A1', 'A2', 'A3', 'A4', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8'],
+    legacyChapters: ['A1', 'A2', 'A3', 'A4', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8'],
   },
   {
     id: 'AG',
     group: 'structure',
     label: '代数与几何',
     blurb: '群与表示 → 点集拓扑 → 流形与黎曼几何 → 李群与李代数。回答「对称性长什么样」。',
-    chapters: ['B1', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'B2', 'lie1', 'lie2', 'lie3'],
+    legacyChapters: ['B1', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'B2', 'lie1', 'lie2', 'lie3'],
   },
   {
     id: 'PR',
     group: 'structure',
     label: '概率与随机',
     blurb: '测度论概率 → 分布族 → 条件期望与鞅 → 收敛模式 → 极限定理 → 蒙特卡洛 → SDE。',
-    chapters: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10'],
+    legacyChapters: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10'],
   },
   {
     id: 'EQ',
     group: 'physics',
     label: '微分方程',
     blurb: 'ODE 与线性系统 → 稳定性 → 分离变量与特征线 → 变换法 → 数值格式。',
-    chapters: ['de1', 'de2', 'de3', 'de4'],
+    legacyChapters: ['de1', 'de2', 'de3', 'de4'],
   },
   {
     id: 'PH',
     group: 'physics',
     label: '物理与量子',
     blurb: '分析力学 → 数学物理（电磁/相对论/规范场）→ 统计与信息 → 量子力学 → 路径积分 → 量子场论。',
-    chapters: ['D1', 'D2', 'D3', 'D4', 'E1', 'E2', 'E3', 'E4', 'M1', 'M2', 'M3', 'M5', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'K1', 'K2', 'K3', 'K4', 'K5', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9'],
+    legacyChapters: ['D1', 'D2', 'D3', 'D4', 'E1', 'E2', 'E3', 'E4', 'M1', 'M2', 'M3', 'M5', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'K1', 'K2', 'K3', 'K4', 'K5', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9'],
   },
   {
     id: 'NM',
     group: 'computing',
     label: '数值与计算',
     blurb: '时间积分 → 空间离散（FDM/FEM/谱）→ 数值线代 → 逼近 → 优化 → 接触与变分积分器。',
-    chapters: ['G1', 'G2', 'G3', 'G4', 'G5', 'M4', 'M7'],
+    legacyChapters: ['G1', 'G2', 'G3', 'G4', 'G5', 'M4', 'M7'],
   },
   {
     id: 'CG',
     group: 'computing',
     label: '图形学',
     blurb: '离散微分几何 → 渲染方程与采样 → 物理仿真 → 流体 → 光学与参与介质。',
-    chapters: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'M6'],
+    legacyChapters: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'M6'],
   },
   {
     id: 'TL',
     group: 'fundamentals',
     label: '工具与技法',
     blurb: '手算工具箱：求和、因式、放缩、极限、三角、线代、积分、特殊函数、能量法。**不是定理集，是兵器谱**。',
-    chapters: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10'],
+    legacyChapters: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10'],
+  },
+  {
+    id: 'NL',
+    group: 'numeric',
+    label: '数值库',
+    blurb:
+      '主仓数值库的镜像：以**库模块**为章（值与代数 / 稠密分解 / 变换与分布 / 自动微分 / 时间积分 / 几何 / 离散与求解 / 张量与形式 / 工程切入线），每章讲数学背景、设计取舍与数值判据。',
+    // NL 是 2026-11-14 新建，没有旧章名可迁移；它的 18 章只在 content-map.json 的 lines 里。
+    legacyChapters: [],
+  },
+  {
+    id: 'DS',
+    group: 'exam408',
+    label: '数据结构',
+    blurb: '线性表、树、图、查找、排序（408 45 分）',
+    legacyChapters: [],
+  },
+  {
+    id: 'CO',
+    group: 'exam408',
+    label: '组成原理',
+    blurb: '数据表示、运算、存储、指令、CPU、总线、IO（408 45 分）',
+    legacyChapters: [],
+  },
+  {
+    id: 'OS',
+    group: 'exam408',
+    label: '操作系统',
+    blurb: '进程与线程、调度、同步、内存、文件、IO（408 35 分）',
+    legacyChapters: [],
+  },
+  {
+    id: 'NT',
+    group: 'exam408',
+    label: '计算机网络',
+    blurb: '体系结构、物理层到应用层（408 25 分）',
+    legacyChapters: [],
+  },
+  {
+    id: 'HS',
+    group: 'exam1',
+    label: '高等数学',
+    blurb: '极限、一元与多元微积分、级数、微分方程（约 84 分）',
+    legacyChapters: [],
+  },
+  {
+    id: 'LA',
+    group: 'exam1',
+    label: '线性代数',
+    blurb: '行列式、矩阵、向量组、特征值、二次型（约 33 分）',
+    legacyChapters: [],
+  },
+  {
+    id: 'PS',
+    group: 'exam1',
+    label: '概率统计',
+    blurb: '随机变量、数字特征、大数定律、参数估计（约 33 分）',
+    legacyChapters: [],
+  },
+  {
+    id: 'EX',
+    group: 'examKit',
+    label: '历年真题',
+    blurb: '2016–2024 九套选择题 + 缺图清单',
+    legacyChapters: [],
+  },
+  {
+    id: 'DL',
+    group: 'examKit',
+    label: '408 拔高题线',
+    blurb: '41–47 七条题线，冲刺满分用',
+    legacyChapters: [],
+  },
+  {
+    id: 'DM',
+    group: 'examKit',
+    label: '数一拔高题线',
+    blurb: '八条题型线（极限到中值证明）',
+    legacyChapters: [],
+  },
+  {
+    id: 'QK',
+    group: 'examKit',
+    label: '速学稿',
+    blurb: '一科一份：概括版 + 口语版',
+    legacyChapters: [],
+  },
+  {
+    id: 'SY',
+    group: 'examKit',
+    label: '分层与索引',
+    blurb: 'T1/T2/T3 应试分层',
+    legacyChapters: [],
+  },
+  {
+    id: 'SO',
+    group: 'project',
+    label: '操作系统项目',
+    blurb: 'linux-api / jos / kernel-compare / drivers / security / virtualization',
+    legacyChapters: [],
+  },
+  {
+    id: 'CP',
+    group: 'project',
+    label: '体系结构与编译器',
+    blurb: '汇编链接 / 读核 / 造核 / LLVM',
+    legacyChapters: [],
+  },
+  {
+    id: 'LG',
+    group: 'project',
+    label: '语言与并行',
+    blurb: 'C++ / Python / CUDA',
+    legacyChapters: [],
+  },
+  {
+    id: 'AL',
+    group: 'project',
+    label: '算法',
+    blurb: '实现体检 / 面试题库',
+    legacyChapters: [],
+  },
+  {
+    id: 'EG',
+    group: 'project',
+    label: '工程方法',
+    blurb: '测试 / 调试 / 性能 / 系统设计 / 隐性陷阱',
+    legacyChapters: [],
+  },
+  {
+    id: 'GX',
+    group: 'project',
+    label: '图形与游戏',
+    blurb: '光栅化 / 光线追踪 / 几何动画 / 引擎 / 游戏',
+    legacyChapters: [],
+  },
+  {
+    id: 'CS',
+    group: 'project',
+    label: 'CSAPP',
+    blurb: '数据表示到并发的整条链路',
+    legacyChapters: [],
+  },
+  {
+    id: 'DF',
+    group: 'project',
+    label: '6.824',
+    blurb: 'Raft 共识与多副本收敛',
+    legacyChapters: [],
+  },
+  {
+    id: 'PA',
+    group: 'project',
+    label: 'CS149',
+    blurb: 'SIMD、多核、GPU 与性能分析',
+    legacyChapters: [],
+  },
+  {
+    id: 'DB',
+    group: 'project',
+    label: '数据库',
+    blurb: '索引、事务、MVCC、日志恢复',
+    legacyChapters: [],
+  },
+  {
+    id: 'AI',
+    group: 'project',
+    label: 'AI',
+    blurb: '从 MLP 到 Transformer 的架构演进',
+    legacyChapters: [],
+  },
+  {
+    id: 'DX',
+    group: 'project',
+    label: '离散数学',
+    blurb: '归纳与不变量、容斥、主定理、网络流、模运算',
+    legacyChapters: [],
+  },
+  {
+    id: 'PX',
+    group: 'project',
+    label: '面试索引',
+    blurb: '36 份 OUTLINE 的「面试怎么讲」抽成一页',
+    legacyChapters: [],
   },
   {
     id: 'MP',
     group: 'meta',
     label: '路线与索引',
     blurb: '学习阶段、承重墙清单、教材对照。这一域是**元内容**（关于知识库本身），不是数学。',
-    chapters: ['N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7', 'N8', 'N9', 'N10', 'N11', 'N12', 'N13', 'N14', 'N15'],
+    legacyChapters: ['N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7', 'N8', 'N9', 'N10', 'N11', 'N12', 'N13', 'N14', 'N15'],
   },
 ];
 
@@ -182,4 +394,69 @@ export function groupRank(g: GroupId): number {
 
 export function groupLabel(g: GroupId): string {
   return GROUPS.find((x) => x.id === g)?.label ?? g;
+}
+
+/* ------------------------------------------------------------------ 线层（2026-11-14） */
+
+/**
+ * 线：组与章之间的中间层，**只做分组与排序，不进代号**。
+ *
+ * 为什么加：域层过重（PH 32 章、CG 26 章），展开后一屏全是章号，读者拿不到中间语义。
+ * 加线后层级仍是「组 → 线 → 章 → 单元」四层，但第二级能一句话说清「这一段在讲什么」。
+ *
+ * 为什么不拆域：拆域要重排章号（一个域内整体平移），会把已收敛的 318 个单元、掌握度键、
+ * links 与 graph/*.yaml 一起推倒。线不进代号，所以**零迁移**。
+ *
+ * 数据真源是 `src/content/content-map.json`（规则与理由见 `docs/content-map.md`），
+ * 这里只做类型收口与查表；不要在 TS 里另写一份线表。
+ */
+export interface ContentLine {
+  id: string;
+  label: string;
+  group: GroupId;
+  /** 所属域：必须是 DOMAINS 里的 id；一条线只属于一个域 */
+  domain: string;
+  blurb?: string;
+  /** 学习顺序；全表内每个章恰好出现一次（`check-content-map.mjs` 判据 1） */
+  chapters: string[];
+  status: 'present' | 'planned';
+}
+
+/** 内容表的边界类型：JSON 导入只有一处 cast，其余代码按真实类型用 */
+interface ContentMapFile {
+  sites: unknown[];
+  groups: unknown[];
+  lines: ContentLine[];
+  numericChapters: unknown[];
+  routePage: unknown;
+  fixups: unknown[];
+}
+
+const MAP = contentMap as unknown as ContentMapFile;
+
+export const LINES: readonly ContentLine[] = MAP.lines;
+
+const LINE_OF_CHAPTER = new Map<string, ContentLine>();
+for (const line of LINES) for (const ch of line.chapters) LINE_OF_CHAPTER.set(ch, line);
+
+/** 章或单元代号 → 所属线（`AN03.2` 先取 `AN03`）；未登记返回 undefined */
+export function lineOfChapter(code: string): ContentLine | undefined {
+  return LINE_OF_CHAPTER.get(chapterOf(code));
+}
+
+/** 某个组下的线，按内容表书写顺序（即学习顺序） */
+export function linesOfGroup(group: GroupId): ContentLine[] {
+  return LINES.filter((l) => l.group === group);
+}
+
+/**
+ * 侧栏第二级的分组键：有线走线，没线退回域。
+ *
+ * 一处定义、三处使用（渲染侧栏 / 增量刷新进度条 / 未来的线层跳转），
+ * 避免两边各写一份 `line ? line.id : domain` 而逐渐分叉。
+ */
+export function sectionKeyOf(code: string): string {
+  const ch = chapterOf(code);
+  const line = LINE_OF_CHAPTER.get(ch);
+  return line ? `line:${line.id}` : `dom:${domainOf(ch) || 'ZZ'}`;
 }

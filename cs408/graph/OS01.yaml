@@ -1,4 +1,4 @@
-# cs408/graph/OS1.yaml — 「OS1 进程与线程」章的语义边真源（DESIGN §8.2 四类边）。
+# cs408/graph/OS01.yaml — 操作系统第 1 章（概述）的语义边真源（DESIGN §8.2 四类边）。
 #
 # 与数学侧 graph/*.yaml 完全同构，只是数据根不同（cs408/graph/）。
 # 方向约定见 graph/A1.yaml 头部注释，四方一致（本文件 / 渲染器 / check-graph / check-sem-sync）：
@@ -6,15 +6,14 @@
 #   applies Y ∈ X.applies ⟺ 有向边 X → Y（X 被 Y 应用）
 #   tension / dual 为无向边，允许成环
 #
-# notebook_commit：408 线没有 .tex，真源在 ../11408-notebook（本仓只读快照），故记 n/a。
+# notebook_commit：408 线没有 .tex，真源在 notebook/kaoyan/note/408/os/，本仓只读快照，故记 n/a。
+# 2026-11-14：旧数据把「进程与线程」错放在 OS01.1；该内容已按考纲归到 OS02.1（见 OS02.yaml）。
+# 本章（OS-01 概述）目前**没有人工标注的语义边**，保留空边表示「已覆盖、无边」，不是漏标。
 notebook_commit: n/a
 
 nodes:
-  OS01.1: # 进程与线程
-    # 起点：一上来就讲「资源 vs 执行」的分离，没有组内前序。
+  OS01.1: # 操作系统概述（408-OS-0101）
     prereq: []
     tension: []
     dual: []
-    # 下游（OS2 调度 / OS3 同步 / OS4 死锁 / OS5 进程通信）尚未生成，
-    # 按「宁少而真」不写空指代；生成后在这里补边。
     applies: []

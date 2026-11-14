@@ -42,7 +42,7 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
       <button class="graphbtn" data-graph="1" title="总纲：数学大观（四条主轴 / 两个出口 / 交叉点）">📘 总纲</button>
       ${
         model.hasAngles
-          ? `<button class="graphbtn" data-angles="1" title="切入点：作者选定的一条切入线（不是全学科总纲）">🧭 切入点</button>`
+          ? `<button class="graphbtn" data-angles="1" title="路线：数学切入线（现代分析学）+ 工程切入线（bridges 六个结构动作）">🧭 路线</button>`
           : ''
       }
       <label class="search">

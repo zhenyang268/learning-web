@@ -55,6 +55,12 @@ export interface Entry {
   status?: string;
   links?: string[];
   viz?: VizSpec;
+  /** doc-card/v1：标题层级（0 = 无标题引言；2 = `##`；3 = `###`） */
+  level?: number;
+  /** doc-card/v1：本条是真题镜像时，指向真题单元（如 `EX21.1`） */
+  mirror_of?: string;
+  /** doc-card/v1：题号（如 `2021#16`） */
+  question_id?: string;
 }
 
 export interface SrcRef {

@@ -86,12 +86,12 @@ async function main() {
   // 旧章 → 新章
   const chapterMap = new Map();
   for (const dom of tax.DOMAINS) {
-    dom.chapters.forEach((oldChapter, i) => {
+    dom.legacyChapters.forEach((oldChapter, i) => {
       chapterMap.set(oldChapter, `${dom.id}${String(i + 1).padStart(2, '0')}`);
     });
   }
   const chapterDomain = new Map();
-  for (const dom of tax.DOMAINS) for (const c of dom.chapters) chapterDomain.set(c, dom.id);
+  for (const dom of tax.DOMAINS) for (const c of dom.legacyChapters) chapterDomain.set(c, dom.id);
 
   // 旧单元 → 新单元（章内按旧代号数值序编号）
   const byChapter = new Map();
@@ -244,7 +244,7 @@ async function main() {
   md.push('> 本表只用于「查旧文 / 对历史记录」。', '');
   md.push('## 域', '', '| 域 | 名称 | 章数 | 说明 |', '| --- | --- | --- | --- |');
   for (const dom of tax.DOMAINS) {
-    const n = dom.chapters.filter((c) => chapterMap.has(c)).length;
+    const n = dom.legacyChapters.filter((c) => chapterMap.has(c)).length;
     md.push(`| ${dom.id} | ${dom.label} | ${n} | ${dom.blurb} |`);
   }
   md.push('', '## 章', '', '| 旧章 | 新章 | 域 | 单元数 | 旧章代表标题 |', '| --- | --- | --- | --- | --- |');

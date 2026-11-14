@@ -1,0 +1,21 @@
+# cs408/graph/OS02.yaml — 操作系统第 2 章（进程与线程）的语义边真源（DESIGN §8.2 四类边）。
+#
+# 与数学侧 graph/*.yaml 完全同构，只是数据根不同（cs408/graph/）。
+# 方向约定见 graph/A1.yaml 头部注释，四方一致（本文件 / 渲染器 / check-graph / check-sem-sync）：
+#   prereq  Y ∈ X.prereq ⟺ 有向边 Y → X（先学 Y 再学 X），**必须无环**
+#   applies Y ∈ X.applies ⟺ 有向边 X → Y（X 被 Y 应用）
+#   tension / dual 为无向边，允许成环
+#
+# notebook_commit：408 线没有 .tex，真源在 notebook/kaoyan/note/408/os/，本仓只读快照，故记 n/a。
+# 2026-11-14：本章代号由 OS01.1 校正为 OS02.1（原数据内容实为 408-OS-0201 进程与线程）。
+notebook_commit: n/a
+
+nodes:
+  OS02.1: # 进程与线程
+    # 起点：一上来就讲「资源 vs 执行」的分离，没有组内前序。
+    prereq: []
+    tension: []
+    dual: []
+    # 下游（调度 / 同步 / 死锁 / 进程通信）的语义边留到下一期人工标注，
+    # 按「宁少而真」不写空指代。
+    applies: []

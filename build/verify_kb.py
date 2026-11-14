@@ -310,10 +310,19 @@ def main() -> None:
     (STATE / "verify").mkdir(parents=True, exist_ok=True)
     corrections: list = []
     all_errs: list[str] = []
+    skipped_docs: list[Path] = []
     for f in files:
         if not f.exists():
             all_errs.append(f"CRIT {f}: 文件不存在")
             continue
+        # 2026-11-14：json/ 里并存两种 schema。doc-card/v1 由 build/verify_docs.py 校验，
+        # 这里**显式跳过并打印计数** —— 静默跳过等于「跳过 → 假装通过」。
+        try:
+            if json.loads(f.read_text(encoding="utf-8")).get("schema") == "doc-card/v1":
+                skipped_docs.append(f)
+                continue
+        except Exception:  # noqa: BLE001 - 解析失败交给 verify_file 报 CRIT
+            pass
         all_errs += verify_file(f)
         all_errs += settle_numerics(f, corrections, dry=dry)
     if not dry:
@@ -325,6 +334,8 @@ def main() -> None:
         print(e)
     n_mark = sum(c["markers"] for c in corrections)
     n_bad = sum(len(c["mismatches"]) for c in corrections)
+    if skipped_docs:
+        print(f"SKIP {len(skipped_docs)} 个 doc-card/v1（由 build/verify_docs.py 校验）")
     print(f"\n== {len(files)} 文件：CRIT {len(crit)} · MAJ {len(maj)} · 数值回填 {n_mark} 处"
           f"（其中不一致 {n_bad}）{'  [dry-run 未写回]' if dry else ''} ==")
     if out_path:
