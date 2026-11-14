@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL04.5",
+  "chapter": "NL04",
+  "title": "开方主值与半角写法",
+  "src": {
+    "file": "notebook/math/survey/p4-complex.tex",
+    "sha256": "sha256:448ff3c6af38ff4ed96394fa55217375f859fe35ecad4b3592c77907b51339c1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL04.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\sqrt{z}=\\sqrt{\\dfrac{\\left\\lvert z\\right\\rvert +a}{2}}+\\mathrm{sign}(b)\\sqrt{\\dfrac{\\left\\lvert z\\right\\rvert -a}{2}}\\,i$，\n其中 $a=\\mathrm{Re}\\,z$。"
+    },
+    {
+      "id": "NL04.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "直接算 $\\sqrt{a+bi}$ 需要解二次方程，会遇相消（A6）；半角形式把它变成\n两个非负量之和。"
+    },
+    {
+      "id": "NL04.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "实部恒取正号 $\\Rightarrow$ 结果的实部 $\\ge0$（这是主值的定义）；\n$z=0$ 必须单独返回，否则 $b=0/0$ 变 NaN；跨负实轴时虚部符号翻转，故**不连续**。\n$\\left\\lvert z\\right\\rvert $ 要用 `hypot`，$\\left\\lvert z\\right\\rvert \\pm a$ 要用不抵消的写法。成立条件：$z\\ne0$ 走通用分支。"
+    },
+    {
+      "id": "NL04.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\left\\lvert a\\right\\rvert ,\\left\\lvert b\\right\\rvert \\sim10^{200}$ 时不能出现 inf/nan；$z<0$ 时结果应为纯虚且符号与 $b$ 一致。"
+    },
+    {
+      "id": "NL04.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C4、A6。"
+    },
+    {
+      "id": "NL04.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $\\sqrt{z^{2}}=\\left\\lvert z\\right\\rvert $。复域里 $\\sqrt{z^{2}}$ 依赖分支，可能是 $z$ 也可能是 $-z$。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "C5",
+    "status": "已实现：core/complex.hpp",
+    "section": "复分析：多值性不是缺陷，是定义的一部分"
+  }
+}

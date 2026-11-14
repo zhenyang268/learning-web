@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.1",
+  "chapter": "NL06",
+  "title": "特征函数与 $+i$ 约定",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "### 串讲三：为什么 DFT 是 $-i$，特征函数是 $+i$\n\n这是全库唯一一处**故意反号**的地方（D20）。两边都在做「投影到 $e^{i\\omega t}$」，\n但一边是分析信号（把时间函数拆成频率成分），一边是刻画分布（把概率质量映射成\n$\\mathbb{R}$ 上的函数）。符号差异的具体后果很实在：\n\n|   | DFT（$e^{-2\\pi ikn/N}$） | 特征函数（$e^{+itx}$） |\n|---|---|---|\n| 反号后谁变 | $X_k\\to X_{-k}$（谱镜像） | $\\varphi'(0)$ 从 $+iE[X]$ 变 $-iE[X]$ |\n| 模长判据能否发现 | 能（谱位置反） | **不能**（共轭后模长相同） |\n| 修法 | 索引回卷 | 只能测**实/虚两槽**|\n\n所以 P5 那条「接缝测试」必须用**复值概率质量函数**：实 pmf 下「只翻频轴」与「翻轴再共轭」\n数值恰好相同，测试测不出错。"
+    },
+    {
+      "id": "NL06.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\varphi_X(t)=E[e^{itX}]=\\int e^{itx}p(x)\\,dx=\\sum_k p_ke^{itx_k}$。"
+    },
+    {
+      "id": "NL06.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把「独立和的分布」变成「函数相乘」（P3），把「矩」变成「导数」（P4）。"
+    },
+    {
+      "id": "NL06.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "与傅里叶变换方向**相反**（H1 用 $-i$）。成立条件：$E\\left\\lvert X\\right\\rvert $ 存在时 $\\varphi$\n可微；$\\varphi(0)=1$、$\\left\\lvert \\varphi(t)\\right\\rvert \\le1$、$\\varphi$ 一致连续。"
+    },
+    {
+      "id": "NL06.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "矩的判据必须分实/虚槽（P4），不能只看模。"
+    },
+    {
+      "id": "NL06.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C3、H1。"
+    },
+    {
+      "id": "NL06.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「特征函数就是傅里叶变换」。数学上是，但**符号约定相反**；\n照抄 FFT 的符号会得到 $\\overline{\\varphi}$，而模长判据完全看不出来。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P1",
+    "status": "框架：math/prob.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

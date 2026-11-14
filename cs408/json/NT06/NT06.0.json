@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NT06.0",
+  "chapter": "NT06",
+  "title": "NT06 应用层",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NT06.0:exam.s01",
+      "type": "extension",
+      "title": "第 NT06 应用层：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 9 题 —— 2016 #40；2017 #40；2018 #33、#40；2019 #10、#40；2020 #40；2022 #40；2024 #40\n> 一课位置：`quick/408-net.md` §NET-06 应用层　｜　考点页：`note/408/net/`"
+    },
+    {
+      "id": "NT06.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-NET-0602` 〔易错〕DNS 查询用 UDP，区域传送用 TCP　原因：2019/2020 真题都碰过\n- `408-NET-0602` 〔易错〕递归查询 vs 迭代查询：主机→本地 DNS 通常是递归，本地→根通常迭代　原因：方向记反\n- `408-NET-0603` 〔易错〕FTP 双连接：控制 21（持续）、数据 20（每传一次新建）　原因：端口记反\n- `408-NET-0603` 〔易错〕SMTP 是「推」，POP3/IMAP 是「拉」；MIME 负责非 ASCII 编码　原因：方向错\n- `408-NET-0604` 〔易错〕HTTP 非持续连接时间 ≈ 2RTT + 传输时间（每对象），持续连接 ≈ 1RTT + …　原因：少算建连 RTT"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "应用层"
+  }
+}

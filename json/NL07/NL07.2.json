@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL07.2",
+  "chapter": "NL07",
+  "title": "传播规则与链式法则",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL07.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$(a+b\\varepsilon)(c+e\\varepsilon)=ac+(ae+bc)\\varepsilon$；\n$(a+b\\varepsilon)/(c+e\\varepsilon)=\\frac ac+\\frac{bc-ae}{c^{2}}\\varepsilon$（$c\\ne0$）。\n原函数：$\\sin:( \\sin a,\\ \\cos a\\cdot b)$、$\\exp:(\\exp a,\\ \\exp a\\cdot b)$、$\\ln:(\\ln a,\\ b/a)$、\n$\\sqrt:(\\sqrt a,\\ b/(2\\sqrt a))$。"
+    },
+    {
+      "id": "NL07.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "只要每种原函数都满足「值 + 导数」二元传播，整条表达式树就自动正确——\n这是把微积分降级成算术的关键。"
+    },
+    {
+      "id": "NL07.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "连乘的导数用前后缀积可做到 $O(n)$ 而避免零因子问题：\n$dY=\\sum_i\\big(\\prod_{j\\ne i}v_j\\big)dx_i$。成立条件：$c\\ne0$（除零由 IEEE 传播，标量层不判，D12）。"
+    },
+    {
+      "id": "NL07.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与解析导数对拍；$n$ 元连乘的 $O(n)$ 版本与朴素 $O(n^{2})$ 版本互相对拍。"
+    },
+    {
+      "id": "NL07.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "D1。"
+    },
+    {
+      "id": "NL07.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「除法要单独实现一套导数」。它完全由乘法与可逆元推出；\n手写公式容易在 $c$ 接近 0 时与乘法版本不一致。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D2",
+    "status": "已实现：autodiff/dual.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

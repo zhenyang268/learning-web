@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.5",
+  "chapter": "NL09",
+  "title": "四元数代数：唯一非交换来源是叉积",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$i^{2}=j^{2}=k^{2}=ijk=-1$；\n$(w_1+\\mathbf v_1)(w_2+\\mathbf v_2)=(w_1w_2-\\mathbf v_1\\cdot\\mathbf v_2)+\n(w_1\\mathbf v_2+w_2\\mathbf v_1+\\mathbf v_1\\times\\mathbf v_2)$。"
+    },
+    {
+      "id": "NL09.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "四元数是最省的四维代数表示旋转：4 个数、无奇点、复合只需 16 次乘法。"
+    },
+    {
+      "id": "NL09.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "最后一项 $\\mathbf v_1\\times\\mathbf v_2$ 是**唯一的非交换来源**；\n去掉它就是复数。成立条件：$T$ 为浮点；四元数是除环（非零元可逆）但**非交换**，\n所以不得进入自动微分的交换环域（D1）。"
+    },
+    {
+      "id": "NL09.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "结合律与单位元；$qq^{-1}=1$；$\\left\\lvert q_1q_2\\right\\rvert =\\left\\lvert q_1\\right\\rvert \\left\\lvert q_2\\right\\rvert $（范数乘法性）。"
+    },
+    {
+      "id": "NL09.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G1、C1。"
+    },
+    {
+      "id": "NL09.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「四元数乘法就是四个分量各自乘」。它含叉积项，顺序反了得到共轭旋转；\n把四元数当向量逐分量算会「看起来像」但结果不是旋转。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G5",
+    "status": "已实现：quat/quaternion.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

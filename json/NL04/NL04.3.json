@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL04.3",
+  "chapter": "NL04",
+  "title": "欧拉公式与复指数",
+  "src": {
+    "file": "notebook/math/survey/p4-complex.tex",
+    "sha256": "sha256:448ff3c6af38ff4ed96394fa55217375f859fe35ecad4b3592c77907b51339c1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL04.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\exp(a+bi)=e^{a}(\\cos b+i\\sin b)$。"
+    },
+    {
+      "id": "NL04.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「旋转」的解析表达：单位圆上的 $\\exp(i\\theta)$ 就是转动 $\\theta$；\nDFT 的旋转因子、特征函数的 $e^{itX}$、四元数的半角公式，都是它的变体。"
+    },
+    {
+      "id": "NL04.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "它与矩阵指数 $\\exp(A)$ **只在 $1\\times1$ 时重合**。成立条件：$b$ 为实数；\n相位按模 $2\\pi$ 有意义。"
+    },
+    {
+      "id": "NL04.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无（恒等式本身）；`expm.hpp`明确区分两者（N10）。"
+    },
+    {
+      "id": "NL04.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C1。"
+    },
+    {
+      "id": "NL04.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $\\exp(A)$ 可以先对元素取 $\\exp$。见 N10；两者的「指数」含义不同：\n一个是标量函数，一个是幂级数的矩阵和。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "C3",
+    "status": "已实现：core/complex.hpp、linalg/expm.hpp 对照",
+    "section": "复分析：多值性不是缺陷，是定义的一部分"
+  }
+}

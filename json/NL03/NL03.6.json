@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.6",
+  "chapter": "NL03",
+  "title": "thin QR 与最小二乘",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$A=QR$：$A$ 为 $m\\times n$（$m\\ge n$），$Q$ 为 $m\\times n$ 且 $Q^{H}Q=I_n$，\n$R$ 为 $n\\times n$ 上三角（thin QR）。"
+    },
+    {
+      "id": "NL03.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是**最小二乘**的标准路径：$\\min\\left\\lVert Ax-b\\right\\rVert _{2}$ 等价于解 $Rx=Q^{H}b$，\n因为正交变换不改变 2-范数。"
+    },
+    {
+      "id": "NL03.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "最小二乘的数学链是\n\n$$\n\\left\\lVert Ax-b\\right\\rVert ^{2}=\\left\\lVert Q^{H}(Ax-b)\\right\\rVert ^{2}\n=\\left\\lVert Rx-Q^{H}b\\right\\rVert ^{2}+\\left\\lVert (I-QQ^{H})b\\right\\rVert ^{2},\n$$\n\n第二项与 $x$ 无关，故只需解上三角方程。成立条件：$A$ 列满秩（否则 $R$ 奇异，需换 QR 带列选主元或 SVD）。"
+    },
+    {
+      "id": "NL03.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "原文未给——`qr.hpp`的「三」段**没有写最小二乘**，这条属缺口（见第 节）。\n$m<n$ 的情形库统一抛错，不做退化处理。"
+    },
+    {
+      "id": "NL03.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "N3。"
+    },
+    {
+      "id": "NL03.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $Q$ 必须是 $m\\times m$ 的方阵。thin QR 只取前 $n$ 列，\n这正是「经济型」的含义；补齐多余列只改变 $Q$，不改 $R$。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N6",
+    "status": "已实现（QR；最小二乘原文未给）：linalg/qr.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

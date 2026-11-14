@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.3",
+  "chapter": "NL01",
+  "title": "前向误差与后向误差",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "前向误差 $\\left\\lvert \\hat x-x\\right\\rvert /\\left\\lvert x\\right\\rvert $；后向误差是最小的 $\\left\\lVert E\\right\\rVert /\\left\\lVert A\\right\\rVert $，\n使 $(A+E)\\hat x=b$ 精确成立。前者问「算得准不准」，后者问「算的是不是某个邻近问题的精确解」。"
+    },
+    {
+      "id": "NL01.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "判断一个算法「稳不稳」必须说清是哪一种。LU 带部分主元是**后向稳定**的\n（$\\left\\lVert E\\right\\rVert \\sim n\\varepsilon\\left\\lVert A\\right\\rVert $），但它的前向误差还要被 $\\kappa(A)$ 放大。"
+    },
+    {
+      "id": "NL01.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "一阶近似下 $\\text{前向}\\lesssim\\kappa(A)\\cdot\\text{后向}$。成立条件：$\\kappa$ 取与范数匹配的\n2-范数条件数，且扰动不改变秩。"
+    },
+    {
+      "id": "NL01.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "原文未给——`solve.hpp`的「三」段没有展开这条链，属于第 节的缺口。"
+    },
+    {
+      "id": "NL01.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A1、A4。"
+    },
+    {
+      "id": "NL01.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「残差小就等于解准」。残差正是后向误差；$\\kappa$ 很大时，\n残差 $10^{-16}$ 的解可以离真解差很远。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "A3",
+    "status": "已实现（概念；链路未展开）：linalg/solve.hpp",
+    "section": "分析基础：误差是怎么被量出来的"
+  }
+}

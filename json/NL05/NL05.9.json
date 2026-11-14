@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.9",
+  "chapter": "NL05",
+  "title": "傅里叶级数：系数就是归一化谱",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.9:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$c_k=\\frac1N\\sum_{n=0}^{N-1}x_ne^{-2\\pi ikn/N}=X_k/N$，$k\\in\\mathbb{Z}$；\n布局为 $(2K+1)\\times1$，第 $r$ 行对应 $k=r-K$。"
+    },
+    {
+      "id": "NL05.9:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "把「周期函数的频谱」与「离散 DFT」接上：级数系数不是新对象，就是 DFT 除 $N$。"
+    },
+    {
+      "id": "NL05.9:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "手算锚点：$x_n=\\cos(2\\pi\\cdot3n/N)\\Rightarrow c_{\\pm3}=1/2$，其余 $0$。\n截断重构 $f_K(t)=\\sum_{k=-K}^{K}c_ke^{2\\pi ikt}$ 在节点上等于 $N\\cdot\\mathrm{IFFT}(S)$——\n**乘 $N$ 不是笔误**，因为 IFFT 自带 $1/N$（H2）。成立条件：$N=2^{k}$、$0\\le K$、$2K+1\\le N$；\n截断窗口必须**对称**（单边截断得到的是解析信号，实部只剩一半）。"
+    },
+    {
+      "id": "NL05.9:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "漏乘 $N$ 的病态要能被幅度判据抓住（$f_K$ 与实际值差一个 $N$ 倍）。"
+    },
+    {
+      "id": "NL05.9:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H1、H2。"
+    },
+    {
+      "id": "NL05.9:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $c_k$ 与 $X_k$ 是「两个不同的量」。差别只有一个常数 $1/N$；\n真正的差别在**索引约定**（$k$ 取负、居中存放）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H9",
+    "status": "框架：math/series.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

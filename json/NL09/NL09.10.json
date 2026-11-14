@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.10",
+  "chapter": "NL09",
+  "title": "角度公式：为什么是 $2\\,\\mathrm{atan2}(\\left\\lvert \\mathbf v\\right\\rvert ,w)$",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.10:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\theta=2\\,\\mathrm{atan2}(\\left\\lVert \\mathbf v\\right\\rVert ,w)$（先令 $w\\ge0$）；\n两旋转之差 $\\Omega=2\\arccos\\left\\lvert q_0\\cdot q_1\\right\\rvert $。"
+    },
+    {
+      "id": "NL09.10:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "角度是所有「误差/容差」的度量单位：姿态误差多大算收敛，全靠它。"
+    },
+    {
+      "id": "NL09.10:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "不用 $2\\arccos w$：后者的相对误差约 $\\sqrt{\\varepsilon}/\\theta$，$\\theta=10^{-8}$ 时返回 0。\n成立条件：$q$ 已归一（否则 $\\left\\lVert \\mathbf v\\right\\rVert $ 与 $w$ 不在同一圆上）。"
+    },
+    {
+      "id": "NL09.10:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "小角度用例（$\\theta=10^{-8}$）必须给出非零值；与 G3 的矩阵路径对拍。"
+    },
+    {
+      "id": "NL09.10:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G3、G6。"
+    },
+    {
+      "id": "NL09.10:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\arccos$ 更直接所以更好」。在 0 附近 $\\cos\\theta\\approx1-\\theta^{2}/2$，\n$\\arccos$ 要开方两次才能分辨；$\\mathrm{atan2}$ 用的是比值，天然避开这个相消。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G10",
+    "status": "已实现：quat/quaternion.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

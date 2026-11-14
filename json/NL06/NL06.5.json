@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.5",
+  "chapter": "NL06",
+  "title": "接缝：只翻频轴、不共轭",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "连续情形 $\\varphi_X(2\\pi\\xi)=P(-\\xi)$，其中 $P$ 是 $p$ 的傅里叶变换；\n离散情形 $\\varphi_X(2\\pi k/N)=\\mathrm{FFT}[p]_{(N-k)\\bmod N}$。"
+    },
+    {
+      "id": "NL06.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "库同时有 FFT（$-i$）与特征函数（$+i$），两者必须在某处对齐；\n对齐点错了，整条「分布 $\\leftrightarrow$ 频谱」的桥就歪了。"
+    },
+    {
+      "id": "NL06.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "正确做法是**只翻频轴**（索引回卷），**不额外共轭**。\n成立条件：$p$ 为实 $pmf$ 时 $P(-\\xi)=\\overline{P(\\xi)}$ 恰好成立，所以错误的实现看起来也对。"
+    },
+    {
+      "id": "NL06.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "必须用**复值**pmf 测：实 pmf 下「翻轴」与「翻轴+共轭」数值相同，测不出错。"
+    },
+    {
+      "id": "NL06.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "P1、H1、H5。"
+    },
+    {
+      "id": "NL06.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「反正实信号有共轭对称，共不共轭一个样」。共轭对称是**实信号**的性质，\n一旦输入变成复数（比如已经乘过相位），这条性质消失，错误立刻显形。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P5",
+    "status": "框架：math/prob.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

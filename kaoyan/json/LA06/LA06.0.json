@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LA06.0",
+  "chapter": "LA06",
+  "title": "LA06 二次型",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "LA06.0:exam.s01",
+      "type": "extension",
+      "title": "第 LA06 二次型：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-la.md` §LA-06 二次型　｜　考点页：`note/math1/la/`"
+    },
+    {
+      "id": "LA06.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-LA-0601` 〔高频〕二次型矩阵必须对称：给非对称矩阵先取 $\\frac{A+A^T}{2}$　原因：直接用非对称矩阵求特征值，整题白算\n- `M1-LA-0601` 〔易错〕标准形不唯一，规范形唯一（由正负惯性指数决定）　原因：说「标准形唯一」\n- `M1-LA-0601` 〔易错〕配方法必须是可逆线性变换；正交变换法遇重根要正交化 + 单位化　原因：重根忘了施密特\n- `M1-LA-0603` 〔易错〕相似不一定合同，合同不一定相似；实对称矩阵：相似 ⇒ 合同，反之不成立　原因：四种关系记乱"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "二次型"
+  }
+}

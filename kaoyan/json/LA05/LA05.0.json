@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LA05.0",
+  "chapter": "LA05",
+  "title": "LA05 特征值与特征向量",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "LA05.0:exam.s01",
+      "type": "extension",
+      "title": "第 LA05 特征值与特征向量：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-la.md` §LA-05 特征值与特征向量　｜　考点页：`note/math1/la/`"
+    },
+    {
+      "id": "LA05.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-LA-0501` 〔易错〕$k$ 重特征值对应的线性无关特征向量个数 $\\le k$　原因：以为一定等于 $k$\n- `M1-LA-0502` 〔易错〕一般矩阵相似的必要条件是特征值相同；可对角化时才是充要　原因：把必要当充要\n- `M1-LA-0502` 〔易错〕有重特征值 ≠ 不可对角化，要验证 $n-r(\\lambda E-A)$ 是否等于代数重数　原因：见「重根」就判不可对角化\n- `M1-LA-0503` 〔易错〕实对称不同特征值的特征向量正交；普通矩阵只是线性无关　原因：对普通矩阵也用正交"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "特征值与特征向量"
+  }
+}

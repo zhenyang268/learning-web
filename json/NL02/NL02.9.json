@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.9",
+  "chapter": "NL02",
+  "title": "行列式是体积，不是「接近 0 就奇异」",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.9:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\det A$ 是有向体积缩放因子；方阵下 $\\left\\lvert \\det A\\right\\rvert =\\prod_i\\sigma_i$。"
+    },
+    {
+      "id": "NL02.9:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "判断坐标变换的 Jacobian 是否为零（拉回与积分换元要它），以及体积判据。"
+    },
+    {
+      "id": "NL02.9:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$\\left\\lvert \\det A\\right\\rvert $ 小**不等于**病态：把单位矩阵乘 $10^{-8}$，$\\det=10^{-8n}$ 而 $\\kappa=1$。\n判断奇异性要用 $\\sigma_{\\min}/\\sigma_{\\max}$。"
+    },
+    {
+      "id": "NL02.9:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "原文未给——库没有 `det`入口，这条属缺口。"
+    },
+    {
+      "id": "NL02.9:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L7。"
+    },
+    {
+      "id": "NL02.9:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $\\det\\approx0$ 就是奇异。尺度一改判断就翻，它是个**绝对量**，不能横向比较。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L9",
+    "status": "缺位：库无 det 入口",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

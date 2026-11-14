@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.4",
+  "chapter": "NL06",
+  "title": "矩即导数：$i^{k}$ 因子与实虚分槽",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\varphi^{(k)}(0)=i^{k}E[X^{k}]$。具体地：$\\varphi'(0)=i\\mu$（纯虚），\n$\\varphi''(0)=-(\\mu^{2}+\\sigma^{2})$（纯实）。"
+    },
+    {
+      "id": "NL06.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把「求矩」变成「在 0 处求导」，是从特征函数反推分布的最短路径。"
+    },
+    {
+      "id": "NL06.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "奇阶导数带 $i^{\\text{奇}}$ 因子，故落在虚部；偶阶落在实部。\n成立条件：$E\\left\\lvert X\\right\\rvert ^{k}<\\infty$；$0$ 处可导。"
+    },
+    {
+      "id": "NL06.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "判据必须分实/虚两槽比较；若整体用 $\\mathrm{abs2}$，符号错误会被抹平。"
+    },
+    {
+      "id": "NL06.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "P1。"
+    },
+    {
+      "id": "NL06.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\varphi$ 在 0 处的斜率就是均值」。斜率是 $i\\mu$，差一个 $i$；\n把它当实数会得到 0（因为 $\\mu$ 在虚部）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P4",
+    "status": "框架：math/prob.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

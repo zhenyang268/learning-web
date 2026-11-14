@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NT01.0",
+  "chapter": "NT01",
+  "title": "NT01 体系结构",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NT01.0:exam.s01",
+      "type": "extension",
+      "title": "第 NT01 体系结构：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 10 题 —— 2016 #33；2017 #33；2019 #3、#33；2020 #33；2021 #33；2022 #33、#37；2023 #33；2024 #33\n> 一课位置：`quick/408-net.md` §NET-01 体系结构　｜　考点页：`note/408/net/`"
+    },
+    {
+      "id": "NT01.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-NET-0101` 〔易错〕时延四分量：发送 + 传播 + 处理 + 排队；发送时延 = 数据量/带宽（不是距离/速度）　原因：两个时延混算"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "体系结构"
+  }
+}

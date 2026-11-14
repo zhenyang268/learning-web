@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.8",
+  "chapter": "NL05",
+  "title": "Parseval 与归一化因子",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.8:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "在不归一化 + $1/N$ 逆变换的约定下：$\\sum_n\\left\\lvert x_n\\right\\rvert ^{2}=\\frac1N\\sum_k\\left\\lvert X_k\\right\\rvert ^{2}$。"
+    },
+    {
+      "id": "NL05.8:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "能量守恒是检验「变换有没有算错」的全局判据——它不依赖任何单个频点的精度。"
+    },
+    {
+      "id": "NL05.8:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "因子 $1/N$ 来自 H2 的逆变换归一化；若改用酉归一化（正逆各除 $\\sqrt N$），因子变成 1。\n成立条件：同一约定下两边比较；$\\mathrm{abs2}$ 求和（不取模开方）。"
+    },
+    {
+      "id": "NL05.8:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "两边比值与 1 的差 $\\le10^{-12}$。"
+    },
+    {
+      "id": "NL05.8:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H1、H2。"
+    },
+    {
+      "id": "NL05.8:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 Parseval 是「近似成立的能量关系」。它是精确恒等式（离散、有限、无截断），\n浮点上只差舍入。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H8",
+    "status": "框架：math/fourier.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

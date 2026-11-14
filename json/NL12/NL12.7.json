@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL12.7",
+  "chapter": "NL12",
+  "title": "元素总数与空乘积",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL12.7:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\text{Size}()=\\prod_d\\text{shape}[d]$；秩 0（标量）时**空乘积为 1**。"
+    },
+    {
+      "id": "NL12.7:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "标量必须有一个元素而不是零个；否则「$1\\times1$ 矩阵」与「标量」的运算语义会分裂。"
+    },
+    {
+      "id": "NL12.7:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "任一维为 0 $\\Rightarrow\\text{Size}=0$（合法空张量，不是错误）；含 0 维时**秩仍照算**（$\\{2,0,3\\}$ 的秩是 3、元素数 0）。成立条件：形状非负。"
+    },
+    {
+      "id": "NL12.7:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "空张量与标量分别用例；`0×0` 的写盘/读回（对应 NOW 的 npy 契约）也要能过。"
+    },
+    {
+      "id": "NL12.7:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "T1。"
+    },
+    {
+      "id": "NL12.7:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「元素数为 0 就是秩为 0」。秩是维数、元素数是乘积；$\\{0\\}$ 的秩是 1、元素数是 0。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "T7",
+    "status": "框架：core/tensor.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

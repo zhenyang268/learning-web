@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PS07.0",
+  "chapter": "PS07",
+  "title": "PS07 参数估计",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "PS07.0:exam.s01",
+      "type": "extension",
+      "title": "第 PS07 参数估计：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-ps.md` §PS-07 参数估计　｜　考点页：`note/math1/ps/`"
+    },
+    {
+      "id": "PS07.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-PS-0701` 〔易错〕最大似然：离散用分布律、连续用密度；均匀分布要按 $\\max X_i$ 取边界，不能求导　原因：硬求导得不出\n- `M1-PS-0702` 〔高频〕有效性比较必须建立在无偏前提下　原因：直接比方差\n- `M1-PS-0703` 〔易错〕枢轴量的分布不能含未知参数；方差已知用 $Z$、未知且小样本用 $t$　原因：选错统计量\n- `M1-PS-0703` 〔高频〕置信水平不是「参数落在区间内的概率」（参数是常数）　原因：概念表述错，扣分"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "参数估计"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.2",
+  "chapter": "NL01",
+  "title": "累加误差与 $8n\\varepsilon$ 的来历",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$n$ 次量级相当的加减乘，舍入误差累积上界约为 $n\\varepsilon\\cdot(\\text{结果量级})$；\n库取系数 $8$ 作余量，定义 $\\mathrm{DefaultTol}(n)=8n\\varepsilon(\\text{real\\_t})$。"
+    },
+    {
+      "id": "NL01.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是全库**唯一默认容差**：判主元是否为零、判 Cholesky 主元是否为正、\n判特征值迭代是否收敛，都用它。"
+    },
+    {
+      "id": "NL01.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$8n\\varepsilon$ 的量级是「$n$ 次累加的最坏舍入」。成立条件：各步量级相当、\n**没有相消**（见 A6）。一旦出现严重相消，相对误差无界，这个界不再有效。"
+    },
+    {
+      "id": "NL01.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "`solve.hpp`判 $\\left\\lvert \\text{pivot}\\right\\rvert \\le \\mathrm{DefaultTol}(n)$；\n`cholesky.hpp`判 $\\mathrm{real}(d)>\\mathrm{DefaultTol}(n)$（写成 `!(d>tol)`让 NaN 也抛）。"
+    },
+    {
+      "id": "NL01.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A1。"
+    },
+    {
+      "id": "NL01.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $8n\\varepsilon$ 是误差分析严格推出来的。源码明确写着「系数 8 是余量、非推导」——\n它是个经过实测校准的工程常数，不是定理。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "A2",
+    "status": "已实现：core/scalar.hpp",
+    "section": "分析基础：误差是怎么被量出来的"
+  }
+}

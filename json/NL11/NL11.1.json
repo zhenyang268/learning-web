@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL11.1",
+  "chapter": "NL11",
+  "title": "CSR 与 SpMV 的复杂度",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL11.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "CSR 用三个数组：`values`（非零元）、`colIdx`（列号）、\n`rowPtr`（每行起点，长 $n+1$，`rowPtr[n]`=\\text{nnz}）。"
+    },
+    {
+      "id": "NL11.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "有限元的 $A$ 每行只有几个非零；稠密存储的 $O(n^{2})$ 与「想解多大的问题」直接冲突。"
+    },
+    {
+      "id": "NL11.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "一次 SpMV 是 $O(\\text{nnz})$，而稠密是 $O(n^{2})$；对 1D 三对角 $\\text{nnz}=3n-2$，\n所以每次迭代 $O(n)$ 而非 $O(n^{2})$。成立条件：`rowPtr`单调不减且首末正确；\n稀疏没有「结构零」以外的假设。"
+    },
+    {
+      "id": "NL11.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与稠密乘逐点对拍（随机 $100\\times100$、密度 5%、$\\le10^{-14}$）；\n三对角手算 `rowPtr`=$[0,2,5,8,\\dots]$；边界形状 $1\\times1$、单行、全零行、$\\text{nnz}=0$ 不许崩。"
+    },
+    {
+      "id": "NL11.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "F1。"
+    },
+    {
+      "id": "NL11.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「稀疏存储一定更快」。$n$ 小或密度高时，索引开销会反超；\n判据是「实际耗时比」而不是「理论复杂度」。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F7",
+    "status": "未建：linalg/sparse.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

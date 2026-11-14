@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL13.7",
+  "chapter": "NL13",
+  "title": "$n=3$ 字典：grad / curl / div",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL13.7:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "0-形式 $\\leftrightarrow$ 梯度、1-形式 $\\leftrightarrow$ 旋度、2-形式 $\\leftrightarrow$ 散度；\n即 $d$ 在三个阶上分别实现这三个算子（配合 M5 的 $\\star$）。"
+    },
+    {
+      "id": "NL13.7:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「微分形式不是抽象玩具」的证据：向量分析的三件套就是同一个 $d$ 的不同阶表现。"
+    },
+    {
+      "id": "NL13.7:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "两条熟知的恒等式在此变成一句话：$\\mathrm{curl}\\,\\mathrm{grad}=0$ 与\n$\\mathrm{div}\\,\\mathrm{curl}=0$ 都是 $d^{2}=0$。成立条件：欧氏度量 + 标准定向。"
+    },
+    {
+      "id": "NL13.7:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与显式叉积/散度逐分量对拍；$d^{2}=0$ 的三阶版本各自验证。"
+    },
+    {
+      "id": "NL13.7:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "M3、M5。"
+    },
+    {
+      "id": "NL13.7:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\mathrm{curl}\\,\\mathrm{grad}=0$ 是算出来的巧合」。它是拓扑事实\n（$d^{2}=0$），与坐标系无关；换成曲线坐标依然成立，而手算展开会累死。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "M7",
+    "status": "未建：math/forms.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

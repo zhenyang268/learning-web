@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.3",
+  "chapter": "NL03",
+  "title": "Householder 反射",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "取 $v=x+\\mathrm{sign}(x_1)\\left\\lVert x\\right\\rVert e_1$，令 $H=I-2vv^{H}/(v^{H}v)$，则\n$Hx=-\\mathrm{sign}(x_1)\\left\\lVert x\\right\\rVert e_1$——一次反射把一个向量整体打到坐标轴上。"
+    },
+    {
+      "id": "NL03.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是 QR 的「整列消元」工具：一次反射消掉一列下面的所有元素，不改已算好的列。"
+    },
+    {
+      "id": "NL03.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$H^{H}H=I$ 且 $H^{H}=H$（酉且 Hermitian，故 $H^{-1}=H$）。\n分母 $v^{H}v$ 必须用**修改后**的 $v$ 计算——用改前的 $\\left\\lVert x\\right\\rVert ^{2}$ 会让 $H$ 不再对合，\n消元目标也达不到。成立条件：$x\\ne0$；$\\left\\lVert x\\right\\rVert $ 大于阈值，否则跳过。"
+    },
+    {
+      "id": "NL03.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "跳过条件 $\\left\\lVert x\\right\\rVert \\le \\mathrm{DefaultTol}(m)$。"
+    },
+    {
+      "id": "NL03.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L3、L4、L10。"
+    },
+    {
+      "id": "NL03.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为反射会放大误差。酉变换的 2-范数恰为 1，它是「不放大」的；\n真正放大误差的是后续的消元除法。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N3",
+    "status": "已实现：linalg/qr.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

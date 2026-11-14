@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.6",
+  "chapter": "NL09",
+  "title": "双覆盖与半角",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$q=\\cos\\frac\\theta2+\\sin\\frac\\theta2\\hat u$ 对应旋转 $\\theta$；\n$q$ 与 $-q$ 给出同一个旋转矩阵，即映射 $S^{3}\\to SO(3)$ 是**二对一**（双覆盖）。"
+    },
+    {
+      "id": "NL09.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它解释了半角、$\\theta+2\\pi$ 的等价、以及为什么四元数的「角度」只能取 $[0,\\pi]$ 的一半。"
+    },
+    {
+      "id": "NL09.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$M(q)=M(-q)$；旋转复合对应四元数乘（同向）；共轭对应逆旋转。\n成立条件：$\\left\\lVert q\\right\\rVert =1$（单位四元数）才有纯旋转；非单位会带缩放。"
+    },
+    {
+      "id": "NL09.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$M(q)=M(-q)$ 逐元素；$\\left\\lvert q\\right\\rvert =1$ 时 $M(q)$ 正交且 $\\det=1$。"
+    },
+    {
+      "id": "NL09.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G2、G5。"
+    },
+    {
+      "id": "NL09.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「四元数转动 $2\\pi$ 就回到原状态」。四元数要 $4\\pi$ 才回到自己\n（$q\\to-q$），这正是「自旋 $1/2$」的几何来源；用它插值时选短弧就是在处理这个歧义（G8）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G6",
+    "status": "已实现：quat/quaternion.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

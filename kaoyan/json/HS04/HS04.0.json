@@ -1,0 +1,25 @@
+{
+  "schema": "doc-card/v1",
+  "code": "HS04.0",
+  "chapter": "HS04",
+  "title": "HS04 向量代数与空间解析几何",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "HS04.0:exam.s01",
+      "type": "extension",
+      "title": "第 HS04 向量代数与空间解析几何：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-04 向量代数与空间解析几何　｜　考点页：`note/math1/hs/`"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "向量代数与空间解析几何"
+  }
+}

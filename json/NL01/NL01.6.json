@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.6",
+  "chapter": "NL01",
+  "title": "相消与三种改写",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "两个相近数相减，结果的相对误差约为 $\\varepsilon\\left\\lvert a\\right\\rvert /\\left\\lvert a-b\\right\\rvert $——\n当 $\\left\\lvert a-b\\right\\rvert \\ll\\left\\lvert a\\right\\rvert $ 时有效位成批消失。"
+    },
+    {
+      "id": "NL01.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "四个地方直接踩它：复数模长 $\\sqrt{a^{2}+b^{2}}$、开方里的 $\\left\\lvert z\\right\\rvert \\pm a$、\n`erfc`的大参数、二次方程小根。"
+    },
+    {
+      "id": "NL01.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "三条改写手段：**换形式**（分子有理化、半角公式）、\n**用不抵消表达式**（`hypot`、倒数形式）、**切到互补函数**（$\\mathrm{erf}\\leftrightarrow\\mathrm{erfc}$、\n$\\Phi(-x)=\\mathrm{erfc}(x/\\sqrt2)/2$）。成立条件：改写必须在同一数学恒等式的两侧，不能引入新的近似。"
+    },
+    {
+      "id": "NL01.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "`special.hpp`要求 $\\mathrm{erf}/\\mathrm{erfc}$ 与语言内建差 $\\le 2$ ulp；\n$\\mathrm{erfc}$ 在 $x\\gtrsim5.9$ 处若用 $1-\\mathrm{erf}$ 只剩 1 ulp 可用，必错。"
+    },
+    {
+      "id": "NL01.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A1。"
+    },
+    {
+      "id": "NL01.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「上 long double 就能治相消」。相消丢的是**已经算出来的位**，\n加精度只多几位，改写形式才根治。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "A6",
+    "status": "已实现：core/complex.hpp、math/special.hpp",
+    "section": "分析基础：误差是怎么被量出来的"
+  }
+}

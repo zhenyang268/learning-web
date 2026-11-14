@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.7",
+  "chapter": "NL05",
+  "title": "复杂度：$O(N^{2})$ 与 $O(N\\log N)$ 的量级差",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.7:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "DFT 需 $N^{2}$ 次复乘；FFT 需约 $\\frac N2\\log_2N$ 次蝶形（每次一个复乘两个复加）。"
+    },
+    {
+      "id": "NL05.7:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它解释「为什么 FFT 是信号处理的起点」：$N=2^{20}$ 时约 $10^{12}$ 对 $2\\times10^{7}$，\n差四个数量级。"
+    },
+    {
+      "id": "NL05.7:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "比值约 $2N/\\log_2N$。成立条件：$N$ 为 2 的幂；常数因子未计。"
+    },
+    {
+      "id": "NL05.7:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无（复杂度是量级陈述，不进 ctest）；实测只记一笔不设阈值。"
+    },
+    {
+      "id": "NL05.7:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H6。"
+    },
+    {
+      "id": "NL05.7:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$O(N\\log N)$ 一定比 $O(N^{2})$ 快」。小 $N$（几十）时 DFT 的常数更小，\n这也是库在小规模时用 DFT 作参照基线的原因。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H7",
+    "status": "框架：math/fourier.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

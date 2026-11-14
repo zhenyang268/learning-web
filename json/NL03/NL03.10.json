@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.10",
+  "chapter": "NL03",
+  "title": "矩阵指数：Padé 与 scaling & squaring",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.10:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "两条路线：Taylor 级数截断；Padé $[13/13]$ 近似\n$\\exp(A)\\approx D^{-1}N$，其中 $N=\\sum_{k=0}^{m}c_kA^{k}$、$D=\\sum_k c_k(-A)^{k}$，\n$c_k=\\frac{(2m-k)!\\,m!}{(2m)!\\,k!\\,(m-k)!}$（递推 $c_k=c_{k-1}\\frac{m-k+1}{k(2m-k+1)}$，$c_1=1/2$）。\n两者都配 scaling & squaring：$\\exp(A)=(\\exp(A/2^{s}))^{2^{s}}$。"
+    },
+    {
+      "id": "NL03.10:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "矩阵指数是线性 ODE、旋转积分、马尔可夫半群的统一工具；\n它也是「逼近算法 + 误差地板」这一对概念的样板。"
+    },
+    {
+      "id": "NL03.10:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "取 $s$ 使 $\\left\\lVert A/2^{s}\\right\\rVert _{F}\\le1/2$（Taylor）或 $\\le\\theta_{13}=5.3719\\ldots$（Padé）。\n**精度地板**：$\\exp$ 的条件数约 $e^{\\left\\lVert A\\right\\rVert }/\\sqrt{2\\pi\\left\\lVert A\\right\\rVert }\\cdot\\varepsilon$，与算法无关——\n即「再怎么改算法，相对误差也下不去」。\n独立判据：$\\det(\\exp A)=\\exp(\\mathrm{tr}A)$；而 $\\exp(A)\\exp(-A)=I$ 在 $\\left\\lVert A\\right\\rVert =100$ 时条件数可达 $7\\times10^{86}$，\n不能当判据。"
+    },
+    {
+      "id": "NL03.10:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "Padé 与 Taylor 的相对差 $<10^{-8}$（实测 $5.3\\times10^{-16}$ 至 $1.5\\times10^{-13}$）；\n级数截断上界 $k\\le30$。"
+    },
+    {
+      "id": "NL03.10:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "N2、A4。"
+    },
+    {
+      "id": "NL03.10:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\exp(A)$ 就是把每个元素取 $\\exp$」。那是逐元素操作，不是矩阵指数；\n只有对角矩阵两者才重合。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N10",
+    "status": "已实现：linalg/expm.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

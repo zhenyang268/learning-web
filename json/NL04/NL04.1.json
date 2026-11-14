@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL04.1",
+  "chapter": "NL04",
+  "title": "复代数与非有序域",
+  "src": {
+    "file": "notebook/math/survey/p4-complex.tex",
+    "sha256": "sha256:448ff3c6af38ff4ed96394fa55217375f859fe35ecad4b3592c77907b51339c1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL04.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$(a+bi)(c+di)=(ac-bd)+(ad+bc)i$，$\\left\\lvert z\\right\\rvert ^{2}=a^{2}+b^{2}$，\n$z^{-1}=\\overline{z}/\\left\\lvert z\\right\\rvert ^{2}$。"
+    },
+    {
+      "id": "NL04.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是全库唯一的「非有序标量」：所有比较必须绕道 $\\mathrm{abs2}$（D7），\n所有正交必须用共轭转置（L3）。"
+    },
+    {
+      "id": "NL04.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "复数域**不存在**与加法乘法相容的全序。成立条件：无——\n这是定理（任何把 $\\mathbb{C}$ 变成有序域的尝试都会导致 $-1\\ge0$）。"
+    },
+    {
+      "id": "NL04.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "判复数相等必须逐分量比实虚两槽；$\\mathrm{abs2}$ 只能判模长（L5）。"
+    },
+    {
+      "id": "NL04.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L4。"
+    },
+    {
+      "id": "NL04.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「复数也能比大小，只是编译器不给」。不是编译器限制，是数学上不可能：\n只要 $\\left\\lvert \\cdot\\right\\rvert $ 与加减乘相容，$i^{2}=-1<0$ 必然矛盾。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "C1",
+    "status": "已实现：core/complex.hpp",
+    "section": "复分析：多值性不是缺陷，是定义的一部分"
+  }
+}

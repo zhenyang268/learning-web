@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.8",
+  "chapter": "NL03",
+  "title": "SPD 判定 = 分解走通",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.8:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$A$ Hermitian 正定 $\\iff$ 不选主元的 Cholesky 能完整走通。"
+    },
+    {
+      "id": "NL03.8:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "这条等价性让「判定」和「计算」合并成一步——不需要单独的判定算法，\n跑一遍分解就是判定。"
+    },
+    {
+      "id": "NL03.8:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "双向等价：正定 $\\Rightarrow$ 每步主元 $d>0$；反之若每步都走通，则构造出的 $L$ 满足 $LL^{H}=A$\n且主元为正 $\\Rightarrow$ 正定。成立条件：$A$ 必须 Hermitian（否则「正定」本身无定义）。"
+    },
+    {
+      "id": "NL03.8:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "主元 $\\mathrm{real}(d)>\\mathrm{DefaultTol}(n)$，失败即判非 SPD（够用，因为主元严格正时有正的下界）。"
+    },
+    {
+      "id": "NL03.8:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "N7。"
+    },
+    {
+      "id": "NL03.8:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 SPD 判定需要先算特征值。特征值判定正确但要 $O(n^{3})$ 且精度更差；\n分解判定是同一量级里最省的路线。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N8",
+    "status": "已实现：inverse.hpp、cholesky.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

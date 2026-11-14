@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.10",
+  "chapter": "NL02",
+  "title": "秩 1 修正（外积）",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.10:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$uv^{H}$ 是秩 1 矩阵，$(uv^{H})_{ij}=u_i\\overline{v_j}$。"
+    },
+    {
+      "id": "NL02.10:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "Householder 反射 $H=I-2vv^{H}/(v^{H}v)$ 就是秩 1 修正；\n反向传播里 $\\partial L/\\partial W=vx^{\\mathsf T}$ 也是外积。"
+    },
+    {
+      "id": "NL02.10:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "秩 1 修正只改变一个方向上的分量，故一次反射能把一个向量整体打到坐标轴上。\n成立条件：$u,v$ 为列向量（D19）；形状必须匹配，否则抛错。"
+    },
+    {
+      "id": "NL02.10:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "反向模式的形状校验：$\\partial L/\\partial W$ 必须是 $m\\times n$，由 $vx^{\\mathsf T}$ 唯一确定（G4）。"
+    },
+    {
+      "id": "NL02.10:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L2、L3。"
+    },
+    {
+      "id": "NL02.10:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为外积是内积的「转置版」。内积给标量、外积给矩阵，维数差一个量级。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L10",
+    "status": "已实现：linalg/qr.hpp、autodiff/grad_graph.hpp",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.2",
+  "chapter": "NL06",
+  "title": "高斯的特征函数",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$X\\sim N(\\mu,\\sigma^{2})\\Rightarrow\\varphi(t)=e^{i\\mu t-\\sigma^{2}t^{2}/2}$。"
+    },
+    {
+      "id": "NL06.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是唯一「特征函数仍是高斯型」的分布，也是中心极限定理的解析支点。"
+    },
+    {
+      "id": "NL06.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$\\mu=0$ 时 $\\varphi$ 实、偶、非负；$\\mu=0,\\sigma=1$ 时\n$\\varphi(t)=e^{-t^{2}/2}$ **恰好等于**标准正态密度函数——高斯是傅里叶变换的不动点（差常数）。\n成立条件：$\\sigma>0$。"
+    },
+    {
+      "id": "NL06.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "高斯不动点：取 $dx\\in\\{0.5,0.4,0.3,0.25\\}$ 四点，残差随 $dx$ 的衰减斜率与\n$\\exp(-\\pi/dx^{2})$ 的预测一致。"
+    },
+    {
+      "id": "NL06.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "P1。"
+    },
+    {
+      "id": "NL06.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「不动点意味着 $\\varphi=\\varphi$ 恒成立」。它只在 $\\mu=0,\\sigma=1$ 且按\n$\\hat f(\\xi)=\\int f(x)e^{-2\\pi i\\xi x}dx$ 归一化时成立；换约定就多出常数与相位。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P2",
+    "status": "框架：math/prob.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

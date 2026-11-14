@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL04.4",
+  "chapter": "NL04",
+  "title": "对数主值与分支切割",
+  "src": {
+    "file": "notebook/math/survey/p4-complex.tex",
+    "sha256": "sha256:448ff3c6af38ff4ed96394fa55217375f859fe35ecad4b3592c77907b51339c1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL04.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\log z=\\ln\\left\\lvert z\\right\\rvert +i\\arg z$，$\\arg z\\in(-\\pi,\\pi]$（主值）。"
+    },
+    {
+      "id": "NL04.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "复对数是多值（$\\log z$ 差 $2\\pi ik$），必须选一支；选哪一支决定了哪些地方不连续。"
+    },
+    {
+      "id": "NL04.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "主值分支的**切割在负实轴**：从上方趋近给 $+\\pi$，从下方给 $-\\pi$，\n所以 $\\log$ 在负实轴上不连续。这是多值性的必然，不是实现缺陷。需要连续性时要自己做相位展开（unwrapping）。"
+    },
+    {
+      "id": "NL04.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无。"
+    },
+    {
+      "id": "NL04.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C3。"
+    },
+    {
+      "id": "NL04.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「主值就是唯一正确的值」。主值是**约定**；换一支（比如 $[0,2\\pi)$）\n得到另一套连续性与另一套公式，物理结果相同但中间步骤的符号会变。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "C4",
+    "status": "已实现：core/complex.hpp",
+    "section": "复分析：多值性不是缺陷，是定义的一部分"
+  }
+}

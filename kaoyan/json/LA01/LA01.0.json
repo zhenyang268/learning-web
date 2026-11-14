@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LA01.0",
+  "chapter": "LA01",
+  "title": "LA01 行列式",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "LA01.0:exam.s01",
+      "type": "extension",
+      "title": "第 LA01 行列式：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-la.md` §LA-01 行列式　｜　考点页：`note/math1/la/`"
+    },
+    {
+      "id": "LA01.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-LA-0101` 〔易错〕行列式转置不变 $|A^{T}|=|A|$、两行互换变号　原因：两个基本性质写错\n- `M1-LA-0101` 〔易错〕代数余子式带 $(-1)^{i+j}$，$i+j$ 奇数取负　原因：忘符号"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "行列式"
+  }
+}

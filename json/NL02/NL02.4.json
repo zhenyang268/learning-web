@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.4",
+  "chapter": "NL02",
+  "title": "内积、共轭位置与正定性",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\langle a,b\\rangle _{F}=\\sum_i \\overline{a_i}b_i$（共轭在**第一个**参数）。"
+    },
+    {
+      "id": "NL02.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "范数、正交、投影、最小二乘、CG 的正定性前提，全由内积定义。"
+    },
+    {
+      "id": "NL02.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "共轭必须在第一参数，才有 $\\langle x,x\\rangle =\\left\\lVert x\\right\\rVert ^{2}\\in\\mathbb{R}_{\\ge0}$——即**正定性**。\n漏写共轭不会「少一点精度」，而是让内积不再是正定形式，依赖它的正交性判据静默给出错误结论。\n成立条件：元素类型具备 $\\mathrm{conj}$ 与 $\\mathrm{abs2}$ 语义（D7）。"
+    },
+    {
+      "id": "NL02.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "复数域才测得出（实域共轭恒等，测试免疫）。"
+    },
+    {
+      "id": "NL02.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C1。"
+    },
+    {
+      "id": "NL02.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「先乘 a 还是先乘 b 无所谓」。复内积是半双线性的，交换要付共轭；顺序错就塌成双线性。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L4",
+    "status": "已实现：linalg/operator.hpp",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

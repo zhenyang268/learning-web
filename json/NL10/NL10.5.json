@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL10.5",
+  "chapter": "NL10",
+  "title": "Dirichlet 消元与保持对称",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL10.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "对边界自由度：把对应行列清零、对角置 1、右端置为边界值，并把边界值对内部的贡献从 $b$ 里扣掉。"
+    },
+    {
+      "id": "NL10.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "不处理边界，$A$ 有非平凡零空间（常向量），CG 必失败（F9）；\n处理不当，$A$ 变不对称，CG 的整个理论前提崩掉。"
+    },
+    {
+      "id": "NL10.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "「行、列都清零 + 对角置 1」保持**对称**；只清行会破坏对称性。\n成立条件：Dirichlet 值已知；边界自由度集合正确（F1）。"
+    },
+    {
+      "id": "NL10.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "处理后 $A$ 仍对称、对角非零、$x$ 的边界分量等于给定值；未加边界时内部节点行和为 0。"
+    },
+    {
+      "id": "NL10.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "F1、F2。"
+    },
+    {
+      "id": "NL10.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「把边界节点从矩阵里删掉」更干净。删行删列会改变未知量编号（要重排索引），\n工程上更容易出错；清零法保留维度、保持结构。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F5",
+    "status": "未建：math/assemble.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

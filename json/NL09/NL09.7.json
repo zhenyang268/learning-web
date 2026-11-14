@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.7",
+  "chapter": "NL09",
+  "title": "四元数的逆与零判据",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.7:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$q^{-1}=q^{*}/\\left\\lvert q\\right\\rvert ^{2}$，$q^{*}=(w,-\\mathbf v)$；单位四元数下 $q^{-1}=q^{*}$。"
+    },
+    {
+      "id": "NL09.7:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "逆旋转、误差度量（$q_1^{-1}q_2$ 的角）、以及插值的中间量都用到它。"
+    },
+    {
+      "id": "NL09.7:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "判零用**四个分量精确全为 0**，不带容差——与矩阵求逆的容差判据（N9）不同。\n成立条件：非零四元数。"
+    },
+    {
+      "id": "NL09.7:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$qq^{-1}=1$（到 $10^{-15}$）；零四元数抛异常而不是返回 inf。"
+    },
+    {
+      "id": "NL09.7:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G5。"
+    },
+    {
+      "id": "NL09.7:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「四元数求逆和矩阵求逆一样该带容差」。矩阵的「接近奇异」有实际意义\n（条件数大），四元数的「接近零」只是一个点；加容差会把合法的极小四元数误杀。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G7",
+    "status": "已实现：quat/quaternion.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

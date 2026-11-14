@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.9",
+  "chapter": "NL03",
+  "title": "结构化解与探测顺序",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.9:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "按结构给出逆：对角 $(A^{-1})_{ii}=1/d_i$；正交 $A^{-1}=A^{H}$；\nSPD 用 $A=LL^{H}\\Rightarrow A^{-1}=(L^{-1})^{H}L^{-1}$；一般用 $PA=LU\\Rightarrow A^{-1}=U^{-1}L^{-1}P$；\nQR 用 $A^{-1}=R^{-1}Q^{H}$。"
+    },
+    {
+      "id": "NL03.9:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "结构化解又快又准（正交矩阵的逆零误差），比通用求解好得多；但前提是**判对结构**。"
+    },
+    {
+      "id": "NL03.9:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "结构探测的集合关系：对角 $\\subset$ 对称 $\\subset$ 一般；SPD $\\subset$ 对称。\n所以在检查顺序上**子类必须判在父类之前**，否则永远走通用路径。\n条件判据：对角 $\\left\\lvert a_{ij}\\right\\rvert \\le\\mathrm{tol}\\,(i\\ne j)$；对称 $\\left\\lvert a_{ij}-\\overline{a_{ji}}\\right\\rvert \\le\\mathrm{tol}$；\n正交 $\\left\\lVert A^{H}A-I\\right\\rVert \\le\\mathrm{tol}$；复数域必须用 $A^{H}$ 而不是 $A^{\\mathsf T}$。"
+    },
+    {
+      "id": "NL03.9:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "各路径的奇异判据统一：对角 $\\left\\lvert d_i\\right\\rvert \\le\\mathrm{tol}$，LU $\\left\\lvert u_{kk}\\right\\rvert \\le\\mathrm{tol}$，\nQR $\\left\\lvert R_{ii}\\right\\rvert \\le\\mathrm{tol}$，SPD 由 N8 内部判。"
+    },
+    {
+      "id": "NL03.9:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "N2、N7、N8。"
+    },
+    {
+      "id": "NL03.9:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「对称矩阵的逆也对称」就能反推用了快路径。逆确实对称，\n但判定它是否对称用的容差是调用方给的——同一个矩阵在 $10^{-6}$ 与 $10^{-12}$ 下可能落到不同分支。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N9",
+    "status": "已实现：linalg/inverse.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DS01.0",
+  "chapter": "DS01",
+  "title": "DS01 绪论",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "DS01.0:exam.s01",
+      "type": "extension",
+      "title": "第 DS01 绪论：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 2 题 —— 2017 #1；2022 #1\n> 一课位置：`quick/408-ds.md` §DS-01 绪论　｜　考点页：`note/408/ds/`"
+    },
+    {
+      "id": "DS01.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-DS-0102` 〔易错〕必须写时间复杂度与空间复杂度，题目要求而不写直接扣　原因：最常见的白丢分"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "绪论"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.2",
+  "chapter": "NL03",
+  "title": "LU 分解与乘子界",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$PA=LU$：$L$ 单位下三角（对角全 1），$U$ 上三角，$P$ 由行交换序列重放。\n消元式：$l_{ik}=u_{ik}/u_{kk}$，$u_{ij}\\leftarrow u_{ij}-l_{ik}u_{kj}$（$j\\ge k$）。"
+    },
+    {
+      "id": "NL03.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "一次分解、多次求解：同一 $A$ 换不同 $b$ 只需前代回代，代价从 $O(n^{3})$ 降到 $O(n^{2})$。"
+    },
+    {
+      "id": "NL03.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "前代 $Ly=Pb$、回代 $Ux=y$；不显式求 $A^{-1}$（求逆的 flops 是解方程的数倍，精度还更差）。\n成立条件：$A$ 方阵、主元非奇异；$\\left\\lvert l_{ij}\\right\\rvert \\le1$ 由 N1 保证。"
+    },
+    {
+      "id": "NL03.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "主元 $\\left\\lvert u_{kk}\\right\\rvert >\\mathrm{DefaultTol}(n)$，否则抛「输入合法但数值做不到」类异常。"
+    },
+    {
+      "id": "NL03.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "N1。"
+    },
+    {
+      "id": "NL03.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为分解完直接调逆矩阵更方便。$A^{-1}$ 的每个元素都要解一次方程，\n而且残差更大——凡是只要 $x$，就别造 $A^{-1}$。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N2",
+    "status": "已实现：linalg/solve.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG00.1",
+  "chapter": "EG00",
+  "title": "eng · 分组 · 大纲",
+  "src": {
+    "file": "notebook/projects/eng/OUTLINE.md",
+    "sha256": "sha256:7ab6be2fb94aba08b898e8ba285369feebc0431ac3a032cfcd1855939263a5de"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "EG00.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> 分组目录：五份方法论文档，覆盖「设计 → 写 → 出事 → 变慢」这条链，外加一本横切案例集。五个子项目各自两件套，本文只做路由。"
+    },
+    {
+      "id": "EG00.1:body.s01",
+      "type": "extension",
+      "title": "一、这个目录是什么",
+      "level": 2,
+      "content": "| 子项目 | 在链条上的位置 | 回答什么 | 章 |\n|---|---|---|---|\n| `eng/system-design/` | **设计** | 量级估算 → 缓存 → 限流 → MQ → 分库分表 → 秒杀：一个系统在纸上怎么搭起来，以及每层引入什么新问题 | 8 |\n| `eng/testing/` | **写** | UT → 集成 → 契约 → 冒烟 → CI 门禁：什么该测、替身怎么选、覆盖率为什么骗人、flaky 怎么治 | 9 |\n| `eng/debug-toolchain/` | **出事** | core dump → gdb → strace → ASan/TSan：从\"崩了\"到\"最小复现\"的定位链路 | 8 |\n| `eng/perf-engineering/` | **变慢** | benchmark → 指标口径 → on/off-CPU 火焰图 → Amdahl：怎么测、怎么归因、怎么不被自己骗 | 8 |\n| `eng/latent-issues/` | **横切** | 惊群、伪共享、ABA、优先级反转、队头阻塞、TIME_WAIT、fd 耗尽、Nagle 与延迟 ACK、EINTR：平时碰不到、面试专挑 | 12 |\n\n**一句话定位**：前四个是流程上的四段，`latent-issues` 是把四段里反复出现的**同一批陷阱**按专题收拢的案例库。它们的共同点不是\"技术栈\"，而是**判据形态**——每条结论都必须能写成\"观察到 X 就说明我错了\"。\n\n**入口（本文的读法）**：在「容量、正确性、可观测性必须由同一组信号互相约束」的前提下，把五个方法论项目读成同一条链：设计 → 写 → 出事 → 变慢。换的是证据来源（`EXPLAIN rows`、consumer lag、core dump、火焰图、`epoll` 惊群），不换的是判断顺序：先定量级，再看错误，最后看时间。\n\n**不换的是什么**：全程不变的是请求标识、单调时钟、资源边界、状态转换表和证据链（trace id、`CLOCK_MONOTONIC`、cgroup `cpu.max/memory.max`、`RLIMIT_NOFILE`、状态机迁移表、core dump/pcap/perf.data），所以看到差异先问：输入分布、观测口径、并发/资源限制是否改变了状态转换，例如 p99 上升是 `cpu.max` 节流、futex 等待、TIME_WAIT 堆积还是 Nagle/延迟 ACK 导致。\n\n**积木**：①`LOCK CMPXCHG` 指令提供单字读改写的不可分割边；它能独立验证 `ABA` 是否出现在 `std::atomic_compare_exchange_strong` 的 expected 与 observed 值差上。②`memory_order_acquire`/`memory_order_release` 提供语言内存模型的 happens-before 边；它能独立验证 `__tsan_read8`/`__tsan_write8` 是否报告缺少同步边的读写。③`CLOCK_MONOTONIC` 提供 POSIX 单调时间戳；它能独立验证 `perf.data` 与 `core dump` 时间线是否可排序。④`write` 返回长度与 `errno` 提供系统调用错误边界；它能独立验证 `EINTR` 是否来自信号中断而非 `close` 返回。\n\n**最小情形**：单核单线程执行一次 `write(fd, buf, len)` 并读取一次 `CLOCK_MONOTONIC`；`std::atomic` 无跨线程可见性、`memory_order_acquire/release` 无 happens-before、`futex` 无等待、`epoll_wait` 无并发事件、`RLIMIT_NOFILE` 未触达、`TIME_WAIT` 无多连接、`Nagle` 与延迟 ACK 无往返，因此该情形只暴露 `errno`、返回值和单次时间戳。\n\n**生成**：累加 单线程一次 syscall 到多核 `std::thread`、多进程 `epoll_wait`、多节点 `MQ consumer lag`，新增 `cpu.max`、`memory.max`、`RLIMIT_NOFILE`、`futex` 与 `trace id` 的状态转换约束。覆盖 `EXPLAIN rows`、`__asan_report_load8`、`__tsan_read8`、`core dump`、`perf.data`、`pcap` 的同一请求链，新增观测口径必须由 `trace id`、`CLOCK_MONOTONIC` 和 `errno` 对齐。最坏情形 `cpu.max` 节流、`memory.max` OOM、`EMFILE`、`TIME_WAIT`、`Nagle`/延迟 ACK、`EINTR` 同时发生，`p99` 上升必须能由 `perf.data`、`ss`、`pcap`、`printk` 或 `errno` 区分。\n\n**两边**：同一连接状态在用户态由 `fd`、`epoll_event`、`errno` 和连接池 `std::unordered_map` 持有。同一连接状态在内核由 `tcp_sock`、`sk_buff`、`inet_timewait_sock` 与 `TIME_WAIT` 四元组持有。同一请求标识在用户态由 `trace id` 写入日志字段和 `std::string` 持有。同一请求标识在内核态由 `perf.data` 采样栈、`AF_PACKET` 抓包队列与 `audit` 记录持有。\n\n**积木**：① `LOCK CMPXCHG` 指令提供单字原子比较交换；它能独立验证 `ABA` 是否缺少 `LOCK CMPXCHG` 保护。② `clock_gettime(CLOCK_MONOTONIC)` 系统调用提供不受 `settimeofday` 影响的时基；它能独立验证超时是否来自 `adjtime`/`settimeofday` 跳变。③ `tcp_sock` 内核对象与 TCP 四元组提供 `TIME_WAIT` 状态机；它能独立验证短连接压测端口占用是否来自 `2MSL`。④ `RLIMIT_NOFILE` 与 `file` 内核对象提供 fd 分配边界；它能独立验证 `fd 耗尽` 是否来自 `open`/`socket` 未关闭。\n\n**最小情形**：单核单线程对 socket fd 执行一次 `write(fd, buf, len)`，内核对象 `file` 与 `sk_buff` 只被一个 `task_struct` 访问；此时 `LOCK CMPXCHG`、`futex_wait`、`epoll_wait` 惊群、伪共享 cache line、`TCP_NODELAY` 与延迟 ACK 的 `ACK` 字段竞争均不起作用。\n\n**生成**：累加多核多线程与多连接，`clone` 引入 `task_struct`/`futex_wait`，`socket`/`epoll_create` 引入 `tcp_sock`/`epoll_wait` 状态机，约束是每个共享字必须有 `LOCK CMPXCHG` 或 `futex` 等待队列保护且每个 fd 受 `RLIMIT_NOFILE` 限制。覆盖 `pthread_create` 的栈、`epoll_wait` 的就绪队列、`tcp_sock` 的状态、`perf_event_open` 的样本，约束是它们必须分别用 `gdb`、`ss`、`perf.data`、`/proc/PID/status` 取证。最坏情形是 `fd 耗尽`、`OOM killer`、`cgroup cpu.max` 节流、`TIME_WAIT` 堆积、`EINTR` 同时发生，约束是 p99 上升必须先区分 `cpu.max` 节流、`futex` 等待、`tcp_sock` `TIME_WAIT` 堆积、`read`/`write` 返回 `errno=EINTR`。\n\n**两边**：`RIP`/`RSP` 寄存器与内核栈上的 `pt_regs` 保存同一执行位置，`tcp_sock` 与 `ss -tn state time-wait` 输出保存同一 `TIME_WAIT` 状态。持有者是 `task_struct` 与内核栈、`tcp_sock` 与 `ss` 进程。"
+    },
+    {
+      "id": "EG00.1:body.s02",
+      "type": "extension",
+      "title": "二、为什么这样分组（功能设计）",
+      "level": 2,
+      "content": "**取舍一：为什么这些能放一起，而 `os/`、`cpu/` 不能。** 这五份讨论的是**做事的方法**，与具体技术栈无关：perf 的口径可以用于任何语言，debug 的链路可以用于任何服务，system-design 的量级估算与语言无关。而 `os/`、`cpu/` 讨论的是**特定系统的知识**，换个对象就不成立。把方法与知识分开，才能避免\"讲性能时混进内核细节、讲内核时混进方法论\"。\n\n**取舍二：为什么 `latent-issues` 也算方法论。** 它的 12 章不是知识点罗列，而是**同一类失败模式在不同层面的复现**：惊群与队头阻塞是\"通知语义\"问题，伪共享与 ABA 是\"并发可见性\"问题，TIME_WAIT 与 fd 耗尽是\"资源生命周期\"问题。它的用法是当索引查——遇到一个诡异现象，先来这里对号，再回具体项目深挖。这正是方法论该有的形态。\n\n**取舍三：为什么不拆成\"性能\"和\"质量\"两组。** 拆开会切断因果：一个 slow query 可能要先从 perf 的火焰图看出锁竞争，再用 debug 的 TSan 报告确认，最后用 testing 的办法做出最小复现。**四段是同一条定位链上的不同站位**，拆开就只剩清单。\n\n**分组只做路由**：五个子项目仍各自五段、各自判据。"
+    },
+    {
+      "id": "EG00.1:body.s03",
+      "type": "proof",
+      "title": "三、推荐顺序与判据",
+      "level": 2,
+      "content": "按\"用得上\"排序，不按章节顺序。\n\n| 阶段 | 内容 | 判据 | 成本 |\n|---|---|---|---|\n| 1（必做） | `debug-toolchain/`：core dump、gdb 回溯、最小复现 | 给一个崩溃现场，能在十分钟内定位到「函数+偏移+可疑变量」，并写出最小复现 | 中 |\n| 2（必做） | `testing/`：测试金字塔、替身取舍、覆盖率骗局 | 能说清\"这个测试为什么抓不到注入的 bug\"；能用一次注入故障证明测试有效 | 中 |\n| 3（必做） | `perf-engineering/`：指标口径、火焰图、Amdahl | 给一段慢代码，能先定瓶颈类（CPU/IO/锁/GC），再谈优化；结论带事件名与量级 | 中 |\n| 4（建议） | `system-design/`：量级估算、缓存三坑、限流与削峰 | 能在白板上从 QPS 估到存储容量，并指出方案的第一瓶颈 | 中 |\n| 5（加分） | `latent-issues/`：按现象检索 | 遇到诡异现象时能对号入座，并说出触发条件与观测手段 | 小（但需反复翻） |\n| 6（加分） | `perf`/`debug` 的工具深水区：TSan 报告读法、off-CPU 分析 | 能解释一份 TSan 报告里的 happens-before 缺口 | 大 |\n\n**一条硬判据**：五份文档里任何一条结论，都要能落到**一次测量或一次复现**。方法论最大的敌人不是不知道，而是\"用听起来专业的说法掩盖没有测量\"。"
+    },
+    {
+      "id": "EG00.1:body.s04",
+      "type": "extension",
+      "title": "四、不做什么 · 必要性 · 失效点",
+      "level": 2,
+      "content": "### 必要性：删掉会怎样\n\n| 机制 | 删掉会怎样 | 判定 |\n|---|---|---|\n| `CI 门禁` | 承诺破：合并前拦截协议破坏；错误发生：`契约` 未跑，`MQ` 消息新增字段被消费端按旧 schema 丢弃，主干继续合并。 | 必需 |\n| `ASan/TSan` | 承诺破：并发可见性错误在 `UT` 阶段暴露；错误发生：`ABA` 只在 `core dump` 里留下坏指针，`gdb` 无法证明缺少 `atomic` compare-exchange。 | 必需 |\n| `on/off-CPU 火焰图` | 承诺破：慢请求可归因到 `锁竞争` 或计算；错误发生：`benchmark` 把 `futex` 等待计入 CPU 时间，`Amdahl` 加速比按错误分母计算。 | 必需 |\n| `TIME_WAIT` | 承诺破：短连接压测区分端口占用与内存泄漏；错误发生：`fd 耗尽` 被归因到对象池，错过 `2MSL` 与四元组复用前提。 | 必需 |\n| `EINTR` | 承诺破：阻塞 `read`/`write` 遇信号可恢复；错误发生：慢 syscall 返回 `-1` + `errno=EINTR` 被当作连接错误，连接池误关闭。 | 选择 |\n\n### 失效点：哪条前提一破，结论就变\n\n- `/proc/sys/kernel/yama/ptrace_scope=0` + core dump 目录权限位 `rwx` → `gdb` 能解析 `core dump` 的 `RIP`/`RSP` 与 `glibc` 栈帧；若 `ptrace_scope=1` 或缺 `rwx`，只剩返回地址，无法还原 `strace` 前的系统调用参数。\n- 多核 + 同一 cache line 被两个线程读写 + 未用 `alignas(64)` 或原子指令 → `伪共享`/`TSan` 的可见性结论成立；单核或 cache line 隔离后，`on/off-CPU 火焰图` 不再出现 `锁竞争` off-CPU 尖峰。\n- TCP 默认 `TIME_WAIT=2MSL` + 未设 `SO_REUSEADDR` + 短连接 → `fd 耗尽` 归因到四元组占用；若 `tcp_tw_reuse=1` 或改用 HTTP/2 多路复用，`TIME_WAIT` 不再导致压测端口耗尽。\n- `TCP_NODELAY=0` + 对端延迟 ACK + 小写请求 → `Nagle 与延迟 ACK` 的 40ms p99 尖刺成立；若 `TCP_NODELAY=1` 或切到 HTTP/3/QUIC，延迟 ACK 不解释 `benchmark` 尖刺。\n- `SA_RESTART` 未设置 + 阻塞 `read` + `SIGALRM` → `EINTR` 重试承诺破；若设置 `SA_RESTART` 或改用 `epoll_wait` 超时返回 `EINTR`，连接池不再误关。\n\n### 不做什么（范围）\n\n**不做框架与中间件教程。** Kubernetes、Kafka、Redis 的用法与调参不展开；`system-design` 只讲\"为什么需要这一层、它引入什么新问题\"。\n\n**不做 SRE 值班手册。** 告警分级、on-call 流程、事故复盘模板属于组织实践，不是能力判据。\n\n**不做公司面经汇编。** 不收集\"某厂问了什么\"，只给判据与追问链。\n\n**不做极限压测制造数字。** 没有基线、没有方差、没有口径的\"提升 X 倍\"一律不写。\n\n**不做具体语言的性能技巧。** 那属于 `langs/`；这里只讲怎么测、怎么归因。"
+    },
+    {
+      "id": "EG00.1:body.s05",
+      "type": "extension",
+      "title": "五、面试怎么讲",
+      "level": 2,
+      "content": "**30 秒版本**（开场直接说，130–180 字）\n\n> 工程方法论这块我按一条链准备：设计时先做量级估算，写的时候明确哪些测试能证伪、哪些只是摆设，出事时能从 core dump 十分钟定位到最小复现，变慢时先定瓶颈类再谈优化。所有结论我都要求能落到一次测量或一次复现上——比如性能必须先给事件名与量级，测试必须能用注入故障证明它真的会报错。我认为这套东西的价值不是知道更多名词，而是**在信息不全时能给出可被推翻的判断**。\n\n**可能被追问的 8 个点**\n\n1. **「你怎么保证一次性能优化是真的？」** → 考点：口径与噪声。\n   → 答法：三件事——同口径基线（同机器、同输入、同编译选项）、重复测量给方差、指标落到具体事件（`cycles`/`instructions`/`cache-misses`）。判据是\"如果重跑十次结论翻转，那就不算结论\"。\n\n2. **「测试覆盖率 80% 说明什么？」** → 考点：覆盖率的边界。\n   → 答法：只说明 80% 的代码被执行过，不说明断言检查了什么、分支组合覆盖了没有。证据是\"把一处逻辑改错，测试是否变红\"——**注入故障测试**比覆盖率有意义得多。\n\n3. **「服务偶发变慢，你怎么查？」** → 考点：先分类再深入。\n   → 答法：先分清是 CPU 密集、I/O 等待、锁竞争还是 GC；用 `perf`/火焰图看 on-CPU 与 off-CPU，用 `strace`/`ss` 看系统调用与网络。判据：先说瓶颈类，再给证据；不要一上来就猜\"数据库慢\"。\n\n4. **「core dump 里你第一眼看什么？」** → 考点：定位顺序。\n   → 答法：先看信号（`SIGSEGV` 还是 `SIGABRT`）、再看 faulting PC 对应到哪个函数+偏移、再读参数寄存器与栈、最后判断是空指针、栈破坏还是 ABI 不一致。判据是能否写出最小复现。\n\n5. **「缓存穿透/击穿/雪崩分别怎么防？」** → 考点：三种失效模式的区分。\n   → 答法：穿透是查不存在的 key（布隆过滤器/空值缓存）、击穿是热点 key 过期（互斥重建/逻辑过期）、雪崩是大量 key 同时过期（过期时间加抖动/多级缓存）。边界：三者都伴随\"缓存与数据库一致性\"问题，别只答防法不讲一致性代价。\n\n6. **「超卖怎么解决？」** → 考点：并发扣减的正确性。\n   → 答法：本质是\"读-改-写\"不是原子操作。手段分三层：数据库行锁/乐观版本号、Redis 的原子扣减（Lua）、以及预扣库存 + 异步落库。判据是能否举出每种方案在什么情况下仍会超卖（例如预扣后未回补）。\n\n7. **「伪共享怎么发现、怎么消？」** → 考点：从现象到复现。\n   → 答法：现象是多核扩展性差但 cache miss 指标异常；手段是对齐填充（`alignas(64)`）或用线程本地累加再合并。判据是用 `perf c2c` 一类的工具看到同一 cache line 的跨核写冲突。\n\n8. **「惊群是什么，为什么现在不容易见到了？」** → 考点：机制演进。\n   → 答法：多个进程/线程同时阻塞在同一事件上，事件到来时全部被唤醒但只有一个能处理；`epoll` 的 EPOLLEXCLUSIVE 与内核的等待队列唤醒策略缓解了它，但应用层仍可能因为\"唤醒后抢不到锁\"而复现。判据是上下文切换次数与无效唤醒计数。\n\n**别说什么**\n\n- **「我做过性能优化，提升了 30%。」** 没有口径、没有方差、没有事件名，这句话本身就会被扣分。\n- **「我们覆盖率 90%。」** 覆盖率是工程指标，不是质量证明；被追问\"注入一处 bug 你的测试会红吗\"就露馅。\n- **「加个缓存就好了。」** 缓存三坑与一致性代价都没提，属于典型的无判据建议。\n- **把 `latent-issues` 当名词背。** 每个陷阱都要能说出触发条件与观测手段，否则只是多了几个词。"
+    }
+  ],
+  "source_h1": "eng/ · 工程方法论",
+  "meta": {
+    "kind": "project-group",
+    "group": "eng",
+    "file": "OUTLINE.md"
+  }
+}

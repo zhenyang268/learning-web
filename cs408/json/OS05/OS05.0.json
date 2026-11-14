@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "OS05.0",
+  "chapter": "OS05",
+  "title": "OS05 输入/输出管理",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "OS05.0:exam.s01",
+      "type": "extension",
+      "title": "第 OS05 输入/输出管理：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 8 题 —— 2016 #31；2017 #32；2018 #30；2020 #22、#30；2022 #32；2023 #32；2024 #31\n> 一课位置：`quick/408-os.md` §OS-05 输入/输出管理　｜　考点页：`note/408/os/`"
+    },
+    {
+      "id": "OS05.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-OS-0501` 〔易错〕I/O 软件四层：用户层 → 设备独立性软件 → 驱动程序 → 中断处理程序　原因：顺序错\n- `408-OS-0501` 〔易错〕阻塞 / 非阻塞 / 同步 / 异步 I/O 四个词的区别　原因：大纲新增接口条目\n- `408-OS-0502` 〔易错〕缓冲时间计算：单缓冲的处理时间 = max(C, T) + M；双缓冲 ≈ max(C+M, T)　原因：公式记混，这是标准计算题\n- `408-OS-0502` 〔低频〕SPOOLing 是「虚拟设备」技术，用磁盘模拟独占设备　原因：概念题"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "输入/输出管理"
+  }
+}

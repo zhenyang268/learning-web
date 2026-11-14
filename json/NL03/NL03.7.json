@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.7",
+  "chapter": "NL03",
+  "title": "Cholesky：对称正定的专用分解",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.7:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$A=LL^{H}$，$L$ 下三角且 $L(j,j)>0$（取正号即唯一）。\n逐列：$d=A(j,j)-\\sum_{k<j}\\left\\lvert L(j,k)\\right\\rvert ^{2}$，$L(j,j)=\\sqrt d$，\n$L(i,j)=\\big(A(i,j)-\\sum_{k<j}L(i,k)\\overline{L(j,k)}\\big)/L(j,j)$。"
+    },
+    {
+      "id": "NL03.7:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "SPD 系统的标准解法：代价约 $n^{3}/3$（LU 是 $2n^{3}/3$），且**不需要选主元**——\n正定性保证主元严格为正。"
+    },
+    {
+      "id": "NL03.7:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "唯一性来自「对角取正」这一条约定；若允许负号，$L$ 有 $2^{n}$ 种。\n成立条件：$A$ Hermitian 正定；只读下半三角，故非 Hermitian 输入不会报错（由调用方保证）。"
+    },
+    {
+      "id": "NL03.7:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\mathrm{real}(d)>\\mathrm{DefaultTol}(n)$，写成 `!(d>tol)`让 NaN 也落入失败分支。"
+    },
+    {
+      "id": "NL03.7:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L4、A2。"
+    },
+    {
+      "id": "NL03.7:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「正定」可以用「所有对角元为正」来判。反例：$\\begin{bmatrix}1&2\\\\2&1\\end{bmatrix}$\n对角全正但不定；判据只有分解走通（N8）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N7",
+    "status": "已实现：linalg/cholesky.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

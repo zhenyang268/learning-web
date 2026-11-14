@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.5",
+  "chapter": "NL05",
+  "title": "频轴与 Nyquist",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "采样间隔 $dx$ 下，$\\xi_k=k/(N\\,dx)$（$k\\le N/2$）；后半段\n$\\xi_k=(k-N)/(N\\,dx)$（$k>N/2$）。采样率 $f_s=1/dx$，Nyquist 频率 $f_s/2$ 落在 $k=N/2$。"
+    },
+    {
+      "id": "NL05.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "没有频轴，$X_k$ 只是「第 $k$ 个数」；有了频轴才能说「这是 3 Hz 的分量」。"
+    },
+    {
+      "id": "NL05.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "前半段是正频率、后半段是负频率（因为 DFT 是周期谱，$\\xi$ 与 $\\xi+f_s$ 不可分辨）。\n成立条件：等距采样；$dx>0$。$N$ 偶数时 $k=N/2$ 是自共轭点（实信号下该点相位移 $\\pi$ 无意义）。"
+    },
+    {
+      "id": "NL05.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "直流分量在 $k=0$；实信号在 $k$ 与 $N-k$ 共轭（H8 的对称性）。"
+    },
+    {
+      "id": "NL05.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H1。"
+    },
+    {
+      "id": "NL05.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为频点顺序是「从 0 到最大频率」。DFT 的排列是\n$0,1,\\dots,N/2,-N/2+1,\\dots,-1$，中间那个折返点最容易被忽略。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H5",
+    "status": "框架：math/fourier.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

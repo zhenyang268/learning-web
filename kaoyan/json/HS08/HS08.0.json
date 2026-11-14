@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "HS08.0",
+  "chapter": "HS08",
+  "title": "HS08 常微分方程",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "HS08.0:exam.s01",
+      "type": "extension",
+      "title": "第 HS08 常微分方程：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-08 常微分方程　｜　考点页：`note/math1/hs/`"
+    },
+    {
+      "id": "HS08.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-HS-0801` 〔易错〕伯努利方程代换 $z=y^{1-n}$ 化线性　原因：直接当线性方程解\n- `M1-HS-0804` 〔易错〕欧拉方程换元 $x=e^t$ 化成常系数　原因：不会换元"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "常微分方程"
+  }
+}

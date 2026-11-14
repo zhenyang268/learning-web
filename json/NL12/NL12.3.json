@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL12.3",
+  "chapter": "NL12",
+  "title": "连续性的正确定义",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL12.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\text{IsContiguous}\\iff\\text{strides}=\\text{ComputeStrides(shape)}$（逐维相等）。"
+    },
+    {
+      "id": "NL12.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是 reshape 能否零拷贝的唯一判据；也是性能上「能不能走顺序访问」的判据。"
+    },
+    {
+      "id": "NL12.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "连续性是**布局性质**，与指针是否相邻无关——换轴后某些情形下标恰好仍然连续，\n但一般不是；用「肉眼看着挨着」判断必错。成立条件：秩相同。"
+    },
+    {
+      "id": "NL12.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "直接比两组步长（不抽样、不看内容）。"
+    },
+    {
+      "id": "NL12.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "T1。"
+    },
+    {
+      "id": "NL12.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「转置之后还是连续」。转置交换了步长（$\\{12,4,1\\}\\to\\{1,4,12\\}$），\n绝大多数情况不再连续；numpy 也是这样。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "T3",
+    "status": "框架：core/tensor.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

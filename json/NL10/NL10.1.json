@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL10.1",
+  "chapter": "NL10",
+  "title": "结构化网格与自由度编号",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL10.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "这一节全部是 **未建**（只在 `NOW.md`规划）。它的价值不在「实现细节」，\n而在**把一道 PDE 拆成五步数学动作**——面试里能说清这五步的人远少于能背公式的人。\n\n| 步 | 数学动作 | 产物 | 为什么不能省 |\n|---|---|---|---|\n| 1 | 选网格、定自由度 | 节点集 $\\{x_i\\}$、编号表 | 编号决定矩阵的稀疏结构与带宽 |\n| 2 | 弱形式 + 分部积分 | $\\int\\nabla u\\cdot\\nabla v=\\int fv$ | 降阶：二阶导挪到测试函数上 |\n| 3 | 单元刚度装配 | $K_e\\to A$ | 每个单元的积分只算一次 |\n| 4 | 载荷 $b_i=\\int f\\varphi_i$ | $b$ | 用闭式积分才不引入额外误差 |\n| 5 | 边界条件 | 消元后的 $A,b$ | 不改边界，矩阵奇异（常值在零空间） |"
+    },
+    {
+      "id": "NL10.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "1D：$[a,b]$ 上 $n$ 个节点、$n-1$ 个单元，$h=(b-a)/(n-1)$。\n2D：$n_x\\times n_y$ 个节点、$(n_x-1)(n_y-1)$ 个矩形单元，每格切两个三角形，\n节点按行主序编号 $p=j\\,n_x+i$。"
+    },
+    {
+      "id": "NL10.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "编号不是记账，是**矩阵结构**：行主序编号给出带宽 $O(n_x)$ 的带状矩阵，\n换成对角编号带宽变 $O(n_x+n_y)$——同一个 PDE、不同的解算代价。"
+    },
+    {
+      "id": "NL10.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "自由度 = 节点（P1 元）；边界自由度是四条边上的节点。成立条件：矩形域、等距、固定对角线方向。"
+    },
+    {
+      "id": "NL10.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "手算表对拍：1D $n=5,[0,1]\\Rightarrow$ 节点 $\\{0,.25,.5,.75,1\\}$、边界 $\\{0,4\\}$；\n2D $4\\times3\\Rightarrow$ 12 节点、内点 2、边界 10、三角形 $2\\cdot3\\cdot2=12$。"
+    },
+    {
+      "id": "NL10.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L1。"
+    },
+    {
+      "id": "NL10.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「单元数等于节点数」。1D 单元是 $n-1$、2D 单元是 $2(n_x-1)(n_y-1)$；\n把单元当节点会导致刚度矩阵维度错。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F1",
+    "status": "未建：math/grid.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

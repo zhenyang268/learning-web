@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "HS06.0",
+  "chapter": "HS06",
+  "title": "HS06 多元函数积分学",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "HS06.0:exam.s01",
+      "type": "extension",
+      "title": "第 HS06 多元函数积分学：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-06 多元函数积分学　｜　考点页：`note/math1/hs/`"
+    },
+    {
+      "id": "HS06.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-HS-0601` 〔高频〕二重积分极坐标要乘 $r$（雅可比）　原因：漏乘 ⇒ 结果差一个量级\n- `M1-HS-0601` 〔易错〕二重积分交换次序必须先画区域、找交点　原因：直接换限\n- `M1-HS-0602` 〔易错〕三重积分：先二后一（截面法）vs 先一后二（投影法）按被积函数与区域选　原因：选反了算不动\n- `M1-HS-0603` 〔易错〕格林公式三个前提：正向边界、$P,Q$ 有连续偏导、区域无「洞」（有洞要挖）　原因：直接套\n- `M1-HS-0604` 〔易错〕高斯公式常需补面使区域封闭，补的面要单独算并减掉　原因：忘补或忘减\n- `M1-HS-0604` 〔易错〕斯托克斯公式的方向用右手法则定　原因：方向错符号错"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "多元函数积分学"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL07.5",
+  "chapter": "NL07",
+  "title": "反向模式与伴随传播",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL07.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "设 $v=\\partial L/\\partial z$ 为「上游伴随」，则\n$\\partial L/\\partial n=\\sum_{m:n\\to m}(\\partial L/\\partial m)(\\partial m/\\partial n)$。"
+    },
+    {
+      "id": "NL07.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "$m=1$ 时一次反向得到整个梯度，代价与参数规模成线性——这是训练可行性的全部基础。"
+    },
+    {
+      "id": "NL07.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "三条要点：(1)fan-out 处必须**累加**（同一节点被多条路径用到）；\n(2)局部导数按算子给：MatMul 是 $\\partial L/\\partial W=vx^{\\mathsf T}$、$\\partial L/\\partial x=W^{\\mathsf T}v$；\n(3)形状唯一确定公式（$vx^{\\mathsf T}$ 必为 $m\\times n$）。成立条件：图是有向无环；无 tape 时 fan-out 会重算导致指数爆炸。"
+    },
+    {
+      "id": "NL07.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "恒等图 $L=x$ 的梯度必须恰为 $1$；差分校验 $h=10^{-6}$、误差约 $1\\times10^{-10}$。"
+    },
+    {
+      "id": "NL07.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "D3、L10。"
+    },
+    {
+      "id": "NL07.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「反向就是前向的逆运算」。它不是逆矩阵，是**转置**（伴随）传播：\n每一步乘的是局部雅可比的转置，而不是它的逆。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D5",
+    "status": "已实现：autodiff/grad_graph.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

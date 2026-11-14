@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "HS02.0",
+  "chapter": "HS02",
+  "title": "HS02 一元函数微分学",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "HS02.0:exam.s01",
+      "type": "extension",
+      "title": "第 HS02 一元函数微分学：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-02 一元函数微分学　｜　考点页：`note/math1/hs/`"
+    },
+    {
+      "id": "HS02.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-HS-0202` 〔易错〕中值定理选型：结论不含端点 → 罗尔；含端点且单函数 → 拉格朗日；含两个函数/分式 → 柯西　原因：选错定理白做\n- `M1-HS-0202` 〔易错〕辅助函数构造：把结论化成微分方程，用积分因子法反推　原因：只会「凑」\n- `M1-HS-0202` 〔易错〕中值定理证明必须验证三个前提（闭区间连续、开区间可导、端点值或 $g'\\ne 0$）　原因：只构造不验证，扣步骤分\n- `M1-HS-0204` 〔易错〕曲率 $\\kappa=\\dfrac{|y''|}{(1+y'^{2})^{3/2}}$、曲率半径 $R=1/\\kappa$（数一独有）　原因：公式记错次幂"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "一元函数微分学"
+  }
+}

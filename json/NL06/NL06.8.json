@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.8",
+  "chapter": "NL06",
+  "title": "$\\mathrm{erf}$、$\\Phi$ 与尾部互补",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.8:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\mathrm{erf}(x)=\\frac{2}{\\sqrt\\pi}\\int_0^{x}e^{-t^{2}}dt$，\n$\\Phi(x)=\\frac{1+\\mathrm{erf}(x/\\sqrt2)}{2}$，密度 $\\varphi_{\\text{pdf}}(x)=e^{-x^{2}/2}/\\sqrt{2\\pi}$。"
+    },
+    {
+      "id": "NL06.8:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "正态的分布函数是「查表」的全部内容；尾部概率是显著性检验的语言。"
+    },
+    {
+      "id": "NL06.8:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "左尾必须走互补：$\\Phi(-x)=\\mathrm{erfc}(x/\\sqrt2)/2\\ (x>0)$——\n因为 $x\\gtrsim5.9$ 时 $\\mathrm{erf}(x)=1-2.5\\times10^{-16}$，只差 1 ulp，\n用 $1-\\mathrm{erf}$ 算左尾会得到 0。对称性 $\\Phi(-x)=1-\\Phi(x)$ 数学上成立但**数值上不能用**。\n成立条件：$\\sigma>0$ 且有限。"
+    },
+    {
+      "id": "NL06.8:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\mathrm{erf}/\\mathrm{erfc}$ 与语言内建差 $\\le2$ ulp；$\\left\\lvert \\Phi(\\Phi^{-1}(u))-u\\right\\rvert \\le10^{-14}$\n对 $u\\in[10^{-12},1-10^{-12}]$。"
+    },
+    {
+      "id": "NL06.8:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A6、C5。"
+    },
+    {
+      "id": "NL06.8:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\mathrm{erfc}=1-\\mathrm{erf}$ 直接实现就行」。定义恒等，数值不恒等：\n相消会把尾部信息全部抹掉（A6）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P8",
+    "status": "框架：math/special.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

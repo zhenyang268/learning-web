@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL13.5",
+  "chapter": "NL13",
+  "title": "Hodge star",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL13.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "在 $\\mathbb{R}^{n}$ 的欧氏度量与标准定向下，$\\star$ 把 $k$-形式映到 $(n-k)$-形式，\n由 $\\omega\\wedge\\star\\eta=\\langle \\omega,\\eta\\rangle \\,\\mathrm{vol}$ 唯一确定。"
+    },
+    {
+      "id": "NL13.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把「内积」翻译成「楔积 + 体积」，从而把散度写成 $d\\star$，把拉普拉斯写成 $\\star d\\star d$。"
+    },
+    {
+      "id": "NL13.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "对合性 $\\star\\star\\omega=(-1)^{k(n-k)}\\omega$；成立条件：只做欧氏度量（非欧需度量矩阵）。"
+    },
+    {
+      "id": "NL13.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "对合性逐分量 $\\le10^{-14}$；$n=3$ 时 $\\star$ 与叉积/散度的对应（M7）。"
+    },
+    {
+      "id": "NL13.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "M2、L4。"
+    },
+    {
+      "id": "NL13.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\star$ 就是补下标」。补下标只是一半，还要按体积元与定向确定符号；\n搞错符号会让散度差一个负号，在 PDE 里表现为「椭圆算子变双曲」。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "M5",
+    "status": "未建：math/forms.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

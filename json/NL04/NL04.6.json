@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL04.6",
+  "chapter": "NL04",
+  "title": "幂主值与「不是实数幂」",
+  "src": {
+    "file": "notebook/math/survey/p4-complex.tex",
+    "sha256": "sha256:448ff3c6af38ff4ed96394fa55217375f859fe35ecad4b3592c77907b51339c1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL04.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$z^{w}=\\exp(w\\log z)$，取 $\\log$ 的主值即得幂的主值。"
+    },
+    {
+      "id": "NL04.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它说明「分数次幂」在复域天然多值；求根、算 $\\sqrt[3]{\\cdot}$ 都要先决定分支。"
+    },
+    {
+      "id": "NL04.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$(-8)^{1/3}$ 的主值是 $1+1.732i$，**不是**$-2$。成立条件：$z\\ne0$（$0^{0}$ 与 $0^{w}$ 另议）。"
+    },
+    {
+      "id": "NL04.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无。"
+    },
+    {
+      "id": "NL04.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C4、C5。"
+    },
+    {
+      "id": "NL04.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为复数的幂可以「先化成实数再算」。一旦底数为负或指数非整数，\n实数路径给出的那个根只是若干分支中的一个，且常不是主值。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "C6",
+    "status": "已实现：core/complex.hpp",
+    "section": "复分析：多值性不是缺陷，是定义的一部分"
+  }
+}

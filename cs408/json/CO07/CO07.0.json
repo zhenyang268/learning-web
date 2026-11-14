@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CO07.0",
+  "chapter": "CO07",
+  "title": "CO07 输入/输出系统",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "CO07.0:exam.s01",
+      "type": "extension",
+      "title": "第 CO07 输入/输出系统：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 10 题 —— 2016 #22；2017 #21；2018 #22；2019 #21、#22；2021 #20；2022 #21；2023 #22；2024 #21、#22\n> 一课位置：`quick/408-co.md` §CO-07 输入/输出系统　｜　考点页：`note/408/co/`"
+    },
+    {
+      "id": "CO07.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-CO-0701` 〔低频〕通道（I/O 处理机）比 DMA 更进一步：能执行通道程序、管理多台设备　原因：冷门概念，考过\n- `408-CO-0704` 〔低频〕DMA 的预处理与后处理由 CPU 做，数据传送由 DMA 控制器做　原因：「DMA 全程不用 CPU」是错的\n- `408-CO-0704` 〔低频〕程序查询 / 中断 / DMA 的 CPU 开销与适用场景对比　原因：每年可能 1 题"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "输入/输出系统"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL10.2",
+  "chapter": "NL10",
+  "title": "P1 单元刚度矩阵",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL10.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "1D：$K_e=\\frac1h\\begin{bmatrix}1&-1\\\\-1&1\\end{bmatrix}$；\n2D 直角三角形：$K_e=\\frac12\\begin{bmatrix}2&-1&-1\\\\-1&1&0\\\\-1&0&1\\end{bmatrix}$。"
+    },
+    {
+      "id": "NL10.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「$-\\Delta$ 在分片线性空间上的矩阵表示」，整个有限元就是从它装配出来的。"
+    },
+    {
+      "id": "NL10.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "两个必查性质：**行和为 0**（常函数在核里，对应「常数不影响梯度」）、\n**对称**（因为双线性形式对称）。成立条件：P1（分片线性）基函数；单元几何规则。"
+    },
+    {
+      "id": "NL10.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "1D $n=3,h=0.5$：$A=\\frac1h\\begin{bmatrix}1&-1&0\\\\-1&2&-1\\\\0&-1&1\\end{bmatrix}$ 逐项对拍；\n$A(i,j)=A(j,i)$ 要求浮点**精确**相等（同一条装配路径算两次）。"
+    },
+    {
+      "id": "NL10.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "F1。"
+    },
+    {
+      "id": "NL10.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「2D 的 $K_e$ 是 1D 的张量积」。直角三角形的 $K_e$ 不是矩形元的张量积形式；\n用错会得到与解析解不符的收敛阶。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F2",
+    "status": "未建：math/assemble.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

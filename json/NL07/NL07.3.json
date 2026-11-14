@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL07.3",
+  "chapter": "NL07",
+  "title": "雅可比布局：行是输出、列是输入",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL07.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "分子布局：$J\\in\\mathbb{R}^{m\\times n}$，$J_{ij}=\\partial y_i/\\partial x_j$（D19 第二次修订）；\n链式法则取自然序 $J_{f\\circ g}=J_f\\cdot J_g$。"
+    },
+    {
+      "id": "NL07.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "布局不统一，全库的「转置」会到处漏；链式法则的方向一错，反传全错。"
+    },
+    {
+      "id": "NL07.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "标量输出时 $J$ 是 $1\\times n$ **行**向量，而梯度 $\\nabla f=J^{\\mathsf T}$ 是 $n\\times 1$ 列——\n两者**不是同一个东西**，梯度与被微对象同形。成立条件：向量一律 $n\\times1$（D19）。"
+    },
+    {
+      "id": "NL07.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "差分校验 $J_{ij}\\approx\\frac{f_i(x+he_j)-f_i(x-he_j)}{2h}$，$h=10^{-6}$ 时误差约 $10^{-10}$，\n判据取差 $<10^{-8}$。"
+    },
+    {
+      "id": "NL07.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L1、L2。"
+    },
+    {
+      "id": "NL07.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「分母布局只是写法的偏好」。两种布局互为转置，链式法则的乘法顺序相反\n（$J_gJ_f$）；混用一次就会得到形状对、数值错的结果。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D3",
+    "status": "已实现：autodiff/jacobian.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

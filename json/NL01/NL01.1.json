@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.1",
+  "chapter": "NL01",
+  "title": "机器 epsilon 与相对精度",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "这一节是全篇的地基。后面每个阈值、每条「误差 $O(h^p)$」的判据，根都在这里。"
+    },
+    {
+      "id": "NL01.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "设浮点舍入到最近，$\\varepsilon$ 定义为满足 $1+\\delta\\ne1$ 的最小正 $\\delta$。\n它给的不是「最小正数」，而是**相对精度**的量级单位：$\\left\\lvert \\mathrm{fl}(x)-x\\right\\rvert \\lesssim \\varepsilon\\left\\lvert x\\right\\rvert /2$。"
+    },
+    {
+      "id": "NL01.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "全库所有容差都以它为分子；判断「这个残渣算不算零」必须先知道机器能分辨到哪。"
+    },
+    {
+      "id": "NL01.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$\\varepsilon_{\\text{float}}\\approx1.19\\times10^{-7}$，$\\varepsilon_{\\text{double}}\\approx2.22\\times10^{-16}$，\n**两者差 9 个数量级**。成立条件：舍入到最近；进入次正规数区间后相对误差界失效。"
+    },
+    {
+      "id": "NL01.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "源码无独立用例，但它是 `DefaultTol`的唯一来源。"
+    },
+    {
+      "id": "NL01.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "无。"
+    },
+    {
+      "id": "NL01.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $\\varepsilon$ 是「最小正浮点数」。那是次正规下界（double 约 $5\\times10^{-324}$），\n与 $\\varepsilon$ 差三百多个数量级；两者混用会让阈值失去量纲意义。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "A1",
+    "status": "已实现：core/scalar.hpp",
+    "section": "分析基础：误差是怎么被量出来的"
+  }
+}

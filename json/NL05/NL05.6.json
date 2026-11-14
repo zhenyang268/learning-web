@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.6",
+  "chapter": "NL05",
+  "title": "radix-2：位反转与蝶形",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "按频率下标的二进制位反转做一次重排，然后做 $\\log_2N$ 层蝶形，每层步长 $2,4,\\dots,N$。"
+    },
+    {
+      "id": "NL05.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "把 $O(N^{2})$ 的求和拆成两半递归，是「分治」在变换上的原型；\n它也是「算法结构决定常数」的样板。"
+    },
+    {
+      "id": "NL05.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "位反转的原因：递归拆偶/奇下标后，叶子顺序是「下标反转二进制」。\n$N=1$ 合法（恒等）。成立条件：$N=2^{k}$；旋转因子必须**直接算 $\\cos/\\sin$ 建表**——\n用递推 $w^{k+1}=w^{k}\\cdot w$ 会把误差累到 $N\\varepsilon$（$N=2^{20}$ 时约 $2\\times10^{-10}$，跨过 $10^{-12}$ 判据）。"
+    },
+    {
+      "id": "NL05.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与 DFT 对拍（H1）；$\\log$-$\\log$ 斜率不是判据（这是精确算法，不是逼近）。"
+    },
+    {
+      "id": "NL05.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H1、A2。"
+    },
+    {
+      "id": "NL05.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「FFT 是一种近似」。除了浮点舍入，FFT 与 DFT 给出**完全相同**的结果；\n速度来自因子分解，不来自截断。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H6",
+    "status": "框架：math/fourier.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

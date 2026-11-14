@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DS03.0",
+  "chapter": "DS03",
+  "title": "DS03 栈、队列和数组",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "DS03.0:exam.s01",
+      "type": "extension",
+      "title": "第 DS03 栈、队列和数组：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 13 题 —— 2016 #3、#4；2017 #2、#3；2018 #2、#3；2020 #1、#2；2021 #2、#3；2022 #2；2023 #3；2024 #2\n> 一课位置：`quick/408-ds.md` §DS-03 栈、队列和数组　｜　考点页：`note/408/ds/`"
+    },
+    {
+      "id": "DS03.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-DS-0301` 〔易错〕卡特兰数 $\\frac{1}{n+1}\\binom{2n}{n}$：出栈序列数、n 结点二叉树形态数、n 对括号匹配数　原因：三种问法是同一个数\n- `408-DS-0301` 〔易错〕中缀 → 后缀：运算符弹栈规则、括号处理　原因：手算题\n- `408-DS-0302` 〔易错〕循环队列三种判空满约定（牺牲一个单元 / 设 size / 设 tag），对应不同公式　原因：混用公式"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "栈、队列和数组"
+  }
+}

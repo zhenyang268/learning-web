@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.3",
+  "chapter": "NL09",
+  "title": "vee 与对数映射：用 atan2 而不是 arccos",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\mathrm{Vee}(K)=(K_{21},K_{02},K_{10})$，满足 $\\mathrm{Vee}(\\mathrm{Hat}(u))=u$；\n反解\n\n$$\n\\theta=\\mathrm{atan2}\\Bigl(\\tfrac12\\left\\lVert \\mathrm{Vee}(R-R^{\\mathsf T})\\right\\rVert ,\\ \\tfrac12(\\mathrm{tr}R-1)\\Bigr).\n$$"
+    },
+    {
+      "id": "NL09.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "把 $R$ 变回「轴 $\\times$ 角」，才能在两个旋转之间插值、做误差度量。"
+    },
+    {
+      "id": "NL09.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "用 $\\mathrm{atan2}$ 而不是 $\\arccos$：后者在 $\\theta\\to0$ 时相对误差约 $\\sqrt{\\varepsilon}/\\theta$，\n$\\theta=10^{-8}$ 直接返回 0。成立条件：$\\theta\\ne\\pi$（此时 $R-R^{\\mathsf T}=0$，轴不可辨，\n需要改用对称部分 $\\frac{R+I}{2}$ 求轴）。"
+    },
+    {
+      "id": "NL09.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "往返 $\\mathrm{Exp}(\\mathrm{Log}(R))$ 与 $R$ 的差；$\\theta$ 很小时（$10^{-8}$）仍应给出非零轴角。"
+    },
+    {
+      "id": "NL09.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G1、G2、A6。"
+    },
+    {
+      "id": "NL09.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\arccos$ 与 $\\mathrm{atan2}$ 只是写法不同」。在 $\\theta$ 接近 0 或 $\\pi$ 的两端，\n两者的**有效位**差几个数量级；这是「同一个函数、两种数值行为」的典型。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G3",
+    "status": "已实现：linalg/so3.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

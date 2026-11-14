@@ -1,0 +1,53 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.0",
+  "chapter": "NL01",
+  "title": "总图：十一个分支与一张依赖网",
+  "src": {
+    "file": "notebook/math/survey/p1-overview.tex",
+    "sha256": "sha256:152e6358351649189b48fff04d3052b9f2abdf84b252ea9d9248acb6dfdaf79f"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.0:body.s01",
+      "type": "extension",
+      "title": "读法：本册只借用「入口法」的两格",
+      "level": 3,
+      "content": "本册**不硬套**根目录 `LEARNING.md`的六段——这里的条目是**镜像**（库里有什么数学），\n不是定理，没有「$A[i]$ 怎么长成 $A$」可言。只借用两格：\n\n- **入口**：每条只回答「这条数学在代码里长成什么形状、落在哪个函数、判据挂在哪」，\n          不复述教材定义；\n- **失效点**：每条的状态词（框架 / 骨架 / 未建 / 缺位）就是它的失效点——\n          公式可信不等于数值已验证。\n\n所以读法是一句话：**查「这条数学落在哪个函数上」，而不是读「这条数学是什么」。**其余四段（积木、生成、条件、两边）在 `../bridges/`与主册里，不在本册。"
+    },
+    {
+      "id": "NL01.0:body.s02",
+      "type": "extension",
+      "title": "状态图例",
+      "level": 3,
+      "content": "全篇每个条目后面都跟一个状态词，取值为：\n\n| 状态 | 含义 |\n|---|---|\n| 已实现 | 源码头文件标注「已实现」，函数体有真实算法 |\n| 框架 | 签名与注释已定、函数体全部 `throw`；注释即规格，公式可信，数值未验证 |\n| 骨架 | 同上，但源码自述为「骨架」；公式仍是规格 |\n| 未建 | 只在 `NOW.md`里规划，文件不存在 |\n| 缺位 | 库里既没有位置、也没有规划；必须在第 节的缺口里登记 |\n\n**框架与骨架的数学含量并不低**：它们是「先写契约后写代码」的产物，公式段往往是全仓最完整的。\n但它们的**判据全部未经验证**——条目里凡是标「未验证」的阈值，都只代表意图，不代表实测。"
+    },
+    {
+      "id": "NL01.0:body.s03",
+      "type": "extension",
+      "title": "十一个分支与条目编号",
+      "level": 3,
+      "content": "条目编号是全局的、不按章的先后。同一编号在全文中唯一，交叉引用都用它。\n\n| 分支 | 编号 | 覆盖对象 |\n|---|---|---|\n| 分析基础 | A1--A6 | 机器精度、累加误差、前向/后向误差、条件数、收敛阶、相消 |\n| 线性代数 | L1--L10 | 线性映射、矩阵乘、转置与伴随、内积、范数与迹、谱、奇异值、正交相似 |\n| 数值线性代数 | N1--N13 | 部分主元、Householder、Givens、MGS、Cholesky、Padé、Jacobi、$A^{H}A$ 路线、秩判定 |\n| 复分析 | C1--C6 | 复代数、Smith 除法、欧拉公式、主值与分支切割、开方、幂 |\n| 调和分析 | H1--H11 | DFT、归一化、卷积定理、频轴、radix-2、Parseval、级数投影、Gibbs、谱收敛 |\n| 概率 | P1--P10 | 特征函数、矩、接缝、经验特征函数、Box--Muller、erf/$\\Phi$、分位数 |\n| 微分与自动微分 | D1--D8 | 对偶数、链式法则、雅可比布局、种子 sweep、反向模式、Lipschitz、RK 阶、辛结构 |\n| 几何与李群 | G1--G10 | 叉积与 hat、Rodrigues、李括号、四元数代数、双覆盖、插值、Shepperd |\n| 离散化与变分 | F1--F9 | 网格与自由度、P1 刚度、弱形式、一致载荷、Dirichlet、收敛阶、CSR、CG |\n| 张量代数 | T1--T7 | 形状与步长、偏移、连续性、零拷贝视图、reshape 合法性、广播 |\n| 微分形式 | M1--M7 | $k$-形式、外积、外微分、拉回、Hodge、Stokes、$n=3$ 字典 |"
+    },
+    {
+      "id": "NL01.0:body.s04",
+      "type": "extension",
+      "title": "依赖网（ASCII）",
+      "level": 3,
+      "content": "箭头读作「是……的基础」。方括号里是状态。\n\n```\n A1 eps --> A2 8n*eps --> A3 fwd/bwd err --> A4 cond number\n   |            |               |                |\n   |            v               v                v\n   |          N1 pivot     N5 MGS ill-cond   N12 A^H A squared\n   v            |                                ^\n C2 Smith       v                                |\n            N3 Householder --> N6 thin QR    L7 singular values\n                 |                 |              ^\n                 v                 v              |\n               N4 Givens      N6b least sq   N11 Jacobi spectrum\n\n L1 row-major --> L2 matmul --> L3 transpose/adjoint\n   |                              |\n   v                              v\n T1 shape/stride --> T2 offset --> T3 contiguous --> T4 view\n                                                        |\n                                                        v\n                                                   T5 reshape\n D1 dual eps^2=0 --> D2 chain rule --> D3 jacobian layout\n                                        |--> D4 seed sweep (col)\n                                        \\--> D5 reverse mode (row)\n\n H1 DFT --> H2 1/N --> H3 circular conv --> H4 linear conv (pad)\n   |          |                                |\n   v          v                                v\n H5 freq axis  H8 Parseval            H10 Gibbs / H11 spectral decay\n   |\n   v\n P1 char func (+i, opposite sign) --> P3 conv theorem --> P6 empirical\n                                          |\n                                          v\n                                     P4 moments = derivatives\n\n G1 cross/hat --> G2 Rodrigues --> G4 Lie bracket\n      |               |\n      v               v\n G6 quat double cover --> G8 slerp --> G9 Shepperd\n\n D6 Lipschitz --> D7 Euler/RK4 order --> D8 symplectic/Verlet\n\n F1 grid --> F2 P1 stiffness --> F3 weak form --> F4 load\n                                   |               |\n                                   v               v\n                               F5 Dirichlet --> F6 order 2\n                                   |\n                                   v\n                              F7 CSR --> F8 CG --> F9 convergence\n\n M3 d^2=0 --> M6 Stokes --> M7 grad/curl/div  (same root as F3)\n```"
+    },
+    {
+      "id": "NL01.0:body.s05",
+      "type": "extension",
+      "title": "读法：三层",
+      "level": 3,
+      "content": "1. **查漏**：翻到某分支，逐条看「常见误解」——能反驳自己直觉的，才说明真懂；\n1. **补基础**：条目末的「前置」给出向上追溯的路径，追到 A 开头的条目为止；\n1. **建直觉**：星号节「串讲」是跨分支的边，专门讲「为什么这两个看起来无关的东西是同一件事」。\n\n本份清单共 **97 条**知识点：已实现 **49 条**、框架 **28 条**、骨架 **3 条**、\n未建 **16 条**、缺位 **1 条**。这五类数字的差别比总数重要得多，含义见第 节。\n\n状态词是**白名单五值**、可脚本核对（`math/survey/verify.py`的 V2）：\n其中「未建」指只在 `NOW.md`里规划、「缺位」指库里既无位置也无规划。\n两个词不许混用，混了计数就对不上。"
+    }
+  ],
+  "meta": {
+    "kind": "library-section",
+    "surveyFile": "p1-overview.tex"
+  }
+}

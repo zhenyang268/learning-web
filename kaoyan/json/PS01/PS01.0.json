@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PS01.0",
+  "chapter": "PS01",
+  "title": "PS01 随机事件与概率",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "PS01.0:exam.s01",
+      "type": "extension",
+      "title": "第 PS01 随机事件与概率：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-ps.md` §PS-01 随机事件与概率　｜　考点页：`note/math1/ps/`"
+    },
+    {
+      "id": "PS01.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-PS-0104` 〔易错〕两两独立 ≠ 相互独立（反例必记）　原因：只证两两"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "随机事件与概率"
+  }
+}

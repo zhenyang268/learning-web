@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL13.4",
+  "chapter": "NL13",
+  "title": "拉回",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL13.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "光滑映射 $F:M\\to N$ 把 $N$ 上的 $k$-形式拉回成 $M$ 上的 $k$-形式：\n$(F^{*}\\omega)_p(v_1,\\dots,v_k)=\\omega_{F(p)}(dF_pv_1,\\dots,dF_pv_k)$；分量上是 Cauchy--Binet 子式。"
+    },
+    {
+      "id": "NL13.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "换元积分、坐标变换下「同一个量怎么写」全靠它；也是「$F^{*}$ 与 $d$ 可交换」这条结构的载体。"
+    },
+    {
+      "id": "NL13.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$F^{*}(d\\omega)=d(F^{*}\\omega)$（与 $d$ 交换）；$F^{*}(dx\\wedge dy)=\\det(J)\\,dx\\wedge dy$（2 维）。\n成立条件：$F$ 光滑；定向一致（否则符号翻转）。"
+    },
+    {
+      "id": "NL13.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "线性 $F$ 与二次 $F$ 各一例；$\\det(J)$ 与显式行列式对拍。"
+    },
+    {
+      "id": "NL13.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "M2、M3、L9。"
+    },
+    {
+      "id": "NL13.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「拉回就是换元」。换元是拉回在积分里的**一个应用**；\n拉回本身定义在形式上，与积分无关，所以它才能与 $d$ 交换。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "M4",
+    "status": "未建：math/forms.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

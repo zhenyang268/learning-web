@@ -1,0 +1,55 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG02.1",
+  "chapter": "EG02",
+  "title": "debug-toolchain · 大纲",
+  "src": {
+    "file": "notebook/projects/eng/debug-toolchain/OUTLINE.md",
+    "sha256": "sha256:9fe86e40b7e23d8968a973971df501a7f039f0f0d4f48bbcf5f304245d19503d"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "EG02.1:body.s01",
+      "type": "extension",
+      "title": "一、它解决什么问题",
+      "level": 2,
+      "content": "这项能力拦的是两类东西：真实工程里“改不动”的事故，和面试里“背了名词但没定位过”的题。\n\n**场景一：线上进程周期性消失。** 一个多线程服务，峰值 QPS 数千，每隔一两天由 systemd 报 `signal=11` 重启一次，日志最后一行是 `recv failed`。此时线上二进制经过 strip、无 debuginfo，`ulimit -c` 为 0 没留 core，retry 掩盖了现象。团队能做的是重启加猜测，这类问题通常以“天”为单位消耗。它需要的不是更聪明的头脑，而是：崩溃前先决定 core 存哪、符号怎么留、`build-id` 怎么对齐；崩溃后能从 `SIGSEGV` 与 `SIGBUS` 的差别、从寄存器与栈帧读出访问地址与映射区间的关系。\n\n**场景二：面试现场。** “这段代码在 `-O2` 下崩、`-O0` 正常，怎么解释？”“ASan 没报错是不是就没内存问题？”“TSan 报了 race，可我明明有 mutex。”这些题不考名词解释，考的是你有没有用这套工具把某个 bug 从现象固定到源码行的完整链条。答不出链条，就只会背“ASan 快、Valgrind 慢”。\n\n**场景三：不可复现的脏读。** 压测 6 小时复现一次，attach 上去所有线程都正常。这类问题的解法是插桩（TSan）、结构化日志、最小复现三条线并行，而不是盯代码。\n\n**入口（本文的读法）**：在 `ulimit -c=0`、二进制被 strip、`systemd` 只留 `signal=11` 的约束下，把「重启 + 猜测」换成三样可核对的东西：`core_pattern`/`coredumpctl` 的 core、`build-id`/`.debug_line` 得到的源码行、`SIGSEGV` 与 `RIP/RSP/RBP` 加 `/proc/pid/maps` 的访问地址。再往下是 `ASan` 的 redzone、`TSan` 的 happens-before、`perf`/`bpftrace` 的 tracepoint，最后收敛到一个最小复现脚本。\n\n**不换的是什么**：全程不变的是同一 ELF 的 `build-id`、`.text` 指令字节、崩溃 `RIP`、`/proc/pid/maps` 映射区间和共享内存的 happens-before 边，所以 `-O2` 崩而 `-O0` 不崩、ASan 不报而 TSan 报、attach 后线程正常时，先核对 core 与 debuginfo 的 `build-id`、`RIP` 是否落在 `.text` 且访问地址是否未映射、mutex `lock/unlock` 是否覆盖读写、以及 `TSan`/`ASan` 插桩是否改变 happens-before 边或 shadow memory 检查范围。\n\n**积木**：①x86-64 `RIP/RSP/RBP` 寄存器、`SIGSEGV`/`SIGBUS` 异常和 `siginfo_t.si_addr` 字段；它能独立验证崩溃指令地址、栈指针、访问地址是否落在 `/proc/pid/maps` 的 `vm_area_struct` 映射区间内。②ELF `.note.gnu.build-id`、`.text` 指令字节和 DWARF `.debug_line` 行号表；它能独立验证 core 中的 `RIP` 是否属于同一二进制并映射到源码行。③C++ `happens-before` 边、`pthread_mutex_lock`/`pthread_mutex_unlock` 调用和 `TSan` shadow memory；它能独立验证两个共享访问之间是否存在同步顺序边。④Linux `RLIMIT_CORE`、`core_pattern`、`elf_core_dump` 写入的 `NT_PRSTATUS`/`NT_FILE` note；它能独立验证进程收到致命信号时是否生成 core 以及 core 是否保存 `pt_regs` 与映射表。\n\n**最小情形**：单核单线程执行 `mov (%rax), %rbx`，`RAX` 指向未映射虚拟地址，内核页错误处理投递 `SIGSEGV` 并填写 `siginfo_t.si_addr`，`RLIMIT_CORE` 非零时 `elf_core_dump` 写 `core_pattern` 指定的 core；此时 `TSan` happens-before 图、`ASan` shadow memory/redzone、`perf` 多核 tracepoint 不起作用，因为只有一个线程、一个 CPU、一个访问指令。\n\n**生成**：累加 `clone`/`pthread_create` 创建的多线程 `/proc/pid/task` 与多核 `perf` tracepoint，新增 `TSan` happens-before 边和 `ASan` shadow memory 检查范围约束。覆盖 `SIGSEGV`/`SIGBUS`、`build-id`/`.debug_line`、`core_pattern`/`coredumpctl`、`RIP/RSP/RBP` 与 `/proc/pid/maps` 映射区间，新增 core 与 debuginfo 必须同一 ELF `build-id` 约束。最坏情形 多线程写共享 `std::string` 且 `pthread_mutex_lock`/`pthread_mutex_unlock` 未覆盖读写，`TSan` 报告两个访问位置但无 happens-before 边，`ASan` 不报而 `SIGSEGV` 在 `RAX` 指向未映射地址时触发。\n\n**两边**：同一崩溃现场在用户态表示为 `RIP/RSP/RBP`、`/proc/pid/maps` 映射区间和 ELF `.note.gnu.build-id`，由 `gdb`/`lldb` 读取。同一崩溃现场在内核态表示为 `pt_regs`、`vm_area_struct` 和 `siginfo_t.si_addr`，由 `elf_core_dump` 写入 core。"
+    },
+    {
+      "id": "EG02.1:body.s02",
+      "type": "extension",
+      "title": "二、为什么这样做（方法论设计）",
+      "level": 2,
+      "content": "**有口径才算数。** 本方法论要求每条结论都带可核验的判据：崩溃要能还原到 `(线程, 帧, 源码行, 访问地址)`；内存错误要有一份 sanitizer 报告指明“谁申请、谁释放、第一次越界发生在哪一行”；数据竞争要有 happens-before 边 $a \\rightarrow b$ 的断裂点，即两个冲突访问各自的位置与中间缺失的同步。做不到这些的，一律降级为“假设”，标在问题单上而不是结论里。\n\n**看起来专业但无法证伪的。** “我加了两行打印就好了”；“重启后再没出现过”；“应该是编译器优化的问题”；“这段逻辑上不可能出错”；“我用 gdb 跟了一下，没发现问题”。它们的共同点是：结论不指向任何可复现的输入或可解释的机制，事后无法被推翻，因此也无法被信任。工程上要的不是“听起来专业的判断”，而是“错了会被打脸的判断”。\n\n**指标怎么定。** 不设“提升 N 倍”这类指标。可定的是：可复现率 $R = n_{\\text{hit}}/N$（同一输入重复 $N$ 次，命中同一栈或同一报告的次数占比），$R \\to 1$ 才算固定；报告可解释率（每条 sanitizer 输出都能指到源码行，而不是“大概这里”）；MTTR 分段（发现 / 定位 / 修复 / 验证四段分别计时，定位段是这套工具链真正负责的部分）。\n\n**这套方法在什么情况下失效。** 第一，海森堡效应：插桩与调试改变了时序，竞态消失，问题变得更贵；第二，符号缺失：strip 过且无独立 debuginfo 的 core 基本不可读；第三，权限：容器里 `ptrace_scope`、`perf_event_paranoid`、内核栈可见性都会让工具直接不可用，这不是技术问题而是部署问题；第四，越界范围：ASan 只能抓它插桩到的访问，Valgrind 只能审查它翻译到的指令，未重编译的库、JIT 代码、内联汇编都是盲区；第五，sanitizer 是采样视角不是证明，报告为空不等于没有问题，报告非空也不等于真实缺陷（缺注解的同步原语）。\n\n**常见错误做法的代价。** 用 printf 代替调试器：一次编译-运行 3–5 分钟，且 I/O 本身改变时序，可能把一天的竞态拖成一周。生产上直接 `gdb attach` 再 `continue`：进程被暂停，如果它正持锁，整条调用链会等锁，上游超时雪崩，一次排查换来一次故障。全量开 ASan 上生产：ASan 有固定比例的 shadow memory 与 redzone 开销（具体倍数按实现与配置而定），把稳定性问题换成了容量问题。看到 TSan 报告就加一把大锁：竞争变成性能问题，且真实设计缺陷仍在，只是换了个地方报。靠重试“解决”崩溃：越界可能已经破坏了堆结构，下一次在无关位置崩，定位成本翻倍。"
+    },
+    {
+      "id": "EG02.1:body.s03",
+      "type": "extension",
+      "title": "三、章节大纲",
+      "level": 2,
+      "content": "**1. 从崩溃现场开始：signal、core dump、backtrace**\n讲信号的语义差别（`SIGSEGV` 是访问非法，`SIGBUS` 是映射有效但不可用，`SIGABRT` 是主动中止，`SIGILL` 常与 UB 被优化相关）、`core_pattern` 与 `ulimit -c` 如何决定 core 落盘位置与过滤范围、`backtrace()` 与 DWARF unwind 的差别、`-O2` 下缺帧与内联导致的栈失真、符号化三件套（二进制 / debuginfo / build-id）如何对齐。\n能回答：“收到 `SIGSEGV`，你手上有什么，第一步做什么？”“core 打不开、栈全是 `??` 怎么办？”\n\n**2. gdb / lldb：断点、条件断点与观察点**\n讲软件断点（改写指令）与硬件断点/观察点（调试寄存器，数量有限，按架构而定）的代价差异；条件断点为什么慢（每次命中都要回调试器求值），改用命中计数或 `commands` + `continue`；观察点抓“谁改了这个变量”；`attach` 的停顿风险与线程调度锁；多线程下 `thread apply all bt` 的读法；容器内的 `gdbserver`。\n能回答：“一个变量在没人赋值的地方变了，怎么找？”“条件断点为什么拖慢一个数量级？”\n\n**3. 内存错误：ASan 与 Valgrind 的检测原理**\n讲 ASan 的 shadow memory 映射 $\\text{shadow} = (\\text{addr} \\gg 3) + \\text{offset}$（offset 按实现而定）与红区、隔离队列；Valgrind 的动态二进制翻译（DBI）路径，为什么它能覆盖未重编译的库而更慢；两者共同依赖 redzone 与已释放内存隔离，因此对“未触红区的越界”“生命周期结束但内存尚未复用”不敏感；LeakSanitizer 只报不可达，不报逻辑泄漏。\n能回答：“ASan 和 Valgrind 怎么选？”“ASan 没报错是不是就没内存问题？”\n\n**4. 未定义行为：UBSan 能抓什么、抓不到什么**\n讲能抓的分类：有符号溢出、移位越界、对齐、空指针解引用的一部分、vptr、有类型信息时的数组越界、函数缺少 return。抓不到：无符号回绕（定义良好）、未初始化读（属 MSan）、悬垂但未复用的指针、以及“编译器据 UB 做优化后，源码与行为已无因果关系”这一类。\n能回答：“`-O2` 崩 `-O0` 正常，怎么解释？”“UBSan 报的 runtime error 是否必须修？”\n\n**5. 数据竞争：TSan 的报告怎么读**\n讲 happens-before 与向量时钟的实现，以及 TSan 报告的三段结构：冲突的两个访问（读/写、位置是 heap/global/stack）、各自线程栈、以及它试图建立的同步关系。重点讲误报来源：手写自旋锁、futex、内联汇编、部分系统调用、缺注解的无锁结构，以及 `__tsan_acquire`/`__tsan_release` 注解的作用。强调 TSan 只对实际发生的交错负责，未执行路径不报。\n能回答：“加了 mutex 为什么还报？”“TSan 干净是否等于线程安全？”\n\n**6. 系统调用层：strace、ltrace 与 dtruss**\n讲 `ptrace` 机制带来的数量级拖慢（每次 syscall 进出都要停），因此只适合低频或短时窗口；常用口径：`-f` 跟线程、`-T` 看单次耗时、`-e trace=` 过滤、`-y` 解析 fd 路径（具体选项按版本确认）。它回答“卡在哪个系统调用、返回什么 errno、fd 泄漏”，不回答“用户态在干什么、锁等了多久”。`ltrace` 覆盖不全；`dtruss` 是 macOS 对应物且需权限。\n能回答：“进程 hang 住，怎么区分死锁、系统调用阻塞、死循环？”\n\n**7. 资源与运行时：/proc、lsof、perf 的调试用法**\n讲 `/proc/<pid>/status` 的 `VmRSS` 与 `Threads`、`smaps` 的映射归属、`task/*/stack` 的内核栈（需权限）、`fd/` 与 `lsof` 查 fd 泄漏与被删除但仍占空间的文件；`perf stat` 看 CPI 与上下文切换、`perf top` 看热点、`perf record/report` 看调用图（完整性取决于 frame pointer 或 DWARF）、`perf trace` 覆盖部分 strace 场景。三种瓶颈分类：on-CPU、off-CPU（等锁/等 I/O）、syscall 密集。\n能回答：“CPU 不高但 QPS 上不去，怎么定位？”“内存持续上涨，怎么区分泄漏、碎片、缓存？”\n\n**8. 日志与可观测性：结构化日志、trace id、最小复现**\n讲键值/JSON 化让“崩溃前最后 N 条”可机读；trace id 与 span 的父子关系才能还原跨进程因果，只有 id 没有 span 等于没接上；日志分级与采样在高频路径上的成本；最小复现作为调试的终点产物——判据是“一条命令 + 一个输入”稳定命中同一栈或同一报告，方法上对应输入二分（delta debugging）。\n能回答：“线上 bug 怎么在 24 小时内给出结论？”“什么算一份好的 bug 报告？”"
+    },
+    {
+      "id": "EG02.1:body.s04",
+      "type": "extension",
+      "title": "四、不做什么 · 必要性 · 失效点",
+      "level": 2,
+      "content": "### 必要性：删掉会怎样\n\n| 机制 | 删掉会怎样 | 判定 |\n|---|---|---|\n| `build-id` | `debuginfo` 被 `strip` 后，`core` 无法与线上二进制配对；`(线程, 帧, 源码行, 访问地址)` 还原承诺破，`栈帧` 只能显示地址，不能落到源码行 | 必需 |\n| `SIGSEGV`/`SIGBUS` | 只剩 `systemd` 的 `signal=11`；无法用 `寄存器` 与 `栈帧` 区分访问地址落在 `映射区间` 外还是页内非法访问，`(线程, 帧, 源码行, 访问地址)` 承诺破 | 必需 |\n| `ulimit -c` | `core` 不生成；`recv failed` 后无法读取 `寄存器`、`栈帧`、`映射区间`，`MTTR 分段` 的定位段承诺破，只能靠重启猜测 | 必需 |\n| `happens-before 边` | TSan 报告只剩两个冲突访问位置；无法指出中间缺失的 `mutex`/同步原语，结论不能写成竞争定位，只能标为 `问题单` 上的 `假设` | 必需 |\n| `ASan` | 没有 `shadow memory`/`redzone` 报告；内存错误不能固定到“谁申请、谁释放、第一次越界发生在哪一行”，但可用 `Valgrind` 审查翻译到的指令，故为选择 | 选择 |\n\n### 失效点：哪条前提一破，结论就变\n\n- `ptrace_scope=1` 且容器缺 `CAP_SYS_PTRACE` → `gdb attach` 不能读 `/proc/<pid>/mem`、`寄存器`、`栈帧`；`SIGSEGV`/`SIGBUS` 只能停在 `systemd` 的 `signal=11`，`(线程, 帧, 源码行, 访问地址)` 降级为 `问题单` 上的 `假设`。\n- `ulimit -c=0` 且 `debuginfo` 未保留、`build-id` 未归档 → `core` 不生成或无法与 `strip` 后二进制配对；`recv failed` 与 `systemd` 重启记录不能证明访问地址越出 `映射区间`。\n- `CLOCK_REALTIME` 与 `systemd` 日志时间戳受 NTP step 调整 → `MTTR 分段` 的发现/定位顺序反转，`recv failed` 与 `signal=11` 不能证明 `core` 生成在崩溃前/后，定位段计时不能归因到源码行。\n- ASan 未覆盖未重编译库、JIT 代码、内联汇编 → `shadow memory`/`redzone` 不产生 sanitizer 报告；报告为空不等于无越界，未插桩指令的访问不进入 `shadow memory`/`redzone` 判定。\n- TSan 对未注解 `mutex`/同步原语不生成 `happens-before 边` → 两个冲突访问之间没有可核验同步边；`可复现率 R=1` 也可能只固定同一误报，结论不能写成“已定位数据竞争”。\n\n### 不做什么（范围）\n\n不做操作系统原理课：页表、调度算法、文件系统实现属于 408 层，这里只讲“调试时怎么读它”。不做语言语法与标准条款考证：UB 只讲能否被抓到，不做标准文本的逐条释义。不做工具版本特性对比表与 IDE/编辑器配置。不深入内核态调试（kgdb、kprobe、eBPF 追踪），只到用户态能看到的 `/proc` 与内核栈为止。不承诺任何性能倍数：所有插桩开销统一写“按实现与配置而定”。不复现厂商基准数据。"
+    },
+    {
+      "id": "EG02.1:body.s05",
+      "type": "extension",
+      "title": "五、面试怎么讲",
+      "level": 2,
+      "content": "**30 秒版本（约 160 字）**\n“我按‘现象→工具→判据’的方式组织这条链路：崩溃先看信号语义与 core 是否完整，能不能还原到帧和行；内存问题用 ASan 的 shadow memory 或 Valgrind 的 DBI 去拿一份带申请/释放点的报告，并说清它的盲区；竞态看 TSan 报告里 happens-before 断在哪，缺注解就补注解而不是加大锁；系统调用层用 strace 判断是不是阻塞在 syscall，用 perf 区分 on-CPU 与 off-CPU。我判断一个问题是否算解决，看的是可复现率是否到 1、报告是否能指到源码行，而不是‘重启后没再出现’。”\n\n**可能被追问的 7 个点**\n\n1. **“core 拿到但栈是 `??`，怎么办？”** 考点：符号化链路。答：先确认二进制与 core 的 build-id 是否一致，再确认是否有独立 debuginfo（`debuginfo-install` / 分离符号），最后确认是不是帧指针缺失导致 unwind 断了——改用 DWARF CFI 或从寄存器与栈上手工回溯。判据是能对上源码行。\n2. **“ASan 和 Valgrind 选哪个？”** 考点：原理与代价。答：能重编译就用 ASan（编译期插桩、shadow memory，覆盖自编译代码，快但只覆盖插桩范围）；不能重编译或要查第三方库、要 helgrind/DRD 那类分析就用 Valgrind（DBI，覆盖广但慢）。判据是“覆盖范围 vs 时间预算”，不是谁更先进。\n3. **“ASan 干净就没事了？”** 考点：盲区。答：不。红区没触到、生命周期结束后内存未复用、JIT/内联汇编、未重编译的库都不在它的视野里。这时补 Valgrind 交叉验证，或退回日志与复现。\n4. **“`-O2` 崩、`-O0` 正常。”** 考点：UB 与优化的因果断裂。答：这是 UB 被优化放大后的典型表现，不是“编译器有 bug”。做法是开 UBSan 分组排查（signed-integer-overflow、shift、alignment、vptr），并注意优化后现象可能与源码位置无关，必须靠插桩而不是读代码。\n5. **“TSan 报了 race，但我有锁。”** 考点：happens-before 的建立方式。答：先读报告三段——两个访问在哪、各自线程栈、它找到的同步边。常见原因是锁保护的不是同一个对象、锁的作用域没覆盖读侧、或用了 TSan 不认识的同步原语（自旋、futex、内联汇编），后者用 `__tsan_acquire`/`__tsan_release` 注解解决。\n6. **“进程 hang 住，怎么分三类？”** 考点：分层定位。答：先 `perf top`/`top` 看是否 on-CPU（死循环），再 `strace -f -T` 看是否卡在某个 syscall（阻塞），再 `/proc/<pid>/task/*/stack` 或等待通道看是否等锁/等 I/O。三者判据不同，不要一上来 attach 打栈。\n7. **“CPU 不高但 QPS 上不去。”** 考点：off-CPU。答：这是 off-CPU 分析场景，`perf stat` 看上下文切换与 CPI，`/proc` 看线程状态分布，配合 trace id 定位到具体阶段；不要只做 on-CPU 采样然后得出“没有热点”的结论。\n\n**别说什么**\n\n- “我用 gdb 打了个断点就找到了”——没交代怎么知道该断在哪，等于没答。\n- “ASan 没报错，所以不是内存问题”——盲区没交代，判据不成立。\n- “TSan 报的大多是误报”——不区分“工具局限”和“你缺注解”，会被追问到底。\n- “这是编译器优化的问题”——把 UB 的因果顺序讲反了，容易被追问到崩。"
+    }
+  ],
+  "meta": {
+    "kind": "project",
+    "group": "eng",
+    "project": "debug-toolchain",
+    "file": "OUTLINE.md"
+  }
+}

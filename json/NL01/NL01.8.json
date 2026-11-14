@@ -1,0 +1,53 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.8",
+  "chapter": "NL01",
+  "title": "覆盖度自查与缺口",
+  "src": {
+    "file": "notebook/math/survey/p11-audit.tex",
+    "sha256": "sha256:fd5026202e9f5dd43787d9b9d2030aeba17c1e3fba6ecbec7ecb4c7e4734535f"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.8:body.s01",
+      "type": "extension",
+      "title": "文件到条目的映射",
+      "level": 3,
+      "content": "下表是「每个文件贡献了哪几条」。**没有任何一个文件是零贡献**——\n最少的 `core/common.hpp`与 `core/scalar_traits.hpp`也各有归属\n（前者给 $\\varepsilon$ 的实际取值与 $\\pi$ 精度口径，后者自述「没有数学公式」，故并入 A1 的口径说明）。\n\n| 文件 | 状态 | 贡献条目 | 归不进数学的内容 |\n|---|---|---|---|\n| `core/scalar.hpp`| 已实现 | A1、A2、L4 | concept 约束写法、静态函数替代 constexpr 的工程理由 |\n| `core/complex.hpp`| 已实现 | C1--C6、A6 | 不用 `std::complex`的三条理由 |\n| `core/matrix.hpp`| 已实现 | L1--L3、L10 | 哑容器设计、i-k-j 循环的 cache 友好性 |\n| `core/tensor.hpp`| 框架 | T1--T7 | 视图生命周期契约、不做并发/表达式模板 |\n| `core/common.hpp`| 骨架（部分注释掉） | A1（$\\varepsilon$ 取值）、A2（$\\pi$ 口径） | 三个 enum 的结构标签 |\n| `core/scalar_traits.hpp`| 已实现 | （并入 A1 说明） | 一行前向声明用于打断循环包含 |\n| `linalg/solve.hpp`| 已实现 | N1、N2、A2、A3 | 行交换簿记、`piv`存列号 |\n| `linalg/inverse.hpp`| 已实现 | N9、N8、L3 | 五条路径不复用的工程理由 |\n| `linalg/qr.hpp`| 已实现 | N3、N4、N5、N6、L10 | 三条路径对拍策略、`Adjoint`踩坑记录 |\n| `linalg/cholesky.hpp`| 已实现 | N7、N8 | 异常类型的历史遗留 |\n| `linalg/svd.hpp`| 已实现 | L7、N12、N13、A4 | 排序须与 $V$ 列同步置换 |\n| `linalg/eigen.hpp`| 已实现 | L6、L8、N11 | 特征值返回顺序不保证 |\n| `linalg/expm.hpp`| 已实现 | N10、C3 | 求逆 vs 求解的 flops 纪律 |\n| `linalg/operator.hpp`| 已实现 | L4、L5 | 暂驻/搬家理由、禁用 `+=`|\n| `linalg/so3.hpp`| 已实现 | G1--G4 | 三层否决的分层理由、不查反对称 |\n| `quat/quaternion.hpp`| 已实现 | G5--G10 | 不提供标量除法的二义性 |\n| `autodiff/dual.hpp`| 已实现 | D1、D2 | ADL/友元断链、无复合赋值 |\n| `autodiff/jacobian.hpp`| 已实现 | D3、D4 | 重载偏序、形状检查的旧 bug |\n| `autodiff/grad_graph.hpp`| 已实现 | D5、L10 | tape 的拓扑排序实现 |\n| `math/ode.hpp`| 骨架 | D6--D8 | `std::function`别名、异常分类 |\n| `math/fourier.hpp`| 框架 | H1--H8 | 长度契约分档、不自动分派 |\n| `math/series.hpp`| 框架 | H9--H11 | 与 fourier 分文件的理由 |\n| `math/special.hpp`| 框架 | P8--P10、A6 | 默认参数、不用 Dual/Complex 的取舍 |\n| `math/prob.hpp`| 框架 | P1--P7 | seed 显式化、逐位可复现口径 |\n| `NOW: grid.hpp`| 未建 | F1 | 手算表对拍的验收方式 |\n| `NOW: sparse.hpp`| 未建 | F7 | 「生产路径不许 ToDense」的纪律 |\n| `NOW: assemble.hpp`| 未建 | F2--F6 | 非多项式 $f$ 需要求积器（不做） |\n| `NOW: cg.hpp`| 未建 | F8、F9 | `std::invocable`零开销约束 |\n| `NOW: forms.hpp`| 未建 | M1--M7 | 「定义用性质、公式作推论」的书写纪律 |"
+    },
+    {
+      "id": "NL01.8:body.s02",
+      "type": "extension",
+      "title": "97 条的构成",
+      "level": 3,
+      "content": "| 类别 | 条数 | 含义 |\n|---|---|---|\n| 已实现 | 49 | 有真实算法，判据可跑（A1--A6、L1--L8、L10、N1--N13、C1--C6、D1--D5、G1--G10） |\n| 框架 | 28 | 公式可信、函数体全 throw（H1--H11、P1--P10、T1--T7） |\n| 骨架 | 3 | 源码自述骨架（D6--D8） |\n| 未建 | 16 | 只在 `NOW.md`规划（F1--F9、M1--M7） |\n| 缺位 | 1 | 库里没有位置也没规划（L9 行列式） |\n| 合计 | 97 |   |\n\n**这个分布本身就是一条结论**：这张清单里 31 条（框架+骨架）的公式是「设计意图」而非「已验证事实」，\n16 条连文件都还没有。它们能用来复习，**不能**用来论证「库实现了这个数学」。"
+    },
+    {
+      "id": "NL01.8:body.s03",
+      "type": "extension",
+      "title": "缺口：库用到、但数学上没成体系",
+      "level": 3,
+      "content": "以下六处是真正值得补的空白。它们的共同点：**不是缺一条公式，而是缺一段推导**。\n\n1. **$8n\\varepsilon$ 背后的舍入分析**（A2）。源码只说「系数 8 是余量、非推导」。\n          完整的推导需要：$n$ 步运算的误差累积上界、以及「阈值反推」四步（$R=e_{\\text{tol}}/e_{\\text{worst}}\\in[10^{1},10^{6}]$）。\n          这一段在 `03-test-standard.md`里只有工程口径，没有数学证明。\n1. **条件数 $\\kappa(A)$ 的定义与增长**（A4、N12）。`svd.hpp`之外，\n          其余文件的「三、公式与符号表」都**没有**出现 $\\kappa$。这是全库最明显的一处「用了但没写」。\n1. **SVD 走 $A^{H}A$ 的精度损失链条**（N12）。$\\kappa(A^{H}A)=\\kappa(A)^{2}$ 只是一句话；\n          「$\\sigma$ 的相对误差为何是 $\\sqrt\\varepsilon$ 量级」还差一步：$\\lambda$ 的误差 $\\varepsilon\\kappa^{2}$ 经开方变成\n          $\\sqrt{\\varepsilon}\\kappa$。Golub--Kahan 双对角化能避开，但未实现。\n1. **Gibbs 过冲常数 $\\frac2\\pi\\int_0^\\pi\\frac{\\sin t}{t}dt$ 的来源**（H10）。\n          数值 $1.08949\\ldots$ 有了，但「为什么是 sinc 积分、为什么与 $K$ 无关」的推导没有。\n1. **QR 与最小二乘的联系**（N6）。`qr.hpp`的「三、公式与符号表」里**完全没有**最小二乘；而最小二乘是 QR 最重要的消费场景。这条是本清单里唯一「数学上必需、源码里缺失」的。\n1. **行列式与体积**（L9）。库没有 `det`入口，但拉回（M4）需要 $\\det J$，\n          第四节的「体积形式」也需要它——目前只能靠 SVD 的恒等式绕过去。"
+    },
+    {
+      "id": "NL01.8:body.s04",
+      "type": "extension",
+      "title": "另外三处「形式上完整、实质待验证」",
+      "level": 3,
+      "content": "- **框架层的判据全是意图**：H、P、T 三组的阈值（$10^{-13}$、$2$ ulp、$10^{-14}$）都写在注释里，\n          没有一条跑过。它们的价值是「给出了验收目标」，不是「已经验收」。\n- **骨架层的阶数是承诺**：D7 的「RK4 四阶」、D8 的「能量有界」都还没有实现，\n          所以「辛 vs 非辛」的对照目前只是数学陈述。\n- **未建层的编号是计划**：F1 的「$4\\times3$ 网格有 12 个三角形」这类数字是手算目标，\n          库里还没有能跑的代码去核对它。"
+    },
+    {
+      "id": "NL01.8:body.s05",
+      "type": "extension",
+      "title": "最后一句",
+      "level": 3,
+      "content": "这份清单能保证的是：**每个数学对象都找到了它在库里的位置，且说清了它的成立条件与失败长相**。\n它不能保证的是：这些条件的**数值**已经验证过。二者的差别，就是「读过」与「做过」的差别。"
+    }
+  ],
+  "meta": {
+    "kind": "library-section",
+    "surveyFile": "p11-audit.tex"
+  }
+}

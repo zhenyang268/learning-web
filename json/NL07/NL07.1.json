@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL07.1",
+  "chapter": "NL07",
+  "title": "对偶数：$\\varepsilon^{2}=0$ 的代数",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL07.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "### 串讲四：为什么「前向一次得列、反向一次得行」\n\n这件事看着像工程技巧，其实全是维度：\n\n- 前向：把 $\\varepsilon$ 塞进第 $j$ 个输入分量 $x_j$。仿射部分立刻吐出\n          $\\partial f/\\partial x_j$——**一次一个输入**，是 $J$ 的一列。\n- 反向：从标量 $L$ 出发，把「上游的伴随」按链式法则往回乘——**一次一个输出**，是 $J$ 的一行。\n\n于是代价对偶：$n$ 个输入、$m$ 个输出时，前向 $O(n)$ 次、反向 $O(m)$ 次。\n深度学习里 $m=1$（损失是标量）而 $n$ 是百万参数，所以必须反向。这不是「反向模式更先进」，\n只是 $m\\ll n$ 时它更便宜。"
+    },
+    {
+      "id": "NL07.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$z=v+d\\varepsilon$，规定 $\\varepsilon^{2}=0$ 且 $\\varepsilon\\ne0$。注意 $\\varepsilon$ 不是 $i$：\n$i^{2}=-1$，$\\varepsilon^{2}=0$。"
+    },
+    {
+      "id": "NL07.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把「求导」变成「在同一个数域里做算术」——不需要符号系统，也不需要差分步长。"
+    },
+    {
+      "id": "NL07.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "对任意光滑 $f$，$f(v+d\\varepsilon)=f(v)+d\\,f'(v)\\varepsilon$：因为 $h^{2}=0$，\n**高阶项精确消失**，所以链式法则成为代数恒等式（不是极限意义下的近似）。成立条件：\n$f$ 在 $v$ 的邻域内解析（有 Taylor 展开）；$T$ 必须是**交换环**——四元数不满足，不得进此域。"
+    },
+    {
+      "id": "NL07.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "二阶导数用嵌套 $\\mathrm{Dual\\langle Dual\\rangle}$：$v+d_1\\varepsilon_1+e\\varepsilon_2+(\\partial^{2})\\varepsilon_1\\varepsilon_2$。"
+    },
+    {
+      "id": "NL07.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "无。"
+    },
+    {
+      "id": "NL07.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\varepsilon$ 是个很小的数」。它不是数，是一个幂零生成元；\n写成 $10^{-8}$ 就退化成数值差分，误差从机器精度掉到 $O(\\sqrt\\varepsilon)$。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D1",
+    "status": "已实现：autodiff/dual.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

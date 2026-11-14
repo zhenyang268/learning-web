@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.1",
+  "chapter": "NL02",
+  "title": "矩阵作为线性映射与行主序",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "### 串讲一：$8n\\varepsilon$、回代、条件数是一条链\n\nA2 给的是「$n$ 步运算能攒多少舍入」；A3 把它翻译成「解方程的后向误差」；\nA4 再加上「问题本身的放大倍率」。三者串起来才是完整的误差预算：\n\n$$\n\\text{解的相对误差}\\ \\lesssim\\ \\underbrace{\\kappa(A)}_{\\text{A4}}\\cdot\n\\underbrace{n\\varepsilon}_{\\text{A2}}\\ .\n$$\n\n所以看到 `DefaultTol(n)` $=8n\\varepsilon$ 时不要只想「机器精度乘 n」，它是这条链的第一环。"
+    },
+    {
+      "id": "NL02.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$A\\in\\mathbb{R}^{m\\times n}$ 表示映射 $x\\mapsto Ax$（$x$ 为 $n\\times1$ 列向量，D19）；\n存储上 $A(i,j)$ 落在 `data`[$i\\cdot n+j$]。"
+    },
+    {
+      "id": "NL02.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是所有形状规则与布局规则的源头：向量是列、雅可比是 $m\\times n$、\n链式法则是 $J_{f\\circ g}=J_fJ_g$。"
+    },
+    {
+      "id": "NL02.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "行主序意味着「同一行的元素在内存里相邻」；这是**存储**约定，\n与「向量写成 $n\\times1$」不冲突——两者是不同层面的约定。"
+    },
+    {
+      "id": "NL02.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无（存储公式本身即是定义）。"
+    },
+    {
+      "id": "NL02.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "无。"
+    },
+    {
+      "id": "NL02.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为行主序 $\\Rightarrow$ 向量该写成行向量。布局决定遍历顺序，不决定向量的形状语义。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L1",
+    "status": "已实现：core/matrix.hpp",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

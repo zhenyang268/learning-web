@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.2",
+  "chapter": "NL05",
+  "title": "逆变换：$1/N$ 只出现一次",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$x_n=\\frac1N\\sum_k X_k e^{+2\\pi ikn/N}$。"
+    },
+    {
+      "id": "NL05.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "正逆必须复合为恒等：$\\frac1N\\sum_k e^{2\\pi ik(n-m)/N}=\\delta_{nm}$。\n这个 $1/N$ 是「$N$ 个正交方向的平均」的代价。"
+    },
+    {
+      "id": "NL05.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "两个方向的**符号相反**是定义本身，不是笔误；$1/N$ 全库只在 IFFT 出现一次。\n成立条件：$N$ 与正向一致；复数域共轭关系 $x=\\overline{\\mathrm{FFT}(\\overline{X})}/N$ 可作为实现路径。"
+    },
+    {
+      "id": "NL05.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "往返 $\\left\\lVert \\mathrm{IFFT}(\\mathrm{FFT}(x))-x\\right\\rVert _{\\infty}\\le10^{-13}$。"
+    },
+    {
+      "id": "NL05.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H1。"
+    },
+    {
+      "id": "NL05.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「正变换除 $\\sqrt N$、逆变换除 $\\sqrt N$」更对称。那是酉归一化（Parseval 无因子），\n与 D20 约定的 $\\pm1$、$1/N$ 方案不同；混用会让卷积少（或多）一个因子。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H2",
+    "status": "框架：math/fourier.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

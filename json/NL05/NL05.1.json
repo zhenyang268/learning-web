@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.1",
+  "chapter": "NL05",
+  "title": "DFT 的定义与「正向不归一化」",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$X_k=\\sum_{n=0}^{N-1}x_n e^{-2\\pi ikn/N}$，$k=0,\\dots,N-1$；正向**不除 $N$**。"
+    },
+    {
+      "id": "NL05.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「把一个离散信号分解成 $N$ 个旋转的叠加」；不归一化让正向成为纯投影，\n所有归一化集中到逆变换，避免因子分散在两处。"
+    },
+    {
+      "id": "NL05.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "旋转因子 $e^{-2\\pi ikn/N}$ 对应 C3 的复指数；$X_k$ 是 $x$ 在频率 $k$ 上的**内积**$\\langle e_k,x\\rangle $（严格说要共轭，方向由符号约定决定）。成立条件：$N\\ge1$；信号按 $N\\times1$ 列向量（D19）。"
+    },
+    {
+      "id": "NL05.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与朴素 DFT 对拍：$N=1024$ 复数随机，$\\left\\lVert \\mathrm{FFT}-\\mathrm{DFT}\\right\\rVert _{\\infty}/\\left\\lVert X\\right\\rVert _{\\infty}\\le10^{-13}$；\n另加**有条件逐点**判据——只对 $\\left\\lvert X_k\\right\\rvert \\ge0.1\\left\\lVert X\\right\\rVert _{\\infty}$ 的频点比较（近零频点必然假红）。"
+    },
+    {
+      "id": "NL05.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C3、L4。"
+    },
+    {
+      "id": "NL05.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「不归一化」是无所谓的选择。它决定了卷积定理里有没有附加因子（H3）、\nParseval 里 $1/N$ 放在哪边（H8）——一处改，处处变。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H1",
+    "status": "框架：math/fourier.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

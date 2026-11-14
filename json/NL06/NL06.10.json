@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.10",
+  "chapter": "NL06",
+  "title": "尾部相消与判据的位置",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.10:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "尾部（$|x|$ 大）概率极小，任何「大数减小数」的写法都会丢光有效位；\n所以判据不能只写在「函数值」上，还要写在「反函数复合」上。"
+    },
+    {
+      "id": "NL06.10:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "尾部是「精度最容易假通过」的地方：中心区域对拍全绿，尾部错得离谱。"
+    },
+    {
+      "id": "NL06.10:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "两条互补判据：$\\mathrm{erfc}$ 与内建对拍（绝对差 $\\le2$ ulp）覆盖尾部；\n$\\Phi(\\Phi^{-1}(u))$ 复合判据覆盖「往返一致性」。成立条件：$u$ 在 $[10^{-12},1-10^{-12}]$ 内，\n再往外 $\\Phi^{-1}$ 的绝对误差会让复合判据失真。"
+    },
+    {
+      "id": "NL06.10:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "复合误差 $\\le10^{-14}$；$\\mathrm{erfc}(+\\infty)=0$、$\\mathrm{erfc}(-\\infty)=2$、$\\mathrm{erf}(\\pm\\infty)=\\pm1$。"
+    },
+    {
+      "id": "NL06.10:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "P8、P9、A6。"
+    },
+    {
+      "id": "NL06.10:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「函数值与反函数值都测了就万事大吉」。两者可能**一致地错**（同一个相消 bug 让两边偏移相同），必须再加一条与外部实现的绝对对拍。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P10",
+    "status": "框架：math/special.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

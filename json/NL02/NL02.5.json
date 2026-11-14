@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.5",
+  "chapter": "NL02",
+  "title": "Frobenius 范数、迹恒等式与「平方阈值」",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\left\\lVert A\\right\\rVert _{F}^{2}=\\sum_{ij}\\left\\lvert A_{ij}\\right\\rvert ^{2}$；$\\langle A,B\\rangle _{F}=\\mathrm{tr}(A^{H}B)$；\n比较一律写成 $\\mathrm{abs2}\\le \\mathrm{tol}^{2}$。"
+    },
+    {
+      "id": "NL02.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "全库「判大小」的统一写法：避免开方、避免比较复数本身。"
+    },
+    {
+      "id": "NL02.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "平方在非负实数上保序，故 $\\left\\lvert x\\right\\rvert \\le t\\iff\\left\\lvert x\\right\\rvert ^{2}\\le t^{2}$；\n但 $\\mathrm{abs2}$ **丢相位**，只能判模长，判复向量相等必须逐分量比实虚两槽（D7 的已知盲区）。"
+    },
+    {
+      "id": "NL02.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "所有范数判据（$\\left\\lVert A^{\\mathsf T}A-I\\right\\rVert $、$\\left\\lVert A-QR\\right\\rVert $、$\\mathrm{off}(A)$）都写成平方比较。"
+    },
+    {
+      "id": "NL02.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L4、A6。"
+    },
+    {
+      "id": "NL02.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $\\mathrm{abs2}$ 判等与 $\\left\\lvert \\cdot\\right\\rvert $ 判等等价。对模长等价；对「两个复数相同」不等价。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L5",
+    "status": "已实现：linalg/operator.hpp",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.11",
+  "chapter": "NL03",
+  "title": "Jacobi 旋转求对称特征值",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.11:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "对 $2\\times2$ Hermitian 子块 $\\begin{bmatrix}a&z\\\\\\overline{z}&b\\end{bmatrix}$，\n用酉旋转零化 $z$：$\\tan2\\theta=\\frac{2\\left\\lvert z\\right\\rvert }{a-b}$，$\\theta=\\frac12\\mathrm{atan2}(2\\left\\lvert z\\right\\rvert ,a-b)$；\n旋转后 $a'=\\frac{a+b}{2}+\\frac{D}{2}$，$b'=\\frac{a+b}{2}-\\frac{D}{2}$，$D=\\mathrm{hypot}(a-b,2\\left\\lvert z\\right\\rvert )$。"
+    },
+    {
+      "id": "NL03.11:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是最稳的对称特征值算法：只做正交相似（L8），不破坏结构，收敛二次。"
+    },
+    {
+      "id": "NL03.11:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "对角元用解析式而不写 $c^{2}a+s^{2}b+2cs\\left\\lvert z\\right\\rvert $——后者多一次相消（A6）。\n$\\theta$ 若取成 $\\theta+\\pi/2$ 会把两特征值对调，故公式与取法必须配套。\n收敛判据必须**相对**：$\\mathrm{off}(A)\\le\\mathrm{tol}\\left\\lVert A\\right\\rVert _{F}$，\n其中 $\\mathrm{off}(A)^{2}=\\left\\lVert A\\right\\rVert _{F}^{2}-\\sum_i\\left\\lvert A_{ii}\\right\\rvert ^{2}$；绝对阈值在 $\\left\\lVert A\\right\\rVert $ 大时永不收敛、\n小时过早停。成立条件：$A$ Hermitian；每轮 cyclic 扫全部 $i<j$（否则会填回已零化的元素）。"
+    },
+    {
+      "id": "NL03.11:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "单元素跳过阈值 $\\mathrm{tol}^{2}/n_d$，$n_d=n(n-1)$；最多 $kMaxSweep=100$ 轮，\n超限抛异常；迹不变可随时对拍。"
+    },
+    {
+      "id": "NL03.11:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L6、L8、N3。"
+    },
+    {
+      "id": "NL03.11:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「零化一个元素就少一个非对角元」。旋转会把别处已零化的元素重新填成非零，\n所以必须扫完整轮并看整体 $\\mathrm{off}$。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N11",
+    "status": "已实现：linalg/eigen.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

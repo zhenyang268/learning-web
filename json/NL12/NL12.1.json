@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL12.1",
+  "chapter": "NL12",
+  "title": "形状与行主序步长",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL12.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "### 串讲六：弱形式与 $d^{2}=0$ 是同一条边界的两种写法\n\nF3 的分部积分和 M3 的 $d^{2}=0$ 看起来一个属于有限元、一个属于微分几何，其实是同一件事的两端：\n\n|   | 有限元（F3） | 微分形式（M3、M6） |\n|---|---|---|\n| 核心恒等式 | $\\int_\\Omega\\nabla u\\cdot\\nabla v=-\\int_\\Omega(\\Delta u)v+\\int_{\\partial\\Omega}\\partial_nu\\,v$ | $\\int_M d\\omega=\\int_{\\partial M}\\omega$ |\n| 「挪一次导数」 | 分部积分 | 外微分 + Stokes |\n| 边界项怎么来 | 被积函数求导产生全导数项 | 定向边界上的低一阶形式 |\n| 二阶导消失 | 弱形式只含一阶 | $d^{2}=0$：再微一次必为 0 |\n\n所以「为什么有限元必须用弱形式」与「为什么 $d^{2}=0$」本质是同一个机制：**求导会把信息推到边界上**。\n把这句话记住，两块内容就只需要记一份。\n\n### 串讲七：三种「连续性」，别混\n\n| 说法 | 属于谁 | 判据 | 违反后果 |\n|---|---|---|---|\n| 张量连续性（连续布局） | T3 | 步长与形状推出的步长逐维相等 | reshape 必须抛错（T5） |\n| 函数光滑性 $C^{p}$ | H11 | 第 $p$ 阶导数连续 | 谱系数衰减只有 $O(k^{-p-1})$ |\n| 收敛阶 $O(h^{p})$ | A5 | $h$ 减半误差降 $2^{p}$ | 渐近区外比值乱、判据假红 |\n\n三者都叫「连续/光滑」，但一个讲内存、一个讲函数、一个讲误差率。"
+    },
+    {
+      "id": "NL12.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "秩 $r$、形状 $\\text{shape}[0..r-1]$；步长从最后一维往前算：\n$\\text{strides}[r-1]=1$，$\\text{strides}[d]=\\text{strides}[d+1]\\cdot\\text{shape}[d+1]$，\n即 $\\text{strides}[d]=\\prod_{k>d}\\text{shape}[k]$。"
+    },
+    {
+      "id": "NL12.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "步长是「多维下标 → 一维偏移」的全部信息；视图、切片、换轴都只改步长不动数据。"
+    },
+    {
+      "id": "NL12.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "必须**从后往前**算（行主序）。成立条件：$r\\ge1$；$\\text{shape}[d]\\ge0$。"
+    },
+    {
+      "id": "NL12.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\{2,3,4\\}\\Rightarrow\\text{strides}=\\{12,4,1\\}$。"
+    },
+    {
+      "id": "NL12.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L1。"
+    },
+    {
+      "id": "NL12.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「步长就是形状的累乘」。只在行主序且连续时才对；\n换轴之后步长与形状不再有那个关系（T4），这正是「视图」能零拷贝的原因。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "T1",
+    "status": "框架：core/tensor.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

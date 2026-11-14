@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DS02.0",
+  "chapter": "DS02",
+  "title": "DS02 线性表",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "DS02.0:exam.s01",
+      "type": "extension",
+      "title": "第 DS02 线性表：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 7 题 —— 2016 #1、#2；2021 #1；2023 #1、#2；2024 #1、#6\n> 一课位置：`quick/408-ds.md` §DS-02 线性表　｜　考点页：`note/408/ds/`"
+    },
+    {
+      "id": "DS02.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-DS-0202` 〔易错〕顺序表插入/删除平均移动 n/2 次　原因：忘了除以 2\n- `408-DS-0203` 〔易错〕边界必测：空表 / 单结点 / 首元素即满足 / 全相同元素　原因：只写主干逻辑\n- `408-DS-0203` 〔易错〕链表改指针顺序：先接后继再断前驱，否则断链　原因：手写代码第一大坑\n- `408-DS-0203` 〔易错〕不许用 STL，408 要纯 C 结构体 + 指针　原因：用 `vector` 直接判不合要求\n- `408-DS-0203` 〔易错〕常见家族：链表逆置/合并/找倒数第 k、树的遍历与建树、图的遍历与拓扑、数组原地操作　原因：按家族练，别按题练\n- `408-DS-0204` 〔易错〕KMP 的 next 有三套约定（从 0 / 从 1 / 优化版 nextval），题干通常明示　原因：不换算就与答案差 1"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "线性表"
+  }
+}

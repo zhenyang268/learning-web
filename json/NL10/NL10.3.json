@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL10.3",
+  "chapter": "NL10",
+  "title": "弱形式与分部积分",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL10.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "对 $-\\Delta u=f$（Dirichlet 0），两边乘测试函数 $v$ 并积分，用分部积分：\n\n$$\n\\int_\\Omega\\nabla u\\cdot\\nabla v\\,dx=\\int_\\Omega fv\\,dx \\forall v\\in H^{1}_{0}.\n$$"
+    },
+    {
+      "id": "NL10.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "强形式要求 $u$ 二阶可导；弱形式只要求一阶可积——这才让分片线性函数成为合法解。"
+    },
+    {
+      "id": "NL10.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "分部积分把「一个二阶导」换成「两个一阶导的乘积」，同时**把边界项丢给自然边界条件**。\nDirichlet 条件是本质边界（要强加），Neumann 是自然边界（出现在右端）。\n成立条件：$u,v\\in H^{1}$；边界足够正则（分段光滑即可）。"
+    },
+    {
+      "id": "NL10.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无（这一步是推导，不是计算）；但「行和为 0」（F2）就是弱形式在常数上的推论。"
+    },
+    {
+      "id": "NL10.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "F2。"
+    },
+    {
+      "id": "NL10.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「弱形式是强形式的近似」。两者对光滑解**完全等价**；弱形式只是把要求放宽到\n更差的函数类，从而让离散解有定义。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F3",
+    "status": "未建：math/assemble.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CO06.0",
+  "chapter": "CO06",
+  "title": "CO06 总线",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "CO06.0:exam.s01",
+      "type": "extension",
+      "title": "第 CO06 总线：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 7 题 —— 2016 #21；2017 #20；2018 #21；2020 #19；2021 #19；2023 #20；2024 #20\n> 一课位置：`quick/408-co.md` §CO-06 总线　｜　考点页：`note/408/co/`"
+    },
+    {
+      "id": "CO06.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-CO-0601` 〔易错〕数据总线传「数据 + 指令 + 命令字 + 状态信息」；控制总线传读/写/中断确认/总线请求　原因：「命令字走控制总线」是错的\n- `408-CO-0601` 〔易错〕同步总线的工作频率可能 ≠ 时钟频率（一周期传两次）　原因：带宽算成一半\n- `408-CO-0601` 〔易错〕「总线忙」信号由获得总线使用权的设备发出　原因：细节选择题\n- `408-CO-0602` 〔易错〕突发传输节约的是地址与命令的建立时间，每周期数据量不变　原因：以为突发能提高瞬时带宽"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "总线"
+  }
+}

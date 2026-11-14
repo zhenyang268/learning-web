@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.11",
+  "chapter": "NL05",
+  "title": "谱收敛：光滑度决定衰减速度",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.11:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "若周期函数 $x$ 有 $p$ 阶连续导数（$x\\in C^{p}$），则 $\\left\\lvert c_k\\right\\rvert =O(\\left\\lvert k\\right\\rvert ^{-p-1})$。"
+    },
+    {
+      "id": "NL05.11:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把「函数有多光滑」翻译成「系数掉得多快」，是选 $K$ 的唯一依据。"
+    },
+    {
+      "id": "NL05.11:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "方波 $p=0\\Rightarrow\\left\\lvert c_k\\right\\rvert =O(1/\\left\\lvert k\\right\\rvert )$，截断误差 $O(1/K)$；\n解析函数则指数衰减。成立条件：$p$ 阶导数连续（分段光滑时按最差的那段算）。"
+    },
+    {
+      "id": "NL05.11:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "双对数坐标下 $\\left\\lvert c_k\\right\\rvert $ 的斜率约 $-(p+1)$。"
+    },
+    {
+      "id": "NL05.11:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H9。"
+    },
+    {
+      "id": "NL05.11:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「光滑函数的系数一定很快衰减」。$C^{1}$ 但二阶导数跳变的函数，\n衰减只有 $O(k^{-3})$；指数衰减要求**解析**，比「无限可微」更强。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H11",
+    "status": "框架：math/series.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

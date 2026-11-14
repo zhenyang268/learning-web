@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "HS01.0",
+  "chapter": "HS01",
+  "title": "HS01 函数、极限、连续",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "HS01.0:exam.s01",
+      "type": "extension",
+      "title": "第 HS01 函数、极限、连续：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-01 函数、极限、连续　｜　考点页：`note/math1/hs/`"
+    },
+    {
+      "id": "HS01.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-HS-0103` 〔易错〕等价无穷小替换在加减法里要慎用（同阶相消会丢主项）　原因：无脑替换得 0"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "函数、极限、连续"
+  }
+}

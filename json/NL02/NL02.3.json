@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.3",
+  "chapter": "NL02",
+  "title": "转置、共轭转置与伴随",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$(A^{\\mathsf T})_{ij}=A_{ji}$；$(A^{H})_{ij}=\\mathrm{conj}(A_{ji})$。\n数学上伴随的定义是 $\\langle A^{H}u,v\\rangle =\\langle u,Av\\rangle $。"
+    },
+    {
+      "id": "NL02.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "复域一切酉性、正交性、Hermitian 判据都只能用 $A^{H}$；反向传播的转置也是它。"
+    },
+    {
+      "id": "NL02.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "实域 $\\mathrm{conj}$ 恒等，故 $A^{\\mathsf T}=A^{H}$，**bug 只在复数域暴露**——\n源码记录这个坑已踩两次（`givens`、`qr_inverse`）。换内积（度量矩阵 $G$）时\n伴随变成 $G^{-1}A^{H}G$。成立条件：内积为标准 Hermite 内积。"
+    },
+    {
+      "id": "NL02.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\left\\lVert Q^{H}Q-I\\right\\rVert $、Hermitian 判定，均在 double 下恒真、Complex 下才有效。"
+    },
+    {
+      "id": "NL02.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C1。"
+    },
+    {
+      "id": "NL02.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「转置 = 改行列布局」。那是实现层面的交换下标；数学上转置是**伴随**，\n与内积绑定，所以换度量它就换形状。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L3",
+    "status": "已实现：core/matrix.hpp",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

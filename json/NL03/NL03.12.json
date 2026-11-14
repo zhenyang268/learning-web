@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.12",
+  "chapter": "NL03",
+  "title": "为什么走 $A^{H}A$ 会把条件数平方",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.12:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "由于 $x^{H}A^{H}Ax=\\left\\lVert Ax\\right\\rVert ^{2}\\ge0$，$B=A^{H}A$ 是 Hermitian 半正定，\n其特征值就是 $\\sigma_i^{2}$；于是 SVD 可以退化为「对称特征值问题」。"
+    },
+    {
+      "id": "NL03.12:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "这是库当前 SVD 的实现路线——最省事、复用已有的 Jacobi；但代价必须说清。"
+    },
+    {
+      "id": "NL03.12:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$\\kappa(A^{H}A)=\\kappa(A)^{2}$（这是 A4 的直接推论）。因此在 $B$ 上求特征值的相对误差\n$\\sim\\varepsilon\\kappa(B)=\\varepsilon\\kappa(A)^{2}$，开方后 $\\sigma$ 的相对误差 $\\sim\\sqrt{\\varepsilon}\\,\\kappa(A)$。\n源码给的例子：$\\kappa(A)=10^{8}$ 时 $\\sigma$ 相对误差约 $1\\times10^{-8}$。成立条件：$\\kappa$ 用 2-范数；\n重构 $\\left\\lVert USV^{H}-A\\right\\rVert $ 仍是 $\\varepsilon$ 级（$\\sigma$ 与 $1/\\sigma$ 精确相消）。"
+    },
+    {
+      "id": "NL03.12:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\mathrm{tol\\_sig}=\\mathrm{DefaultTol}(r)\\sigma_0$；补列时要求投影后 $\\left\\lVert w\\right\\rVert ^{2}>0.25$。"
+    },
+    {
+      "id": "NL03.12:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A4、L7、N11。"
+    },
+    {
+      "id": "NL03.12:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「既然数学上等价，走 $A^{H}A$ 没损失」。等价性对精确算术成立；\n浮点上损失的不是 $\\varepsilon$ 而是 $\\sqrt{\\varepsilon}$——这是路线选择问题，不是实现 bug。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N12",
+    "status": "已实现：linalg/svd.hpp（路线选择）",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL08.1",
+  "chapter": "NL08",
+  "title": "Lipschitz 条件与解的存在唯一",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL08.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "初值问题 $y'=f(t,y)$、$y(t_0)=y_0$；若 $f$ 对 $y$ 满足 Lipschitz 条件\n$\\left\\lvert f(t,y_1)-f(t,y_2)\\right\\rvert \\le L\\left\\lvert y_1-y_2\\right\\rvert $，则局部解存在且唯一（Picard--Lindelöf）。"
+    },
+    {
+      "id": "NL08.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "没有唯一性，任何数值解都失去「在对什么东西逼近」的前提。"
+    },
+    {
+      "id": "NL08.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "Lipschitz 弱于连续可微，强于连续；只有连续性（Peano）时解可能不唯一。\n契约要求 $f$ 光滑；**跳变不处理**（需要事件检测，不做）。"
+    },
+    {
+      "id": "NL08.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无（骨架未实现）。"
+    },
+    {
+      "id": "NL08.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A5。"
+    },
+    {
+      "id": "NL08.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「右端连续就一定有唯一解」。经典反例 $y'=\\sqrt{\\left\\lvert y\\right\\rvert },y(0)=0$ 有无穷多解；\n差的就是 Lipschitz。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D6",
+    "status": "骨架：math/ode.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

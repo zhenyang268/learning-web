@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.4",
+  "chapter": "NL01",
+  "title": "条件数与误差放大",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\kappa(A)=\\left\\lVert A\\right\\rVert \\left\\lVert A^{-1}\\right\\rVert $；在谱范数下 $\\kappa=\\sigma_{\\max}/\\sigma_{\\min}$\n（对可逆矩阵）。它衡量「输入的小相对扰动最多被放大几倍」。"
+    },
+    {
+      "id": "NL01.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "解释「为什么解方程的结果比矩阵本身还不准」，也是 SVD 走 $A^{H}A$ 路线\n精度损失的唯一解释（N12）。"
+    },
+    {
+      "id": "NL01.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$\\kappa(A^{H}A)=\\kappa(A)^{2}$；$\\sigma$ 的相对误差约 $\\sqrt{\\varepsilon}$ 而非 $\\varepsilon$。\n成立条件：$A$ 非奇异；方阵。"
+    },
+    {
+      "id": "NL01.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "原文只给了一个数字：$\\kappa(A)=10^{8}$ 时 $\\sigma$ 的相对误差约 $10^{-8}$。\n其余文件都「原文未给」（缺口见第 节）。"
+    },
+    {
+      "id": "NL01.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L7。"
+    },
+    {
+      "id": "NL01.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $\\kappa$ 是矩阵的固有性质、与范数无关。换范数 $\\kappa$ 会差常数倍；\n说 $\\kappa$ 必须同时说范数。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "A4",
+    "status": "已实现（部分）：linalg/svd.hpp 提及",
+    "section": "分析基础：误差是怎么被量出来的"
+  }
+}

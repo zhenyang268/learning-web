@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.6",
+  "chapter": "NL06",
+  "title": "经验特征函数",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\hat\\varphi(t)=\\frac1n\\sum_{j=1}^{n}e^{itx_j}$，即把样本当经验分布的 pmf 代入 P1。"
+    },
+    {
+      "id": "NL06.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是从数据估计特征函数的标准做法；大数律保证 $\\hat\\varphi\\to\\varphi_X$。"
+    },
+    {
+      "id": "NL06.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "误差量级 $O(1/\\sqrt n)$（均值型统计量的标准差）；成立条件：样本独立同分布。\n判据侧取 $3/\\sqrt n$ 作容差。"
+    },
+    {
+      "id": "NL06.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\left\\lvert \\hat\\varphi(t)-\\varphi(t)\\right\\rvert \\le3/\\sqrt n$ 量级；同 seed 逐位可复现。"
+    },
+    {
+      "id": "NL06.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "P1、P7。"
+    },
+    {
+      "id": "NL06.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「样本量翻倍误差就减半」。$1/\\sqrt n$ 意味着要误差减半需要**四倍**样本；\n这个尺度差是很多「加数据没用」的根源。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P6",
+    "status": "框架：math/prob.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL10.4",
+  "chapter": "NL10",
+  "title": "一致载荷与闭式积分",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL10.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$b_i=\\int f\\varphi_i$。1D 线性 $f$：单元上 $\\frac h6[2f_i+f_{i+1},\\ f_i+2f_{i+1}]$；\n2D 三角形用 $\\int\\lambda_1^{a}\\lambda_2^{b}\\lambda_3^{c}\\,dA=2A\\frac{a!\\,b!\\,c!}{(a+b+c+2)!}$。"
+    },
+    {
+      "id": "NL10.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "载荷的误差会**直接进入解**；用「节点值代替积分」（集中质量）会把插值误差与\n积分误差混在一起，让收敛阶无法归因。"
+    },
+    {
+      "id": "NL10.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "只接受次数 $\\le2$ 的多项式 $f$（有闭式），其余需要求积器（不做）。\n成立条件：$f$ 多项式；单元几何规则。"
+    },
+    {
+      "id": "NL10.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "1D 节点精确性（F6）：$u=x(1-x)$、$f=2$ 时 P1 解在节点上与解析解**逐点相等**（机器精度）——\n载荷、边界、单元刚度任一错，这条立刻红。"
+    },
+    {
+      "id": "NL10.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "F2、F3。"
+    },
+    {
+      "id": "NL10.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「一致性质量矩阵不如集中质量好」。集中质量是对角矩阵、求解快，\n但它**对应另一个离散问题**；混用会让「二阶收敛」的归因失效。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F4",
+    "status": "未建：math/assemble.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

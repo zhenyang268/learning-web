@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL11.2",
+  "chapter": "NL11",
+  "title": "Krylov 子空间与共轭方向",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL11.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "CG 在 Krylov 子空间 $\\mathcal K_k=\\mathrm{span}\\{b,Ab,\\dots,A^{k-1}b\\}$ 中找\n使 $\\left\\lVert e_k\\right\\rVert _{A}$ 最小的 $x_k$；方向 $p_k$ 满足 $A$-共轭（$p_i^{H}Ap_j=0$，$i\\ne j$）。"
+    },
+    {
+      "id": "NL11.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「迭代解」的原型：只用一个矩阵-向量乘，不存矩阵，内存 $O(n)$。"
+    },
+    {
+      "id": "NL11.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "三项递推：$r_k=b-Ax_k$、$\\alpha_k=\\frac{r_k^{H}r_k}{p_k^{H}Ap_k}$、\n$x_{k+1}=x_k+\\alpha_kp_k$、$p_{k+1}=r_{k+1}+\\beta_kp_k$。共轭方向保证「每个方向只走一次」，\n故理论上 $n$ 步精确收敛。成立条件：$A$ 对称正定（否则 $\\left\\lVert \\cdot\\right\\rVert _{A}$ 不是范数）。"
+    },
+    {
+      "id": "NL11.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与直接解对拍，残差 $\\le10^{-10}$；迭代数只记录不设阈值（1D 无预条件约 $O(n)$ 量级）；\n把 $\\alpha$ 写成反号必须立刻发散——这是注入对照。"
+    },
+    {
+      "id": "NL11.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "F7、L4、N8。"
+    },
+    {
+      "id": "NL11.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「共轭梯度就是最速下降的改进版」。最速下降每步正交于残差、会「锯齿」；\nCG 每步 $A$-正交于所有历史方向，所以能在一个 $n$ 维空间里走 $n$ 步精确到达。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F8",
+    "status": "未建：linalg/cg.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

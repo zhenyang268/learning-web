@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.9",
+  "chapter": "NL09",
+  "title": "从旋转矩阵反解四元数（Shepperd）",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.9:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "四个候选量形如 $\\frac{1+R_{ii}-R_{jj}-R_{kk}}{4}$，取**最大**的那个开根作「大头」，\n再由它推出其余三个分量。"
+    },
+    {
+      "id": "NL09.9:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "从 $R$ 回到 $q$ 是刚体状态互换的必经步骤；单分支写法在 $\\theta\\to\\pi$ 处精度崩。"
+    },
+    {
+      "id": "NL09.9:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "之所以要分支：当某个分量接近 0 时，从它反解会把误差放大到 $\\sqrt{\\varepsilon}$ 量级；\n选最大者保证分母不为小量。成立条件：$R$ 是正交且 $\\det=1$（不是的话先做正交化）。"
+    },
+    {
+      "id": "NL09.9:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "往返 $M(\\mathrm{Quat}(R))=R$；$\\theta=\\pi$ 附近（$\\mathrm{tr}R\\to-1$）单独加用例。"
+    },
+    {
+      "id": "NL09.9:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G6、G2。"
+    },
+    {
+      "id": "NL09.9:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「用 $\\sqrt{1+\\mathrm{tr}R}/2$ 一个公式就够了」。$\\mathrm{tr}R\\to-1$ 时它就是 $0/0$；\n所有教程里的「一个公式」都隐含了「$w$ 不小」的假设。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G9",
+    "status": "已实现：quat/quaternion.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

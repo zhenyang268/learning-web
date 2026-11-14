@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.5",
+  "chapter": "NL03",
+  "title": "MGS 与 CGS：病态下才见分晓",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "经典 Gram--Schmidt（CGS）先算出所有 $r_{ij}=q_i^{H}a_j$ 再一次性扣；\n修正版（MGS）每算一个系数就立刻从 $a_j$ 扣掉。"
+    },
+    {
+      "id": "NL03.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是最直观的正交化；但在病态矩阵上 CGS 的正交性会垮掉，必须知道为什么。"
+    },
+    {
+      "id": "NL03.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "MGS 的舍入误差约 $\\varepsilon\\kappa(A)$，CGS 约 $\\varepsilon\\kappa(A)^{2}$。\n源码记录：CGS 在病态下 $\\left\\lVert Q^{H}Q-I\\right\\rVert $ 可到 $1\\times10^{-8}$（double 下这已是灾难）。\n成立条件：$q_k$ 必须已归一（$\\langle q_k,q_k\\rangle \\equiv1$，分母被吸收）。"
+    },
+    {
+      "id": "NL03.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\left\\lVert A-QR\\right\\rVert _{\\infty}$ 与 $\\left\\lVert Q^{H}Q-I_{n}\\right\\rVert _{\\infty}$ 同时小；\n秩亏列 $r_{jj}=0$ 时 $Q$ 的第 $j$ 列不唯一，不能用「逐列一致」当判据。"
+    },
+    {
+      "id": "NL03.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L4、A4。"
+    },
+    {
+      "id": "NL03.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 MGS 与 CGS 只是「循环顺序不同、结果一样」。数学上等价，浮点上**精度差一个 $\\kappa$ 量级**。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N5",
+    "status": "已实现：linalg/qr.hpp（MGS）",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

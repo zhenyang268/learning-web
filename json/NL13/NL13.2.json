@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL13.2",
+  "chapter": "NL13",
+  "title": "外积（楔积）",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL13.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$(\\omega\\wedge\\eta)(v_1,\\dots,v_{p+q})=\\sum_\\sigma\\mathrm{sgn}(\\sigma)\\,\n\\omega(v_{\\sigma(1)},\\dots)\\eta(v_{\\sigma(p+1)},\\dots)/\\text{重复计数}$；\n分量层面就是「按组合数展开并带符号」。"
+    },
+    {
+      "id": "NL13.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把低阶形式建成高阶，且天然反对称——行列式、体积形式 $dx\\wedge dy\\wedge dz$ 都是它。"
+    },
+    {
+      "id": "NL13.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "反交换：$\\omega\\wedge\\eta=(-1)^{pq}\\eta\\wedge\\omega$（$p,q$ 为阶数）；\n$\\omega\\wedge\\omega=0$ 当 $p$ 为奇数。成立条件：$p+q\\le n$（超过就表示层存不下，抛错）。"
+    },
+    {
+      "id": "NL13.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与显式叉积/行列式对拍（$n=3$ 的全部组合）；$k+l>n$ 必须抛错而不是截断。"
+    },
+    {
+      "id": "NL13.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "M1。"
+    },
+    {
+      "id": "NL13.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\omega\\wedge\\eta=\\eta\\wedge\\omega$ 差个符号而已」。差的符号是 $(-1)^{pq}$，\n两个奇形式交换**不变号**（$pq$ 为奇 $\\times$ 奇 = 奇？注意 $p=q=1$ 时 $pq=1$，故反号）。\n算清楚指数，别背口诀。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "M2",
+    "status": "未建：math/forms.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

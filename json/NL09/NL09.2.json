@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.2",
+  "chapter": "NL09",
+  "title": "立方恒等式与 Rodrigues 公式",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\mathrm{Hat}(u)^{3}=-\\left\\lVert u\\right\\rVert ^{2}\\mathrm{Hat}(u)$；于是\n$\\exp(\\theta\\,\\mathrm{Hat}(\\hat u))=I+\\sin\\theta\\,\\mathrm{Hat}(\\hat u)+(1-\\cos\\theta)\\,\\mathrm{Hat}(\\hat u)^{2}$。"
+    },
+    {
+      "id": "NL09.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是 $SO(3)$ 的闭式指数映射——不需要矩阵级数，也不需要特征分解。"
+    },
+    {
+      "id": "NL09.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "立方恒等式让级数在三次之后闭合，故 $\\exp$ 只有三项。单位轴时化为\n$\\mathrm{Hat}(\\hat u)^{3}=-\\mathrm{Hat}(\\hat u)$。成立条件：$\\left\\lVert \\hat u\\right\\rVert =1$（否则把 $\\theta$ 换成 $\\theta\\left\\lVert u\\right\\rVert $\n并把轴换成 $\\hat u=u/\\left\\lVert u\\right\\rVert $）。源码实测残差 $2.2\\times10^{-16}$。"
+    },
+    {
+      "id": "NL09.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\left\\lVert \\exp(\\theta\\hat u)-R_{\\text{显式}}\\right\\rVert $；立方恒等式残差；\n但**整体符号翻转抓不到**（$\\hat u\\to-\\hat u,\\theta\\to-\\theta$ 给同一 $R$）。"
+    },
+    {
+      "id": "NL09.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G1、C3。"
+    },
+    {
+      "id": "NL09.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$R$ 唯一决定轴和角」。$R$ 只决定 $\\{\\pm\\hat u,\\ \\theta\\leftrightarrow2\\pi-\\theta\\}$ 这一对等价类；\n反解必须额外定约定（通常取 $\\theta\\in[0,\\pi]$）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G2",
+    "status": "已实现：linalg/so3.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

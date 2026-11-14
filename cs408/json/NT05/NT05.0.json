@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NT05.0",
+  "chapter": "NT05",
+  "title": "NT05 传输层",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NT05.0:exam.s01",
+      "type": "extension",
+      "title": "第 NT05 传输层：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 15 题 —— 2017 #39；2018 #39；2019 #8、#9、#38、#39；2020 #38、#39；2021 #38、#39、#40；2022 #38、#39；2024 #38、#39\n> 一课位置：`quick/408-net.md` §NET-05 传输层　｜　考点页：`note/408/net/`"
+    },
+    {
+      "id": "NT05.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `408-NET-0502` 〔易错〕UDP 伪首部含协议字段 = 17、UDP 长度；伪首部不参与传输　原因：伪首部字段漏\n- `408-NET-0502` 〔易错〕UDP 首部 8 B、TCP 首部 20 B（不含选项）　原因：2021 真题开始考\n- `408-NET-0503` 〔高频〕第三次握手可以携带数据（前两次不行）　原因：2020 真题\n- `408-NET-0503` 〔易错〕SYN 与 FIN 各消耗 1 个序号；纯 ACK 不消耗　原因：序号账本算错\n- `408-NET-0503` 〔易错〕TIME_WAIT = 2MSL，两个作用：保证最后 ACK 到达、让旧报文消散　原因：只答一个\n- `408-NET-0504` 〔高频〕发送窗口 = $\\min(cwnd, rwnd)$；算实际发送量时两个都要看　原因：只看 cwnd\n- `408-NET-0504` 〔易错〕Karn 算法：重传的报文段不用于更新 RTT 估计　原因：冷门但常出\n- `408-NET-0504` 〔高频〕零窗口 ⇒ 发送方启坚持定时器发探测报文　原因：细节\n- `408-NET-0505` 〔高频〕拥塞控制的两个分支要分清：；·超时 ⇒ $ssthresh=\\lfloor cwnd/2\\rfloor$、$cwnd=1$、重新慢开始；·3 个重复 ACK ⇒ $ssthresh=\\lfloor cwnd/2\\rfloor$、$cwnd=ssthresh+3$、进快恢复　原因：把两者都写成「减半后从 1 开始」是最高频错\n- `408-NET-0505` 〔高频〕慢开始是「每收到 1 个 ACK，cwnd 加 1 MSS」（不是每 RTT 翻倍）；拥塞避免是「每 RTT 加 1 MSS」　原因：描述与逐轮表格对不上"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "传输层"
+  }
+}

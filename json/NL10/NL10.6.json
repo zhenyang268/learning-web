@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL10.6",
+  "chapter": "NL10",
+  "title": "收敛阶 2 与 1D 的节点精确性",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL10.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "P1 元在 $L^{2}$ 下有二阶收敛：$\\left\\lVert u-u_h\\right\\rVert _{L^{2}}\\le Ch^{2}\\left\\lvert u\\right\\rvert _{H^{2}}$。\n1D 的特殊性：节点上的值**精确**（不用减 $O(h^{2})$）。"
+    },
+    {
+      "id": "NL10.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「离散解是否可信」的唯一客观判据；1D 的节点精确性是整条链最锋利的验收工具。"
+    },
+    {
+      "id": "NL10.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "阶 2 的来源：$L^{2}$ 误差 $\\sim h\\cdot$（插值误差 $O(h)$ 的一阶矩），\n两个 $h$ 相乘。1D 节点精确的原因：Green 函数对称性使得节点误差的主项恒为零——这是 1D 的偶然，**2D 不成立**。\n成立条件：解足够光滑（$H^{2}$）；网格拟一致。"
+    },
+    {
+      "id": "NL10.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$n=16/32/64/128$ 三次 $h$ 减半的误差比值落在 $[3.8,4.2]$；\n2D 用 $u=x(1-x)y(1-y)$、$f=2y(1-y)+2x(1-x)$，阶 2 但节点**不**精确。"
+    },
+    {
+      "id": "NL10.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A5、F2、F4。"
+    },
+    {
+      "id": "NL10.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「1D 节点精确说明我的离散是超收敛的」。它是 1D 的结构性巧合；\n照搬到 2D 会得到一个必然失败的判据。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F6",
+    "status": "未建：math/assemble.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

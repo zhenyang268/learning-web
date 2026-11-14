@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.6",
+  "chapter": "NL02",
+  "title": "谱分解与实对称可对角化",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$A=Q\\Lambda Q^{H}$，$Q^{H}Q=I$，$\\Lambda=\\mathrm{diag}(\\lambda_1,\\dots,\\lambda_n)$ 实。"
+    },
+    {
+      "id": "NL02.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "「旋转坐标系把矩阵变成对角」这件事，是所有对称问题的标准手法；\nJacobi 迭代就是逐步逼近这个 $Q$。"
+    },
+    {
+      "id": "NL02.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "谱定理：$A^{H}=A\\Rightarrow$ 正交可对角化、特征值全实、特征向量可取成正交基。\n成立条件：**Hermitian 是结构条件**，不是算法保证——非对称矩阵走这条路径会直接抛错。"
+    },
+    {
+      "id": "NL02.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "迹不变 $a'+b'=a+b$；$\\mathrm{off}(A)\\le 8n\\varepsilon\\left\\lVert A\\right\\rVert _{F}$；单元素跳过阈值 $\\mathrm{tol}^{2}/n_d$\n（保证全部跳过时总和仍不超）。"
+    },
+    {
+      "id": "NL02.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L3。"
+    },
+    {
+      "id": "NL02.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「实矩阵的特征值都是实的」。只有对称/Hermitian 才保证；一般实矩阵的特征值可成共轭对。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L6",
+    "status": "已实现：linalg/eigen.hpp（仅对称/Hermitian）",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

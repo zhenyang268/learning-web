@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL13.3",
+  "chapter": "NL13",
+  "title": "外微分与 $d^{2}=0$",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL13.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$d$ 把 $k$-形式映到 $k+1$ 形式，分量上是对系数取偏导再反对称组合；\n库的实现里**偏导由调用方给**（$C(n,k)\\times n$ 矩阵），只做反对称组装。"
+    },
+    {
+      "id": "NL13.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「梯度、旋度、散度」的统一算子，也是 $d^{2}=0$ 这条「边界没有边界」的代数表述。"
+    },
+    {
+      "id": "NL13.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "两条恒等式：$d^{2}=0$；Leibniz 律 $d(\\omega\\wedge\\eta)=d\\omega\\wedge\\eta+(-1)^{p}\\omega\\wedge d\\eta$\n（$p=\\deg\\omega$，符号来自反交换）。成立条件：系数 $C^{2}$（混合偏导可交换）。"
+    },
+    {
+      "id": "NL13.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "在二次多项式上 $d^{2}=0$ 逐分量 $\\le10^{-14}$；Leibniz 律同样；\n「$d$ 的符号约定」用 $n=3$ 字典（M7）反查，不与叉积冲突。"
+    },
+    {
+      "id": "NL13.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "M1、M2。"
+    },
+    {
+      "id": "NL13.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$d^{2}=0$ 只是符号巧合」。它的实质是「混合偏导可交换 + 反对称化」，\n所以凡是对称二阶导可交换的场合都成立；在离散化里它会以「边界算子复合为零」的形式重现（串讲六）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "M3",
+    "status": "未建：math/forms.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

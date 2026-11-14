@@ -1,0 +1,25 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CO01.0",
+  "chapter": "CO01",
+  "title": "CO01 计算机系统概述",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/408.md",
+    "sha256": "sha256:b57e4bbac4cf3bbae943de0f57994dbbf8d64c3f7485339d8a6941023d461201"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "CO01.0:exam.s01",
+      "type": "extension",
+      "title": "第 CO01 计算机系统概述：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点（2016–2024，按 KP 标注统计）：共 8 题 —— 2016 #12；2017 #12；2018 #12；2019 #12；2020 #12；2021 #12；2022 #12；2023 #12\n> 一课位置：`quick/408-co.md` §CO-01 计算机系统概述　｜　考点页：`note/408/co/`"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "计算机系统概述"
+  }
+}

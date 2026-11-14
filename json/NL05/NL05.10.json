@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.10",
+  "chapter": "NL05",
+  "title": "截断与 Gibbs 过冲",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.10:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "用前 $K$ 个谐波重构有跳变的周期函数时，跳变附近出现过冲，峰值趋于\n$\\frac2\\pi\\int_0^{\\pi}\\frac{\\sin t}{t}dt=1.08948987\\ldots$，即约 $8.95\\%$ 的相对过冲。"
+    },
+    {
+      "id": "NL05.10:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「逐点收敛」与「一致收敛」分家的经典例子；也是「误差不随 $K$ 减小」的唯一常见例外。"
+    },
+    {
+      "id": "NL05.10:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "过冲幅度**与 $K$ 无关**（只与跳变高度有关），过冲宽度 $\\sim1/K$——\n所以 $L^{2}$ 误差趋于 0（H11），而 $\\sup$ 误差不趋于 0。成立条件：函数有第一类间断。"
+    },
+    {
+      "id": "NL05.10:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "方波重构的峰值比 $\\approx1.0895$，且 $K$ 增大时该比值不降；「不随 $K$ 减小」本身就是判据。"
+    },
+    {
+      "id": "NL05.10:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H9。"
+    },
+    {
+      "id": "NL05.10:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「加更多项就能消除振铃」。可以把振铃**挤窄**，不能压平；\n要压平必须换求和法（Fejér / Lanczos $\\sigma$ 因子），那是改变函数而非提高分辨率。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H10",
+    "status": "框架：math/series.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.2",
+  "chapter": "NL02",
+  "title": "矩阵乘法与形状约束",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$(AB)_{ij}=\\sum_{k=0}^{n-1}A_{ik}B_{kj}$，形状 $(m\\times n)(n\\times p)=(m\\times p)$。"
+    },
+    {
+      "id": "NL02.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "复合映射就是矩阵乘；雅可比链式法则、反向传播的 $\\partial L/\\partial W=vx^{\\mathsf T}$\n都建立在它之上。"
+    },
+    {
+      "id": "NL02.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "中间维必须相等，否则抛异常——库**不做隐式转置、不做广播**。\n成立条件：维数匹配；Hadamard 积走独立入口，不混用。"
+    },
+    {
+      "id": "NL02.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "无。"
+    },
+    {
+      "id": "NL02.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L1。"
+    },
+    {
+      "id": "NL02.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为逐元素乘（Hadamard）是矩阵乘的特例。两者是不同的运算，\n库把它们拆成两个入口正是为了防止混淆。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L2",
+    "status": "已实现：core/matrix.hpp",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

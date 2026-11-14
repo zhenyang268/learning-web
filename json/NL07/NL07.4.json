@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL07.4",
+  "chapter": "NL07",
+  "title": "种子 sweep：一次填一列",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL07.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "令 $x=x_0+e_j\\varepsilon$，则 $f(x)=f(x_0)+(\\partial f/\\partial x_j)\\varepsilon$；\n扫遍 $j=1..n$ 即得完整 $J$，共 $n$ 次前向。"
+    },
+    {
+      "id": "NL07.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是前向模式的实际算法，也是「代价 = 输入维数」这个说法的出处。"
+    },
+    {
+      "id": "NL07.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "第 $j$ 次 sweep 只填第 $j$ 列；形状校验必须**逐维**（只比一个维度会退化成恒真）。\n成立条件：$x$ 为 $n\\times1$、输出 $m\\times1$。"
+    },
+    {
+      "id": "NL07.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与 D3 的差分校验对拍；对角/逐元素函数的 $J$ 应为 $\\mathrm{diag}(\\varphi')$，\n广播（$f$ 为 $1\\times1$）时 $J=\\varphi'(a)\\cdot\\mathbf{1}$。"
+    },
+    {
+      "id": "NL07.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "D1、D3。"
+    },
+    {
+      "id": "NL07.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「一次 sweep 能得整行」。前向一次只给一列；要整行必须反向（D5）。\n方向搞反会让整体代价从 $O(n)$ 变成 $O(n^{2})$ 而不报错。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D4",
+    "status": "已实现：autodiff/jacobian.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

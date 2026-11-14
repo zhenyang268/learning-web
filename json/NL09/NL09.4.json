@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.4",
+  "chapter": "NL09",
+  "title": "李括号：$[\\mathrm{Hat}(a),\\mathrm{Hat}(b)]=\\mathrm{Hat}(a\\times b)$",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "矩阵换位子 $[A,B]=AB-BA$；对 $\\mathfrak{so}(3)$ 有\n$[\\mathrm{Hat}(a),\\mathrm{Hat}(b)]=\\mathrm{Hat}(a\\times b)$。"
+    },
+    {
+      "id": "NL09.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它说明「$\\mathfrak{so}(3)$ 对换位子封闭」，即它确实是李代数；\n也是「旋转不可交换」的代数表达。"
+    },
+    {
+      "id": "NL09.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "因子是 $1$ 不是 $2$（不同书的约定会差常数，本库取 1）。\n成立条件：$a,b$ 为 $3\\times1$。"
+    },
+    {
+      "id": "NL09.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "两边逐分量对拍（精确恒等式，容差到 $10^{-14}$ 即可）。"
+    },
+    {
+      "id": "NL09.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G1。"
+    },
+    {
+      "id": "NL09.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「换位子小就说明两个旋转接近可交换」。换位子为零才是可交换（共轴）；\n它的大小与角度无关地给出「转轴夹角」，不是「角度差」。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G4",
+    "status": "已实现：linalg/so3.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

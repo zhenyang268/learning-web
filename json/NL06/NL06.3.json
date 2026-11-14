@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.3",
+  "chapter": "NL06",
+  "title": "卷积定理（概率版）",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$X\\perp Y\\Rightarrow\\varphi_{X+Y}(t)=\\varphi_X(t)\\varphi_Y(t)$，等价于\n$p_{X+Y}=p_X*p_Y$。"
+    },
+    {
+      "id": "NL06.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「独立随机变量求和」的唯一省力算法；也是 H3 在概率侧的同一条定理。"
+    },
+    {
+      "id": "NL06.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "成立条件：$X,Y$ 独立（不相关不够）；$\\varphi$ 存在（即分布有定义）。"
+    },
+    {
+      "id": "NL06.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "与直接卷积对拍；离散情形用 H3 的循环卷积要注意补零（H4）。"
+    },
+    {
+      "id": "NL06.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "P1、H3。"
+    },
+    {
+      "id": "NL06.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「卷积定理说明两个和的分布等于两个密度相乘」。恰好**反了**：\n是**特征函数**相乘、**密度**卷积。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P3",
+    "status": "框架：math/prob.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

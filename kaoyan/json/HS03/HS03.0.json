@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "HS03.0",
+  "chapter": "HS03",
+  "title": "HS03 一元函数积分学",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "HS03.0:exam.s01",
+      "type": "extension",
+      "title": "第 HS03 一元函数积分学：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-03 一元函数积分学　｜　考点页：`note/math1/hs/`"
+    },
+    {
+      "id": "HS03.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-HS-0301` 〔易错〕分部积分选 $u$：反 → 对 → 幂 → 三 → 指（排前面的设为 $u$）　原因：选错陷入循环\n- `M1-HS-0302` 〔易错〕变上限积分求导：上限是复合函数要乘内层导数；被积函数含 $x$ 要先换元　原因：两种情况都常错\n- `M1-HS-0302` 〔易错〕定积分换元必须同时换限（不必代回原变量）　原因：换了元还用旧限\n- `M1-HS-0302` 〔易错〕参数方程积分时若 $t$ 上限 < 下限，保留原方向让积分自动带符号　原因：随手换限丢负号\n- `M1-HS-0304` 〔高频〕旋转体侧面积 $S=2\\pi\\int y\\,\\mathrm{d}s$，$\\mathrm{d}s$ 不是 $\\mathrm{d}x$　原因：写成 $2\\pi\\int y\\,\\mathrm{d}x$ 是最经典的错\n- `M1-HS-0304` 〔高频〕极坐标弧长 $\\mathrm{d}s=\\sqrt{r^2+(r')^2}\\,\\mathrm{d}\\theta$（不是 $\\sqrt{1+(r')^2}$）　原因：公式记混\n- `M1-HS-0304` 〔易错〕表面积 ≠ 侧面积：要额外检查有没有露出的底面　原因：少加一块\n- `M1-HS-0304` 〔易错〕面积要判正负：曲线在 $x$ 轴下方时取绝对值　原因：算出负数直接填"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "一元函数积分学"
+  }
+}

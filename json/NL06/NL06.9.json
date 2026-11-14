@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL06.9",
+  "chapter": "NL06",
+  "title": "分位数：Acklam 近似 + 一步 Newton",
+  "src": {
+    "file": "notebook/math/survey/p6-prob.tex",
+    "sha256": "sha256:64e47f763c4110757051d84ae9bab7a30da9592fe882cd1ef3ce0c5054ce7ca3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL06.9:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "求 $z$ 使 $\\Phi(z)=u$。先用 Acklam 有理逼近给初值 $z_0$（相对误差约 $1.15\\times10^{-9}$），\n再走一步 Newton：$z_1=z_0-\\big(\\Phi(z_0)-u\\big)/\\varphi_{\\text{pdf}}(z_0)$。"
+    },
+    {
+      "id": "NL06.9:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "分位数是「从概率反查阈值」的唯一工具（置信区间、显著性、采样）。"
+    },
+    {
+      "id": "NL06.9:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "Newton 的收敛是二次的，前提是初值已落在收敛域内且 $\\varphi(z_0)\\ne0$（尾部会趋 0，\n故 $u$ 必须严格在 $(0,1)$ 开区间）。成立条件：$u$ 不取端点（端点对应 $\\pm\\infty$，库不返回）。"
+    },
+    {
+      "id": "NL06.9:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\left\\lvert \\Phi(z)-u\\right\\rvert \\le10^{-14}$，$u\\in[10^{-12},1-10^{-12}]$；\n锚点 $u=0.975\\Rightarrow z\\approx1.959963984540054$。"
+    },
+    {
+      "id": "NL06.9:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "P8。"
+    },
+    {
+      "id": "NL06.9:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「近似公式够了，不必再迭代」。Acklam 单独只有约 $10^{-9}$，\n而 $\\Phi$ 本身能到 ulp 级——不迭代就把上游精度白白丢掉三个数量级。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "P9",
+    "status": "框架：math/special.hpp",
+    "section": "概率：特征函数是「方向相反的那个傅里叶变换」"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL04.2",
+  "chapter": "NL04",
+  "title": "Smith 除法",
+  "src": {
+    "file": "notebook/math/survey/p4-complex.tex",
+    "sha256": "sha256:448ff3c6af38ff4ed96394fa55217375f859fe35ecad4b3592c77907b51339c1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL04.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "朴素式 $(a+bi)/(c+di)=\\big[(ac+bd)+(bc-ad)i\\big]/(c^{2}+d^{2})$ 会在 $c,d$ 极大时上溢、\n极小时下溢。Smith 形式：若 $\\left\\lvert c\\right\\rvert \\ge\\left\\lvert d\\right\\rvert $，取 $r=d/c$，\n则商 $=\\dfrac{a+br}{c+dr}+\\dfrac{b-ar}{c+dr}i$；$\\left\\lvert c\\right\\rvert <\\left\\lvert d\\right\\rvert $ 时对称地按 $d$ 归一化。"
+    },
+    {
+      "id": "NL04.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "中间量必须落在可表示范围：$c^{2}+d^{2}$ 在 $\\left\\lvert c\\right\\rvert ,\\left\\lvert d\\right\\rvert \\sim10^{200}$ 时直接溢出成\n$\\infty$，商变成 $0$ 或 NaN，而真实商可能就在 1 附近（如 $(10^{200}+i)/(10^{200}+i)=1$）。"
+    },
+    {
+      "id": "NL04.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "先按大分量归一化，使 $\\left\\lvert r\\right\\rvert \\le1$，所有中间量不超过约 $2\\max(\\left\\lvert c\\right\\rvert ,\\left\\lvert d\\right\\rvert )$。\n成立条件：分母非零（零由 IEEE 传播，不在标量层判，见 D12）。"
+    },
+    {
+      "id": "NL04.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "用例：同量级大数相除应为 $1$；$\\left\\lvert c\\right\\rvert ,\\left\\lvert d\\right\\rvert \\sim10^{-200}$ 时不出现 inf/nan。"
+    },
+    {
+      "id": "NL04.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "C1、A6。"
+    },
+    {
+      "id": "NL04.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「先算模方再除」只是慢一点。它是**错**：模方的动态范围是原分量的两倍，\n越界即坏，且无法靠提高精度根治。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "C2",
+    "status": "已实现：core/complex.hpp",
+    "section": "复分析：多值性不是缺陷，是定义的一部分"
+  }
+}

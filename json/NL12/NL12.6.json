@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL12.6",
+  "chapter": "NL12",
+  "title": "广播与形状推导",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL12.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "逐元素运算要求形状相同或可广播（例如 $1\\times1$ 的标量与 $m\\times n$ 张量）——\n库的选择是：**只在明确的 $1\\times1$ 情形放行**，其余同形状要求，否则抛错。"
+    },
+    {
+      "id": "NL12.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "广播能省内存，但也让形状错误变得难以发现；自动微分的雅可比形状尤其依赖这条约定。"
+    },
+    {
+      "id": "NL12.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "广播的数学后果：$f$ 为标量函数作用在 $1\\times1$ 上时，$J=\\varphi'(a)\\cdot\\mathbf 1$（全 1 矩阵）；\n形状错误必须**逐维**检查（只比一个维度会退化成恒真——源码记录过这个 bug 导致越界读）。\n成立条件：被广播维度确实是 1，或形状完全一致。"
+    },
+    {
+      "id": "NL12.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "形状校验逐维；广播情形的 $J$ 与解析值对拍。"
+    },
+    {
+      "id": "NL12.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "T1、D3。"
+    },
+    {
+      "id": "NL12.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「广播是免费的」。它放大的是**读写次数**（同一份数据被重复读），\n在 cache 带宽受限时是实打实的代价。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "T6",
+    "status": "框架：core/tensor.hpp（语义参照 autodiff）",
+    "section": "张量代数与微分形式"
+  }
+}

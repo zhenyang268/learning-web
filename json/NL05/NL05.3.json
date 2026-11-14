@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL05.3",
+  "chapter": "NL05",
+  "title": "循环卷积定理",
+  "src": {
+    "file": "notebook/math/survey/p5-fourier.tex",
+    "sha256": "sha256:f9eb0cf5768be06b4e6d6c818dc11ebac03c7faee2bfe6b2f23e10d4f570dd55"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL05.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$(a\\circledast b)_n=\\sum_{m}a_m b_{(n-m)\\bmod N}$，则\n$\\mathrm{FFT}(a\\circledast b)_k=A_kB_k$（**无附加因子**）。"
+    },
+    {
+      "id": "NL05.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "时域卷积变成频域乘法，是 FFT 全部实用价值的来源。"
+    },
+    {
+      "id": "NL05.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "前提是**循环**卷积（下标模 $N$）；无附加因子正是不归一化 + $1/N$ 只在逆变换的后果。\n成立条件：两序列等长 $N$；不等长要先补零到同一长度，否则得到的是循环的、绕回的结果。"
+    },
+    {
+      "id": "NL05.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "三条路径对拍：时域直接、频域补零、循环矩阵乘，逐点 $\\le10^{-12}$。"
+    },
+    {
+      "id": "NL05.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "H1、H2。"
+    },
+    {
+      "id": "NL05.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「FFT 卷一下就得到线性卷积」。循环卷积会把尾部**绕回**头部；\n结果看起来「差不多」但边界全错，这是最常见的静默错。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "H3",
+    "status": "框架：math/fourier.hpp",
+    "section": "调和分析：变换的两端与归一化的位置"
+  }
+}

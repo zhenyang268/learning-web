@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.1",
+  "chapter": "NL09",
+  "title": "叉积、hat 与反对称矩阵",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "### 串讲五：$\\mathrm{hat}$、四元数、$SO(3)$ 为什么是一件事\n\n三种表示都在描述「绕某轴的转动」，差别只在**存什么、怎么复合**：\n\n| 表示 | 存什么 | 复合 | 代价 / 陷阱 |\n|---|---|---|---|\n| 旋转矩阵 $R\\in SO(3)$ | 9 个数 | 矩阵乘 | 无奇点，但 9 个数里只有 3 个自由度；正交性会漂 |\n| 李代数 $\\hat u\\,\\theta\\in\\mathfrak{so}(3)$ | 3 个数 | 需要 $\\exp$ 才能回到群 | 最省，但 $\\theta$ 有 $2\\pi$ 周期、$\\pi$ 附近反解不稳 |\n| 单位四元数 $q\\in S^{3}$ | 4 个数 | 四元数乘 | 无双覆盖歧义但有 $\\pm q$；插值最自然 |\n\n桥梁是两条：$\\exp(\\theta\\hat u)$ 给出 Rodrigues（G2），而四元数的 $q=\\cos\\frac\\theta2+\\sin\\frac\\theta2\\hat u$\n与它满足 $R(q)=\\exp(\\theta\\hat u)$（G6）。**半角**不是技巧，是双覆盖的必然：\n$q$ 与 $-q$ 必须映到同一个 $R$，所以角度只能吃一半。"
+    },
+    {
+      "id": "NL09.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$a\\times b=(a_yb_z-a_zb_y,\\ a_zb_x-a_xb_z,\\ a_xb_y-a_yb_x)$；\n$\\mathrm{Hat}(u)$ 是满足 $\\mathrm{Hat}(u)b=u\\times b$ 的 $3\\times3$ 反对称矩阵，\n即 $\\mathrm{Hat}(u)=\\begin{bmatrix}0&-u_3&u_2\\\\u_3&0&-u_1\\\\-u_2&u_1&0\\end{bmatrix}$。"
+    },
+    {
+      "id": "NL09.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把「叉积」变成「矩阵作用」，于是旋转可以写成指数——这就是李代数到李群的入口。"
+    },
+    {
+      "id": "NL09.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "性质：$\\mathrm{Hat}(u)^{\\mathsf T}=-\\mathrm{Hat}(u)$、\n$\\mathrm{Hat}(\\lambda u)=\\lambda\\,\\mathrm{Hat}(u)$（**线性，绝不归一化**）、\n$\\mathrm{Hat}(u)^{2}=uu^{\\mathsf T}-\\left\\lVert u\\right\\rVert ^{2}I$、$\\left\\lvert a\\times b\\right\\rvert =\\left\\lvert a\\right\\rvert \\left\\lvert b\\right\\rvert \\sin\\angle$。\n成立条件：入参出参一律 $3\\times1$ 列向量（D19），形状不对抛错而不是静默接受。"
+    },
+    {
+      "id": "NL09.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\mathrm{Hat}(u)b$ 与显式叉积逐分量对拍；$\\mathrm{Hat}$ 的反对称性逐元素查。"
+    },
+    {
+      "id": "NL09.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L10、L3。"
+    },
+    {
+      "id": "NL09.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「$\\mathrm{Hat}$ 该把 $u$ 归一化」。归一化会把 $\\theta$ 从矩阵里抹掉，\n$\\exp$ 之后只能得到单位角度；线性性是整套记号成立的前提。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G1",
+    "status": "已实现：linalg/so3.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}

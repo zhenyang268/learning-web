@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.1",
+  "chapter": "NL03",
+  "title": "部分主元的必要性",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.1:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "消元第 $k$ 步前，在当前列的第 $k$ 行以下选绝对值最大的元素换到对角位置，\n再做消元。换行信息记在 `piv`里。"
+    },
+    {
+      "id": "NL03.1:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "不选主元时，主元可能是 $10^{-20}$，下一步 $1/10^{-20}=10^{20}$ 会把残差放大到\n完全不可用的量级——这**不是精度问题，是算法失效**。"
+    },
+    {
+      "id": "NL03.1:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "选主元保证 $\\left\\lvert l_{ik}\\right\\rvert \\le1$（乘子不放大），从而 $L$ 的元素有界、\n后向误差 $\\left\\lVert E\\right\\rVert \\sim n\\varepsilon\\left\\lVert A\\right\\rVert $。成立条件：无结构假设；对 SPD 矩阵可省（见 N7）。"
+    },
+    {
+      "id": "NL03.1:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "主元判零用 $\\mathrm{abs2}(p)\\le\\mathrm{tol}^{2}$，$\\mathrm{tol}=\\mathrm{DefaultTol}(n)=8n\\varepsilon$。"
+    },
+    {
+      "id": "NL03.1:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A2。"
+    },
+    {
+      "id": "NL03.1:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为选主元是为了「更准」。它首先是为了**不炸**；精度提升是副产品。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N1",
+    "status": "已实现：linalg/solve.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

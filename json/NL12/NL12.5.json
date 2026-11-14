@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL12.5",
+  "chapter": "NL12",
+  "title": "reshape 的合法条件与拷贝顺序",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL12.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "合法的充要条件：(1) $\\text{IsContiguous}()$；(2) $\\prod\\text{newShape}=\\text{Size}()$。"
+    },
+    {
+      "id": "NL12.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "非连续张量的「内存顺序」与新形状的行主序不一致，直接重解释会得到**形状对、数值错**的结果。"
+    },
+    {
+      "id": "NL12.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "深拷贝必须按「里程表」从**最后一维**进位递增下标，\n\n$$\n\\text{out}[n]=\\text{ptr}\\big[\\text{Offset}(\\text{idx},\\text{srcStrides})\\big];\n$$\n\n从第 0 维进位会得到转置结果。\n成立条件：连续性 + 元素数相等。非连续时库**一律抛错**（numpy 会静默复制，语义陷阱）。"
+    },
+    {
+      "id": "NL12.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "拿 $a^{\\mathsf T}$ 的拷贝与「转置后的拷贝」对比，两者必须不同（否则进位方向错了）。"
+    },
+    {
+      "id": "NL12.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "T1、T2、T3。"
+    },
+    {
+      "id": "NL12.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「reshape 就是改形状标签」。只有连续张量才可以只改标签；否则必须复制，\n而复制顺序错了就是个静默的转置 bug。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "T5",
+    "status": "框架：core/tensor.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

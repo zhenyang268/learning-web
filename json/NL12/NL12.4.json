@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL12.4",
+  "chapter": "NL12",
+  "title": "切片与换轴：零拷贝视图",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL12.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "沿轴 $a$ 取 $[b,e)$：指针加 $b\\cdot\\text{strides}[a]$、$\\text{shape}'[a]=e-b$、步长不变。\n换轴（置换）：$\\text{shape}'[d]=\\text{shape}[\\text{axes}[d]]$、$\\text{strides}'[d]=\\text{strides}[\\text{axes}[d]]$、指针不变。"
+    },
+    {
+      "id": "NL12.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "大张量的切片必须是 $O(1)$；复制会让「取一个通道」这种操作退化成整块搬运。"
+    },
+    {
+      "id": "NL12.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "两者都不搬字节，所以都**与宿主共享内存**——视图生命周期不得长于宿主（契约，不做运行期检查）。\n成立条件：切片区间合法；置换须是 $0..r-1$ 的排列。"
+    },
+    {
+      "id": "NL12.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "切片/换轴后元素总数与预期一致；修改视图要能反映到宿主（别名语义）。"
+    },
+    {
+      "id": "NL12.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "T1、T3。"
+    },
+    {
+      "id": "NL12.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「换轴会把数据搬成新布局」。不搬；搬的话 reshape 就不需要「非连续必须抛错」这条规则了。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "T4",
+    "status": "框架：core/tensor.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

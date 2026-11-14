@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL13.6",
+  "chapter": "NL13",
+  "title": "Stokes 三定理的统一形式",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL13.6:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\int_M d\\omega=\\int_{\\partial M}\\omega$。取 $n=3$ 的不同阶即得 Green、散度、Stokes 三条经典定理。"
+    },
+    {
+      "id": "NL13.6:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它把「边界上的积分」与「内部微分」等价，是有限元弱形式（F3）的几何版本。"
+    },
+    {
+      "id": "NL13.6:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "三条退化：0-形式给梯度定理、1-形式给 Stokes（环量=旋度通量）、\n2-形式给散度定理（通量=散度积分）。成立条件：$M$ 有定向、边界分段光滑、$\\omega$ 在闭包上 $C^{1}$。"
+    },
+    {
+      "id": "NL13.6:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "三次多项式 + 张量积 Simpson（对三次精确），两边差 $\\le10^{-13}$。"
+    },
+    {
+      "id": "NL13.6:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "M3、M4。"
+    },
+    {
+      "id": "NL13.6:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「这是三个定理」。它是一个定理的三次取值；记住 $\\int_{\\partial}=\\int d$ 即可，\n三条公式都能现推。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "M6",
+    "status": "未建：math/forms.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

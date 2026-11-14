@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL02.7",
+  "chapter": "NL02",
+  "title": "奇异值分解与三个恒等式",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL02.7:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$A=USV^{H}$，$U^{H}U=I_r$、$V^{H}V=I_r$，$r=\\min(m,n)$，\n$\\sigma_i=\\sqrt{\\lambda_i(A^{H}A)}\\ge0$ 且降序。"
+    },
+    {
+      "id": "NL02.7:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "秩、条件数、最小二乘、低秩逼近都由它给出；它也是唯一能在数值上「看清」$\\kappa$ 的工具。"
+    },
+    {
+      "id": "NL02.7:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "三条恒等式：$\\sum_i\\sigma_i^{2}=\\left\\lVert A\\right\\rVert _{F}^{2}$（Frobenius）、\n$\\sum_i\\sigma_i=\\left\\lVert A\\right\\rVert _{*}$（核范数）、$\\sigma_{\\max}\\sigma_{\\min}=\\left\\lvert \\det A\\right\\rvert $（方阵非奇异）。\n左奇异向量 $u_i=Av_i/\\sigma_i$，$\\sigma_i\\approx0$ 时 $u_i$ 不唯一（可任取正交补中的向量）。"
+    },
+    {
+      "id": "NL02.7:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "秩用相对阈值：$\\mathrm{rank}(A)=\\#\\{i:\\sigma_i>\\tau\\sigma_0\\}$，$\\tau=\\max(m,n)\\varepsilon$；\n奇异值判零用的 $\\mathrm{tol\\_sig}=\\mathrm{DefaultTol}(r)\\cdot\\sigma_0$。\n（任务说明里提到的「可信阈值 $1\\times10^{-6}$」**原文未给**。）"
+    },
+    {
+      "id": "NL02.7:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L6。"
+    },
+    {
+      "id": "NL02.7:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 $\\sigma_i>0$ 就能判秩。浮点下 $\\lambda$ 可能出现 $-10^{-17}$，\n必须 $\\max(\\lambda,0)$ 夹取并用相对阈值；绝对阈值在尺度变化时全错。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "L7",
+    "status": "已实现：linalg/svd.hpp",
+    "section": "线性代数：矩阵是线性映射，不是数字表"
+  }
+}

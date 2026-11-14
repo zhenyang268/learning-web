@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL01.5",
+  "chapter": "NL01",
+  "title": "收敛阶与「h 减半」判据",
+  "src": {
+    "file": "notebook/math/survey/p2-foundation.tex",
+    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL01.5:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "全局误差 $e(h)=O(h^{p})$ 称 $p$ 阶。实操判据：$h$ 每减半，误差应降 $2^{p}$ 倍，\n即 $\\log e$ 对 $\\log h$ 的斜率约为 $p$。"
+    },
+    {
+      "id": "NL01.5:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "RK4 的四阶、P1 有限元在 $L^{2}$ 下的二阶，都只能这样验收——没有精确解的场合\n这是唯一可用的客观判据。"
+    },
+    {
+      "id": "NL01.5:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "局部截断误差 $p+1$ 阶 $\\Rightarrow$ 全局 $p$ 阶。成立条件：方法稳定、右端项足够光滑、\n**步长已进入渐近区**（$h$ 太大时高阶项未起来，比值会乱）。"
+    },
+    {
+      "id": "NL01.5:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "三次 $h$ 减半的比值落在区间内（P1 取 $[3.8,4.2]$）；Euler 减半降 2 倍、RK4 降 16 倍。"
+    },
+    {
+      "id": "NL01.5:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "A1。"
+    },
+    {
+      "id": "NL01.5:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「阶越高越准」。阶是渐近率；常数项很大时，低阶方法在中等 $h$ 下可能更准\n（RK4 步长过大时反而不如小步长 Euler）。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "A5",
+    "status": "已实现（判据方法论）",
+    "section": "分析基础：误差是怎么被量出来的"
+  }
+}

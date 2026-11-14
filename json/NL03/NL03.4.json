@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL03.4",
+  "chapter": "NL03",
+  "title": "Givens 旋转",
+  "src": {
+    "file": "notebook/math/survey/p3-numeric.tex",
+    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL03.4:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$G=\\begin{bmatrix}c&s\\\\-\\overline{s}&c\\end{bmatrix}$，$\\left\\lvert c\\right\\rvert ^{2}+\\left\\lvert s\\right\\rvert ^{2}=1$；\n取 $r=\\mathrm{hypot}(\\left\\lvert f\\right\\rvert ,\\left\\lvert g\\right\\rvert )$，$c=\\left\\lvert f\\right\\rvert /r$，$s=(f/\\left\\lvert f\\right\\rvert )\\cdot\\overline{g}/r$，\n则 $G(f,g)^{\\mathsf T}=((f/\\left\\lvert f\\right\\rvert )r,0)^{\\mathsf T}$。"
+    },
+    {
+      "id": "NL03.4:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "一次只消一个元素，适合**稀疏**或「只需局部消元」的场合；\n反射适合稠密整列。"
+    },
+    {
+      "id": "NL03.4:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "复数域里靠相位 $f/\\left\\lvert f\\right\\rvert $ 补一个自由度，才能让 $G$ 保持酉且把 $g$ 精确消成 0。\n成立条件：$\\left\\lvert f\\right\\rvert $、$\\left\\lvert g\\right\\rvert $ 不同时为 0；用 `hypot`防上溢。"
+    },
+    {
+      "id": "NL03.4:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "$\\left\\lvert g\\right\\rvert ^{2}\\le\\mathrm{tol}^{2}$ 时跳过（已足够小）。"
+    },
+    {
+      "id": "NL03.4:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "L3、L4。"
+    },
+    {
+      "id": "NL03.4:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为 Givens 只是「2×2 的反射」。它是旋转（行列式为 1），不是反射（行列式 $-1$）；\n差别在复数域与相位处理上会现形。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "N4",
+    "status": "已实现：linalg/qr.hpp",
+    "section": "数值线性代数：分解是为了让「判据」有地方落"
+  }
+}

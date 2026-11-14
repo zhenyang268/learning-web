@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL12.2",
+  "chapter": "NL12",
+  "title": "下标到偏移的线性映射",
+  "src": {
+    "file": "notebook/math/survey/p10-tensor.tex",
+    "sha256": "sha256:7788066e0e6accbcefb6f26233a34f1f437b4a56e00fef2653ed18d3c4dde124"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL12.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\text{offset}=\\sum_{d=0}^{r-1}\\text{idxs}[d]\\cdot\\text{strides}[d]$。"
+    },
+    {
+      "id": "NL12.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它是「多维数组」的全部实现原理：所有访问都是这一行点积。"
+    },
+    {
+      "id": "NL12.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "这是**线性映射**（对下标线性），所以换轴=换求和顺序、切片=给某一项加常数。\n成立条件：$0\\le\\text{idxs}[d]<\\text{shape}[d]$；下标个数必须等于秩。库只在 `at()`里查越界，\n`operator()`不逐维查——个数写错会越界读或丢下标（静默错）。"
+    },
+    {
+      "id": "NL12.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "shape $\\{2,3,4\\}$ 下 $(1,2,3)=1\\cdot12+2\\cdot4+3=23$。"
+    },
+    {
+      "id": "NL12.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "T1。"
+    },
+    {
+      "id": "NL12.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「列主序只是把两个下标换一下」。步长整组都变（$\\text{strides}=\\{1,2,6\\}$），\n所有切片与换轴的语义随之改变；两套约定不能局部混用。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "T2",
+    "status": "框架：core/tensor.hpp",
+    "section": "张量代数与微分形式"
+  }
+}

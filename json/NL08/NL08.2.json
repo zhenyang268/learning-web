@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL08.2",
+  "chapter": "NL08",
+  "title": "Euler 与 RK4 的阶",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL08.2:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "Euler：$y_{n+1}=y_n+hf(t_n,y_n)$，1 阶。RK4：\n$k_1=f(t,y)$，$k_2=f(t+h/2,y+\\frac h2k_1)$，$k_3=f(t+h/2,y+\\frac h2k_2)$，$k_4=f(t+h,y+hk_3)$，\n$y_{n+1}=y+h(k_1+2k_2+2k_3+k_4)/6$，4 阶。"
+    },
+    {
+      "id": "NL08.2:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它们是「局部误差阶 $\\to$ 全局误差阶」的标准例子，也是收敛阶判据（A5）的常用靶子。"
+    },
+    {
+      "id": "NL08.2:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "Euler 局部 $O(h^{2})$、全局 $O(h)$（$h$ 减半误差降 2 倍）；\nRK4 局部 $O(h^{5})$、全局 $O(h^{4})$（$h$ 减半误差降 16 倍），每步 4 次 $f$。\n成立条件：$f$ 足够光滑且步长进入渐近区。"
+    },
+    {
+      "id": "NL08.2:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "三次 $h$ 减半的误差比值（2 与 16），落区间内才算过。"
+    },
+    {
+      "id": "NL08.2:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "D6、A5。"
+    },
+    {
+      "id": "NL08.2:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「RK4 一定比 Euler 准」。$h$ 很大时 RK4 的 4 次求值可能落在解的外面，\n反而发散；阶是**渐近**性质。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D7",
+    "status": "骨架：math/ode.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

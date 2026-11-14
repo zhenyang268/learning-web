@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL08.3",
+  "chapter": "NL08",
+  "title": "辛结构与 Verlet 的能量行为",
+  "src": {
+    "file": "notebook/math/survey/p7-calculus.tex",
+    "sha256": "sha256:2b6f0f4448527ad71cb9c43761458d33575073a6d3d563516ca10c1d2a112d4b"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL08.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "力学系统写成 $\\dot q=v$、$\\dot v=a(q)$。辛 Euler：$v_{n+1}=v_n+ha(q_n)$、\n$q_{n+1}=q_n+hv_{n+1}$（用**新**速度）。Verlet：半步速度—整步位置—半步速度\n（$v_{1/2}=v_n+\\frac h2a(q_n)$、$q_{n+1}=q_n+hv_{1/2}$、$v_{n+1}=v_{1/2}+\\frac h2a(q_{n+1})$）。"
+    },
+    {
+      "id": "NL08.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "长时间积分时，普通高阶方法会让能量单调漂移；保结构方法让能量**有界振荡**。"
+    },
+    {
+      "id": "NL08.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "辛方法精确保持的是**扰动哈密顿量**$H+O(h^{2})$，故能量误差不发散。\nVerlet 2 阶、每步 2 次加速度；辛 Euler 1 阶但已有界。成立条件：$H=\\frac12\\left\\lvert v\\right\\rvert ^{2}+U(q)$，\n力由 $a=-\\nabla U$ 给出（保守系统）。"
+    },
+    {
+      "id": "NL08.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "判能量**包络**（上下界是否随时间增长），不判单步误差；\n比较辛 Euler 与 RK4 的长时间能量曲线是标准用例。"
+    },
+    {
+      "id": "NL08.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "D7。"
+    },
+    {
+      "id": "NL08.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「阶更高就更守恒」。RK4 阶高但不保辛，长时间能量会**系统性漂移**；\n这是「结构 > 阶数」最著名的反例。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "D8",
+    "status": "骨架：math/ode.hpp",
+    "section": "微分：从 $\\eps^{2}=0$ 到伴随传播"
+  }
+}

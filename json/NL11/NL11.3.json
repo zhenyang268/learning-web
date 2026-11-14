@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL11.3",
+  "chapter": "NL11",
+  "title": "CG 的收敛率与「为什么必须 SPD」",
+  "src": {
+    "file": "notebook/math/survey/p9-discrete.tex",
+    "sha256": "sha256:5feb96646ad1dab0c6f040977bf978cb2715fb208fc65fc40ecf66cb81654cc3"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL11.3:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "误差界：\n\n$$\n\\left\\lVert e_k\\right\\rVert _{A}\\le2\\left(\\frac{\\sqrt\\kappa-1}{\\sqrt\\kappa+1}\\right)^{k}\\left\\lVert e_0\\right\\rVert _{A},\n$$\n\n$\\kappa=\\lambda_{\\max}/\\lambda_{\\min}$。"
+    },
+    {
+      "id": "NL11.3:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "它决定「迭代多少次」，也解释「为什么预处理是必要的」（把 $\\kappa$ 压小）。"
+    },
+    {
+      "id": "NL11.3:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "$\\kappa$ 大时收敛慢（$\\kappa=10^{4}$ 需要约 $100$ 次以上量级）；\n非 SPD 时 $p^{H}Ap$ 可能为 0 或负，$\\alpha$ 无意义 → 残差停滞或上升。\n成立条件：$A$ 对称正定；精确算术；浮点上收敛会因舍入而偏离界。"
+    },
+    {
+      "id": "NL11.3:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "非 SPD 的 `apply`（例如未加边界的纯拉普拉斯）必须表现为残差停滞/上升并被\n最大迭代数截断，**不许死循环**。"
+    },
+    {
+      "id": "NL11.3:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "F8、A4、N8。"
+    },
+    {
+      "id": "NL11.3:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「CG 对任何矩阵都能用，只是慢一点」。对非对称矩阵它连「下降方向」都无法保证，\n会直接崩；这就是为什么对称性（F5）是硬约束。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "F9",
+    "status": "未建：linalg/cg.hpp",
+    "section": "离散化与变分：连续方程怎么变成 $Au=b$"
+  }
+}

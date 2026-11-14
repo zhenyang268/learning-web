@@ -1,0 +1,32 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PS03.0",
+  "chapter": "PS03",
+  "title": "PS03 多维随机变量及其分布",
+  "src": {
+    "file": "notebook/kaoyan/syllabus/math1.md",
+    "sha256": "sha256:389b11c2f62861218b63747dedf1ab1a947a89600fda775bcba850a72f66ffe7"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "PS03.0:exam.s01",
+      "type": "extension",
+      "title": "第 PS03 多维随机变量及其分布：导语与真题落点",
+      "level": 2,
+      "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-ps.md` §PS-03 多维随机变量及其分布　｜　考点页：`note/math1/ps/`"
+    },
+    {
+      "id": "PS03.0:keng.s01",
+      "type": "counterexample",
+      "title": "细节与陷阱",
+      "level": 2,
+      "content": "- `M1-PS-0302` 〔易错〕不相关 ⇏ 独立；二维正态是唯一例外（不相关 ⇔ 独立）　原因：把「不相关」当「独立」\n- `M1-PS-0303` 〔易错〕卷积 $Z=X+Y$：积分限要按支撑集分段，代换别丢雅可比　原因：上下限画错\n- `M1-PS-0303` 〔易错〕$\\max/\\min$：$F_{\\max}=F^n$，$F_{\\min}=1-(1-F)^n$　原因：与密度混用"
+    }
+  ],
+  "meta": {
+    "kind": "chapter",
+    "chapter_title": "多维随机变量及其分布"
+  }
+}

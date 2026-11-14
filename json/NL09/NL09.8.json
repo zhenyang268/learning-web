@@ -1,0 +1,62 @@
+{
+  "schema": "doc-card/v1",
+  "code": "NL09.8",
+  "chapter": "NL09",
+  "title": "球面插值：slerp 与 nlerp",
+  "src": {
+    "file": "notebook/math/survey/p8-geometry.tex",
+    "sha256": "sha256:7a9b59f0579ef30c9f5b83df3160ad887691fa941e56ceb46060caa795d0d77e"
+  },
+  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_dirty": true,
+  "entries": [
+    {
+      "id": "NL09.8:body.s01",
+      "type": "extension",
+      "title": "是什么",
+      "level": 3,
+      "content": "$\\mathrm{slerp}(t)=\\dfrac{\\sin((1-t)\\Omega)}{\\sin\\Omega}q_0+\\dfrac{\\sin(t\\Omega)}{\\sin\\Omega}q_1$，\n$\\Omega=\\arccos\\left\\lvert q_0\\cdot q_1\\right\\rvert $；退化时用线性插值再归一化（nlerp）。"
+    },
+    {
+      "id": "NL09.8:body.s02",
+      "type": "extension",
+      "title": "为什么需要",
+      "level": 3,
+      "content": "关键帧动画、姿态平滑都用它；「匀速转动」是它唯一的正确性标准。"
+    },
+    {
+      "id": "NL09.8:body.s03",
+      "type": "proof",
+      "title": "关键结论",
+      "level": 3,
+      "content": "短弧判据：$q_0\\cdot q_1<0$ 时把 $q_1$ 翻号（否则绕远路）。\n$\\Omega$ 很小时 $\\sin\\Omega$ 出现在分母会放大误差，故 $d>0.9995$（$\\Omega\\ge0.0316$）时切 nlerp。\n成立条件：$q_0,q_1$ 均已归一。"
+    },
+    {
+      "id": "NL09.8:body.s04",
+      "type": "proof",
+      "title": "判据",
+      "level": 3,
+      "content": "插值后 $\\left\\lvert q\\right\\rvert =1$；角速度恒定的用例（等步长 $t$ 给出的角增量应相等）。"
+    },
+    {
+      "id": "NL09.8:body.s05",
+      "type": "extension",
+      "title": "前置",
+      "level": 3,
+      "content": "G6、G7。"
+    },
+    {
+      "id": "NL09.8:body.s06",
+      "type": "extension",
+      "title": "常见误解",
+      "level": 3,
+      "content": "以为「nlerp 就是 slerp 的近似、差别很小」。线性插值会让 $\\left\\lvert q\\right\\rvert $ 掉到 0.857 附近，\n再归一化后**角速度不均匀**——慢—快—慢，动画上看得出顿挫。"
+    }
+  ],
+  "meta": {
+    "kind": "library-know",
+    "surveyId": "G8",
+    "status": "已实现：quat/quaternion.hpp",
+    "section": "几何与李群：同一个旋转的三件衣服"
+  }
+}
