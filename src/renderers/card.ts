@@ -31,7 +31,9 @@ const TAB_ORDER: Array<{ type: string; label: string }> = [
   { type: '__more', label: '更多' },
 ];
 
-const MORE_TYPES = ['comparison', 'extension', 'counterexample', 'probe', 'viz'];
+// introduction 当前只出现在 doc-card/v1（走 renderDocHtml），entry-card 线暂无；
+// 列入兜底，防止将来数据侧引入该类型时词条静默丢失（不在任何 tab 就不渲染）。
+const MORE_TYPES = ['comparison', 'extension', 'counterexample', 'probe', 'viz', 'introduction'];
 
 /** 「限定词拆解」= 灵魂词条，单独成块默认展开（TASKBOOK §8.4），不进 tab */
 const isQuantifiers = (e: Entry): boolean => slotOf(e) === 'quantifiers';

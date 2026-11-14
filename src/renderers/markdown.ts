@@ -219,6 +219,22 @@ function splitDisplayBlocks(block: string, ctx?: RenderCtx): string | null {
   return out.join('');
 }
 
+/**
+ * `\(...\)` / `\[…\]` → `$…$` / `$$…$$`：数据侧的历史残留定界符归一。
+ *
+ * 为什么是归一而不是在主链加第二套定界符：splitRow 的 `$` 翻转（保护表格
+ * 单元格里的 `|`）、MATH 正则、R1 整块判定、R2 跨行扫描全建立在 `$` 上，
+ * 第二套定界符要穿进五处分支；归一只需入口一处。成对（非贪婪）才替换；
+ * 围栏块不进来（调用方守门）。数据里的 `\\[4pt]` 是 KaTeX 行距命令，
+ * 不构成 `\[…\]` 对，不受影响。
+ */
+function normalizeMathDelims(s: string): string {
+  if (!s.includes('\\(') && !s.includes('\\[')) return s;
+  return s
+    .replace(/\\\(([\s\S]*?)\\\)/g, (_m, inner: string) => `$${inner}$`)
+    .replace(/\\\[([\s\S]*?)\\\]/g, (_m, inner: string) => `$$${inner}$$`);
+}
+
 /** 极简 markdown → HTML：段落 / 列表 / 表格 / 行间公式 / 行内公式 */
 export function renderContent(src: string, ctx?: RenderCtx): string {
   if (!src) return '';
@@ -268,8 +284,10 @@ export function renderContent(src: string, ctx?: RenderCtx): string {
   }
   return blocks
     .map((block) => {
-      const b = block.trim();
+      let b = block.trim();
       if (!b) return '';
+      // 历史残留定界符归一（围栏块是 ASCII 图/代码，里面的 \( 不是数学）
+      if (!/^\s*(```|~~~)/.test(b)) b = normalizeMathDelims(b);
       let lines = b.split('\n');
       // 标题（总纲文档用）：## → h2、### → h3（# 已由页头承载，同样降为 h2）
       // 围栏代码块（``` 或 ~~~，总纲附篇的「总关系图」是 ASCII 树）：

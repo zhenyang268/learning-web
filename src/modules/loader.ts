@@ -83,8 +83,10 @@ function validateFile(raw: unknown, path: string, issues: LoadIssue[]): EntryFil
       issues.push({ file: path, field: key, message: `文件级必填字段缺失或非字符串：${key}` });
     }
   }
-  if (obj.schema !== undefined && obj.schema !== 'entry-card/v2') {
-    issues.push({ file: path, field: 'schema', message: `未知 schema：${String(obj.schema)}（期望 entry-card/v2）` });
+  // doc-card/v1（NL 系列讲解）走 app.ts 的文档渲染分支，结构同样是必填校验的对象，
+  // 不是「未知 schema」（原先 106 个 NL 文件每个报 1 条假问题，QA 浮层被假信号淹没）。
+  if (obj.schema !== undefined && obj.schema !== 'entry-card/v2' && obj.schema !== 'doc-card/v1') {
+    issues.push({ file: path, field: 'schema', message: `未知 schema：${String(obj.schema)}（期望 entry-card/v2 或 doc-card/v1）` });
   }
   if (typeof obj.code === 'string' && !CODE_RE.test(obj.code)) {
     issues.push({ file: path, field: 'code', message: `代号不是两级：${obj.code}` });
