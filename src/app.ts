@@ -3,7 +3,7 @@ import './styles.css';
 import type { EntryFile, UnitMeta } from './types';
 import { loadIndex, loadUnit, type LoadIssue } from './modules/loader';
 import { buildGraphFromMeta, frontierOf, letterOf, type Graph } from './modules/graph';
-import { groupMasteryMean, loadState, progressOf } from './modules/state';
+import { bumpMastery, groupMasteryMean, loadState, progressOf, toggleProbe } from './modules/state';
 import { patchHeaderProgress, renderHeader } from './shell/header';
 import { patchSidebarMastery, renderSidebar } from './shell/sidebar';
 import { renderAside } from './shell/aside';
@@ -569,6 +569,20 @@ document.addEventListener('click', (ev) => {
   if (retry?.dataset.retry) {
     failed.delete(retry.dataset.retry);
     apply();
+    return;
+  }
+  // 自测题「能答」开关：记录 probe + 同步掌握度（±1 封顶 0–5），轻刷新右栏与目录
+  const st = (ev.target as HTMLElement).closest<HTMLElement>('[data-selftest]');
+  if (st?.dataset.selftest) {
+    const key = st.dataset.selftest;
+    const unit = st.dataset.unit ?? '';
+    const now = toggleProbe(key);
+    const cards = metaOf(unit)?.cards?.length ? metaOf(unit)!.cards : [unit];
+    for (const c of cards) bumpMastery(c, now ? 1 : -1);
+    st.classList.toggle('done', now);
+    st.textContent = now ? '✓ 能答' : '能答？';
+    st.closest('li')?.classList.toggle('done', now);
+    document.dispatchEvent(new Event('kb:mastery'));
     return;
   }
   const target = (ev.target as HTMLElement).closest<HTMLElement>('[data-goto]');

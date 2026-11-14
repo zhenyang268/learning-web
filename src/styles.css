@@ -1718,3 +1718,91 @@ a.graphbtn.crosssite {
 .docsec .mirror:hover {
   color: var(--pink);
 }
+
+/* ---------------------------------------------------------- 考点自测（工程线） */
+.selftest {
+  margin-top: 28px;
+  padding: 16px 18px;
+  border: 1px solid var(--line, #2a2a35);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stdim {
+  font-size: 0.82em;
+  color: var(--dim);
+  margin: 4px 0 12px;
+}
+
+.stlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stq {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line, #2a2a35);
+  border-radius: 8px;
+}
+
+.stq.done {
+  border-color: var(--ok, #4ade80);
+  background: rgba(74, 222, 128, 0.06);
+}
+
+.sttag {
+  flex: none;
+  font-size: 0.72em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #2a2a35);
+  color: var(--dim);
+  margin-top: 2px;
+}
+
+.stbody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stq-text {
+  font-weight: 600;
+}
+
+.stbar {
+  font-size: 0.8em;
+  color: var(--dim);
+}
+
+.stbtn {
+  flex: none;
+  align-self: center;
+  font: inherit;
+  font-size: 0.8em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #2a2a35);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.stbtn:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+.stbtn.done {
+  border-color: var(--ok, #4ade80);
+  color: var(--ok, #4ade80);
+}
+

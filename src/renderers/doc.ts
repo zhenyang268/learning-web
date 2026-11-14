@@ -1,6 +1,8 @@
 import type { Entry, EntryFile } from '../types';
 import { displayCode } from '../modules/codes';
 import { attrEscape } from '../modules/attr';
+import { isProbeDone } from '../modules/state';
+import { SELFTEST_PROJECTS } from '../content/selftest-projects';
 import { escapeHtml, renderContent, renderInline } from './markdown';
 
 /**
@@ -39,7 +41,41 @@ export function renderDocHtml(file: EntryFile): string {
       .join(' ');
     parts.push(`<section class="${cls}" data-entry="${attrEscape(e.id)}">${head}${content}</section>`);
   }
+  const selftest = selftestSection(code);
+  if (selftest) parts.push(selftest);
   return parts.join('\n');
+}
+
+/**
+ * 工程线考点自测（数据见 `content/selftest-projects.ts`）：
+ * 一组「不看书能不能答」的问题，读者点「能答」记录掌握度（app.ts 委托处理）。
+ * 数学线 / 408 不在数据表里，自动不出这一节 —— 数据驱动，不加站点开关。
+ */
+function selftestSection(code: string): string {
+  const chap = code.split('.')[0] ?? '';
+  const items = SELFTEST_PROJECTS[chap];
+  if (!items?.length) return '';
+  const rows = items
+    .map((it, i) => {
+      const key = `${code}:selftest.${i}`;
+      const done = isProbeDone(key);
+      return `<li class="stq${done ? ' done' : ''}">
+      <span class="sttag">${escapeHtml(it.tag)}</span>
+      <span class="stbody"><span class="stq-text">${renderInline(it.q)}</span>
+      <span class="stbar">会标准：${renderInline(it.bar)}</span></span>
+      <button class="stbtn${done ? ' done' : ''}" data-selftest="${attrEscape(key)}" data-unit="${attrEscape(code)}">${
+        done ? '✓ 能答' : '能答？'
+      }</button>
+    </li>`;
+    })
+    .join('');
+  return `<section class="docsec selftest">
+  <h2 class="dochead">自测 · 不看书能答吗？</h2>
+  <div class="docbody">
+  <p class="stdim">答出这些题 = 这个项目的考点掌握了；点「能答」记掌握度，答不出就回正文。右上目录与「下一步」推荐会跟着变。</p>
+  <ul class="stlist">${rows}</ul>
+  </div>
+  </section>`;
 }
 
 function mirrorLink(e: Entry): string {

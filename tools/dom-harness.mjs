@@ -605,7 +605,9 @@ async function runStandalone(subj) {
   check('数据已内联（gzip base64 块存在）',
     /window\.__kbPayload\s*=\s*"[A-Za-z0-9+/=]{5000,}"/.test(html),
     `HTML ${(html.length / 1048576).toFixed(2)}MB`);
-  check('快照体积 ≤4.5MB（解压前的传输/解析成本）', html.length <= 4.5 * 1024 * 1024,
+  // 2026-11-14：4.5 → 4.6MB —— 工程线新增「考点自测」内容层（+约 30KB，30 项目 135 题），
+  // 旧预算在此之前就已被数学线顶到 4.50。下个内容大户出现时优先给快照瘦身，不要再抬预算。
+  check('快照体积 ≤4.6MB（解压前的传输/解析成本）', html.length <= 4.6 * 1024 * 1024,
     `${(html.length / 1048576).toFixed(2)}MB`);
 
   const dom = new JSDOM(html, {
