@@ -5,9 +5,9 @@
   "title": "总图：十一个分支与一张依赖网",
   "src": {
     "file": "notebook/math/survey/p1-overview.tex",
-    "sha256": "sha256:152e6358351649189b48fff04d3052b9f2abdf84b252ea9d9248acb6dfdaf79f"
+    "sha256": "sha256:a0eb1f276268286dd73b80f3424a9278c4381af25a4b07515d6264efc5c627d5"
   },
-  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
   "notebook_dirty": true,
   "entries": [
     {

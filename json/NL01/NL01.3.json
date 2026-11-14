@@ -5,9 +5,9 @@
   "title": "前向误差与后向误差",
   "src": {
     "file": "notebook/math/survey/p2-foundation.tex",
-    "sha256": "sha256:b90346d3fc3e0ebb3dd0a8212982876b5c6d924ea36799dda9af70ef3829299b"
+    "sha256": "sha256:a24eb1522590a7cb21efca2a2a8ea5922d3495e5f0293e8f5b8c2e27cf26f33e"
   },
-  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
   "notebook_dirty": true,
   "entries": [
     {

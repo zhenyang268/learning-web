@@ -5,9 +5,9 @@
   "title": "LU 分解与乘子界",
   "src": {
     "file": "notebook/math/survey/p3-numeric.tex",
-    "sha256": "sha256:d1066bce592d9e2a5df9ba9c527d46d71f690586566dd6ba0210944ba3938fb1"
+    "sha256": "sha256:b1cbcac8f576f6b2f5b83ffc2ae1d7c2a222e846c4cd3919abb8734fc72335ea"
   },
-  "notebook_commit": "718f85c7ff20e35ab78764cd80e8a4f753dc1b34",
+  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
   "notebook_dirty": true,
   "entries": [
     {
