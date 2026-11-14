@@ -69,7 +69,8 @@ npm run build
 
 | 产物 | 形态 | 怎么打开 | 用途 |
 |---|---|---|---|
-| `dist/knowledge.html` 等四份 | 单文件：数据 gzip 内联、字体 base64、**普通 `<script>`**；按学科拆分（`knowledge-<站>.html`） | **双击即开**（`file://`） | 分发、存档、发给人看 |
+| `release/knowledge*.html`（**入库**） | 单文件：数据 gzip 内联、字体 base64、**普通 `<script>`**；按学科拆分 | **双击即开**（`file://`） | 从 GitHub 下载即看、发给人 |
+| `dist/`（不入库） | 完整构建产物：四入口 + 四数据根 + assets | 需 HTTP（`npm run preview`） | 本地开发、部署 |
 | `dist/knowledge-index.html` | 纯链接索引页（无数据） | 双击即开 | 四份快照的入口 |
 | `dist/index.html` + `dist/json/` | Vite 多页 + **运行时 `fetch()`** | **必须 HTTP** | 开发、内容维护 |
 | `dist/cs408.html` + `dist/cs408/` | 同上，数据根独立 | **必须 HTTP** | 408 子站 |

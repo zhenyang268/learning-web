@@ -22,7 +22,8 @@
     "check:projects": "node tools/check-katex.mjs --subject projects && node tools/check-graph.mjs --subject projects && node tools/check-sem-sync.mjs --subject projects && node tools/dom-harness.mjs --subject projects --all",
     "check": "tsc --noEmit && npm run check:content-map && npm run verify:docs && npm run check:katex && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all",
     "audit": "node tools/dom-harness.mjs --audit",
-    "audit:content": "uv run python build/verify_kb.py --dry-run --out build/logs/health-content.json"
+    "audit:content": "uv run python build/verify_kb.py --dry-run --out build/logs/health-content.json",
+    "release": "npm run build && node tools/sync-release.mjs"
   },
   "dependencies": {
     "yaml": "^2.9.1"

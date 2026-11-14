@@ -318,6 +318,7 @@ node tools/remap-codes.mjs --apply
 - **禁 CDN。** KaTeX / Mermaid / 图表库全部内联或 vendored，产物必须断网可用。
 - standalone HTML 遵守 §3 的三条约束（内联数据 / IIFE / 无 CDN；细则见 `DESIGN.md` §9.1）。
 - **`dist/` 有两种形态，不要混**（2026-10-30 定，方案 A）：
+  **入库位置 `release/`**（`dist/` 仍 gitignore）：`npm run release` 生成；
   **每个学科一份单文件**（普通 `<script>` + gzip 数据 + base64 字体），双击即开：
   `knowledge.html`（数学）/`knowledge-cs408.html` /`knowledge-math1.html` /`knowledge-projects.html`，
   外加 `knowledge-index.html` 索引页（纯链接，file:// 也能开）；
