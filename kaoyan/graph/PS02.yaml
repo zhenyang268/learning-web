@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  PS02.0:
+    prereq: [PS01.4, HS03.2] # 分布函数以概率为基础，连续型密度计算用定积分

@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  PS05.0:
+    prereq: [PS04.2] # 切比雪夫不等式与极限定理都以期望、方差为工具

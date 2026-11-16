@@ -5,10 +5,10 @@
   "title": "运算与转置",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0201-运算与转置.md",
-    "sha256": "sha256:8c0def1a5d74ba099f5580a17aee2276201677307518e92daa086f8d1e035e64"
+    "sha256": "sha256:cdfdbc05a7ffae78b0b6a171b80fe7554d30ee4a85872c6554fd8233f13998e3"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA02.1:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：转置与对称性、反对称性中的整体转置",
       "level": 2,
       "content": "**题目（常见变形）**：判断 $AA^T$、$A^TA$、$A+A^T$ 的对称性，或由 $A^T=-A$ 讨论行列式、奇偶阶。\n\n**思路**：第一步对目标矩阵整体再转置一次，看是否回到自身：$(AA^T)^T=AA^T$，$(A+A^T)^T=A+A^T$。若要比较 $AA^T$ 与 $A^TA$，先看 $A$ 是否方阵、是否与 $A^T$ 可交换，不能只凭形式相似下结论。反对称矩阵先分阶讨论，奇数阶要单独用行列式转置关系检验。\n\n**坑**：看到 $AA^T$ 与 $A^TA$ 就误判成同一个矩阵；看到 $A^T=-A$ 就误判成 $A=0$，或忘记奇数阶时还要额外讨论。"
+    },
+    {
+      "id": "LA02.1:example.s01",
+      "type": "example",
+      "title": "例题：利用低次幂规律求矩阵幂",
+      "level": 2,
+      "content": "**题目**：设 $A=\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$，求 $A^n$（$n$ 为正整数）。\n\n**解答**：写 $A=I+N$，其中 $N=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ 且 $N^2=0$。因 $I$ 与 $N$ 可交换，$A^n=I+nN=\\begin{pmatrix}1&n\\\\0&1\\end{pmatrix}$。"
     }
   ],
   "source_h1": "M1-LA-0201 运算与转置",

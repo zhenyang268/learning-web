@@ -5,10 +5,10 @@
   "title": "两类错误与流程",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0801-两类错误与流程.md",
-    "sha256": "sha256:455236ad6086fb982dbb63e5d9d6e7b7029d382a83c855f7d036f349afa2fa9f"
+    "sha256": "sha256:9185efad8867af6a9e2e03d55745f7db5e51da1f371cd08fc4910ac9dc584b1a"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS08.1:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：$\\alpha$、$\\beta$、$n$ 三者的联动与样本容量确定",
       "level": 2,
       "content": "**思路**：第一步写出两式：$\\alpha=P(\\text{落入拒绝域}\\mid\\mu=\\mu_0)$，$\\beta=P(\\text{落入接受域}\\mid\\mu=\\mu_1)$。第二步把拒绝域边界视为未知量，联立两式消去边界，得到 $n$ 与 $\\alpha,\\beta,\\mu_0,\\mu_1,\\sigma$ 的关系；单侧检验用单侧分位点、双侧用双侧分位点，代入求解即可。第三步明确：$\\alpha$ 减小则 $\\beta$ 增大（$n$ 不变）；要同时压小两者，只能增大 $n$。\n\n**坑**：直接把给出的 $\\alpha$ 当作 $\\beta$ 用，或忽略\"$\\beta$ 是在某个具体 $\\mu_1$ 处取的\"，导致方程里少了一个已知量。另一个坑：求 $n$ 时不向上取整，得到小数样本容量。"
+    },
+    {
+      "id": "PS08.1:example.s01",
+      "type": "example",
+      "title": "例题：用 p 值作判断",
+      "level": 2,
+      "content": "**题目**：某检验得到 $p=0.03$，分别在显著性水平 $0.05$ 与 $0.01$ 下作结论。\n\n**解答**：$0.03\\le0.05$，在 $5\\%$ 水平拒绝 $H_0$；$0.03>0.01$，在 $1\\%$ 水平不拒绝 $H_0$。$p=0.03$ 不表示“$H_0$ 为真的概率是 $3\\%$”，而是 $H_0$ 下得到当前或更极端结果的概率。"
     }
   ],
   "source_h1": "M1-PS-0801 两类错误与流程",

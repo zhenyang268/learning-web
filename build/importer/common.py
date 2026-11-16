@@ -19,8 +19,8 @@ KAOYAN = NOTEBOOK / "kaoyan"
 PROJECTS = NOTEBOOK / "projects"
 
 SCHEMA = "doc-card/v1"
-CODE_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?$")
-ID_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
+CODE_RE = re.compile(r"^[A-Z]{2}\d{2}(\.\d+)?$")
+ID_RE = re.compile(r"^[A-Z]{2}\d{2}(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
 
 
 # ------------------------------------------------------------------ 归一与对账
@@ -80,6 +80,7 @@ def notebook_state() -> tuple[str, bool]:
 
 ENTRY_TYPES: dict[str, str] = {
     "考法": "statement",
+    "例题": "example",
     "真题": "probe",
     "坑": "counterexample",
     "陷阱": "counterexample",
@@ -181,6 +182,8 @@ def entry_slug(title: str) -> str:
     t = title.strip()
     if t.startswith("考法"):
         return "kaofa"
+    if t.startswith("例题"):
+        return "example"
     if "真题" in t:
         return "exam"
     if t.startswith("坑") or "陷阱" in t:

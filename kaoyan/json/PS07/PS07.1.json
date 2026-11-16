@@ -5,10 +5,10 @@
   "title": "矩估计与最大似然",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0701-矩估计与最大似然.md",
-    "sha256": "sha256:a039e9c28bc57eecafbe430b01d29fcc06985070811890c96d900efc1dc64bb3"
+    "sha256": "sha256:0cf6e4cad136008680ee6e45ad1a493f05fa4f0c20cce3082b05c1da4ec21163"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS07.1:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：同一参数的矩估计与最大似然估计对照",
       "level": 2,
       "content": "**思路**：两条线并行推进：矩估计走“总体矩=样本矩”，最大似然走“构造似然—取对数—求导或看单调”。第一步是把两个估计量都独立算完再比较，不要用其中一个的结论去替代另一个的过程。\n\n**坑**：对 $U(0,\\theta)$ 这类分布，容易把矩估计结果 $2\\bar X$ 与最大似然结果 $\\max X_i$ 混为一谈，或在题目只问其中一个时把另一个写上去。两者一般不相等，哪个更“好”要靠下一考点的无偏性与方差去判，不能凭直觉。"
+    },
+    {
+      "id": "PS07.1:example.s01",
+      "type": "example",
+      "title": "例题：均匀分布的两种估计",
+      "level": 2,
+      "content": "**题目**：$X_1,X_2,X_3$ 来自 $U(0,\\theta)$，观测值为 $2,4,6$。分别求矩估计与最大似然估计。\n\n**解答**：矩估计由 $\\bar X=\\theta/2$ 得 $\\hat\\theta_M=2\\bar X=8$。似然 $L(\\theta)=\\theta^{-3}I\\{\\theta\\ge6\\}$ 随 $\\theta$ 递减，故 $\\hat\\theta_{MLE}=6$。一个用均值，一个受支撑边界约束。"
     }
   ],
   "source_h1": "M1-PS-0701 矩估计与最大似然",

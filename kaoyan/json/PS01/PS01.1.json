@@ -5,10 +5,10 @@
   "title": "事件与运算",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0101-事件与运算.md",
-    "sha256": "sha256:c0d30a55aa21615c98a51463828633df786b56bb0f30994084d37055506d082e"
+    "sha256": "sha256:46ea38d20f2c3f0433ec515a14fa96fb93ed9dda962bb25936e494e5f3d52e5c"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS01.1:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：由概率等式反推事件关系",
       "level": 2,
       "content": "**思路**：第一步把等式里每个概率都用“四块语言”展开，$P(A\\bar B)=P(A)-P(AB)$、$P(\\bar A B)=P(B)-P(AB)$，两边同时出现 $P(AB)$ 时直接消去，剩下的等式往往就是 $P(A)=P(B)$ 这类干净结论。遇到“互不相容”“对立”“独立”这类词，先各自换成概率语言（$P(AB)=0$、$P(AB)=P(A)P(B)$、$P(A)+P(B)=1$）再代入。\n\n**坑**：看到两个概率相等就往“相互独立”上靠；把“互不相容”直接当成“独立”用，写出 $P(AB)=P(A)P(B)$——这是本考点最容易犯的一件事，因为两个词都含“不”字。另一个坑是对立事件与互斥事件混用：互斥只保证 $P(A\\cup B)=P(A)+P(B)$，不保证和为 $1$。"
+    },
+    {
+      "id": "PS01.1:example.s01",
+      "type": "example",
+      "title": "例题：加法公式与补事件",
+      "level": 2,
+      "content": "**题目**：已知 $P(A)=0.5$、$P(B)=0.4$、$P(AB)=0.2$，求 $P(A\\cup B)$ 与 $P(\\bar A\\bar B)$。\n\n**解答**：$P(A\\cup B)=0.5+0.4-0.2=0.7$。由德摩根律，$\\bar A\\bar B=\\overline{A\\cup B}$，故 $P(\\bar A\\bar B)=1-0.7=0.3$。"
     }
   ],
   "source_h1": "M1-PS-0101 事件与运算",

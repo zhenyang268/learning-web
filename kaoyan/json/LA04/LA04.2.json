@@ -5,10 +5,10 @@
   "title": "非齐次方程组",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0402-非齐次方程组.md",
-    "sha256": "sha256:7972e19080d4b6ef4abcad6a85a2ebd6269886ed037ceb90ef96a4e5eff044a4"
+    "sha256": "sha256:6b711d33a118293d1b6b16a5c08946739d01dbd6be430f96cf944dd66379bec2"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA04.2:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：在通解上加附加条件挑出特定解",
       "level": 2,
       "content": "**思路**：第一步照常求出通解，其中的自由常数 $k_i$ 先留着。第二步把附加条件（某分量等于给定值、某两个分量成比例、解向量满足某个线性关系）代入通解的表达式，得到关于 $k_i$ 的方程，解出 $k_i$ 再回代。\n\n**坑**：附加条件只代入了特解部分，忘了基础解系里的 $k_i$ 也参与该分量；另外当附加条件给出的是二次关系时可能出现多组 $k_i$，只取一组而漏解。"
+    },
+    {
+      "id": "LA04.2:example.s01",
+      "type": "example",
+      "title": "例题：非齐次通解的结构",
+      "level": 2,
+      "content": "**题目**：求方程 $x+y=1$ 的通解，并写成“特解 + 齐次通解”。\n\n**解答**：取特解 $\\eta^*=(1,0)^T$。对应齐次方程 $x+y=0$ 的基础解系为 $\\xi=(1,-1)^T$，故通解为 $(x,y)^T=(1,0)^T+t(1,-1)^T$，$t\\in\\mathbb R$。这里 $n-r=2-1=1$。"
     }
   ],
   "source_h1": "M1-LA-0402 非齐次方程组",

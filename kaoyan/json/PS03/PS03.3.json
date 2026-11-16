@@ -5,10 +5,10 @@
   "title": "二维函数的分布",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0303-二维函数的分布.md",
-    "sha256": "sha256:2c2dda9403a033d05764a5b78a9e659291ec6bf03fdbbfcdfafe5384d3db5da8"
+    "sha256": "sha256:b0d63cda454b431767f52f77569d3e95cf4f7c4a480320fb115a3c85d6ff80c3"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS03.3:intro.s01",
@@ -37,6 +37,13 @@
       "title": "考法 3：$Z=Y/X$ 或一般二维变换的雅可比法",
       "level": 2,
       "content": "**思路**：第一步选方法：求 $Z=Y/X$ 可先做分布函数\n$$F_Z(z)=P(Y\\le zX)$$\n但必须按 $X>0$ 与 $X<0$ 分区域讨论，因为除以 $X$ 会改变不等号方向；也可令 $U=Y/X,\\ V=X$，先反解 $Y=UV,\\ X=V$，再算雅可比\n$$J=\\frac{\\partial(x,y)}{\\partial(u,v)},\\qquad f_{U,V}(u,v)=f_{X,Y}(x(u,v),y(u,v))\\,|J|$$\n最后对 $v$ 积分得 $f_U(u)$。一般变换题都要先写反解、再算雅可比、再更新支撑区域。\n\n**坑**：做 $Y/X\\le z$ 时不分 $X$ 的正负，直接两边乘 $X$，把不等号方向固定错；雅可比用了正变换 $(u,v)\\mapsto(x,y)$ 的偏导却忘记取绝对值或取倒数；变换后只改写密度中的 $x,y$，没有把支撑区域 $D$ 用新变量 $u,v$ 重新表示，导致积分范围仍按旧区域写。"
+    },
+    {
+      "id": "PS03.3:example.s01",
+      "type": "example",
+      "title": "例题：独立指数变量最小值",
+      "level": 2,
+      "content": "**题目**：$X,Y$ 独立且均服从参数为 $1$ 的指数分布，求 $Z=\\min(X,Y)$ 的分布。\n\n**解答**：对 $z\\ge0$，$P(Z>z)=P(X>z)P(Y>z)=e^{-2z}$，故 $F_Z(z)=1-e^{-2z}$；$z<0$ 时为 $0$。因此 $Z$ 服从参数为 $2$ 的指数分布。"
     }
   ],
   "source_h1": "M1-PS-0303 二维函数的分布",

@@ -7,8 +7,8 @@
     "file": "notebook/projects/os/kernel-compare/NOTES.md",
     "sha256": "sha256:ac53093babd9aa1b878160662e09275a8eb7d7bde9e5e4f797e90dec9973774b"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "SO03.2:intro.s01",

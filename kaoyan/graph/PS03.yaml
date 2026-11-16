@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  PS03.0:
+    prereq: [PS02.3, HS06.1] # 联合/边缘与变量变换把一维分布推广到二重积分

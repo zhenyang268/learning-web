@@ -27,6 +27,7 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const { JSDOM } = require('jsdom');
 const esbuild = require('esbuild');
+const YAML = require('yaml');
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -274,10 +275,10 @@ async function runUnit(bundleJs, code) {
   const cards = [...reader.querySelectorAll('.card')].filter((c) => !c.classList.contains('pagehead'));
   if (isDoc) {
     // 搬运来的文档按「节」渲染，不出词条卡；断言改成「节数 == 词条数、标题层级在」
-    const secs = [...reader.querySelectorAll('.docsec')];
-    p('文档分节已渲染（节数 == 词条数）', secs.length === unit.entries.length,
+    const secs = [...reader.querySelectorAll('.docsec:not(.selftest)')];
+    p('文档分节已渲染（节数 == 词条数，不含自测）', secs.length === unit.entries.length,
       `sections=${secs.length} entries=${unit.entries.length}`);
-    const heads = reader.querySelectorAll('.dochead');
+    const heads = reader.querySelectorAll('.docsec:not(.selftest) .dochead');
     const wantHeads = unit.entries.filter((e) => (e.level ?? 2) > 0 && (e.title ?? '').trim()).length;
     p('小节标题全部渲染', heads.length === wantHeads, `heads=${heads.length} want=${wantHeads}`);
     const mirrors = reader.querySelectorAll('.mirror');
@@ -286,6 +287,97 @@ async function runUnit(bundleJs, code) {
     p('镜像指针指向真题单元',
       [...mirrors].every((a) => /^EX\d{2}\.\d$/.test(a.getAttribute('data-goto') ?? '')),
       [...mirrors].slice(0, 3).map((a) => a.getAttribute('data-goto')).join(','));
+    const selftest = reader.querySelector('.selftest');
+    // ── 页面契约分流（不按 subject 批量跳过）
+    //  `meta.kind` 是数据侧真源：`project-group` / `project-index` 是**导航页**
+    //  （一章的分组大纲 / 面试索引），它们把别的项目串起来，自己既不可交付也无判据
+    //  —— `src/content/selftest.ts` 的 NO_SELFTEST_KINDS 与 `modules/graph.ts` 的
+    //  `isLearnableUnit` 都这么判。这类页**只验可达性 / 导航 / 落点**，不跑 L1–L5；
+    //  真实项目 / 数一考点（`project` / `kaoyan-kp`）**仍跑满 L1–L5**。
+    const kind = unit.meta?.kind ?? '';
+    const NAV_KINDS = new Set(['project-group', 'project-index']);
+    const isNav = NAV_KINDS.has(kind);
+    if (isNav) {
+      // 导航页契约：不出自测区（答了也不作数 —— 这正是「点满五题右栏仍 L0」的旧 bug 现场）
+      p(`导航页（${kind}）不渲染自测区`, !selftest,
+        selftest ? `仍渲染了 ${selftest.querySelectorAll('.stbtn').length} 个自测按钮` : '');
+      p('导航页仍渲染正文与页头', reader.children.length > 0 && textOf(reader.querySelector('.pagehead h1')).length > 0);
+      // 落点：导航页必须真的能走到它串联的那些单元（不含自己、且都在索引里）
+      const links = [...reader.querySelectorAll('[data-goto]')]
+        .map((a) => a.getAttribute('data-goto'))
+        .filter((g) => g && g !== code);
+      p('导航页给出可达落点（data-goto 非空）', links.length > 0, `落点 ${links.length} 个`);
+      p('导航页落点全部是索引里的真实单元',
+        links.every((g) => ALL_CODES.includes(g)),
+        [...new Set(links.filter((g) => !ALL_CODES.includes(g)))].slice(0, 5).join(','));
+    } else if (selftest) {
+      const buttons = [...selftest.querySelectorAll('.stbtn')];
+      const keys = buttons.map((b) => b.getAttribute('data-selftest'));
+      p('自测覆盖 L1–L5', [1, 2, 3, 4, 5].every((n) => textOf(selftest).includes(`L${n}`)));
+      p('自测键唯一且使用统一作用域', new Set(keys).size === keys.length && keys.every((k) => k?.includes(':selftest.')));
+      // 掌握度口径（src/content/selftest.ts）：**每一级的题全部达标才升到该级**，
+      // 所以「点第一题就 L1」只在 L1 恰好只有一题时成立。这里从 DOM 读每题的 Lk 标签
+      // 自己算「点 k 题后应有的等级」，逐个点、逐个断言 —— 顺便把「非末题提前升级」挡在闸门外。
+      const levelOf = (btn) => {
+        const m2 = /L([1-5])/.exec(textOf(btn.closest('li')?.querySelector('.sttag')));
+        return m2 ? Number(m2[1]) : 0;
+      };
+      const levels = buttons.map(levelOf);
+      const expected = (clicked) => {
+        const done = new Set(clicked);
+        let lv = 0;
+        for (const target of [1, 2, 3, 4, 5]) {
+          const idx = levels.map((l2, i) => (l2 === target ? i : -1)).filter((i) => i >= 0);
+          if (!idx.length || !idx.every((i) => done.has(i))) break;
+          lv = target;
+        }
+        return lv;
+      };
+      const ringNow = () => textOf(aside.querySelector('.ring .num'));
+      const sideNow = () => textOf(selfNode?.querySelector('.m'));
+      p('自测首屏掌握度为 L0（未答任何题）', ringNow() === 'L0', ringNow());
+      const clicked = [];
+      let earlyUp = '';
+      let mismatch = '';
+      for (let i = 0; i < buttons.length; i += 1) {
+        buttons[i].click();
+        clicked.push(i);
+        const want = expected(clicked);
+        const got = ringNow();
+        if (got !== `L${want}` && !mismatch) mismatch = `第 ${i + 1} 题（L${levels[i]}）→ 期望 L${want} 实得 ${got}`;
+        // 提前升级的**正确定义**：升到 `want` 级时，`want` 以下（含 want 自己）存在
+        // 「有题但没答完」的级。也就是说，级别不能越过任何一道未答的题。
+        //
+        // 旧写法拿「刚点的那道题的等级」当基准（`want !== 该题等级 - 1`），
+        // 于是 AL01 这种「L1 一道、L2 两道、L3 两道」的题库在点第 1 题（L1）时
+        // 被判成「L3 还有未答题却升到 L1」—— 那是**正常**行为（L1 的题答完了），
+        // 误报让整批 projects 单元红掉（96 个单元里有 12 个属此类）。
+        const pendingBelow = [1, 2, 3, 4, 5]
+          .filter((lv2) => lv2 <= want)
+          .filter((lv2) => {
+            const idx = levels.map((l2, k) => (l2 === lv2 ? k : -1)).filter((k) => k >= 0);
+            return idx.length > 0 && !idx.every((k) => clicked.includes(k));
+          });
+        if (pendingBelow.length && !earlyUp) {
+          earlyUp = `升到 L${want} 时 L${pendingBelow[0]} 尚有未答题`;
+        }
+      }
+      p('逐题达标后才升级（全级题都答对才升，不假设首题即升级）', mismatch === '', mismatch);
+      p('非末题不提前升级（同级仍有未答题时停在前一级）', earlyUp === '', earlyUp);
+      const full = levels.length ? Math.max(...levels) : 0;
+      p(`全部自测通过后掌握度为 L${full}`, ringNow() === `L${full}`, ringNow());
+      p('自测后侧栏掌握度与右栏一致', sideNow() === ringNow(), `侧栏 ${sideNow()} / 右栏 ${ringNow()}`);
+      const last = buttons[buttons.length - 1];
+      p('自测按钮暴露开关状态', clicked.every((i) => buttons[i].getAttribute('aria-pressed') === 'true') &&
+        last.getAttribute('aria-pressed') === 'true');
+      // 收回：撤掉最后一题后必须退回前一级（增量刷新要跟着降，不能只升不降）
+      last.click();
+      p('撤销末题后掌握度退回前一级', ringNow() === `L${expected(clicked.slice(0, -1))}`,
+        `期望 L${expected(clicked.slice(0, -1))} 实得 ${ringNow()}`);
+      // 清空全部题目，把状态还原成 L0（后续断言/体检不带着残留掌握度跑）
+      for (let i = buttons.length - 2; i >= 0; i -= 1) buttons[i].click();
+      p('全部撤销后掌握度回到 L0', ringNow() === 'L0', ringNow());
+    }
   } else {
     p('定理卡已渲染', cards.length > 0, `cards=${cards.length}`);
   }
@@ -297,6 +389,8 @@ async function runUnit(bundleJs, code) {
     nodesLazy > 0 && nodesLazy <= INDEX.units.length,
     `nodes=${nodesLazy} units=${INDEX.units.length}`);
   p('当前单元在左栏可见且高亮', !!selfNode);
+  p('目录与顶栏字母块可键盘聚焦', selfNode?.getAttribute('tabindex') === '0' &&
+    [...d.querySelectorAll('#header .chapters b')].every((b) => b.getAttribute('tabindex') === '0'));
   p('左栏有域分组（域 → 章 → 单元三层）', d.querySelectorAll('#sidebar .dom').length > 0,
     `domains=${d.querySelectorAll('#sidebar .dom').length}`);
   for (const det of d.querySelectorAll('#sidebar details.chap')) det.setAttribute('open', '');
@@ -304,6 +398,31 @@ async function runUnit(bundleJs, code) {
   p('展开全部章后左栏节点数 == 索引单元数',
     d.querySelectorAll('#sidebar .node').length === INDEX.units.length,
     `nodes=${d.querySelectorAll('#sidebar .node').length} units=${INDEX.units.length}`);
+
+  // ── Enter 键导航（app.ts 的 keydown：role=button + data-goto → goTo）
+  //    「有 tabindex」不等于「按 Enter 真能走」，所以真派发一次键盘事件看路径是否改变。
+  //    用侧栏另一个单元（不动 hash 即可验；goTo 走 hash 路由）。
+  const enterTarget = [...d.querySelectorAll('#sidebar .node[role="button"][data-goto]')]
+    .find((n) => n.getAttribute('data-goto') !== code);
+  if (enterTarget) {
+    const dest = enterTarget.getAttribute('data-goto');
+    const before = dom.window.location.hash;
+    enterTarget.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await sleep(120);
+    p('Enter 键触发目录跳转（role=button + data-goto）',
+      dom.window.location.hash === `#/${dest}`,
+      `期望 #/${dest} 实得 ${dom.window.location.hash}（原 ${before}）`);
+    const t1 = Date.now();
+    while (Date.now() - t1 < 2000 && reader.dataset.loading === '1') await sleep(20);
+    p('Enter 跳转后正文换成目标单元',
+      textOf(reader.querySelector('.pagehead h1')).includes(dest ?? ''),
+      textOf(reader.querySelector('.pagehead h1')).slice(0, 40));
+    // 回到本单元，后续断言仍在原上下文中跑
+    dom.window.location.hash = `#/${code}`;
+    await sleep(150);
+  } else {
+    p('Enter 键导航目标存在（左栏另有一个单元可跳）', false, '侧栏只有当前单元');
+  }
   p('右栏有掌握度/依赖/被用于',
     textOf(aside).includes('依赖') && textOf(aside).includes('被用于'));
   p('frontier 横幅已算出', textOf(d.getElementById('frontier')).includes('今天该学'));
@@ -320,10 +439,25 @@ async function runUnit(bundleJs, code) {
       cards.every((c) => c.querySelectorAll('.pane.on').length <= 1));
   }
 
+  // ── 合成 entry-card 正例：每个「已进 READ_ORDER」的类型都必须真的渲染出来
+  //    现场（2026-11-16）：`READ_ORDER` 早把 `example` 登记在 application 之后、
+  //    viz 之前，但 `MORE_TYPES` 漏了它，`byType.get('example')` 在 `more` 里取不到 ——
+  //    该类型词条**不进任何 tab、也不进 vizslot**，渲染无声消失（不报错、不占位）。
+  //    真数据目前 75 条 example 全在 doc-card/v1（走 renderDocHtml，不受影响），
+  //    所以这条缺口在现有数据上**看不见**，只能靠合成的 entry-card 组来守。
+  if (!isDoc) await runSyntheticEntryCard();
+
   // ── 限定词拆解（灵魂词条）：走真数据、默认可见、可点行锚到真实词条
   const qTableLines = quant ? (quant.content?.match(/^\s*\|/gm)?.length ?? 0) : 0;
   const expectTable = qTableLines >= 2;
   if (hasQuant) {
+    // 限定词块在 `.card` 的 innerHTML 里拼出来，但要等该卡真的被渲染。
+    // 全量跑时（进程里已开过几百个 jsdom）重单元首屏会更慢，
+    // 采样一次可能撞在「卡还没进 DOM」的瞬间 —— 那会把 6 条断言全判红
+    // （AG16.23 / NM02.2 / TL06.2 在全量偶发、单跑必绿，实测核对）。
+    // 这里等它出现（最多 2s），出现即继续，不拖慢正常单元。
+    const tq = Date.now();
+    while (Date.now() - tq < 2000 && !reader.querySelector(`.qbody[data-q="${qId}"]`)) await sleep(20);
     const qbody = reader.querySelector(`.qbody[data-q="${qId}"]`);
     p('限定词块存在且指向 .quantifiers 词条', !!qbody, qbody?.dataset.q ?? '(无)');
     p('限定词块默认展开（不在 .pane 内）', !!qbody && !qbody.closest('.pane'));
@@ -390,9 +524,23 @@ async function runUnit(bundleJs, code) {
   }
 
   // ── viz
-  const vizRendered = reader.querySelectorAll('.vizslot .vizitem .viz').length;
-  const unregistered = allText.match(/尚未在前端注册/g)?.length ?? 0;
+  //
+  // `mountViz` **不是同步完成**的：`viz/kit.ts` 用 canvas + rAF + ResizeObserver 绘制，
+  // 声明式模块还要先跑一遍 invariant 自检。上面刚点过「掌握度 +1」与全部 tab，
+  // 都可能在 viz 还没落位时就把断言跑到 —— 全量跑时进程已开过几百个 jsdom，
+  // 机器更忙，于是出现「渲染 7 / 应有 8」「渲染 6 / 应有 10」这类**假红**
+  // （同一单元单独跑时是 8/8、10/10，已实测核对）。
+  //
+  // 所以这里等 `.vizitem` 数量**收敛到期望值**再断言（最多 2s），
+  // 而不是「采样一次就判」。数量一旦够了立即通过，不会拖慢正常的单元。
   const plannedEntries = vizFront.length + vizPlanned.length;
+  const vizCount = () => reader.querySelectorAll('.vizslot .vizitem .viz').length;
+  if (plannedEntries) {
+    const tv = Date.now();
+    while (Date.now() - tv < 2000 && vizCount() < plannedEntries) await sleep(20);
+  }
+  const vizRendered = vizCount();
+  const unregistered = allText.match(/尚未在前端注册/g)?.length ?? 0;
   if (plannedEntries) {
     p('每个 viz 词条都有独立渲染体',
       vizRendered === plannedEntries, `渲染 ${vizRendered} / 应有 ${plannedEntries}`);
@@ -479,13 +627,30 @@ async function runUnit(bundleJs, code) {
       textOf(reader.querySelector('.pagehead h1')).slice(0, 40));
     void added;
     p('不重拉已看过的单元', !added.includes(meta.path), added.join(', '));
-    // 真正的指标：按需加载没有退化成全量 —— 全程拉过的单元文件数要远小于全库
+    // 真正的指标：按需加载没有退化成全量 —— 全程拉过的单元文件数要远小于全库。
+    //
+    // 阈值**按预取契约算**（app.ts 的 prefetch：`requestIdleCallback` 拉 idx+1 / idx+2），
+    // 不是拍一个数字再往上加 1。一个单元断言里一共走三条加载路径：
+    //   ① 首屏        当前单元 + 2 个预取邻居
+    //   ② Enter 导航  侧栏另一个单元 + 2 个预取邻居
+    //   ③ 切到 other （全库第一个单元）+ 2 个预取邻居
+    // 三条路径的邻居可能重合，所以去重后的**上界**是 3*(1+2) = 9；实测恰好 9
+    // （math1 HS02.1：HS02.1/2/3 + DM01/2/3 的邻居，加 Enter 目标 = 9）。
+    //
+    // 因此不变式两条，缺一不可：
+    //   · `<= PREFETCH_BOUND`（契约上界，越界说明有第四条加载路径 —— 真回归）
+    //   · `< 全库/4`（仍未退化成全量；106 单元 → 26，81 单元 → 20）
+    // 只写 `<=8` 会把契约内的合法行为判红（旧写法 40 处失败的来源）；
+    // 只写「+1」则会把真实回归一起放过。
+    const PREFETCH_BOUND = 3 * (1 + 2);
     const fetchedUnits = new Set(
       reqs().filter((u) => u !== INDEX_URL && u.startsWith(DATA_ROOT)),
     );
-    p('全程拉过的单元文件数远小于全库（未退化成全量）',
-      fetchedUnits.size <= 8 && fetchedUnits.size < INDEX.units.length,
-      `拉过 ${fetchedUnits.size} / 全库 ${INDEX.units.length}`);
+    const quarterLib = Math.floor(INDEX.units.length / 4);
+    p('全程拉过的单元文件数在预取契约上界内，且远小于全库（未退化成全量）',
+      fetchedUnits.size <= PREFETCH_BOUND && fetchedUnits.size <= quarterLib,
+      `拉过 ${fetchedUnits.size} / 全库 ${INDEX.units.length}` +
+        `（契约上界 ${PREFETCH_BOUND}，全库 1/4 = ${quarterLib}）`);
 
     // 切回：原单元已在内存，不该重新请求它的文件
     const n1 = reqs().length;
@@ -504,6 +669,94 @@ async function runUnit(bundleJs, code) {
   }
 
   return dom;
+}
+
+/* ------------------------------------------ 代码文本 vs 数学定界符（渲染层） */
+
+/**
+ * `$` 在**代码**里是字面量，在数学里是定界符 —— 这是渲染层最容易踩的一条线。
+ *
+ * 现场（2026-11-15）：工程线 SO01.2 正文有一句
+ *   `ls -l /proc/$PID/fd | awk '{print $NF}' | sort | uniq -c`
+ * 写在反引号里。旧 renderInline 先切 MATH 再管代码，于是 `$PID/fd | awk '{print $` 被当成
+ * 行内公式送进 KaTeX，报 `Expected '}', got 'EOF'`，正文里嵌一颗红字 `.katex-error`
+ * —— 体检（--audit）判 P0「KaTeX 报错」，用户看到的就是坏页面。
+ *
+ * 这里不走页面导航，直接打渲染层（**生产代码**，规则不写第二份），因为要断的是
+ * HTML 语义（哪段在 `<code>` 里、哪段在 `<annotation>` 里），DOM 文本比对分不出来。
+ * 只在 projects 站跑：shell 片段是工程线文档的常态，数学站没有这类正文。
+ */
+async function runMathCodeGuard() {
+  const { renderContent, renderInline } = await requireTs('src/renderers/markdown.ts');
+  const BT = '`';
+  const F = BT + BT + BT;
+  const codeTexts = (html) => [...html.matchAll(/<code>([\s\S]*?)<\/code>/g)].map((m2) => m2[1]);
+  const annos = (html) =>
+    [...html.matchAll(/<annotation encoding="application\/x-tex">([\s\S]*?)<\/annotation>/g)].map((m2) => m2[1]);
+
+  console.log('\n9) 代码文本不被当数学（$-定界符）');
+
+  // ① 真实数据形态：awk 的 $NF（SO01.2 的 P0 现场），$ 在反引号里
+  {
+    const src = `x ${BT}ls -l /proc/$PID/fd | awk '{print $NF}' | sort | uniq -c${BT} y`;
+    const out = renderContent(src);
+    check('行内代码里的 $NF 不进 KaTeX（无 .katex-error）', !/katex-error|katex-fail/.test(out), out.slice(0, 140));
+    check('行内代码里的 $NF 完全不算公式（无 .katex）', !/class="katex"/.test(out), out.slice(0, 140));
+    check('awk $NF 的代码文本原样保留',
+      codeTexts(out)[0] === "ls -l /proc/$PID/fd | awk '{print $NF}' | sort | uniq -c",
+      JSON.stringify(codeTexts(out)));
+  }
+  // ①b 同一形态的第二个现场：awk 取第 4 列
+  {
+    const out = renderContent(`c ${BT}awk 'NR>1{print $4}' /proc/net/tcp${BT} d`);
+    check('awk $4 不进 KaTeX', !/class="katex"/.test(out) && !/katex-error/.test(out), out.slice(0, 140));
+    // 代码内容是**已转义**的 HTML（`>` → `&gt;`），期望值按同一口径写；
+    // 这条要验的是「$ 与代码正文都还在、没被公式切走」，不是转义策略。
+    check('awk $4 代码文本保留', codeTexts(out)[0] === "awk 'NR&gt;1{print $4}' /proc/net/tcp", JSON.stringify(codeTexts(out)));
+  }
+  // ② shell 的 $$（PID 变量）：行内代码 + 围栏代码块都必须按字面量走
+  {
+    const inline = renderContent(`p ${BT}echo $$; top -H -p $$${BT} q`);
+    check('行内代码里的 $$ 不渲染成 KaTeX（shell PID 不回归误报）',
+      !/class="katex"/.test(inline) && !/katex-error/.test(inline), inline);
+    check('行内代码里的 $$ 文本保留', codeTexts(inline)[0] === 'echo $$; top -H -p $$', JSON.stringify(codeTexts(inline)));
+    const fenced = renderContent(`p\n\n${F}sh\necho $$; cat /proc/$$/smaps_rollup\n${F}\n\nq`);
+    check('围栏代码块里的 $$ 原样输出（pre 内，无 KaTeX）',
+      /<pre class="md-pre">[\s\S]*echo \$\$; cat \/proc\/\$\$\/smaps_rollup[\s\S]*<\/pre>/.test(fenced) &&
+        !/class="katex"/.test(fenced),
+      fenced.slice(0, 160));
+  }
+  // ③ 混排：真公式与代码在同一行，互相不吞并
+  {
+    const out = renderInline(`$x$ 与 ${BT}echo $$${BT} 与 $y$`);
+    const an = annos(out);
+    check('公式与代码混排：两个公式都在且顺序正确',
+      an.length === 2 && an[0] === 'x' && an[1] === 'y', JSON.stringify(an));
+    check('公式与代码混排：中间是代码且文本正确', codeTexts(out)[0] === 'echo $$', JSON.stringify(codeTexts(out)));
+    check('公式与代码混排：无 KaTeX 报错', !/katex-error/.test(out), out.slice(0, 140));
+  }
+  // ④ 正常公式不因这次的修复回归
+  {
+    const inline = renderContent('$x^2$ ok');
+    check('行内公式 $x^2$ 仍渲染', annos(inline)[0] === 'x^2', JSON.stringify(annos(inline)));
+    const disp = renderContent('$$(a+b)^2$$');
+    check('单行行间公式 $$…$$ 仍渲染', annos(disp)[0] === '(a+b)^2', JSON.stringify(annos(disp)));
+    const multi = renderContent('$$a=b\n+c$$');
+    check('跨行行间公式（断行）仍渲染', annos(multi)[0] === 'a=b\n+c', JSON.stringify(annos(multi)));
+    const bold = renderContent('**$m$ 阶极点**');
+    check('粗体包公式仍成对（** 不因 stash 分家）',
+      /^<p><b>[\s\S]*class="katex"[\s\S]*阶极点<\/b><\/p>$/.test(bold), bold.slice(0, 120));
+    const dollar = renderContent('$\\$1$ 元');
+    check('公式内的 \\$ 仍渲染（R3 不回归）', annos(dollar)[0] === '\\$1' && /元/.test(dollar), JSON.stringify(annos(dollar)));
+  }
+  // ⑤ 表格单元格：代码里的 | 不切列、$ 不翻转公式状态
+  {
+    const out = renderContent(`| a | b |\n| --- | --- |\n| ${BT}cut -d'|' -f1${BT} | $x$ |`);
+    const tds = [...out.matchAll(/<td>([\s\S]*?)<\/td>/g)].map((m2) => m2[1]);
+    check('表格里代码含 | 不切出多余列', tds.length === 2, `tds=${tds.length} ${out.slice(0, 160)}`);
+    check('表格里代码含 | 文本保留', /cut -d'\|' -f1/.test(tds[0] ?? ''), tds[0] ?? '');
+    check('表格单元格里的公式仍渲染', annos(tds[1] ?? '')[0] === 'x', tds[1] ?? '');
+  }
 }
 
 /* ---------------------------------------------------- 坏 JSON / 错误浮层 */
@@ -654,20 +907,107 @@ async function runStandalone(subj) {
   //    现在语义边是**构建期烘进索引**的，所以断言索引里带 sem 字段）
   const idxUnits = pack?.index ?? [];
   const inlineSem = idxUnits.filter((u) => u && typeof u.sem === 'object' && u.sem !== null).length;
-  // 语义边是人工标注：math 与 cs408 有 yaml，数一 / 工程线还没有（下一期），不能一律要求 >0
+  // 语义边是人工标注：只按**本学科 graph 根下真有 yaml** 才要求非零。
+  // 2026-11-15：四个学科都已有 yaml（graph / cs408/graph / kaoyan/graph / projects/graph），
+  // 旧注释「数一 / 工程线还没有」已过期 —— 有 yaml 却 sem=0 就是构建漏烘，必须红。
   const graphDir = path.join(ROOT, subj.graphRoot.replace(/\/$/, ''));
   const yamlCount = fs.existsSync(graphDir)
     ? fs.readdirSync(graphDir).filter((n) => n.endsWith('.yaml')).length
     : 0;
+  // 期望值一律从 **yaml 真源**独立推导，不用构建产物自己验自己：
+  //   yamlDeclNodes = yaml 里 nodes 声明的**全部**代号（不论索引里有没有）——作分母，防止
+  //                   「yaml 代号与索引错位 → 交集成空 → 断言空真」这类静默盲区；
+  //   yamlNodes     = 上述代号里真在索引中的（这些**必须**带 sem，即使四类边全空）；
+  //   yamlEdges     = yaml 真正声明的边条目总数（四类之和；0 = 该图「已覆盖但本来就是无边图」）。
+  const yamlDeclCodes = new Set();
+  const yamlNodes = new Set();
+  let yamlEdges = 0;
+  let yamlBad = 0;
   if (yamlCount > 0) {
-    check('内联索引带语义边（sem 已烘入，不靠运行期 fetch graph/*）', inlineSem > 0,
-      `内联索引 ${idxUnits.length} 单元中带 sem 的 ${inlineSem} 个`);
+    const idxCodes = new Set(idxUnits.map((u) => u?.code));
+    for (const name of fs.readdirSync(graphDir).filter((n) => n.endsWith('.yaml')).sort()) {
+      let doc = null;
+      try {
+        doc = YAML.parse(fs.readFileSync(path.join(graphDir, name), 'utf8'));
+      } catch {
+        yamlBad += 1; // 坏 yaml 由 check:graph 报红，这里不计入期望
+        continue;
+      }
+      for (const [code, node] of Object.entries(doc?.nodes ?? {})) {
+        yamlDeclCodes.add(code);
+        if (idxCodes.has(code)) yamlNodes.add(code);
+        for (const k of ['prereq', 'applies', 'tension', 'dual']) {
+          const v = node?.[k];
+          if (Array.isArray(v)) yamlEdges += v.length;
+        }
+      }
+    }
+  }
+  // yaml 里声明了、但索引里压根没这个代号 = 真源与数据根错位（多半是路径/改名问题），必须红
+  const yamlOrphans = [...yamlDeclCodes].filter((c) => !yamlNodes.has(c));
+  const semCovered = idxUnits.filter((u) => u?.code && yamlNodes.has(u.code) &&
+    u.sem && typeof u.sem === 'object' && u.sem !== null).length;
+  // 断言 A（防「全部 sem 被丢」）：yaml 覆盖到的每个单元都必须带 sem 字段。
+  // 这一条对 cs408 也成立 —— 它的 2 个节点即便四类边全空，也必须有 sem 对象，
+  // 否则就是构建漏烘（历史上 HARNESS_JSON 改动让语义边静默全丢就是这么坏的）。
+  if (yamlCount > 0) {
+    check('内联索引带语义边（sem 已烘入，不靠运行期 fetch graph/*）',
+      yamlNodes.size > 0 && semCovered === yamlNodes.size && yamlOrphans.length === 0,
+      `${subj.graphRoot} ${yamlCount} 个 yaml；yaml 声明 ${yamlDeclCodes.size} 个代号、其中存在于索引的 ` +
+      `${yamlNodes.size} 个里带 sem 的 ${semCovered} 个` +
+      (yamlOrphans.length ? ` / yaml 有而索引无的代号 ${yamlOrphans.length} 个（${yamlOrphans.slice(0, 5).join(',')}）` : '') +
+      `（索引 ${idxUnits.length} 单元 / 带 sem 的 ${inlineSem} 个${yamlBad ? ` / 坏 yaml ${yamlBad}` : ''}）`);
   } else {
     check('无 yaml 时语义边为 0 且不报错（下一期人工标注）', inlineSem === 0, `sem=${inlineSem}`);
   }
   check('快照不依赖 graph/*.yaml 数据（运行期零 graph 请求）',
     !/"graph\/[A-Za-z0-9]+\.yaml":/.test(html),
     '快照里仍内联着 yaml —— 应已移除（语义边在索引里）');
+
+  // ── 依赖栏在快照里真的可用（不只是「索引有个 sem 字段」）
+  //    右栏「依赖 ◂ / 被用于 ▸」应出 chip：有 sem.prereq 的单元必须列出前序代号，
+  //    有 sem.applies / sem.dual 的单元必须出现在对方的被用于里；全库一个 chip 都没有 = 语义边没接上界面。
+  const aside = d.getElementById('aside');
+  const asideTxt = textOf(aside);
+  const semWithPrereq = idxUnits.filter((u) => Array.isArray(u?.sem?.prereq) && u.sem.prereq.length);
+  const semWithFwd = idxUnits.filter(
+    (u) => (u?.sem?.applies?.length ?? 0) + (u?.sem?.dual?.length ?? 0) + (u?.sem?.tension?.length ?? 0) > 0,
+  );
+  if (yamlCount > 0) {
+    check('快照右栏渲染「依赖 / 被用于」两栏',
+      asideTxt.includes('依赖') && asideTxt.includes('被用于'), asideTxt.slice(0, 120));
+    // 首屏单元的 sem 若带 prereq，右栏依赖栏必须把前序代号列出来（不是只说「无前序」）
+    const curH1 = textOf(reader.querySelector('.pagehead h1'));
+    const cur = idxUnits.find((u) => curH1.includes(u.code));
+    if (cur?.sem?.prereq?.length) {
+      const listed = cur.sem.prereq.filter((c) => asideTxt.includes(c));
+      check(`快照首屏单元 ${cur.code} 的依赖栏列出前序代号`,
+        listed.length === cur.sem.prereq.length,
+        `prereq=${cur.sem.prereq.join(',')} 列出 ${listed.length} 个 / 栏内「${asideTxt.slice(0, 100)}」`);
+    } else {
+      // 首屏单元没有 sem.prereq（拓扑起点）：只能验两栏已渲染 + 说明文案，不硬造断言
+      check('快照首屏单元无前序时依赖栏给出说明',
+        asideTxt.includes('无前序') || asideTxt.includes('暂无'), asideTxt.slice(0, 100));
+    }
+    // 全库层面（防「构建退化成全空」）：**期望值以 yaml 真源为准**，不假定每个学科都有 prereq。
+    //
+    //   yamlEdges > 0 → yaml 真声明了边，索引里必须烘出对应数量的边单元，否则是构建丢 sem；
+    //   yamlEdges = 0 → 该学科图是「已覆盖、本来就是无边图」（如 cs408 的 OS01/OS02 两章，
+    //                   yaml 注释明确写「没有人工标注的语义边，保留空边表示已覆盖、不是漏标」），
+    //                   此时硬要求 prereq 就是拿断言伪造内容依赖 —— 改为验「覆盖标记齐全 + 确实无边」。
+    const semEdges = semWithPrereq.length + semWithFwd.length;
+    if (yamlEdges > 0) {
+      check('yaml 声明的语义边已烘入索引（未退化成空对象）', semEdges > 0,
+        `yaml 声明 ${yamlEdges} 条边；索引里有 prereq 的 ${semWithPrereq.length} 个 / 有正向边的 ${semWithFwd.length} 个`);
+    } else {
+      // 无边图：既要证明「没丢」（覆盖标记齐全，见上面断言 A），也要盯住「不是构建全空」
+      check('yaml 无边图时索引如实为无边（不伪造 prereq）', semEdges === 0,
+        `yaml 声明 0 条边；索引里有 prereq 的 ${semWithPrereq.length} 个 / 有正向边的 ${semWithFwd.length} 个` +
+        `（若 >0 说明凭空造边，与 yaml 契约不符）`);
+      check('无边图仍带 sem 覆盖标记（区分「无边」与「构建丢 sem」）', semCovered > 0,
+        `yaml 覆盖 ${yamlNodes.size} 个单元 / 带 sem 的 ${semCovered} 个`);
+    }
+  }
 
   // 2026-10-30 起两个文档页分开：
   //   #graph  = 总纲（数学大观 v1：四条主轴 / 两个出口 / 交叉点 / 五个切入点 / 四阶段）
@@ -759,7 +1099,37 @@ function readUnitData(code) {
   }
 }
 
-/** 数据侧：不需要 DOM 就能判定的契约问题 */
+/**
+ * Markdown 里**属于数学定界符**的 `$$` 个数（剥掉代码块 / 行内代码之后数）。
+ *
+ * 为什么必须剥：工程线与运维类文档的正文里有大量 shell 片段，
+ * `$$` 在那里是 **PID 变量**（`echo $$`、`cat /proc/$$/smaps_rollup`、`top -H -p $$`）。
+ * 直接数 `$$` 会把这些**正确的**文档判成「$$ 未配对」+「公式裸泄漏」。
+ *
+ * 剥法按 Markdown 常识：围栏代码块（``` / ~~~）、缩进代码块、行内代码（`…`）。
+ * 只改写不改删 —— 用等长空白替换，保持与原文对齐便于人工核对偏移。
+ */
+function countTexDelims(md) {
+  const stripped = String(md)
+    .replace(/^ {0,3}(```|~~~)[\s\S]*?^ {0,3}\1/gm, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/^ {4,}\S.*$/gm, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/`[^`\n]*`/g, (m) => m.replace(/[^\n]/g, ' '));
+  return (stripped.match(/\$\$/g) ?? []).length;
+}
+
+/**
+ * 两种数据契约，字段要求不同 —— 体检必须分开判，否则「按 entry-card 的字段单去查
+ * doc-card」会把整站都判成坏数据（这就是原先 81 个 projects 单元全红、
+ * P1 里 636 条 `keywords 越界` 的来源）。
+ *
+ *   · `entry-card/v1|v2`（数学词条 / 408 / 数一考点）：**模型生成的内容**。
+ *     词条必须带 `keywords`（检索/限定词拆解要用）、`status`、`generated_by`，
+ *     还要有 `links` 交叉引用。这些是**它在页面上的功能依赖**，缺了就是真缺陷。
+ *   · `doc-card/v1`（从 notebook 搬运的文档）：作者写的文档按「节」渲染，
+ *     词条只有 `id / type / title / level / content`。它**不参与检索与限定词拆解**，
+ *     也没有生成元数据 —— 查 `keywords` / `status` / `generated_by` 是**套错契约**。
+ *     对它的正确判据是：正文非空、id 前缀对、标题层级在、内容里没有未回填标记。
+ */
 function dataIssues(code, unit, regs) {
   const out = [];
   const add = (level, kind, detail = '') => out.push({ level, kind, detail });
@@ -767,6 +1137,7 @@ function dataIssues(code, unit, regs) {
     add('P0', '无词条', 'entries 为空或非数组');
     return out;
   }
+  const isDoc = unit.schema === 'doc-card/v1';
   const codes = new Set(ALL_CODES);
   for (const e of unit.entries) {
     const id = e?.id ?? '(无 id)';
@@ -774,9 +1145,12 @@ function dataIssues(code, unit, regs) {
     if (typeof e?.id === 'string' && !e.id.startsWith(`${code}:`)) {
       add('P1', 'id 前缀不符', `${id} 应为 ${code}:…`);
     }
-    const kw = e?.keywords;
-    if (!Array.isArray(kw) || kw.length < 3 || kw.length > 7) {
-      add('P1', 'keywords 越界', `${id} = ${Array.isArray(kw) ? kw.length : '非数组'}`);
+    // `keywords` 只是 entry-card 的契约（doc-card 的词条没有这个字段，见上）
+    if (!isDoc) {
+      const kw = e?.keywords;
+      if (!Array.isArray(kw) || kw.length < 3 || kw.length > 7) {
+        add('P1', 'keywords 越界', `${id} = ${Array.isArray(kw) ? kw.length : '非数组'}`);
+      }
     }
     for (const lk of e?.links ?? []) {
       if (!codes.has(lk)) add('P1', 'links 悬空', `${id} → ${lk}`);
@@ -793,7 +1167,11 @@ function dataIssues(code, unit, regs) {
     }
     if (typeof e?.content === 'string') {
       if (e.content.includes('【待核验')) add('P1', '待核验未回填', id);
-      const dd = (e.content.match(/\$\$/g) ?? []).length;
+      // `$$` 计数**必须先剥掉代码**：工程线的正文里 `$$` 是 shell 的 PID 变量
+      // （`echo $$` / `/proc/$$/smaps_rollup` / `top -H -p $$`），不是 LaTeX 块定界符。
+      // 不剥就把「文档写得对」判成「$$ 未配对 + 公式裸泄漏」
+      // （SO00.2 / SO06.2 / EG05.2 三处误报的来源）。
+      const dd = countTexDelims(e.content);
       if (dd % 2) add('P2', '$$ 未配对', `${id} 出现 ${dd} 处`);
     }
   }
@@ -842,7 +1220,14 @@ function domIssues(dom, code, entryIds) {
   if (emptyAnn) add('P0', 'KaTeX 空公式', `${emptyAnn}/${anns.length}`);
 
   const cards = [...reader.querySelectorAll('.card')].filter((c) => !c.classList.contains('pagehead'));
-  if (!cards.length) add('P0', '无卡片', '');
+  // doc-card/v1 走文档渲染：**按「节」出 `.docsec`，一个 `.card` 都没有**（div 卡片会把
+  // 长文切碎）。所以「无卡片」只对 entry-card 成立；对文档契约，判据是「节渲染出来了」。
+  const docsecs = [...reader.querySelectorAll('.docsec:not(.selftest)')];
+  if (!cards.length && !docsecs.length) add('P0', '无卡片', '');
+  if (docsecs.length && !cards.length) {
+    const hasHead = docsecs.some((s) => s.querySelector('.dochead'));
+    if (!hasHead) add('P2', '文档节缺标题层级', `${docsecs.length} 节无 .dochead`);
+  }
   for (const c of cards) {
     const tb = c.querySelectorAll('.tabs button').length;
     const pn = c.querySelectorAll('.pane').length;
@@ -857,8 +1242,17 @@ function domIssues(dom, code, entryIds) {
   if (unreg) add('P1', 'viz 未注册占位', `${unreg} 处`);
   const mountFail = (txt.match(/模块挂载失败/g) ?? []).length;
   if (mountFail) add('P1', 'viz 挂载失败', `${mountFail} 处`);
-  if (/\$\$/.test(txt)) {
-    add('P2', '公式裸泄漏', (txt.match(/.{0,20}\$\$.{0,20}/) ?? [''])[0]);
+  // 「公式裸泄漏」= **本该渲染成数学**的 `$$` 漏在正文里。代码块里的 `$$` 是 shell 的
+  // PID 变量（`echo $$`），属于正文正确内容 —— 因此先把代码节点从统计里摘掉再判定。
+  // 摘法：克隆一份 reader，删掉 `pre/code/.md-pre/.md-code/kbd` 这些「代码容器」，
+  // 再看剩下的文本里还有没有 `$$`。
+  const probe = reader.cloneNode(true);
+  for (const el of [...probe.querySelectorAll('pre, code, kbd, .md-pre, .md-code, .viz, .vizslot')]) {
+    el.remove();
+  }
+  const texTxt = textOf(probe);
+  if (/\$\$/.test(texTxt)) {
+    add('P2', '公式裸泄漏', (texTxt.match(/.{0,20}\$\$.{0,20}/) ?? [''])[0]);
   }
 
   const codeSet = new Set(ALL_CODES);
@@ -990,6 +1384,116 @@ async function runAudit(bundleJs, codes) {
   return count.P0 ?? 0;
 }
 
+/* ------------------------------------------------- 合成 entry-card 正例 */
+
+/**
+ * `READ_ORDER` 登记的每一种类型，都必须真的落到某个 tab（或独立块）里。
+ *
+ * 为什么单独做一份**合成**数据：`MORE_TYPES` 漏登记 = 该类型词条渲染无声消失，
+ * 这种缺口在现有数据上可能完全看不见（目前 75 条 `example` 全在 doc-card/v1，
+ * 走 `renderDocHtml`，压根不经过 `MORE_TYPES`）。等数据侧真在 entry-card 引入该类型时，
+ * 用户才会发现「例题怎么没了」，而那时距离引入已经过去很久。
+ *
+ * 用生产代码 `renderCard`（不写第二份规则），在一个最小 DOM 里渲染一张合成卡，
+ * 断言：
+ *   · 每个类型的词条 id 都出现在 DOM 里（渲染出来）
+ *   · 「更多」面板内按 READ_ORDER 排（example 在 viz / counterexample / probe 之前）
+ *   · 四问 tab（statement/intuition/proof/application）不因此回归
+ * 只在 entry-card 单元上跑；合成组不碰真数据。
+ */
+let syntheticDone = false;
+async function runSyntheticEntryCard() {
+  if (syntheticDone) return; // 每个进程只跑一次（结论与单元无关）
+  syntheticDone = true;
+
+  const cardMod = await requireTs('src/renderers/card.ts');
+  if (typeof cardMod.renderCard !== 'function') {
+    check('合成 entry-card：renderCard 可载入', false, 'src/renderers/card.ts 未导出 renderCard');
+    return;
+  }
+  // renderCard 依赖 document：给它一个最小 jsdom（不跑应用，只当 DOM 工厂）
+  const dom = new JSDOM('<!doctype html><body><div id="host"></div></body>', {
+    url: 'http://localhost/',
+  });
+  const g = globalThis;
+  const saved = { document: g.document, window: g.window, HTMLElement: g.HTMLElement };
+  g.document = dom.window.document;
+  g.window = dom.window;
+  g.HTMLElement = dom.window.HTMLElement;
+
+  const CODE = 'SYN.1';
+  const SUBJ = 'synsubject';
+  // 倒序声明：若渲染只是「按原数组顺序」，序断言就抓不到 READ_ORDER 的排序作用
+  const TYPES = ['probe', 'counterexample', 'viz', 'example', 'extension', 'application',
+    'proof', 'intuition', 'statement', 'comparison'];
+  const entries = TYPES.map((t) => ({
+    id: `${CODE}:${SUBJ}.${t}`,
+    type: t,
+    subject: SUBJ,
+    title: `合成词条 ${t}`,
+    keywords: ['a', 'b', 'c'],
+    status: 'drafted',
+    generated_by: { model: 'glm', date: '2026-11-16' },
+    content: `合成正文 ${t}`,
+  }));
+  const file = { code: CODE, schema: 'entry-card/v2', entries };
+  const index = { codes: new Set([CODE]) };
+  const group = { key: `${CODE}:${SUBJ}`, label: '合成组', subject: SUBJ, entries };
+
+  let rendered = null;
+  let err = '';
+  try {
+    rendered = cardMod.renderCard(file, group, index);
+  } catch (e) {
+    err = e?.message ?? String(e);
+  } finally {
+    g.document = saved.document;
+    g.window = saved.window;
+    g.HTMLElement = saved.HTMLElement;
+  }
+  check('合成 entry-card 渲染不抛错', !!rendered && !err, err);
+  if (!rendered) {
+    dom.window.close();
+    return;
+  }
+
+  const el = rendered.el;
+  dom.window.document.getElementById('host').append(el);
+  // 懒渲染：把每个 tab 都点开，让所有 pane 填上内容
+  for (const btn of [...el.querySelectorAll('.tabs button')]) {
+    btn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+  }
+
+  const visible = new Set([...el.querySelectorAll('.entry')].map((n) => n.getAttribute('data-id')));
+  const missing = entries.map((e) => e.id).filter((id) => !visible.has(id));
+  check('合成 entry-card：每种类型的词条都渲染进 DOM（无静默丢失）',
+    missing.length === 0, `未渲染 ${missing.length}/${entries.length}：${missing.join(', ')}`);
+
+  // 「更多」面板内的相对顺序：example 必须在 viz / counterexample / probe 之前
+  // （READ_ORDER 的 rank：example 7 < viz 8 < counterexample 9 < probe 10）
+  const paneOf = (t) => [...el.querySelectorAll('.pane')].find((p) =>
+    [...p.querySelectorAll('.entry')].some((n) => n.getAttribute('data-id') === `${CODE}:${SUBJ}.${t}`));
+  const morePane = paneOf('example');
+  const order = morePane
+    ? [...morePane.querySelectorAll('.entry')].map((n) => n.getAttribute('data-id'))
+    : [];
+  const pos = (t) => order.indexOf(`${CODE}:${SUBJ}.${t}`);
+  check('合成 entry-card：example 在「更多」面板内',
+    pos('example') >= 0,
+    order.length ? order.join(' → ') : '(未找到含 example 的面板)');
+  check('合成 entry-card：example 排在 viz / 反例 / 检验题之前（READ_ORDER）',
+    pos('example') >= 0 && pos('example') < pos('viz') &&
+      pos('example') < pos('counterexample') && pos('example') < pos('probe'),
+    `序：example=${pos('example')} viz=${pos('viz')} cx=${pos('counterexample')} probe=${pos('probe')}`);
+
+  // 四问 tab 不因这次补齐而回归：statement/intuition/proof/application 各自成 tab
+  for (const t of ['statement', 'intuition', 'proof', 'application']) {
+    check(`合成 entry-card：${t} 有独立 tab 且渲染`, !!paneOf(t), `${t} 未成 tab`);
+  }
+
+  dom.window.close();
+}
+
 /* ------------------------------------------------------------ 主流程 */
 
 async function main() {
@@ -1070,6 +1574,10 @@ async function main() {
     console.log(`\n分帧挂载并发检验：${heaviest[0]} → ${heaviest[1]}（不等待即切走）`);
     await runRace(bundleJs, heaviest[0], heaviest[1]);
   }
+
+  // 代码文本 vs 数学定界符：只在工程线跑（shell/awk 片段是那边文档的常态）。
+  // 放在单元断言之后、快照之前 —— 它验的是渲染层不变式，与具体单元无关。
+  if (SUBJECT_ID === 'projects') await runMathCodeGuard();
 
   // standalone 快照只有数学站有（408 暂不产单文件）
   // 每个学科都有自己的单文件快照（knowledge.html / knowledge-<id>.html），逐站验

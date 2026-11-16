@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/ds/408-DS-0406-并查集.md",
     "sha256": "sha256:fa7f68bc500639f965b105626790e9e5df9d0ac910ef15d5f7d1de4a1e3e3ad1"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "DS04.6:intro.s01",

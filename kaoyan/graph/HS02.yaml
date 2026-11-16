@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  HS02.0:
+    prereq: [HS01.4] # 微分以连续、极限与函数性质为语言基础

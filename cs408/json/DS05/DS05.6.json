@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/ds/408-DS-0506-拓扑排序.md",
     "sha256": "sha256:ea3b7192c65e2e6993091524ceec66d9e0c648154420f70b114c46bd94d3dfbc"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "DS05.6:intro.s01",

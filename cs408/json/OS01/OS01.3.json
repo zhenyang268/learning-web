@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/os/408-OS-0103-运行环境.md",
     "sha256": "sha256:805b4c38ffd309274a3f70aaca906440e00350c010a2aa398cafc0de9a5b990c"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "OS01.3:intro.s01",

@@ -5,10 +5,10 @@
   "title": "特征值与特征向量",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0501-特征值与特征向量.md",
-    "sha256": "sha256:99130bfafb0fa64a46e49044dc541048ddf9696bfca741240ef6be0007736eeb"
+    "sha256": "sha256:003f9671f73215d5d74e77973101f1c79c63a49800b1e8a45f5d6e8944dd1d4d"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA05.1:intro.s01",
@@ -37,6 +37,13 @@
       "title": "考法 3：抽象矩阵满足矩阵多项式方程",
       "level": 2,
       "content": "**题 1（自拟变形）**：设 $A^2=A$，问 $A$ 能否对角化，以及 $\\mathrm{tr}(A)$、$r(A)$ 的关系。\n\n**思路**：第一步由 $A^2-A=O$ 得 $\\lambda(\\lambda-1)=0$，故特征值只能从 $\\{0,1\\}$ 中取；再看极小多项式无重根，故必可对角化。此时 $\\lambda=1$ 的几何重数就是 $\\dim\\ker(A-E)=n-r(A-E)$，而 $r(A)$ 正是 $\\lambda=1$ 的个数，于是 $\\mathrm{tr}(A)=r(A)$。\n\n**坑**：由 $A^2=A$ 推出 $A=E$ 或 $A=O$（这是把数量方程的习惯搬过来了，$A$ 可以是任何幂等矩阵）；以及只写出 $\\lambda\\in\\{0,1\\}$ 却不追问\"各取几个\"，导致 $\\mathrm{tr}$、$|A|$ 都想成定值。\n\n**题 2（自拟变形）**：设 $A^2=E$，求 $|A|$ 与 $(A-E)$、$(A+E)$ 的秩之和。\n\n**思路**：第一步由 $\\lambda^2=1$ 得 $\\lambda=\\pm1$，从而 $|A|$ 只能取与 $n$ 的奇偶相关的两个值。秩的方向：由 $(A-E)(A+E)=A^2-E=O$ 得 $r(A-E)+r(A+E)\\le n$；再观察 $(A-E)-(A+E)=-2E$ 可逆，可得反向不等式，两边夹出等号。\n\n**坑**：见到两个矩阵乘积为零就直接写 $r(A-E)+r(A+E)=n$，把\"$\\le$\"当成\"$=$\"；补另一半时必须找到它们的线性组合等于可逆矩阵，这一步漏掉就只是单边估计。"
+    },
+    {
+      "id": "LA05.1:example.s01",
+      "type": "example",
+      "title": "例题：特征值与特征向量",
+      "level": 2,
+      "content": "**题目**：求 $A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$ 的特征值和对应特征向量。\n\n**解答**：$|\\lambda E-A|=(\\lambda-2)^2-1=(\\lambda-3)(\\lambda-1)$。$\\lambda=3$ 时解 $(A-3E)x=0$ 得特征向量 $(1,1)^T$；$\\lambda=1$ 时得 $(1,-1)^T$（均可乘任意非零常数）。"
     }
   ],
   "source_h1": "M1-LA-0501 特征值与特征向量",

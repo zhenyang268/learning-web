@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/ds/408-DS-0703-交换排序.md",
     "sha256": "sha256:3ae51824a469bbfc176105053f0904f16b3a60094395a9e3e786478c6cda4722"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "DS07.3:intro.s01",

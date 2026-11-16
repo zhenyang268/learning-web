@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  LA03.0:
+    prereq: [LA02.4] # 极大无关组与秩通过初等变换判定

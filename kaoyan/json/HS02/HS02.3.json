@@ -5,10 +5,10 @@
   "title": "洛必达与泰勒展开",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0203-洛必达与泰勒展开.md",
-    "sha256": "sha256:939f6884082168d43bd5dcfa587c16dcb75d3c5b24d0451bcf00486ff2157b57"
+    "sha256": "sha256:1ac04b64533773d389b4b2807b084f747c8e5712478a3fb37d9fe3dfeb8d087f"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS02.3:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：由泰勒/洛必达的极限值反求参数",
       "level": 2,
       "content": "**思路**：第一步把分子按麦克劳林展开到与分母同阶（或高一阶），把所有低阶项系数列成方程，令其全为零；再用最高阶项的系数比去匹配题给的极限值。参数个数与方程个数应当对得上。\n\n**坑**：只让最高阶项系数匹配，漏掉“低阶项必须全部为零”这一组条件，结果参数少解一个或解出无意义的组合；也有同学把分母的阶数估低，导致展开阶数不够、方程个数不足。"
+    },
+    {
+      "id": "HS02.3:example.s01",
+      "type": "example",
+      "title": "例题：由分母决定泰勒阶数",
+      "level": 2,
+      "content": "**题目**：求 $\\displaystyle\\lim_{x\\to0}\\frac{e^x-1-x}{x^2}$。\n\n**解答**：分母最低阶为 $x^2$，故展开到二阶：$e^x=1+x+\\frac{x^2}{2}+o(x^2)$。代入后分子为 $\\frac{x^2}{2}+o(x^2)$，所以极限为 $\\frac12$。"
     }
   ],
   "source_h1": "M1-HS-0203 洛必达与泰勒展开",

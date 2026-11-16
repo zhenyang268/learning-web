@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/co/408-CO-0505-异常与中断.md",
     "sha256": "sha256:c3b025e1c79d0c6a19591bddabddfa96c24037e9246474a679e2616956b8fc38"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "CO05.5:intro.s01",

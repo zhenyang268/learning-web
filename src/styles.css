@@ -9,6 +9,14 @@
   --tx: #dbe4ff;
   --tx2: #8b96c4;
   --tx3: #5a6490;
+  /*
+   * 辅助正文（自测的「会标准」「当前级别」这类**要读的字**）专用色。
+   *
+   * 为什么不用 --tx3：它只是装饰级灰度（暗色下对 --bg2 只有 3.28:1、
+   * 亮色下 2.99:1），低于 WCAG AA 正文 4.5:1。自测区的说明与判据是要逐字读的，
+   * 不能跟装饰同级。这里取 #a3adcf：暗色 8.46:1、亮色 5.32:1，两端都过线。
+   */
+  --tx-soft: #a3adcf;
   --cyan: #5ee6ff;
   --violet: #a78bfa;
   --pink: #f472b6;
@@ -42,6 +50,8 @@
     --tx: #1c2340;
     --tx2: #525d85;
     --tx3: #8790b5;
+    /* 亮色下同样要过 4.5:1（对 --bg2 #f8f9fd 为 5.32:1） */
+    --tx-soft: #5f6890;
     --cyan: #0e7fa8;
     --violet: #7c5cd6;
     --pink: #c93e86;
@@ -176,6 +186,65 @@ header {
   gap: 6px;
   flex: 1;
   overflow-x: auto;
+}
+
+/*
+ * 窄屏「域 / 进度」导航（2026-11）。
+ *
+ * 桌面隐藏：三栏布局里字母块本来就都看得见，不需要第二套入口。
+ * 窄屏（≤700px）变体见文件末尾的媒体查询：此时 `.chapters` 整个收起，
+ * 由这个原生 <select> 承担全部域入口 —— 之前是「横滚条 + 无提示」，
+ * 390 视口下 5 个域里只能看到 2–3 个，且没有任何可发现性线索。
+ *
+ * 用 label 包 select：点「☰ 域 / 进度」文字也能展开，触摸目标远大于原生 12px 箭头。
+ */
+.domnav {
+  display: none;
+  position: relative;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--glass);
+  font-size: 13px;
+  color: var(--tx2);
+  min-width: 0;
+  flex: 1 1 140px;
+  cursor: pointer;
+}
+
+.domnav:hover,
+.domnav:focus-within {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.dnv-ico {
+  font-size: 12px;
+  line-height: 1;
+  opacity: .9;
+}
+
+.dnv-txt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* 原生 select 铺满 label 且透明：命中区是整个标签，视觉由 label 提供 */
+.dnv-sel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
 }
 
 .chapters b {
@@ -416,6 +485,28 @@ nav .dommeta {
 }
 
 /* 域总进度：与章的 cbar 同一条视觉语言，贴在 domhead 底边 */
+/* ── 末尾「索引与导航」区（2026-11）：纯索引/分组单元置底并弱化 ──
+   弱化只作用在**外观**：章仍是同一个 <details>，行仍是同一个 .node[data-goto]，
+   懒渲染与跳转完全不变。指数不算高：group-head 用虚线而不是实线，
+   章标题降一档透明度，读起来像附录而不是像「下一章要学的东西」。 */
+nav .grp.indexed .grphead {
+  border-top-style: dashed;
+  opacity: .75;
+}
+
+nav details.chap.indexed > summary .chtitle {
+  opacity: .8;
+}
+
+nav details.chap.indexed > summary .chcode {
+  color: var(--tx3);
+}
+
+/* 索引区里的进度条压淡：这些单元大多不参与推荐，条子亮着会误读成「待办」 */
+nav details.chap.indexed > summary .cbar {
+  opacity: .35;
+}
+
 nav .domhead .dbar {
   position: absolute;
   left: 10px;
@@ -1422,7 +1513,18 @@ p .badge {
 
 @media(max-width:1150px) {
   main {
-    grid-template-columns: 1fr;
+    /* 必须是 minmax(0,1fr) 而不是 1fr：1fr 的下限是 min-content，
+       单列堆叠时 #reader 里一条长公式/长串会把轨道撑到 767px，
+       造成整页级横向溢出（390 视口滚出 795）。minmax(0,1fr) 把下限钉到 0，
+       超宽内容由各自的局部滚动容器（.math-display / .mdtable）消化。 */
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* 与上面同一个根因的另一半：网格子项的 min-width 默认是 auto（= min-content），
+     轨道下限虽已归零，子项自己仍可能按 min-content 撑开并顶破视口。
+     只在单列断点内归一，桌面三栏不受影响。 */
+  main > * {
+    min-width: 0;
   }
 
   nav .box,
@@ -1654,6 +1756,28 @@ a.graphbtn.crosssite {
   margin: 8px 0;
 }
 
+/*
+ * 段落里的行内 `code`（`pthread_mutex_lock`、`0x0000000000000001`）是**不可断长词**：
+ * 中文正文的断行机会只在 CJK 字符之间，一串 18 字符的等宽标识符中间没有断点，
+ * 浏览器只能整段保持单行。实测 CS01.1 在 390 视口下，一个含 8+ 个 code 的段落
+ * 把自身撑到 557px（容器 320），进而把 #reader / main / html 一起顶到 599 ——
+ * 这是文档级横向溢出的唯一根因；宽表**不是**元凶（`.mdtable` 的 overflow-x:auto
+ * 已在局部消化它，实测宿主 320 可滚 180，页面并不因此变宽）。
+ *
+ * `overflow-wrap: anywhere` 允许在长词内部断行，且**只在必要时**才断，正常段落
+ * 排版不变；它不像 `word-break: break-all` 那样见缝就断，也不改 white-space 语义。
+ * 数字同理（`0x…` 长常量）。表格与公式的局部横滚不受影响：它们是**块级滚动宿主**，
+ * 宽度由自己的 overflow 消化，这里的换行规则只管纯文本行内内容。
+ *
+ * 作用域：doc-card 的正文在 `.docsec > .docbody`（`#reader` 下的 `p` 并不在
+ * `.docview` 里 —— 两个容器是并列的两套文档渲染，选择器必须同时覆盖）。
+ */
+#reader p,
+.docview p,
+.docbody p {
+  overflow-wrap: anywhere;
+}
+
 /* 总纲附篇（2026-09-27 并入）：引用块与围栏代码块 */
 .docview blockquote {
   margin: 10px 0;
@@ -1710,7 +1834,7 @@ a.graphbtn.crosssite {
   margin-left: 8px;
   font-size: 0.78em;
   font-weight: 400;
-  color: var(--dim);
+  color: var(--tx3);
   border-bottom: 1px dashed currentColor;
   cursor: pointer;
 }
@@ -1728,10 +1852,40 @@ a.graphbtn.crosssite {
   background: rgba(255, 255, 255, 0.02);
 }
 
+/*
+ * 类名说明（原先这里叫 `.stdim`，且只靠颜色降级 —— 名字读作「selftest dim」，与内容无关）：
+ * 保留 `.stdim` 作为**兼容别名**（外部/旧快照仍在用），新语义类是 `.stnote`
+ * （「自测区的说明段」）。两者规则完全相同，改样式只需改这一处。
+ */
+.stnote,
 .stdim {
   font-size: 0.82em;
-  color: var(--dim);
+  /* 深浅两套主题下都 ≥4.5:1；不再用装饰灰 --tx3（3.28:1） */
+  color: var(--tx-soft);
   margin: 4px 0 12px;
+}
+
+/* 自测区头部：当前级别 / 下一级 / 已答题数 */
+.sthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 4px 0 2px;
+}
+
+.stnow {
+  font-size: 0.92em;
+  color: var(--tx);
+}
+
+.stnow b {
+  color: var(--cyan);
+}
+
+.stmeta {
+  font-size: 0.78em;
+  color: var(--tx-soft);
 }
 
 .stlist {
@@ -1763,7 +1917,8 @@ a.graphbtn.crosssite {
   padding: 2px 8px;
   border-radius: 999px;
   border: 1px solid var(--line, #2a2a35);
-  color: var(--dim);
+  /* 「L2 · 机制」是级别标签，要能读清 → 同样用可读级的 --tx-soft */
+  color: var(--tx-soft);
   margin-top: 2px;
 }
 
@@ -1778,9 +1933,10 @@ a.graphbtn.crosssite {
   font-weight: 600;
 }
 
+/* 「会标准：…」—— 这是自测里最需要逐字读的一行，用可读级灰（≥4.5:1） */
 .stbar {
   font-size: 0.8em;
-  color: var(--dim);
+  color: var(--tx-soft);
 }
 
 .stbtn {
@@ -1802,7 +1958,493 @@ a.graphbtn.crosssite {
 }
 
 .stbtn.done {
-  border-color: var(--ok, #4ade80);
-  color: var(--ok, #4ade80);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.project-routes {
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--glass);
+}
+
+.proutes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.proute {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.proute h3 {
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+
+.proute > p {
+  color: var(--tx2);
+  font-size: 13px;
+}
+
+.proute ol {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.proute li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+  font-size: 12.5px;
+  color: var(--tx2);
+}
+
+.proute li .chip {
+  flex: none;
+}
+
+.proute li b {
+  color: var(--tx);
+  font-weight: 600;
+}
+
+/* ---- 路线卡的三种状态：已达标 / 当前位置 / 未开始 ----
+ * 全部由掌握度推出，不新增存储；只用左边框 + 徽标，不改既有配色体系。
+ */
+.proutehead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.prouteprog {
+  font-size: 11.5px;
+  color: var(--tx-soft);
+}
+
+/*
+ * 注意：这里改的是 `.proute > p` 之外的新段落（`.prouteroute`），
+ * 不要把上面 `.proute > p { color: var(--tx2) }` 的既有规则改成不同颜色 ——
+ * tx2 在暗色下是 6.51:1、亮色 6.12:1，本来就够读。
+ */
+.prouteroute {
+  font-size: 12.5px;
+  color: var(--tx-soft);
+  margin-top: 6px;
+}
+
+.prouteroute b {
+  color: var(--cyan);
+}
+
+.pstep {
+  position: relative;
+}
+
+.pstepbody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pstepout {
+  color: var(--tx-soft);
+}
+
+.pstep.done {
+  border-left: 2px solid var(--green);
+}
+
+.pstep.now {
+  border-left: 2px solid var(--cyan);
+  background: rgba(94, 230, 255, 0.06);
+}
+
+.pstepstep {
+  display: inline-block;
+  font-size: 10.5px;
+  line-height: 1.5;
+  padding: 0 6px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  vertical-align: middle;
+}
+
+.pstepstep.done {
+  color: var(--green);
+}
+
+.pstepstep.now {
+  color: var(--cyan);
+}
+
+/* ---- 价值徽标（求职 / 考研）与路线定位 ----
+ * 与上面「已达标 / 当前位置」那套**运行期状态徽标**分开：这两组是人工审定的静态档位，
+ * 不随作答变化。颜色只表达「该不该现在做」，不引入新语义色。
+ */
+.ptier {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 2px 0;
+}
+
+.ptag {
+  display: inline-block;
+  font-size: 10.5px;
+  line-height: 1.5;
+  padding: 0 5px;
+  border-radius: 999px;
+  border: 1px solid var(--line2);
+  color: var(--tx-soft);
+  white-space: nowrap;
+}
+
+/* 求职：必须 → 高对比（红系）；高增益 → 绿；可选 → 灰（默认态） */
+.ptag.job.j-必须 {
+  color: var(--red);
+  border-color: currentColor;
+}
+
+.ptag.job.j-高增益 {
+  color: var(--green);
+  border-color: currentColor;
+}
+
+/* 考研：直接提分 → 黄系；能力迁移 → 青；弱相关 → 灰（默认态） */
+.ptag.exam.e-直接提分 {
+  color: var(--yellow);
+  border-color: currentColor;
+}
+
+.ptag.exam.e-能力迁移 {
+  color: var(--cyan);
+  border-color: currentColor;
+}
+
+.prole {
+  display: inline-block;
+  font-size: 10.5px;
+  line-height: 1.5;
+  padding: 0 6px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line2);
+  color: var(--tx-soft);
+  vertical-align: middle;
+  font-weight: 500;
+}
+
+.prole.r-核心 {
+  color: var(--red);
+  border-color: currentColor;
+}
+
+.prole.r-协同 {
+  color: var(--yellow);
+  border-color: currentColor;
+}
+
+/* 「为什么排在这一位」——比交付物更重要，所以给正文色而不是 dim 色 */
+.pstepwhy {
+  color: var(--tx2);
+}
+
+/* 路线的课程/考纲重叠说明：单独一段、左框线，避免与 goal 混读 */
+.poverlap {
+  margin-top: 6px;
+  padding-left: 8px;
+  border-left: 2px solid var(--line2);
+  font-size: 12.5px;
+  color: var(--tx2);
+}
+
+/* ---- 主路线之后的「岗位缺口」独立块（2026-11）----
+ * 它紧跟在 testing-sim 卡后面，不再被 5 条对照路线淹掉；`pgaps-slot` 只是
+ * 让这块在 `.proutes` 网格里独占一行（否则会被塞进某一列、和路线卡并排）。
+ */
+.pgaps-slot {
+  grid-column: 1 / -1;
+}
+
+/* 其余 5 条对照路线：折叠状态只显示 label + 进度摘要 */
+.proutes-more {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0 12px 10px;
+}
+
+.proutes-more > summary {
+  cursor: pointer;
+  padding: 10px 0;
+  font-size: 12.5px;
+  color: var(--tx2);
+  list-style: none;
+}
+
+.proutes-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+.proutes-more > summary::before {
+  content: '▸ ';
+  color: var(--tx-soft);
+}
+
+.proutes-more[open] > summary::before {
+  content: '▾ ';
+}
+
+.proutes-more[open] > summary {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+
+/* 折叠态下的路线卡：只留卡头一行，不占高度 */
+.proute.compact {
+  padding: 8px 10px;
+}
+
+.proute.compact .proutehead {
+  margin: 0;
+}
+
+.proute.compact h3 {
+  font-size: 13px;
+}
+
+/* 单项目页的「同时在：…」——其余所属路线压成一行链接，不再各开一张卡 */
+.palsoon {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--tx-soft);
+  line-height: 1.9;
+}
+
+.plink {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--cyan);
+  cursor: pointer;
+  border-bottom: 1px dotted currentColor;
+}
+
+.plink:hover {
+  color: var(--tx);
+}
+
+/* ---- 长 doc-card 的「本页目录」（2026-11）----
+ * 默认折叠：details 只管开合，不占首屏。层级缩进用左内边距表达，
+ * `min-width: 0` + `overflow-wrap` 保证长标题在 390 视口不撑破卡片。
+ */
+.dtoc {
+  margin-top: 10px;
+  border-top: 1px dashed var(--line);
+  padding-top: 8px;
+  font-size: 12.5px;
+}
+
+.dtoc > summary {
+  cursor: pointer;
+  color: var(--tx2);
+  list-style: none;
+}
+
+.dtoc > summary::-webkit-details-marker {
+  display: none;
+}
+
+.dtoc > summary::before {
+  content: '▸ ';
+  color: var(--tx-soft);
+}
+
+.dtoc[open] > summary::before {
+  content: '▾ ';
+}
+
+.dtoc ol {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.dtoc li {
+  margin: 3px 0;
+  min-width: 0;
+}
+
+.dtoc a {
+  color: var(--tx2);
+  text-decoration: none;
+  display: block;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.dtoc a:hover {
+  color: var(--cyan);
+}
+
+.dtoc .toc-l3 {
+  padding-left: 14px;
+}
+
+.dtoc .toc-l4 {
+  padding-left: 28px;
+}
+
+/* 锚点跳转后标题不要被顶栏盖住 */
+.dochead[id] {
+  scroll-margin-top: 72px;
+}
+
+/* 核心路线的「补不上的缺口」：只有文字，没有按钮/完成度 */
+.pgaps {
+  margin: 10px 0 4px;
+  padding: 10px 12px;
+  border: 1px dashed var(--line2);
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: var(--tx2);
+}
+
+.pgaps > b {
+  color: var(--tx);
+}
+
+.pgaps ul {
+  margin: 6px 0;
+  padding-left: 18px;
+}
+
+.pgaps li {
+  margin: 3px 0;
+  line-height: 1.55;
+}
+
+/* 徽标「由自测推出」时的视觉降级：仍可见，但表明它不可点写 */
+.mastery.derived {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.lbl.derived {
+  color: var(--tx-soft);
+}
+
+.nowhere {
+  color: var(--cyan);
+}
+
+@media (max-width: 700px) {
+  header {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 10px 14px;
+  }
+
+  .logo {
+    flex: 1;
+  }
+
+  /* 窄屏：横滚字母块整体收起，改由「域 / 进度」原生 select 承载全部域入口。
+     不保留「横滚条 + select 双份」—— 两份入口在 390 视口会各占一行顶栏，
+     而且横滚条本身正是「入口不可达」的元凶。 */
+  .chapters {
+    display: none;
+  }
+
+  .domnav {
+    display: flex;
+    order: 1;
+  }
+
+  .search {
+    flex: 1 1 150px;
+    min-width: 0;
+  }
+
+  .search input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .stq {
+    flex-wrap: wrap;
+  }
+
+  .stbody {
+    min-width: calc(100% - 70px);
+  }
+
+  .stbtn {
+    margin-left: auto;
+  }
+
+  /* 路线卡在窄屏：单列 + 步骤改「代号独占一行」。
+   * 徽标本身已是 flex-wrap，这里只需保证步骤容器不按 min-content 撑宽
+   * （旧写法 `.pstep li { display:flex }` 的 chip 是 flex:none，
+   * 长代号 + 两条档位徽标在 390 视口会把内容顶出卡片）。 */
+  .proutes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pstep {
+    flex-wrap: wrap;
+  }
+
+  .pstep .chip {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .pstepbody {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .pstepbody > b {
+    word-break: break-word;
+  }
+
+  .ptag,
+  .prole {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+[role='button']:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
 }
 

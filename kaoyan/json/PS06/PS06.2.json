@@ -5,10 +5,10 @@
   "title": "三大抽样分布",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0602-三大抽样分布.md",
-    "sha256": "sha256:abb189ec378b875873fbfba769a0183b64720aec96962fdfaac13fba1d8fdc0d"
+    "sha256": "sha256:0147e819e0efd7532dd072f692521907e3f5277095e0674cc260a6d5fe33409d"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS06.2:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：分位数的查表与对称性",
       "level": 2,
       "content": "**思路**：第一步画一条密度曲线，标出所给分位数对应的尾部面积，确定是上侧分位数还是下侧分位数；第二步用分布自身的对称性换算：$t$ 分布和标准正态满足 $u_{1-\\alpha}=-u_\\alpha$，$t_{1-\\alpha}(n)=-t_\\alpha(n)$；$\\chi^2$ 与 $F$ 不对称，只能用倒数关系处理 $F$。\n\n**坑**：把 $\\chi^2_{1-\\alpha}(n)$ 当成 $\\chi^2_\\alpha(n)$ 的相反数——$\\chi^2$ 取值非负，无此对称性；在 $t$ 分布里把 $t_{1-\\alpha}(n)=-t_\\alpha(n)$ 的负号丢掉，或者在 $F$ 的倒数关系里只交换 $\\alpha$ 与 $1-\\alpha$ 而不交换两个自由度，这两种都是设错方程后算出荒谬数值的常见起点。"
+    },
+    {
+      "id": "PS06.2:example.s01",
+      "type": "example",
+      "title": "例题：正态样本的自由度",
+      "level": 2,
+      "content": "**题目**：来自正态总体的样本容量为 $16$，分别写出 $\\frac{15S^2}{\\sigma^2}$ 与 $\\frac{\\bar X-\\mu}{S/4}$ 的分布。\n\n**解答**：$\\frac{15S^2}{\\sigma^2}\\sim\\chi^2(15)$；因 $\\bar X$ 与 $S^2$ 独立，$\\frac{\\bar X-\\mu}{S/\\sqrt{16}}\\sim t(15)$。两处自由度都是 $n-1=15$。"
     }
   ],
   "source_h1": "M1-PS-0602 三大抽样分布",

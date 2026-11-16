@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  DM04.1:
+    prereq: [HS06.0, DM03.1] # 三大公式与散度旋度全在 HS06 场论；空间投影与体积分技巧沿用 DM03 的重积分

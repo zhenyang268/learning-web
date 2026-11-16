@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/exam/真题/2016.md",
     "sha256": "sha256:fcab6b838611927302dda1c777445dc51c0782d8c0b151af1c3c66ba2e1765e1"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "EX16.1:intro.s01",

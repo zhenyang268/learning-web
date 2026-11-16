@@ -5,10 +5,10 @@
   "title": "函数极限与无穷小",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0103-函数极限与无穷小.md",
-    "sha256": "sha256:04a3f693bd567585e20647e8fd3ed7f642f6ff79cfd3d64fd81aabd7bf1d25a5"
+    "sha256": "sha256:d0c6e8379746d6a3de2161b674c26b0cf0a98c051af6df7442cac8b92051a8a1"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS01.3:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：$1^{\\infty}$ 与幂指型",
       "level": 2,
       "content": "**变式 1（$u^v$ 型）**\n\n**思路**：第一步把 $u^v$ 写成 $e^{v\\ln u}$，再把 $\\ln u=\\ln\\bigl(1+(u-1)\\bigr)$ 用 $\\ln(1+t)\\sim t$ 压成 $u-1$，于是指数化成 $v(u-1)$ 的极限（$u\\to1$ 时）。\n\n**坑**：先让底数取极限得 $1$，就写「$1^{\\infty}=1$」；或者把指数上的 $v(u-1)$ 里的 $u$ 直接当 $1$ 处理，指数极限算成 $0$。"
+    },
+    {
+      "id": "HS01.3:example.s01",
+      "type": "example",
+      "title": "例题：加减项不能逐项等价替换",
+      "level": 2,
+      "content": "**题目**：求 $\\displaystyle\\lim_{x\\to0}\\frac{\\tan x-\\sin x}{x^3}$。\n\n**解答**：展开到三阶：$\\tan x=x+\\frac{x^3}{3}+o(x^3)$，$\\sin x=x-\\frac{x^3}{6}+o(x^3)$，相减得 $\\frac{x^3}{2}+o(x^3)$，故极限为 $\\frac12$。若把两项都换成 $x$，会错误地得到 $0$。"
     }
   ],
   "source_h1": "M1-HS-0103 函数极限与无穷小",

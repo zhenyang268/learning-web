@@ -5,10 +5,10 @@
   "title": "HS06 多元函数积分学",
   "src": {
     "file": "notebook/kaoyan/syllabus/math1.md",
-    "sha256": "sha256:379fcaa7e80abfd606c946b5574ea9e47c68fa25f3233c85c8c788180c7a803f"
+    "sha256": "sha256:993bffb11ed10b3db21f4a78652b478a79dfcdb127a96627d081c9f0380b2d87"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS06.0:exam.s01",

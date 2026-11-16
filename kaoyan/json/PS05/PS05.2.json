@@ -5,10 +5,10 @@
   "title": "中心极限定理",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0502-中心极限定理.md",
-    "sha256": "sha256:ffd33ed3719fc77b5ca71dcfbe2d866606d0b21494be7c0ca99c97774fd0266f"
+    "sha256": "sha256:643076d9b20f29b9c515e572ca81b6b5ebb2a24ba77b3a2b7e68ae4914048072"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS05.2:intro.s01",
@@ -37,6 +37,13 @@
       "title": "考法 3：由近似概率反求试验次数或参数",
       "level": 2,
       "content": "**思路**：第一步，先按前两个考法把所求概率写成 $\\Phi(u_2)-\\Phi(u_1)$ 的形式，其中含待求的 $n$；第二步，令其等于题给数值，反查标准正态分位点（如 $\\Phi(u)=0.975$ 对应 $u\\approx1.96$），再把含 $\\sqrt n$ 的方程解出来，最后平方得到 $n$。\n\n**坑**：解到 $\\sqrt{n}\\ge 1.96\\cdot\\dfrac{\\sigma}{\\varepsilon}$ 就停下，直接写 $n\\approx1.96\\sigma/\\varepsilon$，忘了平方，量纲直接错掉。第二个坑是反查时把 $\\Phi(u)=0.975$ 中的 $0.975$ 当成 $u$ 本身；第三个坑仍是取整——“至少需要多少次”必须向上取整，写成四舍五入或直接截断都会少一次。"
+    },
+    {
+      "id": "PS05.2:example.s01",
+      "type": "example",
+      "title": "例题：二项分布的正态近似",
+      "level": 2,
+      "content": "**题目**：$X\\sim B(100,\\frac12)$，用连续性修正近似 $P(X\\le55)$。\n\n**解答**：$np=50$，$\\sqrt{np(1-p)}=5$。修正后 $P(X\\le55)\\approx\\Phi(\\frac{55.5-50}{5})=\\Phi(1.1)\\approx0.8643$。端点 $55$ 要向外扩为 $55.5$。"
     }
   ],
   "source_h1": "M1-PS-0502 中心极限定理",

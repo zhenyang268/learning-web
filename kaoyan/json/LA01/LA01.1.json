@@ -5,10 +5,10 @@
   "title": "定义与性质",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0101-定义与性质.md",
-    "sha256": "sha256:e6c2a205b243b417da6b74f7284c56f4ccb2418d954a89fbc5cb9e4b62b93d89"
+    "sha256": "sha256:2beca07de5bfb2b1a851f1365cd70da8d40d5465c1353786e99e33313663aea4"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA01.1:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：抽象行列式与矩阵运算公式",
       "level": 2,
       "content": "**思路**：第一步把式子化到基本公式：$|AB|=|A||B|$，$|A^T|=|A|$，$|kA|=k^n|A|$，$|A^{-1}|=|A|^{-1}$，$|A^*|=|A|^{n-1}$。遇到 $A+B$ 不要拆，先看能否提公因子或化为乘积。\n\n**坑**：看到 $|kA|$ 写成 $k|A|$；看到 $|A+B|$ 写成 $|A|+|B|$；或把 $|A^*|$ 的指数误记成 $n$ 而不是 $n-1$。"
+    },
+    {
+      "id": "LA01.1:example.s01",
+      "type": "example",
+      "title": "例题：展开与代数余子式符号",
+      "level": 2,
+      "content": "**题目**：计算 $A=\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$ 的行列式，并求元素 $2$ 的代数余子式。\n\n**解答**：$|A|=1\\cdot4-2\\cdot3=-2$。元素 $2$ 位于 $(1,2)$，余子式 $M_{12}=3$，代数余子式 $A_{12}=(-1)^{1+2}M_{12}=-3$。符号由位置决定。"
     }
   ],
   "source_h1": "M1-LA-0101 定义与性质",

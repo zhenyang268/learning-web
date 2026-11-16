@@ -5,10 +5,10 @@
   "title": "数项级数判敛",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0701-数项级数判敛.md",
-    "sha256": "sha256:e6e5de93a71d7bc0906325fe2ef50f22c425cf0d446a834a5d70a63fbc841dd6"
+    "sha256": "sha256:a9a9aa3d2a2fb923d0fdd695e34dae657f2d65fafe8426c286267037d9c52f28"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS07.1:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：交错级数与绝对、条件收敛的判定顺序",
       "level": 2,
       "content": "**思路**：第一步永远是拆绝对值：先判 $\\sum|u_n|$，若收敛立刻写“绝对收敛”，全题结束；若不收敛，再回到原级数用莱布尼茨，把两个条件分开写清：$|u_n|$ 单调不增、$\\lim|u_n|=0$。两条都成立才能说原级数收敛，且此时定为条件收敛。单调性的证法一般是作辅助函数求导，或算 $\\frac{|u_{n+1}|}{|u_n|}$ 与 1 比。\n\n**坑**：只验 $\\lim u_n=0$ 就宣布莱布尼茨过关，漏掉单调性——这是最典型的半截答案。另一个坑是把“$\\sum u_n$ 收敛”与“$\\sum|u_n|$ 收敛”当成一回事，于是把条件收敛的级数写成绝对收敛；还有在拆绝对值时用了错误的比较对象（如拿 $\\sum\\frac{1}{n}$ 去比 $\\sum\\frac{1}{n^{3/2}}$），结论直接反过来。\n\n---"
+    },
+    {
+      "id": "HS07.1:example.s01",
+      "type": "example",
+      "title": "例题：区分绝对收敛与条件收敛",
+      "level": 2,
+      "content": "**题目**：判断 $\\displaystyle\\sum_{n=1}^{\\infty}\\frac{(-1)^{n-1}}{n}$ 的收敛类型。\n\n**解答**：绝对值级数是调和级数，发散；而 $\\frac1n$ 单调递减且趋于 $0$，由莱布尼茨判别法原级数收敛。因此它条件收敛，而不是绝对收敛。"
     }
   ],
   "source_h1": "M1-HS-0701 数项级数判敛",

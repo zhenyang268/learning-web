@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  HS06.0:
+    prereq: [HS03.2, HS05.1] # 重积分以定积分为基础，场论记号使用偏导

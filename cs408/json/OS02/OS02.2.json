@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/os/408-OS-0202-CPU-调度.md",
     "sha256": "sha256:552b8e018f62ca4cd09b45f4cdd9466246ad17474023f39e91f6d51022a661f6"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "OS02.2:intro.s01",

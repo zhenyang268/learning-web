@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  EG04.1:
+    prereq: [DB01.1] # 缓存、事务与幂等设计需要存储一致性基础

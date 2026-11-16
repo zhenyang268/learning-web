@@ -7,8 +7,8 @@
     "file": "notebook/projects/algo/algorithm/OUTLINE.bi.md",
     "sha256": "sha256:04591cb9680b16bfe584f163823d796353cf7e1f0a6040c0e5276fde0fdacebe"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "AL01.3:intro.s01",

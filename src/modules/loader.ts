@@ -54,6 +54,7 @@ export async function loadIndex(dataRoot = 'json/'): Promise<UnitMeta[]> {
       title: typeof u.title === 'string' ? u.title : u.code,
       cards: Array.isArray(u.cards) ? u.cards.filter((c): c is string => typeof c === 'string') : [],
       links: Array.isArray(u.links) ? u.links.filter((c): c is string => typeof c === 'string') : [],
+      kind: typeof u.kind === 'string' ? u.kind : undefined,
       sem: parseSem(u.sem),
     });
   }

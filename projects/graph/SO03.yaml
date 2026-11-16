@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  SO03.1:
+    prereq: [SO02.1] # 跨内核比较先要求亲手实现过一个教学内核

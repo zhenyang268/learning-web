@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  GX04.1:
+    prereq: [GX03.1] # 引擎消费几何/动画输出并组织成帧

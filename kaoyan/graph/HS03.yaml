@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  HS03.0:
+    prereq: [HS02.1] # 原函数与变上限求导以导数定义为前提

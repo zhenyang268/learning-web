@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  LA05.0:
+    prereq: [LA02.2, LA04.1] # 特征方程用行列式/逆，特征向量是齐次方程解

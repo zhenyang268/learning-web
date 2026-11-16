@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CS01.1:
+    prereq: [] # 系统线机器基础入口

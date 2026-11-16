@@ -27,6 +27,103 @@ export interface SidebarModel {
 }
 
 /**
+ * 纯索引 / 分组单元的判定 —— **侧栏「索引与导航」区的唯一入口**。
+ *
+ * 这些单元不是可学项目：`SO00` / `EG00` / `GX00` / `AL00` / `CP00` / `LG00` 是各域的
+ * 分组大纲（`project-group`），`PX01` 是面试索引页（`project-index`），408 的 `EX00`
+ * 是缺图清单（`exam-missing`）。它们各自把**别的单元**串起来，本身没有可交付物，
+ * 也不参与「今天该学」的推荐（见 `isLearnableUnit`）。
+ *
+ * 为什么以前它们和学习项目混排：侧栏只按「组 → 线 → 章」铺开，`SO00` 与 `SO01`
+ * 在同一个域下按章号相邻，读者分不清哪一行是「一份要动手做的大纲」、哪一行是
+ * 「一个索引页」。归到末尾并弱化后，学习主线不再被导航页打断；**链接一个不删**。
+ */
+export function isIndexUnit(u: UnitMeta): boolean {
+  const kind = u.kind ?? '';
+  if (kind === 'project-group' || kind === 'project-index' || kind === 'exam-missing') return true;
+  return INDEX_ONLY_CHAPTERS.has(u.code.split('.')[0] ?? '');
+}
+
+/**
+ * **整章都是索引**的章（数据侧没有单元级 `kind`，只能按章识别）。
+ *
+ * `SY01` 是应试分层表（`tiers`）：一张查表，不是要顺着学的一节。
+ *
+ * `MP*`（路线图 / 承重墙清单 / 教材对照）本来就在 `meta` 组，那里的组名就叫「索引」；
+ * 但它们和学习主线**并排在同一层**，读起来仍像「下一批要学的东西」。
+ * 2026-11 起 `meta` 组的章也进末尾索引区：这些内容的作用是「查」而不是「学」，
+ * 归到一处之后，`索引与导航` 就是全站唯一的导航/查表入口，主线不再被它们分走注意力。
+ * **链接与数据一个不动**，只是位置与视觉权重变了。
+ */
+const INDEX_ONLY_CHAPTERS = new Set(['SY01']);
+
+/** 侧栏「索引与导航」区的组 id 哨兵（不与 taxonomy 的 GroupId 冲突） */
+const INDEX_SECTION = '__index';
+
+/**
+ * 「这一章该不该进末尾索引区」的判据。两条并列，任一成立即可：
+ *
+ *   1. **章里所有单元都是索引单元**（`isIndexUnit`：`project-group` / `project-index` /
+ *      `exam-missing` / 纯索引章）。用「全部」而不是「有任意一个」：`NL01` 里既有
+ *      `library-section` 小节页也有正常知识点，`SO01` 每一章都是真项目 ——
+ *      只要还有一个可学单元，这一章就属于学习主线。
+ *   2. **章属于 `meta` 组**（`MP*`：路线图、承重墙清单、教材对照）。这一组的组名
+ *      本来就叫「索引」，内容是查表而不是学习序列；不并进来就会在末尾出现
+ *      「索引」与「索引与导航」两个并排的索引组，读者要在两处找同一类东西。
+ *
+ * 判定按**整章**算（不是逐单元挪），因为「章 → 单元」是侧栏的懒渲染单位：
+ * 把同一章的单元拆到两个区会让懒渲染的 `data-chap` 撞车。
+ *
+ * 教学线顺序不受影响：这里只决定「这一章放在哪个区」，不重排任何教学序列。
+ */
+function indexChaptersOf(byChapter: Map<string, UnitMeta[]>): Set<string> {
+  const out = new Set<string>();
+  for (const [chap, list] of byChapter) {
+    if (list.length && list.every((u) => isIndexUnit(u))) out.add(chap);
+    else if (groupOf(domainOf(chap) || 'ZZ') === 'meta') out.add(chap);
+  }
+  return out;
+}
+
+/**
+ * 索引区的**内部**顺序：先接回原来的组 → 域顺序，域内再按
+ * **线在 `LINES` 里的次序 → 线内教学序 → 章号**。
+ *
+ * 为什么不是纯字典序：`AL00`（算法分组大纲）属于算法、`SO00` 属于操作系统项目 ——
+ * 读者找它时想的是「算法那条线的索引」，不是「A 开头的第 0 章」。
+ *
+ * 为什么线内下标之前还要比一次「线序」：`MP01` 属于 `mp-road`、`MP11` 属于
+ * `mp-index`，两条线里它们都是第 0 个 —— 只比线内下标会让 MP11 与 MP01 平手，
+ * 再回落到章号就排成 `MP01, MP11, MP02…`（实测）。先比线序才是读者预期：
+ * 路线图那一串走完，才是承重墙与索引。
+ *
+ * 不在任何线上的章（`EX00` / `SY01`）没有教学序列，回落到章号。
+ */
+function indexChapsInOrder(indexChapters: Set<string>): string[] {
+  /** [线序, 线内下标]；不在线上给 [∞, ∞] */
+  const keyOf = (chap: string): [number, number] => {
+    const line = lineOfChapter(chap);
+    if (!line) return [Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER];
+    const li = LINES.findIndex((l) => l.id === line.id);
+    const ci = line.chapters.indexOf(chap);
+    return [li < 0 ? Number.MAX_SAFE_INTEGER : li, ci < 0 ? Number.MAX_SAFE_INTEGER : ci];
+  };
+  return [...indexChapters].sort((a, b) => {
+    const ga = groupRank(groupOf(domainOf(a) || 'ZZ'));
+    const gb = groupRank(groupOf(domainOf(b) || 'ZZ'));
+    if (ga !== gb) return ga - gb;
+    const da = domainRank(domainOf(a) || 'ZZ');
+    const db = domainRank(domainOf(b) || 'ZZ');
+    if (da !== db) return da - db;
+    const [la, ca] = keyOf(a);
+    const [lb, cb] = keyOf(b);
+    if (la !== lb) return la - lb;
+    if (ca !== cb) return ca - cb;
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
+}
+
+/**
  * 三层目录：**域 → 章 → 单元**（2026-10-30）。
  *
  * 为什么改：旧版把 132 章 / 318 单元一次性平铺，目录长到无法导航，
@@ -58,7 +155,7 @@ const progressOfList = (units: UnitMeta[], masteryOf: (c: string) => number): nu
 function nodeHtml(u: UnitMeta, current: string, masteryOf: (c: string) => number): string {
   const m = masteryOf(u.code);
   return `<div class="node${u.code === current ? ' on' : ''}${m >= 3 ? ' done' : ''}"
-    data-goto="${escapeHtml(u.code)}" title="${escapeHtml(u.title)}">
+    data-goto="${escapeHtml(u.code)}" role="button" tabindex="0" title="${escapeHtml(u.title)}">
     <span class="code">${escapeHtml(displayCode(u.code))}</span>
     <span class="ttl">${escapeHtml(u.title)}</span>
     <span class="m">L${m}</span>
@@ -70,15 +167,23 @@ function chapterHint(units: UnitMeta[]): string {
   return units[0]?.title ?? '';
 }
 
+/**
+ * 一个章节点。
+ *
+ * `muted` = 属于末尾「索引与导航」区：视觉弱化（`.chap.indexed`），但仍是同一个
+ * `<details>` 结构、同样的 `data-chap` 懒渲染与 `data-goto` 跳转 —— 弱化只改外观，
+ * 不改可达性，也不动数据。
+ */
 function renderChapter(
   chap: string,
   units: UnitMeta[],
   model: SidebarModel,
   open: boolean,
+  muted = false,
 ): string {
   const avg = progressOfList(units, model.masteryOf);
   const items = open ? units.map((u) => nodeHtml(u, model.current, model.masteryOf)).join('') : '';
-  return `<details class="chap" data-chap="${escapeHtml(chap)}"${open ? ' open' : ''}>
+  return `<details class="chap${muted ? ' indexed' : ''}" data-chap="${escapeHtml(chap)}"${open ? ' open' : ''}>
       <summary title="${escapeHtml(chapterHint(units))}">
         <span class="chcode">${escapeHtml(chap)}</span>
         <span class="chtitle">${escapeHtml(chapterHint(units))}</span>
@@ -95,7 +200,6 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
     : model.units;
 
   const curChapter = model.current ? chapterOf(model.current) : '';
-  const curDomain = model.current ? domainOf(model.current) : '';
 
   // 章 → 单元（全量，章进度按全量算，不受搜索过滤影响）
   const byChapter = new Map<string, UnitMeta[]>();
@@ -107,6 +211,8 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   }
   for (const list of byChapter.values()) list.sort((a, b) => codeKey(a.code)[2] - codeKey(b.code)[2]);
   models.set(host, { model, byChapter });
+
+  const indexChapters = indexChaptersOf(byChapter);
 
   const scroller = host.querySelector<HTMLElement>('.box');
   const keptScroll = scroller ? scroller.scrollTop : 0;
@@ -144,6 +250,8 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   }
   const secs = new Map<string, Sec>();
   for (const chap of byChapter.keys()) {
+    // 纯索引章不进「组 → 线」主干：它们统一去末尾的「索引与导航」区
+    if (indexChapters.has(chap)) continue;
     const dom = domainOf(chap) || 'ZZ';
     const line = lineOfChapter(chap);
     const key = line ? `line:${line.id}` : `dom:${dom}`;
@@ -181,6 +289,32 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   }
   const groups = [...byGroup.entries()].sort((a, b) => groupRank(a[0]) - groupRank(b[0]));
 
+  /**
+   * 末尾「索引与导航」区：**导航页不占学习主线**（2026-11）。
+   *
+   * 排序刻意**不按编号字典序**，而是「先接回原来的组顺序」：`AL00` 属于算法、
+   * `SO00` 属于操作系统项目 —— 读者找它时想的是「算法那条线的索引」，
+   * 不是「A 开头的第 0 章」。组内再按章号，保证同一域的索引页相邻。
+   *
+   * 教学线顺序（`content-map.json` 的 `lines[].chapters`）在这里一律不参与：
+   * 索引页本来就不在教学内容序列里，机械重排会把 `TL06` 这类章推出教学线。
+   */
+  const indexChaps = indexChapsInOrder(indexChapters);
+  const indexSection = indexChaps.length
+    ? `<div class="grp indexed" data-grp="${escapeHtml(INDEX_SECTION)}">
+        <div class="grphead" title="索引 / 分组页与题型分层表：不是可学的实际项目，但链接全部保留">
+          <span class="grplabel">索引与导航</span>
+          <span class="dim grpmeta">${indexChaps.length} 章 · ${indexChaps.reduce(
+            (n, c) => n + (byChapter.get(c)?.length ?? 0),
+            0,
+          )} 单元</span>
+        </div>
+        ${indexChaps
+          .map((c) => renderChapter(c, byChapter.get(c) ?? [], model, c === curChapter, true))
+          .join('')}
+      </div>`
+    : '';
+
   host.innerHTML = `<div class="box">${groups
     .map(([g, doms]) => {
       const chapCount = doms.reduce((n, s) => n + s.chaps.length, 0);
@@ -214,7 +348,7 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
         ${inner}
       </div>`;
     })
-    .join('')}</div>`;
+    .join('')}${indexSection}</div>`;
 
   wireLazy(host);
 
@@ -234,7 +368,6 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
       else if (cBot > box.scrollTop + box.clientHeight) box.scrollTop = cBot - box.clientHeight + 8;
     }
   }
-  void curDomain;
 }
 
 /** 章第一次展开时补单元节点（toggle 不冒泡，用捕获阶段挂一次） */

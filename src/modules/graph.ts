@@ -47,6 +47,26 @@ export interface Graph {
   order: string[];
   /** 若非空说明图有环，交给错误浮层 */
   cycles: string[][];
+  /** code → 索引里的单元元数据（frontier 需要 kind/title，不想再传一份 units） */
+  unit: Map<string, UnitMeta>;
+}
+
+/**
+ * 「这是一个可以学、可以自测的**实际项目**吗」。
+ *
+ * 反例（都在真数据里）：`GX00.1` / `SO00.2` / `EG00.1`（`project-group`，
+ * 一章的分组大纲/详解）、`PX01.1`（`project-index`，面试索引页）。
+ * 它们把**别的项目**串起来，自己既不是可交付物、也没有自测题，
+ * 让它们占走「今天该学」等于把导航页当成学习内容。
+ *
+ * 判定只依赖索引里已烘好的 `kind`（`UnitMeta.kind`），不拉正文。
+ * `kind` 缺省时按可学处理 —— 数学 / 408 / 数一这些线没有 kind 字段，
+ * 不能因为字段缺失就把整站排除掉。
+ */
+export function isLearnableUnit(meta: UnitMeta | undefined): boolean {
+  const kind = meta?.kind ?? '';
+  if (kind === 'project-group' || kind === 'project-index') return false;
+  return true;
 }
 
 /**
@@ -67,10 +87,12 @@ export function buildGraphFromMeta(units: UnitMeta[]): Graph {
   const codes = [...present].sort(cmpCode);
   const prereq = new Map<string, string[]>();
   const usedBy = new Map<string, string[]>();
+  const unit = new Map<string, UnitMeta>();
   for (const c of codes) {
     prereq.set(c, []);
     usedBy.set(c, []);
   }
+  for (const u of units) if (u.code) unit.set(u.code, u);
 
   const addPrereq = (to: string, from: string) => {
     const list = prereq.get(to);
@@ -158,16 +180,55 @@ export function buildGraphFromMeta(units: UnitMeta[]): Graph {
   if (order.length !== codes.length) {
     cycles.push(codes.filter((c) => !order.includes(c)));
   }
-  return { codes, prereq, usedBy, order: order.length ? order : codes, cycles };
+  return { codes, prereq, usedBy, order: order.length ? order : codes, cycles, unit };
 }
+
+/**
+ * 可选优先级钩子：把**合格候选**重排成「该先学哪个」。
+ *
+ * 只决定**同一次 frontier 计算内**候选之间的先后，**不参与资格判定**：
+ * 「未达 L3」「prereq 全部达标」「排除分组/索引页」三条仍由 `frontierOf` 自己判，
+ * 钩子拿不到也不许放宽它们（这是「不能越级推荐」的实现边界）。
+ *
+ * 谁用它：projects 学科（目标岗位 = 测开 + 仿真）传入「求职档位优先，同档按拓扑序」
+ * 的比较器（见 `content/project-routes.ts`）。**其余学科不传 → 行为与原先逐字一致**，
+ * 因为不排序时 `eligible[0]` 就是拓扑序第一个。
+ */
+export type FrontierPriority = (a: string, b: string) => number;
 
 /**
  * frontier = 拓扑序里第一个「掌握度 < 3 且前序全部达标（≥3）」的代号。
  * 全员不满足时退化为拓扑序第一个未达标者 —— 仍然算出来，不写死。
+ *
+ * 只推荐**可学单元**（`isLearnableUnit`）：`GX00.1` 这类分组/索引页
+ * 不占「今天该学」。过滤只影响「推荐哪一条」，
+ * **不改任何单元的 prereq** —— 依赖仍是 yaml/links 派生出来的那份真源。
+ *
+ * @param priority 可选：候选之间的先后（见 `FrontierPriority`）。传了才排序，
+ *                 排序稳定（同键保留拓扑序），因此「其他学科不传」= 零行为变化。
+ * @returns null 表示没有可推荐的可学单元（空态由调用方说明），
+ *          不会是「退化到一个 X00 页」。
  */
-export function frontierOf(graph: Graph, masteryOf: (code: string) => number): string | null {
+export function frontierOf(
+  graph: Graph,
+  masteryOf: (code: string) => number,
+  priority?: FrontierPriority,
+): string | null {
   const ok = (code: string) => masteryOf(code) >= 3;
-  const eligible = graph.order.filter((c) => !ok(c) && (graph.prereq.get(c) ?? []).every(ok));
-  if (eligible.length) return eligible[0];
-  return graph.order.find((c) => !ok(c)) ?? graph.order[0] ?? null;
+  const learnable = (code: string) => isLearnableUnit(graph.unit.get(code));
+  const pool = graph.order.filter(learnable);
+  const eligible = pool.filter(
+    (c) => !ok(c) && (graph.prereq.get(c) ?? []).every(ok),
+  );
+  if (eligible.length) {
+    // 不传钩子 → 直接取拓扑序第一个（原行为）；传了 → 稳定排序后取第一个。
+    // `[...]` 拷贝是必须的：`pool` 已是新数组，但排序仍需避免污染 `eligible` 的观察顺序。
+    if (!priority) return eligible[0];
+    return [...eligible].sort(priority)[0];
+  }
+  // 退化档：前序还没全达标的未达标单元（说明卡在上游，仍给一条），
+  // **不包含**「全员已达标」的情形 —— 那时是真的没有下一步，调用方要显示空态。
+  // 先前这里写 `?? pool[0]`，于是「全学完了」也会被推荐回第一个单元，
+  // 与「frontier 由掌握度算出」的语义相反（用户看到的是一句假的「今天该学」）。
+  return pool.find((c) => !ok(c)) ?? null;
 }

@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CP03.1:
+    prereq: [CP02.1] # RTL 核实现以流水线和精确异常模型为前提

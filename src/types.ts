@@ -130,6 +130,15 @@ export interface UnitMeta {
   /** 本单元所有词条 links 的并集（依赖图只用它） */
   links: string[];
   /**
+   * 数据侧的单元种类（`meta.kind`，索引里透传）：`project` / `project-group` /
+   * `project-index` / `kaoyan-kp` / `drill` / 空。
+   *
+   * 为什么必须进索引：frontier（「今天该学」）要在**不拉正文**的前提下排除
+   * `X00` 这类索引/分组页。原先 kind 只存在于 `EntryFile.meta`，索引里没有，
+   * 于是 `GX00.1`（cg 分组大纲）会被当成普通可学单元推荐出去。
+   */
+  kind?: string;
+  /**
    * 语义边真源（`graph/<L>.yaml`）**构建期烘进来的那一份**。
    *
    * 为什么要烘：右栏「依赖◂」与 frontier「今天该学」原先只吃 links 的编号序启发式，
@@ -160,6 +169,11 @@ export function unitMetaOf(file: EntryFile): UnitMeta {
     if (code !== 'general') cards.push(key);
     for (const l of e.links ?? []) links.add(l);
   }
+  const meta = (file as unknown as { meta?: unknown }).meta;
+  const kind =
+    typeof meta === 'object' && meta !== null
+      ? (meta as Record<string, unknown>).kind
+      : undefined;
   // 去重但保序（cardKeyOf 对同一 subject 会重复产出同一个 key）
   return {
     path: file.path,
@@ -169,5 +183,6 @@ export function unitMetaOf(file: EntryFile): UnitMeta {
     title: file.title ?? code,
     cards: [...new Set(cards)],
     links: [...links],
+    kind: typeof kind === 'string' ? kind : undefined,
   };
 }

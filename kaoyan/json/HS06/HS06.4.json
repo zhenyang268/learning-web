@@ -5,10 +5,10 @@
   "title": "曲面积分",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0604-曲面积分.md",
-    "sha256": "sha256:a0495141c1e00b802a38b064f22f2bfa8fb0cbadeb030e3fb2b42e1f955b75f1"
+    "sha256": "sha256:0598f5dcacfc6c089466a910083fac95bb47791c80aa2428ca2c0a377cc67bbf"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS06.4:intro.s01",
@@ -65,6 +65,13 @@
       "title": "考法 7：斯托克斯公式——把空间闭曲线降成曲面",
       "level": 2,
       "content": "**思路**：算 $\\oint_\\Gamma P\\,dx+Q\\,dy+R\\,dz$ 时，第一步找一张以 $\\Gamma$ 为边界、形状最简单的曲面，平面片最好（常取 $\\Gamma$ 所在的那块平面，或平面 $z=0$ 上被截出的区域）；第二步由 $\\Gamma$ 的绕行方向按右手法则定 $\\Sigma$ 的法向量；第三步写 $\\iint_\\Sigma(\\nabla\\times\\vec F)\\cdot\\vec n\\,dS$，再化成第一类或用合一投影算。若 $\\Gamma$ 是平面与曲面的交线，取那块平面往往使旋度与法向量的点积变成常数。\n\n**坑**：右手系定反——沿 $\\Gamma$ 走时曲面落在左手边，法向量整个反向，结果差一个负号；还有旋度某一分量写成 $R_z-Q_y$ 之类，第二个分量应是 $P_z-R_x$。"
+    },
+    {
+      "id": "HS06.4:example.s01",
+      "type": "example",
+      "title": "例题：第二类曲面积分投影定号",
+      "level": 2,
+      "content": "**题目**：$\\Sigma$ 为上半单位球面，取上侧，求 $\\displaystyle\\iint_\\Sigma dx\\,dy$。\n\n**解答**：这是 $R=1$ 的第二类曲面积分。上半球面投影到 $xOy$ 面是单位圆盘 $D$，取上侧为正，所以原式 $=\\iint_Ddx\\,dy=\\pi$。若取下侧，结果应为 $-\\pi$。"
     }
   ],
   "source_h1": "M1-HS-0604 曲面积分",

@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  LA04.0:
+    prereq: [LA02.3, LA03.2] # 解集结构同时依赖矩阵秩与向量组无关性

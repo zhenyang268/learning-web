@@ -5,10 +5,10 @@
   "title": "常见分布",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0202-常见分布.md",
-    "sha256": "sha256:a0254217d308958e067ab2960a655e2a352b54e0a11448cbd94a9cf7d7cc72b0"
+    "sha256": "sha256:84be98cba49b1e1158eb0f4b4deb36c16fb9905d209da58311950831d2922e4f"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS02.2:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：期望方差随参数走",
       "level": 2,
       "content": "**思路**：第一步把分布认准后直接写结论：二项 $np,\\ np(1-p)$；泊松 $\\lambda,\\ \\lambda$；几何 $\\frac1p,\\ \\frac{1-p}{p^2}$；均匀 $\\frac{a+b}2,\\ \\frac{(b-a)^2}{12}$；指数 $\\frac1\\lambda,\\ \\frac1{\\lambda^2}$；正态 $\\mu,\\ \\sigma^2$。\n\n**坑**：几何分布的两个口径（「首次成功的试验次数」与「首次成功前的失败次数」）期望差 $1$，看到题干问法不细辨就套公式；均匀分布方差漏掉分母 $12$；指数分布方差写成 $1/\\lambda$ 而非 $1/\\lambda^2$。"
+    },
+    {
+      "id": "PS02.2:example.s01",
+      "type": "example",
+      "title": "例题：独立泊松变量的可加性",
+      "level": 2,
+      "content": "**题目**：$X\\sim P(2)$、$Y\\sim P(3)$ 且相互独立，求 $X+Y$ 的分布及 $P(X+Y=0)$。\n\n**解答**：独立同族泊松变量相加仍服从泊松分布，参数相加，故 $X+Y\\sim P(5)$。于是 $P(X+Y=0)=e^{-5}5^0/0!=e^{-5}$。"
     }
   ],
   "source_h1": "M1-PS-0202 常见分布",

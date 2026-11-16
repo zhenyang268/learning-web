@@ -5,10 +5,10 @@
   "title": "曲面与曲线",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0403-曲面与曲线.md",
-    "sha256": "sha256:2a40929e2c930ba559bfa1419ba783438d3d1f5e48c18c45182419343330ffd9"
+    "sha256": "sha256:5858976d1090449d3c1f213b31e66f4d5f431df2acc366ae5b374319df4bed25"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS04.3:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：空间曲线在坐标面上的投影",
       "level": 2,
       "content": "**思路**（两曲面交线在 $xOy$ 面上的投影）：第一步明确“投影”包含两件事：先消去 $z$ 得投影柱面 $F(x,y)=0$，再与坐标面联立，写成 $\\begin{cases}F(x,y)=0\\\\ z=0\\end{cases}$。若曲线以参数式给出，令 $z=0$ 反解参数，再看 $x(t),y(t)$ 的取值，顺带确认参数范围。\n\n**坑**：只写出投影柱面方程就当答案，漏掉“$z=0$”这一句；求投影区域时又忘了柱面围出的是哪一块；消元方向搞错（该消 $z$ 却消了 $y$），得到的是别的坐标面上的投影。"
+    },
+    {
+      "id": "HS04.3:example.s01",
+      "type": "example",
+      "title": "例题：母线绕轴旋转",
+      "level": 2,
+      "content": "**题目**：将 $yOz$ 面上的直线 $y=z$ 绕 $z$ 轴旋转，求所得曲面方程。\n\n**解答**：绕 $z$ 轴时 $z$ 不变，把 $y$ 换成 $\\pm\\sqrt{x^2+y^2}$，得 $\\pm\\sqrt{x^2+y^2}=z$，平方后为 $x^2+y^2=z^2$。这是顶点在原点的圆锥面。"
     }
   ],
   "source_h1": "M1-HS-0403 曲面与曲线",

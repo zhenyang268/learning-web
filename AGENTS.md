@@ -58,14 +58,15 @@
 
 ```
 1. $LEARNING_NOTEBOOK      环境变量（优先，CI / worktree 场景）
-2. ../math-notebook        相对本仓父目录（常规开发场景）
+2. ../notebook             相对本仓父目录（常规开发场景）
 3. 解析失败 → 立即报错退出，不要静默 fallback 到任何默认路径
 ```
 
-> **路径漂移校正（2026-10-30）**：本文早期版本写的是 `../notebook`，
-> 父仓实际目录名是 **`math-notebook/`**（父仓 `README.md` 专门点过这条）。
-> 词条里的 `tex_ref.file` 前缀是 `notebook/`（历史产物口径）——
-> 磁盘目录叫 `math-notebook`，引用前缀叫 `notebook/`，两者不是一回事。
+> **路径漂移校正（2026-11-01 复核）**：2026-10-30 曾把笔记目录改名 `math-notebook/`，
+> **2026-11-01 已并回 `notebook/`**（其下再分 `math/` `kaoyan/` `projects/`）。
+> 故解析顺序第 2 条的目标是 `../notebook`；写路径前先 `ls` 确认，别沿用 `math-notebook`。
+> 词条里的 `tex_ref.file` 前缀仍是 `notebook/`（历史产物口径），与磁盘目录一致；
+> 但具体文件已下移到 `notebook/math/`，回原文核对时以 `tex_ref.file` 的实测路径为准。
 
 > **不再同步（DESIGN D26）**：代号不回写 `.tex`。`docs/codes-map-*.md` 已降级为
 > **一次性迁移档案**。`tex_ref` 的行区间校验依赖 `build/state/slices.json`，
@@ -284,7 +285,7 @@ node tools/remap-codes.mjs --apply
 ### 内容
 
 - **`notebook/*.tex` 只读。** 本仓任何脚本不得写入父仓笔记。
-  唯一例外：需要 `\vizslot` 时在 `notebook/main.tex` **和** `notebook/diffrential/main.tex`
+  唯一例外：需要 `\vizslot` 时在 `notebook/math/main.tex` **和** `notebook/math/bridges/main.tex`
   的导言区各加一行 `\providecommand` 兜底 `[校正 C4]`（否则 `latexmk` 报未定义命令），
   且改完必须重编译**两个**文档验证 PDF 不破。
 - **禁止用编译后的全局编号 `§NN.N`** 做路由或引用，一律用代号。

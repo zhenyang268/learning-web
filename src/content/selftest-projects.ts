@@ -12,14 +12,7 @@
  * 键 = 章代码（`CP01`），同章的 `.1`（大纲）与 `.2`（详解）共用一套自测。
  */
 
-export interface SelftestItem {
-  /** 题型：概念 / 机制 / 边界 */
-  tag: string;
-  /** 问题（不看书口头回答） */
-  q: string;
-  /** 会标准：怎么算答对 */
-  bar: string;
-}
+import type { SelftestItem } from './selftest';
 
 export const SELFTEST_PROJECTS: Record<string, SelftestItem[]> = {
   AL01: [

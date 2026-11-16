@@ -5,10 +5,10 @@
   "title": "向量运算",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0401-向量运算.md",
-    "sha256": "sha256:517b9dc1b98572958bf5e27ceea1ac8c925002b4956b3a7a00824d21110636ea"
+    "sha256": "sha256:fc487cdb48f809cc33aae90ce3a4db82d476fd2debc3dc0c6bb783e9540e8357"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS04.1:intro.s01",
@@ -37,6 +37,13 @@
       "title": "考法 3：性质题：方向余弦、单位化、垂直与平行的等价改写",
       "level": 2,
       "content": "**思路**（已知垂直或平行求参数）：第一步把条件改写成方程：$\\vec a\\perp\\vec b\\iff\\vec a\\cdot\\vec b=0$，$\\vec a\\parallel\\vec b\\iff\\vec a\\times\\vec b=\\vec 0$。凡“平行”的题用叉积比用比例式稳，因为它自动覆盖分量为零的情形。\n\n**坑**：看到“平行”就写 $\\frac{a_1}{b_1}=\\frac{a_2}{b_2}=\\frac{a_3}{b_3}$，某个分量为零时写不下去，便误判为“不平行”；“垂直”题里也常忘记 $|\\vec a+\\vec b|=|\\vec a-\\vec b|$ 与 $\\vec a\\cdot\\vec b=0$ 等价，绕远路还算错。\n\n**思路**（方向余弦与单位化）：第一步先把模算出来，方向余弦是各分量除以模，其平方和恒为一，可用来回代检查；单位向量为 $\\dfrac{\\vec a}{|\\vec a|}$。若问与坐标轴的夹角，答案就是对应的方向余弦取反余弦。\n\n**坑**：把方向余弦写成未除模的分量，或把方向角本身当成方向余弦；遇到含参数的向量忘记先排除模为零即零向量的情形。"
+    },
+    {
+      "id": "HS04.1:example.s01",
+      "type": "example",
+      "title": "例题：叉积求三角形面积",
+      "level": 2,
+      "content": "**题目**：已知 $A(0,0,0)$、$B(1,0,0)$、$C(0,1,0)$，求三角形 $ABC$ 的面积。\n\n**解答**：$\\vec{AB}=(1,0,0)$，$\\vec{AC}=(0,1,0)$，故 $\\vec{AB}\\times\\vec{AC}=(0,0,1)$，其模为 $1$。三角形面积是平行四边形面积的一半，所以 $S=\\frac12$。"
     }
   ],
   "source_h1": "M1-HS-0401 向量运算",

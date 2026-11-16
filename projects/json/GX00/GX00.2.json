@@ -7,8 +7,8 @@
     "file": "notebook/projects/cg/NOTES.md",
     "sha256": "sha256:373aa8c10be69fc1a7bb6ebad51cb94834d59ff1f1b4b13e3d95cf914c7c764a"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "GX00.2:intro.s01",

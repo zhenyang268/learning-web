@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  GX05.1:
+    prereq: [GX04.1] # 游戏把引擎的一帧交给输入与网络同步

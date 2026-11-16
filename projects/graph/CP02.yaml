@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CP02.1:
+    prereq: [CP01.1] # 微架构分析需要读懂指令与 ABI 边界

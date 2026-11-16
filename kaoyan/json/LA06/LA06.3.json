@@ -5,10 +5,10 @@
   "title": "合同变换",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0603-合同变换.md",
-    "sha256": "sha256:3dc3bcce7c4c69f1a5502970f0d15481cf81e23d7b72be395af53ad80ee5848a"
+    "sha256": "sha256:5cd868a34886534edda983d0ea78a075665a5b578c689d9592787a3bc416115d"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA06.3:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：已知合同关系求参数或判断",
       "level": 2,
       "content": "**思路**：先化 $A$ 为对角形或求特征值符号，得到 $(p,q,r)$；再把 $B$ 中参数放入同样指标比较。同阶实对称矩阵合同当且仅当正负惯性指数相同，秩 $p+q$ 和符号差 $p-q$ 可辅助核对。含参数时先由秩定可能范围，再由正负号定区间。\n\n**坑**：只比秩就判合同；用 $|B|$ 的符号直接代替负惯性指数，忽略阶数奇偶；把“$A$ 与 $B$ 合同”误当“$A$ 与 $B$ 相似”，多比了特征值。"
+    },
+    {
+      "id": "LA06.3:example.s01",
+      "type": "example",
+      "title": "例题：合同不一定相似",
+      "level": 2,
+      "content": "**题目**：判断 $A=\\operatorname{diag}(1,2)$ 与 $B=\\operatorname{diag}(2,2)$ 是否合同、是否相似。\n\n**解答**：两者都是二阶实对称矩阵，正惯性指数都为 $2$、负惯性指数都为 $0$，所以合同。但 $A$ 的特征值是 $1,2$，$B$ 的特征值是 $2,2$，特征值不同，所以不相似。"
     }
   ],
   "source_h1": "M1-LA-0603 合同变换",

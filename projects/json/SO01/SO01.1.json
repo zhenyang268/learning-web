@@ -7,8 +7,8 @@
     "file": "notebook/projects/os/linux-api/OUTLINE.md",
     "sha256": "sha256:2b5b638d6cb78e328ad72dc32267d047db76be1c3c047e70d7db89ff3ab2d352"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "SO01.1:body.s01",

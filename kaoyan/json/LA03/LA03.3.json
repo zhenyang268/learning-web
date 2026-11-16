@@ -5,10 +5,10 @@
   "title": "内积与正交",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0303-内积与正交.md",
-    "sha256": "sha256:2e331ef7d2bd559f9be16c336cb9ef73363d3dc9b2ee3e903ccd79bfd2c3aef2"
+    "sha256": "sha256:c044eff0813aac0ee809869cbba85c56342da2b91c202405392f3e40c05712cd"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA03.3:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：求与给定向量的正交向量组或正交补空间",
       "level": 2,
       "content": "**思路**：第一步把“与 $\\alpha_1,\\dots,\\alpha_s$ 都正交”翻译成齐次线性方程组 $A^Tx=0$（以 $\\alpha_i$ 为**行**），它的基础解系就是正交补的一组基；若还要求这组基本身正交规范，就对基础解系再做一次施密特正交化与单位化。\n\n**坑**：把 $\\alpha_i$ 按列拼成 $A$ 之后仍然去解 $Ax=0$（应为 $A^Tx=0$），维数公式里把 $n-r$ 用错；求出的基础解系只保证与给定向量正交，彼此之间并不正交，题目要“正交规范基”时忘记补上正交化与单位化这一步。"
+    },
+    {
+      "id": "LA03.3:example.s01",
+      "type": "example",
+      "title": "例题：施密特正交化",
+      "level": 2,
+      "content": "**题目**：对 $\\alpha_1=(1,1)^T$、$\\alpha_2=(1,0)^T$ 作施密特正交化。\n\n**解答**：取 $\\beta_1=\\alpha_1=(1,1)^T$。投影系数为 $\\frac{(\\alpha_2,\\beta_1)}{(\\beta_1,\\beta_1)}=\\frac12$，故 $\\beta_2=(1,0)^T-\\frac12(1,1)^T=(\\frac12,-\\frac12)^T$。直接计算可得 $(\\beta_1,\\beta_2)=0$。"
     }
   ],
   "source_h1": "M1-LA-0303 内积与正交",

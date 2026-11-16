@@ -5,10 +5,10 @@
   "title": "反常积分",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0303-反常积分.md",
-    "sha256": "sha256:c762dc2da845cb6a31d3e82b61106ac289a954a187baaec668d6fe932105b443"
+    "sha256": "sha256:c61f89da12b900441d13677620a110b3675400a410ad0b2245229307a92f7ee1"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS03.3:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：直接计算——拆极限，不许跳步",
       "level": 2,
       "content": "**思路**：无穷限用 $\\int_a^{+\\infty}f=\\lim_{b\\to+\\infty}\\int_a^{b}f$，瑕点用 $\\lim_{c\\to a^+}\\int_c^{b}f$，先把原函数求出再取极限。同时含无穷限和瑕点时，必须从瑕点处断开成两个独立极限，两者都存在才叫收敛；只要有一个不存在，就写“发散”，不能说“两部分抵消”。\n\n**坑**：对 $\\int_{-1}^{1}\\dfrac{dx}{x}$ 直接用 Newton–Leibniz 写 $\\ln|x|\\big|_{-1}^{1}=0$，把两个发散的部分人为抵消掉；还有算 $\\int_1^{+\\infty}\\dfrac{dx}{x^2}$ 时上下限代反，得负值后误以为“积分值不合理所以发散”。"
+    },
+    {
+      "id": "HS03.3:example.s01",
+      "type": "example",
+      "title": "例题：瑕积分按定义计算",
+      "level": 2,
+      "content": "**题目**：判断并计算 $\\displaystyle\\int_0^1\\frac{dx}{\\sqrt{x}}$。\n\n**解答**：$x=0$ 是瑕点。按定义，$\\int_0^1x^{-1/2}dx=\\lim_{c\\to0^+}[2\\sqrt{x}]_c^1=\\lim_{c\\to0^+}(2-2\\sqrt c)=2$，故积分收敛且值为 $2$。这里 $p=\\frac12<1$，符合瑕积分临界条件。"
     }
   ],
   "source_h1": "M1-HS-0303 反常积分",

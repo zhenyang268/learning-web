@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  EG05.1:
+    prereq: [SO01.1, EG03.1] # 线上网络与伪共享问题需要系统接口和性能实验

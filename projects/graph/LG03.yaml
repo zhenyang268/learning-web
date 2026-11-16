@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  LG03.1:
+    prereq: [LG01.1, PA01.1] # CUDA 需要 C++ 与并行性能模型

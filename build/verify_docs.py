@@ -32,8 +32,8 @@ sys.path.insert(0, str(IMPORTER))
 from common import norm, reconstruct, split_exam_chunks  # noqa: E402
 from md_split import split_markdown  # noqa: E402
 
-CODE_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?$")
-ID_RE = re.compile(r"^[A-Za-z]+\d+(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
+CODE_RE = re.compile(r"^[A-Z]{2}\d{2}(\.\d+)?$")
+ID_RE = re.compile(r"^[A-Z]{2}\d{2}(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
 ROOTS = {
     "math": WEB / "json",
     "cs408": WEB / "cs408" / "json",
@@ -182,6 +182,8 @@ def check_coverage() -> None:
                 crit("数一: 拔高单元数与源不符")
             if count_kind(docs, "quick") != len(list((NB / "kaoyan/quick").glob("math-*.md"))):
                 crit("数一: 速学单元数与源不符")
+            if count_kind(docs, "tiers") != 1:
+                crit("数一: 缺分层表单元")
 
     # 工程线
     docs = load_docs(ROOTS["projects"])

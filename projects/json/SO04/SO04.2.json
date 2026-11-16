@@ -7,8 +7,8 @@
     "file": "notebook/projects/os/drivers/NOTES.md",
     "sha256": "sha256:f719e018d1c7463049322565c5c0a5fcb07729a058bdb332a55c6a8640fdcddf"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "SO04.2:intro.s01",

@@ -5,10 +5,10 @@
   "title": "秩",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0203-秩.md",
-    "sha256": "sha256:3f4ccecc9c3888589b7c02fdf4a4b3fb2a06d67a1a8f2328f855aaaeb5377999"
+    "sha256": "sha256:481f50451befc1bac31b46c3c02a563ad1ba22f63dcb9c78edac8d5686ba45cd"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA02.3:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：秩与特征值、伴随矩阵的联动",
       "level": 2,
       "content": "**思路**：第一步先判 $A$ 能否对角化：实对称阵必可，有 $n$ 个互异特征值也可。可对角化时 $r(A)$ 等于非零特征值的个数，重特征值按重数计；再问 $A^{*}$ 的秩时，直接按 $r(A)$ 与 $n-1$ 的大小关系分三档讨论，不重算 $A^{*}$。\n\n**坑**：对不可对角化的矩阵也套「非零特征值个数等于秩」。特征值全为 $0$ 而 $A\\ne O$ 的矩阵秩并不为 $0$；另一处高频错误是把 $r(A)=n-1$ 时 $A^{*}$ 的秩记成 $n-1$，忘了此时 $A^{*}$ 的列都落在 $A$ 的零空间方向上，秩只剩 $1$。"
+    },
+    {
+      "id": "LA02.3:example.s01",
+      "type": "example",
+      "title": "例题：由阶梯形确定秩",
+      "level": 2,
+      "content": "**题目**：求 $A=\\begin{pmatrix}1&2&3\\\\2&4&6\\\\0&1&1\\end{pmatrix}$ 的秩。\n\n**解答**：第二行减第一行的 $2$ 倍得 $(0,0,0)$，第三行保持 $(0,1,1)$。阶梯形有两个非零行，且前两列可取主元，因此 $r(A)=2$。不能因方阵行列式为零就只写“降秩”而不给具体秩。"
     }
   ],
   "source_h1": "M1-LA-0203 秩",

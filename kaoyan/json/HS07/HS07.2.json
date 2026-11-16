@@ -5,10 +5,10 @@
   "title": "幂级数",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0702-幂级数.md",
-    "sha256": "sha256:c8dc341c434c227403a4087c7a263ce2d8dc8fbd965515d4d82b89b74e166d50"
+    "sha256": "sha256:a75c1cd68f626a008867f8fa279f18e5c88dda6410c8e3812cedf57214db5d5b"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS07.2:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：展开成幂级数——认母函数，不硬算泰勒系数",
       "level": 2,
       "content": "**思路**：第一步认母函数：$e^x$、$\\sin x$、$\\cos x$、$\\frac{1}{1-x}$、$\\ln(1+x)$、$(1+x)^{\\alpha}$ 六族的标准展开与成立区间要能默写。第二步把待展函数化成“母函数 + 变量替换”的形式：分式先拆部分分式，含 $\\arctan x$、$\\arcsin x$ 的先求导变成有理式，展完再积回去。第三步在展开点不是 0 时，整体写成 $(x-x_0)^n$ 的幂，并同步改写成立区间。\n\n**坑**：只写通项不写成立区间；替换变量时漏配系数——把 $x$ 换成 $2x$ 后通项里该出现的 $2^n$ 没出现，或者 $\\ln(1+2x)$ 里的 $2^n$ 只加在分母上；先求导再积分回来时忘记补 $\\int_0^x$ 的上下限，把常数项丢掉。\n\n---"
+    },
+    {
+      "id": "HS07.2:example.s01",
+      "type": "example",
+      "title": "例题：由几何级数积分求和函数",
+      "level": 2,
+      "content": "**题目**：求 $\\displaystyle S(x)=\\sum_{n=1}^{\\infty}\\frac{x^n}{n}$ 的和函数与收敛域。\n\n**解答**：对 $|x|<1$，逐项求导得 $S'(x)=\\sum_{n=1}^{\\infty}x^{n-1}=\\frac1{1-x}$；又 $S(0)=0$，故 $S(x)=-\\ln(1-x)$。端点 $x=1$ 为调和级数，发散；$x=-1$ 为交错级数，收敛。因此收敛域为 $[-1,1)$。"
     }
   ],
   "source_h1": "M1-HS-0702 幂级数",

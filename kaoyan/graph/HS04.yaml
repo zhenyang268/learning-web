@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  HS04.0:
+    prereq: [HS01.1] # 向量函数与空间曲线使用函数及复合的基本语言

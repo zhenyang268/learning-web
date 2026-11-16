@@ -7,8 +7,8 @@
     "file": "notebook/projects/cpu/cpu-microarchitecture/OUTLINE.md",
     "sha256": "sha256:7f86c3bb2b5dbc87857e1399c777dc87ce7bf223cb82e070d75bd9e43f70e811"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "CP02.1:intro.s01",

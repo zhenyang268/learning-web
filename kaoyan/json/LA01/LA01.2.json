@@ -5,10 +5,10 @@
   "title": "计算技巧",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0102-计算技巧.md",
-    "sha256": "sha256:04cb3ec65dc33cfdae7707c8c8f85ce4efb6c5b75a2ea157a6523bfee0998262"
+    "sha256": "sha256:5b0f1e00a4736dae8c49961e6a5d85e1ff1014ea8a621a6009644a38ed10af10"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA01.2:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：行列式与特征值",
       "level": 2,
       "content": "**思路**：第一步确认特征值是否已知或可求，再用 $|A|=\\prod_i\\lambda_i$、$|A+kE|=\\prod_i(\\lambda_i+k)$；遇到 $|A^*|$ 或 $|A^{-1}|$ 先看 $A$ 是否可逆，再换到特征值乘积。求 $|A-\\lambda E|$ 时把它当特征多项式，不要与 $|A|$ 的因子混。\n\n**坑**：看到 $|A+B|$ 就想成特征值逐项相加；看到 $|A-\\lambda E|$ 的根就误当成 $|A|$ 的因子；$A$ 有零特征值时仍套 $A^*$ 的特征值公式。"
+    },
+    {
+      "id": "LA01.2:example.s01",
+      "type": "example",
+      "title": "例题：范德蒙德行列式",
+      "level": 2,
+      "content": "**题目**：计算 $\\begin{vmatrix}1&1&1\\\\1&2&3\\\\1&4&9\\end{vmatrix}$。\n\n**解答**：这是变量 $1,2,3$ 的范德蒙德行列式，值为 $(2-1)(3-1)(3-2)=2$。差因子按后变量减前变量排列，顺序反转会改变符号。"
     }
   ],
   "source_h1": "M1-LA-0102 计算技巧",

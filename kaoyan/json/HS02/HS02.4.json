@@ -5,10 +5,10 @@
   "title": "单调、极值、凹凸与曲率",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0204-单调、极值、凹凸与曲率.md",
-    "sha256": "sha256:8a5d710170d558fb863bce0ed363cbd6bc7ef97b9e0a919cfd1e6e8488fb0e4a"
+    "sha256": "sha256:c891953931f0ff1d487ff671727b86488c89ea8b634ad183873bb81bb97eb06d"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS02.4:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：含参数讨论单调性、极值点个数",
       "level": 2,
       "content": "**思路**：第一步求导后把 $f'(x)$ 整理成「分子/分母」形式，把参数分离出来或找出使分子为零的临界参数值；再按「$f'(x)=0$ 有无实根、根是否落在定义域内、根之间的大小顺序」分档，每一档单独画一张符号表，最后按档汇总。\n\n**坑**：只讨论 $f'(x)=0$ 有实根的情形，忘了判别式 $\\le 0$ 时 $f'$ 恒号、函数严格单调无极值；分界点取等号的那一档（如参数恰为某值）不单独交代，导致零点归属错、极值个数多算或少算一个。"
+    },
+    {
+      "id": "HS02.4:example.s01",
+      "type": "example",
+      "title": "例题：显式曲线的曲率",
+      "level": 2,
+      "content": "**题目**：求抛物线 $y=x^2$ 在原点的曲率与曲率半径。\n\n**解答**：$y'=2x$，$y''=2$。在原点 $y'=0$，故 $\\kappa=\\frac{|2|}{(1+0)^{3/2}}=2$，$R=\\frac1\\kappa=\\frac12$。曲率取非负值，分母是 $3/2$ 次幂。"
     }
   ],
   "source_h1": "M1-HS-0204 单调、极值、凹凸与曲率",

@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  HS07.0:
+    prereq: [HS01.2, HS03.3] # 部分和是数列，幂级数与反常判敛共用极限/比较思想

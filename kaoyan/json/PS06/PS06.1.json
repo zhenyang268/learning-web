@@ -5,10 +5,10 @@
   "title": "总体、样本、统计量",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0601-总体、样本、统计量.md",
-    "sha256": "sha256:09085a6120f38bbdb15fe508c5b886fda5608cda1197613d1a8ce06045f82cfa"
+    "sha256": "sha256:eab957a6d831d945f408b61ccd256eb38461c4885cbf4b76888b47f5290bbad9"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS06.1:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：样本矩与总体矩的对应",
       "level": 2,
       "content": "**思路**：第一步辨明 $k$ 阶样本原点矩 $A_k=\\frac1n\\sum X_i^k$ 与 $k$ 阶样本中心矩 $B_k=\\frac1n\\sum(X_i-\\bar X)^k$ 的定义差别；第二步用大数定律说明 $A_k$ 依概率收敛到 $E(X^k)$，需要“用样本矩替换总体矩”时，就对应到 $A_k$。\n\n**坑**：把 $B_2$ 与 $S^2$ 当成同一个量，实际 $S^2=\\frac{n}{n-1}B_2$；也容易在求 $E(A_2)$ 时把它写成 $\\mu^2$，漏掉方差项 $E(X^2)=\\mu^2+\\sigma^2$。"
+    },
+    {
+      "id": "PS06.1:example.s01",
+      "type": "example",
+      "title": "例题：样本均值与无偏样本方差",
+      "level": 2,
+      "content": "**题目**：样本为 $1,2,3$，求 $\\bar X$、$S^2$ 以及经验分布函数在 $x=2$ 处的值。\n\n**解答**：$\\bar X=2$；$S^2=\\frac{(1-2)^2+(2-2)^2+(3-2)^2}{3-1}=1$。小于等于 $2$ 的样本有 $2$ 个，故 $F_3(2)=\\frac23$。三者都只由样本决定，都是统计量。"
     }
   ],
   "source_h1": "M1-PS-0601 总体、样本、统计量",

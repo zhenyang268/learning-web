@@ -5,10 +5,10 @@
   "title": "初等变换与分块",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0204-初等变换与分块.md",
-    "sha256": "sha256:cee7716f3ed55b6f5734afabdb58186609c8a55ac4134613c03ba067fe9ce93a"
+    "sha256": "sha256:a1e8420255f5885614cbeaeb0b183d5c4e17370430f4d320a79586539e3c72e3"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA02.4:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：用分块凑 $A^{n}$、算秩或行列式",
       "level": 2,
       "content": "**思路**：第一步看块结构能否分解成 $A=D+N$，$D$ 取分块对角部分、$N$ 为严格分块三角部分（幂零）。先验证 $DN=ND$，一旦可交换就能用二项式定理，而 $N$ 的某次幂之后全为零，只需算前几项。遇到 $\\begin{pmatrix}O&A\\\\B&O\\end{pmatrix}$ 型，先平方，看是否回到分块对角再定规律。\n\n**坑**：不验证 $D$ 与 $N$ 是否可交换就套 $(D+N)^{n}=\\sum\\binom{n}{k}D^{n-k}N^{k}$。$DN\\ne ND$ 时该展开完全失效；只要看到分块结构就直接展开，是这一步最容易出的错。"
+    },
+    {
+      "id": "LA02.4:example.s01",
+      "type": "example",
+      "title": "例题：分块上三角矩阵求逆",
+      "level": 2,
+      "content": "**题目**：设 $M=\\begin{pmatrix}A&C\\\\O&B\\end{pmatrix}$，其中 $A,B$ 可逆，求 $M^{-1}$。\n\n**解答**：设逆为 $\\begin{pmatrix}X&Y\\\\Z&W\\end{pmatrix}$，由分块乘法得 $X=A^{-1}$、$W=B^{-1}$、$Z=O$，并由 $AY+CB=O$ 得 $Y=-A^{-1}CB^{-1}$。所以 $M^{-1}=\\begin{pmatrix}A^{-1}&-A^{-1}CB^{-1}\\\\O&B^{-1}\\end{pmatrix}$。"
     }
   ],
   "source_h1": "M1-LA-0204 初等变换与分块",

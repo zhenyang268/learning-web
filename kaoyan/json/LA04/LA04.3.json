@@ -5,10 +5,10 @@
   "title": "同解与公共解",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0403-同解与公共解.md",
-    "sha256": "sha256:84d3aa5a40b77be70f9b250a6fc5a21c9bbd295e19987c5a080640013ff1c768"
+    "sha256": "sha256:b5769162399370253a4c4d810f08436a869af0f49f9f04d9855eff610d083e46"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA04.3:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：公共解空间的维数与秩的换算",
       "level": 2,
       "content": "**思路**：第一步把\"公共解空间\"认成两个零空间的交 $N(A)\\cap N(B)$，其维数等于 $n-r\\begin{pmatrix}A\\\\B\\end{pmatrix}$，$n$ 仍是列数。第二步涉及维数关系时，用 $\\dim N(A)+\\dim N(B)=\\dim\\big(N(A)+N(B)\\big)+\\dim\\big(N(A)\\cap N(B)\\big)$ 把\"和空间\"与\"交空间\"串起来。\n\n**坑**：拿 $\\big(n-r(A)\\big)+\\big(n-r(B)\\big)-n$ 硬套容斥去算交的维数，这个式子在两个零空间不独立时并不成立，正确入口是拼接矩阵的秩；还有把列数 $n$ 记成拼接后的行数，量纲就已经错了。"
+    },
+    {
+      "id": "LA04.3:example.s01",
+      "type": "example",
+      "title": "例题：公共解必须联立",
+      "level": 2,
+      "content": "**题目**：求 $x+y=0$ 与 $x-y=0$ 两组齐次方程的公共解。\n\n**解答**：公共解满足联立组 $x+y=0$、$x-y=0$。两式相加得 $x=0$，回代得 $y=0$，所以公共解只有零向量。两个原解空间都是一维，但其交空间维数为 $0$。"
     }
   ],
   "source_h1": "M1-LA-0403 同解与公共解",

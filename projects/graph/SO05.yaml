@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  SO05.1:
+    prereq: [SO03.1] # 安全原语分析以用户/内核边界与真实实现为前提

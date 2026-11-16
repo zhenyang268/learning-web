@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  GX02.1:
+    prereq: [GX01.1] # P2 用同一场景与光栅化结果交叉验证

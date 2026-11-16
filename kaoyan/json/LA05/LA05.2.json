@@ -5,10 +5,10 @@
   "title": "相似对角化",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0502-相似对角化.md",
-    "sha256": "sha256:2fc3630c09ec5d308a87e8bb5e43c2adcca3e33c48ee7e184a3665992a8dfa08"
+    "sha256": "sha256:9954b15f0f1d11dd0f448dfa938b8d3a0a435fa6b262bc061b2abf51b2844303"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA05.2:intro.s01",
@@ -37,6 +37,13 @@
       "title": "考法 3：$A$ 与 $B$ 相似的条件，及用对角化求 $A^{n}$",
       "level": 2,
       "content": "**题 1（自拟变形）**：已知 $A\\sim B$，求其中的参数。\n\n**思路**：第一步把相似的必要条件写成方程：$\\mathrm{tr}(A)=\\mathrm{tr}(B)$、$|A|=|B|$、特征多项式相同、$r(A)=r(B)$；参数个数若多于一个就多取几条联立，然后用\"$A$、$B$ 都可对角化且特征值相同\"回头验证充分性。\n\n**坑**：把\"特征值相同\"直接当成相似（还需都可对角化，否则同一个特征值组可能对应 Jordan 块不同的矩阵）；以及只用迹建立了一个方程就下结论，参数的另一支解未检验。\n\n**题 2（自拟变形）**：$A$ 可对角化，求 $A^{k}$。\n\n**思路**：第一步写 $A=P\\Lambda P^{-1}$，于是 $A^{k}=P\\Lambda^{k}P^{-1}$，$\\Lambda^{k}$ 只需把对角元各自取 $k$ 次幂；关键一步落在求 $P^{-1}$ 上，或用 $P^{-1}AP=\\Lambda$ 的关系把待求式整体化简，避免硬求逆。\n\n**坑**：把顺序写成 $P^{-1}\\Lambda^{k}P$；以及当 $P$ 由特征向量构成时直接把 $P$ 当成正交矩阵用 $P^{-1}=P^{T}$——只有实对称矩阵正交对角化时才成立。"
+    },
+    {
+      "id": "LA05.2:example.s01",
+      "type": "example",
+      "title": "例题：构造对角化矩阵",
+      "level": 2,
+      "content": "**题目**：对 $A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$ 求可逆 $P$ 与对角阵 $\\Lambda$，使 $P^{-1}AP=\\Lambda$。\n\n**解答**：特征值 $3,1$ 的特征向量分别取 $(1,1)^T,(1,-1)^T$。令 $P=\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$，$\\Lambda=\\operatorname{diag}(3,1)$，则 $AP=P\\Lambda$，故 $P^{-1}AP=\\Lambda$。列顺序与特征值顺序一致。"
     }
   ],
   "source_h1": "M1-LA-0502 相似对角化",

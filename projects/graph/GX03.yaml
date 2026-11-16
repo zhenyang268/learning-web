@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  GX03.1:
+    prereq: [GX02.1] # 按分组 OUTLINE 的 P1–P5 推荐顺序

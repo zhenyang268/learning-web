@@ -7,8 +7,8 @@
     "file": "notebook/projects/os/OUTLINE.md",
     "sha256": "sha256:e86cfd86e0ae6d833d9fcf32d35f96726e3941e5db8553e20910643586ee751f"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "SO00.1:intro.s01",

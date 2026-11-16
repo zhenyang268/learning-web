@@ -7,8 +7,8 @@
     "file": "notebook/projects/algo/algorithm/NOTES.md",
     "sha256": "sha256:4d756dff0ce28de4ac63f59505ebcf670a4a8712485b77b4d9f1aa78d2e2b6f7"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "AL01.2:intro.s01",

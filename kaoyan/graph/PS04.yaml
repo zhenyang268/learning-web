@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  PS04.0:
+    prereq: [PS03.3] # 期望、方差与协方差由随机变量及其函数的分布计算

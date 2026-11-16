@@ -5,10 +5,10 @@
   "title": "正定判定",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0602-正定判定.md",
-    "sha256": "sha256:3c1155436fc5679537580e3f4ad72d238c1996ed4b5ffff5d6e220a874395be4"
+    "sha256": "sha256:1b697c6a3c4a2ba1fe1a403fff6ff3b36f5b1c21e6bec9842dce3a260e524bba"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA06.2:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：抽象二次型用定义或合同于 $E$",
       "level": 2,
       "content": "**思路**：若 $A$ 可写成 $B^TB$、平方和或“对任意 $x$”的条件，先用定义：任取 $x\\ne 0$ 推 $x^TAx>0$。也可找可逆 $C$ 使 $A=C^TC$，或证 $A$ 与 $E$ 合同；题给恒成立条件时，常取特殊 $x$ 反证。\n\n**坑**：只在标准基向量上验证二次型取正；把半正定平方和当成正定，忽略可能有非零 $x$ 使各项同时为零；用“存在可逆 $C$ 使 $A=C^TC$”时忘记 $C$ 必须可逆。"
+    },
+    {
+      "id": "LA06.2:example.s01",
+      "type": "example",
+      "title": "例题：含参数正定的范围",
+      "level": 2,
+      "content": "**题目**：求 $a$ 使 $A=\\begin{pmatrix}1&a\\\\a&1\\end{pmatrix}$ 正定。\n\n**解答**：$A$ 实对称。顺序主子式要求 $1>0$ 且 $|A|=1-a^2>0$，所以 $-1<a<1$。端点 $a=\\pm1$ 使行列式为零，只能半正定，不能包含。"
     }
   ],
   "source_h1": "M1-LA-0602 正定判定",

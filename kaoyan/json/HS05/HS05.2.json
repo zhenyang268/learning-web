@@ -5,10 +5,10 @@
   "title": "复合与隐函数",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0502-复合与隐函数.md",
-    "sha256": "sha256:f48ceec0e8db7406ce60dde2a8b3c98c3595a3b96d7372339ee3d64b7c0ae0c3"
+    "sha256": "sha256:bb2d0ff5ebed9a3f08f2529b107b9212993bf53f740eff9a7b4b92b5b219abef"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS05.2:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：隐函数二阶导与混合偏导——先留一阶表达式，再整体求导",
       "level": 2,
       "content": "**思路**：第一步用隐函数求导得到 $y'$ 的表达式，尽量保留为含 $x,y$ 的分式；再对 $x$ 求导，遇到 $y$ 就乘 $y'$，最后把一阶 $y'$ 代回，化成只含 $x,y$ 的形式。若求 $z_{xy}$，先对 $x$ 求偏导得 $z_x$，再对 $y$ 求偏导，注意 $z_x$ 中仍含 $z$，而 $z$ 又是 $x,y$ 的函数。关键一步是“一阶结果不急着化简到底，先整体求导”。\n\n**坑**：对 $-\\dfrac{F_x}{F_y}$ 求导时漏掉商法则，只对分子求导；把 $y$ 当常数，忘记链式因子 $y'$；求二阶混合偏导时把 $z_x$ 中的 $z$ 当常数，漏掉 $z_y$ 这一层；代回 $y'$ 时把一阶表达式里的 $y$ 误写成常数。"
+    },
+    {
+      "id": "HS05.2:example.s01",
+      "type": "example",
+      "title": "例题：隐函数的一阶与二阶导",
+      "level": 2,
+      "content": "**题目**：由 $x^2+y^2=1$ 确定上半平面内的 $y=y(x)$，求在 $(0,1)$ 处的 $y'$ 与 $y''$。\n\n**解答**：两边求导得 $2x+2yy'=0$，故 $y'=-x/y$，在该点 $y'=0$。再求导得 $1+(y')^2+yy''=0$，代入 $x=0,y=1,y'=0$ 得 $y''=-1$。分母 $y\\ne0$ 正是此处隐函数求导的条件。"
     }
   ],
   "source_h1": "M1-HS-0502 复合与隐函数",

@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/os/408-OS-0203-同步与互斥.md",
     "sha256": "sha256:16689391c439dba80a2286f38f0b772577a8e1eb28dcffaf614c2923f7e2dfbd"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "OS02.3:intro.s01",

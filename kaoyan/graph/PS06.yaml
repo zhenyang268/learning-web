@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  PS06.0:
+    prereq: [PS04.2] # 统计量分布与抽样误差使用期望和方差

@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  EG02.1:
+    prereq: [EG01.1] # 调试工具结论需要可复现用例与对照测试

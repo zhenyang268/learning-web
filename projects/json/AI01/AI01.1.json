@@ -7,8 +7,8 @@
     "file": "notebook/projects/ai/OUTLINE.md",
     "sha256": "sha256:29a2047c3e1b490dea4a8ac56ff761ab6f871f940c518e7ae921e4510a3ccc17"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "AI01.1:body.s01",

@@ -23,6 +23,43 @@ export interface KbIndex {
   codes: Set<string>;
 }
 
+/**
+ * 稳定阅读顺序（2026-11 重排）。
+ *
+ * 现场（NM07.1）：DOM 里是 comparison → counterexample → statement → intuition → probe → viz，
+ * 于是读者**先读反例、后读陈述** —— 不知道陈述是什么，反例就只是噪音。
+ *
+ * 这里是**一条**顺序表，不是「按 type 排序再分 tab」，它只用在两处：
+ *   · `groupReadingRank` —— 卡片与卡片之间谁先谁后（`groupEntries` 末尾的稳定排序）；
+ *   · `readingOrder` —— 「更多」面板内并列词条的行序（`renderCard` 的 `more`）。
+ * tab 归属、组内成员、数据一条都没动。
+ * 未登记的类型（将来数据侧新增）一律排在 `MORE_TYPES` 之后，按原 entries 顺序 —— 不静默丢失。
+ *
+ * **只作用于 entry-card**：doc-card 走 `renderDocHtml`，作者的分章顺序原样保留
+ * （那些小节是连续文档，机械按 type 重排会把「考法 → 题」的上下文切断）。
+ */
+const READ_ORDER: string[] = [
+  'comparison', // 限定词：先给边界，再谈主张
+  'statement', // 陈述：主张本身
+  'intuition', // 直觉：为什么可信
+  'proof', // 证明 / 推导
+  'application', // 应用 / 扩展
+  'extension',
+  'example', // 例题
+  'viz', // 演示
+  'counterexample', // 反例：知道主张之后才有意义
+  'probe', // 检验题：最后自测
+];
+
+const READ_RANK = new Map(READ_ORDER.map((t, i) => [t, i]));
+
+/** 阅读序：登记过的按 READ_ORDER，未登记的排在最后（保原序，`a` 的次序靠数组稳定性） */
+function readingOrder(a: Entry, b: Entry): number {
+  const ra = READ_RANK.get(a.type) ?? READ_ORDER.length;
+  const rb = READ_RANK.get(b.type) ?? READ_ORDER.length;
+  return ra - rb;
+}
+
 const TAB_ORDER: Array<{ type: string; label: string }> = [
   { type: 'statement', label: '陈述' },
   { type: 'intuition', label: '直觉' },
@@ -33,10 +70,43 @@ const TAB_ORDER: Array<{ type: string; label: string }> = [
 
 // introduction 当前只出现在 doc-card/v1（走 renderDocHtml），entry-card 线暂无；
 // 列入兜底，防止将来数据侧引入该类型时词条静默丢失（不在任何 tab 就不渲染）。
-const MORE_TYPES = ['comparison', 'extension', 'counterexample', 'probe', 'viz', 'introduction'];
+//
+// `example`（2026-11-16 补）同理，但它**已经不只是兜底**：`READ_ORDER` 早已把它登记在
+// 「application / extension 之后、viz 之前」（例题要在主张讲完之后、演示之前读到），
+// 而这张表若漏了它，`byType.get('example')` 就在 `more` 里取不到 —— 该类型词条
+// 不进任何 tab、也不进 vizslot，渲染时**无声消失**（不报错、不占位）。
+// 数据侧目前 75 条 example 全在 doc-card/v1（走 renderDocHtml，不受此表影响），
+// entry-card 线一旦引入该类型就会撞上这个缺口，所以在此补齐。
+const MORE_TYPES = [
+  'comparison',
+  'extension',
+  'example',
+  'counterexample',
+  'probe',
+  'viz',
+  'introduction',
+];
 
 /** 「限定词拆解」= 灵魂词条，单独成块默认展开（TASKBOOK §8.4），不进 tab */
 const isQuantifiers = (e: Entry): boolean => slotOf(e) === 'quantifiers';
+
+/**
+ * 卡片组的阅读序：一个组由它的**最强主张**定位。
+ *
+ * 现场（NM07.1）：6 条词条分成 4 张卡（general.viz / variational-integrator /
+ * wrong-order / probe1）。`general.*` 是**按 id 顺序**先被 push 进数组的，于是
+ * 「演示槽位」排第一、「反例」排第二、真正的陈述排第三 —— 读者先看到反例。
+ *
+ * 修法不是按 type 把长文重排（那会毁掉作者章节序），而是给**每张卡**算一个
+ * 阅读档位 = 组内最强（rank 最小）的词条档位，再按它稳定排序：
+ *   限定词 → 陈述 → 直觉 → 证明 → 应用 → 例题 → viz → 反例 → 检验题
+ * 组内成员顺序与 tab 归属完全不动；只有「卡与卡之间」谁先谁后变了。
+ * 同档位保持原 entries 出现顺序（Array.prototype.sort 在现代引擎里稳定）。
+ */
+function groupReadingRank(group: EntryGroup): number {
+  const ranks = group.entries.map((e) => READ_RANK.get(e.type) ?? READ_ORDER.length);
+  return ranks.length ? Math.min(...ranks) : READ_ORDER.length;
+}
 
 /** subject 分组；`general.*` 每个词条独立成卡（否则整节会糊成一张） */
 export function groupEntries(file: EntryFile): EntryGroup[] {
@@ -61,7 +131,11 @@ export function groupEntries(file: EntryFile): EntryGroup[] {
       entries,
     });
   }
-  return groups;
+  // 稳定排序：只决定卡与卡的先后，不动组内顺序（见 groupReadingRank 的说明）
+  return groups
+    .map((g, i) => ({ g, i, rank: groupReadingRank(g) }))
+    .sort((a, b) => a.rank - b.rank || a.i - b.i)
+    .map(({ g }) => g);
 }
 
 /** 难度：优先读词条自带 difficulty；v2 契约未强制该字段，缺失时按结构确定性推导（并在 title 标明来源） */
@@ -209,8 +283,11 @@ function entryBlock(entry: Entry, ctx: RenderCtx, codes: Set<string>): string {
         ${gen ? `<span class="dim mono">${escapeHtml(gen)}</span>` : ''}
         ${
           // tex_ref 降级为悬停线索（DESIGN D26）：本站已与 .tex 解耦，
-          // 「A_analysis.tex:147–147」不该占每条词条的会标位置
-          tex ? `<span class="dim mono trace" title="${attrEscape(tex)}">⌾</span>` : ''
+          // 「A_analysis.tex:147–147」不该占每条词条的会标位置。
+          // 这里是 **HTML 属性语境**，必须用 escapeHtml：attrEscape 只防 CSS 选择器里的
+          // 引号/反斜杠，会把 `"` 转成 `\"` —— 在 HTML 属性里 `\` 不转义，引号照旧收尾，
+          // 后面跟 ` onmouseover=...` 就能跳出属性（tex_ref.file 是数据字段，不可信）。
+          tex ? `<span class="dim mono trace" title="${escapeHtml(tex)}">⌾</span>` : ''
         }
         ${linkChips(entry, codes)}
       </div>
@@ -255,7 +332,30 @@ export function renderCard(
   index: KbIndex,
   /** 难度由调用方算一次传进来（apply 里已经整组算过，避免每卡重复 difficultyOf） */
   diff?: { level: 1 | 2 | 3; source: 'data' | 'derived' },
+  /**
+   * 掌握度显示口径（2026-11-15 独立复核修复）：
+   *
+   *   · `derivedMastery: true` —— 掌握度**只读**（由自测派生），点击不写 mastery。
+   *     纯 entry-card 词条保持原行为（传 false / 不传）。
+   *   · `derivedLevel: 0–5` —— 派生徽标**显示用的级别**（自测级别）。
+   *     原先这里仍调 `masteryOf(group.key)` 读**旧手动值**：用户以前点过徽标留下的
+   *     `mastery[cardKey]` 会让卡片徽标显示 L3、而侧栏/右栏按自测显示 L0 —— 同一单元两个数。
+   *     现在由 app 传派生级别进来（与 `masteryByCode` 同一口径），正文与侧栏一致。
+   *   · 未载入正文的 `kaoyan-kp` / `project` 单元也传 `derivedMastery: true` 且**不传**
+   *     `derivedLevel`：自测未提供证据 → 显示 L0，不回落旧手动值（与现有设计一致）。
+   */
+  opts?: {
+    derivedMastery?: boolean;
+    /** 派生掌握度级别（0–5）；只在 `derivedMastery` 为真时有意义 */
+    derivedLevel?: number;
+    /**
+     * 派生徽标就地刷新时「按哪个单元的自测级别算」（默认 `file.code`）。
+     * 单独成卡的 `general.*` 词条虽然卡 key 是词条 id，级别仍属于整个单元。
+     */
+    unitCode?: string;
+  },
 ): RenderedCard {
+  const derived = opts?.derivedMastery === true;
   const card = document.createElement('div');
   card.className = 'card';
   card.dataset.group = group.key;
@@ -270,13 +370,24 @@ export function renderCard(
     list.push(e);
     byType.set(e.type, list);
   }
-  const more = MORE_TYPES.flatMap((t) => byType.get(t) ?? []);
+  /**
+   * 「更多」面板里的词条按**阅读序**排，而不是按 MORE_TYPES 的声明序。
+   *
+   * 现场（NM07.1）：MORE_TYPES 把 counterexample 写在 statement 之前，于是 6 条词条
+   * 分成 4 张卡时，读者先看到「反例：先变分再离散」，再看到陈述 —— 顺序是反的。
+   * 这里只改**读序**：数据一条没动，tab 归属也没变（comparison/counterexample/probe/viz
+   * 仍在「更多」里），只是同一面板内的行序按 READ_ORDER 走。
+   */
+  const more = MORE_TYPES.flatMap((t) => byType.get(t) ?? []).sort(readingOrder);
   const tabs = TAB_ORDER.filter(({ type }) =>
     type === '__more' ? more.length > 0 : (byType.get(type)?.length ?? 0) > 0,
   );
   const vizEntries = group.entries.filter((e) => e.viz || e.type === 'viz');
 
-  const mastery = masteryOf(group.key);
+  // 派生口径下**不读** `masteryOf(group.key)`：那是旧手动值，会让正文与侧栏/右栏
+  // 显示两个不同的数（独立复核发现）。app 传进来的 `derivedLevel` 才是自测级别；
+  // 未载入正文的自测型单元不传它 → 0（自测未提供证据）。
+  const mastery = derived ? clampLevel(opts?.derivedLevel ?? 0) : masteryOf(group.key);
   const diffInfo = diff ?? difficultyOf(group);
 
   card.innerHTML = `
@@ -287,10 +398,20 @@ export function renderCard(
         diffInfo.source === 'data' ? '词条字段' : '由结构推导 · 词条未提供 difficulty'
       }）"></span>
       <h2>${renderInline(group.label, ctx)}${group.subject !== 'general' ? ` <span class="dim mono">${escapeHtml(group.subject)}</span>` : ''}</h2>
-      <div class="mastery" data-mastery="${escapeHtml(group.key)}" title="点击 +1（0–5 循环）；数据契约无 mastery 字段，初值 0">
-        L${mastery} <span class="bar"><i style="width:${(mastery / 5) * 100}%"></i></span>
+      <div class="mastery${derived ? ' derived' : ''}" data-mastery="${escapeHtml(group.key)}"
+        title="${
+          derived
+            ? '掌握度由自测推出（L1–L5 逐级达标）；手动 +1 已停用，去自测区作答'
+            : '点击 +1（0–5 循环）；数据契约无 mastery 字段，初值 0'
+        }">
+        ${masteryHtml(mastery)}
       </div>
     </div>
+    ${/* 限定词块**先于**陈述正文：阅读顺序「限定词 → 陈述 → 直觉 → …」的第一段。
+         原先它排在 tabs/pane 之后，读者读完备主张才看到「五个限定词怎么翻车」，
+         而限定词表的第一列恰恰是「去掉它会怎样」，属于前置条件。
+         它仍在同一张卡内（不拆卡），Anchors/点击行为不变。*/ ''}
+    ${renderQuantifiers(group, ctx)}
     ${
       tabs.length
         ? `<div class="tabs">
@@ -311,7 +432,6 @@ export function renderCard(
       .join('')}`
         : ''
     }
-    ${renderQuantifiers(group, ctx)}
     <div class="vizslot"></div>`;
 
   function paneBody(entries: Entry[]): string {
@@ -340,7 +460,9 @@ export function renderCard(
   enhanceQuantTable(card, group.entries.find(isQuantifiers), tools);
   wireTabs(card);
   wireRefs(card, file, ctx, index.codes);
-  wireMastery(card, group);
+  wireMastery(card, group, derived);
+  // 记录「这张卡属于哪个单元」：自测作答后 `patchCardMastery` 靠它重算派生徽标
+  if (derived) derivedCards.set(card, opts?.unitCode ?? file.code ?? '');
   const viz = mountVizSlots(card, vizEntries);
 
   return { el: card, viz };
@@ -386,6 +508,9 @@ function enhanceQuantTable(card: HTMLElement, quant: Entry | undefined, tools: R
     if (id) {
       tr.classList.add('qrow');
       tr.setAttribute('data-cx', id);
+      tr.setAttribute('role', 'button');
+      tr.setAttribute('tabindex', '0');
+      tr.setAttribute('aria-expanded', 'false');
       (cells[1] ?? cells[0])?.insertAdjacentHTML(
         'beforeend',
         '<span class="caret" aria-hidden="true">▸</span>',
@@ -424,14 +549,22 @@ function wireTabs(card: HTMLElement): void {
 
 /** 同文件词条引用 → 卡内定位；若引用出现在限定词表某行，则在该行下**就地展开**词条 */
 function wireRefs(card: HTMLElement, file: EntryFile, ctx: RenderCtx, codes: Set<string>): void {
-  card.addEventListener('click', (ev) => {
-    const node = (ev.target as HTMLElement).closest<HTMLElement>('[data-ref]');
+  const activate = (target: HTMLElement) => {
+    const node = target.closest<HTMLElement>('[data-ref]');
     if (node?.dataset.ref) {
       openRef(card, file, ctx, codes, node);
       return;
     }
-    const row = (ev.target as HTMLElement).closest<HTMLTableRowElement>('tr.qrow');
+    const row = target.closest<HTMLTableRowElement>('tr.qrow');
     if (row?.dataset.cx) expandRow(file, ctx, codes, row);
+  };
+  card.addEventListener('click', (ev) => activate(ev.target as HTMLElement));
+  card.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    const row = (ev.target as HTMLElement).closest<HTMLTableRowElement>('tr.qrow');
+    if (!row) return;
+    ev.preventDefault();
+    activate(row);
   });
 }
 
@@ -466,6 +599,7 @@ function expandRow(
   const next = row.nextElementSibling as HTMLElement | null;
   if (next?.classList.contains('detail')) {
     row.classList.remove('open');
+    row.setAttribute('aria-expanded', 'false');
     next.remove();
     return;
   }
@@ -474,6 +608,7 @@ function expandRow(
   const entry = file.entries.find((e) => e.id === row.dataset.cx);
   if (!entry) return;
   row.classList.add('open');
+  row.setAttribute('aria-expanded', 'true');
   const tr = document.createElement('tr');
   tr.className = 'detail';
   const cols = row.querySelectorAll('td').length || 4;
@@ -531,14 +666,63 @@ function openRef(
   if (code && code !== (file.code ?? '')) location.hash = `#/${code}`;
 }
 
-function wireMastery(card: HTMLElement, group: EntryGroup): void {
+/**
+ * 当前卡使用**派生**掌握度（自测推出）：就地刷新徽标时要按自测算，不能读旧手动值。
+ *
+ * 值是「这张卡代表哪个**单元**」（比 group.key 更稳：`general.*` 卡的 key 是词条 id，
+ * 但派生级别来自单元自测，按单元代号算才对）。
+ */
+const derivedCards = new WeakMap<HTMLElement, string>();
+
+/**
+ * 自测作答后，就地重写本页所有派生卡片的掌握度徽标（不重建卡片、不重跑 KaTeX）。
+ *
+ * 为什么必须有：用户点「能答」→ 自测级别变了，但正文卡片徽标原先只在渲染时算一次，
+ * 于是「侧栏 L2、正文还写着 L1」。`levelOf` 由调用方给（与 `masteryByCode` 同一口径），
+ * 外面那层 @param 说明保持与 app 的约定一致。
+ */
+export function patchCardMastery(host: ParentNode, levelOf: (code: string) => number): void {
+  host.querySelectorAll<HTMLElement>('.card').forEach((card) => {
+    const unit = derivedCards.get(card);
+    if (unit === undefined) return;
+    const el = card.querySelector<HTMLElement>('.mastery[data-mastery]');
+    if (!el) return;
+    el.innerHTML = masteryHtml(clampLevel(levelOf(unit)));
+  });
+}
+
+/** 派生级别一律钳到 0–5 整数：越界值（NaN / 2.5 / 9）不该写进徽标 */
+function clampLevel(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(5, Math.round(value)));
+}
+
+/** 徽标与环的 HTML：渲染与就地更新共用一份，避免两处格式漂移 */
+function masteryHtml(level: number): string {
+  return `L${level} <span class="bar"><i style="width:${(level / 5) * 100}%"></i></span>`;
+}
+
+function wireMastery(card: HTMLElement, group: EntryGroup, readOnly = false): void {
   const mEl = card.querySelector('[data-mastery]') as HTMLElement;
+  if (readOnly) {
+    // 自测型单元（数一 KP / 工程线项目）：**自测是掌握度的唯一写入口**。
+    // 这里不发任何 mastery 写事件，也不 dispatch kb:mastery —— 否则点一下徽标
+    // 就能绕过作答把 frontier 抬上去，与自测记录互相打架。
+    //
+    // 注意**不要**删 `data-mastery`：`patchCardMastery` 靠它定位徽标元素做就地刷新
+    // （原先删掉之后，点「能答」正文徽标就再也刷不动了）。只读性由「不挂 click」
+    // 保证，与属性无关；`data-derived="1"` 让外部断言与样式能区分派生徽标。
+    mEl.classList.add('derived');
+    mEl.dataset.derived = '1';
+    mEl.title = '本项目/考点的掌握度由下方自测推出（L1–L5 逐级达标）；手动 +1 已停用，去自测区作答';
+    return;
+  }
   mEl.addEventListener('click', () => {
     // 0–5 循环（title 承诺的语义）：+1 后对 6 取模，L5 再点回 L0。
     // 不走 bumpMastery（它内部钳位在 5，会把用户永久卡死在最高档）。
     const next = (masteryOf(group.key) + 1) % 6;
     setMastery(group.key, next);
-    mEl.innerHTML = `L${next} <span class="bar"><i style="width:${(next / 5) * 100}%"></i></span>`;
+    mEl.innerHTML = masteryHtml(next);
     document.dispatchEvent(new CustomEvent('kb:mastery'));
   });
 }

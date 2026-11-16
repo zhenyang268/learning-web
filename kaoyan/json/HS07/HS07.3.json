@@ -5,10 +5,10 @@
   "title": "傅里叶级数",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0703-傅里叶级数.md",
-    "sha256": "sha256:ebd45574d77ea876b5355c4a1004a6e617dc7627e95d0fead569248936ce61fa"
+    "sha256": "sha256:19eebefac2434af07139dcb151dc8d16ab15cb907d3210bfd6cc4b4fc008e674"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS07.3:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：题干给出展开式反求某点和，或求某个系数的值",
       "level": 2,
       "content": "**思路**：第一步不要从头算积分，先看所求的点与已给表达式的关系：若问的是和，回到考法 1 的“连续/间断”判断；若问的是某个 $a_n$ 或 $b_n$，用系数的积分定义配合奇偶性把被积函数化简，比把整个级数展开展开快得多。\n\n**坑**：见了“求 $S(x_0)$”就去算全部系数再求和，算到一半发现是无穷和而卡死；另一类是把 $S(x_0)$ 与 $f(x_0)$ 无条件等同，忘了在间断点两者相差一个左右极限平均。"
+    },
+    {
+      "id": "HS07.3:example.s01",
+      "type": "example",
+      "title": "例题：端点处的傅里叶级数和",
+      "level": 2,
+      "content": "**题目**：将 $f(x)=x$（$-\\pi<x<\\pi$）作周期 $2\\pi$ 延拓，其傅里叶级数在 $x=\\pi$ 处的和是多少？\n\n**解答**：周期延拓在 $\\pi$ 处跳跃，$f(\\pi^-)=\\pi$，而右极限来自左端，$f(-\\pi^+)=-\\pi$。由狄利克雷定理，级数和为 $\\frac{\\pi+(-\\pi)}2=0$，不能直接代 $f(\\pi)$。"
     }
   ],
   "source_h1": "M1-HS-0703 傅里叶级数",

@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  PS08.0:
+    prereq: [PS06.2, PS07.3] # 检验统计量与置信区间共用抽样分布和分位数

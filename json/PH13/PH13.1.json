@@ -239,38 +239,6 @@
       "status": "drafted"
     },
     {
-      "id": "PH13.1:superposition.proof",
-      "type": "proof",
-      "subject": "superposition",
-      "title": "推导骨架：为什么叠加原理是「线性」的（三条依据）",
-      "keywords": [
-        "第一步：薛定谔方程是线性的 ⇒ 解的线性组合仍是解",
-        "第二步：实验（双缝）证实干涉 ⇒ 概率不是简单相加",
-        "第三步：概率 = |振幅|² ⇒ 交叉项正是干涉",
-        "第四步：线性 ⇒ 态空间是复向量空间（而非实概率单纯形）",
-        "易错点：把混合当叠加（概率相加 vs 振幅相加）",
-        "数值：|+⟩ 对 σx 给 +1；50/50 混合给 0"
-      ],
-      "tex_ref": {
-        "file": "notebook/F_quantum.tex",
-        "line_start": 10,
-        "line_end": 16
-      },
-      "fill_hint": "四步骨架；第三步给干涉项的显式表达式；第四步说明「为什么必须复向量空间」；数值给叠加 vs 混合的对照。",
-      "content": "**推导骨架**（四步，每步给理由）。目标：说明「叠加」为什么必须**线性**。\n\n**第一步：方程的线性。** 薛定谔方程（`PH15.1`）\n\n$$i\\hbar\\partial_t|\\psi\\rangle=\\hat H|\\psi\\rangle$$\n\n是**线性方程**（$\\hat H$ 不依赖 $\\psi$）。**所以**：若 $|\\psi_1\\rangle$、$|\\psi_2\\rangle$ 是解，则 $\\alpha|\\psi_1\\rangle+\\beta|\\psi_2\\rangle$ 也是解。\n\n**理由**：这是「线性方程解的线性组合仍是解」这一普遍性质。\n\n**第二步：双缝实验。** 只开缝 1（关缝 2）时屏上强度 $I_1$；只开缝 2 时 $I_2$；**两缝同开时 $I\\neq I_1+I_2$**（出现干涉条纹）。\n\n**理由**：这说明「概率不能简单相加」——**必须有交叉项**。\n\n**第三步：概率 = 振幅平方。** 把态写成 $|\\psi\\rangle=\\alpha|\\psi_1\\rangle+\\beta|\\psi_2\\rangle$，则\n\n$$P=\\lvert\\alpha+\\beta\\rvert^{2}=\\lvert\\alpha\\rvert^{2}+\\lvert\\beta\\rvert^{2}+2\\mathrm{Re}(\\bar\\alpha\\beta).$$\n\n**最后一项就是干涉项**：它可以是正（相长）或负（相消）✅。\n\n**第四步：线性 ⇒ 复向量空间。** 若「叠加」只是「概率相加」（$P=P_1+P_2$），态空间就是**实概率单纯形**（只有一个自由度：$p$）。**而实验要求交叉项** → 必须保留**相位** → 态空间必须是**复**向量空间。\n\n**数值校核（这条能把上面全串起来）**：\n\n| 态 | $\\langle\\sigma_z\\rangle$ | $\\langle\\sigma_x\\rangle$ |\n|---|---|---|\n| $\\vert+\\rangle=(\\vert0\\rangle+\\vert1\\rangle)/\\sqrt2$（叠加） | $0$ | $+1$【已核验:1|1】 |\n| $50/50$ 混合 | $0$ | $0$【已核验:0|0】 |\n\n**$\\sigma_z$ 相同、$\\sigma_x$ 不同**——这就是「叠加」（有相位信息）与「混合」（无相位信息）的可观测差别。**`PH13.1:hilbert-space.intuition` 的 Bloch 球上，前者在球面、后者在球心。**\n\n**依赖链**：薛定谔方程线性（第一步）→ 实验的干涉（第二步）→ 概率的交叉项（第三步）→ 复向量空间（第四步）。\n\n**易错点**：\n\n1. **把混合当叠加**：写 $|\\psi\\rangle=\\frac{1}{\\sqrt2}(|0\\rangle+|1\\rangle)$ 时以为是「一半一半」——**不是**（它还有相位结构）；\n2. **用实向量空间**：会丢掉全部干涉（复数是本质的，不是记号便利）；\n3. **以为叠加是「同时处于两个态」**：更准确的图像是「态是方向，叠加是方向相加」（`PH13.1:hilbert-space.intuition`）。",
-      "links": [
-        "PH14.1",
-        "PH15.1",
-        "CG21.1"
-      ],
-      "generated_by": {
-        "model": "glm-5.3-flashx",
-        "date": "pending",
-        "reviewed": false
-      },
-      "status": "drafted"
-    },
-    {
       "id": "PH13.1:probe.probe1",
       "type": "probe",
       "subject": "probe",

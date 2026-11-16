@@ -5,10 +5,10 @@
   "title": "偏导与全微分",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0501-偏导与全微分.md",
-    "sha256": "sha256:a16845c116b179d89fc90925860c023e4f07250aa8ce8b534f8bbd64363e4559"
+    "sha256": "sha256:b93a06101915d6c6967e6fffa253c2f1fff7b37e620ebfdee67309c84a9d7461"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS05.1:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：全微分形式与近似计算——先确认可微再写 $dz$",
       "level": 2,
       "content": "**思路**：第一步确认函数在点可微（或题设已给可微），再写\n$$dz=f_x(x_0,y_0)\\,dx+f_y(x_0,y_0)\\,dy.$$\n做近似计算时，把所求量写成 $f(x_0+\\Delta x,y_0+\\Delta y)$，取 $x_0,y_0$ 为便于计算的点，$\\Delta x,\\Delta y$ 为小增量，用\n$$f(x_0+\\Delta x,y_0+\\Delta y)\\approx f(x_0,y_0)+f_x\\Delta x+f_y\\Delta y.$$\n关键一步是“选点 + 定增量”，并保证 $\\Delta x,\\Delta y$ 足够小。\n\n**坑**：在不可微点直接写全微分表达式，把形式上的 $f_xdx+f_ydy$ 当成 $dz$；把 $\\Delta z$ 与 $dz$ 混为一谈，忘记 $\\Delta z=dz+o(\\rho)$，在需要估计误差时漏掉高阶项；近似计算中把增量符号写反，导致修正项方向错误。"
+    },
+    {
+      "id": "HS05.1:example.s01",
+      "type": "example",
+      "title": "例题：偏导与全微分",
+      "level": 2,
+      "content": "**题目**：设 $z=x^2+y^2$，求在点 $(1,2)$ 处的两个偏导与全微分。\n\n**解答**：$z_x=2x$，$z_y=2y$，故在该点 $z_x=2$、$z_y=4$。多项式处处可微，因此 $dz=2\\,dx+4\\,dy$；这里 $dx,dy$ 是自变量的增量。"
     }
   ],
   "source_h1": "M1-HS-0501 偏导与全微分",

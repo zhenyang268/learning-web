@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/drill/math1/02-一元积分与定积分应用.md",
     "sha256": "sha256:f7a21d553f8e0921395866af1007e002bdc8730f074ed09b50ba92201c2142d0"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "DM02.1:intro.s01",

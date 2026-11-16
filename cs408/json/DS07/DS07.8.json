@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/ds/408-DS-0708-算法比较.md",
     "sha256": "sha256:cc8e40ad87b518d0bb68e250de95f89bc9f16f6470c7d58e4dc53a1994352bfd"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "DS07.8:intro.s01",

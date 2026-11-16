@@ -5,10 +5,10 @@
   "title": "联合与边缘",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0301-联合与边缘.md",
-    "sha256": "sha256:8e22e4d68243f90c0386dee8cf5d30d628a965c96c2e322aea4a936caf29464f"
+    "sha256": "sha256:b4be61d13f1284aac5fcdcb76e4705fd3690d192d0c10183e0ae71b684bcce25"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS03.1:intro.s01",
@@ -37,6 +37,13 @@
       "title": "考法 3：二维均匀分布下的几何概率",
       "level": 2,
       "content": "**思路**：第一步识别“均匀”是对哪个区域 $D$ 而言，先求出 $D$ 的面积 $S_D$，写出\n$$f(x,y)=\\begin{cases}\\dfrac{1}{S_D},&(x,y)\\in D\\\\0,&\\text{其他}\\end{cases}$$\n再求事件对应的子区域 $A$，概率就是面积比 $S_{A\\cap D}/S_D$。若目标区域由 $x+y\\le z$、$|x|+|y|\\le z$ 等边界围成，先画图定交区域，再按 $z$ 的取值分段算面积。\n\n**坑**：只算目标区域面积后直接乘密度值，忘记密度值本身含 $1/S_D$，等价于漏除总面积；看到 $D$ 是正方形就默认 $X,Y$ 独立，实际上斜线截出的三角形区域、圆盘区域都不是乘积型支撑；分段临界点不画图，凭直觉把面积公式套到所有 $z$ 上。"
+    },
+    {
+      "id": "PS03.1:example.s01",
+      "type": "example",
+      "title": "例题：三角形支撑上的边缘密度",
+      "level": 2,
+      "content": "**题目**：$(X,Y)$ 在 $D=\\{0<x<y<1\\}$ 上均匀分布，求联合密度与 $f_X(x)$。\n\n**解答**：$D$ 的面积为 $\\frac12$，故联合密度为 $2$（区域内），区域外为 $0$。固定 $x\\in(0,1)$ 时 $y$ 从 $x$ 到 $1$，所以 $f_X(x)=\\int_x^12\\,dy=2(1-x)$，其余为 $0$。"
     }
   ],
   "source_h1": "M1-PS-0301 联合与边缘",

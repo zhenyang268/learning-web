@@ -5,10 +5,10 @@
   "title": "三重积分",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0602-三重积分.md",
-    "sha256": "sha256:c77feb60946970f67e3f78de15e73c0a9a314184944dbc18a3750d1878b8caec"
+    "sha256": "sha256:3a86a7233fe26bfc823b1cfc75bb912afbe6a4e356eea7c4603dc3c0f459ee57"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS06.2:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：球面坐标——球、球壳、锥与球的组合",
       "level": 2,
       "content": "**思路**：第一步看两件事：立体是否以原点为心（球、球壳、锥顶在原点），被积函数是否含 $x^2+y^2+z^2$。代换 $x=\\rho\\sin\\varphi\\cos\\theta,\\ y=\\rho\\sin\\varphi\\sin\\theta,\\ z=\\rho\\cos\\varphi$，$dV=\\rho^2\\sin\\varphi\\,d\\rho\\,d\\varphi\\,d\\theta$。关键一步是用“过 $z$ 轴的半平面与立体的交”定 $\\varphi$：锥面 $z=\\sqrt{x^2+y^2}$ 对应 $\\varphi=\\frac{\\pi}{4}$，上半球对应 $\\varphi\\in\\left[0,\\frac{\\pi}{2}\\right]$，整球是 $\\left[0,\\pi\\right]$。\n\n**坑**：把 $\\varphi$ 与 $\\theta$ 的角色互换——$\\varphi$ 是与 $z$ 轴正向的夹角、$\\theta$ 是 $xOy$ 面上的极角，混了之后会把锥面条件错写成 $\\theta=\\frac{\\pi}{4}$，$\\theta$ 的范围随之全错。第二处：漏掉 $\\rho^2\\sin\\varphi$ 中的 $\\sin\\varphi$，只写 $\\rho^2$；$\\varphi$ 跨过 $\\frac{\\pi}{2}$ 时 $\\sin\\varphi$ 恒正，这个因子不会因为符号问题被“蒙对”。"
+    },
+    {
+      "id": "HS06.2:example.s01",
+      "type": "example",
+      "title": "例题：球坐标求单位球体积",
+      "level": 2,
+      "content": "**题目**：用球面坐标计算单位球的体积。\n\n**解答**：范围为 $0\\le\\rho\\le1$、$0\\le\\varphi\\le\\pi$、$0\\le\\theta\\le2\\pi$，体积元为 $\\rho^2\\sin\\varphi\\,d\\rho d\\varphi d\\theta$。因此 $V=\\int_0^{2\\pi}d\\theta\\int_0^\\pi\\sin\\varphi\\,d\\varphi\\int_0^1\\rho^2d\\rho=2\\pi\\cdot2\\cdot\\frac13=\\frac{4\\pi}{3}$。"
     }
   ],
   "source_h1": "M1-HS-0602 三重积分",

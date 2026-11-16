@@ -5,10 +5,10 @@
   "title": "逆与伴随",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0202-逆与伴随.md",
-    "sha256": "sha256:6d432d4c1043207c899f6ffadb062b009cf33987cd843394cd40b0ac4fcd823d"
+    "sha256": "sha256:9e21c6b53e574a531f6b80703c0837f02772844f3714610e492d353bfa070669"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA02.2:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：由 $A^*$ 与 $A$ 的关系反求参数或行列式",
       "level": 2,
       "content": "**题目（常见变形）**：给 $A^*$ 的某个元素、$\\lvert A^*\\rvert$ 或 $A^*=\\lambda A$ 等条件，求参数或 $\\lvert A\\rvert$。\n\n**思路**：第一步把条件统一到 $AA^*=\\lvert A\\rvert I$ 或 $A^*=\\lvert A\\rvert A^{-1}$，先判断 $A$ 是否可逆。若给 $A^*$ 的具体矩阵，先用 $A^*$ 的秩或行列式反推 $A$ 的秩、$\\lvert A\\rvert$，再代回 $A=\\lvert A\\rvert(A^*)^{-1}$ 检验。若给 $A^*=\\lambda A$，先把 $\\lambda$ 与 $\\lvert A\\rvert$ 分开，不要混成一个量。\n\n**坑**：看到 $A^*$ 可逆就误判成 $A$ 一定可逆而直接除；看到 $A^*=\\lambda A$ 就误判成 $\\lambda=\\lvert A\\rvert$，或由 $A^*$ 反求 $A$ 时漏掉 $\\lvert A\\rvert$ 的符号与幂次。"
+    },
+    {
+      "id": "LA02.2:example.s01",
+      "type": "example",
+      "title": "例题：由行列式与伴随求逆",
+      "level": 2,
+      "content": "**题目**：设 $A=\\operatorname{diag}(2,1)$，求 $A^*$ 与 $A^{-1}$。\n\n**解答**：$|A|=2$，代数余子式转置得 $A^*=\\operatorname{diag}(1,2)$。因此 $A^{-1}=A^*/|A|=\\operatorname{diag}(\\frac12,1)$，可直接用 $AA^{-1}=I$ 复核。"
     }
   ],
   "source_h1": "M1-LA-0202 逆与伴随",

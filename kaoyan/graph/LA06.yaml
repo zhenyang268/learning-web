@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  LA06.0:
+    prereq: [LA05.3] # 正交变换化标准形直接使用实对称矩阵对角化

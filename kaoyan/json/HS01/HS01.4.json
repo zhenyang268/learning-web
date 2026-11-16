@@ -5,10 +5,10 @@
   "title": "连续与间断",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0104-连续与间断.md",
-    "sha256": "sha256:99ea3cd33826d57894e583bce20066d2d4d3771bd79c3382bb1982da74cb51e2"
+    "sha256": "sha256:04d9545d371acffd4828b02dd2f5923a301521814c4ce6c820c4ccdbc91845d3"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS01.4:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：连续性作为求极限的搬运工具",
       "level": 2,
       "content": "**变式 1（$\\lim f(g(x))$）**\n\n**思路**：第一步先算内层 $g$ 的极限 $a$，再检查外层 $f$ 在 $a$ 处是否连续；连续才可把极限搬进函数号内写成 $f(a)$。\n\n**坑**：外层是取整、符号函数、$e^{1/u}$ 这类在 $a$ 处不连续的函数，仍直接代入；内层极限是 $\\infty$ 时套用「$f(\\infty)$」。"
+    },
+    {
+      "id": "HS01.4:example.s01",
+      "type": "example",
+      "title": "例题：可去间断与连续延拓",
+      "level": 2,
+      "content": "**题目**：设 $f(x)=\\frac{\\sin x}{x}$（$x\\ne0$），$f(0)=a$。问 $a$ 为何值时 $f$ 在 $0$ 处连续？\n\n**解答**：$x\\ne0$ 时表达式连续，且 $\\lim_{x\\to0}\\frac{\\sin x}{x}=1$。连续要求函数值等于极限，故 $a=1$。若 $a\\ne1$，原点是可去间断点，而不是无穷间断点。"
     }
   ],
   "source_h1": "M1-HS-0104 连续与间断",

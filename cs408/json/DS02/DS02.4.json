@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/ds/408-DS-0204-串与模式匹配.md",
     "sha256": "sha256:a434123bf925a49ed09ecfba59d77edbfc9e12a9b589f1e322b697e9083c2706"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "DS02.4:intro.s01",

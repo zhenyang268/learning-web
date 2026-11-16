@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  DM03.1:
+    prereq: [HS03.0, HS05.0, HS06.0] # 条件极值用 HS05 的拉格朗日，三重积分与雅可比换元用 HS06，含参积分求导回到 HS03

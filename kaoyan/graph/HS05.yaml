@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  HS05.0:
+    prereq: [HS02.1, HS04.1] # 偏导推广一元导数，梯度与方向使用向量运算

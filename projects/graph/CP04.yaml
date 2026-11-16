@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CP04.1:
+    prereq: [LG01.1, CP01.1] # 编译器需要语言语义与目标 ABI，不要求先造 CPU

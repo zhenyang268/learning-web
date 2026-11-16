@@ -7,8 +7,8 @@
     "file": "notebook/projects/cpu/OUTLINE.md",
     "sha256": "sha256:9d22e893fce0986a0947e678d131b9e29d0b40f93aa9d22583844f963e0c6381"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "CP00.1:intro.s01",

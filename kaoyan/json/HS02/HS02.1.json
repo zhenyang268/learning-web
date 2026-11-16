@@ -5,10 +5,10 @@
   "title": "导数与微分",
   "src": {
     "file": "notebook/kaoyan/note/math1/hs/M1-HS-0201-导数与微分.md",
-    "sha256": "sha256:9f734969cd79e9d0097d0351bc09f078ab842d976a62f97f3392ceae5f61f995"
+    "sha256": "sha256:fff419dd7c82b13f8ff5b7c45ae2a0f484191748288db8e37a44de3102b078f4"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "HS02.1:intro.s01",
@@ -51,6 +51,13 @@
       "title": "考法 5：用导数定义反求极限，或求 $f^{(n)}(0)$",
       "level": 2,
       "content": "**思路**：把待求极限凑成 $\\dfrac{f(x)-f(x_0)}{x-x_0}$ 的标准形状：先在分子里加减同一项造出 $f(x_0)$，再把多余因子提到极限号外。第一步是**对齐增量**：分母是 $x-x_0$、$\\sin x$、$x^2$ 还是 $2x$，分子里的 $f$ 增量必须与之同一个量。\n\n**坑**：分子里是 $f(x^2)-f(0)$ 而分母是 $x$，直接套 $f'(0)$ 而漏掉补偿因子 $\\dfrac{f(x^2)-f(0)}{x^2}\\cdot\\dfrac{x^2}{x}$。第二种常见误判：极限里出现 $f(1-\\cos x)-f(0)$，把增量当成 $x$ 而不是 $1-\\cos x$。\n\n---"
+    },
+    {
+      "id": "HS02.1:example.s01",
+      "type": "example",
+      "title": "例题：绝对值函数在分界点的可导性",
+      "level": 2,
+      "content": "**题目**：判断 $f(x)=|x|$ 在 $x=0$ 处是否可导。\n\n**解答**：函数在 $0$ 处连续，但左导数为 $\\lim_{x\\to0^-}\\frac{-x}{x}=-1$，右导数为 $\\lim_{x\\to0^+}\\frac{x}{x}=1$。左右导数不等，所以不可导。这里用的是导数定义，而不是分别求导后比较导函数极限。"
     }
   ],
   "source_h1": "M1-HS-0201 导数与微分",

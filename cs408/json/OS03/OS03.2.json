@@ -7,8 +7,8 @@
     "file": "notebook/kaoyan/note/408/os/408-OS-0302-虚拟内存管理.md",
     "sha256": "sha256:002540fb540c14474bd651328a2900270e6f03068513b8426f8193ce6abb5687"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "OS03.2:intro.s01",

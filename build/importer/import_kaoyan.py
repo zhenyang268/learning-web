@@ -6,7 +6,7 @@
 - 真题：一年一个单元（`EX<yy>.1`），缺图清单 `EX00.1`
 - 拔高：一条题线一个单元（408 `DL<n>.1` / 数一 `DM<n>.1`）
 - 速学：一科一个单元（`QK01`–`QK07`）
-- 分层：`SY01.1`（`syllabus/tiers.md`，两科共用，放 408 根）
+- 分层：`SY01.1`（`syllabus/tiers.md`，两科各放一份同源镜像）
 
 用法：uv run python build/importer/import_kaoyan.py
 """
@@ -277,10 +277,11 @@ def main() -> int:
     r408 = import_book("408", "kaoyan/syllabus/408.md", cs408, commit, dirty)
     r1 = import_book("M1", "kaoyan/syllabus/math1.md", math1, commit, dirty)
 
-    # 分层表两科共用，放 408 根
+    # 分层表两科共用同一源，各站各放一份镜像，避免数一用户必须跨站查口径
     tiers = "kaoyan/syllabus/tiers.md"
-    write_unit(cs408, plain_unit(tiers, "SY01.1", "考点分层（T1/T2/T3）", {"kind": "tiers"}), commit, dirty)
-    r408["units"] += 1
+    for root, report in ((cs408, r408), (math1, r1)):
+        write_unit(root, plain_unit(tiers, "SY01.1", "考点分层（T1/T2/T3）", {"kind": "tiers"}), commit, dirty)
+        report["units"] += 1
 
     print(f"408  ：章 {r408['chapters']} · 考点 {r408['kp']} · 单元 {r408['units']}")
     print(f"数一 ：章 {r1['chapters']} · 考点 {r1['kp']} · 单元 {r1['units']}")

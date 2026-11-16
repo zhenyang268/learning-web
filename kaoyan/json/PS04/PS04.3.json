@@ -5,10 +5,10 @@
   "title": "矩与常用数字特征",
   "src": {
     "file": "notebook/kaoyan/note/math1/ps/M1-PS-0403-矩与常用数字特征.md",
-    "sha256": "sha256:a548c3f5cad9b16fd19e557ca1b03e7cc40d5b775f009d42c1caa7f4cf021912"
+    "sha256": "sha256:01eed6f00283c3627841482e51ecc09ca0f2d7b4cd62ddf4f0d87b1ef8244fc4"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "PS04.3:intro.s01",
@@ -37,6 +37,13 @@
       "title": "考法 3：由已知数字特征反求参数或未知矩",
       "level": 2,
       "content": "**思路**：第一步把题给的 $E(X)$、$D(X)$ 或某阶矩写成含参数的方程，再利用 $D(X)=E(X^2)-[E(X)]^2$ 建立第二式。若分布类型已定，先对号入座列出该分布的标准期望、方差，再解参数或回代求未知矩；若只给部分矩，先判断还缺哪一个低阶矩。\n\n**坑**：只用一个方程就定参数，忽略方差或二阶矩给出的第二个约束；看到均值与方差相等就误判为泊松，忽略题目已经限定的分布类型；解出参数后忘记回代检查是否落在合法范围，或把“样本矩”与“总体矩”混用。"
+    },
+    {
+      "id": "PS04.3:example.s01",
+      "type": "example",
+      "title": "例题：由期望反求参数与二阶矩",
+      "level": 2,
+      "content": "**题目**：$X$ 服从参数为 $\\lambda$ 的指数分布，且 $E(X)=2$。求 $\\lambda$、$D(X)$ 与 $E(X^2)$。\n\n**解答**：指数分布均值为 $1/\\lambda=2$，故 $\\lambda=\\frac12$，$D(X)=1/\\lambda^2=4$。由 $E(X^2)=D(X)+[E(X)]^2$ 得 $E(X^2)=4+4=8$。"
     }
   ],
   "source_h1": "M1-PS-0403 矩与常用数字特征",

@@ -5,10 +5,10 @@
   "title": "标准形与惯性定理",
   "src": {
     "file": "notebook/kaoyan/note/math1/la/M1-LA-0601-标准形与惯性定理.md",
-    "sha256": "sha256:a427177a79e493267fc10b21b0b6c03cc6bbc8dffcb42af80f8bf21bb068b3b0"
+    "sha256": "sha256:cec34916e87a1388a954b32c79eaec7e986bc509472ca7d59ce34f7cf24507a2"
   },
-  "notebook_commit": "54390093a9c3e0ace557cb26a0a1e9f688d4a220",
-  "notebook_dirty": true,
+  "notebook_commit": "19f0871c3d49152874f38c4d1c0f0ad83d9a7896",
+  "notebook_dirty": false,
   "entries": [
     {
       "id": "LA06.1:intro.s01",
@@ -44,6 +44,13 @@
       "title": "考法 4：合同与相似的判定：先看变换，再看不变量",
       "level": 2,
       "content": "**思路**：先写清定义：相似是 $B=P^{-1}AP$，合同是 $B=C^TAC$。若题中给的是实对称矩阵，先比秩和正负惯性指数判定合同；若问相似，再比特征值、迹、行列式。若出现 $C^T=C^{-1}$，才说明这个合同变换同时是正交相似变换。\n\n**坑**：看到两个矩阵行列式相等、秩相等就判合同，漏掉惯性指数；看到 $B=C^TAC$ 就顺手写成 $C^{-1}AC$，把合同误当相似；还可能把“合同保持对称性”和“相似保持对称性”混为一谈。"
+    },
+    {
+      "id": "LA06.1:example.s01",
+      "type": "example",
+      "title": "例题：配方法与惯性指数",
+      "level": 2,
+      "content": "**题目**：将 $f(x,y)=x^2+2xy+3y^2$ 化为标准形，并求正、负惯性指数。\n\n**解答**：配方得 $f=(x+y)^2+2y^2$。令 $u=x+y$、$v=y$ 是可逆代换，标准形为 $u^2+2v^2$。两个平方项系数均为正，所以 $(p,q)=(2,0)$，秩为 $2$。"
     }
   ],
   "source_h1": "M1-LA-0601 标准形与惯性定理",

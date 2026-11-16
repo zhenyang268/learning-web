@@ -261,7 +261,7 @@ learning-web/
 | C1 | 「全笔记 36 节，概念节点预计 250+」 | **24 个内容 `.tex`**（A–R 16 篇 + `partN` + `de1–4` + `lie1–3`）、**202 个 `\subsection`**、**162 个 `\subsubsection`**、`main.pdf` **112 页** | 节点规模按章节实测后再定，不要沿用「250+」 |
 | C2 | `A1.1.3` / `A1.1.4` | **不存在三级代号**，只到 `X#.k`。三大收敛定理 = **`A1.3`**；σ-代数 / 外测度 / Vitali 全在 **`A1.4`**（A1 的第 4 个小目「测度论基础」） | 节点主键与路由直接错位 |
 | C3 | R1「Python 3.14 缺 wheel」标 **高** | **实测解除**：`pypandoc-binary 1.17` 有 `py3-none-macosx_11_0_arm64.whl`（`py3-none` 纯标签）、`flask 3.1.3` = `py3-none-any`、`flask-caching 2.5.1` 需 `>=3.11` | 风险 **高 → 低**；**不要**为它改 `.python-version` |
-| C4 | `\providecommand` 只加 `notebook/main.tex` | 要加**两处**：`notebook/main.tex` 与 `notebook/diffrential/main.tex`（后者可独立编译） | 子文档编译报 `Undefined control sequence` |
+| C4 | `\providecommand` 只加 `notebook/math/main.tex` | 要加**两处**：`notebook/math/main.tex` 与 `notebook/math/bridges/main.tex`（后者可独立编译） | 子文档编译报 `Undefined control sequence` |
 | C5 | 「Python 一律走父仓的 uv 环境」 | 已实测成立：在 `learning-web/` 下 `uv run` **向上发现父仓项目**，用 `~/develop/learning/.venv`。故 `uv add` 写进**父仓** `pyproject.toml` + `uv.lock`，本仓不建自己的 `pyproject.toml` | 依赖提交要在**父仓**做 |
 | C6 | `vendored/` = KaTeX CSS + 字体 | 若走客户端渲染还需 **`katex.min.js`**，且**首屏会闪一次**；`pandoc --katex` **不是**服务端渲染 | 触发决策 D8（构建期预渲染） |
 | C7 | R3 三类结构一起点名 | A1 段内实测 **3 张 `tabular`（均 `L{}` 定宽列）+ 1 处 `\boxed`**；**`\xrightarrow` 不在 A1**，集中在 `C_partial`(7)、`de4`(8) 与 `P`/`Q`/`lie1–3`(各 1) | 目视比对要**按章分摊**到这些文件 |
