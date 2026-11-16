@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO30.1",
+  "chapter": "VO30",
+  "title": "30 时间、空间与顺序",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/30-时间、空间与顺序.md",
+    "sha256": "sha256:e8b35c20fe3feccbbcb3cf8847ad91bdd91bbb0b626689ec2ab14716860754c2"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO30.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `chronological` *adj.* 按时间顺序的；按年代先后的\n- `preceding` *adj.* 在前的；先前的\n- `phase` *n.* 阶段；时期\n- `epoch` *n.* 时代；纪元\n- `era` *n.* 时代；年代\n- `span` *n.* 一段时间；跨度\n- `interim` *n.* 过渡期；中间期\n- `transition` *n.* 过渡；转变\n- `sequence` *n.* 顺序；一系列\n- `succession` *n.* 连续；继承\n- `sequential` *adj.* 按顺序的；连续的\n- `prior` *adj.* 先前的；优先的\n- `outset` *n.* 开端；开始\n- `onset` *n.* 开始；发作\n- `commencement` *n.* 开始；毕业典礼\n- `inaugurate` *v.* 开创；为……举行就职典礼\n- `culminate` *v.* 达到顶点；告终\n- `zenith` *n.* 顶点；巅峰\n- `terminate` *v.* 终止；结束\n- `expire` *v.* 到期；期满\n- `lapse` *n.* 流逝；失误\n- `elapse` *v.* （时间）流逝\n- `decay` *n.* 衰败；腐烂\n- `degenerate` *v.* 退化；堕落\n- `outmoded` *adj.* 过时的；老式的\n- `prehistoric` *adj.* 史前的\n- `medieval` *adj.* 中世纪的\n- `concurrent` *adj.* 同时发生的；并存的\n- `overlap` *v.* 重叠；部分相同\n- `episode` *n.* 一段情节；插曲\n- `fragment` *n.* 碎片；片段\n- `transitory` *adj.* 短暂的；瞬息的\n- `ephemeral` *adj.* 短暂的；朝生暮死的\n- `fleeting` *adj.* 飞逝的；短暂的\n- `momentary` *adj.* 瞬间的；短暂的\n- `instantaneous` *adj.* 瞬间的；即刻的\n- `enduring` *adj.* 持久的；不衰的\n- `durable` *adj.* 耐久的；持久的\n- `prolonged` *adj.* 延长的；长期的\n- `protracted` *adj.* 拖延的；延长的\n- `deadline` *n.* 截止日期；最后期限\n- `schedule` *n.* 日程；时间表\n- `biennial` *adj.* 两年一次的\n- `quarterly` *adj.* 季度的；每季的\n- `decade` *n.* 十年\n- `millennium` *n.* 一千年；千禧年\n- `fortnight` *n.* 两星期\n- `session` *n.* 一段时间；会议\n- `tenure` *n.* 任期；终身职位\n- `stint` *n.* 一段时间；工作期限\n- `hiatus` *n.* 间断；停顿\n- `suspension` *n.* 暂停；中止\n- `cessation` *n.* 停止；中止\n- `resume` *v.* 恢复；重新开始\n- `resurgence` *n.* 复苏；再起\n- `renaissance` *n.* 复兴；文艺复兴\n- `revival` *n.* 复兴；恢复\n- `recurrence` *n.* 复发；再发生\n- `intermittent` *adj.* 间歇的；断断续续的\n- `sporadic` *adj.* 零星的；偶发的\n- `periodic` *adj.* 周期性的；定期的\n- `cyclical` *adj.* 循环的；周期性的\n- `tempo` *n.* 节奏；速度\n- `pace` *n.* 速度；步调\n- `temporal` *adj.* 时间的；世俗的\n- `synchronous` *adj.* 同步的；同时的\n- `juncture` *n.* 时刻；关头\n- `transitional` *adj.* 过渡的；转变的\n- `terminal` *adj.* 末端的；终点的\n- `termination` *n.* 终止；结束\n- `culmination` *n.* 顶点；高潮\n- `eventual` *adj.* 最终的；最后的\n- `posterior` *adj.* 后来的；后部的\n- `impending` *adj.* 即将发生的；迫在眉睫的\n- `expiry` *n.* 到期；期满\n- `protract` *v.* 延长；拖延\n- `prolong` *v.* 延长；拖延\n- `repetitive` *adj.* 重复的；反复的\n- `cyclic` *adj.* 循环的；周期的\n- `punctuate` *v.* 不时打断；加标点\n- `hitherto` *adv.* 迄今；到目前为止\n- `heretofore` *adv.* 迄今为止；在此之前\n- `beforehand` *adv.* 事先；提前\n- `afterward` *adv.* 之后；后来\n- `contemporaneous` *adj.* 同时代的；同时发生的\n- `anachronism` *n.* 时代错误；不合时宜\n- `spatial` *adj.*\n- `nostalgia` *n.* 怀旧；乡愁\n- `perennial` *adj.* 长期的；反复出现的\n- `punctual` *adj.* 准时的；守时的\n- `proximity` *n.* 接近；邻近\n- `contiguous` *adj.* 相接的；连绵的\n- `vicinity` *n.* 附近；邻近地区\n- `periphery` *n.* 外围；边缘\n- `peripheral` *adj.* 外围的；次要的\n- `lateral` *adj.* 侧面的；横向的\n- `vertical` *adj.* 垂直的；纵向的\n- `horizontal` *adj.* 水平的；横向的\n- `perpendicular` *adj.* 垂直的；成直角的\n- `intersect` *v.* 相交；交叉\n- `expanse` *n.* 广阔区域；辽阔\n- `spacious` *adj.* 宽敞的；广阔的\n- `confinement` *n.* 限制；幽禁\n- `orientation` *n.* 方向；定位；倾向\n- `displacement` *n.* 取代；位移\n- `locality` *n.* 地点；地区\n- `alignment` *n.* 排列；结盟\n- `juxtapose` *v.* 并置；把…并列\n- `superimpose` *v.* 叠加；把…置于其上\n- `interweave` *v.* 交织；使混杂\n- `rotation` *n.* 旋转；轮换\n- `recur` *v.* 再发生；重现\n- `reiterate` *v.* 重申；反复说\n- `repetition` *n.* 重复；反复\n- `precedence` *n.* 优先；居前\n- `inversion` *n.* 倒置；颠倒\n- `reversal` *n.* 逆转；反转\n- `transpose` *v.* 调换位置；颠倒顺序\n- `deterioration` *n.* 恶化；退化\n- `corrode` *v.* 腐蚀；侵蚀\n- `condense` *v.* 凝结；压缩\n- `solidify` *v.* 凝固；巩固\n- `harden` *v.* 硬化；使坚强\n- `warp` *v.* 扭曲；变形\n- `deform` *v.* 使变形；损毁外形\n- `mutation` *n.* 突变；变异\n- `conversion` *n.* 转变；转换\n- `devolve` *v.* 移交；下放（权力）\n- `nascent` *adj.* 新生的；初期的\n- `embryonic` *adj.* 萌芽期的；胚胎的\n- `fledgling` *adj.* 初出茅庐的；羽翼未丰的\n- `maturity` *n.* 成熟；到期\n- `ripen` *v.* 成熟；使成熟\n- `wither` *v.* 枯萎；衰退\n- `flourish` *v.* 繁荣；兴旺\n- `thrive` *v.* 兴旺；茁壮成长\n- `expedite` *v.* 加快；促进\n- `hasten` *v.* 加速；急忙\n- `retard` *v.* 延缓；阻碍\n- `linger` *v.* 逗留；徘徊\n- `persist` *v.* 坚持；持续\n- `concurrence` *n.* 同时发生；一致\n- `asynchronous` *adj.* 异步的\n- `anterior` *adj.* 前面的；先前的\n- `former` *adj.* 以前的；前者的\n- `thence` *adv.* 从那里；因此\n- `whence` *adv.* 从何处；由此\n- `anniversary` *n.* 周年纪念日\n- `instant` *n.* 瞬间；片刻\n- `extension` *n.* 延长；扩展\n- `expiration` *n.* 到期；期满\n- `resumption` *n.* 重新开始"
+    },
+    {
+      "id": "VO30.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nStanding in the vicinity of the old railway station, one can read a city's history in its layout. The earliest warehouses, built prior to the industrial boom, form a narrow row adjacent to the river. Their construction preceded the granite depot by some twenty years, and the subsequent arrival of the tram lines reshaped the whole district. The interval between the two building phases was short, yet the styles differ sharply. A visitor who walks eastward follows a chronological sequence: wooden sheds, brick halls, then steel and glass. For the duration of the tour, the guide kept drawing a parallel between spatial distance and historical time — the further you walk, the further back you travel, until past and present seem almost simultaneous.\n\n### 中译\n站在老火车站附近，人们可以从城市的布局中读出它的历史。最早的一批仓库建于工业繁荣之前，沿河排成窄窄的一列，紧邻水岸。它们的建造比花岗岩货栈早了大约二十年，随后有轨电车的到来又重塑了整个街区。两个建造阶段之间的间隔很短，风格却截然不同。向东行走的参观者会遵循一条时间顺序：木棚、砖厅，然后是钢筋与玻璃。在整个游览期间，导游一直在把空间距离与历史时间作类比——你走得越远，就回溯得越久，直到过去与现在几乎同时并存。\n\n### 语法点\n1. `built prior to the industrial boom` → 过去分词短语作后置定语（相当于 which were built...）→ 用于修饰名词时压缩定语从句，说明建造时间早于某事件，写作中可使句子更紧凑。\n2. `Their construction preceded the granite depot by some twenty years` → precede sth by + 时间量 → 表示\"比……早若干时间\"，是表达时间先后的正式书面结构，常用于历史、考古、建筑类描述。\n3. `A visitor who walks eastward follows a chronological sequence` → who 引导的限制性定语从句 + 主句一般现在时 → 用于说明性、描述性语篇中陈述普遍事实或一般规律，避免使用过去时。\n4. `the further you walk, the further back you travel` → the + 比较级..., the + 比较级... → 表示\"越……越……\"；从句用一般现在时表普遍情况，主句随之变化，注意比较级前置与语序。\n5. `For the duration of the tour, the guide kept drawing a parallel between A and B` → for + 时间段名词短语作时间状语 + keep doing sth → 表示\"在整段……期间持续做某事\"，常用于叙事中交代持续性动作的时间跨度。"
+    }
+  ],
+  "source_h1": "30 时间、空间与顺序",
+  "meta": {
+    "kind": "english1-words",
+    "group": 30
+  }
+}

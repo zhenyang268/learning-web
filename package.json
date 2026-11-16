@@ -11,7 +11,7 @@
     "build:standalone": "node tools/build-standalone.mjs",
     "build:prune-fonts": "node tools/prune-katex-fonts.mjs",
     "check:viz": "node tools/viz-model-check.mjs",
-    "import:docs": "uv run python build/importer/import_kaoyan.py && uv run python build/importer/import_projects.py && uv run python build/importer/import_math_library.py",
+    "import:docs": "uv run python build/importer/import_kaoyan.py && uv run python build/importer/import_projects.py && uv run python build/importer/import_math_library.py && uv run python build/importer/import_english1.py",
     "verify:docs": "uv run python build/verify_docs.py",
     "check:content-map": "node tools/check-content-map.mjs",
     "check:katex": "node tools/check-katex.mjs --subject math",
@@ -20,7 +20,8 @@
     "check:cs408": "node tools/check-katex.mjs --subject cs408 && node tools/check-graph.mjs --subject cs408 && node tools/check-sem-sync.mjs --subject cs408 && node tools/dom-harness.mjs --subject cs408 --all",
     "check:math1": "node tools/check-katex.mjs --subject math1 && node tools/check-graph.mjs --subject math1 && node tools/check-sem-sync.mjs --subject math1 && node tools/dom-harness.mjs --subject math1 --all",
     "check:projects": "node tools/check-katex.mjs --subject projects && node tools/check-graph.mjs --subject projects && node tools/check-sem-sync.mjs --subject projects && node tools/dom-harness.mjs --subject projects --all",
-    "check": "tsc --noEmit && npm run check:content-map && npm run verify:docs && npm run check:katex && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all",
+    "check:english1": "node tools/check-katex.mjs --subject english1 && node tools/check-graph.mjs --subject english1 && node tools/check-sem-sync.mjs --subject english1 && node tools/dom-harness.mjs --subject english1 --all",
+    "check": "tsc --noEmit && npm run check:content-map && npm run verify:docs && npm run check:katex && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all && npm run check:english1",
     "audit": "node tools/dom-harness.mjs --audit",
     "audit:content": "uv run python build/verify_kb.py --dry-run --out build/logs/health-content.json",
     "release": "npm run build && node tools/sync-release.mjs"

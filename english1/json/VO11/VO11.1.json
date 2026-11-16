@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO11.1",
+  "chapter": "VO11",
+  "title": "11 法律、制度与权利",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/11-法律、制度与权利.md",
+    "sha256": "sha256:2cacfb4822e3ed637769c5083b23be11481c2c9970b1bd78b7717b63334669a3"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO11.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `law` *n.* 法律；法规\n- `legal` *adj.* 法律的；合法的\n- `legislature` *n.* 立法机关；议会\n- `lawyer` *n.* 律师\n- `plaintiff` *n.* 原告\n- `defendant` *n.* 被告\n- `defense` *n.* 辩护；防御\n- `hearing` *n.* 听证会；审讯\n- `proceeding` *n.* 诉讼程序；议程\n- `due` *adj.* 应有的；到期的\n- `damages` *n.* 损害赔偿金\n- `rule` *n.* 规则；裁定\n- `article` *n.* 条款；文章\n- `section` *n.* 部分；条款\n- `paragraph` *n.* 段落；条款\n- `breach` *n.* 违反；破坏\n- `infringement` *n.* 侵权；违反\n- `offend` *v.* 违反；冒犯\n- `guilty` *adj.* 有罪的；内疚的\n- `innocence` *n.* 无罪；天真\n- `innocent` *adj.* 无罪的；无辜的\n- `accusation` *n.* 指控；控告\n- `bail` *n.* 保释；保释金\n- `imprisonment` *n.* 监禁；关押\n- `prison` *n.* 监狱\n- `jail` *n.* 监狱\n- `arrest` *v.* 逮捕；阻止\n- `detain` *v.* 拘留；扣押\n- `summons` *n.* 传票（超纲）\n- `subpoena` *n.* 传票（超纲）\n- `affidavit` *n.* 宣誓书（超纲）\n- `oath` *n.* 誓言；宣誓\n- `perjury` *n.* 伪证罪（超纲）\n- `punishment` *n.* 惩罚；处罚\n- `fine` *n.* 罚款；罚金\n- `theft` *n.* 盗窃；偷窃\n- `robbery` *n.* 抢劫；抢夺\n- `burglary` *n.* 入室盗窃（超纲）\n- `murder` *n.* 谋杀；凶杀\n- `homicide` *n.* 杀人；凶杀（超纲）\n- `battery` *n.* 殴打；电池\n- `libel` *n.* 诽谤；中伤（超纲）\n- `slander` *n.* 口头诽谤（超纲）\n- `defamation` *n.* 诽谤；中伤（超纲）\n- `negligence` *n.* 过失；疏忽\n- `malpractice` *n.* 渎职；医疗事故（超纲）\n- `tort` *n.* 侵权行为（超纲）\n- `possession` *n.* 占有；拥有\n- `burden` *n.* 举证责任；负担\n- `copyright` *n.* 版权；著作权\n- `disclosure` *n.* 披露；公开\n- `discharge` *v.* 释放；解除\n- `complaint` *n.* 控告；投诉\n- `confess` *v.* 供认；坦白\n- `confession` *n.* 供认；坦白\n- `confidential` *adj.* 保密的；机密的\n- `competent` *adj.* 有法定资格的；胜任的\n- `certify` *v.* 证明；认证\n- `citation` *n.* 传票；引证\n- `claimant` *n.* 原告；索赔人\n- `allegation` *n.* 指控；主张\n- `arbitrate` *v.* 仲裁；公断\n- `arbitrator` *n.* 仲裁员\n- `adjudicate` *v.* 裁决；判决\n- `adjudication` *n.* 裁决；判决\n- `binding` *adj.* 有约束力的\n- `bench` *n.* 法官席；法院\n- `codify` *v.* 编纂成法典\n- `coercion` *n.* 胁迫；强制\n- `collateral` *n.* 抵押品；担保物\n- `complainant` *n.* 控告人；原告\n- `conspiracy` *n.* 共谋；阴谋\n- `constable` *n.* 警察；治安官\n- `contest` *v.* 抗辩；争夺\n- `contravene` *v.* 违反；抵触\n- `corroborate` *v.* 证实；佐证\n- `counterfeit` *v.* 伪造；假冒\n- `covenant` *n.* 契约；承诺\n- `deed` *n.* 契据；行为\n- `directive` *n.* 指令；指示\n- `dissolve` *v.* 解散；终止\n- `embezzle` *v.* 挪用；侵占\n- `enactment` *n.* 颁布；法令\n- `equitable` *adj.* 公平的；衡平的\n- `evict` *v.* 驱逐；赶出\n- `exonerate` *v.* 免除罪责；证明无罪\n- `extradition` *n.* 引渡\n- `confiscate` *v.* 没收；充公\n- `emancipation` *n.* 解放；解除束缚"
+    },
+    {
+      "id": "VO11.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nWhen a person is accused of a crime, the law does not merely ask whether harm occurred; it insists that the state follow due process. The presumption of innocence means that the burden of proof rests on the prosecution, not on the defendant. Anyone facing serious charges should have access to legal counsel, for a fair hearing is not a privilege but a right. If evidence was obtained through an unlawful search, the court may exclude it, thereby protecting the accused from an infringement of basic rights. Statutory rules must be enforced consistently, and public officials must accept accountability for their decisions. Where negligence causes loss, civil liability may arise, and the injured party may seek a remedy in court. Judicial independence matters because rights are meaningful only when they can be claimed and defended.\n\n### 中译\n当一个人被指控犯罪时，法律并不只问是否造成了损害；它坚持国家必须遵循正当程序。无罪推定意味着举证责任在控方，而不在被告。任何面临严重指控的人都应获得律师帮助，因为公正听审不是特权，而是权利。如果证据是通过非法搜查取得的，法院可以将其排除，从而保护被告的基本权利不受侵犯。法定规则必须得到一致执行，公职人员必须为自己的决定承担责任。若过失造成损失，可能产生民事责任，受害方可以诉诸法院寻求救济。司法独立很重要，因为权利只有能够被主张和捍卫时才有意义。\n\n### 语法点\n- `it insists that the state follow due process` → `insist that + 主语 + (should) do` 虚拟语气 → 表示“坚持要求”时，that 从句谓语用动词原形；法律、制度文本中常见。\n- `The presumption of innocence means that the burden of proof rests on the prosecution, not on the defendant.` → `mean that` 引导宾语从句 + `not + 介词短语` 对比补充 → 用 that 从句说明含义；用 `not on...` 承接前文介词短语，避免重复谓语。\n- `Anyone facing serious charges should have access to legal counsel` → 现在分词短语 `facing...` 作后置定语 → 相当于 `who faces...`，常用来修饰 `anyone/those` 等，使表达紧凑。\n- `If evidence was obtained through an unlawful search, the court may exclude it, thereby protecting the accused...` → `if` 条件状语从句 + 被动语态 + `thereby + 现在分词` 结果状语 → 条件从句说明前提；`thereby doing` 说明主句动作带来的结果。\n- `rights are meaningful only when they can be claimed and defended` → `only when` 引导时间/条件状语从句 + 被动语态 → `only when` 表“只有当……才”，强调必要条件；被动语态突出权利“被主张、被捍卫”。"
+    }
+  ],
+  "source_h1": "11 法律、制度与权利",
+  "meta": {
+    "kind": "english1-words",
+    "group": 11
+  }
+}

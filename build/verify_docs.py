@@ -39,7 +39,10 @@ ROOTS = {
     "cs408": WEB / "cs408" / "json",
     "kaoyan": WEB / "kaoyan" / "json",
     "projects": WEB / "projects" / "json",
+    "english1": WEB / "english1" / "json",
 }
+# 词汇闸门：大纲总量（与 `english1/words/README.md`、`kaoyan/tools/stats.py` 同一口径）
+WORDS_GATE = 5530
 SURVEY_SPACE = {"A": 6, "L": 10, "N": 13, "C": 6, "H": 11, "P": 10, "D": 8, "G": 10, "F": 9, "T": 7, "M": 7}
 
 errs: list[str] = []
@@ -116,6 +119,10 @@ def check_lossless(p: Path, d: dict) -> None:
     # 章首单元是从 syllabus 的「导语 + 细节与陷阱」拼出来的，不对应整份源文件
     if (d.get("meta") or {}).get("kind") == "chapter":
         return
+    # 英语一大纲补全被拆成多段（VO97.N），单段不对应整份源；无损由
+    # `check_english1_coverage` 的「按序拼回 = 源」一次性判（拆错段必然被抓）。
+    if (d.get("meta") or {}).get("kind") == "english1-supplement":
+        return
     src = NB / d["src"]["file"][len("notebook/") :]
     if src.suffix != ".md" or not src.exists():
         return
@@ -136,6 +143,171 @@ def check_lossless(p: Path, d: dict) -> None:
 
 def count_kind(docs: list[tuple[Path, dict]], kind: str) -> int:
     return sum(1 for _, d in docs if (d.get("meta") or {}).get("kind") == kind)
+
+
+# ------------------------------------------------------------------ 英语一：词汇对账
+
+
+WORD_LIST_RE = re.compile(r"^-\s+`([^`]+)`", re.M)
+WORD_TABLE_RE = re.compile(r"^\|\s*\d+\s*\|\s*`([^`]+)`", re.M)
+
+
+def words_of(text: str) -> set[str]:
+    """源侧取词：主题组用 `- \\`word\\``，大纲补全用 `| n | \\`word\\` |`。"""
+    return {w.lower() for w in WORD_LIST_RE.findall(text)} | {w.lower() for w in WORD_TABLE_RE.findall(text)}
+
+
+def entries_words(entries: list[dict]) -> set[str]:
+    """JSON 侧取词：只认词条正文里的同一两种行形态，不扫标题。"""
+    return words_of("\n".join(e.get("content", "") for e in entries))
+
+
+def check_english1_words() -> None:
+    """词汇独立对账（2026-11-16）。
+
+    判据（每条都点名，不静默）：
+    1. **逐单元集合相等**：对 `english1/words/` 的每一份源，JSON 侧取出的词集合必须与源完全相等；
+       源有、JSON 无 → 漏；JSON 有、源无 → 多（编造）。
+    2. **唯一词总数**：全表去重后必须 ≥ `WORDS_GATE`（5530）。
+    3. **跨表重复**：主题组与补全表的交集**允许存在**（同一词在不同场景复现），但必须打印实际数量，
+       且「唯一词数 = 两组之和 − 交集」，三者自洽；交集不为 0 时不做静默忽略。
+    """
+    src_dir = NB / "kaoyan" / "english1" / "words"
+    if not src_dir.exists():
+        crit("english1: 词汇源目录不存在（english1/words/）")
+        return
+    docs = load_docs(ROOTS["english1"])
+    by_src: dict[str, list[dict]] = {}
+    for _, d in docs:
+        by_src.setdefault(d["src"]["file"], []).append(d)
+
+    src_group: set[str] = set()
+    src_supp: set[str] = set()
+    checked = 0
+    for p in sorted(src_dir.glob("[0-9][0-9]-*.md")):
+        rel = "notebook/kaoyan/english1/words/" + p.name
+        want = words_of(p.read_text(encoding="utf-8"))
+        units = by_src.get(rel)
+        if not units:
+            crit(f"english1: 词汇源未入库 {p.name}")
+            continue
+        got: set[str] = set()
+        for d in units:
+            got |= entries_words(d["entries"])
+        checked += 1
+        missing, extra = want - got, got - want
+        if missing:
+            crit(f"english1/words/{p.name}: JSON 漏词 {len(missing)} 个（例 {sorted(missing)[:5]}）")
+        if extra:
+            crit(f"english1/words/{p.name}: JSON 多词 {len(extra)} 个（例 {sorted(extra)[:5]}）")
+        if p.name.startswith("97-"):
+            src_supp |= want
+        else:
+            src_group |= want
+
+    json_all: set[str] = set()
+    for _, d in docs:
+        if (d.get("meta") or {}).get("kind") in ("english1-words", "english1-supplement"):
+            json_all |= entries_words(d["entries"])
+
+    if not json_all:
+        crit("english1: 词汇 JSON 侧取不到任何词")
+        return
+
+    inter = src_group & src_supp
+    union = src_group | src_supp
+    if len(union) != len(src_group) + len(src_supp) - len(inter):
+        crit("english1: 唯一词自洽失败（并集 ≠ 两组和 − 交集）")
+    if len(union) < WORDS_GATE:
+        crit(f"english1: 唯一词 {len(union)} < 闸门 {WORDS_GATE}")
+    if len(json_all) != len(union):
+        crit(f"english1: JSON 唯一词 {len(json_all)} ≠ 源唯一词 {len(union)}")
+
+    # 逐源对账通过后，两边集合必须完全相等（不静默漏）
+    miss, extra = union - json_all, json_all - union
+    if miss:
+        crit(f"english1: 源有 JSON 无的跨表漏词 {len(miss)}（例 {sorted(miss)[:5]}）")
+    if extra:
+        crit(f"english1: JSON 有源无的跨表多词 {len(extra)}（例 {sorted(extra)[:5]}）")
+
+    print(
+        f"english1 词汇对账：源文件 {checked} · 主题组唯一 {len(src_group)} · "
+        f"补全表唯一 {len(src_supp)} · 交集 {len(inter)} · 唯一合计 {len(union)} · "
+        f"JSON 唯一 {len(json_all)} · 闸门 {WORDS_GATE} {'PASS' if len(union) >= WORDS_GATE else 'FAIL'}"
+    )
+
+
+def check_english1_coverage() -> None:
+    """英语一覆盖：单元数、分段数、源一致性、无损、代号唯一。"""
+    from import_english1 import FULL_REL, GUIDE_REL, LECTURES, SYLLABUS_REL, split_supplement
+
+    docs = load_docs(ROOTS["english1"])
+    if not docs:
+        crit("english1: 数据根为空")
+        return
+    kinds: dict[str, int] = {}
+    for _, d in docs:
+        k = (d.get("meta") or {}).get("kind", "?")
+        kinds[k] = kinds.get(k, 0) + 1
+
+    if kinds.get("english1-syllabus", 0) != 1:
+        crit("english1: 考纲单元应为 1（GE01.1）")
+    lecture_files = sorted((NB / "kaoyan" / "english1").glob("[0-9][0-9]-*.md"))
+    want_lectures = len([p for p in lecture_files if not p.name.startswith("00-")])
+    if kinds.get("english1-lecture", 0) != want_lectures:
+        crit(f"english1: 讲义单元 {kinds.get('english1-lecture', 0)} ≠ 源 {want_lectures}")
+    if len(LECTURES) != want_lectures:
+        crit(f"english1: 映射表讲义 {len(LECTURES)} ≠ 源 {want_lectures}")
+    if kinds.get("english1-words-guide", 0) != 1:
+        crit("english1: 词汇导览单元应为 1（VO00.1）")
+    groups = sorted(
+        p for p in (NB / "kaoyan" / "english1" / "words").glob("[0-9][0-9]-*.md") if not p.name.startswith("97-")
+    )
+    if kinds.get("english1-words", 0) != len(groups):
+        crit(f"english1: 词汇主题组单元 {kinds.get('english1-words', 0)} ≠ 源 {len(groups)}")
+    if len(groups) != 30:
+        crit(f"english1: 词汇主题组应为 30，源有 {len(groups)}")
+
+    # 大纲补全：分段数 = 重新切分的段数（按 `##` 标题或表格块边界，绝不硬切行）
+    _, chunks, info = split_supplement(FULL_REL, "VO97")
+    want_seg = len(chunks)
+    got_seg = kinds.get("english1-supplement", 0)
+    if got_seg != want_seg:
+        crit(f"english1: 大纲补全分段 {got_seg} ≠ 源切分 {want_seg}（mode={info['mode']}）")
+    supp_docs = [d for _, d in docs if (d.get("meta") or {}).get("kind") == "english1-supplement"]
+    codes = sorted(d["code"] for d in supp_docs)
+    want_codes = sorted(f"VO97.{i}" for i in range(1, len(supp_docs) + 1))
+    if codes != want_codes:
+        crit(f"english1: 大纲补全代号不连续 {codes[:3]}…{codes[-3:]}")
+    # 无损：把各分段按序拼回，必须等于源（归一后逐行相等）
+    if supp_docs:
+        got_text = "\n\n".join(
+            "\n\n".join(
+                (("#" * int(e.get("level", 2)) + " " + e["title"] + "\n\n" + e["content"])
+                 if int(e.get("level", 2)) else e["content"])
+                for e in d["entries"]
+            )
+            for d in supp_docs
+        )
+        src_text = (NB / FULL_REL).read_text(encoding="utf-8")
+        # H1 只在第一段带一次，其余段不带；拼回后补回 H1 再比
+        h1 = [d.get("source_h1") for d in supp_docs if d.get("source_h1")]
+        joined = (f"# {h1[0]}\n\n" if h1 else "") + got_text
+        if norm(joined) != norm(src_text):
+            crit("english1: 大纲补全拼回与源不一致（分段切坏了）")
+
+    # 代号唯一
+    seen: dict[str, str] = {}
+    for p, d in docs:
+        c = d["code"]
+        if c in seen:
+            crit(f"english1: 代号重复 {c}（{seen[c]} 与 {p.name}）")
+        seen[c] = p.name
+
+    # 导览与考纲源文件必须存在
+    for rel in (SYLLABUS_REL, GUIDE_REL, FULL_REL):
+        if not (NB / rel).exists():
+            crit(f"english1: 缺源 {rel}")
 
 
 def check_coverage() -> None:
@@ -248,6 +420,8 @@ def main() -> int:
             print(f"{name:9s} {len(docs):4d} 单元  {kinds}")
 
     check_coverage()
+    check_english1_coverage()
+    check_english1_words()
     if errs:
         print()
         for e in errs[:60]:

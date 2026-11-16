@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO20.1",
+  "chapter": "VO20",
+  "title": "20 初高中衔接基础（上）",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/20-初高中衔接基础（上）.md",
+    "sha256": "sha256:8e2915647089e339ee249cb46c52f7200b3616ec54ff2e8775506c6a26a5d4f1"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO20.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `able` *adj.* 能够的；有能力的\n- `above` *prep.* 在……之上；adv. 在上面\n- `across` *prep.* 穿过；遍及\n- `act` *v.* 行动；起作用\n- `add` *v.* 增加；补充说\n- `afraid` *adj.* 害怕的；担心的\n- `after` *prep.* 在……之后；conj. 在……以后\n- `again` *adv.* 再一次；又\n- `against` *prep.* 反对；倚靠\n- `age` *n.* 年龄；时代\n- `ago` *adv.* 以前\n- `agree` *v.* 同意；一致\n- `air` *n.* 空气；神态\n- `all` *adj.* 全部的；pron. 全部\n- `allow` *v.* 允许；承认\n- `alone` *adj.* 独自的；adv. 单独地\n- `along` *prep.* 沿着；adv. 向前\n- `also` *adv.* 也；而且\n- `among` *prep.* 在……之中\n- `animal` *n.* 动物\n- `another` *adj.* 另一个的；pron. 另一个\n- `answer` *n.* 答案；v. 回答\n- `any` *adj.* 任何的；pron. 任何一个\n- `area` *n.* 地区；领域\n- `arm` *n.* 手臂；武器\n- `arrive` *v.* 到达；达成\n- `ask` *v.* 问；要求\n- `at` *prep.* 在；以\n- `bad` *adj.* 坏的；严重的\n- `bag` *n.* 包；袋\n- `ball` *n.* 球；舞会\n- `base` *n.* 基础；v. 以……为基础\n- `be` *v.* 是；存在\n- `beat` *v.* 打败；敲打\n- `because` *conj.* 因为\n- `become` *v.* 变成；成为\n- `bed` *n.* 床；底座\n- `before` *prep.* 在……之前；conj. 在……以前\n- `begin` *v.* 开始\n- `behind` *prep.* 在……后面；落后于\n- `below` *prep.* 在……下面；adv. 在下面\n- `between` *prep.* 在……之间\n- `big` *adj.* 大的；重要的\n- `bird` *n.* 鸟\n- `black` *adj.* 黑色的；n. 黑色\n- `blue` *adj.* 蓝色的；忧郁的\n- `boat` *n.* 船\n- `body` *n.* 身体；主体\n- `born` *adj.* 出生的；天生的\n- `both` *adj.* 两者的；pron. 两者都\n- `bottom` *n.* 底部；最低点\n- `box` *n.* 盒子；v. 拳击\n- `boy` *n.* 男孩\n- `bread` *n.* 面包\n- `break` *v.* 打破；违反\n- `bring` *v.* 带来；引起\n- `brother` *n.* 兄弟\n- `build` *v.* 建造；建立\n- `burn` *v.* 燃烧；烧毁\n- `busy` *adj.* 忙的；繁忙的\n- `but` *conj.* 但是；prep. 除……之外\n- `buy` *v.* 买\n- `by` *prep.* 通过；在……旁边\n- `call` *v.* 叫；打电话\n- `can` *v.* 能；可以\n- `car` *n.* 汽车；车厢\n- `care` *v.* 关心；n. 照料\n- `carry` *v.* 携带；运送\n- `catch` *v.* 抓住；赶上\n- `center` *n.* 中心；中央\n- `certain` *adj.* 确定的；某些\n- `chair` *n.* 椅子；主席\n- `chance` *n.* 机会；可能性\n- `child` *n.* 孩子\n- `choose` *v.* 选择\n- `city` *n.* 城市\n- `clean` *adj.* 干净的；v. 打扫\n- `clear` *adj.* 清楚的；v. 清除\n- `climb` *v.* 攀登；上升\n- `close` *v.* 关闭；adj. 近的\n- `cold` *adj.* 冷的；n. 感冒\n- `color` *n.* 颜色；v. 着色\n- `come` *v.* 来；出现\n- `continue` *v.* 继续；延续\n- `cook` *v.* 烹饪；n. 厨师\n- `cool` *adj.* 凉爽的；冷静的\n- `copy` *n.* 副本；v. 复制\n- `corner` *n.* 角落；拐角\n- `could` *v.* 能够；可能\n- `country` *n.* 国家；乡村\n- `cup` *n.* 杯子；奖杯\n- `cut` *v.* 切；削减\n- `dark` *adj.* 黑暗的；n. 黑暗\n- `day` *n.* 天；白天\n- `dead` *adj.* 死的；无生气的\n- `deep` *adj.* 深的；深刻的\n- `different` *adj.* 不同的\n- `difficult` *adj.* 困难的\n- `do` *v.* 做；助动词\n- `dog` *n.* 狗\n- `door` *n.* 门\n- `down` *adv.* 向下；prep. 沿着\n- `dream` *n.* 梦；v. 做梦\n- `drink` *v.* 喝；n. 饮料\n- `drop` *v.* 落下；n. 滴\n- `dry` *adj.* 干的；v. 弄干\n- `during` *prep.* 在……期间\n- `each` *adj.* 每个的；pron. 每个\n- `ear` *n.* 耳朵；穗\n- `early` *adj.* 早的；adv. 早\n- `earth` *n.* 地球；泥土\n- `east` *n.* 东方；adj. 东方的\n- `easy` *adj.* 容易的；轻松的\n- `eat` *v.* 吃\n- `egg` *n.* 蛋；卵\n- `eight` *num.* 八\n- `either` *adj.* 两者之一的；adv. 也（否定）\n- `else` *adv.* 其他；另外\n- `end` *n.* 结束；v. 结束\n- `enter` *v.* 进入；参加\n- `every` *adj.* 每个的\n- `eye` *n.* 眼睛；眼光\n- `face` *n.* 脸；v. 面对\n- `fall` *v.* 落下；n. 秋天\n- `family` *n.* 家庭；家族\n- `far` *adj.* 远的；adv. 远地\n- `farm` *n.* 农场；v. 耕种\n- `fast` *adj.* 快的；adv. 快速地\n- `father` *n.* 父亲\n- `feel` *v.* 感觉；认为\n- `few` *adj.* 很少的；pron. 少数\n- `field` *n.* 田地；领域\n- `fight` *v.* 战斗；n. 斗争\n- `fill` *v.* 填满；充满\n- `fire` *n.* 火；v. 解雇\n- `first` *adj.* 第一的；adv. 首先\n- `fish` *n.* 鱼；v. 钓鱼\n- `five` *num.* 五\n- `fly` *v.* 飞；n. 苍蝇\n- `food` *n.* 食物\n- `foot` *n.* 脚；底部\n- `for` *prep.* 为了；conj. 因为\n- `form` *n.* 形式；v. 形成\n- `four` *num.* 四\n- `friend` *n.* 朋友\n- `from` *prep.* 从；来自\n- `front` *n.* 前面；adj. 前面的\n- `full` *adj.* 满的；完全的\n- `garden` *n.* 花园\n- `get` *v.* 得到；变得\n- `girl` *n.* 女孩\n- `give` *v.* 给；提供\n- `glad` *adj.* 高兴的\n- `glass` *n.* 玻璃；杯子\n- `go` *v.* 去；进行\n- `good` *adj.* 好的；n. 好处\n- `great` *adj.* 伟大的；极好的\n- `green` *adj.* 绿色的；n. 绿色\n- `grow` *v.* 生长；增长\n- `hand` *n.* 手；v. 递\n- `happy` *adj.* 快乐的；满意的\n- `hard` *adj.* 困难的；adv. 努力地\n- `have` *v.* 有；使\n- `he` *pron.* 他\n- `head` *n.* 头；v. 朝向\n- `high` *adj.* 高的；adv. 高高地\n- `home` *n.* 家；adv. 在家\n- `horse` *n.* 马"
+    },
+    {
+      "id": "VO20.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\n\nMoving from junior high to senior high is an important step, and students who prepare for it early often find the change far less frightening. However, preparation does not mean spending more hours on homework. What it requires is a set of habits that can be developed slowly.\n\nFirst, consider how you use your time. A student who plans the week ahead can improve efficiency without studying longer. Second, learn to ask questions: the ability to notice what you do not understand is more valuable than the ability to memorize. Third, treat mistakes as information rather than failure.\n\nSuch habits take effort, and progress may seem slow. Yet the students who achieve most are rarely the cleverest; they are those who keep adjusting their methods. Senior high offers an opportunity to begin again, and the habits you build now will serve you for years.\n\n### 中译\n\n从初中升入高中是重要的一步，而早早为此做准备的学生往往会觉得这一变化远没有那么可怕。然而，准备并不意味着在作业上花更多时间。它真正需要的，是一套可以慢慢养成的习惯。\n\n首先，想想你如何使用时间。一个提前规划好一周的学生，不必学得更久也能提高效率。其次，学会提问：能察觉自己不懂什么，比能背下来更有价值。第三，把错误当作信息，而不是失败。\n\n这样的习惯需要付出，进展也可能显得缓慢。然而收获最大的学生很少是最聪明的，而是那些不断调整方法的人。高中提供了重新开始的机会，而你现在养成的习惯将为你服务多年。\n\n### 语法点\n\n1. `students who prepare for it early` → 由关系代词 who 引导的定语从句，修饰先行词 students → 从句谓语 prepare 的数由先行词决定（复数 students 配 prepare，单数则用 prepares），考场中先找先行词再定主谓一致。\n\n2. `What it requires is a set of habits` → 由 what 引导的主语从句作句子主语，主句谓语用单数 is → what 从句整体视为单数概念，谓语一律用单数；注意不要按从句里的复数名词 habits 去配谓语（此处 habits 是表语）。\n\n3. `does not mean spending more hours` → mean 后接动名词作宾语 → mean doing 表示「意味着做某事」，mean to do 表示「打算做某事」，两者是考研高频辨析点。\n\n4. `far less frightening` → far 作程度副词修饰比较级 less → 修饰比较级的常用词还有 much、even、still、a lot、rather；不能再用 very 修饰比较级。\n\n5. `treat mistakes as information rather than failure` → treat A as B 的动词短语结构，rather than 连接两个平行名词作宾语补足成分 → rather than 前后须词性、形式一致；另注意 rather than 后接动词时通常用原形，与前面成分保持平行。"
+    }
+  ],
+  "source_h1": "20 初高中衔接基础（上）",
+  "meta": {
+    "kind": "english1-words",
+    "group": 20
+  }
+}

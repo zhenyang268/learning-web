@@ -15,6 +15,7 @@ import {
   LINES,
   lineOfChapter,
   sectionKeyOf,
+  type ContentLine,
   type GroupId,
 } from '../modules/taxonomy';
 
@@ -24,6 +25,22 @@ export interface SidebarModel {
   masteryOf: (code: string) => number;
   /** 搜索词（空则不筛） */
   query?: string;
+  /**
+   * 章序（`subjects.ts` 的 `Subject.chapterOrder`，代号前缀 → 名次）。
+   *
+   * 为什么是 `(chap) => number` 而不是 `subject`：sidebar 是纯渲染层，
+   * 只认「这个章排第几」，不认识学科 id。英语一那套
+   * 导览 → 阅读 → 大作文 → 翻译 → 小作文 → 新题型 → 完形 → 词汇 的次序
+   * 由学科配置给出；其余四站不传，`Infinity` 让排序完全回落到原来的
+   * 「组 → 域 → 线 → 章号」。
+   */
+  chapterRank?: (chap: string) => number;
+  /**
+   * 同一前缀下**章内**名次（`WR01` 与 `WR02` 之间谁在前）。
+   * 缺省按章号；英语一的 `WR` 要让 `WR02`（大作文）排在 `WR01`（小作文）前面，
+   * 由 `Subject.chapterOrder` 的细粒度形式给出 —— 见 `app.ts` 的 `chapterRankOf`。
+   */
+  unitRank?: (code: string) => number;
 }
 
 /**
@@ -142,8 +159,12 @@ let lastQuery = '';
 /** 每个宿主的当前模型（懒渲染要在 toggle 回调里取） */
 const models = new WeakMap<HTMLElement, { model: SidebarModel; byChapter: Map<string, UnitMeta[]> }>();
 
-const sortUnits = (list: UnitMeta[]): UnitMeta[] =>
+const sortUnits = (list: UnitMeta[], model?: SidebarModel): UnitMeta[] =>
   list.slice().sort((a, b) => {
+    // 章序优先：英语一的「词汇」必须整章排在题型章之后，搜索平铺时同样成立
+    const ra = model?.chapterRank?.(chapterOf(a.code)) ?? Number.POSITIVE_INFINITY;
+    const rb = model?.chapterRank?.(chapterOf(b.code)) ?? Number.POSITIVE_INFINITY;
+    if (ra !== rb) return ra < rb ? -1 : 1;
     const ka = codeKey(a.code);
     const kb = codeKey(b.code);
     return ka[0] === kb[0] ? ka[1] - kb[1] || ka[2] - kb[2] : ka[0] < kb[0] ? -1 : 1;
@@ -209,7 +230,17 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
     list.push(u);
     byChapter.set(chap, list);
   }
-  for (const list of byChapter.values()) list.sort((a, b) => codeKey(a.code)[2] - codeKey(b.code)[2]);
+  // 章内单元序：英语一的 `WR01`（小作文）与 `WR02`（大作文）各自只有一个单元，
+  // 但章序要求「大作文在翻译前、小作文在翻译后」，所以章内也要吃 `unitRank`
+  // （缺省退回代号序号，四个老站行为不变）。
+  for (const list of byChapter.values()) {
+    list.sort((a, b) => {
+      const ua = model.unitRank?.(a.code) ?? Number.POSITIVE_INFINITY;
+      const ub = model.unitRank?.(b.code) ?? Number.POSITIVE_INFINITY;
+      if (ua !== ub) return ua < ub ? -1 : 1;
+      return codeKey(a.code)[2] - codeKey(b.code)[2];
+    });
+  }
   models.set(host, { model, byChapter });
 
   const indexChapters = indexChaptersOf(byChapter);
@@ -229,6 +260,7 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
   if (q) {
     host.innerHTML = `<div class="box"><h4 data-chapter="__search">搜索 · ${matched.length} 个单元</h4>${sortUnits(
       matched,
+      model,
     )
       .map((u) => nodeHtml(u, model.current, model.masteryOf))
       .join('')}</div>`;
@@ -248,13 +280,45 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
     rank: number;
     chaps: string[];
   }
+  /**
+   * section 的键：**章序连续的同域章归一节**。
+   *
+   * 平常就是 `dom:WR`（一个域一节，与改造前一致）。只有当学科给了
+   * `chapterRank` 且同一个域内的章**名次不连续**时才拆开：
+   * 英语一的 `WR02`（大作文，名次 2）与 `WR01`（小作文，名次 4）中间隔着
+   * `TR01`（翻译，3.5），于是拆成两节 `dom:WR@WR02` 与 `dom:WR@WR01`，
+   * 侧栏读起来才是「…阅读 → 大作文 → 翻译 → 小作文 → 新题型…」。
+   *
+   * 判据完全由名次决定，不看学科 id —— 老站 `rank` 恒为 Infinity，
+   * `@` 后缀永远不会出现，DOM 结构与增量刷新的 `data-sec` 值逐字节不变。
+   */
+  const secKeyOf = (chap: string, dom: string, line: ContentLine | undefined): string => {
+    const base = line ? `line:${line.id}` : `dom:${dom}`;
+    const r = model.chapterRank?.(chap) ?? Number.POSITIVE_INFINITY;
+    if (!Number.isFinite(r)) return base;
+    /**
+     * 同域内按名次**分组**：名次相同的章是一组（如 `VO00…VO97` 全是 7.5），
+     * 名次不同的章各自成组（`WR02` = 2 与 `WR01` = 4 分列翻译两侧）。
+     *
+     * 只在「本域确实含有多个不同名次」时才加 `@章号` 后缀 —— 单个名次
+     * （词汇 33 章全体 7.5）保持原来的 `dom:VO` 一节，不把 33 章拆成 33 个域头
+     * （第一版就踩了这个坑：每章一个 `.domhead`）。
+     */
+    const sameDom = [...byChapter.keys()].filter((c) => (domainOf(c) || 'ZZ') === dom);
+    const ranks = new Set(
+      sameDom.map((c) => model.chapterRank?.(c) ?? Number.POSITIVE_INFINITY).filter((x) => Number.isFinite(x)),
+    );
+    if (ranks.size <= 1) return base;
+    return `${base}@${r}`;
+  };
+
   const secs = new Map<string, Sec>();
   for (const chap of byChapter.keys()) {
     // 纯索引章不进「组 → 线」主干：它们统一去末尾的「索引与导航」区
     if (indexChapters.has(chap)) continue;
     const dom = domainOf(chap) || 'ZZ';
     const line = lineOfChapter(chap);
-    const key = line ? `line:${line.id}` : `dom:${dom}`;
+    const key = secKeyOf(chap, dom, line);
     const sec = secs.get(key) ?? {
       key,
       label: line ? line.label : domainLabel(dom),
@@ -266,8 +330,21 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
     secs.set(key, sec);
   }
   const sections = [...secs.values()];
+  /**
+   * 章序：**学科配置优先，线表次之**。
+   *
+   * 英语一的 `chapterOrder` 会给出有限名次（导览 0 → 阅读 1 → … → 词汇 6），
+   * 于是章按题型学习顺序排；四个老站 `chapterOrder` 缺省 → 全是 `Infinity`，
+   * 比较落到 `Infinity - Infinity = NaN` 会被 `||` 短路掉，**行为与改造前完全一致**
+   * （线内教学序 → 章号）。这一句是「不硬编码 if 英语」的全部实现。
+   */
+  const rank = (chap: string): number => model.chapterRank?.(chap) ?? Number.POSITIVE_INFINITY;
   for (const s of sections) {
     s.chaps.sort((a, b) => {
+      const ra = rank(a);
+      const rb = rank(b);
+      // 两边都未登记（无穷）时不比 —— 直接落到线内教学序 / 章号
+      if (ra !== rb) return ra < rb ? -1 : 1;
       const line = lineOfChapter(a);
       if (line) {
         const ia = line.chapters.indexOf(a);
@@ -277,7 +354,25 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
       return a < b ? -1 : 1;
     });
   }
-  sections.sort((a, b) => domainRank(a.domain) - domainRank(b.domain) || a.rank - b.rank);
+  /**
+   * 域/线之间的次序：**章序优先，域序兜底**。
+   *
+   * 为什么章序要压过域序：英语一的侧栏要求「导览 → 阅读 → 大作文 → 翻译 →
+   * 小作文 → 新题型 → 完形 → 词汇」—— 大作文与小作文是两个**章**却分列翻译两侧。
+   * 若只按域序排，`WR` 域下的 WR01/WR02 必然相邻，这条要求就无法成立。
+   * 取该 section 内**最小的章名次**作 section 名次：英语一因此得到
+   * GE(0.5) < RC(1.5) < WR02(2) < TR(3.5) < WR01(4) < NT(5.5) …
+   *
+   * 四个老站 `chapterRank` 恒为 Infinity → 两者都是 Infinity，比较失效，
+   * 自动落到 `domainRank`（原逻辑），一行行为都不变。
+   */
+  const secRank = (s: Sec): number => Math.min(...s.chaps.map((c) => rank(c)));
+  sections.sort((a, b) => {
+    const ra = secRank(a);
+    const rb = secRank(b);
+    if (ra !== rb) return ra < rb ? -1 : 1;
+    return domainRank(a.domain) - domainRank(b.domain) || a.rank - b.rank;
+  });
 
   // 线/域 → 组（侧栏第一级）；组保持 GROUPS 定义顺序
   const byGroup = new Map<GroupId, Sec[]>();

@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO19.1",
+  "chapter": "VO19",
+  "title": "19 词根词缀（下）",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/19-词根词缀（下）.md",
+    "sha256": "sha256:c64b42a8fc97823c3b9f10e6c91d6d644032b4b2d66aecc310dacb43d865b745"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO19.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `abduct` *v.* 绑架；诱拐\n- `retrospect` *n.* 回顾；回想\n- `deport` *v.* 驱逐出境\n- `inscription` *n.* 铭文；题词\n- `biography` *n.* 传记\n- `diagram` *n.* 图表；示意图\n- `grammar` *n.* 语法\n- `telegram` *n.* 电报\n- `microphone` *n.* 麦克风\n- `phonetics` *n.* 语音学\n- `phonology` *n.* 音系学（超纲）\n- `symbiosis` *n.* 共生（超纲）\n- `biopsy` *n.* 活检（超纲）\n- `reduction` *n.* 减少；降价\n- `conduction` *n.* 传导\n- `conductor` *n.* 指挥；导体\n- `aspect` *n.* 方面；外观\n- `respective` *adj.* 各自的\n- `spectrum` *n.* 光谱；范围\n- `reporter` *n.* 记者\n- `importance` *n.* 重要性\n- `important` *adj.* 重要的\n- `supportive` *adj.* 支持的\n- `supporter` *n.* 支持者\n- `versatile` *adj.* 多才多艺的；多用途的\n- `divert` *v.* 转移；使转向\n- `universe` *n.* 宇宙；万物\n- `intercept` *v.* 拦截；截获\n- `susceptible` *adj.* 易受影响的；易感染的\n- `spectacular` *adj.* 壮观的；引人注目的\n- `inject` *v.* 注射；注入\n- `eject` *v.* 驱逐；弹出\n- `transcript` *n.* 抄本；成绩单\n- `avert` *v.* 避免；转移（目光）\n- `regress` *v.* 倒退；退化\n- `transgress` *v.* 违反；越界\n- `recess` *n.* 休会；休息\n- `invoke` *v.* 援引；祈求\n- `evoke` *v.* 唤起；引起"
+    },
+    {
+      "id": "VO19.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\n\nAnyone who has studied English vocabulary seriously soon discovers that roots and affixes are not merely a list to be memorised. Take the root *spect*, meaning “to look”. Once you know it, you can inspect an unfamiliar word, predict its meaning from its parts, and describe it accurately to others. Similarly, *port*, “to carry”, explains why a portable device is easy to carry and why a transfer of funds moves money from one account to another. The same logic applies to *dict* (to say), *duct* (to lead) and *pos* (to place): it is this underlying system that makes a word like *compose* or *conduct* transparent rather than arbitrary. Learners who master a few dozen such elements therefore convert passive recognition into active control, and they submit new words to analysis instead of merely memorising them. The gain is visible within weeks.\n\n### 中译\n\n任何认真学过英语词汇的人都会很快发现，词根与词缀并不只是一份用来背诵的清单。以词根 *spect*（意为“看”）为例。一旦你掌握了它，你就能审视一个陌生的单词，依据其组成部分预测它的含义，并向他人准确地描述它。同样，*port*（“携带”）可以解释为什么便携设备易于携带，也可以解释为什么资金转账会把钱从一个账户转移到另一个账户。同样的逻辑也适用于 *dict*（说）、*duct*（引导）和 *pos*（放置）：正是这一底层系统，使得 *compose* 或 *conduct* 这样的词变得透明可解，而不是任意武断。因此，掌握了数十个这类要素的学习者，就把被动的辨认转化为主动的掌控；他们让新词接受分析，而不是仅仅死记硬背。这种收益在几周之内就清晰可见。\n\n### 语法点\n\n1. `Anyone who has studied English vocabulary seriously soon discovers that roots and affixes are not merely a list to be memorised.` → 定语从句（who…）嵌套宾语从句（that…），宾语从句中又含不定式被动式作后置定语（to be memorised） → 写议论文开头下判断时，可用“Anyone who… discovers that…”把人、事、结论三层一次说清，避免短句堆叠。\n\n2. `Take the root spect, meaning “to look”.` → 祈使句 + 现在分词短语作后置修饰（= which means） → 举例时用祈使句引入，再以分词短语补充释义，比另起一句更紧凑；分词逻辑主语须与所修饰名词一致。\n\n3. `it is this underlying system that makes a word like compose or conduct transparent rather than arbitrary.` → It is … that … 强调句型，强调主语 this underlying system → 阅读中见 it is/was … that … 且去掉后句子仍完整，即为强调句；写作中用来突出因果链中的关键因素。\n\n4. `Once you know it, you can inspect an unfamiliar word, predict its meaning from its parts, and describe it accurately to others.` → once 引导时间状语从句 + 情态动词并列谓语（inspect / predict / describe） → once 相当于“一旦”，从句用一般现在时表将来；三个动词并列时只保留第一个情态动词，后两个用原形，句子更简洁。\n\n5. `Learners who master a few dozen such elements therefore convert passive recognition into active control, and they submit new words to analysis instead of merely memorising them.` → 定语从句 + convert … into … 固定搭配；“instead of + 动名词”作状语表取舍 → instead of 后须接名词或动名词，不能接不定式；用于对比“正确做法与错误做法”时，可使论证立场鲜明。"
+    }
+  ],
+  "source_h1": "19 词根词缀（下）",
+  "meta": {
+    "kind": "english1-words",
+    "group": 19
+  }
+}

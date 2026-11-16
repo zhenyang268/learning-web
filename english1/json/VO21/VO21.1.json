@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO21.1",
+  "chapter": "VO21",
+  "title": "21 初高中衔接基础（中）",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/21-初高中衔接基础（中）.md",
+    "sha256": "sha256:defdd9ff89ff6b23d3e2da4232854028726179a458e796730b1e37a67eea9d50"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO21.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `afford` *v.* 负担得起；提供\n- `belong` *v.* 属于；应归入\n- `condition` *n.* 条件；状况\n- `cross` *v.* 穿过；交叉\n- `depend` *v.* 依靠；取决于\n- `divide` *v.* 划分；分裂\n- `earn` *v.* 赚得；赢得\n- `escape` *v.* 逃避；逃脱\n- `experience` *n.* 经验；经历\n- `fail` *v.* 未能；失败\n- `fit` *v.* 适合；安装\n- `gain` *v.* 获得；增加\n- `gather` *v.* 收集；推断\n- `guess` *v.* 猜测；认为\n- `hang` *v.* 悬挂；绞死\n- `happen` *v.* 发生；碰巧\n- `hurt` *v.* 损害；伤害\n- `involve` *v.* 涉及；使参与\n- `join` *v.* 加入；连接\n- `keep` *v.* 保持；经营\n- `kill` *v.* 扼杀；杀死\n- `land` *n.* 土地；国土\n- `lend` *v.* 提供；借出\n- `let` *v.* 让；出租\n- `lift` *v.* 解除；举起\n- `light` *n.* 光；灯\n- `live` *adj.* 现场的；活的\n- `look` *v.* 显得；看\n- `miss` *v.* 错过；想念\n- `move` *v.* 促使；移动\n- `name` *v.* 命名；任命\n- `need` *v.* 需要；必须\n- `notice` *v.* 注意到；察觉\n- `own` *v.* 拥有；承认\n- `pass` *v.* 通过；传递\n- `pay` *v.* 值得；支付\n- `pick` *v.* 挑选；采摘\n- `place` *v.* 放置；安置\n- `plan` *n.* 计划；方案\n- `play` *v.* 起作用；玩\n- `provide` *v.* 提供；规定\n- `pull` *v.* 拉；拔\n- `put` *v.* 表达；放置\n- `reach` *v.* 达到；伸手\n- `record` *n.* 记录；唱片\n- `repeat` *v.* 重复；复述\n- `return` *v.* 返回；回报\n- `rise` *v.* 上升；起立\n- `risk` *v.* 冒…的危险；风险"
+    },
+    {
+      "id": "VO21.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nThe transition from junior to senior high school is an **important** period for every student. During this time, it is not enough to **remember** facts; students need to **develop** good habits of **review** and **practice**. **Although** the work becomes harder, regular review can **improve** understanding and make **progress** possible. **However**, many students wait until an exam is near, **because** they believe that last-minute effort will **provide** a quick solution. In fact, real improvement comes from small daily actions. If you spend twenty minutes reviewing what you learned each day, you will find it easier to connect new knowledge with old knowledge. Teachers can provide guidance, but no one can study for you. Therefore, take every simple exercise seriously, and remember that steady effort matters more than sudden pressure. In this way, the transition can become a valuable chance to grow.\n\n### 中译\n从初中到高中的过渡对每个学生来说都是一个重要阶段。在此期间，仅仅记住事实是不够的；学生需要养成复习和练习的良好习惯。尽管任务变得更难，定期复习仍能增进理解并带来进步。然而，许多学生等到考试临近才行动，因为他们相信临时抱佛脚会提供快速的解决办法。事实上，真正的进步来自日常的小行动。如果你每天花二十分钟复习当天所学，你会发现更容易把新知识与旧知识联系起来。老师可以提供指导，但没有人能替你学习。因此，认真对待每一道简单练习，并记住：持续的努力比突如其来的压力更重要。这样，这段过渡期就能成为宝贵的成长机会。\n\n### 语法点\n- `it is not enough to remember facts` → `it` 作形式主语，不定式短语 `to remember facts` 作真正主语 → 用于避免主语过长，常见句型为 `It is + adj. + to do`。\n- `Although the work becomes harder, regular review can improve understanding...` → `although` 引导让步状语从句 → 表示“虽然”，主句不能再用 `but`；考研阅读中常用于引出让步转折。\n- `because they believe that last-minute effort will provide a quick solution` → `because` 引导原因状语从句；`that` 引导宾语从句 → `because` 说明主句原因，`believe` 后的 `that` 从句作宾语。\n- `If you spend twenty minutes reviewing what you learned each day` → `if` 引导条件状语从句；`spend + 时间 + doing`；`what` 引导宾语从句 → 表示条件与“花时间做某事”，`what` 在从句中作 `learned` 的宾语。\n- `you will find it easier to connect new knowledge with old knowledge` → `find + it + adj. + to do`；`connect A with B` → `it` 作形式宾语，真正宾语是不定式；`connect...with...` 表示“把A与B联系起来”。"
+    }
+  ],
+  "source_h1": "21 初高中衔接基础（中）",
+  "meta": {
+    "kind": "english1-words",
+    "group": 21
+  }
+}

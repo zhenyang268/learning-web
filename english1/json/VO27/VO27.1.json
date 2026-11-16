@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO27.1",
+  "chapter": "VO27",
+  "title": "27 学术与研究",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/27-学术与研究.md",
+    "sha256": "sha256:cb878d23b0a214268615e872f957cf14dcc27f9c3ca4474bd52ca86fa0a4c508"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO27.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `replicate` *v.* 重复（实验）；复制\n- `substantiate` *v.* 证实；证明\n- `surmise` *v.* 猜测；推测\n- `fluctuation` *n.* 波动；起伏\n- `outlier` *n.* 异常值；离群值\n- `median` *n.* 中位数；中间值\n- `incremental` *adj.* 递增的；渐进的\n- `meticulous` *adj.* 一丝不苟的；细致的\n- `scrupulous` *adj.* 严谨的；审慎的\n- `systematic` *adj.* 系统的；有条理的\n- `exhaustive` *adj.* 详尽的；彻底的\n- `provisional` *adj.* 临时的；暂定的\n- `preliminary` *adj.* 初步的；预备的\n- `tenable` *adj.* 站得住脚的\n- `untenable` *adj.* 站不住脚的\n- `congruent` *adj.* 一致的；相合的\n- `calibration` *n.* 校准；标定\n- `calibrate` *v.* 校准；调整\n- `quantify` *v.* 量化；定量\n- `metric` *n.* 指标；度量标准\n- `prevalence` *n.* 普遍性；流行率\n- `incidence` *n.* 发生率；发病率\n- `placebo` *n.* 安慰剂\n- `diagnostic` *adj.* 诊断的；判断的\n- `reproducibility` *n.* 可重复性（超纲）\n- `scrutiny` *n.* 仔细审查；监督\n- `plagiarism` *n.* 剽窃；抄袭\n- `treatise` *n.* 专著；论文\n- `monograph` *n.* 专著（超纲）\n- `anthology` *n.* 文集；选集\n- `conceptualize` *v.* 使概念化；构思\n- `expound` *v.* 详细阐述\n- `explicate` *v.* 解释；说明（超纲）\n- `posit` *v.* 假定；假设\n- `purport` *v.* 声称；标榜\n- `ascertain` *v.* 查明；确定\n- `demarcate` *v.* 划定；区分（超纲）\n- `approximation` *n.* 近似；近似值\n- `aberration` *n.* 偏差；反常（超纲）\n- `dispersion` *n.* 分散；离散度\n- `skew` *v.* 使偏斜；歪曲\n- `observational` *adj.* 观察的；观测的\n- `longitudinal` *adj.* 纵向的；长期的\n- `cohort` *n.* 队列；同期群体\n- `confounding` *adj.* 混杂的；令人困惑的\n- `theoretical` *adj.* 理论的；理论上的\n- `statistical` *adj.* 统计的；统计学的\n- `regression` *n.* 回归；倒退\n- `heterogeneity` *n.* 异质性；异质化（超纲）\n- `endogeneity` *n.* 内生性（超纲）\n- `dataset` *n.* 数据集；资料集\n- `cross-sectional` *adj.* 横断面的；横截面的\n- `retrospective` *adj.* 回顾性的；追溯的\n- `prospective` *adj.* 前瞻性的；预期的\n- `randomize` *v.* 随机化；随机分配\n- `confound` *v.* 使混杂；混淆\n- `generalizability` *n.* 可推广性；普适性（超纲）\n- `operationalize` *v.* 操作化；使可操作（超纲）\n- `anecdotal` *adj.* 轶事的；传闻的\n- `respondent` *n.* 受访者；回答者\n- `participant` *n.* 参与者；参加者\n- `modeling` *n.* 建模；模型化\n- `predictor` *n.* 预测变量；预测者\n- `determinant` *n.* 决定因素；决定变量\n- `meta-analysis` *n.* 元分析；荟萃分析（超纲）\n- `plagiarize` *v.* 剽窃；抄袭\n- `acknowledgment` *n.* 致谢；承认\n- `paraphrase` *v.* 改写；释义\n- `quotation` *n.* 引文；引用\n- `excerpt` *n.* 摘录；节选\n- `revision` *n.* 修订；修改\n- `preprint` *n.* 预印本；未定稿（超纲）\n- `submission` *n.* 投稿；提交\n- `referee` *n.* 审稿人；裁判\n- `editor` *n.* 编辑；主编\n- `keyword` *n.* 关键词；关键字\n- `appendix` *n.* 附录；阑尾\n- `footnote` *n.* 脚注；注脚\n- `endnote` *n.* 尾注；文末注\n- `correspondence` *n.* 通信；信件\n- `authorship` *n.* 作者身份；著述\n- `coauthor` *n.* 合著者；共同作者\n- `erratum` *n.* 勘误表；错误（超纲）\n- `retraction` *n.* 撤稿；收回\n- `retract` *v.* 撤回；缩回\n- `license` *n.* 许可；许可证\n- `permission` *n.* 许可；允许\n- `archive` *n.* 档案；档案馆\n- `repository` *n.* 存储库；知识库\n- `index` *n.* 索引；指数\n- `annotate` *v.* 注释；作注解\n- `annotation` *n.* 注释；注解\n- `transcribe` *v.* 转录；抄写\n- `coding` *n.* 编码；译码\n- `specification` *n.* 规范；具体说明\n- `sensitivity` *n.* 敏感性；灵敏度\n- `specificity` *n.* 特异性；明确性\n- `probabilistic` *adj.* 概率性的；或然的（超纲）\n- `fieldwork` *n.* 实地调查；田野工作\n- `sampling` *n.* 抽样；取样\n- `subset` *n.* 子集；分组\n- `panel` *n.* 专门小组；面板\n- `attrition` *n.* 流失；损耗\n- `demography` *n.* 人口统计学\n- `epidemiology` *n.* 流行病学\n- `randomized` *adj.* 随机的；随机化的\n- `causation` *n.* 因果关系；引起\n- `proportion` *n.* 比例；部分\n- `ratio` *n.* 比率；比例\n- `percentage` *n.* 百分比；比例\n- `gradient` *n.* 梯度；坡度\n- `curve` *n.* 曲线；弧线\n- `linear` *adj.* 线性的；直线的\n- `nonlinear` *adj.* 非线性的\n- `exponential` *adj.* 指数的；呈指数增长的\n- `cluster` *n.* 聚类；群\n- `stratification` *n.* 分层；层化\n- `probability` *n.* 概率；可能性\n- `likelihood` *n.* 可能性；似然\n- `inductive` *adj.* 归纳的；诱导的\n- `contradictory` *adj.* 矛盾的；对立的\n- `hypothesize` *v.* 假设；提出假说\n- `conclusive` *adj.* 决定性的；确凿的\n- `inconclusive` *adj.* 无定论的；非决定性的\n- `definitive` *adj.* 确定的；权威的\n- `causal` *adj.* 因果的；原因的\n- `replication` *n.* 重复实验；复制\n- `reproducible` *adj.* 可重复的；可复现的\n- `misconduct` *n.* 不端行为；失职\n- `fabricate` *v.* 捏造；制造\n- `peer` *n.* 同行；同龄人\n- `corpus` *n.* 语料库；全集\n- `paucity` *n.* 缺乏；少量（超纲）\n- `plethora` *n.* 过多；过剩（超纲）\n- `nuanced` *adj.* 细致入微的；有微妙差别的\n- `elusive` *adj.* 难以捉摸的；难以找到的\n- `pertinent` *adj.* 相关的；切题的\n- `generalization` *n.* 概括；普遍化\n- `ethnography` *n.* 民族志；人种学\n- `archival` *adj.* 档案的；档案中的\n- `triangulation` *n.* 三角验证；三角测量"
+    },
+    {
+      "id": "VO27.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nResearch in the social sciences rarely proceeds by intuition alone. A scholar usually begins with a hypothesis derived from the existing literature and then designs a methodology capable of testing it. In quantitative studies, researchers control variables and rely on empirical data to validate their claims; in qualitative work, by contrast, interviews and observation may reveal how a framework operates in practice. Yet no single study can settle a question. Before findings enter the academic record, they must survive peer review, and even then independent teams are expected to replicate the results. This process is slow, but it protects knowledge from being confused with opinion. For students, the lesson is clear: to read critically is to ask not only what a study concludes, but how it reached that conclusion and whether its evidence is strong enough to support it.\n\n### 中译\n社会科学研究很少仅凭直觉推进。学者通常从现有文献中提出一个假设，然后设计一种能够检验该假设的方法。在定量研究中，研究者控制变量并依赖实证数据来验证其主张；相比之下，在定性研究中，访谈和观察可能揭示某一框架在实践中如何运作。然而，任何单一研究都无法解决一个问题。在研究结果进入学术记录之前，它们必须经受同行评审；即便那时，独立团队也应重复这些结果。这一过程缓慢，但它防止知识被混同于意见。对学生而言，教训很清楚：批判性阅读不仅要问一项研究得出了什么结论，还要问它如何得出该结论，以及其证据是否足以支持该结论。\n\n### 语法点\n- `A scholar usually begins with a hypothesis derived from the existing literature` → 过去分词短语作后置定语 → `derived from...` 修饰 `hypothesis`，相当于 `which is derived from...`；学术写作中常用于压缩定语从句，表被动或来源。\n- `a methodology capable of testing it` → 形容词短语作后置定语 → `capable of doing` 修饰 `methodology`；`capable of + 动名词` 说明名词的能力或用途。\n- `may reveal how a framework operates in practice` → `how` 引导宾语从句 → 作 `reveal` 的宾语，从句用陈述语序；用于说明方式或运作机制。\n- `Before findings enter the academic record, they must survive peer review` → `Before` 引导时间状语从句 + 主句情态动词 → `before` 从句用一般现在时表将来，主句 `must` 表必要性；`findings` 复数作主语，`enter` 用原形。\n- `not only what a study concludes, but how it reached that conclusion and whether its evidence is strong enough to support it` → `not only...but...` 并列名词性从句 → `what/how/whether` 三个宾语从句并列作 `ask` 的宾语；从句均用陈述语序，`whether` 引导一般疑问意义。"
+    }
+  ],
+  "source_h1": "27 学术与研究",
+  "meta": {
+    "kind": "english1-words",
+    "group": 27
+  }
+}

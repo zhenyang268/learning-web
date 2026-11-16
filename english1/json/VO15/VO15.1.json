@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO15.1",
+  "chapter": "VO15",
+  "title": "15 高频副词与介词短语",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/15-高频副词与介词短语.md",
+    "sha256": "sha256:58a041746c5df6fa0f96573b29e461f88c445bfdb937c98585b903ccbb2a9c98"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO15.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `meantime` *adv.* 同时；其间\n- `afterwards` *adv.* 后来；之后\n- `finally` *adv.* 最后；终于\n- `recently` *adv.* 最近；近来\n- `lately` *adv.* 最近；近来\n- `shortly` *adv.* 不久；简短地\n- `immediately` *adv.* 立即；直接地\n- `instantly` *adv.* 立即；即刻\n- `suddenly` *adv.* 突然；忽然\n- `steadily` *adv.* 稳步地；持续地\n- `rapidly` *adv.* 迅速地；快速地\n- `swiftly` *adv.* 迅速地；敏捷地\n- `quickly` *adv.* 迅速地；很快\n- `slowly` *adv.* 缓慢地；慢\n- `constantly` *adv.* 不断地；经常\n- `continually` *adv.* 不断地；频繁地\n- `continuously` *adv.* 连续地；不间断地\n- `repeatedly` *adv.* 反复地；再三地\n- `frequently` *adv.* 频繁地；经常\n- `often` *adv.* 经常；往往\n- `sometimes` *adv.* 有时；间或\n- `occasionally` *adv.* 偶尔；有时\n- `seldom` *adv.* 很少；不常\n- `rarely` *adv.* 很少；难得\n- `never` *adv.* 从不；决不\n- `always` *adv.* 总是；一直\n- `usually` *adv.* 通常；经常\n- `commonly` *adv.* 通常；普遍地\n- `normally` *adv.* 正常地；通常\n- `ordinarily` *adv.* 通常；普通地\n- `generally` *adv.* 通常；一般地\n- `particularly` *adv.* 特别；尤其\n- `especially` *adv.* 尤其；特别\n- `specially` *adv.* 专门地；特别地\n- `specifically` *adv.* 具体地；特别地\n- `mainly` *adv.* 主要地；大体上\n- `completely` *adv.* 完全地；彻底地\n- `totally` *adv.* 完全地；总共\n- `absolutely` *adv.* 绝对地；完全地\n- `perfectly` *adv.* 完全地；完美地\n- `exactly` *adv.* 确切地；恰好\n- `precisely` *adv.* 精确地；恰恰\n- `approximately` *adv.* 大约；近似地\n- `roughly` *adv.* 大约；粗略地\n- `about` *adv.* 大约；到处\n- `around` *adv.* 大约；周围\n- `nearly` *adv.* 几乎；差不多\n- `almost` *adv.* 几乎；差不多\n- `simply` *adv.* 仅仅；简单地\n- `only` *adv.* 仅仅；唯一地\n- `even` *adv.* 甚至；更加\n- `still` *adv.* 仍然；更加\n- `yet` *adv.* 还；然而\n- `already` *adv.* 已经；早已\n- `ever` *adv.* 曾经；究竟\n- `quite` *adv.* 相当；完全\n- `fairly` *adv.* 相当；公平地\n- `very` *adv.* 非常；正是\n- `too` *adv.* 太；也\n- `so` *adv.* 如此；非常\n- `enough` *adv.* 足够；相当\n- `slightly` *adv.* 稍微；轻微地\n- `considerably` *adv.* 相当大地；很大程度上\n- `significantly` *adv.* 显著地；意味深长地\n- `substantially` *adv.* 大体上；实质上\n- `enormously` *adv.* 极大地；非常\n- `immensely` *adv.* 极大地；非常\n- `highly` *adv.* 高度地；非常\n- `deeply` *adv.* 深深地；深刻地\n- `greatly` *adv.* 大大地；非常\n- `much` *adv.* 很；…得多\n- `more` *adv.* 更；更多\n- `most` *adv.* 最；非常\n- `less` *adv.* 更少；较少\n- `least` *adv.* 最少；最小\n- `well` *adv.* 很好地；充分地\n- `better` *adv.* 更好地；更\n- `best` *adv.* 最好地；最\n- `ahead` *adv.* 提前；在前面\n- `apart` *adv.* 分开；相隔\n- `aside` *adv.* 在旁边；撇开\n- `away` *adv.* 离开；远离\n- `forward` *adv.* 向前；提前\n- `abroad` *adv.* 在国外；到国外\n- `overseas` *adv.* 在海外；到海外\n- `namely` *adv.* 即；也就是\n- `actually` *adv.* 实际上；事实上\n- `certainly` *adv.* 当然；肯定\n- `probably` *adv.* 很可能；大概\n- `possibly` *adv.* 可能地；或许\n- `perhaps` *adv.* 也许；可能\n- `obviously` *adv.* 显然；明显地\n- `clearly` *adv.* 清楚地；显然\n- `directly` *adv.* 直接地；立即\n- `indirectly` *adv.* 间接地\n- `relatively` *adv.* 相对地；比较地\n- `definitely` *adv.* 明确地；肯定地\n- `basically` *adv.* 基本上；根本上\n- `essentially` *adv.* 本质上；基本上"
+    },
+    {
+      "id": "VO15.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nStudents who wish to write persuasively should pay attention to adverbs and prepositional phrases, which are often overlooked. By and large, these small expressions do not attract attention; in particular, phrases such as “to some extent” or “in the long run” can, however, shape a writer’s tone considerably. If learners deliberately collect such items and readily put them into practice, their prose will eventually become more precise. Simultaneously, they must avoid using them at random, for a phrase chosen in vain may confuse rather than clarify. On the whole, mastery does not arise overnight; it depends, to a large extent, on repeated exposure and careful revision. In this sense, what seems merely decorative can, in the long run, determine whether an argument is persuasive.\n\n### 中译\n希望写出有说服力文章的学生应当关注副词和介词短语，而它们常常被忽视。总的来说，这些小型表达并不会引人注意；尤其是“在某种程度上”或“从长远来看”这类短语，却能在相当程度上塑造作者的语调。如果学习者有意收集这类表达并乐于将其付诸实践，他们的文笔最终会变得更加精准。同时，他们必须避免随意使用这些表达，因为一个徒劳选用的短语可能使人困惑而非澄清。总体而言，掌握并非一夜之间就能实现；它在很大程度上依赖于反复接触和仔细修改。从这个意义上说，看似只是装饰性的表达，从长远来看，可能决定一个论点是否具有说服力。\n\n### 语法点\n1. “Students who wish to write persuasively should pay attention to...” → who引导限制性定语从句，修饰Students；主句谓语为should pay attention to → 用于说明哪类学生应当关注某事，定语从句紧跟先行词，情态动词should表达建议。\n2. “By and large, these small expressions do not attract attention” → By and large为句首评注性状语；do not构成一般现在时否定 → 用于整体评价某一现象，评注状语后用逗号隔开，否定句借助助动词do。\n3. “If learners deliberately collect such items and readily put them into practice, their prose will eventually become more precise.” → if引导条件状语从句，从句中含并列谓语collect and put；主句用will+动词原形 → 条件从句常用一般现在时表将来，主句用将来时；deliberately、readily分别修饰谓语动词。\n4. “a phrase chosen in vain may confuse rather than clarify” → chosen in vain为过去分词短语作后置定语；rather than连接并列动词confuse和clarify → 过去分词短语修饰phrase，表示被动/完成意义；rather than连接两个并列成分，表示“而不是”。\n5. “what seems merely decorative can, in the long run, determine whether an argument is persuasive.” → what引导主语从句；in the long run为插入性状语；whether引导宾语从句作determine的宾语 → what从句整体作主语，谓语为can determine；插入状语不影响句子结构，whether从句说明“决定是否……”。"
+    }
+  ],
+  "source_h1": "15 高频副词与介词短语",
+  "meta": {
+    "kind": "english1-words",
+    "group": 15
+  }
+}

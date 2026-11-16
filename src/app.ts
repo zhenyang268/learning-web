@@ -47,8 +47,8 @@ import {
 } from './renderers/doc';
 import { jobPriorityOfUnit, routeMotivation } from './content/project-routes';
 import { displayCode } from './modules/codes';
-import { MATH, type Subject } from './subjects';
-import { chapterOf, cmpCode, DOMAINS, domainOf } from './modules/taxonomy';
+import { MATH, siteLinksOf, type Subject } from './subjects';
+import { activeDomains, chapterOf, cmpCode, domainOf, useDomains } from './modules/taxonomy';
 
 /**
  * 当前学科。**全应用只有这一个开关**（由入口文件传给 boot）：
@@ -346,7 +346,22 @@ function navBlocksOf(): NavBlock[] {
     domainCodes.set(d, list);
   }
   const blocks: NavBlock[] = [];
-  for (const d of DOMAINS) {
+  // 顶栏块与侧栏**同一个章序**：英语一按题型排（导览 → 阅读 → 大作文 → … → 词汇），
+  // 其余四站 chapterRank 恒为 Infinity，`DOMAINS` 顺序不受任何影响。
+  // 用「该域名下最小的章名次」给域排序，域内的域顺序（DOMAINS）保持不变作次键。
+  const domainOrder = new Map<string, number>();
+  for (const [id, codes] of domainCodes) {
+    let best = Number.POSITIVE_INFINITY;
+    for (const c of codes) best = Math.min(best, chapterRankOf(chapterOf(c)));
+    domainOrder.set(id, best);
+  }
+  const orderedDomains = [...activeDomains()].sort((a, b) => {
+    const ra = domainOrder.get(a.id) ?? Number.POSITIVE_INFINITY;
+    const rb = domainOrder.get(b.id) ?? Number.POSITIVE_INFINITY;
+    if (ra !== rb) return ra < rb ? -1 : 1;
+    return 0; // 相等时保持 DOMAINS 原序（stable sort）
+  });
+  for (const d of orderedDomains) {
     const codes = domainCodes.get(d.id);
     if (!codes?.length) continue;
     blocks.push({
@@ -397,6 +412,44 @@ function currentNavLetter(code: string): string {
   return domainOf(meta.code);
 }
 
+/**
+ * 章序 / 单元序的**唯一派生点**（`Subject.chapterOrder` → 名次函数）。
+ *
+ * 为什么是「前缀 + 显式例外」而不是一份完整的章清单：英语一共有 39 章目录，
+ * 把 39 个章号抄一遍就是第二份真源（加一章忘一处必然漂移）。学科配置只写
+ * 「题型的学习次序」，章内次序缺省按章号，**只有确实需要倒挂的章才写全称**：
+ * `WR02`（大作文 20 分）必须排在 `WR01`（小作文 10 分）前，而 `WR01` 的章号更小。
+ *
+ * 于是 `chapterOrder` 里的元素有两种写法：
+ *   · 两字母（`RC`）      → 该前缀下所有章按章号
+ *   · 完整章号（`WR02`）  → 该章取出单独名次，其余同前缀章的相对次序不变
+ * 四个老站不配 `chapterOrder` → 恒 `Infinity` → 排序完全回落到原逻辑。
+ */
+const chapterRankOf = (chap: string): number => {
+  const order = current.chapterOrder;
+  if (!order) return Number.POSITIVE_INFINITY;
+  const exact = order.indexOf(chap);
+  if (exact >= 0) return exact;
+  const prefix = order.indexOf(chap.slice(0, 2));
+  if (prefix < 0) return Number.POSITIVE_INFINITY;
+  // 同前缀未点名：紧跟在被点名的那一章之后，并保持它们在 order 里的相对次序
+  return prefix + 0.5;
+};
+
+/** 章内单元名次（同一前缀下的 `WR01` / `WR02`），缺省不参与比较 */
+const unitRankOf = (code: string): number => {
+  const order = current.chapterOrder;
+  if (!order) return Number.POSITIVE_INFINITY;
+  const chap = chapterOf(code);
+  const i = order.indexOf(chap);
+  if (i >= 0) return i;
+  // 章内序用章的相对名次 ×10 + 单元号，避免与其它比较器耦合
+  const prefix = order.indexOf(chap.slice(0, 2));
+  if (prefix < 0) return Number.POSITIVE_INFINITY;
+  const unit = Number(code.split('.')[1] ?? 0);
+  return (prefix + 0.5) * 10 + unit;
+};
+
 /** 中档：只更新顶栏 / 横幅 / 侧栏（不算 KaTeX，不重建卡片）——切单元、搜索、重载时用 */
 function refreshChrome(): void {
   const code = currentCode();
@@ -405,7 +458,10 @@ function refreshChrome(): void {
     current: currentNavLetter(code),
     errorCount: issues.length + (fatal ? 1 : 0),
     query: searchQuery,
-    crossLink: current.crossLink,
+    // 五站互链：从 SUBJECTS 派生（旧版是单条 crossLink，只能看得到两个站）。
+    // 当前站由 `renderHeader` 标 aria-current 并禁用跳转。
+    sites: siteLinksOf(current.id),
+    chapterRank: chapterRankOf,
     // 按钮与数据同源：`syllabus/angles === null`（math1 / projects / 408 的路线）
     // 时顶栏不出现「总纲」「路线」。此前无条件渲染，按下去只有一句「暂未提供」。
     syllabus: current.syllabus ? { label: '总纲', title: current.syllabus.title } : null,
@@ -427,6 +483,8 @@ function refreshSidebar(): void {
     current: currentCode(),
     masteryOf: masteryByCode,
     query: searchQuery,
+    chapterRank: chapterRankOf,
+    unitRank: unitRankOf,
   });
 }
 
@@ -1105,6 +1163,9 @@ function scopeOfProbeKey(key: string): string {
 
 export async function boot(subject: Subject = MATH): Promise<void> {
   current = subject;
+  // 域表随学科切换（英语一要为撞车前缀 `NT` 重新裁决）。必须在任何
+  // `domainOf`/`groupOf`/`domainRank` 调用之前设置 —— boot 之后才有渲染。
+  useDomains(subject.domainTable ?? null);
   document.title = subject.title;
   loadState();
   issues = [];
@@ -1131,7 +1192,12 @@ export async function boot(subject: Subject = MATH): Promise<void> {
     });
   }
   if (!currentCode() && units.length) {
-    const next = frontierCode() ?? units[0]?.code;
+    // 学科配置的 startCode 优先（英语一 → GE01.1 考纲主键表）；
+    // 但只在**尚未掌握任何单元**时生效 —— 学过之后仍按 frontier 继续，
+    // 否则每次打开都把读者拽回导览页。
+    const learned = units.some((u) => masteryByCode(u.code) > 0);
+    const configured = subject.startCode && byCode.has(subject.startCode) ? subject.startCode : null;
+    const next = (learned ? null : configured) ?? frontierCode() ?? units[0]?.code;
     if (next) {
       const target = `#/${next}`;
       if (location.hash === target) apply(); // 同值 hashchange 不触发（onReload 后重进会白屏），手动补一发
@@ -1143,6 +1209,14 @@ export async function boot(subject: Subject = MATH): Promise<void> {
 }
 
 document.addEventListener('click', (ev) => {
+  // 五站互链里的**当前站**不自跳（`aria-current` + `data-current`）。
+  // 只拦当前站：别的站是真链接，file:// 与 dev 都由浏览器整页跳转完成，
+  // 不经过任何路由代码（这也是 standalone 快照能互链的原因）。
+  const site = (ev.target as HTMLElement).closest<HTMLElement>('a[data-site]');
+  if (site?.dataset.current === '1') {
+    ev.preventDefault();
+    return;
+  }
   // 总纲 / 切入点 两个文档页共用一套开关逻辑：再点一次回上一个阅读单元
   const docBtn = (ev.target as HTMLElement).closest<HTMLElement>('[data-graph],[data-angles]');
   if (docBtn) {

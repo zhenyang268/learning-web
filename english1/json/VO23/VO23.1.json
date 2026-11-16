@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO23.1",
+  "chapter": "VO23",
+  "title": "23 考研大纲补充（上）",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/23-考研大纲补充（上）.md",
+    "sha256": "sha256:55118f2d604f50df5a8d12fcae5b433ea0c5645ea1e8ddbb912edc2232eadad6"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO23.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `alien` *adj.* 外来的；陌生的\n- `ample` *adj.* 充足的；宽敞的\n- `articulate` *v.* 清楚表达；清晰发音\n- `barrier` *n.* 障碍；屏障\n- `boundary` *n.* 边界；界限\n- `bulk` *n.* 大量；主体\n- `capture` *v.* 捕获；吸引\n- `characterize` *v.* 以……为特征；描绘\n- `circumstance` *n.* 环境；情况\n- `coincide` *v.* 同时发生；相符\n- `collaborate` *v.* 合作；协作\n- `collapse` *v.* 倒塌；崩溃\n- `commence` *v.* 开始；着手\n- `comparable` *adj.* 可比较的；类似的\n- `conceal` *v.* 隐藏；隐瞒\n- `concise` *adj.* 简明的；简洁的\n- `confine` *v.* 限制；禁闭\n- `consist` *v.* 由……组成；在于\n- `consult` *v.* 咨询；查阅\n- `cooperate` *v.* 合作；配合\n- `coordinate` *v.* 协调；配合\n- `correspond` *v.* 相符；通信\n- `dedicate` *v.* 致力于；奉献\n- `deficiency` *n.* 缺乏；不足\n- `descend` *v.* 下降；下来\n- `deserve` *v.* 应得；值得\n- `designate` *v.* 指定；标明\n- `deviate` *v.* 偏离；背离\n- `discard` *v.* 丢弃；抛弃\n- `discourse` *n.* 话语；论述\n- `displace` *v.* 取代；使离开\n- `distort` *v.* 歪曲；扭曲\n- `drain` *v.* 耗尽；排水\n- `duplicate` *v.* 复制；重复\n- `duration` *n.* 持续时间；期间\n- `dynamic` *adj.* 动态的；有活力的\n- `emerge` *v.* 出现；显露\n- `empirical` *adj.* 经验的；实证的\n- `encounter` *v.* 遇到；遭遇\n- `endure` *v.* 忍受；持续"
+    },
+    {
+      "id": "VO23.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nAnyone who has tried to master a foreign language knows that vocabulary is not a list to be memorised once and then forgotten. Words must be sustained by constant use, or their meanings diminish within weeks. Learners who integrate new expressions into real conversation, rather than storing them in isolation, undergo a quiet change: what once seemed arbitrary gradually embodies sense. Teachers therefore advocate context over word lists, and they are right to do so, for the constraints of grammar, far from inhibiting expression, compensate for the ambiguity that isolated words produce. No method can remove the inherent difficulty of the task, but a learner who endeavors to read widely will find that each unfamiliar term eventually finds its place.\n\n### 中译\n任何尝试掌握一门外语的人都知道，词汇不是背过一遍就可以抛开的清单。词语必须靠持续使用来维持，否则其意义几周之内便会消退。把新表达融入真实对话、而不是孤立地储存它们的学习者，会经历一种无声的变化：原本看似随意的说法渐渐体现出意义。因此教师主张以语境代替词表，他们这样做是有道理的，因为语法的种种限制非但不抑制表达，反而补偿了孤立词语所造成的歧义。任何方法都无法消除这项任务固有的难度，但一个努力广泛阅读的学习者会发现，每个陌生的词最终都会找到自己的位置。\n\n### 语法点\n1. `Words must be sustained by constant use, or their meanings diminish within weeks.` → 情态动词被动语态（must be sustained）+ or 连接的并列分句（or = otherwise，表\"否则\"）→ 写作中先用 must be done 提出条件或要求，再用 or 引出反面后果，比 if...not 更紧凑，也常用于论证句。\n\n2. `Learners who integrate new expressions into real conversation, rather than storing them in isolation, undergo a quiet change` → who 引导限制性定语从句 + rather than 引导的介词短语插入语（后接动名词）+ 主句谓语 undergo → rather than 作介词时后接名词或动名词，可置于两个逗号之间作对比状语，不切断主谓，是长句\"加塞\"而不乱结构的常用手段。\n\n3. `what once seemed arbitrary gradually embodies sense` → what 引导主语从句（名词性从句）作全句主语 → what = the thing(s) that，把抽象概念提到句首作主语，避免用 it 造成指代不明；注意从句用陈述语序。\n\n4. `for the constraints of grammar, far from inhibiting expression, compensate for the ambiguity` → for 引导原因状语分句（for = because，较书面）+ far from + 动名词作插入状语表否定 + 主句谓语 compensate for → far from doing 表\"远非、不但不\"，先否定读者预期再给出实情，是考研阅读中典型的让步—转折结构。\n\n5. `a learner who endeavors to read widely will find that each unfamiliar term eventually finds its place` → who 引导定语从句修饰主语 learner + 主句谓语 will find + that 引导宾语从句 → 主语后接定语从句拉长、谓语用情态动词、再以 that 宾语从句收尾，是考研阅读长句的典型骨架；endeavor to do 表\"努力做\"，比 try to 更书面。"
+    }
+  ],
+  "source_h1": "23 考研大纲补充（上）",
+  "meta": {
+    "kind": "english1-words",
+    "group": 23
+  }
+}

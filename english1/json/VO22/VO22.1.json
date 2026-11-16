@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO22.1",
+  "chapter": "VO22",
+  "title": "22 初高中衔接基础（下）",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/22-初高中衔接基础（下）.md",
+    "sha256": "sha256:e80a79678557b12416c235484ef98703ce952296e671f281374df3e0369faf20"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO22.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `enjoy` *v.* 享受；喜爱\n- `finish` *v.* 完成；结束\n- `open` *v.* 打开；开始\n- `read` *v.* 阅读；理解\n- `represent` *v.* 代表；表现\n- `say` *v.* 说；表明\n- `search` *v.* 搜寻；调查\n- `seem` *v.* 似乎；好像\n- `sell` *v.* 出售；推销\n- `send` *v.* 发送；派遣\n- `serve` *v.* 服务；担任\n- `set` *v.* 设置；确定\n- `show` *v.* 表明；展示\n- `sit` *v.* 坐；位于\n- `speak` *v.* 说话；发言\n- `spend` *v.* 花费；度过\n- `start` *v.* 开始；创办\n- `stay` *v.* 保持；停留\n- `stop` *v.* 停止；阻止\n- `take` *v.* 需要；采取\n- `talk` *v.* 谈话；讨论\n- `thank` *v.* 感谢；谢意\n- `throw` *v.* 扔；抛弃\n- `travel` *v.* 旅行；传播\n- `treat` *v.* 对待；治疗\n- `try` *v.* 尝试；审判\n- `turn` *v.* 转变；转动\n- `use` *v.* 使用；利用\n- `visit` *v.* 访问；参观\n- `wait` *v.* 等待；期待\n- `walk` *v.* 步行；散步\n- `want` *v.* 想要；需要\n- `watch` *v.* 观看；留意\n- `wear` *v.* 磨损；穿着\n- `wish` *v.* 希望；祝愿\n- `wonder` *v.* 想知道；惊讶\n- `work` *v.* 起作用；工作\n- `worry` *v.* 担心；使烦恼\n- `write` *v.* 写作；填写"
+    },
+    {
+      "id": "VO22.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nThe transition from junior high to senior high is a challenging experience that tests both students and parents. At first, many students often find it hard to manage their time, for the freedom they gain can easily turn into distraction. Those who improve most quickly are not always the cleverest; rather, they are willing to consider advice from teachers and avoid repeating the same mistakes. A helpful habit is to develop a weekly plan and to prepare for each class in advance. When difficulties arise, students should not hide them but ask for support from classmates or teachers. Gradually, they will realize that greater independence also means greater responsibility. Such an understanding makes the transition less frightening and more rewarding.\n\n### 中译\n从初中到高中的过渡是一段有挑战性的经历，它考验着学生和家长双方。起初，许多学生常常发现很难管理自己的时间，因为他们获得的自由很容易变成分心。进步最快的人并不总是最聪明的；相反，他们愿意考虑老师的建议，并避免重复同样的错误。一个有益的习惯是制定每周计划，并提前为每节课做准备。当困难出现时，学生不应隐藏它们，而应向同学或老师寻求支持。渐渐地，他们会意识到更大的独立也意味着更大的责任。这样的理解使这一过渡不那么令人害怕，而更有收获。\n\n### 语法点\n1. `that tests both students and parents` → that 引导定语从句，修饰先行词 experience，that 在从句中作主语 → 用于对抽象名词作限定说明，避免另起一句。\n2. `find it hard to manage their time` → find + it（形式宾语）+ 形容词 + 不定式（真正宾语）→ find/think/make 等后接复合宾语时，用 it 占位，真正宾语后置。\n3. `for the freedom they gain can easily turn into distraction` → for 作并列连词引导原因分句；其中 the freedom they gain 含省略关系代词的定语从句 → for 后接完整分句说明原因，注意与介词 for 区分。\n4. `Those who improve most quickly are not always the cleverest` → who 引导定语从句修饰 Those；not always 构成部分否定 → who 在从句中作主语；not always 表示“并不总是”，不表示“全都不”。\n5. `students should not hide them but ask for support` → not...but... 连接两个并列谓语；should 为情态动词 → 用于表达“不应……而应……”，前后成分保持结构一致。"
+    }
+  ],
+  "source_h1": "22 初高中衔接基础（下）",
+  "meta": {
+    "kind": "english1-words",
+    "group": 22
+  }
+}

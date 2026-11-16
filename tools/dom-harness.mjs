@@ -32,8 +32,8 @@ const YAML = require('yaml');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 /**
- * 学科（`--subject math|cs408|math1|projects`，默认 math）。
- * 四站是同仓多入口：入口 HTML / 入口 TS / 数据根各一套，其余完全共用。
+ * 学科（`--subject math|cs408|math1|projects|english1`，默认 math）。
+ * 五站是同仓多入口：入口 HTML / 入口 TS / 数据根各一套，其余完全共用。
  * 默认 math 保证既有调用（`npm run check`）行为一字不变。
  *
  * 这里必须写一张静态表：subjects.ts 在后面才用 esbuild 载入，模块级拿不到。
@@ -48,7 +48,14 @@ const ENTRY = {
   cs408: { root: 'cs408/json/', html: 'cs408.html', ts: 'src/main-cs408.ts' },
   math1: { root: 'kaoyan/json/', html: 'math1.html', ts: 'src/main-math1.ts' },
   projects: { root: 'projects/json/', html: 'projects.html', ts: 'src/main-projects.ts' },
-}[SUBJECT_ID] ?? { root: 'json/', html: 'index.html', ts: 'src/main.ts' };
+  english1: { root: 'english1/json/', html: 'english1.html', ts: 'src/main-english1.ts' },
+}[SUBJECT_ID];
+// 未知学科**直接失败**，不回退 math：静默回退会让 `--subject english1` 实际在验数学站，
+// 闸门全绿但新站一片没测（五站接入时最容易踩）。
+if (!ENTRY) {
+  console.error(`[dom-harness] 未知学科：${SUBJECT_ID}（可选 math|cs408|math1|projects|english1）`);
+  process.exit(1);
+}
 const DATA_ROOT = ENTRY.root;
 const ENTRY_HTML = ENTRY.html;
 const ENTRY_TS = ENTRY.ts;
@@ -985,9 +992,20 @@ async function runStandalone(subj) {
         listed.length === cur.sem.prereq.length,
         `prereq=${cur.sem.prereq.join(',')} 列出 ${listed.length} 个 / 栏内「${asideTxt.slice(0, 100)}」`);
     } else {
-      // 首屏单元没有 sem.prereq（拓扑起点）：只能验两栏已渲染 + 说明文案，不硬造断言
-      check('快照首屏单元无前序时依赖栏给出说明',
-        asideTxt.includes('无前序') || asideTxt.includes('暂无'), asideTxt.slice(0, 100));
+      // 首屏单元没有 sem.prereq（拓扑起点）：只能验两栏已渲染 + 说明文案，不硬造断言。
+      //
+      // 可接受的三种说明（**都是「无前序」的合法表达**，判据按语义收而不是按字面收）：
+      //   · 「无前序（拓扑序起点）」   —— 未标注时的默认说法；
+      //   · 「起点（真源已标注）」     —— yaml 显式声明为空且确有下游（更准，见
+      //                                  `app.ts:prereqEmptyNote` 第 2 分支）；
+      //   · 「组内无前序（真源已标注）。跨章关联 N 条…」—— 有跨章 links 但方向未判定。
+      //
+      // 2026-11-16 修：旧判据只认前两种字面（`无前序` / `暂无`），漏掉了
+      // 「起点（真源已标注）」这一**最精确**的分支，于是 math1 快照首屏（HS01.0，
+      // 被 QK05.1 依赖、yaml 明确声明无前序）长期判红 —— 断言比数据窄，是断言的问题。
+      const explainsEmpty =
+        asideTxt.includes('无前序') || asideTxt.includes('暂无') || asideTxt.includes('起点（真源已标注）');
+      check('快照首屏单元无前序时依赖栏给出说明', explainsEmpty, asideTxt.slice(0, 100));
     }
     // 全库层面（防「构建退化成全空」）：**期望值以 yaml 真源为准**，不假定每个学科都有 prereq。
     //

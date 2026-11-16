@@ -94,11 +94,30 @@ async function bundleApp(entryTs) {
     logLevel: 'silent',
     loader: { '.css': 'empty' }, // 样式另行内联
     minify: true,
+    // 见 SNAPSHOT_NAME_KEY 注释：五站互链在快照里必须指向真实的快照文件名，
+    // 而这个决定只能在打包期做（运行期拿不到「我是不是快照」的先验）。
+    define: { __KB_SNAPSHOT__: 'true' },
   });
   const js = res.outputFiles.find((f) => !f.path.endsWith('.css')) ?? res.outputFiles[0];
   if (!js) throw new Error('esbuild 未产出 js');
   return js.text;
 }
+
+/**
+ * 行尾空白归一：只删**每行末尾**的空白字符，行数与行内内容不变。
+ *
+ * 为什么需要：内联进快照的 app 是「源码里的模板字符串」经 esbuild minify 得到的，
+ * 模板字符串的缩进会被原样保留。当某个 `${...}` 插值返回空串时，它前面那段
+ * `\n    ` 就孤零零留在产物里，变成一整行「只有 4 个空格」—— 这不是正文，
+ * 而是缩进残渣。`git diff --cached --check` 会在提交前拦下它（五份 knowledge*.html
+ * 同在第 3106 行，因为五份快照共用同一段 app 代码）。
+ *
+ * 为什么在生成侧修而不是手改 HTML：`release/` 是构建产物，手改下一次构建就没了。
+ * 为什么安全：这些空格落点都在模板字面量的 **HTML 正文**里，HTML 会把连续空白
+ * 折叠成一个，删掉行尾空白对渲染与交互没有任何影响；正则是按行处理，不跨行、
+ * 不动 `\n`，所以不会把两行拼成一行。
+ */
+const stripTrailingBlankPerLine = (text) => text.replace(/[ \t]+$/gm, '');
 
 const page = (title, style, shim, app) => `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -127,20 +146,57 @@ const page = (title, style, shim, app) => `<!DOCTYPE html>
 </html>
 `;
 
+/**
+ * 五站互链在快照里怎么落地：`subjects.ts` 用编译期宏 `__KB_SNAPSHOT__` 判断
+ * 「我是不是被打包成了快照」，是则指向 `knowledge-<id>.html`（`outNameOf` 同一份映射）。
+ *
+ * 为什么用 esbuild `define` 而不是事后在产物里做字符串替换：产物是 minify 过的 IIFE，
+ * 字符串字面量的形态由压缩器决定（单引号 / 双引号 / 模板串 / 拼接），
+ * 用正则或 split 去改它是**猜编译器**，压缩设置一变就静默失效 ——
+ * 而失效的后果是 file:// 下五条坏链接：点下去没有任何反应，也没有 404 提示。
+ *
+ * 单站构建（`--subject english1`）时，另外四份快照可能并不存在。那种情况由
+ * `SNAPSHOT_PRESENT` 兜底：页面里记下**本目录真实存在的快照**，渲染时只把存在的
+ * 那份渲染成链接，其余降级为不可点的文字（并给出原因）—— 不造坏链接。
+ */
+const snapshotPresentOf = () => {
+  const names = [];
+  for (const id of ['math', 'cs408', 'math1', 'projects', 'english1']) {
+    const name = outNameOf(id);
+    if (fs.existsSync(path.join(OUT_DIR, name))) names.push(name);
+  }
+  return names;
+};
+
 /** 学科 → 入口 TS 与输出文件名（入口命名沿用仓库约定） */
 function layoutOf(subject) {
   const entryTs = subject.entryHtml === 'index.html' ? 'src/main.ts' : `src/main-${subject.id}.ts`;
-  const outName = subject.id === 'math' ? 'knowledge.html' : `knowledge-${subject.id}.html`;
+  const outName = outNameOf(subject.id);
   return { entryTs, outName };
 }
 
-function buildShim(payload, dataRoot, unitCount) {
+/**
+ * 站点 id → 快照文件名。**唯一**一份映射：五份快照的互链与索引页都从这里取，
+ * 否则「索引写 knowledge-english1.html、页面里写 english1.html」这类漂移
+ * 在 file:// 下就是一条 404（浏览器不会给任何提示，只留一个坏链接）。
+ */
+function outNameOf(id) {
+  return id === 'math' ? 'knowledge.html' : `knowledge-${id}.html`;
+}
+
+function buildShim(payload, dataRoot, unitCount, presentNames) {
   // 单元路径在索引里已经带数据根前缀（`cs408/json/…`），所以 shim 只按原串匹配。
   const rootIndex = `${dataRoot}index.json`;
   return `
     (function () {
       window.__kbPayload = "${payload}";
       window.__kbPack = null;
+      /**
+       * 本目录**真实存在**的快照文件名（构建期扫描得出）。
+       * 单站重建（--subject english1）时另外四份可能没生成 —— 渲染侧据此
+       * 只把存在的渲染成链接，其余降级为不可点文字，file:// 下不留坏链接。
+       */
+      window.__kbSnapshots = ${JSON.stringify(presentNames)};
       window.__kbStandalone = { units: ${unitCount}, gzip: true, dataRoot: "${dataRoot}" };
       var missing = typeof DecompressionStream === 'undefined' || typeof Response === 'undefined' || typeof Blob === 'undefined';
       var PACK = null;
@@ -189,7 +245,11 @@ function buildShim(payload, dataRoot, unitCount) {
     })();`;
 }
 
-async function buildSubject(subject, kbIndex, katexCss, appCss) {
+/**
+ * @param presentNames 本次构建**之后**本目录会存在的快照文件名
+ *   （全量构建 = 五份；单站构建 = 磁盘上已有的 + 正在构建的这一份）
+ */
+async function buildSubject(subject, kbIndex, katexCss, appCss, presentNames) {
   const { entryTs, outName } = layoutOf(subject);
   const dataDir = path.join(ROOT, subject.dataRoot.replace(/\/$/, ''));
   const graphDir = path.join(ROOT, subject.graphRoot.replace(/\/$/, ''));
@@ -218,10 +278,17 @@ async function buildSubject(subject, kbIndex, katexCss, appCss) {
   const app = await bundleApp(entryTs);
   const outPath = path.join(OUT_DIR, outName);
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(
-    outPath,
-    page(`${subject.title} · 知识库快照`, `${katexCss}\n${appCss}`, buildShim(payload, relPrefix, index.units.length), app),
+  // 见 stripTrailingBlankPerLine 注释：模板缩进在插值为空时会留下「只有空白的行」，
+  // 写盘前统一去掉行尾空白，保证产物过 `git diff --cached --check`。
+  const html = stripTrailingBlankPerLine(
+    page(
+      `${subject.title} · 知识库快照`,
+      `${katexCss}\n${appCss}`,
+      buildShim(payload, relPrefix, index.units.length, presentNames),
+      app,
+    ),
   );
+  fs.writeFileSync(outPath, html);
 
   const mb = (n) => `${(n / 1024 / 1024).toFixed(2)} MB`;
   const total = fs.statSync(outPath).size;
@@ -232,15 +299,38 @@ async function buildSubject(subject, kbIndex, katexCss, appCss) {
   return { subject, outName, total, units: index.units.length };
 }
 
-/** 索引页：纯链接，file:// 可开，不依赖任何数据 */
-function buildLanding(built) {
-  const rows = built
-    .map(
-      (b) => `<a class="row" href="./${b.outName}">
+/**
+ * 索引页：纯链接，file:// 可开，不依赖任何数据。
+ *
+ * 行数 = **站点数**（来自 SUBJECTS），不是「这次构建了几份」：
+ * 索引是五站的总目录，不能因为单站重建就只剩一行。全部构建时五份都在，
+ * 每行都是真链接；万一某份缺失，该行显式写「本次未生成」而不是留一个
+ * 「待建」的承诺或一条 404 链接。
+ */
+function buildLanding(built, allSubjects) {
+  const byId = new Map(built.map((b) => [b.subject.id, b]));
+  const rows = allSubjects
+    .map((s) => {
+      const b = byId.get(s.id);
+      // 全量构建时五份都在（normal）；单站构建时其余四份若磁盘上没有，如实标注
+      if (!b) {
+        const name = outNameOf(s.id);
+        const exists = fs.existsSync(path.join(OUT_DIR, name));
+        return exists
+          ? `<a class="row" href="./${name}">
+      <span class="t">${s.title}</span>
+      <span class="d">已有快照（本次未重建）</span>
+    </a>`
+          : `<div class="row missing">
+      <span class="t">${s.title}</span>
+      <span class="d">本目录没有这份快照（单独重建该站即可生成）</span>
+    </div>`;
+      }
+      return `<a class="row" href="./${b.outName}">
       <span class="t">${b.subject.title}</span>
       <span class="d">${b.units} 单元 · ${(b.total / 1024 / 1024).toFixed(2)} MB</span>
-    </a>`,
-    )
+    </a>`;
+    })
     .join('\n');
   const html = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -259,6 +349,8 @@ function buildLanding(built) {
     padding:16px 18px;margin-bottom:10px;border:1px solid #262a35;border-radius:12px;
     background:#151822;color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
   .row:hover{border-color:#4b5567;transform:translateY(-1px)}
+  .row.missing{border-style:dashed;color:#6c7488}
+  .row.missing:hover{border-color:#262a35;transform:none}
   .t{font-weight:600}
   .d{color:#8b93a7;font-size:12.5px}
 </style>
@@ -273,7 +365,8 @@ function buildLanding(built) {
 </html>
 `;
   const out = path.join(OUT_DIR, 'knowledge-index.html');
-  fs.writeFileSync(out, html);
+  // 同上：索引页模板也带缩进，插值为空时同样会留空白行，写盘前统一去掉
+  fs.writeFileSync(out, stripTrailingBlankPerLine(html));
   console.log(`\n索引页：dist/knowledge-index.html（${built.length} 份快照）`);
 }
 
@@ -289,11 +382,18 @@ async function main() {
   const targets = SUBJECTS.filter((s) => !only || s.id === only);
   if (!targets.length) throw new Error(`未知学科：${only}`);
 
+  // 本次构建后本目录会有的快照清单：全量 = 五份全在；单站 = 已有的 ∪ 这一份。
+  // 在**写第一份之前**算：全量构建时五份都会被写出，所以直接用 targets 的全集。
+  const presentNames = only
+    ? [...new Set([...snapshotPresentOf(), ...targets.map((s) => outNameOf(s.id))])]
+    : targets.map((s) => outNameOf(s.id));
+
   const built = [];
   for (const subject of targets) {
-    built.push(await buildSubject(subject, kbIndex, katexCss, appCss));
+    built.push(await buildSubject(subject, kbIndex, katexCss, appCss, presentNames));
   }
-  if (!only) buildLanding(built);
+  if (!only) buildLanding(built, SUBJECTS);
+  console.log(`\n五站互链：${presentNames.length} 份快照可互达（${presentNames.join('、')}）`);
 }
 
 main().catch((e) => {

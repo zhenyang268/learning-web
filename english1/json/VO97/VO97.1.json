@@ -1,0 +1,27 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO97.1",
+  "chapter": "VO97",
+  "title": "大纲补全 段001",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/97-大纲补全（按词频）.md",
+    "sha256": "sha256:a993a3fe4aaed9422d8896730d2f5fc2e579d2a40a4c0d4e023ec53ea6bd8927"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO97.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **来源**：《2024 年全国硕士研究生招生考试英语（一）考试大纲词汇表》共 5530 词，\n> 词频与释义取自公开数据集 `exam-data/NETEMVocabulary`（`netem_reranked_simple.json`）。\n> **释义为数据源原样，非模型生成**，所以与 26 个主题组的手写释义风格不同。\n> 主题组已覆盖 2522 个，本表补 3008 个，合计 5530/5530。\n> 背词按主题组，本表只用来查漏与查义。"
+    }
+  ],
+  "source_h1": "97 大纲补全（按真题词频排序）",
+  "meta": {
+    "kind": "english1-supplement",
+    "segment": 1,
+    "mode": "table-blocks"
+  }
+}

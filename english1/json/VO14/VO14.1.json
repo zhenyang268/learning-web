@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO14.1",
+  "chapter": "VO14",
+  "title": "14 高频形容词",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/14-高频形容词.md",
+    "sha256": "sha256:f1e882ad3d8f1d410e3d549d1fca7067e16ce4a37d48ac5a19cc9a309269a92d"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO14.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `significant` *adj.* 重要的；显著的\n- `essential` *adj.* 本质的；必不可少的\n- `crucial` *adj.* 决定性的；至关重要的\n- `vital` *adj.* 至关重要的；生命的\n- `fundamental` *adj.* 根本的；基础的\n- `considerable` *adj.* 相当大的；值得考虑的\n- `enormous` *adj.* 巨大的；庞大的\n- `tremendous` *adj.* 巨大的；极好的\n- `immense` *adj.* 巨大的；广大的\n- `severe` *adj.* 严重的；严厉的\n- `serious` *adj.* 严重的；严肃的\n- `rigorous` *adj.* 严格的；严密的\n- `rigid` *adj.* 死板的；僵硬的\n- `flexible` *adj.* 灵活的；可弯曲的\n- `elastic` *adj.* 有弹性的；灵活的\n- `comprehensive` *adj.* 综合的；全面的\n- `extensive` *adj.* 广泛的；大量的\n- `intensive` *adj.* 密集的；深入的\n- `general` *adj.* 普遍的；大体的\n- `specific` *adj.* 具体的；特定的\n- `particular` *adj.* 特定的；挑剔的\n- `peculiar` *adj.* 特有的；奇怪的\n- `unique` *adj.* 独特的；唯一的\n- `distinct` *adj.* 明显的；截然不同的\n- `distinctive` *adj.* 独特的；有特色的\n- `various` *adj.* 各种各样的；多个的\n- `variable` *adj.* 变化的；可变的\n- `consistent` *adj.* 一致的；始终如一的\n- `persistent` *adj.* 持续的；坚持不懈的\n- `permanent` *adj.* 永久的；长期的\n- `temporary` *adj.* 暂时的；临时的\n- `transient` *adj.* 短暂的；临时的\n- `eternal` *adj.* 永恒的；无休止的\n- `perpetual` *adj.* 永久的；不断的\n- `unavoidable` *adj.* 不可避免的\n- `necessary` *adj.* 必要的；必然的\n- `adequate` *adj.* 足够的；胜任的\n- `sufficient` *adj.* 充足的；足够的\n- `deficient` *adj.* 缺乏的；不足的\n- `abundant` *adj.* 丰富的；大量的\n- `plentiful` *adj.* 丰富的；充足的\n- `scarce` *adj.* 稀少的；缺乏的\n- `rare` *adj.* 稀有的；罕见的\n- `occasional` *adj.* 偶尔的；临时的\n- `frequent` *adj.* 频繁的；经常的\n- `recurrent` *adj.* 反复出现的；周期性的\n- `constant` *adj.* 不断的；恒定的\n- `continuous` *adj.* 连续的；不间断的\n- `continual` *adj.* 反复的；不断的\n- `successive` *adj.* 连续的；继承的\n- `consecutive` *adj.* 连续的；连贯的\n- `simultaneous` *adj.* 同时发生的；同步的\n- `spontaneous` *adj.* 自发的；自然的\n- `intentional` *adj.* 有意的；故意的\n- `accidental` *adj.* 意外的；偶然的\n- `casual` *adj.* 随意的；偶然的\n- `random` *adj.* 随机的；任意的\n- `rational` *adj.* 理性的；合理的\n- `reasonable` *adj.* 合理的；通情达理的\n- `sensible` *adj.* 明智的；可感知的\n- `sensitive` *adj.* 敏感的；灵敏的\n- `vulnerable` *adj.* 易受伤害的；脆弱的\n- `fragile` *adj.* 脆弱的；易碎的\n- `delicate` *adj.* 微妙的；精致的\n- `subtle` *adj.* 微妙的；敏锐的\n- `obvious` *adj.* 明显的；显而易见的\n- `apparent` *adj.* 表面的；明显的\n- `evident` *adj.* 明显的；明白的\n- `transparent` *adj.* 透明的；显而易见的\n- `opaque` *adj.* 不透明的；难懂的\n- `complicated` *adj.* 复杂的；难懂的\n- `intricate` *adj.* 错综复杂的；难理解的\n- `sophisticated` *adj.* 复杂精密的；老练的\n- `crude` *adj.* 粗糙的；未加工的\n- `rough` *adj.* 粗略的；粗糙的\n- `shallow` *adj.* 肤浅的；浅的\n- `intense` *adj.* 强烈的；紧张的\n- `fierce` *adj.* 激烈的；凶猛的\n- `violent` *adj.* 暴力的；猛烈的\n- `drastic` *adj.* 激烈的；严厉的\n- `extreme` *adj.* 极端的；极度的\n- `mild` *adj.* 轻微的；温和的\n- `slight` *adj.* 轻微的；微小的\n- `decisive` *adj.* 决定性的；果断的\n- `urgent` *adj.* 紧急的；迫切的\n- `pressing` *adj.* 紧迫的；迫切的\n- `beneficial` *adj.* 有益的；有利的\n- `advantageous` *adj.* 有利的；有益的\n- `favorable` *adj.* 有利的；赞同的\n- `detrimental` *adj.* 有害的；不利的\n- `harmful` *adj.* 有害的\n- `positive` *adj.* 积极的；肯定的\n- `negative` *adj.* 消极的；否定的\n- `fair` *adj.* 公平的；相当的\n- `just` *adj.* 公正的；正当的\n- `invalid` *adj.* 无效的；站不住脚的\n- `genuine` *adj.* 真正的；真诚的\n- `synthetic` *adj.* 合成的；人造的\n- `false` *adj.* 错误的；虚假的\n- `fake` *adj.* 假的；伪造的\n- `reliable` *adj.* 可靠的；可信的\n- `trustworthy` *adj.* 可信的；可靠的\n- `absurd` *adj.* 荒谬的；荒唐的\n- `ridiculous` *adj.* 荒谬的；可笑的\n- `fantastic` *adj.* 极好的；奇异的\n- `incredible` *adj.* 难以置信的；极好的\n- `extraordinary` *adj.* 非凡的；特别的\n- `exceptional` *adj.* 杰出的；例外的\n- `outstanding` *adj.* 杰出的；未解决的\n- `distinguished` *adj.* 杰出的；卓越的\n- `reputable` *adj.* 声誉好的；可敬的\n- `respectable` *adj.* 可敬的；体面的\n- `generous` *adj.*\n- `accurate` *adj.* 精确的；准确的\n- `appropriate` *adj.* 合适的；恰当的\n- `relevant` *adj.* 相关的；切题的\n- `capable` *adj.* 有能力的；能够的\n- `dependent` *adj.* 依赖的；取决于\n- `independent` *adj.* 独立的；自主的\n- `identical` *adj.* 完全相同的；同一的\n- `equivalent` *adj.* 相等的；等同的\n- `initial` *adj.* 最初的；开始的\n- `subsequent` *adj.* 随后的；后来的\n- `previous` *adj.* 先前的；以前的\n- `contemporary` *adj.* 当代的；同时代的\n- `typical` *adj.* 典型的；特有的\n- `common` *adj.* 常见的；共同的\n- `normal` *adj.* 正常的；标准的\n- `ordinary` *adj.* 普通的；平凡的\n- `average` *adj.* 平均的；普通的\n- `entire` *adj.* 整个的；全部的\n- `total` *adj.* 总的；完全的\n- `complete` *adj.* 完全的；完整的\n- `absolute` *adj.* 绝对的；完全的\n- `relative` *adj.* 相对的；相关的\n- `mutual` *adj.* 相互的；共同的\n- `individual` *adj.* 个人的；独特的\n- `personal` *adj.* 个人的；私人的"
+    },
+    {
+      "id": "VO14.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nWhen students assess an argument in a reading passage, it is essential to distinguish between a significant claim and a merely impressive one. A reliable judgment depends on adequate evidence, yet evidence is often complex and incomplete. It is therefore appropriate to ask whether the writer has offered considerable support or has simply repeated an obvious point. An effective reader does not treat every detail as equally important; instead, he or she weighs the precise function of each sentence. This habit is not an inevitable gift, but it can be learned. If a conclusion seems too strong, a careful reader will notice the gap between the evidence and the claim. Such caution is essential in examinations, where a significant mistake may result from a hasty judgment rather than from a lack of knowledge.\n\n### 中译\n当学生在阅读文章中评估一个论证时，关键是要区分一个重要主张与一个仅仅给人深刻印象的主张。可靠的判断取决于充分的证据，而证据往往复杂且不完整。因此，恰当的做是追问作者是否提供了相当多的支持，还是只是重复了一个显而易见的观点。高效的读者不会把每个细节都视为同等重要；相反，他/她会权衡每个句子的确切作用。这种习惯并非一种不可避免的天赋，而是可以习得的。如果一个结论显得过于强硬，细心的读者会注意到证据与主张之间的差距。这种谨慎在考试中至关重要，因为在考试中，一个重大错误可能源于草率判断，而非知识欠缺。\n\n### 语法点\n- `it is essential to distinguish between a significant claim and a merely impressive one` → it作形式主语，不定式短语作真正主语；distinguish between A and B → 评价类形容词常用“It is + adj. + to do”结构；between...and...连接并列宾语，表示区分两者。\n- `whether the writer has offered considerable support or has simply repeated an obvious point` → whether...or...引导宾语从句，or连接两个并列谓语has offered与has repeated → 用于表达两种可能或选择；并列谓语保持时态一致。\n- `does not treat every detail as equally important` → 助动词does not + 动词原形；treat...as...复合结构 → 否定一般现在时；treat A as B表示“把A当作B”。\n- `This habit is not an inevitable gift, but it can be learned.` → but连接两个并列分句；can be learned为情态动词被动语态 → 用but表转折对比；被动语态强调习惯可以被习得。\n- `where a significant mistake may result from a hasty judgment rather than from a lack of knowledge` → where引导非限制性定语从句；result from表示原因；rather than连接两个from短语 → 非限制性定语从句补充说明情境；rather than连接平行成分，表达取舍对比。"
+    }
+  ],
+  "source_h1": "14 高频形容词",
+  "meta": {
+    "kind": "english1-words",
+    "group": 14
+  }
+}

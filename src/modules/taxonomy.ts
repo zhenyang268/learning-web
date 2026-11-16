@@ -38,6 +38,7 @@ export type GroupId =
   | 'meta'
   | 'exam408'
   | 'exam1'
+  | 'examEnglish1'
   | 'examKit'
   | 'project';
 
@@ -56,6 +57,11 @@ export const GROUPS: Group[] = [
   { id: 'meta', label: '索引', blurb: '关于知识库本身：阶段、清单、教材对照' },
   { id: 'exam408', label: '408 考纲', blurb: '数据结构 / 组成原理 / 操作系统 / 计算机网络' },
   { id: 'exam1', label: '数一考纲', blurb: '高等数学 / 线性代数 / 概率统计' },
+  {
+    id: 'examEnglish1',
+    label: '英一考纲',
+    blurb: '按题型分组：导览 / 阅读 / 写作 / 翻译 / 新题型 / 完形 / 词汇（顺序见 subjects.ts 的 chapterOrder）',
+  },
   { id: 'examKit', label: '备考工具', blurb: '真题、拔高题线、速学稿、分层表' },
   { id: 'project', label: '工程线', blurb: '按项目分组：系统 / 体系结构 / 语言 / 算法 / 工程方法 / 图形' },
 ];
@@ -329,6 +335,29 @@ export const DOMAINS: Domain[] = [
   },
 ];
 
+/**
+ * **站点级域覆盖**：代号前缀在两站之间撞车时必须由学科裁决。
+ *
+ * 现场（2026-11 五站接入）：`NT` 在 408 是「计算机网络」（`NT01–NT06`），
+ * 在英语一是「新题型」（`NT01`）。`domainOf` 只看代号，无法区分两个站，
+ * 于是英一的 `NT01` 被判成 408 的计算机网络：侧栏把它归进「408 考纲」组、
+ * 排在所有英一题型之前（实测首屏目录第一行是 `NT01`）。代号不能改（40 个
+ * JSON 已生成），所以由 `Subject.domainTable` 把该站的域表**覆盖**给引擎。
+ *
+ * 缺省为 `null`：四个老站不声明，行为与改造前逐字节一致。
+ */
+let domainTable: readonly Domain[] | null = null;
+
+/** 由 `boot()` 在启动时调用一次（学科切换 = 换这张表） */
+export function useDomains(table: readonly Domain[] | null): void {
+  domainTable = table;
+}
+
+/** 当前生效的域表：站点的覆盖表优先，否则用本文件的 `DOMAINS` */
+export function activeDomains(): readonly Domain[] {
+  return domainTable ?? DOMAINS;
+}
+
 /** `AN03.2` → `AN`；不匹配返回 '' */
 export function domainOf(code: string): string {
   const m = /^([A-Z]{2})\d{2}(?:\.\d+)?$/.exec(code);
@@ -342,17 +371,18 @@ export function chapterOf(code: string): string {
 }
 
 export function domainLabel(id: string): string {
-  return DOMAINS.find((d) => d.id === id)?.label ?? id;
+  return activeDomains().find((d) => d.id === id)?.label ?? id;
 }
 
 export function domainBlurb(id: string): string {
-  return DOMAINS.find((d) => d.id === id)?.blurb ?? '';
+  return activeDomains().find((d) => d.id === id)?.blurb ?? '';
 }
 
 /** 侧栏与总纲都按这个顺序，不按代号字典序（字典序会把 MP 排在 NM 前） */
 export function domainRank(id: string): number {
-  const i = DOMAINS.findIndex((d) => d.id === id);
-  return i < 0 ? DOMAINS.length : i;
+  const table = activeDomains();
+  const i = table.findIndex((d) => d.id === id);
+  return i < 0 ? table.length : i;
 }
 
 /** 章的中文标签要靠数据（章标题取自该章第一个单元），这里只给「章号 → 域」 */
@@ -372,7 +402,7 @@ const ORDER_RE = /^([A-Z]{2})(\d{2})(?:\.(\d+))?$/;
  */
 export function orderKey(code: string): [number, number, number] {
   const m = ORDER_RE.exec(code);
-  if (!m) return [DOMAINS.length, Number.MAX_SAFE_INTEGER, 0];
+  if (!m) return [activeDomains().length, Number.MAX_SAFE_INTEGER, 0];
   return [domainRank(m[1]), Number(m[2]), m[3] ? Number(m[3]) : 0];
 }
 
@@ -384,7 +414,7 @@ export function cmpCode(a: string, b: string): number {
 
 /** 域 → 所属组；未知域归到 meta（侧栏末尾，不干扰阅读顺序） */
 export function groupOf(domainId: string): GroupId {
-  return DOMAINS.find((d) => d.id === domainId)?.group ?? 'meta';
+  return activeDomains().find((d) => d.id === domainId)?.group ?? 'meta';
 }
 
 /** 组的显示顺序（按 GROUPS 定义，不按字典序） */

@@ -1,5 +1,6 @@
 import { escapeHtml } from '../renderers/markdown';
 import { attrEscape } from '../modules/attr';
+import type { SiteLink } from '../subjects';
 
 /**
  * 顶栏的一个入口块。
@@ -30,8 +31,16 @@ export interface HeaderModel {
   errorCount: number;
   /** 当前搜索词（受控） */
   query: string;
-  /** 另一个学科的入口（数学 ↔ 408 互链）；不传则不渲染 */
-  crossLink?: { label: string; href: string };
+  /**
+   * 五站互链（`subjects.ts` 的 `siteLinksOf` 派生）。
+   *
+   * 取代旧的单条 `crossLink`：旧版每个站只认识一个邻居，
+   * 从工程线要到英语一得先回数学 —— 「任意页面可达」这个要求它做不到。
+   * 不传则不渲染（standalone 索引页之类的纯链接页）。
+   */
+  sites?: SiteLink[];
+  /** 章序（顶栏块与侧栏同一口径）；缺省按 DOMAINS 顺序 */
+  chapterRank?: (chap: string) => number;
   /**
    * 总纲入口。**`null` = 该学科没有总纲（`subject.syllabus === null`）→ 不渲染按钮。**
    *
@@ -97,6 +106,88 @@ function navOptionsHtml(model: HeaderModel): string {
       ${chapters.length ? `<optgroup label="索引与导航">${chapters.map((b) => opt(b, all.indexOf(b))).join('')}</optgroup>` : ''}`;
 }
 
+/**
+ * 五站互链。
+ *
+ * 两套呈现，**同一份链接**：
+ *   · 桌面（≥701px）：`.sitenav` 一排短标签（数学 / 408 / 数一 / 工程 / 英一）；
+ *   · 窄屏（≤700px）：`.sitenav` 收起，`.sitemenu` 是一个原生 `<details>` 折叠，
+ *     `<summary>` 自带键盘可达（Tab 聚焦 + Enter/Space 展开），里面的 `<a>` 仍是真链接 ——
+ *     与已有 `.domnav`（域 / 进度 `<select>`）是**两个不同控件**：
+ *     前者换站，后者换域，互不抢占，也不会像自绘菜单那样互相关闭。
+ *
+ * 为什么不复用 `<select>`：它是导航跨 HTML 文档的跳转，`<select>` 需要 JS 拦截
+ * `change` 再 `location.assign`，file:// 与禁用 JS 时全失效；`<a href>` 永远可用。
+ *
+ * 当前站：`aria-current="page"` 且**不自跳**。
+ * 关键点：它仍然是一个可聚焦的 `<a>`（保留在 Tab 序列里，屏幕阅读器能读到
+ * 「当前页」），但点击/回车由 `app.ts` 的委托 `preventDefault` 拦下 ——
+ * 不用 `href="#"`（会在地址栏留垃圾 hash），也不用 `pointer-events:none`
+ * （那会让键盘焦点落在一个「看不见反应」的元素上）。
+ */
+function siteItemHtml(s: SiteLink, extraClass: string, markCurrent: boolean): string {
+  const cur = s.current;
+  const base = `${extraClass}${cur ? ' on' : ''}`;
+  // 快照里若该文件不存在（单站重建），不渲染成 <a>：坏链接在 file:// 下点了毫无反应，
+  // 比「明确不可点」更糟。`missingSnapshot` 只有快照场景会为真。
+  if (missingSnapshot(s) && !cur) {
+    return `<span class="${base} miss" aria-disabled="true"
+      title="${escapeHtml(s.label)}：本次快照未包含该站（单独重建即可生成）">${escapeHtml(s.label)}</span>`;
+  }
+  // 当前站：可聚焦（保留在 Tab 序列里，屏幕阅读器读得到「当前页」），
+  // 但点击由 `app.ts` 的委托 preventDefault，不自跳。
+  const attrs = cur
+    ? `${markCurrent ? 'aria-current="page" ' : ''}data-current="1" aria-disabled="true"`
+    : `href="${escapeHtml(s.href)}"`;
+  return `<a class="${base}" ${attrs}
+    data-site="${escapeHtml(s.id)}"
+    title="${cur ? `当前站点：${escapeHtml(s.label)}` : `切换到 ${escapeHtml(s.label)} 站`}">${escapeHtml(
+      s.label,
+    )}</a>`;
+}
+
+/**
+ * 该站的快照文件在**本目录**是否存在。
+ *
+ * 判据来自 shim 里的 `window.__kbSnapshots`（构建期扫描磁盘得出）。
+ * dev / vite build 没有这个变量 → 一律 false（正常入口都在，不需要降级）。
+ */
+function missingSnapshot(s: SiteLink): boolean {
+  if (s.current) return false; // 当前页自己总是「存在」的
+  const present = (globalThis as { __kbSnapshots?: string[] }).__kbSnapshots;
+  if (!Array.isArray(present)) return false;
+  const name = s.href.replace(/^\.\//, '');
+  return !present.includes(name);
+}
+
+/**
+ * 五站导航的两个宿主。**同一时刻只有一份在无障碍树上**：
+ * 桌面显示 `.sitenav`，窄屏显示 `.sitemenu`（媒体查询切换）。
+ *
+ * `aria-current` 只能出现一次：两份都「完整渲染」会让屏幕阅读器读到两处
+ * 「当前页」，也让「当前站唯一」的断言变成 `english1,english1`（实测抓到的）。
+ *
+ * 两份都在 HTML 里（媒体查询只切显示，不切 DOM，重渲染才不会丢开合状态），
+ * 但**只有桌面那份**标 `aria-current`：窄屏那份是纯跳转清单，当前站那一项
+ * 渲染成「不可点的当前项」（`.on` + `aria-disabled`，不带 `aria-current`），
+ * 这样屏幕阅读器只读到一个「当前页」，键盘 Tab 也能跳过它。
+ *
+ * 五项都要在：`max_items` 要求「任意页面都能看到五个站」，少一项就不算可达。
+ */
+function sitesHtml(sites: SiteLink[] | undefined): string {
+  if (!sites?.length) return '';
+  const cur = sites.find((s) => s.current);
+  return `<nav class="sitenav" aria-label="学科站点">${sites
+    .map((s) => siteItemHtml(s, 'sitelnk', true))
+    .join('')}</nav>
+    <details class="sitemenu">
+      <summary title="切换学科站点（当前：${escapeHtml(cur?.label ?? '')}）">
+        <span aria-hidden="true">⇄</span> ${escapeHtml(cur?.label ?? '站点')}
+      </summary>
+      <div class="sitemenu-list">${sites.map((s) => siteItemHtml(s, 'sitemenu-item', false)).join('')}</div>
+    </details>`;
+}
+
 /** 选中项在窄屏导航上的摘要文字（当前域 + 进度） */
 function navSummary(model: HeaderModel): string {
   const hit = model.blocks.find((b) => b.letter === model.current);
@@ -116,13 +207,7 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
       </label>
       <div class="chapters"></div>
       <div class="warnslot"></div>
-      ${
-        model.crossLink
-          ? `<a class="graphbtn crosssite" href="${escapeHtml(model.crossLink.href)}" title="切换到 ${escapeHtml(
-              model.crossLink.label,
-            )} 站点（数据根完全独立，互不加载）">⇄ ${escapeHtml(model.crossLink.label)}</a>`
-          : ''
-      }
+      ${sitesHtml(model.sites)}
       ${
         model.syllabus
           ? `<button class="graphbtn" data-graph="1" title="总纲：${escapeHtml(

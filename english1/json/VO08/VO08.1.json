@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO08.1",
+  "chapter": "VO08",
+  "title": "08 生物、医学与健康",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/08-生物、医学与健康.md",
+    "sha256": "sha256:c73bd8b5b5c0c51e3a7f87d4d8d3dfec43f5ed373660b9c9f494fbb9982d4bfc"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO08.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `health` *n.* 健康；卫生\n- `disease` *n.* 疾病；病害\n- `medical` *adj.* 医学的；医疗的\n- `medicine` *n.* 医学；药\n- `patient` *n.* 病人；患者\n- `treatment` *n.* 治疗；处理\n- `gene` *n.* 基因\n- `genetic` *adj.* 基因的；遗传的\n- `cell` *n.* 细胞；牢房\n- `brain` *n.* 大脑；智力\n- `immune` *adj.* 免疫的；不受影响的\n- `immunity` *n.* 免疫力；豁免\n- `infection` *n.* 感染；传染\n- `infect` *v.* 感染；传染\n- `infectious` *adj.* 传染性的；有感染力的\n- `virus` *n.* 病毒\n- `viral` *adj.* 病毒的；病毒性的\n- `bacteria` *n.* 细菌\n- `bacterial` *adj.* 细菌的\n- `drug` *n.* 药物；毒品\n- `vaccine` *n.* 疫苗\n- `vaccinate` *v.* 接种疫苗\n- `symptom` *n.* 症状；征兆\n- `syndrome` *n.* 综合征；症候群\n- `diagnosis` *n.* 诊断\n- `diagnose` *v.* 诊断\n- `therapy` *n.* 治疗；疗法\n- `therapeutic` *adj.* 治疗的；治疗性的\n- `clinical` *adj.* 临床的\n- `clinic` *n.* 诊所；门诊部\n- `hospital` *n.* 医院\n- `physician` *n.* 内科医生；医师\n- `surgeon` *n.* 外科医生\n- `surgery` *n.* 外科手术；外科\n- `nurse` *n.* 护士\n- `chronic` *adj.* 慢性的；长期的\n- `acute` *adj.* 急性的；敏锐的\n- `mental` *adj.* 精神的；心理的\n- `psychological` *adj.* 心理的；心理学的\n- `anxiety` *n.* 焦虑；忧虑\n- `depressed` *adj.* 抑郁的；沮丧的\n- `disorder` *n.* 失调；紊乱\n- `illness` *n.* 疾病；不适\n- `healthy` *adj.* 健康的；有益健康的\n- `nutrition` *n.* 营养；营养学\n- `nutrient` *n.* 营养物质\n- `diet` *n.* 饮食；节食\n- `dietary` *adj.* 饮食的\n- `vitamin` *n.* 维生素\n- `protein` *n.* 蛋白质\n- `enzyme` *n.* 酶\n- `hormone` *n.* 激素；荷尔蒙\n- `metabolism` *n.* 新陈代谢\n- `metabolic` *adj.* 新陈代谢的\n- `blood` *n.* 血；血液\n- `heart` *n.* 心脏；核心\n- `cardiac` *adj.* 心脏的\n- `lung` *n.* 肺\n- `respiratory` *adj.* 呼吸的\n- `breathe` *v.* 呼吸\n- `muscle` *n.* 肌肉\n- `muscular` *adj.* 肌肉的\n- `bone` *n.* 骨；骨骼\n- `skeletal` *adj.* 骨骼的\n- `nerve` *n.* 神经；勇气\n- `nervous` *adj.* 神经的；紧张的\n- `neuron` *n.* 神经元\n- `tissue` *n.* 组织；纸巾\n- `organ` *n.* 器官；机构\n- `organism` *n.* 生物；有机体\n- `evolutionary` *adj.* 进化的\n- `biology` *n.* 生物学\n- `biological` *adj.* 生物学的；生物的\n- `reproduction` *n.* 繁殖；复制\n- `pregnancy` *n.* 怀孕\n- `embryo` *n.* 胚胎\n- `fetus` *n.* 胎儿\n- `birth` *n.* 出生；分娩\n- `cancer` *n.* 癌症\n- `tumor` *n.* 肿瘤\n- `malignant` *adj.* 恶性的\n- `benign` *adj.* 良性的；温和的\n- `cardiovascular` *adj.* 心血管的\n- `diabetes` *n.* 糖尿病\n- `asthma` *n.* 哮喘\n- `allergy` *n.* 过敏\n- `allergic` *adj.* 过敏的\n- `inflammation` *n.* 炎症\n- `inflammatory` *adj.* 炎症的；煽动性的\n- `wound` *n.* 伤口；创伤\n- `injury` *n.* 伤害；损伤\n- `trauma` *n.* 创伤；外伤\n- `heal` *v.* 治愈；愈合\n- `recovery` *n.* 康复；恢复\n- `recover` *v.* 康复；恢复\n- `rehabilitation` *n.* 康复；复原\n- `disability` *n.* 残疾；无力\n- `impair` *v.* 损害；削弱\n- `impairment` *n.* 损伤；障碍\n- `complication` *n.* 并发症；复杂化\n- `epidemic` *n.* 流行病\n- `pandemic` *n.* 大流行病\n- `outbreak` *n.* 爆发；暴发\n- `mortality` *n.* 死亡率；死亡\n- `antibiotic` *n.* 抗生素\n- `antibody` *n.* 抗体\n- `obesity` *n.* 肥胖\n- `contagious` *adj.* 传染性的；有感染力的\n- `hygiene` *n.* 卫生；卫生学\n- `sanitation` *n.* 环境卫生；卫生设施\n- `insomnia` *n.* 失眠\n- `addiction` *n.* 成瘾；沉溺\n- `morbidity` *n.* 发病率；病态\n- `lifespan` *n.* 寿命\n- `longevity` *n.* 长寿；寿命"
+    },
+    {
+      "id": "VO08.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nRecent research in physiology suggests that chronic stress can weaken immunity and make the body more vulnerable to infection. When a patient reports persistent symptoms such as fatigue and poor sleep, doctors should not dismiss them as merely psychological. A careful diagnosis may reveal an underlying genetic predisposition or a hereditary disorder that has remained unnoticed for years. Although medication can relieve acute discomfort, it is often less effective than a therapy that combines exercise, nutrition and regular monitoring. Public health programmes therefore emphasize prevention: vaccination reduces the risk of contagious disease, while health education helps people recognize early warning signs. This does not mean that individual effort alone determines health outcomes. Biological, social and environmental factors interact, and effective medical care must address them together. Understanding this complexity is essential if we hope to improve both longevity and quality of life.\n\n### 中译\n近期生理学研究表明，长期压力会削弱免疫力，使身体更容易受到感染。当患者主诉疲劳、睡眠差等持续症状时，医生不应将其仅仅视为心理问题而加以忽视。细致的诊断可能揭示潜在的遗传易感性，或一种多年未被注意的遗传性疾病。尽管药物能够缓解急性不适，但其效果往往不如结合运动、营养与定期监测的治疗方案。因此，公共卫生项目强调预防：接种疫苗降低传染病风险，健康教育帮助人们识别早期预警信号。这并不意味着个人努力 alone 决定健康结果。生物、社会与环境因素相互作用，有效的医疗照护必须综合应对这些因素。理解这种复杂性，对于提高寿命和生活质量至关重要。\n\n### 语法点\n- “suggests that chronic stress can weaken immunity and make the body more vulnerable to infection” → that 引导宾语从句，从句中 can weaken 与 (can) make 并列，make 后接“宾语+形容词补语” → 用于表达研究、证据表明某结论，注意宾语从句用陈述语序，并列谓语可共享情态动词。\n- “When a patient reports persistent symptoms..., doctors should not dismiss them...” → When 引导时间状语从句，主句用“should not + 动词原形” → 用于描述经常性情形下的建议或规范，从句常用一般现在时，主句用情态动词表达能力、义务或建议。\n- “a hereditary disorder that has remained unnoticed for years” → that 引导限制性定语从句，从句谓语 has remained 为现在完成时，unnoticed 作表语 → 用于修饰名词并说明某状态持续至今，注意 remain 为系动词，后接形容词。\n- “Although medication can relieve acute discomfort, it is often less effective than a therapy that combines...” → Although 引导让步状语从句，主句含 less effective than 比较结构，therapy 后接 that 引导定语从句 → 用于先让步后对比，比较级前可用 less 表示“不如”，定语从句修饰比较对象。\n- “This does not mean that individual effort alone determines health outcomes.” → 主句为否定结构，that 引导宾语从句，从句用一般现在时陈述观点 → 用于否定某一简单化看法，mean that 后接完整从句，从句保持陈述语序。"
+    }
+  ],
+  "source_h1": "08 生物、医学与健康",
+  "meta": {
+    "kind": "english1-words",
+    "group": 8
+  }
+}

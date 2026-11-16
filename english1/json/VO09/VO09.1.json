@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO09.1",
+  "chapter": "VO09",
+  "title": "09 心理、认知与情绪",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/09-心理、认知与情绪.md",
+    "sha256": "sha256:d20cb6792da98e61b92fffb8f7c789cba8f48bec5261644e7015b1605b1fef47"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO09.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `psychology` *n.* 心理学；心理\n- `cognition` *n.* 认知；认识\n- `cognitive` *adj.* 认知的；认识的\n- `mind` *n.* 头脑；心理\n- `behavior` *n.* 行为；举止\n- `behavioral` *adj.* 行为的；行为主义的\n- `emotion` *n.* 情绪；情感\n- `emotional` *adj.* 情绪的；情感上的\n- `feeling` *n.* 感觉；情感\n- `mood` *n.* 情绪；心情\n- `passion` *n.* 激情；热情\n- `consciousness` *n.* 意识；知觉\n- `conscious` *adj.* 有意识的；意识到的\n- `unconscious` *adj.* 无意识的；不省人事的\n- `subconscious` *adj.* 下意识的；潜意识的\n- `awareness` *n.* 意识；认识\n- `aware` *adj.* 意识到的；知道的\n- `attention` *n.* 注意；注意力\n- `attentive` *adj.* 专心的；注意的\n- `concentration` *n.* 集中；专注\n- `focus` *v.* 集中；聚焦\n- `sensory` *adj.* 感觉的；感官的\n- `sense` *n.* 感觉；意义\n- `sensation` *n.* 感觉；轰动\n- `memory` *n.* 记忆；记忆力\n- `learning` *n.* 学习；学问\n- `knowledge` *n.* 知识；了解\n- `understanding` *n.* 理解；谅解\n- `comprehension` *n.* 理解；理解力\n- `logical` *adj.* 逻辑的；合理的\n- `thought` *n.* 思想；想法\n- `thinking` *n.* 思考；思想\n- `reflection` *n.* 反思；倒影\n- `insight` *n.* 洞察力；深刻见解\n- `intuition` *n.* 直觉；直觉力\n- `instinct` *n.* 本能；直觉\n- `impulse` *n.* 冲动；脉冲\n- `motive` *n.* 动机；目的\n- `motivation` *n.* 动机；积极性\n- `desire` *n.* 欲望；渴望\n- `intention` *n.* 意图；目的\n- `intend` *v.* 打算；意图\n- `purpose` *n.* 目的；用途\n- `goal` *n.* 目标；目的\n- `decision` *n.* 决定；决策\n- `decide` *v.* 决定；裁决\n- `attribution` *n.* 归因；归属\n- `value` *n.* 价值；价值观\n- `expectation` *n.* 期望；预期\n- `anticipation` *n.* 预期；期望\n- `anxious` *adj.* 焦虑的；渴望的\n- `fear` *n.* 恐惧；担心\n- `frighten` *v.* 使惊恐；吓唬\n- `scare` *v.* 使害怕；惊吓\n- `terror` *n.* 恐怖；恐惧\n- `horror` *n.* 恐怖；厌恶\n- `panic` *n.* 恐慌；惊慌\n- `phobia` *n.* 恐惧症；恐惧\n- `strain` *n.* 压力；紧张\n- `tension` *n.* 紧张；张力\n- `tense` *adj.* 紧张的；拉紧的\n- `pressure` *n.* 压力；压强\n- `adaptation` *n.* 适应；改编\n- `aggressive` *adj.* 好斗的；有进取心的\n- `aggression` *n.* 侵略；攻击性\n- `alarm` *n.* 惊恐；警报\n- `alienate` *v.* 使疏远；使异化\n- `alienation` *n.* 疏远；异化\n- `ambition` *n.* 雄心；抱负\n- `anger` *n.* 愤怒\n- `annoy` *v.* 使恼怒；打扰\n- `apprehension` *n.* 忧虑；理解\n- `aptitude` *n.* 天资；倾向\n- `arouse` *v.* 引起；唤醒\n- `aspiration` *n.* 渴望；抱负\n- `attachment` *n.* 依恋；附件\n- `avoidance` *n.* 回避；逃避\n- `awe` *n.* 敬畏；惊叹\n- `bewilder` *v.* 使困惑；使迷惑\n- `boredom` *n.* 无聊；厌倦\n- `calm` *adj.* 平静的；镇静的\n- `cherish` *v.* 珍爱；怀有\n- `compassion` *n.* 同情；怜悯\n- `compulsion` *n.* 强迫；冲动\n- `concern` *n.* 担忧；关心\n- `confidence` *n.* 信心；信任\n- `confident` *adj.* 自信的；确信的\n- `confusion` *n.* 困惑；混淆\n- `conscience` *n.* 良心；良知\n- `consideration` *n.* 考虑；体贴\n- `contempt` *n.* 蔑视；轻蔑\n- `curiosity` *n.* 好奇心；求知欲\n- `curious` *adj.* 好奇的；奇怪的\n- `deceive` *v.* 欺骗；误导\n- `deception` *n.* 欺骗；骗术\n- `delight` *n.* 高兴；愉快\n- `delusion` *n.* 妄想；错觉\n- `despair` *n.* 绝望；失望\n- `despise` *v.* 鄙视；蔑视\n- `determination` *n.* 决心；确定\n- `disappoint` *v.* 使失望\n- `disappointment` *n.* 失望；沮丧\n- `disgust` *n.* 厌恶；反感\n- `dislike` *v.* 不喜欢；厌恶\n- `dismay` *n.* 沮丧；惊愕\n- `distract` *v.* 分散注意力；使分心\n- `distraction` *n.* 分心；消遣\n- `distress` *n.* 痛苦；困扰\n- `disturb` *v.* 打扰；使不安\n- `disturbance` *n.* 干扰；骚乱\n- `dread` *n.* 恐惧；惧怕\n- `eager` *adj.* 渴望的；热切的\n- `ego` *n.* 自我；自尊\n- `embarrass` *v.* 使尴尬；使窘迫\n- `embarrassment` *n.* 尴尬；困窘\n- `empathy` *n.* 共情；同理心\n- `enthusiasm` *n.* 热情；热衷\n- `envy` *n.* 嫉妒；羡慕\n- `excite` *v.* 使兴奋；激起\n- `excitement` *n.* 兴奋；激动\n- `fatigue` *n.* 疲劳；劳累\n- `frustration` *n.* 挫折；沮丧\n- `gratitude` *n.* 感激；感谢\n- `grief` *n.* 悲伤；悲痛\n- `guilt` *n.* 内疚；罪责\n- `hatred` *n.* 仇恨；憎恨\n- `hesitate` *v.* 犹豫；迟疑\n- `hope` *n.* 希望；期望\n- `hostility` *n.* 敌意；敌对\n- `identity` *n.* 身份；认同\n- `ignorance` *n.* 无知；愚昧\n- `ignore` *v.* 忽视；不理会\n- `illusion` *n.* 错觉；幻想\n- `imagine` *v.* 想象；设想\n- `imagination` *n.* 想象力；想象\n- `imitate` *v.* 模仿；仿效\n- `impression` *n.* 印象；感想"
+    },
+    {
+      "id": "VO09.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nResearchers have long observed that anxiety does not simply disturb emotion; it also shapes cognition. When students perceive a task as threatening, their attention narrows and their memory becomes less reliable. A narrow focus may help them cope with immediate danger, but in an examination hall it can prevent them from recalling facts they know well. Teachers therefore need to understand that behavior is not merely a matter of willpower; they cannot easily motivate a learner who is struggling with fear rather than laziness. If small successes are used to reinforce effort, however, students can gradually become more conscious of their own progress. Such awareness helps them regulate emotion, sustain attention and approach difficult problems with greater confidence. In this sense, effective instruction is not about removing anxiety altogether but about helping learners perceive challenges accurately and respond to them constructively.\n\n### 中译\n研究者早已观察到，焦虑不仅会扰乱情绪，也会塑造认知。当学生把任务视为威胁时，他们的注意力会变窄，记忆也会变得不那么可靠。狭窄的专注或许能帮助他们应对眼前的危险，但在考场上，这可能使他们无法回忆起自己明明掌握的事实。因此，教师需要明白，行为不仅仅关乎意志力；他们很难激励一个正在与恐惧而非懒惰作斗争的学习者。然而，如果用小成功来强化努力，学生就会逐渐更清楚地意识到自己的进步。这种意识有助于他们调节情绪、维持注意力，并以更大的信心面对难题。从这个意义上说，有效的教学不是要彻底消除焦虑，而是帮助学习者准确看待挑战并建设性地回应挑战。\n\n### 语法点\n1. `does not simply disturb emotion; it also shapes cognition` → `not simply...; ...also...` 分号并列递进结构 → 用于表达“不只是……，还……”，写作中可替代 `not only...but also...`，避免倒装。\n2. `perceive a task as threatening` → `perceive + 宾语 + as + 形容词/分词` 宾补结构 → 表示“认为/把……看作……”，同类动词还有 `regard/describe/see...as...`。\n3. `prevent them from recalling facts they know well` → `prevent sb. from doing sth.` + 省略关系代词的定语从句 → 表示“阻止某人做某事”；`facts` 后省略了 `that/which`，阅读中常见。\n4. `motivate a learner who is struggling with fear rather than laziness` → `who` 引导定语从句 + `be doing` 进行体 + `rather than` 平行对比 → `who` 修饰 `learner`；`is struggling` 表示正在挣扎；`rather than` 连接并列成分。\n5. `If small successes are used to reinforce effort, however, students can gradually become more conscious of their own progress.` → `if` 条件状语从句 + 被动语态 `be used to do` + `become conscious of` → 表示“如果……被用来……，就会逐渐意识到……”；`however` 作插入语，位置灵活。"
+    }
+  ],
+  "source_h1": "09 心理、认知与情绪",
+  "meta": {
+    "kind": "english1-words",
+    "group": 9
+  }
+}

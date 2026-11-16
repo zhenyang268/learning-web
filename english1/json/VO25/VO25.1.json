@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO25.1",
+  "chapter": "VO25",
+  "title": "25 超纲与低频学术词",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/25-超纲与低频学术词.md",
+    "sha256": "sha256:a16192cc9ec32e43f5ff2bea054c37b43b648b9df096d76d2a583af0b273b8bb"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO25.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `heuristic` *adj.* 启发式的；试探性的（超纲）\n- `quantitative` *adj.* 定量的（超纲）\n- `qualitative` *adj.* 定性的（超纲）\n- `correlation` *n.* 相关性；关联（超纲）\n- `parameter` *n.* 参数；界限（超纲）\n- `coefficient` *n.* 系数（超纲）\n- `variance` *n.* 方差；差异（超纲）\n- `deviation` *n.* 偏差；偏离（超纲）\n- `taxonomy` *n.* 分类学；分类法（超纲）\n- `synthesis` *n.* 综合；合成（超纲）\n- `analytic` *adj.* 分析的（超纲）\n- `syllogism` *n.* 三段论（超纲）\n- `axiom` *n.* 公理；原理（超纲）\n- `theorem` *n.* 定理（超纲）\n- `lemma` *n.* 引理（超纲）\n- `corollary` *n.* 推论；必然结果（超纲）\n- `calculus` *n.* 微积分；结石（超纲）\n- `matrix` *n.* 矩阵；母体（超纲）\n- `vector` *n.* 向量；载体（超纲）\n- `scalar` *n.* 标量（超纲）\n- `tensor` *n.* 张量（超纲）\n- `topology` *n.* 拓扑学；布局（超纲）\n- `geometry` *n.* 几何学（超纲）\n- `derivative` *n.* 导数；衍生物（超纲）\n- `asymptote` *n.* 渐近线（超纲）\n- `convergence` *n.* 收敛；趋同（超纲）\n- `divergence` *n.* 发散；分歧（超纲）\n- `equilibrium` *n.* 均衡；平衡（超纲）\n- `entropy` *n.* 熵；混乱（超纲）\n- `enthalpy` *n.* 焓（超纲）\n- `catalyst` *n.* 催化剂；促进因素（超纲）\n- `polymer` *n.* 聚合物（超纲）\n- `molecule` *n.* 分子（超纲）\n- `genome` *n.* 基因组（超纲）\n- `chromosome` *n.* 染色体（超纲）\n- `synapse` *n.* 突触（超纲）\n- `cortex` *n.*\n- `abatement` *n.* 减弱；废除\n- `abiotic` *adj.* 非生物的\n- `absorbance` *n.* 吸光度\n- `abstraction` *n.* 抽象；抽象概念\n- `accretion` *n.* 积聚；增生\n- `acumen` *n.* 敏锐；精明\n- `adiabatic` *adj.* 绝热的\n- `affinity` *n.* 亲和力；密切关系\n- `allele` *n.* 等位基因\n- `allometric` *adj.* 异速生长的\n- `allosteric` *adj.* 变构的\n- `amalgam` *n.* 混合物；汞合金\n- `amortization` *n.* 摊销；分期偿还\n- `amplitude` *n.* 振幅；幅度\n- `anisotropy` *n.* 各向异性\n- `antecedent` *n.* 前件；先行词\n- `antigen` *n.* 抗原\n- `apoptosis` *n.* 细胞凋亡\n- `archetype` *n.* 原型；典型\n- `assay` *n.* 测定；化验\n- `associative` *adj.* 联想的；结合的\n- `attenuation` *n.* 衰减；减弱\n- `axiomatic` *adj.* 公理的；不言自明的\n- `bifurcation` *n.* 分叉；分歧\n- `binomial` *n.* 二项式\n- `bioassay` *n.* 生物测定\n- `biomarker` *n.* 生物标志物\n- `biosphere` *n.* 生物圈\n- `bivariate` *adj.* 双变量的\n- `capacitance` *n.* 电容；容量\n- `cardinality` *n.* 基数；势\n- `catalysis` *n.* 催化作用\n- `categorical` *adj.* 分类的；绝对的\n- `causality` *n.* 因果关系\n- `cellular` *adj.* 细胞的；蜂窝状的\n- `centrality` *n.* 中心性；核心地位\n- `chronology` *n.* 年代学；时序\n- `cladistics` *n.* 支序分类学\n- `coherence` *n.* 连贯性；一致性\n- `collinear` *adj.* 共线的\n- `commensurable` *adj.* 可通约的；相当的\n- `commutative` *adj.* 交换的\n- `comparative` *adj.* 比较的；相对的\n- `compensatory` *adj.* 补偿性的\n- `complementary` *adj.* 互补的；补充的\n- `composite` *adj.* 复合的；合成的\n- `computational` *adj.* 计算的；计算性的\n- `concatenation` *n.* 连接；连锁\n- `concentric` *adj.* 同心的\n- `conceptual` *adj.* 概念的\n- `concomitant` *adj.* 伴随的；同时发生的\n- `conditional` *adj.* 有条件的；条件的\n- `conflation` *n.* 合并；混同\n- `consistency` *n.* 一致性；连贯性\n- `contingent` *adj.* 偶然的；视情况而定的\n- `continuum` *n.* 连续体；连续统\n- `contractual` *adj.* 合同的；契约的\n- `contraposition` *n.* 换质位；对置\n- `covariance` *n.* 协方差\n- `cytoplasm` *n.* 细胞质\n- `demarcation` *n.* 划界；界限\n- `denotation` *n.* 本义；指称\n- `derivation` *n.* 推导；起源\n- `deterministic` *adj.* 决定论的；确定性的\n- `dichotomy` *n.* 二分法；对立\n- `diffusion` *n.* 扩散；传播\n- `dimensionality` *n.* 维度；维数\n- `discriminant` *n.* 判别式\n- `disjunction` *n.* 析取；分离\n- `dissipation` *n.* 耗散；消散\n- `dissociation` *n.* 解离；分离\n- `distribution` *n.* 分布；分配\n- `distributive` *adj.* 分配的；分布的\n- `domain` *n.* 领域；定义域\n- `dominant` *adj.* 占优势的；显性的\n- `eigenvalue` *n.* 特征值\n- `electrolyte` *n.* 电解质\n- `electromagnetic` *adj.* 电磁的\n- `underlying` *adj.* 潜在的；根本的\n- `mitigate` *v.* 减轻；缓和\n- `exacerbate` *v.* 加剧；恶化\n- `tangible` *adj.* 有形的；可触摸的\n- `threshold` *n.* 阈值；门槛\n- `elucidate` *v.* 阐明；解释\n- `enumerate` *v.* 列举；枚举\n- `extrapolate` *v.* 推断；外推\n- `latent` *adj.* 潜在的；隐藏的\n- `magnitude` *n.* 重要性；量级\n- `normative` *adj.* 规范的；标准的\n- `nuance` *n.* 细微差别；微妙之处\n- `preclude` *v.* 排除；阻止\n- `predominant` *adj.* 主要的；占优势的\n- `proliferate` *v.* 激增；扩散\n- `reciprocal` *adj.* 互惠的；相互的\n- `salient` *adj.* 显著的；突出的\n- `stipulate` *v.* 规定；明确要求\n- `tacit` *adj.* 心照不宣的；默示的\n- `transcend` *v.* 超越；超出"
+    },
+    {
+      "id": "VO25.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nRecent scholarship on academic innovation has challenged the prevailing **paradigm** that **empirical** progress depends mainly on individual brilliance. A more plausible **heuristic** treats discovery as a social process: **salient** anomalies are noticed, discussed, and then **corroborated** by independent researchers. **Intrinsic** motivation matters, but **exogenous** incentives—funding, prestige, and institutional pressure—can either accelerate or distort this process. The **proliferation** of preprint platforms, albeit useful, has made the distinction between preliminary findings and settled knowledge less clear. A useful **caveat** is therefore that the **dichotomy** between “pure” and “applied” research is often overstated. Hitherto marginal voices may also reshape what counts as evidence. Researchers should thus remain cautious about claiming that any single method can capture the complex ecology of knowledge production.\n\n### 中译\n近期关于学术创新的研究挑战了一种流行范式，即实证进展主要依赖个人才华。一个更合理的启发式方法把发现视为社会过程：显著异常被注意、讨论，随后由独立研究者证实。内在动机固然重要，但外部激励——经费、声望和制度压力——可能加速也可能扭曲这一过程。预印本平台的激增虽然有用，却使初步发现与确定知识之间的界限变得更不清晰。因此一个有用的提醒是：“纯”研究与“应用”研究之间的二分法常被夸大。此前边缘化的声音也可能重塑何为证据。因此，研究者应保持谨慎，不要声称任何单一方法都能捕捉知识生产的复杂生态。\n\n### 语法点\n- `has challenged the prevailing paradigm that empirical progress depends mainly on individual brilliance` → 现在完成时 + that 引导同位语从句（说明 paradigm 的内容） → 写作中可用“claim/idea/paradigm + that...”把抽象名词具体化。\n- `treats discovery as a social process` → treat + 宾语 + as + 名词（宾语补足语） → 用于给某事物重新定性，如 regard/view/describe...as...\n- `are noticed, discussed, and then corroborated by independent researchers` → 三个过去分词并列的被动结构 → 描述研究流程时用并列被动，保持主语一致、动作递进。\n- `albeit useful` → albeit + 形容词/名词短语，表让步 → 比 although 更书面，常插在句中作补充，如 The method, albeit costly, remains...\n- `has made the distinction between preliminary findings and settled knowledge less clear` → make + 宾语 + 形容词补足语（复合宾语），其中宾语含 between...and... 介词短语 → 用于表达“使某判断/界限变得……”，适合学术评价句。"
+    }
+  ],
+  "source_h1": "25 超纲与低频学术词",
+  "meta": {
+    "kind": "english1-words",
+    "group": 25
+  }
+}

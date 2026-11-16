@@ -1,0 +1,33 @@
+{
+  "schema": "doc-card/v1",
+  "code": "VO16.1",
+  "chapter": "VO16",
+  "title": "16 熟词僻义",
+  "src": {
+    "file": "notebook/kaoyan/english1/words/16-熟词僻义.md",
+    "sha256": "sha256:b2f59a6e98cc2b1cae59939f62c63bbaa952bdcb566d77047259858be41b8935"
+  },
+  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "VO16.1:body.s01",
+      "type": "extension",
+      "title": "词表",
+      "level": 2,
+      "content": "- `balance` *v.* 权衡；使平衡\n- `bear` *v.* 承担；忍受\n- `bill` *n.* 法案；账单\n- `book` *v.* 预订；登记\n- `coin` *v.* 创造（新词）；硬币\n- `cover` *v.* 涵盖；覆盖\n- `cry` *n.* 呼声；哭泣\n- `deliver` *v.* 发表；递送\n- `digest` *v.* 理解；消化\n- `draw` *v.* 得出；画\n- `engage` *v.* 参与；吸引\n- `entertain` *v.* 考虑；娱乐\n- `exercise` *v.* 行使；锻炼\n- `fix` *v.* 确定；修理\n- `frame` *v.* 构建；框架\n- `free` *v.* 释放；免费的\n- `game` *n.* 猎物；游戏\n- `host` *v.* 主办；主人\n- `last` *v.* 持续；最后的\n- `lean` *v.* 倾向于；倾斜\n- `leave` *n.* 许可；离开\n- `lie` *v.* 位于；躺\n- `make` *v.* 成为；制造\n- `mean` *adj.* 吝啬的；意味着\n- `meet` *v.* 满足；遇见\n- `mint` *v.* 铸造；薄荷\n- `moving` *adj.* 感人的；移动的\n- `order` *n.* 秩序；命令\n- `plant` *n.* 工厂；植物\n- `present` *v.* 呈现；目前的\n- `pretty` *adv.* 相当；漂亮的\n- `prize` *v.* 珍视；奖品\n- `promise` *n.* 前途；承诺\n- `proper` *adj.* 固有的；适当的\n- `race` *n.* 种族；比赛\n- `relieve` *v.* 缓解；减轻\n- `remote` *adj.* 渺茫的；遥远的\n- `resolve` *v.* 解决；决心\n- `respect` *n.* 方面；尊重\n- `save` *prep.* 除…之外；拯救\n- `second` *v.* 赞成；第二的\n- `spell` *v.* 意味着；拼写\n- `stand` *v.* 忍受；站立\n- `strike` *v.* 打动；打击\n- `tell` *v.* 区分；告诉\n- `breed` *v.* 导致，引起；繁殖\n- `draft` *v.* 起草；征召\n- `fashion` *v.* 塑造，影响；制作\n- `handle` *v.* 处理，应对；把手\n- `key` *adj.* 关键的；钥匙\n- `lot` *n.* 一块地；许多\n- `marked` *adj.* 显著的；带标记的\n- `odd` *adj.* 奇数的，单的；奇怪的\n- `passage` *n.* 通过；段落\n- `rest` *n.* 其余部分；休息\n- `run` *v.* 经营，管理；跑\n- `spare` *v.* 抽出，腾出；备用的\n- `tip` *n.* 建议，诀窍；尖端"
+    },
+    {
+      "id": "VO16.1:body.s02",
+      "type": "extension",
+      "title": "短文",
+      "level": 2,
+      "content": "### 短文\nThe claim that reading widely will improve one's writing addresses a familiar question. Researchers argue that learners who observe the small conventions of a language — not merely its rules — gradually learn to distinguish a sound argument from a plausible one. Such learners also learn to appreciate how much a single word may spell for a reader. To entertain an unusual meaning of a common word is not a whim; it is a practice that tests patience. A dictionary may credit a common word with a dozen senses, yet context alone tells which one is meant. Students who subject every sentence to this kind of scrutiny become careful readers; those who do not are content with the surface. Over the course of a term, the difference is subtle but real, and it will endure.\n\n### 中译\n“广泛阅读能提高写作水平”这一说法，处理的是一个人们熟悉的问题。研究者主张，那些遵守一门语言细微惯例（而不仅是其规则）的学习者，会逐渐学会把健全的论证与看似合理的论证区分开来。这样的学习者也会逐渐体会到，一个单词对读者而言可能意味着多少。设想一个常用词的不寻常含义并非一时兴致，而是一种考验耐心的做法。词典可能会给一个常用词列出十几个义项，但唯有语境才能说明用的是哪一个。把每句话都置于这种细致审视之下的学生，会成为细心的读者；不这样做的学生则满足于表面。在一个学期的过程中，这种差别细微却真实，而且会持续下去。\n\n### 语法点\n1. The claim that reading widely will improve one's writing addresses a familiar question. → 主句 + that 引导的同位语从句（reading widely will improve one's writing 说明 claim 的内容），主句谓语为 addresses → 同位语从句本身成分完整、不缺主宾，只起解释作用；写作中用来“先抛出观点再展开”，比定语从句更常用于抽象名词（claim / idea / fact / belief）之后。\n2. learners who observe the small conventions of a language … gradually learn to distinguish… → who 引导的限制性定语从句修饰 learners，主句主语为 learners，谓语为 learn → 主语后带定语从句时，真正的主谓一致看先行词（复数 learners 配 learn）；破折号中的 not merely its rules 是插入成分，分析长句时先跳过。\n3. To entertain an unusual meaning of a common word is not a whim → 不定式短语作主语，谓语用单数 is → 不定式作主语表示具体的、一次性的行为；若主语过长，可后置为 It is not a whim to entertain…，这也是考研翻译中常见的语序调整点。\n4. Such learners also learn to appreciate how much a single word may spell for a reader. → how much 引导的宾语从句，作 appreciate 的宾语 → 介词/动词后的名词性从句一律用陈述语序（不能用 may a single word spell）；how + 形容词/副词 是“程度”类宾语从句的高频形式。\n5. Students who subject every sentence to this kind of scrutiny become careful readers; those who do not are content with the surface. → 分号连接两个并列分句，第二分句用 those who do not 指代前文人群，do not 替代 subject…to… 整个动词短语 → those who 泛指“……的人”，其后谓语用复数；用 do / do not 替代重复动词短语是避免冗余、保持句子紧凑的常用手段。"
+    }
+  ],
+  "source_h1": "16 熟词僻义",
+  "meta": {
+    "kind": "english1-words",
+    "group": 16
+  }
+}

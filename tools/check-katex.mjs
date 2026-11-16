@@ -6,8 +6,11 @@
  * 到了浏览器里就是一块红字或空白。这里用 `throwOnError:false` + 检查 `katex-error` 类，
  * 等价于页面上的实际表现。
  *
- * 用法：node tools/check-katex.mjs [--subject math|cs408|math1|projects]
+ * 用法：node tools/check-katex.mjs [--subject math|cs408|math1|projects|english1]
  * 退出码：有错误即 1。
+ *
+ * 未知学科**直接失败**，不回退 math：静默回退会让「check:english1 全绿」
+ * 其实在验数学站（2026-11 五站接入时加的守卫）。
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,8 +27,13 @@ const ROOTS = {
   cs408: 'cs408/json',
   math1: 'kaoyan/json',
   projects: 'projects/json',
+  english1: 'english1/json',
 };
-const dir = path.join(ROOT, ROOTS[SUBJECT] ?? ROOTS.math);
+if (!Object.prototype.hasOwnProperty.call(ROOTS, SUBJECT)) {
+  console.error(`[check-katex] 未知学科：${SUBJECT}（可选 ${Object.keys(ROOTS).join('|')}）`);
+  process.exit(1);
+}
+const dir = path.join(ROOT, ROOTS[SUBJECT]);
 const MATH_RE = /\$\$([\s\S]+?)\$\$|\$((?:\\\$|[^$\n])+?)\$/g;
 
 let files = 0;

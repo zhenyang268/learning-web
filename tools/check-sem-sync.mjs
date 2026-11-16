@@ -65,7 +65,16 @@ const SUBJECT_ID = (() => {
   return i >= 0 ? process.argv[i + 1] : 'math';
 })();
 const subjectsMod = await loadTs('src/subjects.ts');
-const SUBJ = subjectsMod.SUBJECTS.find((s) => s.id === SUBJECT_ID) ?? subjectsMod.MATH;
+// 未知学科**直接失败**，不静默回退 math（否则 `--subject english1` 会在验数学站，
+// 五站接入时这类回退最危险：闸门全绿但一片没测）。
+const SUBJ = subjectsMod.SUBJECTS.find((s) => s.id === SUBJECT_ID);
+if (!SUBJ) {
+  console.error(
+    `[check-sem-sync] 未知学科：${SUBJECT_ID}` +
+      `（可选 ${subjectsMod.SUBJECTS.map((s) => s.id).join('|')}）`,
+  );
+  process.exit(1);
+}
 const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, SUBJ.dataRoot.replace(/\/$/, ''));
 const GRAPH_DIR = path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, ''));
 console.log(`[check-sem-sync] 学科 ${SUBJ.id} · 数据根 ${SUBJ.dataRoot} · 语义边根 ${SUBJ.graphRoot}`);

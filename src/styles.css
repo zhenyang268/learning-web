@@ -1556,11 +1556,121 @@ p .badge {
   white-space: nowrap;
 }
 
-/* 跨站入口（数学 ↔ 408）：复用 graphbtn 的外观，<a> 需要补回无下划线与行高 */
-a.graphbtn.crosssite {
-  text-decoration: none;
-  line-height: 1.4;
+/* ── 五站互链（2026-11，取代旧的单条「⇄ 另一个学科」）──
+ *
+ * 桌面：`.sitenav` 一排短标签（数学 / 408 / 数一 / 工程 / 英一）。短标签是硬约束 ——
+ * 顶栏 1440 视口里同时住着 logo、域横滚条、警告位、总纲/路线按钮、搜索框，
+ * 换成「408 考研」「数一考研」这种全称会把横滚条挤到只剩一两块。
+ *
+ * 窄屏：`.sitenav` 收起，`.sitemenu` 是一个原生 <details>。选它而不是自绘菜单：
+ *   · `<summary>` 天然进 Tab 序列，Enter/Space 开合（390 验收实测键盘可达）；
+ *   · 菜单项是 `<a href>`，不依赖 JS 与路由 —— 也与 .domnav 的 <select> 完全分离，
+ *     两者各自开合、互不关闭（自绘菜单最容易在这里互相抢 focus）。
+ */
+.sitenav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--glass);
+  white-space: nowrap;
+}
+
+a.sitelnk {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  line-height: 1.5;
   color: var(--tx2);
+  text-decoration: none;
+  transition: .2s;
+}
+
+a.sitelnk:hover,
+a.sitelnk:focus-visible {
+  color: var(--cyan);
+  background: var(--glass2);
+}
+
+/* 当前站：胶囊高亮 + 不可自跳（点击由 app.ts 委托拦下） */
+a.sitelnk.on {
+  color: var(--cyan);
+  background: var(--glass2);
+  cursor: default;
+}
+
+/* 快照里缺这一站（单站重建）：明确不可点，而不是一条点了没反应的坏链接 */
+.sitelnk.miss,
+.sitemenu-item.miss {
+  color: var(--tx3);
+  opacity: .55;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.sitemenu {
+  display: none;
+  position: relative;
+}
+
+.sitemenu > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--glass);
+  font-size: 13px;
+  color: var(--tx2);
+  white-space: nowrap;
+}
+
+.sitemenu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.sitemenu[open] > summary,
+.sitemenu > summary:hover,
+.sitemenu > summary:focus-visible {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* 菜单贴在顶栏下沿，右侧对齐（顶栏是 sticky，绝对定位相对 .sitemenu） */
+.sitemenu-list {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  min-width: 132px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 12px 32px #0008;
+}
+
+a.sitemenu-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--tx2);
+  text-decoration: none;
+}
+
+a.sitemenu-item:hover,
+a.sitemenu-item:focus-visible {
+  color: var(--cyan);
+  background: var(--glass2);
+}
+
+a.sitemenu-item.on {
+  color: var(--cyan);
+  cursor: default;
 }
 
 .graphbtn:hover,
@@ -1774,7 +1884,14 @@ a.graphbtn.crosssite {
  */
 #reader p,
 .docview p,
-.docbody p {
+.docbody p,
+/* 列表项与正文同一口径（2026-11-16）：旧规则只覆盖 `p`，于是工程线
+ * LG01.1 的一句 `手写 String/Vector/UniquePtr/SharedPtr/ScopeGuard 等最小版本`
+ * 在 390 视口把 `<li>` 撑到 350px、页面整体滚到 444（实测）。
+ * 代码块与宽表各有自己的滚动宿主，不受影响。 */
+#reader li,
+.docview li,
+.docbody li {
   overflow-wrap: anywhere;
 }
 
@@ -2373,6 +2490,35 @@ a.graphbtn.crosssite {
   .domnav {
     display: flex;
     order: 1;
+  }
+
+  /* 五站互链在窄屏：桌面那排短标签收起，改由「切换站」折叠承担。
+   *
+   * 顶栏这一行已有 logo / 域下拉 / 搜索框三件，再塞五个标签必然撑成两行以上
+   * 并在 390 视口产生横溢（实测 5×44px + 间隙 = 250px，超出行宽）。
+   * 折叠只占一个胶囊（~72px），且与域下拉是两个独立控件：域下拉管「本站哪个域」，
+   * 这里管「换哪一站」，语义不重叠，键盘各自可达。
+   */
+  .sitenav {
+    display: none;
+  }
+
+  .sitemenu {
+    display: block;
+    order: 2;
+    flex: 0 0 auto;
+  }
+
+  .sitemenu > summary {
+    padding: 4px 9px;
+    font-size: 12.5px;
+  }
+
+  .sitemenu-list {
+    /* 390 视口：菜单右对齐到顶栏内边距，避免贴边或被裁 */
+    right: 0;
+    min-width: 116px;
+    max-width: 68vw;
   }
 
   .search {
