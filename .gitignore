@@ -14,6 +14,10 @@ yarn-error.log*
 .vite/
 .eslintcache
 
+# Python 编译产物（import 脚本每次运行都会重生成）
+__pycache__/
+*.pyc
+
 # macOS / 编辑器 / WorkBuddy 工作区
 .DS_Store
 .vscode/
