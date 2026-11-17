@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.7",
+  "chapter": "DB01",
+  "title": "第 6 章 隔离级别：从读未提交到可串行化",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 隔离级别：从读未提交到可串行化",
+      "level": 2,
+      "content": "**要解决的问题**：定义并发事务之间的**可见性契约**——别人做到一半的修改，我能不能看见。没有这个契约，「并发下读到什么」无法描述，也无法判断一个实现是否安全。\n\n**机制**：\n\nSQL 标准用三种「现象」定义四个级别，**只规定禁止什么，不规定怎么实现**：\n\n| 级别 | 脏读 | 不可重复读 | 幻读 |\n|---|---|---|---|\n| READ UNCOMMITTED | 可能 | 可能 | 可能 |\n| READ COMMITTED | 禁止 | 可能 | 可能 |\n| REPEATABLE READ | 禁止 | 禁止 | 标准允许（实现常禁止） |\n| SERIALIZABLE | 禁止 | 禁止 | 禁止 |\n\n- **脏读**：读到别人未提交的版本。\n- **不可重复读**：同一事务内两次读同一行，值变了（别人 UPDATE 并提交）。\n- **幻读**：同一事务内两次按同一条件读，**行数**变了（别人 INSERT/DELETE 并提交）。\n\n实现只有两条路线：**加锁**（读加共享锁、写加排他锁，可串行化靠范围锁/间隙锁禁幻读）和**快照**（MVCC 给每次读一个可见版本集合，读不加锁）。快照粒度是 RC 与 RR 的唯一实质差别：\n\n```text\nvisible(version, snapshot):\n  if version.trx_id == self.trx_id:      return true   # 读自己的修改\n  if version.trx_id >= snapshot.max_id:  return false  # 快照之后才开启的事务\n  if version.trx_id in snapshot.active:  return false  # 快照时尚未提交\n  return true\n# RC: 每条语句刷新 snapshot\n# RR: 事务内第一条读语句固定 snapshot，全程复用\n```\n\n关键实现差异（面试真正的分水岭）：InnoDB 默认 RR，普通 `SELECT` 是**快照读**、不加锁；`SELECT ... FOR UPDATE`、`UPDATE`、`DELETE` 是**当前读**，读最新已提交版本并加 next-key 锁（记录锁 + 间隙锁）。所以「MySQL RR 没有幻读」只在快照读下成立，当前读防幻读靠的是间隙锁，不是快照。\n\n**最小例子**：表 `t(id INT PRIMARY KEY, v INT)`，初始一行 `(1, 10)`。\n\n```text\nS1: BEGIN; SELECT v FROM t WHERE id=1;        -- 10\nS2: BEGIN; UPDATE t SET v=20 WHERE id=1; COMMIT;\nS1: SELECT v FROM t WHERE id=1;\n```\n\n- S1 为 RR：第二次仍读到 `10`。`v=20` 的版本 `trx_id` 落在 S1 快照的 active 列表里，不可见。\n- S1 为 RC：第二次读到 `20`。语句级新快照，S2 已提交。\n\n换一条路径看幻读：S1 在 RR 下先执行 `SELECT * FROM t WHERE id > 0 FOR UPDATE`，InnoDB 会对 `(1, +∞)` 加间隙锁；此时 S2 的 `INSERT INTO t VALUES (2, 30)` 被阻塞到 S1 提交，S1 范围内不会凭空多出一行。若 S1 用的是普通 `SELECT`，快照读本来就看不见新行——两条路径分别对应「锁防幻读」和「快照看不见幻读」，机制完全不同。\n\n**面试高频问法**：\n\n1. 「RC 和 RR 一句话区别？」\n   考点：快照粒度。答法：RC 是语句级快照，每条语句重新取一次；RR 是事务级快照，事务内第一条读语句定下后全程复用。副作用就是 RC 有不可重复读，RR 没有。\n\n2. 「MySQL 的 RR 到底有没有幻读？」\n   考点：快照读 vs 当前读。答法：快照读下没有，因为新插入的行 `trx_id` 在快照之后，根本不可见；当前读下靠 next-key 锁阻塞插入来防。所以既不能说「RR 没有幻读」，也不能说「RR 有幻读」，取决于这条语句是不是当前读。\n\n3. 「SERIALIZABLE 是怎么做出来的？」\n   考点：悲观 vs 乐观。答法：两条路线——把读也升级成加锁读（共享锁/范围锁），冲突就阻塞，简单但吞吐低；或者仍走快照、提交时做读写依赖环检测（SSI），冲突的事务回滚一个，不阻塞但会失败重试。具体选哪条按实现而定。\n\n4. 「幻读和不可重复读差在哪，为什么处理成本差这么多？」\n   考点：锁的粒度。答法：不可重复读是同一行的值变了，加行锁就够；幻读是结果集行数变了，锁住已存在的行没用，必须锁住「不存在的行」可能出现的区间，也就是间隙锁或谓词锁，代价是并发度下降。\n\n5. 「读未提交还有人用吗？」\n   考点：边界场景。答法：基本不用，只适合能容忍脏数据的近似统计。多数引擎把它实现为「完全不加读锁、直接读最新版本」，它省掉的是读锁开销，不是日志或回滚开销。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 12,
+    "section": "第 6 章 隔离级别：从读未提交到可串行化"
+  }
+}

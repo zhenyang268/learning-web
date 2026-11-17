@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO06.12",
+  "chapter": "SO06",
+  "title": "第 10 章 度量与归因：把\"快\"变成一个数",
+  "src": {
+    "file": "notebook/projects/os/virtualization/NOTES.md",
+    "sha256": "sha256:d4ea73a02ef0f6f4eead171c249368035a9e07403606e7dbdca31b66a680465e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO06.12:body.s01",
+      "type": "extension",
+      "title": "第 10 章 度量与归因：把\"快\"变成一个数",
+      "level": 2,
+      "content": "**要解决的问题**：这一块的公共话语全是形容词。不给口径就是口号；给了口径但归因错了，比不给更糟。\n\n**机制**：\n\n**(a) 先定口径，再谈快慢**（这张表就是\"别背数字\"的执行版）：\n\n| 指标 | 口径 | 怎么测 | 常见误用 |\n|---|---|---|---|\n| 退出频率 | `vmexit/s`，并按原因分组 | `perf kvm stat live`；`/sys/kernel/debug/kvm/*`（`exits`、`io_exits`、`mmio_exits`、`irq_exits`、`halt_exits`） | 只报总数，不分组 → 不知道是 I/O 还是中断 |\n| 访存效率 | guest 内 IPC、`dTLB` miss | guest 内 `perf stat`，与裸机同 workload 对比 | 拿不同 CPU 频率的两台机器比 |\n| 块 I/O | `IOPS` + `p99` 延迟，`iodepth`/`bs`/`direct=1` 必须写 | guest 内 `fio`；宿主看 `iostat -x` 的 `aqu-sz`、`%util` | 只报 IOPS 不报延迟 |\n| 网络 | 包长 + 并发 + `pps`/带宽 + `p99` | `iperf3`（`TCP_STREAM`）/ `netperf`（`TCP_RR` 看延迟） | 用 1500B 测吞吐，却想解释 64B 小包的问题 |\n| 启动 | 到\"第一个 syscall / 第一个用户进程\" | `systemd-analyze`、`/dev/kmsg` 打点、`time docker run --rm true` | 报到\"登录提示符\"（混进了 getty 与网络等待） |\n| 迁移 | `downtime` + `total time` + 脏页速率 | QMP `info migrate`；`migrate-set-parameters` 调 `downtime-limit` | 只报\"迁移成功\"，不报停机 |\n\n**(b) 工具链与它们各自能看到什么**：\n\n| 工具 | 看什么 | 注意 |\n|---|---|---|\n| `perf kvm stat live` | 退出原因分布 + 频率 | 需要 `kvm` tracepoint（`kvm:kvm_exit`） |\n| `perf kvm stat record/report`（`--guest`） | 采样 + guest/host 归属 | `--guest` 才能把 guest 内的符号解出来 |\n| QEMU `-trace enable=\"virtio_*\"` | 环操作、通知、`ioeventfd` 命中 | 开销不小，只在定位时开 |\n| `/sys/kernel/debug/kvm/*` | 每 VM 的累计计数（按 pid 分目录） | 累计值，要自己差分 |\n| guest 内 `perf`/`ftrace` | 应用侧归因 | **guest 内测量本身就在跨界**（时钟读、tracepoint 写都可能退出） |\n| `mpstat` 的 `%steal` | 超分导致 guest 想跑但排不上 | 只有半虚拟化时钟下才准 |\n\n**(c) 五个最小实验**（每个都能在一台机器上跑完，且都有一个\"预期形状\"）：\n\n1. **TCG vs KVM 的启动时间**：同镜像，`-accel tcg` vs `-accel kvm`，量\"到串口出现 `login:`\"。预期：差一到两个数量级；再用 `-d tb_stats` 看翻译块数量与命中率。\n2. **`num-queues` 的扩展性**：`virtio-blk,num-queues=1` vs `=4`，4 vCPU、`fio` 4 线程随机读。预期：队列数上去吞吐上升，但**受 BQL / iothread 配置限制**——如果不升，说明后端在串行。\n3. **`ioeventfd` 命中 vs 不命中**：`vhost-net` 开 vs 关（`vhost=off` 退回 QEMU 用户态后端），同一 64B 小包负载。预期：`vmexit/s` 与 `%CPU` 明显下降，而带宽差距在小包上最大。\n4. **容器 vs VM 的启动**：`time docker run --rm alpine true` vs 微虚拟机启动。预期：差一个数量级以上；**注意别把拉镜像算进启动**（先 `pull` 再计时）。\n5. **WSL2 的跨 OS 文件访问**：`/mnt/c` vs `~/` 的 `git status`（第 9 章）。预期：按\"元数据操作数 × 往返\"成立。\n\n**(d) 四类归因陷阱**（比工具更重要）：\n\n| 陷阱 | 现象 | 正确做法 |\n|---|---|---|\n| 把 cache 影响算成\"虚拟化开销\" | 换到 VM 后 IPC 下降，就说是 VMM 的锅 | 对照**同机裸机**同 workload；分离\"cache 变小/共享\"与\"退出开销\" |\n| 把超分算成\"虚拟化慢\" | guest 里延迟抖动大 | 先看 `%steal`、宿主 `runqueue` 长度、绑核与 `nohz_full` |\n| guest 内测量自带偏差 | 在 guest 里测得的\"纯计算\"时间比裸机长 | 用 `kvm-clock`/TSC 直通，避免测量路径本身退出；必要时在宿主侧用事件计数 |\n| benchmark 自己就在跨界 | 用 `gettimeofday` 密集的循环测吞吐 | 换粗粒度计时（批量后再计时），或减小时钟调用比例 |\n\n**(e) 一条硬判据**：**任何\"X 比 Y 快\"都必须带三件东西**——口径（指标 + 负载 + 硬件）、复现命令、**一个反例**（什么条件下结论会反过来）。\n给不出反例，说明只测了一个点，不叫结论。\n\n**最小例子**：`perf kvm stat live` 的典型输出形状——按退出原因排序，`EPT_VIOLATION`/`MSR_WRITE`/`HLT`/`IO` 各占多少。\n判据：如果 `MSR_WRITE` 异常高，先怀疑是**未直通的 MSR**（时钟/电源管理相关），而不是\"I/O 慢\"；\n如果 `EPT_VIOLATION` 高而负载是纯计算，先怀疑**内存槽没变大页 / host 内存碎片导致 EPT 大页塌陷**。\n**这条\"看原因猜原因\"的能力，比记住任何数字都有用。**\n\n**面试高频问法**：\n\n1. **「你怎么证明 virtio 比全模拟快，快多少？」** → 考点：口径 + 机制解释。\n   → 答法：同一负载（4KB 随机读、`iodepth=32`、`direct=1`），对比 `virtio-blk` 与 `IDE PIO`，报 **IOPS、`p99`、`vmexit/s` 三个数**；机制解释是\"退出次数从每次寄存器访问降到每次请求一次\"，所以**小请求密集**时差距最大、大顺序读时差距缩小。**只说\"快几倍\"没有意义，因为倍数随请求大小变化。**\n2. **「VM 里网络 `p99` 抖动大，怎么定位？」** → 考点：分层排查。\n   → 答法：先看 `%steal`（是不是没 CPU）→ 再看后端位置（`vhost` 线程/`vhost-user` 进程的调度延迟）→ 再看中断合并与 `ioeventfd` 命中率 → 最后才怀疑协议栈。**判据：抖动如果是毫秒级、且与宿主负载相关，基本是调度问题；如果与包长相关，是环/合并问题。**\n3. **「怎么判断瓶颈在 guest 还是 host？」** → 考点：测量的位置。\n   → 答法：guest 内 `perf` 看 IPC 与自己的热点；宿主看 `vmexit/s`、`%CPU`（含 `system` 时间）、`iostat`/`sar`。**关键判据：guest 里\"什么都没干却很慢\"（低 IPC、低 CPU）→ 在等 host；guest 里 CPU 满但吞吐低 → 在 guest 自己。**\n4. **「你说容器启动快，快在哪一步？」** → 考点：把总量拆成阶段。\n   → 答法：拆成\"拉镜像 / 解压 / 建 namespace / 挂 overlay / `exec`\"，各自计时。**结论通常是\"启动本身几毫秒到几十毫秒，真正的时间在拉镜像与解压\"**，所以\"容器秒起\"这个说法在冷启动时不成立。判据：`docker run` 前先 `pull`，再对比冷/热启动。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "virtualization",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 11,
+    "section": "第 10 章 度量与归因：把\"快\"变成一个数"
+  }
+}

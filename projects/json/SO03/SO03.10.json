@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO03.10",
+  "chapter": "SO03",
+  "title": "第 8 章 文件系统与设备的组织",
+  "src": {
+    "file": "notebook/projects/os/kernel-compare/NOTES.md",
+    "sha256": "sha256:3fdad2384b230576e8b856161ad428eb8606560c1ee888202b9c68e3b315846e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO03.10:body.s01",
+      "type": "extension",
+      "title": "第 8 章 文件系统与设备的组织",
+      "level": 2,
+      "content": "**要解决的问题**：文件系统放在内核里还是用户态，决定了崩溃影响面、路径长度与实现复杂度。\n\n**机制**：\n\n- **JOS（用户态服务）**：FS 进程持有块缓存与磁盘布局（superblock / bitmap / inode 区 / 数据区），其他进程通过 `FSREQ_*` 请求，通过页映射共享文件内容。崩溃影响面 = 一个进程；代价 = 每次操作两次调度。\n- **xv6（内核内 + 日志）**：`inode` + `bcache`（LRU）+ `log`（日志区 + 两阶段提交）。所有对元数据的修改先写日志，再提交，崩溃后重放——**这是\"崩溃一致性\"的最小可理解实现。**\n- **Linux（VFS + 页缓存 + 具体文件系统）**：VFS 提供 `inode/dentry/file/super_block` 四个抽象对象，具体文件系统（ext4/xfs/btrfs）实现操作；数据走页缓存，写回由 `writeback` 线程异步完成；元数据一致性靠 journal（ext4 的 jbd2）。\n- **设备层**：JOS 只有一块 IDE 盘与一块 e1000 网卡，驱动直接在内核里轮询或中断；Linux 有设备模型（总线/设备/驱动）、DMA API、NAPI、块层多队列。细节见 `../drivers/`。\n\n**最小例子**：`unlink` 一个正在被打开的文件。\nJOS：FS 进程改目录项与 inode 链接计数，文件数据仍被客户端映射着，等最后一个映射消失才释放。\nxv6：`unlink` 把目录项清空、`ip->nlink--`，`iput` 时若 `nlink==0` 且无引用则 `itrunc` 释放块。\nLinux：`dentry` 从目录摘除、`inode->i_nlink--`，但 `file` 结构还活着（fd 未关），数据要等最后一个 `close` 才释放——**\"删除\"与\"释放\"被拆成两件事**，这正是 fd 语义的基础。\n\n**面试高频问法**：\n\n1. **「为什么 Linux 删了文件还能读？」** → 考点：fd 与目录项分离。答法：`unlink` 只减链接计数并摘除目录项，`file` 结构仍持有 `inode`，数据块要等最后一个 fd 关闭才释放。\n2. **「xv6 的日志怎么保证崩溃一致性？」** → 考点：两阶段提交。答法：先 `begin_op` 把修改写进日志区并记下块号，`end_op` 时先写提交记录（commit），再把日志块写回原位；崩溃后重放已提交的日志、丢弃未提交的。\n3. **「用户态文件系统（FUSE）为什么慢？」** → 考点：路径长度。答法：每次操作都要用户态 → 内核 → 用户态服务 → 内核，多次上下文切换与数据拷贝；换来的是崩溃隔离与开发便利。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "kernel-compare",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 12,
+    "section": "第 8 章 文件系统与设备的组织"
+  }
+}

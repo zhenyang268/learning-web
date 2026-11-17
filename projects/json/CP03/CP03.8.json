@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.8",
+  "chapter": "CP03",
+  "title": "S5 存储：I/D cache 与存储器接口",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.8:body.s01",
+      "type": "extension",
+      "title": "S5 存储：I/D cache 与存储器接口",
+      "level": 2,
+      "content": "### 要解决的问题\n\nS2–S4 让核内的指令流跑起来了，但每条 load 都直接打到存储器。真实存储器有延迟，一条慢 load 就能把整个窗口堵死。cache 的作用是把绝大多数访存留在核附近，同时把\"缺失时的等待\"变成可管理的状态机。\n\n### 机制\n\n三层概念要分清：**结构**（容量/路数/行大小）、**策略**（写回还是写穿、分配还是不分配、替换算法）、**接口**（怎么和后端存储器握手）。\n\n位划分先算清：4KB、16B 行、直接映射 → 256 行 → `offset=4 bit`、`index=8 bit`、`tag=20 bit`。升两路组相联（同样 4KB/16B）→ 128 组 → `index=7 bit`、`tag=21 bit`。**这几个数写错，miss 率会与手算对不上，之后所有性能结论都不可信**。\n\n策略取最常见的一组：**write-back + write-allocate**（写命中只标 dirty，写缺失先取行再写）。需要 `dirty` 位与\"替换时回写\"的状态。\n\n接口不要一上来就做 AXI。先用一个简单的同步 SRAM 模型：`req_valid / req_ready / req_addr / req_wdata / req_we` + 固定延迟，在 testbench 里可参数化（`+LATENCY=20`）。**延迟可参数化比\"总线协议正确\"重要得多**——它让你能做\"延迟 → IPC\"的敏感性分析。\n\n### 最小例子\n\n```systemverilog\n// 直接映射 D-cache 的读路径骨架（省略写路径与替换）\nlogic [255:0] tagv;          // valid\nlogic [255:0] dirty;\nlogic [19:0]  tag_q [256];\nlogic [127:0] data_q [256];  // 16B = 128 bit\n\nwire [3:0]  offset = addr[3:0];\nwire [7:0]  index  = addr[11:4];\nwire [19:0] tag    = addr[31:12];\n\nwire hit = tagv[index] && (tag_q[index] == tag);\n```\n\n一段能暴露集合冲突的 microbench：以 4KB 为步长访问数组（`a[i*1024]`），直接映射下每次必 miss，两路组相联仍必 miss（同组），四路开始缓解——**这条曲线能同时验证你的位划分和你的路数**。\n\n**验收判据**：① 顺序/跨步/随机三种模式的 miss 率与手算一致（直接映射与两路各算一遍）；② 加 cache 后同一 microbench 的 IPC 上升，且上升幅度能归因到 miss 数下降；③ 关掉 cache（直通）结果仍正确——**正确性不能被 cache 掩盖**。\n\n### 面试高频问法\n\n- **\"cache 的容量、路数、行大小各自影响什么？\"** → 考点是 AMAT 三项。答法：容量降 miss 率，路数降冲突缺失，行大小影响空间局部性收益与缺失代价（行越大，单次 miss 搬得越多，可能浪费带宽）；三者都会抬高命中时间或面积，所以是权衡。\n- **\"L1 为什么常见 VIPT？\"** → 考点是并行启动翻译与索引。答法：页内偏移在翻译前后不变，所以 index 可以取自虚拟地址，与 TLB 并行；tag 用物理地址比较。只要 index 位宽不超过页偏移，VIPT 等价于 PIPT，天然无别名。\n- **\"write-back 与 write-through 怎么选？\"** → 考点是写放大与一致性复杂度。答法：write-back 省带宽但需要 dirty 位与回写路径，未见一致性复杂度（单核无影响）；write-through 简单但每次写都打后端，写密集负载下带宽压力大。多核下 write-back 还需要一致性协议配合。\n- **\"为什么要做延迟可参数化？\"** → 考点是性能实验的方法。答法：核的性能结论必须能对\"存储器变慢\"做出可预测的响应；延迟固定时，你无法区分\"IPC 低是因为结构不好\"还是\"因为后端太慢\"。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 17,
+    "section": "S5 存储：I/D cache 与存储器接口"
+  }
+}

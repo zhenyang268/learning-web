@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO02.7",
+  "chapter": "SO02",
+  "title": "B3 地址空间",
+  "src": {
+    "file": "notebook/projects/os/xv6/NOTES.md",
+    "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO02.7:body.s01",
+      "type": "extension",
+      "title": "B3 地址空间",
+      "level": 2,
+      "content": "> 职责：一堆映射 → 能长能缩能复制能替换的对象。依赖：B2；被 B5／`exec` 借。\n\n**一堆映射 → 能长能缩能复制能替换的对象。** 使用面：`grow`／`shrink`／`copy`／`free_all`。\n\n### 现象\n\n`sbrk(n)` 返回旧边界，之后那一段可读可写；`n` 为负时收缩；`fork` 之后父子各写各的互不影响；栈向下长，撞到栈底那页没映射处就崩，而不是静默写坏堆。\n\n### 机制\n\n实现面（≤6）：段布局／栈方向／guard page／COW 钩子／按需分配（xv6 无 lazy）。删掉 guard page → 栈溢出静默写坏堆。\n\n**能力地图**（init 进程，xv6，单核）：\n\n```text\n0x0                  ┌────────────────────┐\n                     │ text      R-X  U   │  执行 OK；写 → scause 15（PTE_W=0）\n                     ├────────────────────┤\n                     │ data/bss  RW-  U   │  读 OK；写 OK\n                     ├────────────────────┤\n                     │ heap      RW-  U   │  sbrk 往上推，边界是 p->sz\n                     │   ...              │\n                     ├────────────────────┤\n                     │ stack     RW-  U   │  向下长；栈底有一页没映射\n                     └────────────────────┘\nTRAMPOLINE            │ trampoline R-X ─   │  U=0：只有陷入瞬间 CPU 用\nTRAPFRAME             │ trapframe RW-  ─   │  U=0：用户碰 → scause 13\nKERNBASE..PHYSTOP     │ 内核直接映射        │  text R-X、data RW；U=0\n```\n\n三条直接从图上读出来的结论：\n\n1. **「能不能访问」= 有映射 + `U=1` + 对应 `R/W/X`**，不是「代码里检查了」。\n2. **「写一下会怎样」**：`W=1` 直接写；`W=0` 且是 COW 页 → 缺页后复制；`W=0` 且不是 COW（代码段）→ 杀进程。\n3. **「访问一段新的会怎样」**：xv6 没有 lazy allocation，`sbrk` 时就把页建好，所以「边界推高」和「可访问」是同步的；Linux 里两者分开，才有 minor fault。\n\n**申请内存**：`sys_sbrk` → `growproc` → `uvmalloc`（立刻 `kalloc` + `mappages`）或 `uvmdealloc`。**顺序是不变量**：先分配、成功后才改 `p->sz`；失败回滚并返回 -1，于是不出现「能访问但没内存」。\n\n**COW 的落地**（`uvmcopy` + `cowfault`）：\n\n1. `uvmcopy` 遍历父页表，把**父的** PTE 清 `PTE_W`、打 `PTE_COW`；子页表用同样权限映射同一物理页；计数 +1。**两边都要改**，只改子的话父会写穿。\n2. 谁写谁触发 `scause=15`（store page fault），`usertrap` 调 `cowfault(PGROUNDDOWN(r_stval()))`。\n3. `cowfault`：查 PTE → 确认 `V` 且无 `W` 且有 COW 标记 → `kalloc` → `memmove` → **`uvmunmap(..., 1, 0)` 先拆旧映射**（`mappages` 遇到已存在映射会 panic）→ `mappages` 成可写 → `kfree` 旧页（计数 -1）。\n\n三个必错点（顺序与位都不能挪）：**先拆映射再 `mappages`**、**父的 PTE 也要清 `W` 打 COW**、**旧页只经 `kfree` 减一次计数**。\n\n### 为什么这么设计\n\n`fork` 后通常跟 `exec`（shell 就是这样），全量复制是纯浪费；COW 把复制推迟到「真的写」。代价是缺页成热路径、引用计数要维护、错一处就是随机 panic。**为什么不是别的**：`vfork` 不复制但父阻塞，`posix_spawn` 走 `CLONE_VM|CLONE_VFORK`；COW 是「不改调用者语义」的最小代价。\n\n`grow` 走 eager 也是选点：\n\n| | eager（xv6） | demand（Linux） |\n|---|---|---|\n| 错误何时暴露 | `sbrk` 当场返回 -1 | 访问时才 fault，可能很远 |\n| 内存占用 | 立刻占 | 按需，可超卖 |\n| 缺页是不是常规路径 | 不是 | 是（minor fault 常见） |\n\n所以「申请内存会怎样」**必须带内核名**：xv6 是一次分配，Linux 是一次记账。\n\n### 怎么验证\n\n- `grow` 后可写；越界 fault；`copy` 后两边独立写；\n- 对函数指针所在页写（xv6 没有 `mprotect`）看 `scause=15`；写 `TRAMPOLINE` 看 `scause=13`（取指/读权限不足）；\n- `b growproc`：`p myproc()->sz` 前后对比 + `vmprint` 看新增项；`sbrk` 超大值看返回 -1 且 `sz` 不变；\n- `b cowfault`：看旧 PTE 的 `W`/COW 位、看计数 >1。\n\n**失效点**：先改边界后分配 → 能访问但没内存；`copy` 只改子不改父 → 写穿；`scause=13` 不该走 COW，否则读非法地址会被静默分配。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "xv6",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 18,
+    "section": "B3 地址空间"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO06.4",
+  "chapter": "SO06",
+  "title": "第 2 章 两种引擎：陷出模拟与二进制翻译",
+  "src": {
+    "file": "notebook/projects/os/virtualization/NOTES.md",
+    "sha256": "sha256:d4ea73a02ef0f6f4eead171c249368035a9e07403606e7dbdca31b66a680465e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO06.4:body.s01",
+      "type": "extension",
+      "title": "第 2 章 两种引擎：陷出模拟与二进制翻译",
+      "level": 2,
+      "content": "**要解决的问题**：没有硬件扩展时怎么跑？有扩展时为什么还需要\"翻译\"？两个引擎的判据不同，混在一起讲就会得出\"TCG 是过时的 KVM\"这种错误结论。\n\n**机制**：\n\n**(a) `trap-and-emulate` 的闭环**（有硬件扩展时的主路径）：\n\n```mermaid\nsequenceDiagram\n    participant G as guest (VMX non-root)\n    participant H as CPU/硬件\n    participant K as KVM (VMX root, ring0)\n    participant Q as QEMU (用户态)\n    G->>H: 执行 MOV CR3 / IN / MMIO 写\n    H->>K: VM exit（保存 guest 状态，装 host 状态）\n    K->>K: 查退出原因（VMCS exit reason）\n    alt KVM 自己能处理（如 CR3 写入、EPT 建映射）\n        K->>H: VMRESUME 直接回 guest\n    else 需要设备模型（PIO/MMIO/未注册地址）\n        K->>Q: ioctl(KVM_RUN) 返回 KVM_EXIT_IO/MMIO\n        Q->>Q: 设备模型算出结果，写进 guest 内存\n        Q->>K: 再次 ioctl(KVM_RUN)\n        K->>H: VMRESUME\n    end\n```\n\n**关键点**：闭环里有**两处**可能\"短路\"。KVM 能自己处理的退出不回到用户态（这是第一层短路）；\n能通过 `ioeventfd` 绑到 `eventfd` 的写操作，连 KVM 都不用回（第二层短路，见第 5、6 章）。\n\n**(b) 二进制翻译**（无扩展、或跨架构时的唯一路径）：\n读一段 guest 指令 → 识别**基本块**（到跳转/调用为止）→ 翻译成宿主指令序列 → 放进**翻译缓存**（TB）→ 执行。\n三个必须解决的工程问题：\n\n| 问题 | 做法 | 不做会怎样 |\n|---|---|---|\n| 下次怎么找到这块 | 用 guest PC 做键查哈希表 | 每轮都重新翻译，慢到不可用 |\n| 怎么避免\"翻译→跳回分发器→再翻译\" | **直接块链接**：TB 末尾直接 `jmp` 到目标 TB 的宿主地址 | 每个基本块都回一次分发器，性能腰斩 |\n| 客户机自己改代码怎么办 | TB 页设为只读，写触发 `SIGSEGV` → 把该页所有 TB 失效并重译 | 跑的是旧代码，程序行为错 |\n\nQEMU 的这套叫 **TCG**（Tiny Code Generator）：每条 guest 指令展开成中间表示（TCG ops），再由后端生成宿主代码；\n`-d in_asm,op,out_asm` 能把三层都打出来，这是\"读懂 TCG\"最快的方式（一次翻译，三份视图）。\n\n**(c) 半虚拟化**（第三条路，只在这里点一句）：改客户机内核，把\"会陷出的操作\"换成显式的 `hypercall`。\n它的优势是**不用假装**——客户机知道自己被虚拟化，于是可以把\"批处理\"\"通知抑制\"这类优化直接写进驱动（virtio 就是这么来的）。\n劣势是**要改内核 / 要有驱动**，所以它成了 I/O 的标准形态、CPU 的非标准形态。\n\n**为什么 KVM 不能跨架构**：KVM 的全部工作是\"把 guest 的指令流**原样**交给物理 CPU 执行\"，它不翻译任何东西。\n所以 `qemu-system-x86_64` 在没有 x86 硬件虚拟化的宿主上（例如 Apple Silicon 跑 x86 镜像）只能退回 TCG。\n**量与质的差别在这里**：KVM 的每次拦截是\"硬件举手\"，纳秒级；TCG 的每条指令都要经过翻译过的代码，且翻译块本身占 cache。\n实测差异常在**一到两个数量级**（启动一个发行版：KVM 秒级、TCG 分钟级），具体数字自己测（第 10 章实验 ①）。\n\n**最小例子**：在 Apple Silicon 上 `qemu-system-x86_64`（无 KVM、纯 TCG）启动一个最小 Linux，\n与在同架构机器上用 `-accel kvm` / `-accel hvf` 启动同一镜像对比\"到串口出现 `login:`\"的时间。\n判据：能说出差的这一到两个数量级里，**多少来自翻译开销、多少来自 TB 未命中后的重译、多少来自设备模型**（用 `-d tb_stats` 或 QEMU 的 `-trace` 分开看）。\n\n**面试高频问法**：\n\n1. **「TCG 和 KVM 是不是一回事的两种实现？」** → 考点：一次跨界的性质完全不同。\n   → 答法：不是。KVM 是\"让 CPU 直接跑 guest 指令，只在硬件举手时接管\"，代价是**每次退出**；TCG 是\"把 guest 指令改写成宿主指令再跑\"，代价是**每条指令都多一层翻译 + 缓存压力**。前者要求同架构且有扩展，后者可跨架构。判据：`qemu-system-<arch>` 的 `-accel` 里有没有 `kvm`。\n2. **「自修改代码（JIT、动态链接器）在 TCG 下怎么处理？」** → 考点：翻译缓存的失效。\n   → 答法：把存放翻译块的客户机页设成只读，guest 写触发段错误，QEMU 在该页的 TB 全部作废、重译并恢复可写。代价是**写代码页比写数据页贵得多**，所以 TCG 下 JIT 密集的负载（浏览器、JVM）会明显更慢。\n3. **「虚拟化开销到底是 5% 还是 50%？」** → 考点：负载决定陷出密度。\n   → 答法：这个数没有意义，除非说清负载。CPU 纯计算（陷出密度≈0）可以接近裸机；小包网络 + 每次包一次退出可以慢数倍；`fork` 密集 + 全模拟设备会更惨。**正确答法是给出本负载的 `vmexit/s` 与单次退出的乘积，而不是一个百分比。**\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "virtualization",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 11,
+    "section": "第 2 章 两种引擎：陷出模拟与二进制翻译"
+  }
+}

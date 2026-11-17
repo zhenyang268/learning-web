@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO02.6",
+  "chapter": "SO02",
+  "title": "B2 地址翻译",
+  "src": {
+    "file": "notebook/projects/os/xv6/NOTES.md",
+    "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO02.6:body.s01",
+      "type": "extension",
+      "title": "B2 地址翻译",
+      "level": 2,
+      "content": "> 职责：虚拟地址 → 任意物理页 + 权限。依赖：B1；被 B3／B4 借。\n\n**虚拟地址 → 任意物理页 + 权限。** 使用面：`map`／`unmap`／`walk`／同一 `pa` 可挂多张表。\n\n### 现象\n\n映射后能读写；`unmap` 后再访问崩；同一物理页挂两处，改一处另一处可见。反过来，一个虚拟页写崩了，要能说清是「没映射」「`U=0`」还是「`W=0`」。\n\n### 机制\n\n实现面（≤6）：三级索引／PTE 位布局／TLB 刷新／重复映射检测。删掉 TLB 刷新 → 旧翻译还在；删掉重复映射检测 → 静默覆盖。\n\n「能不能访问」的判据不在代码里，在 PTE 里：**有映射 + `U=1` + 对应 `R/W/X`**。用户态碰 `TRAMPOLINE` 必 fault，哪怕它就在用户页表里。\n\n### 为什么这么设计\n\nW^X（可写与可执行互斥）关掉「改指令」这条路径；`U=0` 的内核映射保证陷入时不用换页表也能跑（xv6 不做 KPTI）。两条都是**取舍**：前者牺牲 JIT 类用法，后者牺牲侧信道防护——是取舍，不是「本来如此」。\n\n**页表结构 ≠ 进程**——结构归这里，PTE 里的物理地址归 B1，进程只到「我拿到哪张、能读写哪些」。三者混讲，才会出现「学进程要先学完整套内存管理」的错觉。\n\n### 怎么验证\n\n- 映射后可读写；`unmap` 后 fault；同一 `pa` 两处映射，改一处另一处可见；\n- `b walk`：看 `va`、返回的 PTE、低 5 位，这条访问属于哪一段当场可判；`p/x $satp`、`p myproc()->pagetable`、`vmprint` 三者对上。\n\n**失效点**：Sv39 → Sv48 时 `walk` 层数、`MAXVA`、索引位数全变，「三级」立刻失效——这是选点，不是原理。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "xv6",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 18,
+    "section": "B2 地址翻译"
+  }
+}

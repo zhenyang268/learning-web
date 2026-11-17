@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG00.5",
+  "chapter": "LG00",
+  "title": "2 推荐顺序",
+  "src": {
+    "file": "notebook/projects/langs/NOTES.md",
+    "sha256": "sha256:8114d098dc603d8f75fd0297e834b4f972fad6fb2cd03cd3bafe5b42e8e2fa44"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG00.5:body.s01",
+      "type": "extension",
+      "title": "2 推荐顺序",
+      "level": 2,
+      "content": "### 第一段：C++ 对象模型（必做）\n\n```bash\nclang++ -std=c++20 -fdump-lang-class t.cpp    # 看类的布局与 vtable\nclang++ -g -O2 -S -o - t.cpp | c++filt | head -40\nobjdump -d a.out | grep -A3 'call.*\\*'        # 虚调用是间接跳转\n```\n\n**判据**：给定一个含虚函数、多继承、空基类优化的类，能画出内存布局并解释每个填充字节的来由；能说清\"为什么这个虚调用无法内联\"。\n\n### 第二段：C++ 生命周期与 UB（必做）\n\n```bash\nclang++ -g -fsanitize=address,undefined t.cpp -o t && ./t\n```\n\n**判据**：能构造三类最小复现——悬垂指针/引用、越界、有符号溢出被优化放大；并解释 `-O0` 与 `-O2` 行为不同的原因。\n\n### 第三段：C++ 并发与内存序（必做）\n\n**判据**：能写出一个只在弱序机器上错的例子（例如缺少 acquire/release 的发布-订阅），并说明 `seq_cst` 多挡掉了什么重排、代价在哪。\n\n### 第四段：Python 语义与运行时（建议）\n\n```bash\npython3 -c \"import sys; a=[]; f=lambda x=a: x; print(sys.getrefcount(a))\"\npython3 -X importtime -c \"import json\"\npython3 -m dis - <<< 'def f(x): return x+1'\n```\n\n**判据**：能解释默认参数可变陷阱的机制（默认值在定义时求值一次）、生成器的惰性与内存优势、以及 `is` 与 `==` 在整数缓存上的差异边界。\n\n### 第五段：Python 并发（建议）\n\n**判据**：同一段 CPU 密集代码分别用线程、协程、多进程跑，能解释三者耗时差异的来源；能指出\"协程里放 `time.sleep` 会怎样\"的实验现象与原因。\n\n### 第六段：CUDA 模型（看条件）\n\n**没有 GPU 也能走**：用文档里的模型讲清三件事——warp 是锁步的（分支发散会串行）、共享内存按 bank 编址（同 bank 不同地址串行）、显存访问要合并（不合并一次请求拆成多次）。\n\n**有卡时**：\n\n```bash\nncu --set full ./kernel            # 占用率、访存效率、bank conflict、stall reason\nnsys profile ./app                 # 时间线：kernel 与拷贝各占多少\n```\n\n**判据**：任给一个朴素 kernel，能说出最可能的三处瓶颈并给出验证方式；改完之后指标确实朝预期移动。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 7,
+    "section": "2 推荐顺序"
+  }
+}

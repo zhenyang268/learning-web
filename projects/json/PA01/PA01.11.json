@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.11",
+  "chapter": "PA01",
+  "title": "7 PA2 逐层 · 任务执行库的三种实现与 DAG 调度",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.11:body.s01",
+      "type": "extension",
+      "title": "7 PA2 逐层 · 任务执行库的三种实现与 DAG 调度",
+      "level": 2,
+      "content": "> 源码在本地已解压：`~/develop/learning/learning-408/parallel-cs149/asst2-master/`（`part_a/`、`part_b/`、`tests/`）。\n> 接口定义见 `part_b/itasksys.h`：`IRunnable::runTask(task_id, num_total_tasks)`、`ITaskSystem::run / runAsyncWithDeps / sync`。\n\n### 11.1 先看测试集：你的实现会被什么样的负载考\n\n`tests/README.md` 描述的 11 个测试，就是你的设计约束（这张表值得反复看）：\n\n| 测试 | 任务数 × launch 数 | 特征 | 对调度的含义 |\n|---|---|---|---|\n| `super_super_light` | 64 tasks × 400 launches | 两个 2^15 缓冲区来回拷贝，**任务极便宜** | 调度开销完全主导 |\n| `super_light` | 64 × 400 | 拷贝前递增，**任务便宜** | 需要真并行才能赢 |\n| `ping_pong_equal` | 64 × 400 | 2^19 缓冲区，任务代价**均匀** | 静态分配就够 |\n| `ping_pong_unequal` | 64 × 400 | 同上但**代价不均** | 必须动态分配 |\n| `recursive_fibonacci` | 256 × 30 | 计算密集、递归 | 计算主导，开销可忽略 |\n| `math_ops_in_tight_loop` | 16 × 2000 | 每任务 32 次 exp/log/乘加 | launch 数远大于任务数 |\n| `..._fewer_tasks` | 9 × 2000 | 512 份工作塞进 9 个任务，**不均** | 任务数 < 核数，考验不浪费线程 |\n| `..._fan_in` | 64 × 256 + 1 次 reduce | 末尾一个 reduce 依赖全部 | DAG：扇入 |\n| `..._reduction_tree` | 64 × 32 + 二叉归约树 | 每层 add-reduce 依赖两个前驱 | DAG：树形依赖 |\n| `spin_between_run_calls` | 1 + 2 + 1 tasks | 轻-中-轻，async 下最后一个依赖前两个 | 考验\"别让线程空转\" |\n| `mandelbrot_chunked` | 128 × 1 | 单 launch，128 个连续块，**不均** | 只有一次 launch，线程池与 spawn 差不多 |\n\n**这张表直接回答了 writeup 必答的\"为什么简单版更快\"**：`super_super_light` 的任务便宜到什么程度？每个任务就是拷贝 512 个元素，而一次 `run()` 有 64 个任务、跑 400 次。此时线程创建/同步/join 的成本、以及 cache 在线程间来回易主的代价，可能比并行收益还大。**serial 版本没有同步开销，也没有伪共享**。\n\n### 11.2 Part A 三个实现：演进链与伪代码\n\n#### Step 1 · `TaskSystemParallelSpawn`\n\n```\nrun(runnable, num_total_tasks):\n    shared_counter = 0                    // 动态抢任务\n    threads = min(num_threads, num_total_tasks)\n    spawn threads-1 个 worker，主线程也当 worker\n    每个 worker:\n        while (true) {\n            i = atomic_fetch_add(&shared_counter, 1)\n            if (i >= num_total_tasks) break\n            runnable->runTask(i, num_total_tasks)\n        }\n    join 所有 worker\n    return                                // 返回时全部任务已完成 → 满足同步语义\n```\n\n要点：**任务数少于线程数时别起满线程**（`mandelbrot_chunked` 是 128 任务，但 `spin_between_run_calls` 只有 1 个任务）。动态抢任务用原子计数器就够了，不必用锁。\n\n#### Step 2 · `TaskSystemParallelThreadPoolSpinning`\n\n在构造函数（或首次 `run()`）里把 `num_threads` 个 worker 建好，每个 worker 跑一个死循环：\n\n```\nworker_loop:\n    while (!shutdown) {\n        if (有可执行的任务) { 取一个; runTask(...); 已完成计数++ }\n        // 没有就继续转（spin）\n    }\n```\n\n`run()` 的变化（**这是本步最容易写错的地方**）：\n\n```\nrun(runnable, num_total_tasks):\n    lock(m)\n    把这次 launch 的任务挂到就绪队列; num_remaining = num_total_tasks\n    unlock(m)\n    while (已完成计数 != num_total_tasks) { /* 主线程自旋等待 */ }\n    return\n```\n\n**致命陷阱**：判断\"全部完成\"必须看**已完成计数 == num_total_tasks**，不能看\"队列为空\"。队列空只说明任务都被领走了，它们可能还在跑。同理，worker 数 > 0 且队列空时也不能判定结束。\n\n主线程自旋还带来一个副作用：**它占着一个核空转，抢了 worker 的执行资源**——这正是 Step 3 要修的问题之一。\n\n#### Step 3 · `TaskSystemParallelThreadPoolSleeping`\n\n把两处自旋换成条件变量：\n\n1. worker 无活可干 → 睡在 \"有任务\" 条件上。\n2. **调用 `run()` 的主线程** → 睡在 \"本批完成\" 条件上，由最后一个完成任务的 worker `notify`。\n\n```\nworker_loop:\n    lock(m)\n    while (!shutdown) {\n        while (队列空 && !shutdown) cond_worker.wait(m)     // 必须用 while，不是 if\n        if (shutdown) break\n        取任务; unlock(m); runTask(); lock(m); 已完成++\n        if (已完成 == 本批总数) cond_done.notify_all()\n    }\n    unlock(m)\n```\n\n条件变量的正确姿势：**always wait in a while loop**（虚假唤醒 + 条件可能在你拿到锁之前被别的线程满足）。\n\n### 11.3 Part B：DAG 调度\n\n只改 `TaskSystemParallelThreadPoolSleeping` 一个类。核心是两个结构：\n\n- **`waiting` 集合**：已提交但依赖未满足的 launch。\n- **`ready` 队列**：依赖已满足、可以立即执行的任务。\n\n每个 launch 记录：`{runnable, num_total_tasks, remaining, TaskID, 后继列表}`。\n\n```\nrunAsyncWithDeps(runnable, num_total_tasks, deps):\n    lock(m)\n    id = next_id++\n    launch = {num_total_tasks, remaining = num_total_tasks, 依赖数 = deps.size()}\n    for (d : deps)  launches[d].successors.push(id)     // 反向边\n    if (依赖数 == 0) 把该 launch 的任务推进 ready 队列\n    else            放进 waiting\n    cond_worker.notify_all()\n    unlock(m)\n    return id                                            // 立即返回，任务可能还没开始\n\n// worker 每完成一个任务：\n    launch.remaining--\n    if (launch.remaining == 0) {\n        for (s : launch.successors) {\n            launches[s].依赖数--\n            if (依赖数 == 0) 把 s 的任务推进 ready 队列\n        }\n    }\n\nsync():\n    lock(m)\n    while (还有任何未完成的 launch) cond_done.wait(m)\n    unlock(m)\n```\n\n**依赖是 launch 粒度**：launchA 的 128 个任务**全部**结束后，launchB 的任一任务才能开始；但 launchB 和 launchC 之间可以完全并行（`..._reduction_tree` 就是考这个）。\n\n**易错点清单**\n- `sync()` 等的是**所有先前 launch**，不是最近一个。\n- `run()` 可以用 `runAsyncWithDeps(runnable, n, 空 deps)` + `sync()` 实现（handout 明确允许），省得维护两套逻辑。\n- TaskID 必须唯一自增；不用考虑 int 溢出。\n- 句柄失效：用 `std::vector` 存 launch 时，**不要保存裸指针/引用**（vector 扩容会搬家），存下标或 id 去查。\n- grading 会用**没给你**的 workload 测正确性——别对着 11 个测试调参调歪了。\n- Part B 的性能门槛比 Part A 宽（50% vs 20%），正确性 30 分远重于性能 10 分。**先保证绝对正确**。\n\n**设计理念**：这就是 TBB / Spark / PyTorch 调度器的同一道题——**批量任务 + 依赖图 + 固定线程池**。做完 PA2 再看这些框架，你看到的是实现细节而不是魔法。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 18,
+    "section": "7 PA2 逐层 · 任务执行库的三种实现与 DAG 调度"
+  }
+}

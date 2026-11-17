@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.19",
+  "chapter": "SO01",
+  "title": "附录 A 与 macOS / Windows 的差异（速查，不做主线）",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.19:body.s01",
+      "type": "extension",
+      "title": "附录 A 与 macOS / Windows 的差异（速查，不做主线）",
+      "level": 2,
+      "content": "> 定位：以 Linux 为开发环境，但要知道\"哪些结论只在 Linux 成立\"。**只列会造成误判的差异**，不做平台教程。\n\n| 维度 | Linux | macOS | Windows |\n|---|---|---|---|\n| 进程创建 | `fork` + `exec` 两段 | 有 `fork`，但多线程进程里只能用 `posix_spawn`（`fork` 后只能调 async-signal-safe 函数） | **没有 `fork`**：`CreateProcess` 一步完成，靠句柄继承传递资源 |\n| 线程 | `clone` 共享组合，进程=线程的一种特例 | Mach thread + BSD process 双层模型；`pthread` 建在 Mach 之上 | `CreateThread`，调度单位是线程，进程只是容器 |\n| 句柄 | 一切皆 fd（文件/管道/socket/eventfd 统一） | 也统一为 fd，但事件机制是 `kqueue`（无 epoll） | 一切都叫 `HANDLE`，异步是 `OVERLAPPED` + IOCP |\n| 事件通知 | `epoll` / `io_uring` | `kqueue`（`EVFILT_READ` 等） | IOCP（完成端口，**完成通知**而非就绪通知） |\n| 内存 | 按需分页 + overcommit + OOM killer | 内存压缩（compressed memory），无 overcommit 习惯，进程被杀走 jetsam 而非 OOM killer | `VirtualAlloc` 两段式（reserve/commit），工作集概念，提交即占用 |\n| 动态库 | `.so` + `ld.so` + `LD_PRELOAD` | `.dylib` + `dyld` + `install_name`/`@rpath`；`DYLD_INSERT_LIBRARIES` 受 SIP/hardened runtime 限制 | `.dll` + PE 导入表；有 DLL 搜索顺序安全史（现要求全路径） |\n| 权限模型 | rwx + capabilities + namespace/cgroup | POSIX 权限 + **TCC**（相机/麦克风/文件）+ SIP | ACL + SID + **UAC**（提权需显式） |\n| 可观测 | `/proc`、`/sys`、`perf`、`strace`、`bpftrace` | 无 `/proc`（用 `sysctl`/`libproc`/`sample`/`fs_usage`），`dtrace` 受限 | ETW + PerfView/Procmon/WPA |\n| 时钟 | `CLOCK_MONOTONIC` 等 | `mach_absolute_time`（+ `clock_gettime` 兼容层） | `QueryPerformanceCounter` |\n| 二进制格式 | ELF | Mach-O | PE |\n\n**四个最容易把\"Linux 经验\"用错的点**：\n\n1. **`fork` 不是普适的。** 多线程进程里 `fork` 之后子进程只有调用线程存活，且只能调 async-signal-safe 函数（`malloc` 都可能死锁）；macOS 直接建议改用 `posix_spawn`，Windows 根本没有。**跨平台代码应该一路用 `spawn` 语义。**\n2. **`/proc` 是 Linux 专有。** 依赖 `/proc/PID/smaps`、`/proc/net/tcp` 的监控脚本在 macOS 上全部失效；Windows 对应的是 ETW 与性能计数器。\n3. **就绪 vs 完成。** `epoll`/`kqueue` 告诉你\"可以读了\"，IOCP 告诉你\"读完了\"。**同一个网络程序在两种模型下的结构不同**，不是换个 API 就能编译通过的差异。\n4. **OOM 行为不同。** Linux 有 killer，macOS 有压缩内存 + jetsam，Windows 提交即占用（失败在分配时）。**\"内存涨了会不会被杀\"这个问题在三个平台有三个答案。**\n\n**收口**：这些差异**不影响**你以 Linux 为主线的判断（`epoll` 语义、`/proc` 口径、`fork` 的 COW 都照旧），但凡是写\"可移植\"的代码或看别人的跨平台故障报告，先确认上面四条。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 18,
+    "parts": 19,
+    "section": "附录 A 与 macOS / Windows 的差异（速查，不做主线）"
+  }
+}

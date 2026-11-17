@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG00.3",
+  "chapter": "LG00",
+  "title": "0 怎么用",
+  "src": {
+    "file": "notebook/projects/langs/NOTES.md",
+    "sha256": "sha256:8114d098dc603d8f75fd0297e834b4f972fad6fb2cd03cd3bafe5b42e8e2fa44"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG00.3:body.s01",
+      "type": "extension",
+      "title": "0 怎么用",
+      "level": 2,
+      "content": "- 选路径：§2。\n- 三份文档的判据差异：§1 的口径表。\n- 准备追问：§4。\n- 避坑：§3。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 7,
+    "section": "0 怎么用"
+  }
+}

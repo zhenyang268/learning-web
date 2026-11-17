@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.13",
+  "chapter": "DB01",
+  "title": "第 12 章 一致性四层串讲：CPU 缓存 / 内存序 / 事务 / 副本",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.13:body.s01",
+      "type": "extension",
+      "title": "第 12 章 一致性四层串讲：CPU 缓存 / 内存序 / 事务 / 副本",
+      "level": 2,
+      "content": "**要解决的问题**：面试里「一致性」被问到四次，含义完全不同却常被混为一谈。这一章把它们放进同一个坐标系：**越往下是硬件帮你排序，越往上是软件自己定义顺序；每一层都在回答同一个问题——多个观察者看到的事件顺序是否一致**。答不上这层映射，就会把「缓存一致性」和「事务隔离级别」当成同一件事讲。\n\n**机制**：\n\n四层各自的「一致性」定义与保证手段：\n\n| 层 | 谁在排序 | 保证什么 | 靠什么实现 |\n|---|---|---|---|\n| CPU 缓存 | 硬件缓存一致性协议 | 单地址的读写对所有核看到同一顺序（coherence） | MESI 类协议、总线嗅探/目录 |\n| 内存序 | 编译器 + CPU | 多地址操作的可见顺序（consistency） | 内存屏障 / 原子指令的 order 语义 |\n| 事务 | 数据库 | 并发事务的可串行化或某隔离级别的等价 | 锁 + MVCC + 冲突检测 |\n| 副本 | 分布式系统 | 多副本间日志/状态的收敛顺序 | 主从日志、quorum、共识协议 |\n\n**第一层 CPU 缓存：coherence 不是 consistency。** MESI 让每个缓存行处于 Modified/Exclusive/Shared/Invalid 之一，写一个核的缓存行要让其他核的副本失效。它保证的是「**同一个地址**上不会有两个核同时看到不同的最新值」，即 *cache coherence*。但它**不保证**不同地址的写在不同核上的可见顺序——这就是为什么第一层之上还需要第二层。\n\n**第二层内存序：屏障与 order 语义。** 编译器和 CPU 都会重排。经典 store-load 重排（StoreLoad）会导致 Dekker 式互斥失败：两个线程各自写自己的标志再读对方标志，可能双方都读到 0。解决手段是屏障：`mfence` / `dmb ish` / `atomic_thread_fence(memory_order_seq_cst)`；或直接用带语义的原子操作——`memory_order_relaxed` 只保证原子性不保证顺序，`acquire/release` 建立「release 写之前的操作 happens-before acquire 读之后的操作」，`seq_cst` 全局单一总序。\n\n一句话锚点：**coherence 是单地址的，consistency（内存序）是多地址的**。JMM / C++ 内存模型都是在这层做抽象，`volatile` 在 Java 里给的是可见性 + 禁止部分重排，不是原子性。\n\n**第三层事务：把「顺序」变成「等价于某个串行顺序」。** 隔离级别的本质是允许哪些重排（异常）发生：读未提交允许脏读，读已提交禁止脏读但允许不可重复读，可重复读禁止不可重复读但可能允许幻读（视实现而定，MySQL InnoDB 的可重复读用间隙锁 + 一致性快照把大部分幻读也挡了），可串行化要求结果等价于某串行执行。实现手段是锁（两阶段锁 2PL：增长期只加锁、收缩期只放锁）与 MVCC（快照读不加锁，版本链判断可见性）。**注意 2PL 和 2PC 只差一个字母，一个是并发控制协议，一个是原子提交协议，别混。**\n\n**第四层副本：把「顺序」变成「多数派认可的日志顺序」。** 主从异步复制给出的是最终收敛；Raft/Paxos 类协议把「日志顺序」交给 quorum 投票，从而在少数派故障下仍保持线性一致（在 lease/读走 leader 的前提下）。CAP 里的 C 常被误读为「强一致」，准确说是**线性一致（linearizability）**：所有操作看起来像在某个全局时间点上原子生效。\n\n四层的递进关系可以压成一句话：**下层给你「同一份数据多个观察者看到什么」，上层给你「多个操作多个观察者看到什么顺序」；层数越高，代价越大，可放弃的保证越多。**\n\n**最小例子**：\n\n第一层 + 第二层的最小可复现路径（x86 上 StoreLoad 重排导致的意外结果）：\n\n```c\n// 两个线程，x = y = 0\n// T1: x = 1; r1 = y;\n// T2: y = 1; r2 = x;\n// x86 上可能出现 r1 == 0 && r2 == 0\n// 加屏障后不可能：\n// T1: x = 1; __sync_synchronize(); r1 = y;\n// T2: y = 1; __sync_synchronize(); r2 = x;\n```\n反直觉点：x86 是 TSO 模型，StoreStore/LoadLoad 不重排，**唯独允许 StoreLoad 重排**，所以上面这段在 x86 上确实可能双 0，而很多人以为 x86 是顺序一致。\n\n第三层的最小例子（MySQL InnoDB，可重复读）：\n\n```sql\n-- 会话 A\nBEGIN; SELECT balance FROM account WHERE id = 1;  -- 1000\n-- 会话 B\nUPDATE account SET balance = 900 WHERE id = 1; COMMIT;\n-- 回到会话 A（同一个事务内，快照读）\nSELECT balance FROM account WHERE id = 1;         -- 仍是 1000\n-- 若 A 用 SELECT ... FOR UPDATE（当前读），则读到 900 并加锁\n```\n参数与结果：一致性快照在事务第一次读时建立，之后普通 `SELECT` 走版本链，`FOR UPDATE` / `UPDATE` 走当前读。这解释了「同事务内读到旧值」不是 bug。\n\n第四层的最小例子：三副本 Raft，leader 提交需 2 个 `ACK`；网络分区后旧 leader 在少数派侧无法提交，客户端写超时——它选择**拒绝**而非返回可能被回滚的成功，这正是线性一致与最终一致的分界点。\n\n**面试高频问法**：\n\n1. 「MESI 保证了缓存一致性，为什么还需要内存屏障？」→ 考点是 coherence 与 consistency 的区分 → 一句话答法：「MESI 只保证同一个缓存地址在所有核上有单一写序，不同地址的写之间的可见顺序它不管，所以多地址的场景要靠屏障或带 order 语义的原子操作来补。」\n2. 「x86 是顺序一致的吗？」→ 考点是 TSO 与 StoreLoad 重排 → 一句话答法：「不是，x86 是 TSO，除 StoreLoad 外的重排都被禁止，唯独允许写后读重排，所以 Dekker 式双标志在 x86 上仍可能双方都读到 0。」\n3. 「acquire/release 和 seq_cst 差在哪？」→ 考点是 happens-before 建立范围 → 一句话答法：「acquire/release 只在配对的读写下建立 happens-before，不要求全局总序；seq_cst 额外要求所有 seq_cst 操作有一个所有线程一致认同的单一总序。」\n4. 「可重复读和可串行化差在哪，InnoDB 的可重复读算不算串行化？」→ 考点是隔离级别与幻读 → 一句话答法：「差在幻读与写偏斜这类谓词级冲突：InnoDB 的可重复读用一致性快照挡了快照读的幻读、用间隙锁挡了当前读的幻读，但仍有写偏斜等场景，所以它不等价于可串行化。」\n5. 「事务的隔离级别和 Raft 的一致性是一回事吗？」→ 考点是四层映射 → 一句话答法：「不是，事务解决并发操作等价于某个串行顺序（并发控制），Raft 解决多副本日志收敛到同一顺序（原子提交 + 多数派），前者是 2PL/MVCC，后者是 quorum，二者都要在『顺序』上做文章但对象和故障模型完全不同。」"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 12,
+    "parts": 12,
+    "section": "第 12 章 一致性四层串讲：CPU 缓存 / 内存序 / 事务 / 副本"
+  }
+}

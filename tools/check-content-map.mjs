@@ -87,12 +87,19 @@ const numeric = Array.isArray(map.numericChapters) ? map.numericChapters : [];
 const SITE_ROOTS = {
   math: JSON_DIR,
   emath: path.join(ROOT, 'emath/json'),
+  projects: path.join(ROOT, 'projects/json'),
 };
 const chaptersOf = (root) =>
   fs.existsSync(root)
     ? fs.readdirSync(root).filter((d) => fs.statSync(path.join(root, d)).isDirectory())
     : [];
-const dirs = Object.values(SITE_ROOTS).flatMap(chaptersOf);
+/**
+ * 只检查**真的有线**的站点：cs408 / kaoyan / english1 目前没有 content-map 线，
+ * 若把它们的目录并进来，1c 会要求给 408 的 160 个单元也写线（超出本轮范围）。
+ * 新增一个站点的线时，把 site 加进 SITE_ROOTS 即可自动纳入。
+ */
+const lineSites = new Set(lines.map((l) => l.site ?? 'math'));
+const dirs = [...lineSites].flatMap((site) => (SITE_ROOTS[site] ? chaptersOf(SITE_ROOTS[site]) : []));
 const numericCodes = numeric.map((c) => c.code);
 
 /* ---------------------------------------------------------------- 1. 章覆盖 */

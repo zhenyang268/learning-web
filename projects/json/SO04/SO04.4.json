@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO04.4",
+  "chapter": "SO04",
+  "title": "第 2 章 JOS 磁盘（一）：ATA PIO 读扇区",
+  "src": {
+    "file": "notebook/projects/os/drivers/NOTES.md",
+    "sha256": "sha256:97e4aa1f82aecd48001369efcf5ecd6115e15522145d220eae80babec3faff7e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO04.4:body.s01",
+      "type": "extension",
+      "title": "第 2 章 JOS 磁盘（一）：ATA PIO 读扇区",
+      "level": 2,
+      "content": "**要解决的问题**：让内核能按扇区读写一块真实磁盘，并且**错误可返回**——不能因为设备没响应就死在循环里。\n\n**机制**：\n\n端口表（主通道）：\n\n| 端口 | 用途 |\n|---|---|\n| `0x1F0` | 数据（16 位，一次一个字） |\n| `0x1F1` | 错误 / 特性 |\n| `0x1F2` | 扇区计数 |\n| `0x1F3`–`0x1F5` | LBA 低 / 中 / 高 |\n| `0x1F6` | 驱动器/磁头 + LBA 高 4 位（`0xE0 \\| 高4位`） |\n| `0x1F7` | 状态（读）/ 命令（写） |\n\n状态位：`ERR 0x01`、`DRQ 0x08`、`DF 0x20`、`DRDY 0x40`、`BSY 0x80`。\n\n读写顺序固定：**写参数 → 发命令 → 等 `BSY` 落且 `DRDY` 起 → 等 `DRQ` 起 → 搬数据**。发完命令后设备需要时间响应，老 ATA 没有就绪中断，惯用做法是**连读四次备用状态寄存器**（`0x3F6`）凑出约 400ns。\n\n```c\n#define SECTSIZE 512\n#define ATA_BSY 0x80\n#define ATA_DRDY 0x40\n#define ATA_DRQ 0x08\n\nstatic int ide_wait_ready(void) {\n    // 最多等一小会儿；教学实现常写成死等，但真实驱动必须有超时\n    for (int i = 0; i < 1000000; ++i) {\n        uint8_t st = inb(0x1F7);\n        if ((st & ATA_BSY) == 0 && (st & ATA_DRDY)) return 0;\n        if (st & 0x01) return -1;           // ERR\n    }\n    return -1;                              // 超时\n}\n\nint ide_read(uint32_t secno, void *dst, size_t nsecs) {\n    outb(0x1F2, (uint8_t)nsecs);\n    outb(0x1F3, secno & 0xFF);\n    outb(0x1F4, (secno >> 8) & 0xFF);\n    outb(0x1F5, (secno >> 16) & 0xFF);\n    outb(0x1F6, 0xE0 | ((secno >> 24) & 0x0F));\n    outb(0x1F7, 0x20);                      // READ SECTORS\n    for (; nsecs > 0; --nsecs, dst = (char *)dst + SECTSIZE) {\n        if (ide_wait_ready() < 0) return -1;\n        while ((inb(0x1F7) & ATA_DRQ) == 0) ;   // 等数据就绪\n        insl(0x1F0, dst, SECTSIZE / 4);         // 128 个 32 位字\n    }\n    return 0;\n}\n```\n\n**最小例子**：读 0 号扇区（通常是引导区的尾部签名）。\n\n```c\nuint8_t sec[512];\nif (ide_read(0, sec, 1) < 0) panic(\"disk error\");\nif (sec[510] != 0x55 || sec[511] != 0xAA) cprintf(\"no boot signature\\n\");\n```\n\n**面试高频问法**：\n\n1. **「为什么必须先等 BSY 落？」** → 考点：设备状态机。答法：`BSY` 表示设备正在执行上一条命令，此时写寄存器会被忽略或写坏；必须等它落下、再看 `DRDY`（就绪）才安全。\n2. **「`DRQ` 是什么意思？」** → 考点：数据阶段。答法：`DRQ` 表示设备已经把数据放到数据端口（读）或准备好接收（写），一次 `DRQ` 通常对应一个扇区的搬运窗口。\n3. **「为什么真实驱动必须有超时？」** → 考点：错误路径。答法：设备可能掉线、线缆故障、控制器挂死；死等会变成不可恢复的挂起。教学实现可以死等，生产实现必须超时并上报。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "drivers",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 10,
+    "section": "第 2 章 JOS 磁盘（一）：ATA PIO 读扇区"
+  }
+}

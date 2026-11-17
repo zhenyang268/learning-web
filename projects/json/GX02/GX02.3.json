@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "GX02.3",
+  "chapter": "GX02",
+  "title": "章节目录",
+  "src": {
+    "file": "notebook/projects/cg/raytrace/NOTES.md",
+    "sha256": "sha256:ddd0564d84493eff25a8d3e1589f3eb594df2cf1fa226f2cb15f85b7b0bb1c87"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "GX02.3:body.s01",
+      "type": "extension",
+      "title": "章节目录",
+      "level": 2,
+      "content": "1. Ray 与求交基础\n2. 三角形求交\n3. HitRecord 与材质分发\n4. 阴影射线\n5. 递归与深度截断\n6. BVH 构建\n7. BVH 遍历与性能口径\n8. 采样与收敛"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cg",
+    "project": "raytrace",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 10,
+    "section": "章节目录"
+  }
+}

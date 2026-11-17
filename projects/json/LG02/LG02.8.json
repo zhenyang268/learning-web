@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG02.8",
+  "chapter": "LG02",
+  "title": "第 7 章 多进程与并发选型",
+  "src": {
+    "file": "notebook/projects/langs/python-basics/NOTES.md",
+    "sha256": "sha256:756d0b7dacd8aaff39313179f8b6b750108fa2187ac744c8d1474d84cf6e0c1b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG02.8:body.s01",
+      "type": "extension",
+      "title": "第 7 章 多进程与并发选型",
+      "level": 2,
+      "content": "**要解决的问题**：GIL 让同一时刻只有一个线程执行字节码，纯 Python 的 CPU 密集任务无法靠多线程加速。多进程提供真正并行的执行单元；但进程模型带来了启动开销、序列化边界和共享状态难题，所以还需要一套「什么任务用什么并发模型」的选型判断。不解决这块，面试官一问「你这个爬虫为什么开 8 个线程而不是 8 个进程」就答不上来。\n\n**机制**：\n\n- 进程 = 独立解释器 + 独立地址空间 + 独立 GIL，因此是并行（parallel）而非并发（concurrent）。代价是启动要重新初始化解释器，内存不共享。\n- 启动方式由 `multiprocessing.set_start_method()` 决定：`fork` 复制父进程内存（Linux 传统默认），`spawn` 起一个全新解释器只导入必要模块（Windows 默认，macOS 新版默认），`forkserver` 用一个干净的服务进程来 fork。`fork` 快但会继承父进程的锁、连接、线程状态，在多线程程序里 fork 是不安全的；`spawn` 干净但慢，且要求被调用的函数和参数可 pickle。\n- 跨进程传参和返回值走序列化：`Queue` / `Pipe` 底层把对象 pickle 成字节流。所以 lambda、闭包、本地类实例、打开的文件句柄、数据库连接都传不过去。\n- `spawn` 会重新导入主模块，所以建进程的代码必须放在 `if __name__ == \"__main__\":` 下，否则子进程导入时又建进程，无限递归。\n- 共享状态三条路：`Value`/`Array`（共享内存 + 锁）、`Manager`（代理对象，每次读写都走 IPC，慢）、或者干脆不共享——让每个进程算完返回结果，由父进程聚合。工程上最后一种最常见。\n- 池化：`ProcessPoolExecutor` / `multiprocessing.Pool` 复用已启动的进程，摊薄启动成本。\n\n```python\nfrom concurrent.futures import ProcessPoolExecutor\n\ndef work(n):                      # 必须是模块顶层函数，才能按限定名 pickle\n    return sum(i * i for i in range(n))\n\nif __name__ == \"__main__\":        # spawn 会重新导入主模块，缺这行会递归建进程\n    with ProcessPoolExecutor(max_workers=4) as ex:\n        print(list(ex.map(work, [10**6] * 4)))\n```\n\n**最小例子**：把上面 `work` 换成 `lambda n: n * 2` 扔进 `ex.map`，在 `spawn` 下会在把任务送进队列时抛 pickle 相关异常（`AttributeError: Can't pickle local object` 一类，具体类型按版本与对象而定）。这解释了「为什么进程池的函数必须定义在模块顶层」——序列化只传函数名和模块路径，子进程靠导入还原，闭包捕获的变量不在其中。而 `threading` 版同样代码能跑，因为线程共享地址空间，压根不需要序列化。\n\n选型口径：CPU 密集 → 多进程；少量连接的高延迟 IO（数据库、内部 RPC）→ 多线程足够，代码心智负担小；上万并发连接、每连接大部分时间在等网络 → asyncio；混合负载用「进程池外套线程池/asyncio」两层结构，别在一个池里指望两头兼顾。\n\n**面试高频问法**：\n\n1. 「什么时候用多进程，什么时候用多线程？」→ 考点是 GIL 的边界在哪。→ 答法：「任务瓶颈在 CPU 就用多进程，因为 GIL 让线程拿不到并行；瓶颈在等 IO 就用多线程，因为等 IO 时线程会释放 GIL。判断标准是任务时间花在算还是花在等。」\n2. 「多进程为什么一定要写 `if __name__ == '__main__'`？」→ 考点是 spawn 的导入语义。→ 答法：「spawn 启动子进程时会重新导入主模块，模块顶层的建进程代码会被再执行一遍。加这个守卫让它在子进程里不执行，否则就是无限递归建进程。」\n3. 「多进程之间怎么共享一个 dict？」→ 考点是序列化与共享内存的取舍。→ 答法：「普通 dict 不共享，传过去是 pickle 的副本。要么用 `Manager().dict()`，它是代理对象，每次读写走 IPC，慢；要么用 `Value`/`Array` 这类共享内存加锁；实践里更常见的是不共享，各进程算完把结果回传给父进程合并。」\n4. 「fork 和 spawn 有什么区别，有什么坑？」→ 考点是进程创建语义。→ 答法：「fork 复制父进程当前内存，快，但会继承锁和连接状态，父进程里若有多线程，子进程可能死锁；spawn 起全新解释器，干净但慢且要求可 pickle。Linux 传统默认 fork，Windows 和 macOS 新版默认 spawn，所以跨平台代码要假设 spawn 来写。」\n5. 「进程池开多少个进程合适？」→ 考点是有没有工程感。→ 答法：「CPU 密集按 `os.cpu_count()` 量级取，略大于核数意义不大；进程有独立内存和启动成本，不是越多越好，还要看单进程内存占用和下游连接数限制。」"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "python-basics",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 10,
+    "section": "第 7 章 多进程与并发选型"
+  }
+}

@@ -283,10 +283,14 @@ async function runUnit(bundleJs, code) {
   const cards = [...reader.querySelectorAll('.card')].filter((c) => !c.classList.contains('pagehead'));
   if (isDoc) {
     // 搬运来的文档按「节」渲染，不出词条卡；断言改成「节数 == 词条数、标题层级在」
-    const secs = [...reader.querySelectorAll('.docsec:not(.selftest)')];
+    const secs = [
+      ...reader.querySelectorAll('.docsec:not(.selftest):not(.interviewq):not(.projchildren)'),
+    ];
     p('文档分节已渲染（节数 == 词条数，不含自测）', secs.length === unit.entries.length,
       `sections=${secs.length} entries=${unit.entries.length}`);
-    const heads = reader.querySelectorAll('.docsec:not(.selftest) .dochead');
+    const heads = reader.querySelectorAll(
+      '.docsec:not(.selftest):not(.interviewq):not(.projchildren) .dochead',
+    );
     const wantHeads = unit.entries.filter((e) => (e.level ?? 2) > 0 && (e.title ?? '').trim()).length;
     p('小节标题全部渲染', heads.length === wantHeads, `heads=${heads.length} want=${wantHeads}`);
     const mirrors = reader.querySelectorAll('.mirror');
@@ -316,6 +320,10 @@ async function runUnit(bundleJs, code) {
     //  `isLearnableUnit` 都这么判。这类页**只验可达性 / 导航 / 落点**，不跑 L1–L5；
     //  真实项目 / 数一考点（`project` / `kaoyan-kp`）**仍跑满 L1–L5**。
     const kind = unit.meta?.kind ?? '';
+    if (kind === 'project' || kind === 'project-chapter') {
+      p('项目页不再复制全局路线卡', reader.querySelectorAll('[data-route]').length === 0,
+        `got=${reader.querySelectorAll('[data-route]').length}`);
+    }
     if (kind === 'kaoyan-kp') {
       const back = reader.querySelector('.chapterlink');
       const want = `${code.split('.')[0]}.0`;
@@ -453,7 +461,18 @@ async function runUnit(bundleJs, code) {
   }
   p('右栏有掌握度/依赖/被用于',
     textOf(aside).includes('依赖') && textOf(aside).includes('被用于'));
-  p('frontier 横幅已算出', textOf(d.getElementById('frontier')).includes('今天该学'));
+  if (SUBJECT_ID === 'projects') {
+    const front = d.getElementById('frontier');
+    p('工程线横幅是总纲入口（不是「今天该学」）',
+      textOf(front).includes('工程总纲') && !!front.querySelector('[data-graph]'),
+      textOf(front).slice(0, 40));
+    p('工程线不显示已达标/当前位置',
+      !reader.querySelector('.pstepstep, .prouteprog, .prouteroute'));
+    p('工程线右栏不显示掌握度环', !aside.querySelector('.ring'));
+    p('工程线侧栏不显示 L 徽标', !selfNode?.querySelector('.m'));
+  } else {
+    p('frontier 横幅已算出', textOf(d.getElementById('frontier')).includes('今天该学'));
+  }
 
   // ── 四问 tab（仅 entry-card；doc-card 没有分页）
   if (!isDoc) {
@@ -925,9 +944,13 @@ async function runStandalone(subj) {
   check('内联数据解压成功（gzip → 318 单元）', inlineUnits >= 1,
     pack ? `${inlineUnits} 个单元` : (dom.window.__kbFatal ?? '未生成 __kbPack'));
   // 侧栏三层 + 单元懒渲染（2026-10-30）：首屏只渲染当前章的单元
+  // 工程线首屏是总纲页（不是单元页），侧栏没有当前章可展开 → 允许 nodes=0；
+  // 但域分组必须渲染，且阅读区确实是总纲。
+  const startsAtPlan =
+    SUBJECT_ID === 'projects' && textOf(reader).includes('工程总纲');
   check('快照左栏分层渲染（域分组 + 节点数 ≤ 内联单元数）',
     d.querySelectorAll('#sidebar .dom').length > 0 &&
-      d.querySelectorAll('#sidebar .node').length > 0 &&
+      (startsAtPlan || d.querySelectorAll('#sidebar .node').length > 0) &&
       d.querySelectorAll('#sidebar .node').length <= inlineUnits,
     `doms=${d.querySelectorAll('#sidebar .dom').length} nodes=${d.querySelectorAll('#sidebar .node').length} inline=${inlineUnits}`);
 
@@ -1001,7 +1024,7 @@ async function runStandalone(subj) {
   const semWithFwd = idxUnits.filter(
     (u) => (u?.sem?.applies?.length ?? 0) + (u?.sem?.dual?.length ?? 0) + (u?.sem?.tension?.length ?? 0) > 0,
   );
-  if (yamlCount > 0) {
+  if (yamlCount > 0 && !startsAtPlan) {
     check('快照右栏渲染「依赖 / 被用于」两栏',
       asideTxt.includes('依赖') && asideTxt.includes('被用于'), asideTxt.slice(0, 120));
     // 首屏单元的 sem 若带 prereq，右栏依赖栏必须把前序代号列出来（不是只说「无前序」）
@@ -1051,6 +1074,23 @@ async function runStandalone(subj) {
   // 2026-10-30 起两个文档页分开：
   //   #graph  = 总纲（数学大观 v1：四条主轴 / 两个出口 / 交叉点 / 五个切入点 / 四阶段）
   //   #angles = 切入点（原「现代分析学总纲 v3.0」，一条具体路线，不是全学科总纲）
+  if (SUBJECT_ID === 'projects') {
+    dom.window.location.hash = '#graph';
+    await sleep(120);
+    const rd = d.getElementById('reader');
+    const txt = textOf(rd);
+    check('工程总纲能渲染（五类能力线 + 工程实践/性能工程）',
+      txt.includes('五类能力线') && txt.includes('工程实践') && txt.includes('性能工程'));
+    check('工程总纲写明「进度不在这里」', txt.includes('进度不在这里'));
+    check('工程总纲渲染 7 条路线卡', rd.querySelectorAll('[data-route]').length === 7,
+      `got=${rd.querySelectorAll('[data-route]').length}`);
+    check('工程总纲不显示已达标/当前位置/进度摘要',
+      !rd.querySelector('.pstepstep, .prouteprog, .prouteroute'));
+    check('工程总纲路线卡有可点落点', rd.querySelectorAll('.proute [data-goto]').length > 0);
+    check('工程总纲右栏不显示掌握度环', !d.getElementById('aside').querySelector('.ring'));
+    dom.window.close();
+    return;
+  }
   if (SUBJECT_ID !== 'math') {
     // 非数学站没有「数学大观」总纲与切入点：只验空态说明，不套数学的断言
     dom.window.location.hash = '#graph';

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.4",
+  "chapter": "PA01",
+  "title": "0 怎么读这个文件",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.4:body.s01",
+      "type": "extension",
+      "title": "0 怎么读这个文件",
+      "level": 2,
+      "content": "- §1 给出**课程定位与本地代码现状**（先看清手里到底有什么，别对着空气复习）。\n- §2 是**全局地图 + 关键路径**，回答\"5 个 PA 分别落在硬件栈的哪一层、按什么顺序过\"。\n- §3 是**贯穿全课程的设计理念**——**这是整个项目最值钱的部分，别跳过**。CS149 的作业会换硬件、换语言（ISPC / CUDA / NKI），但理念是同一套。\n- §4 每个 PA 一个模板：**抓重点 → 关键路径 → 细节与易错点 → 设计理念**，是**大纲级**（每层 4 条以内）。\n- §6–§11 是**逐层展开**：真实函数签名、数据流、伪代码、逐条易错点。读到具体动手那一节时再回来翻。\n- §12 是**课程讲座层**：补全 18 讲主线，重点展开 PA 没考的 coherence、内存一致性、lock-free（与 408 的存储层次/同步互斥直接相通）。\n- §13 是**自测验收清单**；§14 是**求职视角**（岗位地图、面试真题对照、简历写法、补课路线）——要拿这门课找工作就直接从 §14 开始倒推。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 18,
+    "section": "0 怎么读这个文件"
+  }
+}

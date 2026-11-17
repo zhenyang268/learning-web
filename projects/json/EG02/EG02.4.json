@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG02.4",
+  "chapter": "EG02",
+  "title": "第 3 章 内存错误：ASan 与 Valgrind 的检测原理",
+  "src": {
+    "file": "notebook/projects/eng/debug-toolchain/NOTES.md",
+    "sha256": "sha256:501d16a42d59f5fede5b4ae459640fa33b09933168d563ca831a80f45354cc1f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG02.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 内存错误：ASan 与 Valgrind 的检测原理",
+      "level": 2,
+      "content": "**要解决的问题**：越界、use-after-free、未初始化读、泄漏这类错误，症状常常在离根因很远的地方才爆出来；只靠 core dump 只能看到“死在哪”，看不到“谁先写坏了内存”。这一章解决的是：怎样在错误访问发生的那一刻把它拦下来，并给出分配点、释放点和访问点的调用栈。\n\n**机制**：\n\nASan 走的是“编译期插桩 + 影子内存”路线。编译器在每次 load/store 前插入检查，运行时用一张影子内存记录“这块应用内存是否可访问”。典型映射是每 8 字节应用内存对应 1 字节影子：\n\n```text\nshadow_addr = (addr >> 3) + shadow_offset\ns = *shadow_addr\nif (s == 0)        // 8 字节全可访问\n    ok;\nelse if (s < 0)    // redzone、已释放、栈/全局毒区\n    report(addr);\nelse if ((addr & 7) >= s)  // 只有前 s 字节可访问\n    report(addr);\n```\n\n真实检查会考虑访问宽度，上面只是单字节访问的简化。影子字节的负值区分 heap-left-redzone、heap-right-redzone、freed、stack、global 等来源，所以报告能直接说 `heap-use-after-free` 或 `stack-buffer-overflow`。ASan 的分配器会在每次 `malloc` 周围加 redzone，并把释放的内存放进 quarantine 延迟复用；栈和全局变量也由编译器插桩加红区。`memcpy`、`strlen`、`free` 等 libc 函数由拦截器包一层，检查传入区间。泄漏检测通常集成在退出时执行，可用 `ASAN_OPTIONS=detect_leaks=1`、`quarantine_size_mb=...` 调整。\n\nValgrind Memcheck 走的是“动态二进制翻译”路线：不用重新编译，把机器指令翻译成 VEX 中间表示，在合成 CPU 上执行。它维护两类元数据：A 位表示某字节是否可寻址，V 位表示某位是否已定义。因此 Memcheck 能报“条件跳转依赖未初始化值”，而 ASan 默认不查未初始化读，那是 MSan 的职责。Memcheck 通过替换分配器识别堆块边界和释放状态，`--leak-check=full` 给出 definitely/indirectly/possibly/still reachable 分类，`--track-origins=yes` 追未初始化值的来源。\n\n| | ASan | Valgrind Memcheck |\n|---|---|---|\n| 插桩时机 | 编译期 | 运行时 DBI |\n| 主要元数据 | 1/8 影子内存 | A/V 位 |\n| 未初始化读 | 不查，需 MSan | 查 |\n| 栈/全局越界 | 红区可查 | 主要擅长堆，栈/全局较弱 |\n| 代价 | 较低 | 明显更高，具体倍率依程序而定 |\n\n**最小例子**：\n\n```c\n// uaf.c\n#include <stdlib.h>\nint main(void) {\n    int *p = malloc(4 * sizeof(int));\n    free(p);\n    return p[0];\n}\n```\n\n```bash\ncc -fsanitize=address -g -O1 uaf.c -o uaf\n./uaf\n```\n\n结果会看到 `ERROR: AddressSanitizer: heap-use-after-free`，后面跟 `READ of size 4`、`freed by thread T0 here`、`previously allocated by thread T0 here`，进程以非零状态退出。把同一份代码用 `valgrind --leak-check=full ./uaf_no_asan` 跑，也能报非法读，但需要程序已编译成普通二进制。\n\n未初始化读的例子：\n\n```c\n// uninit.c\n#include <stdlib.h>\nint main(void) {\n    int *p = malloc(10 * sizeof(int));\n    if (p[3]) return 1;\n    free(p);\n    return 0;\n}\n```\n\n```bash\ncc -g -O0 uninit.c -o uninit\nvalgrind --track-origins=yes ./uninit\n```\n\n结果包含 `Conditional jump or move depends on uninitialised value(s)`，并指出来源是堆分配。注意：Memcheck 不是“读未初始化就立刻报”，而是当未初始化值影响分支、地址计算或系统调用等可观察行为时才报。\n\n**面试高频问法**：\n\n- **ASan 为什么通常比 Valgrind 快？** → 考点：插桩时机与元数据粒度 → 答：ASan 在编译期插入检查，运行时只查一张 1/8 映射的影子内存；Valgrind 要用 DBI 翻译并模拟执行，还要维护逐字节的 A/V 位，开销明显更高。\n- **ASan 的影子内存怎么映射？** → 考点：是否理解 `addr >> 3` 和影子字节语义 → 答：每 8 字节应用内存对应 1 字节影子，影子值为 0 表示 8 字节全可访问，1 到 7 表示前 N 字节可访问，负值表示 redzone、已释放或毒区。\n- **ASan 能查未初始化读吗？** → 考点：ASan/MSan/Valgrind 的分工 → 答：默认不能，未初始化读要用 MSan；Valgrind Memcheck 也能查，因为它维护 V 位。\n- **ASan 的 redzone 和 quarantine 各解决什么？** → 考点：误报与漏报的权衡 → 答：redzone 让越界访问落到毒区，quarantine 延迟释放内存复用，让 use-after-free 更容易在释放后立刻暴露；代价是内存占用。\n- **Valgrind 报 `still reachable` 就是泄漏吗？** → 考点：泄漏分类 → 答：不一定，它表示退出时仍可达；真正可疑的是 definitely lost 和 indirectly lost，still reachable 往往只是全局缓存没释放。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "debug-toolchain",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 8,
+    "section": "第 3 章 内存错误：ASan 与 Valgrind 的检测原理"
+  }
+}

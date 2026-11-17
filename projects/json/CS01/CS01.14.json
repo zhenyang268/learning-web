@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.14",
+  "chapter": "CS01",
+  "title": "7.4 archlab · 逐层设计（Ch4 + Ch5，只做 Part A + B）",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.14:body.s01",
+      "type": "extension",
+      "title": "7.4 archlab · 逐层设计（Ch4 + Ch5，只做 Part A + B）",
+      "level": 3,
+      "content": "#### 7.4.1 Y86-64 速查（与 x86-64 的三点关键差异）\n\n| 项目 | Y86-64 | 说明 |\n|---|---|---|\n| 寄存器 | `%rax %rcx %rdx %rbx %rsp %rbp %rsi %rdi %r8..%r14` | **没有 `%r15`**（它被用作程序计数器）—— 用它必炸，这是最著名的坑 |\n| 立即数 | `irmovq $0x100, %rbx` | 立即数必须用 `$` 前缀，且**只能作为 `irmovq` 的源** |\n| 访存 | `mrmovq D(%rB), %rA` / `rmmovq %rA, D(%rB)` | 内存→寄存器、寄存器→内存，不支持 `mov` 内存到内存 |\n| 运算 | `addq subq andq xorq` | 只能操作**寄存器**（不能带立即数，这正是 `iaddq` 存在的理由） |\n| 跳转 | `jmp jle jl je jne jge jg` + `cmovXX` | 依赖条件码（ZF/SF/OF） |\n| 栈 | `pushq popq call ret` | 同 x86-64 语义 |\n| 停止 | `halt` / `nop` | — |\n\n**汇编文件格式（`.ys`）**\n\n```\n        .pos 0                  # 从地址 0 开始\ninit:   irmovq stack, %rsp      # 必须先设栈，否则 call/ret 越界\n        call main\n        halt\n\n        .align 8                # 数据按 8 字节对齐\nele1:   .quad 0x00a             # 链表节点：val, next\n        .quad ele2\n...\nstack:  .quad 0                 # 栈底（栈向低地址长，所以放在最后）\n```\n\n#### 7.4.2 Part A：三个程序骨架\n\n```asm\n# ---- sum.ys：迭代求和 ----\nsum_list:\n        irmovq $0, %rax\n        jmp    test\nloop:\n        mrmovq (%rdi), %rsi     # val = ls->val   (偏移 0)\n        addq   %rsi, %rax\n        mrmovq 8(%rdi), %rdi    # ls = ls->next   (偏移 8)\ntest:\n        andq   %rdi, %rdi       # 用 andq 自身设置 ZF（Y86-64 没有 test 指令）\n        jne    loop\n        ret\n```\n\n```asm\n# ---- rsum.ys：递归版 ----\nrsum_list:\n        andq   %rdi, %rdi\n        je     zero             # ls == NULL -> 返回 0\n        mrmovq (%rdi), %rsi     # val = ls->val\n        pushq  %rsi             # val 过不了递归，必须压栈保存\n        mrmovq 8(%rdi), %rdi    # ls->next\n        call   rsum_list        # 递归（结果在 %rax）\n        popq   %rsi\n        addq   %rsi, %rax\n        ret\nzero:\n        irmovq $0, %rax\n        ret\n```\n\n```asm\n# ---- copy.ys：拷贝 + xor 校验 ----\n# 参数: %rdi = src, %rsi = dest, %rdx = len；返回 %rax = xor 校验和\ncopy_block:\n        irmovq $0, %rax\n        jmp    test\nloop:\n        mrmovq (%rdi), %r8      # val = *src\n        irmovq $8, %r9\n        addq   %r9, %rdi        # src++\n        rmmovq %r8, (%rsi)      # *dest = val\n        addq   %r9, %rsi        # dest++\n        xorq   %r8, %rax        # result ^= val\n        irmovq $1, %r9\n        subq   %r9, %rdx        # len--\ntest:\n        andq   %rdx, %rdx\n        jg     loop             # len > 0\n        ret\n```\n\n**验收**：`./yas sum.ys && ./yis sum.yo`，要求 `%rax == 0xcba`；`copy.ys` 还要求三个值 `0x00a 0x0b0 0xc00` 被拷到 `dest` 起始的 24 字节，且**不得破坏其它内存**（所以循环边界差一个就是 0 分）。\n\n#### 7.4.3 Part B：给 SEQ 加 `iaddq`（这是本节的核心）\n\n**指令语义**：`iaddq V, rB` → `R[rB] <- R[rB] + V`，**并且设置条件码**。编码：`C0 rB V(8字节)`（第一个寄存器字段未用）。\n\n**为什么需要它**：Y86-64 的 `addq` 只能加寄存器，`irmovq` 不能做加法。要执行 `rB += 8`，标准 Y86-64 得写两条指令（`irmovq $8, %r9; addq %r9, %rB`）。`iaddq` 把它合成一条 —— **这就是 CISC 与 RISC 之争的一个缩影**（408 必考 CISC/RISC 对比）。\n\n**SEQ 各阶段要动的信号**（在 `sim/seq/seq-full.hcl` 里）：\n\n| 阶段 | 信号 | iaddq 的取值 | 与 `irmovq` 的差别 |\n|---|---|---|---|\n| fetch | `instr_valid` | `icode in { ..., IIADDQ }` | 要加进合法集合 |\n| fetch | `need_regids` | `1`（有寄存器字节） | 同 irmovq |\n| decode | `srcA` | `RNONE`（不读 rA） | 同 irmovq |\n| decode | **`srcB`** | **`rB`** | **irmovq 是 `RNONE`** ← 差别 1 |\n| execute | `aluA` | `valB` | irmovq 的 valB 无意义 |\n| execute | `aluB` | `valC` | 同 irmovq |\n| execute | `set_cc` | **1** | **irmovq 是 0** ← 差别 2 |\n| write-back | `dstE` | `rB` | 同 irmovq |\n| PC | `new_pc` | `valP` | 同 irmovq |\n\n**整段 HCL 只多两处**（示意，`I` 表示 icode）：\n\n```\nword srcB = [\n    I in { IRRMOVQ, IMRMOVQ, IOPQ, IRMMOVQ } : rB;\n    I in { IIADDQ }                          : rB;   # <- 新增\n    I in { IPUSHQ, IPOPQ, ICALL, IRET }      : RRSP;\n    1                                        : RNONE;\n];\n\nword set_cc = I in { IOPQ };                          # 原式\nword set_cc = I in { IOPQ, IIADDQ };                  # <- 新增\n```\n\n**这一改动的价值远超 35 分**：它让你看清\"**一条指令在数据通路里就是若干个控制信号的一次取值**\"。408 考流水线数据通路时，让你填的正是这张表。\n\n#### 7.4.4 Part C 为什么建议放弃\n\n评分看平均 CPE（cycles per element，块长 1..64 平均）：`S = 0 (c > 12.5)` / `24*(12.5 - c) (10 <= c <= 12.5)` / `60 (c < 10.0)`，baseline ≈ 15.18，官方最佳 ≈ 9.27。要压下去得做：加 `iaddq` → 用 `iaddq` 消掉减法 → 利用其 `set_cc` 省掉一条比较 → 8 路循环展开 → 处理余数 → 调 PIPE 的转发逻辑……\n\n**这是一整个独立的优化课题，且 408 只要求你会算流水线的 CPI，不要求你会优化玩具 CPU。** 时间投到 malloclab / shlab 上回报高一个量级。\n\n#### 7.4.5 验收命令\n\n```bash\ncd sim/misc && make                 # 编 yas / yis\n./yas sum.ys && ./yis sum.yo        # Part A：看 %rax 是否 0xcba\ncd ../seq   && make VERSION=full    # Part B：重建带 iaddq 的 SEQ\n(cd ../y86-code; make testssim)     # 回归测试：benchmark 全过\n(cd ../ptest;  make SIM=../seq/ssim TFLAGS=-i)   # iaddq 专项回归\n```"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 13,
+    "parts": 20,
+    "section": "7.4 archlab · 逐层设计（Ch4 + Ch5，只做 Part A + B）"
+  }
+}

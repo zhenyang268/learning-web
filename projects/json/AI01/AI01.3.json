@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "AI01.3",
+  "chapter": "AI01",
+  "title": "第 2 章 张量与形状：广播规则、batch 维、reshape 与 transpose 的代价",
+  "src": {
+    "file": "notebook/projects/ai/NOTES.md",
+    "sha256": "sha256:1cf4e0aa160c61aa9f87967082eee26c05a0f005a45a9f5b367ba822c50b3d15"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "AI01.3:body.s01",
+      "type": "extension",
+      "title": "第 2 章 张量与形状：广播规则、batch 维、reshape 与 transpose 的代价",
+      "level": 2,
+      "content": "**要解决的问题**：形状错了模型根本跑不起来，但形状对了也可能出问题——广播悄悄把不该对齐的维度对上、transpose 之后接 reshape 触发一次全量拷贝、或者把 batch 维和数据维搞混导致样本之间互相串。这一章解决的是「张量的逻辑形状和物理内存布局是两件事」，后面 CNN 的 NCHW 与 NHWC、Transformer 的多头切分都以此为前置。\n\n**机制**：\n\n一个张量由三件东西确定：`data`（一段一维连续内存）、`shape`（每一维多长）、`stride`（沿每一维走一步，要在内存里跨过多少元素）。行主序连续时，stride 从最右往左累乘：形状 $(B,T,C)=(8,512,64)$ 对应 strides $(512\\cdot64,\\;64,\\;1)=(32768,64,1)$。\n\n- **广播规则**：从尾部对齐，逐维比较；两维相等、或其中一个是 1，则兼容，结果取较大的那个；缺失的维按 1 补齐。长度为 1 的维通过「stride 设为 0」实现逻辑复制，不真正分配内存。\n- **batch 维**：约定第 0 维是 batch。这样每个算子的签名只需要描述「单样本形状」，kernel 按前导维展开并行；同时归一化层的统计范围完全由形状决定——在最后一维（特征维）上统计，就是每个 token 各自归一化；在 $(N,H,W)$ 上统计，就是把每个通道跨样本聚合。\n- **reshape 与 transpose 的代价**：`transpose`/`permute` 只交换 stride，是 $O(1)$，但结果通常不再连续；`reshape` 在 stride 兼容时也只改 shape，是 $O(1)$，一旦不兼容就必须先拷贝成连续内存，变成 $O(n)$。`view` 是「不兼容就直接报错」的严格版本。这条规则解释了为什么「先 permute 再 reshape」的写法在形状上正确、在性能上却可能是一次隐藏的全量拷贝。\n\n```python\nfrom itertools import zip_longest\n\ndef broadcast_shape(a, b):\n    out = []\n    for x, y in zip_longest(reversed(a), reversed(b), fillvalue=1):\n        if x != y and 1 not in (x, y):\n            raise ValueError(f\"{a} 与 {b} 不可广播\")\n        out.append(max(x, y))\n    return tuple(reversed(out))\n\nbroadcast_shape((2, 1, 4), (3, 4))   # (2, 3, 4)\nbroadcast_shape((8, 512, 64), (512, 64))  # (8, 512, 64)\n```\n\n**最小例子**：\n\n1）广播：$A$ 形状 $(2,1,4)$，$B$ 形状 $(3,4)$。尾部对齐后：$4$ vs $4$ 相等；$1$ vs $3$ 中 $1$ 可广播成 $3$；$2$ vs 缺失（补 $1$）得 $2$。结果 $(2,3,4)$，共 $24$ 个元素，而实际参与运算的只有 $8+12=20$ 个存储元素，多出来的 4 份靠 stride 0 复用。\n\n2）批维与卷积形状：输入 $(32,3,224,224)$ 过一个 $k=7,s=2,p=3$、输出通道 $64$ 的卷积。输出边长 $=\\lfloor(224+2\\cdot3-7)/2\\rfloor+1=\\lfloor 223/2\\rfloor+1=112$，输出形状 $(32,64,112,112)$。参数量 $64\\times(3\\cdot7\\cdot7+1)=64\\times148=9472$——**跟 batch 大小和输入分辨率无关**，这是「形状只影响计算量、不影响参数量」的最典型例子。\n\n3）transpose 的代价：$(8,512,64)$ 经 `permute(0,2,1)` 得 $(8,64,512)$，strides 从 $(32768,64,1)$ 变为 $(32768,1,64)$，操作本身 $O(1)$。但此时内存布局是「同一位置跨 64 个通道、步长为 1」，若再 `reshape(8, 64*512)`，由于第 1、2 维的 stride 不是连续期望的 $(512,1)$，必须先把 $8\\times512\\times64=262144$ 个元素按新顺序拷一遍。改成先 `contiguous()` 再 `reshape`，语义相同，但拷贝点变得显式可控。\n\n**面试高频问法**：\n\n1. 「广播规则说一遍，什么情况下会报错？」\n   → 考点：尾部对齐，而不是从头对齐。\n   → 一句话答法：从最后一维往前逐维比，相等或有一个是 1 就兼容、取较大值，缺失的维补 1；只要有某一维既不相等又没有 1，就报错。\n2. 「为什么 batch 维固定放第 0 维？」\n   → 考点：算子签名统一与访存局部性。\n   → 一句话答法：同一 batch 内每个样本形状完全一致、走完全相同的算子，放第 0 维后每个算子只需描述单样本形状，kernel 按前导维展开并行；同时行主序下 batch 维在最外层，切片一个样本仍是一段连续内存。\n3. 「transpose 是免费的吗？」\n   → 考点：shape 与 stride 分离。\n   → 一句话答法：transpose 只交换 stride，本身 $O(1)$，但它让张量不再连续；后续接 reshape 或矩阵乘时可能触发一次 $O(n)$ 的隐式拷贝，所以要么保证转置的是相邻维、要么显式 `contiguous()`。\n4. 「`view` 和 `reshape` 有什么区别？」\n   → 考点：连续性与 stride 兼容。\n   → 一句话答法：`view` 只在原张量 stride 兼容时才能改形状，否则直接报错；`reshape` 遇到不兼容会先拷一份连续内存再改，所以能用 `view` 的地方说明你没走隐式拷贝。\n5. 「归一化层到底在哪些维上做统计，由什么决定？」\n   → 考点：共享统计量的范围就是张量的维度划分。\n   → 一句话答法：由形状决定共享范围——在最后一维（特征维）统计，就是每个位置各自归一化；在 $(N,H,W)$ 上统计，就是每个通道跨样本聚合。改一批维度顺序，语义就变了，不只是快慢问题。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "ai",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 8,
+    "section": "第 2 章 张量与形状：广播规则、batch 维、reshape 与 transpose 的代价"
+  }
+}

@@ -10,6 +10,11 @@ export interface AsideModel {
   masteryOf: (code: string) => number;
   difficulty: number;
   /**
+   * 是否显示进度（掌握度环 / 自测验收 / 当前位置）。
+   * 缺省 true；工程线显式 false —— 进度不在这套静态站里控制。
+   */
+  showProgress?: boolean;
+  /**
    * 掌握度是否由自测派生（该单元有自测题）。true 时环上标「自测推出」，
    * 并说明徽标不可手动抬高 —— 与 renderCard 的只读徽标同一口径。
    */
@@ -74,7 +79,7 @@ function chips(codes: string[], cls: string, empty: string): string {
  */
 function routeBlock(model: AsideModel): string {
   const route = model.route;
-  const st = model.selftest;
+  const st = model.showProgress === false ? null : model.selftest;
   const rows: string[] = [];
   if (route) {
     rows.push(
@@ -101,8 +106,13 @@ function routeBlock(model: AsideModel): string {
     );
   }
   if (!rows.length) return '';
-  const isNow = model.frontier != null && model.frontier === (model.file.code ?? '');
-  return `<h4 style="margin-top:18px">动机 · 交付 · 验收</h4>
+  const isNow =
+    model.showProgress !== false &&
+    model.frontier != null &&
+    model.frontier === (model.file.code ?? '');
+  return `<h4 style="margin-top:18px">动机 · 交付${
+    model.showProgress === false ? '' : ' · 验收'
+  }</h4>
       ${isNow ? '<p class="kv nowhere">当前推荐位置：「今天该学」就是本单元。</p>' : ''}
       ${rows.join('\n')}`;
 }
@@ -117,9 +127,12 @@ export function renderAside(host: HTMLElement, model: AsideModel): void {
     : '';
   const probes = file.entries.filter((e) => e.type === 'probe');
 
+  const showProgress = model.showProgress !== false;
   host.innerHTML = `
     <div class="box">
-      <h4>掌握度 · 难度</h4>
+      ${
+        showProgress
+          ? `<h4>掌握度 · 难度</h4>
       <div class="ring">
         <svg width="64" height="64">
           <circle cx="32" cy="32" r="26" fill="none" style="stroke:var(--line)" stroke-width="6" />
@@ -134,7 +147,9 @@ export function renderAside(host: HTMLElement, model: AsideModel): void {
           <div class="lbl">难度 ${difficulty}/3</div>
           ${model.derived ? '<div class="lbl derived">由自测推出</div>' : ''}
         </div>
-      </div>
+      </div>`
+          : ''
+      }
       ${routeBlock(model)}
 
       <h4 style="margin-top:20px">依赖 ◂</h4>
@@ -146,7 +161,7 @@ export function renderAside(host: HTMLElement, model: AsideModel): void {
       ${
         // 没有检验题就**整块不渲染**：原先固定输出「检验题 · 0」+「本节暂无检验题」，
         // 右栏凭空多出一节零信息内容，还把「本节元信息」往下推（CS01.1 / QK06.1 都是 0）。
-        probes.length
+        showProgress && probes.length
           ? `<h4 style="margin-top:14px">检验题 · ${probes.length}</h4>
       ${probes
         .map(

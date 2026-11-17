@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.6",
+  "chapter": "EG05",
+  "title": "第 5 章 活锁、饥饿与公平性",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 活锁、饥饿与公平性",
+      "level": 2,
+      "content": "**要解决的问题**：并发系统里“不阻塞”不等于“有进展”。活锁和饥饿都不会表现出死锁那种明显的挂起——CPU 正常、线程都在跑、日志一直在刷，但业务指标不动。这一章解决的是：当系统的推进保证依赖“重试策略 + 排队规则”而不是锁本身时，怎么保证每个参与者最终都能前进。\n\n**机制**：\n\n先划清三者的边界，这是回答所有相关问题的地基：\n\n- 死锁：所有参与者阻塞等待，CPU 空转，栈上全是等锁。\n- 活锁：所有参与者都在运行，但状态互相抵消，系统级无进展。\n- 饥饿：系统整体有进展，但某个特定参与者长期轮不到。\n\n活锁的两个典型形态。第一种是**冲突重试无退避**：CAS 失败立刻重试，冲突率不降反升，重试本身还加剧了总线流量。修复手段是指数退避加随机抖动：\n\n$$t_n = \\min(t_{max},\\ t_0 \\cdot 2^n) \\cdot U(0.5,\\ 1.5)$$\n\n退避降低碰撞频率，抖动打破“所有人在同一时刻失败、又在同一时刻重试”的相位同步。第二种是**对称谦让**：两个线程检测到冲突后同时释放已持资源再重试，动作完全镜像，下一轮仍然冲突。修复是引入不对称量——按 ID 排序、随机等待、或者取号。\n\n饥饿的根因是排队规则里不含“年龄”。三种常见来源：\n\n- **非公平锁**：释放锁时新到的线程直接在快路径上抢（barging），等待队列里的线程永远排在“刚到的”后面。`synchronized` 与 `ReentrantLock(false)` 都是这种。\n- **读写锁偏向读者**：读持续不断时，写者等不到“无读者”的空窗。glibc 的 `pthread_rwlock_t` 默认行为偏读者，需要 `pthread_rwlockattr_setkind_np` 设 `PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP` 来抑制写者饥饿（具体默认值按 glibc 版本与实现而定）。反过来，Go 的 `sync.RWMutex` 在有 writer 等待时会阻塞新读者，于是被饿死的是读者。\n- **优先级**：实时任务占满 CPU，普通任务轮不到。Linux CFS 用 vruntime 记账，醒得晚的任务 vruntime 更小、更容易被选中，天然抗饥饿；但 SCHED_FIFO 的 RT 任务不主动让出，只能靠 `sched_rt_runtime_us` 的带宽上限兜底。\n\n公平性的实现手段无非三类：严格 FIFO（ticket lock、取号队列，无饥饿但 cache 不友好）、按年龄提升优先级（MLFQ、写者优先）、以及队列序选择（LIFO 提升 cache 局部性与吞吐，但队尾任务可能永久饥饿；FIFO 公平，代价是吞吐）。\n\n```python\ndef cas_with_backoff(counter):\n    n = 0\n    while True:\n        old = counter.load()\n        if counter.compare_exchange(old, old + 1):\n            return old\n        n += 1\n        t = min(MAX_BACKOFF, BASE << min(n, 10))\n        sleep(random.uniform(0.5, 1.5) * t)   # 抖动打散相位\n```\n\n**最小例子**：用一个实时任务制造饥饿，观察低优先级任务的唤醒延迟。\n\n```bash\n# 终端 A：SCHED_FIFO 忙循环，不主动让出\nsudo chrt -f 50 sh -c 'while :; do :; done'\n# 终端 B：普通任务测唤醒延迟\ntime sleep 1\n```\n\nA 跑起来后，B 的 `sleep 1` 实际耗时明显变长，具体倍数取决于核数与 `/proc/sys/kernel/sched_rt_runtime_us` 的当前值（先 `cat` 一下确认，它给 RT 任务留了运行上限，所以是“严重延迟”而不是完全饿死）。把 A 换成 `chrt -o 0` 改回 SCHED_OTHER，或直接 kill 掉，B 的延迟回到正常。记着清理 A，别让它一直占着核。\n\n**面试高频问法**：\n\n1. 问法：「活锁和死锁线上怎么区分？」\n   考点：两者的可观测信号完全不同，考你有没有真排查过。\n   答法：死锁看线程栈全卡在等锁、CPU 低；活锁看 CPU 高、重试计数暴涨但业务成功数不涨——判断依据是“重试次数/成功数”这个比值，不是 CPU。\n\n2. 问法：「重试为什么必须加随机抖动，只做指数退避行不行？」\n   考点：相位同步问题。\n   答法：指数退避只降低重试频率，不打破同步；一批客户端同时失败就会同时重试，加抖动才能把碰撞概率打散，这跟 CSMA/CD 的退避和 Raft 的随机选举超时是同一个思路。\n\n3. 问法：「公平锁一定更好吗？」\n   考点：公平性的代价。\n   答法：不是。公平锁要排队、要唤醒、要上下文切换，吞吐和 cache 局部性都变差；只有当“某个线程被无限期推迟会造成业务后果”（写锁、任务队列、消息消费位点）时才值得强制公平。\n\n4. 问法：「读写锁为什么会出现写者饥饿，怎么解？」\n   考点：读者并发进入导致空窗消失。\n   答法：读者可以并发进入，写者必须等无读者的瞬间，读流量持续不断时这个瞬间不出现；解法是写者优先，或者等 writer 到达阈值后阻塞新读者，glibc 里就是设 `PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP`。\n\n5. 问法：「任务队列用 LIFO 有什么问题？」\n   考点：吞吐与公平的权衡。\n   答法：LIFO 让热数据留在队头，cache 命中好、吞吐高，但队尾的老任务可能永远轮不到；要补一个最大等待时间或定期把队尾翻上来。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 12,
+    "section": "第 5 章 活锁、饥饿与公平性"
+  }
+}

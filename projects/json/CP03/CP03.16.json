@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.16",
+  "chapter": "CP03",
+  "title": "附录 B 坑清单（按出现频率排序）",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.16:body.s01",
+      "type": "counterexample",
+      "title": "附录 B 坑清单（按出现频率排序）",
+      "level": 2,
+      "content": "1. `x0` 只做了初值置零，没屏蔽写口 —— 症状随机、难定位。\n2. J 型立即数位序错（`instr[20]` 与 `instr[30:21]` 顺序颠倒）—— `jal` 跳飞。\n3. 分支立即数漏掉 `bit0 = 0` —— 跳到奇数地址，取指错位。\n4. 级间寄存器没带控制信号 —— 用到后一条指令的 `regwrite`。\n5. 转发漏 `rd != 0` 判断 —— 特定序列上 `x0` 变成可变寄存器。\n6. 转发优先级写反（`MEM/WB` 高于 `EX/MEM`）—— 长依赖链上偶发错值。\n7. `stall` 只冻结 PC 没清 `ID/EX` —— bubble 没插进去，重复执行。\n8. `flush` 时保留站/ROB 残留 —— 错误路径的指令后来又被提交。\n9. store 在 EX/MEM 就写 cache —— 误预测后内存脏。\n10. load 的字节选择用 `addr[1:0]` 之外的方式 —— `lb/lh` 取错字节。\n11. cache index/tag 位宽算错 —— miss 率与手算不符，性能结论全废。\n12. difftest 只在最终内存比对 —— 错误互相抵消，无法定位。\n13. 乱序提交宽度 > 1 但异常判定仍按单条 —— 异常现场不精确。\n14. 参数化深度用 `localparam` 写死后又手动改多处 —— 曲线扫的不是同一个设计。\n15. 用自写测试替代 difftest —— 覆盖面等于想象力。\n16. CoreMark/Dhrystone 裸机跑不起来就放弃 —— 它们需要自己补 `core_portme.c`（计时与输出）；**在 Verilator 里计时就是数仿真周期，比上板更干净**，只要把周期数打出来即可。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 15,
+    "parts": 17,
+    "section": "附录 B 坑清单（按出现频率排序）"
+  }
+}

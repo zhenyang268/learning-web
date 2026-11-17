@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "GX03.1",
   "chapter": "GX03",
-  "title": "geometry-anim · 大纲",
+  "title": "geometry-anim · 总览",
   "src": {
     "file": "notebook/projects/cg/geometry-anim/OUTLINE.md",
     "sha256": "sha256:c4154f83a4369d3cf770420200285d04c690d37c2d2b8f855f710c9f2f74578d"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

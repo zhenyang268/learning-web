@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP04.8",
+  "chapter": "CP04",
+  "title": "第 7 章 后端：SelectionDAG 与 GlobalISel、指令选择、寄存器分配、指令调度",
+  "src": {
+    "file": "notebook/projects/cpu/compiler/NOTES.md",
+    "sha256": "sha256:c6fff8754ad6e8ac1d415ac403d79eedbe0ea927767a531665e867679040055f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP04.8:body.s01",
+      "type": "extension",
+      "title": "第 7 章 后端：SelectionDAG 与 GlobalISel、指令选择、寄存器分配、指令调度",
+      "level": 2,
+      "content": "**要解决的问题**：IR 仍是目标无关的三地址码，后端要把它变成某颗 CPU 能执行的机器指令；不解决就没有合法指令、寄存器分配和栈帧，LLVM 只能停在分析层。\n\n**机制**：后端入口是 `TargetMachine`，函数级容器是 `MachineFunction`。两条指令选择路径：\n\n- **SelectionDAG**：`SelectionDAGBuilder` 把基本块建成 DAG，节点是 `SDNode`；边除数据依赖外还有 **chain**（内存/副作用顺序）和 **glue**（多返回值必须一起发射）。随后做类型/操作合法化（promote、expand、custom），`DAGCombine` 做目标相关合并，`SelectionDAGISel` 用 TableGen 生成的模式匹配选中指令，再按调度模型排成 `MachineInstr`。\n- **GlobalISel**：`IRTranslator` 先降到通用 MIR，再 `Legalizer` → `RegBankSelect` → `InstructionSelect`，把合法化、选寄存器组、选指令拆开，减少 DAG 构造开销；覆盖度按目标和版本而定，不支持时可回退 SelectionDAG。\n\n```text\nIR -> SelectionDAGBuilder -> 类型/操作合法化 -> DAGCombine\n   -> SelectionDAGISel(TableGen matcher) -> MachineInstr\n   -> MachineScheduler -> RegAllocGreedy -> PostMachineScheduler\n   -> PrologEpilogInserter -> AsmPrinter\nGlobalISel: IR -> IRTranslator -> Legalizer -> RegBankSelect -> InstructionSelect\n```\n\n指令选择的核心是 `.td` 里的指令定义与匹配模式，TableGen 生成 matcher；复杂寻址模式（base+index×scale+disp 这类）也是 `.td` 模式的一部分，选中哪条机器指令、寻址操作数怎么折叠，都由匹配模式与代价决定。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "compiler",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 11,
+    "section": "第 7 章 后端：SelectionDAG 与 GlobalISel、指令选择、寄存器分配、指令调度"
+  }
+}

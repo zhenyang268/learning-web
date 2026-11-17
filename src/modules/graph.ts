@@ -66,6 +66,9 @@ export interface Graph {
 export function isLearnableUnit(meta: UnitMeta | undefined): boolean {
   const kind = meta?.kind ?? '';
   if (kind === 'project-group' || kind === 'project-index') return false;
+  // 工程线拆页后，章节页/附加页是阅读单元，不是可独立交付的项目；
+  // 「该学哪个项目」仍由 `.1` 总览决定（与路线步骤的 `.1` 同口径）。
+  if (kind === 'project-chapter' || kind === 'project-extra') return false;
   return true;
 }
 

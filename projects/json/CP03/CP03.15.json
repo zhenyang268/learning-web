@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.15",
+  "chapter": "CP03",
+  "title": "附录 A 判据表模板（每个改动都要填）",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.15:body.s01",
+      "type": "proof",
+      "title": "附录 A 判据表模板（每个改动都要填）",
+      "level": 2,
+      "content": "| 改动 | IPC | 面积 (μm²) | fmax (MHz) | 关键路径变化 | 结论 |\n|---|---|---|---|---|---|\n| 基线（五级 + BHT） | | | | | |\n| + BTB | | | | | |\n| + D-cache 4KB 直接映射 | | | | | |\n| ROB 32 → 128 | | | | | |\n\n**填不满这张表的改动不要做**——它的意思是\"这个改动无法被评价\"。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 14,
+    "parts": 17,
+    "section": "附录 A 判据表模板（每个改动都要填）"
+  }
+}

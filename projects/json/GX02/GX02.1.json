@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "GX02.1",
   "chapter": "GX02",
-  "title": "raytrace · 大纲",
+  "title": "raytrace · 总览",
   "src": {
     "file": "notebook/projects/cg/raytrace/OUTLINE.md",
     "sha256": "sha256:3be04216527ba8788e80b57e282b032fa14fb385387307d6278b8957a4891426"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

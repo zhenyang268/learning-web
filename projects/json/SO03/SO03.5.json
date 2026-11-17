@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO03.5",
+  "chapter": "SO03",
+  "title": "第 3 章 特权级与陷入路径",
+  "src": {
+    "file": "notebook/projects/os/kernel-compare/NOTES.md",
+    "sha256": "sha256:3fdad2384b230576e8b856161ad428eb8606560c1ee888202b9c68e3b315846e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO03.5:body.s01",
+      "type": "extension",
+      "title": "第 3 章 特权级与陷入路径",
+      "level": 2,
+      "content": "**要解决的问题**：从用户态进入内核的那几条指令，是三个内核差异最明显的地方。要回答的是：**硬件替你保存了什么？第一条内核指令能信任什么？**\n\n**机制**：\n\n**JOS（x86-32，软中断）**：`int $0x30` → 查 IDT 第 48 号门（DPL=3 才允许用户触发）→ 硬件按 TSS 的 `esp0` 换到内核栈，压 `ss/esp/eflags/cs/eip` → 入口代码保存通用寄存器到 `Trapframe` → `trap_dispatch` 按 `tf_trapno` 分发到 `syscall()`。\n\n**xv6（RISC-V，`ecall`）**：U 态执行 `ecall` → 硬件跳到 `stvec`（指向 `trampoline` 的 `uservec`）、把 `pc` 存入 `sepc`、原因存入 `scause`，**不换栈、不保存通用寄存器** → `uservec` 先把 `sscratch` 里的 `trapframe` 地址取出、保存 32 个寄存器，再切内核页表与栈 → `usertrap()` 分发。\n\n**Linux（x86-64，`syscall` 指令）**：`syscall` → `rip` 存 `rcx`、`rflags` 存 `r11`、跳到 `MSR_LSTAR` 指定入口、**用户栈指针没被保存** → 入口第一条 `swapgs` 换 per-CPU 基址（`gs` 指向当前 CPU 的结构），把用户栈存进 per-CPU scratch，再切到内核栈。中断与异常仍走 IDT，是另一套入口代码。\n\n三者对比出的规律：\n\n- **保存越少，第一条指令越危险。** RISC-V 只给你 `sepc/scause`，所以必须有个 `sscratch` 兜住\"当前 trapframe 在哪\"；x86-64 连用户栈都不给，所以需要 `swapgs` + per-CPU 暂存。\n- **换栈由谁做。** x86-32 由硬件按 TSS 自动换；RISC-V 与 x86-64 都要软件自己换。\n\n**最小例子**：xb6 的 `uservec` 第一句是 `csrrw a0, sscratch, a0`——用一条指令同时\"取出 trapframe 地址\"和\"把用户 `a0` 存进 sscratch\"，避免中间态。这种\"一条指令完成两件事\"的写法是为了不给中断留窗口。\n\n**面试高频问法**：\n\n1. **「`ecall` 之后为什么不能直接用内核栈？」** → 考点：硬件是否换栈。答法：RISC-V 的 `ecall` 不换栈，`sp` 还是用户栈；必须先从 `sscratch` 或 `mscratch` 拿到内核栈/trapframe，再 `mv sp, ...`。x86-32 相反，TSS 让硬件自动换。\n2. **「`swapgs` 为什么不能省？」** → 考点：per-CPU 数据的定位。答法：内核需要\"当前 CPU 的结构体指针\"，x86-64 用 `gs` 基址存它；用户态可以改 `gs`，所以进出内核必须交换，否则内核会读到用户可控的指针——这是安全边界，不是优化。\n3. **「软中断和 `syscall` 指令差在哪？」** → 考点：入口成本。答法：软中断要查 IDT、走完整的硬件栈帧、保存更多状态；`syscall` 直跳入口、只存 `rcx/r11`，所以快，但需要软件补上没保存的部分。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "kernel-compare",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 12,
+    "section": "第 3 章 特权级与陷入路径"
+  }
+}

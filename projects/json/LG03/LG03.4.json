@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG03.4",
+  "chapter": "LG03",
+  "title": "第 3 章 内存层次：全局、共享、常量、寄存器，bank conflict 与本地内存溢出",
+  "src": {
+    "file": "notebook/projects/langs/cuda/NOTES.md",
+    "sha256": "sha256:d28750e42e41e2d9683a44653a40e2a9685b4209ef050c102a3c1599a73d9c81"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG03.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 内存层次：全局、共享、常量、寄存器，bank conflict 与本地内存溢出",
+      "level": 2,
+      "content": "**要解决的问题**：前两章把并行度做出来了，但同一个 kernel 只改「数据放在哪一层内存、按什么布局放」，端到端时间能差好几倍。这一章解决的是：给定一份计算，哪些数据该留在寄存器、哪些该显式搬进共享内存、哪些该走常量内存，以及怎么避免编译器把数据悄悄丢进本地内存，或者共享内存访问撞成 bank conflict。不解决这层问题，前面所有并行度都会被访存延迟和串行化抵消掉。\n\n**机制**：\n\n| 层次 | 作用域 | 典型容量（量级，按架构） | 谁来管 |\n|---|---|---|---|\n| 寄存器 | 每线程 | 每 SM 65536 个 32-bit；每线程上限 255 | 编译器分配 |\n| 共享内存 | 每 block | 每 SM 数十 KB 到 200+ KB，可 carveout | 代码显式 `__shared__` |\n| 常量内存 | grid 全局只读 | 64 KB | `__constant__` + host 拷贝 |\n| 全局内存 | grid 全局 | HBM，GB 级 | `cudaMalloc` |\n| 本地内存 | 每线程私有 | 物理位于全局内存 | 编译器在溢出时生成 |\n\n关键点有几条：\n\n1. **共享内存按 bank 切分**。多数架构把 shared 切成 32 个 bank、每个 bank 4 字节宽，地址到 bank 的映射是 $bank=\\lfloor addr/4\\rfloor \\bmod 32$。一个 warp 的 32 个线程如果访问落在同一 bank 的不同 4 字节字上，就产生冲突，硬件把它们拆成多次事务串行完成；如果落在同一个字上，则走广播，一拍完成。\n2. **共享内存需要显式同步**。写 shared 与读 shared 之间必须有 `__syncthreads()`，它是 block 粒度屏障，不能跨 block。这也是为什么 tile 的尺寸必须和 block 尺寸绑死。\n3. **常量内存的收益来自广播**。一个 warp 内所有线程读同一地址时，一次事务就完成，相当于免费；一旦 32 个线程读 32 个不同地址，就退化成 32 次串行事务，比全局内存还差。\n4. **本地内存不是「本地」**。寄存器不够用、或者对数组做运行期下标索引时，编译器会生成 local memory 访问，物理上落在全局内存，只靠 L1/L2 兜底。用 `-Xptxas -v` 能看到每线程寄存器数和 spill 的字节数，这是排查它的第一手段。\n\n**最小例子**：\n\n```cuda\n#define TILE 32\n__global__ void transpose(const float* __restrict__ in, float* __restrict__ out, int n) {\n    __shared__ float tile[TILE][TILE + 1];      // +1 是 padding，打散 bank\n    int x = blockIdx.x * TILE + threadIdx.x;\n    int y = blockIdx.y * TILE + threadIdx.y;\n    if (x < n && y < n) tile[threadIdx.y][threadIdx.x] = in[y * n + x];\n\n    __syncthreads();                            // 写读之间必须同步\n\n    x = blockIdx.y * TILE + threadIdx.x;        // 交换 block 坐标\n    y = blockIdx.x * TILE + threadIdx.y;\n    if (x < n && y < n) out[y * n + x] = tile[threadIdx.x][threadIdx.y];\n}\n```\n\n配置：`dim3 block(32, 32); dim3 grid((n+31)/32, (n+31)/32);`，$n=4096$ 时是 $128\\times128$ 个 block。三次对照：\n\n- **朴素版**（直接 `out[x*n+y] = in[y*n+x]`）：读是合并的，写是跨步 $n$ 的，一个 warp 的 32 次写散到 32 条 128B 事务上，写带宽降到理论值的约 $1/32$ 量级。\n- **shared 版（无 padding）**：读、写两侧都变成合并访问，但回读 `tile[threadIdx.x][threadIdx.y]` 时 stride 是 32 个 float，$bank=(tx\\cdot 32+ty)\\bmod 32=ty$，同一 warp 的 32 个线程全部撞进同一个 bank，形成 32-way conflict，这一段又被串行化 32 次。\n- **shared + padding 版**：stride 变成 33，$bank=(tx\\cdot33+ty)\\bmod 32=(tx+ty)\\bmod 32$ 随 `tx` 遍历 32 个 bank，冲突消失。\n\n结论：shared 版能不能真正拿到收益，取决于 padding 这一格有没有加。端到端转置带宽的变化是数倍量级（量级示例，需按卡实测），而且没有哪一版是「绝对最优」，取决于 $n$ 是否整除 TILE、是否需要边界判断。\n\n同一套判断也适用于本地内存：把 `float acc[8]` 用运行期变化的 `i` 去索引，编译器无法把它放进寄存器，整块搬进 local memory，每线程多出 8 次全局内存往返。改成 `#pragma unroll` 让下标在编译期确定，或者手工展开成 8 个标量，才是正解。\n\n**面试高频问法**：\n\n1. **问法**：shared memory 为什么能加速？什么时候反而更慢？\n   **考点**：片上带宽与容量的取舍，以及同步和 tile 边界带来的额外开销。\n   **答法**：shared 提供远高于 HBM 的片上带宽和确定性延迟，条件是同一份数据被 block 内多个线程复用、并且访问不冲突；如果每个数据只被用一次，或者加了 `__syncthreads` 之后复用度不够、又或者 tile 尺寸导致边界分支变多，搬这一趟就是净亏。\n\n2. **问法**：怎么判断有没有 bank conflict，怎么消？\n   **考点**：bank 映射公式和 padding 手法。\n   **答法**：按 $bank=\\lfloor addr/4\\rfloor \\bmod 32$ 算出同一 warp 32 个地址的 bank 编号，只要有多个线程落在同一 bank 的不同字上就冲突；消除手段是 padding 把 stride 从 32 的倍数改成互质数、或者把访问顺序重排成按列，也可以用 8 字节宽的 bank 配置（按架构支持情况）。\n\n3. **问法**：什么情况下变量会掉进 local memory？怎么发现？\n   **考点**：寄存器溢出的触发条件和排查工具。\n   **答法**：寄存器需求超过每线程上限、数组用运行期下标索引、或者取局部数组地址传给函数时，编译器会放到 local memory；用 `-Xptxas -v` 看 spill 的字节数、用 Nsight Compute 看 local memory 的读写流量，两个数不为零就说明在付这份代价。\n\n4. **问法**：常量内存适合放什么？为什么同一个地址访问快？\n   **考点**：广播机制与退化条件。\n   **答法**：适合放 kernel 参数衍生出的、整个 grid 只读且被高频访问的小表（滤波核系数、变换矩阵这类）；warp 内所有线程读同一地址时硬件做一次事务广播，但如果 32 个线程读 32 个不同地址，就会串行成 32 次，比走全局内存还慢。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "cuda",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 10,
+    "section": "第 3 章 内存层次：全局、共享、常量、寄存器，bank conflict 与本地内存溢出"
+  }
+}

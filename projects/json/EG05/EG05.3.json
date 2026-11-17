@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.3",
+  "chapter": "EG05",
+  "title": "第 2 章 伪共享：cache line、填充与真伪对比",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.3:body.s01",
+      "type": "extension",
+      "title": "第 2 章 伪共享：cache line、填充与真伪对比",
+      "level": 2,
+      "content": "**要解决的问题**：多线程程序里逻辑上毫不相干的变量，因为落在同一条 cache line 上而互相拖慢。不解决这个问题，会把吞吐瓶颈误判成「锁没优化好」，做一堆无用功。\n\n**机制**：CPU 以 cache line 为单位做一致性管理，行大小 $L$ 在 x86_64 上通常是 64 字节（按架构而定，部分 ARM 服务器为 64B，也有更大的）。MESI 类协议下，一个核要写某个字节，必须先把该行拿到 Modified/Exclusive 状态，其他核的副本被 invalidate。所以两个核各自递增位于同一行的两个**不同**变量时，行会在核间来回迁移，每次写都是一次 cache-to-cache 传输。\n\n判定条件很直接：变量 $a$、$b$ 落在同一行，即\n\n$$\n\\left\\lfloor \\frac{\\text{addr}(a)}{L} \\right\\rfloor = \\left\\lfloor \\frac{\\text{addr}(b)}{L} \\right\\rfloor\n$$\n\n并且两者被不同核**写**，就是伪共享。如果至少一方只读，行可以多核共享 S 状态，没有一致性流量；如果两个核写的是**同一个**变量，那是真共享，通信是必要的，填充救不了。\n\n消除手段：\n\n- 填充到行边界：C/C++ 用 `alignas(64)` 或 `__attribute__((aligned(64)))` 加 padding；C++17 有 `std::hardware_destructive_interference_size`（值由实现定义）。\n- Java 用 `@Contended`，需要 `-XX:-RestrictContended` 才在用户类上生效。\n- 减少写共享：每线程本地累加、最后合并；或分片计数后求和。\n- 发现手段：`perf c2c`（若内核与 perf 支持）看 HITM 行，HITM 即「本核读/写了一条被其他核改过的行」。\n\n**最小例子**：4 线程各做 $10^7$ 次原子递增，对比紧凑数组与填充数组。\n\n```c\n#include <pthread.h>\n#include <stdatomic.h>\n#define N 10000000\ntypedef struct { _Atomic long v; } tight_t;\ntypedef struct { _Atomic long v; char pad[64 - sizeof(long)]; }\n        __attribute__((aligned(64))) padded_t;   // 每实例独占一行\nstatic tight_t  t[8];\nstatic padded_t p[8];\nvoid *work(void *arg) {\n    long i = (long)arg;\n    for (int k = 0; k < N; k++) atomic_fetch_add_explicit(&t[i].v, 1, memory_order_relaxed);\n    for (int k = 0; k < N; k++) atomic_fetch_add_explicit(&p[i].v, 1, memory_order_relaxed);\n    return NULL;\n}\n```\n\n```bash\ngcc -O2 -pthread bench.c -o bench && ./bench 4\n# 分别计时两段循环：\n# tight 段（4 个 8B 变量挤在同一行）明显慢于 padded 段\n```\n\n结果：`sizeof(tight_t)=8`，4 个实例共 32 字节，全在一条 64B 行内，4 个核争抢同一行；`sizeof(padded_t)=64` 且 `aligned(64)`，每个实例独占一行，各核各行其是。差距常见在数倍量级，随核心数与拓扑变化，具体倍数按机器而定。用 `perf c2c record ./bench` 后 `perf c2c report --stats`，紧凑版会看到大量 HITM，填充版几乎没有。\n\n真伪对比要记住的分界：\n\n| | 真共享 | 伪共享 |\n|---|---|---|\n| 数据关系 | 同一变量 | 不同变量、同一行 |\n| 一致性流量 | 必要，语义要求 | 纯浪费 |\n| 填充能否消除 | 不能 | 能 |\n| 正确解法 | 分片/批量/减少临界区 | padding、对齐、分离到不同行 |\n\n**面试高频问法**：\n\n1. **「什么是伪共享？和真共享怎么区分？」**\n   - 考点：是否理解一致性以行为单位，而不是以变量为单位。\n   - 答法：两个核写逻辑上无关但落在同一 cache line 的变量，行在核间反复失效迁移；真共享是写同一个变量，通信是语义要求的，填充无效。\n2. **「填充为什么能解决？代价是什么？」**\n   - 考点：对齐与数组步长的关系，以及是否知道副作用。\n   - 答法：把每个热点变量拉到独占一行并对齐到行边界，各核不再争同一行；代价是内存膨胀、破坏空间局部性，而且行大小按架构而定，写死 64 并不总对。\n3. **「怎么确认是伪共享而不是锁竞争？」**\n   - 考点：可观测手段。\n   - 答法：看 perf c2c 的 HITM 热点行，或做「只改结构体布局、逻辑不动」的对照实验；如果加 padding 后显著变快，基本可以定案。\n4. **「volatile / 原子操作能解决伪共享吗？」**\n   - 考点：原子性与缓存一致性是两回事。\n   - 答法：不能。原子性保证不丢更新，反而常常因为要独占行而放大一致性流量；消除伪共享靠布局和写频率，而不是靠 atomic。\n5. **「除了 padding，还有什么工程手段？」**\n   - 考点：是否有实际优化经验。\n   - 答法：每线程本地累加再合并、分片计数（如 LongAdder 的思路）、批量提交降低写频率、把只读共享数据与可写数据分开布局。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 12,
+    "section": "第 2 章 伪共享：cache line、填充与真伪对比"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP04.6",
+  "chapter": "CP04",
+  "title": "第 5 章 从源码到 IR：Clang 的 AST 与 CodeGen 如何分工",
+  "src": {
+    "file": "notebook/projects/cpu/compiler/NOTES.md",
+    "sha256": "sha256:c6fff8754ad6e8ac1d415ac403d79eedbe0ea927767a531665e867679040055f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP04.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 从源码到 IR：Clang 的 AST 与 CodeGen 如何分工",
+      "level": 2,
+      "content": "**要解决的问题**：Clang 要把 C/C++ 的语言语义降到 LLVM IR，但 AST 与 CodeGen 必须分工。不解决，语言特性和 ABI 细节会漏进优化器，或 CodeGen 过早优化、难维护。\n\n**机制**：Clang 流程是预处理 → Parser → Sema → AST → CodeGen → `llvm::Module` → 优化/后端。AST 是语义树，不是 SSA：`FunctionDecl`、`CompoundStmt`、`ReturnStmt`、`BinaryOperator`、`DeclRefExpr`、`ImplicitCastExpr`、`IntegerLiteral` 等节点保留类型、作用域、重载决议和隐式转换。Sema 把隐式转换显式化，CodeGen 不再猜语义。\n\nCodeGen 以 Translation Unit 为单位：`CodeGenModule` 拥有 `llvm::Module`，管全局变量/函数、常量、类型与 ABI lowering、全局构造/析构、debug info；每个函数由 `CodeGenFunction` 用 `IRBuilder` 生成基本块和指令。局部变量先落成 `alloca` 还是直接 SSA，取决于是否可取地址、生命周期和 cleanup；前端通常选简单形式，交给 `mem2reg` 提升。短路求值、三目、异常/cleanup、虚调用、结构体拷贝都在这里降成 IR。ABI 的关键部分也在这里：Clang 的 target `ABIInfo` 决定参数/返回如何分类，IR 里可能出现 `sret`、`byval` 等属性；LLVM 后端再把调用约定映射到机器层。\n\n关键取舍：CodeGen 生成“直白、可优化”的 IR，而不是在 AST 上做复杂优化。这样前端简单，优化器只面对 IR；代价是 O0 IR 冗余，依赖中端清理。\n\n**最小例子**：`int f(int x){ return x*2+1; }`。`clang -Xclang -ast-dump -fsyntax-only f.c` 可见 `FunctionDecl` 下的 `ParmVarDecl`、`CompoundStmt`、`ReturnStmt`、`BinaryOperator '+'`，其左是 `BinaryOperator '*'`，叶子是 `ImplicitCastExpr`/`DeclRefExpr` 和 `IntegerLiteral`。`clang -S -emit-llvm -O0 f.c -o f.ll` 的函数体通常是 `alloca i32`、`store` 参数、`load`、`mul`、`add`、`ret`；`opt -passes=mem2reg` 后 alloca/load/store 被消掉，得到类似 `%1 = mul i32 %0, 2`、`%2 = add i32 %1, 1`、`ret i32 %2`。调用 `f(3)` 返回 7；IR 里的常量 2、1 就是 AST 的 `IntegerLiteral` 降下来的。\n\n**面试高频问法**：\n- 问：AST 和 LLVM IR 的职责边界？→ 考点：语义分析 vs lowering。答：AST 保留语言级声明、类型和隐式转换，CodeGen 按"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "compiler",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 11,
+    "section": "第 5 章 从源码到 IR：Clang 的 AST 与 CodeGen 如何分工"
+  }
+}

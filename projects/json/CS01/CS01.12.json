@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.12",
+  "chapter": "CS01",
+  "title": "7.2 bomblab · 逐层设计（Ch3，复习式）",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.12:body.s01",
+      "type": "extension",
+      "title": "7.2 bomblab · 逐层设计（Ch3，复习式）",
+      "level": 3,
+      "content": "> `bomb/solutions` 已覆盖 6 phase + secret（截至 2026-11-04）。这一节**不是重做**，而是把那 94 行笔记里的每个答案，反推成\"它背后考的是哪个机器级知识点\"，再按 408 的口径过一遍。\n\n#### 7.2.1 通用拆解流程（这套动作比某个炸弹的答案值钱）\n\n```\n1. objdump -d bomb > bomb.asm          # 全部反汇编，离线看\n2. 定位 <main>：找到 phase_1 ... phase_6 的调用点与 read_line / phase_defused\n3. 定位 <phase_N>：从函数入口往下读，先找\"输入被送到哪里\"（sscanf 的格式串是关键）\n4. 找常量：objdump -s -j .rodata  /  gdb 里 x/s <addr>  (你笔记里的 x/s 0x402400 就是这么用的)\n5. 关键判断处下断点：break *0x40xxxx ;  run ;  x/s $rax ...\n6. 推输入 -> 试 -> 若引爆炸弹，回到第 3 步重新精读\n```\n\n**三个\"一眼认出来\"的形态**（408 考汇编阅读就考这三种）：\n\n| 形态 | 汇编特征 | 对应 C 结构 |\n|---|---|---|\n| **跳转表** | `jmp *0x402470(,%rax,8)` + 一段连续 8 字节地址区 | `switch (i) { case ... }` |\n| **递归调用** | 函数体内 `call` 自身 + 栈上保存参数 | `int f(int a, int l, int r)` |\n| **链表遍历** | `mov 0x8(%rbx), %rax` / `mov (%rax), %eax`（偏移 8 = next 指针） | `while (p) { ... p = p->next; }` |\n\n#### 7.2.2 七关的知识点对照（按你的 solutions 反推）\n\n| Phase | 你的答案 | 机器级知识点 | 三层问答 |\n|---|---|---|---|\n| 1 | `Border relations with Canada have never been better.` | **字符串比较**：`strings_not_equal` 循环逐字节比 | ① 逐字节 `cmpb` 直到 `\\0`；② 为什么不一次比 8 字节（长度未知必须逐个）；③ 若给一段 `movzbl (%rdi,%rax), %eax` 循环，能否认出是 `strcmp` |\n| 2 | `1 2 4 8 16 32` | **数组 + 指针递增**：`rbx = &num[1]`，`cmp -0x4(%rbx), %eax` | ① 循环里比较相邻元素；② 编译器用指针自增代替下标（`num[i]` → `*(p++)`）；③ 认出 `add $0x4,%rbx` = 数组步进 4 字节（int） |\n| 3 | `0 207` | **跳转表 switch**：`jmp *0x402470(,%rax,8)` | ① 索引 → 表基址 + 8×索引 → 取目标地址；② 为什么用表而不用 `if-else` 链（O(1) vs O(n)）；③ **小端读表**：表里的 8 字节要反着读 |\n| 4 | `7 0` | **递归 + 二分**：`func4(a, 0, 14)`，中点 `mid = (edx + esi + sign(edx-esi)) / 2` | ① 递归栈帧与参数传递（前 6 个参数走寄存器）；② \"向零取整\"的除法在汇编里是 `+sign` 再 `/2`；③ 给一段递归汇编能否画出调用树 |\n| 5 | `ionefg` | **字符低 4 位作索引查表** | ① `and $0xf, %eax` + 查表拼串；② ASCII 与位操作的配合；③ 认出 `and $0xf` 是\"取低 4 位\"的掩码操作 |\n| 6 | `4 3 2 1 6 5` | **链表排序**：6 个节点循环 5 次，比较 `node->val` 降序 | ① 结构体内存布局（val 在 0，next 在 8）；② 链表重排是改指针不是搬数据；③ 认出 `0x8(%rbx)` 是 `next` 字段 |\n| secret | — | **二叉搜索树**：`fun7(root, x)`，返回值编码路径 `2*f(left)` / `2*f(right)+1` | ① BST 查找路径；② 用 2 进制位编码\"左右\"路径（路径即编码）；③ 给返回式能否反推输入 |\n\n#### 7.2.3 408 视角的三个抓手\n\n408 **不考逆向**，但考\"给一段 GCC 生成的 x86-64 汇编，问它在干什么\"。所以从 bomb 里要带走的是这三条：\n\n1. **栈帧布局**：`call` 压返回地址 → `push %rbp; mov %rsp,%rbp` → 局部变量在 `-0x8(%rbp)` 一带 → 第 7 个及以上参数走栈。\n2. **参数传递约定**：`%rdi %rsi %rdx %rcx %r8 %r9`（整型/指针），返回值 `%rax`。\n3. **数组/结构体/指针的三种寻址**：`(%rbx)`、`0x8(%rbx)`、`(%rax,%rbx,4)`（基址+变址×比例 = 数组下标）。\n\n**复习验收（30 分钟）**：遮住 `solutions`，只看 `bomb.asm` 的 `phase_3` 与 `phase_6`，要求自己说出\"这是 switch 跳转表\"\"这是链表降序重排\"，并指出判断依据的那条指令。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 20,
+    "section": "7.2 bomblab · 逐层设计（Ch3，复习式）"
+  }
+}

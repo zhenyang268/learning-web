@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.4",
+  "chapter": "EG05",
+  "title": "第 3 章 ABA 问题与无锁数据结构的正确做法",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 ABA 问题与无锁数据结构的正确做法",
+      "level": 2,
+      "content": "**要解决的问题**：CAS 的原子性只覆盖「这一个地址、这一刻」，不覆盖「这个地址的历史」。无锁结构靠「读—算—CAS」重试，如果读和 CAS 之间值被改回了原样，CAS 会误判「没人动过」，把一个已经失效的拓扑当成有效拓扑提交。不解决，无锁栈/队列会静默丢节点、double free、use-after-free，而且极难复现。\n\n**机制**\n\n经典无锁栈 pop：\n\n```c\ndo {\n    top = head.load(acquire);          // ①\n    if (!top) return NULL;\n    next = top->next;                  // ②\n} while (!head.compare_exchange_weak(top, next, acq_rel)); // ③\nreturn top;\n```\n\nABA 的产生需要三个条件同时成立：CAS 只比较值、节点内存可被复用或释放、①②与③之间存在窗口。典型的坏交错：\n\n| 时刻 | T1 | T2 | 栈状态 |\n|---|---|---|---|\n| t1 | 读到 `top=A, next=B`，被抢占 | | A→B→C |\n| t2 | | pop A，pop B，push A | A→C |\n| t3 | CAS(head, A, B) 成功 | | head=B，B 已弹出 |\n\nT1 认为「A 还在、A 后面是 B」，于是把 head 改成 B。但 B 已经被弹出甚至释放，C 及其后的节点全部丢失。\n\n解法分三层，工程上通常组合使用：\n\n1. **让「值相同」不再等价于「状态相同」**：tagged pointer，把版本计数和指针打包成一个原子字，每次修改版本加一，CAS 比较整字。64 位平台上指针有效位之外的位可以借给版本（具体位数按平台而定），原子性依赖 128 位 CAS（x86-64 的 `cmpxchg16b`）或 LL/SC 循环。版本会回绕，$2^{k}$ 次修改后理论上仍可 ABA，所以它通常要和回收机制配合。\n2. **让内存不能被复用**：hazard pointer、epoch-based reclamation、RCU、引用计数。注意它单独**不解决**逻辑 ABA——值仍可能被改回，只是节点还活着、不会 use-after-free；要真正判定「没人动过」，仍要版本或标记。\n3. **利用 LL/SC**：ARM/POWER 的 load-linked/store-conditional 中，任何对该地址的写（哪怕写回原值）都会让后续 SC 失败，因此天然免疫「值回原样」这一类 ABA。但 LL/SC 有伪失败，且不能跨 cache line，循环里仍要正确处理重试。\n\n另外，CAS 失败重试路径要用 `compare_exchange_weak`（允许伪失败，通常在循环里更快），内存序至少要 `acq_rel`，否则读到的 `next` 可能不是与 `top` 匹配的那个版本。Michael-Scott 队列的 head/tail 也有同样的 ABA 面，处理方式一致。\n\n**最小例子**\n\n```bash\ngcc -O2 -pthread aba.c -o aba && ./aba\n```\n\n程序按上表交错执行：T1 读 `A/B` 后 `sched_yield()`，T2 做完 pop-pop-push，T1 再 CAS。观察输出：\n\n```\nCAS succeeded: head = B (freed)\nexpected: head = C, length 1\nactual:   lost C, use-after-free on B\n```\n\n把 `head` 换成 `std::atomic<uint64_t>`、高 16 位存版本、用 `cmpxchg16b` 或 `__int128` 的 CAS 后，同一交错下 T1 的 CAS 因版本不匹配失败并重读，输出变为 `CAS failed, retry; head = A (v+2)`，C 保留。\n\n**面试高频问法**\n\n- 「CAS 不是原子的吗，为什么还有 ABA？」→ 考点是原子性 ≠ 历史性。答法：CAS 保证单地址比较交换不可分割，但读和 CAS 之间值可以 A→B→A；CAS 看到 A 仍成功，可它依赖的 `next` 已经失效，于是把过期拓扑提交了。\n- 「怎么彻底解决 ABA？」→ 考点是分层。答法：没有银弹，版本号/tagged pointer 解决「值等价」，hazard pointer/epoch/RCU 解决「内存复用」，LL/SC 架构上任何写都会让 SC 失败；工程上组合使用，且版本号会回绕，要靠回收机制兜底。\n- 「版本号放多少位，64 位系统怎么塞？」→ 考点是实现细节。答法：指针有效位之外的高位借给版本，具体位数按平台而定；CAS 需要 128 位原子指令或双字 CAS，不是所有平台都有，没有时退回 LL/SC 或加锁。\n- 「hazard pointer 能不能单独解决 ABA？」→ 考点是区分 use-after-free 与逻辑 ABA。答法：不能。它保证被引用的节点不被释放，但值仍可能被改回；它解决的是内存回收，逻辑 ABA 还要版本或标记。\n- 「Java 里 `AtomicStampedReference` 和 `AtomicMarkableReference` 有什么区别？」→ 考点是标记宽度。答法：前者带整数版本戳，能防 ABA；后者只有一个布尔标记，只能表达「有没有被改过」，防不了 A→B→A。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 12,
+    "section": "第 3 章 ABA 问题与无锁数据结构的正确做法"
+  }
+}

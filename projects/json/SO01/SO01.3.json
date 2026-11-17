@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.3",
+  "chapter": "SO01",
+  "title": "第 1 章〔CPU〕进程与线程：fork / exec / wait / clone，父子进程的关系与代价",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.3:body.s01",
+      "type": "extension",
+      "title": "第 1 章〔CPU〕进程与线程：fork / exec / wait / clone，父子进程的关系与代价",
+      "level": 2,
+      "content": "**要解决的问题**：线上两起典型事故。其一，守护进程反复 `fork()` 子进程却不 `wait()`，僵尸堆到 `pid_max`，之后所有服务报 `fork: Cannot allocate memory`，看起来像“内存不够”，实际是 pid 表满。其二，32 GB 的 Redis/JVM 做 `fork()` 快照，写入放大触发 COW 拆页，RSS 瞬间翻倍，被 OOM killer 杀掉，日志里只有一条 killed。此外还有一类：`exec` 前没给监听 fd 设 `FD_CLOEXEC`，socket 漏进子进程，重启时 `Address already in use`，用 `ss` 查不到占用者，因为占着它的是个不干活的子进程。不会这一章，你只能看到“进程起不来”，说不出“是 pid 耗尽、是 COW 翻倍、还是 fd 泄漏”。\n\n**API 与代价**：\n\n```c\n#include <unistd.h>\n#include <sys/wait.h>\n#include <sched.h>\n\npid_t pid = fork();\nif (pid == 0) {              /* 子进程：只复制了调用线程 */\n    execl(\"/bin/prog\", \"prog\", NULL);\n    _exit(127);              /* 注意不是 exit() */\n} else if (pid > 0) {        /* 父进程：拿到子 pid */\n    int st;\n    pid_t r = waitpid(pid, &st, WNOHANG);\n    /* r==0   : 子进程还在，稍后再来\n       r==-1  : errno==ECHILD 没有这个子进程（已被 SIG_IGN 回收或不是亲生的）\n       WIFEXITED(st)/WEXITSTATUS(st)、WIFSIGNALED(st)/WTERMSIG(st) 才是退出码 */\n} else {                     /* -1: EAGAIN(超 RLIMIT_NPROC/pid_max) 或 ENOMEM */\n}\n\n/* 线程 = 共享地址空间的 clone，内核里同样是 task_struct */\nclone(fn, stack, CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM, arg);\n```\n\n`fork` 是唯一“返回两次”的调用，三分支里漏写 `pid < 0` 是经典 bug。`_exit` 与 `exit` 的差别是致命的：`exit` 会跑 `atexit`、flush stdio 缓冲，`fork` 后子进程调 `exit` 会把父进程未 flush 的缓冲区再写一遍（第 8 章会再碰它）。\n\n`execve(path, argv, envp)` 成功不返回；失败返回 -1，errno 关键分支：`ENOENT`（路径或解释器不存在，脚本 shebang 指向不存在的 bash 也报这个）、`EACCES`、`ENOEXEC`（格式不对且没有 shebang）、`E2BIG`（argv+envp 超过 `ARG_MAX`，典型是 exec 时把整个环境塞进去）。`execvp` 走 `PATH`，`execvpe` 需要 `_GNU_SOURCE`。\n\n代价：`fork` 是 `copy_process()` 加逐级复制页表，成本随虚拟地址空间增大而线性增长，而不随 RSS 增长。64 GB 虚拟地址、几十 MB 实际驻留的进程，`fork` 一样慢，因为复制的页表项按 VMA 覆盖的虚拟范围算。真正的内存代价推迟到写时。`vfork`/`posix_spawn` 在 glibc 上就是 `clone(CLONE_VM|CLONE_VFORK)` 加 `exec`，省掉页表复制，但 `vfork` 子进程只能 `exec` 或 `_exit`，做别的就是未定义行为。\n\n**对应命令与读法**：\n\n- `ps -eo pid,ppid,stat,etime,rss,cmd --sort=-rss | head -20` → 看 `STAT` 列：`Z` 是僵尸、`D` 是不可中断睡眠（IO 卡死）、`S` 可中断睡眠、`R` 运行、`s` 会话首进程、`l` 多线程、`+` 前台。`RSS` 对僵尸恒为 0，所以“内存没涨但进程一堆”正是僵尸的特征；`ETIME` 与 `PPID` 一起看，大量 `PPID=1` 的同名进程说明父进程已经先死（孤儿被过继）。会骗你：`%CPU`/`RSS` 都是瞬间快照，容器内 `ps` 看到的是整个 pid namespace，宿主机视角也在里面。\n- `top` → 看 `Tasks:` 那一行 `total / running / sleeping / stopped / zombie`。`zombie` 非 0 且持续上涨就是没 `wait`；`running` 数长期大于 CPU 核数说明在排队。会骗你：`top` 里多线程进程的 `%CPU` 默认按 Irix 模式可超过 100%，按 `I` 切 Solaris 模式才是“占整机百分比”，两个口径混用会把 8 核机器的 400% 误读成 4%。\n- `pstree -p <pid>` → 看树形结构与 `(pid)` 标注，`{name}` 是线程组内的线程。用来确认 fork 出来的子进程到底挂在哪、有没有被过继给 1。会骗你：进程一旦被 reparent 到 init/subreaper，树就断了，真实血缘只能靠 `ps -o ppid=` 或审计日志回溯。\n- `pidof nginx` → 返回所有匹配可执行文件名的主 pid。用来确认“起了几个、是不是 restart 后老进程还在”。会骗你：对 shell/python 脚本，`pidof` 匹配的是解释器的名字（`pidof myscript.sh` 通常什么也不返回），得用 `pidof -x` 或直接看 `ps -o cmd=`。\n- `strace -f -e trace=clone,clone3,execve,wait4 -o /tmp/p.log ./prog` → 看每次 `clone(...) = 12345` 与随后的 `execve`，`CLONE_THREAD` 标志说明是建线程而不是建进程；`wait4` 缺失而 `clone` 很多，就是僵尸的根因。新内核上 `fork` 会显示为 `clone3`，只写 `trace=clone` 会漏。会骗你：`-f` 的 ptrace 会显著拖慢目标（clone 密集时几倍），并且改变调度时序，线上慎用，优先 `-c` 只统计。\n\n**原理**：`fork()` 落到 `kernel_clone()`，`copy_process()` 依次复制 `task_struct`、复制或共享 `files_struct`/`fs_struct`/`sighand`、调 `dup_mmap()` 复制 VMA 和页表，然后把父子双方的 PTE 都改成只读并清 `PTE_W`，页框的 `_refcount` 加一——这就是写时复制。所以 `fork` 的开销是“页表项数 + VMA 数”，不是数据量；第一次写触发缺页，`do_wp_page()` 才分配新页框，此时 RSS 才涨（第 5、6 章会接着算这笔账）。\n\n`CLONE_THREAD` 让新 task 与父 task 共享 `signal_struct` 和 `mm`，`getpid()` 返回同一个 tgid，`gettid()` 才是各自的内核 pid——`ps -L`/`top -H` 里那个 LWP 就是它。线程组里任一线程调 `exit_group`（即 `exit()`）会杀掉整组，`_exit()` 才是只退自己。\n\n退出路径：`do_exit()` 把 `task->exit_state` 置 `EXIT_ZOMBIE`，释放 `mm`（RSS 归零）、关闭 fd、把剩余子进程 reparent 给 `init` 或最近的 `PR_SET_CHILD_SUBREAPER` 进程，然后**保留 task_struct 不释放**，等父进程 `wait4()` 里 `release_task()` 回收。这就是僵尸：pid 被占、`task_struct` 被占，但内存几乎不占。所以“僵尸吃内存”是误会，它吃的是 pid 号；而 `pid_max` 默认 32768（可按发行版调整，`/proc/sys/kernel/pid_max` 上限受 `PID_MAX_LIMIT` 约束），涨到头就 `EAGAIN`。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 19,
+    "section": "第 1 章〔CPU〕进程与线程：fork / exec / wait / clone，父子进程的关系与代价"
+  }
+}

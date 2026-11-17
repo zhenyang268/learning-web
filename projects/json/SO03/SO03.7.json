@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO03.7",
+  "chapter": "SO03",
+  "title": "第 5 章 地址空间管理",
+  "src": {
+    "file": "notebook/projects/os/kernel-compare/NOTES.md",
+    "sha256": "sha256:3fdad2384b230576e8b856161ad428eb8606560c1ee888202b9c68e3b315846e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO03.7:body.s01",
+      "type": "extension",
+      "title": "第 5 章 地址空间管理",
+      "level": 2,
+      "content": "**要解决的问题**：谁负责建立映射？三个内核给了三个答案，代价与灵活性完全不同。\n\n**机制**：\n\n- **JOS：显式系统调用。** `sys_page_alloc` / `sys_page_map` 由用户进程调用，内核按参数建立映射并把页记录进引用计数。好处是\"每次映射都能被观测、出错立刻返回\"；坏处是没有按需分配，用户栈要自己涨，映射策略全压在用户库。\n- **xv6：内核统一建。** `exec` 时按 ELF 段建映射，`sbrk` 增长堆，栈在进程创建时预先映射一页。用户页表里额外映射 `trampoline` 与 `trapframe` 两页，前者供切页表用。\n- **Linux：缺页驱动。** 先建 `mm_struct` 与 VMA（红黑树）描述\"这段地址应该有映射\"，真正访问时缺页异常进入 `handle_mm_fault`，按 VMA 决定匿名页、文件页（page cache）还是 COW。好处是延迟分配、共享、按需换入；坏处是错误被推迟（访问时才崩）。\n\n**最小例子**：`mmap` 一个 1 GB 匿名区，Linux 立刻返回但不分配物理页；第一次写触发缺页、分配零页或新页。JOS 里同样的意图要先算好页数、循环调用 `sys_page_alloc`——**这就是\"显式映射 vs 按需缺页\"的体感差别。**\n\n**面试高频问法**：\n\n1. **「为什么 Linux 的 `malloc` 大块内存几乎不耗时？」** → 考点：延迟分配。答法：`mmap` 只改 VMA，物理页在首次访问时缺页分配；所以\"申请成功\"不等于\"可用\"，OOM 可能发生在访问时而不是申请时。\n2. **「JOS 的 `UVPT` 是什么技巧？」** → 考点：自映射页表。答法：把页目录/页表本身按固定虚拟区映射进用户空间，用户态就能直接读自己的页表项，不需要系统调用；xv6 没有这个需求，所以不实现。\n3. **「反向映射（rmap）解决了什么？」** → 考点：回收的前提。答法：回收一个物理页前要知道\"谁在映射它\"，Linux 维护反向映射链；JOS 用引用计数，xv6 干脆不做回收。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "kernel-compare",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 12,
+    "section": "第 5 章 地址空间管理"
+  }
+}

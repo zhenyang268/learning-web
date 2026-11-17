@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "EG05.1",
   "chapter": "EG05",
-  "title": "latent-issues · 大纲",
+  "title": "latent-issues · 总览",
   "src": {
     "file": "notebook/projects/eng/latent-issues/OUTLINE.md",
     "sha256": "sha256:bf52a03d1f92be3a7707b899b16eafae086dfd5e7814431c96213ff27e9e1e31"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

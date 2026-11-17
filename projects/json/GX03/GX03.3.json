@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "GX03.3",
+  "chapter": "GX03",
+  "title": "章节目录",
+  "src": {
+    "file": "notebook/projects/cg/geometry-anim/NOTES.md",
+    "sha256": "sha256:de751a3397a31d34f6c1a6ac1322ea459a216b8e108c6835f2c8caefe84b33d9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "GX03.3:body.s01",
+      "type": "extension",
+      "title": "章节目录",
+      "level": 2,
+      "content": "1. 参数曲线\n2. B 样条与 NURBS\n3. 曲面与细分\n4. 关键帧与插值\n5. 骨骼与蒙皮\n6. 粒子与积分器\n7. 碰撞与简单物理\n8. 动画数据流"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cg",
+    "project": "geometry-anim",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 10,
+    "section": "章节目录"
+  }
+}

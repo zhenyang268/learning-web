@@ -41,7 +41,7 @@ import { renderContent, escapeHtml, renderInline } from './renderers/markdown';
 import {
   answeredText,
   levelText,
-  patchRouteState,
+  projectRoutesPlanHtml,
   renderDocHtml,
   selftestNextText,
 } from './renderers/doc';
@@ -458,12 +458,13 @@ function refreshChrome(): void {
     current: currentNavLetter(code),
     errorCount: issues.length + (fatal ? 1 : 0),
     query: searchQuery,
+    showProgress: current.showProgress !== false,
     // 五站互链：从 SUBJECTS 派生（旧版是单条 crossLink，只能看得到两个站）。
     // 当前站由 `renderHeader` 标 aria-current 并禁用跳转。
     sites: siteLinksOf(current.id),
     chapterRank: chapterRankOf,
-    // 按钮与数据同源：`syllabus/angles === null`（math1 / projects / 408 的路线）
-    // 时顶栏不出现「总纲」「路线」。此前无条件渲染，按下去只有一句「暂未提供」。
+    // 按钮与数据同源：`syllabus/angles === null`（math1 / emath / 408 的路线）
+    // 时顶栏不出现「总纲」「路线」。工程线 2026-11-18 起有总纲，按钮随数据出现。
     syllabus: current.syllabus ? { label: '总纲', title: current.syllabus.title } : null,
     angles: current.angles ? { label: '路线', title: current.angles.title } : null,
     onSearch: (q) => {
@@ -485,6 +486,7 @@ function refreshSidebar(): void {
     query: searchQuery,
     chapterRank: chapterRankOf,
     unitRank: unitRankOf,
+    showProgress: current.showProgress !== false,
   });
 }
 
@@ -563,14 +565,7 @@ function patchReaderState(code: string): void {
   if (!file) return;
   // 1) 卡片徽标：派生口径的卡按自测级别重写（entry-card 单元这一步是空转）
   if (isSelftestKind(code) || hasSelftest(file)) patchCardMastery(elReader, derivedLevelOf);
-  // 2) 路线卡：已达标数 / 当前位置 / 每步 done·now·todo
-  patchRouteState(elReader, {
-    has: (c) => byCode.has(c),
-    masteryOf: masteryByCode,
-    frontier: frontierCode(),
-    threshold: 3,
-  });
-  // 3) 右栏「验收」那行报的是当前 L 级别 → 整块右栏过轻，直接重渲染（右栏没有交互焦点）
+  // 2) 右栏「验收」那行报的是当前 L 级别 → 整块右栏过轻，直接重渲染（右栏没有交互焦点）
   const stProg = hasSelftest(file) ? selftestProgress(file) : null;
   renderAside(elAside, {
     file,
@@ -578,6 +573,7 @@ function patchReaderState(code: string): void {
     masteryOf: masteryByCode,
     difficulty: asideDifficulty,
     prereqEmptyNote: prereqEmptyNote(code),
+    showProgress: current.showProgress !== false,
     derived: hasSelftest(file),
     selftest: stProg
       ? { level: stProg.level, next: stProg.next, remaining: stProg.remaining, total: stProg.nextTotal }
@@ -610,6 +606,21 @@ function patchChapterBar(chap: string): void {
 let searchQuery = '';
 
 function renderFrontier(): void {
+  if (current.showProgress === false) {
+    // 已经在本页时不再显示「看总纲 →」的回头按钮。
+    if (currentCode() === 'graph' || currentCode() === 'angles') {
+      elFrontier.innerHTML = '';
+      return;
+    }
+    // 工程线不报「今天该学」：进度由 NOW.md / learning-todo 管。
+    // 横幅改成总纲入口，读者第一眼看到的是「按能力线选项目」。
+    elFrontier.innerHTML = `<div class="inner">
+      <div><b>工程总纲</b><span>按能力线选项目：工程实践 → 性能对照 → 底座；进度不在这里控制</span></div>
+      <span class="grow"></span>
+      <button class="chip" data-graph="1">看总纲 →</button>
+    </div>`;
+    return;
+  }
   const next = frontierCode();
   const meta = next ? metaOf(next) : undefined;
   if (!meta) {
@@ -701,6 +712,25 @@ const CARDS_PER_FRAME = 2;
 
 /* --------------------------------------------------------------- 正文渲染 */
 
+/**
+ * 分组页 / 面试索引页的下级项目（`.1` 总览）：
+ * 路线卡从项目页撤掉后，分组页仍要有一条去本组项目的路。
+ */
+function childNavOf(file: EntryFile): Array<{ code: string; title: string }> {
+  const kind = ((file as unknown as { meta?: Record<string, unknown> }).meta?.kind ?? '') as string;
+  if (kind !== 'project-group' && kind !== 'project-index') return [];
+  const prefix = kind === 'project-group' ? (file.code ?? '').slice(0, 2) : '';
+  return units
+    .filter(
+      (u) =>
+        u.kind === 'project' &&
+        u.code.endsWith('.1') &&
+        (!prefix || u.code.startsWith(prefix)),
+    )
+    .sort((a, b) => cmpCode(a.code, b.code))
+    .map((u) => ({ code: u.code, title: u.title.replace(/ · 总览$/, '') }));
+}
+
 function renderReader(
   file: EntryFile,
   groups: EntryGroup[],
@@ -711,12 +741,16 @@ function renderReader(
   if ((file as unknown as { schema?: string }).schema === 'doc-card/v1') {
     beginRender();
     // 路线卡要显示「已达标 / 当前位置」：判定状态来自同一份掌握度口径，不新增存储
-    elReader.innerHTML = renderDocHtml(file, {
-      has: (code) => byCode.has(code),
-      masteryOf: masteryByCode,
-      frontier: frontierCode(),
-      threshold: 3,
-    });
+    elReader.innerHTML = renderDocHtml(
+      file,
+      {
+        has: (code) => byCode.has(code),
+        masteryOf: masteryByCode,
+        frontier: frontierCode(),
+        threshold: 3,
+      },
+      childNavOf(file),
+    );
     elReader.dataset.ready = '1';
     return;
   }
@@ -967,6 +1001,7 @@ function apply(): void {
     masteryOf: masteryByCode,
     difficulty,
     prereqEmptyNote: prereqEmptyNote(code),
+    showProgress: current.showProgress !== false,
     derived: derivedAside,
     selftest: stProg
       ? { level: stProg.level, next: stProg.next, remaining: stProg.remaining, total: stProg.nextTotal }
@@ -1054,11 +1089,15 @@ function docView(kind: 'graph' | 'angles'): void {
     elAside.innerHTML = '';
     return;
   }
+  const routes =
+    kind === 'graph' && current.routesOnGraph
+      ? projectRoutesPlanHtml((c) => byCode.has(c))
+      : '';
   elReader.innerHTML = `<div class="card pagehead">
       <h1>📘 ${label} <em>${escapeHtml(doc.title)} · ${escapeHtml(doc.version)}</em></h1>
       <div class="meta"><span class="tag">${kind}</span><span>${escapeHtml(current.title)}</span></div>
     </div>
-    <div class="card docview">${renderContent(doc.md)}</div>${
+    <div class="card docview">${renderContent(doc.md)}</div>${routes}${
       kind === 'angles' ? bridgeTrack() : ''
     }`;
   elAside.innerHTML =
@@ -1074,7 +1113,20 @@ function docView(kind: 'graph' | 'angles'): void {
       <p class="kv">想知道<b>整个数学怎么长在一起</b>，看顶栏的「总纲」；<br>想知道<b>这条路怎么走</b>，就是本页。</p>
       <p class="kv dim">代号已换新体系（域 2 字母 + 章 2 位 + 单元序），文中的引用随之更新。</p>
     </div>`
-      : `<div class="box">
+      : current.routesOnGraph
+        ? `<div class="box">
+      <h4>怎么读这一页</h4>
+      <p class="kv">先选<b>能力线</b>，再选项目：工程实践是主线，性能工程 / 图形 / AI 是对照。
+      不要把「CPU 微架构、编译器、CUDA」当成和「测试、调试」并列的项目。</p>
+      <h4 style="margin-top:16px">代号规则</h4>
+      <p class="kv"><span class="mono">CP04.6</span> = 项目 CP04 · 第 6 节。
+      项目总览是 <span class="mono">.1</span>，NOTES 按二级标题一节一页（超长节再按三级标题拆）。</p>
+      <h4 style="margin-top:16px">进度</h4>
+      <p class="kv">本页<b>不显示已达标 / L0 / 进度条</b>。学到哪一步看父仓 <span class="mono">NOW.md</span>
+      与 <span class="mono">learning-todo/daily/</span>；站点只回答「有什么、为什么这么排」。</p>
+      <p class="kv dim">分类真源：<span class="mono">notebook/projects/PLAN.md</span> 与 <span class="mono">README.md</span>。</p>
+    </div>`
+        : `<div class="box">
       <h4>怎么读这张图</h4>
       <p class="kv">四条主轴（分析 / 代数几何 / 概率 / 物理量子）<b>并列，不排先后</b>；
       真正的顺序由你要去的出口决定。</p>
@@ -1190,6 +1242,12 @@ export async function boot(subject: Subject = MATH): Promise<void> {
       field: 'prereq',
       message: `依赖图存在环，拓扑排序失败：${graph.cycles.map((c) => c.join('/')).join(' / ')}`,
     });
+  }
+  if (!currentCode() && subject.startRoute) {
+    // 工程线的首屏是「工程总纲」，不是某个项目页；startCode 只能指向单元，
+    // 所以单独给文档路由留一个开关。hashchange 会触发 apply。
+    location.hash = `#${subject.startRoute}`;
+    return;
   }
   if (!currentCode() && units.length) {
     // 学科配置的 startCode 优先（英语一 → GE01.1 考纲主键表）；

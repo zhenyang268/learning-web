@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP02.10",
+  "chapter": "CP02",
+  "title": "第 9 章 性能计数器与 roofline：怎么判断是算力受限还是带宽受限",
+  "src": {
+    "file": "notebook/projects/cpu/cpu-microarchitecture/NOTES.md",
+    "sha256": "sha256:b1539a87a7849b9ecba5e0bf6800be550395ec0b2c83652efc9050ba7e9db83f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP02.10:body.s01",
+      "type": "extension",
+      "title": "第 9 章 性能计数器与 roofline：怎么判断是算力受限还是带宽受限",
+      "level": 2,
+      "content": "**要解决的问题**：前八章一直在讲「怎么让流水线跑得更快」，但没有回答「我这段代码到底卡在哪、还值不值得优化」。缺少归因手段时，优化就只能靠猜：很可能花一周做向量化，最后发现程序本来就卡在主存带宽上，提速为零。这一章提供两样东西：把「慢」拆成算力项和带宽项的度量方法，以及判断「是否已经接近硬件上限」的标尺。\n\n**机制**：\n\n其一，硬件性能计数器（PMU）。每个核内有一组可编程计数器，能统计周期数、退休指令数、各级 cache 的 access/miss、TLB miss、分支误预测等事件。Linux 上通过 `perf_event_open` 暴露，`perf stat` 是常用前端。核心推导量是 IPC：\n\n$$\n\\text{IPC} = \\frac{\\text{instructions retired}}{\\text{cycles}}\n$$\n\nIPC 只告诉你「每周期退休几条」，必须和 stall 归因事件一起看才有意义。两个陷阱：一是**多路复用**——要统计的事件数多于物理计数器数时，内核分时切换计数器再外推，短程序误差很大；二是 **retired 语义**——只统计退休的指令，被误预测冲掉的指令不计入，所以误预测率高的代码 IPC 会显得「虚高」。\n\n其二，roofline 模型。横轴是运算强度 $I$（每从主存搬运 1 Byte 完成多少 FLOP），纵轴是可达性能。两条上界：算力上界 $P \\le \\pi$，带宽上界 $P \\le \\beta I$。合起来：\n\n$$\nP \\le \\min(\\pi,\\ \\beta I), \\qquad I^{*} = \\frac{\\pi}{\\beta}\n$$\n\n$I^{*}$ 是拐点。$I < I^{*}$ 时程序在斜线段上，属于**带宽受限**，再怎么优化运算都没用；$I > I^{*}$ 时在水平段上，属于**算力受限**，此时唯一的出路是换算法、换指令（SIMD/FMA）或换更宽的核。分块（cache blocking）的作用就是提高 $I$，把工作点从斜线推到水平段——这正好接上第 8 章的存储层次：分块让数据在高层 cache 里被复用。\n\n**最小例子**：\n\n设（以下为便于计算的假设值，不是实测某型号）：双精度峰值 $\\pi = 100$ GFLOP/s，可持续带宽 $\\beta = 25$ GB/s，则 $I^{*} = 4$ FLOP/Byte。\n\n对 $C = A \\times B$ 做边长为 $b$ 的分块，double 占 8 Byte，每块搬入 $2b^2$ 个元素、$16b^2$ Byte，完成 $2b^3$ FLOP：\n\n$$\nI = \\frac{2b^{3}}{16b^{2}} = \\frac{b}{8}\n$$\n\n| $b$ | $I$ (FLOP/Byte) | 上限 | 状态 |\n|---|---|---|---|\n| 8 | 1 | $25 \\times 1 = 25$ GFLOP/s | 带宽受限，仅峰值 25% |\n| 32 | 4 | 拐点 | 恰好平衡 |\n| 64 | 8 | $\\pi = 100$ GFLOP/s | 算力受限 |\n\n一次真实测量走这条路径：\n\n```bash\nperf stat -e cycles,instructions,cache-misses,LLC-load-misses ./a.out\n```\n\n若 IPC 只有 0.3 且 LLC-load-misses 很高，先怀疑带宽与预取，不要急着改计算内核；若 IPC 已接近该核的发射宽度，说明前端和后端都被喂饱了，属于算力受限，此时只有 SIMD 化、提高 FMA 占比或换核才有用。注意「发射宽度」的具体值按实现而定，要从该核的公开微架构资料取，不要凭经验猜。\n\n**面试高频问法**：\n\n1. 「IPC 低就说明程序不好吗？」→ 考点是 IPC 与工作点的关系。→ 答法：IPC 低只说明每周期退休的指令少，可能是带宽受限、可能是分支误预测、也可能是代码本身是长依赖链。要配合 stall 事件和 roofline 上的位置一起判断，单独一个 IPC 没有诊断价值。\n\n2. 「roofline 的拐点怎么来的，为什么它很重要？」→ 考点是 $\\pi/\\beta$ 的物理含义。→ 答法：拐点是算力和带宽两个上界相等的点，$I^{*} = \\pi/\\beta$。拐点左边的优化方向和右边完全相反，所以要先测出自己站在哪一侧，再决定是提高运算强度还是减少运算量。\n\n3. 「怎么把一段内存受限的代码变成算力受限？」→ 考点是分块与复用。→ 答法：提高运算强度 $I$，最直接的办法是分块，让载入的数据在寄存器或 cache 里被复用多次；再配合预取把延迟隐藏掉。本质是把第 8 章的存储层次当作提升 $I$ 的工具。\n\n4. 「perf 统计出来的数为什么有时不可信？」→ 考点是多路复用和 retired 语义。→ 答法：事件数超过物理计数器时内核会分时复用再外推，运行时间短就偏差大，应加长采样或减少事件；另外 retired 只统计退休指令，被冲掉的指令不计入，误预测多的场景要交叉验证。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "cpu-microarchitecture",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 10,
+    "section": "第 9 章 性能计数器与 roofline：怎么判断是算力受限还是带宽受限"
+  }
+}

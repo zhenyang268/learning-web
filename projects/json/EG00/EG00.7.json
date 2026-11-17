@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG00.7",
+  "chapter": "EG00",
+  "title": "4 跨项目追问",
+  "src": {
+    "file": "notebook/projects/eng/NOTES.md",
+    "sha256": "sha256:e214cf5954a537c33d05170a4d2a93b87a993d118977ca442a1b652629277764"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG00.7:body.s01",
+      "type": "extension",
+      "title": "4 跨项目追问",
+      "level": 2,
+      "content": "1. **「你这个优化在别人机器上还成立吗？」** → 口径题：缓存大小、核数、NUMA、编译器版本；结论只在同口径下有效。\n2. **「测试全绿但线上出问题，怎么解释？」** → 测试只覆盖了被断言的行为；引出\"契约测试\"与\"生产环境可观测性\"。\n3. **「为什么加机器没用？」** → 可能撞上单点（数据库主库、单 key 热点）或串行段（Amdahl）；也可能是连接数/文件句柄耗尽。\n4. **「这个 bug 复现不了怎么办？」** → 从\"复现\"退到\"观测\"：加日志/指标/探针，把概率问题变成计数问题。\n5. **「性能问题为什么最后都变成架构问题？」** → 因为瓶颈会迁移：优化了 CPU 就露出 I/O，优化了 I/O 就露出锁，最后只能改结构。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 8,
+    "section": "4 跨项目追问"
+  }
+}

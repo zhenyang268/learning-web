@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.8",
+  "chapter": "DB01",
+  "title": "第 7 章 MVCC：版本链、快照与回滚段",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.8:body.s01",
+      "type": "extension",
+      "title": "第 7 章 MVCC：版本链、快照与回滚段",
+      "level": 2,
+      "content": "**要解决的问题**：让读和写不互相阻塞，同时保证同一事务在快照读中看到一致的数据版本。如果用纯锁实现隔离，读者要加共享锁、写者要加排他锁，读写互斥会把并发度压到很低；MVCC 把「读」变成对一个历史版本的访问，读不加锁，写不阻塞读。\n\n**机制**：以 MySQL InnoDB 为例。每行记录除用户列外，还有 `DB_TRX_ID`（最后修改它的事务 id）和 `DB_ROLL_PTR`（指向 undo 中的上一版本），这两个隐藏列构成版本链的骨架。\n\n- 写操作产生 undo 记录。`INSERT` 产生 insert undo，只用于回滚，事务提交后可立刻丢弃；`UPDATE`/`DELETE` 产生 update undo，它既用于回滚，也用于构造旧版本，必须保留到没有快照再需要它为止。\n- undo 记录自身也带一个指向更早 undo 的指针，`DB_ROLL_PTR` → 最新 undo → 更早 undo，形成从新到旧的单向链表，链头是聚簇索引上的当前记录。\n- 一致性读时，InnoDB 构造一个 Read View，四个关键字段：`m_ids` 创建时活跃的读写事务 id 列表、`min_trx_id` = `m_ids` 最小值、`max_trx_id` 下一个将分配的事务 id、`creator_trx_id` 本事务 id。\n\n可见性判断（简化伪代码）：\n\n```text\nvisible(trx_id):\n    if trx_id == creator_trx_id: return true       # 自己的修改\n    if trx_id < min_trx_id:      return true       # 快照前已提交\n    if trx_id >= max_trx_id:     return false      # 快照后开启\n    if trx_id in m_ids:          return false      # 快照时还活跃\n    return true                                    # 快照前已提交\n```\n\n不可见就顺着 `DB_ROLL_PTR` 回退一个版本，再判断，直到找到可见版本或链尾（此时对当前查询不可见，视为删除）。这个过程叫版本回溯。\n\n两个关键差异：\n\n- 隔离级别 RC 下，每条快照读 SELECT 都新建 Read View，所以同一事务两次查询能看到中间提交的变化；\n- RR 下，事务内第一次快照读建立 Read View 并复用，之后的快照读都基于同一时间点，这是 RR 能避免不可重复读的原因。\n\n清理由 purge 线程完成：update undo 挂在 history list 上，purge 判断「比最早的 Read View 还旧、且没有事务再需要」时才回收。长事务会导致 `history list length` 持续增长、undo 表空间膨胀、回溯链变长——这是「长事务有害」的具体机制。\n\n还要区分快照读和当前读：`SELECT` 普通查询是快照读；`SELECT ... FOR UPDATE`、`LOCK IN SHARE MODE`、`UPDATE`、`DELETE`、`INSERT` 是当前读，读最新已提交版本并加锁。所以 RR 下「快照读看不到别人改的值，UPDATE 却能看到」并不矛盾。\n\n**最小例子**：\n\n```sql\nCREATE TABLE t (id INT PRIMARY KEY, v INT) ENGINE=InnoDB;\nINSERT INTO t VALUES (1, 10);\n\n-- 会话 A\nSET SESSION transaction_isolation = 'REPEATABLE-READ';\nBEGIN;\nSELECT v FROM t WHERE id = 1;      -- 10\n\n-- 会话 B\nBEGIN;\nUPDATE t SET v = 20 WHERE id = 1;\nCOMMIT;\n\n-- 会话 A\nSELECT v FROM t WHERE id = 1;                -- 仍是 10，快照读走版本链\nSELECT v FROM t WHERE id = 1 FOR UPDATE;     -- 20，当前读\nCOMMIT;\n```\n\n会话 A 第二次查询时，聚簇索引记录上 `DB_TRX_ID` 是 B 的事务 id，落在 A 的 `m_ids` 或 `>= max_trx_id` 区间，判为不可见，回退到 undo 中得到 10。\n\n**面试高频问法**：\n\n1. 「MVCC 怎么实现？」→ 考点是版本链 + Read View 是否讲全 → 一句话答法：「行上隐藏事务 id 和回滚指针，改一行就在 undo 里留一条旧版本，读的时候用 Read View 判断当前版本可见不可见，不可见就顺指针回溯到可见版本。」\n\n2. 「RR 和 RC 的 MVCC 差别在哪？」→ 考点是 Read View 的创建时机 → 「RC 每条语句新建 Read View，RR 事务内第一次快照读建一次并复用，所以 RC 会读到别人新提交的值，RR 不会。」\n\n3. 「MVCC 解决幻读吗？」→ 考点是快照读与当前读的边界 → 「只解决快照读的幻读；当前读和写操作仍要靠 next-key lock，所以 RR 下 `SELECT ... FOR UPDATE` 还能防幻读，RC 下就防不住。」\n\n4. 「undo log 什么时候能删？」→ 考点是 purge 与长事务 → 「update undo 挂在 history list 上，purge 线程确认没有比它更早的 Read View 需要时才回收；长事务会把这条线卡住，导致 undo 膨胀。」\n\n5. 「版本链很长有什么代价？」→ 考点是回溯成本与存储 → 「每次读要沿链回溯，undo 表空间和 history list 一起涨，最终拖慢查询和 purge，按实现而定具体耗时。」"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 12,
+    "section": "第 7 章 MVCC：版本链、快照与回滚段"
+  }
+}

@@ -5,11 +5,9 @@ import { selftestItems, selftestKey, selftestLevel, selftestProgress } from '../
 import {
   CORE_GAPS,
   PROJECT_ROUTES,
-  projectRoutesFor,
   type ExamTier,
   type JobTier,
   type ProjectRoute,
-  type ProjectRouteStep,
 } from '../content/project-routes';
 import { escapeHtml, renderContent, renderInline } from './markdown';
 
@@ -25,13 +23,15 @@ import { escapeHtml, renderContent, renderInline } from './markdown';
  * - `type=heading` 只出标题不出正文（源里「`## 考法` 下直接跟 `## 题`」的写法）。
  * - `mirror_of` 表示这条是真题镜像，页面上给一个可点的「→ 真题」指针。
  */
-/** 路线卡的状态注入：站内已有单元集合 + 每个单元的达标/推荐判定（由 app 提供） */
+/**
+ * 文档渲染的可选状态（由 app 提供）：
+ *  - `masteryOf` 只给章首「本章考点」导航显示 L 级（数一/408 的章首页）；
+ *  - `has/frontier/threshold` 保留给调用方（路线计划/旧调用），文档渲染本身不再显示进度。
+ */
 export interface DocRouteState {
   has(code: string): boolean;
   masteryOf(code: string): number;
-  /** 「今天该学」的代号（frontier）；null = 没有可推荐单元 */
   frontier: string | null;
-  /** 已达标门槛（与 frontier 同口径：≥3） */
   threshold?: number;
 }
 
@@ -67,7 +67,34 @@ function chapterKpsNav(file: EntryFile, route?: DocRouteState): string {
   </nav>`;
 }
 
-export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
+/**
+ * 分组页 / 面试索引页的「下级项目」导航（2026-11-18）。
+ *
+ * 为什么需要：全局路线卡从每个项目页撤掉后，分组页（`CP00` / `SO00` …）
+ * 不能再靠路线卡提供 `data-goto`；分组页应该指向**本组自己的项目总览**，
+ * 面试索引页则指向全部项目总览。
+ */
+function projectChildrenNav(items: ReadonlyArray<{ code: string; title: string }>): string {
+  if (!items.length) return '';
+  const rows = items
+    .map(
+      (u) =>
+        `<li><button class="chip" data-goto="${escapeHtml(u.code)}"><span class="mono">${escapeHtml(
+          displayCode(u.code),
+        )}</span> ${escapeHtml(u.title)}</button></li>`,
+    )
+    .join('');
+  return `<section class="docsec projchildren">
+  <h2 class="dochead">下级项目 · ${items.length}</h2>
+  <div class="docbody"><ul class="projlist">${rows}</ul></div>
+  </section>`;
+}
+
+export function renderDocHtml(
+  file: EntryFile,
+  route?: DocRouteState,
+  childNav?: ReadonlyArray<{ code: string; title: string }>,
+): string {
   const code = file.code ?? '';
   const meta = docMeta(file);
   const parts: string[] = [];
@@ -84,9 +111,6 @@ export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
     <h1>${escapeHtml(displayCode(code))} <em>${renderInline(file.title ?? '')}</em></h1>
     <div class="meta">${meta.map((m) => `<span class="tag">${escapeHtml(m)}</span>`).join('')}${backToLecture}</div>
   </div>`);
-
-  const routes = projectRoutesSection(file, route);
-  if (routes) parts.push(routes);
 
   for (const e of file.entries) {
     const level = typeof e.level === 'number' ? e.level : 2;
@@ -106,43 +130,15 @@ export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
   }
   const kps = chapterKpsNav(file, route);
   if (kps) parts.push(kps);
-  const selftest = selftestSection(file);
+  const selftest = selftestSection(file, fm.kind === 'project');
   if (selftest) parts.push(selftest);
+  const children = childNav?.length ? projectChildrenNav(childNav) : '';
+  if (children) parts.push(children);
   return parts.join('\n');
 }
 
-/**
- * 路线步骤的三种状态，全部由**已有掌握度**推出（不新增存储）：
- *   - `done`  已达标（mastery ≥ 3，与 frontier 的「前序达标」同口径）
- *   - `now`   就是「今天该学」的那一步
- *   - 其余    未达标
- */
-const REACHED = 3;
-
-/**
- * 「当前位置」那一行。抽成独立函数：自测作答后 app 要就地重写它
- * （`patchRouteState`），两处必须用同一段 HTML，否则文案/转义会漂移。
- */
-function nowStepHtml(step: ProjectRouteStep | undefined): string {
-  if (!step) return '';
-  return `<p class="prouteroute">当前位置：<b>${escapeHtml(step.stage)}</b> · ${escapeHtml(step.code)}</p>`;
-}
-
-/** 路线卡片元素 → 路线 id（就地刷新时要按 id 找回数据，不靠 DOM 反推步骤） */
+/** 路线卡元素 → 路线 id（静态卡只用于总纲页，不参与运行期刷新） */
 export const ROUTE_ATTR = 'data-route';
-
-function stepState(code: string, route?: DocRouteState): 'done' | 'now' | 'todo' {
-  if (!route) return 'todo';
-  const threshold = route.threshold ?? REACHED;
-  if (route.frontier && route.frontier === code) return 'now';
-  return route.masteryOf(code) >= threshold ? 'done' : 'todo';
-}
-
-function stepBadge(state: 'done' | 'now' | 'todo'): string {
-  if (state === 'done') return '<span class="pstepstep done">已达标</span>';
-  if (state === 'now') return '<span class="pstepstep now">当前位置</span>';
-  return '';
-}
 
 /**
  * 两个价值徽标：「求职：必须 / 高增益 / 可选」「考研：直接提分 / 能力迁移 / 弱相关」。
@@ -195,52 +191,36 @@ function routeHeadBages(route: ProjectRoute): { label: string; badge: string } {
 }
 
 /**
- * 紧凑变体：**只**给 label + 进度摘要，不给步骤列表。
+ * 静态路线卡（2026-11-18）：只回答「为了什么做、按什么顺序做」，
+ * **不显示完成度 / 已达标 / 当前位置** —— 进度不在这套静态站里控制。
  *
- * 用途是第 3 条的「其余 5 条收进 details」——折叠状态下读者需要一个能分辨
- * 「哪条是哪条、走到哪了」的最短摘要；展开后再渲染完整卡（`routeCard`）。
+ * 卡只在工程总纲页渲染一次，不再复制到每个项目页：
+ * 原先每个项目页都挂一张全局路线卡，读者在单项目里看到的是全局信息，
+ * 总纲层反而是空的。
  */
-function routeSummaryCard(route: ProjectRoute, state?: DocRouteState): string {
-  const done = route.steps.filter((s) => stepState(s.code, state) === 'done').length;
+function routeCardStatic(route: ProjectRoute, has: (code: string) => boolean): string {
   const head = routeHeadBages(route);
-  return `<article class="proute compact" ${ROUTE_ATTR}="${escapeHtml(route.id)}">
-    <div class="proutehead">
-      <h3>${escapeHtml(head.label)}${head.badge}</h3>
-      <span class="prouteprog mono">${done}/${route.steps.length} 已达标</span>
-    </div>
-  </article>`;
-}
-
-function routeCard(route: ProjectRoute, state?: DocRouteState): string {
-  const done = route.steps.filter((s) => stepState(s.code, state) === 'done').length;
-  const nowStep = route.steps.find((s) => stepState(s.code, state) === 'now');
-  const head0 = routeHeadBages(route);
-  const head = `<div class="proutehead">
-      <h3>${escapeHtml(head0.label)}${head0.badge}</h3>
-      <span class="prouteprog mono">${done}/${route.steps.length} 已达标</span>
-    </div>
-    ${nowStepHtml(nowStep)}
-    <p>${escapeHtml(route.goal)}</p>
-    ${route.overlap ? `<p class="poverlap">${escapeHtml(route.overlap)}</p>` : ''}`;
   const steps = route.steps
     .map((step) => {
-      const st = stepState(step.code, state);
-      const exists = state ? state.has(step.code) : true;
-      // `data-goto` / `title` 都是 **HTML 属性**语境：`attrEscape` 只适合 CSS 选择器
-      // （它把 `"` 转成 `\"`，在 HTML 里引号照旧收尾、可跳出属性），所以这里用 escapeHtml。
-      const chip = exists
+      // `data-goto` / `title` 是 HTML 属性语境，用 escapeHtml；attrEscape 只防 CSS 选择器。
+      const chip = has(step.code)
         ? `<button class="chip" data-goto="${escapeHtml(step.code)}">${escapeHtml(step.code)}</button>`
         : `<button class="chip pending" data-goto="${escapeHtml(step.code)}" title="该单元尚未生成">${escapeHtml(
             step.code,
           )} ·待生成</button>`;
-      return `<li class="pstep ${st}">${chip}
-        <span class="pstepbody"><b>${escapeHtml(step.stage)} · 成本${escapeHtml(step.cost)}</b>${stepBadge(st)}
+      return `<li class="pstep">${chip}
+        <span class="pstepbody"><b>${escapeHtml(step.stage)} · 成本${escapeHtml(step.cost)}</b>
         ${tierBadges(step.job, step.exam)}
         <span class="pstepwhy">为什么：${escapeHtml(step.why)}</span>
         <span class="pstepout">交付：${escapeHtml(step.outcome)}</span></span></li>`;
     })
     .join('');
-  return `<article class="proute" ${ROUTE_ATTR}="${escapeHtml(route.id)}">${head}<ol>${steps}</ol></article>`;
+  return `<article class="proute" ${ROUTE_ATTR}="${escapeHtml(route.id)}">
+    <div class="proutehead"><h3>${escapeHtml(head.label)}${head.badge}</h3></div>
+    <p>${escapeHtml(route.goal)}</p>
+    ${route.overlap ? `<p class="poverlap">${escapeHtml(route.overlap)}</p>` : ''}
+    <ol>${steps}</ol>
+  </article>`;
 }
 
 /**
@@ -264,139 +244,36 @@ function coreGapsBlock(): string {
 }
 
 /**
- * 主路线 = 数组里 role 为核心/协同的那两条（`testing-sim` / `kaoyan-sync`）。
- * 用 role 判定而不是写死 id：数据侧调整 id 时这里不会静默失配。
+ * 工程总纲页的「按目标选路线」区（2026-11-18）。
+ *
+ * 从每个项目页搬到总纲页：路线是全局信息，单项目页只保留右栏的
+ * 「动机 · 交付」（`routeMotivation`）。
+ * **不显示完成度/已达标/当前位置** —— 进度不在这套静态站里控制。
  */
-const isMainRoute = (r: ProjectRoute): boolean => r.role === '核心' || r.role === '协同';
-
-/**
- * 路线区：只回答「为了什么做、按什么顺序做、我现在在哪」。
- * 交付物用步骤自带的 `outcome`；验收=该单元的自测（L1–L5），这里只给指针不复述正文。
- *
- * 顺序 = `PROJECT_ROUTES` 数组顺序（核心 → 协同 → 原有分组路线，graphics 在最后）：
- * 同一份顺序既决定展示，也决定 projects 学科 frontier 的推荐优先级（见 `modules/graph.ts`）。
- *
- * **两种页面的呈现不同**（2026-11，解决「过度平铺」）：
- *
- *   ① 整表页（`project-group` / `project-index`，7 条路线全在）：
- *      只完整展开 testing-sim 与 kaoyan-sync 两条主路线；其余 5 条对照路线收进
- *      `<details>`，每条只留 label + 进度摘要。原来 7 张 3 米长的卡平铺，
- *      读者滚到第三条就已经忘记自己在看哪条。
- *      `核心缺口` 紧跟在 testing-sim 之后（独立成块、标题写「岗位缺口」），
- *      不被后面 5 条对照路线淹没。
- *
- *   ② 单项目页（`projectRoutesFor` 只命中该章所属的几条）：
- *      只完整展开「主路线那一张」（`routePlaceOf` 同款优先序：PROJECT_ROUTES 里第一条
- *      命中本章的，即核心 > 协同 > 对照），其余所属路线压成一行「同时在：…」。
- *      现场（CS01.1）：同一个单元被渲染 3 张卡、3 个「当前位置」，页面像在自我重复。
- */
-export function projectRoutesSection(file: EntryFile, state?: DocRouteState): string {
-  const routes = projectRoutesFor(file);
-  if (!routes.length) return '';
-
-  // ── 整表页：7 条全在
-  if (routes.length === PROJECT_ROUTES.length) {
-    const total = new Set(routes.flatMap((r) => r.steps.map((s) => s.code))).size;
-    const mains = routes.filter(isMainRoute);
-    const rest = routes.filter((r) => !isMainRoute(r));
-    // 主路线按数组序（核心→协同）逐张渲染；缺口块贴在**核心**那张之后
-    const mainHtml = mains
-      .map((r) =>
-        `${routeCard(r, state)}${r.role === '核心' ? `<div class="pgaps-slot">${coreGapsBlock()}</div>` : ''}`,
-      )
-      .join('');
-    const folded = rest.length
-      ? `<details class="proutes-more">
-      <summary>其余 ${rest.length} 条对照路线（可选参照）</summary>
-      <div class="proutes">${rest.map((r) => routeSummaryCard(r, state)).join('')}</div>
-    </details>`
-      : '';
-    return `<section class="project-routes" aria-label="按目标选择项目路线">
-    <h2>按目标选路线</h2>
-    <p class="stnote">路线定方向（${mains.length} 条主线 · ${total} 个阶段）：先走 <b>${mains
-      .map((r) => escapeHtml(r.label))
-      .join('</b> → <b>')}</b>；其余 ${rest.length} 条为对照，折在下面。<b>已达标</b> = 该单元自测到 L3 及以上，<b>当前位置</b> = 拓扑序 + 掌握度算出的「今天该学」。</p>
-    <div class="proutes">${mainHtml}</div>
-    ${folded}
-  </section>`;
-  }
-
-  // ── 单项目页：只完整展开主路线一张
-  const primary = routes.find(isMainRoute) ?? routes[0];
-  const others = routes.filter((r) => r !== primary);
-  const total = new Set(routes.flatMap((r) => r.steps.map((s) => s.code))).size;
-  const alsoOn = others.length
-    ? `<p class="palsoon">同时在：${others
-        .map(
-          (r) =>
-            `<button class="plink" data-route-jump="${escapeHtml(r.id)}" title="这条路线也包含本章">${escapeHtml(
-              r.label,
-            )}</button>`,
-        )
-        .join('<span class="dim"> · </span>')}</p>`
+export function projectRoutesPlanHtml(has: (code: string) => boolean): string {
+  const isMain = (r: ProjectRoute): boolean => r.role === '核心' || r.role === '协同';
+  const mains = PROJECT_ROUTES.filter(isMain);
+  const rest = PROJECT_ROUTES.filter((r) => !isMain(r));
+  const mainHtml = mains
+    .map(
+      (r) =>
+        `${routeCardStatic(r, has)}${r.role === '核心' ? `<div class="pgaps-slot">${coreGapsBlock()}</div>` : ''}`,
+    )
+    .join('');
+  const folded = rest.length
+    ? `<details class="proutes-more">
+    <summary>其余 ${rest.length} 条对照路线（可选参照）</summary>
+    <div class="proutes">${rest.map((r) => routeCardStatic(r, has)).join('')}</div>
+  </details>`
     : '';
-  return `<section class="project-routes" aria-label="本单元所属的项目路线">
-    <h2>在路线里的位置</h2>
-    <p class="stnote">本单元属于 ${routes.length} 条路线，这里只展开主路线一张（${total} 个阶段合计）；其余路线见下方「同时在」。</p>
-    <div class="proutes">${routeCard(primary, state)}</div>
-    ${alsoOn}
-  </section>`;
-}
-
-/**
- * 路线区的**就地刷新**（自测点完之后）：只重写每张路线卡内部的「已达标数 / 当前位置 / 每步状态」，
- * 不整页重渲染 —— 用户刚点的「能答」按钮在文档末尾，整页替换会把滚动位置弹回顶部。
- *
- * `state.masteryOf` / `state.frontier` 由调用方即时算好（与 `masteryByCode` 同一口径）。
- * @returns 是否有任何路线卡真的被更新（false = 该页没有路线区，调用方可跳过）
- */
-export function patchRouteState(host: ParentNode, state: DocRouteState): boolean {
-  const cards = host.querySelectorAll<HTMLElement>(`article.proute[${ROUTE_ATTR}]`);
-  if (!cards.length) return false;
-  let touched = false;
-  cards.forEach((el) => {
-    const id = el.getAttribute(ROUTE_ATTR) ?? '';
-    const route = PROJECT_ROUTES.find((r) => r.id === id);
-    if (!route) return;
-    const prog = el.querySelector<HTMLElement>('.prouteprog');
-    const done = route.steps.filter((s) => stepState(s.code, state) === 'done').length;
-    if (prog) prog.textContent = `${done}/${route.steps.length} 已达标`;
-    // 「当前位置」行可能原来不存在（没有 now 步骤）→ 用同一段 HTML 重建/插入
-    const nowStep = route.steps.find((s) => stepState(s.code, state) === 'now');
-    const cur = el.querySelector<HTMLElement>('.prouteroute');
-    if (nowStep) {
-      const html = nowStepHtml(nowStep);
-      if (cur) cur.outerHTML = html;
-      else el.querySelector('.proutehead')?.insertAdjacentHTML('afterend', html);
-    } else if (cur) {
-      cur.remove();
-    }
-    // 每步的 done / now / todo 与徽标（列表结构不动，只切 class 与徽标）
-    const items = el.querySelectorAll<HTMLElement>('li.pstep');
-    route.steps.forEach((step, i) => {
-      const li = items[i];
-      if (!li) return;
-      const st = stepState(step.code, state);
-      li.classList.remove('done', 'now', 'todo');
-      li.classList.add(st);
-      let badge = li.querySelector<HTMLElement>('.pstepstep');
-      const want = stepBadge(st);
-      if (!want) {
-        badge?.remove();
-        return;
-      }
-      if (!badge) {
-        const body = li.querySelector('.pstepbody');
-        if (!body) return;
-        body.insertAdjacentHTML('afterbegin', want);
-        badge = li.querySelector<HTMLElement>('.pstepstep');
-        return;
-      }
-      badge.outerHTML = want;
-    });
-    touched = true;
-  });
-  return touched;
+  return `<section class="project-routes" aria-label="按目标选择项目路线">
+  <h2>按目标选路线</h2>
+  <p class="stnote">路线只定方向，**不记进度**：${mains.length} 条主线 + ${rest.length} 条对照。
+  每步代号可点，进入项目总览；具体章节在项目页里。学到哪一步看 \`NOW.md\` / \`learning-todo/daily/\`，不看本站。
+  </p>
+  <div class="proutes">${mainHtml}</div>
+  ${folded}
+</section>`;
 }
 
 /**
@@ -406,10 +283,30 @@ export function patchRouteState(host: ParentNode, state: DocRouteState): boolean
  * 这里**只渲染**，写入口只有 `app.ts` 的委托处理器 ——
  * 所以「自测是唯一写入口、手动徽标不得抬高 frontier」的口径由两处共同保证。
  */
-function selftestSection(file: EntryFile): string {
+function selftestSection(file: EntryFile, readonly = false): string {
   const code = file.code ?? '';
   const items = selftestItems(file);
   if (!items.length) return '';
+  // 工程线：题目保留，但**只读**，不记进度、不写「能答」。
+  // 进度真源是 NOW.md / learning-todo/daily，不在本站。
+  if (readonly) {
+    const rows = items
+      .map(
+        (it) => `<li class="stq">
+      <span class="sttag">${escapeHtml(it.tag)}</span>
+      <span class="stbody"><span class="stq-text">${renderInline(it.q)}</span>
+      <span class="stbar">会标准：${renderInline(it.bar)}</span></span>
+    </li>`,
+      )
+      .join('');
+    return `<section class="docsec interviewq">
+  <h2 class="dochead">面试追问 · 不看书能答吗？</h2>
+  <div class="docbody">
+  <p class="stnote">只作读完后的自检，不记进度、不影响推荐。答不出就回正文，不用凭感觉点亮。</p>
+  <ul class="stlist">${rows}</ul>
+  </div>
+  </section>`;
+  }
   const prog = selftestProgress(file);
   const rows = items
     .map((it, i) => {
@@ -490,6 +387,9 @@ function docMeta(file: EntryFile): string[] {
   if (typeof m.examCount === 'number' && m.examCount > 0) out.push(`真题 ${m.examCount} 题`);
   if (typeof m.surveyId === 'string') out.push(String(m.surveyId));
   if (typeof m.status === 'string' && m.status) out.push(String(m.status));
+  if (typeof m.part === 'number' && typeof m.parts === 'number') {
+    out.push(`第 ${String(m.part)}/${String(m.parts)} 节`);
+  }
   if (m.lecture && typeof m.lecture === 'object') out.push('章讲义');
   if (Array.isArray(m.kps) && m.kps.length) out.push(`${m.kps.length} 考点`);
   out.push(`${file.entries.length} 节`);

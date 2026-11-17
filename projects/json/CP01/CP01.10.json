@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP01.10",
+  "chapter": "CP01",
+  "title": "第 9 章 内联汇编与 intrinsics：约束、clobber、内存屏障",
+  "src": {
+    "file": "notebook/projects/cpu/asm-link-arch/NOTES.md",
+    "sha256": "sha256:04b5529a001bfe4ec19f5d9641db647d43404a1276627187bd916f3d732fe051"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP01.10:body.s01",
+      "type": "extension",
+      "title": "第 9 章 内联汇编与 intrinsics：约束、clobber、内存屏障",
+      "level": 2,
+      "content": "**要解决的问题**：C 语言无法表达特殊寄存器、系统指令、精确指令序列和内存序语义；如果直接把这些指令交给编译器而不讲清输入输出和副作用，优化器就会在它不知道的地方重排、缓存或删除代码，导致“单测通过、上线乱序”的错误。这一章要解决的问题是：**如何把一段汇编安全地嵌入 C，并让编译器的优化假设保持成立**。\n\n**机制**\n\nGCC/Clang 的扩展内联汇编形式是：\n\n```c\nasm volatile (\"模板\" : 输出 : 输入 : clobber);\n```\n\n- **约束**决定操作数放在哪里：`\"r\"` 通用寄存器，`\"m\"` 内存，`\"i\"` 立即数，`\"x\"` SSE 寄存器，`\"w\"` 向量寄存器；`\"=r\"` 只写，`\"+r\"` 读写，`\"=&r\"` 是 early clobber，声明输出在输入被读完之前就可能被写，防止模板先覆盖输入。\n- **clobber** 声明这条 asm 会破坏什么：`\"cc\"` 表示标志寄存器，`\"memory\"` 表示内存内容可能改变。`\"memory\"` 是**编译器屏障**：它让编译器不能把跨这条 asm 的内存访问缓存到寄存器，也不能随意重排内存读写，但它**不生成任何 CPU 指令**。\n- **volatile** 只约束这条 asm 本身不被删除、不被移到与之有数据依赖的访问之外；它不等于内存屏障，也不等于原子性。\n\n内存屏障分两层：编译屏障 `asm volatile(\"\" ::: \"memory\")` 只限制编译器；CPU 屏障才限制硬件。x86 用 `mfence`、`lfence`、`sfence`，AArch64 用 `dmb ish`、`dsb`，以及带获取/释放语义的 `ldar`/`stlr`。实际工程中优先用 C11 `atomic_thread_fence` 或 `__atomic_*`，让编译器按目标选择指令。\n\n**intrinsics 的取舍**：intrinsics 是编译器内建函数，例如 x86 的 `_mm256_loadu_si256`、AArch64 NEON 的 `vld1q_u8`。优点是类型安全、优化器理解语义、可参与调度和常量折叠；缺点是把代码绑定到 ISA 和头文件。内联汇编灵活，但优化器把它当黑盒，约束写错就是静默错误。原则：**能用 intrinsics 就不写 asm，intrinsics 覆盖不到才写 asm**。\n\n**最小例子**\n\n```c\nstatic inline int xchg_int(int *p, int v) {\n    int old;\n    asm volatile(\"xchgl %0, %1\"\n                 : \"=r\"(old), \"+m\"(*p)\n                 : \"0\"(v)\n                 : \"memory\");\n    return old;\n}\n```\n\n调用 `int x = 42; int old = xchg_int(&x, 7);`，结果 `old = 42`、`x = 7`。`\"0\"(v)` 让 `v` 与 `old` 共用同一个寄存器作为输入；`\"+m\"` 表示内存既读又写；`\"memory\"` 阻止编译器把 `x` 的其他访问提到交换之前。x86 上 `xchg` 对内存操作数隐含锁语义，所以这里没有再加 `lock` 前缀。\n\n一个反例：生产者写 `data = 42; flag = 1;`，只在两句之间放 `asm volatile(\"\" ::: \"memory\")`。这能阻止编译器把 `data` 的写挪到 `flag` 之后，但**不能阻止 CPU 乱序**；跨核可见性仍需 release 存储或屏障指令。\n\n**面试高频问法**\n\n1. **问法**：`asm volatile` 里的 `volatile` 和 `\"memory\"` clobber 是一回事吗？\n   **考点**：编译器屏障与指令屏障的区别。\n   **一句话答法**：不是；`volatile` 只让这条 asm 不被删掉、不被随意移动，`\"memory\"` 才告诉编译器内存可能变了、跨它不能缓存和重排内存访问，两者都不产生 CPU 屏障。\n\n2. **问法**：输出约束 `\"=r\"` 和 `\"=&r\"` 差在哪？\n   **考点**：early clobber。\n   **一句话答法**：`=` 允许编译器让输出和某个输入共用寄存器，因为它假设输入先读完；`=&` 声明输出在输入读完前就可能被写，模板先写输出时不会覆盖输入。\n\n3. **问法**：intrinsics 和内联汇编怎么选？\n   **考点**：优化器可见性与可移植性。\n   **一句话答法**：优先 intrinsics，编译器能调度、折叠并理解依赖；只有特殊寄存器、系统指令或必须精确控制指令序列时才用内联汇编。\n\n4. **问法**：`asm volatile(\"\" ::: \"memory\")` 能当跨线程同步吗？\n   **考点**：编译期约束不等于硬件内存序。\n   **一句话答法**：不能，它只约束编译器；CPU 仍可乱序，跨核同步要用 acquire/release 原子操作或目标架构的屏障指令。\n\n5. **问法**：内联汇编最常见的线上事故是什么？\n   **考点**：约束和 clobber 写漏。\n   **一句话答法**：漏写 `\"memory\"` 导致内存访问被重排、漏写 `\"cc\"` 或 early clobber 导致寄存器被覆盖，表现为优化级别一换就错。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "asm-link-arch",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 10,
+    "section": "第 9 章 内联汇编与 intrinsics：约束、clobber、内存屏障"
+  }
+}

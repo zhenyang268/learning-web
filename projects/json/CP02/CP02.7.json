@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP02.7",
+  "chapter": "CP02",
+  "title": "第 6 章 乱序访存：load/store 队列、内存消歧、store-to-load forwarding",
+  "src": {
+    "file": "notebook/projects/cpu/cpu-microarchitecture/NOTES.md",
+    "sha256": "sha256:b1539a87a7849b9ecba5e0bf6800be550395ec0b2c83652efc9050ba7e9db83f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP02.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 乱序访存：load/store 队列、内存消歧、store-to-load forwarding",
+      "level": 2,
+      "content": "**要解决的问题**：第 5 章用重命名消除了寄存器的假依赖，但**内存没有名字可换**。`store [r1], x` 和 `load r2, [r3]` 是否访问同一地址，编译期和发射期都未必知道——`r3` 可能还没算出来。如果 load 随意越过更老的 store 先执行，可能读到过期值；如果一律不许越过，访存就成了新的顺序瓶颈，乱序收益被大幅吃掉。乱序访存要在这两者之间找到可回滚的折中。\n\n**机制**：\n\n- **load/store 队列（LQ/SQ）**：访存指令按程序顺序登记。load 可以提前发射，但提交前要验证没有被更老的 store 覆盖；store 在提交前**不写 cache**，数据先放在 store buffer 里，等 ROB 提交时才真正落地。这是精确异常的要求：误预测清流水时，未提交的 store 必须能一并撤销。\n- **内存消歧（memory disambiguation）**：load 发射时查 SQ，判断是否有更老的 store 可能别名。三种策略：\n  - 保守：只要存在地址未知的更老 store 就等——安全但慢；\n  - 激进：预测不别名，先执行，事后验证，错了就 replay（memory order machine clear）；\n  - 折中：**地址/依赖预测器**记住「这条 load 上次和哪条 store 冲突过」，按历史决定等还是冲。\n- **store-to-load forwarding**：store 数据还在 store buffer、没进 cache 时，后来的 load 命中同一地址，直接从 store buffer 取，省掉「等 store 提交再读 cache」的往返。难点在**部分重叠**：load 的字节范围可能只覆盖 store 的一部分，或跨两条 store，硬件要按字节偏移和掩码拼接；覆盖不全或跨 cache line 时通常只能停顿。\n\n```text\nload issue:\n  addr = compute(...)\n  for each older store in SQ (newest first):\n     if store.addr known and overlaps(load.addr, store.addr):\n         if store covers load range: forward bytes, done\n         else: stall / partial forward\n     if store.addr unknown:\n         consult dependence predictor → wait or speculate\n  if no conflict: read cache, mark load for later verification\n```\n\n**最小例子**：`store [r10+0], r11`（4 字节），随后 `load r12, [r10+0]`（4 字节）。地址完全相同，SQ 地址比较命中，直接 forwarding，load 不必等 store 提交，省掉一次 store→cache→load 的往返。再看部分重叠：store 写 `[0x1000] = 0x11223344`（小端，字节依次为 44 33 22 11），随后 `load` 2 字节于 `[0x1002]`，应得 `0x1122`。forwarding 逻辑要按偏移取 store 数据的高两字节拼出结果；若 load 范围是 `[0x1002, 0x1006)`，就跨出了这条 store 的覆盖范围，需要合并下一条 store 或停顿。\n\n**面试高频问法**：\n\n- 「load 能不能越过更老的 store 执行？」→ 考点是消歧与可回滚性。答法：可以，前提是能判断别名或能事后验证并回滚；地址未知时靠依赖预测器猜，猜错触发 memory order clear 重放，猜对就赚到并行。\n- 「store 为什么必须等到提交才写 cache？」→ 考点是精确异常。答法：store 一旦写了 cache 就无法撤销，误预测或异常后内存已被改脏；放在 store buffer 里等 ROB 提交，才能保证清流水时一起丢弃。\n- 「store-to-load forwarding 的难点在哪？」→ 考点是部分重叠与对齐。答法：要按字节偏移和掩码判断 load 的字节区间是否被 store 完全覆盖，部分覆盖需要拼接，跨多条 store 或跨 cache line 时往往只能停顿，逻辑面积不小。\n- 「内存消歧猜错的代价有多大？」→ 考点是流水线清空。答法：要把违规 load 及其之后的指令清掉重放，量级接近一次分支误预测，所以预测器准确率直接决定激进策略是否划算。\n- 「为什么乱序访存比乱序算术难？」→ 考点是地址的运行时性。答法：算术指令的源寄存器编号译码时就知道，依赖可静态匹配；访存地址要等地址计算指令执行完才存在，别名关系动态且不可静态判定，所以必须靠队列 + 运行时比较 + 预测。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "cpu-microarchitecture",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 10,
+    "section": "第 6 章 乱序访存：load/store 队列、内存消歧、store-to-load forwarding"
+  }
+}

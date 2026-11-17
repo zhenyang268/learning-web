@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO00.7",
+  "chapter": "SO00",
+  "title": "4 跨项目追问",
+  "src": {
+    "file": "notebook/projects/os/NOTES.md",
+    "sha256": "sha256:ea9cd76832f3f4e4729e92e9d274efafaf69b1cd7d4b55fc7a296eefc079315a"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO00.7:body.s01",
+      "type": "extension",
+      "title": "4 跨项目追问",
+      "level": 2,
+      "content": "1. **「你说缺页很贵，贵在哪一步？」** → 区分 minor（补 PTE）与 major（读设备），给量级关系而不是绝对数。\n2. **「页表遍历为什么要走 TLB？」** → 交界题：主战场在 `cpu/cpu-microarchitecture/`，这里只答「地址翻译本身也是一次访存」。\n3. **「你的程序为什么被 OOM 杀了而不是别人？」** → `oom_score`、内存占用、cgroup 限额三者一起说。\n4. **「信号处理函数里为什么不能随便调 `printf`？」** → 可重入与 async-signal-safe；延伸到「为什么 `malloc` 不是」。\n5. **「容器里的 `nproc` 为什么不准？」** → cgroup 配额与 CPU 亲和性的区别；展开在 `virtualization/`。\n6. **「同一段代码在裸机、VM、容器里跑，慢的顺序为什么不一定一致？」** → 三段各自收费不同：裸机纯硬件；VM 收「退出税」（fork/小 I/O 最痛）；容器收「overlay 与共用内核」的税（首次写、元数据密集最痛）。没有「谁一定快」，只有「这个负载在收谁的税」。\n7. **「xv6 与 Linux 的 `fork` 语义一样吗？」** → 名字一样、决定权不同：`fork` 全共享地址空间（COW），`clone` 把共享集合参数化；进程与线程的差别在 Linux 是参数，在 xv6 是「没有」。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 7,
+    "section": "4 跨项目追问"
+  }
+}

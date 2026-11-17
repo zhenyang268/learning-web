@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG02.6",
+  "chapter": "LG02",
+  "title": "第 5 章 上下文管理器与 with",
+  "src": {
+    "file": "notebook/projects/langs/python-basics/NOTES.md",
+    "sha256": "sha256:756d0b7dacd8aaff39313179f8b6b750108fa2187ac744c8d1474d84cf6e0c1b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG02.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 上下文管理器与 with",
+      "level": 2,
+      "content": "**要解决的问题**：把「获取资源 → 使用 → 无论发生什么都释放」这个模式从业务代码里抽出来，保证异常、`return`、`break` 路径下释放都发生，而且释放逻辑只写一次。不解决的话，就是满屏 `try/finally`，漏一个就是文件句柄或锁泄漏。\n\n**机制**：\n\n- 协议两个方法：`__enter__(self)` 的返回值绑定给 `as` 后面的名字；`__exit__(self, exc_type, exc, tb)` 在退出时被调用，正常退出时三个参数都是 `None`。\n- `__exit__` 返回**真值**表示异常已被处理，`with` 块内的异常不再向外传播；返回 `None`/`False` 则原样抛出。所以清理型管理器应显式 `return False`（或干脆不 return），吞异常必须是刻意的。\n- `with a() as x, b() as y:` 等价于两层嵌套 `with`，退出顺序与进入顺序相反，`b` 先退出。\n- `contextlib.contextmanager` 把生成器函数变成上下文管理器：`yield` 之前是 `__enter__`，`yield` 出去的值就是 `as` 的目标，`yield` 之后是 `__exit__`。块内抛异常时，`__exit__` 用 `gen.throw()` 把异常抛回 `yield` 那一行，所以**必须用 `try/finally` 包住 `yield`**，否则清理代码不执行。\n- 需要动态数量时用 `contextlib.ExitStack`，`enter_context` 注册，退出时逆序回调。\n\n```python\nimport time\nfrom contextlib import contextmanager\n\nclass Timer:\n    def __enter__(self):\n        self.t0 = time.perf_counter()\n        return self                      # as 拿到的是 self\n    def __exit__(self, exc_type, exc, tb):\n        self.elapsed = time.perf_counter() - self.t0\n        return False                     # 不吞异常\n\n@contextmanager\ndef tx(conn):\n    conn.begin()\n    try:\n        yield conn                       # as 拿到 conn\n    except Exception:\n        conn.rollback()\n        raise                            # 决定不吞，继续抛\n    else:\n        conn.commit()\n```\n\n**最小例子**：\n\n```python\nwith Timer() as t:\n    sum(range(1000))\nprint(t.elapsed > 0)          # True，__exit__ 已执行\n\nclass Swallow:\n    def __enter__(self): return self\n    def __exit__(self, *exc): return True\n\nwith Swallow():\n    raise ValueError(\"boom\")  # 不会向外抛，因为 __exit__ 返回 True\nprint(\"continued\")            # 会执行\n\nwith open(\"a.txt\") as f:      # 块内异常也保证 close\n    raise RuntimeError\n```\n\n**面试高频问法**：\n\n1. **「with 等价于什么，`__exit__` 一定会执行吗？」** → 考点是协议的展开形式。答法：等价于 `m = expr; x = m.__enter__()` 加 `try: ... finally: m.__exit__(...)`；只要 `__enter__` 成功返回，`__exit__` 在异常、`return`、`break` 下都会执行——但如果 `__enter__` 自己抛异常，`__exit__` 不会被调用。\n2. **「`__exit__` 返回 True 会发生什么？」** → 考点是异常抑制语义。答法：块内异常被吞掉，控制流从 `with` 之后继续；只应在确实处理了异常时返回真值，清理型管理器返回假值以免掩盖 bug。\n3. **「`@contextmanager` 内部怎么实现的，异常怎么进去的？」** → 考点是生成器协议。答法：装饰器把生成器函数包成一个实现了 `__enter__/__exit__` 的类，`__enter__` 调 `next(gen)` 跑到 `yield`，`__exit__` 正常时 `next(gen)`、异常时 `gen.throw(exc)`；因此清理必须写在 `try/finally` 里，且 `yield` 只能出现一次。\n4. **「多个 with 的退出顺序，怎么管理不确定数量的资源？」** → 考点是嵌套与栈式释放。答法：进入顺序从左到右、退出逆序；数量动态时用 `ExitStack`，`enter_context` 注册的回调在 `with` 结束时逆序执行。\n5. **「with 能替代 try/except 吗？」** → 考点是职责区分。答法：不能。上下文管理器管的是「作用域边界的资源释放」，不是「就地处理某个异常」；它可以把异常信息拿到手做记录或回滚，但要不要吞异常是显式设计决策。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "python-basics",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 10,
+    "section": "第 5 章 上下文管理器与 with"
+  }
+}

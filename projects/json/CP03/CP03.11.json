@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.11",
+  "chapter": "CP03",
+  "title": "S8 乱序访存：LSQ + 消歧",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.11:body.s01",
+      "type": "extension",
+      "title": "S8 乱序访存：LSQ + 消歧",
+      "level": 2,
+      "content": "### 要解决的问题\n\n重命名为寄存器提供了\"可换的名字\"，**内存没有名字可换**。`store [r1], x` 与 `load r2, [r3]` 是否同址，发射时 `r3` 可能还没算出来。放任 load 越过更老的 store 会读脏；一律不许越又退化成顺序瓶颈。这一节要在两端之间找一个可回滚的折中。\n\n### 机制\n\n- **LQ/SQ**：访存指令按程序序登记。load 可提前发射，但提交前要验证没有被更老的 store 覆盖；store 在提交前**不写 cache**，数据先躺 store buffer。\n- **消歧三策略**：保守（地址未知的更老 store 存在就等）→ 激进（预测不别名，先跑，事后验证，错了 replay）→ 折中（地址/依赖预测器记住历史冲突）。\n- **store-to-load forwarding**：store 数据还在 buffer 时，后来的 load 命中同址直接从 buffer 取。难点是**部分重叠**：要按字节偏移与掩码拼接；跨多条 store 或跨 cache line 时通常只能停。\n\n### 最小例子\n\n```asm\nsw   x11, 0(x10)     # [0x1000] = 0x11223344（小端：44 33 22 11）\nlh   x12, 2(x10)     # 读 [0x1002] 2 字节 → 期望 0x1122\n```\n\n转发逻辑必须按偏移取高两字节拼出 `0x1122`；若 load 是 `lw x12, 2(x10)`（4 字节，跨出这条 store 的覆盖范围），就只能停顿或合并下一条 store——**这类\"部分重叠\"是 LSQ 里最大的 bug 源**。\n\n**验收判据**：① 三个 microbench（`memcpy`、链表遍历、随机访存）的 IPC 分别变化，且\"保守 vs 投机\"的差值能归因到假依赖次数；② difftest 在含大量别名访存的随机程序上零分歧；③ 注入一个\"store 提前写 cache\"的 bug，确认 difftest 在误预测/异常路径上能抓到。\n\n### 面试高频问法\n\n- **\"load 能越过更老的 store 吗？\"** → 考点是可回滚性。答法：能，前提是能判断别名或能事后验证并回滚；地址未知时靠预测器猜，猜错触发 memory order clear 重放。\n- **\"为什么 store 要等提交才写 cache？\"** → 考点是精确异常。答法：一旦写了 cache 就无法撤销，误预测或异常后内存已脏；放 store buffer 等 ROB 提交，清流水时才能一并丢弃。\n- **\"为什么乱序访存比乱序算术难？\"** → 考点是地址的运行时性。答法：算术指令的源寄存器编号译码时已知，依赖可静态匹配；访存地址要等地址计算执行完才存在，别名关系动态且不可静态判定，因此必须靠队列 + 运行时比较 + 预测。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 17,
+    "section": "S8 乱序访存：LSQ + 消歧"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.10",
+  "chapter": "EG05",
+  "title": "第 9 章 fd 耗尽与 EMFILE 的连锁反应",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.10:body.s01",
+      "type": "extension",
+      "title": "第 9 章 fd 耗尽与 EMFILE 的连锁反应",
+      "level": 2,
+      "content": "**要解决的问题**：文件描述符是进程级的有界资源，一旦耗尽，失败不会只限于某一个模块：**连“处理错误”的代码本身都会失败**（日志文件打不开、等待队列写入失败、探活 socket 创建不出来），一次小泄漏因此被放大成整个进程不可用。\n\n**机制**：\n\nfd 是进程 fd table 的下标，表的上限由 `RLIMIT_NOFILE` 软限制决定（`ulimit -n`）；内核全局还有一张 `struct file` 表，受 `file-max` 约束。两层对应两个 errno：\n\n- `EMFILE`：**进程**的 fd table 满了 —— 你自己的泄漏；\n- `ENFILE`：**内核全局** file 表满了 —— 通常是同机别的进程在泄漏。\n\n真正致命的是 Linux 上 `accept()` 在 fd 表满时的行为：它返回 `EMFILE`，但**不会把连接从 accept 队列取走**。于是监听 socket 在 epoll 里永远可读（水平触发），事件循环被这个就绪事件反复唤醒、每次都失败，CPU 空转；正常连接也进不来。这就是“连锁反应”的第一环。第二环是错误路径：想写日志 → `open()` 失败 → 返回错误 → 上层重试 → 又消耗 fd。第三环是子进程/`exec`/DNS 解析，它们全都需要 fd。\n\n标准解法是**预留一个 idle fd** 做占位，收到 `EMFILE` 时先释放它、把连接取出来立刻关掉、再补回占位：\n\n```c\nint idle_fd = open(\"/dev/null\", O_RDONLY);   // 启动时占位，永不使用\nfor (;;) {\n    int c = accept4(lfd, NULL, NULL, SOCK_NONBLOCK | SOCK_CLOEXEC);\n    if (c < 0) {\n        if (errno == EMFILE || errno == ENFILE) {\n            close(idle_fd);                  // 腾出一个名额\n            c = accept(lfd, NULL, NULL);     // 把队头连接取走\n            if (c >= 0) close(c);            // 立刻关闭，让客户端尽快失败而非挂到超时\n            idle_fd = open(\"/dev/null\", O_RDONLY);  // 恢复占位\n            continue;\n        }\n        if (errno == EAGAIN || errno == EWOULDBLOCK) break;  // ET 下必须循环到 EAGAIN\n        if (errno == EINTR) continue;                        // 见第 12 章\n        break;\n    }\n    handle(c);\n}\n```\n\n要点：idle fd 只能让**单个连接**快速失败，不解决根本问题；想限流还得在 accept 路径上做拒绝或从 epoll 摘掉 listen fd（连接会留在 backlog 里，不丢，但你也不再消费）。\n\n**最小例子**：用 16 个 fd 的限额跑一个自增打开文件的小程序：\n\n```python\nimport resource\nresource.setrlimit(resource.RLIMIT_NOFILE, (16, 16))\nfds = []\ntry:\n    while True:\n        fds.append(open('/dev/null'))\nexcept OSError as e:\n    print(len(fds), e)\n```\n\n典型输出是 `[Errno 24] Too many open files`（0/1/2 和解释器自身已占若干）。线上排查对应命令：\n\n```bash\nls -l /proc/$(pgrep -f myserver)/fd | wc -l          # 当前占用\nlsof -p <pid> | awk '{print $5}' | sort | uniq -c    # 按类型/状态聚合\nss -tanp | grep <pid> | awk '{print $1}' | sort | uniq -c  # 看是不是连接没关\n```\n\n**面试高频问法**：\n\n1. **EMFILE 和 ENFILE 有什么区别？** → 考点是“资源有哪几层”。→ 一句话答法：EMFILE 是本进程的 fd 表满了，泄漏在自己身上；ENFILE 是内核全局 file 表满了，污染源在同机其他进程，排查方向完全不同。\n2. **accept 返回 EMFILE 之后，直接 `continue` 行不行？** → 考点是 accept 队列语义与 epoll 行为。→ 答：不行，Linux 在 fd 满时不会把连接取走，listen fd 一直可读，水平触发下事件循环会 100% 空转，得先用预留的 idle fd 腾出名额把连接取走丢掉。\n3. **怎么定位 fd 泄漏？** → 考点是可观测性。→ 答：先 `/proc/<pid>/fd` 计数看趋势确认是否单调涨，再用 `lsof` 或 `ss` 按 peer/状态聚合，找出是哪一类 fd（连接、文件、epoll、eventfd）在涨，最后回去看那条路径的异常分支有没有漏 close。\n4. **fd 耗尽为什么连健康检查都失败、进程被摘掉？** → 考点是连锁性。→ 答：探活、日志、DNS 查询都要创建 fd，同一个资源池被抢光时它们一起失败，监控看到的是“整个进程不可用”而不是“某个接口变慢”。\n5. **把 `ulimit -n` 调到 100 万算解决吗？** → 考点是治标。→ 答：只是把故障推迟，泄漏仍在，而且 fd table 变大后遍历与 `select` 类调用的开销变化按实现而定；正确做法是限流 + 修泄漏 + 保留 idle fd 兜底。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 12,
+    "section": "第 9 章 fd 耗尽与 EMFILE 的连锁反应"
+  }
+}

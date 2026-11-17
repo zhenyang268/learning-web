@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "EG03.1",
   "chapter": "EG03",
-  "title": "perf-engineering · 大纲",
+  "title": "perf-engineering · 总览",
   "src": {
     "file": "notebook/projects/eng/perf-engineering/OUTLINE.md",
     "sha256": "sha256:aee5dd6557a8246d4bec963894793e996ae7f5975b870261e1060331a1178fc0"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

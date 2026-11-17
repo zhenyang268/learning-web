@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG00.4",
+  "chapter": "EG00",
+  "title": "1 五份文档的判据形态",
+  "src": {
+    "file": "notebook/projects/eng/NOTES.md",
+    "sha256": "sha256:e214cf5954a537c33d05170a4d2a93b87a993d118977ca442a1b652629277764"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG00.4:body.s01",
+      "type": "proof",
+      "title": "1 五份文档的判据形态",
+      "level": 2,
+      "content": "| 文档 | 判据落点 | 典型证据 | 失效条件 |\n|---|---|---|---|\n| `debug-toolchain` | 能否定位到「函数+偏移+可疑变量」 | gdb 回溯、core dump、最小复现脚本 | 无符号/优化后内联，回溯失真 |\n| `testing` | 测试是否真的会红 | 注入故障后测试失败、CI 门禁拦截记录 | 测的是实现细节而非行为 |\n| `perf-engineering` | 指标名 + 量级 + 方差 | `perf stat` 事件、火焰图、benchmark 十次重复 | 输入不代表真实负载；噪声大于效应 |\n| `system-design` | 量级估算与第一瓶颈 | 白板算式、QPS→存储→带宽的推导 | 忽略了某一层的排队效应 |\n| `latent-issues` | 触发条件 + 观测手段 | `perf c2c`、`ss -ti`、`dmesg`、上下文切换计数 | 内核/库版本演进使现象消失或变形 |\n\n**一条铁律**：这五份里**任何\"提升 X 倍\"\"覆盖率 Y%\"都要带括号说明口径**，否则就当没写。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 8,
+    "section": "1 五份文档的判据形态"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG01.7",
+  "chapter": "LG01",
+  "title": "第 6 章 模板与泛型编程",
+  "src": {
+    "file": "notebook/projects/langs/cpp-basics/NOTES.md",
+    "sha256": "sha256:71b4f0ffcd424e996bad8153c2e52ef129599c9dae8a86bd3c560bb028fd5252"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG01.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 模板与泛型编程",
+      "level": 2,
+      "content": "**要解决的问题**：让同一份算法对任意满足要求的类型都成立，且类型检查发生在编译期、调用点零抽象开销。不解决就只能为每种类型复制粘贴，或者退化成 `void*` 加运行期强转，丢掉类型安全和内联机会。\n\n**机制**：模板是**编译期代码生成器**。编译器看到 `f<int>(x)` 才用 `int` 替换 `T` 并实例化出一份真实函数，因此模板的定义必须在实例化点可见——这就是“模板实现要放头文件”的根本原因（替代方案是在 `.cpp` 里显式实例化 `template void f<int>(int);`，把可用类型集合封闭起来）。\n\n函数模板的推导按值传参时会 decay：去掉引用和顶层 `const`、数组退化为指针、函数退化为函数指针。唯独 `T&&` 是**转发引用**（也叫万能引用），只有在“形参恰好写成 `T&&` 且 `T` 需要推导”时成立：\n\n```cpp\ntemplate <class T> void f(T&& x);   // 转发引用\nint a = 1;\nf(a);    // T 推成 int&，T&& 折叠成 int&\nf(1);    // T 推成 int，T&& 就是 int&&\ntemplate <class T> void g(std::vector<T>&& v);  // 不是，T 由 vector 决定\n```\n\n引用折叠规则只有两条：`& + & = &`，其余含 `&&` 的组合都得 `&&`。配合 `std::forward<T>(x)` 才能把实参原本的值类别原样传下去，这是完美转发的基础。\n\n特化方面：类模板可以全特化和偏特化；函数模板只能全特化（严格说是重载），不能偏特化，需要“部分类型特化”时改用重载或 `if constexpr`。模板里的名字查找是两阶段的：非依赖名在定义时查找，依赖名在实例化时结合 ADL 查找，偶尔需要 `typename` / `template` 消歧义。\n\n约束的演进路径是 `enable_if` + SFINAE（替换失败不是错误，把不匹配的重载从候选集里静默剔除）→ C++17 `if constexpr` → C++20 concepts（写出可读的 `requires` 子句，报错信息从几百行变成一句“不满足约束”）。可变参数模板配合折叠表达式可以把递归展开写成一行。\n\n```cpp\ntemplate <class... Ts>\nvoid emit(Ts&&... ts) {                 // 完美转发 + 折叠表达式\n  (sink(std::forward<Ts>(ts)), ...);    // 逗号折叠，按序调用\n}\ntemplate <class T> requires std::integral<T>\nT twice(T x) { return x + x; }          // C++20 约束\n```\n\n**最小例子**：`emit(1, std::string(\"a\"))`。编译器推导出 `Ts = {int, std::string}`，实例化出接受 `int&&` 和 `std::string&&` 的版本，折叠成 `sink(1), sink(std::string(\"a\"))` 两次调用。若 `sink` 只接受可打印类型，把 `std::string` 换成不可打印类型时，用 SFINAE 的版本是候选集里静默剔除、报“找不到匹配的 sink”，用 concepts 的版本则直接指出第几个实参违反了哪条约束。\n\n**面试高频问法**：\n\n- **问**：`T&&` 一定是右值引用吗？→ **考点**：转发引用的成立条件与引用折叠。→ **答**：不一定。只有当形参严格写成 `T&&` 且 `T` 处于推导状态时它才是转发引用，此时传左值 `T` 推成 `T&`、经引用折叠形参变成左值引用；写成 `std::vector<T>&&` 或 `const T&&` 就退化成普通右值引用。\n- **问**：`std::move` 和 `std::forward` 有什么区别？→ **考点**：值类别是否保持。→ **答**：`move` 无条件把实参转成右值，适合“我确定不再用它”；`forward<T>` 按推导出的 `T` 有条件转发，左值仍转发为左值、右值转发为右值，是完美转发的正确工具。\n- **问**：为什么模板的声明和定义通常不能拆到 `.h` / `.cpp`？→ **考点**：实例化时机。→ **答**：模板本身不生成代码，编译器在实例化点必须看到完整定义才能生成特化版本；拆到 `.cpp` 后其他翻译单元只看到声明，链接期就找不到符号。补救办法是在 `.cpp` 里显式实例化，或直接定义在头文件里。\n- **问**：SFINAE 是什么，C++20 之后还需要吗？→ **考点**：重载决议与约束表达。→ **答**：SFINAE 指模板替换阶段失败只把该候选从重载集中剔除而不报错，`enable_if` 借此按类型能力开关重载；C++20 concepts 用 `requires` 子句把同一件事写成可读的约束，报错更友好，新代码应优先用 concepts。\n- **问**：为什么函数模板不能偏特化？→ **考点**：语言规则与替代方案。→ **答**：标准不允许函数模板偏特化，只能全特化；要对一类类型做差异化实现，用重载（形参写成 `std::vector<T>` 这种具体形式即可参与偏序选择）或 `if constexpr` 在函数体内分支。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "cpp-basics",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 10,
+    "section": "第 6 章 模板与泛型编程"
+  }
+}

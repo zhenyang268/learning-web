@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.18",
+  "chapter": "CP03",
+  "title": "附录 D 读开源核的路线（读什么、不读什么）",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.18:body.s01",
+      "type": "extension",
+      "title": "附录 D 读开源核的路线（读什么、不读什么）",
+      "level": 2,
+      "content": "**先读 Rocket（顺序、5 级 + 可选乱序访存）**：它的 `IBuf/ID/EX/MEM/WB` 与 Hazard 逻辑能直接对上 S2–S3，是最短的对照路径。\n\n**再读 BOOM/SonicBOOM（乱序）**：只看四块——重命名与 free list、ROB 提交与回滚、保留站唤醒、LSQ 消歧。其余（TLB、浮点、向量、多核一致性）**此时一律跳过**，它们会把注意力从微架构拉到别处。\n\n**读的方式**：先看模块端口与参数（结构规模），再看状态机的几个关键 case（stall/flush/rollback），最后才看具体逻辑。不要从第一行读到最后一行。\n\n**不读**：任何涉及 MMU/特权级/一致性的实现细节——那些是另一条线的知识，在这里读只会增加负担而不增加能力。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 17,
+    "parts": 17,
+    "section": "附录 D 读开源核的路线（读什么、不读什么）"
+  }
+}

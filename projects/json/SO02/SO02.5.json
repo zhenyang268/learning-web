@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO02.5",
+  "chapter": "SO02",
+  "title": "B1 物理内存",
+  "src": {
+    "file": "notebook/projects/os/xv6/NOTES.md",
+    "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO02.5:body.s01",
+      "type": "extension",
+      "title": "B1 物理内存",
+      "level": 2,
+      "content": "> 职责：一段 RAM → 可反复分配回收的页。依赖：B0；被 B2／B5／B9 借。\n\n**RAM → 可反复分配回收的页。** 使用面：`alloc()`／`free(p)`／页大小固定 4K。\n\n### 现象\n\n进程要新页立刻拿到；退出后那些页还能被别人用；反复 `fork`/`exit` 多轮后可用页数回到初值。\n\n### 机制\n\n实现面（≤6）：freelist／位图／buddy／引用计数（`kfree` 减到 0 才回收）。删掉引用计数 → COW 页被提前释放。\n\n分配器是全局问题：全系统只有一个池子，谁都能要，所以它必须对「两个持有者指同一页」有答案——这是引用计数进入实现面的原因，不是因为它属于 COW（COW 在 B3/B5，这里只承认会被借）。\n\n### 为什么这么设计\n\n把「翻译」和「分配」分开，是让进程只负责**提需求**（哪些虚拟页、什么权限），物理帧的复用与回收是**全局问题**。xv6 的答案最小号：直接映射 + freelist；Linux 换成了一套更复杂的分配器（形态不在这里展开，属于下钻项）。**换的是分配器，不换的是「进程只提需求」**——所以研究进程可以不管分配器。\n\n代价：一旦承诺 COW，引用计数就从「优化」变「必需」——否则共享页被一方释放，另一方指着已回收的内存。xv6 选「按页号索引一张计数表」这个最省事形状（待核：与 Linux 对照点未在 xv6 源码核对）。\n\n### 怎么验证\n\n- 若干轮 alloc/free 后空闲页数回初值；两次 `alloc` 不返回同一页；\n- `forktest` 跑完后**数空闲页回初值**（强判据，`forktest` 本身不查这个）。\n\n**失效点**：多核不加锁 → 同一页发两次；空闲表未初始化 → 拿到 0 页。`CPUS=3` 是默认，所以「单核下成立」必须显式声明。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "xv6",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 18,
+    "section": "B1 物理内存"
+  }
+}

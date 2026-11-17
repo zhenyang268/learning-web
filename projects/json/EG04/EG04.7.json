@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG04.7",
+  "chapter": "EG04",
+  "title": "第 6 章 短链系统的完整设计",
+  "src": {
+    "file": "notebook/projects/eng/system-design/NOTES.md",
+    "sha256": "sha256:8c03e7a30994a074c7699d310514e394d38198b7b64147bf87883364a25260fa"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG04.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 短链系统的完整设计",
+      "level": 2,
+      "content": "**要解决的问题**：把任意长 URL 压成几字符的短码，写一次读千万次，在短码唯一、不可枚举、跳转延迟极低的前提下完成跳转。不解决，长链接不可分发，渠道点击统计也无从做起。\n\n**机制**：数据模型就两条 KV：`s:<code> -> long_url` 是读路径，`u:<hash(long_url|channel)> -> code` 是写路径的去重索引。选 KV 而非关系库，因为访问模式就是按单键取整值，且天然按 code 哈希分片。\n\n短码生成三条路：\n\n- 发号器 + Base62：自增 ID 转 62 进制，无冲突、长度随存量可控（$62^k$ 决定容量上界），缺点是顺序可枚举，需要加盐混淆或打乱字母表。\n- 随机码 + 唯一索引：随机取 k 位，写入用 SETNX 兜底，冲突重试，实现最简单、不可预测。\n- hash 截断：必然冲突，要么重试要么加长，一般只在长 URL 天然去重的场景用。\n\n读路径是设计重心：短码 → 本地缓存 → Redis → 回源 KV → 回填并设 TTL；不存在的短码用布隆过滤器或空值短 TTL 缓存挡住，防止被遍历打穿；超热短码用本地缓存 + Redis 两级。301 与 302 是业务决策：301 让浏览器永久缓存，省回源但丢统计、改链失效；302 每次回源，可统计、可改链、可插风控确认页，默认选 302。写路径要处理长 URL 校验与黑名单（防钓鱼、防内网地址造成 SSRF），以及同 URL 是否复用短码——复用省存储，但按渠道各生成一个才能分开统计。\n\n```python\ndef shorten(long_url, channel):\n    fp = \"u:\" + sha256(long_url + \"|\" + channel)\n    if (code := kv.get(fp)) is not None:\n        return code\n    for _ in range(3):                     # 冲突重试上限\n        code = b62(next_id())              # 或 secrets 随机 k 位\n        if kv.set_nx(\"s:\" + code, long_url):\n            kv.set(fp, code)\n            return code\n    raise Conflict\n\ndef resolve(code):\n    if not bloom.might_contain(code):\n        return 404\n    url = local_cache.get(code) or redis.get(code)\n    if url is None:\n        url = kv.get(\"s:\" + code)\n        redis.set(code, url or \"\", ttl=...)   # 空值也缓存，挡穿透\n    return redirect(url, status=302)\n```\n\n**最小例子**：本地起服务，两次请求。\n\n```bash\n$ curl -i -X POST localhost:8080/api/links -H 'Content-Type: application/json' \\\n    -d '{\"url\":\"https://example.com/docs/2024/q3/report?src=newsletter\",\"channel\":\"newsletter\"}'\nHTTP/1.1 201 Created\n{\"code\":\"1Zk9fQ\",\"short\":\"http://sho.rt/1Zk9fQ\"}\n\n$ curl -i http://sho.rt/1Zk9fQ\nHTTP/1.1 302 Found\nLocation: https://example.com/docs/2024/q3/report?src=newsletter\n```\n\n同 URL 同 channel 再提交一次，命中 `u:` 索引返回同一个 `1Zk9fQ`；换成 `channel=weibo` 则生成新短码，两条短码各自统计点击。\n\n**面试高频问法**：\n\n1. 「短码怎么生成，为什么不用 hash？」→ 考点在冲突成本 → 答：hash 截断必然冲突，得靠重试或加长兜底；发号器 + Base62 无冲突、长度可控，随机码不可枚举但需要唯一索引兜底。\n2. 「301 还是 302？」→ 考点是缓存语义与业务可控性 → 答：默认 302，因为要统计点击、要能改链和下线；只有确定永久不变且放弃统计才用 301。\n3. 「读写比悬殊怎么扛？」→ 考点是缓存层级与存储选型 → 答：短码到长 URL 是纯 KV 读，用本地缓存加 Redis 挡掉绝大部分流量，存储按短码哈希分片水平扩，写路径由发号器或唯一索引保证唯一。\n4. 「怎么防遍历爬取？」→ 考点是短码熵而不是加防火墙 → 答：短码用随机段或加盐混淆保证不可预测，同时对来源 IP 和短码前缀限流，并监控异常 404 比例。\n5. 「缓存穿透和热点怎么处理？」→ 考点是两类问题要分开答 → 答：不存在的短码靠布隆过滤器或空值短 TTL 缓存挡回源；热点短码靠本地缓存 + Redis 多级，配合热点探测预热。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "system-design",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 8,
+    "section": "第 6 章 短链系统的完整设计"
+  }
+}

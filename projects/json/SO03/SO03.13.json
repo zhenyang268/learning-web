@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO03.13",
+  "chapter": "SO03",
+  "title": "附：三张速查表",
+  "src": {
+    "file": "notebook/projects/os/kernel-compare/NOTES.md",
+    "sha256": "sha256:3fdad2384b230576e8b856161ad428eb8606560c1ee888202b9c68e3b315846e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO03.13:body.s01",
+      "type": "extension",
+      "title": "附：三张速查表",
+      "level": 2,
+      "content": "**表 1 陷入路径**\n\n```text\nJOS    : int $0x30 → IDT[48] → TSS.esp0 换栈 → 入口存 Trapframe → trap_dispatch → syscall()\nxv6    : ecall     → stvec(trampoline/uservec) → sscratch 取 trapframe → 存 32 寄存器 → 切 satp → usertrap()\nLinux  : syscall   → MSR_LSTAR → swapgs + 保存用户栈到 per-CPU → 切内核栈 → do_syscall_64 → sys_call_table[nr]\n         中断/异常 → IDT → 另一套入口代码\n```\n\n**表 2 结构体对照**\n\n| 概念 | JOS | xv6 | Linux |\n|---|---|---|---|\n| 执行体 | `Env` | `proc` | `task_struct` |\n| 现场 | `env_tf`（内嵌） | `tf`（指针，指向固定虚拟页） | 内核栈上 |\n| 地址空间 | `env_pgdir` | `pagetable` | `mm_struct`（可空，`active_mm` 兜底） |\n| 打开的文件 | 无（走 FS 进程） | `ofile[]` | `files_struct`（可共享） |\n\n**表 3 同步阶梯**\n\n| 需求 | 机制 | 出现在 |\n|---|---|---|\n| 单核临界区 | 关中断 | 三者都有 |\n| 多核短临界区 | 自旋锁 | 三者都有（JOS 仅在 SMP 配置） |\n| 临界区里要睡眠 | 睡眠锁 / mutex | xv6 起 |\n| 读多写少、读侧不能加锁 | RCU | 仅 Linux |\n| 核数继续涨 | per-CPU 数据 | xv6 极简版，Linux 全面 |"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "kernel-compare",
+    "file": "NOTES.md",
+    "part": 12,
+    "parts": 12,
+    "section": "附：三张速查表"
+  }
+}

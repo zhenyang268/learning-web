@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG00.9",
+  "chapter": "EG00",
+  "title": "6 一句话收口",
+  "src": {
+    "file": "notebook/projects/eng/NOTES.md",
+    "sha256": "sha256:e214cf5954a537c33d05170a4d2a93b87a993d118977ca442a1b652629277764"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG00.9:body.s01",
+      "type": "extension",
+      "title": "6 一句话收口",
+      "level": 2,
+      "content": "**这五份的共性只有一句：把\"我觉得\"换成\"我测到/我复现了\"。** 判据能否写出来，是这一组唯一的分水岭。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 8,
+    "section": "6 一句话收口"
+  }
+}

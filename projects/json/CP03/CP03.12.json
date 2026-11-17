@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.12",
+  "chapter": "CP03",
+  "title": "S9 时序与面积闭环",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.12:body.s01",
+      "type": "extension",
+      "title": "S9 时序与面积闭环",
+      "level": 2,
+      "content": "### 要解决的问题\n\n到这里核\"能跑\"且\"能对\"，但还没有任何**物理约束**的证据。这一节要拿到两个可归因的数字：关键路径的 ns 数、综合后的面积；并且做一次真实的取舍实验，证明你能把 STA 报告翻译成结构改动。\n\n### 机制\n\n流程是三段：**综合**（Yosys：RTL → 门级网表 + 面积）→ **时序**（OpenSTA：网表 + liberty + 时钟约束 → 关键路径与 slack）→ **回去改 RTL**。\n\n三件事必须先想清楚：\n\n1. **约束怎么给**。`create_clock -period <T>`，T 从 2 ns 或 5 ns 起步（sky130 上教学核一般在这个量级，具体按实现），逐步收紧直到违例，那个点就是你的 fmax 估计。\n2. **面积报什么**。`stat` 给的单元面积（μm²）与门数，前者可比，后者只是 proxy。\n3. **看什么路径**。不是只看 slack 数值，而是看报告的起点/终点与经过的逻辑级数（`report_checks -path_delay max -digits 3`）。\n\n常见三处瓶颈与改法：ALU 进位链（拆流水级 / 超前进位 / 降低位宽换并行）、保留站的唤醒+选择（分 bank、用 age matrix 替优先级编码）、重命名读端口（减发射宽度或分批读）。每改一次都要重报四个数。\n\n### 最小例子\n\n```bash\n# 综合 + 面积\nyosys -p \"read_verilog -sv rtl/*.sv; synth -top Top; stat; write_verilog -noattr netlist.v\"\n\n# 时序（OpenSTA，需要 sky130 的 liberty）\ncat > sta.tcl <<'EOF'\nread_liberty sky130_fd_sc_hd__tt_025C_1v80.lib\nread_verilog netlist.v\nlink_design Top\ncreate_clock -name clk -period 5.0 [get_ports clk]\nreport_checks -path_delay max -digits 3\nreport_tns\nreport_wns\nEOF\nsta -exit sta.tcl | tee sta.log\n```\n\n判读方式：`slack` 为正说明还有余量，收紧周期直到负；`report_checks` 里起点是 `clk`、终点是 `clk`（寄存器到寄存器）的路径才是真正的关键路径，输入到输出的组合路径不算 fmax。\n\n**验收判据**：① 综合无 latch、无未驱动、无多驱动（`yosys` 的 `check` 干净）；② 报出一条具体的关键路径（起点寄存器 → 经过哪些单元 → 终点寄存器）；③ 做一次取舍实验并给出四数表（IPC / 面积 / fmax / 结论）。\n\n### 面试高频问法\n\n- **\"你怎么知道能跑到多少频率？\"** → 考点是时序分析而不是猜。答法：综合出网表后用 STA 在给定 liberty 与约束下报 slack，收紧周期到违例的那个点就是 fmax 估计；同时要说明这是综合后估计，不含布局布线、时钟树与 PVT 角。\n- **\"综合后面积大，怎么降？\"** → 考点是结构层面的优化。答法：先看 `stat` 里谁占大头——通常是寄存器堆、ROB/RS 的 CAM 与优先编码、多路选择网络。手段是减宽度、参数化裁剪（窗口/RS 深度）、共享功能单元、把大 mux 换成树形结构。**面积换性能永远是一笔交易，要报两边。**\n- **\"为什么教学核的频率不能和商用核比？\"** → 考点是工艺与后端。答法：工艺不同（sky130 vs 先进节点差几代）、流程不同（综合后估计 vs 完整后端 + 时钟树 + PVT 签核）、结构不同（教学核没有手工优化关键路径）。可比的是\"同工艺下面积-性能点\"。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 17,
+    "section": "S9 时序与面积闭环"
+  }
+}

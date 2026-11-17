@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG03.7",
+  "chapter": "EG03",
+  "title": "第 6 章 IO 与锁竞争：iostat、perf lock、临界区怎么量",
+  "src": {
+    "file": "notebook/projects/eng/perf-engineering/NOTES.md",
+    "sha256": "sha256:b0d9c2bc493b3027796926ceb8b14f794523b415fe58a823afe700b373cb473d"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG03.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 IO 与锁竞争：iostat、perf lock、临界区怎么量",
+      "level": 2,
+      "content": "**要解决的问题**：IO 等待和锁等待都是“不烧 CPU 的时间”，on-CPU 火焰图上直接是空白，`top` 里只表现为 CPU 不高但吞吐上不去。这一章解决的是：把这两类阻塞量化出来——IO 到底堵在哪一层，锁到底等了多久、等了多频繁。不解决，就会对着一条平坦的 CPU 曲线反复怀疑代码“算得不够快”。\n\n**机制**：IO 侧先统一口径。`iostat -x` 的关键列：`r/s`、`w/s` 是**完成**的请求数（不是提交数），`await` 是平均完成时间（排队 + 设备服务），拆开看 `r_await` / `w_await`，`aqu-sz`（旧版叫 `avgqu-sz`）是平均在途请求数，`%util` 是设备“忙”的时间占比。判饱和的正确姿势是三者交叉：`await` 上升 + `aqu-sz` 上升 + 吞吐不再增长 = 队列或设备到头；`await` 上升但 `aqu-sz` 很小 = 单次请求本身就慢（大 IO、设备慢、或上层有同步等待）。`%util` 在支持多队列并行设备的盘上（如 NVMe）可接近 100% 仍有余量，不能单看它下结论。`iowait` 是 CPU 空闲且有未完成 IO 的时间，是结果不是原因，多核机器上还会被严重低估。\n\n锁侧要明确三个量：**竞争次数**（有多少次没直接拿到锁）、**等待时间分布**（尤其是 P99，平均值没有意义）、**临界区持有时间**（拿锁到放锁）。平均持有时间再短，调用频率高时排队照样能把尾延迟拉爆——这是排队论直觉，不是估算公式。\n\n工具路径：`perf lock record` / `perf lock report` 基于内核的锁事件，输出每个锁的 acquired、contended、con-bounces、wait-total、wait-max（字段集合与可用性按内核版本和配置而定，不支持时该命令会直接报错）。更通用的做法是动态插桩，比如用 bpftrace 把 libc 的 mutex 入口和返回配对，直接出等待时间直方图。最后用 off-CPU 火焰图定性：栈顶是 `futex`、`mutex_lock` 还是 `read` / `fsync`，一眼能分出是锁还是 IO。\n\n**最小例子**：\n\n```bash\niostat -x 1\n```\n\n某一列出现 `w/s` 不再上涨、`w_await` 从低位翻倍、`aqu-sz` 同步上升，说明写路径已经排队到设备侧；若 `w_await` 涨而 `aqu-sz` 仍是零点几，问题在上层——每次请求本身大或存在同步刷盘，回去查调用栈。\n\n锁等待的最小量化（x86_64 + glibc 路径，按发行版实际路径调整）：\n\n```bash\nbpftrace -e '\nuprobe:/lib/x86_64-linux-gnu/libc.so.6:pthread_mutex_lock\n{ @t[tid] = nsecs; }\nuretprobe:/lib/x86_64-linux-gnu/libc.so.6:pthread_mutex_lock\n/@t[tid]/\n{ @wait_ns = hist(nsecs - @t[tid]); delete(@t[tid]); }'\n```\n\n返回值处的差值就是“从发起到真正拿到锁”的时间，无竞争时它只是函数自身开销，量级极小；竞争时直方图右侧会长出长尾。限制要说清楚：这只量到等待，量不到持有；要量持有得在 unlock 侧配对，而 unlock 调用点无法直接告诉你它释放的是哪把锁，通常靠锁地址或业务侧显式埋点解决。\n\n**面试高频问法**：\n\n1. 「`%util` 到 100% 就是磁盘瓶颈吗？」→ 考点是设备并行度这层认知。→ 一句话答法：不一定，`%util` 只表示设备有请求在处理的时间占比，多队列设备可以同时处理多个请求；判饱和要看 `await`、`aqu-sz` 与吞吐是否同时顶住。\n2. 「`iowait` 高说明 IO 是瓶颈吗？」→ 考点是区分现象与原因。→ 一句话答法：不能，`iowait` 是 CPU 空闲等 IO 的结果，多核下只是部分核空闲；要看 IO 侧的 `await`、`aqu-sz` 和进程是否真的阻塞在 IO 上。\n3. 「锁竞争怎么量化？」→ 考点是有没有具体的量。→ 一句话答法：三个量——单位时间竞争次数、等待时间分布（看 P99 不看均值）、临界区持有时间；`perf lock` 给前两个的现成视图，拿不到锁事件时用 bpftrace 在 mutex 入口/返回配对量。\n4. 「临界区平均持有时间很短，是不是就不用管了？」→ 考点是排队放大效应。→ 一句话答法：要看总等待占比，锁被调用的频率会放大排队；单次持有再短，QPS 上来后等待队列照样把尾延迟顶起来。\n5. 「CPU 不高但吞吐上不去，你怎么分清是 IO 还是锁？」→ 考点是 off-CPU 视角。→ 一句话答法：抓 off-CPU 火焰图，阻塞栈上是 `futex` / `mutex_lock` 就归锁，是 `read` / `write` / `fsync` 就归 IO；两边都有就先按各自的等待总时长占比排序。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "perf-engineering",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 8,
+    "section": "第 6 章 IO 与锁竞争：iostat、perf lock、临界区怎么量"
+  }
+}

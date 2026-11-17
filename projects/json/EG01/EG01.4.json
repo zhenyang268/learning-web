@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG01.4",
+  "chapter": "EG01",
+  "title": "第 3 章 测试替身：mock / stub / fake / spy 的取舍",
+  "src": {
+    "file": "notebook/projects/eng/testing/NOTES.md",
+    "sha256": "sha256:264b2fc5ec970679cc8c0bd3d0474efd81daf2f882573790c6eb4fea8b4e3d4c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG01.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 测试替身：mock / stub / fake / spy 的取舍",
+      "level": 2,
+      "content": "**要解决的问题**：把被测代码与不可控的外部世界（网络、时钟、数据库、第三方 SDK）隔开，让失败定位在逻辑本身而不是环境。替身选错的代价是双向的：选了过重的 mock，重构就红一片；选了过轻的 stub，测试全绿但线上照样炸。\n\n**机制**：四种替身来自 Meszaros / Fowler 的 test double 分类，区别只有两点——**有没有真实行为**、**断言的是状态还是交互**。\n\n| 类型 | 行为 | 断言方式 | 典型场景 |\n|---|---|---|---|\n| Stub | 无，返回预设值 | 状态断言 | 「查不到用户时返回 404」 |\n| Spy | 无，但记录调用 | 事后交互断言 | 注入点改不动，只能包一层 |\n| Mock | 无，预置期望 | 事前/事后交互断言 | 验证「确实发出了 charge 命令」 |\n| Fake | 有，但是走捷径的实现 | 状态断言 | 内存 Repository、内存消息队列、可控时钟 |\n\n取舍顺序可以写成一段决策：\n\n```text\ndouble(dep):\n  if dep 有状态且被测代码要查询它:      return Fake(dep)      # 内存实现\n  if 只关心 dep 返回什么:               return Stub(value)    # 最便宜\n  if 断言点就是\"有没有发出这条命令\":     return Mock(expect)   # 只在进程边界\n  if 构造/注入点改不动:                 return Spy(real_obj)  # 包住既有对象\n```\n\n关键约束：**mock 只对进程边界用**（支付网关、消息总线、第三方 HTTP 客户端），不要对被测对象内部的协作者用。因为 mock 断言的是「调用序列」，一旦把内部协作关系固化进测试，任何拆分函数、合并调用的重构都会让测试变红——而外部行为没变。这正是「测行为不测实现」在替身层面的落地。反过来，Fake 的代价是它自己也是一份实现，会与真实实现语义漂移，所以 Fake 必须由契约测试对齐真实实现（见第 5 章）。\n\n**最小例子**：\n\n```python\n# shop/order.py\nclass OrderService:\n    def __init__(self, repo, gateway):\n        self.repo, self.gateway = repo, gateway\n\n    def checkout(self, oid):\n        order = self.repo.get(oid)\n        if order.total > 0:\n            self.gateway.charge(order.total)\n            order.paid = True\n        self.repo.save(order)\n\n# tests/test_order.py\ndef test_checkout_charges():\n    repo = FakeRepo({\"o1\": Order(total=100)})       # Fake：有状态\n    gw = Mock()                                     # Mock：进程边界命令\n    OrderService(repo, gw).checkout(\"o1\")\n    gw.charge.assert_called_once_with(100)\n    assert repo.get(\"o1\").paid is True\n\ndef test_zero_total_no_charge():\n    repo = FakeRepo({\"o2\": Order(total=0)})\n    gw = Mock()\n    OrderService(repo, gw).checkout(\"o2\")\n    gw.charge.assert_not_called()\n```\n\n跑 `pytest -q tests/test_order.py` → `2 passed`。注意这里断言的是 `charge` 被调用**几次、什么参数**，以及仓库里的最终状态；没有断言 `repo.save` 在 `charge` 之后被调用——那是实现顺序，不是契约。\n\n**面试高频问法**：\n\n1. **mock 和 stub 到底差在哪？**\n   → 考点：交互断言 vs 状态断言，以及是否预置期望。\n   → 答法：stub 只负责喂返回值，测试断言的是被测代码的输出状态；mock 预置了「必须被这样调用」的期望，断言的是交互本身。所以 stub 不会因为重构而红，mock 会，这也是 mock 只能放在边界的理由。\n\n2. **什么时候不该用 mock？**\n   → 考点：是否理解 mock 与实现耦合。\n   → 答法：被测对象内部的协作者不 mock，核心领域逻辑一律用真实对象；只 mock 进程边界——网络、时钟、随机源、第三方 SDK。判断标准是「这个依赖换实现时，测试该不该跟着改」，该改的才 mock。\n\n3. **Fake 有什么隐藏成本？**\n   → 考点：测试基础设施也是代码。\n   → 答法：Fake 是一份平行实现，会和真实实现语义漂移，而且它自己需要测试。做法是让同一组契约测试同时跑在 Fake 和真实实现上（真实实现那侧放集成测试），漂移才会被抓到。\n\n4. **第三方 SDK 全 mock 了，测试全绿，上线挂了，为什么？**\n   → 考点：mock 固化的是你对 API 的假设。\n   → 答法：mock 只验证了「我以为的调用方式」，没验证对方真实行为——字段名、错误码、超时语义都可能变。补一层针对真实沙箱的契约测试或录制回放，mock 只留在单元层。\n\n5. **spy 什么时候非用不可？**\n   → 考点：注入点不可改时的折中。\n   → 答法：遗留代码里对象在自己内部 new 出依赖、没有构造注入点时，用 spy 包住真实对象只观察不改变行为。这是过渡手段，正规做法是把依赖提到构造函数参数，然后换回 Fake 或 Mock。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "testing",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 9,
+    "section": "第 3 章 测试替身：mock / stub / fake / spy 的取舍"
+  }
+}

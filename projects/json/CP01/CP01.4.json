@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP01.4",
+  "chapter": "CP01",
+  "title": "第 3 章 ARM64 汇编基础：load/store 架构、条件执行与 x86 的逐条对照",
+  "src": {
+    "file": "notebook/projects/cpu/asm-link-arch/NOTES.md",
+    "sha256": "sha256:04b5529a001bfe4ec19f5d9641db647d43404a1276627187bd916f3d732fe051"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP01.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 ARM64 汇编基础：load/store 架构、条件执行与 x86 的逐条对照",
+      "level": 2,
+      "content": "**要解决的问题**：把「内存可以直接当操作数」的 x86 直觉换成「只有 load/store 碰内存」的 RISC 直觉，并建立 x86-64 ↔ AArch64 的一对一映射。不解决这件事，你读 ARM64 反汇编时会把 `ldr x1, [x0, x1, lsl #3]` 当成三条指令，写内联汇编时会生成非法寻址，性能分析时会把访存次数数错。\n\n**机制**\n\n**寄存器堆对照**。这是两套架构最直观的差别：\n\n| | x86-64 | AArch64 |\n|---|---|---|\n| 通用寄存器 | 16 个（rax…r15） | 31 个（X0–X30），另有 W0–W30 作 32 位视图 |\n| 零寄存器 | 无 | XZR / WZR（读恒 0，写丢弃） |\n| 栈指针 | rsp（普通寄存器） | SP（独立编码，X31 在不同指令里表示 SP 或 XZR） |\n| PC | rip，可用 `lea rax,[rip+disp]` 取 | 不能当通用寄存器读，用 `adr` / `adrp` 取页内/页基地址 |\n| 指令长度 | 变长 1–15 字节 | 定长 4 字节 |\n\n寄存器多带来的直接后果：AArch64 的参数寄存器有 8 个而 x86-64 只有 6 个，且 x86-64 的部分寄存器还有历史包袱（ah/al 不能和 REX 前缀共存）。定长指令带来的后果：PC 相对跳转范围有限的只有 `b`/`bl`（±128MB），更远要经链接器插入 veneer，走 X16/X17。\n\n**load/store 架构**。AArch64 的算术指令只能吃寄存器，访存只认 `LDR/STR/LDP/STP/LDUR/STUR` 一族；x86-64 则允许绝大多数 ALU 指令带一个内存操作数。同一个「数组求和加」的语义：\n\n```asm\n; x86-64：一条指令，读内存 + 加寄存器\nadd rax, [rdi + rsi*8]\n\n; AArch64：必须两条\nldr x1, [x0, x1, lsl #3]\nadd x0, x0, x1\n```\n\n**寻址方式对照**。x86-64 是 `[base + index*scale + disp]`，scale 只能是 1/2/4/8；AArch64 是 `[base, #imm]`（无符号偏移按访问宽度缩放，12 位）、`[base, Xm, LSL #s]`（寄存器偏移，可带 extend）、以及 x86 没有的两种自动更新：\n\n```asm\nldr x0, [x1, #8]!     ; pre-index：先 x1+=8，再取\nldr x0, [x1], #8      ; post-index：先取，再 x1+=8\n```\n\n后两种加上 `LDP/STP`，就是 AArch64 没有 `push/pop` 却能一条指令完成入栈出栈的原因——`stp x29, x30, [sp, #-16]!` 抵得上 x86 的两条 push。\n\n**条件执行**。两边都不是「每条指令带谓词」：ARMv7 的谓词执行在 AArch64 里已被裁掉，只保留条件分支 `b.cond` 和条件选择/条件比较家族 `CSEL / CSINC / CSINV / CSNEG / CCMP / CCMN`；x86-64 对应的是 `jcc / cmovcc / setcc / adc-sbb`。第二处差别在标志位怎么产生：x86 的 ALU 指令默认写 rflags，AArch64 默认**不写** PSTATE，必须加 `S` 后缀（`ADDS/SUBS/ANDS`），而 `CMP` 就是 `SUBS XZR, ...`、`TST` 就是 `ANDS XZR, ...`。这意味着 AArch64 的指令调度更自由——编译器可以把不相关的指令塞进 `cmp` 和 `b.eq` 之间而不破坏标志。\n\n**最小例子**\n\n```c\nlong idx(long *a, long i) { return a[i]; }\nlong myabs(long x)        { return x < 0 ? -x : x; }\n```\n\n```asm\n; ---- x86-64 (SysV) ----\nidx:    mov  rax, [rdi + rsi*8]      ; rdi=a, rsi=i\n        ret\nmyabs:  mov  rax, rdi\n        neg  rax                     ; 若 x<0 则 -x>0，SF=0\n        cmovs rax, rdi               ; 原值为正时 SF=1，取回 x\n        ret\n\n; ---- AArch64 (AAPCS64) ----\nidx:    ldr  x0, [x0, x1, lsl #3]    ; 一条 load，缩放由 lsl #3 完成\n        ret\nmyabs:  cmp  x0, #0\n        cneg x0, x0, lt              ; lt 成立则 x0 = -x0，无分支\n        ret\n```\n\n数一下差别：`idx` 两边都是 2 条指令，因为 x86 的 scale 和 ARM 的 LSL 都在寻址里编码了；`myabs` 两边都做到了无分支，但 x86 靠「标志位 + cmov」，ARM 靠「比较 + 条件选择」。如果换成一个 5 分支的 switch，x86 会生成跳转表 `.rodata` + `jmp [rax*8+L]`，AArch64 生成 `adrp/add` 算出表基址再 `ldr x1,[x0, w2, sxtw #3]; br x1`——注意这里必须用 `adrp` 两三条指令才能拼出 64 位地址，这就是定长指令的代价。\n\n**面试高频问法**\n\n1. **「ARM 是不是 load/store 架构？举一个 x86 能写、ARM 写不了的指令。」** → 考点是是否真理解「运算不碰内存」。答法：是，AArch64 只有 LDR/STR 一族访存；`add rax, [rdi]` 在 AArch64 里必须拆成 `ldr x1,[x0]` 加 `add x0,x0,x1`，所以 ARM 的指令数通常更多但每条更规整、更易流水。\n\n2. **「AArch64 有没有条件执行？和 ARMv7 差在哪？」** → 考点是版本演进，别把 ARM32 的印象套过来。答法：AArch64 取消了逐指令谓词执行，只剩条件分支和 CSEL/CSINC/CSINV/CSNEG/CCMP 这套条件选择家族，好处是解码简单、不占用编码里的 4 位条件域。\n\n3. **「`cmp` 在 AArch64 里是什么？为什么不写 `adds` 就没有标志位？」** → 考点是标志位生成规则。答法：`cmp x0,#0` 就是 `subs xzr, x0, #0`，结果丢弃只留 PSTATE 的 N/Z/C/V；AArch64 的 ALU 指令默认不更新标志，必须显式加 `S`，这是和 x86 每指令默认写 rflags 的关键区别。\n\n4. **「AArch64 没有 push/pop，函数序言怎么写？比 x86 快还是慢？」** → 考点是 LDP/STP + pre/post-index。答法：`stp x29, x30, [sp, #-16]!` 一条完成「减栈 + 存两个寄存器」，`ldp x29, x30, [sp], #16` 一条完成出栈，指令数不比 x86 的两次 push 多，而且是单条指令单次访存对齐。\n\n5. **「两个架构的指令长度差异对性能和链接有什么影响？」** → 考点是变长解码 vs 定长。答法：x86 变长（1–15 字节）代码密度高、缓存友好，但解码要串行判定长度；AArch64 定长 4 字节解码简单、可取指即对齐，代价是立即数和跳转范围受限，远跳要链接器插 veneer（用 X16/X17）。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "asm-link-arch",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 10,
+    "section": "第 3 章 ARM64 汇编基础：load/store 架构、条件执行与 x86 的逐条对照"
+  }
+}

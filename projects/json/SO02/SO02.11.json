@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO02.11",
+  "chapter": "SO02",
+  "title": "B7 调度",
+  "src": {
+    "file": "notebook/projects/os/xv6/NOTES.md",
+    "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO02.11:body.s01",
+      "type": "extension",
+      "title": "B7 调度",
+      "level": 2,
+      "content": "> 职责：一条 CPU 时间线 → 多份时间片。依赖：B5、B4；无块借它，但各块都假设会被切走。\n\n**一条 CPU 时间线 → 多份时间片。** 使用面：`yield`／`sleep(chan)`／`wakeup(chan)`。\n\n### 现象\n\n两个死循环进程交替跑；`sleep` 后不被选中，直到有人 `wakeup` 同一个 `chan`；谁在持锁时睡了，系统卡死。\n\n### 机制\n\n实现面（≤6）：runqueue／时间片／优先级／抢占点／上下文切换。删掉「持锁才能睡」→ lost wakeup。\n\n`sleep(chan, lk)` 先持锁检查条件、挂到 `chan`、再 `sched`，中间放锁。\n\n### 为什么这么设计\n\n**为什么要求持锁**：不持锁，「检查」与「挂上」之间有窗口，`wakeup` 落进窗口就永远等；持锁关掉这个窗口——不是靠关中断，因为 `sched` 会切上下文。单核也成立（唤醒可能来自中断）；`CPUS=3` 下它从习惯变正确性前提。B7 无块依赖它，但**各块都假设会被切走**——任何「先读全局量再写回」都要过这关。\n\n### 怎么验证\n\n- 两个死循环交替（时间片生效的证据）；`sleep` 后不被选中直到 `wakeup`；\n- 注入一个错：去掉 `sleep` 的持锁前提，症状必须是「偶发永久阻塞」而不是立刻崩——对不上说明还没理解这块；\n- 死锁（B7 故障恢复列）**不做**：只说结论。\n\n**失效点**：在持锁时睡 → 死锁；`wakeup` 不持同一把锁 → 丢唤醒。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "xv6",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 18,
+    "section": "B7 调度"
+  }
+}

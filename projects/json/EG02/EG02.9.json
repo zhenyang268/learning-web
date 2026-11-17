@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG02.9",
+  "chapter": "EG02",
+  "title": "第 8 章 日志与可观测性：结构化日志、trace id、最小复现",
+  "src": {
+    "file": "notebook/projects/eng/debug-toolchain/NOTES.md",
+    "sha256": "sha256:501d16a42d59f5fede5b4ae459640fa33b09933168d563ca831a80f45354cc1f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG02.9:body.s01",
+      "type": "extension",
+      "title": "第 8 章 日志与可观测性：结构化日志、trace id、最小复现",
+      "level": 2,
+      "content": "**要解决的问题**：前七章解决\"故障发生时我在场\"；这一章解决\"故障发生时我不在场\"。线上问题的事后证据几乎只有日志，但如果日志是一句拼好的字符串、没有关联 id、也不知道当时参数，那它只能证明\"出过事\"，不能帮你复现。这一章的目标是让每条日志都能被机器筛选、被跨进程 join、并最终压成一条能重跑的命令。\n\n**机制**：\n\n结构化日志的本质是：**日志是一条事件记录，不是一个句子**。写入端不做字符串拼接，而是给字段；序列化交给 encoder（JSON 或 logfmt）。schema 要固定：`ts`、`level`、`msg`、`service`、`trace_id`、`span_id`、`pid/tid`、业务主键、`err`（拆成 type / message / stack）。固定 schema 的价值在于可以按字段聚合和告警，而 `grep \"timeout\"` 不是聚合。\n\n关键纪律是基数控制：`user_id`、`request_id` 这类高基数字段不要做成日志系统的索引标签/label，否则时间序列基数爆炸；它们应该留在日志正文里被检索，而不是变成 metric 维度。\n\ntrace id 的传播是这套东西的骨架。跨进程用 W3C Trace Context 的 `traceparent` 头：`00-<32 位十六进制 trace-id>-<16 位 parent-id>-<flags>`，网关或入口服务生成，后续每一跳透传。进程内不要靠\"随手传参\"，而是放进请求上下文，由日志组件自动注入：\n\n```python\n# 伪代码：context 承载 trace 上下文，日志组件自动读取\ndef handle(req):\n    ctx = extract(req.headers.get(\"traceparent\")) or new_trace()\n    with trace_context(ctx):              # 绑定到当前执行上下文\n        log.info(\"order.create\", order_id=oid, amount=amt)\n        executor.submit(with_context(ctx, charge, oid))  # 跨线程显式携带\n```\n\n三个容易丢的地方：线程池提交任务时（ThreadLocal 不会自动过去）、异步回调/协程切换时、消息队列投递时（trace 上下文要写进消息头）。丢一处，链路就断成两截，而这恰恰是最需要证据的跨服务段。\n\n最小复现是这条链的终点：从 trace 里找到**第一个**异常 span，把它前后的字段抽出来，固定输入、剥离环境、压掉并发，得到一个能反复跑的东西。降维按三条轴走：输入（哪个参数、哪条数据）、环境（配置、版本、时区、locale、内核/libc）、时序（并发度、重试、超时）。如果压到单线程单请求仍然复现不了，那结论本身就很有价值——它是并发或时序问题，需要用压力或确定性重放（如 rr 的 record/replay）来打。\n\n**最小例子**：三个服务串一次下单，用户报\"偶发下单失败\"。先按 trace id 把日志捞齐：\n\n```bash\n$ grep -h '\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"' /var/log/{gw,order,pay}/*.log\n{\"ts\":\"...\",\"level\":\"info\",\"svc\":\"gw\",\"msg\":\"order.create\",\"trace_id\":\"4bf9...4736\",\"order_id\":\"A17\",\"amount\":199}\n{\"ts\":\"...\",\"level\":\"warn\",\"svc\":\"order\",\"msg\":\"pay.call.retry\",\"trace_id\":\"4bf9...4736\",\"attempt\":3,\"elapsed_ms\":2870}\n{\"ts\":\"...\",\"level\":\"error\",\"svc\":\"pay\",\"msg\":\"pay.charge.failed\",\"trace_id\":\"4bf9...4736\",\"err.type\":\"TimeoutError\",\"err.msg\":\"deadline exceeded\"}\n```\n\n看到 `attempt:3` 和 `elapsed_ms:2870`，怀疑是上游重试把下游的时间预算吃光了。把它压成一条本地复现：固定 `order_id=A17`、`amount=199`、下游延迟注入 3s、重试 3 次，用同一份代码跑单测——复现出来，就不是\"偶发\"，是\"重试预算没扣减\"。\n\n**面试高频问法**：\n\n1. **\"结构化日志和 `printf` 日志的本质区别是什么？\"** → 考点是可否被机器消费。答法：结构化日志输出字段而非句子，schema 固定，能按字段聚合、告警、和 trace 关联；拼接字符串只能人肉 grep，字段一旦变格式就全废。\n\n2. **\"trace id 怎么跨线程池和消息队列传？\"** → 考点是上下文传播的边界。答法：显式携带，不能裸用 ThreadLocal——线程池提交时用包装器把上下文绑到任务上，队列投递时写进消息头，消费端先 extract 再绑定；否则子任务日志里 trace_id 为空或串到别的请求上。\n\n3. **\"采样怎么做才不会把有价值的请求丢掉？\"** → 考点是头部采样与尾部采样的取舍。答法：头部采样在入口按概率 $p$ 决定，实现简单但会丢掉大部分错误请求；尾部采样先缓冲整条 trace，按状态码/延迟决定留不留，能保住错误和慢请求，代价是要缓冲和额外内存。\n\n4. **\"线上日志该写什么、不该写什么？\"** → 考点是安全与成本。答法：写事件名 + 业务主键 + 错误类型 + 关键数量；不写密钥、token、完整 PII、超大 payload；高基数 id 不要做成索引标签，否则日志系统基数爆炸。\n\n5. **\"给你一个线上 bug，你怎么做出最小复现？\"** → 考点是方法论而非工具。答法：先从 trace 定位第一个异常 span，抽出当时输入与配置，固定输入、剥离环境、降到单线程单请求；还复现不了就判定为并发/时序问题，用加压或 rr 重放；最后把复现步骤固化成一条能跑的命令或一个失败的测试用例。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "debug-toolchain",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 8,
+    "section": "第 8 章 日志与可观测性：结构化日志、trace id、最小复现"
+  }
+}

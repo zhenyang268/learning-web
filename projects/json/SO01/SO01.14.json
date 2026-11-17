@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.14",
+  "chapter": "SO01",
+  "title": "第 12 章〔网络〕IO 多路复用：select / poll / epoll 的差别与边缘触发",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.14:body.s01",
+      "type": "extension",
+      "title": "第 12 章〔网络〕IO 多路复用：select / poll / epoll 的差别与边缘触发",
+      "level": 2,
+      "content": "**要解决的问题**：单线程要扛上万连接，或者已经上了 epoll 却在压测里“偶发不收数据”“CPU 空转在 sys 态”。前者是模型选错，后者几乎都是 ET 没读到 `EAGAIN`、或者 LT 下事件没处理干净导致的反复唤醒。\n\n**API 与代价**\n\n```c\nint ep = epoll_create1(EPOLL_CLOEXEC);\nstruct epoll_event ev = { .events = EPOLLIN | EPOLLET, .data.fd = cfd };\nepoll_ctl(ep, EPOLL_CTL_ADD, cfd, &ev);        /* 一次注册，O(log n) 插红黑树 */\nstruct epoll_event evs[64];\nint n = epoll_wait(ep, evs, 64, -1);           /* 只拷就绪项 */\nfor (int i = 0; i < n; i++) {\n    for (;;) {                                  /* ET 必须读到 EAGAIN */\n        ssize_t r = read(evs[i].data.fd, buf, sizeof buf);\n        if (r > 0) continue;\n        if (r == 0) { close(evs[i].data.fd); break; }\n        if (errno == EAGAIN || errno == EWOULDBLOCK) break;\n        if (errno == EINTR) continue;\n        close(evs[i].data.fd); break;\n    }\n}\n```\n\n- `select`：`fd_set` 是编译期 `FD_SETSIZE`（通常 1024）位图，每次调用把三张位图**拷进内核**并线性扫描全部位；返回后 `fd_set` 被就地修改，下轮必须重新 `FD_SET`；`timeout` 在 Linux 上也会被改写，循环里要重置。\n- `poll`：`struct pollfd` 数组，突破 1024，但仍每次全量拷贝 + 线性扫描，连接数 $n$ 时单次调用代价 $O(n)$。\n- `epoll`：`epoll_ctl` 付一次注册成本，`epoll_wait` 的代价是 $O(\\text{就绪数})$，与总连接数无关。但**不是零拷贝神话**：就绪数组仍要 `copy_to_user`，只是拷的是就绪项而非全集。\n- 触发模式：默认 LT（电平），只要缓冲区还有数据就反复上报；`EPOLLET` 只在**状态变化**时上报一次。用 ET 必须把 fd 设成 `O_NONBLOCK`，否则最后一次 `read` 会阻塞住整个事件循环。\n- `EPOLLONESHOT` 让一次事件后自动失活，多线程处理同一连接时必须用，否则两个线程同时读同一条连接。`EPOLLEXCLUSIVE`（4.5+）用于多个进程监听同一端口时避免惊群。\n\n**对应命令与读法**\n\n1. `ss -s` → `Total`、`TCP: estab ... orphaned ... timewait`。连接数与预期严重不符（远大于 worker 数 × 预期）说明 fd/socket 泄漏。**会骗你**：只统计当前 netns，容器里必须 `nsenter -t <pid> -n ss -s`；`closed` 包含尚未回收的短连接。\n2. `ls -l /proc/PID/fd | grep -c 'eventpoll'` → 每 `epoll_create` 一次就多一个 `anon_inode:[eventpoll]`。数量随请求增长 = 每次请求新建 epoll 却没 `close`。**会骗你**：`ls -l` 输出里 fd 号会复用，看到的名字是当前指向；权限不足时读不到别人的 `/proc`。\n3. `cat /proc/PID/fdinfo/<epfd>` → 每行 `tfd: 7 events: 1d data: ...` 是一个被监听的 fd，`events` 是十六进制掩码（`1`=EPOLLIN，`4`=EPOLLOUT，`80000000`=EPOLLET）。`tfd` 行数远超 `ss` 里的活跃连接数 = 忘了 `EPOLL_CTL_DEL` 或 fd 已关但没摘。**会骗你**：这里不显示就绪状态，掩码要手工换算。\n4. `strace -e trace=epoll_wait,epoll_ctl -p PID` → 看 `epoll_wait` 的返回值和 `timeout` 参数。返回值长期为 0 且 `timeout=0` = 忙轮询；返回 nfds>0 但很快又全量返回 = LT 下没把数据读干净。**会骗你**：`strace` 让目标慢一个数量级以上，可能把偶发问题放大成必现；`-p` 需要 ptrace 权限（`kernel.yama.ptrace_scope`）。\n5. `ss -tan state established | wc -l` 与上面 `fdinfo` 的 `tfd` 数对比 → 两者应大致相等。注册数远大于实际连接数，就是事件表泄漏；反过来少很多，说明有连接没被注册（新 accept 后漏了 `epoll_ctl`）。**会骗你**：`ss` 有采样间隙，且包含 TIME_WAIT 以外的所有状态，需固定 `state established`。\n\n**原理**\n\n`struct eventpoll` 里三样东西：红黑树 `rbr` 存所有注册的 `epitem`、就绪链表 `rdllist`、等待队列 `wq`。`epoll_ctl(ADD)` 时，内核在该 fd 对应 `struct file` 的 `poll` 回调链上挂一个 `ep_poll_callback`；数据到达时，协议栈调用 `sk_data_ready` → `wake_up` → 回调把 `epitem` 链进 `rdllist` 并唤醒 `epoll_wait` 的等待者。所以 `epoll_wait` 的成本只跟就绪项数量相关，而不是连接总数——这是它相对 `select`/`poll` 的本质差别。\n\nLT 与 ET 的差别发生在 `ep_send_events`：LT 在把事件交给用户态后，会重新调用该文件的 `poll` 检查是否仍有数据，有就重新挂回 `rdllist`；ET 只交付一次，之后必须等下一次**状态跃变**（空→非空）才会再触发。这就是 ET 丢事件的根因：socket 的 `sk_data_ready` 回调只在接收队列由空变非空时触发，如果应用没读到 `EAGAIN` 就返回，队列始终非空，后续数据到来不会再产生新回调。\n\n`select` 的 1024 上限来自 `fd_set` 的位图大小，是编译期常量，改 `FD_SETSIZE` 需要重新编译所有相关代码，且内核侧同样按位扫描；`poll` 去掉了上限但没去掉 $O(n)$ 的拷贝和扫描。连接数上千后，`select`/`poll` 的成本主要在两次用户/内核态的全量拷贝和线性遍历，而 `epoll` 把这份成本前移到了 `epoll_ctl`。代价是状态挂在 fd 上：`fork` 后子进程继承同一个 epoll fd 并共享事件，父子同时 `epoll_wait` 会各自拿到一部分事件，这是许多“明明注册了却不处理”的隐蔽来源。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 13,
+    "parts": 19,
+    "section": "第 12 章〔网络〕IO 多路复用：select / poll / epoll 的差别与边缘触发"
+  }
+}

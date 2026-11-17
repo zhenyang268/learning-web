@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG03.5",
+  "chapter": "EG03",
+  "title": "第 4 章 火焰图读法：on-CPU 与 off-CPU，宽度、合并与调用栈",
+  "src": {
+    "file": "notebook/projects/eng/perf-engineering/NOTES.md",
+    "sha256": "sha256:b0d9c2bc493b3027796926ceb8b14f794523b415fe58a823afe700b373cb473d"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG03.5:body.s01",
+      "type": "extension",
+      "title": "第 4 章 火焰图读法：on-CPU 与 off-CPU，宽度、合并与调用栈",
+      "level": 2,
+      "content": "**要解决的问题**：profiler 吐出来的是几十万条栈样本，人眼没法读。火焰图把它们压成一张宽度即比例的图，用来看「哪条路径吃掉了多少时间」。但如果不知道宽度是**样本占比**而不是耗时、不知道 on-CPU 与 off-CPU 是两套口径，就会得出「这个函数最宽所以最该优化」这种错误结论。\n\n**机制**：\n\n数据流是两段式的：采样器产出原始栈，`stackcollapse-*` 把每条栈压成一行 `frame;frame;frame count`，`flamegraph.pl` 渲染成 SVG。核心聚合规则就三条：\n\n- **宽度**：某帧的宽度 $w = n_{\\text{frame}} / N$，$n_{\\text{frame}}$ 是包含该帧的样本数，$N$ 是总样本数。固定采样频率下，它近似等于**时间占比**。所以宽度既不是调用次数，也不是单次耗时——一个调用 100 万次的 1μs 函数，宽度可能远小于一个调用 10 次但每次 100ms 的函数。\n- **合并**：只把**完全相同的栈**（从根到叶逐帧相同）累加。同一个叶子函数经由两条不同路径进来，会渲染成两座独立的塔，各自计宽。这就是「同一个函数在图上出现好几次」的原因。\n- **方向**：常规火焰图根在底部、火焰向上，底部是入口，顶部是叶子；icicle 图上下翻转，等价。\n\n**on-CPU vs off-CPU 是两种时间，不能相加**：\n\n| | 采样依据 | 宽度含义 |\n|---|---|---|\n| on-CPU | 线程正在 CPU 上执行时被打断 | 占用 CPU 的时长占比 |\n| off-CPU | 线程被调度走/阻塞（`sched_switch`） | 等待的墙钟时长 |\n\noff-CPU 需要内核调度事件或 eBPF，且部分事件依赖 `CONFIG_SCHEDSTATS` / `sched_schedstats` 开关，具体可用性按内核配置而定——不能假设默认打开。把两者画在一起是 hot/cold 火焰图（一半 on-CPU 正向、一半 off-CPU 倒挂），而不是简单相加。\n\n```bash\n# on-CPU\nperf record -F 99 -g -p $PID -- sleep 20\nperf script > out.perf\nstackcollapse-perf.pl out.perf > out.folded\nflamegraph.pl --title=\"on-CPU 20s\" out.folded > oncpu.svg\n\n# off-CPU：bcc 的 offcputime，-f 输出折叠格式\noffcputime-bpfcc -p $PID -f 20 > offcpu.folded\nflamegraph.pl --color=io --title=\"off-CPU\" offcpu.folded > offcpu.svg\n```\n\n**读图要点**：\n\n1. **先找平顶（plateau）**：大片同宽、上方没有更深帧的区域，是真正在做工的函数（`memcpy`、`malloc`、自旋）。平顶的宽度就是它的自耗时上限。\n2. **看宽窄突变**：上层突然比下层宽，说明该层有大量 self 时间，或者栈在这里断了。\n3. **断裂栈的识别**：出现 `[unknown]`、或某帧下面帧数明显偏少，先怀疑 frame pointer 链被优化掉、跨语言边界、JIT 未注册符号，而不是「这里没有调用者」。\n4. **别跨图比宽度**：只有同一二进制、同一采样频率、同一负载下宽度才可比。要比两次结果，用 `difffolded.pl` 求差，或者回到绝对样本数归一。\n\n**最小例子**：\n\n```bash\nperf record -F 99 -g -p $(pgrep -n myserver) -- sleep 20\nperf script > out.perf\nstackcollapse-perf.pl out.perf > out.folded\nflamegraph.pl out.folded > oncpu.svg\ngrep -c '' out.folded     # 折叠后不同调用栈的行数，即塔的数量量级\n```\n\n结果形态（示意）：最宽的一塔是 `main→handle→serialize→memcpy`，`memcpy` 处是平顶，说明自耗集中在这里；旁边一塔 `main→handle→mutex_lock` 也有可观宽度——但**光看 on-CPU 分不清是自旋还是被阻塞**，要再跑一次 off-CPU 图：若 off-CPU 图上同一路径宽而长，就是等锁；若 on-CPU 上是平顶，就是自旋在烧 CPU。这两种情况的修法完全不同（换临界区粒度 vs 减少争用）。\n\n**面试高频问法**：\n\n1. **「火焰图的宽度代表什么？」→ 考点：指标口径 → 答法**：宽度是该帧出现的样本数占总样本数的比例，固定采样频率下近似时间占比；它不是调用次数，也不是单次耗时，所以不能拿宽度直接换算成「这个函数花了多少毫秒」。\n2. **「on-CPU 和 off-CPU 火焰图有什么区别，能画在一张图上吗？」→ 考点：时间口径 → 答法**：on-CPU 统计线程在 CPU 上执行的样本，off-CPU 统计线程被调度走或阻塞的时长；两者是不同口径不能相加，需要同时看时用 hot/cold 火焰图左右拼接，而不是把样本混进一个计数里。\n3. **「为什么同一个函数在图上出现在好几个地方？」→ 考点：合并规则 → 答法**：折叠只对完全相同的调用栈累加，不同父路径进来的同一叶子是两座独立的塔；所以要沿塔向下看父路径才知道是哪个调用方贡献的宽度，优化时也得按路径分别处理。\n4. **「图上一大片平顶说明什么？」→ 考点：热点与栈完整性 → 答法**：平顶表示样本集中在同一函数且没有更深帧，通常是真正的自耗热点（或内联后的外层函数）；但如果同时伴随大量 `[unknown]`，先修栈展开和符号，再谈优化。\n5. **「两次采样的火焰图能直接比宽度得出优化收益吗？」→ 考点：可比性 → 答法**：只有同二进制、同采样频率、同负载下宽度才可比；更稳的是用折叠文件求差或者比绝对样本数，否则采样噪声和负载漂移会被当成优化效果。\n\n  Update available: 2.7.1 → 2.7.2\n  Run bl update to upgrade"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "perf-engineering",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 8,
+    "section": "第 4 章 火焰图读法：on-CPU 与 off-CPU，宽度、合并与调用栈"
+  }
+}

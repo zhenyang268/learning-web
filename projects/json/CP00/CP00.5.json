@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP00.5",
+  "chapter": "CP00",
+  "title": "2 章节 ↔ 步骤 映射",
+  "src": {
+    "file": "notebook/projects/cpu/NOTES.md",
+    "sha256": "sha256:f11e2f546f1a0222d1555da30fba4f53c302c37eb193a45111454c1b8d382c0f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP00.5:body.s01",
+      "type": "extension",
+      "title": "2 章节 ↔ 步骤 映射",
+      "level": 2,
+      "content": "### 2.1 结构与实现（`cpu-microarchitecture` ↔ `riscv-core`）\n\n| 读（章） | 做（步） | 做完多知道什么 |\n|---|---|---|\n| 1 ISA 与实现的分离 | S1 单周期 RV32I | 立即数位序、`x0` 写口屏蔽覆盖所有写口 |\n| 2 五级流水线 | S2 五级 | 时钟由最慢一级 + 级间寄存器决定 |\n| 3 冒险与转发 | S3 转发/load-use | 停顿来自「值何时可用」而非「有无依赖」 |\n| 4 分支预测 | S4 BHT/BTB | MPKI 与 IPC 必须同时报 |\n| 8 存储层次与 TLB | S5 I/D cache | 位划分错则所有性能结论作废 |\n| 5 乱序执行 | S7 重命名+ROB+RS | 窗口是曲线；先顶上去的是 fmax |\n| 6 乱序访存 | S8 LSQ + 消歧 | 内存没有名字可换，别名只能运行时判 |\n| 9 PMU 与 roofline | S10 归因（用 S6+S9 的数据） | 四桶之和解释不了总周期 = 缺计数器 |\n| 7、10 超标量/SMT、现代核对照 | **无对应** | 这两章只能在「读别人的核」时用 |\n\n### 2.2 现场与工具（`asm-link-arch` ↔ 全部）\n\n| 读（章） | 支撑哪条线 | 典型用途 |\n|---|---|---|\n| 4 调用约定与 ABI | `riscv-core`（定调用约定）、`compiler`（lowering 与 `sret`） | 解释「为什么 24 字节结构体走内存返回」 |\n| 5 栈帧与局部变量 | `riscv-core`（递归与栈布局）、日常崩溃定位 | 读 `sub rsp, N`、红区、16 字节对齐 |\n| 6 目标文件与 ELF | `compiler`（重定位与节）、日常链接失败 | `readelf -s/-r` 读符号与重定位 |\n| 7 静态/动态链接、PLT/GOT | 日常线上问题、`compiler` 的 PIC 讨论 | `LD_DEBUG=bindings` 解释一次绑定 |\n| 8 装载与 ASLR | 与安全、调试相关 | `&x` 变化而 `&a-&b` 恒定 |\n| 9 内联汇编与屏障 | `compiler`（intrinsics 边界） | 编译器屏障 vs CPU 屏障 |\n| 2/3 指令集与 ARM64 对照 | 全部（读反汇编的字典） | 见到不认识的指令就查 |\n| 10 差异清单 | 全部（移植判断） | 哪类写法跨架构会挂 |\n\n### 2.3 上游与下游（`compiler` ↔ `cpu-microarchitecture`）\n\n| 读（章） | 与体系结构的交点 |\n|---|---|\n| 6 优化管线（内联/向量化） | 向量化直接改变指令数与访存形态 → 影响 IPC 与 AMAT |\n| 7 后端（指令选择、寄存器分配、调度） | spill/reload 数量决定访存压力；调度改变流水线利用 |\n| 9 可观测性（`-print-changed`、`-opt-bisect-limit`） | 归因工具，与 `perf` 的归因是同一套思路的两端 |\n| 11 GPU 与域特定语言编译 | 并行模型改变「什么算好的指令序列」：线程映射与显存层次取代指令选择成为主战场 |\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 9,
+    "section": "2 章节 ↔ 步骤 映射"
+  }
+}

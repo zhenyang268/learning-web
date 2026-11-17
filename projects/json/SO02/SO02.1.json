@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "SO02.1",
   "chapter": "SO02",
-  "title": "xv6 · 大纲",
+  "title": "xv6 · 总览",
   "src": {
     "file": "notebook/projects/os/xv6/OUTLINE.md",
     "sha256": "sha256:d7cb3bdd6ac16c304d390e38d59d040bbd1ce0bd9cf1d76e71e7566e1691870f"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

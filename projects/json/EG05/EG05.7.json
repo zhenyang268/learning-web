@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.7",
+  "chapter": "EG05",
+  "title": "第 6 章 缓存击穿、雪崩与热 key",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 缓存击穿、雪崩与热 key",
+      "level": 2,
+      "content": "**要解决的问题**：缓存的价值是把后端 QPS 压到它能承受的量级，但缓存失效不是均匀渐变的，而是三种突变：单 key 失效的瞬间、大批 key 同时失效或缓存层整体不可用、单 key 流量超过单节点能力。这一章解决的是让失效流量变得可预测，并且在失效窗口内后端不被打穿。\n\n**机制**：\n\n先分清四个词，这是这一章的第一道面试题：\n\n- **穿透**：查一个根本不存在的 key，缓存永不命中，每次都打 DB。\n- **击穿**：一个热点 key 到期，瞬间并发全部落到 DB。\n- **雪崩**：大量 key 同一时刻过期，或缓存集群整体故障。\n- **热 key**：单 key 的 QPS 超过一个节点/一个分片的承载能力，即使不过期也是瓶颈。\n\n**击穿的解法是单飞**：把“回源”这个动作按 key 合并，只放一个请求去查 DB，其余等结果。\n\n```go\nv, err, _ := group.Do(key, func() (any, error) {\n    if v, ok := local.Get(key); ok {\n        return v, nil\n    }\n    v, err := db.Query(key)          // 只有一个 goroutine 真正回源\n    if err == nil {\n        cache.Set(key, v, ttlWithJitter())\n    }\n    return v, err\n})\n```\n\n（`group` 即 `golang.org/x/sync/singleflight` 的 `Group`，`Do` 返回结果、错误和一个 `shared` 标志表示本次结果是否被多方共享。）\n\n三个必须注意的点：合并粒度由 key 决定，key 设计粗了会把不相关请求合并；慢请求会让所有等待者一起变慢，尾延迟被放大；错误会广播给所有等待者，所以不能把“这次失败”当成“这个 key 不存在”写进缓存。跨进程的单飞要靠分布式锁，例如 `SET lock:{key} 1 NX PX 3000`，抢不到锁的请求短暂等待后重读缓存。\n\n**雪崩的解法**是分层防御：TTL 抖动，$ttl = base + U(0, J)$，$J$ 通常取 $base$ 的 10%~20%，把“同一秒过期”摊成一条斜线；发布前异步预热，避免上线瞬间全空；多级缓存，本地缓存挡一层，Redis 挂了还有兜底（代价是一致性窗口）；客户端或 DB 侧限流熔断，宁可拒绝也不要把 DB 拖死；缓存层本身做多副本/Cluster，消除“整个缓存层消失”这个最坏情况。\n\n**热 key 的解法**先探测再处理。探测手段有 `redis-cli --hotkeys`（需要淘汰策略为 LFU 系列）、客户端埋点统计、代理层采样。处理手段有三类：本地缓存把“每请求一次 Redis”降到“每进程每几秒一次”；key 拆分 `hotkey:{0..N}`，写时写 N 份或写主 key 异步同步，读时轮询分散到多个分片；读写分离、多副本读。\n\n**最小例子**：\n\n```bash\n# 1) TTL 抖动前：所有 key 都是 3600 秒，同一秒集体过期\nredis-cli SET sku:1 v EX 3600\nredis-cli TTL sku:1\n# → (integer) 3600\n\n# 2) NX 互斥：只有一个请求能拿到回源权\nredis-cli SET lock:sku:1 1 NX PX 3000\n# → OK\nredis-cli SET lock:sku:1 1 NX PX 3000\n# → (nil)   # 第二个请求拿不到锁，走“短暂等待 + 重读缓存”\n\n# 3) 找热 key，先切到 LFU 淘汰策略\nredis-cli CONFIG SET maxmemory-policy allkeys-lfu\nredis-cli --hotkeys\n# → 按访问频率列出的 key（采样结果随实例状态而定）\n```\n\n第 1 步就复现了雪崩的成因：把 `EX 3600` 换成 `EX $((3600 + RANDOM % 600))`，过期点就散到 10 分钟的窗口里。\n\n**面试高频问法**：\n\n1. 问法：「击穿、雪崩、穿透有什么区别？」\n   考点：是不是把三个词当同义词背。\n   答法：穿透是 key 压根不存在，击穿是单个热 key 过期，雪崩是大面积同时失效或缓存层故障；对应解法分别是布隆过滤器/空值缓存、单飞或分布式锁、TTL 抖动加多级缓存加熔断。\n\n2. 问法：「singleflight 有什么坑？」\n   考点：合并的副作用。\n   答法：粒度是 key，key 设计错会把不相关请求合并；一次慢回源会让所有等待者一起超时，放大尾延迟；错误会广播给所有等待者，所以不能把一次失败当不存在缓存起来。\n\n3. 问法：「逻辑过期和互斥重建怎么选？」\n   考点：可用性与一致性的取舍。\n   答法：逻辑过期把过期时间写在 value 里，过期后仍返回旧值并异步刷新，可用性优先但有一致性窗口；互斥重建是同步等结果，一致性好但把延迟直接暴露给用户。热点 key 通常选前者。\n\n4. 问法：「TTL 抖动为什么能缓解雪崩，范围怎么定？」\n   考点：是否知道抖动也有代价。\n   答法：把同时过期摊平到一段时间上；范围取 base 的 10%~20%，太小没效果，太大会拉低命中率、拉长脏数据窗口，上限必须小于业务能容忍的陈旧时间。\n\n5. 问法：「热 key 拆成 N 份之后，写怎么保证一致？」\n   考点：拆分带来的写放大。\n   答法：要么写 N 份并做部分失败的补偿，要么写主 key 再异步同步到副本、读时允许短暂不一致；N 按“单 key QPS / 单节点安全水位”估，估不出来就先做本地缓存挡一层。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 12,
+    "section": "第 6 章 缓存击穿、雪崩与热 key"
+  }
+}

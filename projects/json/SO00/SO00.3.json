@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO00.3",
+  "chapter": "SO00",
+  "title": "0 怎么用",
+  "src": {
+    "file": "notebook/projects/os/NOTES.md",
+    "sha256": "sha256:ea9cd76832f3f4e4729e92e9d274efafaf69b1cd7d4b55fc7a296eefc079315a"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO00.3:body.s01",
+      "type": "extension",
+      "title": "0 怎么用",
+      "level": 2,
+      "content": "- 选路径：读 §2。\n- 查对应：§1 的「同一件事的两侧」表。\n- 准备追问：§4 的跨项目问题。\n- 避坑：§3 的误配。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 7,
+    "section": "0 怎么用"
+  }
+}

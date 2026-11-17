@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG01.3",
+  "chapter": "EG01",
+  "title": "第 2 章 单元测试的边界：测行为不测实现",
+  "src": {
+    "file": "notebook/projects/eng/testing/NOTES.md",
+    "sha256": "sha256:264b2fc5ec970679cc8c0bd3d0474efd81daf2f882573790c6eb4fea8b4e3d4c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG01.3:body.s01",
+      "type": "extension",
+      "title": "第 2 章 单元测试的边界：测行为不测实现",
+      "level": 2,
+      "content": "**要解决的问题**：让测试在重构时保持稳定。测试一旦和内部结构绑死，每次等价重构都要改测试，测试就从资产变成负债，团队会开始跳过或删除测试。不解决这一条，前面所有分层都是空谈。\n\n**机制**：先给「行为」一个可操作的判据，而不是口号。设 $R$ 为一次保持外部契约不变的等价重构，测试集 $S$ 合格当且仅当\n\n$$S(M) = S(R(M))$$\n\n即重构前后测试结果一致。换句话说：**测试只允许依赖「从外部能观察到的东西」**。可观察的只有三类：返回值、对外可见的状态变化、对外发出的消息（发给外部协作者的请求内容）。不可观察、因此禁止断言的有：私有方法、内部调用顺序、内部数据结构、同模块内协作者的调用次数。\n\n按这个判据，替身的使用边界也随之确定：mock 只出现在「跨进程、慢、不确定」的边界（支付网关、短信、时钟、第三方 API），绝不用在同模块内部的协作对象上。验证副作用时，断言的是「外部收到了什么」，而不是「内部第几步调了谁」。\n\n```text\n# 判定一个断言是否越界\ndef is_behavior(assertion):\n    subject = assertion.observed_subject()\n    if subject in {return_value, public_state, outbound_message}:\n        return True          # 行为\n    return False             # 私有方法 / 内部调用顺序 / 内部协作对象\n```\n\n**最小例子**：`OrderService.placeOrder(cart, user)`。\n\n反例（测实现）：mock 掉 `PriceCalculator`、`InventoryRepo`、`OrderRepo`，然后断言 `priceCalculator.calculate` 被调用一次、`inventoryRepo.deduct` 在 `orderRepo.save` 之前被调用。测试是绿的，但它把「先算价再扣库存再落单」这个内部步骤写死了。\n\n正例（测行为）：只 mock 外部支付网关，断言三件事——返回的订单状态是 `CREATED`、订单总价等于 `90`（VIP 折扣后）、支付网关收到的金额是 `9000`（分）。\n\n现在做一次等价重构：把 `PriceCalculator` 内联进 `OrderService`，逻辑不变。反例测试全红，得改测试；正例测试一条不用动，仍然绿。这就是那条等式的实际体现。再补一个副作用场景：发短信通知。正例是断言「短信网关收到 (手机号, 模板 ID)」，而不是断言 `smsService.send` 在 `placeOrder` 第 7 行被调用——前者重构安全，后者一挪代码就断。\n\n**面试高频问法**：\n\n1. 怎么判断一个测试是不是测了实现？ → 考点在重构不变性 → 答法：做一次等价重构，测试红了就是测了实现；不用争论，重构一次就见分晓。\n2. Mock 用得越多不是隔离得越好吗？ → 考点在 mock 的边界 → 答法：mock 只该出现在进程外、慢、非确定的边界，mock 同模块内部协作者等于把实现细节抄进测试。\n3. 不 mock 内部协作者，怎么验证「发短信」这种副作用？ → 考点在可观察行为的定义 → 答法：副作用也是行为，但验证的是短信网关收到了什么内容，不是 Service 内部第几行调了它。\n4. 覆盖率 100% 能保证没测实现吗？ → 考点在覆盖率与耦合是正交的 → 答法：不能，覆盖率只说明行被执行过，不说明断言落在行为上，mock 满天飞一样能刷到 100%。\n5. TDD 是不是天然就能避免测实现？ → 考点在 TDD 的真实约束力 → 答法：不一定，先定好内部类结构再写测试一样会耦合；TDD 有用是因为测试先于实现，逼你从调用方视角描述行为。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "testing",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 9,
+    "section": "第 2 章 单元测试的边界：测行为不测实现"
+  }
+}

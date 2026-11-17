@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "GX01.3",
+  "chapter": "GX01",
+  "title": "章节目录",
+  "src": {
+    "file": "notebook/projects/cg/rasterizer/NOTES.md",
+    "sha256": "sha256:189bc6c94f641497f4bb86840d0f7a71d0db09d22e543b7b83b04decf76debf5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "GX01.3:body.s01",
+      "type": "extension",
+      "title": "章节目录",
+      "level": 2,
+      "content": "1. 变换链与矩阵底座\n2. 视图与投影\n3. 光栅化与消隐\n4. 着色\n5. 纹理与采样\n6. 阴影贴图\n7. 裁剪与视锥\n8. 色彩管线与输出\n9. 抗锯齿\n10. 双后端对照与回归比对"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cg",
+    "project": "rasterizer",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 12,
+    "section": "章节目录"
+  }
+}

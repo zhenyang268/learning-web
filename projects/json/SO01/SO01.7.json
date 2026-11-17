@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.7",
+  "chapter": "SO01",
+  "title": "第 5 章 内存占用口径：VSS / RSS / PSS / USS、缺页与共享页",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.7:body.s01",
+      "type": "extension",
+      "title": "第 5 章 内存占用口径：VSS / RSS / PSS / USS、缺页与共享页",
+      "level": 2,
+      "content": "**要解决的问题**：线上说“内存涨了”，九成先要反问是哪一个口径。`ps` 的 RSS 相加经常超过物理内存——共享库、共享内存、被映射的 page cache 在多个进程里被各记一遍；反过来，容器 OOM 报的 `anon-rss` 又比 `top` 看到的小，因为后者混进了 file-backed 页。分不清这四个口径，就会把共享库当泄漏去扩容、把可回收的页缓存当“还不了的内存”去重启服务。\n\n**API 与代价**：口径来自内核计数器，不是 `free` 现算的。\n\n- `VSS` = `mm->total_vm`，VMA 长度之和。分配地址空间就有，**不占物理页**。\n- `RSS` = `mm->rss_stat[]`（每 CPU 计数器求和）× `PAGE_SIZE`，只统计**已建立 PTE 且 Present** 的页。\n- `PSS` 没有常驻计数器：`smaps` 遍历每个 VMA、对每页按 `mapcount` 平摊现算，代价 $O(\\text{映射数})$，读别人的进程要 root。\n- `USS` = `Private_Clean + Private_Dirty`，进程独占。\n\n```c\nsize_t n = 64UL << 20;\nvoid *p = mmap(NULL, n, PROT_READ|PROT_WRITE,\n               MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);  /* VSS +=64MiB，RSS 不变 */\nmemset(p, 1, n);              /* 16384 次 minor fault 后 RSS 才 +=64MiB */\nmadvise(p, n, MADV_DONTNEED); /* 匿名页直接丢弃：RSS 归零，内容变零 */\nmunmap(p, n);                 /* 这时才释放 VMA 和页表页 */\n```\n\n按页读 `statm`（**单位是页，不是字节**）：\n\n```c\nlong sz, res, sh;                    /* size resident shared */\nFILE *f = fopen(\"/proc/self/statm\", \"r\");\nfscanf(f, \"%ld %ld %ld\", &sz, &res, &sh);\nprintf(\"RSS=%ld KiB\\n\", res * sysconf(_SC_PAGESIZE) / 1024);\n```\n\n常见误用：把 `statm` 的 `shared` 当 PSS——它其实是**文件后备的驻留页**总数，同一份 libc 在 50 个进程里各记一遍；`getrusage().ru_maxrss` 在 Linux 上单位是 **KiB**，且是历史峰值，永不会下降。\n\n**对应命令与读法**：\n\n1. `free -m` → 看 `available` 而不是 `free` → 它是内核估算的“还能给新应用多少”（扣除 low watermark 与不可回收 slab）→ 骗你处：`buff/cache` 含 tmpfs/shmem，这部分**不可回收**，tmpfs 写满时 `available` 才掉，平时容易漏判。\n2. `vmstat 1 5` → 跳过第一行（开机以来均值）；看 `si/so`（换页 KB/s）、`free`、`cache`、`wa` → `si/so` 长期非 0 是真缺内存 → 骗你处：`cache` 列不含 SReclaimable slab，也不反映碎片，空闲页够但 order-3 分配失败它看不出来。\n3. `cat /proc/PID/statm` → 第 1 列 `size` 是 VSS（页），第 2 列 `resident` 是 RSS（页）→ 差值大说明“申请了没碰” → 骗你处：`resident` 含共享页，多进程相加必然重复计算。\n4. `grep -E '^(Rss|Pss)' /proc/PID/smaps_rollup` → 一次给出全进程 Rss/Pss 合计，与 `pmap -x` 的 total 对得上 → 看 Pss 随时间单调涨才是真泄漏 → **会骗你**：老内核没有 `smaps_rollup`，逐段读 `smaps` 开销大。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 19,
+    "section": "第 5 章 内存占用口径：VSS / RSS / PSS / USS、缺页与共享页"
+  }
+}

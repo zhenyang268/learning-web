@@ -50,6 +50,11 @@ export interface HeaderModel {
   syllabus?: { label: string; title: string } | null;
   /** 路线（`#angles`）入口；同样以「数据存在」为渲染条件 */
   angles?: { label: string; title: string } | null;
+  /**
+   * 是否显示平均掌握度（块上的进度条 / 下拉里的百分比）。
+   * 缺省 true；工程线显式 false —— 进度不在这套静态站里控制。
+   */
+  showProgress?: boolean;
   onSearch(query: string): void;
   /** 顶栏导航选中某一项（窄屏 select 用；桌面块走 document 上的 data-goto 委托） */
   onGoto(code: string): void;
@@ -62,19 +67,22 @@ let navSelect: HTMLSelectElement | null = null;
 const pct = (n: number): string => (n * 100).toFixed(0);
 
 /** 桌面横滚条里的一个块 */
-function blockHtml(b: NavBlock, current: string, index: number): string {
+function blockHtml(b: NavBlock, current: string, index: number, showProgress = true): string {
   const n = index + 1;
-  const tip =
-    (b.group ?? 'domain') === 'chapter'
+  const tip = showProgress
+    ? (b.group ?? 'domain') === 'chapter'
       ? `${b.label} · 索引章 · 平均掌握度 ${pct(b.progress)}%`
-      : `${b.label} · 平均掌握度 ${pct(b.progress)}%`;
+      : `${b.label} · 平均掌握度 ${pct(b.progress)}%`
+    : b.label;
   return `<b class="${b.letter === current ? 'on' : ''}" data-letter="${escapeHtml(b.letter)}" data-goto="${escapeHtml(
     b.first,
   )}"
       data-nav="${n}" role="button" tabindex="0" aria-label="前往 ${escapeHtml(b.label)}"
-      title="${escapeHtml(b.letter)} ${escapeHtml(tip)}">${escapeHtml(b.letter)}<i style="transform:scaleX(${b.progress.toFixed(
-        3,
-      )})"></i></b>`;
+      title="${escapeHtml(b.letter)} ${escapeHtml(tip)}">${escapeHtml(b.letter)}${
+        showProgress
+          ? `<i style="transform:scaleX(${b.progress.toFixed(3)})"></i>`
+          : ''
+      }</b>`;
 }
 
 /**
@@ -96,12 +104,13 @@ function blockHtml(b: NavBlock, current: string, index: number): string {
 function navOptionsHtml(model: HeaderModel): string {
   const domains = model.blocks.filter((b) => (b.group ?? 'domain') === 'domain');
   const chapters = model.blocks.filter((b) => b.group === 'chapter');
+  const show = model.showProgress !== false;
   const opt = (b: NavBlock, index: number): string =>
     `<option value="${escapeHtml(b.first)}" data-nav="${index + 1}">${escapeHtml(b.label)} (${escapeHtml(
       b.letter,
-    )}) · ${pct(b.progress)}%</option>`;
+    )})${show ? ` · ${pct(b.progress)}%` : ''}</option>`;
   const all = model.blocks;
-  return `<option value="" selected>域 / 进度…</option>
+  return `<option value="" selected>${show ? '域 / 进度…' : '域…'}</option>
       <optgroup label="域">${domains.map((b) => opt(b, all.indexOf(b))).join('')}</optgroup>
       ${chapters.length ? `<optgroup label="索引与导航">${chapters.map((b) => opt(b, all.indexOf(b))).join('')}</optgroup>` : ''}`;
 }
@@ -249,7 +258,7 @@ export function renderHeader(host: HTMLElement, model: HeaderModel): void {
   }
 
   (host.querySelector('.chapters') as HTMLElement).innerHTML = model.blocks
-    .map((b, i) => blockHtml(b, model.current, i))
+    .map((b, i) => blockHtml(b, model.current, i, model.showProgress !== false))
     .join('');
   (host.querySelector('.warnslot') as HTMLElement).innerHTML = model.errorCount
     ? `<div class="warnchip" title="见右下角数据问题浮层">⚠ ${model.errorCount}</div>`

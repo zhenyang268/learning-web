@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG00.4",
+  "chapter": "LG00",
+  "title": "1 三条判据链（别混用）",
+  "src": {
+    "file": "notebook/projects/langs/NOTES.md",
+    "sha256": "sha256:8114d098dc603d8f75fd0297e834b4f972fad6fb2cd03cd3bafe5b42e8e2fa44"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG00.4:body.s01",
+      "type": "proof",
+      "title": "1 三条判据链（别混用）",
+      "level": 2,
+      "content": "| | `cpp-basics` | `python-basics` | `cuda` |\n|---|---|---|---|\n| 回答的问题 | 这段代码为什么会崩/会错 | 这段代码为什么慢在这 | 这个 kernel 为什么跑不满 |\n| 主判据 | 能指出 UB 或生命周期错误，并用工具证实 | 能用运行时机制解释行为差异 | 能用 profiler 指标定位瓶颈类 |\n| 工具 | `-fsanitize=address,undefined`、`objdump`、`-fdump-lang-class`、`valgrind` | `dis`、`sys.getrefcount`、`tracemalloc`、`-X importtime`、事件循环日志 | `ncu`/`nsys`：占用率、bank conflict、访存效率、stall reason |\n| 失效条件 | 优化等级改变后行为不同（正是 UB 的证据） | 换了实现（PyPy/free-threading）结论不同 | 换了架构（SM 数、共享内存大小）结论不同 |\n| 一句话口径 | 编译器假设了什么 | 运行时替你做了什么 | 硬件等着什么 |\n\n**一条铁律**：三个方向都**不接受\"感觉更快\"**。C++ 要能复现崩溃或差异，Python 要能给出耗时/内存的分项，CUDA 要能给出指标名与数值。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 7,
+    "section": "1 三条判据链（别混用）"
+  }
+}

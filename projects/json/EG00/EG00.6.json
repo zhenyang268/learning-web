@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG00.6",
+  "chapter": "EG00",
+  "title": "3 五个最小可交付",
+  "src": {
+    "file": "notebook/projects/eng/NOTES.md",
+    "sha256": "sha256:e214cf5954a537c33d05170a4d2a93b87a993d118977ca442a1b652629277764"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG00.6:body.s01",
+      "type": "extension",
+      "title": "3 五个最小可交付",
+      "level": 2,
+      "content": "每个项目留一个**可展示的证据**，比读完全文有用：\n\n| 项目 | 最小可交付 |\n|---|---|\n| `debug-toolchain` | 一份 core dump 分析记录：信号 → PC → 变量 → 根因 → 最小复现 |\n| `testing` | 一个\"注入故障即变红\"的测试集 + 一句\"哪些没测、为什么\" |\n| `perf-engineering` | 一张火焰图 + 一句归因结论 + 一次方差说明 |\n| `system-design` | 一页容量估算（QPS / 存储 / 带宽）+ 第一瓶颈 |\n| `latent-issues` | 一份自己的\"踩坑索引\"，每条含触发条件与观测手段 |"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 8,
+    "section": "3 五个最小可交付"
+  }
+}

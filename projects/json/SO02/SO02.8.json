@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO02.8",
+  "chapter": "SO02",
+  "title": "B4 陷入与返回",
+  "src": {
+    "file": "notebook/projects/os/xv6/NOTES.md",
+    "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO02.8:body.s01",
+      "type": "extension",
+      "title": "B4 陷入与返回",
+      "level": 2,
+      "content": "> 职责：执行流 → 可冻结可恢复的现场。依赖：B1、B2；被 B5／B6／B7／B9 借。\n\n**执行流 → 可冻结可恢复的现场。** 使用面：trapframe／不可改的入口（`stvec`+`sscratch`）／`return`。\n\n### 现象\n\n进程调 `write` 时「停了一下」，回来继续，寄存器像没被动过；中断能打断；内核里再陷入也不毁现场。\n\n### 机制\n\n实现面（≤6）：入口汇编／换栈／`sscratch` 暂存／trapframe 布局／嵌套与中断开关。删掉不可改入口 → 提权；删掉换栈 → 返回地址可篡改。\n\n要做到「能停、且停时它的世界不变」，必须有：用户态改不了的入口（`stvec`）、用户态改不了的现场存放处（trapframe，`U=0`）、硬件给的返回地址（`sepc`）。\n\n**一次 `ecall` 的六步**：\n\n| 时刻 | `pc` | `sp` | `satp` | `stvec` | `sscratch` |\n|---|---|---|---|---|---|\n| U 态执行 `ecall` 前 | 用户下一条 | 用户栈 | 用户页表 | `TRAMPOLINE+uservec` | `TRAPFRAME` |\n| `uservec` 第一条 `csrrw` 后 | trampoline | 用户栈 | 用户页表 | 同上 | 用户的 `a0` |\n| 存完 31 个寄存器、取 `kernel_sp` 后 | trampoline | 内核栈顶 | 用户页表 | 同上 | 用户的 `a0` |\n| `csrw satp` + `sfence.vma` 后 | trampoline | 内核栈顶 | **内核页表** | 同上 | 用户的 `a0` |\n| `jr t0` 进 `usertrap` 后 | `usertrap` | 内核栈 | 内核页表 | **`kernelvec`** | 用户的 `a0` |\n| `sret` 之后 | 用户下一条 | 用户栈 | 用户页表 | `TRAMPOLINE+uservec` | `TRAPFRAME` |\n\n四个必须能解释的点：\n\n- **`csrrw a0, sscratch, a0`**：一条指令同时拿到 trapframe 地址、把用户 `a0` 暂存走，少一个中断窗口；随后 `csrr t0, sscratch; sd t0, 112(a0)` 补存用户 `a0`。\n- **trampoline 必须在用户页表里同址映射**：换 `satp` 那一瞬间，下一条指令的取指地址必须在新旧两张表里都有效。\n- **`usertrap` 第一句把 `stvec` 换成 `kernelvec`**：否则内核里再中断会跳回 `uservec`，把内核现场当用户现场存。\n- **`scause==8` 时 `epc += 4`**：`sepc` 指向 `ecall` 本身，不加就原地打转（症状：系统调用无限重复）。\n\n**trapframe 布局**（前 40 字节不是寄存器，`a0` 在 112、`a7` 在 168）：\n\n| 偏移 | 字段 | 谁写 |\n|---|---|---|\n| 0 / 8 / 16 | `kernel_satp` / `kernel_sp` / `kernel_trap` | `usertrapret` 填，`uservec` 读 |\n| 24 | `epc` | `sepc` 同步进来；返回值也走这里 |\n| 32 | `kernel_hartid` | `usertrapret` |\n| 40 起 | 31 个通用寄存器 × 8 字节 | `uservec` |\n\n即：前 40 字节是 5 个簿记字段，后面 248 字节是 31 个通用寄存器（`x0` 不存），总 288 字节。\n\n### 为什么这么设计\n\nRISC-V 的 `ecall` 只做三件事（`pc→sepc`、原因 `→scause`、`pc→stvec`）——**不换栈、不存寄存器**。硬件省下的软件必须补：现场进 trapframe，栈从 `kernel_sp` 取，「trapframe 在哪」只能藏 `sscratch`。三处都是被硬件契约逼出来的，不是风格。\n\n**为什么 B4 独立成块**：进程**借**它，借的东西不能同时是借者的字段。trapframe 字段顺序是契约型积木——不能独立验证，只能端到端注入一个错（改一个字段，`trampoline.S` 偏移全错）。删掉 trampoline 同址映射 → 换 `satp` 后取指地址失效，陷入即崩。\n\n### 怎么验证\n\n- 背六步表，`b usertrap` / `b syscall` 各停一次，用 `p/x $satp`、`$stvec`、`$sscratch` 对表；\n- `b usertrap` 时看 `$scause`、`$satp`、`x/36gx myproc()->trapframe`；\n- `backtrace` 用 `s0` 走链（`fp-8` 是返回地址、`fp-16` 是上一帧 `fp`，上界 `PGROUNDUP(fp)`），意义是证明**陷入现场与调用链是同一套栈**，判据是 3–5 层；\n- 判据总述：`ecall` 后能回来；一个寄存器不漏；再陷入不毁现场。\n\n**失效点**：trapframe 字段顺序一改，`trampoline.S` 的偏移全错——不是概率问题。加 KPTI 后用户页表不再含内核映射，trampoline 从「省事」变「唯一可用跳板」。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "xv6",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 18,
+    "section": "B4 陷入与返回"
+  }
+}

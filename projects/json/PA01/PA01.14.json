@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.14",
+  "chapter": "PA01",
+  "title": "10 PA5 逐层 · H100 上的开放优化",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.14:body.s01",
+      "type": "extension",
+      "title": "10 PA5 逐层 · H100 上的开放优化",
+      "level": 2,
+      "content": "> 源码在 `asst5-kernels-main.zip` 内：`problems/{histogram, 1d-occupancy-decoder, flashattention, rk4, swiglu}/`。\n> 平台：H100，通过 `popcorn-cli` 提交到课程作业队列（有 leaderboard）。可用 CUDA / Triton / TileLang，**明确允许用 LLM**。\n\n### 14.1 五个 kernel 的真实形状与本质考点\n\n| kernel | 输入/输出形状 | 本质考点 |\n|---|---|---|\n| **histogram** | 输入 `[1048576, 512]`（值域 `[0,255]`）→ 输出 `[512, 256]` | **原子竞争**：512 个通道 × 大量线程抢 256 个 bin。经典解法是**先在 shared memory 里做 per-block 直方图，最后再合并到全局**，把全局原子次数降一个数量级 |\n| **swiglu** | `SwiGLU(x,W,V,b,c,beta) = Swish(xW+b) ⊙ (xV+c)`，`Swish(x)=x*sigmoid(beta*x)`；`x:[B,S,D_in]` → `[B,S,H]` | **带宽受限的 elementwise + GEMM**。考点是融合：两个 GEMM + 激活 + 逐元素乘，能不能一趟走完不落 HBM |\n| **rk4** | 3D 热方程，`u_t = α∇²u`，**8 阶精度 25 点 stencil**（1 中心 + 6 方向 × 4 邻居），RK4 时间推进 | **stencil + 时间步**。算术强度低、**带宽受限**；8 阶 25 点意味着每个点要读 25 个邻居 → shared memory / halo 管理是核心 |\n| **flashattention** | `Q,K,V: [B, N, S, D]`，FP16 | 经典三件套：**tiling + fusion + online softmax**（用 running max / running sum 增量归一化，避免整行驻留） |\n| **1d-occupancy-decoder** | queries `[B, 250k, 3] → MLP → [B,250k,768]`；latents `[B,1024,768]`；cross-attention 输出 `[B,250k,768]` → `[B,250k,1]` | **极端不平衡的 cross-attention**：query 25 万、latent 仅 1024。和常见 2k×2k 的 benchmark 完全不同，需要针对\"K/V 极小、Q 极大\"重做分块 |\n\n### 14.2 选题建议（按\"上手成本 / 上限\"排序）\n\n1. **histogram** —— 概念最集中（原子竞争 + shared memory + 归约），代码量最小，适合\"把课上概念完整走一遍\"。上限中等。\n2. **swiglu** —— 结构清晰（GEMM + elementwise），容易用 Triton 快速迭代；瓶颈明确是带宽，能练\"怎么判断带宽受限\"。\n3. **rk4** —— 有真实物理背景，stencil 的 halo/shared memory 优化路径清晰；work log 好写（每步都有可测的指标变化）。\n4. **flashattention** —— 上限高、资料多，但也最容易变成\"抄一个现成实现\"；如果选它，work log 必须体现**你自己测出来的决策**（tile 尺寸、shared memory 分配、online softmax 的取舍）。\n5. **1d-occupancy-decoder** —— 最复杂（MLP + cross-attention + LayerNorm + 投影，一整条前向），适合想冲 100+ 的团队。\n\n### 14.3 NCU 报告怎么读\n\nhandout 给了一个真实 profile 片段（RK4 的 `heat_step_kernel`）：\n\n```\nDuration            : 7.10 us\nCompute_Throughput  : 18.45%\nSM_Busy             : 31.12%\nL1_Cache_Throughput : 46.35%\nDRAM_Throughput     : 4.45%\nL1_Cache_Hit_Rate   : 80.99%\n```\n\n**读法**：\n\n- `Compute_Throughput` 18% + `DRAM_Throughput` 4.5% → **既不算力受限也不带宽受限**，那瓶颈是什么？答案是**并行度不足 / 占用率太低**（SM_Busy 只有 31%，大量 warp 槽位空着）。\n- 判断口诀：**某个吞吐率接近 100% 的就是瓶颈**；都低 = 延迟没藏好或并行度不够。\n- 四个优化方向对照：增加并行度 → 提高占用率；减少通信 → 降 DRAM_Throughput 需求；隐藏延迟 → 更多并发 warp / 异步拷贝；缓解竞争 → 降原子/L2 冲突。\n\n### 14.4 work log 怎么写（这是评分对象）\n\n每一\"步\"都要有这六项（handout 明确列举）：\n\n```\n1. 当前代码是什么结构？（高层描述，如\"我们把最外层循环分块，块映射到 CUDA block，内层循环并行到线程\"）\n2. 性能数字（明确给出运行时间）\n3. 还测了哪些统计？（NCU 的哪些指标）\n4. 从数据里得出什么结论？\n5. 假设瓶颈是什么？怎么得出这个假设的？\n6. 这个假设说明下一步该改什么？\n```\n\n再加上：**为什么停**（时间到了？还是从 profile 判断没多少空间了——后者的推理要写出来）以及 **LLM 有没有帮上忙、怎么用**。\n\n### 14.5 流程要点\n\n- `popcorn-cli submit --leaderboard <name> --mode <test|benchmark|leaderboard|profile> submission.py`\n- 写 CUDA 要先 `python wrap_cuda_submission.py <SUNetID>` 包成 `submission.py`（队列只收 `submission.py`）\n- 本地可跑：`python ../eval.py <test|benchmark|profile> test_cases/test.txt`\n- `ncu` 需要 GPU 性能计数器权限：`NVreg_RestrictProfilingToAdminUsers=0` + 重启\n- **只在 H100 上收集性能数据**；本地小卡（如 L4）只用于调试和探索选项\n\n### 14.6 设计理念\n\n这是\"**没有参考实现可追**\"的真实性能工程：你不知道天花板在哪，只能靠测量逼近。一份好的 work log 就是一门可复现的实验科学记录——**能被数据推翻的假设，比一次正确的猜测更值钱**。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 13,
+    "parts": 18,
+    "section": "10 PA5 逐层 · H100 上的开放优化"
+  }
+}

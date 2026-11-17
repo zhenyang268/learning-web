@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.5",
+  "chapter": "CS01",
+  "title": "1 怎么读这个文件",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.5:body.s01",
+      "type": "extension",
+      "title": "1 怎么读这个文件",
+      "level": 2,
+      "content": "- §2 是**全景 + 408 映射 + 关键路径**，回答\"这八个 lab 到底在造什么、先做哪个、哪些根本不该碰\"。\n- §3 是**设计理念**，七条贯穿整个系列的主线。**这是最值钱的部分**——CSAPP 之所以是神课，不是因为题目难，是因为它每个 lab 都在逼你体会同一批设计原则。\n- §4 每个 lab 一张卡片：目标 → 接口 → 机制骨架 → **关键路径**（实现顺序）→ **易错点 Top** → **设计理念** → 408 对应点 → 验收命令。\n- §5 环境（Linux 硬前提）+ 调试兵器库；§6 是批次划分；**§7 是八个 lab 的逐层设计（完整讲义，含代码骨架与手算过程）—— 真正干活时看这里，§4 只是速查卡片**。\n- §8 是**出口视角**（考研复试与找工作面试怎么复用这批 lab，含项目介绍话术与三个\"五分钟故事\"）—— 初试前不用看，初试结束当晚再翻。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 20,
+    "section": "1 怎么读这个文件"
+  }
+}

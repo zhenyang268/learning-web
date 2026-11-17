@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "LG01.1",
   "chapter": "LG01",
-  "title": "cpp-basics · 大纲",
+  "title": "cpp-basics · 总览",
   "src": {
     "file": "notebook/projects/langs/cpp-basics/OUTLINE.md",
     "sha256": "sha256:9a5aa340ec17a584f37f30f0515831e04253c32e7d4c0126f3a176469713e986"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

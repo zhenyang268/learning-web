@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.12",
+  "chapter": "SO01",
+  "title": "第 10 章〔文件〕IO 栈与页缓存：buffered vs direct IO、fsync 与写放大",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.12:body.s01",
+      "type": "extension",
+      "title": "第 10 章〔文件〕IO 栈与页缓存：buffered vs direct IO、fsync 与写放大",
+      "level": 2,
+      "content": "**要解决的问题**：`write()` 返回成功不等于数据在盘上——进程被杀没事，机器掉电就丢；数据库每条 `fsync` 让 p99 从 2ms 抖到 200ms；应用只写了 10MB/s，`iostat` 显示磁盘 300MB/s；`iostat` 的 `%util` 100% 但 `iotop` 里一个在写的进程都没有。这一章解决的就是“写下去的东西去哪了、什么时候真到盘、代价谁付”。\n\n**API 与代价**：\n\n```c\nssize_t n = write(fd, buf, len);        /* 只拷进 page cache，不分配块、不发起 I/O */\nif (n < 0 && errno == EINTR) /* 重试 */;\nfsync(fd);      /* 数据 + 元数据（size/mtime/块映射）都持久化 */\nfdatasync(fd);  /* 只保证数据可取回，可省无关元数据 */\nsync_file_range(fd, off, len, SYNC_FILE_RANGE_WRITE); /* 仅触发回写，不保证落盘 */\nposix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED);         /* 丢弃干净页，避免缓存污染 */\nfallocate(fd, 0, 0, len);                             /* 预分配，把块分配移出写路径 */\nint fd2 = open(p, O_RDWR|O_CREAT|O_DIRECT, 0644);     /* 绕过页缓存 */\n```\n\n- `write` 返回的是“已拷入页缓存的字节数”，短写和 `EINTR` 都必须循环重试。\n- `fsync` 的代价是一组真实 I/O 加一次缓存屏障：机械盘 ms 级，SSD 几十 µs~ms；逐条 `fsync` 与批量 `fsync` 差一个数量级。\n- `O_DIRECT` 有对齐约束：偏移、长度、缓冲区地址按逻辑块（常见 512/4096）对齐，否则 `EINVAL`，缓冲区用 `posix_memalign` 分配。它仍不保证元数据落盘，要持久化还得 `fsync`。\n- `O_SYNC`/`O_DSYNC` 等价于每次 `write` 自带 `fsync`，是最贵的选项。\n- 常见误用：把 `write` 成功当持久化；拿 `sync_file_range` 替代 `fsync`；`rename`/`unlink` 后忘了 `fsync` 父目录 fd；用小缓冲逐条 `write` 再逐条 `fsync`。\n\n**对应命令与读法**：\n\n1. `iostat -x 1 5` → 看 `w/s`、`wkB/s`、`await`/`w_await`、`aqu-sz`（旧版叫 `avgqu-sz`）、`%util`、`wareq-sz` → `w_await` 高说明排队在设备侧；`wareq-sz` 远大于 4KB 说明合并良好，接近 4KB 且有大量小写说明随机写；`%util` 贴 100% 且 `await` 同步上升就是饱和 → 会骗你：NVMe/RAID 能并行处理，`%util` 100% 不代表打满；`await` 含排队时间，不能当单次 I/O 服务时间。\n2. `iotop -o -b -n 2 -d 5`（需 root，依赖内核 `CONFIG_TASK_IO_ACCOUNTING`/`TASK_DELAY_ACCT`）→ 看 `DISK WRITE` 与 `IO>` 两列 → `IO>` 高说明进程在等 I/O 而不是在算 → 会骗你：异步回写由 `kworker`/`flush-*` 完成，脏页的“账”算在 `kworker` 头上，你看到的是回写者不是元凶；容器里经常只看到宿主进程。\n3. `grep -E '^(Cached|Dirty|Writeback|Buffers|MemFree)' /proc/meminfo` → `Dirty` 是尚未回写的脏页，`Writeback` 是正在回写的页 → `Dirty` 持续接近 `dirty_ratio` 说明写入速率超过设备能力，`write()` 已经在被限流 → 会骗你：`Cached` 含 tmpfs/shmem（`Shmem` 行），不代表全是可回收的文件页；瞬时值波动大，要连续采样。\n4. `perf trace -p <pid> -e write,fsync,fdatasync -s`（需 root 或放宽 `perf_event_paranoid`）→ 看各系统调用次数、总耗时、平均耗时 → 直接量化“`fsync` 吃掉了多少时间”：次数多但平均很短是正常的 WAL 批量；单次 `fsync` 上百 ms 就是设备屏障或队列问题 → 会骗你：只覆盖系统调用时间，不含回写线程后续的真实 I/O；高频率下有可观测开销。\n5. `cat /proc/<pid>/io` → `wchar` 是 `write` 累计字节，`write_bytes` 是“导致发往存储层的字节”，`cancelled_write_bytes` 是被丢弃的脏页 → 两者接近且都很大，说明是 `O_DIRECT`/`O_SYNC` 或回写已跟不上的 buffered 写；`write_bytes` 远小于 `wchar` 说明数据还躺在页缓存里 → 会骗你：这些是进程开机以来的累计值，看当下忙不忙要隔一段时间采两次相减；数值大不等于此刻在写盘。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 19,
+    "section": "第 10 章〔文件〕IO 栈与页缓存：buffered vs direct IO、fsync 与写放大"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.7",
+  "chapter": "CP03",
+  "title": "S4 分支预测",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.7:body.s01",
+      "type": "extension",
+      "title": "S4 分支预测",
+      "level": 2,
+      "content": "### 要解决的问题\n\n分支在 EX 才解析，前端每遇分支就可能空等 2 拍；流水越深、发射越宽，浪费越大。预测把\"每分支必停\"换成\"平时猜，猜错付代价\"，让控制冒险从常态变成例外。\n\n### 机制\n\n两件事分开做：**方向**（taken/not taken）与**目标**（target）。\n\n- **BHT（方向）**：2-bit 饱和计数器。`00/01` 预测不跳，`11/10` 预测跳；每次实际结果更新计数器（饱和不回绕）。2 位能抵抗一次噪声，这是它比 1 位强的地方。\n- **BTB（目标）**：以分支 PC 的低位索引，存 `{valid, tag, target}`。命中就下一拍从 `target` 取指。\n- **误预测恢复**：`flush` 所有年轻指令 + `PC <= 恢复地址`（taken 用 target，not-taken 用 `pc+4`），并更新预测器状态。\n\n进阶（有余力再做）：全局历史 + 局部历史的锦标赛、TAGE-lite（多长度历史 + tag 匹配 + 选择逻辑）。**先不要做 TAGE**——没有 BHT+BTB 的干净基线，TAGE 的收益与 bug 分不开。\n\n### 最小例子\n\n```systemverilog\n// 2-bit 饱和计数器：11 强跳, 10 弱跳, 01 弱不跳, 00 强不跳\nalways_ff @(posedge clk) begin\n  if (bht_we) begin\n    case (bht[idx])\n      2'b00: bht[idx] <= actual_taken ? 2'b01 : 2'b00;\n      2'b01: bht[idx] <= actual_taken ? 2'b10 : 2'b00;\n      2'b10: bht[idx] <= actual_taken ? 2'b11 : 2'b01;\n      2'b11: bht[idx] <= actual_taken ? 2'b11 : 2'b10;\n    endcase\n  end\nend\n```\n\n一段循环 `for (i=0;i<1000;i++)` 的分支，稳态预测率接近 100%，但**退出那一次必然误预测**——所以\"每千次迭代一次误预测\"是这类循环的固有下限，不要指望 predictor 消掉它。\n\n**验收判据**：在 S1 的测试程序与 CoreMark/Dhrystone 上统计 MPKI（每千指令误预测数），从 always-not-taken → BHT → BHT+BTB 三档都要报，同时报 IPC。**只报 IPC 不报 MPKI，等于没有因果**。\n\n### 面试高频问法\n\n- **\"误预测的代价由什么决定？\"** → 考点是深度与宽度。答法：大致等于\"流水深度 × 前端重填宽度\"——要冲刷的年轻指令数 × 每拍能取回的指令数；深流水惩罚更大，所以深流水必须配更强的预测器。\n- **\"2-bit 计数器为什么不换成 1-bit？\"** → 考点是噪声容忍。答法：1 位在一次偶然反向就翻转，循环退出与嵌套分支上会连续误预测；2 位要求连续两次反向才改变预测，能吸收单次抖动。\n- **\"TAGE 比两级自适应强在哪？\"** → 考点是历史长度问题。答法：不同的分支需要不同长度的历史（长历史捕捉相关性，短历史抗噪声），TAGE 用多张不同长度历史的表 + tag 匹配 + 带偏置的选择逻辑动态挑一张；判据是 MPKI，不是\"准不准\"。\n- **\"预测器会不会成为时序瓶颈？\"** → 考点是预测在关键路径上。答法：预测发生在取指级，允许跨拍；但 BTB 的读 + tag 比较 + 选择往往决定前端频率，所以真实核把 BTB 分级、把预测拆到多拍。这是 S9 会真实撞到的问题。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 17,
+    "section": "S4 分支预测"
+  }
+}

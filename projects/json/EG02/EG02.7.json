@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG02.7",
+  "chapter": "EG02",
+  "title": "第 6 章 系统调用层：strace、ltrace 与 dtruss",
+  "src": {
+    "file": "notebook/projects/eng/debug-toolchain/NOTES.md",
+    "sha256": "sha256:501d16a42d59f5fede5b4ae459640fa33b09933168d563ca831a80f45354cc1f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG02.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 系统调用层：strace、ltrace 与 dtruss",
+      "level": 2,
+      "content": "**要解决的问题**：程序「卡住了」「返回 ENOENT 但文件明明在」「权限没问题却打不开」——这些问题的答案在用户态代码之下，需要看进程与内核的边界上到底发生了什么。这一章解决「什么时候该下沉到 syscall 层、以及看到的那行 `= -1 EACCES` 该怎么解读」。\n\n**机制**：\n\n三者都是**跟踪器（tracer）**模式，靠内核的 ptrace 机制工作：\n\n- **strace**：Linux，跟踪**系统调用**。用 `PTRACE_SYSCALL` 让被跟踪进程在每次进出内核时停住，读寄存器（x86-64 上是 `orig_rax` 取 syscall 号、`rdi/rsi/rdx/r10/r8/r9` 取前六个参数、`rax` 取返回值），再按 syscall 表格式化成人类可读文本。所以 strace 能看到 `openat` 的路径、`read` 的 fd、`write` 的字节数，但**看不到**用户态函数调用。\n- **ltrace**：Linux，跟踪**动态库函数调用**（PLT 层）。原理是给目标进程的 PLT/GOT 打桩或单步，因此能看到 `malloc`、`strcpy`、`pthread_mutex_lock` 这类库函数，但代价大、对静态链接和 `-fno-plt` 无效，实用性远低于 strace。\n- **dtruss**：macOS/BSD 上的对应物，底层是 DTrace。用法和 strace 类似但语法不同：`sudo dtruss -f ./prog`，参数过滤靠 `-t` 或 DTrace 脚本。macOS 上还有 `ktrace`/`kdv` 但日常用 dtruss。**没有 strace 的 macOS 等价便利性**，SIP 保护下对系统二进制常需要关 SIP，这是实际踩坑点。\n\nstrace 常用参数（这些是核心考点）：\n\n```bash\nstrace -f -o out.txt ./prog        # -f 跟踪子进程/线程（fork/vfork/clone 后的），-o 写文件\nstrace -e trace=openat,read,write ./prog   # -e trace= 只留指定 syscall\nstrace -e trace=file ./prog        # 所有带路径名的 syscall（open/stat/unlink...）\nstrace -e trace=network ./prog     # 网络类\nstrace -p 1234                     # attach 到运行中进程\nstrace -c ./prog                   # 汇总：每个 syscall 的次数、耗时、错误数\nstrace -T -tt ./prog               # -T 每行耗时，-tt 绝对时间戳\nstrace -y ./prog                   # 把 fd 翻译成路径（打开的文件）—— 定位 fd 泄漏利器\nstrace -k ./prog                   # 打印每行用户态栈（需内核支持，按实现而定）\n```\n\n读结果的关键是**返回值语义**：成功返回那个值（`openat` 返回 fd 数字、`read` 返回字节数），失败返回 `-1` 并跟 `EXXX`。`= -1 ENOENT (No such file or directory)` 和 `= -1 EACCES (Permission denied)` 是两类完全不同的问题；`= ? ERESTARTSYS` 表示被信号打断后重启，通常是正常的。另外注意 `openat(AT_FDCWD, \"x\", ...)` 里的 `AT_FDCWD` 表示相对当前工作目录——很多「文件找不到」其实是 cwd 不对，不是路径拼错。\n\n**最小例子**：\n\n```bash\n# 场景：程序说找不到配置文件\nstrace -f -e trace=file -o /tmp/tr.txt ./app\ngrep -E 'ENOENT|EACCES' /tmp/tr.txt | head\n```\n\n输出（典型形态）：\n\n```text\nopenat(AT_FDCWD, \"/etc/app/conf.yml\", O_RDONLY) = -1 ENOENT (No such file or directory)\nopenat(AT_FDCWD, \"./conf.yml\", O_RDONLY)        = 3\nread(3, \"port: 8080\\n\", 4096)                   = 11\n```\n\n结论：程序先找 `/etc/app/conf.yml` 失败，回落到 cwd 下的 `./conf.yml` 成功。如果线上报「配置没生效」，而这一行显示读的是 `./conf.yml`，那就是**工作目录不对**——systemd 的 `WorkingDirectory`、容器的 `WORKDIR`、cron 的 cwd 都是常见根因，改配置路径不如改成绝对路径。\n\n再看 `strace -c` 的用途：如果某 syscall 的 `seconds` 占比异常高（典型如大量 `futex` 阻塞，或 `read` 在大文件上慢），说明瓶颈在内核侧而非业务逻辑。而 `strace -y` 输出里的 `read(3</var/log/app.log>, ...)` 能一眼看出 fd 3 是哪个文件——排查「句柄泄漏」「write 到已经该关闭的文件」时，比猜 fd 号快得多。\n\n**面试高频问法**：\n\n1. **「strace 是怎么实现的？为什么它能让程序变慢很多？」**\n   → 考点是 ptrace 与上下文切换成本。答法：「基于 ptrace 的 `PTRACE_SYSCALL`，被跟踪进程每次进内核和出内核都会停下来通知 tracer，tracer 读寄存器再放行，等于每个 syscall 加两次上下文切换加一次进程间通信。所以高频 syscall 的程序 slowdown 可能到几十倍，生产上只能短时 attach，不能常开。」\n\n2. **「`strace -f` 不加会怎样？为什么有些子进程的 syscall 看不到？」**\n   → 考点是跟踪范围。答法：「不加 `-f` 只跟踪主进程，fork/clone 出来的子进程和线程默认不被跟踪，它们的 syscall 全部丢失。加了 `-f` 才会跟随 fork/vfork/clone，输出里用 `[pid 1234]` 前缀区分。注意线程在 Linux 上也是 clone 出来的，多线程程序的 syscall 基本都要 `-f` 才完整。」\n\n3. **「程序打开文件失败，strace 显示 `= -1 ENOENT`，但文件确实存在，怎么解释？」**\n   → 考点是路径解析与 cwd/namespace。答法：「三种常见原因：一是 `AT_FDCWD` 相对的路径，实际 cwd 和你以为的不一样（systemd/容器/cron 的 cwd）；二是路径中间某一级目录不存在或没权限，`ENOENT` 报的是解析链上失败的那一段；三是 mount namespace 或 chroot 不同，进程看到的文件系统和 shell 里看到的不是同一个。用 `strace -y` 和 `/proc/<pid>/cwd`、`/proc/<pid>/root` 交叉验证。」\n\n4. **「strace 和 ltrace 该选哪个？为什么 ltrace 用得少？」**\n   → 考点是跟踪层次与可用性。答法：「strace 看内核边界（syscall），ltrace 看用户态动态库调用。选 strace 优先，因为几乎所有 I/O、内存映射、进程创建、网络都在 syscall 层可见。ltrace 实现依赖 PLT 打桩，对静态链接、`-fno-plt`、内联后的调用都失效，而且开销更大，实际排查价值有限。」\n\n5. **「macOS 上怎么替代 strace？」**\n   → 考点是跨平台工具链常识。答法：「用 `sudo dtruss -f ./prog`，底层是 DTrace，参数过滤语法和 strace 不同（`-t` 或写 DTrace 脚本）。注意 SIP 保护下跟踪系统二进制常需关 SIP；另外 Apple Silicon 上部分场景受限制。跨平台项目最好把 syscall 层排查写成脚本，别把 strace 参数硬编码进流程。」"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "debug-toolchain",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 8,
+    "section": "第 6 章 系统调用层：strace、ltrace 与 dtruss"
+  }
+}

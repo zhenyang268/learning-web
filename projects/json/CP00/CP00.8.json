@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP00.8",
+  "chapter": "CP00",
+  "title": "5 常见误配",
+  "src": {
+    "file": "notebook/projects/cpu/NOTES.md",
+    "sha256": "sha256:f11e2f546f1a0222d1555da30fba4f53c302c37eb193a45111454c1b8d382c0f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP00.8:body.s01",
+      "type": "extension",
+      "title": "5 常见误配",
+      "level": 2,
+      "content": "| 误配 | 后果 | 正确做法 |\n|---|---|---|\n| 先做乱序，顺序流水线还没干净 | bug 无法归因，改了也不确定对不对 | 先 S1–S3，用 difftest 立基线 |\n| 只读 `cpu-microarchitecture` 不动手 | 讲得出结构，一问「你测过吗」就退 | 至少做到 S3，最好到 S6 |\n| 先装整套 PDK 再写代码 | 工具链成了项目本身 | S0 只装 Verilator + GCC + Spike；PDK 留到 S9 |\n| 把 `compiler` 当主线深挖 | 与目标岗位错配（除非投编译器岗） | 60 分只读 IR/SSA；80 分再加管线与 GPU 一章 |\n| 把 `asm-link-arch` 当纯基础课跳过 | 读核时看不懂反汇编，无法验证编译器生成了什么 | 第 4/5/6 章必须在造核之前 |\n| 用 `IPC 提升` 单独报收益 | 违反「指令数 × CPI」的分项前提 | 四项一起报：IPC、指令数、面积、fmax |\n| 把 Triton/TVM 当\"会用就行\" | 被问分层与代价就露馅 | 记住一句话：它们在替你决定线程映射与调度，代价是控制力 |\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 9,
+    "section": "5 常见误配"
+  }
+}

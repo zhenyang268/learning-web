@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.6",
+  "chapter": "PA01",
+  "title": "2 全局地图与关键路径",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.6:body.s01",
+      "type": "extension",
+      "title": "2 全局地图与关键路径",
+      "level": 2,
+      "content": "### 2.1 五个 PA 一张表\n\n| PA | 主题 | 硬件/语言 | 分值骨架 | 对应 lecture | 核心考点 |\n|---|---|---|---|---|---|\n| PA1 | 在四核 CPU 上做性能分析 | std::thread + ISPC + CS149 fake SIMD | 6 个 program：20/20/20/15/10/15 | L1–L3（并行形式、ISPC 抽象） | 负载不均、SIMD divergence、算术强度 |\n| PA2 | 从零写任务执行库 | C++ thread pool | A 50 + B 40 + writeup 10 | L5–L6（工作分配与调度） | 三种调度实现的开销对比、DAG 依赖 |\n| PA3 | CUDA 圆形渲染器 | CUDA | 5 + 10 + 72(实现) + 13(writeup) | L7–L8（GPU 架构、数据并行） | order + atomicity 两条不变式、scan、shared memory |\n| PA4 | Fused Conv+MaxPool | NKI (Python) on Trainium2 | 30 + 70 | L9–L11（DNN 推理、硬件专用化） | 软件管理存储、tiling、loop fusion |\n| PA5 | 写一个最快的 kernel | CUDA / Triton / TileLang on H100 | 80–110（按 work log 评分） | L13（DSL 与 AI 驱动优化） | 无参考实现时的开放性能工程 |\n| biggraphs | OpenMP BFS（加分） | OpenMP | 70 + 14，可给前面任一 PA 加 `(x/84)*10` 分 | L4–L6 | top-down / bottom-up / hybrid、CAS |\n\n### 2.2 关键路径：复习顺序\n\n推荐顺序 **PA1 → PA2 → PA3 → PA4 → PA5**，理由不是难度，而是**概念依赖**：\n\n1. **PA1 先建立\"负载不均 / divergence / 带宽受限\"三个直觉。** 这三个词会出现在后面每一个 PA 里。PA1 的 6 个 program 每一个都是一次\"为什么加速比不到 8 倍\"的诊断练习。\n2. **PA2 把 PA1 的直觉变成代码。** PA1 里你只是观察 ISPC 的 `launch` 怎么分任务；PA2 要你自己写那个分发器。Part A 的灵魂问题是\"为什么最简单的实现反而更快\"。\n3. **PA3 换硬件。** 同一个\"分任务\"问题，在 GPU 上变成了 thread block / warp / shared memory。PA2 的 scan 在这里以 shared-memory prefix-sum 的形式再出现一次。\n4. **PA4 把\"数据放哪\"的控制权交给你。** PA3 的 shared memory 还是\"缓存\"语义；PA4 的 SBUF/PSUM 是你自己 DMA 的。到这里 locality / blocking / fusion 三个优化才是硬要求，不是加分项。\n5. **PA5 是毕业考**：没有参考实现，自己定优化顺序，写 work log。\n\n`biggraphs` 是可选的支线，适合在 PA2 之后当\"并行算法 + 同步原语\"的练习（CAS、frontier 切换），与主线正交。\n\n### 2.3 一条贯穿所有 PA 的方法论\n\n课程在 PA5 里把它写成了明确的四步循环，其实每个 PA 都在用：\n\n```\n1. run      跑当前版本\n2. measure  测时间 + 从 profiler 拿统计（吞吐/带宽占用/命中率/MFU）\n3. hypothesize  结合对代码的了解（依赖在哪、访存在哪）+ 数据，猜瓶颈是什么\n4. change   改一版验证假设，看是不是真的快了\n```\n\n四个可能的优化方向（PA5 handout 原话）：**增加并行度 / 减少通信 / 隐藏延迟 / 缓解竞争**。任何一次\"我把它改快了\"都要能归到这四类之一，否则你只是碰运气。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 18,
+    "section": "2 全局地图与关键路径"
+  }
+}

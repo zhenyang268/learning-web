@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "LG00.1",
   "chapter": "LG00",
-  "title": "langs · 分组 · 大纲",
+  "title": "langs · 分组 · 总览",
   "src": {
     "file": "notebook/projects/langs/OUTLINE.md",
     "sha256": "sha256:b41b91e9a28e69f7afa56abaa8026f2897cef16b5f739857bad215585c07aead"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

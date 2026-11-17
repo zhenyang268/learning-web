@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.5",
+  "chapter": "PA01",
+  "title": "1 定位与现状",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.5:body.s01",
+      "type": "extension",
+      "title": "1 定位与现状",
+      "level": 2,
+      "content": "### 1.1 一句话\n\n> **CS149 教的不是\"怎么写并行程序\"，而是\"怎么判断一个并行程序在这个硬件上跑得好不好，以及为什么\"。**\n\n课程开篇就立了三条 theme：怎么设计能 scale 的并行程序、并行硬件是怎么实现的、怎么思考效率。第三条里有一句必须记住的话：\n\n> **FAST != EFFICIENT**\n\n在 10 个核上拿到 2 倍加速，程序确实变快了，但硬件用得好不好是另一回事。整个学期的作业都在反复考这个区分。\n\n### 1.2 硬件阶梯：5 个 PA 就是 5 个落点\n\n```\n  多核 CPU（4-16 核 + SIMD）      PA1 性能分析 / PA2 任务调度\n        |                          ISPC, std::thread, pthread\n        v\n  GPU（CUDA, 数据并行）            PA3 Circle Renderer\n        |                          block / warp / shared memory\n        v\n  AI 加速器（Trainium2 / NKI）     PA4 Fused Conv+MaxPool\n        |                          SBUF / PSUM，软件管理的片上存储\n        v\n  开放性能工程（H100 + leaderboard） PA5 Fast Kernels\n                                   FlashAttention / SwiGLU / ...\n```\n\n注意这条线不是\"难度递增\"，而是**\"谁来决定数据放在哪\"这件事的控制权，一步步从硬件手里交到程序员手里**：CPU 的 cache 是硬件管的；GPU 的 shared memory 要你显式声明；Trainium 的 SBUF/PSUM 每一次搬运都要你写 DMA。\n\n### 1.3 本地代码现状（事实口径：以仓库当前分支为准）\n\n先说清楚，免得复习时找错地方：\n\n| 目录/文件 | 状态 |\n|---|---|\n| `asst2-master/` | **已解压**，但 `part_a/tasksys.cpp` 与 `part_b/tasksys.cpp` 都是**原始骨架**（`run()` 里是串行 for 循环，Part B 的 `runAsyncWithDeps()` 直接 `return 0`）。只有 `TaskSystemSerial` 是完整的 |\n| `asst1-master/` | 目录存在但**内容为空**（只剩 `.DS_Store`）。源码仍在 `asst1-master.zip` 里 |\n| `asst3-master.zip` / `asst4-trainium2-main.zip` / `asst5-kernels-main.zip` | 未解压 |\n| `biggraphs-ec-main.zip` | 未解压（OpenMP BFS，旧版 PA5 / 加分项） |\n| `intro_to_cuda-main.zip` / `cuda_tutorial-main.zip` | 未解压（PA3 的前置小样） |\n| git | 仅 2 个提交：`init`（空）、`init asst2`。**没有任何学生实现被提交过** |\n\n结论：**手头是完整的官方 handout，没有自己的历史实现。** 所以这份笔记的定位是\"项目指导 + 复习提纲\"，不是\"你写过的代码的复盘\"。要看 handout 原文：\n\n```bash\ncd ~/develop/learning/learning-408/parallel-cs149\nunzip -q asst3-master.zip -d .        # 其余同理；asst1 解压到别处，别覆盖现有空目录\n```\n\n### 1.4 这门课的隐形门槛\n\n官方 course info 把 CS111（同步原语）列为强列建议的先修，并明说：**学生卡住的最主要原因是缺乏调试经验**。作业会碰到 ISPC、CUDA、NKI 三种新语言，课程假设你边做边学。复习时如果卡住，先问\"这是我的并行设计错了，还是我还没掌握这门语言的语法\"。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 18,
+    "section": "1 定位与现状"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP01.5",
+  "chapter": "CP01",
+  "title": "第 4 章 调用约定与 ABI：SysV 与 AArch64、参数传递、调用者与被调用者保存",
+  "src": {
+    "file": "notebook/projects/cpu/asm-link-arch/NOTES.md",
+    "sha256": "sha256:04b5529a001bfe4ec19f5d9641db647d43404a1276627187bd916f3d732fe051"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP01.5:body.s01",
+      "type": "extension",
+      "title": "第 4 章 调用约定与 ABI：SysV 与 AArch64、参数传递、调用者与被调用者保存",
+      "level": 2,
+      "content": "**要解决的问题**：函数调用不是语言特性，是编译器、链接器、操作系统、调试器共同遵守的二进制契约。不解决这件事，你无法解释「为什么第 7 个参数突然跑到栈上」「为什么改一个寄存器就段错误」「为什么 C++ 调用 C 必须 `extern \"C\"`」，也无法在 gdb 里手工构造一次调用。\n\n**机制**\n\n**参数传递对照**。整数/指针按序吃寄存器，吃完上栈：\n\n| | x86-64 SysV | AArch64 AAPCS64 |\n|---|---|---|\n| 整数参数 | rdi, rsi, rdx, rcx, r8, r9（6 个） | x0–x7（8 个） |\n| 浮点参数 | xmm0–xmm7 | v0–v7 |\n| 整数返回 | rax（128 位用 rdx:rax） | x0（x1 辅助） |\n| 浮点返回 | xmm0 / xmm1 | v0 |\n| 被调用者保存 | rbx, rbp, r12–r15, rsp | x19–x28, x29(FP), x30(LR), sp, 以及 v8–v15 的低 64 位 |\n| 调用者保存 | rax, rcx, rdx, rsi, rdi, r8–r11, 全部 xmm | x0–x18, 全部 v0–v7 与 v16–v31 |\n\nx86-64 里 r10/r11 明确是调用者保存的临时寄存器，r12–r15 才需要压栈；AArch64 里 x16/x17 是 IP0/IP1，专供链接器插入的 veneer 使用，编译器一般不当通用临时寄存器用；x18 是平台寄存器（Darwin/Windows 上保留，Linux 用户态可用但通常被保留作 OS 用途）。\n\n**返回地址放在哪，决定了栈帧形状**。x86 的 `call` 把返回地址压栈，于是「函数入口处 rsp ≡ 8 (mod 16)」，SysV 要求**调用指令执行前** rsp 16 字节对齐。AArch64 的 `bl` 把返回地址放进 X30，叶函数可以完全不碰栈；非叶函数才 `stp x29,x30,[sp,#-16]!` 把它落盘。另一个实打实的差别是红区：SysV 给了叶函数 rsp 以下 128 字节的红区，信号处理不会踩；AAPCS64 **没有**红区，所以 AArch64 叶函数一旦要临时空间就得老老实实调整 SP。\n\n**聚合类型与变参**。两边都不是「结构体一律走栈」：SysV 把 ≤16 字节的聚合按八字节分类成 INTEGER/SSE，拆进寄存器，>16 字节则调用者在栈上开空间并把地址当隐藏第一参数（返回值同理，`rdi` 传隐藏指针）；AAPCS64 把 ≤16 字节的复合类型装进 x 寄存器，同构浮点聚合（HFA，最多 4 个同类型浮点成员）走 v 寄存器。变参的差异更明显：SysV 要求调用者在 `al` 里填「本次用了几个向量寄存器」，`va_start` 靠它决定要不要存 xmm 寄存器堆；AAPCS64 的匿名参数直接从栈上取，不需要这个计数。\n\n**最小例子**\n\n```c\nlong f(long a, long b, long c, long d, long e, long g, long h, long i);\nlong r = f(1,2,3,4,5,6,7,8);\n```\n\nx86-64：前 6 个进 rdi=1, rsi=2, rdx=3, rcx=4, r8=5, r9=6；编译器倒序压栈 `push $8; push $7`，再 `call`。进入 `f` 后：\n\n```asm\nf:\n    mov rax, [rsp+16]   ; 第 8 个参数 = 8\n    add rax, [rsp+8]    ; 第 7 个参数 = 7\n    add rax, rdi        ; = 1\n    ret                 ; 结果 16\n```\n\nAArch64：x0–x7 正好装下 1..8，栈一个字都不用动：\n\n```asm\nf:\n    add x0, x0, x7      ; 1 + 8\n    add x0, x0, x6      ; + 7\n    ret                 ; 结果 16\n```\n\n第 9 个参数才会出现在 AArch64 的 `[sp]`。这就是「多两个参数寄存器」在真实代码里的价值：8 参数以内的函数在 AArch64 上完全无栈帧，而在 x86-64 上已经要读写栈。\n\n**面试高频问法**\n\n1. **「第 7 个参数在 x86-64 和 AArch64 上分别在哪？」** → 考点是参数寄存器数量。答法：x86-64 只有 6 个整数参数寄存器（rdi/rsi/rdx/rcx/r8/r9），第 7 个在栈上 `[rsp+8]`（`[rsp]` 是返回地址）；AArch64 有 x0–x7，第 7 个仍在 x6，第 9 个才上栈。\n\n2. **「调用者保存和被调用者保存怎么分？为什么不全保存？」** → 考点是性能取舍。答法：调用者保存的是「调用前后可能被改写、需要调用者自己负责的」临时寄存器（x86 的 rax/rcx/rdx/rsi/rdi/r8–r11，ARM 的 x0–x18），被调用者保存的是跨越调用仍需保持的（rbx/rbp/r12–r15，x19–x28/x29/x30）。全保存会让每次调用多出十几次访存，分工后只有真正用到 callee-saved 的函数才付压栈代价。\n\n3. **「x86-64 的栈对齐规则具体是什么？为什么 `printf` 会崩？」** → 考点是对齐时机。答法：SysV 要求 `call` 执行前 rsp 是 16 的倍数，所以函数入口 rsp ≡ 8 (mod 16)；手写汇编或改编译选项后忘了 `sub rsp,8` 补齐，`printf` 内部用到 `movaps`（要求 16 字节对齐）就会触发 SIGSEGV。\n\n4. **「红区是什么？AArch64 有吗？」** → 考点是 ABI 细节。答法：SysV 允许叶函数直接用 rsp 以下 128 字节而不调整 SP，因为信号处理保证不覆盖；AAPCS64 没有红区，AArch64 叶函数要用临时空间必须先 `sub sp`。\n\n5. **「`extern \"C\"` 到底做了什么？和链接错误什么关系？」** → 考点是把 ABI 和符号名连起来。答法：C++ 会对函数名做 name mangling，把参数类型编进符号（`_Z3fooi`），而 C 没有；不加 `extern \"C\"` 去调用一个 C 库函数，链接器按 `_Z3fooi` 找不到定义，报 `undefined reference`——问题不在 ABI 参数传递，而在符号名。\n\n> 补一条常被追问的延伸：**「undefined reference 和符号冲突的真实原因」**——前者是「有声明无定义」：定义所在的目标文件没被加入链接、静态库顺序错（链接器从左到右扫，只为「当前未定义」的符号抽取成员）、`inline`/模板没实例化、或者上面说的名字不匹配；后者是「同名强符号出现两次」，链接器规则是强符号只能有一个定义，弱符号与 COMDAT 组（`inline` 函数、模板实例、C++17 `inline` 变量）可以多份由链接器挑一份。GCC 10 起 `-fno-common` 成为默认，把原来的 tentative definition 从可合并的 COMMON 符号改成强符号，于是「两个 .c 里都写了 `int g;`」从静默合变成了 `multiple definition`——这是升级编译器后突然报错的真实原因。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "asm-link-arch",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 10,
+    "section": "第 4 章 调用约定与 ABI：SysV 与 AArch64、参数传递、调用者与被调用者保存"
+  }
+}

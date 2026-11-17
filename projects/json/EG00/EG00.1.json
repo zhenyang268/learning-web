@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "EG00.1",
   "chapter": "EG00",
-  "title": "eng · 分组 · 大纲",
+  "title": "eng · 分组 · 总览",
   "src": {
     "file": "notebook/projects/eng/OUTLINE.md",
     "sha256": "sha256:7ab6be2fb94aba08b898e8ba285369feebc0431ac3a032cfcd1855939263a5de"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

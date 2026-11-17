@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO02.10",
+  "chapter": "SO02",
+  "title": "B6 系统调用",
+  "src": {
+    "file": "notebook/projects/os/xv6/NOTES.md",
+    "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO02.10:body.s01",
+      "type": "extension",
+      "title": "B6 系统调用",
+      "level": 2,
+      "content": "> 职责：任意用户请求 → 受检的窄入口。依赖：B4、B5；被 B8／B10 借。\n\n**用户请求 → 受检的窄入口。** 使用面：`syscall(number,args)`／返回值约定／用户指针校验。\n\n### 现象\n\n用户程序调 `write` 只给一个数字和三个参数；传非法指针进去得到错误返回值，内核不崩；传不存在的号得到 -1。\n\n### 机制\n\n实现面（≤6）：分发表／号约定／`copyin/copyout`／错误码。删掉参数校验 → 内核按用户指针解引用。\n\n链子是 B4 的 `ecall` 之后：`uservec` 存现场 → `usertrap` 按 `scause` 分发 → `syscall()` 从 `trapframe->a7` 取号、从 `a0`.. 取参数、查表调用 → 返回值写回 `trapframe->a0`（这也是 `sigalarm` 类 lab 要求「`a0` 原值」的原因：返回通道只有这一个字段）。\n\n### 为什么这么设计\n\n窄入口的意义是把「用户能要求内核做什么」收敛成一张表：**号是准入，参数校验是第二道**。删掉参数校验，用户指针就成了内核解引用——一次 `copyin/copyout` 漏检查，等于把内核地址空间交给用户。\n\n**权限链从这块开始断**：xv6 只到「内核态 vs 用户态」，没有 uid/属主。凡是「谁能调」，xv6 只有一个答案（谁都能），B8 的属主检查是空的。这是选点，不是原理。\n\n### 怎么验证\n\n- 非法指针返回错误而不是崩内核；未知号返回 -1；\n- `b syscall`：看 `myproc()->trapframe->a7`（号分到哪）+ `$scause=8`（是 ecall 进来的）；\n- 预测检验：给定 `write(1, bad_ptr, n)`，先说出「返回 -1，不 panic」再验证。\n\n**失效点**：xv6 无 uid/属主，权限链到内核态为止；换到有 uid 的系统，本块准入要重画。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "xv6",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 18,
+    "section": "B6 系统调用"
+  }
+}

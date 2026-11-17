@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.13",
+  "chapter": "CP03",
+  "title": "S10 性能归因（可选，收口章）",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.13:body.s01",
+      "type": "extension",
+      "title": "S10 性能归因（可选，收口章）",
+      "level": 2,
+      "content": "### 要解决的问题\n\nS7–S9 给出了结构、IPC 与频率，但没回答\"这个核现在卡在哪\"。没有归因，下一次改动就只能试。这一节把自研核的 CPI 分解开，与 `cpu-microarchitecture/` 的 Top-down 四分类对齐，形成闭环。\n\n### 机制\n\n在核里埋最少的计数器：`cycles`、`instret`、`fetch_stall`（前端无指令可派）、`rob_full`、`rs_full`、`lsq_full`、`branch_mispredict`、`icache_miss`、`dcache_miss`。然后按 Top-down 归类：\n\n- **retiring**：正常提交；\n- **bad speculation**：误预测与错误路径浪费；\n- **front-end bound**：取指/icache/队列空；\n- **back-end bound**：执行端口拥塞或访存等待。\n\n四个桶的和应能解释总周期数——**解释不了的部分就是你还缺的计数器**，这本身就是一条判据。\n\n### 最小例子\n\n```bash\n# 跑同一 microbench 的两版参数，比较四桶占比\n./obj_dir/sim +rob=32  +bench=memcpy\n./obj_dir/sim +rob=128 +bench=memcpy\n# 输出：cycles, ipc, front%, badspec%, backend%, retiring%\n```\n\n**验收判据**：四桶之和与总周期的偏差在可解释范围内；且\"改一处结构 → 桶的占比按预期移动\"能被实测印证（例如加深 ROB 应降 backend bound、提高 BTB 命中应降 bad speculation）。\n\n### 面试高频问法\n\n- **\"你怎么知道瓶颈在哪？\"** → 考点是有没有可证伪的判断。答法：埋计数器做 Top-down 四分类，看哪一类占比最高；然后写下\"如果改 X 则 Y 桶应下降\"的预测，改完实测验证。**能被推翻的判断才算分析。**\n- **\"自研核的 IPC 低，是结构问题还是程序问题？\"** → 考点是两者分离。答法：先看前端桶——如果前端受限，是取指带宽/缓存问题；再看错误投机桶——如果高，是预测器问题；两者都低才轮到后端结构。分离靠计数器，不靠感觉。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 12,
+    "parts": 17,
+    "section": "S10 性能归因（可选，收口章）"
+  }
+}

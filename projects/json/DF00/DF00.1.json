@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "DF00.1",
   "chapter": "DF00",
-  "title": "raft · 分组 · 大纲",
+  "title": "raft · 分组 · 总览",
   "src": {
     "file": "notebook/projects/raft/OUTLINE.md",
     "sha256": "sha256:face6f55d114aa56bf7542d702e0008de3b222c78bd91714f25872130189abcb"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

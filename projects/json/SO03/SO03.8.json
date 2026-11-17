@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO03.8",
+  "chapter": "SO03",
+  "title": "第 6 章 调度与同步的复杂度阶梯",
+  "src": {
+    "file": "notebook/projects/os/kernel-compare/NOTES.md",
+    "sha256": "sha256:3fdad2384b230576e8b856161ad428eb8606560c1ee888202b9c68e3b315846e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO03.8:body.s01",
+      "type": "extension",
+      "title": "第 6 章 调度与同步的复杂度阶梯",
+      "level": 2,
+      "content": "**要解决的问题**：三个内核的同步机制数量差一个数量级。要看清\"哪一条约束催生了哪一层机制\"。\n\n**机制**：\n\n| 层 | JOS | xv6 | Linux |\n|---|---|---|---|\n| 关中断 | 有，临界区短 | 有，`push_off/pop_off` 计数 | 有，`local_irq_save` |\n| 自旋锁 | 有（SMP 配置下） | 有（spinlock，持锁关中断） | 有（`spinlock_t`，+ 抢占禁用） |\n| 睡眠锁 | 没有，用关中断绕 | 有（sleeplock 建在 spinlock + sleep 上） | `mutex` / `rwsem` / `rt_mutex` |\n| 无锁读 | 没有 | 没有 | **RCU** |\n| 每 CPU 数据 | 没有 | 有 per-CPU（极简） | 大量 |\n| 调度器 | 时钟轮转 | 轮转 + `sleep/wakeup` | CFS → EEVDF，按 vruntime 排红黑树 |\n\n**阶梯的规律**：**SMP 出现 → 自旋锁；\"原子上下文不能睡眠\" → 睡眠锁分层；读者远多于写者且能容忍延迟回收 → RCU；核数继续涨 → per-CPU 化。** 每一层都是前一层成本不可接受时才出现。\n\n**最小例子**：xv6 的 `sleeplock` 只有两个字段（`locked` + `lk`），`acquiresleep` 用自旋锁保护 `locked`，睡不上就 `sleep(&lk, &lk->lk)`；Linux 的 `mutex` 要处理乐观自旋、优先级继承、lockdep 检测——**同样的语义，成本从\"能工作\"涨到\"能诊断\"。**\n\n**面试高频问法**：\n\n1. **「为什么自旋锁里不能睡眠？」** → 考点：持锁睡眠的连锁后果。答法：自旋锁在等锁时占着 CPU，若持锁者睡去，等待者会空转到时间片耗尽；SMP 下还可能死锁（被唤醒的持锁者抢不到同一 CPU）。所以自旋锁的临界区必须极短且不睡眠。\n2. **「RCU 为什么能\"无锁读\"？」** → 考点：延迟回收。答法：读者只标记\"我在读\"，写者复制新版本、发布指针，等所有读者离开临界区后再释放旧版本；读侧几乎没有原子操作，代价是写侧变慢与内存延迟回收。\n3. **「CFS 的核心思想是什么？」** → 考点：公平的定义。答法：用 `vruntime`（虚拟运行时间）衡量\"谁欠得多\"，永远调度欠得最多的；权重由 `nice` 决定，于是\"公平\"变成了按权重的比例分配。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "kernel-compare",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 12,
+    "section": "第 6 章 调度与同步的复杂度阶梯"
+  }
+}

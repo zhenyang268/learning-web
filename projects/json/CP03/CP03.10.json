@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.10",
+  "chapter": "CP03",
+  "title": "S7 乱序前端：重命名 + ROB + 保留站",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.10:body.s01",
+      "type": "extension",
+      "title": "S7 乱序前端：重命名 + ROB + 保留站",
+      "level": 2,
+      "content": "### 要解决的问题\n\n顺序流水线仍然按程序序发射与完成：一条等 cache 的 load、一条多周期除法，会把后面所有无关指令堵住。乱序把\"程序顺序\"和\"执行顺序\"解耦，让窗口内操作数就绪的指令先跑；同时必须**保持外部可见的顺序语义**（精确异常、顺序提交）。\n\n### 机制\n\n三条正交的机制，别混在一起想：\n\n1. **寄存器重命名**：架构寄存器（32 个）→ 物理寄存器（一池，例如 64/96/128）。每条写指令分配一个新 Preg，并更新映射表。效果：WAR/WAW 假依赖消失，旧读者仍指向旧 Preg。RAW 真依赖保留，靠 Preg 编号匹配。\n2. **保留站 / 发射队列**：指令在此等待，记录 `{src1_preg, src2_preg, ready1, ready2}`。功能单元算完把 `{preg, value}` 广播到总线上，等待该 preg 的项被唤醒，按就绪（不按程序序）发射。\n3. **ROB**：所有指令按程序序分配项，执行完标 `done`，**只有到 ROB 头部才提交**（写架构寄存器、释放旧 Preg）。异常只在头部判定，误预测时丢弃头部之后全部——精确异常的基础。\n\n关键取舍是**窗口大小**：ROB 深度决定能同时在飞多少指令。收益受程序固有 ILP 限制、边际递减；代价是面积近似线性、唤醒/选择逻辑延迟超线性（fmax 会掉），以及误预测时清空的项数。\n\n实现顺序建议：先做**顺序发射 + 乱序完成 + 顺序提交**（有了 ROB 就能跑通精确异常），再加保留站做乱序发射。**一步到位写乱序发射，bug 无法归因**。\n\n### 最小例子\n\n```text\n每拍：\n  fetch/decode      (in order) ：最多取 W 条\n  rename            (in order) ：alloc Preg + alloc ROB entry，读映射表得 src_preg\n  dispatch → RS               ：写 {src_preg, ready=busy_table[src_preg]}\n  issue             (out of order)：所有 src ready 且功能单元空闲 → 发射\n  execute + broadcast         ：结果写回 Preg，清 busy 位，唤醒 RS 中等待者\n  writeback / mark done       ：ROB 项标 done\n  commit            (in order) ：ROB 头部 done → 写架构寄存器，释放 old_preg 到 free list\n```\n\n```systemverilog\n// ROB 项字段（最小集）\ntypedef struct packed {\n  logic [31:0] pc;\n  logic [31:0] instr;\n  logic [4:0]  rd_arch;\n  logic [5:0]  rd_phys;\n  logic [5:0]  old_phys;   // 提交时释放回 free list\n  logic        done;\n  logic        is_store;   // store 必须在提交时才写 cache\n} rob_entry_t;\n```\n\n参数化（`ROB_DEPTH`、`RS_DEPTH`、`NUM_PREG`）从第一天就做。**参数化不是为了省事，是为了 S9 能扫曲线**。\n\n**验收判据**：① 顺序版与乱序版跑同一批测试结果一致，difftest 零分歧；② 扫 `ROB_DEPTH ∈ {16,32,64,128,256}`，画出 IPC 随窗口的曲线，能看到饱和段；③ 能在波形上指出\"两条无关指令乱序完成、但按程序序提交\"。\n\n### 面试高频问法\n\n- **\"重命名到底消除了什么？RAW 呢？\"** → 考点是真假依赖。答法：WAR/WAW 是寄存器名字复用造成的假依赖，换 Preg 即消失；RAW 是真依赖，重命名不解决，只能靠转发或等待。所以乱序的收益来自\"填掉真依赖造成的空拍\"，不是\"消除依赖\"。\n- **\"ROB 满了和保留站满了有什么区别？\"** → 考点是两种停顿的位置。答法：ROB 满说明提交跟不上（后端长延迟把头部卡住），前端必须停派；RS 满说明某类功能单元长期拥塞（例如访存端口不足），表现为该类指令排队。Top-down 里前者偏后端资源受限、后者偏执行端口受限。\n- **\"窗口越大越好吗？\"** → 考点是边际收益与频率代价。答法：IPC 随窗口上升并在某点饱和；面积线性增长、唤醒与选择逻辑延迟超线性增长导致 fmax 下降。所以最优窗口是在给定频率目标下使 `IPC × f` 最大的那个点——**答案是曲线，不是数字**。\n- **\"精确异常怎么保证？\"** → 考点是提交点唯一。答法：执行阶段不改架构状态，只写 ROB 与 Preg；异常在 ROB 头部判定，此时它之前的已全部提交、之后的全部丢弃，现场精确。store 同理，必须等提交才真正写 cache。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 17,
+    "section": "S7 乱序前端：重命名 + ROB + 保留站"
+  }
+}

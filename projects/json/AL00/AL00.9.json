@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "AL00.9",
+  "chapter": "AL00",
+  "title": "6 一句话收口",
+  "src": {
+    "file": "notebook/projects/algo/NOTES.md",
+    "sha256": "sha256:03c1c25b7346a0358365e02322918e05d8588fd5cd3458214436bda8fea93947"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "AL00.9:body.s01",
+      "type": "extension",
+      "title": "6 一句话收口",
+      "level": 2,
+      "content": "**算法的分水岭不在\"写出来\"，而在\"为什么对、多快、哪里会错\"这三句能不能立刻说出口。**"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "algo",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 8,
+    "section": "6 一句话收口"
+  }
+}

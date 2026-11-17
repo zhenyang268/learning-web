@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "CP04.1",
   "chapter": "CP04",
-  "title": "compiler · 大纲",
+  "title": "compiler · 总览",
   "src": {
     "file": "notebook/projects/cpu/compiler/OUTLINE.md",
     "sha256": "sha256:fb1c20598faac3ad787c40a2cb93d37737a78b319d29035db4296bbe5a4d7bf6"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

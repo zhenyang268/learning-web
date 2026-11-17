@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.16",
+  "chapter": "SO01",
+  "title": "第 14 章〔网络〕连接边界：backlog、TIME_WAIT、端口耗尽与参数调优",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.16:body.s01",
+      "type": "extension",
+      "title": "第 14 章〔网络〕连接边界：backlog、TIME_WAIT、端口耗尽与参数调优",
+      "level": 2,
+      "content": "**要解决的问题**：压测 QPS 上不去却偶发连接失败；日志里 `connect: Cannot assign requested address`；`Connection refused` 和 `Connection timed out` 混为一谈；机器上几万个 TIME_WAIT 让新人慌了神去改内核参数；`netstat -s` 里 listen overflow 在涨。不理解边界，调参只会把问题从一处搬到另一处。\n\n**API 与代价**：\n\n- `listen(fd, backlog)`：`backlog` 是**全连接队列**上限，且被 `net.core.somaxconn` 截断，内核取 `min(backlog, somaxconn)`。它从来不是“最大并发连接数”，已建立连接再多也只看这一个上限。\n- `accept()`：从全连接队列取走请求。队列满时新到的 ACK 默认被丢弃，客户端感知是 `SYN` 重传后超时；`net.ipv4.tcp_abort_on_overflow=1` 则直接回 RST，变成 `Connection reset`。**代价**：超时慢、RST 快，前者掩盖故障，后者暴露但可能误伤。\n- `SO_REUSEADDR`：允许 `bind` 一个仍处于 `TIME_WAIT` 的本地地址，只影响 bind 判定，不改变 TIME_WAIT 本身。`SO_REUSEPORT`：多进程共听同一端口，内核按四元组哈希分流；代价是哈希可能不均，某进程接了 95% 的连接。\n- `connect()` 返回 `EADDRNOTAVAIL` = 本地临时端口耗尽（`ip_local_port_range` 内无可用四元组）；`ECONNREFUSED` = 对端 RST（没监听或 backlog 溢出且开了 abort）；`ETIMEDOUT` = SYN 无人应答。\n\n```c\nlisten(fd, 4096);            /* 实际生效值是 min(4096, net.core.somaxconn) */\nfor (;;) {\n    int c = accept4(fd, &sa, &slen, SOCK_NONBLOCK | SOCK_CLOEXEC);\n    if (c < 0) {\n        if (errno == EMFILE || errno == ENFILE) { /* fd 耗尽：留一个 spare fd 应急 */ }\n        else if (errno == EAGAIN) { /* 水平触发下的重复就绪，不是错误 */ }\n        else if (errno == ECONNABORTED) { continue; }   /* 客户端撤了 */\n    }\n}\n```\n\n**对应命令与读法**：\n\n1. `ss -tan state time-wait | wc -l`（或 `ss -s` 的 `timewait` 行）→ 看总数与对端分布 → 短连接服务几万属于正常；活跃连接数只有几十而 TIME_WAIT 上万才值得查。→ **会骗你的情况**：TIME_WAIT 全在**主动关闭方**，如果你的机器是客户端，看到多说明是你在关连接；`ss -tan state time-wait` 在某些版本要写成 `state time-wait` 的小写连字符形式，写错会静默返回全部连接。\n2. `ss -lnt` → 看 `Recv-Q`（当前全连接队列长度）和 `Send-Q`（该 socket 的 backlog 上限）→ `Recv-Q` 持续逼近 `Send-Q` 就是 accept 跟不上，`Send-Q` 小于你 `listen()` 传的值说明被 `somaxconn` 截断了。→ **会骗你的情况**：只对 LISTEN 状态的 socket 有这层含义，普通连接上 `Send-Q` 是发送队列字节数；IPv6 socket 用 `-4` 看不到。\n3. `sysctl net.ipv4.tcp_max_tw_buckets net.ipv4.ip_local_port_range net.ipv4.tcp_tw_reuse net.core.somaxconn` → 看端口区间宽度、`tw_reuse` 是否开启 → 端口数 = 区间大小 × 目的 IP 数，区间 32768 配单目标 IP，短连接下几秒就能打满。→ **会骗你的情况**：`tcp_tw_reuse` 只对**主动发起连接**的客户端生效，服务端改它没用；它依赖时间戳避免 PAWS 回绕，对端禁用时间戳时复用会被拒。\n4. `netstat -s | grep -iE 'overflow|drop|SYNs'`（新版用 `nstat -az TcpExtListenOverflows TcpExtListenDrops`）→ `listen overflows` 非零就是全连接队列满，`SYNs to LISTEN sockets dropped` 是半连接队列或全连接队列被丢的总量。→ **会骗你的情况**：`netstat` 在部分发行版已废弃、字段名随内核变化；数值是累计量，重启清零，要看 rate。\n5. `ss -tan state syn-recv | wc -l` → 半连接队列当前深度 → 短时冲高正常，持续高位叠加 SYN drop 就是 SYN 攻击或 accept 阻塞。→ **会骗你的情况**：开了 `tcp_syncookies` 后，半连接队列不再需要挂满即可完成握手，这个数会偏低，看起来“很健康”。\n\n**原理**：三次握手对应两个队列。SYN 到达时，内核在 `request_sock_queue` 的 `syn_table` 里建 `request_sock` 并回 SYN+ACK（半连接）；收到最终 ACK 后创建 `sock`，挂到 `sk_ack_backlog`，只有当 `sk_ack_backlog < sk_max_ack_backlog` 时才入队，否则丢 ACK 或（abort 开启时）回 RST——`sk_max_ack_backlog` 就是 `somaxconn` 截断后的那个值。`accept()` 只是从队列摘一个节点，所以“accept 慢”会直接表现为客户端超时，而不是服务端报错。TIME_WAIT 存在的原因是四元组在 $2 \\times MSL$ 内不能再被复用，否则旧连接的延迟报文会污染新连接；`tcp_tw_reuse` 用时间戳做单调性校验后才敢复用。临时端口选择是 `bind_conflict` 在四元组哈希上做的冲突检测：端口区间窄、目的地址少、短连接多，三者相乘就是 `EADDRNOTAVAIL` 的充分条件。调大 `ip_local_port_range` 或用连接池复用长连接，才是治本；改 `tcp_max_tw_buckets` 只是让内核提前回收，日志会更干净，故障不会更少。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 15,
+    "parts": 19,
+    "section": "第 14 章〔网络〕连接边界：backlog、TIME_WAIT、端口耗尽与参数调优"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO04.5",
+  "chapter": "SO04",
+  "title": "第 3 章 JOS 磁盘（二）：块缓存与磁盘布局",
+  "src": {
+    "file": "notebook/projects/os/drivers/NOTES.md",
+    "sha256": "sha256:97e4aa1f82aecd48001369efcf5ecd6115e15522145d220eae80babec3faff7e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO04.5:body.s01",
+      "type": "extension",
+      "title": "第 3 章 JOS 磁盘（二）：块缓存与磁盘布局",
+      "level": 2,
+      "content": "**要解决的问题**：文件系统不能每次读写都直接打磁盘——太慢，而且无法表达\"这块数据正在被改\"。需要一个**带引用计数的块缓存**，以及一个能被解释的磁盘布局。\n\n**机制**：\n\n**两个粒度**：设备按**扇区**（512 B）读写，文件系统按**块**（4 KB = 8 扇区）管理。两者不要混。\n\n**块缓存**（`bcache`）三个结构：哈希表（按 `dev, blockno` 定位）、双向 LRU 链（淘汰顺序）、每块的引用计数（有人用就不能淘汰）。\n\n```c\nstruct buf {\n    int flags;            // B_VALID / B_DIRTY\n    uint32_t dev, blockno;\n    uint32_t refcnt;\n    struct buf *prev, *next;\n    uint8_t data[BLKSIZE]; // 4096\n};\n```\n\n三个操作的语义：\n\n- `bget(dev, blkno)`：哈希查；命中则 `refcnt++` 并挪到 LRU 头；未命中则从尾部摘一个 `refcnt==0` 的（脏块要写回），重新初始化后挪到头部。\n- `bread(dev, blkno)`：`bget` + 若 `!B_VALID` 则 `ide_read` 一整块并置 `B_VALID`。\n- `brelse(b)`：`refcnt--`，挪到 LRU 头。**只要有人引用，这块就不会被换出。**\n\n**磁盘布局**（JOS 教学口径，块号从 0 起）：\n\n```text\n块 0        引导块\n块 1        superblock：magic / 总块数 / 数据块数 / inode 数\n块 2        位图：每个 bit 对应一个块是否已分配\n块 3 ...    inode（struct File 数组，每块若干个）\n...         数据块\n```\n\n`struct File` 用 **10 个直接块指针 + 1 个单级间接块**（间接块里放 1024 个 4 字节块号），所以单文件上限约 $(10+1024)\\times4\\text{KB}\\approx4\\text{MB}$。**用单级间接把多级寻址的代码省掉，这是教学取舍的直接体现。**\n\n**最小例子**：一次 `read` 的完整路径\n\n```text\n用户 read → FS 进程查 inode → 得到块号列表 → bread(块号)（可能命中缓存）→ 拷到共享页 → 回 IPC\n```\n\n判据：能说出每一步\"谁持有引用、什么时候释放\"。**漏掉 `brelse` 的后果不是崩溃，而是缓存逐渐被钉死、最终所有块都不可淘汰。**\n\n**面试高频问法**：\n\n1. **「块缓存和 CPU 的 cache 有什么像、有什么不像？」** → 考点：两类缓存的差异。答法：都吃局部性、都有替换策略；但块缓存是**软件显式管理**的（谁引用谁负责），CPU cache 是硬件透明管理的（一致性由硬件保证）。\n2. **「为什么要引用计数，只用 LRU 不行吗？」** → 考点：淘汰的安全性。答法：LRU 只决定\"淘汰顺序\"，不知道\"能不能淘汰\"；正在被读写的块一旦被换出，数据就丢了。引用计数是\"借用凭证\"。\n3. **「脏块什么时候写回？」** → 考点：写回策略。答法：JOS 在淘汰脏块时写回；也可以选周期回写（Linux 的 writeback）或提交时写回（日志文件系统）。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "drivers",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 10,
+    "section": "第 3 章 JOS 磁盘（二）：块缓存与磁盘布局"
+  }
+}

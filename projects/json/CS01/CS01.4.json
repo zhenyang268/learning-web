@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.4",
+  "chapter": "CS01",
+  "title": "0 仓况体检（先看这个，它决定复习路线）",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.4:body.s01",
+      "type": "extension",
+      "title": "0 仓况体检（先看这个，它决定复习路线）",
+      "level": 2,
+      "content": "我逐文件读了本地仓，**结论与\"我之前做过这个项目\"的预期不符**，如实报告：\n\n| 目录 | 就绪度（截至 2026-11-04） | 证据（仓库内可查） |\n|---|---|---|\n| `bomb/` | **有真实产出**：`bomb/solutions`（94 行中文笔记，含 `(gdb) x/s 0x402400` 反汇编分析，覆盖 phase1–6 + secret phase） | `bomb/solutions` 含 gdb 反汇编分析 |\n| `datalab/bits.c` | 空壳·官方骨架：13 个 puzzle 全部是 `return 2;` / `return 0;` 占位 | `grep return` 全部是占位值 |\n| `cachelab/csim.c` | 空壳·7 行，只有 `printSummary(0,0,0)` | 全文 7 行 |\n| `cachelab/trans.c` | 空壳·`transpose_submit` 函数体为空 | 函数体空 |\n| `malloclab/mm.c` | 空壳·官方 `mm-naive.c` 骨架（110 行，brk 递增式，无 header/footer、不合并） | 文件头注释即 naive 版说明 |\n| `shlab/tsh.c` | 空壳·官方 starter（509 行，注释齐全，无 `fork`/`execve`/`waitpid` 实现） | grep 无 fork/execve/waitpid |\n| `proxylab/proxy.c` | 空壳·14 行，只打印 UA 头 | 全文 14 行 |\n| `archlab/` | 空壳·`sim.tar` **未解压**，只有 `archlab.pdf` + `simguide.pdf` | `ls archlab/sim` 不存在 |\n| `target1/` | 半·attacklab 靶子齐全（`ctarget` `rtarget` `farm.c` `hex2raw` `cookie.txt = 0x59b997fa`），但**没有答案文件** | 有靶子无解答 |\n\n**两个环境硬事实**（会直接影响你能不能跑）：\n\n1. **所有参考二进制都是 Linux x86-64 ELF**：`datalab/dlc`、`cachelab/csim-ref`、`cachelab/test-csim`、`shlab/tshref`、`bomb/bomb`、`target1/ctarget` 全部是 ELF。本机是 macOS（darwin），**这些跑不了**。所以 CSAPP 这条线必须有 Linux 环境（Docker / 虚拟机 / 远程主机），macOS 只能做\"读代码 + 写代码 + 静态分析\"。\n2. **`malloclab/` 缺 trace 文件**：本地只有 `short1-bal.rep` / `short2-bal.rep` 两个迷你 trace，`traces/` 与 `mdriver` 二进制都没有 —— 官方 handout 里的 `traces/` 需要从 `csapp.cs.cmu.edu/3e/malloclab-handout.tar` 补。\n\n> 所以这次\"复习\"的准确定位是：**用仓里已有的 bomb lab 分析笔记当锚点，把其余七个 lab 按 408 收益重新排序，从零做起**。下面的路线就是按这个定位排的。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 20,
+    "section": "0 仓况体检（先看这个，它决定复习路线）"
+  }
+}

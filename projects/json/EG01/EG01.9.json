@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG01.9",
+  "chapter": "EG01",
+  "title": "第 8 章 flaky test 治理与确定性",
+  "src": {
+    "file": "notebook/projects/eng/testing/NOTES.md",
+    "sha256": "sha256:264b2fc5ec970679cc8c0bd3d0474efd81daf2f882573790c6eb4fea8b4e3d4c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG01.9:body.s01",
+      "type": "extension",
+      "title": "第 8 章 flaky test 治理与确定性",
+      "level": 2,
+      "content": "**要解决的问题**：一条测试只要偶发变红，团队就会开始“重跑一下”，门禁从此失效——红灯不再等价于“代码坏了”。这一章解决“让同一 commit 的测试结果只取决于代码，而不取决于时间、顺序、机器和网络”。\n\n**机制**：先把根因分类，再谈治理手段。\n\n| 根因 | 典型表现 | 治理手段 |\n|---|---|---|\n| 真实时间 | `sleep`、读 `now()`、时区/DST、超时太紧 | 注入 Clock，测试用假时钟推进 |\n| 随机与哈希序 | Go map 遍历顺序、未固定 seed | 排序后比较；seed 打印并可重放 |\n| 并发 | 共享全局态、端口/临时目录冲突、goroutine 泄漏 | 每测试独立资源、端口 bind 0、`-race` |\n| 外部依赖 | 真实网络、共享库、第三方限流 | 换 fake/契约桩，测试内自建 schema |\n| 顺序依赖 | A 建的数据被 B 依赖 | 测试间零共享；主动随机化执行顺序 |\n| 环境差异 | CPU 数、locale、文件系统大小写 | 环境信息进日志，CI 与本地对齐 |\n\n治理顺序是“先量化，再修，最后才止血”。量化指按测试名统计失败率、同 commit 重跑是否复现、是否与并行度相关。设单次失败概率为 $p$，重跑 $n$ 次全绿的概率是 $1-p^n$——重试只是把红灯变成灰灯，成本是 CI 时间和被掩盖的真 bug。\n\n重试只能作为临时手段，且必须绑定三件事：标记（skip/quarantine 带原因和链接）、owner、到期时间。没有期限的重试等于关掉门禁。门禁策略上，新引入的 flaky 立即阻断，已知 flaky 移出阻断集合但仍单独跑并告警。\n\n```python\nclass Clock(Protocol):\n    def now(self) -> datetime: ...\n\ndef test_token_expires(fake_clock):\n    tok = issue(ttl=timedelta(minutes=5), clock=fake_clock)\n    fake_clock.advance(timedelta(minutes=4, seconds=59))\n    assert verify(tok, clock=fake_clock)\n    fake_clock.advance(timedelta(seconds=2))\n    assert not verify(tok, clock=fake_clock)   # 边界确定，无 sleep\n```\n\n**最小例子**：某接口测试断言 `created_at` 落在 `datetime.utcnow()` 前后 1 秒内，本地全绿、CI 偶发失败。定位步骤：同一 commit 上用 `pytest -q tests/test_order.py --junitxml=out.xml` 循环跑 50 次，记录失败次数与机器负载；确认失败只出现在慢机上，属于真实时间依赖。改法是把 `Clock` 注入被测代码，测试传 `FakeClock(fixed=2024-01-01T00:00:00Z)`，断言改成精确相等。改完再循环跑 50 次，全部通过，且不再需要 sleep 等待。另一类常见修法是 Go 里对 map 遍历结果先 `sort.Strings` 再和 golden 文件比对，消除顺序随机。\n\n**面试高频问法**：\n\n1. “怎么判断一个测试是真 flaky 还是真 bug？” → 考点是复现性归因 → 答法：同一 commit 重复跑、换机器换并行度跑，同输入不同结果才是 flaky；稳定失败就是 bug 或环境问题，绝不能用重试盖住。\n2. “重试机制到底能不能用？” → 考点是是否知道它的代价 → 答法：只能当临时手段，必须配 quarantine 标记、owner、到期时间和失败率指标；无期限重试等于把门禁关掉，红灯失去意义。\n3. “时间相关的测试怎么写才不 flaky？” → 考点是依赖注入 → 答法：不要在测试里 sleep 或读真实时钟，把 Clock 作为依赖注入、用 advance 推进；等异步用带 deadline 的轮询或 channel 同步，不用固定 sleep。\n4. “并发测试为什么容易不稳定？” → 考点是隔离与竞态 → 答法：共享可变全局态、固定端口、共享临时目录、goroutine 泄漏；解法是每测试独立资源、端口 bind 0、开 `-race`，并随机化执行顺序主动暴露顺序依赖。\n5. “本地过、CI 不过，按什么顺序排查？” → 考点是环境差异清单 → 答法：依次过时区/locale、CPU 数与并行度、文件系统大小写与遍历顺序、网络与 DNS、缓存与残留状态；先把这些环境变量和随机 seed 打进失败日志，再谈改代码。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "testing",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 9,
+    "section": "第 8 章 flaky test 治理与确定性"
+  }
+}

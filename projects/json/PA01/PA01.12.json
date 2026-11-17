@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.12",
+  "chapter": "PA01",
+  "title": "8 PA3 逐层 · CUDA 圆形渲染器",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.12:body.s01",
+      "type": "extension",
+      "title": "8 PA3 逐层 · CUDA 圆形渲染器",
+      "level": 2,
+      "content": "> 源码在 `asst3-master.zip` 内（主要战场 `render/cudaRenderer.cu`，645 行；工具 `render/circleBoxTest.cu_inl`、`render/exclusiveScan.cu_inl`）。\n> 参考实现 `render/refRenderer.cpp`（串行，正确）；评分 `render/checker.py`。\n\n### 12.1 骨架到底错在哪（逐行看真实代码）\n\n`kernelRenderCircles()` 是一个 **thread 对应一个 circle** 的 kernel：\n\n```\nint index = blockIdx.x * blockDim.x + threadIdx.x;\nif (index >= cuConstRendererParams.numCircles) return;\n...\nfor (pixelY = screenMinY; pixelY < screenMaxY; pixelY++)\n    for (pixelX = screenMinX; pixelX < screenMaxX; pixelX++)\n        shadePixel(index, pixelCenterNorm, p, imgPtr);\n```\n\n而 `shadePixel()` 里那段被注释框起来的代码：\n\n```\n// BEGIN SHOULD-BE-ATOMIC REGION\nfloat4 existingColor = *imagePtr;                 // 读全局\nnewColor.x = alpha*rgb.x + (1-alpha)*existingColor.x;\n...\n*imagePtr = newColor;                             // 写全局\n// END SHOULD-BE-ATOMIC REGION\n```\n\n**两个错误同时存在**：\n\n1. **原子性**：读-混合-写这三步不是原子的，两个圆同时更新同一像素会丢更新。\n2. **顺序**：每个 circle 由一个线程独立处理，线程调度顺序 = 圆的完成顺序，**和输入顺序毫无关系**。而半透明混合 `result = C_alpha*C_r + (1-C_alpha)*P_r` 是**不可交换**的（X 盖在 Y 上 ≠ Y 盖在 X 上）。\n\n跑 `./render -r cuda rand10k` 对比 `./render -r cpuref rand10k`，能看到横向条纹，而且每帧都在变。\n\n### 12.2 两条不变式与那句关键洞察\n\n1. **Atomicity**：读四个 float、混合、写回，必须是一整个不可分的操作。\n2. **Order**：对**同一个像素**的更新，必须按 circle 的输入顺序发生。\n\n> **A key observation is that the definition of order only specifies the order of updates to the same pixel.**\n> 不重叠的圆之间**没有任何顺序要求**，可以随意并行。\n\n这句话是整个 PA3 的优化空间来源：**你的性能上限，取决于能不能把\"有依赖的部分\"圈得足够小。**\n\n还有一个必须记住的次序建议（handout 原文加粗）：**先解决顺序，再看原子性还要不要紧**。很多时候顺序一旦保证（比如同一像素只由一个线程按序处理完），原子性问题自然消失。\n\n### 12.3 解法谱系：从\"能过\"到\"能拿满分\"\n\n| 档 | 做法 | 评价 |\n|---|---|---|\n| ① | **全局锁**：每个像素一把锁，更新前拿锁 | 正确但慢；锁的开销 + 串行化 |\n| ② | **每像素 CAS / atomic 自旋**：抢到锁就按自己的顺序写 | 原子性有了，**顺序仍无法保证**（谁先抢到谁先写）→ 不正确 |\n| ③ | **按 circle 顺序处理像素 + 前缀和做 compaction**：block 内先筛出\"影响本 tile 的圆\"，用 shared-memory exclusive scan 给它们分配紧凑槽位 | 正确且快，经典解法 |\n| ④ | **分 tile + circle-box 剔除 + 块内按序 blend + 一次写全局** | 满分路线；对 `micro2M`（200 万个极小圆）尤其有效 |\n\n### 12.4 推荐方案（④）的完整数据流\n\n```\n每个 CUDA block 负责图像的一个 tile（如 32x32 或 64x64 像素）\n  1. 把该 block 要用的 circle 数据 load 进 shared memory\n     —— 先用 circleInBoxConservative() 粗筛（把 box 按半径外扩，判圆心是否在扩大的盒子里）\n     —— 再用 circleInBox() 精筛（圆心 clamp 到 box 求最近点，比距离）\n  2. block 内用 sharedMemExclusiveScan() 做 compaction：\n     每个圆产出一个 flag（是否影响本 tile），scan 之后得到它在本 block 槽位数组中的下标\n  3. 槽位数组里的圆**天然按 circle index 升序**——这正是我们需要的输入顺序\n  4. 每个线程负责 tile 内若干像素，用一个**寄存器/local 累加器**按槽位顺序做 blend\n  5. 累加完只做 **一次全局写**（float4 一次写 4 个分量，比 4 次 fp32 store 更高效）\n```\n\n关键点：**`shadePixel` 每次都对全局内存读改写，改成寄存器累加是这一题收益最大的一步改造**。骨架代码里也留了注释提示这条。\n\n### 12.5 Part 2 的 scan（10 分）：真实细节\n\n`exclusiveScan.cu_inl` 的硬性要求（写在文件头，别跳过）：\n\n- 输入长度**必须是 2 的幂**；\n- **block 内线程数必须等于数组长度**（`SCAN_BLOCK_DIM` 既是线程数也是扫描元素数，且 ≤ 1024）；\n- `sScratch` 要有 `2 * SCAN_BLOCK_DIM` 个元素；\n- 三个数组都要在 shared memory 里。\n\n还有一个极易踩的坑（文件里专门用 NOTE 标出来了）：\n\n```\n// 线性线程下标必须这样算：\nint linearThreadIndex = threadIdx.y * blockDim.x + threadIdx.x;\n// 不能写成 threadIdx.x * blockDim.x + threadIdx.y\n```\n\n因为 scan 假设**每 32 个相邻的线性下标（0-31, 32-63, ...）构成一个 warp**，它们 lockstep 执行。用 2D 索引时如果顺序弄反，warp 的划分就散了，scan 直接错。\n\n`find_repeats` 的性能陷阱（handout 原文）：**naive 实现给 `parallel_for` 的每个迭代都启动 N 个线程再用 `if` 筛**——upsweep 最后一轮只有 2 个线程在干活，其余全空转。满分实现是**每个内层迭代只起一个线程**。\n\n### 12.6 八个场景与对应策略\n\n评分表里的 8 个场景（`rgb`, `rand10k`, `rand100k`, `pattern`, `snowsingle`, `biglittle`, `rand1M`, `micro2M`），每个 2 分正确性 + 7 分性能：\n\n- `rgb` / `pattern`：圆很少，**launch 开销主导**，别为它们过度设计。\n- `rand10k` → `rand100k` → `rand1M`：随机圆数量递增，**并行度足够，考验每圆的处理效率**。\n- `micro2M`：200 万个**极小圆**——每个圆只覆盖极少数像素，**必须用 circle-based 并行 + 强力剔除**，否则 per-pixel 方案会退化成\"每个像素扫 200 万个圆\"。\n- `snowsingle`：雪花单帧，走 `SNOWFLAKES` 那条带 `lookupColor` 的分支。\n- `biglittle`：大小圆混合——大圆覆盖多、小圆覆盖少，考验**负载在 block 间的均衡**。\n\n判分：`T <= 1.20 * T_ref` 满分；`T > 10 * T_ref` 零分；中间按 `7 * T_ref / T` 给分。\n\n### 12.7 易错点清单\n\n- **`cudaMalloc` 失败是静默的**。`rand1M` / `micro2M` 下如果临时结构开太多全局内存，程序不会报错，只会\"莫名其妙正确性失败\"。必须包 `cudaCheckError` 宏。\n- **kernel launch 的错误是异步的**，会在下一次被包的 CUDA 调用处才报出来；所以调试期把所有 CUDA API 都包上。\n- **`shadePixel` 里那个场景判断在内层循环**，骨架注释明确建议把它提到 `kernelRenderCircles` 外面（设置 lane mask 本身就有开销）。\n- 全局写用 `*(float4*)ptr = value` 一次写 4 个分量（骨架里 `kernelClearImage` 就是这么写的）。\n- 图像尺寸保证是 256 的倍数，所以 tile 划分不用处理不规则边界。\n\n### 12.8 设计理念\n\n- **消除共享 > 加锁**：把\"谁会碰这个像素\"圈清楚（靠 tile + 排序），比给像素上锁便宜一个数量级。\n- **减少通信**：一个像素的整个累加过程留在寄存器/共享内存，最后一次写全局。\n- **数据复用**：circle 数据被 block 内所有线程反复用 → 进 shared memory。\n- **两个并行轴**：parallelism across pixels 与 across circles，在不同阶段分别用（`micro2M` 用后者，`rand1M` 用前者）。\n- **scan 是这门课的暗线**：PA2 手写过线程池调度，PA3 在 GPU 上写 scan，PA4 在 PSUM 里做累加——同一件事的三种硬件形态。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 18,
+    "section": "8 PA3 逐层 · CUDA 圆形渲染器"
+  }
+}

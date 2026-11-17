@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "GX05.1",
   "chapter": "GX05",
-  "title": "game · 大纲",
+  "title": "game · 总览",
   "src": {
     "file": "notebook/projects/cg/game/OUTLINE.md",
     "sha256": "sha256:2b6a8eaabbe12a6c2331db95a613ebf9c16cc3fb9bce5b75262eafe142023aa5"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

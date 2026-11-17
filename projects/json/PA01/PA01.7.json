@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.7",
+  "chapter": "PA01",
+  "title": "3 设计理念（最值钱的一节）",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.7:body.s01",
+      "type": "extension",
+      "title": "3 设计理念（最值钱的一节）",
+      "level": 2,
+      "content": "### 3.1 抽象 vs 实现：这门课的复调主题\n\nL3 的标题里直接写着 \"ISPC programming, abstraction vs. implementation\"。同一件事在三个 PA 里出现三次：\n\n| 层 | 抽象（你写的） | 实现（硬件真的做的） | 陷阱 |\n|---|---|---|---|\n| ISPC | `foreach (i = 0 ... N)`，只声明\"这些迭代独立\" | 编译器把迭代切成 gang，映射到 8-wide AVX2 | 你以为在写循环，其实在写 SIMD lane；分支 divergence 直接吃利用率 |\n| ISPC | `launch[N]` 起 N 个 task | 运行时把 task 分到多核 | task 数是**实现决策**，不是语义的一部分 |\n| CUDA | block / thread 两级抽象 | warp（32 线程 SIMT）+ SM 调度 | 按 thread 思考会写出 divergence 严重的分支；按 warp 思考才对 |\n| NKI | tile 上的矩阵运算 | Tensor Engine 的物理 tile 约束 `(128,128) x (128,512)` | 抽象的 tile 大小必须落到硬件约束上，否则编译不过 |\n\n一句话：**抽象给你表达能力，实现决定你的性能。** 每次用一个新的抽象，先问\"它下面是什么\"。\n\n### 3.2 声明式 vs 命令式\n\nPA1 里有个被 handout 特意强调的对比：\n\n- `sum`（命令式）：手写 `c[programIndex + i] = ...`，你自己在做\"把工作映射到执行单元\"。\n- `sum2`（声明式）：`foreach (i = 0 ... N) { c[i] = a[i] + b[i]; }`，你只声明\"有哪些工作\"，映射交给系统。\n\n区别很微妙但很重要：声明式给实现留了重排的自由。这也是 `foreach` 和 `launch` 要分成两个机制的原因——前者管\"一个核内的 SIMD 并行\"，后者管\"跨核的任务并行\"，两者在实现上是不同的决策，混在一个抽象里就没法分别调优。\n\n### 3.3 三个性能敌人：不均、divergence、带宽\n\nPA1 的 6 个 program 其实是这三件事的标本：\n\n- **负载不均**（mandelbrot threads）：view 1 的上下半图代价差别大，静态按行切块 → 3 线程那个点特别难看。解法是交织（cyclic）静态分配，不需要任何同步。\n- **divergence**（mandelbrot ISPC / sqrt）：同一个 gang 里不同 lane 的迭代次数不同，SIMD 必须按最慢的那个 lane 走完。sqrt 的牛顿迭代收敛速度依赖初值，输入分布直接决定加速比——所以 handout 让你\"构造一个让加速比最大的输入\"和\"构造一个让加速比最小的输入\"。\n- **带宽受限**（saxpy）：2 次浮点运算对 12 字节访存，算术强度极低。多核/多任务都救不了它，这是硬件上限，不是实现问题。\n\n**判断\"瓶颈是算力还是带宽\"是 CS149 的第一基本功。** 后面 PA3 的 NCU 报告、PA4 的 MFU、PA5 的 DRAM throughput 都在问同一个问题。\n\n### 3.4 存储层次的控制权\n\n这是 CPU → GPU → 加速器这条线最深的一条线索：\n\n| 机器 | 片上存储 | 谁决定放什么 |\n|---|---|---|\n| 多核 CPU | L1/L2 cache | **硬件**（对软件正确性不可见） |\n| GPU | shared memory（每 block 显式声明）+ L1 | **程序员**声明，硬件仍管全局内存 |\n| Trainium2 | SBUF（28 MiB）+ PSUM（2 MiB） | **程序员**用 DMA 显式搬；不搬就用不了 |\n\nPA4 的 handout 把这件事说得很直白：传统 cache 下\"从软件正确性的角度看，cache 不存在\"；而 NeuronCore 的存储是 **software managed**，最大的挑战就是**编排数据怎么流过这台机器**。\n\n推论：**loop blocking 和 loop fusion 在 CPU 上是优化技巧，在加速器上是能不能跑的问题。** PA4 的 conv+pool 融合，本质上是\"卷积的结果别写回 HBM，直接在片上做 maxpool\"。\n\n### 3.5 开销意识：什么时候\"更简单\"更快\n\nPA2 Part A 故意让你实现三个版本，然后用 wireup 逼你回答：为什么串行版和\"每次 run 都建线程\"的版在某些测试上不比线程池慢？\n\n答案是**开销的量级**：\n- 任务极便宜（`super_super_light`）→ 线程创建/同步的开销可能大于并行收益，甚至串行的 cache 局部性更好。\n- 任务贵且数量多 → 摊销后线程池赢。\n- spin vs sleep → spin 延迟低但白占执行资源（在核数等于线程数时会拖慢 worker）；sleep 省资源但有唤醒开销。\n\n**没有\"最好的调度器\"，只有\"对这个负载特征最合适的调度器\"。** 这就是真实系统（TBB、Spark、PyTorch）要内置多种策略的原因。\n\n### 3.6 正确性的两条不变式：原子性与顺序\n\nPA3 把这个区分讲得最清楚，而且它适用于所有并行系统：\n\n- **原子性**：读-改-写这个整体不能被打断。\n- **顺序**：对**同一个**位置的更新必须按输入顺序发生。\n\n关键洞察（handout 原话加粗）：**顺序只约束同一个像素。** 不重叠的圆之间没有任何顺序要求，可以随便并行。这句话是整个 PA3 的优化空间来源——你的性能上限取决于能不能把\"有依赖的部分\"圈得足够小。\n\n还有一个次序建议值得记住：**先解决顺序，再看原子性还要不要紧。** 很多时候顺序一旦被保证（比如同一像素只由一个线程按序处理），原子性问题自然消失了。这是个通用思路：靠**消除共享**来保证正确性，比靠加锁便宜得多。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 18,
+    "section": "3 设计理念（最值钱的一节）"
+  }
+}

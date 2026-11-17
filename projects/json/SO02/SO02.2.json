@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "SO02.2",
   "chapter": "SO02",
-  "title": "xv6 · 分章详解",
+  "title": "xv6 · 导读",
   "src": {
     "file": "notebook/projects/os/xv6/NOTES.md",
     "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {
@@ -16,132 +16,16 @@
       "title": "",
       "level": 0,
       "content": "> **切法**：按**块**切——一块 = 一种复用方式 + 一组失效模式，块名读成「一份什么 → 多份什么」。不按 408 章、不按 lab 顺序，也不按「进程／文件／设备」三对象切。\n> **骨架来自** `OUTLINE.md` §3.1（十二块与依赖）与 §3.3（每块六项），本文只填骨架。\n> **每块四段**：现象（我这一侧看到什么）→ 机制（内核做了什么）→ **为什么这么设计**（不这么做会怎样、代价）→ 怎么验证（断点/命令/判据）。\n> **一条纪律**：跨块只借不造，一个工具只有一个 owner（先引入它的块）；同一机制只在本块写一次，别处只引用。\n> 机制因果与三内核对照见 `../kernel-compare/`，驱动四步的 JOS 版见 `../drivers/`。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s01",
-      "type": "extension",
-      "title": "怎么用",
-      "level": 2,
-      "content": "**块是理解单位，lab 是验收单位。** 一个 lab 会横跨两块（`cow` 落在 B3 与 B5），所以验收表按块标注。五个 lab 全绿只说明「没立刻崩」。\n\n每块六项，正文按这六项填：\n\n| 项 | 写什么 | 判据（`LEARNING.md` §3.1） |\n|---|---|---|\n| 职责 | 一份什么变成多份什么 | 块名能读成「一份 → 多份」 |\n| 使用面 | ≤5 条能力，只写能力 | 能预测一个具体动作的结果 |\n| 实现面 | ≤6 个名词，各带「删掉会怎样」 | 答不出的删掉 |\n| 依赖 | 借谁／谁借它 | 前置依赖必补，前置知识可欠账 |\n| 判据 | 可观察的验证动作 | 跑得出结果，或指得出一行 |\n| 失效点 | 哪条前提一破就变 | 能配反例 |\n\n**块内部仍用六问讲**：入口在哪／积木哪几件（可独立验证的与契约型的）／A[i] 是什么／生成哪一类／条件是什么／失效点在哪。块间是依赖，不是章节顺序。\n\n**读法**：讲块横读一行，讲线竖读一列；四条线（准入／配额／并发／恢复）不单独成章。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s02",
-      "type": "extension",
-      "title": "B0 初始化与运行底座",
-      "level": 2,
-      "content": "> 职责：裸板 → 能跑 C 的环境。依赖：无；被全部块借。\n\n**裸板 → 能跑 C 的环境。** 无接口；三保证：能切特权级、有可用栈、有输出通道。\n\n### 现象\n\n`make qemu` 之后屏幕上出现 `xv6 kernel is booting`，再往下是 `init: starting sh`，`$` 能接受输入。复位后的 CPU 和这一步之间隔着「能执行 C、能输出一个字符」。\n\n### 机制\n\n实现面（≤6）：链接脚本／入口汇编／BSS 清零／栈设置／UART MMIO／`sret` 前的特权级字段。删掉 BSS 清零 → 全局变量随机；删掉栈设置 → 第一次函数调用就崩。\n\nB0 正文只练工具、不讲机制；它把后十一块的「停住看现场」固定成动作。\n\n**工具链（macOS）**：RISC-V 交叉编译器 + gdb + `qemu-system-riscv64`。Homebrew 有对应 formula（`riscv64-elf-gcc` / `riscv64-elf-gdb` / `qemu`；名字对不上就 `brew search riscv`）。Makefile 默认前缀是 `riscv64-unknown-elf-`，所以装前缀匹配的 `riscv-tools`，或每次覆盖：\n\n```bash\nmake TOOLPREFIX=riscv64-elf- qemu\n```\n\n**三个固定动作**：\n\n- **动作一：跑起来。** `make qemu`；`Ctrl-a x` 退出，`Ctrl-a c` 进 QEMU monitor。默认 `CPUS=3`；凡「单核下才成立」的推理，一律 `make CPUS=1 qemu`。\n- **动作二：停下来。** `make qemu-gdb` 挂起等连接，另开终端在**仓库根目录**跑 gdb（自带 `.gdbinit` 已写架构与 `target remote` 端口，端口看该文件）。\n- **动作三：打出来。** `vmprint(p->pagetable)`（页表）、`backtrace()`（调用链）、`procdump()`（进程表，xv6 自带）。\n\ngdb 六条：\n\n```text\np/x $satp                      # 当前页表基址\np/x $sepc                      # 陷入时保存的返回地址\np/x $scause                    # 8=ecall 15=写缺页 13=读缺页\np/x $stval                     # 出错地址（page fault）\np *myproc()                    # 当前进程\nx/36gx myproc()->trapframe     # 288 字节 = 5 个簿记字段 + 31 个寄存器\n```\n\n### 为什么这么设计\n\ngdb 当状态查看器，因为单块机制不需要并发时间线，只要随时能打出状态。**代价**：看不到竞态——引用计数漏减、日志并发提交错时静态快照可能都对，这类错只能靠「跑 `forktest` 多轮 + 数空闲页」暴露。\n\n三个固定动作是各块「怎么验证」的公共前提：**没有 B0，那十一块的判据只是纸上的句子**。它产出的不是功能，是可观察性。\n\n### 怎么验证\n\n- 能打印第一行（`xv6 kernel is booting`）；`b _entry` 能看到 `pc/sp`；\n- `vmprint`／`backtrace`／`procdump` 三个动作各能跑出一次输出。\n\n**失效点**：x86 叫保护模式，RISC-V 是从 M 落到 S——职责相同，实现整体替换。换平台时实现面全换，三保证不变。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s03",
-      "type": "extension",
-      "title": "B1 物理内存",
-      "level": 2,
-      "content": "> 职责：一段 RAM → 可反复分配回收的页。依赖：B0；被 B2／B5／B9 借。\n\n**RAM → 可反复分配回收的页。** 使用面：`alloc()`／`free(p)`／页大小固定 4K。\n\n### 现象\n\n进程要新页立刻拿到；退出后那些页还能被别人用；反复 `fork`/`exit` 多轮后可用页数回到初值。\n\n### 机制\n\n实现面（≤6）：freelist／位图／buddy／引用计数（`kfree` 减到 0 才回收）。删掉引用计数 → COW 页被提前释放。\n\n分配器是全局问题：全系统只有一个池子，谁都能要，所以它必须对「两个持有者指同一页」有答案——这是引用计数进入实现面的原因，不是因为它属于 COW（COW 在 B3/B5，这里只承认会被借）。\n\n### 为什么这么设计\n\n把「翻译」和「分配」分开，是让进程只负责**提需求**（哪些虚拟页、什么权限），物理帧的复用与回收是**全局问题**。xv6 的答案最小号：直接映射 + freelist；Linux 换成了一套更复杂的分配器（形态不在这里展开，属于下钻项）。**换的是分配器，不换的是「进程只提需求」**——所以研究进程可以不管分配器。\n\n代价：一旦承诺 COW，引用计数就从「优化」变「必需」——否则共享页被一方释放，另一方指着已回收的内存。xv6 选「按页号索引一张计数表」这个最省事形状（待核：与 Linux 对照点未在 xv6 源码核对）。\n\n### 怎么验证\n\n- 若干轮 alloc/free 后空闲页数回初值；两次 `alloc` 不返回同一页；\n- `forktest` 跑完后**数空闲页回初值**（强判据，`forktest` 本身不查这个）。\n\n**失效点**：多核不加锁 → 同一页发两次；空闲表未初始化 → 拿到 0 页。`CPUS=3` 是默认，所以「单核下成立」必须显式声明。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s04",
-      "type": "extension",
-      "title": "B2 地址翻译",
-      "level": 2,
-      "content": "> 职责：虚拟地址 → 任意物理页 + 权限。依赖：B1；被 B3／B4 借。\n\n**虚拟地址 → 任意物理页 + 权限。** 使用面：`map`／`unmap`／`walk`／同一 `pa` 可挂多张表。\n\n### 现象\n\n映射后能读写；`unmap` 后再访问崩；同一物理页挂两处，改一处另一处可见。反过来，一个虚拟页写崩了，要能说清是「没映射」「`U=0`」还是「`W=0`」。\n\n### 机制\n\n实现面（≤6）：三级索引／PTE 位布局／TLB 刷新／重复映射检测。删掉 TLB 刷新 → 旧翻译还在；删掉重复映射检测 → 静默覆盖。\n\n「能不能访问」的判据不在代码里，在 PTE 里：**有映射 + `U=1` + 对应 `R/W/X`**。用户态碰 `TRAMPOLINE` 必 fault，哪怕它就在用户页表里。\n\n### 为什么这么设计\n\nW^X（可写与可执行互斥）关掉「改指令」这条路径；`U=0` 的内核映射保证陷入时不用换页表也能跑（xv6 不做 KPTI）。两条都是**取舍**：前者牺牲 JIT 类用法，后者牺牲侧信道防护——是取舍，不是「本来如此」。\n\n**页表结构 ≠ 进程**——结构归这里，PTE 里的物理地址归 B1，进程只到「我拿到哪张、能读写哪些」。三者混讲，才会出现「学进程要先学完整套内存管理」的错觉。\n\n### 怎么验证\n\n- 映射后可读写；`unmap` 后 fault；同一 `pa` 两处映射，改一处另一处可见；\n- `b walk`：看 `va`、返回的 PTE、低 5 位，这条访问属于哪一段当场可判；`p/x $satp`、`p myproc()->pagetable`、`vmprint` 三者对上。\n\n**失效点**：Sv39 → Sv48 时 `walk` 层数、`MAXVA`、索引位数全变，「三级」立刻失效——这是选点，不是原理。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s05",
-      "type": "extension",
-      "title": "B3 地址空间",
-      "level": 2,
-      "content": "> 职责：一堆映射 → 能长能缩能复制能替换的对象。依赖：B2；被 B5／`exec` 借。\n\n**一堆映射 → 能长能缩能复制能替换的对象。** 使用面：`grow`／`shrink`／`copy`／`free_all`。\n\n### 现象\n\n`sbrk(n)` 返回旧边界，之后那一段可读可写；`n` 为负时收缩；`fork` 之后父子各写各的互不影响；栈向下长，撞到栈底那页没映射处就崩，而不是静默写坏堆。\n\n### 机制\n\n实现面（≤6）：段布局／栈方向／guard page／COW 钩子／按需分配（xv6 无 lazy）。删掉 guard page → 栈溢出静默写坏堆。\n\n**能力地图**（init 进程，xv6，单核）：\n\n```text\n0x0                  ┌────────────────────┐\n                     │ text      R-X  U   │  执行 OK；写 → scause 15（PTE_W=0）\n                     ├────────────────────┤\n                     │ data/bss  RW-  U   │  读 OK；写 OK\n                     ├────────────────────┤\n                     │ heap      RW-  U   │  sbrk 往上推，边界是 p->sz\n                     │   ...              │\n                     ├────────────────────┤\n                     │ stack     RW-  U   │  向下长；栈底有一页没映射\n                     └────────────────────┘\nTRAMPOLINE            │ trampoline R-X ─   │  U=0：只有陷入瞬间 CPU 用\nTRAPFRAME             │ trapframe RW-  ─   │  U=0：用户碰 → scause 13\nKERNBASE..PHYSTOP     │ 内核直接映射        │  text R-X、data RW；U=0\n```\n\n三条直接从图上读出来的结论：\n\n1. **「能不能访问」= 有映射 + `U=1` + 对应 `R/W/X`**，不是「代码里检查了」。\n2. **「写一下会怎样」**：`W=1` 直接写；`W=0` 且是 COW 页 → 缺页后复制；`W=0` 且不是 COW（代码段）→ 杀进程。\n3. **「访问一段新的会怎样」**：xv6 没有 lazy allocation，`sbrk` 时就把页建好，所以「边界推高」和「可访问」是同步的；Linux 里两者分开，才有 minor fault。\n\n**申请内存**：`sys_sbrk` → `growproc` → `uvmalloc`（立刻 `kalloc` + `mappages`）或 `uvmdealloc`。**顺序是不变量**：先分配、成功后才改 `p->sz`；失败回滚并返回 -1，于是不出现「能访问但没内存」。\n\n**COW 的落地**（`uvmcopy` + `cowfault`）：\n\n1. `uvmcopy` 遍历父页表，把**父的** PTE 清 `PTE_W`、打 `PTE_COW`；子页表用同样权限映射同一物理页；计数 +1。**两边都要改**，只改子的话父会写穿。\n2. 谁写谁触发 `scause=15`（store page fault），`usertrap` 调 `cowfault(PGROUNDDOWN(r_stval()))`。\n3. `cowfault`：查 PTE → 确认 `V` 且无 `W` 且有 COW 标记 → `kalloc` → `memmove` → **`uvmunmap(..., 1, 0)` 先拆旧映射**（`mappages` 遇到已存在映射会 panic）→ `mappages` 成可写 → `kfree` 旧页（计数 -1）。\n\n三个必错点（顺序与位都不能挪）：**先拆映射再 `mappages`**、**父的 PTE 也要清 `W` 打 COW**、**旧页只经 `kfree` 减一次计数**。\n\n### 为什么这么设计\n\n`fork` 后通常跟 `exec`（shell 就是这样），全量复制是纯浪费；COW 把复制推迟到「真的写」。代价是缺页成热路径、引用计数要维护、错一处就是随机 panic。**为什么不是别的**：`vfork` 不复制但父阻塞，`posix_spawn` 走 `CLONE_VM|CLONE_VFORK`；COW 是「不改调用者语义」的最小代价。\n\n`grow` 走 eager 也是选点：\n\n| | eager（xv6） | demand（Linux） |\n|---|---|---|\n| 错误何时暴露 | `sbrk` 当场返回 -1 | 访问时才 fault，可能很远 |\n| 内存占用 | 立刻占 | 按需，可超卖 |\n| 缺页是不是常规路径 | 不是 | 是（minor fault 常见） |\n\n所以「申请内存会怎样」**必须带内核名**：xv6 是一次分配，Linux 是一次记账。\n\n### 怎么验证\n\n- `grow` 后可写；越界 fault；`copy` 后两边独立写；\n- 对函数指针所在页写（xv6 没有 `mprotect`）看 `scause=15`；写 `TRAMPOLINE` 看 `scause=13`（取指/读权限不足）；\n- `b growproc`：`p myproc()->sz` 前后对比 + `vmprint` 看新增项；`sbrk` 超大值看返回 -1 且 `sz` 不变；\n- `b cowfault`：看旧 PTE 的 `W`/COW 位、看计数 >1。\n\n**失效点**：先改边界后分配 → 能访问但没内存；`copy` 只改子不改父 → 写穿；`scause=13` 不该走 COW，否则读非法地址会被静默分配。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s06",
-      "type": "extension",
-      "title": "B4 陷入与返回",
-      "level": 2,
-      "content": "> 职责：执行流 → 可冻结可恢复的现场。依赖：B1、B2；被 B5／B6／B7／B9 借。\n\n**执行流 → 可冻结可恢复的现场。** 使用面：trapframe／不可改的入口（`stvec`+`sscratch`）／`return`。\n\n### 现象\n\n进程调 `write` 时「停了一下」，回来继续，寄存器像没被动过；中断能打断；内核里再陷入也不毁现场。\n\n### 机制\n\n实现面（≤6）：入口汇编／换栈／`sscratch` 暂存／trapframe 布局／嵌套与中断开关。删掉不可改入口 → 提权；删掉换栈 → 返回地址可篡改。\n\n要做到「能停、且停时它的世界不变」，必须有：用户态改不了的入口（`stvec`）、用户态改不了的现场存放处（trapframe，`U=0`）、硬件给的返回地址（`sepc`）。\n\n**一次 `ecall` 的六步**：\n\n| 时刻 | `pc` | `sp` | `satp` | `stvec` | `sscratch` |\n|---|---|---|---|---|---|\n| U 态执行 `ecall` 前 | 用户下一条 | 用户栈 | 用户页表 | `TRAMPOLINE+uservec` | `TRAPFRAME` |\n| `uservec` 第一条 `csrrw` 后 | trampoline | 用户栈 | 用户页表 | 同上 | 用户的 `a0` |\n| 存完 31 个寄存器、取 `kernel_sp` 后 | trampoline | 内核栈顶 | 用户页表 | 同上 | 用户的 `a0` |\n| `csrw satp` + `sfence.vma` 后 | trampoline | 内核栈顶 | **内核页表** | 同上 | 用户的 `a0` |\n| `jr t0` 进 `usertrap` 后 | `usertrap` | 内核栈 | 内核页表 | **`kernelvec`** | 用户的 `a0` |\n| `sret` 之后 | 用户下一条 | 用户栈 | 用户页表 | `TRAMPOLINE+uservec` | `TRAPFRAME` |\n\n四个必须能解释的点：\n\n- **`csrrw a0, sscratch, a0`**：一条指令同时拿到 trapframe 地址、把用户 `a0` 暂存走，少一个中断窗口；随后 `csrr t0, sscratch; sd t0, 112(a0)` 补存用户 `a0`。\n- **trampoline 必须在用户页表里同址映射**：换 `satp` 那一瞬间，下一条指令的取指地址必须在新旧两张表里都有效。\n- **`usertrap` 第一句把 `stvec` 换成 `kernelvec`**：否则内核里再中断会跳回 `uservec`，把内核现场当用户现场存。\n- **`scause==8` 时 `epc += 4`**：`sepc` 指向 `ecall` 本身，不加就原地打转（症状：系统调用无限重复）。\n\n**trapframe 布局**（前 40 字节不是寄存器，`a0` 在 112、`a7` 在 168）：\n\n| 偏移 | 字段 | 谁写 |\n|---|---|---|\n| 0 / 8 / 16 | `kernel_satp` / `kernel_sp` / `kernel_trap` | `usertrapret` 填，`uservec` 读 |\n| 24 | `epc` | `sepc` 同步进来；返回值也走这里 |\n| 32 | `kernel_hartid` | `usertrapret` |\n| 40 起 | 31 个通用寄存器 × 8 字节 | `uservec` |\n\n即：前 40 字节是 5 个簿记字段，后面 248 字节是 31 个通用寄存器（`x0` 不存），总 288 字节。\n\n### 为什么这么设计\n\nRISC-V 的 `ecall` 只做三件事（`pc→sepc`、原因 `→scause`、`pc→stvec`）——**不换栈、不存寄存器**。硬件省下的软件必须补：现场进 trapframe，栈从 `kernel_sp` 取，「trapframe 在哪」只能藏 `sscratch`。三处都是被硬件契约逼出来的，不是风格。\n\n**为什么 B4 独立成块**：进程**借**它，借的东西不能同时是借者的字段。trapframe 字段顺序是契约型积木——不能独立验证，只能端到端注入一个错（改一个字段，`trampoline.S` 偏移全错）。删掉 trampoline 同址映射 → 换 `satp` 后取指地址失效，陷入即崩。\n\n### 怎么验证\n\n- 背六步表，`b usertrap` / `b syscall` 各停一次，用 `p/x $satp`、`$stvec`、`$sscratch` 对表；\n- `b usertrap` 时看 `$scause`、`$satp`、`x/36gx myproc()->trapframe`；\n- `backtrace` 用 `s0` 走链（`fp-8` 是返回地址、`fp-16` 是上一帧 `fp`，上界 `PGROUNDUP(fp)`），意义是证明**陷入现场与调用链是同一套栈**，判据是 3–5 层；\n- 判据总述：`ecall` 后能回来；一个寄存器不漏；再陷入不毁现场。\n\n**失效点**：trapframe 字段顺序一改，`trampoline.S` 的偏移全错——不是概率问题。加 KPTI 后用户页表不再含内核映射，trampoline 从「省事」变「唯一可用跳板」。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s07",
-      "type": "extension",
-      "title": "B5 进程",
-      "level": 2,
-      "content": "> 职责：流 + 地址空间 + 资源 → 可管理的单位。依赖：B3、B4；被 B6／B7／B8 借。\n\n**流 + 地址空间 + 资源 → 可管理的单位。** 使用面：`create`／`fork`／`exec`／`exit`／`wait`。\n\n### 现象\n\n`fork` 返回两次，父子各改自己的变量互不影响；`exec` 成功不返回，失败返回 -1 且原进程还在；`exit` 不返回，父 `wait` 拿到退出码；父先死则子被收养。\n\n### 机制\n\n实现面（≤6）：`struct proc` 字段取舍／pid／父子／zombie／上下文切换存哪些寄存器。删掉 zombie → 退出码无处交付。\n\n**一个进程手上有什么**——`struct proc` 里真正属于「它自己一份」的只有四样加身份字段：\n\n| 它自己一份 | 作用 | 切换进程时 |\n|---|---|---|\n| `pagetable` | 它的地址空间视图（被 `satp` 指向） | 换 `satp` |\n| `trapframe` | 它的寄存器现场（`U=0`，用户碰不到） | 换 trapframe 指针 + `sscratch` |\n| `kstack` | 它陷进内核时用的栈 | 换 `sp` |\n| `ofile[]` | 它打开的「东西」（fd 表） | 不用换，但要和 file 的引用计数对上 |\n| `pid` / `parent` / `state` / `chan` | 身份、父子、状态、等谁 | 读或改 |\n\n**`fork` 会怎样**：四件事——`allocproc` 建新 proc（新页表、新 kstack、新 trapframe）；`uvmcopy` 处理内存（COW，机制见 B3）；复制 fd 表；子进程 `state = RUNNABLE`、`trapframe->a0 = 0`（**这就是「子进程返回 0」的全部魔法**）。父返回子 pid。\n\n账本（三个词覆盖所有 `fork` 追问）：\n\n| 类别 | 具体 |\n|---|---|\n| **复制** | trapframe 全量、fd 表（指针，引用计数 +1）、页表结构（新表项） |\n| **共享** | 物理页（COW，双方只读）、file 的 offset |\n| **替换** | 无 |\n\n**`exec` 会怎样**：打开文件 → 读 ELF 头 → `proc_pagetable` 建新页表 → `loadseg` 逐段读入（代码 R-X、数据 RW）→ 建用户栈 → **换掉** `p->pagetable`、`p->sz`，`trapframe->epc` 设成入口 → 旧页表 `proc_freepagetable` 释放。账本：**保留** pid、fd 表（xv6 无 close-on-exec，fd 全保留）、父进程关系；**替换** 地址空间与返回地址；**关闭** 无。\n\n**退出与回收**：`exit` 关掉所有 fd、结束未完成事务、把子进程挂到 init 名下、唤醒父进程，再 `sched()` 让出 CPU——**自己不回收自己的 `struct proc`**，因为还在用它的内核栈。真正回收在父进程的 `wait` 里（`freeproc`）；父没 `wait` 时它就是 zombie。\n\n### 为什么这么设计\n\n**归属判据**：每个进程一份、切换要换掉的属于进程；全系统只有一份的（物理页池、块缓存、inode 表、进程表本身）不属于进程。它告诉你「隔离的边界画在视角上」：页表是视角，fd 表是视角，磁盘不是。\n\n**`fork` 用 COW**：见 B3（`uvmcopy`/`cowfault` 只在那里写一次）。\n\n**`exec` 不新建进程**：它是「同一个进程换内容」，所以 pid 不变、fd 不变——这就是「重定向」能在 shell 生效的原因（`fork` 后、`exec` 前改 fd 表）。「成功不返回」是因为返回地址已被换成新程序入口。\n\n**`exit` 与 `wait` 分开**：把「资源释放」与「退出码交付」分开。进程不能自己回收自己（栈还在用），退出码必须有人接。代价是 zombie 占一个 proc 槽——「僵尸进程」不是 bug，是设计的必然产物。\n\n### 怎么验证\n\n- `p *myproc()` 逐字段对表；`procdump()` 看各进程的 `pagetable`、`kstack` 不同；\n- `p myproc()->sz` 与页表项是否一致（两个数要对上）；\n- `fork`：`forktest` 不 panic（弱判据）+ 空闲页数回初值（强判据）；\n- `exec`：`b exec`，`p->pagetable` 前后不同、`p->pid` 不变；新旧各打一次 `vmprint`；\n- `exit`/`wait`：`b exit` / `b wait`；`p myproc()->parent`；父没 `wait` 时 `procdump` 见 zombie。\n\n**失效点**：复制漏 fd 表 → 资源泄漏；不回收 → zombie 堆积。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s08",
-      "type": "extension",
-      "title": "B6 系统调用",
-      "level": 2,
-      "content": "> 职责：任意用户请求 → 受检的窄入口。依赖：B4、B5；被 B8／B10 借。\n\n**用户请求 → 受检的窄入口。** 使用面：`syscall(number,args)`／返回值约定／用户指针校验。\n\n### 现象\n\n用户程序调 `write` 只给一个数字和三个参数；传非法指针进去得到错误返回值，内核不崩；传不存在的号得到 -1。\n\n### 机制\n\n实现面（≤6）：分发表／号约定／`copyin/copyout`／错误码。删掉参数校验 → 内核按用户指针解引用。\n\n链子是 B4 的 `ecall` 之后：`uservec` 存现场 → `usertrap` 按 `scause` 分发 → `syscall()` 从 `trapframe->a7` 取号、从 `a0`.. 取参数、查表调用 → 返回值写回 `trapframe->a0`（这也是 `sigalarm` 类 lab 要求「`a0` 原值」的原因：返回通道只有这一个字段）。\n\n### 为什么这么设计\n\n窄入口的意义是把「用户能要求内核做什么」收敛成一张表：**号是准入，参数校验是第二道**。删掉参数校验，用户指针就成了内核解引用——一次 `copyin/copyout` 漏检查，等于把内核地址空间交给用户。\n\n**权限链从这块开始断**：xv6 只到「内核态 vs 用户态」，没有 uid/属主。凡是「谁能调」，xv6 只有一个答案（谁都能），B8 的属主检查是空的。这是选点，不是原理。\n\n### 怎么验证\n\n- 非法指针返回错误而不是崩内核；未知号返回 -1；\n- `b syscall`：看 `myproc()->trapframe->a7`（号分到哪）+ `$scause=8`（是 ecall 进来的）；\n- 预测检验：给定 `write(1, bad_ptr, n)`，先说出「返回 -1，不 panic」再验证。\n\n**失效点**：xv6 无 uid/属主，权限链到内核态为止；换到有 uid 的系统，本块准入要重画。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s09",
-      "type": "extension",
-      "title": "B7 调度",
-      "level": 2,
-      "content": "> 职责：一条 CPU 时间线 → 多份时间片。依赖：B5、B4；无块借它，但各块都假设会被切走。\n\n**一条 CPU 时间线 → 多份时间片。** 使用面：`yield`／`sleep(chan)`／`wakeup(chan)`。\n\n### 现象\n\n两个死循环进程交替跑；`sleep` 后不被选中，直到有人 `wakeup` 同一个 `chan`；谁在持锁时睡了，系统卡死。\n\n### 机制\n\n实现面（≤6）：runqueue／时间片／优先级／抢占点／上下文切换。删掉「持锁才能睡」→ lost wakeup。\n\n`sleep(chan, lk)` 先持锁检查条件、挂到 `chan`、再 `sched`，中间放锁。\n\n### 为什么这么设计\n\n**为什么要求持锁**：不持锁，「检查」与「挂上」之间有窗口，`wakeup` 落进窗口就永远等；持锁关掉这个窗口——不是靠关中断，因为 `sched` 会切上下文。单核也成立（唤醒可能来自中断）；`CPUS=3` 下它从习惯变正确性前提。B7 无块依赖它，但**各块都假设会被切走**——任何「先读全局量再写回」都要过这关。\n\n### 怎么验证\n\n- 两个死循环交替（时间片生效的证据）；`sleep` 后不被选中直到 `wakeup`；\n- 注入一个错：去掉 `sleep` 的持锁前提，症状必须是「偶发永久阻塞」而不是立刻崩——对不上说明还没理解这块；\n- 死锁（B7 故障恢复列）**不做**：只说结论。\n\n**失效点**：在持锁时睡 → 死锁；`wakeup` 不持同一把锁 → 丢唤醒。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s10",
-      "type": "extension",
-      "title": "B8 文件系统",
-      "level": 2,
-      "content": "> 职责：一块盘 → 多个命名对象 + 断电不坏。依赖：B6、B1、B9；被 B5／`exec` 借。\n\n**一块盘 → 多个命名对象 + 断电不坏。** 使用面：`open/close`／`read/write(offset)`／`mkdir/link`／「写成功的重启还在」。\n\n### 现象\n\n`write(fd, buf, n)` 返回写入字节数，数据「进文件了」；写大文件时断电，重启后长度要么旧的、要么新的，**不是半截**；`fork` 后父子读同一 fd 会**互相推进** offset，`dup` 的两个 fd 也一样。\n\n### 机制\n\n**三个对象、三层，各有各的共享范围**：\n\n| 层 | 是什么 | 谁共享 |\n|---|---|---|\n| fd 表项 | 「第几个 fd」→ 指向一个 `struct file` | 进程私有（`fork` 时复制表，指向同一 file） |\n| `struct file` | 这次打开：offset、可读/可写、类型 | `fork` / `dup` 后共享 |\n| `inode` | 文件本身：类型、大小、块指针 | 全系统共享 |\n\n**一次 `write` 落到哪**（每步理由一句）：\n\n```text\nsys_write → filewrite → begin_op → writei → bmap → bread（取块）→ log_write（登记）\n             (file层)   (事务开始)  (inode层) (逻辑→物理)  (块缓存)     (只登记，不落盘)\n                                                    ↓\n                          end_op → commit → write_log / install_trans → virtio_disk_rw\n                                                        (提交时才真正碰设备)\n```\n\n- `filewrite`：推进当前 offset，保证不越界、不写只读 file。\n- `begin_op`：把这次写卷进一个事务（否则改 inode、改位图、写数据三处没法原子）。\n- `writei`：按 inode 的块映射，把用户缓冲切成块大小的段。\n- `bmap`：逻辑块号 → 物理块号；缺块就 `balloc`（**「文件变大」在这里**）。\n- `bread`：块缓存，避免每次写都读盘。\n- `log_write`：只登记「这块要在提交时落盘」，**不写盘**——所以写路径延迟与设备无关。\n- `virtio_disk_rw`：全链唯一真正碰设备的一步，发生在 `commit` 里。\n\n**缓冲（`bio.c`）**：磁盘按块读写比内存慢几个数量级，所以 `bread` 先查缓存，未命中才读盘。写路径**不直接落盘**——改缓存里那份，由 `log_write` 登记，真正的 `bwrite` 在提交阶段。缓存还顺手解决「同一块被两处同时改」。\n\n**日志（`log.c`）**：一次写要改数据块、inode、位图，原位写会在中途断电时留下矛盾状态。做法：改缓存 → `log_write` 登记块号（**吸收**：同一事务同块只登一次）→ `end_op`：`write_log`（复制进日志区）→ `write_head`（写块号，`n≠0`）→ `install_trans`（装回原位）→ `write_head`（`n=0`）。\n\n**提交点是第二次 `write_head`**，三种崩溃时机：\n\n| 崩在哪 | 重启看到 | 恢复动作 | 用户看到 |\n|---|---|---|---|\n| `write_log` 中途 | `n=0` | 什么都不做 | 旧内容 |\n| `install_trans` 中途 | `n≠0` | 重放（幂等） | 新内容 |\n| 第二次 `write_head` 之后 | `n=0` | 什么都不做 | 新内容 |\n\n### 为什么这么设计\n\n**为什么三层**：三层对应三个问题——「这一进程怎么称呼它」「这次打开读到哪」「文件在磁盘上是什么」。合成一层就表达不了「两进程共享 offset」或「同一文件开两次各有 offset」。**offset 共享是 `fork` 的直接后果，不是 bug**。\n\n**为什么分层写**：五件事的**失效模式不同**：offset 错是逻辑错、事务错是一致性错、块映射错是数据丢失、缓存错是「读到旧数据」、设备错是超时。分层让每种错只出现在一层——这也是本块能切成 B5／B8／B9 的理由。\n\n**为什么用日志**：它把「多处修改」压成「一个头」——原子性从「保证 N 处成功」变成「保证 1 处成功」。代价是每块写两次，所以生产内核有 `data=journal` / `ordered` / `writeback` 折衷。`begin_op` 必须预留日志空间（`LOGSIZE` 30、单事务最多 `MAXOPBLOCKS` 10），否则中途日志满，无法原子收尾，只能 panic。**缓冲是选择不是必需**：它不影响正确性，只是让每次读写不必落盘。\n\n### 怎么验证\n\n- `b filewrite` → `b bmap` → `b virtio_disk_rw`，一次 `write` 串起来；看 `bmap` 只在跨块时被调用；\n- `b commit` / `b write_head`（命中两次，第二次参数为 0）；看 `log.lh.n` 与第几次写头；\n- 写大文件途中在宿主机 `Ctrl-a x` 杀 QEMU（不是 `Ctrl-C` kill make），重启看长度不半截；\n- offset 共享：`fork` 后父子对同一 fd `read`，总字节数等于文件大小而非两倍；\n- 判据总述：写-断电-重启不坏；`write_head` 两次。\n\n**失效点**：`begin_op` 不预留日志空间 → 写到一半无法原子收尾，只能 panic。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s11",
-      "type": "extension",
-      "title": "B9 设备与驱动",
-      "level": 2,
-      "content": "> 职责：寄存器 + 中断 + DMA → 提交/完成。依赖：B1、B4；被 B8、B10 借。\n\n**寄存器 + 中断 + DMA → 提交一个请求、稍后拿到完成。** 使用面：`submit`／完成通知／`irq_ack`。\n\n### 现象\n\n进程读写一个 fd 就能收发网络包，看不到网卡；写一块返回时数据「到盘上了」；收发顺序写错，偶发「收到的包内容是上一次的」或「包丢了」；中断不处理，系统像被卡住。\n\n### 机制\n\n链子是 `fd → file → 协议层（net.c）→ 驱动（e1000.c）→ 环 → 网卡`。进程侧只有 fd；协议层解析与回复；驱动做四件事：**找设备**（PCI 拿 MMIO 基址）、**配置**（写控制寄存器、环基址与长度）、**搬数据**（描述符环 + DMA）、**处理完成**（中断 + `DD` 位）。\n\n寄存器窗口 `regs[...]` 是 MMIO（读写它就是读写设备寄存器）。收发各 16 项描述符环；`TDT`/`RDT` 是软件写到哪，`TDH`/`RDH` 是硬件读到哪。\n\n```text\n发送：CPU 填描述符 → 推进 TDT → 网卡 DMA 取走 → 置 DD → 槽可复用\n接收：网卡写数据 → 置 DD → 中断 → 内核取 buffer → 换新 buffer → 清 DD → 推进 RDT\n```\n\n```c\n/* transmit：最后一步才是推进游标 */\nidx = regs[E1000_TDT];\nif((tx_ring[idx].status & E1000_TXD_STAT_DD) == 0) return -1;   // 环满\ntx_ring[idx].addr = (uint64)m->head;  tx_ring[idx].length = m->len;\ntx_ring[idx].cmd = E1000_TXD_CMD_EOP | E1000_TXD_CMD_RS;\nregs[E1000_TDT] = (idx + 1) % TX_RING_SIZE;\n\n/* receive：先换 buffer，最后才还给网卡 */\nidx = (regs[E1000_RDT] + 1) % RX_RING_SIZE;\nif((rx_ring[idx].status & E1000_RXD_STAT_DD) == 0) return;\nrx_mbufs[idx]->len = rx_ring[idx].length;\nnet_rx(rx_mbufs[idx]);\nrx_mbufs[idx] = mbufalloc(0);\nrx_ring[idx].addr = (uint64)rx_mbufs[idx]->head;\nrx_ring[idx].status = 0;\nregs[E1000_RDT] = idx;\n```\n\n### 为什么这么设计\n\n每层挡掉一类复杂度——fd 挡「设备是谁」，协议层挡「字节什么意思」，驱动挡「寄存器怎么摆」。进程不需要知道网卡型号，这是分层收益；代价是每层复制数据或传指针。\n\n**游标是所有权声明**。提前推进等于告诉硬件「这槽我不要了」，硬件就会往里写，而你还在读里面的数据——所以两段骨架共同点是**最后一步才推进游标**。\n\n**环满返回 `-1` 而不是等**：这条路径持有自旋锁——**持锁不能睡**。**中断里先读 `E1000_ICR` 清原因**，否则会一直重进中断（风暴）。\n\n删掉 `DD` 检查 → 复用未发完的描述符、DMA 写坏 buffer：`DD` 位是契约型积木，只能靠「环满时看返回值」与「顺序反了看包内容」暴露。\n\n### 怎么验证\n\n- `b e1000_recv`：看 `RDT`/`RDH` 保持「差一格」、看 `DD` 位；ping 通；狂发到环满看 `transmit` 返回 -1；\n- 读一个块内容正确；连续提交不丢；\n- 注入一个错：推进游标提前一步，症状必须是「偶发收到上次的内容」，不是 panic。\n\n**失效点**：不 ack 中断 → 中断风暴；提前推进游标 → DMA 写坏 buffer；网卡换 virtio-net → 单环 + `DD` 位变成 avail/used 双环 + 通知，所有权经验不能直接搬。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s12",
-      "type": "extension",
-      "title": "B10 网络",
-      "level": 2,
-      "content": "> 职责：一块网卡 → 多个端点。依赖：B9、B6；无块借它。\n\n**一块网卡 → 多个端点**（一串帧 → 有地址、有端口、能重传的字节流）。使用面：`send/recv`／`bind`／（做 TCP 时）可靠 + 有序。\n\n### 现象\n\n一个 fd 收发一个端点的数据；多个端点各有自己的地址；丢包后「能不能补」取决于协议；udp 收发长度与发送端一致。\n\n### 机制\n\n实现面（≤6）：ARP/IP/UDP/TCP／校验和／重传／拥塞。删掉重传 → 丢包即数据丢失。\n\nxv6 只到「驱动与一跳」：驱动交给上层一块 mbuf（B9 的 `net_rx` 就是这条边），协议层解析与回复，端口与端点的绑定在这一层决定谁能收。\n\n### 为什么这么设计\n\n**端点抽象**是这块的贡献：网卡只有一块、环只有一组，但「多个端点」是上层要的东西，所以复用边界画在端口上（不画在设备上）——这也是块名能被读通的原因。\n\n**代价与选点**：只做 UDP 就宣称「网络通了」→ 一被问重传就空。可靠性（重传、有序）是**另一层的承诺**，不在驱动里（范围声明：网络只到驱动与一跳，不做 TCP）。\n\n### 怎么验证\n\n- ping 通；`send`/`recv` 一对一走通，长度一致；\n- 丢包后能重传（**仅当做了 TCP**；不做就明确写「这一块只到一跳」）；\n- 反向判据：去掉 B9 的 `DD` 检查，这里应看到「偶发串包」——症状从上块传来，说明两块边界接对了。\n\n**闭环在哪**：本块的闭环是「一帧从环到端点」，它必须真实走过 B9 的提交（`submit` 进环）与 B6 的 fd 交付（`recv` 返回）两条边界——所以它的最小通路是被**借来的两块**共同撑起来的，不是自证一次。\n\n**失效点**：只做 UDP 就宣称「网络通了」；换协议族时端点抽象变形状（Linux 用 `socket`/`bind`/`connect`，见 OUTLINE §3.5）。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s13",
-      "type": "extension",
-      "title": "B11 虚拟化",
-      "level": 2,
-      "content": "> 职责：一台机 → 多台能跑内核的环境。依赖：全部；无块借它。\n\n**一台机 → 多台能跑内核的环境。** 使用面：`vm_create`／`vcpu_run`／MMIO 与 I/O 陷入模拟。\n\n### 现象\n\nguest 里的内核以为自己在裸机上跑：它设自己的页表、开自己的中断、驱动自己的设备；宿主看到的是「它每一次特权动作都被处理了一次」。\n\n### 机制（xv6 里无实现）\n\nxv6 没有这块代码，所以这里**不写函数、不写寄存器步骤**，只写设计空间与它反转了什么：\n\n| 设计空间 | 可选点 | 反转了哪一块的假设 |\n|---|---|---|\n| 特权级切换 | VT-x／EL2 世界切换 | B0：不再「从 M 落到 S 一次」，而是反复进出 |\n| 内存 | 二阶段翻译（EPT／影子页表） | B2：一次访存过两张表，`satp` 不再是最终权威 |\n| 设备 | 四级台阶（直通／半虚拟化／模拟／无） | B9：描述符环所有权在「被模拟」时重画 |\n| vCPU 调度 | 把 vCPU 当线程调度 | B7：`sleep`/`wakeup` 的「持锁才能睡」变成宿主侧的前提 |\n| 故障隔离 | guest 崩溃不传染宿主 | B5：`exit`/`zombie` 的边界扩到「一台机」 |\n\n判据只有两条，且都不需要写代码：guest 能启动；一次 I/O 的退出次数能数清。\n\n### 为什么这么设计\n\n**为什么放在最后**：B11 把前十块的假设逐条反转，是这套块的**自检器**。删掉 EPT → 每次访存都要影子页表（代价从「一次额外翻译」变成「每次写都要同步」）。把容器当轻量 VM，边界由谁强制就说不清。\n\nxv6 不实现这一块是范围选择：本块判据是「能用 xv6 对照说清被反转了什么」，不是「跑起来一个 hypervisor」。\n\n### 怎么验证（用 xv6 对照）\n\n对前四块各做一次「反转推演」，每步都要指到 xv6 里的一行或一个断点。\n\n1. **对 B0**：`b _entry` 看到的 `pc/sp` 假设「只有一个世界」；二阶段下 guest 的 `_entry` 与宿主入口不是同一条链，「谁在 S 态」要看退出原因。\n2. **对 B2**：`p/x $satp` 在 guest 里是 guest 的页表基址，背后还有一层翻译；对着 B3 的能力地图读，`U=0` 仍成立，只是「谁能改这张表」多了一个持有者。\n3. **对 B4**：六步表里 `satp`／`stvec` 的每一跳在 guest 内部照原样发生；被反转的是「陷入之后谁来处理」——`uservec` 之后还可能退出到宿主。\n4. **对 B9**：`b e1000_recv` 看到的 `RDT`/`RDH`/`DD` 不变式在设备被模拟时位移：不变式仍在 guest 里成立，但环所在物理地址要再过一层翻译，提前推进的后果出现在宿主侧。\n\n判据：每一步能说出「原来的哪条前提被谁多拿了一次」；说不出来就只是在背名词。\n\n**闭环的边界（终点块）**：B11 之后没有任何块能复用它，所以 §2.4 判据 1 的「被后续两块复用」在这里按**反向复用**计——它必须逐条引用 B0/B2/B4/B9 的检查点，并说出「若那条前提缺失，guest 的哪一步先崩」。这是判据的适用范围，不是豁免；说不出反向引用，这一块就不成立。\n\n**失效点**：把容器当轻量 VM → 边界由谁强制说不清。`CPUS=3` 与 vCPU 配额叠加时，B7 的并发结论要重画（xv6 里的锁不覆盖「被宿主切走」这一层）。\n\n---"
-    },
-    {
-      "id": "SO02.2:body.s14",
-      "type": "extension",
-      "title": "附录 A lab → 块 → 判据",
-      "level": 2,
-      "content": "lab 是**验收单位**，不是理解单位；此表只做映射。\n\n| lab | 覆盖的块 | 判据 |\n|---|---|---|\n| pgtbl | B2 B3 | `vmprint` 能读；写只读共享页触发 15；`pgaccess` 两次结果不同 |\n| traps | B4 B6 | 能默写 `ecall→sret` 六步；`backtrace` 出 3–5 层；`sigalarm` 后 `a0` 原值 |\n| cow | B3 B5 | `forktest` 跑完且空闲页数回初值；`cowfault` 里旧 PTE 的 `W`/COW 位正确 |\n| fs | B8 | 写大文件途中杀 QEMU，重启后长度不半截；`write_head` 命中两次 |\n| net | B9 B10 | ping 通；`RDT`/`RDH` 差一格；环满返回 -1 |"
-    },
-    {
-      "id": "SO02.2:body.s15",
-      "type": "extension",
-      "title": "附录 B 断点速查",
-      "level": 2,
-      "content": "| 想看什么 | 断点 | 看什么 | 归哪块 |\n|---|---|---|---|\n| 这条访问属于哪一段 | `b walk` | `va`、返回的 PTE、低 5 位 | B2 |\n| 内存边界改没改 | `b growproc` | `p->sz` 前后 | B3 |\n| COW 有没有真复制 | `b cowfault` | `$stval`、旧 PTE、计数 | B3/B5 |\n| 现场怎么存的 | `b usertrap` | `$scause`、`$satp`、trapframe | B4 |\n| 系统调用分到哪 | `b syscall` | `myproc()->trapframe->a7` | B6 |\n| 事务提交到哪 | `b commit` / `b write_head` | `log.lh.n`、第几次写头 | B8 |\n| 包的所有权 | `b e1000_recv` | `RDT`、`RDH`、`DD` | B9 |"
-    },
-    {
-      "id": "SO02.2:body.s16",
-      "type": "extension",
-      "title": "附录 C 下钻闸门",
-      "level": 2,
-      "content": "只有三类问题允许离开接口层、翻实现面：\n\n| 触发问题 | 要翻的东西 | 翻到哪 |\n|---|---|---|\n| 访问为什么失败 | PTE 存在位与 `R/W/X/U` | B3 的图 + `riscv.h` |\n| `fork` 为什么便宜／内存为何超卖 | 引用计数、按需分配 | B3 + `kalloc.c` |\n| 断电后为什么数据不坏 | 日志提交点 | B8 + `log.c` |\n| 地址空间怎么会比物理内存大 | 虚拟/驻留之别 | B2/B3 + `/proc/PID/statm` |\n| 多核下哪里会坏 | 锁与临界区 | 不展开，只说结论 |\n\n**判据是「不翻就答错」，不是「翻了显得深」**：答 `fork` 不需要讲三级页表；讲三级页表也不会让 `fork` 的答案更对。"
-    },
-    {
-      "id": "SO02.2:body.s17",
-      "type": "extension",
-      "title": "附录 D 与 408 的对照（只做索引）",
-      "level": 2,
-      "content": "408 四章对应：进程管理 → B4 / B5 / B6 / B7；内存管理 → B1 / B2 / B3（只取进程视角那半，分页结构与置换算法不在本文）；文件管理 → B8；I/O 管理 → B9。**反方向不成立**：不是本文缺了 408 某章，而是那些章回答另一类问题。\n\n**收口**：按块讲，每个结论都落在「这块把一份什么变成多份什么、接口哪五条、边界谁检查、换约束哪条失效」上；指不到这一层的，是背来的。"
     }
   ],
   "source_h1": "xv6 · 分章详细（按十二块切）",
   "meta": {
-    "kind": "project",
+    "kind": "project-chapter",
     "group": "os",
     "project": "xv6",
-    "file": "NOTES.md"
+    "file": "NOTES.md",
+    "part": 1,
+    "parts": 18,
+    "section": "导读"
   }
 }

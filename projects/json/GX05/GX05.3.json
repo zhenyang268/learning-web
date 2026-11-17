@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "GX05.3",
+  "chapter": "GX05",
+  "title": "章节目录",
+  "src": {
+    "file": "notebook/projects/cg/game/NOTES.md",
+    "sha256": "sha256:346063eadda84bc8df25e9fddf944d03e6b8b90894449c75bfbb521839913410"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "GX05.3:body.s01",
+      "type": "extension",
+      "title": "章节目录",
+      "level": 2,
+      "content": "1. 案例与技术约束\n2. 关卡与场景组织\n3. 角色控制与手感\n4. 战斗系统\n5. 摄像机\n6. 联网基础\n7. 延迟补偿\n8. 服务端权威与反作弊\n9. 房间与断线重连\n10. 上线检查表"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cg",
+    "project": "game",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 12,
+    "section": "章节目录"
+  }
+}

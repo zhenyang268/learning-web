@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "SO00.1",
   "chapter": "SO00",
-  "title": "os · 分组 · 大纲",
+  "title": "os · 分组 · 总览",
   "src": {
     "file": "notebook/projects/os/OUTLINE.md",
     "sha256": "sha256:260aabfaf1360f38b3792e87d881ae9de2c2f8515658d2046e70e4d0090006b2"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

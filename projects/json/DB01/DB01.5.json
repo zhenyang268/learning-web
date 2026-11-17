@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.5",
+  "chapter": "DB01",
+  "title": "第 4 章 索引二：LSM 与写放大",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.5:body.s01",
+      "type": "extension",
+      "title": "第 4 章 索引二：LSM 与写放大",
+      "level": 2,
+      "content": "**要解决的问题**：B+ 树是原地更新，一次写入要改一个随机页，写密集场景下随机 IO 和页分裂成为瓶颈。LSM 树把随机写变成顺序写，用「追加 + 后台合并」换写吞吐。代价是读放大和写放大，本章就是算清这笔账。\n\n**机制**\n\nLSM 的组件和写入路径：\n\n```text\nwrite(k, v):\n  append WAL(k, v)                 # 顺序追加，崩溃恢复用\n  memtable.insert(k, v)            # 有序内存结构，通常是跳表\n  if memtable.size > threshold:\n     freeze memtable → immutable\n     background: flush immutable → L0 上的 SSTable（有序、不可变）\n  L0 文件数超过阈值 → 后台 compaction:\n     选出 L0 若干文件（key 范围重叠）\n     与 L1 中重叠的 SSTable 做归并排序\n     旧版本 / 墓碑在合并时丢弃，输出新的 L1 文件\n     溢出再往 L2 … Ln 推\n```\n\n要点：\n\n- **SSTable 不可变**，所以写入永远是新建文件，没有原地更新，也没有页分裂。\n- **删除是墓碑**：`delete(k)` 写入一个带删除标记的记录，真正消失要等到 compaction 时与旧版本相遇。\n- **读路径自新到旧**：memtable → immutable memtable → L0（新文件优先）→ L1 → … → Ln，每层内部二分。找不到还要确认「确实不存在」，所以每个 SSTable 配一个 Bloom filter，先用它挡掉绝大多数无关文件。\n- **三种放大**：写放大 $WA = \\dfrac{\\text{写入磁盘字节}}{\\text{用户写入字节}}$；读放大是查一次要碰的文件数；空间放大是磁盘占用与逻辑数据量之比。\n\n**写放大怎么算**：分层（leveled）策略下每层容量是上一层的 $T$ 倍（常见 $T=10$），一条记录从 L1 一路被合并到 Ln，每层都要被读出来再写一次，所以粗略地 $WA \\approx T \\times L$（$L$ 为层数），量级在十几到几十。降低 $T$、减少层数能降写放大，但会抬高读放大和空间放大；tiered 策略先攒批再合并，写放大更低、空间放大更高。这是典型的三角权衡，没有免费的参数。\n\n**最小例子**\n\n以一组常见配置为例（具体默认值随版本和实现而变）：memtable 上限 64MB，L0 文件数达 4 触发合并，L1 容量 256MB，层间倍数 10。\n\n```text\n写 1000 万条 (key, 100B value) ≈ 1GB 逻辑数据\n→ memtable 每写满 64MB flush 一个 L0 文件，共约 16 个\n→ L0 到 4 个就合并进 L1：这 256MB 数据被重写一次\n→ L1 溢出把约 256MB 推进 L2，再推 L3 …\n→ 一条 key 从 L0 走到 L3，被物理写了 4 次左右\n→ 加上 WAL 的一份，实测 WA 通常在十几倍量级（按配置而定）\n```\n\n调优时看的指标就是这四列：每层文件数、compaction pending 字节数、写入放大、读到的 SST 数。写停顿（write stall）通常来自 L0 文件堆积过快，说明 compaction 跟不上写入速率。\n\n**面试高频问法**\n\n1. **「LSM 为什么写快？代价是什么？」**\n   → 考点是随机写转顺序写。答法：所有写入都是追加——先写 WAL，再写内存 memtable，落盘时是一次性顺序写一个新 SSTable，没有原地更新也没有页分裂，所以写吞吐高、写延迟稳定。代价是读要跨多层文件（读放大）、compaction 反复重写数据（写放大），以及旧版本和墓碑占空间（空间放大）。\n\n2. **「写放大是怎么产生的，怎么降低？」**\n   → 考点是 compaction 的重写成本。答法：同一份数据在从 L0 逐层推到 Ln 的过程中，每经过一层都要被读出来、归并、再写成新文件，所以写放大近似等于层间倍数乘以层数。降低的手段是调大层间倍数、减少层数、改用 tiered 风格先攒批合并，或者对写多读少的场景直接换更激进的参数——但每一样都会换来更高的读放大或空间放大。\n\n3. **「leveled 和 tiered compaction 怎么选？」**\n   → 考点是三者权衡的取舍方向。答法：leveled 每层内 key 范围不重叠，读放大低、空间放大低，但写放大大，适合读多写少；tiered 允许同层多个文件范围重叠，先攒一批再合并，写放大小、空间放大大，适合写密集（比如时序、日志类负载）。很多系统是分阶段混合，热层用 tiered、冷层用 leveled。\n\n4. **「Bloom filter 在 LSM 里解决什么问题？」**\n   → 考点是点查的存在性判断。答法：点查不命中时要确认 key 真的不存在，最坏情况得翻遍所有层的所有文件。Bloom filter 挂在每个 SSTable 上，用少量内存给出「一定不存在」或「可能存在」，把绝大部分无效 IO 挡掉，显著降低读放大；代价是有假阳性、不支持范围查询。\n\n5. **「什么场景选 LSM，什么场景选 B+ 树？」**\n   → 考点是负载特征而不是优劣。答法：写密集、追加为主、能接受后台 compaction 抖动和较大空间占用，选 LSM（RocksDB、Cassandra、TiKV 这类）；读写均衡、范围查询多、需要稳定低延迟的读、事务语义复杂，选 B+ 树（InnoDB）。本质是「把成本放在写入时重写还是放在读取时随机 IO」的选择。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 12,
+    "section": "第 4 章 索引二：LSM 与写放大"
+  }
+}

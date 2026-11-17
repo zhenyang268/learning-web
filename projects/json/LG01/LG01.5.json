@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG01.5",
+  "chapter": "LG01",
+  "title": "第 4 章 拷贝控制与移动语义",
+  "src": {
+    "file": "notebook/projects/langs/cpp-basics/NOTES.md",
+    "sha256": "sha256:71b4f0ffcd424e996bad8153c2e52ef129599c9dae8a86bd3c560bb028fd5252"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG01.5:body.s01",
+      "type": "extension",
+      "title": "第 4 章 拷贝控制与移动语义",
+      "level": 2,
+      "content": "**要解决的问题**：当对象被拷贝、赋值、按值传参或从函数返回时，资源（堆内存、文件描述符、锁）究竟是被复制一份还是被转移走。这一章不解决，要么写出双重释放与悬空指针，要么把本该 O(1) 的转移退化成 O(n) 的深拷贝。\n\n**机制**：C++ 给每个类隐式声明五个特殊成员函数：析构、拷贝构造、拷贝赋值、移动构造、移动赋值。编译器自动生成哪些，由用户声明了哪些决定：\n\n1. 用户声明了拷贝构造、拷贝赋值或析构中的任意一个，编译器不再隐式声明移动构造和移动赋值——这是 C++11 最常见的“性能悄悄消失”的原因。\n2. 用户声明了移动操作，拷贝构造和拷贝赋值被定义为 `= delete`，于是这个类只能移动不能拷贝。\n3. 什么都不写（Rule of Zero），编译器按成员逐成员拷贝和移动。\n\n移动构造的参数是 `T&&`，它只做一件事：把源对象内部指针搬过来、再把源置空。**移动后源对象处于“有效但未指定”状态**，唯一保证是能安全析构和重新赋值。`std::move` 本身不移动任何东西，它只是 `static_cast<std::remove_reference_t<T>&&>(x)`，把一个左值标记成“可以被移动”。\n\n拷贝赋值要同时满足自赋值安全和异常安全，惯用写法是 copy-and-swap：先在临时对象里完成可能抛异常的工作，再用不抛异常的 `swap` 提交。\n\n```cpp\nclass Buffer {\n  char* p_; size_t n_;\npublic:\n  explicit Buffer(size_t n) : p_(new char[n]), n_(n) {}\n  ~Buffer() { delete[] p_; }\n  Buffer(const Buffer& o) : p_(new char[o.n_]), n_(o.n_) {\n    std::copy(o.p_, o.p_ + n_, p_);\n  }\n  Buffer& operator=(const Buffer& o) {          // copy-and-swap\n    if (this != &o) { Buffer t(o); swap(t); }\n    return *this;\n  }\n  Buffer(Buffer&& o) noexcept : p_(o.p_), n_(o.n_) { o.p_ = nullptr; o.n_ = 0; }\n  void swap(Buffer& o) noexcept { std::swap(p_, o.p_); std::swap(n_, o.n_); }\n};\n```\n\n移动构造上的 `noexcept` 不是装饰：`std::vector` 扩容时要保证强异常安全，内部用 `move_if_noexcept` 决策——如果元素移动构造被标注为不抛异常（或元素根本不可拷贝），才用移动；否则宁可拷贝，因为“拷贝失败原对象还在”。漏写 `noexcept` 会让容器扩容悄悄走拷贝路径。\n\n**最小例子**：`std::vector<Buffer> v; v.reserve(4);` 后连续 `push_back` 五个元素。前四次只是在 `v` 的缓冲区上移动构造；第五次触发扩容，因为 `Buffer` 的移动构造是 `noexcept`，旧缓冲区的四个元素被逐个移动构造到新缓冲区，总代价 O(n) 次指针搬运而非 O(n) 次深拷贝。若删掉 `noexcept`，同样代码会走四次深拷贝。\n\n**面试高频问法**：\n\n- **问**：什么时候编译器不给你生成移动构造？→ **考点**：五个特殊函数的隐式生成规则。→ **答**：只要用户自己声明了拷贝构造、拷贝赋值或析构中的任意一个，编译器就不会隐式声明移动构造和移动赋值，此时右值也会走拷贝；如果用户声明了移动操作，拷贝操作则被定义为删除。\n- **问**：`std::move` 到底做了什么？→ **考点**：它是类型转换而不是动作。→ **答**：它就是一个到右值引用的 `static_cast`，本身不产生任何代码也不搬运资源；真正的搬运发生在被调用的移动构造或移动赋值里，被 `move` 过的对象之后仍必须可析构、可赋值。\n- **问**：为什么移动构造一定要标 `noexcept`？→ **考点**：容器扩容与强异常保证的联动。→ **答**：`vector` 扩容用 `move_if_noexcept` 决定搬移方式，移动构造可能抛异常时它会退回复制以保证原容器不被破坏，标了 `noexcept` 才能让扩容真正走移动。\n- **问**：拷贝赋值怎么写才安全？→ **考点**：自赋值 + 异常安全。→ **答**：用 copy-and-swap：先拷贝构造一个临时对象（这一步失败不影响 `*this`），再用 `noexcept` 的 `swap` 换进来，同时天然处理了 `a = a` 的情况。\n- **问**：Rule of Zero / Three / Five 怎么理解？→ **考点**：资源管理抽象层次。→ **答**：能靠成员（`string`、`vector`、`unique_ptr`）管住资源就一个都不写（Zero）；一旦要手写析构就要把拷贝和赋值也写全（Three）；C++11 之后再补上移动两件套（Five）。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "cpp-basics",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 10,
+    "section": "第 4 章 拷贝控制与移动语义"
+  }
+}

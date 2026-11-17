@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.5",
+  "chapter": "EG05",
+  "title": "第 4 章 优先级反转与优先级继承",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.5:body.s01",
+      "type": "extension",
+      "title": "第 4 章 优先级反转与优先级继承",
+      "level": 2,
+      "content": "**要解决的问题**：优先级调度假设「高优先级先跑」，但锁把执行权交给了持锁的低优先级任务；一旦中间优先级任务可抢占，高优先级就被一个与锁无关的任务无限期挡住。不解决，实时系统会 miss deadline，而且现象依赖时序、极难复现。\n\n**机制**\n\n优先级反转需要三要素同时成立：至少三个优先级、一把共享锁、中优先级任务可运行。经典时间线是 L 持锁 → H 阻塞在锁上 → M 就绪并抢占 L → H 等 M 跑完。\n\n优先级继承（PI）：当高优先级任务阻塞在锁上，持有者临时继承等待者中的最高优先级，释放后恢复；等待链上要传递。优先级天花板：给锁静态设定天花板优先级，等于所有可能获取者的最高优先级；任务一拿到锁就升到天花板。两者对比：PI 动态、按需、实现简单，但只在真正阻塞时才提升；天花板可静态做可调度性分析、按固定顺序加锁还能防死锁，代价是可能不必要地提升、挡住中优先级任务。\n\n核心伪代码（真实实现还要处理多等待者、提升叠加、链式传播）：\n\n```c\nlock(m):\n    if (m->owner == NULL) { m->owner = self; return; }\n    if (self->prio > m->owner->prio)\n        boost(m->owner, self->prio);   // 可能沿等待链向上传播\n    block(self, m);\n\nunlock(m):\n    m->owner = NULL;\n    restore_prio(self);                // 回到基础优先级或剩余等待者最高值\n    wake_one(m);\n```\n\nLinux 内核里带 PI 的互斥是 `rt_mutex`；用户态通过 `pthread_mutexattr_setprotocol(&attr, PTHREAD_PRIO_INHERIT)` 使用，底层走 futex 的 PI 接口（具体路径按 glibc/内核版本而定）。普通 futex 不继承优先级。PI 只对同一把锁的等待链有效，对自旋锁、CPU 带宽、内存带宽、I/O 等非锁资源造成的反转无能为力；它也不能防死锁。\n\n**最小例子**\n\n三个 `SCHED_FIFO` 线程，L=10、M=20、H=30，L 先拿 mutex 并进入临界区，H 稍后到达，M 一直忙等：\n\n```bash\nsudo chrt -f 10 ./low &   # 先拿锁，临界区里 sleep 一小段\nsudo chrt -f 20 ./mid &   # 纯 CPU 忙等\nsudo chrt -f 30 ./high    # 等同一把锁\n```\n\n需要 `CAP_SYS_NICE`。用 `ftrace` 的 `sched_switch` 观察：`PTHREAD_PRIO_NONE` 时，`mid` 抢占 `low`，`high` 要等 `mid` 跑完才拿到锁；改成 `PTHREAD_PRIO_INHERIT` 后，`low` 在阻塞期间以 prio 30 运行，先于 `mid` 完成临界区并释放，`high` 随即被唤醒。临界区越长，差距越明显（具体时长取决于临界区长度和 M 的行为，不给固定数字）。\n\n**面试高频问法**\n\n- 「描述一下优先级反转，举一个真实案例。」→ 考点是能否讲清三要素和后果。答法：低优先级任务持锁，高优先级任务阻塞，中优先级任务抢占持有者，高优先级被间接无限期阻塞；Mars Pathfinder 上低优先级气象任务持信息量锁、中优先级通信任务抢占、高优先级总线管理任务无法复位看门狗导致系统重启，NASA 远程打开优先级继承。\n- 「优先级继承和优先级天花板有什么区别，怎么选？」→ 考点是动态 vs 静态。答法：PI 只在阻塞发生时把持有者提升到等待者最高优先级，开销在慢路径；天花板是拿锁即提升到预设值，可静态分析、配合有序加锁能防死锁，但可能过度提升。硬实时、锁集合固定时倾向天花板，通用系统倾向 PI。\n- 「Linux 上怎么用 PI 锁？」→ 考点是接口和前提。答法：`pthread_mutexattr_setprotocol(PTHREAD_PRIO_INHERIT)`，线程要用 `SCHED_FIFO/SCHED_RR` 才有意义，底层是 `rt_mutex`/futex PI；普通互斥和自旋锁不继承。`PTHREAD_PRIO_PROTECT` 对应天花板，glibc 的支持情况按版本而定。\n- 「PI 有什么代价和局限？」→ 考点是别把它当万能药。答法：只对同一把锁的等待链有效，链式提升让 unlock 路径变复杂；不解决自旋锁和非锁资源（CPU、内存带宽、I/O）导致的反转；不能防死锁；提升/恢复本身有开销。\n- 「为什么用户态自旋锁不能做优先级继承？」→ 考点是等待关系不可见。答法：自旋者不睡眠，内核看不到谁在等；持有者可能已被更高优先级任务抢占或不在同一 CPU，继承了也没法立刻运行；实时内核里要改用会睡眠的 rtmutex 或直接禁抢占。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 12,
+    "section": "第 4 章 优先级反转与优先级继承"
+  }
+}

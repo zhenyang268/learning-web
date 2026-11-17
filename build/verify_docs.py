@@ -156,6 +156,9 @@ def check_lossless(p: Path, d: dict) -> None:
     # `check_english1_coverage` 的「按序拼回 = 源」一次性判（拆错段必然被抓）。
     if (d.get("meta") or {}).get("kind") == "english1-supplement":
         return
+    # 工程线 NOTES 被拆成多页，整源对账改由 `check_project_notes_lossless` 按序拼回。
+    if (d.get("meta") or {}).get("kind") == "project-chapter":
+        return
     src = NB / d["src"]["file"][len("notebook/") :]
     if src.suffix != ".md" or not src.exists():
         return
@@ -172,6 +175,47 @@ def check_lossless(p: Path, d: dict) -> None:
     )
     if got != want:
         crit(f"{rel}: 无损对账失败（JSON 与源切分结果不一致）")
+
+
+def check_project_notes_lossless() -> None:
+    """工程线：同一份 NOTES 的 `.2…N` 按 `part` 拼回，必须与源切分结果逐行相等。
+
+    拆页的判据不是「每页像一段」而是「拼回去一字不差」——拆错边界、丢 `###`、
+    重复段落都会在这里被抓；`verify_docs` 的其他结构检查仍逐页跑。
+    """
+    sys.path.insert(0, str(IMPORTER))
+    from import_projects import notes_parts  # noqa: E402
+
+    docs = load_docs(ROOTS["projects"])
+    by_src: dict[str, list[dict]] = {}
+    for _, d in docs:
+        meta = d.get("meta") or {}
+        if meta.get("kind") != "project-chapter" or meta.get("file") != "NOTES.md":
+            continue
+        by_src.setdefault(d["src"]["file"], []).append(d)
+
+    for p in sorted((NB / "projects").rglob("NOTES.md")):
+        rel = "notebook/" + str(p.relative_to(NB))
+        units = sorted(by_src.get(rel, []), key=lambda d: (d.get("meta") or {}).get("part", 0))
+        if not units:
+            crit(f"projects: NOTES 未入库 {rel}")
+            continue
+        text = p.read_text(encoding="utf-8")
+        try:
+            h1, chunks = split_markdown(text)
+        except AssertionError as exc:
+            crit(f"projects: NOTES 重跑切分失败 {rel}: {exc}")
+            continue
+        want = reconstruct(h1, [{"level": lv, "title": t, "content": c} for lv, t, c in chunks])
+        got = reconstruct(
+            next((u.get("source_h1") for u in units if u.get("source_h1")), None),
+            [e for u in units for e in u["entries"]],
+        )
+        if got != want:
+            crit(f"projects: NOTES 拼回失败 {rel}")
+        want_parts = len(notes_parts(text))
+        if len(units) != want_parts:
+            crit(f"projects: {rel} 分页数 {len(units)} != 源节数 {want_parts}")
 
 
 def count_kind(docs: list[tuple[Path, dict]], kind: str) -> int:
@@ -455,6 +499,7 @@ def check_coverage() -> None:
         crit(f"工程线: 分组 OUTLINE 单元 {got_group} ≠ 源 {groups}")
     if count_kind(docs, "project-index") != 1:
         crit("工程线: 缺面试索引")
+    check_project_notes_lossless()
 
     # 数值库（2026-11-17 起随工程数学站，根是 emath/json）
     docs = load_docs(ROOTS["emath"])

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG02.8",
+  "chapter": "EG02",
+  "title": "第 7 章 资源与运行时：/proc、lsof、perf 的调试用法",
+  "src": {
+    "file": "notebook/projects/eng/debug-toolchain/NOTES.md",
+    "sha256": "sha256:501d16a42d59f5fede5b4ae459640fa33b09933168d563ca831a80f45354cc1f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG02.8:body.s01",
+      "type": "extension",
+      "title": "第 7 章 资源与运行时：/proc、lsof、perf 的调试用法",
+      "level": 2,
+      "content": "**要解决的问题**：崩溃现场告诉你\"死在哪\"，但线上更常见的是\"没死但不正常\"——内存涨、句柄漏、磁盘满、CPU 打满却不知道在跑什么。这一章提供三把不改代码、不重启进程的望远镜：进程现在长什么样（/proc）、它攥着什么资源（lsof）、时间花在哪（perf）。没有它们，你只能加日志再等下一次故障。\n\n**机制**：\n\n`/proc` 是伪文件系统，内容不是存在磁盘上的，而是**每次 read 时由内核现场生成**。所以它给的是\"读的那一刻\"的快照，不是流；也意味着读取有成本，`smaps` 要遍历页表，比 `status` 贵得多。\n\n```text\n/proc/<pid>/status      VmRSS / Threads / State，一行一个字段，便宜\n/proc/<pid>/maps        虚拟地址段 + 权限 + 后备文件，看映射来源\n/proc/<pid>/smaps_rollup  各段 RSS 汇总（Pss/Anonymous/File），贵但准\n/proc/<pid>/fd/         每个 fd 一个符号链接，指向真实路径，删了带 \" (deleted)\"\n/proc/<pid>/task/<tid>/ 每线程子目录，stack/wchan 看内核栈与阻塞点\n/proc/<pid>/limits      RLIMIT_NOFILE 等，句柄上限的真相在 ulimit -n 之外\n/proc/<pid>/io          rchar/wchar/read_bytes，判断是不是真在 IO\n```\n\n`lsof` 在 Linux 上不是魔法：它枚举 `/proc/*/fd` 做 `readlink`，再配上 `/proc/*/maps`、`/proc/net/*`，反查 inode 到路径。所以它的复杂度约是 `进程数 × fd 数`，机器上进程多时会明显慢——这不是 bug，是数据源决定的。`lsof +L1` 专查 link count < 1 的已删除但仍被打开的文件，是磁盘\"空间不见了\"的第一招。\n\n`perf` 有两条完全不同的路径：`perf stat` 是**计数**（读 PMU 或软件事件计数器，几乎零开销）；`perf record` 是**采样**（每 N 个事件或每 T 时间触发一次中断，记录当时的 IP 和调用栈）。采样周期 $T = 1/f$，窗口 $W$ 内样本数约 $f \\cdot W$，所以比例是从样本里估出来的，不是精确值。`perf trace` 走 tracepoint 而不是 ptrace，能看到系统调用但不等价于 strace 的逐次拦截。\n\n常见的采样命令骨架：\n\n```bash\nperf record -F 99 -g -p <pid> -- sleep 10   # 99Hz 采样 10s，带调用栈\nperf report -i perf.data --stdio            # 按符号聚合，看 self% 与 children%\nperf stat -p <pid> -e cycles,cache-misses -- sleep 5\n```\n\n栈的获取方式决定成败：`-g` 默认按构建而定，可能是帧指针。用 `-fno-omit-frame-pointer` 编译时 `--call-graph fp` 便宜且够用；重度优化、帧指针被省掉时用 `--call-graph dwarf`，靠 DWARF 展开栈，代价是每次采样要 dump 更大一块用户栈，且受栈大小限制。JIT 出来的代码在 `maps` 里是可执行匿名段（无文件名），perf 只能显示裸地址，需要 JIT 侧导出符号表（如 perf map 文件）才能解析。\n\n**最小例子**：磁盘告警，`df` 显示写满，但 `du -sh /var/log` 只有几十 M——典型的\"删了但没关\"。\n\n```bash\n$ lsof +L1\nCOMMAND   PID USER  FD   TYPE DEVICE    SIZE/OFF NLINK     NODE NAME\napp      4412 app   7w   REG  253,0 21474836480     0   918273 /var/log/app/access.log (deleted)\n```\n\n拿到了 pid 和 fd 号，不用重启也能救回来：\n\n```bash\n$ cp /proc/4412/fd/7 /var/log/app/access.recovered.log\n```\n\n注意 `: > 文件` 这种\"清空\"手法对已删除文件无效——路径已经不存在了，只能走 fd。定位到根因后再查代码：日志轮转用 `rename` 还是 `unlink`，决定了要不要通知进程重开文件。\n\n**面试高频问法**：\n\n1. **\"进程 RSS 一直涨，怎么用 /proc 判断是真泄漏还是缓存？\"** → 考点是区分匿名页与文件页。答法：连续采 `/proc/<pid>/smaps_rollup`，看 `Anonymous` 单调涨就是泄漏嫌疑，`File`/`Pss` 涨且能被回收多半是页缓存；再对照 `/proc/<pid>/status` 的 VmRSS 趋势和 GC 后是否回落。\n\n2. **\"lsof 在几千进程的机器上很慢，为什么？\"** → 考点是工具的实现代价。答法：它在 Linux 上遍历 `/proc/*/fd` 和 `/proc/*/maps` 做反查，复杂度随进程数和 fd 数增长；所以线上优先直接 `ls -l /proc/<pid>/fd` 只查一个进程。\n\n3. **\"perf record 和 strace 都能看程序在干什么，开销差在哪？\"** → 考点是采样 vs 陷入。答法：perf 靠硬件/软件事件周期性中断采样，只记录 IP 和栈，开销与频率成正比；strace 每次系统调用都要 ptrace 停住并切换上下文，是逐次拦截，对高频 syscall 的程序可能慢一个量级。\n\n4. **\"perf 出来的栈全是十六进制地址或 `[unknown]`，怎么排查？\"** → 考点是栈展开与符号。答法：先确认有没有帧指针（没有就换 `--call-graph dwarf`），再确认二进制有没有被 strip、调试符号是否装；匿名可执行段说明是 JIT 代码，需要 JIT 导出 perf map。\n\n5. **\"容器里的 `/proc/meminfo` 能代表这个容器的内存上限吗？\"** → 考点是命名空间边界。答法：不能，`meminfo` 多数字段是宿主视角；容器限额在 cgroupfs 里（v2 的 `memory.max`/`memory.current`/`memory.events`），OOM 证据要去那里找。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "debug-toolchain",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 8,
+    "section": "第 7 章 资源与运行时：/proc、lsof、perf 的调试用法"
+  }
+}

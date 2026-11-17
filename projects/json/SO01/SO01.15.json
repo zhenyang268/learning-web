@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.15",
+  "chapter": "SO01",
+  "title": "第 13 章〔网络〕链路与丢包诊断：重传、队列、MTU 与拥塞",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.15:body.s01",
+      "type": "extension",
+      "title": "第 13 章〔网络〕链路与丢包诊断：重传、队列、MTU 与拥塞",
+      "level": 2,
+      "content": "**要解决的问题**：P99 抖动到几百毫秒甚至几秒，CPU 不高、磁盘不忙，监控上“一切正常”；或者大包不通、小包 `ping` 能过（MTU 黑洞）；或者 `ip -s link` 的 dropped 一直在涨。不掌握这套方法，就只能把“网络慢”归因于玄学，改异步、加机器都没用。\n\n**API 与代价**：\n\n- `send()` 返回小于 `len`、或非阻塞下 `errno == EAGAIN`：发送队列满，根因在下游（对端窗口、拥塞窗口、链路），不在本进程。阻塞 socket 配 `SO_SNDTIMEO` 时返回 `EAGAIN` 表示超时。\n- `EMSGSIZE`：UDP 数据报超过路径 MTU，且 `IP_MTU_DISCOVER` 为 `IP_PMTUDISC_DO` 时协议栈拒绝替你分片；TCP 不会遇到，MSS 已经替它协商好。\n- `setsockopt(TCP_NODELAY)`：关掉 Nagle。代价是小包数量上升，与 `TCP_CORK`/`MSG_MORE` 正好相反。它治不了“窗口小”和“重传”造成的延迟，很多团队把它当成优化手段来加，纯属心理安慰。\n- `SO_SNDBUF`/`SO_RCVBUF`：内核记账值约为设置值的 2 倍（含 `sk_buff` 开销），设大只换来缓冲膨胀和更大内存水位，吞吐是否上升取决于 BDP，不是取决于缓冲。\n\n```c\nint one = 1;\nsetsockopt(fd, IPPROTO_TCP, TCP_NODELAY, &one, sizeof one);\nssize_t n = send(fd, buf, len, MSG_MORE);   /* 短写是常态，不是错误 */\nif (n < 0 && (errno == EAGAIN || errno == EWOULDBLOCK))\n    ; /* 发送队列满：等 EPOLLOUT，别 spin */\nelse if (n < 0 && errno == EMSGSIZE)\n    ; /* UDP 超路径 MTU：应用层切片，别指望 IP 分片 */\n```\n\n**对应命令与读法**：\n\n1. `ss -ti dst 10.0.0.5` → 看 `retrans:a/b`（左当前、右累计）、`rto`、`cwnd` 与 `ssthresh` 的相对大小、`unacked`、`send-q` → `retrans` 涨说明真丢包；`cwnd < ssthresh` 且 `cwnd` 明显小于 `10` 说明正处在慢启动或拥塞回退。→ **会骗你的情况**：`cwnd` 单位是 MSS 段数不是字节；连接刚建立时数值天然小；`retrans` 在 GSO 大包场景按段计数，看起来比实际严重。\n2. `nstat -az | grep -E 'TcpRetransSegs|TCPLostRetransmit|TCPTimeouts|TCPOFOQueue'` → 看累计计数器的差值 → `TcpRetransSegs` 增长率超 0.1% 就有问题，`TCPLostRetransmit` 非零说明重传本身又丢了，链路很差。→ **会骗你的情况**：全部是累计值，进程或机器重启后清零，必须隔 10s 采两次做差，或直接看监控的 rate。\n3. `ip -s link show eth0` → 看 RX/TX 的 `errors`、`dropped`、`overrun` → `overrun` 涨是网卡 ring buffer 满了（收不过来，多与中断绑核、NAPI 预算有关），`dropped` 涨看方向区分是驱动丢还是 qdisc 丢。→ **会骗你的情况**：容器里的 `eth0` 是 veth，统计是本端的对端视角，和物理链路无关；`noqueue` qdisc 下没有排队丢弃，dropped 恒为 0 不代表没丢。\n4. `tcpdump -i any -nn -vv port 80` → 看 `[TCP Retransmission]`、`[TCP Dup ACK]`、`win` 窗口值、`mss` → 连续 Dup ACK 意味着对端有空洞、本端在快重传。→ **会骗你的情况**：抓包点在 GSO 之后，看到的是聚合大包；高流量下 tcpdump 自己丢包（`-w` 抓文件写盘也丢），漏包让人误判“没重传”；`-i any` 的链路层是 cooked 格式，看不到真实以太网头。\n5. `ping -M do -s 1472 -c 2 host` → 1472 = 1500 − 20(IP) − 8(ICMP) → 成功说明路径 MTU ≥1500；返回 `EMSGSIZE`/`Frag needed` 就是 MTU 黑洞。→ **会骗你的情况**：需要 root 或 `net.ipv4.ping_group_range` 放行（按发行版而定）；ICMP 被防火墙拦时表现为超时，不是 MTU 问题。\n\n**原理**：`send()` 把数据挂到 `sk_write_queue`，每个 `sk_buff` 计入 `sk_wmem_alloc`；TCP 只在 `cwnd` 与接收窗口的较小值允许时把 skb 交给 qdisc（`fq_codel`/`pfifo_fast`），所以“发出去了”和“离开网卡了”是两件事。MSS 由 SYN 的 MSS option 取双方最小值，路径 MTU 变小只会通过 ICMP `Frag needed` 或 PMTUD 超时被发现，扔掉 ICMP 的路由器就是黑洞的来源。拥塞控制是状态机：3 个 Dup ACK 触发快速重传并置 `ssthresh = max(FlightSize/2, 2*MSS)`，RTO 超时则 `cwnd` 归 1、指数退避，这就是“丢一个包卡两秒”的物理来源。接收侧 `rcv_ssthresh` 收缩会让发送方停在 `unacked`——此时 `ss` 上看到的是本端无辜、对端窗口为 0。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 14,
+    "parts": 19,
+    "section": "第 13 章〔网络〕链路与丢包诊断：重传、队列、MTU 与拥塞"
+  }
+}

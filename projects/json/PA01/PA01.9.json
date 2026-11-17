@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.9",
+  "chapter": "PA01",
+  "title": "5 逐层展开索引（§6–§11 已全部展开）",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.9:body.s01",
+      "type": "extension",
+      "title": "5 逐层展开索引（§6–§11 已全部展开）",
+      "level": 2,
+      "content": "| 目标节 | 内容 | 依赖 |\n|---|---|---|\n| §6 PA1 逐层 | 6 个 program 的数据流与实测口径、`CS149intrin.h` 全部指令清单、kmeans 的 `dist` 热点改写方案 | `asst1-master.zip` 解压 |\n| §7 PA2 逐层 | `tasksys.h` 该加哪些成员、三个 run() 的伪代码、Part B 的两队列 + 入度实现、条件变量的正确模板 | `asst2-master/`（已在本地） |\n| §8 PA3 逐层 | `cudaRenderer.cu` 的错误在哪、tile + prefix-sum 方案的完整数据流、8 个场景的特征与对应策略 | `asst3-master.zip` 解压 |\n| §9 PA4 逐层 | NKI API 速查、tile 尺寸推导、conv→matmul 的矩阵维度图、PSUM 累加的循环排布 | `asst4-trainium2-main.zip` 解压 |\n| §10 PA5 逐层 | 五个 kernel 的难度/收益对比与选题建议、NCU 指标读法、work log 模板 | `asst5-kernels-main.zip` 解压 |\n| §11 biggraphs 逐层 | 三种 BFS 的伪代码与 OpenMP 标注、CAS 用法、切换阈值的测量方法 | `biggraphs-ec-main.zip` 解压 |\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 18,
+    "section": "5 逐层展开索引（§6–§11 已全部展开）"
+  }
+}

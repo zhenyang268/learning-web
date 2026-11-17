@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.9",
+  "chapter": "CS01",
+  "title": "5 环境与调试兵器库",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.9:body.s01",
+      "type": "extension",
+      "title": "5 环境与调试兵器库",
+      "level": 2,
+      "content": "### 5.1 Linux 是硬前提（本机 macOS 跑不了）\n\n体检确认这些是 ELF x86-64：`datalab/dlc`、`cachelab/csim-ref`、`cachelab/test-csim`、`shlab/tshref`、`bomb/bomb`、`target1/ctarget`、`archlab` 的 sim（待解压）、`proxylab/tiny`。\n\n**可选方案（任选其一，我没有查你这台机器上装了哪个，需要你确认）**：\n1. Docker：`docker run -it --rm -v ~/develop/learning/learning-408/csapp:/csapp ubuntu:22.04 bash`，容器内 `apt install build-essential gdb valgrind`（archlab 还需 `bison flex`）。\n2. 虚拟机 / 远程 Linux 主机（x86-64）。\n\n**macOS 上仍然能做的**：读汇编、写所有 lab 的 C/Y86 代码、跑不依赖 ELF 的部分（`cachelab` 的 `csim.c` 自编译自跑、`malloclab` 的 `mm.c` 逻辑推演）。**不能做的**：对拍参考实现、跑 `bomb`/`ctarget`、`driver.sh`。\n\n### 5.2 兵器清单\n\n| 场景 | 工具 |\n|---|---|\n| 看汇编 | `objdump -d`、`gdb` 的 `disas` / `x/s` / `x/x`（你的 bomb 笔记里就在用 `x/s 0x402400`） |\n| 位运算调试 | `datalab/fshow`（看浮点位）、`ishow`（看整数位） |\n| Cache trace | `cachelab/traces/{yi, yi2, dave, trans, long}.trace` + `csim-ref -v`（`-v` 逐行看命中/驱逐） |\n| 堆调试 | 自己写的 `mm_checkheap` + `gdb` 的 `watch` |\n| 信号/进程 | `strace`（Linux）、`ps -o pid,ppid,pgid,stat`、`kill -l` |\n| 网络 | `telnet <host> <port>` 手敲请求、`curl -x http://localhost:PORT URL` 走代理 |\n| 内存/线程 | `valgrind --leak-check=full`（Linux）、`valgrind --tool=helgrind`（查竞争） |\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 20,
+    "section": "5 环境与调试兵器库"
+  }
+}

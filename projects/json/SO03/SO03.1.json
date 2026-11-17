@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "SO03.1",
   "chapter": "SO03",
-  "title": "kernel-compare · 大纲",
+  "title": "kernel-compare · 总览",
   "src": {
     "file": "notebook/projects/os/kernel-compare/OUTLINE.md",
     "sha256": "sha256:23ecfe56fa3f62b8744acbb8b618ad9db23ff969e6ac113ca2b0bcdf8bc51458"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

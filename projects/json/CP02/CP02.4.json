@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP02.4",
+  "chapter": "CP02",
+  "title": "第 3 章 流水线冒险：结构冒险、数据冒险、控制冒险，转发与停顿",
+  "src": {
+    "file": "notebook/projects/cpu/cpu-microarchitecture/NOTES.md",
+    "sha256": "sha256:b1539a87a7849b9ecba5e0bf6800be550395ec0b2c83652efc9050ba7e9db83f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP02.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 流水线冒险：结构冒险、数据冒险、控制冒险，转发与停顿",
+      "level": 2,
+      "content": "**要解决的问题**：第 2 章的五级流水线默认每周期取一条指令、每条指令相互独立，因此 $CPI=1$；但真实程序会争用资源、存在数据依赖，遇到分支还会改变 PC。冒险处理就是补上这些被理想假设忽略的地方，否则流水线要么算错，要么退化成接近串行。\n\n**机制**：结构冒险指同一周期两条指令争用同一硬件。经典五级若只有一个存储器端口，IF 取指和 MEM 访存就会冲突；工程上用分离的 I/D cache、多端口或多 bank、指令队列来缓解。数据冒险在顺序五级中主要处理 RAW：后一条指令在 EX 级要用前一条尚未写回的结果。转发单元比较 EX 级源寄存器与 EX/MEM、MEM/WB 的目的寄存器，命中就把 ALU 结果或写回值旁路到 EX 输入，优先级是 EX/MEM 高于 MEM/WB。这样大多数 ALU 依赖可以零停顿。转发解决不了 load-use：load 的数据在 MEM 末才可用，紧邻的消费者在 EX 就要，必须停一拍。控制冒险是分支方向和目标未定，取指单元不知道下一条 PC；经典五级在 EX 解析分支，已取入的年轻指令要冲刷，按这个模型是 2 个周期。取舍：转发增加旁路 mux 和比较逻辑，可能压 EX 关键路径；停顿简单但直接损失 IPC；编译器调度可拉开依赖距离，但不能替代硬件冒险处理。\n\n```text\nID: 读寄存器 -> rs1v, rs2v\nEX: 若 EX/MEM.regwrite 且 EX/MEM.rd == rs1 -> rs1v = EX/MEM.alu\n    若 MEM/WB.regwrite 且 MEM/WB.rd == rs1 -> rs1v = MEM/WB.wb\n    对 rs2 同理；EX/MEM 优先于 MEM/WB\nload-use: ID 发现 load.rd == 下一条.rs -> stall 1 拍，插 bubble\nbranch: EX 算出 taken/target；与预测不符 -> flush 年轻指令\n```\n\n**最小例子**：`add x1,x2,x3` 后接 `sub x4,x1,x5`。无转发时，sub 在 ID 读 x1，add 还在 EX，读到旧值，需停 2 拍；有转发时，sub 在 EX 从 EX/MEM 取 x1，零停顿。换成 `lw x1,0(x2)` 后接 `add x4,x1,x5`，load 的 x1 到 MEM 末才可用，add 在 EX 就需要，停 1 拍后从 MEM/WB 转发。若 `beq` 实际 taken 而前端按 not taken 取指，经典五级要冲刷 2 条年轻指令，代价 2 周期。\n\n**面试高频问法**：\n- 问：有了转发，为什么还会有数据冒险停顿？→ 考点是“值何时可用”而非“有没有依赖”→ 答：转发只能提前已经算出的值，load 的值最早在 MEM 末出来，紧邻消费者在 EX 就要，必须停一拍。\n- 问：WAR/WAW 在五级顺序流水线里要处理吗？→ 考点是冒险分类与乱序的边界→ 答：顺序五级按程序序写回，WAR/WAW 不会造成错误；到乱序多发射才用寄存器重命名消除。\n- 问：结构冒险在现代处理器里怎么缓解？→ 考点是资源复制与流水化→ 答：分离 I/D cache、多端口或多 bank、队列化，把冲突变成排队，代价是面积和功耗。\n- 问：控制冒险和分支预测是什么关系？→ 考点是本章到下一章的因果→ 答：控制冒险是“不知道下一条 PC”的停顿，分支预测用猜测把停顿移出关键路径，猜错再冲刷。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "cpu-microarchitecture",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 10,
+    "section": "第 3 章 流水线冒险：结构冒险、数据冒险、控制冒险，转发与停顿"
+  }
+}

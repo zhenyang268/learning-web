@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.12",
+  "chapter": "DB01",
+  "title": "第 11 章 复制与分布式事务：主从延迟、两阶段提交",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.12:body.s01",
+      "type": "extension",
+      "title": "第 11 章 复制与分布式事务：主从延迟、两阶段提交",
+      "level": 2,
+      "content": "**要解决的问题**：单机数据库无法同时满足「读写都扛住」和「挂了不丢数据」。复制解决可用性与读扩展，两阶段提交解决「一个事务跨多个资源要么全成要么全败」。不理解它们，就会把「主从延迟」当成 bug，把「2PC 卡住」当成玄学。\n\n**机制**：\n\n复制有两种主流形态，面试必须先分清：\n\n- **语句复制（statement-based）**：binlog 记录 SQL 文本。副作用是 `NOW()`、`RAND()`、`UUID()`、`LIMIT` 无 `ORDER BY` 等不确定语句会导致主从不一致，所以现在多改成 **行复制（row-based）**，记录「哪一行的哪些列从什么改成什么」。行复制确定性强、体积大。\n- **异步 / 半同步 / 组复制**：异步是主库提交即返回，从库慢慢追；半同步是主库等至少一个从库 `ACK` 收到日志（注意是**收到**，不是**应用**）才返回；组复制（如 MySQL Group Replication、Paxos/Raft 类）才真正做多数派确认。\n\n复制链路本质是一条日志流水线：\n\n```\n客户端写 → 主库执行 + 写 binlog(2PC 内部提交) → dump 线程推给从库\n        → 从库 relay log → SQL/applier 线程重放 → 从库数据可见\n```\n\n主从延迟就出在「主库已提交并返回客户端」到「从库重放完成」之间的窗口。常见成因：从库单线程回放扛不住主库并发写（并行复制按 group commit / 按库 / 按行级依赖分片）、大事务（一次删 100 万行要重放很久）、从库上有大查询抢资源、从库磁盘差。\n\n延迟带来的经典坑是 **read-your-writes 被破坏**：写主库立刻读从库，读不到自己的写。工程解法有三类——关键读走主库、会话粘性（同一会话固定路由）、用 GTID / 位点做「读到不低于我写入位点」的等待。\n\n**两阶段提交（2PC）** 解决跨资源原子性，比如「扣库存（库 A） + 生成订单（库 B）」。\n\n```\n协调者                         参与者\n  |-- prepare(写 undo/redo, 加锁, 不提交) -->|\n  |<------------- yes / no -----------------|\n  |   （全部 yes 才继续；任一 no 就全体 abort）|\n  |-- commit / abort ---------------------->|\n  |<------------- ack -----------------------|\n```\n\n关键性质与代价：\n\n1. **阻塞协议**。prepare 之后参与者持有锁直到收到 commit/abort；协调者在第二阶段前崩溃，参与者只能一直等（`xa recover` 人工介入）。\n2. **协调者是单点**。协调者日志落盘后崩溃，恢复后要重放决议；协调者日志丢了这个事务就悬空。\n3. **不是「最终一致」而是「原子提交」**。2PC 保证的是全成或全败，不保证可用性——网络分区时它选择阻塞而非放行（对比 BASE 思路的 TCC / Saga / 本地消息表）。\n\n所以工程上大量系统避开 XA：**本地消息表**（业务写和消息写在同一本地事务，靠投递重试做到最终一致）、**TCC**（Try 预留、Confirm 提交、Cancel 释放，把锁的粒度从数据库行挪到业务资源）、**Saga**（长事务拆成可补偿的短事务链）。它们的共性是放弃「强原子」，换「可补偿 + 幂等」。\n\n**最小例子**：\n\nMySQL 主从，异步复制，两个终端。\n\n主库：\n```sql\n-- 主库 session A\nBEGIN;\nUPDATE account SET balance = balance - 100 WHERE id = 1;\nCOMMIT;                       -- 立即返回，客户端看到成功\n```\n\n紧接着在从库（延迟约 200ms 时）：\n```sql\nSELECT balance FROM account WHERE id = 1;\n-- 结果仍是旧值，比如 1000，而主库已是 900\n```\n\n判定手段：主库 `SHOW MASTER STATUS` 看 `Executed_Gtid_Set`/位点，从库 `SHOW SLAVE STATUS` 看 `Seconds_Behind_Master`（粗粒度，大事务时严重失真）与 `Retrieved_Gtid_Set` 对比 `Executed_Gtid_Set`——**收到但未执行**的差集才是真实延迟。\n\n2PC 的最小可跑路径（MySQL XA）：\n```sql\n-- 参与者 1\nXA START 'x1'; UPDATE stock SET n = n - 1 WHERE sku = 'A'; XA END 'x1';\nXA PREPARE 'x1';              -- 此时行锁未释放\n-- 参与者 2 同理 XA PREPARE\n-- 协调者决定提交\nXA COMMIT 'x1';               -- 两个都 COMMIT 才真正生效\n```\n在两次 `XA PREPARE` 之后、`XA COMMIT` 之前 `kill -9` 协调者，两个参与者的行锁会一直持有，直到 `XA RECOVER` + 人工 `XA COMMIT/ROLLBACK`。\n\n**面试高频问法**：\n\n1. 「主从延迟怎么产生的，什么时候最严重？」→ 考点是复制链路的异步窗口与回放瓶颈 → 一句话答法：「主库提交返回和从库重放完成之间有个窗口，单线程回放遇到大事务或从库资源争抢时窗口被拉长，所以批量删改和从库跑大查询是两个放大器。」\n2. 「半同步复制能保证主从一致吗？」→ 考点是「收到日志」≠「已应用」→ 一句话答法：「不能，半同步只保证日志到了至少一个从库的 relay log，那个从库可能还没重放，主库挂了切过去仍可能丢最近的读可见性。」\n3. 「怎么解决写完立刻读不到？」→ 考点是 read-your-writes 与路由策略 → 一句话答法：「三种：强一致读走主库、同会话粘在主库、或者带 GTID 位点去从库等它追上我的写入位点再读。」\n4. 「2PC 为什么阻塞，卡在哪一步？」→ 考点是 prepare 后持锁 + 协调者单点 → 一句话答法：「prepare 成功后参与者持锁且不能单方面决定，必须等协调者的决议；协调者此时挂了，参与者只能挂着锁等它恢复或人工裁决。」\n5. 「什么时候用 2PC，什么时候用最终一致？」→ 考点是 CAP 权衡与业务容忍度 → 一句话答法：「跨库强一致、参与方少、能接受阻塞和运维成本就用 XA；高并发跨服务场景用本地消息表 / TCC / Saga，用幂等 + 补偿换可用性。」"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 12,
+    "section": "第 11 章 复制与分布式事务：主从延迟、两阶段提交"
+  }
+}

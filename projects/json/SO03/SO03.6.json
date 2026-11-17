@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO03.6",
+  "chapter": "SO03",
+  "title": "第 4 章 进程抽象：字段即世界观",
+  "src": {
+    "file": "notebook/projects/os/kernel-compare/NOTES.md",
+    "sha256": "sha256:3fdad2384b230576e8b856161ad428eb8606560c1ee888202b9c68e3b315846e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO03.6:body.s01",
+      "type": "extension",
+      "title": "第 4 章 进程抽象：字段即世界观",
+      "level": 2,
+      "content": "**要解决的问题**：同一个概念（\"一个正在跑的执行体\"），三个内核的结构体差别巨大。字段的取舍说明了它们各自认为\"什么该跟着执行体走\"。\n\n**机制**：\n\n```text\nJOS  struct Env     : env_tf(Trapframe 全量现场), env_pgdir, env_status, env_id/parent, env_ipc_*(接收登记)\nxv6  struct proc    : kstack, pagetable, tf(指向 trapframe 的指针), state, pid, parent, chan(睡眠通道), ofile[]\nLinux struct task_struct : mm/active_mm, cred, files, fs, sighand, sched_class/prio, rcu, cgroup, nsproxy...\n```\n\n三条结论：\n\n1. **线程这个概念是\"资源共享粒度\"的产物。** Linux 把资源外置成独立结构（`files_struct`、`fs_struct`、`sighand_struct`、`mm_struct`），`clone` 的 flag 决定共享哪些，于是\"线程\"与\"进程\"是同一结构的两种共享组合。JOS/xv6 没有这层拆分，所以没有线程。\n2. **内核栈的位置暴露了实现。** JOS 的现场直接在 `Env` 里（`env_tf`）；xv6 的 trapframe 放在用户页表里、由 `tf` 指针指向；Linux 的现场压在内核栈上，`task_struct` 只有栈指针。\n3. **\"睡眠通道\"是教学内核的极简发明。** xv6 用 `chan`（一个任意指针）表示\"我在等这个条件\"，`wakeup(chan)` 扫描全表；Linux 用等待队列对象，支持多个等待者与选择性唤醒。\n\n**最小例子**：`xv6` 的 `sleep(chan, lock)` 必须\"持锁检查条件 → sleep（内部释放锁）→ 醒来重新持锁检查\"。这三步的顺序就是防丢唤醒的全部内容；Linux 的 `wait_event` 宏把同一逻辑封装起来，但语义完全一致。\n\n**面试高频问法**：\n\n1. **「线程和进程在 Linux 里有什么区别？」** → 考点：是否理解 clone 的资源划分。答法：没有本质区别，`clone` 决定共享哪些资源；共享地址空间与文件表就是线程，全不共享就是进程，中间态（共享文件表不共享地址空间）也存在。\n2. **「为什么 xv6 的 proc 里要存 trapframe 指针而不是整个结构？」** → 考点：布局与页表。答法：trapframe 放在 trampoline 附近的固定虚拟地址，用户页表与内核页表都映射它，这样切入内核时不需要先切页表就能保存现场；`proc` 里只存指针。\n3. **「PCB 里到底该有什么？」** → 考点：判断而不是背四类。答法：凡是\"随执行体走、且切换时要恢复\"的东西——现场、地址空间根、打开的文件、凭据、调度信息、等待关系。反例：程序代码不在 PCB 里。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "kernel-compare",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 12,
+    "section": "第 4 章 进程抽象：字段即世界观"
+  }
+}

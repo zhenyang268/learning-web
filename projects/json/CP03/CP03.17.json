@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.17",
+  "chapter": "CP03",
+  "title": "附录 C 命令速查",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.17:body.s01",
+      "type": "extension",
+      "title": "附录 C 命令速查",
+      "level": 2,
+      "content": "```bash\n# lint / 仿真\nverilator --lint-only -Wall --top-module Top rtl/*.sv\nverilator --cc --exe --build -j 0 --trace --top-module Top -Mdir obj_dir rtl/*.sv sim/sim_main.cpp -o sim\n\n# 测试程序\nmake -j RISCV_PREFIX=riscv-none-elf-            # riscv-tests\nelf2hex 4 65536 <elf> 0x80000000 > imem.hex     # 或 objcopy -O binary\n\n# 参考模型\nspike --isa=rv32i -l --log-commits <elf>\n\n# 综合 / 时序\nyosys -p \"read_verilog -sv rtl/*.sv; synth -top Top; stat; write_verilog -noattr netlist.v\"\nsta -exit sta.tcl\n\n# 波形\ngtkwave wave.vcd &\n```"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 16,
+    "parts": 17,
+    "section": "附录 C 命令速查"
+  }
+}

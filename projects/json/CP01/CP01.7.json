@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP01.7",
+  "chapter": "CP01",
+  "title": "第 6 章 目标文件与 ELF：段与节、符号表、重定位表",
+  "src": {
+    "file": "notebook/projects/cpu/asm-link-arch/NOTES.md",
+    "sha256": "sha256:04b5529a001bfe4ec19f5d9641db647d43404a1276627187bd916f3d732fe051"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP01.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 目标文件与 ELF：段与节、符号表、重定位表",
+      "level": 2,
+      "content": "**要解决的问题**：编译器一次只看得见一个 TU（编译单元），跨文件的函数地址、全局变量位置它根本不知道。ELF 就是把这份“未完成的半成品”连同“哪里还欠一个数”的清单交给链接器。不理解它，`undefined reference` 和 `multiple definition` 就只能靠猜。\n\n**机制**\n\nELF 有两套互相独立的视图，看错视图是新手最常见的困惑：\n\n- **节（section）给链接器**：`.text`、`.data`、`.bss`、`.rodata`、`.symtab`、`.strtab`、`.rela.text`。用 `readelf -S` 看。\n- **段（segment）给装载器**：`PT_LOAD`、`PT_DYNAMIC`、`PT_INTERP`，描述“映射哪段、什么权限”。用 `readelf -l` 看。\n\n`.bss` 是 `SHT_NOBITS`，文件里不占字节，只在内存里占（`p_memsz > p_filesz`），这就是“未初始化全局变量不撑大二进制”的原因。\n\n**符号表** `.symtab`，每项 `Elf64_Sym { st_name, st_info, st_other, st_shndx, st_value, st_size }`。`st_info` 高 4 位是 bind（LOCAL/GLOBAL/WEAK），低 4 位是 type（FUNC/OBJECT/SECTION/FILE/NOTYPE）。关键在 `st_shndx`：等于 `SHN_UNDEF` 表示“本文件只引用、没定义”；`SHN_ABS` 是绝对值；`SHN_COMMON` 是老式 tentative definition 的落脚点。\n\n**重定位表** `.rela.text`，每项 `Elf64_Rela { r_offset, r_info, r_addend }`，语义是“把 `r_offset` 处的字段按 $S + A - P$ 或 $S + A$ 算出来填回去”（$S$ 符号地址，$A$ 加数，$P$ 重定位处地址）。两架构在这里差别很直观：\n\n- x86-64 变长指令，一条 `call` 直接吃 32 位 PC 相对位移 → 一个 `R_X86_64_PLT32`；绝对地址用 `R_X86_64_64`；32 位有符号立即数用 `R_X86_64_32S`。\n- AArch64 指令定长 4 字节，装不下一整个地址，取地址要 `adrp` + `add` 两条指令配合 → **一次引用产生两条重定位**：`R_AARCH64_ADR_PREL_PG_HI21`（页基址高 21 位）+ `R_AARCH64_ADD_ABS_LO12_NC`（低 12 位）。函数调用是 `R_AARCH64_CALL26`，26 位立即数 ×4 → 可达范围 ±128 MB，超出时链接器必须插入跳转桩（stub）。\n\n**`undefined reference` 的真实原因**：某个 `.rela.*` 里的符号 `st_shndx = SHN_UNDEF`，链接器扫遍所有输入 `.o` 和库后，没有任何一个给出 GLOBAL 或 WEAK 定义。典型成因有四种：漏了 `-l` 或库顺序写反（`-l` 必须在使用者之后，因为链接器单趟扫描）；C++ 名字修饰不匹配（漏写 `extern \"C\"`）；`inline` 函数没被 emit 出来；只有声明没有定义。\n\n**符号冲突的真实原因**：链接器维护一张全局符号表，遇到第二个同名强定义（GLOBAL、非 COMMON）立刻报 multiple definition。C 里写 `int x;` 是 tentative definition，老 GCC 默认 `-fcommon` 会把它丢进 `SHN_COMMON` 允许链接期合并（取最大 size）；GCC 10 起默认 `-fno-common`，它变成 `.bss` 里的强定义，于是两个 `.c` 各写一句 `int x;` 立刻冲突——这是近年大量老项目突然编不过的主因。解法：头文件只放 `extern` 声明，定义只留一处；或 `static` / `__attribute__((weak))`。\n\n**最小例子**\n\n```c\n// a.c\nextern int foo(int);\nint main(void) { return foo(1); }\n```\n\n```text\n$ gcc -c a.c && readelf -s a.o\n  3: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND foo      ← 未定义\n  4: 0000000000000000    27 FUNC    GLOBAL DEFAULT    1 main\n$ readelf -r a.o\nOffset          Info           Type            Sym.Name + Addend\n0000000000000015 000300000004 R_X86_64_PLT32   foo - 4\n```\n\n`r_offset = 0x15` 指向 `call` 指令后面那个 4 字节位移字段；此时它是 `-4`（占位），链接器算出 `S + A - P` 后回填。若不提供 `b.o`，`foo` 的 `st_shndx` 一直是 `UND` → 报 `undefined reference to 'foo'`。同源代码在 AArch64 上会产出一行 `R_AARCH64_CALL26` 而不是 `PLT32`。\n\n**面试高频问法**\n\n1. 问：`undefined reference` 到底是编译错误还是链接错误，根因是什么？\n   → 考点在符号表 `SHN_UNDEF` 与链接器解析职责。\n   → 答：链接错误。`a.o` 的重定位表引用了一个 `st_shndx = SHN_UNDEF` 的符号，链接器在所有输入文件和库里找不到对应的 GLOBAL/WEAK 定义，只能报未定义引用。\n\n2. 问：为什么 `-lm` 必须写在 `.c` 文件后面？\n   → 考点在链接器的单趟扫描与库的顺序敏感性。\n   → 答：链接器按命令行顺序扫，到 `-lm` 时才会去归档里取成员，此前未解析的符号才会被拉进来；写在前面则扫库时符号表还是空的，等于没链。\n\n3. 问：两个 `.c` 里都写 `int x;` 为什么有时能过有时报错？\n   → 考点在 COMMON 与 `-fno-common`。\n   → 答：`int x;` 是 tentative definition，`-fcommon` 下进 `SHN_COMMON` 允许合并；GCC 10 默认 `-fno-common`，它成了 `.bss` 强定义，两个强定义相遇即 multiple definition。\n\n4. 问：段和节有什么区别？\n   → 考点在链接视图 vs 装载视图。\n   → 答：节是给链接器用的细粒度分类（`.text`/`.rodata`/`.rela.text`），段是给装载器用的映射单元（`PT_LOAD` 带权限），多个节会被合并进一个段。\n\n5. 问：AArch64 上为什么要两条重定位才能取一个全局变量地址？\n   → 考点在定长指令编码与地址分段。\n   → 答：指令只有 32 位，装不下完整地址，所以 `adrp` 算页基址高 21 位（`ADR_PREL_PG_HI21`），`add` 补低 12 位（`ADD_ABS_LO12_NC`），两处各一条重定位，必须成对出现。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "asm-link-arch",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 10,
+    "section": "第 6 章 目标文件与 ELF：段与节、符号表、重定位表"
+  }
+}

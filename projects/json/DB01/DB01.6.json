@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.6",
+  "chapter": "DB01",
+  "title": "第 5 章 事务与 ACID 的真实含义",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 事务与 ACID 的真实含义",
+      "level": 2,
+      "content": "**要解决的问题**：把「多条语句要么全做、要么全不做」这件事从应用层下沉到存储引擎。不解决，崩溃和并发交错就要业务代码自己补偿，转账只能在「钱扣了没到账」和「到账了没扣钱」之间二选一。\n\n**机制**：\n\n事务是一个带**提交点**的操作序列。引擎为每个事务分配单调递增的 `trx_id`，所有修改先把旧值写进 undo、改内存页、把新值写进 redo；提交时才在 redo 中写入 commit 记录。**commit 记录落盘的那一刻是原子性的分界**：此前修改即使数据页还没刷盘也算生效，此后算生效。\n\nACID 四者并不对等，由不同机制承担：\n\n- **A 原子性** → undo log。回滚就是沿 undo 链把旧值写回；崩溃恢复时对「没有 commit 记录」的事务做同样的事。\n- **D 持久性** → redo log + WAL。先写日志再写数据页，提交时 fsync 日志；数据页由后台异步刷，checkpoint 只决定恢复从哪开始扫。\n- **I 隔离性** → 锁与 MVCC（第 6、7 章）。它是 ACID 里唯一允许业务方主动调低的一项。\n- **C 一致性** → 不是数据库「提供」的，而是 A+I+D 加上约束（唯一索引、外键、CHECK、NOT NULL）共同维护的**应用不变量**。引擎只能保证「不破坏你声明过的约束」，声明之外的一致性归应用。\n\n```text\nbegin:\n  trx_id = next_trx_id()\n  write_undo(old_value)          # 回滚 + MVCC 读旧版本\ncommit:\n  write_redo(commit_record)\n  fsync(redo_log)                # 这一行返回 = 事务已持久\n  # 脏数据页由后台刷，崩溃后按 redo 重放\nrollback:\n  while undo_chain not empty:\n      apply(old_value)\n```\n\n**最小例子**：\n\n```sql\nBEGIN;\nUPDATE account SET balance = balance - 100 WHERE id = 1;\nUPDATE account SET balance = balance + 100 WHERE id = 2;\nCOMMIT;\n```\n\n参数：初始 `id=1` 余额 1000、`id=2` 余额 500。\n\n- 崩溃发生在第二条 UPDATE 执行完、COMMIT 未返回时：恢复时 redo 中查不到该事务的 commit 记录，用 undo 把 `id=1` 加回 100、`id=2` 减回 100。结果 `(1000, 500)`，与事务前一致。\n- 崩溃发生在 COMMIT 返回之后：commit 记录已 fsync，redo 重放两条更新。结果 `(900, 600)`。\n\n只有这两个终态，没有 `(900, 500)`。\n\n**面试高频问法**：\n\n1. 「ACID 里哪个是数据库真正保证的？」\n   考点：C 的地位。答法：A、I、D 是引擎机制，C 是目的不是手段；引擎只保证声明的约束不被破坏，跨行跨服务的业务不变量得靠应用或分布式事务，「数据库保证一致性」只说对了一半。\n\n2. 「提交瞬间数据页还没落盘，凭什么说不丢？」\n   考点：WAL 与提交点。答法：提交只要求 redo 日志 fsync，数据页是脏页异步刷；崩溃后按 redo 重放已提交事务，所以「日志落盘」等价于「事务落盘」。\n\n3. 「undo 和 redo 分别管什么？」\n   考点：两种日志的职责边界。答法：undo 存旧值，负责回滚和给 MVCC 提供旧版本；redo 存新值，负责崩溃后重放已提交修改。恢复时两者配合——已提交的重放，未提交的回滚。\n\n4. 「持久性可以降级吗？」\n   考点：刷盘策略。答法：可以，取决于提交时是否 fsync 日志（如 `innodb_flush_log_at_trx_commit` 之类的刷盘参数），攒批刷能提吞吐，代价是可能丢最近若干已提交事务；此时 D 的强度就等于刷盘频率。\n\n5. 「隔离性调低会影响原子性和持久性吗？」\n   考点：四者解耦。答法：不会。降到读未提交只改变可见性规则，undo/redo 路径不变；反过来异步刷盘牺牲 D 也不影响 A。四者由不同机制实现，可独立取舍。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 12,
+    "section": "第 5 章 事务与 ACID 的真实含义"
+  }
+}

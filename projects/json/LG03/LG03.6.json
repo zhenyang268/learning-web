@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG03.6",
+  "chapter": "LG03",
+  "title": "第 5 章 同步与原子：__syncthreads、原子操作、浮点归约的非确定性",
+  "src": {
+    "file": "notebook/projects/langs/cuda/NOTES.md",
+    "sha256": "sha256:d28750e42e41e2d9683a44653a40e2a9685b4209ef050c102a3c1599a73d9c81"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG03.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 同步与原子：__syncthreads、原子操作、浮点归约的非确定性",
+      "level": 2,
+      "content": "**要解决的问题**：一个 block 内的 256/1024 个线程要把各自的局部结果合并时，需要一个所有线程都能看到的中间缓冲区（shared memory）和一道屏障；而跨 block 合并时，硬件并不提供全局屏障，只能靠原子操作或拆成两个 kernel 来完成。如果这一章不解决，写出来的 kernel 会“大部分时候对、偶尔错”（竞态），或者因为所有线程都原子操作同一地址而性能下降一个数量级。\n\n**机制**：\n- `__syncthreads()` 是 **block 级**屏障，同时充当 block 内 shared/global 访存的内存栅栏：它保证该 block 所有线程此前对 shared 的写对之后所有线程可见。它**不能**跨 block。grid 级同步只有两条路：拆 kernel（两次 launch 之间有隐式全局屏障），或用 cooperative groups 的 `grid.sync()`（要求 cooperative launch 且 grid 规模不超过同时驻留的上限）。\n- 调用约束：`__syncthreads()` 必须被 block 内**所有**线程在**同一控制流位置**执行。写成 `if (t < stride) { ...; __syncthreads(); }` 是否安全取决于条件是否对全体线程一致；如果只有部分线程进入，就会死锁或未定义。正确写法是把 `__syncthreads()` 放在 `if` 外面，或者只让 `if` 包住计算。\n- 原子操作（`atomicAdd` 等）的原子性由硬件在 L2 的原子单元保证，只保证“单次读-改-写不可分割”，**不保证**它与其他内存操作的顺序；需要顺序时配 `__threadfence()`。同一个地址上的原子请求会被串行化，这正是性能瓶颈所在。\n- 浮点非确定性：`(a+b)+c ≠ a+(b+c)`，浮点加法不满足结合律。`atomicAdd` 到同一地址的到达顺序由调度决定，所以同一份输入跑两次，结果的 bit 位可能不同。树形归约在固定 grid/block 下顺序固定，是确定性的。\n\n**最小例子**：`n = 16M` 个 float，`block = 256` 线程，对比两种合并方式。\n\n```cuda\n// A. 每线程一次全局原子：65536 次 atomicAdd 打同一个地址\n__global__ void red_atomic(const float* in, float* out, int n) {\n    float v = 0.f;\n    for (int i = blockIdx.x*blockDim.x+threadIdx.x; i < n; i += gridDim.x*blockDim.x)\n        v += in[i];\n    atomicAdd(out, v);              // 串行化热点\n}\n\n// B. block 内 shared 归约，每 block 只做一次原子\n__global__ void red_shared(const float* in, float* out, int n) {\n    __shared__ float s[256];\n    int t = threadIdx.x;\n    int i = blockIdx.x*blockDim.x*2 + t;\n    float v = (i < n) ? in[i] : 0.f;\n    if (i + blockDim.x < n) v += in[i + blockDim.x];\n    s[t] = v;\n    __syncthreads();\n    for (int st = blockDim.x/2; st > 0; st >>= 1) {\n        if (t < st) s[t] += s[t+st];\n        __syncthreads();            // 屏障在 if 外，全体线程都到\n    }\n    if (t == 0) atomicAdd(out, s[0]);   // 每个 block 一次\n}\n```\n\n在 16M 元素、约 65536 个 block 的配置下，B 把全局原子从“每线程一次”降到“每 block 一次”，原子次数下降三个数量级；A 的耗时主要由 L2 上同一地址的串行化决定，量级示例可能比 B 慢 5–10 倍，需按卡实测。代价是 B 引入了一次 block 内屏障和 shared 往返。\n\n**面试高频问法**：\n1. `__syncthreads()` 能同步整个 grid 吗？→ 考点是同步作用域。→ 不能，它只保证同一个 block 内的线程到达同一点；grid 级只能拆 kernel 或用 cooperative launch 的 `grid.sync()`。\n2. 为什么 `__syncthreads()` 不能写在只有部分线程进入的分支里？→ 考点是屏障的到达语义。→ 屏障要求 block 内所有线程都到达，条件不一致时未到达的线程永远等不到，会挂死或行为未定义；把屏障移到分支外，只让计算进分支。\n3. 原子操作为什么慢，怎么优化？→ 考点是串行化热点与分层归约。→ 同一地址的原子被硬件串行化；先把竞争压到 block 内（shared 归约或 warp shuffle），每 block 只发一次原子，或分散到多个桶再二次归约。\n4. 同样的输入，浮点归约结果每次不一样，是 bug 吗？→ 考点是浮点结合律与调度顺序。→ 不是 bug，是 `atomicAdd` 到达顺序不定导致的舍入差异；要确定性就用固定顺序的树形归约，并按 block 下标顺序做第二阶段，或改用整数/定点。\n5. `atomicAdd` 能替代 `__threadfence()` 吗？→ 考点是原子性与可见性/顺序是两件事。→ 不能；原子只保证单次读改写不可分割，跨地址的写顺序仍需 `__threadfence()` 保证别的线程能看到。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "cuda",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 10,
+    "section": "第 5 章 同步与原子：__syncthreads、原子操作、浮点归约的非确定性"
+  }
+}

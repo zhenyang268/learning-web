@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.18",
+  "chapter": "CS01",
+  "title": "7.8 proxylab · 逐层设计（Ch10–12，做 Part I + II）",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.18:body.s01",
+      "type": "extension",
+      "title": "7.8 proxylab · 逐层设计（Ch10–12，做 Part I + II）",
+      "level": 3,
+      "content": "#### 7.8.1 Part I：顺序代理（40 分，HTTP 报文格式的活标本）\n\n```c\nstatic void doit(int fd)\n{\n    char buf[MAXLINE], method[MAXLINE], uri[MAXLINE], version[MAXLINE];\n    char hostname[MAXLINE], path[MAXLINE], req[MAXLINE];\n    int port, serverfd;\n    rio_t rio_c, rio_s;\n    ssize_t n;\n\n    Rio_readinitb(&rio_c, fd);\n    if (!Rio_readlineb(&rio_c, buf, MAXLINE)) return;      /* 空请求：直接断开 */\n    sscanf(buf, \"%s %s %s\", method, uri, version);\n\n    if (strcasecmp(method, \"GET\")) {                        /* 只处理 GET */\n        clienterror(fd, method, \"501\", \"Not implemented\",\n                    \"Proxy does not implement this method\");\n        return;\n    }\n    if (parse_uri(uri, hostname, &port, path) < 0) {\n        clienterror(fd, uri, \"400\", \"Bad Request\", \"Invalid URL\");\n        return;\n    }\n\n    /* 小写 open_clientfd：失败返回 -1，不会 exit 掉整个代理 */\n    if ((serverfd = open_clientfd(hostname, port)) < 0) {\n        clienterror(fd, uri, \"502\", \"Bad Gateway\", \"Cannot connect to server\");\n        return;\n    }\n\n    /* 组装转发请求：GET 行改成相对路径，并补四个头 */\n    sprintf(req, \"GET %s HTTP/1.0\\r\\n\", path);\n    sprintf(req, \"%sHost: %s\\r\\n\", req, hostname);\n    sprintf(req, \"%s%s\", req, user_agent_hdr);              /* 官方给的 UA 常量 */\n    sprintf(req, \"%sConnection: close\\r\\n\", req);\n    sprintf(req, \"%sProxy-Connection: close\\r\\n\", req);\n    sprintf(req, \"%s\\r\\n\", req);                            /* 空行结束头部 */\n    Rio_writen(serverfd, req, strlen(req));\n\n    /* 原样转发响应 */\n    Rio_readinitb(&rio_s, serverfd);\n    char resp[MAXBUF];\n    while ((n = Rio_readnb(&rio_s, resp, MAXBUF)) > 0)\n        Rio_writen(fd, resp, n);\n\n    Close(serverfd);\n}\n\nstatic int parse_uri(char *uri, char *hostname, int *port, char *path)\n{\n    char *hoststart, *pathstart, *portstart;\n    *port = 80;\n    strcpy(path, \"/\");\n\n    if (strncasecmp(uri, \"http://\", 7) != 0) return -1;     /* 形态①：必须是绝对 URL */\n    hoststart = uri + 7;\n\n    pathstart = strchr(hoststart, '/');                     /* 形态②：有无路径部分 */\n    if (pathstart == NULL) { strcpy(hostname, hoststart); return 0; }\n    *pathstart = '\\0';\n    strcpy(hostname, hoststart);\n    *pathstart = '/';\n    strcpy(path, pathstart);\n\n    portstart = strchr(hostname, ':');                      /* 形态③：显式端口 */\n    if (portstart) { *portstart = '\\0'; *port = atoi(portstart + 1); }\n    return 0;\n}\n```\n\n**四个必须补的头**（缺一个就可能被真实服务器拒绝或返回错误内容）：`Host`、`User-Agent`、`Connection: close`、`Proxy-Connection: close`。\n\n**为什么 `GET http://host/path HTTP/1.1` 要改写成 `GET /path HTTP/1.0`**：代理面向的是服务器，服务器只见\"路径\"；`Host` 头承载主机名。HTTP/1.0 + `Connection: close` 让\"连接关闭\"= \"响应结束\"，省掉解析 `Content-Length` 的麻烦 —— **这是本 lab 简化协议的关键设计决策**。\n\n#### 7.8.2 Part II：并发（15 分）\n\n```c\nint main(int argc, char **argv)\n{\n    int listenfd, *connfdp;\n    socklen_t clientlen;\n    struct sockaddr_storage clientaddr;\n    pthread_t tid;\n\n    if (argc != 2) { fprintf(stderr, \"usage: %s <port>\\n\", argv[0]); exit(1); }\n    Signal(SIGPIPE, SIG_IGN);                 /* 关键：客户端断开后再写会被 SIGPIPE 杀死 */\n    listenfd = Open_listenfd(argv[1]);\n\n    while (1) {\n        clientlen = sizeof(clientaddr);\n        connfdp = Malloc(sizeof(int));        /* 每个连接一份拷贝，避免下面的经典 bug */\n        *connfdp = Accept(listenfd, (SA *)&clientaddr, &clientlen);\n        Pthread_create(&tid, NULL, thread, connfdp);\n    }\n}\n\nstatic void *thread(void *vargp)\n{\n    int connfd = *((int *)vargp);\n    Free(vargp);\n    Pthread_detach(Pthread_self());           /* detach：线程结束自动回收资源 */\n    doit(connfd);\n    Close(connfd);\n    return NULL;\n}\n```\n\n**并发的三个要点**\n\n1. **`connfd` 不能直接传地址**。若写 `Pthread_create(&tid, NULL, thread, &connfd)`，主循环马上会 `Accept` 覆盖 `connfd`，线程读到的可能是下一个连接的 fd —— 这是本 lab 最著名的 bug。解法：传值（`(void *)(intptr_t)connfd`）或每次 `Malloc` 一份（上面用的是后者）。\n2. **线程必须 detach**（或 join），否则每来一个连接泄漏一份线程资源，长跑必挂。\n3. **`open_clientfd` / `open_listenfd` 是线程安全的**（基于 `getaddrinfo`），可以直接在多线程里用；但 **`csapp.c` 里的大写封装（`Open_clientfd` 等）会在出错时 `exit` 掉整个进程** —— 代理是长跑进程，必须自己检查返回值并只关闭当前连接。\n\n#### 7.8.3 Part III 为什么不值得做（以及与 cachelab 的关系）\n\nPart III = 缓存（1 MiB 上限、100 KiB 单对象上限）+ 近似 LRU + **读者-写者锁**（官方明确禁止\"一把大锁\"，要求多读者并发）。\n\n- **408 视角**：它的考点（Web 缓存、代理服务器、命中/未命中）在应用层**以概念形式**考，不需要你实现；而\"读者-写者\"在 OS 同步章节是标准模型，用 PV 操作那套就够了。\n- **项目视角**：LRU + 缓存大小管理，和 cachelab 的 LRU 替换是**同一件事**（cachelab 里你已经写过一遍时间戳 LRU）。重复投入，收益递减。\n\n**所以**：把时间省下来给 malloclab 和 shlab。\n\n#### 7.8.4 验收与调试\n\n```bash\nmake\n./free-port.sh                      # 取一个空闲端口\n./proxy <port> &                    # 起代理\ntelnet localhost <port>             # 手敲请求：\n#   GET http://www.example.com/ HTTP/1.0\n#   （空行结束）\ncurl -v -x http://localhost:<port> http://www.example.com/    # 用 curl 走代理\n./driver.sh                         # 官方评分（Linux 下，依赖 tiny 二进制）\n```\n\n**环境提醒**：`proxylab/tiny` 是 ELF 二进制 → `driver.sh` 只能在 Linux 上跑。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 17,
+    "parts": 20,
+    "section": "7.8 proxylab · 逐层设计（Ch10–12，做 Part I + II）"
+  }
+}

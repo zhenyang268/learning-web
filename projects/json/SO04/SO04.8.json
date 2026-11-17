@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO04.8",
+  "chapter": "SO04",
+  "title": "第 6 章 JOS e1000（二）：中断与收包",
+  "src": {
+    "file": "notebook/projects/os/drivers/NOTES.md",
+    "sha256": "sha256:97e4aa1f82aecd48001369efcf5ecd6115e15522145d220eae80babec3faff7e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO04.8:body.s01",
+      "type": "extension",
+      "title": "第 6 章 JOS e1000（二）：中断与收包",
+      "level": 2,
+      "content": "**要解决的问题**：包到了怎么知道？中断里能做什么、不能做什么？缓冲什么时候能还给设备？\n\n**机制**：\n\n- **中断注册**：把 e1000 的 IRQ 挂到 IDT，开 `IMS` 里需要的位（收包、发送完成、链路变化等）。\n- **中断服务程序**：读 `ICR`（读即清），判断是哪类事件；**只做最少的事**——JOS 直接调 `e1000_recv()` 把包搬走，教学上可以接受，生产上必须推到下半部。\n- **收包路径**：\n\n```text\nidx = (RDT + 1) % NRXDESC\nwhile (rx_ring[idx].status & DD) {\n    拷贝数据到上层（不能等，因为设备随时可能复用这块缓冲）\n    重新分配一个缓冲，填回描述符 addr\n    rx_ring[idx].status = 0\n    RDT = idx                 // 归还给设备\n    idx = (idx + 1) % NRXDESC\n    net_rx(pkt)               // 交给协议栈（ARP/IP/UDP）\n}\n```\n\n**三条硬约束**：\n\n1. **必须先拷走再归还**：一旦 `RDT` 前移，设备就可能立刻往这块缓冲写新包。\n2. **`RDT` 指向\"最后一个已处理\"而不是\"下一个空位\"**：所以取包从 `RDT+1` 开始。\n3. **环满只能丢**：接收侧没有背压，丢包必须计数（否则你永远不知道丢了多少）。\n\n**最小例子**：环满的表现——`RDT` 追不上设备，新包被设备丢弃，`RDH` 停住。判据是\"应用收不到包，但链路是 up 的，且没有中断风暴\"。\n\n**面试高频问法**：\n\n1. **「为什么中断里不能直接处理完整协议栈？」** → 考点：原子上下文。答法：硬中断里通常关本地中断、不能睡眠、长时间占用会丢中断；协议栈可能加锁、分配内存、甚至阻塞，必须放到下半部（`softirq`/`workqueue`/NAPI poll）。\n2. **「接收环为什么比发送环更容易丢包？」** → 考点：背压缺失。答法：发送侧可以返回\"忙\"让上层重试；接收侧包已经到了，缓冲不够只能丢。\n3. **「`RDT` 为什么要等处理完才前移？」** → 考点：所有权。答法：前移即表示\"这块缓冲还给你了\"，设备会立刻覆盖它；没拷走就前移等于把数据交给别人改写。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "drivers",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 10,
+    "section": "第 6 章 JOS e1000（二）：中断与收包"
+  }
+}

@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "SO04.1",
   "chapter": "SO04",
-  "title": "drivers · 大纲",
+  "title": "drivers · 总览",
   "src": {
     "file": "notebook/projects/os/drivers/OUTLINE.md",
     "sha256": "sha256:b7f4e0a24334f740e79ee8a1864dd31d35d4474ea6af2181515c8fb022cea400"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

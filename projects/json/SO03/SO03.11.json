@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO03.11",
+  "chapter": "SO03",
+  "title": "第 9 章 为什么 Linux 必须长成这样",
+  "src": {
+    "file": "notebook/projects/os/kernel-compare/NOTES.md",
+    "sha256": "sha256:3fdad2384b230576e8b856161ad428eb8606560c1ee888202b9c68e3b315846e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO03.11:body.s01",
+      "type": "extension",
+      "title": "第 9 章 为什么 Linux 必须长成这样",
+      "level": 2,
+      "content": "**要解决的问题**：把\"Linux 很复杂\"从抱怨变成论证——复杂性是四条硬约束的必要成本。\n\n**机制**：\n\n1. **ABI 稳定。** 系统调用号、结构体布局、ioctl 号、`/proc` 与 `/sys` 的文本格式都是事实标准。任何\"简化\"都会破坏既有二进制。结果是**只能加不能改**：`statx`、`openat2`、`clone3` 都是\"新号解决老问题\"的产物。\n2. **可移植。** `arch/` 目录把架构相关代码隔离，`asm-generic` 提供缺省实现；同一份内核源码要覆盖几十种架构与配置组合。**抽象成本被摊到每个子系统上。**\n3. **驱动生态。** 树外模块依赖内核内部 API，而内核明确\"内部 API 不稳定\"（no stable internal API），于是驱动必须上游化——驱动数量反过来推动了设备模型、电源管理、热插拔的复杂度。\n4. **SMP 与规模。** 从单核到上千核：per-CPU 数据、RCU、无锁读、SLUB、`cgroup` 配额、NUMA 亲和。**每一条都是为了\"核变多时不塌\"。**\n5. **安全与可观测（附加但同样硬）。** LSM、namespace、seccomp；`ftrace`/`perf`/`eBPF`——生产内核必须能解释自己。\n\n**最小例子**：`fork` 在 Linux 上的实现要考虑 COW、`clone` flag、`cgroup` 归属、namespace 继承、审计、`pid` 分配、`rlimit` 检查……而 xv6 的 `fork` 是三十行 `uvmcopy` 加字段复制。**同一语义，约束从一条涨到十条。**\n\n**面试高频问法**：\n\n1. **「内核内部 API 不稳定，那驱动怎么维护？」** → 考点：生态现实。答法：驱动随内核上游化，跟着版本改；想长期稳定就得走\"稳定外部接口\"（syscall、`/sys`、`netlink`）而不是内部函数。\n2. **「为什么加一个新系统调用比改一个老的好？」** → 考点：ABI。答法：老调用号背后有无数二进制；新增号 + 新结构体可以并存，代价是内核里的兼容代码越积越多。\n3. **「Linux 的复杂度有没有\"可以砍\"的部分？」** → 考点：判断力。答法：能砍的通常已经被砍过（`CONFIG_` 裁剪、模块化、`arch/` 隔离）；砍不掉的是 ABI 与安全边界——那些不是代码问题，是承诺问题。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "kernel-compare",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 12,
+    "section": "第 9 章 为什么 Linux 必须长成这样"
+  }
+}

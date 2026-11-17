@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP04.9",
+  "chapter": "CP04",
+  "title": "第 8 章 目标描述与 ABI：调用约定、栈帧布局、重定位",
+  "src": {
+    "file": "notebook/projects/cpu/compiler/NOTES.md",
+    "sha256": "sha256:c6fff8754ad6e8ac1d415ac403d79eedbe0ea927767a531665e867679040055f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP04.9:body.s01",
+      "type": "extension",
+      "title": "第 8 章 目标描述与 ABI：调用约定、栈帧布局、重定位",
+      "level": 2,
+      "content": "**要解决的问题**：IR 是 target 无关的，它只说「调用函数 f，参数是这 7 个 i64」。要把这句变成 x86-64 上合法的机器码，必须回答三个问题：参数放进哪几个寄存器、多出来的放栈上哪个偏移；函数体里 rsp/rbp 怎么动、被调用者保存寄存器由谁保存；`.o` 里那些「地址待定」的字节由谁来填。这一章管的就是 IR 到具体 ISA 之间那层「物理契约」。不解决它，后端生成的代码一进入 callee-saved 寄存器、一调用外部函数就崩。\n\n**机制**\n\n**三份描述，三个抽象层。** 后端不硬编码 x86，而是从 TableGen 的 `.td` 文件生成描述：`Target.td` 的 `RegisterInfo`（寄存器类）、`InstrInfo`（指令编码与 pattern）、`CallingConv.td`（ABI 规则）、`SchedMachineModel`（调度模型）。`TargetMachine::getSubtargetImpl(const Function &F)` 允许 per-function 的 subtarget，这就是 `__attribute__((target(\"avx2\")))` 能在一个 TU 里混用的原因。\n\n**调用约定写在 TableGen 里，不在 C++ 里。** `CC_X86_64_SysV` 大致长这样：\n\n```tablegen\ndef CC_X86_64_C : CallingConv<[\n  CCIfType<[i32], CCAssignToReg<[EDI, ESI, EDX, ECX, R8D, R9D]>>,\n  CCIfType<[i64], CCAssignToReg<[RDI, RSI, RDX, RCX, R8,  R9 ]>>,\n  CCIfType<[f32], CCAssignToReg<[XMM0,XMM1,XMM2,XMM3,XMM4,XMM5,XMM6,XMM7]>>,\n  CCAssignToStack<8, 8>            // 溢出参数：8 字节槽，8 字节对齐\n]>;\n```\n\n`CCState::AnalyzeFormalArguments` 拿这份规则跑一遍，得到每个实参的 `CCValAssign`（LocInfo：寄存器或栈偏移）。`TargetLowering::LowerFormalArguments` 据此为寄存器参数发 `ISD::CopyFromReg`，为栈参数发基于 frame index 的 load。`LowerCall` 是镜像操作：先 `ISD::CALLSEQ_START` 拿到一个「即将出现的返回地址 + 出参区」的 frame index，把参数 `CopyToReg`，发 `CALL`，再 `CALLSEQ_END`。\n\n**IR 层能看见的 ABI 痕迹。** Clang 前端并不决定寄存器，但它把 ABI 中「IR 必须表达」的部分提前写进函数签名：大结构体返回用 `sret` 指针、按值传大结构体用 `byval`、`inreg`、小整型的 `signext`/`zeroext`、变参函数的 `...`。所以你在 IR 里看到的 `ptr sret(%struct.S) align 8 %agg.result` 就是 ABI 的投影，后端 `LowerCall` 再把它降级成具体的 RDI 传递。这也是为什么 ABI 不能全部压在 Clang 里：IR 是 target 无关的，同一份 `.ll` 可以喂给 `llc -mtriple=aarch64`；真正的寄存器分配必须留在 target 层。\n\n**栈帧由 PEI（PrologEpilogInserter）统一收口。** `MachineFrameInfo` 记录所有对象（spill 槽、局部变量、出参区、已保存寄存器），PEI 先调 `getCalleeSavedRegs()`/`getCallPreservedMask()` 算出哪些寄存器跨调用必须保存（在 x86-64 SysV 下是 RBX、RBP、R12–R15），调 `determineCalleeSaves()` 按需插入 spill，最后调 `TargetFrameLowering::emitPrologue/emitEpilogue` 吐出真实的 `push/mov/sub`。帧对象在 `TargetRegisterInfo::eliminateFrameIndex` 阶段被替换成 `[rsp+N]` 或 `[rbp-N]`；有 VLA 或动态 `alloca` 时不可能用静态 rsp 偏移，只能锁帧指针。\n\n**重定位：汇编器留洞，链接器填。** MC 层在发射时，若操作数含不可解析符号，就产生一个 `MCFixup`（`MCFixupKind` + 字节偏移 + `MCExpr`）。object writer 再把它映射成 ELF 的重定位类型：`X86ELFObjectWriter::getRelocType` 把 `X86::reloc_riprel_4byte` 映射到 `R_X86_64_PC32`，把对函数的 `call` 映射到 `R_X86_64_PLT32`。链接器统一按 $S + A - P$ 求值（$S$ 符号地址，$A$ addend，$P$ 重定位字段自身的地址）。`R_X86_64_PC32` 和 `R_X86_64_PLT32` 在 x86-64 上算出来的值一样，差别只在语义：后者告诉链接器「这是个 call，如果目标在共享库里，可以走 PLT 蹦床」，AArch64 上同样的区分是有真实代码差异的（`BL` vs `ADRP+ADD`）。\n\n**最小例子**\n\n```c\nextern long g(long);\nlong f(long a, long b, long c, long d, long e, long h, long i) {\n    return g(a + i) + b;\n}\n```\n\n`clang -O1 -S -fno-omit-frame-pointer` 得到的形状（省略 `.cfi_*`）：\n\n```asm\nf:\n        pushq   %rbp\n        movq    %rsp, %rbp\n        pushq   %rbx\n        subq    $8, %rsp          # 对齐桩，见下\n        movq    %rsi, %rbx        # b：要跨 call 存活 → callee-saved\n        movq    16(%rbp), %rax    # i：第 7 个参数在栈上\n        addq    %rdi, %rax        # a + i\n        movq    %rax, %rdi\n        callq   g@PLT\n        addq    %rbx, %rax\n        addq    $8, %rsp\n        popq    %rbx\n        popq    %rbp\n        retq\n```\n\n逐项核对 ABI：\n\n- 参数映射：a→RDI、b→RSI、c→RDX、d→RCX、e→R8、h→R9，第 7 个 i 落在栈上。进入函数时 `[rsp]` 是返回地址，`[rsp+8]` 是 i；`push rbp` 后 `rbp = rsp_entry - 8`，所以 `i` 在 `[rbp+16]`。\n- 对齐：SysV 要求「控制转移到函数入口时 $rsp + 8 \\equiv 0 \\pmod{16}$」，即 entry 时 $rsp \\equiv 8$。`push rbp` → 0，`push rbx` → 8，再 `sub $8` → 0，此时执行 `call` 才合规。callee 入口又回到 8。这就是那条看起来莫名其妙的 `subq $8` 的来源——它不是给变量留地方，纯粹是对齐桩（也可以 `push` 一个废寄存器或 `andq $-16, %rsp`）。\n- callee-saved：`b` 活过 `call g`，所以必须进 RBX 而不是 RCX；`pushq %rbx` 同时完成了「保存调用者的值」和「给自己腾出存储」，`popq %rbx` 恢复。\n- 重定位：`callq g@PLT` 处的 rel32 字段在指令第 2 字节，`.o` 里生成 `R_X86_64_PLT32`，addend = $-4$，因为 x86 的 PC 相对位移以下一条指令为基准，而 $P$ 指向字段本身，差 4 字节。\n\n**面试高频问法**\n\n1. **「调用约定到底是在 Clang 里实现的还是 LLVM 后端里实现的？」** → 考点是 ABI 信息在 IR/后端的分层。一句话答法：分两层——Clang 只负责 IR 必须表达的那部分（`sret`/`byval`/`inreg`/`signext`），寄存器与栈槽的分配由 `CallingConv.td` + `TargetLowering::LowerCall/LowerFormalArguments` 完成，因为 IR 要保持 target 无关，同一份 `.ll` 要能喂给任何 `-mtriple`。\n\n2. **「为什么函数入口处 $rsp$ 是 8 而不是 16 的倍数？」** → 考点是 call 指令压返回地址这件事。一句话答法：ABI 要求的是「`call` 执行前 $rsp$ 16 字节对齐」，`call` 把 8 字节返回地址压栈，所以被调用方一进来看到的是 $rsp \\equiv 8 \\pmod{16}$，编译器要在 prologue 里补一个 8 字节的桩才能再次安全地 `call`。\n\n3. **「callee-saved 寄存器是编译器在哪一步决定要保存的？」** → 考点是 PEI 在流水线里的位置。一句话答法：寄存器分配之后，PEI 用 `TargetRegisterInfo::getCalleeSavedRegs()` 和活跃性算出真正被用到的 callee-saved 寄存器，`determineCalleeSaves()` 插 spill，再由 `TargetFrameLowering::emitPrologue` 一次性生成 push 序列——不是每遇到一次调用就存一次。\n\n4. **「`R_X86_64_PC32` 和 `R_X86_64_PLT32` 有什么区别？既然算出来的值一样，为什么不用一个？」** → 考点是重定位语义与链接器行为。一句话答法：数值上两者都是 $S+A-P$，区别在语义标注——`PLT32` 声明「这是对函数的过程调用，目标可能在共享库里，可以经 PLT 跳转」，在 x86-64 上链接器为了兼容把 `PLT32` 当 `PC32` 处理，但在 AArch64 这类「直调只有 ±128MB 范围」的架构上，这个区分直接决定要不要生成跳板代码。\n\n5. **「什么时候 LLVM 不能省略帧指针？」** → 考点是 frame index 消除的约束。一句话答法：栈上对象大小在编译期固定时可以用 rsp 相对寻址、省掉 RBP；一旦出现 VLA、动态 `alloca` 或需要动态调整栈的场合，偏移不再是常量，必须保留帧指针（`-fno-omit-frame-pointer` 强制保留，同时它也是 perf/采样型 profiler 的栈回溯基础）。\n\n6. （可选）**「红区是什么，为什么叶函数可以不要栈帧？」** → x86-64 SysV 在 `[rsp-128, rsp)` 划了 128 字节红区，信号处理不会踩坏它；不调用其它函数的叶函数可以直接用红区存局部变量，prologue/epilogue 全省。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "compiler",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 11,
+    "section": "第 8 章 目标描述与 ABI：调用约定、栈帧布局、重定位"
+  }
+}

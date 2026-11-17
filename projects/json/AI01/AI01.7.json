@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "AI01.7",
+  "chapter": "AI01",
+  "title": "第 7 章 注意力与 Transformer：QKV、多头、位置编码、残差与归一化的位置",
+  "src": {
+    "file": "notebook/projects/ai/NOTES.md",
+    "sha256": "sha256:1cf4e0aa160c61aa9f87967082eee26c05a0f005a45a9f5b367ba822c50b3d15"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "AI01.7:body.s01",
+      "type": "extension",
+      "title": "第 7 章 注意力与 Transformer：QKV、多头、位置编码、残差与归一化的位置",
+      "level": 2,
+      "content": "**要解决的问题**：RNN 靠链式依赖传递信息，任意两个位置之间的路径长度随距离增长，且时间步不能并行。注意力让每个位置直接读取序列中任意位置的信息，Transformer 则把“注意力 + 前馈网络”堆成可并行的块。不解决这个问题，长程依赖和长序列并行都受限于递归结构。\n\n**机制**：输入序列 $X\\in\\mathbb{R}^{n\\times d}$，$n$ 是 token 数，$d$ 是模型维度。每个位置产生三组向量：查询 $Q$、键 $K$、值 $V$，由可学习矩阵投影得到：\n\n$$\nQ=XW_Q,\\quad K=XW_K,\\quad V=XW_V,\\quad W_Q,W_K,W_V\\in\\mathbb{R}^{d\\times d_k}\n$$\n\n注意力分数是查询和键的内积，除以 $\\sqrt{d_k}$ 后 softmax，再对值加权：\n\n```text\nQ, K, V = X @ Wq, X @ Wk, X @ Wv      # [n,d] -> [n,d_k]\nS = Q @ K.T / sqrt(d_k)                # [n,n]\nS[mask] = -inf                         # 因果或 padding 屏蔽\nA = softmax(S, dim=-1)                 # 每行和为 1\nY = A @ V                              # [n,d_k]\n```\n\n$QK^\\top$ 的每个元素衡量“位置 $i$ 的查询”和“位置 $j$ 的键”有多匹配；softmax 把匹配度变成权重；$A V$ 就是按权重对值做加权和。除以 $\\sqrt{d_k}$ 是因为点积的方差随 $d_k$ 增大而增大，不缩放会让 softmax 进入饱和区，权重接近 one-hot。因果掩码把 $j>i$ 的位置置为 $-\\infty$，保证自回归模型只能看左侧。\n\n多头注意力把 $d$ 维切成 $h$ 个头，每头维度 $d_k=d/h$，各自做一次注意力，拼接后再乘输出矩阵 $W_O$：\n\n$$\n\\text{head}_i=\\text{Attention}(XW_Q^i,XW_K^i,XW_V^i),\\quad\nY=\\text{Concat}(\\text{head}_1,\\dots,\\text{head}_h)W_O\n$$\n\n若每头 $d_k=d/h$，QKV 加输出的总参数量约为 $4d^2$，和单头 $d_k=d$ 同量级；多头不是简单堆参数，而是让不同头在不同子空间里建立关系。\n\n自注意力对位置置换是等变的：把 token 顺序打乱，输出也跟着打乱，模型本身不知道谁在前谁在后。因此要加位置编码。正弦位置编码为：\n\n$$\nPE(pos,2i)=\\sin\\left(\\frac{pos}{10000^{2i/d}}\\right),\\quad\nPE(pos,2i+1)=\\cos\\left(\\frac{pos}{10000^{2i/d}}\\right)\n$$\n\n不同维度对应不同频率，每个位置得到一个唯一模式；它也可以被学习成位置嵌入。相对位置编码、RoPE 等变体按实现而定。\n\n每个 Transformer 块由两个子层组成：多头注意力和前馈网络（通常是两层线性加激活，$d_{ff}$ 常取 $4d$）。残差连接让子层只学习“增量”：\n\n$$\nx\\leftarrow x+\\text{Sublayer}(x)\n$$\n\n归一化的位置有两种常见写法。Post-LN 是“先残差相加，再归一化”：$x\\leftarrow \\text{Norm}(x+\\text{Sublayer}(x))$，原始 Transformer 采用这种结构。Pre-LN 是“先归一化，再进子层”：$x\\leftarrow x+\\text{Sublayer}(\\text{Norm}(x))$，残差主干不被归一化打断，常见大模型实现采用这种写法。两者差别不在参数量，而在信号沿主干的传播路径。\n\n**最小例子**：取 $n=2$、$d_k=2$，单头，令\n\n$$\nQ=K=\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix},\\quad V=\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}\n$$\n\n则 $QK^\\top=I$，除以 $\\sqrt{2}$ 后分数矩阵为\n\n$$\nS=\\begin{bmatrix}0.707&0\\\\0&0.707\\end{bmatrix}\n$$\n\n对每行 softmax：第一行 $e^{0.707}\\approx2.028$、$e^0=1$，权重为 $[0.670,0.330]$；第二行为 $[0.330,0.670]$。于是\n\n$$\nA=\\begin{bmatrix}0.670&0.330\\\\0.330&0.670\\end{bmatrix},\\quad\nY=AV=A\n$$\n\n第一个 token 的输出是 $[0.670,0.330]$，它混入了第二个 token 的值。若把两个 token 交换，输出也交换，说明没有位置编码时模型分不清顺序；把位置向量加到输入 $X$ 上，才会打破这种置换等变。\n\n**面试高频问法**：\n\n- 为什么注意力要除以 $\\sqrt{d_k}$？ → 考点是缩放点积的数值性质。答法：点积方差随 $d_k$ 线性增长，不缩放会让 softmax 饱和、权重近似 one-hot；除以 $\\sqrt{d_k}$ 把方差拉回 1 量级。\n- 多头注意力和单头比，参数量增加了吗？ → 考点是头拆分与参数共享。答法：若每头 $d_k=d/h$，QKV 加输出约 $4d^2$，与单头 $d_k=d$ 同量级；多头是划分子空间，不是靠堆参数。\n- 位置编码为什么必要？正弦编码怎么表达位置？ → 考点是自注意力的置换等变性。答法：自注意力本身对 token 顺序等变，没有位置信息；正弦编码用不同频率的 sin/cos 给每个位置唯一模式，相对位移可由线性变换表达。\n- Pre-LN 和 Post-LN 的区别是什么？ → 考点是残差与归一化的连接顺序。答法：Pre-LN 先归一化再进子层，残差主干直通；Post-LN 在残差相加后归一化。原论文用 Post-LN，常见大模型实现用 Pre-LN。\n- 自注意力的计算复杂度是多少？ → 考点是 $n^2$ 项来源。答法：$QK^\\top$ 和 $AV$ 都是 $n\\times n$ 矩阵，复杂度 $O(n^2d)$；长序列时这是主要瓶颈。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "ai",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 8,
+    "section": "第 7 章 注意力与 Transformer：QKV、多头、位置编码、残差与归一化的位置"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.10",
+  "chapter": "DB01",
+  "title": "第 9 章 日志与恢复：WAL、redo、undo、checkpoint",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.10:body.s01",
+      "type": "extension",
+      "title": "第 9 章 日志与恢复：WAL、redo、undo、checkpoint",
+      "level": 2,
+      "content": "**要解决的问题**：事务已经返回 COMMIT，但数据页还停在内存里，机器断电后这份修改不能丢；事务做到一半崩溃，不能留下“钱扣了但没到账”的中间状态；同时，恢复所需的工作量不能随着数据库运行时间线性增长。WAL（Write-Ahead Logging）把随机写页换成顺序写日志，用日志重放和回滚同时满足持久性与原子性，checkpoint 负责给恢复划定起点。\n\n**机制**：\n\n三条规则确定了整个机制：\n\n1. **先日志后数据页**：任何脏页刷盘前，它对应的日志必须先到稳定存储。用 LSN（日志序列号）表达为 `pageLSN ≤ flushedLSN` 才能刷这个页。\n2. **redo 记录“怎么做”**：日志条目形如 `(LSN, txn_id, page_id, offset, before_image, after_image)`，描述对某页某偏移的修改（生理日志：页级定位、页内逻辑）。重放是幂等的——应用前比较 `pageLSN`，已应用过的条目直接跳过。\n3. **undo 记录“怎么退”**：前像（before image）用于回滚未提交事务，同时被 MVCC 复用为读旧版本的数据源。\n\n崩溃恢复按 ARIES 三阶段：\n\n```text\nanalysis : 从最近 checkpoint 扫到日志尾\n           重建 活跃事务表(ATT) + 脏页表(DPT)，得到每条记录的 recLSN\nredo     : 从 DPT 中最小的 recLSN 开始重放，幂等，重放所有事务(含未提交)\nundo     : 从日志尾反向扫描，回滚 ATT 中的未提交事务\n           每步写 CLR(compensation log record)，保证回滚中再崩也能继续\n```\n\n**checkpoint**：不是“把脏页全刷干净再记一笔”，那会造成停顿尖峰。模糊检查点在日志里写一条记录，内容是 `{活跃事务表, 脏页表(含每条记录的 recLSN)}`，之后脏页照常异步刷。恢复时从 checkpoint 的 `redo 起点 = min(recLSN)` 开始重放，把“从建库重放一遍”压缩成“从最近的脏页起点重放”。\n\n**最小例子**：\n\n```sql\nBEGIN;\nUPDATE account SET bal = bal - 100 WHERE id = 1;   -- 旧值 500\nCOMMIT;\n```\n\n执行路径：\n\n- 分配 LSN=1000，写 undo 记录（id=1, bal: 500→400 的反向映射）；\n- 分配 LSN=1001，写 redo 记录（页 P, 偏移 o, 400），进 log buffer；\n- COMMIT 时把 log buffer 刷到磁盘，`flushedLSN ≥ 1001` 才向客户端返回成功。此刻页 P 仍可能是 buffer pool 里的脏页；\n- 断电重启：analysis 发现该事务无结束标记 → redo 从 recLSN 重放 → undo 阶段用 undo 记录把 400 改回 500。\n\n**页断裂**：一个页写了一半断电，redo 重放会基于一个损坏的页。InnoDB 的做法是 doublewrite——刷页前先顺序写到 doublewrite 区域，恢复时用副本修复撕裂页。这是“日志之外的另一层保险”，面试常被追问。\n\n**面试高频问法**：\n\n1. **“为什么必须先写日志再写数据页？直接写页不行吗？”** → 考点：随机写 vs 顺序写的吞吐差距、持久性的最小化承诺、torn page。→ 答法：直接刷页意味着一次事务要等多次随机 IO，且断电会产生半页；WAL 把“提交”变成一次顺序日志 fsync，数据页可以延后批量刷，持久性靠日志重放兜底。\n2. **“redo 和 undo 各自保证什么？只留 redo 行不行？”** → 考点：持久性 vs 原子性，以及 undo 的 MVCC 副作用。→ 答法：redo 保证已提交事务不丢，undo 保证未提交事务能被抹掉；只有 redo 的话崩溃后无法撤销未提交的修改，而且 MVCC 读旧版本也没有数据源。\n3. **“checkpoint 做了什么？为什么恢复不用从日志头重放？”** → 考点：模糊检查点、recLSN、恢复时间上界。→ 答法：checkpoint 记录活跃事务表和脏页表（含每页 recLSN），恢复只需从最小 recLSN 开始，恢复时间被限制在“上次 checkpoint 之后的日志量”，而不是数据库总年龄。\n4. **“崩溃恢复的完整流程？”** → 考点：ARIES 三阶段、CLR 的必要性。→ 答法：analysis 重建 ATT/DPT，redo 从最小 recLSN 幂等重放所有事务，undo 反向回滚未提交事务并写 CLR；CLR 让“回滚过程中再崩溃”也能继续回滚而不是重复回滚。\n5. **“redo log 和 binlog 为什么需要两阶段提交？”** → 考点：两份日志的一致性、主从与恢复的口径。→ 答法：redo 是存储引擎的物理日志、binlog 是 server 层的逻辑日志，两者独立刷盘；若不协调，崩溃后可能出现“引擎里有、binlog 里没有”（从库丢数据）或反之（从库多数据），所以用 prepare/commit 两阶段加崩溃时的 XA 恢复裁决。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 12,
+    "section": "第 9 章 日志与恢复：WAL、redo、undo、checkpoint"
+  }
+}

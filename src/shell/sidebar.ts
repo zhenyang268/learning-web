@@ -26,6 +26,11 @@ export interface SidebarModel {
   /** 搜索词（空则不筛） */
   query?: string;
   /**
+   * 是否显示进度（单元 `L0`、章/域进度条、done 高亮）。
+   * 缺省 true；工程线显式 false —— 进度不在这套静态站里控制。
+   */
+  showProgress?: boolean;
+  /**
    * 章序（`subjects.ts` 的 `Subject.chapterOrder`，代号前缀 → 名次）。
    *
    * 为什么是 `(chap) => number` 而不是 `subject`：sidebar 是纯渲染层，
@@ -173,13 +178,19 @@ const sortUnits = (list: UnitMeta[], model?: SidebarModel): UnitMeta[] =>
 const progressOfList = (units: UnitMeta[], masteryOf: (c: string) => number): number =>
   units.length ? units.reduce((s, u) => s + masteryOf(u.code), 0) / (units.length * 5) : 0;
 
-function nodeHtml(u: UnitMeta, current: string, masteryOf: (c: string) => number): string {
+function nodeHtml(
+  u: UnitMeta,
+  current: string,
+  masteryOf: (c: string) => number,
+  showProgress = true,
+): string {
   const m = masteryOf(u.code);
-  return `<div class="node${u.code === current ? ' on' : ''}${m >= 3 ? ' done' : ''}"
+  const done = showProgress && m >= 3 ? ' done' : '';
+  return `<div class="node${u.code === current ? ' on' : ''}${done}"
     data-goto="${escapeHtml(u.code)}" role="button" tabindex="0" title="${escapeHtml(u.title)}">
     <span class="code">${escapeHtml(displayCode(u.code))}</span>
     <span class="ttl">${escapeHtml(u.title)}</span>
-    <span class="m">L${m}</span>
+    ${showProgress ? `<span class="m">L${m}</span>` : ''}
   </div>`;
 }
 
@@ -202,13 +213,16 @@ function renderChapter(
   open: boolean,
   muted = false,
 ): string {
-  const avg = progressOfList(units, model.masteryOf);
-  const items = open ? units.map((u) => nodeHtml(u, model.current, model.masteryOf)).join('') : '';
+  const show = model.showProgress !== false;
+  const avg = show ? progressOfList(units, model.masteryOf) : 0;
+  const items = open
+    ? units.map((u) => nodeHtml(u, model.current, model.masteryOf, show)).join('')
+    : '';
   return `<details class="chap${muted ? ' indexed' : ''}" data-chap="${escapeHtml(chap)}"${open ? ' open' : ''}>
       <summary title="${escapeHtml(chapterHint(units))}">
         <span class="chcode">${escapeHtml(chap)}</span>
         <span class="chtitle">${escapeHtml(chapterHint(units))}</span>
-        <i class="cbar" style="transform:scaleX(${avg.toFixed(3)})"></i>
+        ${show ? `<i class="cbar" style="transform:scaleX(${avg.toFixed(3)})"></i>` : ''}
       </summary>
       <div class="units"${open ? '' : ' data-lazy="1"'}>${items}</div>
     </details>`;
@@ -262,7 +276,7 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
       matched,
       model,
     )
-      .map((u) => nodeHtml(u, model.current, model.masteryOf))
+      .map((u) => nodeHtml(u, model.current, model.masteryOf, model.showProgress !== false))
       .join('')}</div>`;
     const box = host.querySelector<HTMLElement>('.box');
     if (box) box.scrollTop = q !== lastQuery ? 0 : keptScroll;
@@ -421,13 +435,14 @@ export function renderSidebar(host: HTMLElement, model: SidebarModel): void {
       const inner = doms
         .map((sec) => {
           const all = sec.chaps.flatMap((c) => byChapter.get(c) ?? []);
-          const avg = progressOfList(all, model.masteryOf);
+          const show = model.showProgress !== false;
+          const avg = show ? progressOfList(all, model.masteryOf) : 0;
           const label = sec.label;
           return `<div class="dom" data-dom="${escapeHtml(sec.domain)}" data-sec="${escapeHtml(sec.key)}">
             <div class="domhead" title="${escapeHtml(label)}">
               <span class="domlabel">${escapeHtml(label)}</span>
               <span class="dim dommeta">${sec.chaps.length} 章 · ${all.length} 单元</span>
-              <i class="dbar" style="transform:scaleX(${avg.toFixed(3)})"></i>
+              ${show ? `<i class="dbar" style="transform:scaleX(${avg.toFixed(3)})"></i>` : ''}
             </div>
             ${sec.chaps
               .map((c) => renderChapter(c, byChapter.get(c) ?? [], model, c === curChapter))
@@ -480,7 +495,14 @@ function wireLazy(host: HTMLElement): void {
       const chap = el.dataset.chap ?? '';
       const units = info?.byChapter.get(chap) ?? [];
       box.innerHTML = units
-        .map((u) => nodeHtml(u, info?.model.current ?? '', info?.model.masteryOf ?? (() => 0)))
+        .map((u) =>
+          nodeHtml(
+            u,
+            info?.model.current ?? '',
+            info?.model.masteryOf ?? (() => 0),
+            info?.model.showProgress !== false,
+          ),
+        )
         .join('');
       delete box.dataset.lazy;
     },
@@ -502,6 +524,7 @@ export function patchSidebarMastery(host: HTMLElement, model: SidebarModel, code
   if (mEl) mEl.textContent = `L${m}`;
   node.classList.toggle('done', m >= 3);
 
+  if (model.showProgress === false) return false;
   const chap = chapterOf(code);
   const units = model.units.filter((u) => chapterOf(u.code) === chap);
   const bar = host.querySelector<HTMLElement>(`.chap[data-chap="${attrEscape(chap)}"] .cbar`);

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DF01.9",
+  "chapter": "DF01",
+  "title": "附 · 本线的验证纪律（跨章，不单独成「章」）",
+  "src": {
+    "file": "notebook/projects/raft/go-lab/NOTES.md",
+    "sha256": "sha256:b18216ee2836e911aa1713889307c68af193bafb789b231d240ef7cd3c7272f5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DF01.9:body.s01",
+      "type": "extension",
+      "title": "附 · 本线的验证纪律（跨章，不单独成「章」）",
+      "level": 2,
+      "content": "- 每个场景**固定种子**并记录；失败的种子必须留档，能重放。\n- 竞态检测常开；它不报警只说明这一轮没撞上，不说明没有竞态。\n- 判据是「不变量没被打破」，不是「命令没报错」：各节点投递出的序列互为前缀、已提交条目消失不了、任期不回退、同任期无二主。\n- **不发任何数字**：不谈吞吐、不谈延迟、不谈「几秒内一定选出主」。要谈就谈条件和量级口径。\n- 本章列出的所有机制都还没被验证过（本文件是路线，不是成果）；任何「已实现/已通过」的说法都属于待核。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "raft",
+    "project": "go-lab",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 8,
+    "section": "附 · 本线的验证纪律（跨章，不单独成「章」）"
+  }
+}

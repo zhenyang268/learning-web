@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP04.11",
+  "chapter": "CP04",
+  "title": "第 10 章 什么时候不该用 LLVM：教学编译器、JIT、DSL 的取舍",
+  "src": {
+    "file": "notebook/projects/cpu/compiler/NOTES.md",
+    "sha256": "sha256:c6fff8754ad6e8ac1d415ac403d79eedbe0ea927767a531665e867679040055f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP04.11:body.s01",
+      "type": "extension",
+      "title": "第 10 章 什么时候不该用 LLVM：教学编译器、JIT、DSL 的取舍",
+      "level": 2,
+      "content": "**要解决的问题**：LLVM 是「所有语言、所有目标」的重型基础设施，选错场景的代价是构建时间、产物体积、API 迁移成本和团队认知。这一章的作用是划边界：什么情况下接 LLVM 是纯亏损，以及不用它时用什么。\n\n**机制**\n\n判断不看「LLVM 好不好」，看三个变量：目标平台数量、优化需求强度、单段代码的执行次数。\n\n**教学编译器。** 课程目标是前端（词法、语法、语义、类型检查）和 IR 设计。接 LLVM 等于把中后端整段跳过，学生只写一个 AST→IR 的翻译器，指令选择、寄存器分配、调用约定一个都碰不到；而 LLVM 的构建成本（CMake、数十 GB 磁盘、链接时间）和 C++ API 的版本波动会吃掉课程时间。替代路径是自己写树遍历解释器 → 栈式字节码 VM → 简单寄存器机，或者用 QBE、Cranelift 这类小后端。\n\n**JIT。** LLVM 的 JIT 接口是 ORC：`llvm::orc::LLJIT`、`ExecutionSession`、`JITDylib`、`ThreadSafeModule`、`DynamicLibrarySearchGenerator`。把函数编译到 `-O0`/`-O2` 通常是毫秒到几十毫秒量级（按实现和函数大小而定），对冷启动敏感的进程（CLI 工具、serverless）摊不平。常见做法是 tier-up：先解释执行或模板 JIT 保证启动，用计数器或回边计数识别热点，再对热点函数生成 IR 交给 ORC 优化。tier-up 的额外工程量在 OSR——在循环入口构造新栈帧跳进优化代码，以及代码内存的 W^X 管理、GC 栈图协作（`gc.statepoint` / `gc.root`）、异常展开表和调试信息。\n\nJIT 的回本点可以直接算。设一次编译成本 $T_c$，解释执行一次 $T_i$，编译后执行一次 $T_j$，则执行 $N$ 次才回本：\n\n$$N^* = \\frac{T_c}{T_i - T_j}$$\n\n**DSL。** 如果 DSL 只是表达式求值加少量控制流，字节码 VM 更划算：解析成 `enum Op` 数组，switch 分发，几百行代码，对配置、规则这类场景性能足够。只有需要跟宿主语言零拷贝互操作、需要 SIMD、需要跨多种 CPU 时，LLVM 才是正解。折中方案是先解释，再对热点子集生成 IR。\n\n**几条硬约束**"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "compiler",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 11,
+    "section": "第 10 章 什么时候不该用 LLVM：教学编译器、JIT、DSL 的取舍"
+  }
+}

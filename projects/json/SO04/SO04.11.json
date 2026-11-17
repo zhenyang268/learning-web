@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO04.11",
+  "chapter": "SO04",
+  "title": "附：两块设备的对照",
+  "src": {
+    "file": "notebook/projects/os/drivers/NOTES.md",
+    "sha256": "sha256:97e4aa1f82aecd48001369efcf5ecd6115e15522145d220eae80babec3faff7e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO04.11:body.s01",
+      "type": "extension",
+      "title": "附：两块设备的对照",
+      "level": 2,
+      "content": "| 维度 | IDE 磁盘（PIO） | e1000 网卡 |\n|---|---|---|\n| 寄存器访问 | 端口 I/O | MMIO |\n| 数据搬运 | CPU `insl` | DMA |\n| 完成通知 | 轮询状态位 | 中断 |\n| 并发 | 单请求、可加锁 | 环形队列、收发并行 |\n| 错误模型 | `ERR` 位 + 超时 | 描述符 `errors` + 丢包计数 |\n| 上层 | 块缓存 → inode → 用户态 FS 进程 | ARP/IP/UDP → socket |\n| 最易错的点 | 状态位顺序、超时 | 所有权转移、归还时机 |"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "drivers",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 10,
+    "section": "附：两块设备的对照"
+  }
+}

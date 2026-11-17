@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.19",
+  "chapter": "CS01",
+  "title": "7.9 冲刺期怎么排这张表（60 天，项目线不占教材主线）",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.19:body.s01",
+      "type": "extension",
+      "title": "7.9 冲刺期怎么排这张表（60 天，项目线不占教材主线）",
+      "level": 3,
+      "content": "> 假设每周能给项目线 8–10 小时（教材主线之外的余量）。**任何一关卡住超过预算 1.5 倍，就跳到下一个** —— 卡住的地方回头再看往往一眼就通。\n\n| 周次 | 内容 | 预算 | 完成标志 |\n|---|---|---|---|\n| 第 1 周 | **datalab** 13 题 + cachelab **Part A** | 6–8 h | `./btest` 全绿；`./test-csim` 满分 |\n| 第 2 周 | cachelab **Part B**（32→64→61 三关） | 4–6 h | `./driver.py` 三个矩阵都过满分线 |\n| 第 3–4 周 | **malloclab** Level 1 → Level 2（显式链表） | 10–15 h | 前 9 个 trace 正确 + Perf index ≥ 75 |\n| 第 5 周 | **shlab** 16 个 trace | 6–8 h | `sdriver.pl` 全 16 条与 `tshref.out` 对齐 |\n| 第 6 周（可选） | archlab **A+B** 或 proxylab **Part I** | 5–8 h | `yis` 出 0xcba；或 telnet 打通代理 |\n| 机动 | bomb 复习清单 + attack 原理 | 3–4 h | 见 §7.2 / §7.3 的验收要求 |\n\n**优先级铁律**：`malloclab` 与 `shlab` 是 OS 的两块硬骨头，优先级高于 archlab/proxylab；`archlab Part C` 与 `proxylab Part III` 永远排最后，时间不够就直接砍。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 18,
+    "parts": 20,
+    "section": "7.9 冲刺期怎么排这张表（60 天，项目线不占教材主线）"
+  }
+}

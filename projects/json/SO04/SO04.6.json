@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO04.6",
+  "chapter": "SO04",
+  "title": "第 4 章 JOS 文件服务与 `spawn`",
+  "src": {
+    "file": "notebook/projects/os/drivers/NOTES.md",
+    "sha256": "sha256:97e4aa1f82aecd48001369efcf5ecd6115e15522145d220eae80babec3faff7e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO04.6:body.s01",
+      "type": "extension",
+      "title": "第 4 章 JOS 文件服务与 `spawn`",
+      "level": 2,
+      "content": "**要解决的问题**：把文件系统放在用户态，就必须解决\"别的进程怎么访问它\"和\"程序怎么被加载\"。\n\n**机制**：\n\n**请求集**（`FSREQ_*`）：`OPEN / MAP / SET_SIZE / CLOSE / STAT / UNLINK / FLUSH / READ / WRITE`。每个请求是一个结构体，客户端用 `ipc_send` 发给 FS 进程，FS 处理完用 `ipc_recv` 回值。\n\n**页映射是关键**：`FSREQ_MAP` 让 FS 进程把\"文件的第 n 页\"映射进客户端的地址空间（`sys_page_map`），之后客户端直接读那块内存，**不需要拷贝**。这也是为什么 JOS 的 `file_read` 实现得很轻：它只是触发映射，然后 `memmove`。\n\n**`spawn` 的步骤**（读 ELF 并起一个新进程）：\n\n```text\n1. open(path) → 读 Elf32_Ehdr，校验 magic\n2. 遍历 phdr：对每个 PT_LOAD 段\n     - 计算需要的页数，sys_page_alloc 分配子进程页\n     - fsipc_map 把文件对应页映射到临时地址，memcpy 到子进程页（不完整页要清零）\n3. 分配并映射用户栈，把 argv 字符串拷进去，构造 argc/argv\n4. sys_env_set_status(child, ENV_RUNNABLE)\n```\n\n**最小例子**：`file_read` 与内核内 `read` 的成本对比——JOS 是\"两次调度 + 一次 IPC + 一次页操作\"；xv6 是\"一次系统调用 + 一次块缓存拷贝\"。**同样 4 KB，路径长度差 3 倍以上，但 JOS 的文件系统崩了不影响内核。**\n\n**面试高频问法**：\n\n1. **「为什么用页映射而不是把数据拷进 IPC 消息？」** → 考点：零拷贝与页粒度。答法：IPC 消息只有一个 `uint32_t` 的载荷；大块数据必须靠页共享。映射一次 4 KB 比逐字节拷贝便宜得多，而且天然按页对齐。\n2. **「`spawn` 为什么需要自己清零 `.bss`？」** → 考点：ELF 语义。答法：`p_memsz > p_filesz` 的那部分是 `.bss`，文件里不存在；加载器必须显式清零，否则子进程会看到上一个进程的残留数据（信息泄露）。\n3. **「用户态文件服务在生产里怎么活下来？」** → 考点：FUSE。答法：Linux 的 FUSE 就是同一形态：内核转发请求，用户态守护进程处理。代价是每次操作多次上下文切换，收益是崩溃隔离与开发便利。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "drivers",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 10,
+    "section": "第 4 章 JOS 文件服务与 `spawn`"
+  }
+}

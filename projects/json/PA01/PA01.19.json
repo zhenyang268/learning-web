@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.19",
+  "chapter": "PA01",
+  "title": "15 一句话总结",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.19:body.s01",
+      "type": "extension",
+      "title": "15 一句话总结",
+      "level": 2,
+      "content": "**CS149 的全部作业都在练同一件事：拿到一段代码 + 一台机器，判断它离\"这台机器的上限\"还有多远、差在哪一步，然后用最小的改动把它推近。** 语言（ISPC/CUDA/NKI）和硬件（CPU/GPU/Trainium）都只是这道题的换皮版本。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 18,
+    "parts": 18,
+    "section": "15 一句话总结"
+  }
+}

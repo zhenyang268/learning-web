@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG02.5",
+  "chapter": "LG02",
+  "title": "第 4 章 装饰器与闭包",
+  "src": {
+    "file": "notebook/projects/langs/python-basics/NOTES.md",
+    "sha256": "sha256:756d0b7dacd8aaff39313179f8b6b750108fa2187ac744c8d1474d84cf6e0c1b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG02.5:body.s01",
+      "type": "extension",
+      "title": "第 4 章 装饰器与闭包",
+      "level": 2,
+      "content": "**要解决的问题**：在不改函数体、不改调用方写法的前提下，给函数附加横切行为（计时、日志、缓存、鉴权、重试），并且让「函数 + 它依赖的外部变量」能像普通值一样被传递。不解决的话，这些逻辑只能复制到每个函数里，或者被迫用继承/包装类把简单函数对象搞复杂。\n\n**机制**：\n\n- 函数是一等对象，`def f()` 只是「创建函数对象并绑定到名字 f」。所以函数可以当参数传、当返回值返。\n- 装饰器就是接受可调用对象、返回可调用对象的高阶函数。`@deco` 是语法糖，等价于 `f = deco(f)`，**在函数定义时执行一次**，不是每次调用都执行。\n- 闭包：内层函数引用了外层函数的局部变量（free variable）。外层返回后，这些变量不会随栈帧销毁，而是被搬进 cell 对象，挂在 `f.__closure__` 上，名字列表在 `f.__code__.co_freevars`。\n- 内层函数要给外层变量**重新绑定**，必须 `nonlocal`；不加就是新建一个内层局部变量，外层那个纹丝不动（只读引用则不需要）。\n- 多个装饰器叠加：应用顺序自下而上（离函数近的先包），调用时进入顺序自上而下。\n- `functools.wraps` 把 `__module__/__name__/__qualname__/__doc__/__dict__` 复制到 wrapper 上，并写入 `__wrapped__`，`inspect.signature` 会顺着 `__wrapped__` 找到原函数签名。\n\n```python\nimport functools, time\n\ndef timed(label):                      # 第 1 层：装饰器参数\n    def deco(fn):                      # 第 2 层：被装饰的函数\n        @functools.wraps(fn)\n        def wrapper(*args, **kwargs):  # 第 3 层：实际调用\n            t0 = time.perf_counter()\n            try:\n                return fn(*args, **kwargs)\n            finally:\n                print(f\"{label}:{fn.__name__} {time.perf_counter() - t0:.3f}s\")\n        return wrapper\n    return deco\n\ndef counter():\n    n = 0\n    def inc():\n        nonlocal n                     # 没有它 n += 1 会报 UnboundLocalError\n        n += 1\n        return n\n    return inc\n```\n\n**最小例子**：\n\n```python\n@timed(\"db\")\ndef query(sql, limit=10):\n    return [sql] * limit\n\nquery(\"select 1\")        # 打印 db:query 0.000s，返回长度 10 的列表\nquery.__name__           # 'query'，靠 wraps 保住\nquery.__wrapped__(\"x\")   # 绕过装饰器直接调原函数\n\nc = counter(); c(), c()  # 1, 2\nc.__closure__[0].cell_contents   # 2\n```\n\n`@timed(\"db\")` 的执行过程是：先算 `timed(\"db\")` 得到 `deco`，再用 `deco(query)` 得到 wrapper 并绑定回 `query`。\n\n**面试高频问法**：\n\n1. **「装饰器的本质是什么，`@` 做了什么？」** → 考点是「定义时求值、返回可调用对象」。答法：装饰器是 `f = deco(f)` 的语法糖，在函数定义时执行一次，把原函数替换成返回值；所以它既能返回函数，也能返回类或任意可调用对象。\n2. **「为什么要 `functools.wraps`，不加会怎样？」** → 考点是元信息与自省。答法：不加的话 `__name__` 变成 `wrapper`、`__doc__` 丢失、签名变成 `*args, **kwargs`，日志、文档生成、依赖签名的框架（如 FastAPI 注入、`inspect.signature`）都会出错；wraps 负责拷贝元信息并设置 `__wrapped__`。\n3. **「闭包变量存在哪，为什么需要 `nonlocal`？」** → 考点是 cell 与作用域规则。答法：自由变量存在函数的 `__closure__` cell 里；作用域规则是「内层赋值即视为局部变量」，所以重新绑定外层变量必须显式 `nonlocal`。\n4. **「循环里创建闭包，为什么都拿到最后一个值？」** → 考点是延迟绑定。答法：闭包捕获的是变量本身而不是当时的值，循环结束后变量已是最后一个值；修复用默认参数 `lambda i=i: ...` 或 `functools.partial` 把值提前固定。\n5. **「带参数的装饰器为什么要写三层？」** → 考点是求值层次。答法：最外层收装饰器参数，中间层收被装饰函数，最内层收调用参数；因为 `@deco(arg)` 先执行 `deco(arg)`，它必须返回一个真正能接收函数的装饰器。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "python-basics",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 10,
+    "section": "第 4 章 装饰器与闭包"
+  }
+}

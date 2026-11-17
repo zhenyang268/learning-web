@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.17",
+  "chapter": "PA01",
+  "title": "13 复习验收清单（自测用）",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.17:body.s01",
+      "type": "extension",
+      "title": "13 复习验收清单（自测用）",
+      "level": 2,
+      "content": "每个 PA 过完，试着**不看笔记**回答下面这些问题；答不上来就回对应章节。\n\n**PA1**\n1. 为什么 mandelbrot 按连续块切分时 3 线程那个点特别差？交织分配为什么不需要任何同步？\n2. 为什么 16 线程不会比 8 线程快？\n3. 同一个 gang 里 lane 的迭代次数不同，对耗时的精确影响是什么？\n4. saxpy 每 3 个元素 2 次运算，为什么\"改到近线性加速\"是不可能的？`TOTAL_BYTES` 里为什么乘 4？\n5. kmeans 的热点为什么是 `computeAssignments`？为什么骨架按 k 切分是错的？\n\n**PA2**\n1. `run()` 返回时，\"队列为空\" 和 \"已完成计数 == 总数\" 哪个才是正确判据？为什么？\n2. 主线程在 `run()` 里自旋会怎样伤害 worker？\n3. 条件变量为什么必须放在 `while` 里等？\n4. 依赖是任务级还是 launch 级？launchA 结束后 launchB 和 launchC 之间是什么关系？\n5. `super_super_light` 上为什么串行版能赢？\n\n**PA3**\n1. 骨架错在哪两处？为什么\"顺序只约束同一像素\"这句话是优化空间的来源？\n2. 为什么建议先解决 order 再考虑 atomicity？\n3. shared-memory scan 的三条硬性要求是什么？2D 线程下标为什么必须 `threadIdx.y * blockDim.x + threadIdx.x`？\n4. `micro2M`（200 万个极小圆）为什么逼着你换并行轴？\n5. `cudaMalloc` 失败了你会看到什么？（答案：什么都不看到——所以它必须被包起来）\n\n**PA4**\n1. SBUF / PSUM / HBM 的容量与角色？为什么说 Trainium 的存储是 software managed？\n2. `nc_matmul` 的三个 tile 上限？左操作数为什么要转置？\n3. partition 维 P 的上限是多少、必须是第几维？\n4. 融合 conv+maxpool 到底省了什么？（答案：一次 HBM 往返，不是算力）\n5. 循环排序的两条原则是什么？\n\n**PA5**\n1. 给出一组 NCU 数字（Compute 18%、DRAM 4.5%、SM Busy 31%），瓶颈是什么？\n2. work log 的每一步要写哪六项？\n\n**biggraphs**\n1. 为什么\"先读一次再决定是否发 CAS\"是安全的？\n2. top-down / bottom-up 各自在什么 frontier 规模下占优？阈值该怎么定？\n\n**课程后半场（§12，面试 + 408 双考点）**\n1. 串行比例 s = 0.25 的程序，核数趋于无穷时加速比上限是多少？想把上限提到 100 倍，s 必须压到多少以下？\n2. work-span 模型里 D 是什么？mandelbrot 的\"等最慢线程\"和 SIMD 的\"最慢 lane\"分别是 W/p 和 D 里的哪一项造成的？\n3. H100 的屋脊点大约在多少 FLOP/Byte？LLM decode 的算术强度是多少、落在墙的哪一侧？——这道题的公式化答案是什么？\n4. MESI 比 MSI 多出的 E 态，省掉了哪一类总线事务？\n5. 八个线程写同一 cache line 里的八个不同 int，为什么性能崩？怎么修？\n6. coherence 和 consistency 的区别是什么？DCLP 在没有 acquire/release 时会坏在哪一步？\n7. ABA 问题为什么骗得过 CAS？tagged pointer 是怎么堵住它的？"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 16,
+    "parts": 18,
+    "section": "13 复习验收清单（自测用）"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG00.8",
+  "chapter": "EG00",
+  "title": "5 常见误配",
+  "src": {
+    "file": "notebook/projects/eng/NOTES.md",
+    "sha256": "sha256:e214cf5954a537c33d05170a4d2a93b87a993d118977ca442a1b652629277764"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG00.8:body.s01",
+      "type": "extension",
+      "title": "5 常见误配",
+      "level": 2,
+      "content": "| 误配 | 后果 | 正确做法 |\n|---|---|---|\n| 先读 `system-design` 再读 `testing`/`debug` | 只会画架构图，一遇到现场就空 | 定位与验证是地基，先做 |\n| 用覆盖率当质量证明 | 被\"注入故障\"一问就打穿 | 用注入故障证明测试有效 |\n| 只有火焰图没有结论 | 图表不是归因 | 每个图后面跟一句\"所以瓶颈在 X\" |\n| 把 `latent-issues` 当名词表背 | 追问触发条件就崩 | 每条记三件事：触发/观测/误判 |\n| 把方法论讲成流程 | 听起来像管理者 | 每条都要落到一次测量或一次复现 |"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 8,
+    "section": "5 常见误配"
+  }
+}

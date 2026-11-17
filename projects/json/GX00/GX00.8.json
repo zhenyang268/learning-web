@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "GX00.8",
+  "chapter": "GX00",
+  "title": "5 一句话收口",
+  "src": {
+    "file": "notebook/projects/cg/NOTES.md",
+    "sha256": "sha256:373aa8c10be69fc1a7bb6ebad51cb94834d59ff1f1b4b13e3d95cf914c7c764a"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "GX00.8:body.s01",
+      "type": "extension",
+      "title": "5 一句话收口",
+      "level": 2,
+      "content": "这条链的价值不在于五个子项目都做完，而在于**你能在任何一段被截停时，说清它在整条链上负责哪一段、代价落在哪里、下一步该谁接手**——能说清这个，才叫走完了。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cg",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 7,
+    "section": "5 一句话收口"
+  }
+}

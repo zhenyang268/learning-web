@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "EG01.1",
   "chapter": "EG01",
-  "title": "testing · 大纲",
+  "title": "testing · 总览",
   "src": {
     "file": "notebook/projects/eng/testing/OUTLINE.md",
     "sha256": "sha256:da170cae5eac68ba2a94eea424fa0fc4c4c6f325ee83c8abfa3b2fbdb657a7c9"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

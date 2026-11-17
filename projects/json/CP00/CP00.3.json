@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP00.3",
+  "chapter": "CP00",
+  "title": "0 怎么用这份文件",
+  "src": {
+    "file": "notebook/projects/cpu/NOTES.md",
+    "sha256": "sha256:f11e2f546f1a0222d1555da30fba4f53c302c37eb193a45111454c1b8d382c0f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP00.3:body.s01",
+      "type": "extension",
+      "title": "0 怎么用这份文件",
+      "level": 2,
+      "content": "- **要选路径**：读 §3（60 分）与 §4（80 分），按表里的顺序走。\n- **要查对应关系**：「读的那一章」和「动手的那一步」怎么咬合，看 §2 的映射表。\n- **要统一说法**：同一个词在四份文档里可能有不同侧重，看 §1 的口径表，避免自相矛盾。\n- **要知道什么不该做**：看 §5 的常见误配。\n- **要准备被跨线追问**：看 §6，那里是「只知道单份文档就答不完整」的问题。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 9,
+    "section": "0 怎么用这份文件"
+  }
+}

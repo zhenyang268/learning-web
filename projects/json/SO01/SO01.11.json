@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.11",
+  "chapter": "SO01",
+  "title": "第 9 章〔文件〕元数据与目录：inode、硬链接与软链接、stat 的三个时间",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.11:body.s01",
+      "type": "extension",
+      "title": "第 9 章〔文件〕元数据与目录：inode、硬链接与软链接、stat 的三个时间",
+      "level": 2,
+      "content": "**要解决的问题**：四类真实故障都源于元数据没搞清。①`df -h` 还有 40% 空间，创建文件却报 `No space left on device`——inode 被小文件耗尽；②`df` 用 90%、`du -sh` 加起来只有 30%——被删除但仍被进程打开的文件没释放；③改完配置重启服务仍读旧值——编辑器用 `rename` 换了 inode，旧进程还持有旧 inode 的 fd；④增量备份、`find -mtime` 漏文件——把 `ctime` 当创建时间、或把 `mtime` 当成“最后一次访问”。不会这一层，线上就只能靠重启和猜。\n\n**API 与代价**：\n\n```c\n#include <sys/stat.h>\nstruct stat st;\nif (stat(\"/etc/app.conf\", &st) == -1)   /* 跟随符号链接；lstat 不跟随 */\n    perror(\"stat\");                     /* ENOENT ENOTDIR ELOOP EACCES ENAMETOOLONG */\nst.st_dev; st.st_ino;   /* 唯一标识：跨文件系统 ino 会重复，必须带 dev */\nst.st_nlink;            /* 硬链接数，普通目录至少 2 */\nst.st_size;             /* 逻辑大小 */\nst.st_blocks;           /* 512B 为单位的实占块数，稀疏文件 << size/512 */\nst.st_atim; st.st_mtim; st.st_ctim;     /* 访问 / 修改 / inode 变更 */\n\n/* 创建时间要 statx，且底层支持 */\nstruct statx sx;\nstatx(AT_FDCWD, \"/etc/app.conf\", 0, STATX_BTIME, &sx);\n```\n\n- `stat` 一次系统调用，内核走逐级路径解析：每级目录先查 dentry 缓存，未命中就目录读 I/O。代价与路径深度成正比；热路径用 `openat(dirfd, name)` 缓存目录 fd、必要时 `fstatat(dirfd, name, &st, AT_SYMLINK_NOFOLLOW)`，避免重复解析。\n- `link()`/`linkat()` 只是新增一个目录项、`i_nlink++`，不复制数据；跨文件系统返回 `EXDEV`。`unlink()` 只是 `i_nlink--`，inode 要等 `nlink == 0 && i_count == 0` 才回收。\n- `symlink()` 创建 `S_IFLNK` 类型的新 inode；目标串短于 60 字节时直接内联在 `i_block[]`（fast symlink），不占数据块。`readlink()` 不保证 `\\0` 结尾。\n- 常见误用：拿 `st_ctime` 当创建时间；`stat` 一个软链接拿到目标信息导致 `nlink` 判断错；以为 `unlink` 立即释放空间；`rename` 之后不 `fsync` 父目录 fd，掉电后目录项可能回退。\n\n**对应命令与读法**：\n\n1. `stat /var/log/app.log` → 看 `Inode`、`Links`、`Access`/`Modify`/`Change`/`Birth` → `Links` 大于 1 说明有硬链接；`Change` 是 inode 变更时间（chmod/chown/link 都会改），**不是创建时间**；`Birth` 为 `-` 表示该文件系统或 inode 不支持 btime（如 ext4 用了 128B inode）→ 会骗你：`Access` 在 `relatime` 下长时间不更新，别用它证明“文件没被读过”。\n2. `df -i /var` → 看 `IUsed`、`IFree`、`IUse%` → `IUse%` 到 100% 时任何创建都报 `ENOSPC`，而 `df -h` 可能还很空 → 会骗你：XFS 动态分配 inode，`IUse%` 高但一般打不满；ext4 的 inode 总数在 `mkfs` 时就固定了。\n3. `du -sh /var/*` → 按 `st_blocks`（512B）累加，不是 `st_size` → 远小于 `df` 用量时，怀疑 deleted-but-open 与稀疏文件 → 会骗你：同一次遍历里硬链接只算一次（这是对的），但被删文件完全不出现；目录自身也占块；跨挂载点会算进别的文件系统。\n4. `ls -li /var/log` → 第一列是 inode 号 → 两个路径 inode 相同即同一文件（硬链接）；不相同的软链接会显示 `->` → 会骗你：`ino` 只在同一 `st_dev` 内唯一，容器/多挂载点下必须配合 `stat` 的 `Device` 一起看。\n5. `find /var -xdev -inum 1234567` → 定位某 inode 的所有路径 → 核对“这是不是残留硬链接 / 到底谁占着这个 inode” → 会骗你：不加 `-xdev` 会跨进别的文件系统（慢且混入无关结果）；对已删除但仍打开的文件它找不到，得用 `lsof +L1`。\n\n**原理**：inode 是磁盘上固定大小的记录（ext4 默认 256B，`mkfs` 时按 `bytes-per-inode≈16384` 预分配整张表），存属主、模式、大小、三个时间、块映射与 `i_links_count`；文件名不在 inode 里。目录本身是一个“名字 → inode 号”的映射文件，`ls -li` 的第一列就是映射结果，所以硬链接在语义上就是“同一 inode 的第二个目录项”，与复制数据无关。\n\n路径解析靠内存中的 dentry 缓存（`struct dentry` 持有 `d_inode`）：命中 dcache 时完全不碰磁盘，这是“反复 `stat` 同一路径很便宜、冷路径每层都要读目录块”的原因。ext4 大目录用 htree 索引，但首次查找仍可能触发多次读。\n\n三个时间由写路径维护：`file_update_time()` 更新 `mtime`/`ctime` 并置 `I_DIRTY_SYNC`，随 journal 事务提交落盘。`atime` 由挂载选项决定：`strictatime` 每次读都写 inode，`relatime`（默认）只在\n\n$$\\text{atime} < \\text{mtime} \\;\\lor\\; \\text{now} - \\text{atime} > 24\\text{h}$$\n\n时更新，`noatime` 永不更新——这就是把只读负载从“写 inode”里救出来的机制。\n\n删除路径：`unlink` → `vfs_unlink` → 摘目录项 → `drop_nlink` → `iput()`；只要还有打开的文件描述符（`i_count > 0`），inode 与数据块都留在内存和磁盘上，只有最后一个 `close` 才真正释放。这正是 `df` 与 `du` 对不上的根因。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 19,
+    "section": "第 9 章〔文件〕元数据与目录：inode、硬链接与软链接、stat 的三个时间"
+  }
+}

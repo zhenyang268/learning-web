@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "CP00.1",
   "chapter": "CP00",
-  "title": "cpu · 分组 · 大纲",
+  "title": "cpu · 分组 · 总览",
   "src": {
     "file": "notebook/projects/cpu/OUTLINE.md",
     "sha256": "sha256:9d22e893fce0986a0947e678d131b9e29d0b40f93aa9d22583844f963e0c6381"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

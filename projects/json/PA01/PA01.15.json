@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "PA01.15",
+  "chapter": "PA01",
+  "title": "11 biggraphs 逐层 · OpenMP BFS（支线 / 加分）",
+  "src": {
+    "file": "notebook/projects/cs149/NOTES.md",
+    "sha256": "sha256:9aa8d6a2a24fa3a0e4f21f9bcbe9ce0b1b8c0bd8c1f79a84043c10f77c1d6ec3"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "PA01.15:body.s01",
+      "type": "extension",
+      "title": "11 biggraphs 逐层 · OpenMP BFS（支线 / 加分）",
+      "level": 2,
+      "content": "> 源码在 `biggraphs-ec-main.zip` 内：`bfs/bfs.cpp`（122 行，只有 `bfs_top_down` 是完整的，`bfs_bottom_up` / `bfs_hybrid` 是空函数）、`common/graph.h`。\n> 加分规则：拿到 x/84 分就给**前面任意一个** PA 加 `(x/84)*10` 分。\n\n### 15.1 数据结构（真实定义）\n\n```\nstruct graph {\n    int num_edges, num_nodes;\n    int* outgoing_starts;  Vertex* outgoing_edges;   // CSR 出边\n    int* incoming_starts;  Vertex* incoming_edges;   // CSR 入边（bottom-up 要用）\n};\n```\n\nfrontier 就是一个 `vertex_set { int count; int max_vertices; int* vertices; }`——**一个数组 + 一个计数**，每轮 BFS 在两个 list 之间来回 swap。\n\n### 15.2 Part 1：top-down 并行版\n\n串行骨架：遍历 frontier 里每个点的出边，遇到 `distances[v] == -1` 就设距离并加入新 frontier。并行化时**两处竞争**：\n\n1. `distances[outgoing]` 的读写（多个线程可能同时发现同一个未访问点）；\n2. `new_frontier->count++`（抢下标）。\n\n**CAS 解法**（handout 明确要求用 compare-and-swap 而不是 `#pragma omp critical`）：\n\n```\n#pragma omp parallel for\nfor (int i = 0; i < frontier->count; i++) {\n    int node = frontier->vertices[i];\n    int start = g->outgoing_starts[node];\n    int end   = (node == g->num_nodes - 1) ? g->num_edges : g->outgoing_starts[node+1];\n\n    for (int e = start; e < end; e++) {\n        int out = g->outgoing_edges[e];\n        if (distances[out] == NOT_VISITED_MARKER) {          // 先读一次，明显失败就别发 CAS\n            if (__sync_bool_compare_and_swap(&distances[out],\n                                             NOT_VISITED_MARKER,\n                                             distances[node] + 1)) {\n                int index;\n                #pragma omp atomic capture\n                index = new_frontier->count++;\n                new_frontier->vertices[index] = out;\n            }\n        }\n    }\n}\n```\n\n**为什么先读再 CAS 是安全的**：`distances` 只会从 `-1` 变成某个正数，**不会变回 -1**。所以读到的 `-1` 可能马上失效（那 CAS 会失败，无害），读到的非 `-1` 则一定失败——提前跳过就省掉一次原子操作。handout 专门问了这个问题。\n\n### 15.3 Part 2：bottom-up\n\n```\nfor each 未访问顶点 v (并行):\n    for each 入边 u -> v:\n        if (u 在 frontier 上，即 distances[u] == 当前层):\n            distances[v] = 当前层 + 1; 加入新 frontier; break;   // 找到就退出\n```\n\n- 用 `g->incoming_starts / incoming_edges`（`graph.h` 里确实提供了入边表，还有 `incoming_begin/end/size` Getter）。\n- **同步需求大幅下降**：每个 v 只由一个线程写，不需要 CAS（边界情况是同一 v 被两个不同 u 同时命中——但因为写的是同一个值 `当前层+1`，用一次 CAS 或直接写都安全，取决于你的实现）。\n- **需要\"未访问集合\"的高效表示**：top-down 天然只在 frontier 上迭代，bottom-up 要扫全部未访问点（可以扫全部点然后 `if (distances[v] != -1) continue`，代价是 O(V) 的扫描；更好的做法是维护一个未访问列表）。\n\n### 15.4 Part 3：hybrid 与切换阈值\n\n- **frontier 小** → top-down 快（只扫少量点的出边）。\n- **frontier 大** → bottom-up 快（此时大量点已访问，top-down 会重复扫已访问点的出边；bottom-up 只关心未访问点，且命中就 break）。\n- 切换判据要用**测量的工作量**，不是凭感觉：比较 \"frontier 的出边总数\" 与 \"未访问点的入边总数\"，谁小用谁。\n- **别忘了转换开销**：如果两种算法用了不同的 frontier 表示，切换时要转换，这笔成本要算进阈值里。\n\n### 15.5 为什么不可能接近线性加速（writeup 必答）\n\n三个原因，按量级排：\n\n1. **不规则访存**：图的邻接访问是随机地址，cache 命中率低，**内存带宽/延迟主导**。\n2. **度分布倾斜**：少数高度数顶点让负载严重不均（这是图上并行算法的通病）。\n3. **同步开销**：每轮 BFS 结束都要隐式同步（frontier swap）；frontier 小时并行度也不够。\n\n### 15.6 设计理念\n\n同一个算法（BFS），**两种数据视角**（从 frontier 往外推 vs 从候选点往回看），在不同阶段各有优势——这是\"**算法选择依赖数据状态**\"的最佳范例，也是真实图计算系统（Ligra 等）的核心思想。它和 PA2 的\"没有最好的调度器，只有最合适的调度器\"是同一条原则。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "cs149",
+    "file": "NOTES.md",
+    "part": 14,
+    "parts": 18,
+    "section": "11 biggraphs 逐层 · OpenMP BFS（支线 / 加分）"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "GX04.3",
+  "chapter": "GX04",
+  "title": "章节目录",
+  "src": {
+    "file": "notebook/projects/cg/engine/NOTES.md",
+    "sha256": "sha256:0f946347fe88fdeb3b173db3eb73612fd7dd1bad5a13f24dfbe6cccbfc98e6a8"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "GX04.3:body.s01",
+      "type": "extension",
+      "title": "章节目录",
+      "level": 2,
+      "content": "1. 主循环与时间\n2. 场景图与变换层级\n3. 渲染提交\n4. 资源与资产管线\n5. 输入与相机\n6. 世界查询与碰撞\n7. 动画子系统\n8. 脚本与音频层\n9. 引擎设计理念五条\n10. 性能预算与剖析"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cg",
+    "project": "engine",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 12,
+    "section": "章节目录"
+  }
+}

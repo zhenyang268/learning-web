@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.10",
+  "chapter": "SO01",
+  "title": "第 8 章 标准 IO 与缓冲：stdio 缓冲三态、行缓冲与全缓冲的坑",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.10:body.s01",
+      "type": "extension",
+      "title": "第 8 章 标准 IO 与缓冲：stdio 缓冲三态、行缓冲与全缓冲的坑",
+      "level": 2,
+      "content": "**要解决的问题**\n\n`printf` 的日志在终端里实时滚动，一重定向到文件就\"卡住不输出\"；进程被 `kill -9` 后日志末尾少一截；`fork` 之后每行日志打印两遍；容器里日志被切成 8 KB 一块的怪块。反过来，日志量一上来，`perf top` 里一半 CPU 在 `write` 系统调用上——都是 stdio 三态缓冲的锅。\n\n**API 与代价**\n\n```c\nFILE *fopen(const char *path, const char *mode);\nint setvbuf(FILE *stream, char *buf, int mode, size_t size);  /* 0 / EOF */\nint fflush(FILE *stream);      /* 用户态缓冲 → 内核页缓存，不是落盘 */\nsize_t fwrite(const void *p, size_t sz, size_t n, FILE *fp); /* 返回项数 */\nint fileno(FILE *stream);\n```\n\n三种模式：`_IOFBF` 全缓冲、`_IOLBF` 行缓冲、`_IONBF` 无缓冲。glibc 的默认判定是：`stderr` 恒无缓冲；`stdin`/`stdout` 若 `isatty()` 为真则行缓冲，否则全缓冲（通常是 `st_blksize` 或 `BUFSIZ`=8192）。`setvbuf` **必须在该流任何 IO 之前**调用，否则行为未定义。\n\n```c\nint main(void) {\n    setvbuf(stdout, NULL, _IOLBF, 0);   /* 必须在第一次 printf 前 */\n    printf(\"start\\n\");                  /* 遇 \\n 触发一次 write(1, \"start\\n\", 6) */\n    fprintf(stderr, \"err\\n\");           /* 默认无缓冲，立刻可见 */\n    fflush(stdout);                     /* fork 前必须刷，否则缓冲区被复制一份 */\n    if (fork() == 0) { printf(\"child\\n\"); _exit(0); }  /* _exit 不 flush */\n    return 0;                           /* exit / main return 会 flush 全部流 */\n}\n```\n\n三个高频误用：`fwrite` 返回值是**项数**不是字节数，判断短写要乘 `sz`；`fflush` 只把数据交给内核，断电照样丢，落盘要 `fsync(fileno(fp))`；`abort()`、`_exit()`、`SIGKILL` 都不会 flush。\n\n**对应命令与读法**\n\n1. `stdbuf -oL ./app > out.log 2>&1`（或 `-o0` 无缓冲、`-eL` 改 stderr）→ 输出是否变成实时 → 说明原程序在被重定向时是全缓冲 → 骗你：`stdbuf` 靠 `LD_PRELOAD` 改 libc 内部变量，静态链接、musl、或程序自己调过 `setvbuf` 都会失效；对已经在跑的进程完全无能为力。\n\n2. `strace -f -e trace=write -c -p $PID` → `calls` 列与 `total` 列、用 `total/calls` 估算单次字节数 → 一分钟几十万次 write、每次几十字节，就是行缓冲或无缓冲在放大系统调用；次数很少、单次 8 KB 的是全缓冲 → 骗你：`-c` 是汇总，看不到写的内容；ptrace 让 `total` 时间虚高，只能看比例不能看绝对值。\n\n3. `strace -f -e trace=write -s 64 -p $PID` → 单次 `write(1, \"....\\n\", 12)` 的字符串与长度 → 一眼看出是行缓冲还是整块 → 骗你：`-s` 会截断长串（默认 32）；不加 `-f` 看不到子线程的 write。\n\n4. `ls -l /proc/$PID/fd/1; cat /proc/$PID/fdinfo/1` → `flags:` 有没有 `O_APPEND`（`02000`）、`pos:` 多大 → `pos` 就是已 flush 到文件的字节数，远小于你以为的输出量，说明还压在用户态缓冲里 → 骗你：`pos` 反映的是内核偏移，不是 `printf` 的累计量。\n\n5. `script -q -c ./app /dev/null` → 给程序套一个伪终端，对比输出行为 → 终端下行缓冲、管道下全缓冲的差异当场复现 → 骗你：pty 会改变程序对 `isatty` 的判断，也可能带出颜色码等副作用。\n\n6. `wc -c out.log` → 字节数 → 与期望输出长度对比，判断尾部是否丢在缓冲里 → 骗你：`kill -9` 之后没 flush 的部分本来就不在文件里，`wc` 只能看到已落盘的部分，会把\"丢数据\"误判成\"程序没输出\"。\n\n**原理**\n\n`FILE` 结构体内持有 `_IO_read_ptr/_IO_write_ptr` 指向用户态缓冲，`fwrite` 在全缓冲下只是 `memcpy` 到这块内存，写满（或行缓冲遇到 `\\n`）才真正调 `write`。这把 $N$ 次系统调用压到 $N/\\text{size}$ 次，代价是**延迟**和一个**丢失窗口**：数据在用户态时进程崩了就是没了。`stderr` 无缓冲是刻意的设计取舍——错误信息宁可变慢也不能丢。\n\n`fork` 的坑来自缓冲是进程堆内存：子进程拿到一份副本，父子各自在 `exit` 时 flush，同一段内容被写两遍。解法只有 `fork` 前 `fflush`，或子进程用 `_exit`。\n\n再往下就是第 10 章：`write` 到普通文件只是拷贝进页缓存并标脏，返回即成功；`fflush` 到这一步为止，`fsync` 才走 `<file>->f_op->fsync` 把脏页和元数据真正推给块设备。所以\"日志写了但机器掉电后没有\"从来不是 stdio 的问题，是没 `fsync`。另外 stdio 的锁是 `FILE` 内部的，`flockfile` 可保多线程下一次 `fprintf` 的原子性；但**多进程共享同一个 `FILE` 毫无意义**，跨进程追加只能靠 `O_APPEND` 的单次 `write`。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 19,
+    "section": "第 8 章 标准 IO 与缓冲：stdio 缓冲三态、行缓冲与全缓冲的坑"
+  }
+}

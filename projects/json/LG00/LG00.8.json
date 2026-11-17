@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG00.8",
+  "chapter": "LG00",
+  "title": "5 一句话收口",
+  "src": {
+    "file": "notebook/projects/langs/NOTES.md",
+    "sha256": "sha256:8114d098dc603d8f75fd0297e834b4f972fad6fb2cd03cd3bafe5b42e8e2fa44"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG00.8:body.s01",
+      "type": "extension",
+      "title": "5 一句话收口",
+      "level": 2,
+      "content": "**C++ 考的是\"编译器替你假设了什么\"，Python 考的是\"运行时替你做了什么\"，CUDA 考的是\"硬件在等什么\"。** 三者共同的要求是：结论必须落到一次工具输出。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 7,
+    "section": "5 一句话收口"
+  }
+}

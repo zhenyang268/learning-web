@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "AL01.10",
+  "chapter": "AL01",
+  "title": "第 7 章 带权图",
+  "src": {
+    "file": "notebook/projects/algo/algorithm/NOTES.md",
+    "sha256": "sha256:4d756dff0ce28de4ac63f59505ebcf670a4a8712485b77b4d9f1aa78d2e2b6f7"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "AL01.10:body.s01",
+      "type": "extension",
+      "title": "第 7 章 带权图",
+      "level": 2,
+      "content": "**要解决的问题**：三个具体的边界——INF 相加溢出、负权让 Dijkstra 失效、负环无法求最短路。这三个都不是\"理论上的例外\"，而是写代码时必然撞到的东西。\n\n**机制**：\n\n- **INF 取值**：用 `0x3f3f3f3f3f3f3f3fLL`，两条 INF 相加仍远小于 `LLONG_MAX`；直接写 `LLONG_MAX` 相加是 UB。稳妥做法是松弛前 `if (d[u] == INF) continue;`。\n- **Dijkstra 的正确性前提**：已出堆的节点距离不会再被松弛。有负权时这条不成立，所以它给的是错答案，而不是\"慢一点\"。\n- **负环检测**：Bellman-Ford 跑到第 $n$ 轮仍能松弛，说明存在负环；从该点沿前驱走 $n$ 步必落在环上。\n- **MST 的判据**：Prim 与 Kruskal 的**权和必须相同**，但**边集可以不同**——写清楚这一点，否则会把自己的正确结果误判成 bug。\n\n**最小例子**：边 $1\\to2$ 权 2、$1\\to3$ 权 5、$3\\to2$ 权 $-4$。真值 $d(2)=1$；Dijkstra 先弹出 2 并定死 2，之后不再更新，给出 2。这就是\"正确性依赖\"而不是\"实现 bug\"的最小证据。\n\n**面试高频问法**：\n\n1. **「Dijkstra 和 Bellman-Ford 结果必须一样吗？」** → 考点：松弛语义与前提。答法：正权图上距离数组必须逐点相同（路径可能不唯一）；负权时**必须不同**，并且要能指出是哪条边导致的。\n2. **「负环怎么检测，为什么要跑 n 轮？」** → 考点：迭代次数的含义。答法：第 $k$ 轮保证最多 $k$ 条边的最短路已知，$n-1$ 轮后应全部收敛；第 $n$ 轮还能松弛就存在负环。\n3. **「Prim 和 Kruskal 的 MST 边集一定相同吗？」** → 考点：是否会误判。答法：不一定，权和相同即可；等权边多时边集分歧很常见。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "algo",
+    "project": "algorithm",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 12,
+    "section": "第 7 章 带权图"
+  }
+}

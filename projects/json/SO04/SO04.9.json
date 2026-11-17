@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO04.9",
+  "chapter": "SO04",
+  "title": "第 7 章 Linux 侧的配套：同一件事的五层加成",
+  "src": {
+    "file": "notebook/projects/os/drivers/NOTES.md",
+    "sha256": "sha256:97e4aa1f82aecd48001369efcf5ecd6115e15522145d220eae80babec3faff7e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO04.9:body.s01",
+      "type": "extension",
+      "title": "第 7 章 Linux 侧的配套：同一件事的五层加成",
+      "level": 2,
+      "content": "**要解决的问题**：JOS 的驱动是\"能工作\"的最小形态。生产内核要在同一件事上再叠五层，每层都为了解决一个 JOS 不需要面对的问题。\n\n**机制**：\n\n| 层 | JOS 的做法 | Linux 的做法 | 解决什么 |\n|---|---|---|---|\n| 设备发现 | 硬编码端口/IRQ | 总线模型：`bus_type` + `device` + `device_driver`，匹配后调 `probe()` | 热插拔、多设备、驱动与板级解耦 |\n| 资源管理 | 手动 `mmio_map_region` / 注册 IRQ | `devres`（`devm_*`）托管，失败自动回收 | 错误路径不泄漏 |\n| DMA | 直接写物理地址 | DMA API：`dma_map_single` / `dma_map_sg` / `dma_alloc_coherent` + IOMMU | 缓存一致性与地址翻译 |\n| 中断 | 全部在 handler 里做 | 上半部（确认 + 唤醒下半部）/ 下半部（`softirq`、`workqueue`、线程化中断） | 缩短关中断时间 |\n| 块 I/O | 直接 `ide_read` + 自建 bcache | 块层：`bio` → 请求队列（`blk-mq` 多队列）→ 驱动；页缓存 + 回写线程 | 并发、合并、调度、缓存 |\n| 网络 | 自己写 `e1000_recv` 调 `net_rx` | `net_device` + `ndo_start_xmit` + NAPI + `sk_buff` | 批处理、零拷贝、流控 |\n\n**两条最值得记住的对照**：\n\n- **bcache → 页缓存 + 块层**：JOS 的块缓存是\"文件系统的缓存\"；Linux 把缓存上移到**页缓存**（按文件页缓存），块层只管\"把 I/O 送到设备\"，于是多种文件系统共用一套缓存与回写机制。\n- **`e1000_recv` → NAPI**：JOS 每个包一次中断；NAPI 在中断里关中断并调度 poll，poll 里批量取包，取完再开中断——**用批处理换掉中断风暴**。\n\n**最小例子**：同一个\"发送一个包\"。\nJOS：填 `tx_desc` → `TDT++`。\nLinux：上层组 `sk_buff` → `dev_queue_xmit` → qdisc → `ndo_start_xmit` → 驱动填描述符 → 门铃；完成由中断/NAPI 回收。**多出来的 qdisc 是为了流控与优先级，不是为了功能。**\n\n**面试高频问法**：\n\n1. **「`devm_` 系列解决了什么？」** → 考点：错误路径。答法：把资源绑定到设备生命周期，`probe` 失败或设备移除时自动释放，避免\"申请了三个、第四个失败、前三个泄漏\"这类经典 bug。\n2. **「为什么需要 DMA API 而不是直接用 `virt_to_phys`？」** → 考点：抽象与一致性。答法：设备看到的地址不一定是物理地址（IOMMU 会重映射）；而且 DMA 与 CPU 缓存需要显式的方向性同步，`dma_map_single` 把这两件事一起处理。\n3. **「NAPI 的 poll 和中断是什么关系？」** → 考点：混合模式。答法：第一个包用中断触发，随后关中断进入 poll 批量收；收到没包或预算用完再开中断。**高频时省中断，低频时省轮询。**\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "drivers",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 10,
+    "section": "第 7 章 Linux 侧的配套：同一件事的五层加成"
+  }
+}

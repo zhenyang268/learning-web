@@ -1,4 +1,4 @@
-import type { EntryFile, UnitMeta } from '../types';
+import type { UnitMeta } from '../types';
 
 /**
  * 求职价值三档（口径见 `docs/career/roles.md` §1 与 `docs/career/interview.md` §2）：
@@ -510,25 +510,8 @@ export const CORE_GAPS: string[] = [
   '商业仿真软件经验：ANSYS / Abaqus / Fluent 均无经验；网格无关性、时间步无关性与理论对标三问目前答不出。',
 ];
 
-/** 单元种类（`meta.kind`）：分组大纲/详解、面试索引页都不是「可学的项目」 */
-const GROUP_KINDS = new Set(['project-group', 'project-index']);
-
-function kindOf(file: EntryFile): string {
-  const meta = (file as unknown as { meta?: Record<string, unknown> }).meta;
-  return typeof meta?.kind === 'string' ? meta.kind : '';
-}
-
 function chapterOf(code: string): string {
   return code.split('.')[0] ?? '';
-}
-
-/** 本页所属的路线（分组页/索引页给出全部，项目页给出自己那条） */
-export function projectRoutesFor(file: EntryFile): ProjectRoute[] {
-  const kind = kindOf(file);
-  if (!kind.startsWith('project')) return [];
-  if (GROUP_KINDS.has(kind)) return PROJECT_ROUTES;
-  const chap = chapterOf(file.code ?? '');
-  return PROJECT_ROUTES.filter((route) => route.steps.some((step) => chapterOf(step.code) === chap));
 }
 
 /** 某章的路线步骤（不在任何路线里时为空数组） */

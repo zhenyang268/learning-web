@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.13",
+  "chapter": "EG05",
+  "title": "第 12 章 信号与系统调用：EINTR、信号丢失、fork 后的锁状态",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.13:body.s01",
+      "type": "extension",
+      "title": "第 12 章 信号与系统调用：EINTR、信号丢失、fork 后的锁状态",
+      "level": 2,
+      "content": "**要解决的问题**：信号会异步打断阻塞系统调用、合并同类事件，并在 `fork` 时把“别的线程正持有的锁”复制进子进程；不处理这三件事，服务会出现随机 `EINTR` 失败、事件丢失和子进程死锁。\n\n**机制**：\n\n`EINTR` 的来源是“信号递达”和“系统调用睡眠”撞在一起。进程阻塞在 `read`、`write`、`accept`、`poll` 等调用上时，信号处理函数执行；如果该调用不可自动重启，内核让它返回 `-1`，并把 `errno` 设为 `EINTR`。`SA_RESTART` 只对一部分系统调用生效，`poll`、`select`、`epoll_wait`、`nanosleep` 等仍可能被信号打断，所以不能靠一个标志一劳永逸。正确姿势是显式重试，并且读写要按返回值推进偏移：\n\n```c\nssize_t n;\ndo {\n    n = read(fd, buf, len);\n} while (n < 0 && errno == EINTR);\n```\n\n但 `read` 返回正数也可能只读了一部分，`write` 同理；`EINTR` 重试和“短读写循环”是两件事。对于 `poll` 这类带超时的调用，被打断后还要重新计算剩余超时，不能把 `EINTR` 当普通错误退出事件循环。\n\n信号丢失有两个典型来源。第一，标准信号不排队：同一种标准信号处于未决状态时，内核只保留一个“未决位”，连续 `kill` 三次可能只触发一次处理。实时信号有排队能力，但队列也有上限。第二，检查标志和睡眠之间存在竞态：\n\n```c\nif (!flag) pause();   // 信号可能刚好在 if 和 pause 之间到达\n```\n\n信号在这条缝里到达，`pause()` 就会永久睡下去。标准解法是“先阻塞信号，检查标志，再用 `sigsuspend` 原子地解除阻塞并睡眠”；工程上更常用 self-pipe 或 Linux 的 `signalfd`：信号处理函数只做 async-signal-safe 的 `write` 一个字节，主循环从 pipe/fd 读事件，业务逻辑不放进 handler。handler 里不能 `printf`、`malloc`，共享标志用 `volatile sig_atomic_t`。\n\n`fork` 后的锁状态更隐蔽。`fork` 只复制调用线程，不复制其他线程。若线程 A 持有 `pthread_mutex_t`，线程 B 调用 `fork`，子进程会继承“已加锁”的 mutex 内存，但持有者线程 A 在子进程里不存在；子进程再 `pthread_mutex_lock` 同一个 mutex，就等一个永远不会释放的锁。按 POSIX，子进程在 `exec` 前只应调用 async-signal-safe 函数，调用 `pthread_mutex_lock` 本身就不安全；在 glibc 上常见表现就是死锁。\n\n解决方式有三类：第一，多线程进程尽量避免 `fork`，需要新进程时用 `fork` 后立即 `exec`，或使用 `posix_spawn`；第二，确实要在子进程里继续用锁，就用 `pthread_atfork(prepare, parent, child)` 在 `fork` 前按固定顺序获取自建锁，在父、子进程里分别释放；第三，把“fork 前必须加锁”的锁全部注册进去，不能假设第三方库内部锁也安全。文件锁还要区分：`fcntl` 记录锁通常不随 `fork` 继承，`flock` 锁与打开文件描述关联，`fork` 后可能共享；以目标系统语义为准。\n\n**最小例子**：\n\n父进程安装 `SIGUSR1` 处理函数且不设 `SA_RESTART`，子进程阻塞在 `read(pipefd[0], buf, 16)`。另一进程执行 `kill(pid, SIGUSR1)`，`read` 返回 `-1`、`errno=EINTR`；用重试循环后读到 5 字节。若父进程先用 `pthread_sigmask` 阻塞 `SIGUSR1`，连续 `kill` 三次再解除阻塞，处理函数只执行一次，因为标准信号的未决位被合并；要三次都处理，应使用实时信号，或让 handler 把每次事件写入 self-pipe，由主循环逐条消费。\n\n`fork` 场景：线程 A 持有 mutex 时线程 B 调用 `fork`，子进程再锁同一 mutex 会卡死；改为 `pthread_atfork` 在 prepare 中加锁、parent/child 中解锁，或 `fork` 后立即 `exec`，可避开继承的锁状态。\n\n**面试高频问法**：\n\n- **问法**：为什么 `read` 会返回 `EINTR`？设了 `SA_RESTART` 是不是就不用管了？ → **考点**：信号打断阻塞系统调用，以及可重启调用的范围。 → **答法**：信号处理函数执行后，不可自动重启的系统调用会返回 `-1/EINTR`；`SA_RESTART` 只覆盖部分调用，`poll`、`select`、`epoll_wait`、`nanosleep` 等仍可能被打断，必须显式重试并处理短读写。\n\n- **问法**：标准信号为什么会丢？怎么保证事件不丢？ → **考点**：标准信号未决位合并、实时信号排队、self-pipe/signalfd。 → **答法**：标准信号不排队，同种信号未决时只保留一个，连续到达会合并；要可靠计数用实时信号，工程上更常见的是 handler 只写 self-pipe 或 `signalfd`，把信号转成事件队列由主循环消费。\n\n- **问法**：多线程程序 `fork` 后，子进程为什么会死锁在父进程的 mutex 上？ → **考点**：`fork` 只复制调用线程，锁内存被复制但持有线程不存在。 → **答法**：子进程继承了已加锁的 mutex，却没有能解锁的线程；POSIX 规定 `exec` 前只能调 async-signal-safe 函数，所以多线程进程应优先 `fork+exec`，自建锁则用 `pthread_atfork` 在 fork 前后加解锁。\n\n- **问法**：`pthread_atfork` 能解决所有 fork 后的锁问题吗？ → **考点**：atfork 只覆盖注册过的锁，prepare/parent/child 的顺序和限制。 → **答法**：不能，它只处理你显式注册的锁；prepare 要按固定顺序加锁，parent/child 再释放，第三方库和未注册锁仍可能把子进程卡住，最稳的是 fork 后立即 exec。\n\n- **问法**：信号处理函数里能不能 `printf` 或 `malloc`？ → **考点**：async-signal-safe 与可重入。 → **答法**：不能，handler 只能调用 async-signal-safe 函数，比如 `write`；共享标志用 `volatile sig_atomic_t`，真正的业务处理放到主循环，避免在信号上下文里碰锁和堆。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 12,
+    "parts": 12,
+    "section": "第 12 章 信号与系统调用：EINTR、信号丢失、fork 后的锁状态"
+  }
+}

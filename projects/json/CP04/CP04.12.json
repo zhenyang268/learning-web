@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP04.12",
+  "chapter": "CP04",
+  "title": "第 11 章 面向计算与域特定语言的编译：GPU 后端、Triton、TVM、XLA 与 dialect 分层",
+  "src": {
+    "file": "notebook/projects/cpu/compiler/NOTES.md",
+    "sha256": "sha256:c6fff8754ad6e8ac1d415ac403d79eedbe0ea927767a531665e867679040055f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP04.12:body.s01",
+      "type": "extension",
+      "title": "第 11 章 面向计算与域特定语言的编译：GPU 后端、Triton、TVM、XLA 与 dialect 分层",
+      "level": 2,
+      "content": "**要解决的问题**：前九章讲的是「一条指令流怎么变成更快的指令流」。但张量程序的问题不在指令层：一个 matmul 或 attention，真正决定性能的是**线程怎么映射到数据、数据在显存层次里怎么搬、延迟怎么用流水线盖住**。这三件事在 CUDA 里全由人手写死在代码里，于是「算法」和「调度」被绑死：换个 GPU 要重调，换个形状要重调，换家公司要重写。DSL 编译器要解决的就是这个绑定——**让用户只描述算什么，把线程映射、显存布局、流水线级数交给编译器或搜索**。代价是控制力下降，所以极端 kernel 仍然手写。\n\n**机制**\n\n**先说清分层，这是所有讨论的前提。** 从高层到底层是四段，每一段解决不同的问题：\n\n| 层 | 典型表示 | 决定什么 | 代表系统 |\n|---|---|---|---|\n| 图 / 算子层 | XLA 的 HLO、TVM 的 Relay/Relax | 算子怎么融合、张量布局怎么分配、内存复用 | XLA、TVM（图侧）、`torch.compile` 的图捕获 |\n| tile / 循环层 | TVM 的 TIR 与 schedule、Halide 的 schedule、MLIR 的 `linalg`/`affine` | 循环怎么切、分块多大、哪一维向量化、哪块进共享内存 | TVM、Halide、MLIR |\n| 线程 / 显存层 | Triton 的 block 模型、MLIR 的 `gpu` dialect | 一个 tile 怎么切给线程/warp、同步点放哪、共享内存如何编址 | Triton、MLIR `gpu`、NVVM/ROCDL |\n| 机器码层 | PTX / SASS、目标 ISA | 指令选择、寄存器分配、调度 | LLVM 后端、ptxas |\n\n**核心变换只有三类半，认清它们比认清产品名有用**：\n\n1. **融合（fusion）**——把多个算子合成一个 kernel，省掉中间结果落显存。这是图层的头号收益来源；判断依据是「融合后是否重复计算或破坏并行度」。\n2. **tiling 与布局（layout）**——切块使之适配共享内存与寄存器容量，同时保证访存合并（coalescing）与避免 bank conflict。同一份数学，布局不同可以差出数倍。\n3. **流水线化（software pipelining）**——把后续迭代的 load 提前发出，用多级 staging 掩盖显存延迟；Triton 里暴露为 `num_stages`，本质与 CPU 上的软件流水同一件事。\n4. **（半类）自动调优**——把上面三类的参数当搜索空间，用代价模型 + 实测挑一组；搜什么、代价模型估什么，决定这条路值不值得走。\n\n**Triton：block 级编程模型。** 你写的是「一个 tile 怎么算」，不写线程号。编译器负责把 block 切给 warp、决定共享内存分配、合并访存、插入流水线；暴露的旋钮很少，主要是 `num_warps` 与 `num_stages`。下降路径是 Triton IR（MLIR 体系）→ LLVM IR → PTX/cubin，另有 AMD 后端走 ROCm。**取舍**：控制力介于 CUDA 与整图编译器之间——常规 kernel 几行就有接近手写的性能，极端布局（手写 swizzle、特殊 tensor core 映射）仍要回 CUDA/CUTLASS。\n\n**TVM：schedule 与实现分离，加自动调优。** 图侧是 Relay/Relax（新版本重心逐步转到 Relax/TIR，以当前版本文档为准），计算用 TE 描述，性能靠 schedule 原语显式控制：`split`/`reorder`/`tile`/`bind`/`fuse`/`compute_at`。再往上叠自动调优（AutoTVM/Ansor 一类：定义搜索空间 + 代价模型 + 实测），以及 BYOC（把子图交给别的后端）。**取舍**：后端最多（CUDA/OpenCL/Metal/ROCm/CPU，另有 microTVM），代价是调优时间长、版本演进快，写出来的 schedule 与版本绑定。\n\n**XLA：整图视角。** HLO 图进来，做算子融合、layout assignment、内存分配，再降到 GPU/CPU/TPU 后端；由 JAX/TF 驱动，`jit` 的边界就是编译的边界。**取舍**：整模型优化能力强（融合与布局是全局决策），但控制粒度粗——你很难指定\"这个循环用 128 个线程\"；动态形状的支持程度按版本而定，图外的 Python 控制流会打断优化。\n\n**MLIR：不是编译器，是分层下降的基础设施。** 它提供的是 dialect 机制与可复用的 pass 基础设施，让「高层语义 → 低层语义」可以分成多步、每步都可验证：`tensor` → `linalg`（结构化算子）→ `scf`/`affine`（循环）→ `vector`/`gpu`（并行与线程）→ `llvm`（机器层），中间还有 bufferization（值语义转缓冲语义）。Triton、IREE、部分 TVM 组件都建在这套机制上。**理解 dialect 的价值不在名词，而在「每一层只暴露该层该管的信息」**——这与第 1 章的前端/中端/后端分工是同一条原则，只是粒度更细。\n\n**生态位补一句现实**：`torch.compile` 是这条链的典型组合——Dynamo 把 Python 字节码捕获成图（带 guard，形状/类型变了就重编译），Inductor 再把图降到 Triton kernel（GPU）或 C++/OpenMP（CPU）。**这正是\"图 DSL 与 kernel DSL 在同一栈里共存\"的现实样本**：图侧做融合，kernel 侧做线程与访存。\n\n**判据（四个，缺一不可）**：① 数值正确——与 eager 或参考实现逐元素对拍，注意低精度与归约顺序带来的差异；② 性能——报**相对基准的百分比**（cuBLAS/cuDNN/手写 kernel），不报绝对 TFLOPS；③ 可移植性——支持几个后端，换后端要不要重写 schedule/kernel；④ 编译与调优时间——自动调优可能要跑几百上千个配置，这个成本必须计入。\n\n**最小例子**\n\n同一个 elementwise add，两种写法对比\"谁决定线程映射\"：\n\n```python\n# CUDA：线程映射、边界判断、访存合并全由人写\n# __global__ void add(const float* x, const float* y, float* o, int n) {\n#   int i = blockIdx.x * blockDim.x + threadIdx.x;\n#   if (i < n) o[i] = x[i] + y[i];\n# }\n\n# Triton：只描述一个 block 算什么，线程切分交给编译器\nimport triton, triton.language as tl\n\n@triton.jit\ndef add_kernel(x_ptr, y_ptr, out_ptr, n, BLOCK: tl.constexpr):\n    pid  = tl.program_id(0)\n    offs = pid * BLOCK + tl.arange(0, BLOCK)\n    mask = offs < n\n    x = tl.load(x_ptr + offs, mask=mask)\n    y = tl.load(y_ptr + offs, mask=mask)\n    tl.store(out_ptr + offs, x + y, mask=mask)\n\nadd_kernel[(triton.cdiv(n, BLOCK),)](x, y, out, n, BLOCK=1024)\n```\n\nTVM 侧则是\"计算不变、只改 schedule\"：\n\n```python\nfrom tvm import te\nA = te.placeholder((M, N), name=\"A\")\nB = te.placeholder((N, K), name=\"B\")\nkk = te.reduce_axis((0, N), name=\"kk\")\nC  = te.compute((M, K), lambda i, j: te.sum(A[i, kk] * B[kk, j], axis=kk), name=\"C\")\n\ns = te.create_schedule(C.op)\nxo, yo, xi, yi = s[C].tile(C.op.axis[0], C.op.axis[1], 32, 32)  # 分块\ns[C].vectorize(yi)                                              # 内层向量化\n# 变性能不动上面的计算式：换 tile 大小、换 reorder、绑到 GPU 的 block/thread 轴\n```\n\n**同一个 `C` 的定义可以生成几十种性能不同的实现**——这就是 Halide 提出的 algorithm/schedule 分离，也是 TVM 与 CUDA 最根本的差别。\n\n**面试高频问法**\n\n1. **「Triton 和 CUDA 差在哪？为什么它能让普通人写出接近手写的 kernel？」** → 考点是\"谁决定线程与访存\"。答法：CUDA 里线程映射、共享内存、同步、合并访存都由人写；Triton 只要求描述一个 block 的计算，编译器负责把这些决定下来（block 到 warp 的切分、共享内存分配、访存布局、以及 `num_stages` 控制的软件流水线）。所以它对**常规形态**的 kernel 极有效，对需要非常规布局的 kernel 仍然要回 CUDA。判据是相对 cuBLAS/cuDNN 的百分比，不是\"能跑\"。\n2. **「TVM 的 schedule 和 LLVM 的 pass 是同一种东西吗？」** → 考点是分层。答法：不是一层。schedule 作用在**张量计算的定义**上，改变并行与访存结构（切块、绑定、向量化、放共享内存）；pass 作用在**指令级 IR** 上，改变指令序列（化简、指令选择、寄存器分配）。前者决定\"算什么形状的并行\"，后者决定\"用哪条指令算\"。\n3. **「为什么 XLA 能做整图融合，LLVM 做不了？」** → 考点是编译单元。答法：融合是**图的变换**——把两个算子的循环体合成一个 kernel，需要看到算子级的语义与形状；LLVM 看到的是一条指令流，算子边界已经消失，没有这个自由度。反过来说，XLA 也做不了 LLVM 那层的寄存器分配与指令调度，因为它降到后端就把活交出去了。\n4. **「自动调优（AutoTVM/Ansor）到底在搜什么？」** → 考点是知不知道代价在哪。答法：搜的是 schedule 的参数空间——tile 大小、循环顺序、绑到哪个轴、是否向量化、是否 unroll；用代价模型先筛，再实测确认。代价是真金白银的编译时间（可能几百上千个配置），所以实践中会缓存、会剪枝，也只对热点算子做。\n5. **「MLIR 到底是什么，为什么大家都在用它？」** → 考点是分清基础设施与产品。答法：它不是编译器，是\"多级 IR + 可复用 pass 基础设施\"的框架，价值在于允许**渐进下降**：每一层只暴露该层该管的语义（`linalg` 管结构化算子、`scf` 管循环、`gpu` 管线程），于是每层都能独立优化与验证。代价是栈更长、调试要跨多层 IR——这与第 1 章\"分三段\"的取舍是同一个道理，只是粒度更细。\n6. **「同一个模型，为什么换 GPU 之后性能掉一半？」** → 考点是调度与硬件的耦合。答法：schedule/kernel 里写死的参数（tile 大小、共享内存容量、warp 数、流水级数）是针对某代硬件的容量与延迟调的；换卡后 SM 数、共享内存大小、寄存器数变了，原来的配置要么装不下、要么并行度不足。所以 DSL 的价值不是\"自动变快\"，而是**把重新调参的成本降下来**。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "compiler",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 11,
+    "section": "第 11 章 面向计算与域特定语言的编译：GPU 后端、Triton、TVM、XLA 与 dialect 分层"
+  }
+}

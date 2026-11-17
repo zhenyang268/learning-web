@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO06.11",
+  "chapter": "SO06",
+  "title": "第 9 章 同一问题的四种答案：WSL1 / WSL2 / gVisor / Firecracker",
+  "src": {
+    "file": "notebook/projects/os/virtualization/NOTES.md",
+    "sha256": "sha256:d4ea73a02ef0f6f4eead171c249368035a9e07403606e7dbdca31b66a680465e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO06.11:body.s01",
+      "type": "extension",
+      "title": "第 9 章 同一问题的四种答案：WSL1 / WSL2 / gVisor / Firecracker",
+      "level": 2,
+      "content": "**要解决的问题**：这四样东西经常被混着说（\"WSL 是虚拟机\"\"gVisor 是容器\"\"Firecracker 是 QEMU 的替代\"）。\n它们其实是**同一件事的四个截住点**：都要让\"一段不可信的、按别人的 ABI 写的代码\"跑起来，区别只在**在哪一层把它截住**。\n\n**机制**：\n\n| 方案 | 截住点 | 代表 | 兼容性 | 性能 | 攻击面 |\n|---|---|---|---|---|---|\n| **ABI 翻译** | 系统调用（或 API） | WSL1（`lxcore`）、Wine（Win32 API）、Cygwin | 差：语义对不上的就缺 | syscall 密集负载差 | 翻译层自己的 bug |\n| **真内核进 VM** | 硬件世界切换 | WSL2、Kata Containers、传统云 VM | 好：真内核，ABI 完整 | 接近原生（I/O 有税） | hypervisor + 设备模型 |\n| **用户态内核** | 系统调用（拦截后自己实现） | gVisor（`Sentry`） | 中：重实现了大部分 syscall | syscall 密集负载差（每次都要过用户态） | 面小但**很深**（它自己就是个内核） |\n| **砍设备模型** | 只留必要设备的 VM | Firecracker、Cloud Hypervisor | 中：跑 Linux 够，跑 Windows 不够 | 启动极快（官方口径 ~125 ms 量级、单 VM 内存开销 5 MiB 量级） | 面最小（这是它的设计目标） |\n\n**(a) WSL1：系统调用翻译。** `lxcore` 在内核里把 Linux syscall 翻成 NT 的等价操作，文件系统用 `VolFs`（Linux 元数据）与 `DrvFs`（Windows 盘，元数据放在 NTFS 扩展属性里）。\n翻不动的地方就只能是\"缺\"或\"凑\"：`fork` 语义、`inotify`、`iptables`、`io_uring`、`epoll` 的边角语义。\n**所以 Docker 跑不起来不是\"没优化好\"，是\"这个 ABI 不是翻译得出来的\"。**\n\n**(b) WSL2：真内核进 VM。** 一台轻量 Hyper-V 虚拟机（utility VM，没有 UI），里面跑微软维护的**真 Linux 内核**（通过 Windows Update 更新）。\n工程细节全是\"跨界怎么变便宜\"的教科书：\n\n| 需求 | 做法 | 代价 |\n|---|---|---|\n| 访问 Windows 文件 | 9P 文件服务器（`\\\\wsl$` 与 `/mnt/c`） | **每次元数据操作一次往返** → `git status` 在 `/mnt/c` 上慢一到两个数量级 |\n| 在 Linux 里跑 Windows 程序 | interop 通道（`/init` + 虚拟 socket）把 `exec` 请求交给宿主 | 路径/环境变量/权限要双向映射 |\n| 在 Windows 里访问 Linux 端口 | `localhost` 转发（NAT 模式下由宿主代理） | 镜像网络（Win11 22H2+）才真正\"同网段\" |\n| 图形 | WSLg：Weston + RDP + PulseAudio | 多一层协议，但 GUI 应用能直接开窗 |\n\n**这就是\"同一个产品、同一个 ABI，一次翻译一次虚拟化\"的对照**：WSL1 的慢在\"翻译不完整\"，WSL2 的慢在\"跨 OS 文件协议\"。\n两者的慢**位置完全不同**，这正是第 5 章\"看退出/往返次数\"这条判据的直接应用。\n\n**(c) gVisor：把系统调用变成一次跨界。** `Sentry` 是一个用 Go 写的**用户态内核**，它实现 Linux 系统调用，\n应用跑在里面；平台层用 `ptrace`/`KVM`/`systrap` 截获 syscall。\n好处是**宿主内核几乎看不到应用**（面的确小了）；代价是**每个 syscall 都要过用户态**，\n所以 syscall 密集 + 内存拷贝密集的负载（数据库、大量 `read`/`write`）会明显退化。判据：**它是\"用性能换攻击面\"的典型中间点。**\n\n**(d) Firecracker：把设备模型砍到最小。** 它在 KVM 上做 VMM，但**只留四个 virtio 设备**（net/block/balloon/vsock），\n没有 BIOS/ACPI/PCI 枚举的完整模拟，直接引导 Linux；用 Rust 写，配套 `jailer`（chroot + cgroup + seccomp + 命名空间）。\n它快的根因不是\"代码优化得好\"，而是**\"要做的事本来就少\"**：设备模型小 → 初始化路径短 → 启动快、攻击面小。\n**代价**：跑不了 Windows、没有 VGA、PCI 设备有限——所以它是\"每个 pod 一个 microVM\"这类场景的答案，不是通用 VMM。\n\n**最小例子**（可复现的对照实验）：同一个仓库，分别在 WSL2 的 `/mnt/c/...` 与 `~/...` 下跑\n`time git status`（清空页缓存后各跑三次）。判据：\n两个数字的差别应该落在\"**元数据操作数 × 一次 9P 往返**\"这个模型里；如果差别远超模型预测，就要怀疑是 `git` 在跨越挂载点做 `readdir` 递归或触发 `copy-up`。\n**这个实验的价值在于：它把\"虚拟化开销\"从形容词变成了\"往返次数 × 单次往返成本\"。**\n\n**面试高频问法**：\n\n1. **「WSL2 是虚拟机吗？那它为什么能和 Windows 这么无缝？」** → 考点：跨界成本被压到哪。\n   → 答法：是虚拟机（Hyper-V utility VM + 真 Linux 内核），\"无缝\"来自三条专门的跨界通道：**文件走 9P**、**进程走 interop socket**、**网络走 localhost 转发**。所以\"无缝\"是有价格的——文件访问重（每次往返）、进程启动跨两次边界。**判据：在 `/mnt/c` 下编译和在 `~/` 下编译的速度差。**\n2. **「gVisor 和 VM 谁更安全？」** → 考点：面的形状不同。\n   → 答法：gVisor 把**宿主内核的面**降到很小（应用只跟 `Sentry` 打交道），但 `Sentry` 自己是一个用 Go 写的、要解析大量 syscall 语义的内核——**面小但很深**；VM 的面在 hypervisor 与设备模型。不能用\"谁更安全\"回答，要说\"哪一层的 CVE 更多、被攻破后能拿到什么\"。\n3. **「Firecracker 为什么能 125ms 启动？」** → 考点：减法而不是加法。\n   → 答法：没有 BIOS/ACPI 完整模拟、没有 PCI 枚举、设备只有四个 virtio、内存预分配、直接引导内核——**每一条都是在删\"启动时要做的事\"**。这也是为什么它跑不了 Windows：删掉的那些正是 Windows 需要的。**（数字是官方口径，自己测要在自己机型上重跑。）**\n4. **「Kata Containers 和普通 VM 有什么不同？」** → 考点：集成方式。\n   → 答法：底层仍是 VM（QEMU/Cloud Hypervisor/Firecracker 都可），但**对外表现为一个 OCI 容器**：镜像格式、CRI 接口、生命周期都与容器一致，文件共享用 `virtio-fs`、控制用 `vsock`。所以它是\"用 VM 的隔离 + 容器的接口\"，代价是启动比 `runc` 慢一个数量级（但仍比传统 VM 快）。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "virtualization",
+    "file": "NOTES.md",
+    "part": 10,
+    "parts": 11,
+    "section": "第 9 章 同一问题的四种答案：WSL1 / WSL2 / gVisor / Firecracker"
+  }
+}

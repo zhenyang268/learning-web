@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.4",
+  "chapter": "SO01",
+  "title": "第 2 章〔CPU〕CPU 占用与调度：nice、亲和性、实时策略与被抢占",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.4:body.s01",
+      "type": "extension",
+      "title": "第 2 章〔CPU〕CPU 占用与调度：nice、亲和性、实时策略与被抢占",
+      "level": 2,
+      "content": "**要解决的问题**：三种误判。其一，`top` 显示某进程 380% CPU，你就加机器；实际是 4 个线程在 1 个核上排队，`taskset` 一查亲和性掩码只有 `0x1`。其二，把批处理 `nice -n 19` 降级后仍抢 CPU，因为对端是 `SCHED_FIFO`。其三，某个 `SCHED_FIFO 99` 的线程死循环把整机卡死、ssh 都进不去——因为 RT 线程不受 CFS 公平性约束，只受 RT throttling 限制。不会这一章，你分不清“CPU 真的不够”和“CPU 被调度策略锁死在一个核上”。\n\n**API 与代价**：\n\n```c\n#include <sched.h>\n#include <sys/resource.h>\n#include <sys/syscall.h>\n\n/* nice：影响 CFS 权重，-20..19，越小越优先 */\nsetpriority(PRIO_PROCESS, pid, -5);      /* 降 nice 需 CAP_SYS_NICE 或 RLIMIT_NICE */\n\n/* 调度策略：SCHED_OTHER(CFS) / SCHED_BATCH / SCHED_IDLE / SCHED_FIFO / SCHED_RR */\nstruct sched_param sp = { .sched_priority = 50 };   /* RT 有效范围 1..99 */\nsched_setscheduler(pid, SCHED_FIFO, &sp);           /* EPERM：无 CAP_SYS_NICE 且超 RLIMIT_RTPRIO */\nsched_yield();                                      /* 只把 CPU 让给同优先级/更高优先级 */\n\n/* 亲和性：位图，最多 CPU_SETSIZE 个 CPU */\ncpu_set_t set; CPU_ZERO(&set); CPU_SET(2, &set); CPU_SET(3, &set);\nsched_setaffinity(0, sizeof(set), &set);  /* EINVAL：掩码与任何在线 CPU 无交集 */\n```\n\n关键语义：`sched_setscheduler` 的 `sched_priority` 对 CFS 必须为 0，传非 0 返回 `EINVAL`；`SCHED_RR` 与 `SCHED_FIFO` 的差别只在同优先级间的轮转时间片（`/proc/sys/kernel/sched_rr_timeslice_ms`），优先级不同时行为一致。`sched_yield()` 在 CFS 下只是把当前 task 放到红黑树最右（vruntime 最小者优先），并不是“让出到下一轮”。`SCHED_DEADLINE` 必须走 `sched_setattr(2)`，`sched_setscheduler` 设不了。\n\n代价：改亲和性会触发负载均衡器重新拉起迁移，一次 `sched_setaffinity` 可能伴随 cache 冷启动；RT 线程一旦就绪会立刻抢占同核上任何 CFS 任务，包括内核线程，所以 RT 用错等于把机器变砖。降 nice 需要特权，普通用户只能升 nice（变“更不优先”），这是权限设计的必然。\n\n**对应命令与读法**：\n\n- `top -H -p <pid>` → 看每个线程（`THREAD`/`TID` 列）的 `%CPU`、`S`（状态）、`P`（最后运行的 CPU，按 `f` 可开 `Last used CPU` 字段）。用来确认“是单线程打满一个核，还是 N 个线程分散在 N 个核”。`S` 是 `R` 但 `%CPU` 低，说明它在排队而非在算。会骗你：默认 3 秒刷新，短命线程（<1s）根本采不到；`P` 列是采样瞬间的 CPU，线程被迁移后显示的是后一个。\n- `pidstat -u -t -p <pid> 1 5` → 输出 `UID PID TID %usr %system %guest %wait %CPU CPU Command`。`%usr` 高是用户态忙算，`%system` 高是系统调用/内核态开销（常见于大量小 `read`/`write`），`%wait` 高说明线程在 runqueue 上等 CPU（procps-ng 较新版本才有此列，老版本无该字段）。`CPU` 列显示线程落在哪个核。会骗你：容器里 `CPU` 编号是宿主机编号，和容器内 `nproc` 对不上；`%wait` 在内核不支持 schedstats 时恒为 0。\n- `taskset -pc <pid>` → 打印 `pid 1234's current affinity list: 2,3`，加 `-p` 是查询，不带 `-p` 是设置。看到 `0-63` 但实际只有一个核在跑，就去查 cgroup cpuset。会骗你：这是最大的坑——cgroup v1/v2 的 `cpuset.cpus` 限制不在亲和性掩码里体现，掩码显示全集而 cpuset 只给 1 个核，于是“亲和性没问题但就是不并行”。\n- `chrt -p <pid>` → 输出 `pid 1234's current scheduling policy: SCHED_OTHER` 与 `current scheduling priority: 0`。设 `chrt -f -p 50 <pid>`（`-f` FIFO、`-r` RR、`-o` OTHER、`-b` BATCH、`-i` IDLE）。用它确认“降了 nice 还抢 CPU”的对端是不是 RT。会骗你：显示 `SCHED_FIFO` 不代表它一直在跑，`sched_rt_runtime_us / sched_rt_period_us` = 950000/1000000 时，RT 组每秒最多用 950ms，剩下 50ms 强制让给 CFS（`/proc/sys/kernel/sched_rt_runtime_us`）。\n- `perf stat -e task-clock,context-switches,cpu-migrations,page-faults,cycles,instructions -- ./prog` → `context-switches` 高说明频繁阻塞或被动抢占，`cpu-migrations` 高说明亲和性太宽或负载均衡在搬线程（每次迁移 L1/L2 缓存全冷），`instructions/cycles` 即 IPC，IPC 远低于 1 说明在等内存而非在算。会骗你：需要 `perf_event_paranoid` 足够低（`/proc/sys/kernel/perf_event_paranoid`，多数发行版默认 2 或 4 会拒绝），虚拟机里 `cycles` 常不可用只能退回 `task-clock`。\n\n**原理**：CFS 用红黑树按 `vruntime` 排序，`vruntime` 的增量是\n\n$$\\Delta v_i = \\Delta t \\cdot \\frac{1024}{w_i}$$\n\n`w` 由 nice 映射（nice 0 = 1024，每降 1 约 ×1.25），所以两个线程的 CPU 份额比就是权重比，nice 差 5 大约是 3 倍差距。调度周期 `sched_latency`（默认约 6 ms，`/proc/sys/kernel/sched_latency_ns`）在 runqueue 很长时不再拉长，每个 task 的时间片取\n\n$$\\text{slice}_i = \\max\\!\\left(g_{\\min},\\; \\frac{w_i}{W} \\cdot L\\right)$$\n\n`g_min` 即 `sched_min_granularity`（约 0.75 ms）。这意味着 **runqueue 上任务越多，单任务分到的片越小、切换越频繁，`%system` 随之上升**——不是“CPU 不够”，是上下文切换税。nice 只改权重，不改优先级：一个 nice 19 的线程在其它线程都睡眠时照样能占满 100%。\n\n亲和性落到 `task_struct->cpus_mask`，`sched_setaffinity` 只是改掩码并触发一次 `migration` 检查；真正的迁移由负载均衡器在 `scheduler_tick`/`newidle_balance` 里做，代价是目标 CPU 的缓存与 TLB 全冷。\n\nRT 走另一套结构：每个 CPU 的 `rt_rq` 里按优先级 0..99 挂 100 条链表，`SCHED_FIFO` 的同优先级任务按入队顺序一直跑到阻塞或主动让出，`SCHED_RR` 才在片耗尽时挪到队尾。RT 任务的抢占是无条件的（只要 `need_resched` 置位，`preempt_schedule` 立刻切），因此不需要也不能靠 nice 与之竞争。内核用 RT throttling 兜底：每个 period 只给 RT 组 `sched_rt_runtime_us` 的 CPU 时间，超了就 `rt_rq->rt_throttled = 1` 并把它们从可运行集合中摘掉一个 period，这就是“SCHED_FIFO 死循环也没把机器锁死”的原因——但如果有人把 `sched_rt_runtime_us` 设成 -1（关闭 throttle），就真的会锁死。`SCHED_IDLE` 的权重最低，只在 CPU 空闲时才跑，是比 nice 19 更强的“让路”手段。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 19,
+    "section": "第 2 章〔CPU〕CPU 占用与调度：nice、亲和性、实时策略与被抢占"
+  }
+}

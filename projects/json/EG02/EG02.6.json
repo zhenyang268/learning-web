@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG02.6",
+  "chapter": "EG02",
+  "title": "第 5 章 数据竞争：TSan 的报告怎么读",
+  "src": {
+    "file": "notebook/projects/eng/debug-toolchain/NOTES.md",
+    "sha256": "sha256:501d16a42d59f5fede5b4ae459640fa33b09933168d563ca831a80f45354cc1f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG02.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 数据竞争：TSan 的报告怎么读",
+      "level": 2,
+      "content": "**要解决的问题**：数据竞争是「跑一万次挂零次、上线才炸」的那类 bug，靠复现和加日志几乎抓不到；TSan 把它从概率问题变成确定性的报告，这一章解决「报告里那两段栈到底在说什么、什么才算真竞争」。\n\n**机制**：\n\nTSan 是编译器插桩 + 运行时库的组（`-fsanitize=thread`，Clang/GCC 都有）。它在编译期为每个内存访问插入检查调用，运行时维护**影子内存**：把每个 8 字节应用内存映射为 4 个状态，每状态记录该字节区间的 4 个状态槽（状态 = 读/写 + 访问它的线程 + 该线程的逻辑时钟）。一次访问要做「本次访问 vs 影子槽里历史访问」的冲突判定。\n\n核心算法是 **happens-before（HB）**，不是锁集。TSan 为每个线程维护一个**向量时钟**（vector clock：长度 = 线程数的数组，`VC[t]` 是线程 t 已知的进度）。同步事件传递时钟：\n\n```text\n线程 A: write(x)                    // 影子槽: {addr=x, tid=A, clock=A的VC, write}\n线程 A: pthread_mutex_unlock(m)     // 把 A 的 VC 记进 mutex 的释放时钟\n线程 B: pthread_mutex_lock(m)       // B 的 VC = max(B.VC, m.VC)  → 建立 HB\n线程 B: read(x)                     // 检查: 槽里是 A 的写，\n                                    // 若 A.VC ≤ B.VC 则已 HB，无竞争；\n                                    // 否则报告 data race\n```\n\n判定条件：两个访问访问同一地址、至少一个是写、来自不同线程、且它们之间**不存在 happens-before 关系**。四种同步原语是 TSan 认识并用于建立 HB 的：mutex、原子操作（含 `memory_order` 语义）、线程 create/join、条件变量（通过关联的 mutex）。裸的 `volatile`、自己实现的 spinlock（如果用的是普通 load/store 而非原子）、无锁队列里的手工屏障，TSan 都看不见，会报**误报**。\n\n报告结构固定三段：\n\n1. **WARNING: ThreadSanitizer: data race**，紧跟读写类型和地址；\n2. **Write of size N at 0x... by thread T1**：肇事访问的栈，带 `#0 #1 ...` 帧和源行号；\n3. **Previous read/write of size N at 0x... by thread T2**：与之冲突的历史访问栈；\n4. 尾部 **Location is heap/global/stack** 说明对象在哪，以及 **Thread T1/T2 (TID) created by ...** 给出线程创建栈 —— 这段经常被忽略，但它是定位「谁该负责同步」的关键。\n\n关键运行参数：`TSAN_OPTIONS=\"halt_on_error=0 second_deadlock_stack=1 history_size=7\"`。`halt_on_error=0` 让它在首个竞争后继续跑（默认是继续的，但很多 CI 会设成 1）；`history_size` 控制每个影子槽保留多少历史访问，调大可抓更早的冲突，代价是内存。**内存开销约 5–10 倍，速度 5–15 倍 slowdown**（官方文档口径，按实现与负载而定）。TSan 不能与 ASan 同时开。\n\n**最小例子**：\n\n```c\n// race.c\n#include <pthread.h>\nint g;\nvoid *f(void *p){ g++; return 0; }          // 非原子读改写\nint main(){ pthread_t a,b;\n  pthread_create(&a,0,f,0); pthread_create(&b,0,f,0);\n  pthread_join(a,0); pthread_join(b,0); }\n```\n\n```bash\nclang -fsanitize=thread -g -O1 race.c -o race && ./race\n```\n\n输出（节选，真实格式）：\n\n```text\nWARNING: ThreadSanitizer: data race (pid=12345)\n  Write of size 4 at 0x... by thread T2:\n    #0 f race.c:3 (race+0x...)\n  Previous read of size 4 at 0x... by thread T1:\n    #0 f race.c:3\n  Location is global 'g' of size 4 at 0x... (race+0x...)\n  Thread T2 (tid=...) created by main thread at:\n    #0 pthread_create ...\n    #1 main race.c:5\n```\n\n读法：两段栈**指向同一行同一地址**、`by thread T1/T2` 不同、中间没有 `mutex`/`atomic` 帧 → 真竞争。若是全局变量（`Location is global 'g'`），不用看堆栈也能确定对象；若是 `Location is heap` 且两栈里有 `malloc`，说明是某个被共享的堆对象，顺着创建栈找归属线程。\n\n**面试高频问法**：\n\n1. **「TSan 用什么算法检测竞争？和锁集（lockset）方法有什么区别？」**\n   → 考点是 HB vs Eraser 类锁集算法。答法：「TSan 用 happens-before：给线程维护向量时钟，同步事件传时钟，两个访问无 HB 关系且至少一个写就报。锁集算法只看『访问时持有哪些锁』，会漏掉用原子操作或无锁结构建立的同步，误报多；HB 更精确但有假阴性——没被执行到的路径抓不到。」\n\n2. **「TSan 报了一次竞争，但我觉得有锁保护，为什么？」**\n   → 考点是 TSan 只认标准同步原语。答法：「先确认保护是不是 TSan 认识的：`pthread_mutex`、原子操作、`std::atomic`、create/join。如果是 `volatile` 当同步、自旋锁用普通读写实现、或者用了手写内存屏障，TSan 看不到 HB，就会误报。另外要确认两段栈确实访问同一地址——报告里的地址相同才是真冲突。」\n\n3. **「TSan 的假阴性从哪来？」**\n   → 考点是动态分析的固有局限。答法：「三个来源：一是没执行到的代码路径不插桩不检查；二是 HB 只覆盖它看得见的同步，跨进程共享内存、信号处理里的访问它管不了；三是 `history_size` 有限，早期访问被挤出影子槽后，新访问找不到冲突对象。所以 TSan 干净不等于没竞争，只能说不存在它可见的竞争。」\n\n4. **「报告里 `Thread T1 created by` 那段有什么用？」**\n   → 考点是会不会读完整报告。答法：「它给线程创建栈，能反推哪个线程负责这个共享对象的生命周期。常见场景是库在内部起工作线程，业务代码不知道这个对象被跨线程访问了；顺着创建栈能找到 fork 点，判断该在哪一层加锁或者改成线程私有。」\n\n5. **「TSan 能不能和 ASan 一起用？线上能开吗？」**\n   → 考点是工程约束。答法：「不能同时开，两者都改影子内存布局、都拦 `malloc`，运行时互斥。线上一般不开，内存 5–10 倍、速度 5–15 倍的开销太大；正确做法是在 CI 里跑带 TSan 的构建，或者对已知高风险的模块单独做 TSan 版本压测。TSan 的报告要当断言看，不能当警告忽略。」\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "debug-toolchain",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 8,
+    "section": "第 5 章 数据竞争：TSan 的报告怎么读"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO00.8",
+  "chapter": "SO00",
+  "title": "5 一句话收口",
+  "src": {
+    "file": "notebook/projects/os/NOTES.md",
+    "sha256": "sha256:ea9cd76832f3f4e4729e92e9d274efafaf69b1cd7d4b55fc7a296eefc079315a"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO00.8:body.s01",
+      "type": "extension",
+      "title": "5 一句话收口",
+      "level": 2,
+      "content": "**用户态那侧决定你能不能在十分钟内定位线上问题，内核态那侧决定你能不能解释它为什么发生。** 两侧都讲得出来，才算懂操作系统。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 7,
+    "section": "5 一句话收口"
+  }
+}

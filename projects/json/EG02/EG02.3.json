@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG02.3",
+  "chapter": "EG02",
+  "title": "第 2 章 gdb / lldb：断点、条件断点与观察点",
+  "src": {
+    "file": "notebook/projects/eng/debug-toolchain/NOTES.md",
+    "sha256": "sha256:501d16a42d59f5fede5b4ae459640fa33b09933168d563ca831a80f45354cc1f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG02.3:body.s01",
+      "type": "extension",
+      "title": "第 2 章 gdb / lldb：断点、条件断点与观察点",
+      "level": 2,
+      "content": "**要解决的问题**：core 是事后取证，断点是事中拦截；要能把进程停在“变量刚被改坏”的那一瞬间，而不是靠反复加日志重编。\n\n**机制**：\n\n调试器对进程的控制全部经由 `ptrace`：`PTRACE_ATTACH`（或 `PTRACE_SEIZE`）挂上目标并收到一个 stop，`PTRACE_PEEKTEXT` / `POKETEXT` 读写目标内存，`PTRACE_GETREGSET` 读写寄存器，`PTRACE_CONT` / `PTRACE_SINGLESTEP` 推进执行。Linux 上 `ptrace` 受 `/proc/sys/kernel/yama/ptrace_scope` 限制，非子进程 attach 可能被拒。\n\n软件断点是改写指令：把目标地址的首字节存下来换成 `0xCC`（x86 的 `int3`）。执行到那里触发 #BP，内核转成 `SIGTRAP` 交给 tracer，调试器查自己的断点表命中哪一处，把原字节写回、把 PC 减一，然后等你操作；继续运行时再写回 `0xCC`。所以断点只对“能被 ptrace 改写”的代码成立，且改的是运行中进程的内存，不是磁盘文件。\n\n观察点（watchpoint）依赖 x86 调试寄存器：DR0–DR3 放监视地址，DR7 配置是执行、写、还是读写，以及监视长度（1/2/4/8 字节）。硬件槽位只有四个，超了调试器会退化——gdb 的软件观察点靠单步执行、每步比较值来实现，慢一两个数量级。\n\n条件断点不会减少陷入：进程每次到达断点都照样触发 `SIGTRAP`、照样停下来，调试器再求值条件表达式，为假就自动 continue。在一个百万次调用的热函数上挂 `if x == 5`，等于做了百万次上下文切换。想减少停顿，只能在被调试侧判断后用 `raise(SIGTRAP)`，或用 gdb 的 `dprintf`。\n\nlldb 的对应物：`breakpoint set -n func`（按符号）、`-f a.c -l 12`（按行）、`-c 'i==7'`（条件），`watchpoint set variable counter`、`watchpoint set expression -w write -- &x`，attach 用 `process attach --pid`。\n\n**最小例子**：\n\n```c\n// w.c\nint counter = 0;\nint main(void) {\n    for (int i = 0; i < 10; i++) counter += i + 1;\n    return counter;\n}\n```\n\n```bash\ngcc -g -O0 -o w w.c\ngdb -q ./w\n(gdb) break w.c:3 if i == 7      # 条件断点：只在 i==7 停\n(gdb) run\n(gdb) watch counter              # 观察点：counter 每次被写都停\n(gdb) continue\nOld value = 28\nNew value = 36                   # i==7 时加 8\n(gdb) info watchpoints\n(gdb) delete 2\n```\n\nlldb 等价：`b w.c:3 -c 'i==7'`、`watchpoint set variable counter`。若目标是已跑飞的服务：`gdb -p $(pidof svc)` 后 `thread apply all bt`，先看所有线程卡在哪把锁上，再决定断点。\n\n**面试高频问法**：\n\n1. 「断点在底层是怎么实现的？」→ 考点是 int3 与 ptrace 的配合 → 答：把目标指令首字节换成 `0xCC`，命中时内核发 `SIGTRAP`，调试器恢复原字节、回退 PC，继续时再写回去。\n2. 「为什么 watchpoint 会报无法插入？」→ 考点是硬件调试寄存器 → 答：x86 只有 DR0–DR3 四个槽位，超了就报错或退化成单步比较的软件观察点，后者极慢。\n3. 「条件断点为什么在热路径上几乎不能用？」→ 考点是求值发生在陷入之后 → 答：条件不减少陷入次数，每次命中都要停进程交给调试器求值，要么改成代码里判断后 `raise(SIGTRAP)`，要么用 `dprintf`。\n4. 「线上进程卡住，怎么不停服地看？」→ 考点是 attach 与全线程栈 → 答：`gdb -p` 挂上去，`thread apply all bt` 一次看全，先判断是死锁、等 IO 还是活锁；注意 `ptrace_scope` 和 attach 期间进程是停的。\n5. 「strip 过的 release 程序还能调试吗？」→ 考点是符号层次 → 答：能按地址或动态符号表下断点，但没有行号和局部变量；把 `-g` 产物按 build-id 分离保存，再 `set debug-file-directory` 指过去即可恢复源码级调试。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "debug-toolchain",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 8,
+    "section": "第 2 章 gdb / lldb：断点、条件断点与观察点"
+  }
+}

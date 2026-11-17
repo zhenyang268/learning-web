@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.13",
+  "chapter": "CS01",
+  "title": "7.3 attacklab · 逐层设计（Ch3.10，只读原理）",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.13:body.s01",
+      "type": "extension",
+      "title": "7.3 attacklab · 逐层设计（Ch3.10，只读原理）",
+      "level": 3,
+      "content": "> 建议只读不做（Tier 3）。但**栈帧与返回地址这一层必须懂**——408 考\"函数调用的机器级表示\"，考的就是这张图。\n\n#### 7.3.1 一切的起点：`getbuf` 的栈帧\n\n```c\nunsigned getbuf() {\n    char buf[BUFFER_SIZE];     /* BUFFER_SIZE 要自己 objdump 出来，别照抄别人的 0x28 */\n    Gets(buf);                 /* 无边界检查 —— 漏洞就在这 */\n    return 1;\n}\n```\n\n对应的栈帧（`getbuf` 被调用时，从高地址往低地址看）：\n\n```\n高地址\n+---------------------------+\n| test 的栈帧               |\n|  ...                      |\n| 返回地址（回到 test）      |  <- ret 指令会把它弹进 %rip\n+---------------------------+\n| 保存的 %rbp（若有）        |\n+---------------------------+\n| buf[BUFFER_SIZE-1]        |  <- Gets 从 buf[0] 往上写\n|  ...                      |\n| buf[0]                    |  <- 输入的第一个字节\n+---------------------------+  低地址（%rsp）\n```\n\n**一次缓冲区溢出做了什么**：往 `buf[0]` 开始写，写满 `BUFFER_SIZE` 之后继续写，就会**覆盖\"返回地址\"那个 8 字节槽位**。`getbuf` 执行 `ret` 时，`%rip` 被改成你写进去的那个值 —— **控制流被数据劫持**。\n\n这就是主线六说的：**只要控制流信息（返回地址）放在可被写穿的内存里，\"数据\"和\"代码\"的边界就不存在**。\n\n#### 7.3.2 五个 phase 与三级防御的对应\n\n| Phase | 程序 | 手段 | 目标 | 官方分值 | 它绕过了什么 |\n|---|---|---|---|---|---|\n| 1 | ctarget | CI | 跳到 `touch1` | 10 | 无（栈固定、可执行） |\n| 2 | ctarget | CI | 跳到 `touch2` 且传参 cookie | 25 | 需要注入代码把 cookie 放进 `%rdi` |\n| 3 | ctarget | CI | 跳到 `touch3` 且传 cookie 字符串 | 25 | 字符串要放在不被覆盖的位置 |\n| 4 | rtarget | ROP | 用 gadget 实现 `touch2` | 35 | **栈随机化 + 栈不可执行** |\n| 5 | rtarget | ROP | 用 gadget 实现 `touch3` | 5 | 同上，且要拼字符串地址 |\n\n**三级防御与被绕方式**（这张表是本节的核心）：\n\n| 防御 | 机制 | 攻击怎么绕 |\n|---|---|---|\n| **栈随机化 ASLR** | 每次运行栈基址不同 → 猜不到注入代码的地址 | 用栈上已有的相对关系 / 用 `%rsp` 推算 / **改用不需要知道地址的 ROP** |\n| **栈不可执行 NX（W^X）** | 栈页标记不可执行 → 注入的字节码直接段错误 | **ROP**：不注入代码，改用程序里**现成**的指令片段（gadget），用栈上一串地址把它们串起来 |\n| **金丝雀 canary** | 返回地址前放一个随机值，返回前校验 | 本 lab 的靶子**没开** canary（所以前三关才能成功） |\n\n#### 7.3.3 ROP 的原理（phase 4/5 的本质）\n\n思路一句话：**既然不能注入指令，就把程序里已有的 `ret` 结尾的小片段（gadget）当积木，用栈上的一串地址串成程序。**\n\n```\n栈（从 buf[0] 往上）:\n+----------------------------+\n| gadget1 的地址              |  <- ret 后跳到这里\n| gadget2 的地址              |\n| gadget3 的地址              |\n| touch2 的地址               |\n| cookie (0x59b997fa)        |\n+----------------------------+\n\n执行流: ret -> gadget1 (pop %rax; ret) \n                -> gadget2 (mov %rax,%rdi; ret) \n                -> touch2\n```\n\n**典型 gadget（在 `farm.c` 里找，形态通用，具体地址以你反汇编结果为准）**：\n\n| 想做的事 | 需要的 gadget 形态 |\n|---|---|\n| 把栈上的值弹进寄存器 | `popq %rax ; ret`（字节码 `58 c3`） |\n| 寄存器间搬数据 | `movq %rax, %rdi ; ret`（`48 89 c7 c3`） |\n| 算地址（phase 5 关键） | `lea (%rdi,%rsi,1), %rax ; ret` |\n| 加法 | `addq %rbx, %rax ; ret` |\n\n找法：`gcc -Og -c farm.c && objdump -d farm.o`，扫所有以 `c3`（`ret`）结尾的字节序列 —— **注意 `c3` 也可能是指令中间字节，所以要从真实指令边界开始扫**。\n\n#### 7.3.4 实操易错点（真做的话）\n\n1. **必须加 `-q`**：自学者本地跑，否则会去连不存在的评分服务器。\n2. **小端**：`hex2raw` 里字 `0xdeadbeef` 要输入 `ef be ad de`。\n3. **不能出现 `0x0a`**：换行会被 `Gets` 当成输入结束（`0x0a` = `\\n`）。\n4. **Ubuntu 22.04 上 `ctarget` 会因 `printf` 的 `movaps` 要求 16 字节对齐而段错误**（有人实测；Debian / 老版本 Ubuntu 可行）——**这是环境问题，不是你错了**。\n5. **`BUFFER_SIZE` 以你手里的二进制为准**：`objdump -d ctarget | grep -A20 \"<getbuf>:\"`，看 `sub $0x??, %rsp`。\n\n#### 7.3.5 408 对应点\n\n- **必考**：栈帧布局、`call/ret` 对栈的作用、返回地址的位置、函数调用的机器级表示。\n- **概念层**：缓冲区溢出、栈随机化 / 不可执行 / 金丝雀三种防御各自的**作用点**（选择题可能问\"哪种防御能挡住哪类攻击\"）。\n- **不考**：ROP gadget 的构造、具体字节码。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 12,
+    "parts": 20,
+    "section": "7.3 attacklab · 逐层设计（Ch3.10，只读原理）"
+  }
+}

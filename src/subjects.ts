@@ -13,6 +13,12 @@
 import { SYLLABUS_MD, SYLLABUS_TITLE, SYLLABUS_VERSION } from './content/syllabus';
 import { ANGLES_MD, ANGLES_TITLE, ANGLES_VERSION } from './content/angles';
 import { SYLLABUS_408_MD, SYLLABUS_408_TITLE, SYLLABUS_408_VERSION } from './content/syllabus-cs408';
+import {
+  SYLLABUS_PROJECTS_HAS_ROUTES,
+  SYLLABUS_PROJECTS_MD,
+  SYLLABUS_PROJECTS_TITLE,
+  SYLLABUS_PROJECTS_VERSION,
+} from './content/syllabus-projects';
 import { DOMAINS, type Domain, type GroupId } from './modules/taxonomy';
 
 export interface Subject {
@@ -58,6 +64,20 @@ export interface Subject {
    * 缺省（`undefined`）＝沿用 `taxonomy.DOMAINS`，四个老站一字不变。
    */
   domainTable?: readonly Domain[];
+  /**
+   * 首屏直接落在某个文档路由（`graph` / `angles`），而不是某个单元。
+   *
+   * 为什么需要：工程线的第一屏应当是「总纲 + 按目标选路线」，不是某个项目页；
+   * `startCode` 只能指向单元，所以单独给文档路由留一个字段。
+   */
+  startRoute?: 'graph' | 'angles';
+  /** 总纲页下方是否追加「按目标选路线」的静态路线卡（工程线用） */
+  routesOnGraph?: boolean;
+  /**
+   * 是否显示进度（掌握度环 / 侧栏 L0 / 进度条 / 「今天该学」）。
+   * 缺省 true；工程线显式关掉 —— 进度不在这套静态站里控制。
+   */
+  showProgress?: boolean;
   /** 总纲页；null 表示该学科不提供 #graph 路由 */
   syllabus: { md: string; title: string; version: string } | null;
   /**
@@ -179,7 +199,14 @@ export const PROJECTS: Subject = {
   dataRoot: 'projects/json/',
   graphRoot: 'projects/graph/',
   entryHtml: 'projects.html',
-  syllabus: null,
+  startRoute: 'graph',
+  routesOnGraph: SYLLABUS_PROJECTS_HAS_ROUTES,
+  showProgress: false,
+  syllabus: {
+    md: SYLLABUS_PROJECTS_MD,
+    title: SYLLABUS_PROJECTS_TITLE,
+    version: SYLLABUS_PROJECTS_VERSION,
+  },
   angles: null,
 };
 

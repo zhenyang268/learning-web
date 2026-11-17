@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "AI01.1",
   "chapter": "AI01",
-  "title": "ai · 大纲",
+  "title": "ai · 总览",
   "src": {
     "file": "notebook/projects/ai/OUTLINE.md",
     "sha256": "sha256:29a2047c3e1b490dea4a8ac56ff761ab6f871f940c518e7ae921e4510a3ccc17"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

@@ -193,7 +193,7 @@ learning-web/
   emath/json/ · graph/   # 工程数学数据根：数值库 NL + NM/CG/EQ + AN02–04、PR09
                          #   拆分判据「能算 / 能对拍」见 docs/content-map.md §1
   kaoyan/json/           # 数一考研数据根（408 之外的另一门，主键前缀不同）
-  projects/json/         # 工程线数据根（两件套：OUTLINE + NOTES）
+  projects/json/         # 工程线数据根（OUTLINE 总览 + NOTES 逐节；按能力线分组）
   build/
     verify_kb.py         # **仍在用**：内容校验器（npm run audit:content 调它，只读模式）
     verify_docs.py       # doc-card/v1 四类校验（npm run verify:docs）
@@ -255,7 +255,7 @@ docs/
 ```bash
 # 日常开发（本站是纯前端：改 json/ 秒级可见）
 npm run dev                 # Vite，proxy /api → :5000
-npm run check               # 类型 + content-map + graph + sem-sync + viz + 全量 DOM 断言（318 单元）
+npm run check               # 类型 + content-map + graph + sem-sync + viz + 六站全量 DOM 断言
 npm run check:content-map   # 内容总图闸门：章覆盖 / 组归属 / survey 编号全集 / 落点 / 站点唯一
 npm run import:docs         # notebook → json（408 / 数一 / 工程线 / 数值库），重跑幂等
 npm run verify:docs         # doc-card/v1 四类校验：结构 / 覆盖 / 源一致性 / 无损

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.21",
+  "chapter": "CS01",
+  "title": "9 一句话收尾",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.21:body.s01",
+      "type": "extension",
+      "title": "9 一句话收尾",
+      "level": 2,
+      "content": "> CSAPP 这八个 lab，对 408 的价值**不在代码，而在它把\"补码 / Cache / 分配算法 / 进程回收\"这些考点变成了你亲手调过的东西**。\n> 冲刺期只做 Tier 1 四个（datalab / cachelab / malloclab / shlab），你就把组成的数据表示、存储的 Cache、OS 的内存与进程四块最难的选择/大题直觉全立起来了。\n> 而同一批 lab，在初试之后会自动变成你的复试弹药与面试故事（§8）——**一次投入，三个战场：初试、复试、春招**。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 20,
+    "parts": 20,
+    "section": "9 一句话收尾"
+  }
+}

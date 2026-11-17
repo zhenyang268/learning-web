@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG02.7",
+  "chapter": "LG02",
+  "title": "第 6 章 GIL 与多线程",
+  "src": {
+    "file": "notebook/projects/langs/python-basics/NOTES.md",
+    "sha256": "sha256:756d0b7dacd8aaff39313179f8b6b750108fa2187ac744c8d1474d84cf6e0c1b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG02.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 GIL 与多线程",
+      "level": 2,
+      "content": "**要解决的问题**：解释 CPython 里 `threading` 到底能带来什么、不能带来什么。不解决的话，就会写出「多线程跑 CPU 密集任务以为能提速」，或者反过来「以为有 GIL 就不用加锁」——两个方向都错。\n\n**机制**：\n\n- GIL（Global Interpreter Lock）是 CPython 解释器进程内的一把互斥锁：线程必须持有它才能执行 Python 字节码、修改对象引用计数等解释器状态。结果是**同一进程内同一时刻只有一个线程在跑字节码**。\n- 释放时机有三类：字节码之间的切换检查（间隔由 `sys.setswitchinterval()` 控制，默认值按版本而定）；阻塞式 I/O 与 `time.sleep` 期间主动释放；部分 C 扩展在长计算中主动释放（是否释放由该扩展决定）。\n- 关键推论：切换只发生在字节码边界，所以**单条字节码**看起来原子，但一条 Python 语句通常编译成多条字节码。`n += 1` 是「读 → 加 → 写」三步，中间可能被切走，因此不是原子操作。\n- 所以：I/O 密集型任务多线程有效（等待时让出 GIL，别的线程能跑）；CPU 密集型任务多线程不提速，还会因切换与锁竞争变慢，应该用多进程或把计算下沉到会释放 GIL 的 C 实现。\n- GIL 不等于你的数据结构的锁：它保护的是解释器内部状态，不保护「检查再修改」这种复合逻辑，共享可变状态仍然要 `threading.Lock`。\n- 无 GIL 的 free-threaded 构建（PEP 703）在部分版本作为**可选构建**存在，默认构建仍带 GIL；具体可用状态按版本而定。\n\n```python\nimport sys, threading\nsys.setswitchinterval(1e-6)          # 把切换间隔调小，放大竞态\n\nn = 0\ndef work():\n    global n\n    for _ in range(200_000):\n        n += 1                        # LOAD / ADD / STORE，可被打断\n\nts = [threading.Thread(target=work) for _ in range(4)]\nfor t in ts: t.start()\nfor t in ts: t.join()\nprint(n)                              # 常小于 800000，具体值每次不同\n\nlock = threading.Lock()\ndef safe():\n    global n\n    for _ in range(200_000):\n        with lock:\n            n += 1\n```\n\n**最小例子**：\n\n```python\n# CPU 密集：多线程 vs 串行，耗时往往相近甚至更慢\ndef burn(k):\n    x = 0\n    for i in range(k): x += i * i\n    return x\n\n# I/O 密集：多线程明显快于串行\nimport time\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef fetch(_):\n    time.sleep(0.1)                   # 睡眠期间释放 GIL\n    return 1\n\nt0 = time.perf_counter()\nlist(ThreadPoolExecutor(8).map(fetch, range(16)))   # 约 0.2s 量级\nprint(time.perf_counter() - t0)\n```\n\n用 `dis.dis(work)` 能直接看到 `n += 1` 对应的多条字节码，这是解释「为什么不原子」最直接的证据。\n\n**面试高频问法**：\n\n1. **「GIL 是什么，为什么 CPython 要有它？」** → 考点是设计动机。答法：解释器级互斥锁，保证同一时刻只有一个线程执行字节码；主要目的是用最简单的方式保护引用计数等解释器状态、避免细粒度加锁带来的复杂度和开销，也让单线程性能受益。\n2. **「有 GIL 了，为什么还要自己加锁？」** → 考点是保护粒度。答法：GIL 只在字节码边界切换，不保证多条字节码组成的复合操作原子；`n += 1`、先查后改的字典逻辑都可能交错，共享可变状态必须用 `Lock` 保护。\n3. **「多线程什么时候有用，什么时候该换多进程？」** → 考点是任务类型判断。答法：I/O 密集、会阻塞等待的任务用线程（等待时释放 GIL，并发度高、开销小）；CPU 密集用多进程绕开 GIL，或用释放 GIL 的 C 扩展/向量化实现。\n4. **「GIL 会不会被移除？」** → 考点是对 Python 演进的了解程度。答法：已有 PEP 703 的无 GIL 可选构建在推进，默认构建目前仍带 GIL；即使去掉 GIL，也不代表不用加锁——只是把并行能力放开，内存模型与锁语义仍要自己负责。\n5. **「线程切换开不开、`setswitchinterval` 调小会怎样？」** → 考点是对调度开销的理解。答法：调小使切换更频繁，竞态更容易复现，但上下文切换开销上升、吞吐下降；切换间隔按版本有默认值，不应在生产里随手改。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "project": "python-basics",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 10,
+    "section": "第 6 章 GIL 与多线程"
+  }
+}

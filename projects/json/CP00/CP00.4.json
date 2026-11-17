@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP00.4",
+  "chapter": "CP00",
+  "title": "1 四条线的公共词汇（口径统一）",
+  "src": {
+    "file": "notebook/projects/cpu/NOTES.md",
+    "sha256": "sha256:f11e2f546f1a0222d1555da30fba4f53c302c37eb193a45111454c1b8d382c0f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP00.4:body.s01",
+      "type": "extension",
+      "title": "1 四条线的公共词汇（口径统一）",
+      "level": 2,
+      "content": "| 词 | 在 `asm-link-arch` 里 | 在 `cpu-microarchitecture` 里 | 在 `riscv-core` 里 | 在 `compiler` 里 |\n|---|---|---|---|---|\n| ISA | 指令编码、寻址方式、调用约定的寄存器分工 | **契约**：可见状态怎么变，不承诺周期数 | RV32I 的 40 条指令与五种立即数格式 | 目标 triple、可用指令集特性 |\n| ABI | 参数/返回值寄存器、栈对齐、callee-save 边界 | 与流水线无关，但决定 `sret` 类操作的访存形态 | 决定你自己核的调用约定（教学核可自定义，但要写清） | 后端 lowering 与 `sret/byval` 属性 |\n| 关键路径 | 不涉及 | 决定主频上限的那条组合逻辑链 | STA 报出来的起点→终点路径 | 指令选择的延迟模型（`llvm-mca`） |\n| CPI / IPC | 不涉及 | 主指标，必须与 miss 指标一起看 | 结构改动后的实测值 | 指令数一端的贡献（向量化、展开） |\n| 内存层次 | 段/节在文件里的布局 | AMAT、VIPT、MSHR、TLB 覆盖范围 | 你实现的 I/D cache 的位划分与策略 | 分块、预取提示、向量化后的访存形态 |\n| 抽象层次 | 源码 → 汇编 → 目标文件 → 装载 | ISA → 微架构 | RTL → 网表 → 布局（到综合为止） | 高层 IR → 低层 IR → 机器码 |\n| 判据形态 | 一条命令 + 一段输出 | 一条「观察到 X 则我错」的断言 | difftest 零分歧 + STA slack | pass 是否触发 + IR diff + 运行时指标 |\n\n**一条跨线铁律**：任何性能结论都要能落到「指令数 × CPI × 周期时间」这三项的哪一项上。落不上去的结论，说明你还没归因。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 9,
+    "section": "1 四条线的公共词汇（口径统一）"
+  }
+}

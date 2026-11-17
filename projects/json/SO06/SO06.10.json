@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO06.10",
+  "chapter": "SO06",
+  "title": "第 8 章 容器：把边界画在 namespace 上",
+  "src": {
+    "file": "notebook/projects/os/virtualization/NOTES.md",
+    "sha256": "sha256:d4ea73a02ef0f6f4eead171c249368035a9e07403606e7dbdca31b66a680465e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO06.10:body.s01",
+      "type": "extension",
+      "title": "第 8 章 容器：把边界画在 namespace 上",
+      "level": 2,
+      "content": "**要解决的问题**：容器不是\"小虚拟机\"，它是**同一个内核上的另一种视图**。把它讲成虚拟机，后面所有追问都会答错；\n把它讲成\"就是个进程\"，又解释不了隔离与配额。需要一张\"边界位置表\"。\n\n**机制**：\n\n**(a) 隔离的三块积木 + 一块账本**：\n\n| 积木 | 提供什么 | 关键细节 |\n|---|---|---|\n| namespace | **视图**：PID、挂载、网络、IPC、UTS、user、cgroup、time 八种 | `clone`/`unshare` 建，`setns` 进；`/proc/<pid>/ns/*` 能看到 |\n| cgroup v2 | **配额与计量**：`cpu.weight`/`cpu.max`、`memory.max`/`memory.high`、`io.max`、`pids.max` | 单一层级；`memory.events` 与 PSI（`memory.pressure`）才是\"谁在被压\"的判据 |\n| overlayfs | **根文件系统**：多个 `lowerdir`（只读层）+ 一个 `upperdir`（可写层）→ `merged` | 写触发 **copy-up**；删除用 whiteout；**inode 号不稳定** |\n| capabilities / seccomp / LSM | **降权**：把 root 拆成几十个 bit、把系统调用做成白名单 | `no_new_privs` 是 seccomp 生效的前提；rootless 靠 user namespace 的 uid 映射 |\n\n**(b) 启动路径**（每一步的存在都有原因）：\n\n```\ndockerd（API/镜像/网络/卷） → containerd（镜像分发 + 容器生命周期） → containerd-shim（每个容器一个，负责回收僵尸、持有 stdio）\n    → runc（OCI runtime：建 namespace/cgroup → pivot_root → 降权 → exec） → 你的进程\n```\n\n- `runc` 是**一次性**的：建完容器就退出，所以不能由它来当父进程（否则僵尸没人收）——这就是 `shim` 存在的理由。\n- `pivot_root` 而不是 `chroot`：`chroot` 可以被\"逃出去\"（保留一个旧根的 fd 再 `fchdir`），`pivot_root` 把旧根换掉，逃不出去。\n- OCI 拆成两个 spec：**image spec**（manifest + config + layers，按 digest 寻址）与 **runtime spec**（`config.json`：namespace 列表、cgroup 路径、capabilities、挂载）。**这也是 K8s 1.24 能删掉 dockershim 的原因**——运行时是可替换的，镜像格式是通用的。\n\n**(c) 为什么快（以及\"快\"到底快在哪）**：\n\n| 对比项 | VM | 容器 |\n|---|---|---|\n| 引导 | 固件 + 内核 + init，几百毫秒到几十秒 | 无 |\n| 内存 | 每 VM 一份内核页表、内核数据结构、预留内存 | 无额外内核 |\n| 启动动作 | 硬件初始化 + 设备枚举 + 内核初始化 | 建 namespace + 挂 overlay + `exec`，**几十毫秒量级** |\n| 真正的瓶颈 | 引导 | **拉镜像**（网络 + 解压），不在启动 |\n\n**(d) 为什么不是安全边界**（四条，都能落到机制上）：\n\n1. **共享内核**：一个内核 CVE（`io_uring`、`netfilter`、文件系统）就是一次逃逸，`capabilities` 挡不住内核代码执行。\n2. **共享页缓存**：两个容器读同一文件时页是同一份，于是**计时侧信道**成立（\"你有没有这个文件/这一页\"）。\n3. **`/proc`、`/sys`、设备节点**：默认暴露的信息远多于\"一个进程该看到的\"，需要额外 `maskedPaths`/`readonlyPaths` 与 device cgroup 才收得干净。\n4. **cgroup 只是配额，不是隔离**：`memory.max` 会触发 OOM 而不是\"看不见内存\"，超了照样杀。\n\n⇒ 由此推出第 9 章的四种方案：**如果要\"不可信代码\"级隔离，就得把边界重新画到 CPU 上**（VM、microVM）**或画在系统调用上**（gVisor）。\n\n**(e) 两个\"不是 bug\"的现象**（面试最常问）：\n\n- **容器里的 PID 1 不是 `init`**：它是你 `exec` 的那个进程，恰好拿到了 PID 1。内核规定 **PID 1 忽略没有装 handler 的信号**，所以 `docker stop` 对它发 `SIGTERM` 没反应，十秒后才 `SIGKILL`。解法是 `--init`（塞一个最小的 `tini` 进去）或让应用自己处理信号 + 回收子进程。\n- **容器里 `top` 看到宿主机的核数**：cgroup 的 `cpu.max` 只是配额，**不改 `/proc/cpuinfo`**（改不了，那是内核导出的全局视图）。老 JVM 因此按宿主核数算 GC 线程与堆大小（`UseContainerSupport` 才修好）；同理 `nproc` 在容器里也没有意义，要看 `cpu.max`。\n\n**最小例子**：不用 Docker，手搓一个容器（这条命令本身就是\"容器是什么\"的证明）：\n\n```bash\nunshare --pid --fork --mount-proc --uts --ipc --net --mount \\\n        --map-root-user  bash -c 'hostname c1; ps -ef; echo $$'\n```\n\n判据：`ps -ef` 里只有你自己（PID namespace 生效）、`hostname` 改了但宿主没变（UTS namespace）、\n`ip addr` 只剩 `lo`（net namespace）。**四个 namespace 一建，\"容器\"就出来了**——Docker 只是把这一串动作产品化了。\n\n**面试高频问法**：\n\n1. **「容器和虚拟机的隔离差在哪，能量化吗？」** → 考点：强制者 + 共享面。\n   → 答法：**强制者不同**（VM 由 CPU 的 EPT/特权级强制，容器由内核的 namespace 检查强制）；**共享面不同**（VM 只共享 hypervisor 接口，容器共享整个内核 + 页缓存 + `/proc`）。量化的说法是\"逃逸需要的漏洞数\"：VM 要打 KVM/QEMU（且 QEMU 在用户态、有 seccomp），容器只要打内核——**后者多得多**。\n2. **「overlayfs 在什么负载下最慢？」** → 考点：copy-up 与元数据。\n   → 答法：**首次写大文件**（copy-up 要整份复制，一次写变成\"复制 + 写\"）、**大量小文件元数据操作**（跨层查找）、**跨层 `rename`**。判据：`docker build` 里\"装包\"慢而\"跑程序\"不慢，就是这个形状；解法是把热路径放到 volume（绕过 overlay）。\n3. **「为什么 K8s 要删掉 dockershim？」** → 考点：运行时与镜像格式的分层。\n   → 答法：`dockershim` 是 kubelet 与 Docker 之间的适配层，因为 Docker 本身不实现 CRI；删掉后 kubelet 直接对 `containerd`/`CRI-O` 说 CRI。**镜像仍然是 OCI 格式，所以\"docker build 的镜像照样能跑\"**——这也说明\"容器\"的标准化在 image/runtime spec 这两层，而不在 Docker 这个产品上。\n4. **「容器里怎么做资源限制，`cpu.max` 和 `cpu.weight` 有什么不同？」** → 考点：配额 vs 权重。\n   → 答法：`cpu.max` 是**硬上限**（\"每 100ms 最多用 50ms\"，超了被 throttle）；`cpu.weight` 是**相对份额**（忙的时候按比例分，闲的时候可以全用）。**判据：要\"可预测的延迟\"用 `cpu.max`，要\"利用率\"用 weight；两个都设会互相打架。**\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "virtualization",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 11,
+    "section": "第 8 章 容器：把边界画在 namespace 上"
+  }
+}

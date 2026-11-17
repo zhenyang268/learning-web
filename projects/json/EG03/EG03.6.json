@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG03.6",
+  "chapter": "EG03",
+  "title": "第 5 章 内存与缓存：miss、NUMA、伪共享的量化",
+  "src": {
+    "file": "notebook/projects/eng/perf-engineering/NOTES.md",
+    "sha256": "sha256:b0d9c2bc493b3027796926ceb8b14f794523b415fe58a823afe700b373cb473d"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG03.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 内存与缓存：miss、NUMA、伪共享的量化",
+      "level": 2,
+      "content": "**要解决的问题**：现代 CPU 的绝大多数“算得慢”其实是“等数据”，而 CPU profiling 只会把时间算进那条访存指令上，看起来像指令本身慢。这一章解决的是：把“访存慢”这件事从直觉变成可量化的指标——哪一级 miss、miss 到哪去、有没有跨核抢同一行、内存落在哪个 NUMA 节点。不解决，优化就会变成盲目减小数据结构和加线程。\n\n**机制**：首先要分清指标的口径。`perf stat` 里的 `cache-references` / `cache-misses` 是 PMU 硬件事件，在多数 x86 上 `cache-misses` 对应最后一级缓存 miss，具体映射按 CPU 实现而定，不要跨机器比。要算比率就用成对事件：`L1-dcache-loads` / `L1-dcache-load-misses` 看 L1，`LLC-loads` / `LLC-load-misses` 看最后一级，miss rate = misses / loads。事件前缀与可用性因架构和内核版本而异，跑之前先 `perf list` 对一遍。\n\n定位“miss 到哪去了”用 `perf mem record`（采样 load/store，报告命中层级与数据地址），定位“多核抢同一行”用 `perf c2c`：它统计 HITM（该行被另一核以 Modified 状态命中），这是伪共享的直接证据。伪共享的成因是 cache line（x86 上 64B）作为一致性协议的最小单位，两个线程写同一行里不同的变量，行仍然在核间来回弹。修复是对齐填充：C/C++ 用 `alignas(64)` / `__attribute__((aligned(64)))`，Java 用 `@Contended`（需开启对应 JVM 参数）。\n\nNUMA 侧的口径是“分配落在哪个节点、访问落在哪个节点”：`numactl --hardware` 看拓扑，`numastat` 看 `numa_hit` / `numa_miss` / `numa_foreign`，后者非零说明有跨节点访问。注意 Linux 默认 first-touch：页落在首次写它的线程所在节点，所以“绑核不等于绑内存”，要 `numactl --cpunodebind=0 --membind=0` 显式约束。\n\n**最小例子**：\n\n```bash\nperf stat -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses,\\\nLLC-loads,LLC-load-misses ./bench\n```\n\n读法：先算 IPC = instructions / cycles。若 IPC 明显偏低而 `LLC-load-misses / LLC-loads` 偏高，说明时间花在去内存取数上，接着跑 `perf mem record ./bench && perf mem report` 看是哪些符号、哪些层级；若怀疑多线程互相干扰，跑 `perf c2c record -a -- sleep 5 && perf c2c report`，在报告里看 HITM 高的 cache line 及其归属变量。\n\n伪共享的最小验证：两个线程各自 `counter++` 一千万次，变量放在同一结构体相邻位置 vs 各自 `alignas(64)` 隔开。前者会看到 `perf c2c` 的 HITM 集中在那一行，耗时显著更高；后者 HITM 基本消失、耗时下降。具体倍数按平台与核数而定，但“HITM 消失 + 耗时下降”两件事同时成立才算证据闭环。\n\nNUMA 的最小验证：`numastat` 前后对比，加 `--membind` 绑定后 `numa_foreign` 应显著下降，若端到端延迟不降，说明该 workload 不是跨节点带宽敏感，优化点不在这里。\n\n**面试高频问法**：\n\n1. 「cache miss 率高就说明有性能问题吗？」→ 考点是口径与瓶颈判定，不是背指标。→ 一句话答法：miss 率必须和 IPC、访存占比一起看，纯顺序流式访问 miss 率天然高但被预取掩盖，只有当 miss 抬高了 stalled cycles、进而拉高端到端延迟时才算瓶颈。\n2. 「你怎么证明是伪共享，而不是普通的内存慢？」→ 考点是证据链。→ 一句话答法：`perf c2c` 里看到某条 cache line 的 HITM 计数高、且该行对应的是多个线程各写各的相邻变量，再加填充后 HITM 与耗时同时下降，三条都成立才是伪共享。\n3. 「NUMA 什么时候影响大，什么时候可以忽略？」→ 考点是判断边界。→ 一句话答法：working set 超出单节点缓存、且带宽密集的 workload 影响大；单线程绑核绑内存一致、或数据量小到能待在 LLC 里的场景，跨节点访问占比低，基本可以忽略。\n4. 「`perf mem` 和 `perf c2c` 有什么区别？」→ 考点是工具定位。→ 一句话答法：`perf mem` 回答“这次访存落在哪一级、延迟多少”，是单线程视角的归因；`perf c2c` 回答“这条 cache line 被几个核抢过”，是跨核争用视角，伪共享只能靠后者定性。\n5. 「做完缓存优化，你怎么量化收益？」→ 考点是实验纪律。→ 一句话答法：同机、同参数、同 workload 跑改动前后两轮，同时看 PMU 指标（IPC、miss rate、HITM）和端到端延迟分布；指标动了但延迟没动，说明瓶颈已经不在缓存上。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "perf-engineering",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 8,
+    "section": "第 5 章 内存与缓存：miss、NUMA、伪共享的量化"
+  }
+}

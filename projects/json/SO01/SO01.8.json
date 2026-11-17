@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.8",
+  "chapter": "SO01",
+  "title": "第 6 章 内存故障定位：OOM killer、泄漏、碎片与回收",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.8:body.s01",
+      "type": "extension",
+      "title": "第 6 章 内存故障定位：OOM killer、泄漏、碎片与回收",
+      "level": 2,
+      "content": "**要解决的问题**：典型现场有三类。第一类是进程被 `SIGKILL`，日志只剩 `Killed`，`dmesg` 里一段 `Out of memory: Killed process`，但没人知道被杀的是不是写代码的那个人。第二类是 RSS 只涨不降，重启能缓解、几天后复发，是泄漏、缓存还是 glibc arena 碎片说不清。第三类是 `free` 看着还有几百 MB，`malloc(8MB)` 或 THP 却失败，`dmesg` 报 `order:3 allocation failure`，这是碎片而不是总量不足。三者处置完全不同：泄漏要改代码，碎片要 compaction 或调整分配尺寸，回收压力要调 watermark 与脏页比例。分不清就会用“定时重启”掩盖问题，把可用性赌在运气上。\n\n**API 与代价**：\n\n`mmap` 只建立虚拟映射，代价是 VMA 插入与页表项；真正的物理页在首次写入时由缺页异常分配。所以 `MAP_NORESERVE` 下 `mmap` 成功不代表内存够用，失败通常已经是 `ENOMEM`（超过 `vm.max_map_count`、或 overcommit 策略拒绝）。\n\n```c\nvoid *p = mmap(NULL, len, PROT_READ|PROT_WRITE,\n               MAP_PRIVATE|MAP_ANONYMOUS|MAP_NORESERVE, -1, 0);\nif (p == MAP_FAILED) {          /* ENOMEM：地址空间/map_count/overcommit */\n    perror(\"mmap\"); return -1;\n}\nmemset(p, 0, len);              /* 此刻才占物理页，minor fault 逐页发生 */\nmadvise(p, len, MADV_DONTNEED); /* 匿名页：立即丢弃并清零，RSS 掉，映射保留 */\n/* madvise(p, len, MADV_FREE); 惰性版：内核可回收，回收前读仍是旧值 */\nmunmap(p, len);                 /* 拆 VMA、断页表，代价与映射页数成正比 */\n\nint fd = open(\"/proc/self/oom_score_adj\", O_WRONLY);\nwrite(fd, \"-900\", 4);           /* -1000..1000；调低需 CAP_SYS_RESOURCE */\n```\n\n关键分支：`madvise(MADV_DONTNEED)` 对匿名私有页是丢弃，对 `MAP_SHARED` 文件页是丢页缓存且**不保证写回**，脏页上用它等于拿数据完整性换内存。`mlock` 失败返回 `ENOMEM`（撞 `RLIMIT_MEMLOCK`），配合 `mmap(MAP_LOCKED)` 常用于防止关键页被回收，但也把页钉死在 zone 里，加重碎片。glibc 侧：大于 `M_MMAP_THRESHOLD`（默认 128 KB，动态可升到 32 MB）的请求走 `mmap`，`free` 后立即 `munmap` 还给内核；小块走 `brk`  arena，多线程会分裂出多个 arena，每个 arena 各自持有空闲块，这就是“进程 RSS 不降但 `malloc` 也没泄漏”的常见来源。`malloc_trim(0)` 可把 arena 顶部归还，但只对 `brk` 段有效。\n\n**对应命令与读法**：\n\n1. `dmesg -T | grep -iE 'out of memory|oom-kill|allocation failure'` → 看 `order:N`、`Killed process <pid> (<comm>) total-vm/rss`、是否 `memory cgroup out of memory` → `order` 大于 0 说明是**高阶分配失败**（碎片/紧急回收），不是总量不足；`cgroup out of memory` 走的是 memcg 限额而非全局 → 会骗你：全局 OOM 选中的是 `oom_badness` 最高者，往往不是真凶；容器里 `dmesg` 常被 `dmesg_restrict` 或命名空间挡住，看不到。\n\n2. `grep -E 'MemTotal|MemFree|MemAvailable|Dirty|Writeback|Slab|SReclaimable|SUnreclaim|Committed_AS|CommitLimit' /proc/meminfo` → `MemAvailable` 是内核估算的可回收+空闲，`Dirty` 是待回写脏页，`SReclaimable` 是可回收 slab（dentry/inode 缓存），`SUnreclaim` 是不可回收 → `SUnreclaim` 单项持续增长基本可判内核对象泄漏；`Committed_AS` 逼近 `CommitLimit`（`overcommit_memory=2`）时 `malloc` 会直接失败 → 会骗你：`MemFree` 低完全不代表内存紧张，page cache 占满是设计目标；`MemAvailable` 是启发式估算，对不可移动页、zram、cgroup 限额都不感知。\n\n3. `cat /proc/buddyinfo` → 每行一个 zone，从左到右是 order 0..10 的空闲块个数 → order-0 成千上万而 order-3 及以上为 0，说明**内存碎成小块**，此时 `free` 再多也满足不了 THP、`fork` 的连续页表、大块 slab → 会骗你：不包含 per-CPU pageset 缓存（`/proc/pagetypeinfo` 才有迁移类型拆分），order 高处的块也可能落在 `ZONE_MOVABLE`/CMA 里普通分配用不上。\n\n4. `grep -E 'min|low|high|protection|nr_free_pages|nr_zone_inactive_anon|nr_zone_active_file|scanned|pgsteal' /proc/zoneinfo` → 把 `nr_free_pages` 和 `protection: (x, y, z)` 的 min/low/high 比大小 → 低于 low 唤醒 kswapd，低于 min 触发 **direct reclaim**，进程在 `alloc_pages` 里同步卡住，表现为延迟尖刺和 CPU `sys` 升高；`scanned` 涨而 `pgsteal` 不涨是**扫描无果**，常见于全是不可回收页 → 会骗你：各 zone 要分别看，Normal 紧张时 DMA32 的富余帮不上；watermark 有 boost 值，瞬时显示会偏高。\n\n5. `valgrind --tool=massif --pages-as-heap=yes --massif-out-file=/tmp/m.out ./prog` 再 `ms_print /tmp/m.out` → 看峰值快照的调用栈和 `(B)` 字节数 → 栈顶函数就是增长点；`--pages-as-heap=yes` 把 `mmap`/`brk` 也按堆计入，覆盖直接调 `mmap` 的分配器 → 会骗你：默认只跟踪 `malloc` 家族，看不到 `mmap`；程序慢 10–20 倍，超时逻辑会改变行为；对 `MADV_FREE` 延迟回收不敏感。\n\n6. `slabtop -o -s c`（或 `grep -E 'dentry|inode_cache|task_struct|kmalloc' /proc/slabinfo`）→ 看 `OBJS`/`ACTIVE` 与 `SIZE` → `dentry` 随目录遍历暴涨多为缓存（可回收），`kmalloc-*` 单项只增不减才是泄漏 → 会骗你：`ACTIVE` 小于 `OBJS` 的差额是空闲对象，仍占 slab 页；`SReclaimable` 在压力下会被 shrinker 收走，看着“泄漏”其实不是。\n\n**原理**：物理页由 buddy 分配器按 order 管理，`free_area[order]` 是伙伴链表，分配不到就向上一级借并劈半，释放时若伙伴空闲则合并——合并是碎片的解药，而**不可移动页**（内核 slab、页表、长期 `mlock` 的页）夹在可移动页之间，就把大块永久切碎了。内核为此给页块打迁移类型（`MIGRATE_UNMOVABLE/RECLAIMABLE/MOVABLE`），并尽量按类型聚集；`/proc/pagetypeinfo` 才看得到这层，compaction 就是把可移动页搬走来拼出高阶块，代价是 CPU 与停顿。\n\n回收分两条腿：文件页在 page cache 里，匿名页靠 swap。两者都挂在 per-zone 的 LRU 双链表（active/inactive × anon/file）上，kswapd 按 watermark 后台扫描，先降级 active→inactive 再回收；进程如果分配快过 kswapd，就在 `alloc_pages` 的 slowpath 里**同步**做 direct reclaim，这是尾延迟的最大来源。脏页必须先回写才能回收，所以 `Dirty` 高、`Writeback` 堵（`dirty_ratio`/`dirty_background_ratio`、设备带宽不足）时，回收会被 IO 拖住，`MemAvailable` 看着够却一直进 direct reclaim。\n\nOOM killer 在回收彻底失败后启动，按 badness 选人：\n\n$$\\text{badness}=\\frac{\\text{rss}+\\text{swap}+\\text{pgtables}}{\\text{totalram}}\\times 1000+\\text{oom\\_score\\_adj}$$\n\n所以**占内存多的被杀**，而不是导致紧张的被杀；memcg 下限额见底时同理，但它只在 cgroup 内选，且 `memory.oom.group` 可整组杀。判断泄漏的可靠口径是分区看：RSS 涨而 `SUnreclaim` 不涨、`PagesAnon` 涨、`smaps_rollup` 里某段 `Private_Dirty` 单调涨，才指向用户态泄漏；否则优先怀疑缓存与 arena 碎片。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 19,
+    "section": "第 6 章 内存故障定位：OOM killer、泄漏、碎片与回收"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP04.4",
+  "chapter": "CP04",
+  "title": "第 3 章 LLVM IR 精读：模块、函数、基本块、SSA、phi 与类型系统",
+  "src": {
+    "file": "notebook/projects/cpu/compiler/NOTES.md",
+    "sha256": "sha256:c6fff8754ad6e8ac1d415ac403d79eedbe0ea927767a531665e867679040055f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP04.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 LLVM IR 精读：模块、函数、基本块、SSA、phi 与类型系统",
+      "level": 2,
+      "content": "**要解决的问题**：IR 是 LLVM 里唯一同时被前端、优化器和后端读写的中间产物；如果读不精 IR，就判断不了某个优化到底做没做、写 Pass 时也无从下手，后面关于优化管线和后端的两章也就完全无法展开。\n\n**机制**：\n\nIR 的容器分为四层：`Module`（一个编译单元，持有全局变量、函数声明与定义、元数据）→ `Function`（含 `Argument` 列表与基本块列表）→ `BasicBlock`（有序指令序列，只有一个入口，并以终结指令 `br`/`switch`/`ret`/`invoke`/`unreachable` 结尾）→ `Instruction`。这四层里的所有东西都是 `Value`；值与被使用者的关系用 `Use` 边表示，一个 `Value` 持有使用者列表。`users()`、`replaceAllUsesWith()` 就是在 `Use` 链上操作。\n\nSSA 的约束可以概括成一句话：每个 `Value` 只被定义一次，并且定义点支配所有使用点。局部变量要进入 SSA，必须靠 phi 汇合 —— `mem2reg`（`PromoteMemoryToRegister`）把 `alloca`/`load`/`store` 提升成寄存器值，phi 的插入位置由定义点的**支配边界**迭代求出（iterated dominance frontier）。这也是 IR 里唯一非 SSA 的部分：内存没有 SSA 形式，`load`/`store` 的依赖走别名分析；需要内存级 SSA 时用 `MemorySSA` 分析（成熟度按版本而定）。\n\nphi 的语义是**并行赋值**：`%p = phi i32 [ %a, %bb1 ], [ %b, %bb2 ]` 表示从 `%bb1` 跳来时取 `%a`，从 `%bb2` 跳来时取 `%b`，所有 phi 同时求值，所以交换两个变量只需两条互相引用旧值的 phi，不需要临时变量。代价是：如果某个前驱有多个后继（critical edge，关键边），就必须在边上插入一个只含 phi/`br` 的块，否则无法为这对（前驱，后继）单独指定 incoming 值 —— `SplitCriticalEdge` 做的就是这件事。\n\n类型系统：基础类型 `void/i1/i8/i16/i32/i64/i128/half/float/double/fp128/x86_fp80`，再加 `ptr`、定长数组 `[N x T]`、结构体 `{...}`（可 `packed`）、固定与可伸缩向量 `<N x T>` / `<vscale x N x T>`。指针自 LLVM 15 起默认不透明（`ptr`，不再有 `i8*`/`i32*`），元素类型信息改由 `getelementptr` 的源类型操作数携带 —— 这是读老 IR 与新 IR 最大的差别，具体默认行为按版本而定。\n\n关键取舍：IR 保持 typed（算术与内存访问都带类型），但指针不透明，于是 GEP 成了唯一“带类型地做地址算术”的指令；`inbounds` 是一个承诺（结果不越出对象），优化器据此推断无 UB，写 Pass 时误加 `inbounds` 是经典错误来源。\n\n**最小例子**：\n\n```c\nint sum(int *a, int n) { int s = 0; for (int i=0;i<n;i++) s += a[i]; return s; }\n```\n\n`clang -O1 -S -emit-llvm` 之后（略去向量化与属性），循环体形如：\n\n```llvm\nfor.body:\n  %iv      = phi i64 [ 0, %for.body.preheader ], [ %iv.next, %for.body ]\n  %s       = phi i32 [ 0, %for.body.preheader ], [ %add, %for.body ]\n  %addr    = getelementptr inbounds i32, ptr %a, i64 %iv\n  %v       = load i32, ptr %addr, align 4\n  %add     = add nsw i32 %s, %v\n  %iv.next = add nuw nsw i64 %iv, 1\n  %exit    = icmp eq i64 %iv.next, %wide.trip.count\n  br i1 %exit, label %exit.block, label %for.body\n```\n\n带数字读一遍：设 `%a = 0x1000`、`%iv = 3`，则 `%addr = 0x1000 + 3*4 = 0x100c`；两个 phi 各有两条 incoming，回边 `%for.body → %for.body` 对应自引用那一项；`nsw`（no signed wrap）是给后端的礼物 —— 溢出即 UB，于是 `add`+比较可以折叠成一条带条件码的 `cmp`。\n\n**面试高频问法**：\n\n1. 「为什么需要 phi？没有它能不能表达循环携带的值？」→ 考点：SSA 的支配性质与汇合点 → 一句话：同一变量在两条路径上各有一个定义、又要在汇合点被使用，而只能有一个定义点支配全部使用，phi 就是那个“按来路选值”的定义点；没有 phi 就只能退回内存，等于放弃 SSA。\n2. 「phi 到了机器码里怎么落地？」→ 考点：并行赋值与 critical edge → 一句话：通常翻成前驱末尾的 move，互相赋值的 phi 组要么并行拷贝、要么靠临时寄存器解环；有 critical edge 时先拆边再放 move，否则那条边上会多走一次不该走的 move。\n3. 「`getelementptr` 为什么不直接返回整数地址？」→ 考点：类型携带与指针算术的可组合性 → 一句话：GEP 只算偏移、不访问内存，它带着源元素类型与逐级索引类型，所以在不透明指针下仍能还原数组/结构体步长，`inbounds` 也能单独标注。\n4. 「`mem2reg` 之后 IR 一定更好吗？」→ 考点：SSA 提升的前提条件 → 一句话：它只消掉可证明未被取址的局部 `alloca`，收益是让几乎所有机器无关优化看见值流；对地址已逃逸或被 `volatile` 访问的 `alloca` 它不会动，那时该看 SROA 与别名分析。\n5. 「IR 里内存为什么不是 SSA，后果是什么？」→ 考点：别名分析为何不可省 → 一句话：`store`/`load` 的副作用无法用“每个地址一个定义”表示，只能靠 `AliasAnalysis` 判断两次访问是否同一对象，这正是 GVN/LICM 依赖 `MemorySSA`、`!tbaa` 等元数据的原因。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "compiler",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 11,
+    "section": "第 3 章 LLVM IR 精读：模块、函数、基本块、SSA、phi 与类型系统"
+  }
+}

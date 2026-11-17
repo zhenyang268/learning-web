@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "PA01.1",
   "chapter": "PA01",
-  "title": "cs149 · 大纲",
+  "title": "cs149 · 总览",
   "src": {
     "file": "notebook/projects/cs149/OUTLINE.md",
     "sha256": "sha256:ef79499542e186e7d93edbb284fbea5d4e9a2e9eb1a844da3c4566d81c495448"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

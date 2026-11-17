@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP01.6",
+  "chapter": "CP01",
+  "title": "第 5 章 栈帧与局部变量：帧指针、红区、可变参数、栈对齐",
+  "src": {
+    "file": "notebook/projects/cpu/asm-link-arch/NOTES.md",
+    "sha256": "sha256:04b5529a001bfe4ec19f5d9641db647d43404a1276627187bd916f3d732fe051"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP01.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 栈帧与局部变量：帧指针、红区、可变参数、栈对齐",
+      "level": 2,
+      "content": "**要解决的问题**：函数调用时，返回地址、保存的寄存器、局部变量和溢出参数到底落在内存的哪里？栈帧就是把这套约定固化成实际内存布局。如果不弄清它，调试器里看到的 backtrace 链、崩溃时保存的调用栈、可变参数为什么能把值读出来、`movaps` 为什么因对齐问题崩溃，全都无法解释。\n\n**机制**\n\n两个架构的栈帧形状不同，根本原因在调用指令本身：\n\n- x86-64 的 `call` 先把 8 字节返回地址压栈（`rsp -= 8`）再跳转，返回地址天然位于被调用者的栈帧内。\n- AArch64 的 `bl` 只把返回地址写进 `x30`（LR），完全不动 `sp`；返回地址必须由被调用者自己保存（通常与 FP 一起 `stp`）。\n\n于是 prologue（函数序言）形成对照：\n\n```asm\n# x86-64 SysV                    # AArch64 AAPCS64\npush rbp                         stp  x29, x30, [sp, #-16]!\nmov  rbp, rsp                    mov  x29, sp\nsub  rsp, 0x30                   sub  sp, sp, #0x30\n```\n\n帧链因此也不同：x86-64 上是 `[rbp]=调用者的 rbp`、`[rbp+8]=返回地址`、第一个溢出栈参数在 `[rbp+16]`；AArch64 上是 `[x29]=调用者 fp`、`[x29+8]=返回地址`（一条 `stp` 存下），回溯算法必须按各自的布局来写。`-fno-omit-frame-pointer` 的意义就在这里：牺牲一个通用寄存器换取可靠的 unwind（`perf`、`gdb`、采样 profiler 都依赖它）。\n\n**红区（red zone）**：x86-64 SysV 在 `[rsp-128, rsp)` 划出 128 字节，叶子函数可以不调整 `sp` 就直接使用；代价是内核在投递信号时必须跳过这 128 字节，否则会覆盖用户数据。AArch64 的 AAPCS64 **没有红区**，而且没有 `push/pop` 指令，叶子函数要用栈就得老实调整 `sp`。取舍是：红区省两条指令、省一次 `sp` 更新，但让信号处理和栈探测变复杂。\n\n**栈对齐**：x86-64 规定“进入函数时 `rsp+8` 是 16 的倍数”，即入口 `rsp ≡ 8 (mod 16)`，所以 `push rbp` 之后恰好 16 对齐；`movaps`/`movdqa` 崩溃基本都是有人手动改了 `rsp` 破坏了这个不变式。AArch64 反过来，要求更严格：只要 `sp` 参与访存，就必须 `sp mod 16 = 0`，这是公共接口的硬性约束，不是“进函数时”的约定。\n\n**可变参数**是两条 ABI 差异最明显的地方。x86-64 用寄存器传匿名参数，所以 callee 必须先把 6 个 GP 寄存器和 8 个 XMM 寄存器整体“倾倒”到 176 字节的 register save area（6×8 + 8×16），`va_list` 是四元组 `{gp_offset, fp_offset, overflow_arg_area, reg_save_area}`，并且调用方要在 `al` 里填“用了几个向量寄存器”。AArch64 简单得多：AAPCS64 规定匿名参数一律走栈，`va_list` 基本就是一个指向栈上参数区的游标结构。\n\n**最小例子**\n\n```c\nlong f(long a1, long a2, long a3, long a4, long a5, long a6, long a7)\n{ return a1 + a7; }\n```\n\nx86-64：`a1..a6 → rdi, rsi, rdx, rcx, r8, r9`，`a7` 走栈。设入口 `rsp = 0x7ffd_0000_5ff8`（满足 ≡8 mod 16），`push rbp` 后为 `0x…5ff0`（16 对齐），`sub rsp,0x30` 后为 `0x…5fc0`；调用前把 `a7` 写入 `[rsp]`，`rsp` 仍 16 对齐，callee 里读 `[rbp+16]` 拿到就是 `a7`。\n\nAArch64：`a1..a7 → x0..x6`，因为 GP 参数寄存器有 8 个，`a7` 根本不占栈，栈帧只剩 `stp x29,x30,[sp,#-16]!` 这 16 字节。\n\n**面试高频问法**\n\n1. 问：为什么 AArch64 的栈帧里返回地址位置和 x86-64 不一样？\n   → 考点在调用指令语义：`call` 隐含压栈，`bl` 只写 LR。\n   → 答：x86-64 的 `call` 把返回地址压在栈上，所以它在被调函数的帧里；AArch64 的 `bl` 只写 `x30`，返回地址是被调函数用 `stp x29,x30` 主动存的，位置由编译器约定，不由指令决定。\n\n2. 问：红区是什么，为什么 AArch64 没有？\n   → 考点在 ABI 取舍与信号处理的耦合。\n   → 答：红区是 x86-64 SysV 给叶子函数的 128 字节免调整栈空间，省两条指令；代价是内核投信号要跳过它。AArch64 没有 `push/pop`，也没定义红区，用栈就得显式改 `sp`。\n\n3. 问：`printf` 这类可变参数函数怎么知道去哪里取参数？\n   → 考点在寄存器保存区与 `va_list` 实现。\n   → 答：x86-64 上 callee 把 6 个 GP 和 8 个 XMM 寄存器倾倒到 176 字节保存区，`va_list` 记录 gp/fp 偏移和溢出区指针；AArch64 上匿名参数本来就全在栈上，`va_list` 基本就是栈游标。\n\n4. 问：程序在 `movaps` 上 SIGSEGV，最可能是什么原因？\n   → 考点在栈对齐不变式。\n   → 答：x86-64 要求调用点 `rsp mod 16 = 0`（入口 ≡8），某处手写汇编或 `alloca` 破坏了它，导致 16 字节对齐的 SSE 访存落到奇数 8 字节地址上。\n\n5. 问：`-fomit-frame-pointer` 优化掉 rbp 后，backtrace 还怎么走？\n   → 考点在帧指针与 unwind 信息的替代关系。\n   → 答：靠 `.eh_frame`/CFI 里记录的 CFA 规则做表驱动展开，`gdb`、`perf` 都能用，但代价是体积变大、采样时更慢，内核和部分发行版因此强制保留帧指针。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "asm-link-arch",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 10,
+    "section": "第 5 章 栈帧与局部变量：帧指针、红区、可变参数、栈对齐"
+  }
+}

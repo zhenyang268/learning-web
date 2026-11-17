@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP01.9",
+  "chapter": "CP01",
+  "title": "第 8 章 装载与运行时：动态加载器、地址空间布局、PIE 与 ASLR",
+  "src": {
+    "file": "notebook/projects/cpu/asm-link-arch/NOTES.md",
+    "sha256": "sha256:04b5529a001bfe4ec19f5d9641db647d43404a1276627187bd916f3d732fe051"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP01.9:body.s01",
+      "type": "extension",
+      "title": "第 8 章 装载与运行时：动态加载器、地址空间布局、PIE 与 ASLR",
+      "level": 2,
+      "content": "**要解决的问题**：链接器交出的 ELF 文件里，仍然有一批地址没有确定：共享库符号的最终位置不知道、主程序被放到哪里也不知道。这一章要回答的是“从 `execve` 返回到进入 `main` 之间，谁把 ELF 变成进程内存中可运行的映像，以及 PIE 和 ASLR 如何介入”。不解决它，PLT/GOT 就只能背下来而说不出为什么需要，`undefined reference` 和运行时 `symbol lookup error` 就会混为一谈。\n\n**机制**\n\n分工如下：内核只做“映射”，不做“符号解析”。\n\n1. `execve` 读 ELF header；若存在 `PT_INTERP` 段，就把 `/lib64/ld-linux-x86-64.so.2`（AArch64 上是 `ld-linux-aarch64.so.1`）也映射进来，并把控制权交给它的入口，而不是交给程序自己的入口。\n2. 内核按 `PT_LOAD` 段建立映射。`ET_EXEC`（非 PIE）按文件里写死的 vaddr 映射；`ET_DYN`（PIE 或 `.so`）由内核挑一个随机基址，各段按 `p_vaddr` 平移。\n3. 内核在栈上压入 `argc/argv/envp` 和**辅助向量**：`AT_PHDR`（重定位需要的程序头表地址）、`AT_ENTRY`（真正入口）、`AT_BASE`（解释器基址）、`AT_RANDOM`、`AT_PAGESZ` 等。动态加载器靠这些信息接手。\n4. `ld.so` 自举：它自己也是 `ET_DYN`，在 GOT 可用之前的那段引导代码必须不依赖重定位。随后按 `DT_NEEDED` 广度优先加载依赖、建全局符号作用域（主程序在前，`LD_PRELOAD` 插在主程序之后，其余按加载顺序）、逐条处理重定位表、设置 TLS、跑 `DT_INIT`/`DT_INIT_ARRAY`，最后跳到 `AT_ENTRY`。\n\n重定位在两种模式下差别很大。**非 PIE** 时符号地址在链接期已定，动态重定位几乎为零；**PIE** 时链接器把“`基址 + 常量`”这种形式写成相对重定位：\n\n```text\nx86-64 : R_X86_64_RELATIVE   value = load_base + addend\nAArch64: R_AARCH64_RELATIVE  value = load_base + addend\n```\n\n加载器只需加一个基址，无需查符号表；只有跨模块的符号才走 `R_*_GLOB_DAT`/`R_*_JUMP_SLOT` 这类需要查符号表的类型。\n\n**x86-64 与 AArch64 的关键对照在这里**：PIC 的取址方式不同。x86-64 有 RIP 相对寻址，一条指令就能拿到“当前指令附近”的符号地址：\n\n```asm\nlea rax, [rip + foo]        ; 与基址无关，链接期就能定\n```\n\nAArch64 没有“PC 相对的数据寻址”，只有 `ADR`/`ADRP` 给出页基址，所以 PIC 必须两步：\n\n```asm\nadrp x0, foo                ; 取 foo 所在 4KB 页基址（±4GB 范围，立即数左移 12）\nadd  x0, x0, :lo12:foo      ; 加页内偏移，得到最终地址\n```\n\n`ADRP` 的立即数以 4KB 为粒度编码，所以 AArch64 的 PIC 天然是“页相对”的，链接器和加载器都按页对齐处理，这也是为什么 AArch64 上 `-fPIC` 比 x86-64 更依赖“两步取址”。\n\n**延迟绑定**把符号解析推迟到首次调用。以 x86-64 为例，`call puts@plt` 落到：\n\n```asm\nplt_puts:\n    jmp  *GOT_puts(%rip)    ; 首次指回下一条 push\n    push $reloc_index\n    jmp  plt0               ; plt0 里 push GOT[1]，再 jmp *GOT[2]\n```\n\n`GOT[0]` 指向 `_DYNAMIC`，`GOT[1]` 是 `link_map`，`GOT[2]` 是 `_dl_runtime_resolve`。解析器解析完成后会把真实地址写回 `GOT_puts`，第二次调用就直达。AArch64 没有 x86 那样开销很低的单条“把索引压栈”指令，PLT 用 `stp` 把 `x16/x17` 存栈、寄存器传索引与 `link_map` 跳进解析器；具体指令序列随 binutils 版本变化，但“`GOT[0..2]` 三个特殊槽 + 首次回跳 + 写回”的语义一致。`-z now`（`BIND_NOW`）在加载时一次解析完所有 `JUMP_SLOT`，配合 `RELRO` 把 `.got` 设为只读——这正是 ASLR 之外的另一道防线。\n\n**ASLR** 由 `/proc/sys/kernel/randomize_va_space` 控制（0 关、1 部分、2 全开）。它随机化：栈顶、`mmap` 基址（共享库落在这一区）、`brk` 起始（堆）、以及 PIE 主程序的基址。非 PIE 的主程序基址恒为 `0x400000`，无法随机化，只剩库和栈在动。随机化粒度为页对齐，具体取值范围按内核与架构实现而定：x86-64 用户空间是 47 位 VA，AArch64 常见 48 位（可选 52 位），这决定了两边 `mmap` 区和栈的相对距离不一样，但不改变布局次序：低地址程序映像 → 堆向上 → `mmap` 区向下 → 栈在高地址向下。\n\n**最小例子**\n\n同一个 PIE 程序，两次运行：\n\n```text\n$ readelf -h a.out | grep Type\n  Type: DYN (Position-Independent Executable file)\n$ readelf -r a.out | grep -m1 RELATIVE\n0000000011a9  000000000008 R_X86_64_RELATIVE  11a9\n\nrun1: &main=0x5555_5555_51a9   puts@libc=0x7fff_f7e0_8e50\nrun2: &main=0x5f3c_2b91_21a9   puts@libc=0x7f2a_4c05_2e50\n```\n\n两件事可以当场验证：一，`main` 的地址等于 `基址 + 0x11a9`，两次基址不同，但**低 12 位始终是 `0x1a9`**，因为页内偏移不随机；二，`puts` 属于 libc，落在 `mmap` 区，和主程序不在同一段。换成 `-no-pie` 编译，`main` 两次都是 `0x4011a9`，而 `puts` 依旧每次不同——这说明 ASLR 生效与否要分段看。\n\n对应的 AArch64 二进制里，同一条重定位叫 `R_AARCH64_RELATIVE`，`main` 的取址是 `adrp/add` 两条，页内偏移的低 12 位同样不变。\n\n**面试高频问法**\n\n1. **“`execve` 到 `main` 之间发生了什么？”** → 考点是内核态与用户态加载器的分工边界。答法：内核按 `PT_LOAD` 映射主程序和 `PT_INTERP` 指定的 `ld.so`，压好辅助向量就跳 `ld.so` 入口；`ld.so` 加载依赖、建符号作用域、做重定位、跑 `init_array`。符号解析完全在用户态完成，内核不知道符号是什么。注意 `exit` 时 `fini_array` 与 `atexit` 也不是内核做的。\n\n2. **“PIE 和 ASLR 是什么关系？”** → 考点是“随机化需要位置无关作为前提”。答法：PIE 让主程序变成 `ET_DYN`、代码用相对寻址、链接期用 `RELATIVE` 重定位，因此加载器可以把它放在任意基址；没有 PIE 的 `ET_EXEC` 必须落在固定 `0x400000`，ASLR 只能随机化库、栈、堆。反过来，PIE 不开 ASLR 也能跑，只是基址固定。\n\n3. **“延迟绑定到底省了什么，代价是什么？”** → 考点是 PLT/GOT 三槽语义与安全取舍。答法：省的是启动时对所有 `JUMP_SLOT` 的符号查找，首次调用多一次 `_dl_runtime_resolve`；代价是 `.got` 必须可写，给 GOT 覆写类攻击留了口子。`-z now` 用启动时间换 `RELRO` 只读，现代发行版默认全量绑定。\n\n4. **“为什么 AArch64 做 PIC 要用 `ADRP` + `ADD` 两条，而 x86-64 一条就够？”** → 考点是 ISA 对“PC 相对数据寻址”的支持差异。答法：x86-64 的 `RIP` 相对寻址在指令里直接编码 32 位位移；AArch64 的 `ADR/ADRP` 只能给出页基址（`ADRP` 立即数左移 12、范围 ±4GB），页内偏移得再补一条 `ADD` 或 `LDR :lo12:`。\n\n5. **“开了 ASLR 为什么还会被 ROP 打穿？”** → 考点是随机化的信息边界。答法：ASLR 只随机化**基址**，不隐藏内容；任何一处地址泄露（格式化字符串、越界读）就把相对偏移换算回绝对地址，而代码段内部各 gadget 的相对位置是链接期固定的，所以一次泄露往往就能全段利用。它的定位是提高利用门槛，不是消除漏洞。\n\n6. **“运行时 `symbol lookup error` 和链接时 `undefined reference` 是一回事吗？”** → 考点是解析发生在哪个阶段。答法：`undefined reference` 是静态链接阶段在本次链接的输入里找不到定义；`symbol lookup error` 是加载器在运行时按作用域（主程序 → `LD_PRELOAD` → `DT_NEEDED`）找不到，或找到的版本不匹配（`GLIBC_2.34` 之类符号版本）。前者能靠加库解决，后者常要靠 `LD_LIBRARY_PATH`/`patchelf` 或重编。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "asm-link-arch",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 10,
+    "section": "第 8 章 装载与运行时：动态加载器、地址空间布局、PIE 与 ASLR"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.5",
+  "chapter": "SO01",
+  "title": "第 3 章〔CPU〕时间与定时：单调时钟、定时器与忙等 vs 阻塞",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.5:body.s01",
+      "type": "extension",
+      "title": "第 3 章〔CPU〕时间与定时：单调时钟、定时器与忙等 vs 阻塞",
+      "level": 2,
+      "content": "**要解决的问题**：周期任务漂移、超时控制不准、延迟毛刺查不出源头。典型故障：用 `gettimeofday` 算间隔，NTP 一次阶跃让延时变成负数或几万秒，熔断器失效；用 `sleep(1)` 轮询，实际唤醒 1.05 ms，1000 QPS 下每个连接多 50 µs；事件循环里混入忙等，把一核跑满导致同机其他服务被挤。不会这套，你只能看到「偶发慢」而说不出慢在哪一段。\n\n**API 与代价**\n\n- `clock_gettime(clk, &ts)`：`CLOCK_REALTIME` 会跳变，只能用来打时间戳；测间隔一律用 `CLOCK_MONOTONIC`（被 NTP 缓慢 slew，但不会倒退）；`CLOCK_MONOTONIC_RAW` 连 slew 都不要（拿来做硬件对齐）；`CLOCK_BOOTTIME` 含 suspend 时间。返回值几乎不会失败（只有 `EINVAL`/`EFAULT`），不必写复杂错误分支。\n- 代价：`CLOCK_MONOTONIC`/`REALTIME` 走 vDSO，用户态读共享页，约 20–30 ns，**没有系统调用**；`CLOCK_PROCESS_CPUTIME_ID` 之类的 CPU 时钟需要读 per-task 计数，某些内核上会退化成 syscall。\n- `clock_nanosleep` 与 `nanosleep`：**注意返回值**——`clock_nanosleep` 直接返回错误码（`EINTR`），不设 `errno`、不返回 -1，写成 `if (ret < 0)` 是错的。`TIMER_ABSTIME` 用绝对时间，天然消除累积漂移；相对睡眠被信号打断时剩余时间放在 `rem`，必须自己重算。\n- 定时器和 fd 绑定：`timerfd_create` + `timerfd_settime` + `epoll`，把超时纳入统一事件循环，无信号、无丢失、无重入问题；代价是多一个 fd、每次到期一次 `read` 8 字节。\n- 忙等：`while (clock_gettime(...) < deadline)` 精度可达几十 ns，但独占一个核、阻止 CPU 进 C-state、拉高同核邻居的延迟。只在临界区 < 数十 µs 时值得。\n\n```c\nstruct timespec next;\nclock_gettime(CLOCK_MONOTONIC, &next);\nfor (int i = 0; i < N; i++) {\n    next.tv_nsec += 1000000;                 /* 1ms 周期，绝对时间 */\n    if (next.tv_nsec >= 1000000000) { next.tv_sec++; next.tv_nsec -= 1000000000; }\n    int r;\n    do {\n        r = clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &next, NULL);\n    } while (r == EINTR);                    /* 返回错误码，非 -1/errno */\n}\n```\n\n**对应命令与读法**\n\n1. `time -p ./prog`（或 `/usr/bin/time -v ./prog`）→ 看 `real/user/sys` → `real` 远大于 `user+sys` 说明进程在阻塞（睡眠、IO、等锁）；`user` 高是算力问题；`sys` 高是系统调用与内存拷贝。**会骗你**：多线程下 `user` 是各线程 CPU 时间之和，`real` 可能远小于 `user`；容器内 `time` 看不到被抢占的等待。\n\n2. `strace -T -f -e trace=clock_nanosleep,nanosleep,futex,epoll_wait,ppoll,poll,select ./prog` → 每个系统调用后的 `<0.001234>` 是从进入到返回的实际耗时 → 直接定位哪一次调用耗掉了时间。**会骗你**：`write` 快速返回只说明进了页缓存，不代表已写入磁盘；`ptrace` 会让程序整体变慢，时序敏感的程序会失真。\n\n3. `sudo cat /proc/timer_list` → 每个 CPU 一块，找 `# expires at ... nsecs [in X to Y nsecs]` 与 `now at ...` → `X` 是距离到期的纳秒数，同一 CPU 上挂满大量即将到期的 hrtimer 说明定时器集中在这一核（线程被绑核、`timer_migration` 关闭）。**会骗你**：需要 root 且容器里常不可见；未编译 `CONFIG_TIMER_LIST` 的内核上该文件不存在（按内核版本而定）；它只列 hrtimer，不反映 timerfd 的每次到期唤醒成本。\n\n4. `perf sched record -a -- sleep 5` 然后 `perf sched latency` → 看 `Runtime / Switches / Average delay / Maximum delay` → `Maximum delay` 就是「被唤醒后隔多久真正上 CPU」，毛刺排查主要看这一列；`Runtime` 接近窗口长度说明任务一直可运行但抢不到 CPU。**会骗你**：需要 `perf_event_paranoid ≤ 1` 和 root；只统计采样窗口内发生过调度的事件，5 秒窗口里的低频长尾可能一条都没有。\n\n5. `cat /proc/PID/timers` → 每行 `ID: clockid it_value it_interval notify` → `it_interval` 为 0 是单次定时器，非 0 是周期；`notify` 显示信号投递方式。**会骗你**：只显示 `timer_create` 创建的 POSIX 定时器，`timerfd` 和 `nanosleep` 都不在这里；读别的进程需要权限，权限不足时输出为空而不报错。\n\n6. `cat /proc/PID/timerslack_ns` → 该值是内核允许把唤醒合并、推迟的松弛量（ns），默认 50000 → 调小可降延迟、代价是唤醒次数与功耗上升。**会骗你**：写它需要 `CAP_SYS_NICE`；对实时策略线程 slack 被忽略，因此改了也看不到效果。\n\n**原理**\n\n内核为每个 CPU 维护一棵按 `expires` 排序的红黑树（hrtimer），并用 clockevent 设备编程「下一次到期中断」——没有到期任务时干脆不产生 tick（NOHZ），这是空闲机器 CPU 接近 0% 的原因。`nanosleep` 的实现是：算 `expires = now + 请求值`，插入红黑树，`schedule()` 让出 CPU；中断到来后 hrtimer 回调 `wake_up_process`，任务入 runqueue，若目标 CPU 在 idle 还要发 IPI 唤醒。\n\n正因如此，`sleep` 的实际时长是 $t_{\\text{real}} \\approx \\Delta + \\delta_{\\text{slack}} + \\delta_{\\text{sched}}$：$\\Delta$ 是请求值，$\\delta_{\\text{slack}}$ 是非实时任务默认 50 µs 量级的合并松弛（把 `expires` 向上取整到 slack 边界），$\\delta_{\\text{sched}}$ 是唤醒到上 CPU 的调度延迟。想压低后两项，靠提优先级/绑核（第 2 章）和调 `timerslack_ns`，而不是把 `sleep` 值改小——后者只会让 $t_{\\text{real}}$ 中固定开销占比更大。\n\nvDSO 是这套 API 便宜的根本原因：内核把 `timespec` 和 seqlock 序号放在进程启动时映射的 `[vvar]` 页里，`clock_gettime` 变成「读序号 → 读数据 → 再读序号，不一致就重试」的纯用户态循环。代价是不做跨核同步，不同 CPU 读到的时间戳可能相差一个 tick 量级的更新延迟——对测量间隔没有影响，但不要用它做严格的全序排序。忙等之所以昂贵，是因为它让该 CPU 一直处于 C0 且不断拉高频率，既消耗了本可让给别人的算力，也改变了同封装内其他核的 turbo 预算。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 19,
+    "section": "第 3 章〔CPU〕时间与定时：单调时钟、定时器与忙等 vs 阻塞"
+  }
+}

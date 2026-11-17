@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO02.4",
+  "chapter": "SO02",
+  "title": "B0 初始化与运行底座",
+  "src": {
+    "file": "notebook/projects/os/xv6/NOTES.md",
+    "sha256": "sha256:6bd9474eb0c0350296e6dadc53fecdc2fe7a017ce8a601945b2a460af26299b9"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO02.4:body.s01",
+      "type": "extension",
+      "title": "B0 初始化与运行底座",
+      "level": 2,
+      "content": "> 职责：裸板 → 能跑 C 的环境。依赖：无；被全部块借。\n\n**裸板 → 能跑 C 的环境。** 无接口；三保证：能切特权级、有可用栈、有输出通道。\n\n### 现象\n\n`make qemu` 之后屏幕上出现 `xv6 kernel is booting`，再往下是 `init: starting sh`，`$` 能接受输入。复位后的 CPU 和这一步之间隔着「能执行 C、能输出一个字符」。\n\n### 机制\n\n实现面（≤6）：链接脚本／入口汇编／BSS 清零／栈设置／UART MMIO／`sret` 前的特权级字段。删掉 BSS 清零 → 全局变量随机；删掉栈设置 → 第一次函数调用就崩。\n\nB0 正文只练工具、不讲机制；它把后十一块的「停住看现场」固定成动作。\n\n**工具链（macOS）**：RISC-V 交叉编译器 + gdb + `qemu-system-riscv64`。Homebrew 有对应 formula（`riscv64-elf-gcc` / `riscv64-elf-gdb` / `qemu`；名字对不上就 `brew search riscv`）。Makefile 默认前缀是 `riscv64-unknown-elf-`，所以装前缀匹配的 `riscv-tools`，或每次覆盖：\n\n```bash\nmake TOOLPREFIX=riscv64-elf- qemu\n```\n\n**三个固定动作**：\n\n- **动作一：跑起来。** `make qemu`；`Ctrl-a x` 退出，`Ctrl-a c` 进 QEMU monitor。默认 `CPUS=3`；凡「单核下才成立」的推理，一律 `make CPUS=1 qemu`。\n- **动作二：停下来。** `make qemu-gdb` 挂起等连接，另开终端在**仓库根目录**跑 gdb（自带 `.gdbinit` 已写架构与 `target remote` 端口，端口看该文件）。\n- **动作三：打出来。** `vmprint(p->pagetable)`（页表）、`backtrace()`（调用链）、`procdump()`（进程表，xv6 自带）。\n\ngdb 六条：\n\n```text\np/x $satp                      # 当前页表基址\np/x $sepc                      # 陷入时保存的返回地址\np/x $scause                    # 8=ecall 15=写缺页 13=读缺页\np/x $stval                     # 出错地址（page fault）\np *myproc()                    # 当前进程\nx/36gx myproc()->trapframe     # 288 字节 = 5 个簿记字段 + 31 个寄存器\n```\n\n### 为什么这么设计\n\ngdb 当状态查看器，因为单块机制不需要并发时间线，只要随时能打出状态。**代价**：看不到竞态——引用计数漏减、日志并发提交错时静态快照可能都对，这类错只能靠「跑 `forktest` 多轮 + 数空闲页」暴露。\n\n三个固定动作是各块「怎么验证」的公共前提：**没有 B0，那十一块的判据只是纸上的句子**。它产出的不是功能，是可观察性。\n\n### 怎么验证\n\n- 能打印第一行（`xv6 kernel is booting`）；`b _entry` 能看到 `pc/sp`；\n- `vmprint`／`backtrace`／`procdump` 三个动作各能跑出一次输出。\n\n**失效点**：x86 叫保护模式，RISC-V 是从 M 落到 S——职责相同，实现整体替换。换平台时实现面全换，三保证不变。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "xv6",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 18,
+    "section": "B0 初始化与运行底座"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP00.7",
+  "chapter": "CP00",
+  "title": "4 80 分版：60 分之上的增量",
+  "src": {
+    "file": "notebook/projects/cpu/NOTES.md",
+    "sha256": "sha256:f11e2f546f1a0222d1555da30fba4f53c302c37eb193a45111454c1b8d382c0f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP00.7:body.s01",
+      "type": "extension",
+      "title": "4 80 分版：60 分之上的增量",
+      "level": 2,
+      "content": "目标：**手里有能展示的东西**。三样：一张四数表、一条曲线、一份 STA 报告。\n\n### 4.1 读 `cpu-microarchitecture` 第 5–8、10 章\n\n**产出**：能把「ROB 满 vs 保留站满」「保守消歧 vs 投机消歧」「VIPT 与别名」三组对比各讲 90 秒。\n\n**判据**：每组都能给出「在什么观测结果下我的判断会错」。\n\n### 4.2 做 `riscv-core` S4–S8\n\n**产出**：IBHT/BTB → I/D cache → difftest → 乱序 → LSQ。\n\n**判据（缺一不可）**：\n\n- 与 Spike 逐提交零分歧（S6）；\n- 人为注入的故障被抓到（S6）；\n- 扫 `ROB_DEPTH` 得到 IPC 饱和曲线（S7）；\n- `memcpy`/链表/随机访存三个 microbench 的 IPC 变化可归因（S8）。\n\n### 4.3 做 `riscv-core` S9\n\n**产出**：Yosys 综合 + OpenSTA 在 sky130 上的一条关键路径 + 一次取舍实验。\n\n**判据**：四数表填满；能指出「当前 fmax 卡在哪一级的哪条路径」；改完之后四个数都变，且净收益有结论。\n\n### 4.4 读 `asm-link-arch` 第 7/8/9 章\n\n**产出**：解释一次真实的动态绑定与一次 PIE 下的地址计算。\n\n**判据**：能用 `LD_DEBUG=bindings` 的输出对上 PLT/GOT 的解析流程。\n\n### 4.5 读 `compiler` 第 6/7/9/11 章\n\n**产出**：能判「这段循环为什么没被向量化」；能说清 Triton/TVM/XLA 的分层差异与选型判据。\n\n**判据**：能画出「高层表示 → 中层 dialect/IR → GPU 后端」这条下降链，并指出每一层的典型变换（融合、tiling、线程映射、流水线化）。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 9,
+    "section": "4 80 分版：60 分之上的增量"
+  }
+}

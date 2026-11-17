@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "AL01.12",
+  "chapter": "AL01",
+  "title": "附录 A 反例库",
+  "src": {
+    "file": "notebook/projects/algo/algorithm/NOTES.md",
+    "sha256": "sha256:4d756dff0ce28de4ac63f59505ebcf670a4a8712485b77b4d9f1aa78d2e2b6f7"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "AL01.12:body.s01",
+      "type": "extension",
+      "title": "附录 A 反例库",
+      "level": 2,
+      "content": "每条四件套：**触发输入 → 症状 → 根因 → 对应考点**。用法：面试讲\"我踩过什么坑\"时直接取一条，讲 90 秒。\n\n| # | 反例 | 症状 | 根因 | 考点 |\n|---|---|---|---|---|\n| A1 | 红黑树删除 fixup 把 NIL 哨兵当普通结点 | 空指针崩溃（`b->l->color` 解引用 nullptr） | 哨兵的 `l/r` 是 `nullptr`，不是自指 | `408-DS-0605` 红黑树：NIL 必须当**真结点**处理 |\n| A2 | 红黑树删除后性质不成立 | 中序不再有序、黑高不等（如 5 vs 3） | fixup 分支与旋转方向对应错 | `408-DS-0605` 五条性质逐条校验 |\n| A3 | B+ 树合并时只 `erase` key、没 `erase` child | `children != keys + 1`，索引越界崩溃 | 不变式被破坏，后续读越界 | `408-DS-0606` B/B+ 树的 `children = keys + 1` |\n| A4 | 快排二路划分用 `>=` 比较 | 全等元素时深度 = n，n 大了爆栈 | 划分成 `[1][n-1]`，退化 $\\Theta(n^2)$ | `408-DS-0703` 快排最坏 $O(n^2)$ 的物理证据 |\n| A5 | 堆排序逐个 `insert` 建堆 | 逻辑正确但建堆是 $O(n\\log n)$ | 自底向上 `heapify` 才是 $O(n)$ | `408-DS-0704` 「建堆」与「插入建堆」两种代价 |\n| A6 | KMP 失配用 `j = next[j]` 而不是 `next[j-1]` | 特定串（如 `AAB`）死循环 | 前缀表语义与下标约定不一致 | `408-DS-0204` 串与 KMP 的 next 数组定义 |\n| A7 | 并查集 `unite` 缺同根守卫 | 重复 `unite` 后 size/weight 翻倍 | 同一集合被合并到自己 | `408-DS-0406` 并查集与按秩合并 |\n| A8 | 哈夫曼内部结点成员未初始化 | 潜在未定义行为（换编译器/内存填充才暴露） | 构造函数未初始化指针 | `408-DS-0405` 哈夫曼树与 WPL |\n| A9 | 头文件不自包含（缺 `<vector>`/`<cassert>`） | 单独实例化模板就编译失败 | 模板体在实例化时才检查，平时测不出来 | 工程类：模板实例化检查 |\n\n**用法纪律**：反例的价值不在\"我修过\"，而在**能说清触发条件与判据**。每讲一条，必须给出\"怎么复现\"和\"修完用什么验证\"——否则只是故事。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "algo",
+    "project": "algorithm",
+    "file": "NOTES.md",
+    "part": 11,
+    "parts": 12,
+    "section": "附录 A 反例库"
+  }
+}

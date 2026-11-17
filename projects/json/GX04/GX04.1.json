@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "GX04.1",
   "chapter": "GX04",
-  "title": "engine · 大纲",
+  "title": "engine · 总览",
   "src": {
     "file": "notebook/projects/cg/engine/OUTLINE.md",
     "sha256": "sha256:00268fb608f228191fd7d7484974e444b173f7ea33cf7a8bd14009bf05d652a1"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

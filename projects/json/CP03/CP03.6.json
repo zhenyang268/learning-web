@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.6",
+  "chapter": "CP03",
+  "title": "S3 冒险与转发",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.6:body.s01",
+      "type": "extension",
+      "title": "S3 冒险与转发",
+      "level": 2,
+      "content": "### 要解决的问题\n\n重叠执行让相邻指令互相踩资源（结构冒险）、踩寄存器（数据冒险）、踩取指流（控制冒险）。不处理，要么算错，要么退化到接近串行。这一节的目标是把 $CPI = 1 + \\text{每指令停顿拍数}$ 里的加数压到最小，并且**能算清每一项的来路**。\n\n### 机制\n\n**结构冒险**：单端口存储器会让 IF 与 MEM 冲突。做法是 I-Mem/D-Mem 分开（Harvard 化），或用一块存储器 + 指令/数据仲裁。教学核一律分开——真实核也基本分开 L1I/L1D。\n\n**数据冒险（RAW）**：转发单元比较 EX 级源寄存器与 `EX/MEM.rd`、`MEM/WB.rd`，命中就旁路。**优先级：`EX/MEM` 高于 `MEM/WB`**（更年轻的写者更新）。转发解决不了 load-use：load 的数据在 MEM 末才可用，消费者在 EX 就要，必须停一拍。\n\n**控制冒险**：分支在 EX 解析，已取入的 2 条年轻指令要冲刷，惩罚 2 拍。\n\n```systemverilog\n// 转发选择（EX 级）：只有 regwrite 且 rd != 0 才可转发\nalways_comb begin\n  fwd_a = 2'b00;                       // 00: 寄存器堆 01: EX/MEM 10: MEM/WB\n  if (exmem_regwrite && exmem_rd != 5'd0 && exmem_rd == idex_rs1) fwd_a = 2'b01;\n  else if (memwb_regwrite && memwb_rd != 5'd0 && memwb_rd == idex_rs1) fwd_a = 2'b10;\n\n  fwd_b = 2'b00;\n  if (exmem_regwrite && exmem_rd != 5'd0 && exmem_rd == idex_rs2) fwd_b = 2'b01;\n  else if (memwb_regwrite && memwb_rd != 5'd0 && memwb_rd == idex_rs2) fwd_b = 2'b10;\nend\n\n// load-use 检测：当前在 EX 的是 load，下一条在 ID 就要用它的结果\nwire load_use = idex_memread && (idex_rd == ifid_rs1 || idex_rd == ifid_rs2) && (idex_rd != 0);\n```\n\n注意 `idex_rd != 0` 这个条件：漏掉它就会出现\"`x0` 看起来被转发\"的诡异行为，且只在特定指令序列上暴露。\n\n### 最小例子\n\n```asm\nlw   x1, 0(x2)      # 数据在 MEM 末可用\nadd  x4, x1, x5     # EX 需要 x1 → 必须停 1 拍，然后从 MEM/WB 转发\n```\n\n时间线：`lw` 在 MEM 时 `add` 停在 ID；下一拍 `lw` 进 WB，`add` 进 EX 并从 `MEM/WB` 转发拿到值。**停 1 拍**。\n\n对比 `add x1,x2,x3` 后接 `sub x4,x1,x5`：`sub` 在 EX 时 `add` 在 MEM，从 `EX/MEM` 直接转发，**零停顿**。\n\n**验收判据**：写一段刻意依赖的汇编，用 DUT 的周期计数与停顿计数对照手算；误预测冲刷后所有寄存器与顺序模型一致（用 S6 的 difftest 全量兜底）。\n\n### 面试高频问法\n\n- **\"有了转发为什么还会停？\"** → 考点是值的可用时间。答法：转发只能提前已经算出的值；load 的值最早在 MEM 末出来，消费者在 EX 就要，物理上无法提前。乱序核里这条依赖仍在，只是被别的指令填空拍——乱序消除等待，不消除依赖。\n- **\"WAR/WAW 在五级顺序流水线要处理吗？\"** → 考点是冒险分类与寄存器重命名的作用范围。答法：顺序流水线按程序序写回，WAR/WAW 不会造成错误；到乱序多发射才需要重命名来消除。\n- **\"为什么转发优先级是 EX/MEM 高？\"** → 考点是写者年龄。答法：`EX/MEM` 里的指令比 `MEM/WB` 里的更年轻，它写的是更新的值；反过来会拿到旧值。这是最容易写反的一处，症状是长依赖链上偶发错值。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 17,
+    "section": "S3 冒险与转发"
+  }
+}

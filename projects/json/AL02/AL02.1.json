@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "AL02.1",
   "chapter": "AL02",
-  "title": "algorithm-interview · 大纲",
+  "title": "algorithm-interview · 总览",
   "src": {
     "file": "notebook/projects/algo/algorithm-interview/OUTLINE.md",
     "sha256": "sha256:799f7ce1b692679f3cf0753f7947db32c44c77a2b1f20d17dd9e1a59cbd53ed4"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

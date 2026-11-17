@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP04.10",
+  "chapter": "CP04",
+  "title": "第 9 章 可观测性：debug info、sanitizer 插桩、opt 的调试开关",
+  "src": {
+    "file": "notebook/projects/cpu/compiler/NOTES.md",
+    "sha256": "sha256:c6fff8754ad6e8ac1d415ac403d79eedbe0ea927767a531665e867679040055f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP04.10:body.s01",
+      "type": "extension",
+      "title": "第 9 章 可观测性：debug info、sanitizer 插桩、opt 的调试开关",
+      "level": 2,
+      "content": "**要解决的问题**：编译器出错时没有这三样东西，你只能靠猜。debug info 决定你能不能把崩溃地址映射回源码行和变量；sanitizer 决定内存与并发错误是在测试阶段暴露，还是留到线上；opt 的调试开关决定一个优化 bug 对你来说是「可疑」还是「已定位」。缺了它们，编译器的正确性无法验证，性能回归也无法归因。\n\n**机制**\n\n三条链路都在 IR 层，但作用点不同。\n\n**debug info 是元数据，不是指令。** 结构是 `DICompileUnit` → `DISubprogram` → `DILocation(line, col, scope)`，局部变量是 `DILocalVariable` + `DIExpression`。指令通过 `!dbg !N` 挂到 `DILocation` 上；模块级由 `!llvm.dbg.cu` 列出编译单元，`llvm.module.flags` 里的 `Dwarf Version` / `Debug Info Version` 保证链接时版本一致。变量位置的表达方式在变：旧版是 `llvm.dbg.declare` / `llvm.dbg.value` intrinsic，较新版本（LLVM 19 起）改用 `#dbg_declare` / `#dbg_value` 这类记录，按版本而定；`DIBuilder` 是构造这些元数据的 C++ 接口。\n\n关键取舍在优化下：变量被提升到寄存器、被拆成多个 SSA 值、被内联改变行号，debug info 必然失真。LLVM 的应对是赋值追踪和 salvage，尽量在删除指令时把 `dbg.value` 迁移到等价值上，代价是编译时间。只要符号化栈回溯，可以用 `-gline-tables-only`：`DICompileUnit` 的 `emissionKind` 设为 `LineTablesOnly`，没有变量和类型，体积小得多，也是 release 构建常见的选择。\n\n**sanitizer 是 Pass，插桩发生在 IR 上。** ASan 的核心是影子内存：应用地址 `a` 的 8 个字节对应影子里的 1 个字节，\n\n$$\\text{shadow}(a) = (a \\gg 3) + \\text{offset}$$\n\nx86-64 Linux 上 offset 常见是 `0x7fff8000`（按平台而定）。每次 load/store 前读一个影子字节，非零就走慢路径调 `__asan_report_load4` / `__asan_report_store8` 这类函数。堆越界、栈越界、全局越界、use-after-free 全都归约为「影子被毒化」，所以检查是 $O(1)$，开销是常数倍（ASan 官方文档给的量级是 2 倍，实际按程序而定）。free 不真正归还内存，而是整块毒化后进隔离区延迟复用——这是它能抓 UAF 的原因。栈对象走 `__asan_stack_malloc_N` 重排栈帧加 redzone，全局对象走 `__asan_register_globals`。\n\nUBSan 是纯检查，命中调 `__ubsan_handle_add_overflow` 之类，默认 recover（打印后继续），`-fno-sanitize-recover=all` 才变成 trap。TSan 在每个访存处记录向量时钟到影子单元做 happens-before 判定（`__tsan_read4`），开销明显高于 ASan。MSan 的影子记录每个 bit 是否已初始化，要求全程序插桩（含 libc），否则误报。插桩时机上，ASan 要在大部分优化跑完之后、指令选择之前插入，插入后只跑少量必须的清理 pass，否则检查会被优化掉或与重排后的内存布局错位。\n\n**opt 的调试开关分四类**：看 IR（`-print-after-all`、`-print-before-all`、只打变化的 `-print-changed`）；看 pass 调度（`-debug-pass-manager`）；看 pass 内部日志（`-debug-only=<type>`，需要非 `NDEBUG` 构建，即 `LLVM_ENABLE_ASSERTIONS=ON`，否则 `LLVM_DEBUG` 展开为空）；定位引入 bug 的 pass（`-opt-bisect-limit=N`，只执行前 N 个 pass 实例，二分）。另有两个低成本高回报的：`-verify-each` 每个 pass 后跑 verifier，早崩早发现；`-Rpass=inline` / `-pass-remarks=inline` 直接告诉你某个调用点为什么没内联。\n\n**最小例子**\n\n```c\nint f(int *p) { return *p; }\n```\n\n`clang -O1 -fsanitize=address -S -emit-llvm` 出的 IR（简化）：\n\n```llvm\ndefine dso_local i32 @f(ptr noundef %p) {\nentry:\n  %0 = ptrtoint ptr %p to i64\n  %1 = lshr i64 %0, 3\n  %2 = add i64 %1, 2147450880        ; 0x7FFF8000\n  %3 = inttoptr i64 %2 to ptr\n  %4 = load i8, ptr %3\n  %5 = icmp ne i8 %4, 0\n  br i1 %5, label %check, label %load\ncheck:\n  call void @__asan_report_load4(i64 %0)\n  unreachable\nload:\n  %r = load i32, ptr %p, align 4, !dbg !12\n  ret i32 %r\n}\n```\n\n`2147450880 = 0x7FFF8000`，正是影子偏移；被检查的是 `p>>3 + offset` 处的 1 个字节。加 `-g` 后 `%r` 那行带 `!dbg !12`，`!12 = !DILocation(line: 1, column: 28, scope: !9)`，崩溃时 `llvm-symbolizer` 就能把地址还原成 `f` 的第 1 行第 28 列。\n\n**面试高频问法**\n\n- **ASan 怎么检测越界，为什么开销能压到常数倍？** → 考点：影子映射的复杂度。→ 把地址右移 3 位加固定偏移得到影子字节，每次访存只多读 1 字节，越界和 UAF 都表现为影子非零，慢路径才调 `__asan_report_*`，所以是 $O(1)$ 而不是查边界表。\n- **为什么 ASan 能抓到 use-after-free？** → 考点：free 的语义被改了。→ free 时把整块影子写成毒化值，内存进隔离区延迟复用，再访问读到的影子非零就报错；代价是内存占用上升。\n- **`-debug-only=foo` 什么都不输出，怎么回事？** → 考点：这是编译期开关。→ `LLVM_DEBUG` 在定义了 `NDEBUG` 的 release 构建里是空操作，得用 `LLVM_ENABLE_ASSERTIONS=ON` 的构建，而且 pass 里确实写了该 type 的调试输出。\n- **开了优化以后调试器看不到变量，是谁的问题？** → 考点：debug info 在优化下的存活。→ 优化把变量拆成多个 SSA 值或提升到寄存器，LLVM 靠赋值追踪和 salvage 尽力保留，剩下的失真属于设计取舍；只要行号就上 `-gline-tables-only`。\n- **线上崩溃只给了一个地址，怎么定位？** → 考点：符号化链路。→ release 也要留 `-g` 或至少行号表的二进制，用 `llvm-symbolizer` / `addr2line` 把地址映射回 `file:line`，函数名从符号表来，缺 DWARF 就只能看汇编。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "compiler",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 11,
+    "section": "第 9 章 可观测性：debug info、sanitizer 插桩、opt 的调试开关"
+  }
+}

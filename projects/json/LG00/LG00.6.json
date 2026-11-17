@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "LG00.6",
+  "chapter": "LG00",
+  "title": "3 常见误配",
+  "src": {
+    "file": "notebook/projects/langs/NOTES.md",
+    "sha256": "sha256:8114d098dc603d8f75fd0297e834b4f972fad6fb2cd03cd3bafe5b42e8e2fa44"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "LG00.6:body.s01",
+      "type": "extension",
+      "title": "3 常见误配",
+      "level": 2,
+      "content": "| 误配 | 后果 | 正确做法 |\n|---|---|---|\n| 把这三份当语法书通读 | 读完不会答任何追问 | 只读\"编译器/运行时/硬件替你做了什么\"那部分 |\n| C++ 只背概念不跑 sanitizer | 讲不出证据，被追问\"你见过吗\"就退 | 每类 UB 至少留一个最小复现命令 |\n| Python 用\"解释执行\"解释一切 | 分不清解释开销/GIL/分配/缓存 | 按瓶颈分项，用 `dis`/`tracemalloc` 定位 |\n| CUDA 只看占用率 | 会被 stall reason 打穿 | 占用率 + stall 分布 + 访存效率一起看 |\n| 把 `cs149` 的 roofline 当 CUDA 章的全部 | 少了 bank conflict 与同步这些\"写代码才踩\"的坑 | 并行理论归 `cs149`，工程坑归 `langs/cuda` |"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "langs",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 7,
+    "section": "3 常见误配"
+  }
+}

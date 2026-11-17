@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO00.4",
+  "chapter": "SO00",
+  "title": "1 同一件事的两侧",
+  "src": {
+    "file": "notebook/projects/os/NOTES.md",
+    "sha256": "sha256:ea9cd76832f3f4e4729e92e9d274efafaf69b1cd7d4b55fc7a296eefc079315a"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO00.4:body.s01",
+      "type": "extension",
+      "title": "1 同一件事的两侧",
+      "level": 2,
+      "content": "| 机制 | `linux-api/` 看到的 | `xv6/` 落在哪一块 | 面试常问的方向 |\n|---|---|---|---|\n| 地址空间 | VSS/RSS/PSS、`/proc/pid/maps`、缺页计数 | B2 地址翻译 / B3 地址空间 | 「虚拟地址到物理地址怎么走」→ 两侧都要答 |\n| 缺页 | minor/major、OOM killer、`vmstat` | B3 的 COW 钩子 + B4 的陷入 | 「COW 的 PTE 状态」只有实现侧答得出 |\n| 进程与线程 | `ps -L`、`clone` 参数、`/proc/pid/task` | B5 进程（xv6 无线程） | 「PCB 里到底有什么」 |\n| 调度 | `nice`/cfs 权重、`%CPU` | B7 调度 | 「为什么我的程序被抢占」 |\n| 陷入与信号 | `signal`、`sigaction`、`strace` | B4 陷入 / B6 系统调用（xv6 无信号） | 「系统调用怎么进内核」 |\n| I/O 与阻塞 | epoll、非阻塞、`EAGAIN` | B8 文件 + B9 驱动（xv6 无 epoll） | 「边缘触发为什么丢事件」 |\n| 内存压力 | `cgroup` 限额、swap、OOM 评分 | B1 物理内存（无回收策略） | 「为什么 OOM 杀的是它」 |\n| 硬件契约 | 只能看到「能用什么系统调用」 | B0/B2/B4 | `kernel-compare/`：**同一格两种答案** |\n| 设备 | `iostat`/`ethtool -S` 的计数 | B9 驱动 / B10 网络 | 「一次块读/收包的所有权时间线」 |\n| 边界 | 权限、`ptrace_scope`、`seccomp` | B2 的 `PTE_U` + B6 的参数校验 | `security/`：**跨的是哪条边界、硬件还是软件** |\n| 机器边界 | 容器里 `nproc`/`top` 的数字、`%steal` | B11 虚拟化（xv6 无实现） | 「一次退出要不要发生、发生几次」 |\n\n**一条口径铁律**：说「内存占用」必须带口径（VSS / RSS / PSS / 匿名 / 文件页），说「CPU 占用」必须带分母（单核 100% 还是整机）。这两条最容易被追问打穿。\n\n**第二条口径**：说「某个机制更简单/更快」之前，先说是**在什么约束下**——教学内核赢在可验证性，生产内核赢在兼容与扩展。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 7,
+    "section": "1 同一件事的两侧"
+  }
+}

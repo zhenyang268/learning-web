@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG05.9",
+  "chapter": "EG05",
+  "title": "第 8 章 TIME_WAIT 与端口耗尽",
+  "src": {
+    "file": "notebook/projects/eng/latent-issues/NOTES.md",
+    "sha256": "sha256:9707421bd6ca2876bd0c8596882ef3c8c5695f35b2c72f67a5e300ebd4023687"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG05.9:body.s01",
+      "type": "extension",
+      "title": "第 8 章 TIME_WAIT 与端口耗尽",
+      "level": 2,
+      "content": "**要解决的问题**：TIME_WAIT 是**主动关闭方**必然会进入的状态，它不是泄漏也不是 bug；但它会把四元组占住一段时间，在短连接 + 单后端的场景下直接表现为“连不上（Cannot assign requested address）”。这一章要能把“TIME_WAIT 堆积”拆成“该不该有”和“谁该有”两个问题。\n\n**机制**：四次挥手中，主动关闭方发出最后一个 ACK 后进入 `TIME_WAIT`，持续 $2 \\times MSL$（Linux 上通常固定为 60 秒，按内核实现而定）。它承担两件事：\n\n1. **保证最后的 ACK 能重传**：如果这个 ACK 丢了，对方会重发 FIN，处于 TIME_WAIT 的一方还能再回一次 ACK；若直接进 CLOSED，对方收到的是 RST，连接被异常终止。\n2. **让旧连接的残余段在网络中消亡**：同一四元组上如果立刻建立新连接，旧连接迟到的重复段可能被新连接当成有效数据收下。TIME_WAIT 相当于给这个四元组一个静默期。\n\n关键推论：**被动关闭方不进 TIME_WAIT**（它走 `CLOSE_WAIT → LAST_ACK → CLOSED`）。所以：\n\n- 客户端大量 TIME_WAIT：说明是客户端先关，且短连接，**真的会耗尽本地端口**。\n- 服务端大量 TIME_WAIT：说明服务端先关（HTTP/1.0、或 keepalive 超时短于客户端），但服务端本地端口固定、靠四元组区分连接，**主要成本是内存和 fd，不是端口**，通常不需要处理。\n\n端口上限的算术：可用端口数 = `ip_local_port_range` 的跨度，到**同一个** `dst_ip:dst_port` 的连接受这个数限制。\n\n```bash\nsysctl net.ipv4.ip_local_port_range      # 例如 32768  60999\nss -tan state time-wait | wc -l          # 当前 TIME_WAIT 数\ncat /proc/net/sockstat                   # TCP: inuse ... tw ...\nsysctl net.ipv4.tcp_tw_reuse             # 出新连接时复用 TIME_WAIT\n```\n\n按上例跨度 28232 个端口、每条占 60 秒估算，到单一后端的稳定新建速率上限约为 $\\frac{28232}{60} \\approx 470$ 条/秒；超过这个量就会开始在 `connect()` 上失败。注意这是**算术上界**，实际还要扣掉保留端口和其他出向连接。\n\n手段与边界：\n- **长连接 / 连接池**：根治，把“每秒新建”变成“一次性建立”。\n- **多目标地址**：后端有多个 IP 时，端口池按 `dst_ip` 分别计算，等效扩容。\n- **`tcp_tw_reuse=1`**：只作用于**主动发起的新连接**，且依赖 TCP 时间戳（`tcp_timestamps`）来区分旧连接的迟到段，所以在 NAT 后时间戳被改写等场景要谨慎。\n- **`tcp_tw_recycle`**：已在新内核移除（4.12 起），面试里提到它基本等于暴露知识过期。\n- **`tcp_max_tw_buckets`**：只是限制数量上限、超出直接销毁，掩盖现象不解决问题。\n- **`SO_LINGER` 置 0**：`close()` 直接发 RST，绕过 TIME_WAIT，但会丢弃发送缓冲里未确认的数据，也可能让对端读到 RST 而非正常 EOF，属于“明知道有数据风险才用”的手段。\n\n**最小例子**：在客户端机器上快速建立大量短连接到同一后端，复现端口耗尽。\n\n```bash\n# 1) 压出一批短连接（每次请求后关闭）\nfor i in $(seq 1 20000); do curl -s -o /dev/null http://10.0.0.5:80/ & done; wait\n# 2) 观察\nss -tan state time-wait | wc -l\nss -tan state time-wait | awk '{print $4}' | cut -d: -f2 | sort -u | wc -l\n# 3) 继续加压，出现：curl: (7) Failed to connect ... Cannot assign requested address\n```\n\n预期结果：第 2 步的 TIME_WAIT 数和去重后的本地端口数接近，说明端口被四元组占满；第 3 步的报错来自 `connect()` 拿不到可用的本地端口（`EADDRNOTAVAIL`）。把请求改成复用连接池（或用 `ab -k`）后同一压力下不再报错，即可确认因果。\n\n**面试高频问法**：\n\n1. **“TIME_WAIT 为什么必须存在？去掉行不行？”** → 考点是协议正确性而非运维 → 答法：“两个作用：一是最后的 ACK 丢了还能重传，否则对端会收到 RST；二是给这个四元组一个静默期，让旧连接的迟到重复段消亡，不会污染立刻复用的新连接。去掉会引入连接异常终止和串数据的风险。”\n2. **“服务端 TIME_WAIT 几万个，是问题吗？”** → 考点是分清主动/被动关闭方 → 答法：“TIME_WAIT 只出现在主动关闭方。服务端有 TIME_WAIT 说明是它先关连接，通常来自短连接或 keepalive 超时比客户端短；服务端本地端口固定，靠四元组区分连接，不会端口耗尽，成本只是内存和 fd，一般先去看是不是该改成让客户端先关或者调长 keepalive。”\n3. **“客户端报 Cannot assign requested address 怎么查？”** → 考点是从现象推到端口池 → 答法：“这是 `connect()` 拿不到本地端口。看 `ip_local_port_range` 和 `ss -tan state time-wait` 的去重端口数，如果两者逼近就是耗尽；根因通常是短连接打同一后端，解法是连接池或长连接，临时可以开 `tcp_tw_reuse`。”\n4. **“`tcp_tw_reuse` 为什么要求开时间戳？”** → 考点是复用的安全性从哪来 → 答法：“复用 TIME_WAIT 的四元组本质上是赌旧连接的残留段不会再被误收。时间戳让新连接能通过 PAWS 把旧段判掉，没有时间戳就没有区分依据，复用就会串数据。”\n5. **“`SO_LINGER` 设 0 是不是能绕过 TIME_WAIT？”** → 考点是代价意识 → 答法：“能，`close()` 直接发 RST，跳过后面的挥手。但发送缓冲里没确认的数据会丢，对端拿到的是 RST 不是正常 EOF，可能触发对端错误日志或重试；只有在明确允许丢数据的场景才用。”"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "latent-issues",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 12,
+    "section": "第 8 章 TIME_WAIT 与端口耗尽"
+  }
+}

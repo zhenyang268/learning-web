@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP00.10",
+  "chapter": "CP00",
+  "title": "7 一句话收口",
+  "src": {
+    "file": "notebook/projects/cpu/NOTES.md",
+    "sha256": "sha256:f11e2f546f1a0222d1555da30fba4f53c302c37eb193a45111454c1b8d382c0f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP00.10:body.s01",
+      "type": "extension",
+      "title": "7 一句话收口",
+      "level": 2,
+      "content": "**60 分靠\"讲得清 + 动手过一次\"，80 分靠\"有数字 + 能取舍\"。** 四条线的顺序不是并列的：读得懂（`asm-link-arch`）→ 说得清（`cpu-microarchitecture`）→ 做得出来（`riscv-core`）→ 编得动（`compiler`），而最后一条会反过来改变你对前三条的判断——因为它决定\"进来的是什么指令\"。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 9,
+    "section": "7 一句话收口"
+  }
+}

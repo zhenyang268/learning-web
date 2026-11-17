@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "AL00.3",
+  "chapter": "AL00",
+  "title": "0 怎么用",
+  "src": {
+    "file": "notebook/projects/algo/NOTES.md",
+    "sha256": "sha256:03c1c25b7346a0358365e02322918e05d8588fd5cd3458214436bda8fea93947"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "AL00.3:body.s01",
+      "type": "extension",
+      "title": "0 怎么用",
+      "level": 2,
+      "content": "- 练题型：§1 的题型表，按\"关键一步\"复盘，不要按题目顺序刷。\n- 补实现：§2 的四个基础结构 + 树删除专项。\n- 用工具：§3 的 sanitizer 流程。\n- 准备追问：§4；避坑：§5。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "algo",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 8,
+    "section": "0 怎么用"
+  }
+}

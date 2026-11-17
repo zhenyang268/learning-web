@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO05.13",
+  "chapter": "SO05",
+  "title": "附：一张原语→能力的对照",
+  "src": {
+    "file": "notebook/projects/os/security/NOTES.md",
+    "sha256": "sha256:ef218137a5bb8a8f21577e270e91487695243b99093190a9150d13abaa058b1c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO05.13:body.s01",
+      "type": "extension",
+      "title": "附：一张原语→能力的对照",
+      "level": 2,
+      "content": "| 拿到的原语 | 立刻能做 | 下一步通常是 |\n|---|---|---|\n| 读（任意地址） | 泄露地址、读状态 | 破 ASLR → 转成写/跳 |\n| 写（任意地址） | 改标志/凭据/函数指针 | 转成调用或提权 |\n| 调用（任意函数 + 可控参数） | 执行既有逻辑 | 组合成一次完整动作 |\n| 跳转（可控 `rip`） | 进 ROP/栈迁移 | 拼出\"调用\" |\n| 无原语，仅崩溃 | 拒绝服务 | 需重新找入口 |\n\n**一句话**：安全分析的核心问题是\"**给了你哪几个原语**\"，不是\"这是哪一类漏洞\"。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "security",
+    "file": "NOTES.md",
+    "part": 12,
+    "parts": 12,
+    "section": "附：一张原语→能力的对照"
+  }
+}

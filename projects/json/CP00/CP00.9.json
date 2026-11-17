@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP00.9",
+  "chapter": "CP00",
+  "title": "6 跨线追问（单份文档答不完整的）",
+  "src": {
+    "file": "notebook/projects/cpu/NOTES.md",
+    "sha256": "sha256:f11e2f546f1a0222d1555da30fba4f53c302c37eb193a45111454c1b8d382c0f"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP00.9:body.s01",
+      "type": "extension",
+      "title": "6 跨线追问（单份文档答不完整的）",
+      "level": 2,
+      "content": "1. **「你这个 pass 让循环快了，那在流水线上发生了什么？」** → 要同时有 IR 侧（指令数、访存形态）与体系结构侧（IPC、miss）的证据。答法：先给指令数变化，再给 IPC/MPKI 变化，最后说清值来自哪一层。\n2. **「你的核 IPC 高，是不是因为 ABI 简单？」** → ABI 影响的是 spill/reload 与参数搬运，进而影响访存压力。答法：把 ABI 选择当成结构参数讲——寄存器传参多，spill 少，但寄存器堆端口压力大。\n3. **「为什么 XLA 能做整图融合，LLVM 做不了？」** → 层次不同：XLA 在**图**层（算子级），LLVM 在**指令**层；融合是把多个算子合成一个 kernel，属于调度空间的操作，指令层没有这个自由度。\n4. **「Triton 的 `num_stages` 在编译器里对应什么？」** → 软件流水线（software pipelining）：把循环不同迭代的 load 提前，用多级 staging 隐藏显存延迟。在 RTL 世界里这叫\"流水级间提前取数\"，是同一种权衡。\n5. **「你说 cache 友好，具体到哪一层？」** → 必须落到 AMAT 三项之一（命中时间/缺失率/缺失代价）或具体结构（组相联、MSHR、预取器）；说\"局部性好\"不算答案。\n6. **「你这些数字怎么复现？」** → 每条给命令：`perf stat` 事件名、riscv-tests 用例名、Yosys/OpenSTA 的脚本与 liberty、`opt -print-changed` 的 pass 名。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 9,
+    "section": "6 跨线追问（单份文档答不完整的）"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO06.8",
+  "chapter": "SO06",
+  "title": "第 6 章 KVM 的接口面：一个用户态 VMM 的最小骨架",
+  "src": {
+    "file": "notebook/projects/os/virtualization/NOTES.md",
+    "sha256": "sha256:d4ea73a02ef0f6f4eead171c249368035a9e07403606e7dbdca31b66a680465e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO06.8:body.s01",
+      "type": "extension",
+      "title": "第 6 章 KVM 的接口面：一个用户态 VMM 的最小骨架",
+      "level": 2,
+      "content": "**要解决的问题**：把\"VM 是个用户态进程\"从比喻变成可执行的代码。搞清楚 KVM 到底暴露了几个动作、每个动作的语义是什么，才能理解\"为什么 QEMU 挂了 VM 也挂了\"以及\"为什么有些路径 QEMU 根本不参与\"。\n\n**机制**：\n\n**(a) `/dev/kvm` 是一份 `ioctl` 协议，不是一套 API 抽象。** 顺序基本固定：\n\n| 步骤 | ioctl | 语义 | 遗漏的后果 |\n|---|---|---|---|\n| 1 | `KVM_GET_API_VERSION` | 期望返回 12 | 版本不匹配时行为未定义，先检查再往下走 |\n| 2 | `KVM_CREATE_VM` | 得到一个 VM fd | — |\n| 3 | `KVM_CREATE_IRQCHIP` / `KVM_SET_TSS_ADDR` | 建虚拟中断控制器、给实模式一个 TSS | 中断进不来；某些模式下第一次 `KVM_RUN` 直接失败 |\n| 4 | `KVM_SET_USER_MEMORY_REGION` | 把\"一段用户态地址\"注册成\"一段 guest 物理地址\" | guest 一访存就 `KVM_EXIT_MMIO`（因为没有内存） |\n| 5 | `KVM_CREATE_VCPU` | 得到一个 vCPU fd（**每个 vCPU 一个**） | — |\n| 6 | `KVM_SET_CPUID2` | 告诉 guest CPU 有哪些特性 | guest 会按宿主真实 CPU 的 CPUID 走，迁移到不同机器就崩 |\n| 7 | `KVM_SET_REGS` / `KVM_SET_SREGS` | 设通用寄存器与段/控制寄存器 | 停在复位状态，跑不到你的代码 |\n| 8 | `KVM_RUN`（循环） | **跑一步，直到必须回来** | — |\n\n**(b) `KVM_RUN` 的返回码就是一台机器的事件循环。** 常见退出原因（都在 `kvm_run.exit_reason`）：\n\n| 退出原因 | 含义 | 谁处理 |\n|---|---|---|\n| `KVM_EXIT_IO` | guest 执行了 PIO（`in`/`out`） | KVM 已填好端口与数据偏移，QEMU 读 guest 内存 |\n| `KVM_EXIT_MMIO` | guest 访问了没有内存槽的地址 | QEMU 的设备模型 |\n| `KVM_EXIT_HLT` | guest 空闲 | QEMU 阻塞在 `eventfd` 上等中断 |\n| `KVM_EXIT_SHUTDOWN` / `FAIL_ENTRY` | guest 三重故障 / 进入 guest 失败 | 记录现场（`FAIL_ENTRY` 几乎总是 VMCS/CPUID 配置错） |\n| `KVM_EXIT_EXCEPTION` | 需要注入/处理的异常（如 `#UD`） | 多数情况下 KVM 自己注入，少数给用户态 |\n| `KVM_EXIT_IRQ_WINDOW_OPEN` | 现在可以注入中断了 | 用于\"等一个安全时机再注入\" |\n\n**(c) 三条旁路：把工作从用户态挪走的三个具体机制。**\n\n| 机制 | 注册什么 | 效果 |\n|---|---|---|\n| `KVM_IOEVENTFD` | `(地址, 长度, datamatch?, eventfd)` | guest 往这个地址写 → 内核直接 `eventfd_signal`，**不返回用户态** |\n| `KVM_IRQFD` | `(gsi, eventfd)` | 往 `eventfd` 写 → 内核向 guest 注入中断，**不返回用户态** |\n| `KVM_REGISTER_COALESCED_MMIO` | `(地址, 长度)` | 同一地址的连续写合并成一次退出（对帧缓冲这类\"写很多次只关心最后值\"的设备有效） |\n\n**这三个就是\"能不能换个更便宜的人来收税\"的全部答案**：`ioeventfd` 把 kick 交给内核、`irqfd` 把中断注入交给内核，\n两者一接，virtio 的数据面就完全绕开 QEMU（这正是 vhost 的结构）。\n\n**(d) 线程模型**：一个 vCPU = 一个 fd = **一个宿主线程**（通常），它绝大部分时间阻塞在 `KVM_RUN` 里。\nQEMU 另有主循环线程（设备 I/O、控制面）与若干 iothread（块 I/O）。\n**\"vCPU 数 > 物理核数\"就是超分**，代价是 `steal time`（guest 想跑但排不上 CPU）。\n\n**最小例子**：一个 200 行以内的实模式 VMM，跑 `mov $'A', %al; out %al, $0xe9; hlt`（机器码 `b0 41 e6 e9 f4`），\n在宿主终端打出 `A`。核心就这么几行：\n\n```c\nint kvm = open(\"/dev/kvm\", O_RDWR);\nif (ioctl(kvm, KVM_GET_API_VERSION, 0) != 12) return 1;\nint vm = ioctl(kvm, KVM_CREATE_VM, 0);\n\nstruct kvm_userspace_memory_region mem = {\n    .slot = 0, .guest_phys_addr = 0, .memory_size = 1 << 20,\n    .userspace_addr = (uint64_t)guest_mem,      /* mmap 出来的 1MB */\n};\nioctl(vm, KVM_SET_USER_MEMORY_REGION, &mem);\n\nint vcpu = ioctl(vm, KVM_CREATE_VCPU, 0);\nint run_sz = ioctl(kvm, KVM_GET_VCPU_MMAP_SIZE, 0);\nstruct kvm_run *run = mmap(NULL, run_sz, PROT_READ | PROT_WRITE, MAP_SHARED, vcpu, 0);\n\nstruct kvm_sregs s; ioctl(vcpu, KVM_GET_SREGS, &s);\ns.cs = (struct kvm_segment){ .base = 0, .limit = 0xffff, .selector = 0, .type = 11, .s = 1, .present = 1 };\ns.ds = s.es = s.fs = s.gs = s.ss =\n    (struct kvm_segment){ .base = 0, .limit = 0xffff, .selector = 0, .type = 3, .s = 1, .present = 1 };\nioctl(vcpu, KVM_SET_SREGS, &s);\n\nstruct kvm_regs r = { .rip = 0x1000, .rflags = 2 };   /* 代码放在 0x1000 */\nioctl(vcpu, KVM_SET_REGS, &r);\n\nfor (;;) {\n    ioctl(vcpu, KVM_RUN, 0);\n    if (run->exit_reason == KVM_EXIT_IO && run->io.port == 0xe9) {\n        putchar(*(char *)((char *)run + run->io.data_offset));\n    } else if (run->exit_reason == KVM_EXIT_HLT) {\n        break;                                   /* 正常结束 */\n    } else {\n        break;                                   /* 打印 exit_reason 后退出 */\n    }\n}\n```\n\n**这段代码证明了四件事**（也是这一章的判据）：\n① `guest RAM` 就是宿主进程的一块 `mmap`，**没有魔法**；② 段基址/`rip`/`rflags` 是**你手写的**，所以\"实模式\"只是几个字段的组合；\n③ 一次 `out` 就是一次 `KVM_EXIT_IO`，返回值里直接带端口号和数据在 `kvm_run` 里的偏移；\n④ `HLT` 让 vCPU 停下来（真实 VMM 在这里改成阻塞在 `eventfd` 上而不是退出循环）。\n省略了 `KVM_CREATE_IRQCHIP`、`KVM_SET_CPUID2` 与 `KVM_SET_TSS_ADDR`——只跑这一小段不需要，**一旦要接中断或跑保护模式就必须补上**。\n\n**面试高频问法**：\n\n1. **「KVM 的接口为什么是 `ioctl` 而不是更高级的抽象？」** → 考点：控制面与数据面分离。\n   → 答法：`ioctl` 是**控制面**（建 VM、配内存、设寄存器），而**数据面**已经用共享内存（`kvm_run` 结构 + guest RAM）与 `eventfd`（旁路）承载了，所以不需要\"每次 I/O 一次系统调用\"的抽象层。这个设计让 VMM 可以自由实现设备模型（QEMU 一套、Firecracker 一套、crosvm 一套），KVM 只提供最小公约数。边界：代价是**没有 ABI 稳定性保证之外的类型安全**，参数全是 `void*`。\n2. **「为什么 QEMU 进程挂掉，VM 里的进程也全死？」** → 考点：谁拥有内存与设备状态。\n   → 答法：guest RAM 是 QEMU 的匿名内存（`mmap`），设备状态（virtio 环的后端、块设备 fd、网卡 tap）全在 QEMU 里；KVM 只保存 vCPU 的寄存器状态。QEMU 一死，内存被回收、后端 fd 关闭，VM 立刻消失。**所以\"hypervisor 是 KVM + QEMU 合起来的系统\"这句话不是文字游戏。**\n3. **「vCPU 为什么是一个线程，这个模型有什么代价？」** → 考点：调度与超分。\n   → 答法：`KVM_RUN` 是阻塞调用，天然对应一个线程；代价是 **vCPU 与物理核的映射要靠宿主调度器**，超分时 guest 会看到 `steal time`，多 vCPU 的同步（IPI、`halt polling`）会引入\"虚拟化特有的抖动\"。现代优化：绑核（`vcpupin`）、`halt polling`（空转一会儿再阻塞，减少唤醒延迟）、`nohz_full`。\n4. **「如果一个设备既想快又想可迁移，选哪一级？」** → 考点：台阶的取舍。\n   → 答法：virtio + vhost-user 是唯一同时满足\"快\"\"可迁移\"\"可插拔\"的位置——因为它仍是软件设备，状态可枚举（`vmstate` 里能存环的位置与未完成请求）；直通再快也不能迁移。**判据：迁移需求优先于极限性能时，天花板就是 virtio 那一级。**\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "virtualization",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 11,
+    "section": "第 6 章 KVM 的接口面：一个用户态 VMM 的最小骨架"
+  }
+}

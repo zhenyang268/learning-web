@@ -1970,7 +1970,8 @@ a.sitemenu-item.on {
 }
 
 /* ---------------------------------------------------------- 考点自测（工程线） */
-.selftest {
+.selftest,
+.interviewq {
   margin-top: 28px;
   padding: 16px 18px;
   border: 1px solid var(--line, #2a2a35);
@@ -2435,6 +2436,35 @@ a.sitemenu-item.on {
   flex: 0 0 auto;
   color: var(--tx-soft);
   font-size: 11.5px;
+}
+
+/* 分组页/面试索引页的「下级项目」：只做导航，不记进度 */
+.projchildren {
+  margin-top: 30px;
+  padding: 16px 18px;
+  border: 1px solid var(--line, #2a2a35);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.projchildren h2 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tx);
+}
+
+.projlist {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.projlist .chip {
+  text-align: left;
+  max-width: 100%;
 }
 
 @media (max-width: 480px) {

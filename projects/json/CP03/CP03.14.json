@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.14",
+  "chapter": "CP03",
+  "title": "S11 上板与功耗（可选，纯加分）",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.14:body.s01",
+      "type": "extension",
+      "title": "S11 上板与功耗（可选，纯加分）",
+      "level": 2,
+      "content": "### 要解决的问题\n\n用真实 FPGA 跑一次，获得\"真的在跑\"的体感与一个真实 fmax；但必须清楚它与 S9 的数字**不可换算**。\n\n### 机制\n\n板子选逻辑资源够 RV32I 带 cache 的规模（Arty A7 一类即可）。流程：Vivado/Quartus 综合实现 → 引脚与时序约束 → 下载 → 用 UART 打印 CoreMark 结果。判据是**板上跑出的周期数与 Verilator 仿真一致**（同一程序、同一参数），这才说明实现没有引入行为差异。\n\n功耗只做量级估算：门数 × 单位功耗，或看工具报的静态/动态估计；**不做签核**，也不要说\"功耗是 X 瓦\"。\n\n### 面试高频问法\n\n- **\"FPGA 上跑通了说明什么？\"** → 考点是边界。答法：说明设计可综合、时序可收敛、行为与仿真一致；不说明面积效率、不说明在 ASIC 上的频率，也不说明功耗。\n- **\"仿真和上板结果不一致，先怀疑什么？\"** → 考点是复位与初始化。答法：先查未初始化寄存器（仿真二态、板上四态/上电随机）、再查跨时钟域与复位释放时序，最后才是逻辑错误——前两类在仿真里天然不暴露。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 13,
+    "parts": 17,
+    "section": "S11 上板与功耗（可选，纯加分）"
+  }
+}

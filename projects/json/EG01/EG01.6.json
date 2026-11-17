@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG01.6",
+  "chapter": "EG01",
+  "title": "第 5 章 集成测试与契约测试",
+  "src": {
+    "file": "notebook/projects/eng/testing/NOTES.md",
+    "sha256": "sha256:264b2fc5ec970679cc8c0bd3d0474efd81daf2f882573790c6eb4fea8b4e3d4c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG01.6:body.s01",
+      "type": "extension",
+      "title": "第 5 章 集成测试与契约测试",
+      "level": 2,
+      "content": "**要解决的问题**：单元测试用替身把所有接缝都抹平了，于是“我的代码”和“真实依赖”、“我的服务”和“别人的服务”之间的假设没人验证。集成测试验证纵向接缝（代码 ↔ 真实 DB/队列/HTTP），契约测试验证横向接缝（consumer ↔ provider）。不解决，这些假设第一次被检验就是在联调或线上。\n\n**机制**：\n\n集成测试的三个设计决定：\n\n1. **依赖用真的还是假的**：判据是“这个依赖的语义是不是被测逻辑的一部分”。SQL 方言、事务隔离级别、唯一索引冲突、消息的投递语义——是，就必须用真的；发邮件、调第三方支付——用 fake。\n2. **边界放在进程内还是进程外**：真 DB 跑容器、外部第三方跑进程内 fake，是多数团队的成本/保真平衡点；全容器起一整套只在少量关键链路上做。\n3. **隔离**：每个测试用唯一 schema 或事务回滚；测试数据带唯一前缀（如 `test-{uuid}`），否则并行一开就互相踩。\n\n契约测试的工件流转：\n\n```\nconsumer 测试 → 生成 pact 文件（JSON） → 发布到 broker（带版本+分支）\n                                              ↓\nprovider 侧拉取该版本 pact → 按 given 准备数据 → 回放请求 → 校验真实响应满足 matcher\n                                              ↓\n                                    can-i-deploy 判断这组版本能否一起上\n```\n\n关键约束：**consumer 只声明它真正消费的字段**。provider 新增字段不算破坏性变更，删字段、改类型、改语义（同名字段含义变了）才算。这条约束决定了契约测试是“消费者驱动的”，而不是“provider 接口文档的复制”。\n\n```python\n# 伪代码：pact 风格 DSL\ndef test_get_user_contract(pact):\n    (pact.given(\"user 42 exists\")\n         .upon_receiving(\"a request for user 42\")\n         .with_request(\"GET\", \"/users/42\")\n         .will_respond_with(200, body={\"id\": 42, \"name\": Like(\"alice\")}))  # Like = 类型匹配器\n    with pact:\n        assert client.get_user(42).name == \"alice\"   # 只用到 name\n# provider 侧：verify(pact_file, state_handlers={\"user 42 exists\": seed_user_42})\n```\n\n**最小例子**：一个服务要测“下单扣库存”这条链路，DB 用真 Postgres：\n\n```bash\ndocker compose -f docker-compose.test.yml up -d --wait postgres\npytest tests/integration -m integration -q\n# 结果：12 passed in 41s\n```\n\n`--wait` 会等 compose 里定义的 healthcheck 变成 healthy 才返回，替代了 `sleep 20` 这种既慢又不可靠的等待。测试内每条用例在独立 schema 里建表、跑完 drop，因此可以 `-n 4` 并行。\n\n**面试高频问法**：\n\n1. **“集成测试和契约测试有什么区别？”** → 考点是纵向/横向接缝的区分。答法：集成测试测我的代码和真实依赖拼起来对不对（SQL 能不能跑、事务对不对），是纵向的；契约测试测两个服务对同一份 JSON 的假设一致不一致，是横向的，不碰真实依赖。\n2. **“provider 加了一个响应字段，契约测试该不该红？”** → 考点是 consumer-driven 的兼容性判据。答法：不该红。consumer 只声明它用到的字段，加字段对它是透明的；删字段、改类型、改语义才该红，这条规则让 provider 能安全地演进接口。\n3. **“契约测试能替代集成测试吗？”** → 考点是契约的覆盖边界。答法：不能。契约只验证请求形状和响应字段，不验证真实 SQL、事务回滚、超时、序列化边界、连接池耗尽这些——那些只有跑真依赖才暴露。\n4. **“provider state（given）是干什么的，为什么容易出问题？”** → 考点是契约测试的确定性。答法：契约文件只描述请求和响应，不描述前置数据，所以 provider 侧要为每个 given 写数据准备 handler；handler 和真实数据不一致时契约测试就变 flaky，所以要把它当生产代码维护。\n5. **“集成测试慢到没人跑，怎么办？”** → 考点是成本控制而不是砍覆盖。答法：缩小边界（DB 容器化并复用、只对变更模块跑）、并行分片、把纯逻辑从集成里挪回单测，而不是删掉集成层。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "testing",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 9,
+    "section": "第 5 章 集成测试与契约测试"
+  }
+}

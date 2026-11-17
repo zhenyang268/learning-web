@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "CP01.1",
   "chapter": "CP01",
-  "title": "asm-link-arch · 大纲",
+  "title": "asm-link-arch · 总览",
   "src": {
     "file": "notebook/projects/cpu/asm-link-arch/OUTLINE.md",
     "sha256": "sha256:c2cb1f89d4ea6f824dc98be161cdc393a609a81e4c15cc5768f15e3f369f4256"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO01.20",
+  "chapter": "SO01",
+  "title": "附录 D 设计视角速查",
+  "src": {
+    "file": "notebook/projects/os/linux-api/NOTES.md",
+    "sha256": "sha256:130644deafa903373678f2401b0ebb1596463c7ffffae6aee7f71de55465d58b"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO01.20:body.s01",
+      "type": "extension",
+      "title": "附录 D 设计视角速查",
+      "level": 2,
+      "content": "> 定位：把正文已有的症状反查到「第 0 章的六个决定」上。**症状全部取自正文，不新造**；查表只给决定，不给内核结构。\n\n| 现象（正文已有） | 对应决定 |\n|---|---|\n| `fork` 后子进程改变量、父进程看不见（第 1 章） | ① 共享集合由谁定：数据页 COW |\n| 父子交替写同一文件互相覆盖，因为共享偏移（第 1、7 章） | ① 共享集合由谁定：fd 表复制、description 共享 |\n| `exec` 前没设 `FD_CLOEXEC`，监听 fd 漏进子进程（第 1、7 章） | ① 共享集合由谁定：跨 `exec` 的 fd 归属 |\n| `malloc` 大块走 `mmap`、小块走 heap，`free` 后 RSS 降不降不一样（第 4 章） | ② 内存增长由谁定：`sbrk` 单调 vs `mmap` 可还 |\n| 大文件处理时 sys 时间高、`read` 与 `mmap` 拷贝路径不同（第 4 章） | ② 内存增长由谁定：拷贝 vs 映射 |\n| ET 没循环 `read` 到 `EAGAIN` 就丢事件（第 12 章） | ③ 事件通知由谁定：只报状态跃变 |\n| `epoll_wait` 返回 0 且 `timeout=0` 的忙轮询（第 12 章） | ③ 事件通知由谁定：等待由谁负责 |\n| `read` 偶发 `-1/EINTR` 被当成真错误、`select`/`epoll_wait` 在 `SA_RESTART` 下也不重启（第 7、15 章） | ④ 错误如何报告：同步返回值里塞了异步事件 |\n| 短读短写被当成 EOF，配置只解析了一半（第 7、14 章） | ④ 错误如何报告：返回值语义而非异常 |\n| 非 root 看不到别的进程 `lsof`/`/proc/PID/fd`，权限不足静默给空（第 5、7 章） | ⑤ 权限主体是谁 |\n| 降 nice / 改 `timerslack_ns` 需要 `CAP_SYS_NICE`，普通用户只能升 nice（第 2、3 章） | ⑤ 权限主体是谁：能力决定可观测与可调 |\n| `write` 返回成功但掉电丢数据；`fflush` 不等于 `fsync`（第 8、10 章） | ⑥ 持久化时机由谁定 |\n| System V 共享内存段进程退出仍在，要 `IPC_RMID`（第 16 章） | ⑥ 持久化时机由谁定：对象生命周期归谁 |\n\n**读法**：先在这张表里找到症状，回到对应章节的「对应命令与读法」拿判据；表里查不到的现象，先判它属于哪个决定，再回去补那一章，而不是新起一章。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "linux-api",
+    "file": "NOTES.md",
+    "part": 19,
+    "parts": 19,
+    "section": "附录 D 设计视角速查"
+  }
+}

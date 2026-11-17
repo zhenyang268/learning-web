@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP03.9",
+  "chapter": "CP03",
+  "title": "S6 difftest 与随机测试",
+  "src": {
+    "file": "notebook/projects/cpu/riscv-core/NOTES.md",
+    "sha256": "sha256:c3709d99d3e32a895466f2c6fe463aee88617e6b68baa967fec70de3527f952c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP03.9:body.s01",
+      "type": "extension",
+      "title": "S6 difftest 与随机测试",
+      "level": 2,
+      "content": "### 要解决的问题\n\n到这一步你有几个版本（顺序、流水线、有预测、有 cache），每一版都可能引入\"看起来对\"的错误。人写的测试覆盖度等于自己的想象力，而 CPU 的 bug 集中在想不到的组合里。这一节建立**机器判定**：每条提交的指令与官方参考模型逐条比对。\n\n### 机制\n\n核心是\"提交日志\"（commit log）对齐：\n\n- Spike 侧：`--log-commits` 输出每一条提交指令的 PC、指令编码、以及对寄存器的写回。\n- DUT 侧：在提交点（顺序核就是 WB，乱序核是 ROB 提交）导出同样的三元组。\n- 比对器：C++ 里逐条 diff，第一处不一致就打印上下文（前 10 条 + 当前 PC/寄存器）并停机。\n\n随机程序生成器不要一上来就通用。**约束在能被验证的范围内**：只用 RV32I 的 40 条指令、寄存器随机、访存限制在测试内存段、循环用固定次数、避免无限跳转。几百行的生成器就够，关键是\"能跑很多次、每次都能对齐\"。\n\n**最关键的一步是注入故障测试**：故意改坏一处（把 `x0` 的写屏蔽去掉、把 J 型立即数的 `instr[20]` 换成 `instr[21]`），确认 difftest 一定报错。**报不出来的 difftest 等于没有**——这是判断验证是否真实有效的唯一方法。\n\n### 最小例子\n\n```bash\nspike --isa=rv32i -l --log-commits rv32ui-p-add 2>&1 | head -5\n# core   0: 0x0000000080000000 (0x00000297) auipc t0, 0x0\n# core   0: 0x0000000080000004 (0x00028613) addi  a2, t0, 0\n# ... 每行含 pc / 指令编码 / 汇编文本；寄存器写回在行尾 x<N> <- 0x...\n```\n\n```cpp\n// 比对器核心：每提交一条，取一行 spike 日志比对\nstruct Commit { uint32_t pc, instr; int rd; uint32_t value; };\nwhile (dut_step(&c)) {\n  if (!spike_next(&ref)) { fail(\"spike 提前结束\"); }\n  if (c.pc != ref.pc || c.instr != ref.instr) fail_at(c, ref);\n  if (c.rd != 0 && c.value != ref.value) fail_at(c, ref);\n}\n```\n\n为了让\"提交\"可观察，乱序核需要在 ROB 提交时把 `{pc, instr, rd, value}` 打到一个 debug port 上。**这个 debug port 是验证的基础设施，不是可选装饰**——一开始就设计它，比事后补要省得多。\n\n**验收判据**：① 至少几百万条随机指令零分歧；② 注入的每个故障都能被抓到并定位到具体提交序号；③ 覆盖率达到你关心的几类指令/冒险组合（自己定义覆盖率，不要迷信行覆盖）。\n\n### 面试高频问法\n\n- **\"你怎么保证 CPU 是对的？\"** → 考点是验证方法学。答法：riscv-tests 功能自检 + Spike 逐提交 difftest + 注入故障测试三层；**第三层最关键**，它证明前两层真的会报错。\n- **\"difftest 比对什么？为什么不只比最终内存？\"** → 考点是错误传播。答法：只比最终结果会让大量错误互相抵消（错值被后续指令覆盖），且无法定位。逐提交比对能把错误钉在\"第 N 条提交、PC=0x…、x7 期望/实际\"。\n- **\"随机测试会不会生成非法指令？\"** → 考点是激励约束。答法：生成器只从合法编码模板出指令，且限制访存范围与跳转目标；遇到非法编码要在生成阶段拒绝，而不是让 DUT 去处理（那会引入异常路径，扩大验证面）。\n- **\"覆盖率怎么定？\"** → 考点是验证目标的可度量性。答法：按\"指令类型 × 冒险类型 × cache 命中/缺失 × 分支取/不取\"定义交叉覆盖，比行覆盖有意义；目标是每类组合都至少命中一次。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "riscv-core",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 17,
+    "section": "S6 difftest 与随机测试"
+  }
+}

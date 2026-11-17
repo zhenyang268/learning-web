@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CP01.8",
+  "chapter": "CP01",
+  "title": "第 7 章 静态链接与动态链接：符号解析、PLT/GOT、延迟绑定",
+  "src": {
+    "file": "notebook/projects/cpu/asm-link-arch/NOTES.md",
+    "sha256": "sha256:04b5529a001bfe4ec19f5d9641db647d43404a1276627187bd916f3d732fe051"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CP01.8:body.s01",
+      "type": "extension",
+      "title": "第 7 章 静态链接与动态链接：符号解析、PLT/GOT、延迟绑定",
+      "level": 2,
+      "content": "**要解决的问题**：把若干目标文件里「我引用了 `f`」和「我定义了 `f`」对上号，并决定这个绑定在什么时候发生。静态链接在链接期一次算死，动态链接推迟到装载或首次调用。不解决这件事，程序就无法拆成多个模块编译，`libc` 也无法被所有进程共用一份物理页。\n\n**机制**\n\n符号表是这一切的输入。ELF 的 `.symtab` 每项是 `{st_name, st_value, st_size, st_info(绑定,类型), st_shndx}`；`STB_LOCAL` 只在本文件可见（`static` 函数就落在这里），`STB_GLOBAL` 全局，`STB_WEAK` 弱。`st_shndx == SHN_UNDEF` 表示「本文件引用、但没定义」，这就是重定位要填的洞。\n\n**静态链接**分两步：符号解析 + 重定位。解析规则是：多个 `STB_GLOBAL` 同名定义 → `multiple definition`（GCC 10 起默认 `-fno-common`，以前的 tentative definition 合并行为没了）；强 + 弱 → 取强；多个弱 → 取链接器先遇到的那个。\n\n`undefined reference` 的真实原因只有三类，面试要能说清是哪一类：\n1. 库里确实没有这个定义（漏了 `-l`、拼错、C++ 忘了 `extern \"C\"` 导致名字被 mangle 成 `_Z3foov`）。\n2. 定义在 `.a` 里，但归档文件**只按命令行顺序扫描一遍**，且只拉取「当前还有未解析符号」的成员。`gcc -lfoo main.o` 时 `main.o` 还没进来，`libfoo.a` 被整包跳过 → 后面全成 undefined。修法是把 `-lfoo` 放后面，或用 `--start-group/--end-group` 让链接器反复扫。\n3. 只声明未定义：头文件里 `extern int x;` 但没有哪个 `.c` 真的给出定义。\n\n重定位表 `.rela.text` 每条是 `(r_offset, r_type, r_sym, r_addend)`，链接器算出符号最终地址后回填。两个架构在这里形态差异最明显：\n\n| 场景 | x86-64 | AArch64 |\n|---|---|---|\n| 调用函数 | `R_X86_64_PLT32`（call 的 32 位位移） | `R_AARCH64_CALL26`（bl 的 26 位、±128MB） |\n| 取全局变量地址 | `R_X86_64_PC32`（一条 `lea`） | `R_AARCH64_ADR_PREL_PG_HI21` + `R_AARCH64_ADD_ABS_LO12_NC`（`adrp` + `add` 两条，页相对） |\n\n**动态链接**在链接期只写两样东西进产物：`.dynamic` 里的 `DT_NEEDED`（库的 SONAME）和未定义符号名，地址一个都不填。装载时 ld.so 建全局符号表，按 **BFS 顺序**查找：可执行文件 → 它的直接依赖 → 依赖的依赖，**先遇到的胜出**。这就是**符号冲突**的真实机制——后装载的库即使也导出了同名全局符号，也永远轮不到，这被称为 interposition。`LD_PRELOAD` 正是利用它劫持 `malloc`。要躲开就三招：`-fvisibility=hidden` 少导出、`-Bsymbolic` 让库内引用优先绑自己、version script 隔离。\n\n位置无关代码的落地是 GOT + PLT 两张表：\n- **GOT**（`.got` / `.got.plt`）是数据段里的指针数组，代码只写「从 GOT 第 n 项取地址」，装载时由 ld.so 填真值。\n- **PLT** 是代码段里每个外部函数一小段跳板。x86-64 上 PLT0 负责 `push link_map; jmp *GOT[2]` 进 `_dl_runtime_resolve`；每个 stub 的 GOT 项初值指回自己 stub 内那条 `push reloc_index` 指令。\n- **延迟绑定**：首次调用走 `push 索引 → PLT0 → _dl_runtime_resolve`，解析完把真实地址**写回该 GOT 项**，第二次起就是一次间接跳转。`-z lazy` 是默认，`-z now` + `BIND_NOW` 在装载时全解析，配合 RELRO 把 GOT 变只读。\n- AArch64 结构同构（同样是 `.got.plt` + `.rela.plt` + `_dl_runtime_resolve`），差异只在 stub 用 `adrp/ldr/add/br` 而非 `jmp *`，且 x16/x17 被 ABI 预留为链接器 scratch 寄存器。\n\n**取舍**：静态链接无重定位开销、启动即跑、符号集合封闭（不会被子库插桩），代价是体积、内存不共享、库漏洞必须重链；动态链接换来代码段跨进程共享和独立升级，代价是启动重定位、符号冲突、版本问题（`foo@GLIBC_2.2.5` 这种版本化符号），以及 copy relocation——可执行文件引用 `.so` 里的数据符号时，链接器在可执行文件 `.bss` 里复制一份，运行时拷贝初值，`.so` 内部若用绝对寻址访问自己的变量就会与副本不一致。`-fPIC` 编译的库自己访问全局变量也走 GOT，才避得开。\n\n**最小例子**\n\n```c\n// main.c\nextern int g;\nint f(int);\nint main(void) { return f(1) + g; }\n```\n\n`gcc -c main.c -o main.o && readelf -r main.o`，`.rela.text` 里能看到形如 `R_X86_64_PLT32 f - 4` 和 `R_X86_64_PC32 g - 8` 两条；`objdump -d` 里 `call` 之后跟 4 个字节 `00 00 00 00`，就是待填的洞。同一份源码在 AArch64 上汇编，`bl f` 留 `R_AARCH64_CALL26`，取 `g` 变成 `adrp x0, g` + `ldr w0, [x0, #:lo12:g]` 两条重定位。\n\n链接阶段用 `gcc main.o -L. -lfoo`：若目录里是 `libfoo.so`，`readelf -d` 只剩一行 `NEEDED libfoo.so`，`objdump -d` 里调用点变成 `<f@plt>`；若只有 `libfoo.a` 且命令写成 `gcc -lfoo main.o`，直接报 `undefined reference to 'f'`——就是上面第 2 类原因。\n\n**面试高频问法**\n\n1. **「`undefined reference` 是怎么产生的？」** → 考点是符号解析时机和 `.a` 的拉取语义，不是「没包含头文件」。一句话答法：「链接器扫完所有输入后仍有 `SHN_UNDEF` 符号没被任何 `STB_GLOBAL` 定义填上；最常见是 `.a` 只按命令行顺序扫一遍，库放在了引用它的目标文件前面，或者 C++ 名字被 mangle 了而声明侧没加 `extern \"C\"`。」\n\n2. **「两个 `.so` 都定义了同名全局符号，用哪个？」** → 考点是 BFS 查找顺序与 interposition。一句话答法：「按装载顺序广度优先找，先遇到的胜出，后加载的那个永远被遮蔽；要避免就用 `-fvisibility=hidden`、`-Bsymbolic` 或 version script，`LD_PRELOAD` 就是故意利用这个规则。」\n\n3. **「PLT 和 GOT 为什么是两张表，合成一张不行吗？」** → 考点是段权限与位置无关。一句话答法：「GOT 在数据段、可写、装的是地址；PLT 在代码段、只读、装的是跳板。代码段不能改，所以跳转目标必须从可写的数据段间接取；而首次解析需要一段能执行又能携带重定位索引的代码，只能放在 PLT 里。」\n\n4. **「延迟绑定具体怎么实现的？第一次调用跳到哪？」** → 考点是 GOT 初值。一句话答法：「GOT 项初值不是函数地址，而是指回本 stub 里那条 `push 重定位索引` 的指令，接着跳到 PLT0，PLT0 把 `link_map` 压栈后跳 `_dl_runtime_resolve`；解析器算完地址写回 GOT 项，之后每次调用就是一次间接跳"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "cpu",
+    "project": "asm-link-arch",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 10,
+    "section": "第 7 章 静态链接与动态链接：符号解析、PLT/GOT、延迟绑定"
+  }
+}

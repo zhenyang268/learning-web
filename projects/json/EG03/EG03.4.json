@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG03.4",
+  "chapter": "EG03",
+  "title": "第 3 章 CPU profiling：采样 vs 插桩，perf 与 Instruments 怎么用",
+  "src": {
+    "file": "notebook/projects/eng/perf-engineering/NOTES.md",
+    "sha256": "sha256:b0d9c2bc493b3027796926ceb8b14f794523b415fe58a823afe700b373cb473d"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG03.4:body.s01",
+      "type": "extension",
+      "title": "第 3 章 CPU profiling：采样 vs 插桩，perf 与 Instruments 怎么用",
+      "level": 2,
+      "content": "**要解决的问题**：第 1、2 章告诉你「P99 变差了、benchmark 可信」，但没告诉你 CPU 时间花在谁身上。这一章把「我猜是序列化慢」变成「证据显示 62% 的样本落在 `memcpy` 的平顶上」。不解决这一步，后续所有优化都是加机器或随机改代码。注意 profiling 只回答「时间花在哪」，不回答「为什么慢」——后者要靠第 5、6 章的内存和锁数据。\n\n**机制**：\n\n两种获取时间归属的手段，成本模型完全不同。\n\n- **采样（sampling）**：以频率 $f_s$ 周期性触发中断或让 PMU 计数器溢出，在内核里抓当前指令指针和调用栈，离线聚合。开销近似 $\\propto f_s \\times c_{stack}$，其中 $c_{stack}$ 是抓一次栈的成本（frame pointer 链很便宜，DWARF 展开很贵）。它不改变程序执行路径，样本是统计无偏的，但**分辨率受限于采样间隔**：执行时间短于 $1/f_s$ 的函数可能一次都没被采到。\n- **插桩（instrumentation）**：在函数入口/出口插入计数或计时——编译期 `-pg`（gprof 的 `mcount`）、`-finstrument-functions`；运行期 uprobe/kprobe/eBPF；语言层 JFR、async-profiler 的 wall-clock 模式。计数精确，但开销与**调用次数**成正比，且会抑制内联、扰动 i-cache，属于观察者效应明显的手段。\n\n采样的固有偏差是 **skid**：计数器溢出到 CPU 真正进入内核记录 IP 之间还会执行若干条指令，记录到的 IP 偏向热点之后。Intel PEBS / AMD IBS 用硬件缓冲缓解，但没有免费午餐——不要拿单个样本给一个函数定罪。\n\nperf 的三个用法层次：\n\n```bash\n# 1) 先看宏观指标，判断是不是 CPU 受限\nperf stat -e cycles,instructions,cache-misses,branches ./bench --iters 100000\n\n# 2) 抓热点：99Hz 是常见选择，避免与目标进程的周期锁步\nperf record -F 99 -g --call-graph fp -p $PID -- sleep 30\n# 没有 frame pointer 时改用 DWARF，代价是每次采样都要展开栈\nperf record -F 999 -g --call-graph dwarf,16384 -p $PID -- sleep 10\n\n# 3) 读：默认按 children 聚合，看「谁自己耗时」要关掉\nperf report --stdio --no-children -g graph,0.5,caller\nperf top -p $PID -g\n```\n\n`--call-graph` 的选择是实战分水岭：`fp` 要求二进制用 `-fno-omit-frame-pointer` 编译（Go 默认保留 frame pointer，C/C++ 在 `-O2` 下常被省略）；`dwarf` 更准但采样频率要降下来；支持的 CPU 上 `lbr` 用硬件记录栈。栈抓不到，后面一切都白做。\n\nInstruments（macOS/iOS）的 Time Profiler 本质是同一个采样器：固定间隔抓所有线程的栈，Inverted Call Tree 从叶子往根看，Self/Weight 两列区分「自身耗时」和「含子树」。命令行入口是 `xctrace record --template 'Time Profiler' --launch -- ./app`。它的坑在符号化：release 构建必须带 dSYM，否则看到的是地址不是函数名。System Trace 是另一条线，看的是线程调度与阻塞，属于第 4 章的 off-CPU 口径。\n\n选型一句话：**找分布用采样，找次数和特定调用用插桩**；两者结论冲突时，采样看占比、插桩看绝对次数，不要互相否定。\n\n**最小例子**：\n\n```bash\nperf record -F 99 -g --call-graph dwarf,8192 -o perf.data -- ./bench --iters 100000\nperf report -i perf.data --stdio --no-children -g graph,0.5,caller | head -40\n```\n\n结果形态（示意）：`bench` 之下 `compress_block` 的 self 占比最高，`malloc` 次之，二者之上还有一条 `main→run→worker` 的路径。此时正确的下一步不是「优化整个 bench」，而是把 `compress_block` 单独提成微基准（固定输入、固定迭代），或者换分配器后再采一次，看 `malloc` 那一段是否变窄。若 `perf report` 里大量 `[unknown]`，先修符号——未 strip、`--symfs`、dSYM 三件事，否则整次分析无效。\n\n**面试高频问法**：\n\n1. **「采样和插桩怎么选？」→ 考点：开销模型与偏差来源 → 答法**：找热点用采样，开销与采样频率成正比、不改执行路径但不保证抓到短函数；要精确调用次数或抓某个特定函数用插桩，开销与调用次数成正比，而且会抑制内联、扰动缓存，结论要打折看。\n2. **「perf 采到的函数地址为什么会偏？」→ 考点：skid → 答法**：PMU 计数器溢出到内核记录 IP 之间还会执行若干指令，所以样本偏向热点的后几条指令；PEBS/IBS 能缓解但不是消除，所以只看聚合趋势，不用单条样本定位到指令。\n3. **「`perf record -g` 抓不到调用栈怎么办？」→ 考点：栈展开机制 → 答法**：先确认二进制有没有 frame pointer（`-fno-omit-frame-pointer`），有就用 `--call-graph fp`；没有就退到 `--call-graph dwarf`，代价是展开成本高、频率要降；JIT 场景还要额外注册符号表，否则栈会断在 JIT 边界。\n4. **「`perf report` 里 children 和 self 有什么区别？」→ 考点：聚合口径 → 答法**：self 是样本恰好落在该函数本身，children 是把以它为根的所有样本都算进去；判断「该优化谁」看 self，判断「从哪条路进来的」看 children，用 `--no-children` 切到 self 视角。\n5. **「Instruments 里 Time Profiler 显示的热点和源码行对不上？」→ 考点：优化与符号化 → 答法**：优化构建会内联、会重排，热点常常归到内联后的外层函数或地址区间；要靠 dSYM 符号化，并对照 Inverted Call Tree 和 Self 列，不能直接当源码行归因。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "perf-engineering",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 8,
+    "section": "第 3 章 CPU profiling：采样 vs 插桩，perf 与 Instruments 怎么用"
+  }
+}

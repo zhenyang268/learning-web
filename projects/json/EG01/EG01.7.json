@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG01.7",
+  "chapter": "EG01",
+  "title": "第 6 章 冒烟、回归、验收：什么时候跑哪一层",
+  "src": {
+    "file": "notebook/projects/eng/testing/NOTES.md",
+    "sha256": "sha256:264b2fc5ec970679cc8c0bd3d0474efd81daf2f882573790c6eb4fea8b4e3d4c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG01.7:body.s01",
+      "type": "extension",
+      "title": "第 6 章 冒烟、回归、验收：什么时候跑哪一层",
+      "level": 2,
+      "content": "**要解决的问题**：测试写全了，但“什么时候跑哪一层”没定义。结果是两种极端：每次提交跑全量 E2E，反馈 40 分钟，红了没人看；或者只跑单测，问题漏到线上。这一章给出按“失败成本 × 反馈时长”调度各层的规则。\n\n**机制**：\n\n分层不是按工具分的，是按**回答什么问题**分的：\n\n| 层 | 回答的问题 | 时机 | 时间预算 | 失败动作 |\n|---|---|---|---|---|\n| 冒烟 | 这个构建能不能用？ | 部署到环境后立即 | 分钟级 | 回滚，不继续 |\n| 回归 | 有没有弄坏以前的功能？ | 合并前 + 夜间全量 | 十分钟级 | 阻断合并 |\n| 验收 | 需求做对了没有？ | 发布前 | 小时级 | 阻断发布 + 产品确认 |\n\n门禁排序的经验规则是：单位耗时能拦掉的失败越多越靠前，即近似 $\\max \\frac{\\text{该层可拦截的失败比例}}{\\text{该层耗时}}$。所以编译和 lint 在最前，E2E 在最后。\n\n```yaml\n# 伪代码：门禁顺序，任一 stage 红则后续不跑\nbuild:       { run: make build lint }                  # 期望 < 2 min\nunit:        { needs: build,       run: pytest -m unit }\ncontract:    { needs: unit,        run: pact-verify }\nintegration: { needs: contract,    run: pytest -m integration }\ndeploy_stg:  { needs: integration }\nsmoke:       { needs: deploy_stg,  run: ./smoke.sh --timeout 300, on_fail: rollback }\nregression:  { needs: smoke,       run: pytest -m regression --shard 4 }\nacceptance:  { needs: regression,  when: manual }\n```\n\n冒烟集的设计原则：只保留 10–30 条，覆盖“进程起得来 + 核心链路成功一次”；只读接口优先，写操作必须能自清理；等待用 healthcheck 而不是 `sleep`；失败信息要能指到具体服务，否则值班的人第一步就得手工排查。\n\n回归的选测：按变更影响面选子集（改了哪个模块跑哪些），夜间跑全量兜底。验收用业务语言写（Given/When/Then），由业务方 review，不追求代码覆盖率。\n\n**最小例子**：\n\n```bash\n./smoke.sh --base-url https://stg.example.internal --timeout 300\n# 1) 轮询 GET /healthz 直到 200，最多 300s\n# 2) GET /v1/catalog?limit=1 → 200 且 body 非空\n# 3) POST /v1/orders（固定测试账号）→ 201，随后 DELETE 清理\n# 结果：3 passed, 8.4s，退出码 0\n```\n\n任一步失败退出码非 0，流水线直接回滚，不再跑回归——因为此时回归结果没有意义。\n\n**面试高频问法**：\n\n1. **“冒烟、回归、验收的区别？”** → 考点是三者回答的问题不同。答法：冒烟问“这个构建能不能用”，部署后几分钟内跑，失败就回滚；回归问“有没有弄坏旧功能”，合并前和夜间跑，失败阻断合并；验收问“需求做对了没有”，发布前跑，失败阻断发布并由产品确认。\n2. **“冒烟测试应该写多少条、包含什么？”** → 考点是冒烟是“可用性判定”不是“功能覆盖”。答法：10–30 条、5 分钟内跑完，覆盖进程能起来、依赖能连上、核心链路成功一次；写操作要能清理，只读优先。\n3. **“回归太慢，怎么优化？”** → 考点是成本控制手段。答法：按变更影响面选子集，夜间跑全量兜底，用例并行分片，把纯逻辑从 E2E 挪回单测；不要靠删用例来提速。\n4. **“冒烟测试自己老 flaky 怎么办？”** → 考点是等待方式和数据治理。答法：`sleep` 换成 healthcheck 加超时重试，固定测试账号和夹具数据，失败信息带上服务名和响应码便于归因；连续 flaky 的用例直接移出冒烟集，回到稳定后再放回。\n5. **“验收测试谁来写、要不要自动化？”** → 考点是职责和收益边界。答法：场景由业务方或产品定义，QA 固化成 Given/When/Then，关键路径自动化进流水线，探索性验证留人工；验收的价值在“业务语义对不对”，不在覆盖率。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "testing",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 9,
+    "section": "第 6 章 冒烟、回归、验收：什么时候跑哪一层"
+  }
+}

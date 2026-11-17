@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "AL00.6",
+  "chapter": "AL00",
+  "title": "3 工具：把\"偶发崩溃\"变成\"最小复现\"",
+  "src": {
+    "file": "notebook/projects/algo/NOTES.md",
+    "sha256": "sha256:03c1c25b7346a0358365e02322918e05d8588fd5cd3458214436bda8fea93947"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "AL00.6:body.s01",
+      "type": "extension",
+      "title": "3 工具：把\"偶发崩溃\"变成\"最小复现\"",
+      "level": 2,
+      "content": "```bash\nclang++ -g -O1 -fsanitize=address,undefined t.cpp -o t && ./t\nvalgrind --leak-check=full --track-origins=yes ./t\n```\n\n**流程**（四步，缺一不可）：\n\n1. **稳定复现**：固定随机种子、固定输入；\n2. **缩小输入**：二分删数据 / 二分删操作序列；\n3. **定位**：ASan 报告的\"读/写越界 + 分配点 + 释放点\"三处栈；\n4. **归因**：写清\"少写哪一行/多写哪一行会错\"，而不是\"改了就好了\"。\n\n**判据**：能交出一份四步记录，别人按它能在自己机器上复现同一个崩溃。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "algo",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 8,
+    "section": "3 工具：把\"偶发崩溃\"变成\"最小复现\""
+  }
+}

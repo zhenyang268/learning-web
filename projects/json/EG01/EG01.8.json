@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "EG01.8",
+  "chapter": "EG01",
+  "title": "第 7 章 property-based testing 与 fuzz",
+  "src": {
+    "file": "notebook/projects/eng/testing/NOTES.md",
+    "sha256": "sha256:264b2fc5ec970679cc8c0bd3d0474efd81daf2f882573790c6eb4fea8b4e3d4c"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "EG01.8:body.s01",
+      "type": "extension",
+      "title": "第 7 章 property-based testing 与 fuzz",
+      "level": 2,
+      "content": "**要解决的问题**：基于样例的单元测试只覆盖作者想得到的输入，而线上崩溃几乎都发生在想不到的那一侧。这一章解决“如何用生成器批量造输入、用性质而不是期望值做断言，并把偶发崩溃收缩成一个可复现的最小反例”。\n\n**机制**：三个部件——生成器（generator/strategy）、性质（property）、收缩（shrinking）。性质常见四类：不变量（排序后长度不变、结果有序）、往返（`decode(encode(x)) == x`）、幂等（`normalize(normalize(x)) == normalize(x)`）、对照实现（新实现与朴素实现在同一输入上输出相同）。生成器负责把类型映射成输入分布，失败后收缩器反复裁剪输入直到不可再小，最后把反例写入语料库，下次先跑语料库。\n\nfuzz 与 PBT 的区别在于驱动方式：PBT 的输入是结构化值、由生成器按分布采样；fuzz 的输入是字节流，靠插桩得到的覆盖率反馈引导变异，判据通常是崩溃、panic、未定义行为或 sanitizer 报告。Go 的原生 fuzz 把两者衔接起来：引擎给 bytes，开发者负责解码成结构。\n\n```python\n@given(st.lists(st.integers()))\ndef test_sort(xs):\n    once = my_sort(xs)\n    assert len(once) == len(xs)                              # 不丢元素\n    assert all(a <= b for a, b in zip(once, once[1:]))       # 有序\n    assert my_sort(once) == once                             # 幂等\n```\n\n```go\nfunc FuzzParse(f *testing.F) {\n    f.Add([]byte(\"a=1&b=2\"))              // 种子语料\n    f.Fuzz(func(t *testing.T, data []byte) {\n        v, err := Parse(data)\n        if err != nil {\n            return                        // 非法输入不算失败\n        }\n        if !bytes.Equal(Format(v), data) { // 往返性质\n            t.Fatalf(\"round-trip mismatch: %q\", data)\n        }\n    })\n}\n```\n\n关键工程点：性质的强度决定测试价值。如果性质里把实现逻辑又抄了一遍，那它只是换了输入来源的样例测试，会和实现一起错。另一个坑是分布——默认生成器偏向小值、空集合、ASCII，边界要显式加权或用 `@example` 手动传入。\n\n**最小例子**：Python + Hypothesis 测一个 `parse_duration(\"1h30m\") -> 秒`，性质写 `format(parse(s)) == s`，生成器用 `st.from_regex(r\"\\d+[hms]\", fullmatch=True)`。运行 `pytest -q`，Hypothesis 在若干次采样后报 `Falsifying example: test_roundtrip(s='0s')`，收缩过程把 `\"10h3m2s\"` 一路裁到最短反例；反例落进 `.hypothesis/examples/`，再次运行会立刻用这条数据失败，不需要重新碰运气。Go 侧：`go test -run=^$ -fuzz=FuzzParse -fuzztime=30s`，引擎跑满 30 秒后把触发 panic 的最小输入写进 `testdata/fuzz/FuzzParse/`，之后普通 `go test` 就会复现。\n\n**面试高频问法**：\n\n1. “PBT 和普通单测的本质区别？” → 考点是输入来源与断言形式 → 答法：单测断言“给定 X 得到 Y”，PBT 断言“对所有生成的输入，性质 P 成立”，失败后自动收缩成最小反例并入库回归。\n2. “怎么判断一条 property 写得好不好？” → 考点是会不会把实现抄进断言 → 答法：优先用不变量、往返、幂等、对照实现这四类；如果性质本身复刻了被测逻辑，它就只能验证“代码没变”，验证不了“代码对”。\n3. “fuzz 和 PBT 是什么关系？” → 考点是覆盖率反馈 → 答法：PBT 是生成器 + 性质 + 收缩，输入是结构化值；fuzz 是字节变异 + 覆盖率反馈 + 崩溃检测，输入是 bytes；Go 原生 fuzz 用前者把 bytes 解码成结构，两者常配合用。\n4. “没有 oracle 的接口怎么 fuzz？” → 考点是判据设计 → 答法：退化判据是崩溃、panic、sanitizer 报错；有第二个实现时做差分测试，同一输入喂两个实现比对输出；再不行就只断言不变量（不 panic、长度守恒）。\n5. “生成器的分布为什么重要？” → 考点是假通过 → 答法：默认分布偏向小值和空集合，边界（0、负数、最大长度、Unicode）覆盖不到；要显式加权，并把已知边界用固定样例传入，否则 PBT 会给出“跑了很多次但没测到关键路径”的错觉。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "eng",
+    "project": "testing",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 9,
+    "section": "第 7 章 property-based testing 与 fuzz"
+  }
+}

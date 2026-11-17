@@ -13,7 +13,7 @@
 | `json/NL01…NL18` | `math/survey`（97 条 `know`）+ `math/bridges` | `NL01.0`…，见 §3 |
 | `cs408/json` | `kaoyan/syllabus/408.md` + `lectures/408/*` + `note/408/*` + `exam/真题` + `drill/408` + `quick/408-*` + `tiers.md` | `DS01.1` / `EX21.1` / `DL41.1` / `QK01.1` / `SY01.1` |
 | `kaoyan/json` | 同上，取 `math1.md` + `lectures/math1/*` + `note/math1/*` + `drill/math1` + `quick/math-*` | `HS02.3` / `DM01.1` / `QK05.1` |
-| `projects/json` | `projects/` 目录树 | `SO01.1` / `SO00.1` / `PX01.1` |
+| `projects/json` | `projects/` 的 `OUTLINE.md` + `NOTES.md`（逐节） | `SO01.1`（总览）/ `SO01.2…N`（NOTES 节）/ `SO01.91`（附加页）/ `PX01.1` |
 
 - **代号格式**：`<域 2 字母><章 2 位>.<单元序>`，与 `loader.ts` 的 `CODE_RE` 同源。
 - 科目代码 `NET`（3 字母）在代号里收成 `NT` —— 域固定 2 字母（`SUBJECT_DOMAIN`）。
@@ -22,7 +22,10 @@
   不重复搬考点表（考点导航由 `meta.kps` 给出）。
 - 真题 `EX<年后两位>.1`；缺图 `EX00.1`（只在 408 根，数一无真题源）。
 - 拔高 `DL41.1`…（408）/ `DM01.1`…（数一）；速学 `QK01.1`–`QK07.1`；分层 `SY01.1`。
-- 工程线：分组域 `SO/CP/LG/AL/EG/CG`，单列 `CS/DF/PA/DB/AI/DM`；分组自身 `<域>00.1/.2`。
+- 工程线：分组域 `SO/CP/LG/AL/EG/GX`，单列 `CS/DF/PA/DB/AI/DX`；分组自身 `<域>00.1`（总览）+ NOTES 逐节。
+  - `.1` = `OUTLINE.md` 总览；`.2…N` = `NOTES.md` 的 `##` 节（超长节再按 `###` 拆），`kind=project-chapter`；
+  - `.91/.92` = `OUTLINE.bi.md` / `MINI-COMPILER.md` 等附加页，`kind=project-extra`；
+  - `NOTES` 拆页按 `meta.part/parts` 可拼回源文件，`verify_docs.py` 的 `check_project_notes_lossless` 强制对账。
 - **`DM` 在 kaoyan 根与 projects 根各有一个**（数一拔高 vs 离散数学），靠**数据根隔离**成立；
   跨根合库前必须先改号。
 

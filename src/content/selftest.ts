@@ -88,7 +88,12 @@ export function selftestKey(file: EntryFile, index: number): string {
  * 两处口径必须一致，统一到「按契约出题」：导航页不出题，页面就不渲染自测区，
  * 掌握度自然走卡片均值分支 —— 不存在「答了却不作数」的题。
  */
-const NO_SELFTEST_KINDS = new Set(['project-group', 'project-index']);
+const NO_SELFTEST_KINDS = new Set([
+  'project-group',
+  'project-index',
+  'project-chapter',
+  'project-extra',
+]);
 
 export function selftestItems(file: EntryFile): SelftestItem[] {
   const kind = kindOf(file);

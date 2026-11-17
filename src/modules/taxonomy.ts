@@ -453,6 +453,12 @@ export interface ContentLine {
   group: GroupId;
   /** 所属域：必须是 DOMAINS 里的 id；一条线只属于一个域 */
   domain: string;
+  /**
+   * 所属站点（`math` / `emath` / `projects` …）。缺省 `math`。
+   * 只被 `check-content-map.mjs` 用来判断章该落在哪个数据根；
+   * 运行期侧栏只认 `lineOfChapter`，不需要这个字段。
+   */
+  site?: string;
   blurb?: string;
   /** 学习顺序；全表内每个章恰好出现一次（`check-content-map.mjs` 判据 1） */
   chapters: string[];

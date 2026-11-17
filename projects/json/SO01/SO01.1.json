@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "SO01.1",
   "chapter": "SO01",
-  "title": "linux-api · 大纲",
+  "title": "linux-api · 总览",
   "src": {
     "file": "notebook/projects/os/linux-api/OUTLINE.md",
     "sha256": "sha256:10d93fa66d19e500f14c2b204addf127f72cdc89eee1ae879c7734639b4b7c34"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO00.6",
+  "chapter": "SO00",
+  "title": "3 常见误配",
+  "src": {
+    "file": "notebook/projects/os/NOTES.md",
+    "sha256": "sha256:ea9cd76832f3f4e4729e92e9d274efafaf69b1cd7d4b55fc7a296eefc079315a"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO00.6:body.s01",
+      "type": "extension",
+      "title": "3 常见误配",
+      "level": 2,
+      "content": "| 误配 | 后果 | 正确做法 |\n|---|---|---|\n| 一上来读 xv6 源码 | 没有用户态症状做锚，读完全忘 | 先用 `linux-api` 建立症状→机制索引 |\n| 把 xv6 当「完整 OS」讲 | 被问线程/权限/TCP 就露馅 | 明确口径：教学内核，无 lazy/线程/uid/socket |\n| 把 xv6 的简化当原理 | 「页表就是三级」「驱动就是轮询 DD 位」 | 讲原理用必须/可以/不做，讲实现标选点 |\n| 背 `top` 字段不背分母 | 380% 的解释直接错 | 记住单核口径与 `nproc`/cgroup |\n| 只讲 epoll 快不讲语义 | 追问丢事件就崩 | 水平/边缘 + 非阻塞 + `EAGAIN` 一起讲 |\n| 混淆 VSS/RSS/PSS | 内存结论全错 | 三个都带口径说 |\n| 说「容器是轻量级虚拟机」 | 后面所有隔离/性能追问都会答错 | 按「边界由谁强制」讲 |"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "file": "NOTES.md",
+    "part": 5,
+    "parts": 7,
+    "section": "3 常见误配"
+  }
+}

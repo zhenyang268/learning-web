@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "DB01.3",
+  "chapter": "DB01",
+  "title": "第 2 章 存储引擎：页、行格式与堆表",
+  "src": {
+    "file": "notebook/projects/database/NOTES.md",
+    "sha256": "sha256:89261d1ae754d079af0704ed948b4470d3b3236addc3bc05dc37adff4ea419b5"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "DB01.3:body.s01",
+      "type": "extension",
+      "title": "第 2 章 存储引擎：页、行格式与堆表",
+      "level": 2,
+      "content": "**要解决的问题**：为什么数据库不是「读一行就一次磁盘 IO」，而是以**页**为单位搬运；一行数据在磁盘上到底长什么样（隐藏列是第 7 章 MVCC 的物理前提）；以及「堆表」和「索引组织表」这两种表的物理组织方式决定了后面所有索引讨论的走向。\n\n**机制**：\n\n**页是 IO 与缓存的最小单位**。InnoDB 默认 `innodb_page_size = 16KB`（可配 4K/8K/16K/32K/64K），Buffer Pool、redo、磁盘读写都以页为粒度。一次读取 16KB 即使你只要 1 行——这是 B+ 树扇出要尽量大、行要尽量窄的原因。\n\nInnoDB 页的物理布局（16KB 页）：\n\n```text\nFIL Header(38B) | Page Header(38B) | Infimum/Supremum 两条伪记录\n| User Records（按主键升序单向链表）| Free Space\n| Page Directory（稀疏槽位，槽覆盖约 4~8 条记录）| FIL Trailer(8B，含校验和)\n```\n\n页内查找先用 Page Directory 二分定位到槽，再在槽内沿链表线性找；页之间是双向链表，上一层是 B+ 树非叶节点（第 3 章展开）。\n\n**行格式**：`REDUNDANT` / `COMPACT` / `DYNAMIC` / `COMPRESSED`，MySQL 8.0 默认 `DYNAMIC`。`COMPACT` 一行的组成是：\n\n```text\n变长字段长度列表（逆序）| NULL 标志位图 | 5 字节记录头（含 n_owned、next_record 偏移）\n| 列数据 | [DB_ROW_ID 6B] | DB_TRX_ID 6B | DB_ROLL_PTR 7B\n```\n\n`DB_ROW_ID` 只在没有主键也没有非空唯一索引时生成；`DB_TRX_ID`（最后修改它的事务 ID）和 `DB_ROLL_PTR`（指向 undo 中的旧版本）是 MVCC 版本链的锚点。`DYNAMIC` 与 `COMPACT` 的关键差别在溢出列：超长变长列不在页内存前缀，而是整行放到溢出页、本页只留 20 字节指针（`COMPACT` 会存 768 字节前缀 + 20 字节指针）。\n\n**两种表的组织方式**：\n\n- **索引组织表（IOT）**：InnoDB。数据即主键的聚簇索引，叶子页存整行；二级索引叶子存「索引列 + 主键值」，所以二级索引查非覆盖列要回表。\n- **堆表**：MyISAM 等。`.MYD` 数据文件按插入顺序追加，`.MYI` 索引文件独立，索引叶子存行的物理偏移（RID）。堆表的行位置会因删除空洞和复用而变化，且没有聚簇概念。\n\n空间按「段 → 区（extent，默认 1MB = 64 个 16KB 页）→ 页」管理。\n\n**最小例子**：\n\n```sql\nSELECT @@innodb_page_size;                    -- 16384\nSELECT NAME, ROW_FORMAT FROM information_schema.INNODB_TABLES WHERE NAME = 'shop/orders';\n-- shop/orders | Dynamic\n```\n\n容量估算（算术，非实测）：每行约 200 字节时，一页可放 $\\lfloor (16384 - \\text{页头/目录开销}) / 200 \\rfloor \\approx 80$ 行；非叶节点每条目约 14 字节（主键 + 页号），一页可放约 1000 个条目。三层树即 $1000 \\times 1000 \\times 80$ 量级，这就是「B+ 树三四层就够」的来源。再看 `orders(id BIGINT PK, user_id BIGINT, status TINYINT, created DATETIME)`：二级索引 `(user_id)` 的叶子只有 `user_id + id`，查 `status` 必须回表；改成 `(user_id, status)` 就变成覆盖索引，这正是第 3 章和第 10 章的落点。\n\n**面试高频问法**：\n\n1. 「为什么数据库按页读写而不是按行？」→ 考点是 IO 粒度与局部性 → 答法：「磁盘和 Buffer Pool 的最小单位是页（InnoDB 默认 16KB），一次 IO 会覆盖相邻的多行；扇出大、层数少、缓存命中率高，代价是单行更新也要写整页并产生写放大。」\n2. 「InnoDB 和 MyISAM 的表在磁盘上有什么本质区别？」→ 考点是聚簇 vs 堆表 → 答法：「InnoDB 是索引组织表，主键索引的叶子就是整行数据，二级索引存主键；MyISAM 是堆表，数据文件按插入顺序放、索引文件独立存行偏移，所以它的索引不覆盖数据、也没有聚簇索引。」\n3. 「`DB_TRX_ID` 和 `DB_ROLL_PTR` 是干什么的？」→ 考点是行格式与 MVCC 的衔接 → 答法：「每行隐藏两个列：最后修改它的事务 ID，和指向 undo 里上一个版本的指针；两者串成版本链，快照读就是沿这条链找到可见版本。」\n4. 「`COMPACT` 和 `DYNAMIC` 行格式差在哪？」→ 考点是溢出页策略 → 答法：「主要差在超长变长列的存储，`DYNAMIC` 不在页内存前缀、整行放溢出页只留 20 字节指针，`COMPACT` 要存 768 字节前缀；所以 `DYNAMIC` 对含 `TEXT`/`BLOB` 的表页内密度更好。」\n5. 「为什么建议用自增主键而不是 UUID？」→ 考点是聚簇索引的插入位置 → 答法：「InnoDB 按主键顺序组织叶子页，自增值总在最右页追加；随机 UUID 会往中间页插，触发频繁页分裂和随机 IO，而且二级索引要存 16 字节主键，比 8 字节 `BIGINT` 更占空间。」"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "database",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 12,
+    "section": "第 2 章 存储引擎：页、行格式与堆表"
+  }
+}

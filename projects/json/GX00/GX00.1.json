@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "GX00.1",
   "chapter": "GX00",
-  "title": "cg · 分组 · 大纲",
+  "title": "cg · 分组 · 总览",
   "src": {
     "file": "notebook/projects/cg/OUTLINE.md",
     "sha256": "sha256:f659554a8a37efac407da8bc7e11bb179b65dc2d06a61e12f2f50e807491bc38"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
   "notebook_dirty": false,
   "entries": [
     {

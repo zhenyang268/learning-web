@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "SO04.7",
+  "chapter": "SO04",
+  "title": "第 5 章 JOS e1000（一）：MMIO 与描述符环",
+  "src": {
+    "file": "notebook/projects/os/drivers/NOTES.md",
+    "sha256": "sha256:97e4aa1f82aecd48001369efcf5ecd6115e15522145d220eae80babec3faff7e"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "SO04.7:body.s01",
+      "type": "extension",
+      "title": "第 5 章 JOS e1000（一）：MMIO 与描述符环",
+      "level": 2,
+      "content": "**要解决的问题**：网卡不是\"读一个寄存器拿一个字节\"的设备，它按**描述符环**批量收发。驱动要正确地和硬件共享这块环——谁写、谁读、什么时候归还。\n\n**机制**：\n\n**寄存器**通过 MMIO 访问（把 BAR 指向的物理区映射进内核虚拟地址，JOS 用 `mmio_map_region`）。常用的几组：\n\n| 组 | 寄存器 | 作用 |\n|---|---|---|\n| 控制 | `CTRL` | 复位、链路 |\n| 中断 | `IMS` / `IMC` / `ICR` | 掩码设置 / 清除 / 读状态并清 |\n| 发送 | `TDBAL/TDBAH`（环基址）、`TDLEN`（字节长）、`TDH`（头）、`TDT`（尾）、`TCTL`（使能） | 配置与推动发送环 |\n| 接收 | `RDBAL/RDBAH`、`RDLEN`、`RDH`、`RDT`、`RCTL` | 同上，方向相反 |\n\n**描述符**（16 字节，必须按 16 字节对齐）：\n\n```c\nstruct tx_desc {\n    uint64_t addr;      // 数据缓冲的物理地址\n    uint16_t length;\n    uint8_t  cso, cmd;\n    uint8_t  status;    // bit0 = DD（descriptor done）\n    uint8_t  css;\n    uint16_t special;\n} __attribute__((packed));\n\nstruct rx_desc {\n    uint64_t addr;\n    uint16_t length;\n    uint16_t csum;\n    uint8_t  status;    // bit0 = DD\n    uint8_t  errors;\n    uint16_t special;\n} __attribute__((packed));\n```\n\n**所有权规则**（这是本章唯一真正的难点）：\n\n- 发送环：**驱动写描述符 → 写 `TDT`（门铃）→ 设备取走 → 置 `DD` 并前移 `TDH`**。驱动只能在 `TDH` 追上来之后回收那块缓冲。\n- 接收环：**驱动预先填好缓冲地址 → 写 `RDT` 交给设备 → 设备填数据并置 `DD` → 驱动处理 → 归还并前移 `RDT`**。\n\n**最小例子**：初始化到能发第一个包的最短序列\n\n```c\nregs[TCTL] = 0;                                  // 先关\nregs[TDBAL] = (uint32_t)tx_ring_phys;\nregs[TDBAH] = 0;\nregs[TDLEN] = NTXDESC * 16;\nregs[TDH] = regs[TDT] = 0;\nregs[TCTL] = TCTL_EN | TCTL_PSP | TCTL_CT | TCTL_COLD;\nregs[RCTL] = RCTL_EN | RCTL_BAM | RCTL_SECRC;\nregs[IMS]  = ...;                                // 打开需要的中断\n```\n\n**面试高频问法**：\n\n1. **「为什么描述符里放的是物理地址？」** → 考点：设备视角。答法：设备通过总线访问内存，只认物理/总线地址；虚拟地址对它没有意义。\n2. **「`TDH` 和 `TDT` 分别由谁移动？」** → 考点：所有权。答法：`TDT` 由驱动写（告诉设备\"到这里都可以发\"），`TDH` 由设备写（告诉驱动\"发到这里了\"）。**谁移动，谁就拥有那一格。**\n3. **「环大小怎么选？」** → 考点：延迟与内存的权衡。答法：太小容易满环丢包/降吞吐，太大增加延迟与缓冲内存；教学实现通常几十项，真实网卡上千项并配合多队列。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "os",
+    "project": "drivers",
+    "file": "NOTES.md",
+    "part": 6,
+    "parts": 10,
+    "section": "第 5 章 JOS e1000（一）：MMIO 与描述符环"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CS01.10",
+  "chapter": "CS01",
+  "title": "6 批次划分（对应 §7 的章节）",
+  "src": {
+    "file": "notebook/projects/csapp/NOTES.md",
+    "sha256": "sha256:fc656798fb3ee41c4155506b28801842a9cce805c8792f61500942a494e4a254"
+  },
+  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CS01.10:body.s01",
+      "type": "extension",
+      "title": "6 批次划分（对应 §7 的章节）",
+      "level": 2,
+      "content": "按 Tier 1 → Tier 2 → Tier 3 顺序。**每一块的讲义已在 §7 展开**（含代码骨架与手算过程），知识点 cell 归档进对应 ipynb。\n\n| 批次 | 内容 | 归档目标 |\n|---|---|---|\n| 批次 1 | **L1 datalab**：13 题逐个给解法与位级推导 + IEEE 754 三题完整手算 | `co/02-01`…`co/02-03`（新建） |\n| 批次 2 | **L5 cachelab**：Part A 模拟器设计 + Part B 三种矩阵的分块推导（含 64×64 两步搬运） | `co/03-05-Cache.md`（新建） |\n| 批次 3 | **L7 malloclab**：隐式 → 显式 → 分离链表三级，含宏定义、四情况合并、realloc | `os/03-01`、`os/03-02`（新建） |\n| 批次 4 | **L6 shlab**：eval/fork/回收/竞争/信号转发完整骨架 + 16 个 trace 的考点分配 | `os/02-01-进程与线程.md`（已有，追加） |\n| 批次 5 | **L4 archlab A+B** + **L8 proxylab I+II**（简版） | `os/01-01`…`os/01-05`（已有）/ `net/06-01`…`net/06-04`（已有） |\n| 批次 6 | **L2 bomblab 复习清单** + **L3 attacklab 原理**（只读） | `co/04-01`…`co/04-04`（按需新建） |\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "single",
+    "project": "csapp",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 20,
+    "section": "6 批次划分（对应 §7 的章节）"
+  }
+}
