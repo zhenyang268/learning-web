@@ -5,9 +5,9 @@
   "title": "os · 分组 · 分章详解",
   "src": {
     "file": "notebook/projects/os/NOTES.md",
-    "sha256": "sha256:cab209d397851f93976703d3491a1e58a9b30ac817a96acdda51892b71d96001"
+    "sha256": "sha256:d4fcc4e9907ecf59eeb8639ad1c2116d45d43441e12c37d888054c89e70c397a"
   },
-  "notebook_commit": "3ab7903ff2a4acfea50b71c4930b18b8275c386f",
+  "notebook_commit": "fab7c610587a6c79a1d77ca4e1d5ec3006c808ca",
   "notebook_dirty": false,
   "entries": [
     {
@@ -22,7 +22,7 @@
       "type": "extension",
       "title": "0 怎么用",
       "level": 2,
-      "content": "- 选路径：读 §2（推荐顺序）。\n- 查对应：§1 的「同一件事的两侧」表。\n- 准备追问：§4 的跨项目问题。\n- 避坑：§3 的误配。"
+      "content": "- 选路径：读 §2（推荐顺序）。\n- 查对应：§1 的「同一件事的两侧」表。\n- 准备追问：§4 的跨项目问题。\n- 避坑：§3 的误配。\n- 要动手：页表 / 陷入 / COW / 文件系统 / 驱动五块的落地与断点读 `xv6/NOTES.md`；本文只做「用户态症状 ↔ 内核机制」的两侧对照，不写 lab 步骤。"
     },
     {
       "id": "SO00.2:body.s02",
