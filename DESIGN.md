@@ -145,6 +145,12 @@ learning-web/
 3. **可复现** —— `converter_version` + `pandoc_version` + `katex_version` 三者固定，产物才可复现，
    也才能在 KaTeX 升级后定位「是哪一步改了排版」。
 
+> **2026-11-17 口径**：生成者改为 `tools/write-provenance.mjs`（`npm run build` 的最后一步）。
+> 原 Python 生成线 2026-10-31 退役后该文件**没有生成者**，字段随之收敛到当前实际存在的四项：
+> `notebook_repo` / `notebook_commit` / `notebook_dirty` / `built_at`（外加 `generator`）。
+> `pandoc_version` / `katex_version` / `converter_version` 属旧 Python 线，Node 线没有对应步骤，
+> **不再写空值冒充**；`files` 固定为 `[]`（逐个文件出处已在各 `json` 的 `src.file` 里，不设第二份清单）。
+
 ---
 
 ## 4. 契约

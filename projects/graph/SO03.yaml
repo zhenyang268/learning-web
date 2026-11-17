@@ -1,4 +1,4 @@
-notebook_commit: "5439009"
+notebook_commit: "c02b35d"
 nodes:
   SO03.1:
-    prereq: [SO02.1] # 跨内核比较先要求亲手实现过一个教学内核
+    prereq: [SO02.1] # 横向对照以「先在 xv6 上改对一处」为前提；JOS 列已降为历史附注

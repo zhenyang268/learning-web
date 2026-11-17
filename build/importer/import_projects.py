@@ -20,15 +20,15 @@ from md_split import split_markdown
 
 GROUP_DOMAIN = {
     "os": "SO",
+    "raft": "DF",  # 2026-11-17 起 raft 成组（总纲 + go-lab + cpp）；旧 6824 单列归档，域沿用 DF
     "cpu": "CP",
     "langs": "LG",
     "algo": "AL",
     "eng": "EG",
     "cg": "GX",  # 与数学的 CG（图形学）区分：代号域全局唯一
 }
-SINGLES = [  # README §七 的六个单列，各自一个域
+SINGLES = [  # README §七 的单列，各自一个域
     ("csapp", "CS"),
-    ("6824", "DF"),
     ("cs149", "PA"),
     ("database", "DB"),
     ("ai", "AI"),

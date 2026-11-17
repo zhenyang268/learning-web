@@ -283,6 +283,18 @@ def main() -> int:
         write_unit(root, plain_unit(tiers, "SY01.1", "考点分层（T1/T2/T3）", {"kind": "tiers"}), commit, dirty)
         report["units"] += 1
 
+    # 408 导读（四科：职责 / 块表 / 线 / KP 映射 / 两种问法）——
+    # **只搬导读**，85 个 KP 的正文仍以各自的 kaoyan-kp 单元为准，不在这里复制成新词条。
+    guide = "kaoyan/syllabus/408-guide.md"
+    if (WEB.parent / "notebook" / guide).exists():
+        write_unit(
+            cs408,
+            plain_unit(guide, "GD01.1", "408 导读 · 四科在考什么", {"kind": "guide"}),
+            commit,
+            dirty,
+        )
+        r408["units"] += 1
+
     print(f"408  ：章 {r408['chapters']} · 考点 {r408['kp']} · 单元 {r408['units']}")
     print(f"数一 ：章 {r1['chapters']} · 考点 {r1['kp']} · 单元 {r1['units']}")
     print(f"notebook commit {commit[:12]} · dirty={dirty}")

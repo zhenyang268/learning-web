@@ -1,4 +1,4 @@
-notebook_commit: "5439009"
+notebook_commit: "c02b35d"
 nodes:
   SO06.1:
     prereq: [SO03.1, CP02.1] # 虚拟化成本同时涉及内核边界与硬件性能

@@ -236,10 +236,17 @@ export const DOMAINS: Domain[] = [
     legacyChapters: [],
   },
   {
+    id: 'GD',
+    group: 'examKit',
+    label: '408 导读',
+    blurb: '四科在考什么：职责 / 块表 / 线 / KP 映射 / 考试问法 vs 工程问法（KP 正文仍在各科条目）',
+    legacyChapters: [],
+  },
+  {
     id: 'SO',
     group: 'project',
     label: '操作系统项目',
-    blurb: 'linux-api / jos / kernel-compare / drivers / security / virtualization',
+    blurb: 'linux-api / xv6 / kernel-compare / drivers / security / virtualization',
     legacyChapters: [],
   },
   {

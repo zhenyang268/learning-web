@@ -1,0 +1,4 @@
+notebook_commit: "c02b35d"
+nodes:
+  DF02.1:
+    prereq: [SO01.1] # cpp 版：真 socket / 真 fsync / 真崩溃，仍以进程与并发基础为前提；与 go-lab 是两版并列，不是先后

@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && npm run build:prune-fonts && npm run build:standalone",
+    "build": "tsc --noEmit && vite build && npm run build:prune-fonts && npm run build:standalone && npm run build:provenance",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "build:standalone": "node tools/build-standalone.mjs",
+    "build:provenance": "node tools/write-provenance.mjs",
     "build:prune-fonts": "node tools/prune-katex-fonts.mjs",
     "check:viz": "node tools/viz-model-check.mjs",
     "import:docs": "uv run python build/importer/import_kaoyan.py && uv run python build/importer/import_projects.py && uv run python build/importer/import_math_library.py && uv run python build/importer/import_english1.py",

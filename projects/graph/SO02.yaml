@@ -1,4 +1,4 @@
-notebook_commit: "5439009"
+notebook_commit: "c02b35d"
 nodes:
   SO02.1:
-    prereq: [CS01.1, SO01.1] # JOS 同时需要机器基础与用户态系统调用经验
+    prereq: [CS01.1, SO01.1] # xv6 十二块要同时用到机器基础（页表/特权级）与用户态 API 视角

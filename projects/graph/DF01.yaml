@@ -1,4 +1,4 @@
-notebook_commit: "5439009"
+notebook_commit: "c02b35d"
 nodes:
   DF01.1:
-    prereq: [SO01.1] # Raft 实现需要进程、并发与故障状态机基础
+    prereq: [SO01.1] # go-lab：Raft 实现需要进程、并发与故障状态机基础

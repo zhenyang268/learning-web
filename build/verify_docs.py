@@ -360,7 +360,7 @@ def check_coverage() -> None:
     # 工程线
     docs = load_docs(ROOTS["projects"])
     leaves = [p for p in NB.glob("projects/*/*/OUTLINE.md")] + [
-        NB / "projects" / s / "OUTLINE.md" for s in ("csapp", "6824", "cs149", "database", "ai", "discrete-math")
+        NB / "projects" / s / "OUTLINE.md" for s in ("csapp", "cs149", "database", "ai", "discrete-math")
     ]
     leaves = [p for p in leaves if p.exists()]
     got_outline = sum(
@@ -371,7 +371,7 @@ def check_coverage() -> None:
     if got_outline != len(leaves):
         crit(f"工程线: 叶子 OUTLINE 单元 {got_outline} ≠ 源 {len(leaves)}")
     groups = len(
-        [g for g in ("os", "cpu", "langs", "algo", "eng", "cg") if (NB / "projects" / g / "NOTES.md").exists()]
+        [g for g in ("os", "raft", "cpu", "langs", "algo", "eng", "cg") if (NB / "projects" / g / "NOTES.md").exists()]
     )
     got_group = sum(
         1

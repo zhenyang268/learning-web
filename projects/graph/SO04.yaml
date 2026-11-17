@@ -1,4 +1,4 @@
-notebook_commit: "5439009"
+notebook_commit: "c02b35d"
 nodes:
   SO04.1:
-    prereq: [SO02.1] # 驱动开发使用内核内存、中断与系统调用边界
+    prereq: [SO02.1] # 驱动四步要用到内核内存、中断与系统调用边界（xv6 B9 已给出现场）

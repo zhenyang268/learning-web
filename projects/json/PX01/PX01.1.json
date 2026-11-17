@@ -5,9 +5,9 @@
   "title": "面试索引",
   "src": {
     "file": "notebook/projects/面试索引.md",
-    "sha256": "sha256:6e11dd9bef7b0c4e43e29651b7da8c47fa8b5d8033346152dfce1214d6b4ac68"
+    "sha256": "sha256:d8076f7dad2bc0db6e8ee8d0e6971b84e44dc01af9fe870cf179f744a0a00839"
   },
-  "notebook_commit": "fab7c610587a6c79a1d77ca4e1d5ec3006c808ca",
+  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
   "notebook_dirty": false,
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "introduction",
       "title": "",
       "level": 0,
-      "content": "> **用途**：面试前一晚只看这一页；要展开再进对应 `OUTLINE.md` §五。\n> **生成方式**：脚本抽取 §五 的「30 秒版本」首句与追问问法，**文字未改写**（原句照录）。\n> **不是简历替代品**：简历只摆 3–5 个项目，这一页是全库检索表。"
+      "content": "> **用途**：面试前一晚只看这一页；要展开再进对应 `OUTLINE.md` §五。\n> **生成方式**：脚本抽取 §五 的「30 秒版本」首句与追问问法，**文字未改写**（原句照录）。\n> **不是简历替代品**：简历只摆 3–5 个项目，这一页是全库检索表。\n> **2026-11-17 失效声明**：`os/jos` 与 `6824` 已归档（分别由 `os/xv6/` 与 `raft/` 接替），本页对应条目作废；生成脚本不在仓内，未重跑。新条目见 `os/xv6/OUTLINE.md`、`raft/`、`raft/go-lab/`、`raft/cpp/`。"
     },
     {
       "id": "PX01.1:body.s01",
