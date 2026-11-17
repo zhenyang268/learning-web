@@ -1,6 +1,6 @@
 # importer/ —— notebook → json 的搬运线
 
-> **一句话**：`notebook/` 是源，本目录只**读**它，写 `learning-web/` 下的四个数据根。
+> **一句话**：`notebook/` 是源，本目录只**读**它，写 `learning-web/` 下的六个数据根。
 > 跑法：`npm run import:docs`（三条线串跑，重跑幂等）；验收：`npm run verify:docs`。
 > 规则只在这里写一次，`docs/content-map.md` 讲「为什么这么分」，别处只引用。
 
@@ -11,14 +11,15 @@
 | 数据根 | 来源 | 代号 |
 |---|---|---|
 | `json/NL01…NL18` | `math/survey`（97 条 `know`）+ `math/bridges` | `NL01.0`…，见 §3 |
-| `cs408/json` | `kaoyan/syllabus/408.md` + `note/408/*` + `exam/真题` + `drill/408` + `quick/408-*` + `tiers.md` | `DS01.1` / `EX21.1` / `DL41.1` / `QK01.1` / `SY01.1` |
-| `kaoyan/json` | 同上，取 `math1.md` + `note/math1/*` + `drill/math1` + `quick/math-*` | `HS02.3` / `DM01.1` / `QK05.1` |
+| `cs408/json` | `kaoyan/syllabus/408.md` + `lectures/408/*` + `note/408/*` + `exam/真题` + `drill/408` + `quick/408-*` + `tiers.md` | `DS01.1` / `EX21.1` / `DL41.1` / `QK01.1` / `SY01.1` |
+| `kaoyan/json` | 同上，取 `math1.md` + `lectures/math1/*` + `note/math1/*` + `drill/math1` + `quick/math-*` | `HS02.3` / `DM01.1` / `QK05.1` |
 | `projects/json` | `projects/` 目录树 | `SO01.1` / `SO00.1` / `PX01.1` |
 
 - **代号格式**：`<域 2 字母><章 2 位>.<单元序>`，与 `loader.ts` 的 `CODE_RE` 同源。
 - 科目代码 `NET`（3 字母）在代号里收成 `NT` —— 域固定 2 字母（`SUBJECT_DOMAIN`）。
 - 考点：`408-DS-0402` → `DS04.2`；`M1-HS-0203` → `HS02.3`；同章同节多 KP 按考纲顺序顺延序号。
-- 章首：`.0`（`DS01.0`），承载「真题落点 / 一课位置 / 细节与陷阱」，**不重复搬考点表**。
+- 章首：`.0`（`DS01.0`），承载「真题落点 / 一课位置 / 细节与陷阱」+ **本章章讲义正文**；
+  不重复搬考点表（考点导航由 `meta.kps` 给出）。
 - 真题 `EX<年后两位>.1`；缺图 `EX00.1`（只在 408 根，数一无真题源）。
 - 拔高 `DL41.1`…（408）/ `DM01.1`…（数一）；速学 `QK01.1`–`QK07.1`；分层 `SY01.1`。
 - 工程线：分组域 `SO/CP/LG/AL/EG/CG`，单列 `CS/DF/PA/DB/AI/DM`；分组自身 `<域>00.1/.2`。
@@ -34,6 +35,13 @@
 
 `src.file` 一律 `notebook/…` 形式，并带 `src.sha256` 与 `notebook_commit` / `notebook_dirty`：
 源改了就由 `verify_docs.py` 的「源一致性」抓出来，提示重跑导入。
+
+**章首 `.0` 的合并契约（2026-11-18）**：`meta.lecture` 记录讲义源
+（`file` / `sha256` / 保留正文的 `body_sha256` / 条目数 / 丢弃的小节），
+`meta.kps` 记录本章考点的 `code/title/kp`（按现行 syllabus 生成）。
+Web 只搬讲义「二、正文」与「四、易错清单」；「一、本章考点与档位」与
+「三、真题落点」不搬（前者重复 syllabus，后者是旧版枚举、会与 note 落点漂移）。
+章页顶部仍有 syllabus 的当前真题落点，页尾的考点导航来自 `meta.kps`。
 
 ## 3. 数值库的章映射
 

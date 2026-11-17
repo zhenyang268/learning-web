@@ -295,6 +295,19 @@ async function runUnit(bundleJs, code) {
     p('镜像指针指向真题单元',
       [...mirrors].every((a) => /^EX\d{2}\.\d$/.test(a.getAttribute('data-goto') ?? '')),
       [...mirrors].slice(0, 3).map((a) => a.getAttribute('data-goto')).join(','));
+    // 章首页的「本章考点」导航（2026-11-18）：数据来自 meta.kps，必须与索引里的考点一一对应。
+    // 只对 chapter 单元生效；KP/真题/速学页没有 meta.kps，不产生这条断言。
+    const kps = Array.isArray(unit.meta?.kps) ? unit.meta.kps : [];
+    if (kps.length) {
+      const nav = reader.querySelector('.chapkps');
+      p('章首页渲染本章考点导航', !!nav, nav ? '' : '缺 .chapkps');
+      const got = [...(nav?.querySelectorAll('[data-goto]') ?? [])]
+        .map((a) => a.getAttribute('data-goto'))
+        .filter(Boolean);
+      p('考点导航与 meta.kps 一一对应',
+        got.length === kps.length && got.every((g, i) => g === kps[i].code),
+        `got=${got.join(',')} want=${kps.map((k) => k.code).join(',')}`);
+    }
     const selftest = reader.querySelector('.selftest');
     // ── 页面契约分流（不按 subject 批量跳过）
     //  `meta.kind` 是数据侧真源：`project-group` / `project-index` 是**导航页**

@@ -7,7 +7,7 @@
     "file": "notebook/kaoyan/syllabus/math1.md",
     "sha256": "sha256:993bffb11ed10b3db21f4a78652b478a79dfcdb127a96627d081c9f0380b2d87"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "118b0a21e76a2d70430ccc2249d7e571aa115604",
   "notebook_dirty": false,
   "entries": [
     {
@@ -16,6 +16,27 @@
       "title": "第 HS04 向量代数与空间解析几何：导语与真题落点",
       "level": 2,
       "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-04 向量代数与空间解析几何　｜　考点页：`note/math1/hs/`"
+    },
+    {
+      "id": "HS04.0:lec-head.s01",
+      "type": "heading",
+      "title": "章讲义",
+      "level": 2,
+      "content": ""
+    },
+    {
+      "id": "HS04.0:lec-body.s01",
+      "type": "extension",
+      "title": "二、正文",
+      "level": 2,
+      "content": "### 1. 向量运算：点积、叉积、混合积\n\n向量运算解决三类几何度量：夹角与投影、面积与法向、体积与共面。\n\n设 $\\mathbf a=(a_x,a_y,a_z)$，$\\mathbf b=(b_x,b_y,b_z)$。\n\n点积定义为\n$$\n\\mathbf a\\cdot\\mathbf b=a_xb_x+a_yb_y+a_zb_z.\n$$\n它给出\n$$\n\\mathbf a\\cdot\\mathbf b=|\\mathbf a||\\mathbf b|\\cos\\theta,\n$$\n因此夹角满足\n$$\n\\cos\\theta=\\frac{\\mathbf a\\cdot\\mathbf b}{|\\mathbf a||\\mathbf b|}.\n$$\n$\\mathbf b$ 在 $\\mathbf a$ 上的投影为 $\\dfrac{\\mathbf a\\cdot\\mathbf b}{|\\mathbf a|}$。点积为零等价于垂直。\n\n叉积为\n$$\n\\mathbf a\\times\\mathbf b=\n\\begin{vmatrix}\n\\mathbf i&\\mathbf j&\\mathbf k\\\\\na_x&a_y&a_z\\\\\nb_x&b_y&b_z\n\\end{vmatrix}.\n$$\n其模\n$$\n|\\mathbf a\\times\\mathbf b|=|\\mathbf a||\\mathbf b|\\sin\\theta\n$$\n等于以 $\\mathbf a,\\mathbf b$ 为邻边的平行四边形面积；方向同时垂直于 $\\mathbf a,\\mathbf b$。于是 $\\mathbf a\\times\\mathbf b=\\mathbf 0$ 等价于 $\\mathbf a,\\mathbf b$ 共线。\n\n混合积为\n$$\n[\\mathbf a,\\mathbf b,\\mathbf c]=\\mathbf a\\cdot(\\mathbf b\\times\\mathbf c)\n=\n\\begin{vmatrix}\na_x&a_y&a_z\\\\\nb_x&b_y&b_z\\\\\nc_x&c_y&c_z\n\\end{vmatrix}.\n$$\n其绝对值等于三向量张成的平行六面体体积；三向量共面当且仅当 $[\\mathbf a,\\mathbf b,\\mathbf c]=0$。\n\n**例 1** 设 $\\mathbf a=(1,2,-1)$，$\\mathbf b=(2,-1,3)$，$\\mathbf c=(1,1,1)$。求 $\\mathbf a\\times\\mathbf b$、以 $\\mathbf a,\\mathbf b$ 为邻边的三角形面积、$[\\mathbf a,\\mathbf b,\\mathbf c]$。\n\n先算\n$$\n\\mathbf a\\times\\mathbf b\n=(2\\cdot3-(-1)(-1),\\ (-1)2-1\\cdot3,\\ 1(-1)-2\\cdot2)\n=(5,-5,-5).\n$$\n故\n$$\nS_{\\triangle}=\\frac12|\\mathbf a\\times\\mathbf b|\n=\\frac12\\sqrt{25+25+25}\n=\\frac{5\\sqrt3}{2}.\n$$\n再算\n$$\n[\\mathbf a,\\mathbf b,\\mathbf c]\n=\n\\begin{vmatrix}\n1&2&-1\\\\\n2&-1&3\\\\\n1&1&1\n\\end{vmatrix}\n=1(-1-3)-2(2-3)+(-1)(2+1)\n=-4+2-3=-5.\n$$\n体积为 $5$，对应四面体体积为 $\\dfrac56$。\n\n### 2. 平面与直线\n\n平面由一点和法向量确定。设平面过 $P_0(x_0,y_0,z_0)$，法向量 $\\mathbf n=(A,B,C)$，则\n$$\n\\mathbf n\\cdot(\\mathbf r-\\mathbf r_0)=0,\n$$\n即点法式\n$$\nA(x-x_0)+B(y-y_0)+C(z-z_0)=0.\n$$\n展开得一般式\n$$\nAx+By+Cz+D=0,\n$$\n法向量直接读作 $(A,B,C)$。\n\n直线由一点和方向向量确定。若过 $P_0(x_0,y_0,z_0)$，方向向量 $\\mathbf s=(l,m,n)$，则\n$$\n\\frac{x-x_0}{l}=\\frac{y-y_0}{m}=\\frac{z-z_0}{n}.\n$$\n若直线由两平面交成，则方向向量为\n$$\n\\mathbf s=\\mathbf n_1\\times\\mathbf n_2.\n$$\n\n两平面夹角 $\\theta$ 用两法向量：\n$$\n\\cos\\theta=\\frac{|\\mathbf n_1\\cdot\\mathbf n_2|}{|\\mathbf n_1||\\mathbf n_2|}.\n$$\n直线与平面夹角 $\\varphi$ 用方向向量与法向量：\n$$\n\\sin\\varphi=\\frac{|\\mathbf s\\cdot\\mathbf n|}{|\\mathbf s||\\mathbf n|}.\n$$\n点到平面距离：\n$$\nd=\\frac{|Ax_0+By_0+Cz_0+D|}{\\sqrt{A^2+B^2+C^2}}.\n$$\n过两相交平面 $F_1=0$、$F_2=0$ 交线的平面束可设为\n$$\nF_1+\\lambda F_2=0,\n$$\n但此形式漏掉 $F_2=0$，需要时用 $\\mu F_1+\\nu F_2=0$ 并单独检验。\n\n**例 2** 两平面\n$$\n\\pi_1:x+y-z=1,\\qquad \\pi_2:2x-y+z=2.\n$$\n求交线方向；再求该交线与平面 $\\pi_3:x+2y+2z=5$ 的夹角，以及点 $Q(2,1,3)$ 到 $\\pi_3$ 的距离。\n\n法向量\n$$\n\\mathbf n_1=(1,1,-1),\\qquad \\mathbf n_2=(2,-1,1).\n$$\n方向向量\n$$\n\\mathbf s=\\mathbf n_1\\times\\mathbf n_2\n=(0,-3,-3),\n$$\n可取 $\\mathbf s=(0,1,1)$。取交点：由 $x+y-z=1$，$2x-y+z=2$，得 $x=1,\\ z=y$，取 $(1,0,0)$。交线为\n$$\n\\begin{cases}\nx=1,\\\\\ny=z.\n\\end{cases}\n$$\n$\\pi_3$ 的法向量 $\\mathbf n=(1,2,2)$。于是\n$$\n\\sin\\varphi\n=\\frac{|\\mathbf s\\cdot\\mathbf n|}{|\\mathbf s||\\mathbf n|}\n=\\frac{|0+2+2|}{\\sqrt2\\cdot3}\n=\\frac{2\\sqrt2}{3}.\n$$\n所以 $\\varphi=\\arcsin\\dfrac{2\\sqrt2}{3}$。\n\n点 $Q$ 到 $\\pi_3$ 的距离：\n$$\nd=\\frac{|2+2\\cdot1+2\\cdot3-5|}{\\sqrt{1+4+4}}\n=\\frac{5}{3}.\n$$\n\n**例 3** 用平面束求过交线 $\\pi_1,\\pi_2$ 及点 $Q(1,1,0)$ 的平面。\n\n令\n$$\nF_1=x+y-z-1,\\qquad F_2=2x-y+z-2.\n$$\n设 $F_1+\\lambda F_2=0$。代入 $Q$：\n$$\nF_1(Q)=1,\\qquad F_2(Q)=-1,\n$$\n故 $1-\\lambda=0$，$\\lambda=1$。所求为\n$$\n(x+y-z-1)+(2x-y+z-2)=0\n\\Longrightarrow 3x-3=0\n\\Longrightarrow x=1.\n$$\n\n### 3. 曲面与曲线\n\n旋转曲面：曲线绕某轴旋转，轴对应变量不变，另两个变量用“到轴距离”的平方和替代。例如 $yOz$ 平面内曲线 $f(y,z)=0$ 绕 $z$ 轴旋转，令 $\\rho=\\sqrt{x^2+y^2}$，由 $f(\\rho,z)=0$ 或 $f(-\\rho,z)=0$ 合并得到旋转曲面；若原方程只含 $y^2$，直接把 $y^2$ 换成 $x^2+y^2$。\n\n**例 4** $yOz$ 平面内 $y^2=2z$ 绕 $z$ 轴旋转，得\n$$\nx^2+y^2=2z,\n$$\n是旋转抛物面。\n\n柱面：方程缺一个变量时，通常是柱面。例如 $F(x,y)=0$ 在空间中表示母线平行于 $z$ 轴的柱面。\n\n锥面：常见标准形为\n$$\nz^2=a^2(x^2+y^2),\n$$\n其截痕为圆或椭圆，顶点在原点。\n\n二次曲面识别先化标准型，再看平方项符号与次数：\n$$\n\\frac{x^2}{a^2}+\\frac{y^2}{b^2}+\\frac{z^2}{c^2}=1\n$$\n为椭球面；\n$$\n\\frac{x^2}{a^2}+\\frac{y^2}{b^2}-\\frac{z^2}{c^2}=1\n$$\n为单叶双曲面；\n$$\n-\\frac{x^2}{a^2}-\\frac{y^2}{b^2}+\\frac{z^2}{c^2}=1\n$$\n为双叶双曲面；\n$$\nz=\\frac{x^2}{a^2}+\\frac{y^2}{b^2}\n$$\n为椭圆抛物面。\n\n空间曲线在坐标面的投影：从曲线方程中消去目标坐标面以外的变量，得投影柱面，再与该坐标面方程联立。例如曲线\n$$\n\\Gamma:\\ z=x^2+y^2,\\qquad z=2x.\n$$\n消去 $z$：\n$$\nx^2+y^2=2x\n\\Longrightarrow (x-1)^2+y^2=1.\n$$\n故在 $xOy$ 面上的投影曲线为\n$$\n\\begin{cases}\n(x-1)^2+y^2=1,\\\\\nz=0.\n\\end{cases}\n$$\n**例 5** 识别 $4x^2+y^2-4z^2=4$。化为\n$$\nx^2+\\frac{y^2}{4}-z^2=1,\n$$\n即\n$$\n\\frac{x^2}{1^2}+\\frac{y^2}{2^2}-\\frac{z^2}{1^2}=1,\n$$\n是单叶双曲面，轴为 $z$ 轴。"
+    },
+    {
+      "id": "HS04.0:lec-body.s02",
+      "type": "extension",
+      "title": "四、易错清单",
+      "level": 2,
+      "content": "1. 把叉积按点积逐项相乘 → 面积、法向量、共线判据要用 $\\mathbf a\\times\\mathbf b$，按行列式展开并保留方向。\n2. 混合积行列式行向量、列向量混排导致符号错 → 固定写成 $\\det(\\mathbf a,\\mathbf b,\\mathbf c)$，体积只取绝对值。\n3. 求线面角时直接套 $\\cos$ → 直线方向向量与平面法向量夹角的余弦绝对值对应线面角的**正弦**。\n4. 点到平面距离漏掉常数项 $D$ → 必须用 $\\dfrac{|Ax_0+By_0+Cz_0+D|}{\\sqrt{A^2+B^2+C^2}}$。\n5. 旋转曲面把旋转轴对应变量也替换 → 绕 $z$ 轴时只把 $y^2$ 换成 $x^2+y^2$，$z$ 保留。\n6. 投影曲线只写消元后的平面方程 → 消去 $z$ 后还要补上 $z=0$，明确是在 $xOy$ 面上的投影。\n7. 二次曲面只看一个截痕就下结论 → 先化标准型，再按平方项个数、符号和次数综合判断。\n8. 平面束只设 $F_1+\\lambda F_2=0$ → 该形式漏掉 $F_2=0$，需用 $\\mu F_1+\\nu F_2=0$ 或最后单独检验 $F_2=0$。"
     },
     {
       "id": "HS04.0:keng.s01",
@@ -27,6 +48,33 @@
   ],
   "meta": {
     "kind": "chapter",
-    "chapter_title": "向量代数与空间解析几何"
+    "chapter_title": "向量代数与空间解析几何",
+    "kps": [
+      {
+        "code": "HS04.1",
+        "title": "向量运算",
+        "kp": "M1-HS-0401"
+      },
+      {
+        "code": "HS04.2",
+        "title": "平面与直线",
+        "kp": "M1-HS-0402"
+      },
+      {
+        "code": "HS04.3",
+        "title": "曲面与曲线",
+        "kp": "M1-HS-0403"
+      }
+    ],
+    "lecture": {
+      "file": "notebook/kaoyan/lectures/math1/hs/04-向量代数与空间解析几何.md",
+      "sha256": "sha256:52a8cce5bfec9d35b3cd499a9c17746c23f80bd5620d8282fdc2c52406ce741f",
+      "body_sha256": "sha256:e670459475402210e43aaf65e495e9fd2de7c744712af019d745ea933e9441ae",
+      "entries": 2,
+      "dropped": [
+        "一、本章考点与档位",
+        "三、真题落点"
+      ]
+    }
   }
 }

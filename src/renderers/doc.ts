@@ -36,59 +36,35 @@ export interface DocRouteState {
 }
 
 /**
- * 目录阈值：标题数 ≥ `TOC_MIN_ITEMS`，或页内正文合计 ≥ `TOC_MIN_CHARS` 才出目录。
+ * 章首 `.0` 的「本章考点」导航（2026-11-18）。
  *
- * 依据是真数据的两端：
- *   · QK06.1（数一快速学完）—— 5 个「第 X 部分」，含 8854 + 7553 字的整段讲义，
- *     没有目录就只能一路滚，**必须有目录**；
- *   · CS01.1 / 小页 —— 6 个小节、每节几百字，一屏能扫完，加目录只是噪音。
- * 两条件取「或」：长正文的分节页即便标题少也该给跳转；标题多的列表页同理。
+ * 数据来自导入器写入的 `meta.kps`（按现行 syllabus 生成），**不解析正文**：
+ * 章首页现在已经合并了章讲义，读者看完讲义就在同一页看到考点入口，
+ * 不必回侧栏逐个找。导航用 `data-goto` 走现有路由，不新增 hash。
  */
-const TOC_MIN_ITEMS = 4;
-const TOC_MIN_CHARS = 6000;
-
-/** 标题文本 → 锚点：保留中英文数字，其余压成 '-'，并按出现次数去重（`dup-2`） */
-function slugify(title: string, used: Map<string, number>): string {
-  const base =
-    title
-      .toLowerCase()
-      .replace(/[^\p{L}\p{N}]+/gu, '-')
-      .replace(/^-+|-+$/g, '')
-      .slice(0, 48) || 'sec';
-  const n = (used.get(base) ?? 0) + 1;
-  used.set(base, n);
-  return n === 1 ? base : `${base}-${n}`;
-}
-
-/**
- * 本页目录（2026-11）。
- *
- * 为什么必须先算完再用：锚点要给 `<h2 id>` 和 `<a href="#...">` **同一份**值，
- * 所以这里先扫一遍 entries 建 `id` 表，渲染小节时按 `data-entry` 反查。
- * 去重靠 `slugify` 的 `used` 计数 —— 同名标题（如两处「练习」）不会撞锚点。
- * 纯客户端 hash 跳转，不新增路由，也不依赖外部锚点表。
- */
-function tocBlock(file: EntryFile, anchorOf: Map<string, string>): string {
-  const items =
-    anchorOf.size >= TOC_MIN_ITEMS ||
-    file.entries.reduce((s, e) => s + (e.content?.length ?? 0), 0) >= TOC_MIN_CHARS;
-  if (!items) return '';
-  const rows = file.entries
-    .filter((e) => anchorOf.has(e.id))
-    .map((e) => {
-      const level = typeof e.level === 'number' ? e.level : 2;
-      const anchor = anchorOf.get(e.id) ?? '';
-      return `<li class="toc-l${level}"><a href="#${escapeHtml(anchor)}" data-toc="${escapeHtml(
-        anchor,
-      )}">${renderInline((e.title ?? e.id).trim())}</a></li>`;
+function chapterKpsNav(file: EntryFile, route?: DocRouteState): string {
+  const m = ((file as unknown as { meta?: Record<string, unknown> }).meta ?? {}) as Record<string, unknown>;
+  const kps = Array.isArray(m.kps) ? m.kps : [];
+  const rows = kps
+    .map((raw) => {
+      if (!raw || typeof raw !== 'object') return '';
+      const k = raw as Record<string, unknown>;
+      const code = String(k.code ?? '');
+      const title = String(k.title ?? '');
+      if (!code) return '';
+      const level = route?.masteryOf(code) ?? 0;
+      return `<li><button class="chip kp" data-goto="${escapeHtml(code)}"><span class="kpcode mono">${escapeHtml(
+        displayCode(code),
+      )}</span><span class="kpttl">${escapeHtml(title)}</span><span class="kplv">L${level}</span></button></li>`;
     })
+    .filter(Boolean)
     .join('');
   if (!rows) return '';
-  // details 默认折叠：短页不该被目录占掉首屏；移动端 summary 一行自洽，展开也不溢出
-  return `<details class="dtoc">
-    <summary>本页目录 · ${file.entries.filter((e) => anchorOf.has(e.id)).length} 节</summary>
-    <ol>${rows}</ol>
-  </details>`;
+  return `<nav class="chapkps" aria-label="本章考点">
+  <h2>本章考点 · ${kps.length}</h2>
+  <p class="stnote">点任一考点进入该考点的考法、思路、坑与真题；本页上方是本章讲义。</p>
+  <ul>${rows}</ul>
+  </nav>`;
 }
 
 export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
@@ -96,21 +72,9 @@ export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
   const meta = docMeta(file);
   const parts: string[] = [];
 
-  // 先给每个**有标题**的小节定锚点；无标题（level=0 引言）不进目录，也没有锚点
-  const anchorOf = new Map<string, string>();
-  const used = new Map<string, number>();
-  for (const e of file.entries) {
-    const title = (e.title ?? '').trim();
-    const level = typeof e.level === 'number' ? e.level : 2;
-    if (level === 0 || !title) continue;
-    anchorOf.set(e.id, slugify(title, used));
-  }
-  const toc = tocBlock(file, anchorOf);
-
   parts.push(`<div class="card pagehead">
     <h1>${escapeHtml(displayCode(code))} <em>${renderInline(file.title ?? '')}</em></h1>
     <div class="meta">${meta.map((m) => `<span class="tag">${escapeHtml(m)}</span>`).join('')}</div>
-    ${toc}
   </div>`);
 
   const routes = projectRoutesSection(file, route);
@@ -121,12 +85,9 @@ export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
     const title = (e.title ?? '').trim();
     const body = (e.content ?? '').trim();
     const mirror = mirrorLink(e);
-    const anchor = anchorOf.get(e.id);
-    // 目录锚点挂在小节标题上（没有标题的引言段落不进目录，也不生成 id）
-    const idAttr = anchor ? ` id="${escapeHtml(anchor)}"` : '';
     const head = level === 0 || !title
       ? ''
-      : `<h${Math.min(level + 1, 6)} class="dochead"${idAttr}>${renderInline(title)}${mirror}</h${Math.min(level + 1, 6)}>`;
+      : `<h${Math.min(level + 1, 6)} class="dochead">${renderInline(title)}${mirror}</h${Math.min(level + 1, 6)}>`;
     const content = body ? `<div class="docbody">${renderContent(body)}</div>` : '';
     const cls = ['docsec', `docsec-l${level}`, e.type === 'heading' ? 'docsec-heading' : '']
       .filter(Boolean)
@@ -135,6 +96,8 @@ export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
     // 在 HTML 里 `\"` 不转义引号，数据里的 `"` 仍会提前收尾属性）。
     parts.push(`<section class="${cls}" data-entry="${escapeHtml(e.id)}">${head}${content}</section>`);
   }
+  const kps = chapterKpsNav(file, route);
+  if (kps) parts.push(kps);
   const selftest = selftestSection(file);
   if (selftest) parts.push(selftest);
   return parts.join('\n');
@@ -519,6 +482,8 @@ function docMeta(file: EntryFile): string[] {
   if (typeof m.examCount === 'number' && m.examCount > 0) out.push(`真题 ${m.examCount} 题`);
   if (typeof m.surveyId === 'string') out.push(String(m.surveyId));
   if (typeof m.status === 'string' && m.status) out.push(String(m.status));
+  if (m.lecture && typeof m.lecture === 'object') out.push('章讲义');
+  if (Array.isArray(m.kps) && m.kps.length) out.push(`${m.kps.length} 考点`);
   out.push(`${file.entries.length} 节`);
   return out;
 }

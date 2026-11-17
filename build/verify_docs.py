@@ -29,7 +29,7 @@ NB = WEB.parent / "notebook"
 IMPORTER = WEB / "build" / "importer"
 sys.path.insert(0, str(IMPORTER))
 
-from common import norm, reconstruct, split_exam_chunks  # noqa: E402
+from common import norm, reconstruct, sha256_text, split_exam_chunks  # noqa: E402
 from md_split import split_markdown  # noqa: E402
 
 CODE_RE = re.compile(r"^[A-Z]{2}\d{2}(\.\d+)?$")
@@ -108,10 +108,42 @@ def check_source(p: Path, d: dict) -> None:
     src = NB / d["src"]["file"][len("notebook/") :]
     if not src.exists():
         crit(f"{rel}: 源文件不存在 {src}")
+    else:
+        digest = "sha256:" + hashlib.sha256(src.read_text(encoding="utf-8").encode("utf-8")).hexdigest()
+        if digest != d["src"].get("sha256"):
+            crit(f"{rel}: 源已改动（sha256 不符），重跑导入")
+
+    # 章首单元还带一篇章讲义（2026-11-18）：`src` 仍是 syllabus，
+    # 讲义源单独记在 `meta.lecture`，必须一并校验，否则讲义改了也不会报。
+    lec = (d.get("meta") or {}).get("lecture")
+    if not isinstance(lec, dict):
         return
-    digest = "sha256:" + hashlib.sha256(src.read_text(encoding="utf-8").encode("utf-8")).hexdigest()
-    if digest != d["src"].get("sha256"):
-        crit(f"{rel}: 源已改动（sha256 不符），重跑导入")
+    lf = lec.get("file")
+    if not isinstance(lf, str) or not lf.startswith("notebook/"):
+        crit(f"{rel}: meta.lecture.file 必须是 notebook/… 形式")
+        return
+    lp = NB / lf[len("notebook/") :]
+    if not lp.exists():
+        crit(f"{rel}: 讲义源不存在 {lp}")
+        return
+    text = lp.read_text(encoding="utf-8")
+    if sha256_text(text) != lec.get("sha256"):
+        crit(f"{rel}: 讲义源已改动（sha256 不符），重跑导入")
+    body_sha = lec.get("body_sha256")
+    if isinstance(body_sha, str) and body_sha:
+        from import_kaoyan import DROPPED_LECTURE_SECTIONS  # noqa: E402
+
+        _h1, chunks = split_markdown(text)
+        kept = [
+            c
+            for c in chunks
+            if not (c[0] == 2 and any(c[1].strip().startswith(s) for s in DROPPED_LECTURE_SECTIONS))
+        ]
+        body = reconstruct(
+            None, [{"level": lv, "title": t, "content": c} for lv, t, c in kept]
+        )
+        if sha256_text(body) != body_sha:
+            crit(f"{rel}: 讲义正文指纹不符（保留小节被改动或裁剪规则漂移）")
 
 
 def check_lossless(p: Path, d: dict) -> None:
@@ -313,7 +345,7 @@ def check_english1_coverage() -> None:
 
 def check_coverage() -> None:
     sys.path.insert(0, str(IMPORTER))
-    from import_kaoyan import parse_syllabus  # noqa: E402
+    from import_kaoyan import assign_kp_codes, find_lecture, parse_syllabus  # noqa: E402
 
     for name, rel, book in (
         ("cs408", "kaoyan/syllabus/408.md", "408"),
@@ -321,12 +353,52 @@ def check_coverage() -> None:
     ):
         docs = load_docs(ROOTS[name])
         chapters, rows = parse_syllabus(rel)
+        rows = assign_kp_codes(rows)
         got_kp = count_kind(docs, "kaoyan-kp")
         got_ch = count_kind(docs, "chapter")
         if got_kp != len(rows):
             crit(f"{name}: 考点单元 {got_kp} ≠ 考纲行 {len(rows)}")
         if got_ch != len(chapters):
             crit(f"{name}: 章首单元 {got_ch} ≠ 考纲章 {len(chapters)}")
+
+        # 章讲义：一章一篇，既不许缺也不许多（2026-11-18 从 _archive 迁回主线）
+        want_lec = {find_lecture(book, ch["code"]) for ch in chapters}
+        got_lec: set[str] = set()
+        for _, d in docs:
+            if (d.get("meta") or {}).get("kind") != "chapter":
+                continue
+            lec = (d.get("meta") or {}).get("lecture")
+            if not isinstance(lec, dict):
+                continue
+            f = lec.get("file")
+            if isinstance(f, str) and f.startswith("notebook/"):
+                got_lec.add(f[len("notebook/") :])
+        if want_lec - got_lec:
+            crit(f"{name}: 缺章讲义 {sorted(want_lec - got_lec)[:5]}")
+        if got_lec - want_lec:
+            crit(f"{name}: 多出章讲义 {sorted(got_lec - want_lec)[:5]}")
+        dir_name = "408" if book == "408" else "math1"
+        lec_base = NB / "kaoyan/lectures" / dir_name
+        disk = {
+            f"kaoyan/lectures/{dir_name}/{p.relative_to(lec_base)}"
+            for p in lec_base.rglob("[0-9][0-9]-*.md")
+        }
+        if disk - want_lec:
+            crit(f"{name}: 磁盘上有未入库的章讲义 {sorted(disk - want_lec)[:5]}")
+
+        # 章首的考点导航必须是当前考纲代号/标题，不许留旧序号
+        want_kps: dict[str, list[dict]] = {}
+        for row in rows:
+            want_kps.setdefault(row["chapter"], []).append(
+                {"code": row["code"], "title": row["section"], "kp": row["kp"]}
+            )
+        for _, d in docs:
+            if (d.get("meta") or {}).get("kind") != "chapter":
+                continue
+            chap = d.get("chapter", "")
+            got = (d.get("meta") or {}).get("kps")
+            if got != want_kps.get(chap, []):
+                crit(f"{name}/{chap}.0: meta.kps 与现行考纲不一致（重跑导入）")
         # note 文件一一对应
         want_files = {(NB / "kaoyan" / r["file"]).resolve() for r in rows}
         got_files = {

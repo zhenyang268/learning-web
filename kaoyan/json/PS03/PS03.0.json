@@ -7,7 +7,7 @@
     "file": "notebook/kaoyan/syllabus/math1.md",
     "sha256": "sha256:993bffb11ed10b3db21f4a78652b478a79dfcdb127a96627d081c9f0380b2d87"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "118b0a21e76a2d70430ccc2249d7e571aa115604",
   "notebook_dirty": false,
   "entries": [
     {
@@ -16,6 +16,27 @@
       "title": "第 PS03 多维随机变量及其分布：导语与真题落点",
       "level": 2,
       "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-ps.md` §PS-03 多维随机变量及其分布　｜　考点页：`note/math1/ps/`"
+    },
+    {
+      "id": "PS03.0:lec-head.s01",
+      "type": "heading",
+      "title": "章讲义",
+      "level": 2,
+      "content": ""
+    },
+    {
+      "id": "PS03.0:lec-body.s01",
+      "type": "extension",
+      "title": "二、正文",
+      "level": 2,
+      "content": "### 2.1 联合分布、边缘分布与均匀分布\n\n二维随机变量要同时描述两个变量，只给 $X$ 的分布、$Y$ 的分布不够，因为还要知道它们如何“联动”。联合分布函数定义为\n$$F(x,y)=P(X\\le x,\\ Y\\le y),$$\n连续型情形存在联合密度 $f(x,y)$，满足\n$$F(x,y)=\\int_{-\\infty}^{x}\\int_{-\\infty}^{y}f(u,v)\\,dv\\,du,$$\n且 $f\\ge 0$、$\\iint_{\\mathbb R^2} f=1$。\n\n边缘分布是“把另一个变量丢掉”后的分布。先看\n$$F_X(x)=P(X\\le x)=P(X\\le x,\\ Y<+\\infty)=\\lim_{y\\to+\\infty}F(x,y).$$\n若已知联合密度，\n$$F_X(x)=\\int_{-\\infty}^{x}\\left(\\int_{-\\infty}^{+\\infty}f(u,y)\\,dy\\right)du,$$\n对 $x$ 求导得\n$$f_X(x)=\\int_{-\\infty}^{+\\infty}f(x,y)\\,dy.$$\n离散型完全对应：$p_i=P(X=x_i)=\\sum_j p_{ij}$。这一步的本质是“对另一变量求和/积分消去它”。\n\n若 $(X,Y)$ 在区域 $D$ 上服从均匀分布，则\n$$f(x,y)=\\begin{cases}\\dfrac{1}{S_D},&(x,y)\\in D,\\\\0,&\\text{其他},\\end{cases}$$\n其中 $S_D$ 是 $D$ 的面积。几何含义是：落在 $D$ 内面积相同的子区域概率相同。\n\n**例 2.1** 设 $(X,Y)$ 在三角形 $D=\\{0<x<y<1\\}$ 上均匀分布。求联合密度与两个边缘密度。\n\n$D$ 的面积为 $1/2$，故\n$$f(x,y)=2,\\quad 0<x<y<1.$$\n于是\n$$f_X(x)=\\int_x^1 2\\,dy=2(1-x),\\quad 0<x<1;$$\n$$f_Y(y)=\\int_0^y 2\\,dx=2y,\\quad 0<y<1.$$\n检验：$\\int_0^1 2(1-x)dx=1$，$\\int_0^1 2y\\,dy=1$。\n\n### 2.2 条件分布与独立性\n\n条件密度回答“已知 $Y=y$ 后，$X$ 的分布是什么”。设 $f_Y(y)>0$，定义\n$$f_{X|Y}(x|y)=\\frac{f(x,y)}{f_Y(y)}.$$\n为什么是这个式子？考虑条件事件 $y<Y\\le y+h$：\n$$P(X\\le x\\mid y<Y\\le y+h)\n=\\frac{\\int_{-\\infty}^{x}\\int_y^{y+h}f(u,v)\\,dv\\,du}{\\int_y^{y+h}f_Y(v)\\,dv}.$$\n当 $h\\to0$ 时，分母约为 $f_Y(y)h$，分子约为 $\\left(\\int_{-\\infty}^{x}f(u,y)du\\right)h$，故条件分布函数为\n$$F_{X|Y}(x|y)=\\frac{\\int_{-\\infty}^{x}f(u,y)du}{f_Y(y)}.$$\n对 $x$ 求导即得条件密度公式。\n\n独立性是“知道一个不改变另一个的分布”。连续型情形，$X,Y$ 独立当且仅当\n$$f(x,y)=f_X(x)f_Y(y)$$\n几乎处处成立。更一般地，$F(x,y)=F_X(x)F_Y(y)$。离散型对应 $p_{ij}=p_i p_j$。\n\n关键陷阱：**定义域必须可分离**。若联合密度的支撑集不是乘积形区域，例如 $0<x<y<1$，则不可能独立；即使函数表达式形式上能拆，也要先检查支撑。\n\n**例 2.2** 承例 2.1，求 $f_{X|Y}(x|y)$，并判断独立性。\n\n由 $f_Y(y)=2y$，当 $0<y<1$ 时\n$$f_{X|Y}(x|y)=\\frac{2}{2y}=\\frac1y,\\quad 0<x<y.$$\n即给定 $Y=y$ 后，$X$ 在 $(0,y)$ 上均匀分布。又\n$$f_X(x)f_Y(y)=2(1-x)\\cdot 2y=4y(1-x),$$\n它在 $0<x<y<1$ 上不等于 $2$，故 $X,Y$ 不独立。\n\n还要区分“不相关”与“独立”：不相关只表示 $\\operatorname{Cov}(X,Y)=0$，即没有线性相关；独立要求联合分布等于边缘分布乘积。独立且二阶矩存在时不相关；反之一般不成立。联合正态是重要例外：若 $(X,Y)$ 服从二维正态分布，则不相关与独立等价。\n\n### 2.3 二维函数的分布\n\n**（1）$Z=X+Y$ 的卷积公式。** 先求分布函数：\n$$F_Z(z)=P(X+Y\\le z)=\\iint_{x+y\\le z}f(x,y)\\,dx\\,dy.$$\n作变换 $u=x,\\ z=x+y$，则 $y=z-u$，雅可比绝对值为 $1$，故\n$$f_{X,Z}(u,z)=f(u,z-u),$$\n对 $u$ 积分：\n$$f_Z(z)=\\int_{-\\infty}^{+\\infty}f(u,z-u)\\,du.$$\n若 $X,Y$ 独立，\n$$f_Z(z)=\\int_{-\\infty}^{+\\infty}f_X(u)f_Y(z-u)\\,du,$$\n这就是卷积公式。实际计算时，积分限由 $f_X(u)>0$ 与 $f_Y(z-u)>0$ 共同确定。\n\n**例 2.3** 设 $X,Y$ 独立同分布 $U(0,1)$，求 $Z=X+Y$ 的密度。\n\n$$f_Z(z)=\\int_{-\\infty}^{+\\infty}1_{\\{0<u<1\\}}1_{\\{0<z-u<1\\}}du.$$\n条件为 $0<u<1$ 且 $z-1<u<z$。当 $0<z<1$ 时，$u\\in(0,z)$，\n$$f_Z(z)=\\int_0^z du=z.$$\n当 $1\\le z<2$ 时，$u\\in(z-1,1)$，\n$$f_Z(z)=\\int_{z-1}^1 du=2-z.$$\n其他 $z$ 处为 $0$。所以\n$$f_Z(z)=\\begin{cases}z,&0<z<1,\\\\2-z,&1\\le z<2,\\\\0,&\\text{其他}.\\end{cases}$$\n\n**（2）$Z=\\max(X,Y)$ 与 $Z=\\min(X,Y)$。** 设 $X,Y$ 独立，分布函数分别为 $F_X,F_Y$。最大值不超过 $z$ 等价于两者都不超过 $z$：\n$$F_{\\max}(z)=P(X\\le z,Y\\le z)=F_X(z)F_Y(z).$$\n最小值大于 $z$ 等价于两者都大于 $z$：\n$$P(\\min(X,Y)>z)=P(X>z,Y>z)=[1-F_X(z)][1-F_Y(z)],$$\n故\n$$F_{\\min}(z)=1-[1-F_X(z)][1-F_Y(z)].$$\n连续型时再求导。若 $X,Y$ 同分布 $F$，则\n$$F_{\\max}=F^2,\\qquad F_{\\min}=1-(1-F)^2.$$\n\n**例 2.4** 设 $X,Y$ 独立同分布 $U(0,1)$。求 $Z=\\max(X,Y)$ 与 $W=\\min(X,Y)$ 的密度。\n\n$$F_Z(z)=z^2,\\quad 0<z<1,\\qquad f_Z(z)=2z.$$\n$$F_W(w)=1-(1-w)^2=2w-w^2,\\quad 0<w<1,$$\n$$f_W(w)=2(1-w).$$\n\n**（3）商的分布。** 设 $Z=Y/X$，先限定 $X\\neq0$。作变换 $(x,z)\\mapsto(x,y=xz)$，雅可比绝对值为 $|x|$，故\n$$f_{X,Z}(x,z)=f(x,xz)|x|,$$\n于是\n$$f_Z(z)=\\int_{-\\infty}^{+\\infty}f(x,xz)|x|\\,dx.$$\n若 $X,Y$ 独立，\n$$f_Z(z)=\\int_{-\\infty}^{+\\infty}f_X(x)f_Y(xz)|x|\\,dx.$$\n\n**例 2.5** 设 $X,Y$ 独立同分布指数分布 $Exp(1)$，求 $Z=Y/X$ 的密度。\n\n当 $x>0,z>0$ 时，\n$$f_Z(z)=\\int_0^{+\\infty}e^{-x}e^{-xz}x\\,dx\n=\\int_0^{+\\infty}x e^{-(1+z)x}dx\n=\\frac{1}{(1+z)^2}.$$\n其他 $z$ 处为 $0$。\n\n**（4）一般变换与雅可比。** 设\n$$U=g_1(X,Y),\\qquad V=g_2(X,Y)$$\n有唯一逆变换\n$$x=h_1(u,v),\\qquad y=h_2(u,v).$$\n则\n$$f_{U,V}(u,v)=f_{X,Y}\\big(h_1(u,v),h_2(u,v)\\big)\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right|.$$\n这里雅可比必须取绝对值；先写逆变换，再算行列式，最后把支撑区域一并变换过去。\n\n**例 2.6** 设 $X,Y$ 独立同分布 $U(0,1)$，令 $U=X+Y,\\ V=X-Y$。求 $f_{U,V}$，并求 $U$ 的边缘密度。\n\n逆变换为\n$$x=\\frac{u+v}{2},\\qquad y=\\frac{u-v}{2},$$\n雅可比绝对值为\n$$\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right|=\\left|\\begin{vmatrix}1/2&1/2\\\\1/2&-1/2\\end{vmatrix}\\right|=\\frac12.$$\n故\n$$f_{U,V}(u,v)=\\frac12,$$\n支撑为\n$$0<\\frac{u+v}{2}<1,\\qquad 0<\\frac{u-v}{2}<1.$$\n当 $0<u<1$ 时，$v\\in(-u,u)$，\n$$f_U(u)=\\int_{-u}^{u}\\frac12\\,dv=u.$$\n当 $1\\le u<2$ 时，$v\\in(u-2,2-u)$，\n$$f_U(u)=\\int_{u-2}^{2-u}\\frac12\\,dv=2-u.$$\n所以\n$$f_U(u)=\\begin{cases}u,&0<u<1,\\\\2-u,&1\\le u<2,\\\\0,&\\text{其他},\\end{cases}$$\n与卷积公式所得一致。"
+    },
+    {
+      "id": "PS03.0:lec-body.s02",
+      "type": "extension",
+      "title": "四、易错清单",
+      "level": 2,
+      "content": "1. 求边缘密度时忘记对另一变量在全支撑上积分 → 先画联合支撑，固定 $x$ 后写出 $y$ 的真实上下限，再算 $f_X(x)=\\int f(x,y)dy$。\n2. 判断独立性时只看 $f(x,y)$ 能否拆成两部分 → 必须先检查支撑是否为乘积形；若支撑是 $0<x<y<1$ 这类区域，直接判定不独立。\n3. 条件密度分母误用 $f(x,y)$ 或另一个边缘 → 统一写成 $f_{X|Y}(x|y)=f(x,y)/f_Y(y)$，且只在 $f_Y(y)>0$ 的 $y$ 上讨论。\n4. 卷积公式直接写 $\\int_{-\\infty}^{+\\infty}$ 却不定限 → 用 $f_X(u)>0$ 与 $f_Y(z-u)>0$ 解出 $u$ 的区间，再分段积分。\n5. 混淆 $\\max$ 与 $\\min$ 的分布函数 → 最大值用“都不超过”：$F_{\\max}=F_XF_Y$；最小值用“都不小于”的补事件：$F_{\\min}=1-(1-F_X)(1-F_Y)$。\n6. 雅可比漏绝对值或把正变换、逆变换搞反 → 先写 $x=h_1(u,v),y=h_2(u,v)$，再取 $\\left|\\partial(x,y)/\\partial(u,v)\\right|$。\n7. 把“不相关”直接当“独立” → 不相关只说明协方差为 $0$；独立要验证 $f=f_Xf_Y$ 或 $F=F_XF_Y$，除非题目给出联合正态等特殊结构。\n8. 求商 $Z=Y/X$ 时忽略 $X=0$ 与符号 → 先排除 $X=0$，公式中用 $|x|$，必要时按 $x>0$、$x<0$ 分段。"
     },
     {
       "id": "PS03.0:keng.s01",
@@ -27,6 +48,33 @@
   ],
   "meta": {
     "kind": "chapter",
-    "chapter_title": "多维随机变量及其分布"
+    "chapter_title": "多维随机变量及其分布",
+    "kps": [
+      {
+        "code": "PS03.1",
+        "title": "联合与边缘",
+        "kp": "M1-PS-0301"
+      },
+      {
+        "code": "PS03.2",
+        "title": "条件分布与独立性",
+        "kp": "M1-PS-0302"
+      },
+      {
+        "code": "PS03.3",
+        "title": "二维函数的分布",
+        "kp": "M1-PS-0303"
+      }
+    ],
+    "lecture": {
+      "file": "notebook/kaoyan/lectures/math1/ps/03-多维随机变量及其分布.md",
+      "sha256": "sha256:4e446904460c048fee1cfc85df579eb262a1155db08284eaec5e1cfba3322fe9",
+      "body_sha256": "sha256:3bc1fa350750f22ffd485b5290211058eca84d0db1b8334f6dad447c99accc4e",
+      "entries": 2,
+      "dropped": [
+        "一、本章考点与档位",
+        "三、真题落点"
+      ]
+    }
   }
 }

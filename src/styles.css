@@ -2364,71 +2364,82 @@ a.sitemenu-item.on {
   color: var(--tx);
 }
 
-/* ---- 长 doc-card 的「本页目录」（2026-11）----
- * 默认折叠：details 只管开合，不占首屏。层级缩进用左内边距表达，
- * `min-width: 0` + `overflow-wrap` 保证长标题在 390 视口不撑破卡片。
+/* ---- 章首页的「本章考点」导航（2026-11-18）----
+ * 讲义与考点同页后，页尾给一张可点的考点表；不参与 .docsec 计数，
+ * 长标题在 390 视口用 overflow-wrap 断行，L 徽标右对齐。
  */
-.dtoc {
-  margin-top: 10px;
-  border-top: 1px dashed var(--line);
-  padding-top: 8px;
-  font-size: 12.5px;
+.chapkps {
+  margin-top: 30px;
+  padding: 16px 18px;
+  border: 1px solid var(--line, #2a2a35);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.dtoc > summary {
-  cursor: pointer;
-  color: var(--tx2);
+.chapkps h2 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tx);
+}
+
+.chapkps ul {
   list-style: none;
-}
-
-.dtoc > summary::-webkit-details-marker {
-  display: none;
-}
-
-.dtoc > summary::before {
-  content: '▸ ';
-  color: var(--tx-soft);
-}
-
-.dtoc[open] > summary::before {
-  content: '▾ ';
-}
-
-.dtoc ol {
-  list-style: none;
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chapkps li {
   min-width: 0;
 }
 
-.dtoc li {
-  margin: 3px 0;
+.chapkps .chip.kp {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-align: left;
   min-width: 0;
 }
 
-.dtoc a {
-  color: var(--tx2);
-  text-decoration: none;
-  display: block;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-.dtoc a:hover {
+.chapkps .kpcode {
+  flex: 0 0 auto;
   color: var(--cyan);
+  font-size: 12px;
 }
 
-.dtoc .toc-l3 {
-  padding-left: 14px;
+.chapkps .kpttl {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--tx);
+  font-size: 13px;
+  font-family: inherit;
+  overflow-wrap: anywhere;
 }
 
-.dtoc .toc-l4 {
-  padding-left: 28px;
+.chapkps .kplv {
+  flex: 0 0 auto;
+  color: var(--tx-soft);
+  font-size: 11.5px;
 }
 
-/* 锚点跳转后标题不要被顶栏盖住 */
-.dochead[id] {
-  scroll-margin-top: 72px;
+@media (max-width: 480px) {
+  .chapkps {
+    padding: 14px 14px;
+  }
+
+  .chapkps .chip.kp {
+    flex-wrap: wrap;
+  }
+
+  .chapkps .kplv {
+    margin-left: auto;
+  }
 }
 
 /* 核心路线的「补不上的缺口」：只有文字，没有按钮/完成度 */

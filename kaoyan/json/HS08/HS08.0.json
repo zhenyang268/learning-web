@@ -7,7 +7,7 @@
     "file": "notebook/kaoyan/syllabus/math1.md",
     "sha256": "sha256:993bffb11ed10b3db21f4a78652b478a79dfcdb127a96627d081c9f0380b2d87"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "118b0a21e76a2d70430ccc2249d7e571aa115604",
   "notebook_dirty": false,
   "entries": [
     {
@@ -16,6 +16,27 @@
       "title": "第 HS08 常微分方程：导语与真题落点",
       "level": 2,
       "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-hs.md` §HS-08 常微分方程　｜　考点页：`note/math1/hs/`"
+    },
+    {
+      "id": "HS08.0:lec-head.s01",
+      "type": "heading",
+      "title": "章讲义",
+      "level": 2,
+      "content": ""
+    },
+    {
+      "id": "HS08.0:lec-body.s01",
+      "type": "extension",
+      "title": "二、正文",
+      "level": 2,
+      "content": "### 1. 一阶方程：先识别，再化标准形\n\n微分方程是含未知函数及其导数的方程；最高阶导数的阶数叫方程的阶。通解中独立任意常数的个数应等于阶数，初始条件用来定常数。之所以要分类，是因为一阶方程没有统一解法，必须先把方程改写成可套公式的标准形。\n\n**可分离方程。** 形如\n$$\n\\frac{dy}{dx}=f(x)g(y)\n$$\n且 $g(y)\\neq 0$ 时，分离变量：\n$$\n\\int \\frac{dy}{g(y)}=\\int f(x)\\,dx .\n$$\n先检查 $g(y)=0$ 是否给出常值解，再分离。\n\n例：$y'=xy,\\ y(0)=2$。分离得\n$$\n\\frac{dy}{y}=x\\,dx,\\quad \\ln|y|=\\frac{x^2}{2}+C,\n$$\n故 $y=Ce^{x^2/2}$。代入 $y(0)=2$，得 $C=2$，所以 $y=2e^{x^2/2}$。\n\n**齐次方程。** 形如 $y'=\\varphi(y/x)$。令 $u=y/x$，即 $y=ux$，则\n$$\ny'=u+xu',\n$$\n代入得\n$$\nxu'=\\varphi(u)-u,\n$$\n这是关于 $u$ 的可分离方程。\n\n例：$y'=(x+y)/x=1+y/x$。令 $u=y/x$，则\n$$\nxu'=1,\\quad u=\\ln|x|+C,\n$$\n所以\n$$\ny=x(\\ln|x|+C).\n$$\n\n**一阶线性方程。** 标准形\n$$\ny'+P(x)y=Q(x).\n$$\n取积分因子 $\\mu=e^{\\int P(x)\\,dx}$，则\n$$\n(\\mu y)'=\\mu Q,\n$$\n故\n$$\ny=e^{-\\int P\\,dx}\\left(\\int Q e^{\\int P\\,dx}dx+C\\right).\n$$\n关键是先化成 $y'+P y=Q$，不能把符号写反。\n\n例：$y'+\\frac1x y=x,\\ x>0$。此时 $P=1/x$，$\\mu=e^{\\ln x}=x$，于是\n$$\n(xy)'=x^2,\\quad xy=\\frac{x^3}{3}+C,\n$$\n所以\n$$\ny=\\frac{x^2}{3}+\\frac{C}{x}.\n$$\n\n**伯努利方程。** 形如\n$$\ny'+P(x)y=Q(x)y^n,\\quad n\\neq 0,1.\n$$\n两边除以 $y^n$，令 $z=y^{1-n}$，则\n$$\nz'+(1-n)Pz=(1-n)Q.\n$$\n例：$y'+y=xy^2$。除以 $y^2$，令 $z=y^{-1}$，得\n$$\nz'-z=-x.\n$$\n积分因子为 $e^{-x}$，故\n$$\n(ze^{-x})'=-xe^{-x}.\n$$\n积分得\n$$\nze^{-x}=xe^{-x}+e^{-x}+C,\n$$\n即 $z=x+1+Ce^x$，所以\n$$\ny=\\frac{1}{x+1+Ce^x}.\n$$\n\n**全微分方程。** 方程 $M(x,y)dx+N(x,y)dy=0$ 若满足\n$$\n\\frac{\\partial M}{\\partial y}=\\frac{\\partial N}{\\partial x},\n$$\n则存在 $u(x,y)$，使 $du=Mdx+Ndy$，解为 $u(x,y)=C$。求 $u$ 时先令\n$$\nu=\\int M\\,dx+\\varphi(y),\n$$\n再由 $u_y=N$ 定出 $\\varphi'(y)$。\n\n例：$(2x+y)dx+(x+2y)dy=0$。这里 $M_y=1=N_x$，且\n$$\nu=\\int(2x+y)dx=x^2+xy+\\varphi(y).\n$$\n由 $u_y=x+\\varphi'(y)=x+2y$，得 $\\varphi'(y)=2y$，故\n$$\nx^2+xy+y^2=C.\n$$\n\n### 2. 可降阶的高阶方程\n\n降阶的共同思想是：缺什么变量，就把什么变量当成新未知函数，把二阶方程压成一阶方程。\n\n**类型一：$y''=f(x)$。** 直接积分两次：\n$$\ny'=\\int f(x)\\,dx+C_1,\\quad\ny=\\int\\left(\\int f(x)\\,dx\\right)dx+C_1x+C_2.\n$$\n\n例：$y''=x,\\ y(0)=0,\\ y'(0)=1$。有\n$$\ny'=\\frac{x^2}{2}+1,\\quad y=\\frac{x^3}{6}+x.\n$$\n\n**类型二：$y''=f(x,y')$。** 令 $p=y'$，则 $y''=p'$，方程化为\n$$\np'=f(x,p).\n$$\n解出 $p$ 后，再由 $y'=p$ 积分。\n\n例：$y''+y'=x$。令 $p=y'$，得\n$$\np'+p=x.\n$$\n其解为\n$$\np=x-1+Ce^{-x},\n$$\n所以\n$$\ny=\\frac{x^2}{2}-x-Ce^{-x}+C_2.\n$$\n\n**类型三：$y''=f(y,y')$。** 令 $p=y'$，并把 $p$ 看成 $y$ 的函数，则\n$$\ny''=\\frac{dp}{dx}=\\frac{dp}{dy}\\frac{dy}{dx}=p\\frac{dp}{dy}.\n$$\n方程化为\n$$\np\\frac{dp}{dy}=f(y,p).\n$$\n\n例：$y''=2y^3,\\ y(0)=1,\\ y'(0)=1$。令 $p=y'$，则\n$$\np\\frac{dp}{dy}=2y^3,\n$$\n积分得\n$$\np^2=y^4+C.\n$$\n由初值 $p(0)=1,y(0)=1$，得 $C=0$，故 $p=y^2$（在初值附近取正）。于是\n$$\n\\frac{dy}{dx}=y^2,\\quad -\\frac1y=x+C.\n$$\n代入 $y(0)=1$，得 $C=-1$，所以\n$$\ny=\\frac{1}{1-x}.\n$$\n\n### 3. 常系数线性方程\n\n二阶常系数齐次方程\n$$\ny''+py'+qy=0\n$$\n令 $y=e^{rx}$，代入得特征方程\n$$\nr^2+pr+q=0.\n$$\n设两根为 $r_1,r_2$，则\n\n1. $r_1\\neq r_2$ 为实根：\n$$\ny=C_1e^{r_1x}+C_2e^{r_2x}.\n$$\n2. $r_1=r_2=r$ 为重根：两个解不能都取 $e^{rx}$，否则线性相关，应取\n$$\ny=(C_1+C_2x)e^{rx}.\n$$\n3. $r=\\alpha\\pm i\\beta$：\n$$\ny=e^{\\alpha x}(C_1\\cos\\beta x+C_2\\sin\\beta x).\n$$\n\n例：$y''-2y'+y=0$。特征方程\n$$\nr^2-2r+1=(r-1)^2=0,\n$$\n故\n$$\ny=(C_1+C_2x)e^x.\n$$\n\n非齐次方程 $y''+py'+qy=f(x)$ 只需求一个特解 $y^*$，通解为 $Y+y^*$。若\n$$\nf(x)=P_m(x)e^{\\alpha x},\n$$\n设\n$$\ny^*=x^kQ_m(x)e^{\\alpha x},\n$$\n其中 $Q_m$ 是与 $P_m$ 同次的待定多项式，$k$ 是 $\\alpha$ 作为特征根的重数：不是根取 $k=0$，单根取 $k=1$，重根取 $k=2$。\n\n例：$y''-2y'+y=e^x$。右端 $\\alpha=1$，而 $1$ 是二重特征根，故设\n$$\ny^*=Ax^2e^x.\n$$\n计算：\n$$\n(y^*)''-2(y^*)'+y^*\n=2Ae^x.\n$$\n令其等于 $e^x$，得 $A=\\frac12$。所以\n$$\ny=e^x\\left(C_1+C_2x+\\frac{x^2}{2}\\right).\n$$\n\n若右端为 $e^{\\alpha x}[P_m(x)\\cos\\beta x+Q_n(x)\\sin\\beta x]$，则设\n$$\ny^*=x^k e^{\\alpha x}[R_l(x)\\cos\\beta x+S_l(x)\\sin\\beta x],\n$$\n其中 $l=\\max(m,n)$，$k$ 看 $\\alpha+i\\beta$ 是否为特征根：不是取 $0$，是取 $1$。\n\n例：$y''+y=\\cos x$。此时 $\\alpha+i\\beta=i$ 是特征根，取 $k=1$，设\n$$\ny^*=x(A\\cos x+B\\sin x).\n$$\n代入可算得 $A=0,\\ B=\\frac12$，故\n$$\ny=C_1\\cos x+C_2\\sin x+\\frac{x}{2}\\sin x.\n$$\n\n### 4. 欧拉方程与应用\n\n欧拉方程形如\n$$\nx^2y''+axy'+by=f(x),\\quad x>0.\n$$\n令 $x=e^t$，即 $t=\\ln x$，记 $D=\\frac{d}{dt}$。由链式法则\n$$\nxy'=Dy,\\qquad x^2y''=D(D-1)y.\n$$\n于是方程化为常系数方程\n$$\n[D(D-1)+aD+b]y=f(e^t).\n$$\n解出 $y(t)$ 后，把 $t=\\ln x$ 回代。\n\n例：$x^2y''-2xy'+2y=0$。换元得\n$$\nD(D-1)-2D+2=D^2-3D+2=0,\n$$\n即 $(D-1)(D-2)=0$，故\n$$\ny=C_1e^t+C_2e^{2t}=C_1x+C_2x^2.\n$$\n\n应用题的列式原则是“把几何或物理条件翻译成导数关系”。切线问题中，曲线 $y=y(x)$ 在点 $(x,y)$ 的切线斜率为 $y'$。例如曲线过 $(1,1)$，且切线斜率等于 $2x$，则\n$$\ny'=2x,\\quad y=x^2+C.\n$$\n代入 $(1,1)$，得 $C=0$，故 $y=x^2$。\n\n增长率问题常设 $y'=ky$，解为 $y=Ce^{kt}$。混合问题按“变化率 $=$ 流入速率 $-$ 流出速率”列方程。例：水箱原有 $100$ L 水、含盐 $10$ kg，流入 $2$ L/min、浓度 $0.5$ kg/L，流出 $2$ L/min，体积不变。设含盐量为 $Q(t)$，则\n$$\nQ'=2\\cdot0.5-\\frac{2}{100}Q=1-\\frac{Q}{50},\n$$\n即\n$$\nQ'+\\frac{Q}{50}=1.\n$$\n积分因子 $e^{t/50}$，得\n$$\n(Qe^{t/50})'=e^{t/50},\n$$\n故\n$$\nQ=50+Ce^{-t/50}.\n$$\n由 $Q(0)=10$，得 $C=-40$，所以\n$$\nQ=50-40e^{-t/50}.\n$$"
+    },
+    {
+      "id": "HS08.0:lec-body.s02",
+      "type": "extension",
+      "title": "四、易错清单",
+      "level": 2,
+      "content": "1. 可分离方程直接除以 $g(y)$，却不检查 $g(y)=0$ → 先单独令 $g(y)=0$，看它是否给出常值解；若初值满足 $g(y_0)=0$，常值解可能才是所求解。\n2. 一阶线性方程积分因子写成 $e^{-\\int P dx}$ → 标准形必须是 $y'+P y=Q$，积分因子取 $\\mu=e^{\\int P dx}$，并用 $(\\mu y)'=\\mu Q$ 验算。\n3. 伯努利方程换元后符号错 → 标准形两边除以 $y^n$，令 $z=y^{1-n}$，由 $z'=(1-n)y^{-n}y'$ 推出 $z'+(1-n)Pz=(1-n)Q$。\n4. 全微分方程只验证 $M_y=N_x$，就直接写 $u=\\int M dx=C$ → 必须设 $u=\\int M dx+\\varphi(y)$，再用 $u_y=N$ 求 $\\varphi'(y)$。\n5. 遇到 $y''=f(y,y')$ 仍令 $y''=p'$ → 应令 $p=y'$，并用 $y''=p\\frac{dp}{dy}$，把方程变成关于 $p(y)$ 的一阶方程。\n6. 非齐次特解漏乘 $x^k$ → 先看右端指数 $\\alpha$（或 $\\alpha+i\\beta$）是特征根的重数，非根 $k=0$，单根 $k=1$，二重根 $k=2$。\n7. 常系数齐次方程重根时写成 $C_1e^{rx}+C_2e^{rx}$ → 两个解线性相关，第二项必须乘 $x$，写成 $(C_1+C_2x)e^{rx}$。\n8. 欧拉方程换元后仍保留 $y'$ 对 $x$ 的写法 → 用 $x=e^t,\\ D=\\frac{d}{dt}$，先写 $xy'=Dy,\\ x^2y''=D(D-1)y$，解完再把 $t=\\ln x$ 回代。"
     },
     {
       "id": "HS08.0:keng.s01",
@@ -27,6 +48,38 @@
   ],
   "meta": {
     "kind": "chapter",
-    "chapter_title": "常微分方程"
+    "chapter_title": "常微分方程",
+    "kps": [
+      {
+        "code": "HS08.1",
+        "title": "一阶方程",
+        "kp": "M1-HS-0801"
+      },
+      {
+        "code": "HS08.2",
+        "title": "可降阶的高阶方程",
+        "kp": "M1-HS-0802"
+      },
+      {
+        "code": "HS08.3",
+        "title": "常系数线性方程",
+        "kp": "M1-HS-0803"
+      },
+      {
+        "code": "HS08.4",
+        "title": "欧拉方程与应用",
+        "kp": "M1-HS-0804"
+      }
+    ],
+    "lecture": {
+      "file": "notebook/kaoyan/lectures/math1/hs/08-常微分方程.md",
+      "sha256": "sha256:b84e0e9b7a0d906e37f10762b5a126a4dd416d7109ef62b21cccb0630bdd78c6",
+      "body_sha256": "sha256:244e33cd7511a2a0188a7d02639232d81d269d3a569cd4eeecc955368d4a1bce",
+      "entries": 2,
+      "dropped": [
+        "一、本章考点与档位",
+        "三、真题落点"
+      ]
+    }
   }
 }

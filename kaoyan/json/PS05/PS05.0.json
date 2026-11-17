@@ -7,7 +7,7 @@
     "file": "notebook/kaoyan/syllabus/math1.md",
     "sha256": "sha256:993bffb11ed10b3db21f4a78652b478a79dfcdb127a96627d081c9f0380b2d87"
   },
-  "notebook_commit": "c02b35dce350b9ee697fe098a85acf42bbac5c5a",
+  "notebook_commit": "118b0a21e76a2d70430ccc2249d7e571aa115604",
   "notebook_dirty": false,
   "entries": [
     {
@@ -16,6 +16,27 @@
       "title": "第 PS05 大数定律与中心极限定理：导语与真题落点",
       "level": 2,
       "content": "> 真题落点：真题库只收 408（2016–2024 九年），数一按「常见考法」定位，不冒充原题\n> 一课位置：`quick/math-ps.md` §PS-05 大数定律与中心极限定理　｜　考点页：`note/math1/ps/`"
+    },
+    {
+      "id": "PS05.0:lec-head.s01",
+      "type": "heading",
+      "title": "章讲义",
+      "level": 2,
+      "content": ""
+    },
+    {
+      "id": "PS05.0:lec-body.s01",
+      "type": "extension",
+      "title": "二、正文",
+      "level": 2,
+      "content": "### 1. 切比雪夫不等式：用低阶矩控制尾部\n\n实际问题里，随机变量分布常常不知道，或者精确概率很难算。切比雪夫不等式的作用是：只用均值、方差，就能给出偏离均值概率的上界。它不精确，但条件弱、适用范围广，也是证明大数定律的关键工具。\n\n先看马尔可夫不等式。设 $Y\\ge 0$，$a>0$，则\n$$\nP(Y\\ge a)\\le \\frac{EY}{a}.\n$$\n证明只需把 $EY$ 拆成两部分：\n$$\nEY=E[YI_{\\{Y<a\\}}]+E[YI_{\\{Y\\ge a\\}}]\n\\ge E[YI_{\\{Y\\ge a\\}}]\n\\ge aP(Y\\ge a).\n$$\n两边除以 $a$ 即得。\n\n取 $Y=(X-EX)^2$，$a=\\varepsilon^2$，就得到切比雪夫不等式：\n$$\nP(|X-EX|\\ge \\varepsilon)\n=P((X-EX)^2\\ge \\varepsilon^2)\n\\le \\frac{E(X-EX)^2}{\\varepsilon^2}\n=\\frac{VarX}{\\varepsilon^2}.\n$$\n等价地，\n$$\nP(|X-EX|<\\varepsilon)\\ge 1-\\frac{VarX}{\\varepsilon^2}.\n$$\n使用条件是 $EX^2<\\infty$，否则方差没有意义。式中的 $\\ge$ 与 $>$ 在连续型情形下通常不影响结果，但写题时按原式保留。\n\n最小例：设 $EX=10$，$VarX=4$，$\\varepsilon=6$。则\n$$\nP(|X-10|\\ge 6)\\le \\frac{4}{6^2}=\\frac{1}{9}\\approx 0.1111,\n$$\n所以\n$$\nP(|X-10|<6)\\ge 1-\\frac{1}{9}=\\frac{8}{9}\\approx 0.8889.\n$$\n这里完全不需要知道 $X$ 服从什么分布。\n\n### 2. 大数定律：样本均值为什么稳定\n\n大数定律讨论的是：当样本量 $n$ 增大时，样本均值是否依概率稳定到总体均值。先写清楚“依概率收敛”：若对任意 $\\varepsilon>0$，\n$$\nP(|Y_n-a|\\ge \\varepsilon)\\to 0,\n$$\n则称 $Y_n$ 依概率收敛于 $a$，记作 $Y_n\\xrightarrow{P}a$。\n\n切比雪夫大数定律：设 $X_1,X_2,\\dots$ 相互独立，$EX_i=\\mu_i$，且存在常数 $C$ 使 $VarX_i\\le C$。令 $S_n=\\sum_{i=1}^n X_i$，则\n$$\nE\\left(\\frac{S_n}{n}\\right)=\\frac1n\\sum_{i=1}^n \\mu_i,\\qquad\nVar\\left(\\frac{S_n}{n}\\right)\n=\\frac{1}{n^2}\\sum_{i=1}^n VarX_i\n\\le \\frac{C}{n}.\n$$\n对 $\\frac{S_n}{n}$ 用切比雪夫不等式：\n$$\nP\\left(\\left|\\frac{S_n}{n}-\\frac1n\\sum_{i=1}^n\\mu_i\\right|\\ge \\varepsilon\\right)\n\\le \\frac{C}{n\\varepsilon^2}\\to 0.\n$$\n若所有 $EX_i=\\mu$，就得到\n$$\n\\frac{S_n}{n}\\xrightarrow{P}\\mu.\n$$\n这里的关键是：独立保证方差可加，方差一致有界保证上界趋于 $0$。它不要求同分布。\n\n最小例：设 $X_i\\sim U(0,1)$，$n=100$，$\\varepsilon=0.1$。此时 $\\mu=\\frac12$，$VarX_i=\\frac1{12}$，于是\n$$\nVar\\left(\\frac{S_{100}}{100}\\right)\n=\\frac{1}{100^2}\\cdot 100\\cdot \\frac1{12}\n=\\frac{1}{1200}.\n$$\n由切比雪夫不等式，\n$$\nP\\left(\\left|\\frac{S_{100}}{100}-\\frac12\\right|\\ge 0.1\\right)\n\\le \\frac{1/1200}{0.1^2}\n=\\frac{1}{12}\\approx 0.0833.\n$$\n\n伯努利大数定律是特例：设 $X_i\\sim B(1,p)$，$S_n\\sim B(n,p)$，则 $S_n/n$ 是频率。因为\n$$\nE\\left(\\frac{S_n}{n}\\right)=p,\\qquad\nVar\\left(\\frac{S_n}{n}\\right)=\\frac{p(1-p)}{n},\n$$\n所以\n$$\nP\\left(\\left|\\frac{S_n}{n}-p\\right|\\ge \\varepsilon\\right)\n\\le \\frac{p(1-p)}{n\\varepsilon^2}\n\\le \\frac{1}{4n\\varepsilon^2}.\n$$\n例如 $p=0.3$，$n=1000$，$\\varepsilon=0.05$，则 $p(1-p)=0.21$，\n$$\nP\\left(\\left|\\frac{S_{1000}}{1000}-0.3\\right|\\ge 0.05\\right)\n\\le \\frac{0.21}{1000\\cdot 0.05^2}\n=\\frac{0.21}{2.5}=0.084.\n$$\n\n辛钦大数定律条件更弱：若 $X_1,X_2,\\dots$ 独立同分布，且 $E|X_1|<\\infty$，则\n$$\n\\frac{S_n}{n}\\xrightarrow{P}EX_1.\n$$\n它不需要方差有限，因此不能直接用切比雪夫不等式证明；常用特征函数或截断法。考试中要分清：切比雪夫大数定律看“独立 + 方差一致有界”，辛钦看“独立同分布 + 一阶矩存在”，伯努利是二项频率的特例。\n\n### 3. 中心极限定理：误差的尺度与形状\n\n大数定律只说明 $\\frac{S_n}{n}$ 会靠近 $\\mu$，但没有说明误差有多大、近似分布是什么。中心极限定理进一步指出：在独立同分布、方差有限时，标准化后的和趋于标准正态分布。\n\n列维-林德伯格中心极限定理：设 $X_1,X_2,\\dots$ 独立同分布，$EX_i=\\mu$，$VarX_i=\\sigma^2\\in(0,\\infty)$。令\n$$\nY_n=\\frac{\\sum_{i=1}^n X_i-n\\mu}{\\sigma\\sqrt n}\n=\\frac{S_n-n\\mu}{\\sigma\\sqrt n},\n$$\n则对任意实数 $x$，\n$$\nP(Y_n\\le x)\\to \\Phi(x),\n$$\n其中 $\\Phi$ 是标准正态分布函数。于是当 $n$ 较大时，\n$$\nS_n\\approx N(n\\mu,n\\sigma^2),\\qquad\n\\bar X=\\frac{S_n}{n}\\approx N\\left(\\mu,\\frac{\\sigma^2}{n}\\right).\n$$\n\n推导思路用特征函数。令 $Z_i=X_i-\\mu$，则 $EZ_i=0$，$VarZ_i=\\sigma^2$。设\n$$\n\\psi(t)=Ee^{itZ_i}\n=1-\\frac{\\sigma^2t^2}{2}+o(t^2).\n$$\n标准化和的特征函数为\n$$\n\\varphi_{Y_n}(t)\n=E\\exp\\left(it\\frac{\\sum_{i=1}^n Z_i}{\\sigma\\sqrt n}\\right)\n=\\left[\\psi\\left(\\frac{t}{\\sigma\\sqrt n}\\right)\\right]^n.\n$$\n代入展开：\n$$\n\\psi\\left(\\frac{t}{\\sigma\\sqrt n}\\right)\n=1-\\frac{t^2}{2n}+o\\left(\\frac1n\\right).\n$$\n因此\n$$\n\\varphi_{Y_n}(t)\n=\\left[1-\\frac{t^2}{2n}+o\\left(\\frac1n\\right)\\right]^n\n\\to e^{-t^2/2},\n$$\n而 $e^{-t^2/2}$ 正是 $N(0,1)$ 的特征函数。\n\n最小例：设 $X_i$ 独立同分布，均值为 $1$，方差为 $1$，$n=100$。近似计算\n$$\nP(S_{100}\\le 120).\n$$\n此时 $S_{100}$ 的均值是 $100$，标准差是 $\\sqrt{100}=10$，所以\n$$\nP(S_{100}\\le 120)\n\\approx P\\left(Z\\le \\frac{120-100}{10}\\right)\n=\\Phi(2)\\approx 0.9772.\n$$\n\n### 4. 棣莫弗-拉普拉斯定理与连续性修正\n\n二项分布是伯努利变量之和：$X\\sim B(n,p)$，$X=\\sum_{i=1}^n X_i$，$X_i\\sim B(1,p)$。由中心极限定理，\n$$\n\\frac{X-np}{\\sqrt{np(1-p)}}\\approx N(0,1),\n$$\n即 $X\\approx N(np,np(1-p))$。这就是棣莫弗-拉普拉斯定理。实际近似常要求 $np$ 与 $n(1-p)$ 都不太小。\n\n因为二项分布取整数值，而正态分布是连续的，所以算区间概率时要作连续性修正。对整数 $a\\le b$，\n$$\nP(a\\le X\\le b)\n\\approx\n\\Phi\\left(\\frac{b+0.5-np}{\\sqrt{np(1-p)}}\\right)\n-\\Phi\\left(\\frac{a-0.5-np}{\\sqrt{np(1-p)}}\\right).\n$$\n原因是离散点 $a,a+1,\\dots,b$ 对应连续区间 $[a-0.5,b+0.5]$。单边概率只修正边界：\n$$\nP(X\\le k)\\approx \\Phi\\left(\\frac{k+0.5-np}{\\sqrt{np(1-p)}}\\right),\n$$\n$$\nP(X\\ge k)\\approx 1-\\Phi\\left(\\frac{k-0.5-np}{\\sqrt{np(1-p)}}\\right).\n$$\n\n最小例：设 $X\\sim B(100,0.5)$，求 $P(45\\le X\\le 55)$ 的正态近似。此时\n$$\nnp=50,\\qquad np(1-p)=25,\\qquad \\sqrt{25}=5.\n$$\n作连续性修正，下限用 $44.5$，上限用 $55.5$：\n$$\nz_1=\\frac{44.5-50}{5}=-1.1,\\qquad\nz_2=\\frac{55.5-50}{5}=1.1.\n$$\n所以\n$$\nP(45\\le X\\le 55)\n\\approx \\Phi(1.1)-\\Phi(-1."
+    },
+    {
+      "id": "PS05.0:lec-body.s02",
+      "type": "extension",
+      "title": "四、易错清单",
+      "level": 2,
+      "content": "1. **切比雪夫不等式方向写反** → 记住形式是 $P\\{|X-\\mu|\\ge\\varepsilon\\}\\le \\dfrac{\\sigma^2}{\\varepsilon^2}$；求“不小于”给上界，“小于”用 $1-\\dfrac{\\sigma^2}{\\varepsilon^2}$，先写出原式再代入。\n\n2. **把 $D(X)$ 当成 $\\sigma$ 代入** → 不等式分母是 $\\varepsilon^2$，分子是方差 $D(X)$，不是标准差；若题给 $\\sigma$，先平方再代入。\n\n3. **对大数定律条件不作核对就用** → 辛钦要求独立同分布且期望存在；切比雪夫要求独立、方差一致有界；伯努利要求独立重复试验。逐条比对题目给的“独立”“同分布”“方差”字样再下结论。\n\n4. **中心极限定理误用于单个随机变量** → 定理说的是“和 $S_n=\\sum_{i=1}^n X_i$ 或均值 $\\bar X$ 的分布近似正态”，不是 $X_1$ 本身近似正态；必须先写出 $S_n$ 的期望 $n\\mu$ 与方差 $n\\sigma^2$。\n\n5. **标准化时分母写成 $\\sigma$ 漏掉 $\\sqrt n$** → $\\dfrac{S_n-n\\mu}{\\sqrt n\\,\\sigma}$，分母是 $\\sqrt n\\sigma$；对均值 $\\bar X$ 则是 $\\dfrac{\\bar X-\\mu}{\\sigma/\\sqrt n}$，两者别混。\n\n6. **二项近似漏掉连续性修正** → 离散变量 $X\\sim B(n,p)$ 求 $P\\{X\\le k\\}$ 时改为 $P\\{X\\le k+0.5\\}$，求 $P\\{X\\ge k\\}$ 时改为 $P\\{X\\ge k-0.5\\}$，再标准化。\n\n7. **忘记 $\\Phi(-z)=1-\\Phi(z)$** → 标准化后区间端点可能是负数，查表时统一化为正数再换算，避免把概率算成负数或大于 1。"
     },
     {
       "id": "PS05.0:keng.s01",
@@ -27,6 +48,28 @@
   ],
   "meta": {
     "kind": "chapter",
-    "chapter_title": "大数定律与中心极限定理"
+    "chapter_title": "大数定律与中心极限定理",
+    "kps": [
+      {
+        "code": "PS05.1",
+        "title": "切比雪夫与大数定律",
+        "kp": "M1-PS-0501"
+      },
+      {
+        "code": "PS05.2",
+        "title": "中心极限定理",
+        "kp": "M1-PS-0502"
+      }
+    ],
+    "lecture": {
+      "file": "notebook/kaoyan/lectures/math1/ps/05-大数定律与中心极限定理.md",
+      "sha256": "sha256:091ea2c1913173a89f589436df07d8caf1690de13aaed9c104036aec7cd0f59f",
+      "body_sha256": "sha256:42b9031aff99d7921734970298108d998e44ccab16d5aa836c4d6431987f6f5f",
+      "entries": 2,
+      "dropped": [
+        "一、本章考点与档位",
+        "三、真题落点"
+      ]
+    }
   }
 }

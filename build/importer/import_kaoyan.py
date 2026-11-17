@@ -1,7 +1,11 @@
 """11408 考研线导入：`notebook/kaoyan/` → `cs408/json/`（408）+ `kaoyan/json/`（数一）。
 
 单元类型：
-- 章首 `.0`：syllabus 的「真题落点 / 一课位置 / 细节与陷阱」（不重复搬考点表）
+- 章首 `.0`：syllabus 的「真题落点 / 一课位置 / 细节与陷阱」+ 本章章讲义正文
+  （`lectures/<科>/<NN>-<章名>.md`，2026-11-18 从 `_archive` 迁回主线）。
+  讲义的「一、本章考点与档位」表与「三、真题落点」**不搬**：
+  前者与 syllabus 重复且易过时，后者是旧版枚举、会与现行 note 落点漂移；
+  由 `meta.kps` 生成当前考点导航，正文/易错清单原样搬。
 - 考点：一个 KP 一个单元，正文 = `note/<KP>-<考点>.md`
 - 真题：一年一个单元（`EX<yy>.1`），缺图清单 `EX00.1`
 - 拔高：一条题线一个单元（408 `DL<n>.1` / 数一 `DM<n>.1`）
@@ -22,13 +26,26 @@ from common import (
     build_entries,
     notebook_state,
     read_source,
+    reconstruct,
     reset_root,
+    sha256_text,
     split_exam_chunks,
     write_unit,
 )
 from md_split import split_markdown
 
 ROW_RE = re.compile(r"^\|\s*`((?:408|M1)-[A-Z]+-\d{4}(?:-\d+)?)`\s*\|")
+LECTURE_ROOT = "kaoyan/lectures"
+# 讲义子目录：408 用 ds/co/os/net，数一用 hs/la/ps；章号由文件名 NN- 前缀给出。
+LECTURE_SUBDIR = {
+    "408": {"DS": "ds", "CO": "co", "OS": "os", "NT": "net"},
+    "M1": {"HS": "hs", "LA": "la", "PS": "ps"},
+}
+# 讲义里有两节不进 Web（数据仍以 syllabus/note 为唯一真源）：
+#   · 「一、本章考点与档位」——与 syllabus 重复，考纲一改就过时；考点导航由 `meta.kps` 给出。
+#   · 「三、真题落点」——2026-11-04 的旧版枚举，与现行 note 落点/真题标注会漂移；
+#     章首顶部已用 syllabus 的当前落点，不再复制第二份。
+DROPPED_LECTURE_SECTIONS = ("一、本章考点与档位", "三、真题落点")
 # 科目代码可能是 3 字母（`NET`），但代号域只能 2 字母 —— 用这张表收口。
 CHAPTER_RE = re.compile(r"^###\s+([A-Z]{2,3})-(\d{2})\s+(.+?)\s*$")
 SUBJECT_DOMAIN = {
@@ -95,37 +112,120 @@ def parse_syllabus(rel: str) -> tuple[list[dict], list[dict]]:
     return chapters, rows
 
 
-def chapter_unit(ch: dict, rel: str, title_prefix: str) -> Unit:
-    chunks: list[tuple[int, str, str]] = []
+def assign_kp_codes(rows: list[dict]) -> list[dict]:
+    """考纲行 → 单元代号。同章同节多 KP 按考纲顺序顺延序号。"""
+    used: dict[str, int] = {}
+    out: list[dict] = []
+    for row in rows:
+        kp = row["kp"]
+        parts = kp.split("-")
+        subj, num = SUBJECT_DOMAIN[parts[1]], parts[2]
+        chapter = f"{subj}{num[:2]}"
+        sec = int(num[2:]) or 99
+        key = f"{chapter}/{sec}"
+        while key in used:
+            sec += 1
+            key = f"{chapter}/{sec}"
+        used[key] = 1
+        out.append({**row, "code": f"{chapter}.{sec}"})
+    return out
+
+
+def find_lecture(book: str, chapter: str) -> str:
+    """章号 → 章讲义相对路径（`kaoyan/lectures/<科>/<NN>-<章名>.md`）。
+
+    缺一篇直接报错，不静默跳过：讲义完整性是内容判据，不能靠“导入成功”掩盖。
+    """
+    domain, num = chapter[:2], chapter[2:]
+    sub = LECTURE_SUBDIR[book].get(domain)
+    if not sub:
+        raise SystemExit(f"未知讲义域 {domain}（{chapter}）")
+    dir_name = "408" if book == "408" else "math1"
+    d = WEB.parent / "notebook" / LECTURE_ROOT / dir_name / sub
+    hits = sorted(d.glob(f"{num}-*.md"))
+    if len(hits) != 1:
+        raise SystemExit(f"{chapter} 应有 1 篇讲义，实际 {len(hits)} 篇（{d}）")
+    return f"{LECTURE_ROOT}/{dir_name}/{sub}/{hits[0].name}"
+
+
+def lecture_parts(rel: str) -> tuple[list[tuple[int, str, str]], str, list[str]]:
+    """读讲义并丢掉「一、本章考点与档位」表，返回保留正文的指纹。
+
+    为什么丢这一节：它与 `syllabus/` 是同一份考纲的两种写法，考点/档位/落点
+    的真源在 syllabus；讲义里的表会随考纲修订而过时，搬进 Web 只会制造第二真源。
+    当前考点由 `meta.kps` 导航给出。
+    """
+    text = read_source(rel)
+    _h1, chunks = split_markdown(text)
+    kept: list[tuple[int, str, str]] = []
+    dropped: list[str] = []
+    for level, title, content in chunks:
+        if level == 2 and any(title.strip().startswith(s) for s in DROPPED_LECTURE_SECTIONS):
+            dropped.append(title.strip())
+            continue
+        kept.append((level, title, content))
+    body = reconstruct(None, [{"level": lv, "title": t, "content": c} for lv, t, c in kept])
+    return kept, sha256_text(body), dropped
+
+
+def chapter_unit(
+    ch: dict,
+    rel: str,
+    title_prefix: str,
+    kps: list[dict],
+    lecture_rel: str,
+) -> Unit:
+    """章首 `.0`：导语 + 章讲义正文 + 细节陷阱；考点表不进正文，走 `meta.kps`。"""
+    code = f"{ch['code']}.0"
+    own: list[dict] = []
     if ch["pre"]:
-        chunks.append((2, f"{title_prefix}{ch['code']} {ch['title']}：导语与真题落点", "\n".join(ch["pre"])))
-    if ch["traps"]:
-        chunks.append((2, "细节与陷阱", "\n".join(ch["traps"])))
-    if not chunks:
-        chunks.append((2, "章首", f"（本章暂无落点与陷阱条目）"))
+        own = build_entries(code, [(2, f"{title_prefix}{ch['code']} {ch['title']}：导语与真题落点", "\n".join(ch["pre"]))])
+    if not own:
+        own = build_entries(code, [(2, "章首", "（本章暂无落点与陷阱条目）")])
+
+    kept, body_sha, dropped = lecture_parts(lecture_rel)
+    lec_entries = build_entries(code, kept)
+    for e in lec_entries:
+        # 讲义词条 id 加 `lec-` 前缀，避免与章首自己的 body.sNN 撞号；
+        # 同时保持 `<code>:` 前缀，满足 verify_docs 的 id 前缀判据。
+        e["id"] = e["id"].replace(f"{code}:", f"{code}:lec-", 1)
+    lec_head = {
+        "id": f"{code}:lec-head.s01",
+        "type": "heading",
+        "title": "章讲义",
+        "level": 2,
+        "content": "",
+    }
+    traps = (
+        build_entries(code, [(2, "细节与陷阱", "\n".join(ch["traps"]))])
+        if ch["traps"]
+        else []
+    )
     return Unit(
-        code=f"{ch['code']}.0",
+        code=code,
         chapter=ch["code"],
         title=f"{ch['code']} {ch['title']}",
         src=rel,
-        entries=build_entries(f"{ch['code']}.0", chunks),
-        meta={"kind": "chapter", "chapter_title": ch["title"]},
+        entries=own + [lec_head] + lec_entries + traps,
+        meta={
+            "kind": "chapter",
+            "chapter_title": ch["title"],
+            "kps": kps,
+            "lecture": {
+                "file": "notebook/" + lecture_rel,
+                "sha256": sha256_text(read_source(lecture_rel)),
+                "body_sha256": body_sha,
+                "entries": len(lec_entries),
+                "dropped": dropped,
+            },
+        },
     )
 
 
-def kp_unit(row: dict, used: dict[str, int]) -> Unit:
+def kp_unit(row: dict) -> Unit:
     kp = row["kp"]
-    parts = kp.split("-")
-    subj, num = SUBJECT_DOMAIN[parts[1]], parts[2]
-    chapter = f"{subj}{num[:2]}"
-    sec = int(num[2:]) or 99
-    key = f"{chapter}/{sec}"
-    # 同章同节多 KP → 依次占用下一个序号（考纲顺序即学习顺序）
-    while key in used:
-        sec += 1
-        key = f"{chapter}/{sec}"
-    used[key] = 1
-    code = f"{chapter}.{sec}"
+    code = row["code"]
+    chapter = code.split(".")[0]
 
     rel = "kaoyan/" + row["file"]
     text = read_source(rel)
@@ -189,17 +289,30 @@ def plain_unit(rel: str, code: str, title: str, meta: dict | None = None) -> Uni
 
 def import_book(book: str, syllabus_rel: str, root, commit: str, dirty: bool) -> dict:
     chapters, rows = parse_syllabus(syllabus_rel)
-    used: dict[str, int] = {}
-    report = {"chapters": 0, "kp": 0, "units": 0}
+    rows = assign_kp_codes(rows)
+    by_chapter: dict[str, list[dict]] = {}
+    for row in rows:
+        by_chapter.setdefault(row["chapter"], []).append(
+            {"code": row["code"], "title": row["section"], "kp": row["kp"]}
+        )
+    report = {"chapters": 0, "kp": 0, "lectures": 0, "units": 0}
 
     for ch in chapters:
-        write_unit(root, chapter_unit(ch, syllabus_rel, "第 "), commit, dirty)
+        lecture_rel = find_lecture(book, ch["code"])
+        unit = chapter_unit(
+            ch,
+            syllabus_rel,
+            "第 ",
+            by_chapter.get(ch["code"], []),
+            lecture_rel,
+        )
+        write_unit(root, unit, commit, dirty)
         report["chapters"] += 1
+        report["lectures"] += 1
         report["units"] += 1
 
     for row in rows:
-        unit = kp_unit(row, used)
-        write_unit(root, unit, commit, dirty)
+        write_unit(root, kp_unit(row), commit, dirty)
         report["kp"] += 1
         report["units"] += 1
 
@@ -295,8 +408,12 @@ def main() -> int:
         )
         r408["units"] += 1
 
-    print(f"408  ：章 {r408['chapters']} · 考点 {r408['kp']} · 单元 {r408['units']}")
-    print(f"数一 ：章 {r1['chapters']} · 考点 {r1['kp']} · 单元 {r1['units']}")
+    print(
+        f"408  ：章 {r408['chapters']} · 章讲义 {r408['lectures']} · 考点 {r408['kp']} · 单元 {r408['units']}"
+    )
+    print(
+        f"数一 ：章 {r1['chapters']} · 章讲义 {r1['lectures']} · 考点 {r1['kp']} · 单元 {r1['units']}"
+    )
     print(f"notebook commit {commit[:12]} · dirty={dirty}")
     return 0
 
