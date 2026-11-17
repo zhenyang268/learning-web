@@ -708,6 +708,15 @@ nav .m {
   font-family: var(--mono);
 }
 
+/* 考点页页头「← 本章讲义」：收成小号 chip，别把 meta 行撑高 */
+.pagehead .meta .chapterlink {
+  margin: 0;
+  padding: 2px 10px;
+  font-size: 12px;
+  border-style: dashed;
+}
+}
+
 .tag {
   font-size: 10.5px;
   padding: 2px 9px;

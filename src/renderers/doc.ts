@@ -71,10 +71,18 @@ export function renderDocHtml(file: EntryFile, route?: DocRouteState): string {
   const code = file.code ?? '';
   const meta = docMeta(file);
   const parts: string[] = [];
+  // 考点页 → 本章讲义的回头路：章首页现在是「讲义 + 考点」的入口，
+  // 读者从章页点进某个考点后，页头给一颗按钮回得去（不新增路由）。
+  const fm = ((file as unknown as { meta?: Record<string, unknown> }).meta ?? {}) as Record<string, unknown>;
+  const chapterCode = `${code.split('.')[0]}.0`;
+  const backToLecture =
+    fm.kind === 'kaoyan-kp' && route?.has(chapterCode)
+      ? `<button class="chip chapterlink" data-goto="${escapeHtml(chapterCode)}" title="回到本章讲义与考点目录">← 本章讲义</button>`
+      : '';
 
   parts.push(`<div class="card pagehead">
     <h1>${escapeHtml(displayCode(code))} <em>${renderInline(file.title ?? '')}</em></h1>
-    <div class="meta">${meta.map((m) => `<span class="tag">${escapeHtml(m)}</span>`).join('')}</div>
+    <div class="meta">${meta.map((m) => `<span class="tag">${escapeHtml(m)}</span>`).join('')}${backToLecture}</div>
   </div>`);
 
   const routes = projectRoutesSection(file, route);

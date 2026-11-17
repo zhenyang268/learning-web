@@ -316,6 +316,13 @@ async function runUnit(bundleJs, code) {
     //  `isLearnableUnit` 都这么判。这类页**只验可达性 / 导航 / 落点**，不跑 L1–L5；
     //  真实项目 / 数一考点（`project` / `kaoyan-kp`）**仍跑满 L1–L5**。
     const kind = unit.meta?.kind ?? '';
+    if (kind === 'kaoyan-kp') {
+      const back = reader.querySelector('.chapterlink');
+      const want = `${code.split('.')[0]}.0`;
+      p('考点页有回本章讲义的入口',
+        back?.getAttribute('data-goto') === want,
+        `got=${back?.getAttribute('data-goto') ?? '(无)'} want=${want}`);
+    }
     const NAV_KINDS = new Set(['project-group', 'project-index']);
     const isNav = NAV_KINDS.has(kind);
     if (isNav) {
