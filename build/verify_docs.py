@@ -36,6 +36,7 @@ CODE_RE = re.compile(r"^[A-Z]{2}\d{2}(\.\d+)?$")
 ID_RE = re.compile(r"^[A-Z]{2}\d{2}(\.\d+)?:[a-z0-9-]+\.[a-z0-9-]+$")
 ROOTS = {
     "math": WEB / "json",
+    "emath": WEB / "emath" / "json",
     "cs408": WEB / "cs408" / "json",
     "kaoyan": WEB / "kaoyan" / "json",
     "projects": WEB / "projects" / "json",
@@ -383,8 +384,8 @@ def check_coverage() -> None:
     if count_kind(docs, "project-index") != 1:
         crit("工程线: 缺面试索引")
 
-    # 数值库
-    docs = load_docs(ROOTS["math"])
+    # 数值库（2026-11-17 起随工程数学站，根是 emath/json）
+    docs = load_docs(ROOTS["emath"])
     know = {
         (d.get("meta") or {}).get("surveyId")
         for _, d in docs

@@ -70,7 +70,6 @@ nodes:
       - EQ03.2
       - EQ03.5
       - EQ01.10
-      - AG01.2
     tension: []
     dual: []
     applies: []
@@ -174,3 +173,5 @@ nodes:
     tension: []
     dual: []
     applies: []
+
+  # EQ03.6 prereq 去掉 AG01.2（该章属数学系站，不在本站索引；2026-11-17 拆分）

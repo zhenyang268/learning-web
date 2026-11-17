@@ -184,11 +184,14 @@
 learning-web/
   AGENTS.md              # 本文（规约）
   DESIGN.md              # 设计（决策、数据结构、契约、验收）
-  index.html             # 数学站入口（多页应用之一）
+  index.html             # 数学系（数学站）入口（多页应用之一）
+  emath.html             # 工程数学入口（2026-11-17 从数学站拆出）
   cs408.html             # 408 子站入口（共用外壳，数据根独立）
   cs408/                 # 408 的数据根（与数学的 json/ + graph/ 完全分开）
     json/<章>/<code>.json
     graph/<章>.yaml
+  emath/json/ · graph/   # 工程数学数据根：数值库 NL + NM/CG/EQ + AN02–04、PR09
+                         #   拆分判据「能算 / 能对拍」见 docs/content-map.md §1
   kaoyan/json/           # 数一考研数据根（408 之外的另一门，主键前缀不同）
   projects/json/         # 工程线数据根（两件套：OUTLINE + NOTES）
   build/
@@ -257,6 +260,7 @@ npm run check:content-map   # 内容总图闸门：章覆盖 / 组归属 / surve
 npm run import:docs         # notebook → json（408 / 数一 / 工程线 / 数值库），重跑幂等
 npm run verify:docs         # doc-card/v1 四类校验：结构 / 覆盖 / 源一致性 / 无损
 npm run check:cs408         # 408 子站复用同一套闸门（--subject cs408）
+npm run check:emath         # 工程数学站复用同一套闸门（--subject emath）
 npm run audit               # 前端全量体检（只读，产出 build/logs/health-frontend-*.md）
 npm run audit:content       # 内容体检（verify_kb --dry-run，不回填）
 npm run build               # tsc → vite（多入口）→ 字体瘦身 → standalone 快照
@@ -321,9 +325,10 @@ node tools/remap-codes.mjs --apply
 - **`dist/` 有两种形态，不要混**（2026-10-30 定，方案 A）：
   **入库位置 `release/`**（`dist/` 仍 gitignore）：`npm run release` 生成；
   **每个学科一份单文件**（普通 `<script>` + gzip 数据 + base64 字体），双击即开：
-  `knowledge.html`（数学）/`knowledge-cs408.html` /`knowledge-math1.html` /`knowledge-projects.html`，
+  `knowledge.html`（数学系）/`knowledge-emath.html`（工程数学）/`knowledge-cs408.html` /
+  `knowledge-math1.html` /`knowledge-projects.html` /`knowledge-english1.html`，
   外加 `knowledge-index.html` 索引页（纯链接，file:// 也能开）；
-  `dist/index.html` / `cs408.html` 是**开发形态**（`type="module"` + 运行时 `fetch json/`）⇒ **必须 HTTP**。
+  `dist/index.html` / `emath.html` / `cs408.html` 是**开发形态**（`type="module"` + 运行时 `fetch json/`）⇒ **必须 HTTP**。
   报告「双击白屏」时先确认打开的是哪个文件 —— 开发形态双击必然白屏，不是产物损坏。
   `json/` 是**只读数据集**（由 `.tex` 生成的产物，`index.json` 是物化索引），
   **不是可从 tex 重建的中间态**，不得以「产物有了」为由删除。

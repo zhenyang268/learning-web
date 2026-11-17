@@ -1,6 +1,6 @@
 {
   "schema": "content-map/v1",
-  "updated": "2026-11-14",
+  "updated": "2026-11-17",
   "note": "整站内容总图的唯一真源：站点 / 组 / 线 / 章 / 数值库映射 / 路线页 / 修正项。规则与理由见 docs/content-map.md，本文件只写事实。",
   "sites": [
     {
@@ -12,6 +12,10 @@
       "syllabus": true,
       "crossLinks": [
         {
+          "label": "工程数学",
+          "href": "./emath.html"
+        },
+        {
           "label": "408 考研",
           "href": "./cs408.html"
         },
@@ -22,6 +26,41 @@
         {
           "label": "工程线",
           "href": "./projects.html"
+        },
+        {
+          "label": "英语一",
+          "href": "./english1.html"
+        }
+      ],
+      "status": "present"
+    },
+    {
+      "id": "emath",
+      "title": "工程数学",
+      "entryHtml": "emath.html",
+      "dataRoot": "emath/json/",
+      "graphRoot": "emath/graph/",
+      "syllabus": false,
+      "crossLinks": [
+        {
+          "label": "数学",
+          "href": "./index.html"
+        },
+        {
+          "label": "408 考研",
+          "href": "./cs408.html"
+        },
+        {
+          "label": "数一考研",
+          "href": "./math1.html"
+        },
+        {
+          "label": "工程线",
+          "href": "./projects.html"
+        },
+        {
+          "label": "英语一",
+          "href": "./english1.html"
         }
       ],
       "status": "present"
@@ -39,12 +78,20 @@
           "href": "./index.html"
         },
         {
+          "label": "工程数学",
+          "href": "./emath.html"
+        },
+        {
           "label": "数一考研",
           "href": "./math1.html"
         },
         {
           "label": "工程线",
           "href": "./projects.html"
+        },
+        {
+          "label": "英语一",
+          "href": "./english1.html"
         }
       ],
       "status": "present"
@@ -62,12 +109,20 @@
           "href": "./index.html"
         },
         {
+          "label": "工程数学",
+          "href": "./emath.html"
+        },
+        {
           "label": "408 考研",
           "href": "./cs408.html"
         },
         {
           "label": "工程线",
           "href": "./projects.html"
+        },
+        {
+          "label": "英语一",
+          "href": "./english1.html"
         }
       ],
       "status": "present"
@@ -85,12 +140,51 @@
           "href": "./index.html"
         },
         {
+          "label": "工程数学",
+          "href": "./emath.html"
+        },
+        {
           "label": "408 考研",
           "href": "./cs408.html"
         },
         {
           "label": "数一考研",
           "href": "./math1.html"
+        },
+        {
+          "label": "英语一",
+          "href": "./english1.html"
+        }
+      ],
+      "status": "present"
+    },
+    {
+      "id": "english1",
+      "title": "英语一",
+      "entryHtml": "english1.html",
+      "dataRoot": "english1/json/",
+      "graphRoot": "english1/graph/",
+      "syllabus": true,
+      "crossLinks": [
+        {
+          "label": "数学",
+          "href": "./index.html"
+        },
+        {
+          "label": "工程数学",
+          "href": "./emath.html"
+        },
+        {
+          "label": "408 考研",
+          "href": "./cs408.html"
+        },
+        {
+          "label": "数一考研",
+          "href": "./math1.html"
+        },
+        {
+          "label": "工程线",
+          "href": "./projects.html"
         }
       ],
       "status": "present"
@@ -142,11 +236,22 @@
       "domain": "AN",
       "blurb": "把极限与积分说清楚的第一步",
       "chapters": [
-        "AN01",
+        "AN01"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "an-functional",
+      "label": "泛函与弱解",
+      "group": "fundamentals",
+      "domain": "AN",
+      "blurb": "巴拿赫/希尔伯特/谱与分布 → 微分形式 → Sobolev 与弱解：数值与 FEM 的地基",
+      "chapters": [
         "AN02",
         "AN03",
         "AN04"
       ],
+      "site": "emath",
       "status": "present"
     },
     {
@@ -278,9 +383,20 @@
         "PR06",
         "PR07",
         "PR08",
-        "PR09",
         "PR10"
       ],
+      "status": "present"
+    },
+    {
+      "id": "pr-mc",
+      "label": "蒙特卡洛与误差",
+      "group": "structure",
+      "domain": "PR",
+      "blurb": "估计量、偏差与方差缩减：随机模拟与 CG 的误差判据",
+      "chapters": [
+        "PR09"
+      ],
+      "site": "emath",
       "status": "present"
     },
     {
@@ -295,7 +411,8 @@
         "EQ03",
         "EQ04"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "ph-mechanics",
@@ -399,7 +516,8 @@
         "NM01",
         "NM02"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nm-linalg",
@@ -411,7 +529,8 @@
         "NM03",
         "NM04"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nm-opt",
@@ -424,7 +543,8 @@
         "NM06",
         "NM07"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "cg-geometry",
@@ -442,7 +562,8 @@
         "CG07",
         "CG08"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "cg-fluid",
@@ -461,7 +582,8 @@
         "CG16",
         "CG17"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "cg-optics",
@@ -479,7 +601,8 @@
         "CG24",
         "CG25"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "cg-dec",
@@ -490,7 +613,8 @@
       "chapters": [
         "CG26"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-contract",
@@ -501,7 +625,8 @@
       "chapters": [
         "NL01"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-value",
@@ -514,7 +639,8 @@
         "NL03",
         "NL04"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-transform",
@@ -526,7 +652,8 @@
         "NL05",
         "NL06"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-diff",
@@ -538,7 +665,8 @@
         "NL07",
         "NL08"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-geometry",
@@ -549,7 +677,8 @@
       "chapters": [
         "NL09"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-discrete",
@@ -561,7 +690,8 @@
         "NL10",
         "NL11"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-form",
@@ -573,7 +703,8 @@
         "NL12",
         "NL13"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "nl-bridge",
@@ -588,7 +719,8 @@
         "NL17",
         "NL18"
       ],
-      "status": "present"
+      "status": "present",
+      "site": "emath"
     },
     {
       "id": "mp-road",

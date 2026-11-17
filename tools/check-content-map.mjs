@@ -79,11 +79,20 @@ const groups = Array.isArray(map.groups) ? map.groups : [];
 const sites = Array.isArray(map.sites) ? map.sites : [];
 const numeric = Array.isArray(map.numericChapters) ? map.numericChapters : [];
 
-const dirs = fs.existsSync(JSON_DIR)
-  ? fs
-      .readdirSync(JSON_DIR)
-      .filter((d) => fs.statSync(path.join(JSON_DIR, d)).isDirectory())
-  : [];
+/**
+ * 2026-11-17：数学站拆成两站（数学系 `json/` + 工程数学 `emath/json/`），
+ * 章目录因此有两个根。`dirs` 是**两个根的并集**；每条线的 `site` 决定它必须落在哪个根
+ * （规则 1e），这样「章搬了但线没改」和「线改了但章没搬」都会被抓到。
+ */
+const SITE_ROOTS = {
+  math: JSON_DIR,
+  emath: path.join(ROOT, 'emath/json'),
+};
+const chaptersOf = (root) =>
+  fs.existsSync(root)
+    ? fs.readdirSync(root).filter((d) => fs.statSync(path.join(root, d)).isDirectory())
+    : [];
+const dirs = Object.values(SITE_ROOTS).flatMap(chaptersOf);
 const numericCodes = numeric.map((c) => c.code);
 
 /* ---------------------------------------------------------------- 1. 章覆盖 */
@@ -106,6 +115,22 @@ check('1c 全部章目录都已归线', missingDirs.length === 0, missingDirs.jo
 
 const missingNumeric = numericCodes.filter((c) => !seen.has(c));
 check('1d 全部数值库章都已归线', missingNumeric.length === 0, missingNumeric.join('、'));
+
+// 1e 站点落位：每条线声明的章必须真的在自己站点的数据根里（默认 math）
+const wrongRoot = [];
+for (const line of lines) {
+  const siteId = line.site ?? 'math';
+  const root = SITE_ROOTS[siteId];
+  if (!root) {
+    wrongRoot.push(`${line.id}→未知站点 ${siteId}`);
+    continue;
+  }
+  const have = new Set(chaptersOf(root));
+  for (const ch of line.chapters ?? []) {
+    if (!have.has(ch)) wrongRoot.push(`${line.id}:${ch} 不在 ${siteId}/`);
+  }
+}
+check('1e 每条线的章都落在本站数据根', wrongRoot.length === 0, wrongRoot.slice(0, 8).join('、'));
 
 /* ---------------------------------------------------------------- 2. 组归属 */
 

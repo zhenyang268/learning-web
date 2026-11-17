@@ -17,7 +17,7 @@ import { DOMAINS, type Domain, type GroupId } from './modules/taxonomy';
 
 export interface Subject {
   /** 站点 id，只用于日志与入口区分 */
-  id: 'math' | 'cs408' | 'math1' | 'projects' | 'english1';
+  id: 'math' | 'emath' | 'cs408' | 'math1' | 'projects' | 'english1';
   /** 站点标题（写进 <title>） */
   title: string;
   /** 顶栏短标签（五站互链用）：两三个字，桌面顶栏一排放得下 */
@@ -70,13 +70,82 @@ export interface Subject {
 
 export const MATH: Subject = {
   id: 'math',
-  title: 'learning-web · 知识库',
+  title: 'learning-web · 数学系数学',
   shortLabel: '数学',
   dataRoot: 'json/',
   graphRoot: 'graph/',
   entryHtml: 'index.html',
   syllabus: { md: SYLLABUS_MD, title: SYLLABUS_TITLE, version: SYLLABUS_VERSION },
   angles: { md: ANGLES_MD, title: ANGLES_TITLE, version: ANGLES_VERSION },
+};
+
+/**
+ * 工程数学（`emath/json/`，2026-11-17 从数学站拆出）。
+ *
+ * 拆分判据（`docs/content-map.md` §拆分记录）：**判据是「能算/能对拍」的章进这里**，
+ * 判据是「能证明/能看懂」的留在数学站。数值库 NL01–NL18、数值方法 NM、图形学 CG、
+ * 微分方程 EQ，外加三处按内容判据搬过来的章（AN02 泛函 / AN03 微分形式 /
+ * AN04 Sobolev·弱解、PR09 蒙特卡洛误差）。
+ *
+ * 代号**不重排**：AN02 在这里仍叫 AN02，掌握度与笔记引用才不断。
+ * 所以本站必须自带域表 —— `AN` 在数学站是「测度与积分线的入口」，
+ * 在这里只承载泛函与弱解，标签与组都必须按本站语义重写。
+ */
+const ENGMATH_DOMAINS: readonly Domain[] = [
+  {
+    id: 'AN',
+    group: 'fundamentals',
+    label: '泛函与弱解',
+    blurb: '巴拿赫/希尔伯特空间、有界算子与谱、分布、Sobolev 与弱解 —— 数值方法与 FEM 的地基',
+    legacyChapters: [],
+  },
+  {
+    id: 'PR',
+    group: 'structure',
+    label: '蒙特卡洛与误差',
+    blurb: '估计量、偏差与方差缩减：随机模拟与 CG 的误差判据从这里来',
+    legacyChapters: [],
+  },
+  {
+    id: 'EQ',
+    group: 'computing',
+    label: '微分方程与格式',
+    blurb: 'ODE/PDE → 稳定性 → 变换法与 Green 函数 → 数值格式（归档在数学站的物理侧）',
+    legacyChapters: [],
+  },
+  {
+    id: 'NM',
+    group: 'computing',
+    label: '数值方法',
+    blurb: '时间积分与辛积分器、空间离散、数值线代与逼近、优化与变分',
+    legacyChapters: [],
+  },
+  {
+    id: 'CG',
+    group: 'computing',
+    label: '图形学与仿真',
+    blurb: '渲染方程与采样、流体、光学与介质、离散外微分',
+    legacyChapters: [],
+  },
+  {
+    id: 'NL',
+    group: 'numeric',
+    label: '数值库',
+    blurb: '主仓数值库的镜像：契约与容差 → 值与代数 → 变换 → 张量与形式 → 求解 → 工程切入线',
+    legacyChapters: [],
+  },
+];
+
+export const ENGMATH: Subject = {
+  id: 'emath',
+  title: 'learning-web · 工程数学',
+  shortLabel: '工数',
+  dataRoot: 'emath/json/',
+  graphRoot: 'emath/graph/',
+  entryHtml: 'emath.html',
+  domainTable: ENGMATH_DOMAINS,
+  syllabus: null,
+  angles: null,
 };
 
 /**
@@ -190,7 +259,7 @@ export const ENGLISH1: Subject = {
 };
 
 /** 构建脚本（vite 插件 / standalone）遍历用；顺序 = 顶栏五站互链顺序 */
-export const SUBJECTS: readonly Subject[] = [MATH, CS408, MATH1, PROJECTS, ENGLISH1];
+export const SUBJECTS: readonly Subject[] = [MATH, ENGMATH, CS408, MATH1, PROJECTS, ENGLISH1];
 
 /**
  * 五站互链：**唯一**派生入口（取代旧的单条 `subject.crossLink`）。

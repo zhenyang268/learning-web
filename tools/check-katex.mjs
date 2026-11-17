@@ -24,6 +24,7 @@ const SUBJECT = (() => {
 })();
 const ROOTS = {
   math: 'json',
+  emath: 'emath/json',
   cs408: 'cs408/json',
   math1: 'kaoyan/json',
   projects: 'projects/json',

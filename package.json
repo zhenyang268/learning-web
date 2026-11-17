@@ -19,10 +19,11 @@
     "check:graph": "node tools/check-graph.mjs",
     "check:sem-sync": "node tools/check-sem-sync.mjs",
     "check:cs408": "node tools/check-katex.mjs --subject cs408 && node tools/check-graph.mjs --subject cs408 && node tools/check-sem-sync.mjs --subject cs408 && node tools/dom-harness.mjs --subject cs408 --all",
+    "check:emath": "node tools/check-katex.mjs --subject emath && node tools/check-graph.mjs --subject emath && node tools/check-sem-sync.mjs --subject emath && node tools/dom-harness.mjs --subject emath --all",
     "check:math1": "node tools/check-katex.mjs --subject math1 && node tools/check-graph.mjs --subject math1 && node tools/check-sem-sync.mjs --subject math1 && node tools/dom-harness.mjs --subject math1 --all",
     "check:projects": "node tools/check-katex.mjs --subject projects && node tools/check-graph.mjs --subject projects && node tools/check-sem-sync.mjs --subject projects && node tools/dom-harness.mjs --subject projects --all",
     "check:english1": "node tools/check-katex.mjs --subject english1 && node tools/check-graph.mjs --subject english1 && node tools/check-sem-sync.mjs --subject english1 && node tools/dom-harness.mjs --subject english1 --all",
-    "check": "tsc --noEmit && npm run check:content-map && npm run verify:docs && npm run check:katex && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all && npm run check:english1",
+    "check": "tsc --noEmit && npm run check:content-map && npm run verify:docs && npm run check:katex && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all && npm run check:emath && npm run check:english1",
     "audit": "node tools/dom-harness.mjs --audit",
     "audit:content": "uv run python build/verify_kb.py --dry-run --out build/logs/health-content.json",
     "release": "npm run build && node tools/sync-release.mjs"

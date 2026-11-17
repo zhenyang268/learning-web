@@ -22,7 +22,14 @@ const require = createRequire(import.meta.url);
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, 'json');
+/**
+ * 2026-11-17：数学拆两站后，viz 引用分落在 `json/`（数学系，entry-card/v2）
+ * 与 `emath/json/`（工程数学，含数值库）两个根。只扫一个根会把另一站的模块
+ * 全判成「数据里没人引用」——实测 13 个模块误报。
+ */
+const JSON_DIRS = process.env.HARNESS_JSON
+  ? [process.env.HARNESS_JSON]
+  : [path.join(ROOT, 'json'), path.join(ROOT, 'emath', 'json')];
 
 let pass = 0;
 let fail = 0;
@@ -86,7 +93,7 @@ function requiredModules() {
       }
     }
   };
-  walk(JSON_DIR);
+  for (const dir of JSON_DIRS) if (fs.existsSync(dir)) walk(dir);
   return out;
 }
 

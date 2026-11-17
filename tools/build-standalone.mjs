@@ -393,7 +393,7 @@ async function main() {
     built.push(await buildSubject(subject, kbIndex, katexCss, appCss, presentNames));
   }
   if (!only) buildLanding(built, SUBJECTS);
-  console.log(`\n五站互链：${presentNames.length} 份快照可互达（${presentNames.join('、')}）`);
+  console.log(`\n六站互链：${presentNames.length} 份快照可互达（${presentNames.join('、')}）`);
 }
 
 main().catch((e) => {

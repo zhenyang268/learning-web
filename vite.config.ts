@@ -125,9 +125,10 @@ export default defineConfig({
     emptyOutDir: true,
     target: 'es2022',
     rollupOptions: {
-      // 多入口：五个站点各一个入口脚本（共用一套外壳与渲染器，数据根各自独立）
+      // 多入口：六个站点各一个入口脚本（共用一套外壳与渲染器，数据根各自独立）
       input: {
         main: path.join(ROOT, 'index.html'),
+        emath: path.join(ROOT, 'emath.html'),
         cs408: path.join(ROOT, 'cs408.html'),
         math1: path.join(ROOT, 'math1.html'),
         projects: path.join(ROOT, 'projects.html'),

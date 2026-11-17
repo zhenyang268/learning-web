@@ -45,6 +45,7 @@ const SUBJECT_ID = (() => {
 })();
 const ENTRY = {
   math: { root: 'json/', html: 'index.html', ts: 'src/main.ts' },
+  emath: { root: 'emath/json/', html: 'emath.html', ts: 'src/main-emath.ts' },
   cs408: { root: 'cs408/json/', html: 'cs408.html', ts: 'src/main-cs408.ts' },
   math1: { root: 'kaoyan/json/', html: 'math1.html', ts: 'src/main-math1.ts' },
   projects: { root: 'projects/json/', html: 'projects.html', ts: 'src/main-projects.ts' },

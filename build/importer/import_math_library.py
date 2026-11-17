@@ -190,9 +190,10 @@ def field_chunks(know: dict) -> list[tuple[int, str, str]]:
 
 def main() -> int:
     commit, dirty = notebook_state()
-    root = WEB / "json"
+    root = WEB / "emath" / "json"
 
-    # 只清 NL* 章目录，数学既有 318 单元一个不动
+    # 只清 NL* 章目录（2026-11-17 起数值库归工程数学站，根是 emath/json）；
+    # 工程数学站里手写/搬来的章（AN02–04、NM、CG、EQ、PR09）一个不动
     for child in sorted(root.glob("NL*")):
         for f in child.iterdir():
             f.unlink()
