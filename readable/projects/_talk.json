@@ -1,0 +1,119 @@
+[
+ {
+  "id": "projects-00-overview",
+  "title": "工程线不是教程，是一份能被追问的弹药库",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-00-overview.md",
+  "sha": "353a602b",
+  "n": 39,
+  "problems": []
+ },
+ {
+  "id": "projects-01-os",
+  "title": "操作系统这块，最值钱的是层与层对不上的地方",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-01-os.md",
+  "sha": "b343825b",
+  "n": 36,
+  "problems": []
+ },
+ {
+  "id": "projects-02-cpu",
+  "title": "体系结构这条线的四段，判据一个比一个硬",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-02-cpu.md",
+  "sha": "a269f923",
+  "n": 32,
+  "problems": []
+ },
+ {
+  "id": "projects-03-langs",
+  "title": "三种「为什么慢、为什么错」：编译器假设的、运行时兜住的、硬件等着的",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-03-langs.md",
+  "sha": "c4ec2945",
+  "n": 49,
+  "problems": []
+ },
+ {
+  "id": "projects-04-algo",
+  "title": "算法这块分两半：一半管扛住边界，一半管现场收敛",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-04-algo.md",
+  "sha": "f3f256e2",
+  "n": 46,
+  "problems": []
+ },
+ {
+  "id": "projects-05-eng",
+  "title": "工程方法论这条链：设计、写、出事、变慢，外加一本陷阱索引",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-05-eng.md",
+  "sha": "5859d229",
+  "n": 56,
+  "problems": []
+ },
+ {
+  "id": "projects-06-cg",
+  "title": "图形这条路为什么切成五份：因为判据不同",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-06-cg.md",
+  "sha": "a18b3bff",
+  "n": 33,
+  "problems": []
+ },
+ {
+  "id": "projects-07-raft",
+  "title": "Raft 为什么拆成两版：协议只说一遍，判据差两层",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-07-raft.md",
+  "sha": "70cf6c56",
+  "n": 33,
+  "problems": []
+ },
+ {
+  "id": "projects-08-csapp",
+  "title": "从数据表示到并发，是一条链路而不是八门课",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-08-csapp.md",
+  "sha": "c09175a1",
+  "n": 35,
+  "problems": []
+ },
+ {
+  "id": "projects-09-cs149",
+  "title": "一个加速比必须能被事件计数器解释",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-09-cs149.md",
+  "sha": "5554bc5e",
+  "n": 36,
+  "problems": []
+ },
+ {
+  "id": "projects-10-database",
+  "title": "一条查询从解析到落盘，路上每一层都在还上层的债",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-10-database.md",
+  "sha": "724a6d19",
+  "n": 38,
+  "problems": []
+ },
+ {
+  "id": "projects-11-ai",
+  "title": "一个网络结构可以拆成形状怎么流、参数怎么数、代价怎么估",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-11-ai.md",
+  "sha": "a8091ac5",
+  "n": 39,
+  "problems": []
+ },
+ {
+  "id": "projects-12-discrete-math",
+  "title": "每个结论都要落到它在代码里长什么样",
+  "group": "工程线大纲",
+  "source": "build/reading/talk/projects-12-discrete-math.md",
+  "sha": "165ce6a4",
+  "n": 39,
+  "problems": []
+ }
+]

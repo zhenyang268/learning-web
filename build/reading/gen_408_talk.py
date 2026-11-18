@@ -48,6 +48,8 @@ GROUPS: list[tuple[str, str, str, int]] = [
     ("math1-LA", "math1", "数一 · 线性代数", 4),
     ("math1-PS", "math1", "数一 · 概率统计", 5),
     ("english1", "english1", "英语题型讲解", 6),
+    # 工程线：**只做方向级大纲**，不拆子项目（2026-11-18 与用户定）
+    ("projects", "projects", "工程线大纲", 7),
 ]
 
 

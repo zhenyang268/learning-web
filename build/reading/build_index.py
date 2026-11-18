@@ -21,6 +21,8 @@ LINES = [
     # 讲解稿在前、考纲清单在后：先听「这科考什么」，再听考点清单
     ("cs408", "408", ["cs408/_talk.json", "cs408/_units.json"]),
     ("english1", "英语一", ["english1/_talk.json", "english1/_words.json", "english1/_writing.json"]),
+    # 工程线只有方向级大纲，没有逐篇考点稿
+    ("projects", "工程线", ["projects/_talk.json"]),
 ]
 
 

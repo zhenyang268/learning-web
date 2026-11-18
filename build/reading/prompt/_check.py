@@ -24,7 +24,12 @@ def main() -> int:
     # v3（2026-11-18）：分层铺垫 + 矩阵考点。区间按格数分档，短不罚、灌水才罚。
     # 整科导读（guide）与分层（tiers）天然比单个 KP 长，单独一档
     name = Path(sys.argv[1]).name
-    lo, hi = (1200, 2800) if ("guide" in name or "tiers" in name) else (1000, 2000)
+    if "projects" in name:          # 方向级大纲：要覆盖子项目清单与顺序，天然更长
+        lo, hi = 2200, 4500
+    elif "guide" in name or "tiers" in name:
+        lo, hi = 1200, 2800
+    else:
+        lo, hi = 1000, 2000
     print(f"字数 {chars}（目标 {lo}–{hi}，共 {n_sect} 节）{'OK' if lo <= chars <= hi else '超范围'}")
 
     # 源文件里允许 markdown 标记（反引号、加粗），先剥掉再查残留 —— 否则会把
