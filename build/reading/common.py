@@ -415,11 +415,22 @@ def read_math(tex: str, ctx: Ctx) -> str:
             return f"在 {b} 发生条件下 {a} 的概率"
         return f"{a} 增广 {b}"
 
-    # `P(A\mid B)` 在 ps 里是条件概率，整体替换（保留 P 与括号语义）
+    # `P(A\mid B)` 在 ps 里是条件概率，整体替换（保留 P 与括号语义）。
+    # 左右两侧必须**整段**捕获，不能只抓单个字母：实测 ps 的 13 处 `\mid` 里，
+    # `P(X>s+t\mid X>s)`、`P(D\mid+)`、`P(\text{拒绝}H_0\mid H_0\text{为真})`
+    # 三种写法都超出「单字母对单字母」，只抓一字母会把左式拆成
+    # 「X 大于 s+在 X 发生条件下 t 的概率 大于 s」（2026-11-18 实测）。
     if ctx.subdir == "ps":
         s = re.sub(
-            r"P\s*\(\s*([A-Za-z][A-Za-z0-9]*)\s*\\mid\s*([A-Za-z][A-Za-z0-9]*)\s*\)",
-            r" 在 \2 发生条件下 \1 的概率 ", s)
+            r"([A-Za-z])\s*\(([^()]*?)\s*\\mid\s*([^()]*?)\)",
+            lambda m: f" {m.group(1)} 在 {m.group(3).strip()} 发生条件下"
+                      f" {m.group(2).strip()} 的概率 ",
+            s)
+        # 条件密度/条件分布的下标：`f_{Y\mid X}` 里那个 `\mid` 不是概率式，
+        # 念「在给定 X 时 Y 的」才通顺（同一篇里 `(y\mid x)` 由上一条处理）。
+        s = re.sub(
+            r"_\{\s*([^{}]*?)\s*\\mid\s*([^{}]*?)\s*\}",
+            lambda m: f"_{{给定 {m.group(2).strip()} 时的 {m.group(1).strip()}}}", s)
     # 秩里的增广：r(A\mid b) → A 增广 b 的秩
     s = re.sub(
         r"\br\s*\(\s*([A-Za-z]+)\s*\\mid\s*([A-Za-z0-9\\{}_^*]+)\s*\)",
