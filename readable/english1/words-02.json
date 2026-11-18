@@ -1,0 +1,771 @@
+{
+ "version": "reading/v1",
+ "id": "words-02",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "02-核心动词（下）",
+ "source": "notebook/kaoyan/english1/words/02-核心动词（下）.md",
+ "sourceSha": "fbd7572f",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "02 核心动词（下）"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "change。change。改变。"
+  },
+  {
+   "t": "li",
+   "x": "modify。modify。修改。"
+  },
+  {
+   "t": "li",
+   "x": "transform。transform。改变。"
+  },
+  {
+   "t": "li",
+   "x": "convert。convert。转变。"
+  },
+  {
+   "t": "li",
+   "x": "shift。shift。转移。"
+  },
+  {
+   "t": "li",
+   "x": "vary。vary。改变。"
+  },
+  {
+   "t": "li",
+   "x": "amend。amend。修订。"
+  },
+  {
+   "t": "li",
+   "x": "reform。reform。改革。"
+  },
+  {
+   "t": "li",
+   "x": "reshape。reshape。重塑。"
+  },
+  {
+   "t": "li",
+   "x": "restructure。restructure。重组。"
+  },
+  {
+   "t": "li",
+   "x": "reorganize。reorganize。重组。"
+  },
+  {
+   "t": "li",
+   "x": "rearrange。rearrange。重新安排。"
+  },
+  {
+   "t": "li",
+   "x": "reverse。reverse。扭转。"
+  },
+  {
+   "t": "li",
+   "x": "invert。invert。颠倒。"
+  },
+  {
+   "t": "li",
+   "x": "switch。switch。转换。"
+  },
+  {
+   "t": "li",
+   "x": "mutate。mutate。变异。"
+  },
+  {
+   "t": "li",
+   "x": "evolve。evolve。演变。"
+  },
+  {
+   "t": "li",
+   "x": "diversify。diversify。使多样化。"
+  },
+  {
+   "t": "li",
+   "x": "expand。expand。扩大。"
+  },
+  {
+   "t": "li",
+   "x": "extend。extend。延伸。"
+  },
+  {
+   "t": "li",
+   "x": "enlarge。enlarge。扩大。"
+  },
+  {
+   "t": "li",
+   "x": "magnify。magnify。放大。"
+  },
+  {
+   "t": "li",
+   "x": "amplify。amplify。放大。"
+  },
+  {
+   "t": "li",
+   "x": "intensify。intensify。加强。"
+  },
+  {
+   "t": "li",
+   "x": "strengthen。strengthen。加强。"
+  },
+  {
+   "t": "li",
+   "x": "weaken。weaken。削弱。"
+  },
+  {
+   "t": "li",
+   "x": "diminish。diminish。减少。"
+  },
+  {
+   "t": "li",
+   "x": "reduce。reduce。减少。"
+  },
+  {
+   "t": "li",
+   "x": "decrease。decrease。减少。"
+  },
+  {
+   "t": "li",
+   "x": "lessen。lessen。减少。"
+  },
+  {
+   "t": "li",
+   "x": "shrink。shrink。收缩。"
+  },
+  {
+   "t": "li",
+   "x": "contract。contract。收缩。"
+  },
+  {
+   "t": "li",
+   "x": "dwindle。dwindle。逐渐减少。"
+  },
+  {
+   "t": "li",
+   "x": "deteriorate。deteriorate。恶化。"
+  },
+  {
+   "t": "li",
+   "x": "worsen。worsen。恶化。"
+  },
+  {
+   "t": "li",
+   "x": "improve。improve。改善。"
+  },
+  {
+   "t": "li",
+   "x": "enhance。enhance。提高。"
+  },
+  {
+   "t": "li",
+   "x": "upgrade。upgrade。升级。"
+  },
+  {
+   "t": "li",
+   "x": "increase。increase。增加。"
+  },
+  {
+   "t": "li",
+   "x": "raise。raise。提高。"
+  },
+  {
+   "t": "li",
+   "x": "heighten。heighten。加强。"
+  },
+  {
+   "t": "li",
+   "x": "deepen。deepen。加深。"
+  },
+  {
+   "t": "li",
+   "x": "broaden。broaden。拓宽。"
+  },
+  {
+   "t": "li",
+   "x": "widen。widen。拓宽。"
+  },
+  {
+   "t": "li",
+   "x": "narrow。narrow。缩小。"
+  },
+  {
+   "t": "li",
+   "x": "limit。limit。限制。"
+  },
+  {
+   "t": "li",
+   "x": "restrict。restrict。限制。"
+  },
+  {
+   "t": "li",
+   "x": "constrain。constrain。限制。"
+  },
+  {
+   "t": "li",
+   "x": "curb。curb。抑制。"
+  },
+  {
+   "t": "li",
+   "x": "check。check。抑制。"
+  },
+  {
+   "t": "li",
+   "x": "restrain。restrain。抑制。"
+  },
+  {
+   "t": "li",
+   "x": "inhibit。inhibit。抑制。"
+  },
+  {
+   "t": "li",
+   "x": "hinder。hinder。阻碍。"
+  },
+  {
+   "t": "li",
+   "x": "impede。impede。阻碍。"
+  },
+  {
+   "t": "li",
+   "x": "obstruct。obstruct。阻碍。"
+  },
+  {
+   "t": "li",
+   "x": "block。block。阻碍。"
+  },
+  {
+   "t": "li",
+   "x": "prevent。prevent。阻止。"
+  },
+  {
+   "t": "li",
+   "x": "prohibit。prohibit。禁止。"
+  },
+  {
+   "t": "li",
+   "x": "ban。ban。禁止。"
+  },
+  {
+   "t": "li",
+   "x": "forbid。forbid。禁止。"
+  },
+  {
+   "t": "li",
+   "x": "discourage。discourage。阻止。"
+  },
+  {
+   "t": "li",
+   "x": "deter。deter。阻止。"
+  },
+  {
+   "t": "li",
+   "x": "suppress。suppress。压制。"
+  },
+  {
+   "t": "li",
+   "x": "repress。repress。压制。"
+  },
+  {
+   "t": "li",
+   "x": "oppress。oppress。压迫。"
+  },
+  {
+   "t": "li",
+   "x": "eliminate。eliminate。消除。"
+  },
+  {
+   "t": "li",
+   "x": "eradicate。eradicate。根除。"
+  },
+  {
+   "t": "li",
+   "x": "remove。remove。消除。"
+  },
+  {
+   "t": "li",
+   "x": "cancel。cancel。取消。"
+  },
+  {
+   "t": "li",
+   "x": "repeal。repeal。废除。"
+  },
+  {
+   "t": "li",
+   "x": "revoke。revoke。撤销。"
+  },
+  {
+   "t": "li",
+   "x": "withdraw。withdraw。撤销。"
+  },
+  {
+   "t": "li",
+   "x": "quit。quit。停止。"
+  },
+  {
+   "t": "li",
+   "x": "cease。cease。停止。"
+  },
+  {
+   "t": "li",
+   "x": "halt。halt。停止。"
+  },
+  {
+   "t": "li",
+   "x": "suspend。suspend。暂停。"
+  },
+  {
+   "t": "li",
+   "x": "postpone。postpone。推迟。"
+  },
+  {
+   "t": "li",
+   "x": "delay。delay。推迟。"
+  },
+  {
+   "t": "li",
+   "x": "defer。defer。推迟。"
+  },
+  {
+   "t": "li",
+   "x": "influence。influence。影响。"
+  },
+  {
+   "t": "li",
+   "x": "impact。impact。影响。"
+  },
+  {
+   "t": "li",
+   "x": "shape。shape。塑造。"
+  },
+  {
+   "t": "li",
+   "x": "mold。mold。塑造。"
+  },
+  {
+   "t": "li",
+   "x": "determine。determine。决定。"
+  },
+  {
+   "t": "li",
+   "x": "govern。govern。支配。"
+  },
+  {
+   "t": "li",
+   "x": "control。control。控制。"
+  },
+  {
+   "t": "li",
+   "x": "regulate。regulate。调节。"
+  },
+  {
+   "t": "li",
+   "x": "guide。guide。指导。"
+  },
+  {
+   "t": "li",
+   "x": "direct。direct。指导。"
+  },
+  {
+   "t": "li",
+   "x": "lead。lead。导致。"
+  },
+  {
+   "t": "li",
+   "x": "manage。manage。设法做到。"
+  },
+  {
+   "t": "li",
+   "x": "administer。administer。实施。"
+  },
+  {
+   "t": "li",
+   "x": "supervise。supervise。监督。"
+  },
+  {
+   "t": "li",
+   "x": "monitor。monitor。监测。"
+  },
+  {
+   "t": "li",
+   "x": "oversee。oversee。监督。"
+  },
+  {
+   "t": "li",
+   "x": "manipulate。manipulate。操纵。"
+  },
+  {
+   "t": "li",
+   "x": "exploit。exploit。利用。"
+  },
+  {
+   "t": "li",
+   "x": "dominate。dominate。支配。"
+  },
+  {
+   "t": "li",
+   "x": "prevail。prevail。盛行。"
+  },
+  {
+   "t": "li",
+   "x": "predominate。predominate。占主导。"
+  },
+  {
+   "t": "li",
+   "x": "overwhelm。overwhelm。压倒。"
+  },
+  {
+   "t": "li",
+   "x": "overpower。overpower。压倒。"
+  },
+  {
+   "t": "li",
+   "x": "sway。sway。影响。"
+  },
+  {
+   "t": "li",
+   "x": "induce。induce。诱导。"
+  },
+  {
+   "t": "li",
+   "x": "prompt。prompt。促使。"
+  },
+  {
+   "t": "li",
+   "x": "provoke。provoke。激起。"
+  },
+  {
+   "t": "li",
+   "x": "trigger。trigger。引发。"
+  },
+  {
+   "t": "li",
+   "x": "spark。spark。引发。"
+  },
+  {
+   "t": "li",
+   "x": "stimulate。stimulate。刺激。"
+  },
+  {
+   "t": "li",
+   "x": "inspire。inspire。激发。"
+  },
+  {
+   "t": "li",
+   "x": "motivate。motivate。激励。"
+  },
+  {
+   "t": "li",
+   "x": "encourage。encourage。鼓励。"
+  },
+  {
+   "t": "li",
+   "x": "urge。urge。敦促。"
+  },
+  {
+   "t": "li",
+   "x": "press。press。敦促。"
+  },
+  {
+   "t": "li",
+   "x": "push。push。推动。"
+  },
+  {
+   "t": "li",
+   "x": "drive。drive。驱使。"
+  },
+  {
+   "t": "li",
+   "x": "compel。compel。强迫。"
+  },
+  {
+   "t": "li",
+   "x": "force。force。强迫。"
+  },
+  {
+   "t": "li",
+   "x": "oblige。oblige。迫使。"
+  },
+  {
+   "t": "li",
+   "x": "support。support。支持。"
+  },
+  {
+   "t": "li",
+   "x": "sustain。sustain。维持。"
+  },
+  {
+   "t": "li",
+   "x": "back。back。支持。"
+  },
+  {
+   "t": "li",
+   "x": "favor。favor。支持。"
+  },
+  {
+   "t": "li",
+   "x": "champion。champion。支持。"
+  },
+  {
+   "t": "li",
+   "x": "promote。promote。促进。"
+  },
+  {
+   "t": "li",
+   "x": "sponsor。sponsor。赞助。"
+  },
+  {
+   "t": "li",
+   "x": "fund。fund。资助。"
+  },
+  {
+   "t": "li",
+   "x": "finance。finance。资助。"
+  },
+  {
+   "t": "li",
+   "x": "subsidize。subsidize。补贴。"
+  },
+  {
+   "t": "li",
+   "x": "assist。assist。协助。"
+  },
+  {
+   "t": "li",
+   "x": "aid。aid。帮助。"
+  },
+  {
+   "t": "li",
+   "x": "help。help。帮助。"
+  },
+  {
+   "t": "li",
+   "x": "facilitate。facilitate。促进。"
+  },
+  {
+   "t": "li",
+   "x": "enable。enable。使能够。"
+  },
+  {
+   "t": "li",
+   "x": "bolster。bolster。支持。"
+  },
+  {
+   "t": "li",
+   "x": "reinforce。reinforce。加强。"
+  },
+  {
+   "t": "li",
+   "x": "consolidate。consolidate。巩固。"
+  },
+  {
+   "t": "li",
+   "x": "cement。cement。巩固。"
+  },
+  {
+   "t": "li",
+   "x": "secure。secure。获得。"
+  },
+  {
+   "t": "li",
+   "x": "guarantee。guarantee。保证。"
+  },
+  {
+   "t": "li",
+   "x": "ensure。ensure。确保。"
+  },
+  {
+   "t": "li",
+   "x": "justify。justify。证明…正当。"
+  },
+  {
+   "t": "li",
+   "x": "defend。defend。辩护。"
+  },
+  {
+   "t": "li",
+   "x": "protect。protect。保护。"
+  },
+  {
+   "t": "li",
+   "x": "safeguard。safeguard。保护。"
+  },
+  {
+   "t": "li",
+   "x": "preserve。preserve。保护。"
+  },
+  {
+   "t": "li",
+   "x": "conserve。conserve。保护。"
+  },
+  {
+   "t": "li",
+   "x": "shield。shield。保护。"
+  },
+  {
+   "t": "li",
+   "x": "shelter。shelter。庇护。"
+  },
+  {
+   "t": "li",
+   "x": "harbor。harbor。心怀。"
+  },
+  {
+   "t": "li",
+   "x": "embrace。embrace。采纳。"
+  },
+  {
+   "t": "li",
+   "x": "admit。admit。承认。"
+  },
+  {
+   "t": "li",
+   "x": "concede。concede。承认。"
+  },
+  {
+   "t": "li",
+   "x": "grant。grant。授予。"
+  },
+  {
+   "t": "li",
+   "x": "yield。yield。屈服。"
+  },
+  {
+   "t": "li",
+   "x": "surrender。surrender。放弃。"
+  },
+  {
+   "t": "li",
+   "x": "submit。submit。提交。"
+  },
+  {
+   "t": "li",
+   "x": "comply。comply。遵守。"
+  },
+  {
+   "t": "li",
+   "x": "conform。conform。遵守。"
+  },
+  {
+   "t": "li",
+   "x": "obey。obey。服从。"
+  },
+  {
+   "t": "li",
+   "x": "follow。follow。遵循。"
+  },
+  {
+   "t": "li",
+   "x": "adhere。adhere。坚持。"
+  },
+  {
+   "t": "li",
+   "x": "resist。resist。抵制。"
+  },
+  {
+   "t": "li",
+   "x": "refuse。refuse。拒绝。"
+  },
+  {
+   "t": "li",
+   "x": "rebut。rebut。反驳。"
+  },
+  {
+   "t": "li",
+   "x": "dispute。dispute。质疑。"
+  },
+  {
+   "t": "li",
+   "x": "criticize。criticize。批评。"
+  },
+  {
+   "t": "li",
+   "x": "condemn。condemn。谴责。"
+  },
+  {
+   "t": "li",
+   "x": "blame。blame。责怪。"
+  },
+  {
+   "t": "li",
+   "x": "accuse。accuse。指控。"
+  },
+  {
+   "t": "li",
+   "x": "charge。charge。指控。"
+  },
+  {
+   "t": "li",
+   "x": "attack。attack。攻击。"
+  },
+  {
+   "t": "li",
+   "x": "assault。assault。攻击。"
+  },
+  {
+   "t": "li",
+   "x": "defy。defy。违抗。"
+  },
+  {
+   "t": "li",
+   "x": "protest。protest。抗议。"
+  },
+  {
+   "t": "li",
+   "x": "boycott。boycott。抵制。"
+  },
+  {
+   "t": "li",
+   "x": "undermine。undermine。削弱。"
+  },
+  {
+   "t": "li",
+   "x": "subvert。subvert。颠覆。"
+  },
+  {
+   "t": "li",
+   "x": "sabotage。sabotage。破坏。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "“When universities propose to transform their curricula by integrating artificial intelligence” 变成 When引导时间状语从句；by integrating为“介词+动名词” 变成 用于交代背景或条件，并用by doing说明方式。"
+  },
+  {
+   "t": "li",
+   "x": "“arguing that commercial pressure could undermine the educational values that have long shaped academic life” 变成 现在分词短语作伴随状语；that引导宾语从句，第二个that引导定语从句 变成 用分词补充说明批评者的观点，并用嵌套从句增强信息密度。"
+  },
+  {
+   "t": "li",
+   "x": "“They resist the assumption that every innovation necessarily improves learning” 变成 resist后接名词宾语；that引导同位语从句 变成 用that解释assumption的具体内容，resist常表示“抵制某种观念、做法”。"
+  },
+  {
+   "t": "li",
+   "x": "“A wiser approach is not to reject change altogether but to examine who benefits from it and who bears its costs” 变成 not...but...连接两个不定式；两个who引导并列宾语从句 变成 用not...but...构成对比，用who从句分别说明受益者与承担者。"
+  },
+  {
+   "t": "li",
+   "x": "“Only when institutions support careful trial and open discussion can reform truly serve education rather than merely serve the market” 变成 Only+when状语从句置句首引起主句部分倒装；rather than连接并列动词短语 变成 用倒装强调“只有……才……”，用rather than表达取舍与对比。"
+  }
+ ]
+}

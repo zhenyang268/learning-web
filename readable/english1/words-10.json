@@ -1,0 +1,1555 @@
+{
+ "version": "reading/v1",
+ "id": "words-10",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "10-社会、政治与公共治理",
+ "source": "notebook/kaoyan/english1/words/10-社会、政治与公共治理.md",
+ "sourceSha": "6ef1977c",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "10 社会、政治与公共治理"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "society。society。社会。"
+  },
+  {
+   "t": "li",
+   "x": "social。social。社会的。"
+  },
+  {
+   "t": "li",
+   "x": "government。government。政府。"
+  },
+  {
+   "t": "li",
+   "x": "governance。governance。治理。"
+  },
+  {
+   "t": "li",
+   "x": "politics。politics。政治。"
+  },
+  {
+   "t": "li",
+   "x": "political。political。政治的。"
+  },
+  {
+   "t": "li",
+   "x": "community。community。社区。"
+  },
+  {
+   "t": "li",
+   "x": "institution。institution。制度。"
+  },
+  {
+   "t": "li",
+   "x": "institutional。institutional。制度的。"
+  },
+  {
+   "t": "li",
+   "x": "citizen。citizen。公民。"
+  },
+  {
+   "t": "li",
+   "x": "citizenship。citizenship。公民身份。"
+  },
+  {
+   "t": "li",
+   "x": "poverty。poverty。贫困。"
+  },
+  {
+   "t": "li",
+   "x": "inequality。inequality。不平等。"
+  },
+  {
+   "t": "li",
+   "x": "equality。equality。平等。"
+  },
+  {
+   "t": "li",
+   "x": "democracy。democracy。民主。"
+  },
+  {
+   "t": "li",
+   "x": "democratic。democratic。民主的。"
+  },
+  {
+   "t": "li",
+   "x": "authority。authority。权威。"
+  },
+  {
+   "t": "li",
+   "x": "legislative。legislative。立法的。"
+  },
+  {
+   "t": "li",
+   "x": "legitimate。legitimate。合法的。"
+  },
+  {
+   "t": "li",
+   "x": "bureaucracy。bureaucracy。官僚机构。"
+  },
+  {
+   "t": "li",
+   "x": "official。official。官员。"
+  },
+  {
+   "t": "li",
+   "x": "minister。minister。部长。"
+  },
+  {
+   "t": "li",
+   "x": "parliament。parliament。议会。"
+  },
+  {
+   "t": "li",
+   "x": "congress。congress。国会。"
+  },
+  {
+   "t": "li",
+   "x": "senate。senate。参议院。"
+  },
+  {
+   "t": "li",
+   "x": "council。council。委员会。"
+  },
+  {
+   "t": "li",
+   "x": "committee。committee。委员会。"
+  },
+  {
+   "t": "li",
+   "x": "commission。commission。委员会。"
+  },
+  {
+   "t": "li",
+   "x": "federal。federal。联邦的。"
+  },
+  {
+   "t": "li",
+   "x": "municipal。municipal。市政的。"
+  },
+  {
+   "t": "li",
+   "x": "local。local。地方的。"
+  },
+  {
+   "t": "li",
+   "x": "central。central。中央的。"
+  },
+  {
+   "t": "li",
+   "x": "nation。nation。国家。"
+  },
+  {
+   "t": "li",
+   "x": "national。national。国家的。"
+  },
+  {
+   "t": "li",
+   "x": "nationalism。nationalism。民族主义。"
+  },
+  {
+   "t": "li",
+   "x": "sovereignty。sovereignty。主权。"
+  },
+  {
+   "t": "li",
+   "x": "regime。regime。政权。"
+  },
+  {
+   "t": "li",
+   "x": "reign。reign。统治。"
+  },
+  {
+   "t": "li",
+   "x": "dynasty。dynasty。王朝。"
+  },
+  {
+   "t": "li",
+   "x": "empire。empire。帝国。"
+  },
+  {
+   "t": "li",
+   "x": "colony。colony。殖民地。"
+  },
+  {
+   "t": "li",
+   "x": "colonial。colonial。殖民地的。"
+  },
+  {
+   "t": "li",
+   "x": "imperial。imperial。帝国的。"
+  },
+  {
+   "t": "li",
+   "x": "revolution。revolution。革命。"
+  },
+  {
+   "t": "li",
+   "x": "revolt。revolt。反抗。"
+  },
+  {
+   "t": "li",
+   "x": "rebel。rebel。反叛者。"
+  },
+  {
+   "t": "li",
+   "x": "campaign。campaign。运动。"
+  },
+  {
+   "t": "li",
+   "x": "election。election。选举。"
+  },
+  {
+   "t": "li",
+   "x": "elect。elect。选举。"
+  },
+  {
+   "t": "li",
+   "x": "electorate。electorate。选民。"
+  },
+  {
+   "t": "li",
+   "x": "vote。vote。选票。"
+  },
+  {
+   "t": "li",
+   "x": "ballot。ballot。选票。"
+  },
+  {
+   "t": "li",
+   "x": "candidate。candidate。候选人。"
+  },
+  {
+   "t": "li",
+   "x": "nominate。nominate。提名。"
+  },
+  {
+   "t": "li",
+   "x": "appoint。appoint。任命。"
+  },
+  {
+   "t": "li",
+   "x": "appointment。appointment。任命。"
+  },
+  {
+   "t": "li",
+   "x": "cabinet。cabinet。内阁。"
+  },
+  {
+   "t": "li",
+   "x": "coalition。coalition。联合政府。"
+  },
+  {
+   "t": "li",
+   "x": "alliance。alliance。联盟。"
+  },
+  {
+   "t": "li",
+   "x": "party。party。政党。"
+  },
+  {
+   "t": "li",
+   "x": "partisan。partisan。党派的。"
+  },
+  {
+   "t": "li",
+   "x": "opposition。opposition。反对。"
+  },
+  {
+   "t": "li",
+   "x": "opponent。opponent。对手。"
+  },
+  {
+   "t": "li",
+   "x": "rival。rival。竞争对手。"
+  },
+  {
+   "t": "li",
+   "x": "treaty。treaty。条约。"
+  },
+  {
+   "t": "li",
+   "x": "diplomacy。diplomacy。外交。"
+  },
+  {
+   "t": "li",
+   "x": "diplomatic。diplomatic。外交的。"
+  },
+  {
+   "t": "li",
+   "x": "ambassador。ambassador。大使。"
+  },
+  {
+   "t": "li",
+   "x": "delegate。delegate。代表。"
+  },
+  {
+   "t": "li",
+   "x": "delegation。delegation。代表团。"
+  },
+  {
+   "t": "li",
+   "x": "representative。representative。代表。"
+  },
+  {
+   "t": "li",
+   "x": "representation。representation。代表。"
+  },
+  {
+   "t": "li",
+   "x": "constituent。constituent。选民。"
+  },
+  {
+   "t": "li",
+   "x": "constituency。constituency。选区。"
+  },
+  {
+   "t": "li",
+   "x": "lobby。lobby。游说集团。"
+  },
+  {
+   "t": "li",
+   "x": "advocacy。advocacy。拥护。"
+  },
+  {
+   "t": "li",
+   "x": "petition。petition。请愿书。"
+  },
+  {
+   "t": "li",
+   "x": "appeal。appeal。呼吁。"
+  },
+  {
+   "t": "li",
+   "x": "lobbyist。lobbyist。说客。"
+  },
+  {
+   "t": "li",
+   "x": "propaganda。propaganda。宣传。"
+  },
+  {
+   "t": "li",
+   "x": "immigrant。immigrant。移民。"
+  },
+  {
+   "t": "li",
+   "x": "immigration。immigration。移民入境。"
+  },
+  {
+   "t": "li",
+   "x": "emigrate。emigrate。移居国外。"
+  },
+  {
+   "t": "li",
+   "x": "migrant。migrant。移民。"
+  },
+  {
+   "t": "li",
+   "x": "refugee。refugee。难民。"
+  },
+  {
+   "t": "li",
+   "x": "asylum。asylum。庇护。"
+  },
+  {
+   "t": "li",
+   "x": "ethnic。ethnic。种族的。"
+  },
+  {
+   "t": "li",
+   "x": "racial。racial。种族的。"
+  },
+  {
+   "t": "li",
+   "x": "racism。racism。种族主义。"
+  },
+  {
+   "t": "li",
+   "x": "discrimination。discrimination。歧视。"
+  },
+  {
+   "t": "li",
+   "x": "minority。minority。少数。"
+  },
+  {
+   "t": "li",
+   "x": "majority。majority。多数。"
+  },
+  {
+   "t": "li",
+   "x": "segregation。segregation。种族隔离。"
+  },
+  {
+   "t": "li",
+   "x": "diversity。diversity。多样性。"
+  },
+  {
+   "t": "li",
+   "x": "diverse。diverse。多样的。"
+  },
+  {
+   "t": "li",
+   "x": "tolerance。tolerance。宽容。"
+  },
+  {
+   "t": "li",
+   "x": "tolerate。tolerate。容忍。"
+  },
+  {
+   "t": "li",
+   "x": "hierarchy。hierarchy。等级制度。"
+  },
+  {
+   "t": "li",
+   "x": "hierarchical。hierarchical。等级制的。"
+  },
+  {
+   "t": "li",
+   "x": "status。status。地位。"
+  },
+  {
+   "t": "li",
+   "x": "class。class。阶级。"
+  },
+  {
+   "t": "li",
+   "x": "stratum。stratum。阶层。"
+  },
+  {
+   "t": "li",
+   "x": "elite。elite。精英。"
+  },
+  {
+   "t": "li",
+   "x": "privilege。privilege。特权。"
+  },
+  {
+   "t": "li",
+   "x": "underprivileged。underprivileged。贫困的。"
+  },
+  {
+   "t": "li",
+   "x": "disadvantage。disadvantage。不利条件。"
+  },
+  {
+   "t": "li",
+   "x": "marginalize。marginalize。使边缘化。"
+  },
+  {
+   "t": "li",
+   "x": "exclude。exclude。排除。"
+  },
+  {
+   "t": "li",
+   "x": "exclusion。exclusion。排斥。"
+  },
+  {
+   "t": "li",
+   "x": "inclusion。inclusion。包容。"
+  },
+  {
+   "t": "li",
+   "x": "inclusive。inclusive。包容的。"
+  },
+  {
+   "t": "li",
+   "x": "solidarity。solidarity。团结。"
+  },
+  {
+   "t": "li",
+   "x": "cohesion。cohesion。凝聚力。"
+  },
+  {
+   "t": "li",
+   "x": "coherent。coherent。连贯的。"
+  },
+  {
+   "t": "li",
+   "x": "morality。morality。道德。"
+  },
+  {
+   "t": "li",
+   "x": "ethics。ethics。伦理。"
+  },
+  {
+   "t": "li",
+   "x": "civic。civic。公民的。"
+  },
+  {
+   "t": "li",
+   "x": "civil。civil。公民的。"
+  },
+  {
+   "t": "li",
+   "x": "civilian。civilian。平民。"
+  },
+  {
+   "t": "li",
+   "x": "liberty。liberty。自由。"
+  },
+  {
+   "t": "li",
+   "x": "freedom。freedom。自由。"
+  },
+  {
+   "t": "li",
+   "x": "right。right。权利。"
+  },
+  {
+   "t": "li",
+   "x": "obligation。obligation。义务。"
+  },
+  {
+   "t": "li",
+   "x": "duty。duty。义务。"
+  },
+  {
+   "t": "li",
+   "x": "responsibility。responsibility。责任。"
+  },
+  {
+   "t": "li",
+   "x": "accountability。accountability。问责制。"
+  },
+  {
+   "t": "li",
+   "x": "transparency。transparency。透明。"
+  },
+  {
+   "t": "li",
+   "x": "corruption。corruption。腐败。"
+  },
+  {
+   "t": "li",
+   "x": "corrupt。corrupt。腐败的。"
+  },
+  {
+   "t": "li",
+   "x": "scandal。scandal。丑闻。"
+  },
+  {
+   "t": "li",
+   "x": "fraud。fraud。欺诈。"
+  },
+  {
+   "t": "li",
+   "x": "bribe。bribe。贿赂。"
+  },
+  {
+   "t": "li",
+   "x": "crime。crime。犯罪。"
+  },
+  {
+   "t": "li",
+   "x": "criminal。criminal。罪犯。"
+  },
+  {
+   "t": "li",
+   "x": "offense。offense。犯罪。"
+  },
+  {
+   "t": "li",
+   "x": "penalty。penalty。处罚。"
+  },
+  {
+   "t": "li",
+   "x": "punish。punish。惩罚。"
+  },
+  {
+   "t": "li",
+   "x": "prosecute。prosecute。起诉。"
+  },
+  {
+   "t": "li",
+   "x": "prosecution。prosecution。起诉。"
+  },
+  {
+   "t": "li",
+   "x": "convict。convict。定罪。"
+  },
+  {
+   "t": "li",
+   "x": "jury。jury。陪审团。"
+  },
+  {
+   "t": "li",
+   "x": "judicial。judicial。司法的。"
+  },
+  {
+   "t": "li",
+   "x": "judiciary。judiciary。司法机构。"
+  },
+  {
+   "t": "li",
+   "x": "court。court。法院。"
+  },
+  {
+   "t": "li",
+   "x": "lawsuit。lawsuit。诉讼。"
+  },
+  {
+   "t": "li",
+   "x": "sue。sue。起诉。"
+  },
+  {
+   "t": "li",
+   "x": "illegal。illegal。非法的。"
+  },
+  {
+   "t": "li",
+   "x": "enforce。enforce。执行。"
+  },
+  {
+   "t": "li",
+   "x": "enforcement。enforcement。执行。"
+  },
+  {
+   "t": "li",
+   "x": "compliance。compliance。遵守。"
+  },
+  {
+   "t": "li",
+   "x": "violate。violate。违反。"
+  },
+  {
+   "t": "li",
+   "x": "violation。violation。违反。"
+  },
+  {
+   "t": "li",
+   "x": "allocate。allocate。分配。"
+  },
+  {
+   "t": "li",
+   "x": "allocation。allocation。分配。"
+  },
+  {
+   "t": "li",
+   "x": "austerity。austerity。紧缩。"
+  },
+  {
+   "t": "li",
+   "x": "healthcare。healthcare。医疗保健。"
+  },
+  {
+   "t": "li",
+   "x": "medicare。medicare。医疗保险制度。"
+  },
+  {
+   "t": "li",
+   "x": "education。education。教育。"
+  },
+  {
+   "t": "li",
+   "x": "housing。housing。住房。"
+  },
+  {
+   "t": "li",
+   "x": "utilities。utilities。公用事业。"
+  },
+  {
+   "t": "li",
+   "x": "rural。rural。农村的。"
+  },
+  {
+   "t": "li",
+   "x": "suburb。suburb。郊区。"
+  },
+  {
+   "t": "li",
+   "x": "gentrification。gentrification。中产阶层化。"
+  },
+  {
+   "t": "li",
+   "x": "dwelling。dwelling。住宅。"
+  },
+  {
+   "t": "li",
+   "x": "homeless。homeless。无家可归的。"
+  },
+  {
+   "t": "li",
+   "x": "charity。charity。慈善。"
+  },
+  {
+   "t": "li",
+   "x": "philanthropy。philanthropy。慈善事业。"
+  },
+  {
+   "t": "li",
+   "x": "donate。donate。捐赠。"
+  },
+  {
+   "t": "li",
+   "x": "volunteer。volunteer。志愿者。"
+  },
+  {
+   "t": "li",
+   "x": "nonprofit。nonprofit。非营利的。"
+  },
+  {
+   "t": "li",
+   "x": "entitlement。entitlement。权利。"
+  },
+  {
+   "t": "li",
+   "x": "deprivation。deprivation。剥夺。"
+  },
+  {
+   "t": "li",
+   "x": "deprive。deprive。剥夺。"
+  },
+  {
+   "t": "li",
+   "x": "segregate。segregate。隔离。"
+  },
+  {
+   "t": "li",
+   "x": "surveillance。surveillance。监视。"
+  },
+  {
+   "t": "li",
+   "x": "privacy。privacy。隐私。"
+  },
+  {
+   "t": "li",
+   "x": "censorship。censorship。审查制度。"
+  },
+  {
+   "t": "li",
+   "x": "censor。censor。审查。"
+  },
+  {
+   "t": "li",
+   "x": "media。media。媒体。"
+  },
+  {
+   "t": "li",
+   "x": "journalism。journalism。新闻业。"
+  },
+  {
+   "t": "li",
+   "x": "publicity。publicity。宣传。"
+  },
+  {
+   "t": "li",
+   "x": "poll。poll。民意调查。"
+  },
+  {
+   "t": "li",
+   "x": "referendum。referendum。全民公投。"
+  },
+  {
+   "t": "li",
+   "x": "mandate。mandate。授权。"
+  },
+  {
+   "t": "li",
+   "x": "constraint。constraint。限制。"
+  },
+  {
+   "t": "li",
+   "x": "reconcile。reconcile。调和。"
+  },
+  {
+   "t": "li",
+   "x": "implementation。implementation。实施。"
+  },
+  {
+   "t": "li",
+   "x": "initiative。initiative。倡议。"
+  },
+  {
+   "t": "li",
+   "x": "proposal。proposal。提议。"
+  },
+  {
+   "t": "li",
+   "x": "propose。propose。提议。"
+  },
+  {
+   "t": "li",
+   "x": "amendment。amendment。修正案。"
+  },
+  {
+   "t": "li",
+   "x": "constitution。constitution。宪法。"
+  },
+  {
+   "t": "li",
+   "x": "constitutional。constitutional。宪法的。"
+  },
+  {
+   "t": "li",
+   "x": "charter。charter。宪章。"
+  },
+  {
+   "t": "li",
+   "x": "accord。accord。协议。"
+  },
+  {
+   "t": "li",
+   "x": "protocol。protocol。议定书。"
+  },
+  {
+   "t": "li",
+   "x": "bilateral。bilateral。双边的。"
+  },
+  {
+   "t": "li",
+   "x": "multilateral。multilateral。多边的。"
+  },
+  {
+   "t": "li",
+   "x": "sovereign。sovereign。有主权的。"
+  },
+  {
+   "t": "li",
+   "x": "autonomy。autonomy。自治。"
+  },
+  {
+   "t": "li",
+   "x": "autonomous。autonomous。自治的。"
+  },
+  {
+   "t": "li",
+   "x": "decentralize。decentralize。分权。"
+  },
+  {
+   "t": "li",
+   "x": "centralize。centralize。集中。"
+  },
+  {
+   "t": "li",
+   "x": "accountable。accountable。负有责任的。"
+  },
+  {
+   "t": "li",
+   "x": "oversight。oversight。监督。"
+  },
+  {
+   "t": "li",
+   "x": "watchdog。watchdog。监督机构。"
+  },
+  {
+   "t": "li",
+   "x": "ombudsman。ombudsman。巡视官。"
+  },
+  {
+   "t": "li",
+   "x": "grievance。grievance。不满。"
+  },
+  {
+   "t": "li",
+   "x": "redress。redress。补偿。"
+  },
+  {
+   "t": "li",
+   "x": "remedy。remedy。补救办法。"
+  },
+  {
+   "t": "li",
+   "x": "stakeholder。stakeholder。利益相关者。"
+  },
+  {
+   "t": "li",
+   "x": "grassroots。grassroots。草根。"
+  },
+  {
+   "t": "li",
+   "x": "suffrage。suffrage。选举权。"
+  },
+  {
+   "t": "li",
+   "x": "municipality。municipality。自治市。"
+  },
+  {
+   "t": "li",
+   "x": "prefecture。prefecture。辖区。"
+  },
+  {
+   "t": "li",
+   "x": "province。province。省。"
+  },
+  {
+   "t": "li",
+   "x": "county。county。县。"
+  },
+  {
+   "t": "li",
+   "x": "district。district。区。"
+  },
+  {
+   "t": "li",
+   "x": "electoral。electoral。选举的。"
+  },
+  {
+   "t": "li",
+   "x": "campaigner。campaigner。活动家。"
+  },
+  {
+   "t": "li",
+   "x": "activist。activist。激进分子。"
+  },
+  {
+   "t": "li",
+   "x": "activism。activism。行动主义。"
+  },
+  {
+   "t": "li",
+   "x": "movement。movement。运动。"
+  },
+  {
+   "t": "li",
+   "x": "reformist。reformist。改革者。"
+  },
+  {
+   "t": "li",
+   "x": "liberal。liberal。自由的。"
+  },
+  {
+   "t": "li",
+   "x": "progressive。progressive。进步的。"
+  },
+  {
+   "t": "li",
+   "x": "reactionary。reactionary。反动的。"
+  },
+  {
+   "t": "li",
+   "x": "populist。populist。民粹主义的。"
+  },
+  {
+   "t": "li",
+   "x": "ideology。ideology。意识形态。"
+  },
+  {
+   "t": "li",
+   "x": "ideological。ideological。意识形态的。"
+  },
+  {
+   "t": "li",
+   "x": "manifesto。manifesto。宣言。"
+  },
+  {
+   "t": "li",
+   "x": "agenda。agenda。议程。"
+  },
+  {
+   "t": "li",
+   "x": "legitimacy。legitimacy。合法性。"
+  },
+  {
+   "t": "li",
+   "x": "oppression。oppression。压迫。"
+  },
+  {
+   "t": "li",
+   "x": "repression。repression。镇压。"
+  },
+  {
+   "t": "li",
+   "x": "persecute。persecute。迫害。"
+  },
+  {
+   "t": "li",
+   "x": "persecution。persecution。迫害。"
+  },
+  {
+   "t": "li",
+   "x": "exile。exile。流放。"
+  },
+  {
+   "t": "li",
+   "x": "detention。detention。拘留。"
+  },
+  {
+   "t": "li",
+   "x": "custody。custody。拘留。"
+  },
+  {
+   "t": "li",
+   "x": "amnesty。amnesty。大赦。"
+  },
+  {
+   "t": "li",
+   "x": "pardon。pardon。赦免。"
+  },
+  {
+   "t": "li",
+   "x": "acquit。acquit。宣判无罪。"
+  },
+  {
+   "t": "li",
+   "x": "prosecutor。prosecutor。检察官。"
+  },
+  {
+   "t": "li",
+   "x": "attorney。attorney。律师。"
+  },
+  {
+   "t": "li",
+   "x": "counsel。counsel。律师。"
+  },
+  {
+   "t": "li",
+   "x": "litigation。litigation。诉讼。"
+  },
+  {
+   "t": "li",
+   "x": "tribunal。tribunal。法庭。"
+  },
+  {
+   "t": "li",
+   "x": "jurisdiction。jurisdiction。司法权。"
+  },
+  {
+   "t": "li",
+   "x": "ordinance。ordinance。法令。"
+  },
+  {
+   "t": "li",
+   "x": "edict。edict。敕令。"
+  },
+  {
+   "t": "li",
+   "x": "bylaw。bylaw。附则。"
+  },
+  {
+   "t": "li",
+   "x": "ratify。ratify。批准。"
+  },
+  {
+   "t": "li",
+   "x": "enact。enact。颁布。"
+  },
+  {
+   "t": "li",
+   "x": "veto。veto。否决权。"
+  },
+  {
+   "t": "li",
+   "x": "filibuster。filibuster。冗长辩论。"
+  },
+  {
+   "t": "li",
+   "x": "quorum。quorum。法定人数。"
+  },
+  {
+   "t": "li",
+   "x": "caucus。caucus。党团会议。"
+  },
+  {
+   "t": "li",
+   "x": "primary。primary。初选。"
+  },
+  {
+   "t": "li",
+   "x": "runoff。runoff。决选。"
+  },
+  {
+   "t": "li",
+   "x": "turnout。turnout。投票率。"
+  },
+  {
+   "t": "li",
+   "x": "incumbent。incumbent。现任者。"
+  },
+  {
+   "t": "li",
+   "x": "contender。contender。竞争者。"
+  },
+  {
+   "t": "li",
+   "x": "frontrunner。frontrunner。领先者。"
+  },
+  {
+   "t": "li",
+   "x": "honeymoon。honeymoon。蜜月期。"
+  },
+  {
+   "t": "li",
+   "x": "rating。rating。支持率。"
+  },
+  {
+   "t": "li",
+   "x": "polls。polls。民意测验。"
+  },
+  {
+   "t": "li",
+   "x": "disenfranchise。disenfranchise。剥夺选举权。"
+  },
+  {
+   "t": "li",
+   "x": "gerrymander。gerrymander。不公正划分选区。"
+  },
+  {
+   "t": "li",
+   "x": "incarceration。incarceration。监禁。"
+  },
+  {
+   "t": "li",
+   "x": "recidivism。recidivism。累犯。"
+  },
+  {
+   "t": "li",
+   "x": "probation。probation。缓刑。"
+  },
+  {
+   "t": "li",
+   "x": "parole。parole。假释。"
+  },
+  {
+   "t": "li",
+   "x": "delinquency。delinquency。违法。"
+  },
+  {
+   "t": "li",
+   "x": "vandalism。vandalism。故意破坏公物。"
+  },
+  {
+   "t": "li",
+   "x": "larceny。larceny。盗窃罪。"
+  },
+  {
+   "t": "li",
+   "x": "embezzlement。embezzlement。挪用公款。"
+  },
+  {
+   "t": "li",
+   "x": "money laundering。money laundering。洗钱。"
+  },
+  {
+   "t": "li",
+   "x": "smuggle。smuggle。走私。"
+  },
+  {
+   "t": "li",
+   "x": "trafficking。trafficking。非法交易。"
+  },
+  {
+   "t": "li",
+   "x": "narcotics。narcotics。毒品。"
+  },
+  {
+   "t": "li",
+   "x": "overdose。overdose。用药过量。"
+  },
+  {
+   "t": "li",
+   "x": "prostitution。prostitution。卖淫。"
+  },
+  {
+   "t": "li",
+   "x": "gambling。gambling。赌博。"
+  },
+  {
+   "t": "li",
+   "x": "pornography。pornography。色情作品。"
+  },
+  {
+   "t": "li",
+   "x": "abortion。abortion。堕胎。"
+  },
+  {
+   "t": "li",
+   "x": "euthanasia。euthanasia。安乐死。"
+  },
+  {
+   "t": "li",
+   "x": "contraception。contraception。避孕。"
+  },
+  {
+   "t": "li",
+   "x": "ageing。ageing。老龄化。"
+  },
+  {
+   "t": "li",
+   "x": "dependency。dependency。依赖。"
+  },
+  {
+   "t": "li",
+   "x": "caregiver。caregiver。照料者。"
+  },
+  {
+   "t": "li",
+   "x": "orphan。orphan。孤儿。"
+  },
+  {
+   "t": "li",
+   "x": "widow。widow。寡妇。"
+  },
+  {
+   "t": "li",
+   "x": "accessible。accessible。可进入的。"
+  },
+  {
+   "t": "li",
+   "x": "accessibility。accessibility。无障碍。"
+  },
+  {
+   "t": "li",
+   "x": "mainstream。mainstream。主流。"
+  },
+  {
+   "t": "li",
+   "x": "underclass。underclass。底层阶级。"
+  },
+  {
+   "t": "li",
+   "x": "destitute。destitute。赤贫的。"
+  },
+  {
+   "t": "li",
+   "x": "indigent。indigent。贫困的。"
+  },
+  {
+   "t": "li",
+   "x": "affluent。affluent。富裕的。"
+  },
+  {
+   "t": "li",
+   "x": "affluence。affluence。富裕。"
+  },
+  {
+   "t": "li",
+   "x": "prosperity。prosperity。繁荣。"
+  },
+  {
+   "t": "li",
+   "x": "prosperous。prosperous。繁荣的。"
+  },
+  {
+   "t": "li",
+   "x": "stimulus。stimulus。刺激措施。"
+  },
+  {
+   "t": "li",
+   "x": "bailout。bailout。紧急救助。"
+  },
+  {
+   "t": "li",
+   "x": "default。default。违约。"
+  },
+  {
+   "t": "li",
+   "x": "creditor。creditor。债权人。"
+  },
+  {
+   "t": "li",
+   "x": "foreclosure。foreclosure。取消抵押品赎回权。"
+  },
+  {
+   "t": "li",
+   "x": "bankrupt。bankrupt。破产的。"
+  },
+  {
+   "t": "li",
+   "x": "bankruptcy。bankruptcy。破产。"
+  },
+  {
+   "t": "li",
+   "x": "antitrust。antitrust。反垄断的。"
+  },
+  {
+   "t": "li",
+   "x": "privatization。privatization。私有化。"
+  },
+  {
+   "t": "li",
+   "x": "levy。levy。征税。"
+  },
+  {
+   "t": "li",
+   "x": "excise。excise。消费税。"
+  },
+  {
+   "t": "li",
+   "x": "exemption。exemption。豁免。"
+  },
+  {
+   "t": "li",
+   "x": "evasion。evasion。逃税。"
+  },
+  {
+   "t": "li",
+   "x": "treasury。treasury。国库。"
+  },
+  {
+   "t": "li",
+   "x": "appropriation。appropriation。拨款。"
+  },
+  {
+   "t": "li",
+   "x": "endowment。endowment。捐赠基金。"
+  },
+  {
+   "t": "li",
+   "x": "benefactor。benefactor。捐助者。"
+  },
+  {
+   "t": "li",
+   "x": "philanthropist。philanthropist。慈善家。"
+  },
+  {
+   "t": "li",
+   "x": "donor。donor。捐赠者。"
+  },
+  {
+   "t": "li",
+   "x": "fundraising。fundraising。筹款。"
+  },
+  {
+   "t": "li",
+   "x": "charitable。charitable。慈善的。"
+  },
+  {
+   "t": "li",
+   "x": "voluntary。voluntary。自愿的。"
+  },
+  {
+   "t": "li",
+   "x": "mandatory。mandatory。强制的。"
+  },
+  {
+   "t": "li",
+   "x": "compulsory。compulsory。义务的。"
+  },
+  {
+   "t": "li",
+   "x": "optional。optional。可选的。"
+  },
+  {
+   "t": "li",
+   "x": "eligible。eligible。有资格的。"
+  },
+  {
+   "t": "li",
+   "x": "eligibility。eligibility。资格。"
+  },
+  {
+   "t": "li",
+   "x": "entitle。entitle。使有资格。"
+  },
+  {
+   "t": "li",
+   "x": "qualify。qualify。取得资格。"
+  },
+  {
+   "t": "li",
+   "x": "welfare state。welfare state。福利国家。"
+  },
+  {
+   "t": "li",
+   "x": "safety net。safety net。社会保障网。"
+  },
+  {
+   "t": "li",
+   "x": "means test。means test。经济状况调查。"
+  },
+  {
+   "t": "li",
+   "x": "universal。universal。普遍的。"
+  },
+  {
+   "t": "li",
+   "x": "redistribution。redistribution。再分配。"
+  },
+  {
+   "t": "li",
+   "x": "poverty line。poverty line。贫困线。"
+  },
+  {
+   "t": "li",
+   "x": "homelessness。homelessness。无家可归。"
+  },
+  {
+   "t": "li",
+   "x": "destitution。destitution。赤贫。"
+  },
+  {
+   "t": "li",
+   "x": "overcrowding。overcrowding。过度拥挤。"
+  },
+  {
+   "t": "li",
+   "x": "public transport。public transport。公共交通。"
+  },
+  {
+   "t": "li",
+   "x": "mobility。mobility。流动性。"
+  },
+  {
+   "t": "li",
+   "x": "commute。commute。通勤。"
+  },
+  {
+   "t": "li",
+   "x": "congestion。congestion。拥堵。"
+  },
+  {
+   "t": "li",
+   "x": "pedestrian。pedestrian。行人。"
+  },
+  {
+   "t": "li",
+   "x": "zoning。zoning。分区规划。"
+  },
+  {
+   "t": "li",
+   "x": "redevelopment。redevelopment。重新开发。"
+  },
+  {
+   "t": "li",
+   "x": "demolish。demolish。拆除。"
+  },
+  {
+   "t": "li",
+   "x": "eviction。eviction。驱逐。"
+  },
+  {
+   "t": "li",
+   "x": "subsidized。subsidized。有补贴的。"
+  },
+  {
+   "t": "li",
+   "x": "affordable。affordable。负担得起的。"
+  },
+  {
+   "t": "li",
+   "x": "assimilation。assimilation。同化。"
+  },
+  {
+   "t": "li",
+   "x": "multicultural。multicultural。多元文化的。"
+  },
+  {
+   "t": "li",
+   "x": "pluralism。pluralism。多元主义。"
+  },
+  {
+   "t": "li",
+   "x": "coexistence。coexistence。共存。"
+  },
+  {
+   "t": "li",
+   "x": "harmony。harmony。和谐。"
+  },
+  {
+   "t": "li",
+   "x": "conflict。conflict。冲突。"
+  },
+  {
+   "t": "li",
+   "x": "unrest。unrest。动荡。"
+  },
+  {
+   "t": "li",
+   "x": "riot。riot。暴乱。"
+  },
+  {
+   "t": "li",
+   "x": "turmoil。turmoil。动乱。"
+  },
+  {
+   "t": "li",
+   "x": "upheaval。upheaval。剧变。"
+  },
+  {
+   "t": "li",
+   "x": "insurgent。insurgent。叛乱者。"
+  },
+  {
+   "t": "li",
+   "x": "militant。militant。激进的。"
+  },
+  {
+   "t": "li",
+   "x": "extremism。extremism。极端主义。"
+  },
+  {
+   "t": "li",
+   "x": "terrorism。terrorism。恐怖主义。"
+  },
+  {
+   "t": "li",
+   "x": "terrorist。terrorist。恐怖分子。"
+  },
+  {
+   "t": "li",
+   "x": "militia。militia。民兵组织。"
+  },
+  {
+   "t": "li",
+   "x": "guerrilla。guerrilla。游击队员。"
+  },
+  {
+   "t": "li",
+   "x": "coup。coup。政变。"
+  },
+  {
+   "t": "li",
+   "x": "dictatorship。dictatorship。独裁统治。"
+  },
+  {
+   "t": "li",
+   "x": "totalitarian。totalitarian。极权主义的。"
+  },
+  {
+   "t": "li",
+   "x": "authoritarian。authoritarian。专制的。"
+  },
+  {
+   "t": "li",
+   "x": "tyranny。tyranny。暴政。"
+  },
+  {
+   "t": "li",
+   "x": "monarchy。monarchy。君主制。"
+  },
+  {
+   "t": "li",
+   "x": "republic。republic。共和国。"
+  },
+  {
+   "t": "li",
+   "x": "federation。federation。联邦。"
+  },
+  {
+   "t": "li",
+   "x": "confederation。confederation。邦联。"
+  },
+  {
+   "t": "li",
+   "x": "secession。secession。分离。"
+  },
+  {
+   "t": "li",
+   "x": "plebiscite。plebiscite。公民投票。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

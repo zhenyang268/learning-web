@@ -1,0 +1,807 @@
+{
+ "version": "reading/v1",
+ "id": "wr-06",
+ "line": "english1",
+ "group": "英语作文",
+ "title": "06-大作文",
+ "source": "notebook/kaoyan/english1/06-大作文.md",
+ "sourceSha": "429284d6",
+ "blocks": [
+  {
+   "t": "h1",
+   "x": "EN-WR2 大作文"
+  },
+  {
+   "t": "h2",
+   "x": "一、本章考点与档位"
+  },
+  {
+   "t": "p",
+   "x": "，KP ，名称 ，档位 ，真题落点 ，，---，---，---，---，，E1-WR-02 ，大作文（图画/图表作文）：描述—释义—论证—结论的四段式写作 ，应用 ，按「常见考法」备考（例题与数据均自拟），不编年份题号 ，"
+  },
+  {
+   "t": "p",
+   "x": "本章不新增考点。下文出现的“描述段、释义段、论证段、结论段”都只是 E1-WR-02 内部的功能位置，并不是独立考点；把它们拆开，只是为了让你知道每一段在阅卷时承担什么任务。"
+  },
+  {
+   "t": "p",
+   "x": "E1-WR-02 的功能位置拆分如下，同一考点内部的分层如下："
+  },
+  {
+   "t": "p",
+   "x": "，功能位置 ，交付物 ，判分关注点 ，，---，---，---，，描述 ，把画面转成 1–3 句可读文字 ，要点齐不齐、有没有总体印象句 ，，释义 ，一句话把画面抽象成命题 ，有没有把“画”和“理”接上 ，，论证 ，2–3 个理由或例证 ，因果链是否成立、有没有具体支撑 ，，结论 ，重申 + 可执行建议 ，是否落到人身上，还是只喊口号 ，"
+  },
+  {
+   "t": "h2",
+   "x": "二、正文"
+  },
+  {
+   "t": "h3",
+   "x": "1. 图画作文的本质：三重转译"
+  },
+  {
+   "t": "p",
+   "x": "定义。图画作文给你一幅（或一组）图像，要求你在 160–200 个英文词内完成三次转译："
+  },
+  {
+   "t": "li",
+   "x": "图像 变成 文字（description）：把画面要素写成句子；"
+  },
+  {
+   "t": "li",
+   "x": "文字 变成 命题（interpretation）：把画面要素抽象成一句话的寓意；"
+  },
+  {
+   "t": "li",
+   "x": "命题 变成 论证（argumentation）：为这句寓意配理由、例证、后果与对策。"
+  },
+  {
+   "t": "p",
+   "x": "为什么需要这个概念。因为大作文的阅卷是“先归档、再定分”，不是逐词扣分。归档看三件事：内容要点是否齐全（描述、释义、评论一个不缺）、结构是否一眼可辨、语言错误密度是否低到不干扰阅读。“三重转译”就是内容要点的另一种说法：你少做一次转译，就少一个要点，直接掉档。"
+  },
+  {
+   "t": "p",
+   "x": "可以粗略写成一个乘法关系："
+  },
+  {
+   "t": "f",
+   "x": "S 约等于 S 档 乘 lambda 语言",
+   "tex": "S \\approx S_{\\text{档}} \\times \\lambda_{\\text{语言}}"
+  },
+  {
+   "t": "p",
+   "x": "S 档 由你的结构决定，落在哪一档；lambda 语言 由错误密度决定，在同一档内上下浮动。语言再漂亮，也补不回落掉的那一档。"
+  },
+  {
+   "t": "p",
+   "x": "最小例子。图：一个人低头刷手机，背后一家人围坐却互不交谈。三个转译分别是："
+  },
+  {
+   "t": "li",
+   "x": "图像：A young man sits at a dinner table, eyes fixed on his phone, while the rest of the family eat in silence."
+  },
+  {
+   "t": "li",
+   "x": "命题：The cartoon points to the quiet erosion of face-to-face communication in a hyper-connected age."
+  },
+  {
+   "t": "li",
+   "x": "论证：手机把注意力切成碎片 变成 一桌人虽在场却不交流 变成 亲情与共情能力被稀释。"
+  },
+  {
+   "t": "p",
+   "x": "三句话都到位，才算完成一次完整转译。"
+  },
+  {
+   "t": "h3",
+   "x": "2. 描述段：先给“总体印象句”，再给细节"
+  },
+  {
+   "t": "p",
+   "x": "结构。描述段由两部分组成：一句总体印象句（overview）和一到两句细节铺陈（details）。总体印象句告诉阅卷人“这是一幅什么图”，细节句证明你真的看了图。"
+  },
+  {
+   "t": "p",
+   "x": "为什么必须有总体印象句。因为它是“要点齐全”的信号。直接扎进细节，阅卷人读完不知道图讲什么，只能判你“描述不完整”。"
+  },
+  {
+   "t": "p",
+   "x": "时态。描述画面用一般现在时。画面里发生的是“永恒的此刻”，用过去时会读成“图里那个人昨天做了什么”。"
+  },
+  {
+   "t": "p",
+   "x": "动词库。depict / portray / sketch / illustrate / show，开头别总是 As we can see。"
+  },
+  {
+   "t": "p",
+   "x": "三要素法：主体是谁、在做什么、和谁或什么形成对照或环境。写出这三样，句子自动变具体。"
+  },
+  {
+   "t": "p",
+   "x": "最小例子（空泛版 变成 具体版）。"
+  },
+  {
+   "t": "li",
+   "x": "空泛（32 词）：The picture shows two people. There are many things in the picture. One person is doing something and the other person is doing another thing. It is very meaningful."
+  },
+  {
+   "t": "li",
+   "x": "具体（48 词）：As is vividly portrayed, two men are digging in the same gold mine. The one on the left has opened several shallow pits and is walking away, spade on shoulder, while the one on the right keeps deepening a single hole, his spade already close to the ore."
+  },
+  {
+   "t": "p",
+   "x": "差别不在词难，而在“主体、动作、对照”三样齐了。第二版没有生词，但每一句都能在图上指认出来。"
+  },
+  {
+   "t": "h3",
+   "x": "3. 释义段：把“画”接到“理”上"
+  },
+  {
+   "t": "p",
+   "x": "定义。释义句是一句抽象命题，它必须包含图画里所有关键要素的抽象对应物。"
+  },
+  {
+   "t": "p",
+   "x": "为什么需要。描述与论证之间有一道空隙，释义句就是桥。没有桥，你的文章会变成“前面讲挖坑，后面讲坚持”的两篇短文。"
+  },
+  {
+   "t": "p",
+   "x": "做法。把图中的具体名词替换成抽象名词："
+  },
+  {
+   "t": "p",
+   "x": "，画面要素 ，抽象对应 ，，---，---，，浅坑、深坑 ，浅尝辄止 vs 持续投入 ，，走开的人 ，遇挫即弃 ，，靠近矿脉的铲子 ，临界点（threshold），，金矿 ，值得追求的目标 ，"
+  },
+  {
+   "t": "p",
+   "x": "最小例子（接上节的图）。"
+  },
+  {
+   "t": "li",
+   "x": "桥接句：Simple as the drawing is, its message is anything but shallow: success seldom favours those who give up at the first sign of difficulty; it rewards those who keep digging."
+  },
+  {
+   "t": "p",
+   "x": "注意这句里“digging”同时属于画面和喻义，这种双关是免费得来的自然度，能用就用。"
+  },
+  {
+   "t": "h3",
+   "x": "4. 论证段：四种论证方式，先建因果链"
+  },
+  {
+   "t": "p",
+   "x": "定义。论证是把释义命题支撑起来的过程。四项基本手段：因果链、对比、举例、让步。"
+  },
+  {
+   "t": "p",
+   "x": "因果链怎么建。三步：现象 变成 机制 变成 后果。每一步用从句或分词接住，不要用分号硬拼。"
+  },
+  {
+   "t": "f",
+   "x": "现象 趋于 机制 趋于 后果",
+   "tex": "\\text{现象} \\rightarrow \\text{机制} \\rightarrow \\text{后果}"
+  },
+  {
+   "t": "p",
+   "x": "以“手机依赖”为例："
+  },
+  {
+   "t": "li",
+   "x": "现象：注意力被持续打断；"
+  },
+  {
+   "t": "li",
+   "x": "机制：大脑习惯高频刺激后，难以维持长时间专注；"
+  },
+  {
+   "t": "li",
+   "x": "后果：深度阅读与创造性思考的能力被削弱。"
+  },
+  {
+   "t": "p",
+   "x": "成句：Constant notifications fragment attention, which in turn makes sustained concentration feel unbearable, so that the capacity for deep reading and original thinking quietly decays."
+  },
+  {
+   "t": "p",
+   "x": "对比：用于双图作文。By contrast / whereas / the former... the latter... 但对比的两端必须和描述段的两个主体一一对应，不能换人。"
+  },
+  {
+   "t": "p",
+   "x": "举例：具体但不虚构数据。Take a language learner as an example: one who quits after a month of stumbling never tastes fluency, whereas one who returns to the same grammar point for the tenth time eventually finds it transparent. 注意这里“example”是类型化的，不涉及任何统计。"
+  },
+  {
+   "t": "p",
+   "x": "让步：给文章加一层“想过了”的厚度。Admittedly, not every effort pays off, and blind persistence can be mere stubbornness. Yet..."
+  },
+  {
+   "t": "p",
+   "x": "最小例子（让步句）：Admittedly, not every effort pays off, and blind persistence can be mere stubbornness. Yet before we decide to abandon a hole, we should ask whether we have dug deep enough. 让步先退一步，Yet 一句立刻扳回，立场不软。"
+  },
+  {
+   "t": "h3",
+   "x": "5. 结论段：重申、分工、落地"
+  },
+  {
+   "t": "p",
+   "x": "结构。三句：重申立场（一句）、主体分工（一句，个人、学校、社会、政府选其二，不要全列）、有条件展望（一句）。"
+  },
+  {
+   "t": "p",
+   "x": "为什么不要写“Only in this way can we build a harmonious society”。因为它和你的图画没有对应关系，任何题目都能套，阅卷人一眼看出是背的，它不增加内容要点，只增加字数。"
+  },
+  {
+   "t": "p",
+   "x": "可执行建议的写法：把动词落到具体动作上。Persistence 变成 “在放弃前先估算自己已投入的比例”，而不是“我们要坚持不懈”。"
+  },
+  {
+   "t": "p",
+   "x": "最小例子。"
+  },
+  {
+   "t": "li",
+   "x": "空喊：Therefore, we must persist and never give up."
+  },
+  {
+   "t": "li",
+   "x": "落地：Therefore, before abandoning a plan, we would do well to estimate how much of the seam is already exposed, and to ask a mentor whether the remaining distance is worth another week."
+  },
+  {
+   "t": "h3",
+   "x": "6. 语言层：把及格句升格成得分句"
+  },
+  {
+   "t": "p",
+   "x": "四种升格手段，每种给一对句子。"
+  },
+  {
+   "t": "p",
+   "x": "（1）名词化：把从句压成名词短语，句子立刻变“书面”。"
+  },
+  {
+   "t": "li",
+   "x": "原句：Because people ignore the problem, it becomes worse."
+  },
+  {
+   "t": "li",
+   "x": "升格：The widespread neglect of the problem has only made it worse."
+  },
+  {
+   "t": "p",
+   "x": "（2）非谓语开头：Faced with such a choice, many people...，注意主语必须是人。若写成 Faced with the picture, it reminds us... 就是悬垂分词，错误放在动词上。"
+  },
+  {
+   "t": "p",
+   "x": "（3）定语从句与同位语：Persistence, a quality that cannot be borrowed from others, decides..."
+  },
+  {
+   "t": "p",
+   "x": "（4）倒装与强调：一段最多一处，多了显得刻意。Only when the hole is deep enough does the ore appear."
+  },
+  {
+   "t": "p",
+   "x": "最小例子（悬垂分词修错）。"
+  },
+  {
+   "t": "li",
+   "x": "错：Faced with the cartoon, it tells us that persistence matters."
+  },
+  {
+   "t": "li",
+   "x": "对：Faced with the cartoon, we are told that persistence matters. 或者 The cartoon tells us that persistence matters."
+  },
+  {
+   "t": "h3",
+   "x": "7. 长度与连贯：把字数算到底"
+  },
+  {
+   "t": "p",
+   "x": "分配公式：全文 N 等于 N 1 + N 2 + N 3，其中描述 N 1 约等于 50，论证 N 2 约等于 95，结论 N 3 约等于 45，合计 N 约等于 190，落在 160–200 的安全区。描述段约占 1 除以 4；超过三分之一就会变成“看图说话”，论证被挤压。"
+  },
+  {
+   "t": "p",
+   "x": "字数不足的两种补救：加一个让步句（约 25 词）；给例证补一个对比（约 20 词）。超字的两种删法：删掉纯形容词堆叠；把两个并列简单句并成一个从句（省 5–8 词）。"
+  },
+  {
+   "t": "p",
+   "x": "衔接词分级，不要通篇用 firstly, secondly, finally："
+  },
+  {
+   "t": "li",
+   "x": "段间：To begin with / Worse still / Accordingly"
+  },
+  {
+   "t": "li",
+   "x": "句间：which in turn / by contrast / in other words"
+  },
+  {
+   "t": "li",
+   "x": "段内收束：It is precisely this ... that ..."
+  },
+  {
+   "t": "p",
+   "x": "最小例子（合并省词）。"
+  },
+  {
+   "t": "li",
+   "x": "前：The man dug several holes. He was tired. He left.（10 词）"
+  },
+  {
+   "t": "li",
+   "x": "后：Having dug several shallow holes, the man left in frustration.（9 词）"
+  },
+  {
+   "t": "p",
+   "x": "词数只差一个，但信息密度翻倍。"
+  },
+  {
+   "t": "h3",
+   "x": "8. 例题：从看图到成稿，数字算到底"
+  },
+  {
+   "t": "p",
+   "x": "说明：下面这幅图为自拟练习图，不是真题，只用来演示流程。"
+  },
+  {
+   "t": "p",
+   "x": "图像：两人在同一金矿挖矿。左侧男子挖了几个浅坑，扛着铲子走开；右侧男子只挖一个坑，坑已很深，铲子接近矿脉。“Persistence”字样。"
+  },
+  {
+   "t": "p",
+   "x": "步骤 1：读图取要素。"
+  },
+  {
+   "t": "p",
+   "x": "，要素 ，内容 ，对应抽象 ，，---，---，---，，主体 A ，左侧男子 ，浅尝辄止 ，，主体 B ，右侧男子 ，持续投入 ，，动作对比 ，走开 vs 继续深挖 ，放弃 vs 越过临界点 ，，环境 ，同一矿脉 ，起点相同，结果不同 ，"
+  },
+  {
+   "t": "p",
+   "x": "步骤 2：写描述段，控制 50–56 词。"
+  },
+  {
+   "t": "p",
+   "x": "As is vividly portrayed in the cartoon, two men are digging for gold in the same mine. The one on the left has dug several shallow holes and is walking away with a spade over his shoulder, while the one on the right keeps deepening a single hole, his spade already close to the glittering ore."
+  },
+  {
+   "t": "p",
+   "x": "计数：56 词。独立分句 3 个，while 引导对照 1 处，独立主格 his spade already close to... 1 处。三要素齐（主体、动作、对照）。"
+  },
+  {
+   "t": "p",
+   "x": "步骤 3：释义 + 论证，控制 90–98 词。"
+  },
+  {
+   "t": "p",
+   "x": "因果链先画出来，再成句："
+  },
+  {
+   "t": "f",
+   "x": "浅尝辄止 趋于 经验无法累积 趋于 始终停在门槛外 趋于 误判“努力无用”",
+   "tex": "\\text{浅尝辄止} \\rightarrow \\text{经验无法累积} \\rightarrow \\text{始终停在门槛外} \\rightarrow \\text{误判“努力无用”}"
+  },
+  {
+   "t": "p",
+   "x": "成文：Simple as the drawing is, its message is anything but shallow: success seldom favours those who give up at the first sign of difficulty; it rewards those who keep digging. This is because most worthwhile goals are buried beneath layers of frustration. A language learner who quits after a month of stumbling can never taste fluency, whereas one who returns to the same grammar point for the tenth time eventually finds it transparent. Persistence, in other words, is not a matter of talent but of how long a person is willing to stay with a problem."
+  },
+  {
+   "t": "p",
+   "x": "计数：96 词。内部结构是释义 32 词、机制 14 词、例证 35 词、收束 15 词。这里“the tenth time”是修辞性次数，不是统计数据，安全。"
+  },
+  {
+   "t": "p",
+   "x": "步骤 4：结论段，控制 42–48 词。"
+  },
+  {
+   "t": "p",
+   "x": "Admittedly, not every effort pays off, and blind persistence can be mere stubbornness. Yet before we decide to abandon a hole, we should ask whether we have dug deep enough. Those who do so are far more likely to strike the ore."
+  },
+  {
+   "t": "p",
+   "x": "计数：42 词。让步（14 词）、转折与建议（18 词）、展望（10 词），三句各司其职。"
+  },
+  {
+   "t": "p",
+   "x": "步骤 5：合稿与总字数核算。"
+  },
+  {
+   "t": "f",
+   "x": "N 等于 56 + 96 + 42 等于 194",
+   "tex": "N = 56 + 96 + 42 = 194"
+  },
+  {
+   "t": "p",
+   "x": "194 词在 160–200 内，描述段占 56 除以 194 约等于 29 %，略低于三分之一，符合“描述不压论证”的比例。"
+  },
+  {
+   "t": "p",
+   "x": "成稿（194 词，三段）"
+  },
+  {
+   "t": "q",
+   "x": "As is vividly portrayed in the cartoon, two men are digging for gold in the same mine. The one on the left has dug several shallow holes and is walking away with a spade over his shoulder, while the one on the right keeps deepening a single hole, his spade already close to the glittering ore."
+  },
+  {
+   "t": "q",
+   "x": "Simple as the drawing is, its message is anything but shallow: success seldom favours those who give up at the first sign of difficulty; it rewards those who keep digging. This is because most worthwhile goals are buried beneath layers of frustration. A language learner who quits after a month of stumbling can never taste fluency, whereas one who returns to the same grammar point for the tenth time eventually finds it transparent. Persistence, in other words, is not a matter of talent but of how long a person is willing to stay with a problem."
+  },
+  {
+   "t": "q",
+   "x": "Admittedly, not every effort pays off, and blind persistence can be mere stubbornness. Yet before we decide to abandon a hole, we should ask whether we have dug deep enough. Those who do so are far more likely to strike the ore."
+  },
+  {
+   "t": "p",
+   "x": "逐句功能标注：第 1 句总体印象；第 2 句细节对照；第 3 句释义并收束；第 4 句机制；第 5 句例证；第 6 句把命题推到“时间投入”这一可操作变量上；第 7 句让步；第 8 句建议；第 9 句展望。九个句子，九个功能，没有一句是纯凑数。"
+  },
+  {
+   "t": "p",
+   "x": "结构批注（成稿层面的三处判断）："
+  },
+  {
+   "t": "li",
+   "x": "描述段只写两个主体、一处对照，没有交代“谁赢了”——图画作文的描述段不下结论，结论留给释义句。这是描述与释义的分界线，也是新手最容易越界的地方（在描述段就写 This shows that persistence matters）。"
+  },
+  {
+   "t": "li",
+   "x": "释义句用分号切开对称结构：分号两侧一反一正，正好对应图里的两个人，不需要另起一句“In other words”。"
+  },
+  {
+   "t": "li",
+   "x": "digging 的双关被复用到底：第 8 句 又用了一次，让结论段与画面绑在一起——这是“结论与图画有对应”的最省力做法：把图里的名词原样带进结论。"
+  },
+  {
+   "t": "p",
+   "x": "可复用表达（图画类）："
+  },
+  {
+   "t": "p",
+   "x": "，功能 ，表达 ，，---，---，，描述开篇 ，，，细节对照 ，，，独立主格收细节 ，，，释义桥接 ，，，机制句 ，，，类型化例证 ，，，让步 ，，，建议（可检验），，"
+  },
+  {
+   "t": "p",
+   "x": "仿写自测（图画类，限时 28 分钟，写完逐条打勾）："
+  },
+  {
+   "t": "q",
+   "x": "题目：画面中一人站在书架前，手里拿着手机，屏幕上是一个“已读完 100 本书”的进度徽章；书架上的书都还封着塑封。要求写 160–200 词，含描述、释义、评论。"
+  },
+  {
+   "t": "p",
+   "x": "自测判据（六条，前三条必过）："
+  },
+  {
+   "t": "li",
+   "x": "描述段三要素齐且不下结论：主体（谁）、动作（在做什么）、对照或环境（书架/塑封）三者都出现；描述段内不得出现 / 之类释义句。"
+  },
+  {
+   "t": "li",
+   "x": "释义句一句接住全部细节：把描述段的三个细节（手机徽章、未拆塑封、进度数字）逐一在释义句里找到抽象对应物（虚拟成就感 / 未被消化的知识 / 以量代质的评价），找不到对应物的细节要从描述段删掉。"
+  },
+  {
+   "t": "li",
+   "x": "结论段复用图中的名词：结论段至少出现一个来自图画的词（badge / sealed / count），使建议与画面有血缘关系，而不是通用的“我们要读书”。"
+  },
+  {
+   "t": "li",
+   "x": "无悬垂分词：每个句首分词短语的逻辑主语都能与主句主语对上（尤其检查 与 ）。"
+  },
+  {
+   "t": "li",
+   "x": "例证不编数据：之类例证必须类型化，不出现百分比、机构名、年份调查。"
+  },
+  {
+   "t": "li",
+   "x": "词数 160–200 且描述段 小于等于 1/3：把两个数字写在纸上核对 N d es 除以 N 小于等于 0.34。"
+  },
+  {
+   "t": "h2",
+   "x": "三、真题落点"
+  },
+  {
+   "t": "p",
+   "x": "本年段无对应题目。"
+  },
+  {
+   "t": "p",
+   "x": "本节按「常见考法」列出四种命题形态，例题与数据均自拟，不冒充原题原文，也不出现任何年份与题号："
+  },
+  {
+   "t": "li",
+   "x": "常见考法 A：单幅讽刺漫画（如“挖坑”“刷手机”“过度包装”）——考的是描述段到释义段的衔接，即你能不能把画面要素抽象成一句命题，而不是停在“翻译画面”上。失分点几乎都在释义句缺席或跑题。"
+  },
+  {
+   "t": "li",
+   "x": "常见考法 B：两幅对比图（过去、现在，甲、乙）——考的是对比的一致性：描述段立起的两个主体，在论证段必须仍是一一对应的，不能中途换人，也不能只论证一边。"
+  },
+  {
+   "t": "li",
+   "x": "常见考法 C：柱状图、折线图（数量变化）——考的是数据描述与趋势归纳：描述段要给出“起点—终点—总体走向”，论证段要解释趋势背后的成因，而不是复述数字。"
+  },
+  {
+   "t": "li",
+   "x": "常见考法 D：正面价值类（合作、坚持、文化传承）——考的是结论段的落地：建议要落到具体主体与具体动作上，而不是用“Only in this way can we...”收尾。"
+  },
+  {
+   "t": "p",
+   "x": "四种考法共用一个判分链条：描述要点是否齐全 变成 释义是否接上 变成 论证是否有支撑 变成 结论是否落地。任何一环断掉，档位就掉一级。"
+  },
+  {
+   "t": "h2",
+   "x": "四、易错清单"
+  },
+  {
+   "t": "li",
+   "x": "描述段没有总体印象句，第一句直接扎进细节 变成 先写一句“这是一幅什么图”（As is vividly portrayed, ...），再展开细节，让阅卷人第一眼就知道图的主题。"
+  },
+  {
+   "t": "li",
+   "x": "描述与释义脱节：描述段立起来的关键细节，释义段全部消失 变成 写完描述后，把每个细节列出来，逐一在释义段找到抽象对应物；找不到对应物的细节，从描述段删掉。"
+  },
+  {
+   "t": "li",
+   "x": "时态在同一句里混用 变成 描述画面统一用一般现在时；举例叙事用一般过去时或现在完成时；一句话内不改时态。"
+  },
+  {
+   "t": "li",
+   "x": "*悬垂分词：Faced with the picture, it reminds us...** 变成 分词短语的逻辑主语必须与主句主语一致，改成 Faced with the picture, we are reminded that...，或直接写成 The picture reminds us that...*"
+  },
+  {
+   "t": "li",
+   "x": "*编造统计：According to a survey, 90% of students...** 变成 举例只做类型化，用 Take ... as an example 或 A case in point is ...*，不编机构名、不编百分比。"
+  },
+  {
+   "t": "li",
+   "x": "结论只喊口号，与图画无对应 变成 建议必须能被图画的喻体接住：图讲“挖坑”，建议就写“放弃前先估算已投入比例”，而不是“构建和谐社会”。"
+  },
+  {
+   "t": "li",
+   "x": "*字数不足靠堆形容词（very, extremely, greatly）变成 形容词不增加内容要点，只增加字数，阅卷人一眼看出是填充。正确做法：加一个让步句（Admittedly, ... Yet ...，约 25 词），或给例证补一个对照（whereas ...*，约 20 词），两者的共同点是都带新信息。"
+  },
+  {
+   "t": "li",
+   "x": "图表作文把数字复述成流水账，没有趋势归纳 变成 描述段只给“起点—终点—总体走向”三个量，中间年份的点最多举一个作为拐点证据；复述五个数字的段落不产生任何得分点。"
+  },
+  {
+   "t": "li",
+   "x": "图表是自拟数据却写成真实调查 变成 不要写机构名、不要写百分比精确到小数、不要说“据调查”。用 the chart shows 陈述图中信息即可；数据非真题时，另在题干或批注里注明“自拟”。"
+  },
+  {
+   "t": "li",
+   "x": "每篇照抄，与图表题不符 变成 图表题用 The chart illustrates / The figures reveal；图画题才用 portrayed / depicted。开篇动词要与题型一致。"
+  },
+  {
+   "t": "li",
+   "x": "主体段只列现象不解释机制 变成 三段式里“解释”一段必须回答“为什么会这样”，判据是：把它单独抽出来读，能否成为一句完整的因果陈述（because ... , therefore ...）。"
+  },
+  {
+   "t": "h3",
+   "x": "9. 例题二（自拟图表）：完整范文与全项核算"
+  },
+  {
+   "t": "p",
+   "x": "题目（自拟，数据非真题）："
+  },
+  {
+   "t": "q",
+   "x": "Write an essay of 160–200 words based on the chart below. In your essay, you should (1) describe the chart, (2) interpret the reasons behind it, and (3) give your comments."
+  },
+  {
+   "t": "p",
+   "x": "图表（自拟数据，非真题；此处文字化描述，原图为折线图）：某高校图书馆 2019–2023 年纸质书借阅量与电子书下载量的变化。纵轴为“万次/年”。纸质借阅：2019 年 62，2020 年 41，2021 年 38，2022 年 35，2023 年 33；电子下载：2019 年 60，2020 年 118，2021 年 155，2022 年 188，2023 年 205。图例注明：数据为教学示例用的模拟数据，不代表任何真实机构。"
+  },
+  {
+   "t": "p",
+   "x": "为什么选折线而不是柱状：两条走向相反的曲线让“交叉”本身成为论点——2020 年两条线交叉一次，之后差距持续拉大。结构上它同时给了（a）一个清晰的转折点、（b）一个可用于解释的机制、（c）一个需要评论的分歧，三段都有活干。注意：这种交叉在真实借阅统计里并不罕见，不要把它写成“史无前例的剧变”，评论的分寸就靠这一句兜住。"
+  },
+  {
+   "t": "p",
+   "x": "范文（自拟，非真题）："
+  },
+  {
+   "t": "q",
+   "x": "The chart illustrates how students in one university library used its two collections between 2019 and 2023. In 2019 the two were almost level, with printed borrowing at 620,000 times and digital downloads at 600,000. Thereafter the lines parted: printed borrowing slid to 330,000 times by 2023, while downloads climbed above two million. The two crossed once in 2020 and never met again."
+  },
+  {
+   "t": "q",
+   "x": "Several forces lie behind the divergence. Convenience is the obvious one — a download takes seconds, whereas a trip to the stacks costs an hour. The pandemic accelerated the shift by closing reading rooms for months, and habits formed under constraint tend to persist. Deeper still, the change reflects what students are asked to do: seminar papers now demand quick searches across many sources, and a downloadable text can be searched while a printed one must be read."
+  },
+  {
+   "t": "q",
+   "x": "The trend is unlikely to reverse, and it is not wholly good news. Convenience encourages breadth but may discourage the slow reading that a long argument requires. Libraries would do well to keep a small printed core for deep study, while treating digital access as the default for everything else."
+  },
+  {
+   "t": "p",
+   "x": "准确词数核算（按空格分词，只数正文）："
+  },
+  {
+   "t": "p",
+   "x": "，段 ，句 ，功能 ，词数 ，，---，---，---，---，，描述 ，1 ，总体印象（哪张图、什么区间），17 ，，描述 ，2 ，起点（两条线数量相当，给出 2019 年两个数），18 ，，描述 ，3 ，终点的反向变化（2023 年两个数），18 ，，描述 ，4 ，交叉点 ，10 ，，解释 ，5 ，机制总起句 ，6 ，，解释 ，6 ，机制一：便利 ，19 ，，解释 ，7 ，机制二：外部冲击 + 习惯延续 ，19 ，，解释 ，8 ，机制三：任务本身的变化 ，34 ，，评论 ，9 ，立场：不会逆转，但非全是好事 ，13 ，，评论 ，10 ，保留：便利与深读的张力 ，14 ，，评论 ，11 ，建议：分工保留纸质核心 ，23 ，"
+  },
+  {
+   "t": "p",
+   "x": "脚本核算（str.split() 按空白分词）：三段分别 63 / 78 / 50 词，合计 191 词，落在 160–200 内；描述段占 63 除以 191 约等于 33 %，不超过三分之一，符合“描述不压论证”。解释段最长（78 词，占 41%），这符合图表题的重心——图表的分差主要落在“能不能解释趋势”，而不在“数得准不准”。"
+  },
+  {
+   "t": "p",
+   "x": "数据换算（必查，写错即事实性错误）：纵轴单位是“万次/年”，所以题干里的 62 / 60 / 33 / 205 分别是 620,000 / 600,000 / 330,000 / 2,050,000 次。英文里百万级以下统一用 thousand 读：62 万 = ，33 万 = ；到了 205 万已经跨过百万，换成 比 2,050,000 更像人话，也更省词。凡在范文里出现 thousand 的句子，先回头核对它是几位数——把 205 万写成 （20 万）就是本段最容易犯的数量级错误，差一个数量级的数字在图表题里是硬伤。"
+  },
+  {
+   "t": "p",
+   "x": "结构批注："
+  },
+  {
+   "t": "li",
+   "x": "第 1 句给区间（2019–2023）与对象（one university library 的两套馆藏），不写 。限定语 是对数据边界的诚实标注：图是教学示例，不能推广。"
+  },
+  {
+   "t": "li",
+   "x": "第 2、3 句的分工是“起点—终点”，中间年份（2020–2022）一个不举，第 4 句只留 2020 年那个交叉点作为证据。复述全部五个年份的数字是图表作文最常见的浪费。"
+  },
+  {
+   "t": "li",
+   "x": "第 2 句把两个起点数一次性交代（ / 600,000），第 3 句把两个终点数一次性交代（ / ），第 4 句再用一句话点出交叉——三个量各占一句，交叉点单独成句，比把交叉塞进长句更容易读，也方便阅卷人核对数字。"
+  },
+  {
+   "t": "li",
+   "x": "第 5–8 句是三条彼此独立的机制，从“最明显”到“更深层”递进：变成 。递进标记让阅卷人一眼看出这不是并列罗列。"
+  },
+  {
+   "t": "li",
+   "x": "第 7 句用 与 ，把一个外部事件接到长期趋势上，避免“疫情过去了就恢复”的幼稚推论。"
+  },
+  {
+   "t": "li",
+   "x": "第 8 句把原因落到“学生被要求做什么”，这是本篇最深的一层——不是技术更好，而是任务变了。"
+  },
+  {
+   "t": "li",
+   "x": "第 9 句是立场句，且主动限制自己：。评论段一上来就设边界，比通篇叫好更有分量。"
+  },
+  {
+   "t": "li",
+   "x": "第 10 句用 的对照句式，把“便利的代价”说清楚，这是本篇唯一的价值判断落点。"
+  },
+  {
+   "t": "li",
+   "x": "第 11 句给分工建议：，主体是图书馆，动作可检验，没有 。"
+  },
+  {
+   "t": "p",
+   "x": "可复用表达："
+  },
+  {
+   "t": "p",
+   "x": "，功能 ，表达 ，，---，---，，图表开篇 ，，，起点 / 相当 ，，，反向变化 ，，，交叉 / 反向 ，，，趋势归纳 ，，，递进解释 ，变成 ，，因果加速 ，，，惯性论证 ，，，限制立场 ，，，对照保留 ，，，分工建议 ，，"
+  },
+  {
+   "t": "p",
+   "x": "易错点："
+  },
+  {
+   "t": "li",
+   "x": "数量级与题干不符：纵轴写“万次/年”、2023 年电子下载是 205（万次），却写成 （20 万次）或 —— 205 万 = 2,050,000 次，英文用 ；62 万写成 （6 万）同样差一个数量级。按万为单位读到的数，写成英文前先乘 10,000 再除以 1,000，得到 thousand 前该写多少：62 万 变成 620 thousand，33 万 变成 330 thousand，205 万 变成 2.05 million。数字写错属于事实性错误，成本最高。"
+  },
+  {
+   "t": "li",
+   "x": "把它写成“剧变”：a revolutionary change never seen before —— 一组校内借阅数据支撑不起“史无前例”；改法是把判断降级为 ，并限定主体 。"
+  },
+  {
+   "t": "li",
+   "x": "自拟数据当真题：写 According to a national survey by the Ministry of Education —— 绝不给出不存在的机构；本库所有图表题都在题干里明写“自拟数据，非真题”，写作时用 即可。"
+  },
+  {
+   "t": "li",
+   "x": "时态混乱：描述用一般过去时讲 2019 年数据（正确），但第 6 句忽然回到一般现在时又不带时间标记 —— 描述历史数据统一用一般过去时，讲长期趋势与普遍机制用一般现在时，两句之间的切换要由时间状语（Thereafter / ）显式标记。"
+  },
+  {
+   "t": "li",
+   "x": "只解释不评论：三段写成“描述—原因—再描述” —— 第三段必须包含立场句与建议句，判据是把第三段单独读：能否看出作者赞成还是保留。"
+  },
+  {
+   "t": "li",
+   "x": "悬垂分词：—— 分词逻辑主语必须是主句主语，改成"
+  },
+  {
+   "t": "li",
+   "x": "比较结构残缺：more convenient than printed —— convenient 的比较对象要与前面同类，写 。"
+  },
+  {
+   "t": "li",
+   "x": "超字后删错段：从评论段删掉立场句 —— 超字一律先压描述段的细节句（第 2、3 句的精确数字可合并成一档“起点—终点”各一句，第 4 句的交叉点最该保留），评论段的立场与建议一个字都不动。"
+  },
+  {
+   "t": "p",
+   "x": "仿写自测（限时 30 分钟，写完逐条打勾）："
+  },
+  {
+   "t": "q",
+   "x": "题目：以下为某城市 2019–2023 年共享单车日均骑行次数与公共交通日均客流的自拟模拟数据（单位：万人次）：共享单车 2019 年 12、2020 年 26、2021 年 34、2022 年 41、2023 年 45；公共交通 2019 年 180、2020 年 96、2021 年 130、2022 年 148、2023 年 156。要求写 160–200 词，含描述、解释原因、给出评论。"
+  },
+  {
+   "t": "p",
+   "x": "自测判据（七条，前四条必过）："
+  },
+  {
+   "t": "li",
+   "x": "描述段只用三个量：起点、终点、拐点各一个数字，其余年份一律不写；单位与你用的量词一致（万/千不混）。"
+  },
+  {
+   "t": "li",
+   "x": "解释段有递进标记：三条机制里至少一条用 / 之类标记，表明不是并列罗列。"
+  },
+  {
+   "t": "li",
+   "x": "评论段第一句就是立场：单独抽出来读，能判断作者是乐观、保留还是两者兼有；且没有任何“构建和谐社会”式空句。"
+  },
+  {
+   "t": "li",
+   "x": "词数 160–200 且描述段 小于等于 三分之一：数完把两个数（总词数、描述段词数）写在纸上，N m ed 除以 N 小于等于 0.34。"
+  },
+  {
+   "t": "li",
+   "x": "无编造机构：全文搜 survey、report、%，若有，确认它只出现在“图中显示”的转述里，不指向任何真实机构。"
+  },
+  {
+   "t": "li",
+   "x": "时态分工清楚：每一句要么用过去时描述已发生的数据，要么用现在时讲机制，句中不出现无标记的切换。"
+  },
+  {
+   "t": "li",
+   "x": "无悬垂分词：每个句首分词短语的逻辑主语，都能与紧邻的主句主语对上。"
+  },
+  {
+   "t": "h3",
+   "x": "10. 写作词汇衔接：把上表的词接到段落位置上"
+  },
+  {
+   "t": "p",
+   "x": "本节与 05-小作文.md 2.11 共用同一份 20 词主题清单（A 说明理由 / B 评价比较 / C 数据趋势 / D 立场主张），词义与词表统一在 words/ 维护，此处不复制释义表，只给大作文的落位与一句原创例句——同一个词在小作文里落“事由句”，在大作文里落“解释句/评论句”，这是两处唯一的差别。"
+  },
+  {
+   "t": "p",
+   "x": "A 组（说明理由）变成 落解释段"
+  },
+  {
+   "t": "p",
+   "x": "，词/短语 ，原创例句（大作文句位），，---，---，，alleviate ，，，stem ，，，confine ，，，curtail ，，，withstand ，，"
+  },
+  {
+   "t": "p",
+   "x": "B 组（评价比较）变成 落论证与让步句"
+  },
+  {
+   "t": "p",
+   "x": "，词/短语 ，原创例句（大作文句位），，---，---，，outweigh ，，，reinforce ，，，exacerbate ，，，mitigate ，，，signify ，，"
+  },
+  {
+   "t": "p",
+   "x": "C 组（数据趋势）变成 落描述段与趋势归纳句"
+  },
+  {
+   "t": "p",
+   "x": "，词/短语 ，原创例句（大作文句位），，---，---，，plateau ，，，temper ，，，broaden ，，，deepen ，，，divert ，，"
+  },
+  {
+   "t": "p",
+   "x": "D 组（立场主张）变成 落评论段"
+  },
+  {
+   "t": "p",
+   "x": "，词/短语 ，原创例句（大作文句位），，---，---，，articulate ，，，embody ，，，endorse ，，，restructure ，，，harden ，，"
+  },
+  {
+   "t": "p",
+   "x": "使用规则（三条，与 05 节一致）："
+  },
+  {
+   "t": "li",
+   "x": "一篇大作文同样最多用 3 个，且优先落在解释段与评论段的动词位置——描述段尽量用中性词（rise / slide / level），避免在描述里就下判断。"
+  },
+  {
+   "t": "li",
+   "x": "释义与同义替换查 words/ 原文件（写作替换另见 words/26-写作高频替换词.md），本节只负责“句位”。"
+  },
+  {
+   "t": "li",
+   "x": "搬用例句时必须核对主语：的主语是“你/本文”，的主语是“习惯”，换主语就换句式，不要硬套。"
+  }
+ ]
+}

@@ -1,0 +1,423 @@
+{
+ "version": "reading/v1",
+ "id": "words-17",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "17-易混词辨析",
+ "source": "notebook/kaoyan/english1/words/17-易混词辨析.md",
+ "sourceSha": "74e5239a",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "17 易混词辨析"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "effect。effect。效果。"
+  },
+  {
+   "t": "li",
+   "x": "principal。principal。主要的。"
+  },
+  {
+   "t": "li",
+   "x": "complement。complement。补充。"
+  },
+  {
+   "t": "li",
+   "x": "compliment。compliment。赞美。"
+  },
+  {
+   "t": "li",
+   "x": "stationary。stationary。静止的。"
+  },
+  {
+   "t": "li",
+   "x": "stationery。stationery。文具。"
+  },
+  {
+   "t": "li",
+   "x": "dessert。dessert。甜点。"
+  },
+  {
+   "t": "li",
+   "x": "inquire。inquire。询问。"
+  },
+  {
+   "t": "li",
+   "x": "require。require。需要。"
+  },
+  {
+   "t": "li",
+   "x": "request。request。请求。"
+  },
+  {
+   "t": "li",
+   "x": "obtain。obtain。获得。"
+  },
+  {
+   "t": "li",
+   "x": "attract。attract。吸引。"
+  },
+  {
+   "t": "li",
+   "x": "except。except。除…之外。"
+  },
+  {
+   "t": "li",
+   "x": "accident。accident。事故。"
+  },
+  {
+   "t": "li",
+   "x": "incident。incident。事件。"
+  },
+  {
+   "t": "li",
+   "x": "amount。amount。数量。"
+  },
+  {
+   "t": "li",
+   "x": "advice。advice。建议。"
+  },
+  {
+   "t": "li",
+   "x": "advise。advise。建议。"
+  },
+  {
+   "t": "li",
+   "x": "altar。altar。祭坛。"
+  },
+  {
+   "t": "li",
+   "x": "alternate。alternate。交替。"
+  },
+  {
+   "t": "li",
+   "x": "alternative。alternative。替代方案。"
+  },
+  {
+   "t": "li",
+   "x": "amateur。amateur。业余爱好者。"
+  },
+  {
+   "t": "li",
+   "x": "mature。mature。成熟的。"
+  },
+  {
+   "t": "li",
+   "x": "ambitious。ambitious。有雄心的。"
+  },
+  {
+   "t": "li",
+   "x": "emend。emend。校订。"
+  },
+  {
+   "t": "li",
+   "x": "analogy。analogy。类比。"
+  },
+  {
+   "t": "li",
+   "x": "anomaly。anomaly。异常。"
+  },
+  {
+   "t": "li",
+   "x": "annual。annual。每年的。"
+  },
+  {
+   "t": "li",
+   "x": "annul。annul。废除。"
+  },
+  {
+   "t": "li",
+   "x": "appear。appear。出现。"
+  },
+  {
+   "t": "li",
+   "x": "reply。reply。回答。"
+  },
+  {
+   "t": "li",
+   "x": "depreciate。depreciate。贬值。"
+  },
+  {
+   "t": "li",
+   "x": "reproach。reproach。责备。"
+  },
+  {
+   "t": "li",
+   "x": "approximate。approximate。大约的。"
+  },
+  {
+   "t": "li",
+   "x": "rouse。rouse。唤醒。"
+  },
+  {
+   "t": "li",
+   "x": "assemble。assemble。集合。"
+  },
+  {
+   "t": "li",
+   "x": "resemble。resemble。像。"
+  },
+  {
+   "t": "li",
+   "x": "insert。insert。插入。"
+  },
+  {
+   "t": "li",
+   "x": "insist。insist。坚持。"
+  },
+  {
+   "t": "li",
+   "x": "attach。attach。附上。"
+  },
+  {
+   "t": "li",
+   "x": "detach。detach。分离。"
+  },
+  {
+   "t": "li",
+   "x": "attempt。attempt。尝试。"
+  },
+  {
+   "t": "li",
+   "x": "tempt。tempt。引诱。"
+  },
+  {
+   "t": "li",
+   "x": "priority。priority。优先。"
+  },
+  {
+   "t": "li",
+   "x": "available。available。可获得的。"
+  },
+  {
+   "t": "li",
+   "x": "valuable。valuable。有价值的。"
+  },
+  {
+   "t": "li",
+   "x": "devoid。devoid。缺乏的。"
+  },
+  {
+   "t": "li",
+   "x": "bare。bare。赤裸的。"
+  },
+  {
+   "t": "li",
+   "x": "behalf。behalf。代表。"
+  },
+  {
+   "t": "li",
+   "x": "behave。behave。表现。"
+  },
+  {
+   "t": "li",
+   "x": "beneficent。beneficent。行善的。"
+  },
+  {
+   "t": "li",
+   "x": "beside。beside。在…旁边。"
+  },
+  {
+   "t": "li",
+   "x": "bind。bind。捆绑。"
+  },
+  {
+   "t": "li",
+   "x": "blank。blank。空白的。"
+  },
+  {
+   "t": "li",
+   "x": "bleak adj."
+  },
+  {
+   "t": "li",
+   "x": "allude。allude。暗指。"
+  },
+  {
+   "t": "li",
+   "x": "elude。elude。躲避。"
+  },
+  {
+   "t": "li",
+   "x": "allusion。allusion。暗指。"
+  },
+  {
+   "t": "li",
+   "x": "breath。breath。呼吸。"
+  },
+  {
+   "t": "li",
+   "x": "site。site。地点。"
+  },
+  {
+   "t": "li",
+   "x": "decent。decent。体面的。"
+  },
+  {
+   "t": "li",
+   "x": "descent。descent。下降。"
+  },
+  {
+   "t": "li",
+   "x": "devise。devise。设计。"
+  },
+  {
+   "t": "li",
+   "x": "die。die。死亡。"
+  },
+  {
+   "t": "li",
+   "x": "dye。dye。染色。"
+  },
+  {
+   "t": "li",
+   "x": "discreet。discreet。谨慎的。"
+  },
+  {
+   "t": "li",
+   "x": "discrete。discrete。分离的。"
+  },
+  {
+   "t": "li",
+   "x": "dual。dual。双重的。"
+  },
+  {
+   "t": "li",
+   "x": "duel。duel。决斗。"
+  },
+  {
+   "t": "li",
+   "x": "elicit。elicit。引出。"
+  },
+  {
+   "t": "li",
+   "x": "illicit。illicit。非法的。"
+  },
+  {
+   "t": "li",
+   "x": "immigrate。immigrate。移入。"
+  },
+  {
+   "t": "li",
+   "x": "envelop。envelop。包住。"
+  },
+  {
+   "t": "li",
+   "x": "envelope。envelope。信封。"
+  },
+  {
+   "t": "li",
+   "x": "fare。fare。车费。"
+  },
+  {
+   "t": "li",
+   "x": "farther。farther。更远地。"
+  },
+  {
+   "t": "li",
+   "x": "further。further。进一步地。"
+  },
+  {
+   "t": "li",
+   "x": "flair。flair。天赋。"
+  },
+  {
+   "t": "li",
+   "x": "flare。flare。闪耀。"
+  },
+  {
+   "t": "li",
+   "x": "formally。formally。正式地。"
+  },
+  {
+   "t": "li",
+   "x": "formerly。formerly。以前。"
+  },
+  {
+   "t": "li",
+   "x": "forth。forth。向前。"
+  },
+  {
+   "t": "li",
+   "x": "fourth。fourth。第四的。"
+  },
+  {
+   "t": "li",
+   "x": "hear。hear。听见。"
+  },
+  {
+   "t": "li",
+   "x": "here。here。在这里。"
+  },
+  {
+   "t": "li",
+   "x": "human。human。人的。"
+  },
+  {
+   "t": "li",
+   "x": "humane。humane。人道的。"
+  },
+  {
+   "t": "li",
+   "x": "ingenious。ingenious。巧妙的。"
+  },
+  {
+   "t": "li",
+   "x": "ingenuous。ingenuous。天真的。"
+  },
+  {
+   "t": "li",
+   "x": "later。later。后来。"
+  },
+  {
+   "t": "li",
+   "x": "latter。latter。后者的。"
+  },
+  {
+   "t": "li",
+   "x": "lay。lay。放置。"
+  },
+  {
+   "t": "li",
+   "x": "led。led。领导。"
+  },
+  {
+   "t": "li",
+   "x": "lose。lose。丢失。"
+  },
+  {
+   "t": "li",
+   "x": "loose。loose。松的。"
+  },
+  {
+   "t": "li",
+   "x": "moral。moral。道德的。"
+  },
+  {
+   "t": "li",
+   "x": "morale。morale。士气。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

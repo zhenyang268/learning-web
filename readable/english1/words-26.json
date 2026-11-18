@@ -1,0 +1,527 @@
+{
+ "version": "reading/v1",
+ "id": "words-26",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "26-写作高频替换词",
+ "source": "notebook/kaoyan/english1/words/26-写作高频替换词.md",
+ "sourceSha": "886656af",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "26 写作高频替换词"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "constructive。constructive。建设性的。"
+  },
+  {
+   "t": "li",
+   "x": "rewarding。rewarding。有回报的。"
+  },
+  {
+   "t": "li",
+   "x": "fruitful。fruitful。富有成效的。"
+  },
+  {
+   "t": "li",
+   "x": "wholesome。wholesome。有益健康的。"
+  },
+  {
+   "t": "li",
+   "x": "salutary。salutary。有益的。"
+  },
+  {
+   "t": "li",
+   "x": "commendable。commendable。值得赞扬的。"
+  },
+  {
+   "t": "li",
+   "x": "praiseworthy。praiseworthy。值得称赞的。"
+  },
+  {
+   "t": "li",
+   "x": "laudable。laudable。值得赞扬的。"
+  },
+  {
+   "t": "li",
+   "x": "meritorious。meritorious。值得称赞的。"
+  },
+  {
+   "t": "li",
+   "x": "exemplary。exemplary。典范的。"
+  },
+  {
+   "t": "li",
+   "x": "admirable。admirable。令人钦佩的。"
+  },
+  {
+   "t": "li",
+   "x": "superb。superb。极好的。"
+  },
+  {
+   "t": "li",
+   "x": "splendid。splendid。极好的。"
+  },
+  {
+   "t": "li",
+   "x": "superior。superior。更好的。"
+  },
+  {
+   "t": "li",
+   "x": "first-rate。first-rate。一流的。"
+  },
+  {
+   "t": "li",
+   "x": "optimal。optimal。最佳的。"
+  },
+  {
+   "t": "li",
+   "x": "promising。promising。有前途的。"
+  },
+  {
+   "t": "li",
+   "x": "propitious。propitious。有利的。"
+  },
+  {
+   "t": "li",
+   "x": "encouraging。encouraging。令人鼓舞的。"
+  },
+  {
+   "t": "li",
+   "x": "gratifying。gratifying。令人满足的。"
+  },
+  {
+   "t": "li",
+   "x": "practicable。practicable。可行的。"
+  },
+  {
+   "t": "li",
+   "x": "workable。workable。可行的。"
+  },
+  {
+   "t": "li",
+   "x": "worthwhile。worthwhile。值得的。"
+  },
+  {
+   "t": "li",
+   "x": "profitable。profitable。有利可图的。"
+  },
+  {
+   "t": "li",
+   "x": "lucrative。lucrative。获利多的。"
+  },
+  {
+   "t": "li",
+   "x": "gainful。gainful。有收益的。"
+  },
+  {
+   "t": "li",
+   "x": "prolific。prolific。多产的。"
+  },
+  {
+   "t": "li",
+   "x": "virtuous。virtuous。有德行的。"
+  },
+  {
+   "t": "li",
+   "x": "desirable。desirable。值得向往的。"
+  },
+  {
+   "t": "li",
+   "x": "damaging。damaging。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "destructive。destructive。破坏性的。"
+  },
+  {
+   "t": "li",
+   "x": "unfavorable。unfavorable。不利的。"
+  },
+  {
+   "t": "li",
+   "x": "deleterious。deleterious。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "pernicious。pernicious。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "noxious。noxious。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "baneful。baneful。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "injurious。injurious。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "hurtful。hurtful。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "corrosive。corrosive。腐蚀性的。"
+  },
+  {
+   "t": "li",
+   "x": "ruinous。ruinous。毁灭性的。"
+  },
+  {
+   "t": "li",
+   "x": "disastrous。disastrous。灾难性的。"
+  },
+  {
+   "t": "li",
+   "x": "catastrophic。catastrophic。灾难性的。"
+  },
+  {
+   "t": "li",
+   "x": "calamitous。calamitous。灾难性的。"
+  },
+  {
+   "t": "li",
+   "x": "devastating。devastating。毁灭性的。"
+  },
+  {
+   "t": "li",
+   "x": "deplorable。deplorable。令人遗憾的。"
+  },
+  {
+   "t": "li",
+   "x": "lamentable。lamentable。可悲的。"
+  },
+  {
+   "t": "li",
+   "x": "regrettable。regrettable。令人遗憾的。"
+  },
+  {
+   "t": "li",
+   "x": "unfortunate。unfortunate。不幸的。"
+  },
+  {
+   "t": "li",
+   "x": "wretched。wretched。悲惨的。"
+  },
+  {
+   "t": "li",
+   "x": "miserable。miserable。悲惨的。"
+  },
+  {
+   "t": "li",
+   "x": "dreadful。dreadful。可怕的。"
+  },
+  {
+   "t": "li",
+   "x": "appalling。appalling。骇人的。"
+  },
+  {
+   "t": "li",
+   "x": "abhorrent。abhorrent。令人憎恶的。"
+  },
+  {
+   "t": "li",
+   "x": "repugnant。repugnant。令人反感的。"
+  },
+  {
+   "t": "li",
+   "x": "repulsive。repulsive。令人厌恶的。"
+  },
+  {
+   "t": "li",
+   "x": "offensive。offensive。冒犯的。"
+  },
+  {
+   "t": "li",
+   "x": "odious。odious。可憎的。"
+  },
+  {
+   "t": "li",
+   "x": "obnoxious。obnoxious。令人讨厌的。"
+  },
+  {
+   "t": "li",
+   "x": "vicious。vicious。恶毒的。"
+  },
+  {
+   "t": "li",
+   "x": "sinister。sinister。邪恶的。"
+  },
+  {
+   "t": "li",
+   "x": "nefarious。nefarious。极其邪恶的。"
+  },
+  {
+   "t": "li",
+   "x": "heinous。heinous。令人发指的。"
+  },
+  {
+   "t": "li",
+   "x": "atrocious。atrocious。残暴的。"
+  },
+  {
+   "t": "li",
+   "x": "egregious。egregious。极其恶劣的。"
+  },
+  {
+   "t": "li",
+   "x": "flagrant。flagrant。明目张胆的。"
+  },
+  {
+   "t": "li",
+   "x": "grave。grave。严重的。"
+  },
+  {
+   "t": "li",
+   "x": "alarming。alarming。令人担忧的。"
+  },
+  {
+   "t": "li",
+   "x": "distressing。distressing。令人痛苦的。"
+  },
+  {
+   "t": "li",
+   "x": "cardinal。cardinal。最重要的。"
+  },
+  {
+   "t": "li",
+   "x": "pivotal。pivotal。关键的。"
+  },
+  {
+   "t": "li",
+   "x": "paramount。paramount。至高无上的。"
+  },
+  {
+   "t": "li",
+   "x": "consequential。consequential。重要的。"
+  },
+  {
+   "t": "li",
+   "x": "momentous。momentous。重大的。"
+  },
+  {
+   "t": "li",
+   "x": "weighty。weighty。重要的。"
+  },
+  {
+   "t": "li",
+   "x": "influential。influential。有影响力的。"
+  },
+  {
+   "t": "li",
+   "x": "noteworthy。noteworthy。值得注意的。"
+  },
+  {
+   "t": "li",
+   "x": "far-reaching。far-reaching。影响深远的。"
+  },
+  {
+   "t": "li",
+   "x": "numerous。numerous。众多的。"
+  },
+  {
+   "t": "li",
+   "x": "countless。countless。无数的。"
+  },
+  {
+   "t": "li",
+   "x": "myriad。myriad。无数的。"
+  },
+  {
+   "t": "li",
+   "x": "manifold。manifold。多种的。"
+  },
+  {
+   "t": "li",
+   "x": "multifarious。multifarious。多种多样的。"
+  },
+  {
+   "t": "li",
+   "x": "profuse。profuse。大量的。"
+  },
+  {
+   "t": "li",
+   "x": "colossal。colossal。巨大的。"
+  },
+  {
+   "t": "li",
+   "x": "gigantic。gigantic。巨大的。"
+  },
+  {
+   "t": "li",
+   "x": "massive。massive。巨大的。"
+  },
+  {
+   "t": "li",
+   "x": "vast。vast。广阔的。"
+  },
+  {
+   "t": "li",
+   "x": "prodigious。prodigious。巨大的。"
+  },
+  {
+   "t": "li",
+   "x": "insignificant。insignificant。微不足道的。"
+  },
+  {
+   "t": "li",
+   "x": "minute。minute。极小的。"
+  },
+  {
+   "t": "li",
+   "x": "modest。modest。适度的。"
+  },
+  {
+   "t": "li",
+   "x": "palpable。palpable。明显的。"
+  },
+  {
+   "t": "li",
+   "x": "unmistakable。unmistakable。不会弄错的。"
+  },
+  {
+   "t": "li",
+   "x": "self-evident。self-evident。不言而喻的。"
+  },
+  {
+   "t": "li",
+   "x": "formidable。formidable。艰巨的。"
+  },
+  {
+   "t": "li",
+   "x": "strenuous。strenuous。费力的。"
+  },
+  {
+   "t": "li",
+   "x": "grueling。grueling。累人的。"
+  },
+  {
+   "t": "li",
+   "x": "daunting。daunting。令人畏惧的。"
+  },
+  {
+   "t": "li",
+   "x": "demanding。demanding。要求高的。"
+  },
+  {
+   "t": "li",
+   "x": "attest。attest。证明。"
+  },
+  {
+   "t": "li",
+   "x": "engender。engender。产生。"
+  },
+  {
+   "t": "li",
+   "x": "precipitate。precipitate。促成。"
+  },
+  {
+   "t": "li",
+   "x": "spawn。spawn。产生。"
+  },
+  {
+   "t": "li",
+   "x": "augment。augment。增加。"
+  },
+  {
+   "t": "li",
+   "x": "underpin。underpin。支撑。"
+  },
+  {
+   "t": "li",
+   "x": "procure。procure。获得。"
+  },
+  {
+   "t": "li",
+   "x": "garner。garner。获得。"
+  },
+  {
+   "t": "li",
+   "x": "reap。reap。获得。"
+  },
+  {
+   "t": "li",
+   "x": "utilize。utilize。利用。"
+  },
+  {
+   "t": "li",
+   "x": "harness。harness。利用。"
+  },
+  {
+   "t": "li",
+   "x": "leverage。leverage。利用。"
+  },
+  {
+   "t": "li",
+   "x": "plummet。plummet。骤降。"
+  },
+  {
+   "t": "li",
+   "x": "soar。soar。猛增。"
+  },
+  {
+   "t": "li",
+   "x": "aggravate。aggravate。使恶化。"
+  },
+  {
+   "t": "li",
+   "x": "rectify。rectify。纠正。"
+  },
+  {
+   "t": "li",
+   "x": "commend。commend。称赞。"
+  },
+  {
+   "t": "li",
+   "x": "underscore。underscore。强调。"
+  },
+  {
+   "t": "li",
+   "x": "prioritize。prioritize。优先考虑。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "变成 并列递进结构 变成 用于强调“不只是A，而是B”，适合在作文中提升论证层次。"
+  },
+  {
+   "t": "li",
+   "x": "变成 现在分词作结果状语 + 分号连接并列对比句 变成 用分词短语补充结果，用分号形成鲜明对照，适合论证型写作。"
+  },
+  {
+   "t": "li",
+   "x": "变成 when 引导时间状语从句 + where 引导非限制性定语从句 变成 用 where 对抽象情境作补充说明，使句子信息更密集。"
+  },
+  {
+   "t": "li",
+   "x": "变成 冒号解释结构 + + 对比 变成 用冒号引出具体解释，用 表达因果，用 形成对比。"
+  },
+  {
+   "t": "li",
+   "x": "变成 treat...as... + 并列谓语 + 变成 用 treat...as... 表“视为”，用并列动词提出建议，用 表达否定性劝告。"
+  }
+ ]
+}

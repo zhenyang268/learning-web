@@ -1,0 +1,411 @@
+{
+ "version": "reading/v1",
+ "id": "words-11",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "11-法律、制度与权利",
+ "source": "notebook/kaoyan/english1/words/11-法律、制度与权利.md",
+ "sourceSha": "1a772224",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "11 法律、制度与权利"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "law。law。法律。"
+  },
+  {
+   "t": "li",
+   "x": "legal。legal。法律的。"
+  },
+  {
+   "t": "li",
+   "x": "legislature。legislature。立法机关。"
+  },
+  {
+   "t": "li",
+   "x": "lawyer。lawyer。律师。"
+  },
+  {
+   "t": "li",
+   "x": "plaintiff。plaintiff。原告。"
+  },
+  {
+   "t": "li",
+   "x": "defendant。defendant。被告。"
+  },
+  {
+   "t": "li",
+   "x": "defense。defense。辩护。"
+  },
+  {
+   "t": "li",
+   "x": "hearing。hearing。听证会。"
+  },
+  {
+   "t": "li",
+   "x": "proceeding。proceeding。诉讼程序。"
+  },
+  {
+   "t": "li",
+   "x": "due。due。应有的。"
+  },
+  {
+   "t": "li",
+   "x": "damages。damages。损害赔偿金。"
+  },
+  {
+   "t": "li",
+   "x": "rule。rule。规则。"
+  },
+  {
+   "t": "li",
+   "x": "article。article。条款。"
+  },
+  {
+   "t": "li",
+   "x": "section。section。部分。"
+  },
+  {
+   "t": "li",
+   "x": "paragraph。paragraph。段落。"
+  },
+  {
+   "t": "li",
+   "x": "breach。breach。违反。"
+  },
+  {
+   "t": "li",
+   "x": "infringement。infringement。侵权。"
+  },
+  {
+   "t": "li",
+   "x": "offend。offend。违反。"
+  },
+  {
+   "t": "li",
+   "x": "guilty。guilty。有罪的。"
+  },
+  {
+   "t": "li",
+   "x": "innocence。innocence。无罪。"
+  },
+  {
+   "t": "li",
+   "x": "innocent。innocent。无罪的。"
+  },
+  {
+   "t": "li",
+   "x": "accusation。accusation。指控。"
+  },
+  {
+   "t": "li",
+   "x": "bail。bail。保释。"
+  },
+  {
+   "t": "li",
+   "x": "imprisonment。imprisonment。监禁。"
+  },
+  {
+   "t": "li",
+   "x": "prison。prison。监狱。"
+  },
+  {
+   "t": "li",
+   "x": "jail。jail。监狱。"
+  },
+  {
+   "t": "li",
+   "x": "arrest。arrest。逮捕。"
+  },
+  {
+   "t": "li",
+   "x": "detain。detain。拘留。"
+  },
+  {
+   "t": "li",
+   "x": "summons。summons。传票。"
+  },
+  {
+   "t": "li",
+   "x": "subpoena。subpoena。传票。"
+  },
+  {
+   "t": "li",
+   "x": "affidavit。affidavit。宣誓书。"
+  },
+  {
+   "t": "li",
+   "x": "oath。oath。誓言。"
+  },
+  {
+   "t": "li",
+   "x": "perjury。perjury。伪证罪。"
+  },
+  {
+   "t": "li",
+   "x": "punishment。punishment。惩罚。"
+  },
+  {
+   "t": "li",
+   "x": "fine。fine。罚款。"
+  },
+  {
+   "t": "li",
+   "x": "theft。theft。盗窃。"
+  },
+  {
+   "t": "li",
+   "x": "robbery。robbery。抢劫。"
+  },
+  {
+   "t": "li",
+   "x": "burglary。burglary。入室盗窃。"
+  },
+  {
+   "t": "li",
+   "x": "murder。murder。谋杀。"
+  },
+  {
+   "t": "li",
+   "x": "homicide。homicide。杀人。"
+  },
+  {
+   "t": "li",
+   "x": "battery。battery。殴打。"
+  },
+  {
+   "t": "li",
+   "x": "libel。libel。诽谤。"
+  },
+  {
+   "t": "li",
+   "x": "slander。slander。口头诽谤。"
+  },
+  {
+   "t": "li",
+   "x": "defamation。defamation。诽谤。"
+  },
+  {
+   "t": "li",
+   "x": "negligence。negligence。过失。"
+  },
+  {
+   "t": "li",
+   "x": "malpractice。malpractice。渎职。"
+  },
+  {
+   "t": "li",
+   "x": "tort。tort。侵权行为。"
+  },
+  {
+   "t": "li",
+   "x": "possession。possession。占有。"
+  },
+  {
+   "t": "li",
+   "x": "burden。burden。举证责任。"
+  },
+  {
+   "t": "li",
+   "x": "copyright。copyright。版权。"
+  },
+  {
+   "t": "li",
+   "x": "disclosure。disclosure。披露。"
+  },
+  {
+   "t": "li",
+   "x": "discharge。discharge。释放。"
+  },
+  {
+   "t": "li",
+   "x": "complaint。complaint。控告。"
+  },
+  {
+   "t": "li",
+   "x": "confess。confess。供认。"
+  },
+  {
+   "t": "li",
+   "x": "confession。confession。供认。"
+  },
+  {
+   "t": "li",
+   "x": "confidential。confidential。保密的。"
+  },
+  {
+   "t": "li",
+   "x": "competent。competent。有法定资格的。"
+  },
+  {
+   "t": "li",
+   "x": "certify。certify。证明。"
+  },
+  {
+   "t": "li",
+   "x": "citation。citation。传票。"
+  },
+  {
+   "t": "li",
+   "x": "claimant。claimant。原告。"
+  },
+  {
+   "t": "li",
+   "x": "allegation。allegation。指控。"
+  },
+  {
+   "t": "li",
+   "x": "arbitrate。arbitrate。仲裁。"
+  },
+  {
+   "t": "li",
+   "x": "arbitrator。arbitrator。仲裁员。"
+  },
+  {
+   "t": "li",
+   "x": "adjudicate。adjudicate。裁决。"
+  },
+  {
+   "t": "li",
+   "x": "adjudication。adjudication。裁决。"
+  },
+  {
+   "t": "li",
+   "x": "binding。binding。有约束力的。"
+  },
+  {
+   "t": "li",
+   "x": "bench。bench。法官席。"
+  },
+  {
+   "t": "li",
+   "x": "codify。codify。编纂成法典。"
+  },
+  {
+   "t": "li",
+   "x": "coercion。coercion。胁迫。"
+  },
+  {
+   "t": "li",
+   "x": "collateral。collateral。抵押品。"
+  },
+  {
+   "t": "li",
+   "x": "complainant。complainant。控告人。"
+  },
+  {
+   "t": "li",
+   "x": "conspiracy。conspiracy。共谋。"
+  },
+  {
+   "t": "li",
+   "x": "constable。constable。警察。"
+  },
+  {
+   "t": "li",
+   "x": "contest。contest。抗辩。"
+  },
+  {
+   "t": "li",
+   "x": "contravene。contravene。违反。"
+  },
+  {
+   "t": "li",
+   "x": "corroborate。corroborate。证实。"
+  },
+  {
+   "t": "li",
+   "x": "counterfeit。counterfeit。伪造。"
+  },
+  {
+   "t": "li",
+   "x": "covenant。covenant。契约。"
+  },
+  {
+   "t": "li",
+   "x": "deed。deed。契据。"
+  },
+  {
+   "t": "li",
+   "x": "directive。directive。指令。"
+  },
+  {
+   "t": "li",
+   "x": "dissolve。dissolve。解散。"
+  },
+  {
+   "t": "li",
+   "x": "embezzle。embezzle。挪用。"
+  },
+  {
+   "t": "li",
+   "x": "enactment。enactment。颁布。"
+  },
+  {
+   "t": "li",
+   "x": "equitable。equitable。公平的。"
+  },
+  {
+   "t": "li",
+   "x": "evict。evict。驱逐。"
+  },
+  {
+   "t": "li",
+   "x": "exonerate。exonerate。免除罪责。"
+  },
+  {
+   "t": "li",
+   "x": "extradition。extradition。引渡。"
+  },
+  {
+   "t": "li",
+   "x": "confiscate。confiscate。没收。"
+  },
+  {
+   "t": "li",
+   "x": "emancipation。emancipation。解放。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "变成 虚拟语气 变成 表示“坚持要求”时，that 从句谓语用动词原形；法律、制度文本中常见。"
+  },
+  {
+   "t": "li",
+   "x": "变成 引导宾语从句 + 对比补充 变成 用 that 从句说明含义；用 承接前文介词短语，避免重复谓语。"
+  },
+  {
+   "t": "li",
+   "x": "变成 现在分词短语 facing... 作后置定语 变成 相当于 ，常用来修饰 anyone/those 等，使表达紧凑。"
+  },
+  {
+   "t": "li",
+   "x": "变成 if 条件状语从句 + 被动语态 + 结果状语 变成 条件从句说明前提；说明主句动作带来的结果。"
+  },
+  {
+   "t": "li",
+   "x": "变成 引导时间/条件状语从句 + 被动语态 变成 表“只有当……才”，强调必要条件；被动语态突出权利“被主张、被捍卫”。"
+  }
+ ]
+}

@@ -1,0 +1,863 @@
+{
+ "version": "reading/v1",
+ "id": "words-13",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "13-文化、艺术与传媒",
+ "source": "notebook/kaoyan/english1/words/13-文化、艺术与传媒.md",
+ "sourceSha": "05d827d5",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "13 文化、艺术与传媒"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "culture。culture。文化。"
+  },
+  {
+   "t": "li",
+   "x": "cultural。cultural。文化的。"
+  },
+  {
+   "t": "li",
+   "x": "heritage。heritage。遗产。"
+  },
+  {
+   "t": "li",
+   "x": "inherit。inherit。继承。"
+  },
+  {
+   "t": "li",
+   "x": "legacy。legacy。遗产。"
+  },
+  {
+   "t": "li",
+   "x": "traditional。traditional。传统的。"
+  },
+  {
+   "t": "li",
+   "x": "art。art。艺术。"
+  },
+  {
+   "t": "li",
+   "x": "artist。artist。艺术家。"
+  },
+  {
+   "t": "li",
+   "x": "artistic。artistic。艺术的。"
+  },
+  {
+   "t": "li",
+   "x": "artwork。artwork。艺术作品。"
+  },
+  {
+   "t": "li",
+   "x": "craft。craft。工艺。"
+  },
+  {
+   "t": "li",
+   "x": "craftsmanship。craftsmanship。技艺。"
+  },
+  {
+   "t": "li",
+   "x": "artifact。artifact。手工艺品。"
+  },
+  {
+   "t": "li",
+   "x": "relic。relic。遗物。"
+  },
+  {
+   "t": "li",
+   "x": "monument。monument。纪念碑。"
+  },
+  {
+   "t": "li",
+   "x": "memorial。memorial。纪念碑。"
+  },
+  {
+   "t": "li",
+   "x": "museum。museum。博物馆。"
+  },
+  {
+   "t": "li",
+   "x": "gallery。gallery。画廊。"
+  },
+  {
+   "t": "li",
+   "x": "exhibit。exhibit。展出。"
+  },
+  {
+   "t": "li",
+   "x": "exhibition。exhibition。展览。"
+  },
+  {
+   "t": "li",
+   "x": "display。display。展示。"
+  },
+  {
+   "t": "li",
+   "x": "collection。collection。收藏品。"
+  },
+  {
+   "t": "li",
+   "x": "collector。collector。收藏家。"
+  },
+  {
+   "t": "li",
+   "x": "preservation。preservation。保存。"
+  },
+  {
+   "t": "li",
+   "x": "restore。restore。修复。"
+  },
+  {
+   "t": "li",
+   "x": "restoration。restoration。修复。"
+  },
+  {
+   "t": "li",
+   "x": "renovate。renovate。修复。"
+  },
+  {
+   "t": "li",
+   "x": "ruin。ruin。废墟。"
+  },
+  {
+   "t": "li",
+   "x": "archaeology。archaeology。考古学。"
+  },
+  {
+   "t": "li",
+   "x": "archaeologist。archaeologist。考古学家。"
+  },
+  {
+   "t": "li",
+   "x": "excavate。excavate。挖掘。"
+  },
+  {
+   "t": "li",
+   "x": "ancient。ancient。古代的。"
+  },
+  {
+   "t": "li",
+   "x": "antique。antique。古董。"
+  },
+  {
+   "t": "li",
+   "x": "primitive。primitive。原始的。"
+  },
+  {
+   "t": "li",
+   "x": "civilization。civilization。文明。"
+  },
+  {
+   "t": "li",
+   "x": "civilize。civilize。使开化。"
+  },
+  {
+   "t": "li",
+   "x": "sculpture。sculpture。雕塑。"
+  },
+  {
+   "t": "li",
+   "x": "carve。carve。雕刻。"
+  },
+  {
+   "t": "li",
+   "x": "pottery。pottery。陶器。"
+  },
+  {
+   "t": "li",
+   "x": "porcelain。porcelain。瓷器。"
+  },
+  {
+   "t": "li",
+   "x": "ceramic。ceramic。陶瓷制品。"
+  },
+  {
+   "t": "li",
+   "x": "bronze。bronze。青铜。"
+  },
+  {
+   "t": "li",
+   "x": "jade。jade。玉。"
+  },
+  {
+   "t": "li",
+   "x": "ivory。ivory。象牙。"
+  },
+  {
+   "t": "li",
+   "x": "textile。textile。纺织品。"
+  },
+  {
+   "t": "li",
+   "x": "embroidery。embroidery。刺绣。"
+  },
+  {
+   "t": "li",
+   "x": "calligraphy。calligraphy。书法。"
+  },
+  {
+   "t": "li",
+   "x": "painting。painting。绘画。"
+  },
+  {
+   "t": "li",
+   "x": "painter。painter。画家。"
+  },
+  {
+   "t": "li",
+   "x": "portrait。portrait。肖像。"
+  },
+  {
+   "t": "li",
+   "x": "canvas。canvas。画布。"
+  },
+  {
+   "t": "li",
+   "x": "mural。mural。壁画。"
+  },
+  {
+   "t": "li",
+   "x": "aesthetic。aesthetic。美学的。"
+  },
+  {
+   "t": "li",
+   "x": "aesthetics。aesthetics。美学。"
+  },
+  {
+   "t": "li",
+   "x": "beauty。beauty。美。"
+  },
+  {
+   "t": "li",
+   "x": "beautiful。beautiful。美丽的。"
+  },
+  {
+   "t": "li",
+   "x": "sublime。sublime。崇高的。"
+  },
+  {
+   "t": "li",
+   "x": "elegance。elegance。优雅。"
+  },
+  {
+   "t": "li",
+   "x": "elegant。elegant。优雅的。"
+  },
+  {
+   "t": "li",
+   "x": "grace。grace。优美。"
+  },
+  {
+   "t": "li",
+   "x": "graceful。graceful。优美的。"
+  },
+  {
+   "t": "li",
+   "x": "style。style。风格。"
+  },
+  {
+   "t": "li",
+   "x": "genre。genre。体裁。"
+  },
+  {
+   "t": "li",
+   "x": "motif。motif。主题。"
+  },
+  {
+   "t": "li",
+   "x": "symbol。symbol。象征。"
+  },
+  {
+   "t": "li",
+   "x": "symbolic。symbolic。象征的。"
+  },
+  {
+   "t": "li",
+   "x": "symbolize。symbolize。象征。"
+  },
+  {
+   "t": "li",
+   "x": "imagery。imagery。意象。"
+  },
+  {
+   "t": "li",
+   "x": "image。image。形象。"
+  },
+  {
+   "t": "li",
+   "x": "imaginative。imaginative。富有想象力的。"
+  },
+  {
+   "t": "li",
+   "x": "creativity。creativity。创造力。"
+  },
+  {
+   "t": "li",
+   "x": "creator。creator。创造者。"
+  },
+  {
+   "t": "li",
+   "x": "compose。compose。创作。"
+  },
+  {
+   "t": "li",
+   "x": "composer。composer。作曲家。"
+  },
+  {
+   "t": "li",
+   "x": "composition。composition。作品。"
+  },
+  {
+   "t": "li",
+   "x": "music。music。音乐。"
+  },
+  {
+   "t": "li",
+   "x": "musical。musical。音乐的。"
+  },
+  {
+   "t": "li",
+   "x": "musician。musician。音乐家。"
+  },
+  {
+   "t": "li",
+   "x": "melody。melody。旋律。"
+  },
+  {
+   "t": "li",
+   "x": "rhythm。rhythm。节奏。"
+  },
+  {
+   "t": "li",
+   "x": "harmonious。harmonious。和谐的。"
+  },
+  {
+   "t": "li",
+   "x": "symphony。symphony。交响乐。"
+  },
+  {
+   "t": "li",
+   "x": "orchestra。orchestra。管弦乐队。"
+  },
+  {
+   "t": "li",
+   "x": "opera。opera。歌剧。"
+  },
+  {
+   "t": "li",
+   "x": "drama。drama。戏剧。"
+  },
+  {
+   "t": "li",
+   "x": "dramatic。dramatic。戏剧性的。"
+  },
+  {
+   "t": "li",
+   "x": "dramatize。dramatize。改编成戏剧。"
+  },
+  {
+   "t": "li",
+   "x": "theatre。theatre。剧院。"
+  },
+  {
+   "t": "li",
+   "x": "theatrical。theatrical。戏剧的。"
+  },
+  {
+   "t": "li",
+   "x": "stage。stage。舞台。"
+  },
+  {
+   "t": "li",
+   "x": "perform。perform。表演。"
+  },
+  {
+   "t": "li",
+   "x": "performance。performance。表演。"
+  },
+  {
+   "t": "li",
+   "x": "performer。performer。表演者。"
+  },
+  {
+   "t": "li",
+   "x": "rehearsal。rehearsal。排练。"
+  },
+  {
+   "t": "li",
+   "x": "rehearse。rehearse。排练。"
+  },
+  {
+   "t": "li",
+   "x": "script。script。剧本。"
+  },
+  {
+   "t": "li",
+   "x": "playwright。playwright。剧作家。"
+  },
+  {
+   "t": "li",
+   "x": "plot。plot。情节。"
+  },
+  {
+   "t": "li",
+   "x": "character。character。人物。"
+  },
+  {
+   "t": "li",
+   "x": "protagonist。protagonist。主角。"
+  },
+  {
+   "t": "li",
+   "x": "actor。actor。演员。"
+  },
+  {
+   "t": "li",
+   "x": "actress。actress。女演员。"
+  },
+  {
+   "t": "li",
+   "x": "audience。audience。观众。"
+  },
+  {
+   "t": "li",
+   "x": "spectator。spectator。观众。"
+  },
+  {
+   "t": "li",
+   "x": "critic。critic。评论家。"
+  },
+  {
+   "t": "li",
+   "x": "critical。critical。批判的。"
+  },
+  {
+   "t": "li",
+   "x": "commentary。commentary。评论。"
+  },
+  {
+   "t": "li",
+   "x": "literature。literature。文学。"
+  },
+  {
+   "t": "li",
+   "x": "literary。literary。文学的。"
+  },
+  {
+   "t": "li",
+   "x": "literacy。literacy。读写能力。"
+  },
+  {
+   "t": "li",
+   "x": "poetry。poetry。诗歌。"
+  },
+  {
+   "t": "li",
+   "x": "poem。poem。诗。"
+  },
+  {
+   "t": "li",
+   "x": "poet。poet。诗人。"
+  },
+  {
+   "t": "li",
+   "x": "poetic。poetic。诗意的。"
+  },
+  {
+   "t": "li",
+   "x": "prose。prose。散文。"
+  },
+  {
+   "t": "li",
+   "x": "novel。novel。小说。"
+  },
+  {
+   "t": "li",
+   "x": "novelist。novelist。小说家。"
+  },
+  {
+   "t": "li",
+   "x": "fiction。fiction。小说。"
+  },
+  {
+   "t": "li",
+   "x": "fictional。fictional。虚构的。"
+  },
+  {
+   "t": "li",
+   "x": "narrative。narrative。叙述。"
+  },
+  {
+   "t": "li",
+   "x": "narrate。narrate。叙述。"
+  },
+  {
+   "t": "li",
+   "x": "narration。narration。叙述。"
+  },
+  {
+   "t": "li",
+   "x": "masterpiece。masterpiece。杰作。"
+  },
+  {
+   "t": "li",
+   "x": "classic。classic。经典作品。"
+  },
+  {
+   "t": "li",
+   "x": "classical。classical。古典的。"
+  },
+  {
+   "t": "li",
+   "x": "romantic。romantic。浪漫的。"
+  },
+  {
+   "t": "li",
+   "x": "romance。romance。浪漫。"
+  },
+  {
+   "t": "li",
+   "x": "realism。realism。现实主义。"
+  },
+  {
+   "t": "li",
+   "x": "ideal。ideal。理想。"
+  },
+  {
+   "t": "li",
+   "x": "folklore。folklore。民间传说。"
+  },
+  {
+   "t": "li",
+   "x": "folk。folk。民间。"
+  },
+  {
+   "t": "li",
+   "x": "myth。myth。神话。"
+  },
+  {
+   "t": "li",
+   "x": "mythology。mythology。神话。"
+  },
+  {
+   "t": "li",
+   "x": "legend。legend。传说。"
+  },
+  {
+   "t": "li",
+   "x": "legendary。legendary。传奇的。"
+  },
+  {
+   "t": "li",
+   "x": "fairy。fairy。仙女。"
+  },
+  {
+   "t": "li",
+   "x": "tale。tale。故事。"
+  },
+  {
+   "t": "li",
+   "x": "fable。fable。寓言。"
+  },
+  {
+   "t": "li",
+   "x": "epic。epic。史诗。"
+  },
+  {
+   "t": "li",
+   "x": "ritual。ritual。仪式。"
+  },
+  {
+   "t": "li",
+   "x": "ceremony。ceremony。仪式。"
+  },
+  {
+   "t": "li",
+   "x": "ceremonial。ceremonial。仪式的。"
+  },
+  {
+   "t": "li",
+   "x": "festival。festival。节日。"
+  },
+  {
+   "t": "li",
+   "x": "carnival。carnival。狂欢节。"
+  },
+  {
+   "t": "li",
+   "x": "costume。costume。服装。"
+  },
+  {
+   "t": "li",
+   "x": "medium。medium。媒介。"
+  },
+  {
+   "t": "li",
+   "x": "journalist。journalist。记者。"
+  },
+  {
+   "t": "li",
+   "x": "broadcast。broadcast。广播。"
+  },
+  {
+   "t": "li",
+   "x": "coverage。coverage。新闻报道。"
+  },
+  {
+   "t": "li",
+   "x": "publisher。publisher。出版商。"
+  },
+  {
+   "t": "li",
+   "x": "publicize。publicize。宣传。"
+  },
+  {
+   "t": "li",
+   "x": "advertise。advertise。做广告。"
+  },
+  {
+   "t": "li",
+   "x": "architecture。architecture。建筑学。"
+  },
+  {
+   "t": "li",
+   "x": "photography。photography。摄影。"
+  },
+  {
+   "t": "li",
+   "x": "film。film。电影。"
+  },
+  {
+   "t": "li",
+   "x": "cinema。cinema。电影。"
+  },
+  {
+   "t": "li",
+   "x": "television。television。电视。"
+  },
+  {
+   "t": "li",
+   "x": "video。video。视频。"
+  },
+  {
+   "t": "li",
+   "x": "documentary。documentary。纪录片。"
+  },
+  {
+   "t": "li",
+   "x": "magazine。magazine。杂志。"
+  },
+  {
+   "t": "li",
+   "x": "newspaper。newspaper。报纸。"
+  },
+  {
+   "t": "li",
+   "x": "headline。headline。标题。"
+  },
+  {
+   "t": "li",
+   "x": "editorial。editorial。社论。"
+  },
+  {
+   "t": "li",
+   "x": "column。column。专栏。"
+  },
+  {
+   "t": "li",
+   "x": "writer。writer。作家。"
+  },
+  {
+   "t": "li",
+   "x": "producer。producer。制片人。"
+  },
+  {
+   "t": "li",
+   "x": "manuscript。manuscript。手稿。"
+  },
+  {
+   "t": "li",
+   "x": "edition。edition。版本。"
+  },
+  {
+   "t": "li",
+   "x": "bestseller。bestseller。畅销书。"
+  },
+  {
+   "t": "li",
+   "x": "statue。statue。雕像。"
+  },
+  {
+   "t": "li",
+   "x": "ballet。ballet。芭蕾舞。"
+  },
+  {
+   "t": "li",
+   "x": "dance。dance。舞蹈。"
+  },
+  {
+   "t": "li",
+   "x": "concert。concert。音乐会。"
+  },
+  {
+   "t": "li",
+   "x": "chorus。chorus。合唱队。"
+  },
+  {
+   "t": "li",
+   "x": "lyric。lyric。歌词。"
+  },
+  {
+   "t": "li",
+   "x": "rhyme。rhyme。韵。"
+  },
+  {
+   "t": "li",
+   "x": "animation。animation。动画。"
+  },
+  {
+   "t": "li",
+   "x": "cartoon。cartoon。卡通。"
+  },
+  {
+   "t": "li",
+   "x": "comic。comic。连环画。"
+  },
+  {
+   "t": "li",
+   "x": "screenplay。screenplay。电影剧本。"
+  },
+  {
+   "t": "li",
+   "x": "soundtrack。soundtrack。电影配乐。"
+  },
+  {
+   "t": "li",
+   "x": "movie。movie。电影。"
+  },
+  {
+   "t": "li",
+   "x": "photograph。photograph。照片。"
+  },
+  {
+   "t": "li",
+   "x": "architect。architect。建筑师。"
+  },
+  {
+   "t": "li",
+   "x": "authentic。authentic。真实的。"
+  },
+  {
+   "t": "li",
+   "x": "tragedy。tragedy。悲剧。"
+  },
+  {
+   "t": "li",
+   "x": "spectacle。spectacle。奇观。"
+  },
+  {
+   "t": "li",
+   "x": "entertainment。entertainment。娱乐。"
+  },
+  {
+   "t": "li",
+   "x": "circulate。circulate。传播。"
+  },
+  {
+   "t": "li",
+   "x": "circulation。circulation。发行量。"
+  },
+  {
+   "t": "li",
+   "x": "disseminate。disseminate。传播。"
+  },
+  {
+   "t": "li",
+   "x": "screen。screen。筛查。"
+  },
+  {
+   "t": "li",
+   "x": "interaction。interaction。互动。"
+  },
+  {
+   "t": "li",
+   "x": "feedback。feedback。反馈。"
+  },
+  {
+   "t": "li",
+   "x": "content。content。内容。"
+  },
+  {
+   "t": "li",
+   "x": "subscribe。subscribe。订阅。"
+  },
+  {
+   "t": "li",
+   "x": "anonymity。anonymity。匿名。"
+  },
+  {
+   "t": "li",
+   "x": "anonymous。anonymous。匿名的。"
+  },
+  {
+   "t": "li",
+   "x": "rumor。rumor。谣言。"
+  },
+  {
+   "t": "li",
+   "x": "commemorate。commemorate。纪念。"
+  },
+  {
+   "t": "li",
+   "x": "inspiration。inspiration。灵感。"
+  },
+  {
+   "t": "li",
+   "x": "talent。talent。天赋。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "“intangible traditions that communities preserve and transmit across generations” 变成 that 引导定语从句，先行词为 traditions，that 在从句中作 preserve and transmit 的宾语 变成 用于给抽象名词补充“谁保存、谁传承”的具体信息。"
+  },
+  {
+   "t": "li",
+   "x": "“In an age when digital media can disseminate a local practice to a global audience within hours” 变成 介词短语 In an age + when 引导定语从句修饰 age 变成 用于开篇设定时代背景，when 从句中主谓宾结构完整。"
+  },
+  {
+   "t": "li",
+   "x": "“how can a tradition maintain its authenticity while reaching people who have never encountered it?” 变成 how 引导特殊疑问句；while + 现在分词作时间/伴随状语；who 引导定语从句修饰 people 变成 用于提出核心问题，while doing 的逻辑主语与主句主语一致。"
+  },
+  {
+   "t": "li",
+   "x": "“a medium is not a neutral container but shapes what it carries” 变成 not...but... 并列对比结构；what it carries 为宾语从句作 shapes 的宾语 变成 用于先否定常见看法、再提出真正观点；what 从句相当于“它所承载的东西”。"
+  },
+  {
+   "t": "li",
+   "x": "“neither to freeze heritage in a museum nor to surrender it to the market, but to let communities themselves decide which elements are essential” 变成 neither...nor...but... 并列不定式结构；let sb. do sth. 中 decide 前省略 to；which 引导宾语从句作 decide 的宾语 变成 用于三项并列取舍，突出最终主张；themselves 作同位语加强语气。"
+  }
+ ]
+}

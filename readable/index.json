@@ -1,0 +1,3054 @@
+{
+ "version": "reading/v1",
+ "generated": "2026-11-18",
+ "lines": [
+  {
+   "id": "math1",
+   "title": "数一数学",
+   "units": [
+    {
+     "id": "math1-HS-0101",
+     "title": "奇偶、周期、有界：三条性质，各自省掉哪一半计算",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0101.md",
+     "sha": "928c95cd",
+     "n": 28,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0101.json"
+    },
+    {
+     "id": "math1-HS-0102",
+     "title": "数列极限只问「后面怎么走」，不问「前面怎么来」",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0102.md",
+     "sha": "0eb15c88",
+     "n": 41,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0102.json"
+    },
+    {
+     "id": "math1-HS-0103",
+     "title": "无穷小比较，本质是给「趋于零的快慢」排出一套等级",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0103.md",
+     "sha": "7442549f",
+     "n": 43,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0103.json"
+    },
+    {
+     "id": "math1-HS-0104",
+     "title": "连续的判定只有一句话：极限值能不能按回函数值上",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0104.md",
+     "sha": "bf7d246d",
+     "n": 39,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0104.json"
+    },
+    {
+     "id": "math1-HS-0201",
+     "title": "导数为什么离不开「先连续」这一步：可导必连续，反过来的缺口全在尖点上",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0201.md",
+     "sha": "9f386972",
+     "n": 31,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0201.json"
+    },
+    {
+     "id": "math1-HS-0202",
+     "title": "三个中值定理其实是同一句话：条件松一格，结论就换一个说法",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0202.md",
+     "sha": "20041cca",
+     "n": 32,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0202.json"
+    },
+    {
+     "id": "math1-HS-0203",
+     "title": "洛必达替你把比换成导数之比，泰勒替你把函数摊成阶数；失效的那一类只有泰勒接得住",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0203.md",
+     "sha": "0ed081df",
+     "n": 31,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0203.json"
+    },
+    {
+     "id": "math1-HS-0204",
+     "title": "一阶导给单调和极值，二阶导给凹凸和拐点；订正曲率圆的圆心只差一个方向",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0204.md",
+     "sha": "3b255ed1",
+     "n": 33,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0204.json"
+    },
+    {
+     "id": "math1-HS-0205",
+     "title": "不等式挪到一边就是一个新函数，根的个数靠异号加单调两件事夹出来",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0205.md",
+     "sha": "868b6dc0",
+     "n": 36,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0205.json"
+    },
+    {
+     "id": "math1-HS-0301",
+     "title": "不定积分只剩两件事：认出哪块能塞进微分，认出哪一个因子该拿去求导",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0301.md",
+     "sha": "ce0d6212",
+     "n": 39,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0301.json"
+    },
+    {
+     "id": "math1-HS-0302",
+     "title": "对称、倒过来、按周期平移：定积分省下的都是同一段重复劳动",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0302.md",
+     "sha": "148f2c74",
+     "n": 35,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0302.json"
+    },
+    {
+     "id": "math1-HS-0303",
+     "title": "反常积分：先找危险点，再用尺子比阶，判收敛这一步根本不用算",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0303.md",
+     "sha": "d404aa16",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0303.json"
+    },
+    {
+     "id": "math1-HS-0304",
+     "title": "定积分应用：所有量都是「这一小块有多少」，差别只在半径量到谁",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0304.md",
+     "sha": "67d1ee29",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0304.json"
+    },
+    {
+     "id": "math1-HS-0401",
+     "title": "向量运算：点积只在方向上帮你省力，叉积只在面积和垂直方向上帮你省力",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0401.md",
+     "sha": "28e6e9b8",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0401.json"
+    },
+    {
+     "id": "math1-HS-0402",
+     "title": "平面与直线：平面靠一根垂直于它的向量，直线靠一根沿着它的向量，夹角和距离都是这两个向量的一次运算",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0402.md",
+     "sha": "9b7dda09",
+     "n": 28,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0402.json"
+    },
+    {
+     "id": "math1-HS-0403",
+     "title": "曲面与曲线：同一串平方项，缺谁、齐不齐次、几个负号，形状就换人",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0403.md",
+     "sha": "1f0e9d2b",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0403.json"
+    },
+    {
+     "id": "math1-HS-0501",
+     "title": "把导数拆成「偏」的、再拼回「全」的，是两次不同的让步",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0501.md",
+     "sha": "cf3db0f2",
+     "n": 28,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0501.json"
+    },
+    {
+     "id": "math1-HS-0502",
+     "title": "多元求导的全部难点是「这个位置里还藏着谁」，链式法则就是把这层藏着的变量逐层揪出来",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0502.md",
+     "sha": "0aa2a1e5",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0502.json"
+    },
+    {
+     "id": "math1-HS-0503",
+     "title": "方向导数把「沿轴走」放开成「沿任意方向走」，梯度是这件事的唯一答案",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0503.md",
+     "sha": "135be77f",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0503.json"
+    },
+    {
+     "id": "math1-HS-0504",
+     "title": "极值这一块，找到驻点只是开头，分数几乎全在「还有哪些点没查」",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0504.md",
+     "sha": "de1f7326",
+     "n": 31,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0504.json"
+    },
+    {
+     "id": "math1-HS-0601",
+     "title": "二重积分的全部技巧只有一件事：把区域换成另一种说法，让积分限变简单",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0601.md",
+     "sha": "cd811e2b",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0601.json"
+    },
+    {
+     "id": "math1-HS-0602",
+     "title": "三重积分：投影法省的是穿线方向，截面法省的是内层那一重，坐标变换省的只是上下界的写法",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0602.md",
+     "sha": "4f255765",
+     "n": 32,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0602.json"
+    },
+    {
+     "id": "math1-HS-0603",
+     "title": "曲线积分：弧长元替你把曲线量成数，位移元把方向带进符号，格林公式替你把一圈换成一块",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0603.md",
+     "sha": "e4fe5f20",
+     "n": 32,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0603.json"
+    },
+    {
+     "id": "math1-HS-0604",
+     "title": "曲面积分：面积元替你把斜的曲面摊平，侧决定了通量的符号，高斯公式替你把一张网换成它围住的空间",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0604.md",
+     "sha": "c5eb6ad5",
+     "n": 30,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0604.json"
+    },
+    {
+     "id": "math1-HS-0605",
+     "title": "三大公式：把边界上的累加换成内部的累加，用之前那三关是同一套，散度配面、旋度配线",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0605.md",
+     "sha": "6a8eaa4c",
+     "n": 30,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0605.json"
+    },
+    {
+     "id": "math1-HS-0701",
+     "title": "数项级数判敛：先给通项分个类，再看它衰减多快，拿一把刚好量得出的尺子去比",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0701.md",
+     "sha": "a2d5f38f",
+     "n": 29,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0701.json"
+    },
+    {
+     "id": "math1-HS-0702",
+     "title": "幂级数：它只替你把「无穷多项求和」换成二次的乘法、减法和开方",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0702.md",
+     "sha": "3212e9d6",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0702.json"
+    },
+    {
+     "id": "math1-HS-0703",
+     "title": "傅里叶级数：它把一张周期里的函数图，换成一串角度的正弦和余弦",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0703.md",
+     "sha": "159316d9",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0703.json"
+    },
+    {
+     "id": "math1-HS-0801",
+     "title": "一阶方程：五种类型不是五套公式，是五次退让，认类型那一眼就是全部",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0801.md",
+     "sha": "a4f10ed2",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0801.json"
+    },
+    {
+     "id": "math1-HS-0802",
+     "title": "降阶：方程缺了谁，就说明谁可以被冒充成新变量",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0802.md",
+     "sha": "605fa3ec",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0802.json"
+    },
+    {
+     "id": "math1-HS-0803",
+     "title": "常系数线性方程：一道微分方程被换成一道二次方程，解的形状只由那两根落在哪儿决定",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0803.md",
+     "sha": "bc62234f",
+     "n": 29,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0803.json"
+    },
+    {
+     "id": "math1-HS-0804",
+     "title": "欧拉方程：系数里那个自变量的幂次看着碍事，换成对数之后它正好被导数吃掉",
+     "group": "数一 · 高等数学",
+     "source": "build/reading/talk/math1-HS-0804.md",
+     "sha": "5252ece8",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/math1-HS-0804.json"
+    },
+    {
+     "id": "math1-LA-0101",
+     "title": "行列式：几乎所有行列式变形都在问同一件事——你这一手到底动没动它的值",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0101.md",
+     "sha": "4b91da8c",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0101.json"
+    },
+    {
+     "id": "math1-LA-0102",
+     "title": "行列式计算：算得动的路只有一条，其余都是你认出了形状才敢走的近道",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0102.md",
+     "sha": "385efafb",
+     "n": 22,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0102.json"
+    },
+    {
+     "id": "math1-LA-0201",
+     "title": "矩阵运算：所有符号错都来自左右次序，所有展开错都来自忘了乘法不交换",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0201.md",
+     "sha": "0f0a6c13",
+     "n": 24,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0201.json"
+    },
+    {
+     "id": "math1-LA-0202",
+     "title": "逆与伴随：伴随不是另一个矩阵，是「行列式乘逆」这一句被写成了矩阵",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0202.md",
+     "sha": "0e1f1f1b",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0202.json"
+    },
+    {
+     "id": "math1-LA-0203",
+     "title": "秩：它只回答「这几条里到底有几条在干活」，三个判断都从这一句读出来",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0203.md",
+     "sha": "2e434645",
+     "n": 49,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0203.json"
+    },
+    {
+     "id": "math1-LA-0204",
+     "title": "初等变换：它唯一被允许做的事，就是换一套说法而不换答案",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0204.md",
+     "sha": "480eb72b",
+     "n": 43,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0204.json"
+    },
+    {
+     "id": "math1-LA-0301",
+     "title": "线性相关：三个说法其实是同一句，省掉的是「该先算哪一个」",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0301.md",
+     "sha": "fc201a68",
+     "n": 44,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0301.json"
+    },
+    {
+     "id": "math1-LA-0302",
+     "title": "极大无关组：它数出来的个数就是秩，过渡矩阵一次行变换就能读出来",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0302.md",
+     "sha": "1f197d08",
+     "n": 46,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0302.json"
+    },
+    {
+     "id": "math1-LA-0303",
+     "title": "内积与正交：一个数判垂直，一串减法造正交",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0303.md",
+     "sha": "f5913443",
+     "n": 48,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0303.json"
+    },
+    {
+     "id": "math1-LA-0401",
+     "title": "齐次方程组：判据只比一次，那一比就把答案的个数报出来了",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0401.md",
+     "sha": "fa1c4251",
+     "n": 40,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0401.json"
+    },
+    {
+     "id": "math1-LA-0402",
+     "title": "非齐次方程组：多出来的那个判断，只多比一次秩",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0402.md",
+     "sha": "691f8650",
+     "n": 42,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0402.json"
+    },
+    {
+     "id": "math1-LA-0403",
+     "title": "同解与公共解：一个是问两片是不是同一片，一个是问两片叠起来还剩什么",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0403.md",
+     "sha": "d26e259d",
+     "n": 42,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0403.json"
+    },
+    {
+     "id": "math1-LA-0501",
+     "title": "特征值与特征向量：总和与乘积这两个数，替你把展开整段省掉",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0501.md",
+     "sha": "e35b446a",
+     "n": 45,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0501.json"
+    },
+    {
+     "id": "math1-LA-0502",
+     "title": "相似对角化：能不能换成只剩伸缩的样子，只取决于方向够不够数",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0502.md",
+     "sha": "c9c73e97",
+     "n": 45,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0502.json"
+    },
+    {
+     "id": "math1-LA-0503",
+     "title": "实对称矩阵：对称这一条，把对角化从「要碰运气」变成「照流程走」",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0503.md",
+     "sha": "cb6e0cf5",
+     "n": 36,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0503.json"
+    },
+    {
+     "id": "math1-LA-0601",
+     "title": "标准形与惯性定理：标准形可以变来变去，真正锁住的只有正负号各几个",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0601.md",
+     "sha": "c71f6f77",
+     "n": 34,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0601.json"
+    },
+    {
+     "id": "math1-LA-0602",
+     "title": "正定判定：五种说法等价，但只有一种是一列不等式，所以它最先动手",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0602.md",
+     "sha": "43cfa2c0",
+     "n": 34,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0602.json"
+    },
+    {
+     "id": "math1-LA-0603",
+     "title": "合同变换：两个判据量的不是同一批数，所以同秩同阶也能一个合同一个不合同",
+     "group": "数一 · 线性代数",
+     "source": "build/reading/talk/math1-LA-0603.md",
+     "sha": "8b1a048b",
+     "n": 37,
+     "problems": [],
+     "path": "readable/math1/math1-LA-0603.json"
+    },
+    {
+     "id": "math1-PS-0101",
+     "title": "事件与运算：一句话先翻成并、交、补，就不用把结果一个个列出来数",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0101.md",
+     "sha": "5de7cded",
+     "n": 36,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0101.json"
+    },
+    {
+     "id": "math1-PS-0102",
+     "title": "古典与几何概型：会数就数样本点，数不动就量面积，判据只有一条——样本点是不是等可能",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0102.md",
+     "sha": "50d776db",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0102.json"
+    },
+    {
+     "id": "math1-PS-0103",
+     "title": "条件概率、全概率与贝叶斯：样本空间先被剪小，再被切开，最后被倒推",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0103.md",
+     "sha": "1c62a9e1",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0103.json"
+    },
+    {
+     "id": "math1-PS-0104",
+     "title": "独立性：给乘法公式发的一张许可证，判据只有等式，没有直觉",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0104.md",
+     "sha": "a8e615d3",
+     "n": 22,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0104.json"
+    },
+    {
+     "id": "math1-PS-0201",
+     "title": "分布函数与密度：求区间概率只减两个端点，分段积分这一步被省掉了",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0201.md",
+     "sha": "eff34519",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0201.json"
+    },
+    {
+     "id": "math1-PS-0202",
+     "title": "常见分布：认出场景就等于认出分布，期望方差记熟就省掉积分",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0202.md",
+     "sha": "700bebb1",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0202.json"
+    },
+    {
+     "id": "math1-PS-0203",
+     "title": "换一个变量看同一批结果，能省的计算全看你有没有把区间反解干净",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0203.md",
+     "sha": "8f8527f4",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0203.json"
+    },
+    {
+     "id": "math1-PS-0301",
+     "title": "联合分布里多出来的那个变量，边缘化一次就积掉了，积分限全靠支撑说话",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0301.md",
+     "sha": "6dca0caf",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0301.json"
+    },
+    {
+     "id": "math1-PS-0302",
+     "title": "条件密度是一次除法，判断独立看能不能拆成两截各自管各自",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0302.md",
+     "sha": "a06bc137",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0302.json"
+    },
+    {
+     "id": "math1-PS-0303",
+     "title": "两个变量合成一个，卷积省掉整层积分的前提只有一条：独立",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0303.md",
+     "sha": "ae87d510",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0303.json"
+    },
+    {
+     "id": "math1-PS-0401",
+     "title": "期望最省的那一步是拆开，它连独立都不要",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0401.md",
+     "sha": "8f4aa1f5",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0401.json"
+    },
+    {
+     "id": "math1-PS-0402",
+     "title": "方差记账：常数平移不花钱，耦合只从协方差那一项冒出来",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0402.md",
+     "sha": "7b875047",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0402.json"
+    },
+    {
+     "id": "math1-PS-0403",
+     "title": "二阶那一格最有用的地方，是让方差不用积分",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0403.md",
+     "sha": "888b63fa",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0403.json"
+    },
+    {
+     "id": "math1-PS-0501",
+     "title": "不知道分布的时候，方差加距离平方就能换出一个概率",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0501.md",
+     "sha": "f68c160a",
+     "n": 27,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0501.json"
+    },
+    {
+     "id": "math1-PS-0502",
+     "title": "一堆不管从哪来的量加起来，形状都会收敛到正态",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0502.md",
+     "sha": "f56d1135",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0502.json"
+    },
+    {
+     "id": "math1-PS-0601",
+     "title": "统计量这一关只看一件事：式子里有没有未知参数",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0601.md",
+     "sha": "d467e8ae",
+     "n": 28,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0601.json"
+    },
+    {
+     "id": "math1-PS-0602",
+     "title": "三个分布其实只有一条构造链，拼出来的量叫卡方、t 还是 F",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0602.md",
+     "sha": "969c7429",
+     "n": 30,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0602.json"
+    },
+    {
+     "id": "math1-PS-0701",
+     "title": "参数看不见，数据看得见，于是有了两条把数据倒推成参数的路",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0701.md",
+     "sha": "0542b330",
+     "n": 29,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0701.json"
+    },
+    {
+     "id": "math1-PS-0702",
+     "title": "都能吐出一个数，于是要靠期望、方差、极限这三笔账分出高下",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0702.md",
+     "sha": "2299f696",
+     "n": 28,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0702.json"
+    },
+    {
+     "id": "math1-PS-0703",
+     "title": "报一个点交代不了误差，于是造一个分布已知的式子把参数夹到中间",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0703.md",
+     "sha": "a463863f",
+     "n": 34,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0703.json"
+    },
+    {
+     "id": "math1-PS-0801",
+     "title": "判一个说法站不站得住，先得说清两种判错各要付多少",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0801.md",
+     "sha": "78c42f07",
+     "n": 34,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0801.json"
+    },
+    {
+     "id": "math1-PS-0802",
+     "title": "正态总体只有位置和宽窄两件事，于是四个统计量刚好各管一格",
+     "group": "数一 · 概率统计",
+     "source": "build/reading/talk/math1-PS-0802.md",
+     "sha": "61211107",
+     "n": 35,
+     "problems": [],
+     "path": "readable/math1/math1-PS-0802.json"
+    },
+    {
+     "id": "m1-hs-0101",
+     "title": "M1-HS-0101 函数与初等性质",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0101-函数与初等性质.md",
+     "sha": "63743aa6",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0101.json"
+    },
+    {
+     "id": "m1-hs-0102",
+     "title": "M1-HS-0102 数列极限",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0102-数列极限.md",
+     "sha": "e87dd627",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0102.json"
+    },
+    {
+     "id": "m1-hs-0103",
+     "title": "M1-HS-0103 函数极限与无穷小",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0103-函数极限与无穷小.md",
+     "sha": "38263310",
+     "n": 37,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0103.json"
+    },
+    {
+     "id": "m1-hs-0104",
+     "title": "M1-HS-0104 连续与间断",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0104-连续与间断.md",
+     "sha": "70ee3569",
+     "n": 34,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0104.json"
+    },
+    {
+     "id": "m1-hs-0201",
+     "title": "M1-HS-0201 导数与微分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0201-导数与微分.md",
+     "sha": "ac4da94d",
+     "n": 21,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0201.json"
+    },
+    {
+     "id": "m1-hs-0202",
+     "title": "M1-HS-0202 微分中值定理",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0202-微分中值定理.md",
+     "sha": "df6e661d",
+     "n": 21,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0202.json"
+    },
+    {
+     "id": "m1-hs-0203",
+     "title": "M1-HS-0203 洛必达与泰勒展开",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0203-洛必达与泰勒展开.md",
+     "sha": "bf5b29c4",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0203.json"
+    },
+    {
+     "id": "m1-hs-0204",
+     "title": "M1-HS-0204 单调、极值、凹凸与曲率",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0204-单调、极值、凹凸与曲率.md",
+     "sha": "f1561f6f",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0204.json"
+    },
+    {
+     "id": "m1-hs-0205",
+     "title": "M1-HS-0205 不等式与方程根",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0205-不等式与方程根.md",
+     "sha": "79c2d5b5",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0205.json"
+    },
+    {
+     "id": "m1-hs-0301",
+     "title": "M1-HS-0301 不定积分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0301-不定积分.md",
+     "sha": "c360c998",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0301.json"
+    },
+    {
+     "id": "m1-hs-0302",
+     "title": "M1-HS-0302 定积分与性质",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0302-定积分与性质.md",
+     "sha": "2270b688",
+     "n": 14,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0302.json"
+    },
+    {
+     "id": "m1-hs-0303",
+     "title": "M1-HS-0303 反常积分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0303-反常积分.md",
+     "sha": "7e3b2b83",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0303.json"
+    },
+    {
+     "id": "m1-hs-0304",
+     "title": "M1-HS-0304 定积分应用",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0304-定积分应用.md",
+     "sha": "16636bae",
+     "n": 24,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0304.json"
+    },
+    {
+     "id": "m1-hs-0401",
+     "title": "M1-HS-0401 向量运算",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0401-向量运算.md",
+     "sha": "f3104db3",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0401.json"
+    },
+    {
+     "id": "m1-hs-0402",
+     "title": "M1-HS-0402 平面与直线",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0402-平面与直线.md",
+     "sha": "8a49cad0",
+     "n": 25,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0402.json"
+    },
+    {
+     "id": "m1-hs-0403",
+     "title": "M1-HS-0403 曲面与曲线",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0403-曲面与曲线.md",
+     "sha": "073e4b8c",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0403.json"
+    },
+    {
+     "id": "m1-hs-0501",
+     "title": "M1-HS-0501 偏导与全微分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0501-偏导与全微分.md",
+     "sha": "929a8aea",
+     "n": 30,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0501.json"
+    },
+    {
+     "id": "m1-hs-0502",
+     "title": "M1-HS-0502 复合与隐函数",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0502-复合与隐函数.md",
+     "sha": "49c0d7e6",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0502.json"
+    },
+    {
+     "id": "m1-hs-0503",
+     "title": "M1-HS-0503 方向导数与梯度",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0503-方向导数与梯度.md",
+     "sha": "d4edc9ab",
+     "n": 24,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0503.json"
+    },
+    {
+     "id": "m1-hs-0504",
+     "title": "M1-HS-0504 极值与拉格朗日",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0504-极值与拉格朗日.md",
+     "sha": "7971e6b9",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0504.json"
+    },
+    {
+     "id": "m1-hs-0601",
+     "title": "M1-HS-0601 二重积分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0601-二重积分.md",
+     "sha": "c84f8d34",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0601.json"
+    },
+    {
+     "id": "m1-hs-0602",
+     "title": "M1-HS-0602 三重积分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0602-三重积分.md",
+     "sha": "05a0b35c",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0602.json"
+    },
+    {
+     "id": "m1-hs-0603",
+     "title": "M1-HS-0603 曲线积分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0603-曲线积分.md",
+     "sha": "e3476fc3",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0603.json"
+    },
+    {
+     "id": "m1-hs-0604",
+     "title": "M1-HS-0604 曲面积分",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0604-曲面积分.md",
+     "sha": "12a6aeae",
+     "n": 30,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0604.json"
+    },
+    {
+     "id": "m1-hs-0605",
+     "title": "M1-HS-0605 三大公式与场论",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0605-三大公式与场论.md",
+     "sha": "b980ae65",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0605.json"
+    },
+    {
+     "id": "m1-hs-0701",
+     "title": "M1-HS-0701 数项级数判敛",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0701-数项级数判敛.md",
+     "sha": "18aafb58",
+     "n": 21,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0701.json"
+    },
+    {
+     "id": "m1-hs-0702",
+     "title": "M1-HS-0702 幂级数",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0702-幂级数.md",
+     "sha": "f170a235",
+     "n": 18,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0702.json"
+    },
+    {
+     "id": "m1-hs-0703",
+     "title": "M1-HS-0703 傅里叶级数",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0703-傅里叶级数.md",
+     "sha": "de75db86",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0703.json"
+    },
+    {
+     "id": "m1-hs-0801",
+     "title": "M1-HS-0801 一阶方程",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0801-一阶方程.md",
+     "sha": "cd80af7a",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0801.json"
+    },
+    {
+     "id": "m1-hs-0802",
+     "title": "M1-HS-0802 可降阶的高阶方程",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0802-可降阶的高阶方程.md",
+     "sha": "e5c4c316",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0802.json"
+    },
+    {
+     "id": "m1-hs-0803",
+     "title": "M1-HS-0803 常系数线性方程",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0803-常系数线性方程.md",
+     "sha": "08d77f88",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0803.json"
+    },
+    {
+     "id": "m1-hs-0804",
+     "title": "M1-HS-0804 欧拉方程与应用",
+     "group": "高等数学",
+     "source": "notebook/kaoyan/note/math1/hs/M1-HS-0804-欧拉方程与应用.md",
+     "sha": "392cc458",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-hs-0804.json"
+    },
+    {
+     "id": "m1-la-0101",
+     "title": "M1-LA-0101 定义与性质",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0101-定义与性质.md",
+     "sha": "e7a91bd6",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-la-0101.json"
+    },
+    {
+     "id": "m1-la-0102",
+     "title": "M1-LA-0102 计算技巧",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0102-计算技巧.md",
+     "sha": "a324dea9",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-la-0102.json"
+    },
+    {
+     "id": "m1-la-0201",
+     "title": "M1-LA-0201 运算与转置",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0201-运算与转置.md",
+     "sha": "d841189e",
+     "n": 21,
+     "problems": [],
+     "path": "readable/math1/m1-la-0201.json"
+    },
+    {
+     "id": "m1-la-0202",
+     "title": "M1-LA-0202 逆与伴随",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0202-逆与伴随.md",
+     "sha": "c0eb84fe",
+     "n": 21,
+     "problems": [],
+     "path": "readable/math1/m1-la-0202.json"
+    },
+    {
+     "id": "m1-la-0203",
+     "title": "M1-LA-0203 秩",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0203-秩.md",
+     "sha": "a6e32978",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/m1-la-0203.json"
+    },
+    {
+     "id": "m1-la-0204",
+     "title": "M1-LA-0204 初等变换与分块",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0204-初等变换与分块.md",
+     "sha": "93f8958c",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-la-0204.json"
+    },
+    {
+     "id": "m1-la-0301",
+     "title": "M1-LA-0301 线性相关与秩",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0301-线性相关与秩.md",
+     "sha": "c5fa62c3",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0301.json"
+    },
+    {
+     "id": "m1-la-0302",
+     "title": "M1-LA-0302 极大无关组与向量空间",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0302-极大无关组与向量空间.md",
+     "sha": "01cf9e9f",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0302.json"
+    },
+    {
+     "id": "m1-la-0303",
+     "title": "M1-LA-0303 内积与正交",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0303-内积与正交.md",
+     "sha": "56c48efc",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0303.json"
+    },
+    {
+     "id": "m1-la-0401",
+     "title": "M1-LA-0401 齐次方程组",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0401-齐次方程组.md",
+     "sha": "f0802df1",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0401.json"
+    },
+    {
+     "id": "m1-la-0402",
+     "title": "M1-LA-0402 非齐次方程组",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0402-非齐次方程组.md",
+     "sha": "7bc59f34",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0402.json"
+    },
+    {
+     "id": "m1-la-0403",
+     "title": "M1-LA-0403 同解与公共解",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0403-同解与公共解.md",
+     "sha": "33e20576",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0403.json"
+    },
+    {
+     "id": "m1-la-0501",
+     "title": "M1-LA-0501 特征值与特征向量",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0501-特征值与特征向量.md",
+     "sha": "40c71ade",
+     "n": 26,
+     "problems": [],
+     "path": "readable/math1/m1-la-0501.json"
+    },
+    {
+     "id": "m1-la-0502",
+     "title": "M1-LA-0502 相似对角化",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0502-相似对角化.md",
+     "sha": "fdb70aca",
+     "n": 22,
+     "problems": [],
+     "path": "readable/math1/m1-la-0502.json"
+    },
+    {
+     "id": "m1-la-0503",
+     "title": "M1-LA-0503 实对称矩阵",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0503-实对称矩阵.md",
+     "sha": "b7be3264",
+     "n": 22,
+     "problems": [],
+     "path": "readable/math1/m1-la-0503.json"
+    },
+    {
+     "id": "m1-la-0601",
+     "title": "M1-LA-0601 标准形与惯性定理",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0601-标准形与惯性定理.md",
+     "sha": "55204a5a",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0601.json"
+    },
+    {
+     "id": "m1-la-0602",
+     "title": "M1-LA-0602 正定判定",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0602-正定判定.md",
+     "sha": "6192bc4e",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0602.json"
+    },
+    {
+     "id": "m1-la-0603",
+     "title": "M1-LA-0603 合同变换",
+     "group": "线性代数",
+     "source": "notebook/kaoyan/note/math1/la/M1-LA-0603-合同变换.md",
+     "sha": "af21c8ed",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-la-0603.json"
+    },
+    {
+     "id": "m1-ps-0101",
+     "title": "M1-PS-0101 事件与运算",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0101-事件与运算.md",
+     "sha": "58656e0c",
+     "n": 19,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0101.json"
+    },
+    {
+     "id": "m1-ps-0102",
+     "title": "M1-PS-0102 古典与几何概型",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0102-古典与几何概型.md",
+     "sha": "4d0e3611",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0102.json"
+    },
+    {
+     "id": "m1-ps-0103",
+     "title": "M1-PS-0103 条件概率与贝叶斯",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0103-条件概率与贝叶斯.md",
+     "sha": "fce352e3",
+     "n": 25,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0103.json"
+    },
+    {
+     "id": "m1-ps-0104",
+     "title": "M1-PS-0104 独立性",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0104-独立性.md",
+     "sha": "a8ae5ed1",
+     "n": 22,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0104.json"
+    },
+    {
+     "id": "m1-ps-0201",
+     "title": "M1-PS-0201 分布函数与密度",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0201-分布函数与密度.md",
+     "sha": "d2c295fd",
+     "n": 17,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0201.json"
+    },
+    {
+     "id": "m1-ps-0202",
+     "title": "M1-PS-0202 常见分布",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0202-常见分布.md",
+     "sha": "0905eafd",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0202.json"
+    },
+    {
+     "id": "m1-ps-0203",
+     "title": "M1-PS-0203 随机变量函数的分布",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0203-随机变量函数的分布.md",
+     "sha": "f5c2e6dd",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0203.json"
+    },
+    {
+     "id": "m1-ps-0301",
+     "title": "M1-PS-0301 联合与边缘",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0301-联合与边缘.md",
+     "sha": "4b477278",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0301.json"
+    },
+    {
+     "id": "m1-ps-0302",
+     "title": "M1-PS-0302 条件分布与独立性",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0302-条件分布与独立性.md",
+     "sha": "9998084b",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0302.json"
+    },
+    {
+     "id": "m1-ps-0303",
+     "title": "M1-PS-0303 二维函数的分布",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0303-二维函数的分布.md",
+     "sha": "8a5eacc8",
+     "n": 24,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0303.json"
+    },
+    {
+     "id": "m1-ps-0401",
+     "title": "M1-PS-0401 数学期望",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0401-数学期望.md",
+     "sha": "7b71a24a",
+     "n": 14,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0401.json"
+    },
+    {
+     "id": "m1-ps-0402",
+     "title": "M1-PS-0402 方差与协方差",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0402-方差与协方差.md",
+     "sha": "1646b2d1",
+     "n": 14,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0402.json"
+    },
+    {
+     "id": "m1-ps-0403",
+     "title": "M1-PS-0403 矩与常用数字特征",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0403-矩与常用数字特征.md",
+     "sha": "7f875908",
+     "n": 14,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0403.json"
+    },
+    {
+     "id": "m1-ps-0501",
+     "title": "M1-PS-0501 切比雪夫与大数定律",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0501-切比雪夫与大数定律.md",
+     "sha": "b715e2db",
+     "n": 14,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0501.json"
+    },
+    {
+     "id": "m1-ps-0502",
+     "title": "M1-PS-0502 中心极限定理",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0502-中心极限定理.md",
+     "sha": "3fe2532d",
+     "n": 14,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0502.json"
+    },
+    {
+     "id": "m1-ps-0601",
+     "title": "M1-PS-0601 总体、样本、统计量",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0601-总体、样本、统计量.md",
+     "sha": "70cea9fe",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0601.json"
+    },
+    {
+     "id": "m1-ps-0602",
+     "title": "M1-PS-0602 三大抽样分布",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0602-三大抽样分布.md",
+     "sha": "87dd9110",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0602.json"
+    },
+    {
+     "id": "m1-ps-0701",
+     "title": "M1-PS-0701 矩估计与最大似然",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0701-矩估计与最大似然.md",
+     "sha": "f1d2febd",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0701.json"
+    },
+    {
+     "id": "m1-ps-0702",
+     "title": "M1-PS-0702 估计量的评价",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0702-估计量的评价.md",
+     "sha": "9db9b567",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0702.json"
+    },
+    {
+     "id": "m1-ps-0703",
+     "title": "M1-PS-0703 区间估计",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0703-区间估计.md",
+     "sha": "4fe05860",
+     "n": 23,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0703.json"
+    },
+    {
+     "id": "m1-ps-0801",
+     "title": "M1-PS-0801 两类错误与流程",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0801-两类错误与流程.md",
+     "sha": "73112c56",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0801.json"
+    },
+    {
+     "id": "m1-ps-0802",
+     "title": "M1-PS-0802 正态总体的检验",
+     "group": "概率统计",
+     "source": "notebook/kaoyan/note/math1/ps/M1-PS-0802-正态总体的检验.md",
+     "sha": "92a12c6e",
+     "n": 20,
+     "problems": [],
+     "path": "readable/math1/m1-ps-0802.json"
+    }
+   ]
+  },
+  {
+   "id": "cs408",
+   "title": "408",
+   "units": [
+    {
+     "id": "408-guide-01-ds",
+     "title": "数据结构这一科到底在考什么",
+     "group": "408 导读",
+     "source": "build/reading/talk/408-guide-01-ds.md",
+     "sha": "16e7ca01",
+     "n": 40,
+     "problems": [],
+     "path": "readable/cs408/408-guide-01-ds.json"
+    },
+    {
+     "id": "408-guide-02-co",
+     "title": "组成原理这一科到底在考什么",
+     "group": "408 导读",
+     "source": "build/reading/talk/408-guide-02-co.md",
+     "sha": "5f47b436",
+     "n": 28,
+     "problems": [],
+     "path": "readable/cs408/408-guide-02-co.json"
+    },
+    {
+     "id": "408-guide-03-os",
+     "title": "操作系统这一科到底在考什么",
+     "group": "408 导读",
+     "source": "build/reading/talk/408-guide-03-os.md",
+     "sha": "a7cfc65f",
+     "n": 28,
+     "problems": [],
+     "path": "readable/cs408/408-guide-03-os.json"
+    },
+    {
+     "id": "408-guide-04-net",
+     "title": "计算机网络这一科到底在考什么",
+     "group": "408 导读",
+     "source": "build/reading/talk/408-guide-04-net.md",
+     "sha": "c944a657",
+     "n": 28,
+     "problems": [],
+     "path": "readable/cs408/408-guide-04-net.json"
+    },
+    {
+     "id": "408-tiers-01",
+     "title": "三档分数怎么倒推你的投入顺序",
+     "group": "408 分层",
+     "source": "build/reading/talk/408-tiers-01.md",
+     "sha": "854709f4",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-tiers-01.json"
+    },
+    {
+     "id": "408-kp-0101",
+     "title": "基本概念：同一堆数据，换一种逻辑关系就成了另一种结构",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0101.md",
+     "sha": "299d7364",
+     "n": 38,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0101.json"
+    },
+    {
+     "id": "408-kp-0102",
+     "title": "算法评价：这把尺子量的不是快慢，是增长趋势",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0102.md",
+     "sha": "db8c88d0",
+     "n": 39,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0102.json"
+    },
+    {
+     "id": "408-kp-0201",
+     "title": "线性表：六个动作一套接口，怎么存只是另一个问题",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0201.md",
+     "sha": "0808174c",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0201.json"
+    },
+    {
+     "id": "408-kp-0202",
+     "title": "顺序表：便宜和贵都来自同一个前提",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0202.md",
+     "sha": "59ae8112",
+     "n": 33,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0202.json"
+    },
+    {
+     "id": "408-kp-0203",
+     "title": "链表：为什么要它，为什么带个头，为什么还要成环",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0203.md",
+     "sha": "1393459a",
+     "n": 46,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0203.json"
+    },
+    {
+     "id": "408-kp-0204",
+     "title": "死锁这一块，全部策略都在拆那四个必要条件里的某一条",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0204.md",
+     "sha": "f9d2be9a",
+     "n": 32,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0204.json"
+    },
+    {
+     "id": "408-kp-0301",
+     "title": "分区、分页、分段绕了一圈，收拾的其实是同一件事：碎片",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0301.md",
+     "sha": "0de2b7a4",
+     "n": 33,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0301.json"
+    },
+    {
+     "id": "408-kp-0302",
+     "title": "页面置换算法这一族，全都在赌未来，只是赌法不同、代价不同",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0302.md",
+     "sha": "e12cfd68",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0302.json"
+    },
+    {
+     "id": "408-kp-0303",
+     "title": "数组连续是真的连续，特殊矩阵是拿公式换掉那些空位",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0303.md",
+     "sha": "2f6dad9e",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0303.json"
+    },
+    {
+     "id": "408-kp-0401",
+     "title": "文件系统就是三级翻译：名字翻成索引，索引翻成数据块",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0401.md",
+     "sha": "4c864bcb",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0401.json"
+    },
+    {
+     "id": "408-kp-0402",
+     "title": "索引结点和文件分配表讲的是一回事，只是索引集中放还是散着放",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0402.md",
+     "sha": "8622af00",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0402.json"
+    },
+    {
+     "id": "408-kp-0403",
+     "title": "线索二叉树：把浪费掉的空指针改成一条回头路",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0403.md",
+     "sha": "97e2c3f5",
+     "n": 38,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0403.json"
+    },
+    {
+     "id": "408-kp-0404",
+     "title": "树与森林：把多叉压成二叉，用左指针指孩子、右指针指兄弟",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0404.md",
+     "sha": "50baf6be",
+     "n": 42,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0404.json"
+    },
+    {
+     "id": "408-kp-0405",
+     "title": "哈夫曼树：把最常出现的字符放到离根最近的地方",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0405.md",
+     "sha": "cc1dc61d",
+     "n": 32,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0405.json"
+    },
+    {
+     "id": "408-kp-0406",
+     "title": "并查集：一次查找的一半是走链，一次合并的一半是长高",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0406.md",
+     "sha": "de3cf1c2",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0406.json"
+    },
+    {
+     "id": "408-kp-0501",
+     "title": "图：存储方式决定了哪些算法能跑",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0501.md",
+     "sha": "94afa1c5",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0501.json"
+    },
+    {
+     "id": "408-kp-0502",
+     "title": "图的四种存法：一张方阵换一次直查，一条链表换一次省地",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0502.md",
+     "sha": "0ba5f973",
+     "n": 38,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0502.json"
+    },
+    {
+     "id": "408-kp-0503",
+     "title": "遍历：两条走法，四种存储，代价全在「一步能拿到几个邻居」上",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0503.md",
+     "sha": "0e8abf03",
+     "n": 39,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0503.json"
+    },
+    {
+     "id": "408-kp-0504",
+     "title": "最小生成树：两个算法都是贪心，差别只在按点往外扩还是按边往进选",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0504.md",
+     "sha": "49f3fa37",
+     "n": 40,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0504.json"
+    },
+    {
+     "id": "408-kp-0505",
+     "title": "最短路径：两个问题乘上一个负权条件，四种局面各配一套做法",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0505.md",
+     "sha": "3615a55c",
+     "n": 39,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0505.json"
+    },
+    {
+     "id": "408-kp-0506",
+     "title": "拓扑排序：它一边排顺序，一边就是那个环的检测器",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0506.md",
+     "sha": "8663d497",
+     "n": 40,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0506.json"
+    },
+    {
+     "id": "408-kp-0507",
+     "title": "关键路径：工期由最长的那条路决定，不是由总共多少活决定",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0507.md",
+     "sha": "52c6756a",
+     "n": 39,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0507.json"
+    },
+    {
+     "id": "408-kp-0600",
+     "title": "查找这一章只问一件事：凭什么把查看的路径压到对数级",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0600.md",
+     "sha": "b0adb2ff",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0600.json"
+    },
+    {
+     "id": "408-kp-0601",
+     "title": "查找的代价：三种查法，都能画成一棵树来数比较次数",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0601.md",
+     "sha": "3306695d",
+     "n": 42,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0601.json"
+    },
+    {
+     "id": "408-kp-0602",
+     "title": "折半查找：每比一次砍掉一半，代价由那棵树有多高决定",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0602.md",
+     "sha": "f437f474",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0602.json"
+    },
+    {
+     "id": "408-kp-0603",
+     "title": "二叉排序树：插入的先后顺序决定树形，树形决定查找代价",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0603.md",
+     "sha": "2ff3b474",
+     "n": 41,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0603.json"
+    },
+    {
+     "id": "408-kp-0604",
+     "title": "平衡二叉树：只留三个取值，失衡就只剩四种长相",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0604.md",
+     "sha": "13972b86",
+     "n": 32,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0604.json"
+    },
+    {
+     "id": "408-kp-0605",
+     "title": "红黑树：把「不许歪」换成「不许连着红」",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0605.md",
+     "sha": "04850356",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0605.json"
+    },
+    {
+     "id": "408-kp-0606",
+     "title": "B 树与 B 加树：一个结点装一整块，层数才压得下来",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0606.md",
+     "sha": "e412fa64",
+     "n": 32,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0606.json"
+    },
+    {
+     "id": "408-kp-0607",
+     "title": "散列表：拿位置换比较，代价都堆在冲突上",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0607.md",
+     "sha": "9fcf33f2",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0607.json"
+    },
+    {
+     "id": "408-kp-0701",
+     "title": "排序的好坏不是一维的：快，只是五种代价里的一种",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0701.md",
+     "sha": "f067d66f",
+     "n": 32,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0701.json"
+    },
+    {
+     "id": "408-kp-0702",
+     "title": "插入排序的三个版本，改的都是同一件事：去哪儿插",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0702.md",
+     "sha": "66beb148",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0702.json"
+    },
+    {
+     "id": "408-kp-0703",
+     "title": "快排的全部赌注押在枢轴上：选歪一个，整棵树就歪",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0703.md",
+     "sha": "06ebbcf0",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0703.json"
+    },
+    {
+     "id": "408-kp-0704",
+     "title": "堆的意义只有一个：把「谁是最大的」从走一遍变成了走一条路",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0704.md",
+     "sha": "b49f3066",
+     "n": 39,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0704.json"
+    },
+    {
+     "id": "408-kp-0705",
+     "title": "分治在排序里的账：多借一块地方，换来代价与初始顺序无关",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0705.md",
+     "sha": "7dc5d9a3",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0705.json"
+    },
+    {
+     "id": "408-kp-0706",
+     "title": "不比较也能排序：把关键字拆成几位，一位一位地分配",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0706.md",
+     "sha": "33dfc189",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0706.json"
+    },
+    {
+     "id": "408-kp-0707",
+     "title": "装不进内存之后，快的标准换了：省的是磁盘来回，不是比较次数",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0707.md",
+     "sha": "47ab75c6",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0707.json"
+    },
+    {
+     "id": "408-kp-0708",
+     "title": "没有最好的排序，只有和你手上约束最贴的那一个",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-0708.md",
+     "sha": "d025468a",
+     "n": 38,
+     "problems": [],
+     "path": "readable/cs408/408-kp-0708.json"
+    },
+    {
+     "id": "408-kp-CO-0101",
+     "title": "计算机的四代变迁，换的一直是同一件事：让存储离运算更近一点",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0101.md",
+     "sha": "2563fa71",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0101.json"
+    },
+    {
+     "id": "408-kp-CO-0102",
+     "title": "一台机器被切成五层，每一层都在替下一层遮住细节",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0102.md",
+     "sha": "2fd08599",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0102.json"
+    },
+    {
+     "id": "408-kp-CO-0103",
+     "title": "性能不是一个数字，是三个量乘起来的结果",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0103.md",
+     "sha": "30d6572e",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0103.json"
+    },
+    {
+     "id": "408-kp-CO-0201",
+     "title": "补码让减法消失，代价是负数多占一格",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0201.md",
+     "sha": "7f510080",
+     "n": 39,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0201.json"
+    },
+    {
+     "id": "408-kp-CO-0202",
+     "title": "字符编码：位串本身不带含义，是约定让它成了字",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0202.md",
+     "sha": "53414f19",
+     "n": 19,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0202.json"
+    },
+    {
+     "id": "408-kp-CO-0203",
+     "title": "校验码：多出来的那几位，买的是码距",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0203.md",
+     "sha": "39c396a6",
+     "n": 17,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0203.json"
+    },
+    {
+     "id": "408-kp-CO-0204",
+     "title": "溢出：同一串位，两套判据，别拿一套去答另一套",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0204.md",
+     "sha": "6ff93caf",
+     "n": 19,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0204.json"
+    },
+    {
+     "id": "408-kp-CO-0205",
+     "title": "乘法与除法：一条加法配一把移位，拍数随着位数翻倍",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0205.md",
+     "sha": "81f18223",
+     "n": 18,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0205.json"
+    },
+    {
+     "id": "408-kp-CO-0206",
+     "title": "一位符号、一段阶码、一段尾数：浮点把「能表示多大」和「能表示多细」拆成了两个旋钮",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0206.md",
+     "sha": "e5301c70",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0206.json"
+    },
+    {
+     "id": "408-kp-CO-0207",
+     "title": "对阶这一步：小阶向大阶看齐，代价是低位的位数被丢掉",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0207.md",
+     "sha": "f4595a4b",
+     "n": 39,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0207.json"
+    },
+    {
+     "id": "408-kp-CO-0301",
+     "title": "三样指标不可兼得，层次结构就是把折中做成制度",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0301.md",
+     "sha": "64c73da5",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0301.json"
+    },
+    {
+     "id": "408-kp-CO-0302",
+     "title": "电容存一位，刷新就躲不掉；触发器用面积把这件事换掉",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0302.md",
+     "sha": "c2c7c6db",
+     "n": 38,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0302.json"
+    },
+    {
+     "id": "408-kp-CO-0303",
+     "title": "主存和处理器之间要接线，接的不是一种线：芯片在哪个方向上不够，就朝哪个方向堆片",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0303.md",
+     "sha": "3a5aa2da",
+     "n": 43,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0303.json"
+    },
+    {
+     "id": "408-kp-CO-0304",
+     "title": "磁盘慢，慢在你等的那两段机械动作上：所以它的每一项优化都在别处",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0304.md",
+     "sha": "1d1b9878",
+     "n": 44,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0304.json"
+    },
+    {
+     "id": "408-kp-CO-0305",
+     "title": "缓存怎么找块，决定了它要比较几次、又在哪儿开始打架",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0305.md",
+     "sha": "f4ea62b2",
+     "n": 47,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0305.json"
+    },
+    {
+     "id": "408-kp-CO-0306",
+     "title": "地址翻译和数据查找是两个独立的问题：一串虚地址要过两道关，才碰到数据",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0306.md",
+     "sha": "6f000f79",
+     "n": 45,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0306.json"
+    },
+    {
+     "id": "408-kp-CO-0401",
+     "title": "一条指令怎么切、数据怎么摆，决定了操作码还剩下多少种可能",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0401.md",
+     "sha": "5dc03a9e",
+     "n": 33,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0401.json"
+    },
+    {
+     "id": "408-kp-CO-0402",
+     "title": "寻址方式换的不是地址，是「有效地址要算几次」",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0402.md",
+     "sha": "0aec25bc",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0402.json"
+    },
+    {
+     "id": "408-kp-CO-0403",
+     "title": "汇编只是机器码的另一种写法，你要看的是同一次访存",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0403.md",
+     "sha": "815f76be",
+     "n": 33,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0403.json"
+    },
+    {
+     "id": "408-kp-CO-0404",
+     "title": "复杂指令与精简指令是两条路，各自把代价推到了不同的地方",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0404.md",
+     "sha": "f3b41cba",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0404.json"
+    },
+    {
+     "id": "408-kp-CO-0501",
+     "title": "处理器只做四件事：取、译、执行、写回",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0501.md",
+     "sha": "3d9f7aae",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0501.json"
+    },
+    {
+     "id": "408-kp-CO-0502",
+     "title": "把一条指令切成几个节拍，就决定了哪些动作被绑死、哪些动作能挤在同一拍里跑完",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0502.md",
+     "sha": "14c311de",
+     "n": 41,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0502.json"
+    },
+    {
+     "id": "408-kp-CO-0503",
+     "title": "数据通路就是把每个部件能往哪送画成一张图，控制信号不过是在这张图上选路",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0503.md",
+     "sha": "f7569c80",
+     "n": 42,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0503.json"
+    },
+    {
+     "id": "408-kp-CO-0504",
+     "title": "硬布线和微程序，是「控制信号存不存」的两种答案，所有性能差异都从这一句推出来",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0504.md",
+     "sha": "84882f19",
+     "n": 47,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0504.json"
+    },
+    {
+     "id": "408-kp-CO-0505",
+     "title": "中断是外面来的、跟这条指令无关；异常是这条指令自己惹出来的，这一句决定了保存什么、返回到哪",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0505.md",
+     "sha": "21a4f852",
+     "n": 48,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0505.json"
+    },
+    {
+     "id": "408-kp-CO-0506",
+     "title": "流水线的加速比被最慢的那一级卡住，又被冒险吃掉一部分",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0506.md",
+     "sha": "7955ba53",
+     "n": 46,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0506.json"
+    },
+    {
+     "id": "408-kp-CO-0507",
+     "title": "多核不是把核多摆几个，而是多摆出来的那几个核必须开始互相通报",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0507.md",
+     "sha": "226786f7",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0507.json"
+    },
+    {
+     "id": "408-kp-CO-0601",
+     "title": "总线把两两拉专线换成一堆人共用一条通道，省下的线全变成了排队",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0601.md",
+     "sha": "97868644",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0601.json"
+    },
+    {
+     "id": "408-kp-CO-0602",
+     "title": "同步定时赌所有人的节拍一样快，异步定时则放弃这份便宜的假设",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0602.md",
+     "sha": "a70d9664",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0602.json"
+    },
+    {
+     "id": "408-kp-CO-0701",
+     "title": "输入输出系统的每一层，都在回答「这件事由谁替处理器动手」",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0701.md",
+     "sha": "01e34d26",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0701.json"
+    },
+    {
+     "id": "408-kp-CO-0702",
+     "title": "外设比处理器慢好几个数量级，这条差距要在接口、缓冲和成块传送里被吃掉",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0702.md",
+     "sha": "04460fea",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0702.json"
+    },
+    {
+     "id": "408-kp-CO-0703",
+     "title": "CPU 快得没边、外设千奇百怪，中间必须有人替它们两头对口径",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0703.md",
+     "sha": "a9555c1f",
+     "n": 43,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0703.json"
+    },
+    {
+     "id": "408-kp-CO-0704",
+     "title": "三种 I/O 方式吵了几十年，吵的其实是「谁的眼睛盯着那批数据」",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-CO-0704.md",
+     "sha": "acf7aa07",
+     "n": 48,
+     "problems": [],
+     "path": "readable/cs408/408-kp-CO-0704.json"
+    },
+    {
+     "id": "408-kp-NET-0101",
+     "title": "带宽、时延、往返时间、吞吐量各管一段，混着用就永远算不清",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0101.md",
+     "sha": "de2868ce",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0101.json"
+    },
+    {
+     "id": "408-kp-NET-0102",
+     "title": "分层的全部内容就一句：每一层只跟对端的同层对话，其余全交给下一层",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0102.md",
+     "sha": "369cb3c5",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0102.json"
+    },
+    {
+     "id": "408-kp-NET-0201",
+     "title": "一条线最多能跑多快，先得问这条线受什么限制",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0201.md",
+     "sha": "6b89166f",
+     "n": 23,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0201.json"
+    },
+    {
+     "id": "408-kp-NET-0202",
+     "title": "介质决定这条线上限有多高，设备决定这条线上谁能听见谁",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0202.md",
+     "sha": "47378447",
+     "n": 23,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0202.json"
+    },
+    {
+     "id": "408-kp-NET-0301",
+     "title": "组帧就是给一条无边界的比特流画出边界",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0301.md",
+     "sha": "7ea9b39d",
+     "n": 23,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0301.json"
+    },
+    {
+     "id": "408-kp-NET-0302",
+     "title": "检错是猜出错了并重来，纠错是直接算出差在哪",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0302.md",
+     "sha": "52842a92",
+     "n": 22,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0302.json"
+    },
+    {
+     "id": "408-kp-NET-0303",
+     "title": "三种协议共用一套滑动窗口的骨架，只在两处数字上分开",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0303.md",
+     "sha": "87dff589",
+     "n": 22,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0303.json"
+    },
+    {
+     "id": "408-kp-NET-0304",
+     "title": "一根线上挂多个站，就必须有人管排队；随机访问不算管，它只是赌冲突不会撞上",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0304.md",
+     "sha": "90284217",
+     "n": 29,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0304.json"
+    },
+    {
+     "id": "408-kp-NET-0305",
+     "title": "以太网能赢，是因为它把帧做短、把规则做少，而不是因为它跑得更快",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0305.md",
+     "sha": "db55d2af",
+     "n": 30,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0305.json"
+    },
+    {
+     "id": "408-kp-NET-0306",
+     "title": "网桥把一根线切成两段，冲撞被关在一段里，广播却照样穿过去",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0306.md",
+     "sha": "a37653cd",
+     "n": 27,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0306.json"
+    },
+    {
+     "id": "408-kp-NET-0401",
+     "title": "没有谁看得见整张网，最短路径只能靠邻居之间反复对话拼出来",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0401.md",
+     "sha": "6ac6fd52",
+     "n": 30,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0401.json"
+    },
+    {
+     "id": "408-kp-NET-0402",
+     "title": "距离向量只听得见邻居的一句话，链路状态把整张图搬到手里，代价是一次泛洪",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0402.md",
+     "sha": "ba96e123",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0402.json"
+    },
+    {
+     "id": "408-kp-NET-0403",
+     "title": "子网划分是拿主机位当网络位借，借一位就把那一层的可用地址砍掉一半",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0403.md",
+     "sha": "d66e125d",
+     "n": 25,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0403.json"
+    },
+    {
+     "id": "408-kp-NET-0404",
+     "title": "分片是被链路的最大传输单元逼出来的，重组只能等到终点再做",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0404.md",
+     "sha": "db1c573e",
+     "n": 25,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0404.json"
+    },
+    {
+     "id": "408-kp-NET-0405",
+     "title": "地址不够就换更长的地址，顺带把首部里每一处重复劳动都砍掉",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0405.md",
+     "sha": "c82c2646",
+     "n": 24,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0405.json"
+    },
+    {
+     "id": "408-kp-NET-0406",
+     "title": "路由器隔离广播域，这是它和网桥唯一的分界线",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0406.md",
+     "sha": "2cde105c",
+     "n": 25,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0406.json"
+    },
+    {
+     "id": "408-kp-NET-0501",
+     "title": "端口是进程在网络里的地址，网络层地址只到主机为止",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0501.md",
+     "sha": "3f3c7066",
+     "n": 25,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0501.json"
+    },
+    {
+     "id": "408-kp-NET-0502",
+     "title": "UDP 什么都没承诺，所以那些不给承诺才办得到的事，只能它来做",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0502.md",
+     "sha": "271c014d",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0502.json"
+    },
+    {
+     "id": "408-kp-NET-0503",
+     "title": "三次握手里没有一句客套，它确认的是四个方向的能力，两次换不来",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0503.md",
+     "sha": "5e69219a",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0503.json"
+    },
+    {
+     "id": "408-kp-NET-0504",
+     "title": "一个窗口数字挡了两件事，可靠传输和流量控制共用它，所以永远取小的那个",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0504.md",
+     "sha": "4878b593",
+     "n": 33,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0504.json"
+    },
+    {
+     "id": "408-kp-NET-0505",
+     "title": "慢开始和快恢复是同一件事的两种回头方式：都在试探网络的容量，试探过头就用丢包来告诉你",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0505.md",
+     "sha": "5b8f6fc7",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0505.json"
+    },
+    {
+     "id": "408-kp-NET-0601",
+     "title": "应用层要解决的是两个程序怎么把一段话说完，那两种模型只是把常见的对话关系分了类",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0601.md",
+     "sha": "6f9d1810",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0601.json"
+    },
+    {
+     "id": "408-kp-NET-0602",
+     "title": "名字解析从根开始一层层往下问，问完的答案被留在半路上，第二次就不必再问",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0602.md",
+     "sha": "ebdd9ade",
+     "n": 33,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0602.json"
+    },
+    {
+     "id": "408-kp-NET-0603",
+     "title": "传文件时命令和数据各走一条路，邮件则是一段一段接力往前推",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0603.md",
+     "sha": "34e5c52a",
+     "n": 37,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0603.json"
+    },
+    {
+     "id": "408-kp-NET-0604",
+     "title": "每次请求都是一次独立的买卖，于是记住一个人只能另想办法",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-NET-0604.md",
+     "sha": "1c1325ac",
+     "n": 41,
+     "problems": [],
+     "path": "readable/cs408/408-kp-NET-0604.json"
+    },
+    {
+     "id": "408-kp-OS-0101",
+     "title": "操作系统只干两件事：把硬件看住，把硬件包起来",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0101.md",
+     "sha": "4b788149",
+     "n": 46,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0101.json"
+    },
+    {
+     "id": "408-kp-OS-0102",
+     "title": "从批处理到实时，每一代操作系统改的都是同一件事：谁在原地等",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0102.md",
+     "sha": "4f4a2633",
+     "n": 48,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0102.json"
+    },
+    {
+     "id": "408-kp-OS-0103",
+     "title": "一条边界把机器劈成两半，判断任何操作落在哪边只问一句：它要不要特权的那个权利",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0103.md",
+     "sha": "8ade6652",
+     "n": 58,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0103.json"
+    },
+    {
+     "id": "408-kp-OS-0104",
+     "title": "体系结构的分歧只有一个动作：哪些代码留在特权层里",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0104.md",
+     "sha": "6d1129ce",
+     "n": 30,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0104.json"
+    },
+    {
+     "id": "408-kp-OS-0105",
+     "title": "虚拟机是把已经抽象好的一层硬件，再抽象一次",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0105.md",
+     "sha": "90b164f5",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0105.json"
+    },
+    {
+     "id": "408-kp-OS-0201",
+     "title": "进程是资源单位，线程是调度单位，这条分工决定共享什么",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0201.md",
+     "sha": "ec27ec6b",
+     "n": 35,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0201.json"
+    },
+    {
+     "id": "408-kp-OS-0202",
+     "title": "所有调度算法都在折中响应时间和吞吐量",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0202.md",
+     "sha": "9aa63096",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0202.json"
+    },
+    {
+     "id": "408-kp-OS-0203",
+     "title": "同步管顺序，互斥管独占，两者不是一回事",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0203.md",
+     "sha": "22e73cdd",
+     "n": 31,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0203.json"
+    },
+    {
+     "id": "408-kp-OS-0403",
+     "title": "磁盘调度算法排了半天队，SSD 一来整套作废，因为它们是治同一个病的",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0403.md",
+     "sha": "b306e0e9",
+     "n": 34,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0403.json"
+    },
+    {
+     "id": "408-kp-OS-0501",
+     "title": "三种 I/O 控制方式的差别只有一句话：这一次搬运，谁在盯着",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0501.md",
+     "sha": "eebde45c",
+     "n": 33,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0501.json"
+    },
+    {
+     "id": "408-kp-OS-0502",
+     "title": "缓冲和假脱机干的是同一件事：把一路快慢不匀的活，摊成两段各自匀速的",
+     "group": "408 考点讲解",
+     "source": "build/reading/talk/408-kp-OS-0502.md",
+     "sha": "554f6b22",
+     "n": 36,
+     "problems": [],
+     "path": "readable/cs408/408-kp-OS-0502.json"
+    },
+    {
+     "id": "cs408-01",
+     "title": "一、数据结构（45 分 · DS）",
+     "group": "408 考纲",
+     "source": "notebook/kaoyan/syllabus/408.md",
+     "sha": "b28fd949",
+     "n": 95,
+     "problems": [],
+     "path": "readable/cs408/cs408-01.json"
+    },
+    {
+     "id": "cs408-02",
+     "title": "二、计算机组成原理（45 分 · CO）",
+     "group": "408 考纲",
+     "source": "notebook/kaoyan/syllabus/408.md",
+     "sha": "b28fd949",
+     "n": 109,
+     "problems": [],
+     "path": "readable/cs408/cs408-02.json"
+    },
+    {
+     "id": "cs408-03",
+     "title": "三、操作系统（35 分 · OS）",
+     "group": "408 考纲",
+     "source": "notebook/kaoyan/syllabus/408.md",
+     "sha": "b28fd949",
+     "n": 69,
+     "problems": [],
+     "path": "readable/cs408/cs408-03.json"
+    },
+    {
+     "id": "cs408-04",
+     "title": "四、计算机网络（25 分 · NET）",
+     "group": "408 考纲",
+     "source": "notebook/kaoyan/syllabus/408.md",
+     "sha": "b28fd949",
+     "n": 79,
+     "problems": [],
+     "path": "readable/cs408/cs408-04.json"
+    }
+   ]
+  },
+  {
+   "id": "english1",
+   "title": "英语一",
+   "units": [
+    {
+     "id": "english1-wr-01",
+     "title": "完形填的不是单词，是一篇语篇里被挖掉的那些位置还能不能被上下文的证据接住",
+     "group": "英语题型讲解",
+     "source": "build/reading/talk/english1-wr-01.md",
+     "sha": "0b3555af",
+     "n": 36,
+     "problems": [],
+     "path": "readable/english1/english1-wr-01.json"
+    },
+    {
+     "id": "english1-wr-02",
+     "title": "阅读不是把文章读懂，是把题干这支查询语在原文里定位到唯一一句，再验它有没有被换掉方向",
+     "group": "英语题型讲解",
+     "source": "build/reading/talk/english1-wr-02.md",
+     "sha": "f809e3e3",
+     "n": 31,
+     "problems": [],
+     "path": "readable/english1/english1-wr-02.json"
+    },
+    {
+     "id": "english1-wr-03",
+     "title": "新题型的答案不在「读着顺」里，在两个相邻语言单位的接缝上",
+     "group": "英语题型讲解",
+     "source": "build/reading/talk/english1-wr-03.md",
+     "sha": "ebdef651",
+     "n": 33,
+     "problems": [],
+     "path": "readable/english1/english1-wr-03.json"
+    },
+    {
+     "id": "english1-wr-04",
+     "title": "翻译的得分点设在句子的骨架上，不在一个个词上",
+     "group": "英语题型讲解",
+     "source": "build/reading/talk/english1-wr-04.md",
+     "sha": "b6e85f15",
+     "n": 33,
+     "problems": [],
+     "path": "readable/english1/english1-wr-04.json"
+    },
+    {
+     "id": "english1-wr-05",
+     "title": "小作文只在约一百词的预算里，把一句目的、几下要点、一句期待塞进去",
+     "group": "英语题型讲解",
+     "source": "build/reading/talk/english1-wr-05.md",
+     "sha": "6d257964",
+     "n": 35,
+     "problems": [],
+     "path": "readable/english1/english1-wr-05.json"
+    },
+    {
+     "id": "english1-wr-06",
+     "title": "大作文是三次转译：画面写成句子，句子抽象成命题，命题配上理由",
+     "group": "英语题型讲解",
+     "source": "build/reading/talk/english1-wr-06.md",
+     "sha": "d0605d85",
+     "n": 36,
+     "problems": [],
+     "path": "readable/english1/english1-wr-06.json"
+    },
+    {
+     "id": "words-01",
+     "title": "01-核心动词（上）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/01-核心动词（上）.md",
+     "sha": "40b4697c",
+     "n": 221,
+     "words": 215,
+     "path": "readable/english1/words-01.json"
+    },
+    {
+     "id": "words-02",
+     "title": "02-核心动词（下）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/02-核心动词（下）.md",
+     "sha": "fbd7572f",
+     "n": 190,
+     "words": 184,
+     "path": "readable/english1/words-02.json"
+    },
+    {
+     "id": "words-03",
+     "title": "03-抽象名词与论证用词",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/03-抽象名词与论证用词.md",
+     "sha": "c9904ddc",
+     "n": 208,
+     "words": 202,
+     "path": "readable/english1/words-03.json"
+    },
+    {
+     "id": "words-04",
+     "title": "04-逻辑连接与态度词",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/04-逻辑连接与态度词.md",
+     "sha": "f44cc22d",
+     "n": 213,
+     "words": 207,
+     "path": "readable/english1/words-04.json"
+    },
+    {
+     "id": "words-05",
+     "title": "05-经济、商业与管理",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/05-经济、商业与管理.md",
+     "sha": "e4d044e4",
+     "n": 209,
+     "words": 203,
+     "path": "readable/english1/words-05.json"
+    },
+    {
+     "id": "words-06",
+     "title": "06-科技、工程与创新",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/06-科技、工程与创新.md",
+     "sha": "6b52bffc",
+     "n": 172,
+     "words": 166,
+     "path": "readable/english1/words-06.json"
+    },
+    {
+     "id": "words-07",
+     "title": "07-环境、地理与气候",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/07-环境、地理与气候.md",
+     "sha": "b4e7d942",
+     "n": 155,
+     "words": 149,
+     "path": "readable/english1/words-07.json"
+    },
+    {
+     "id": "words-08",
+     "title": "08-生物、医学与健康",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/08-生物、医学与健康.md",
+     "sha": "8d6d4a30",
+     "n": 126,
+     "words": 120,
+     "path": "readable/english1/words-08.json"
+    },
+    {
+     "id": "words-09",
+     "title": "09-心理、认知与情绪",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/09-心理、认知与情绪.md",
+     "sha": "55e18ab5",
+     "n": 143,
+     "words": 137,
+     "path": "readable/english1/words-09.json"
+    },
+    {
+     "id": "words-10",
+     "title": "10-社会、政治与公共治理",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/10-社会、政治与公共治理.md",
+     "sha": "6ef1977c",
+     "n": 386,
+     "words": 380,
+     "path": "readable/english1/words-10.json"
+    },
+    {
+     "id": "words-11",
+     "title": "11-法律、制度与权利",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/11-法律、制度与权利.md",
+     "sha": "1a772224",
+     "n": 100,
+     "words": 94,
+     "path": "readable/english1/words-11.json"
+    },
+    {
+     "id": "words-12",
+     "title": "12-教育、学术与校园",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/12-教育、学术与校园.md",
+     "sha": "bad40cd2",
+     "n": 110,
+     "words": 104,
+     "path": "readable/english1/words-12.json"
+    },
+    {
+     "id": "words-13",
+     "title": "13-文化、艺术与传媒",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/13-文化、艺术与传媒.md",
+     "sha": "05d827d5",
+     "n": 213,
+     "words": 207,
+     "path": "readable/english1/words-13.json"
+    },
+    {
+     "id": "words-14",
+     "title": "14-高频形容词",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/14-高频形容词.md",
+     "sha": "c5856359",
+     "n": 149,
+     "words": 143,
+     "path": "readable/english1/words-14.json"
+    },
+    {
+     "id": "words-15",
+     "title": "15-高频副词与介词短语",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/15-高频副词与介词短语.md",
+     "sha": "6cb63b07",
+     "n": 105,
+     "words": 99,
+     "path": "readable/english1/words-15.json"
+    },
+    {
+     "id": "words-16",
+     "title": "16-熟词僻义",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/16-熟词僻义.md",
+     "sha": "138321d1",
+     "n": 64,
+     "words": 58,
+     "path": "readable/english1/words-16.json"
+    },
+    {
+     "id": "words-17",
+     "title": "17-易混词辨析",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/17-易混词辨析.md",
+     "sha": "74e5239a",
+     "n": 103,
+     "words": 97,
+     "path": "readable/english1/words-17.json"
+    },
+    {
+     "id": "words-18",
+     "title": "18-词根词缀（上）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/18-词根词缀（上）.md",
+     "sha": "1953c963",
+     "n": 88,
+     "words": 82,
+     "path": "readable/english1/words-18.json"
+    },
+    {
+     "id": "words-19",
+     "title": "19-词根词缀（下）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/19-词根词缀（下）.md",
+     "sha": "7ffed4f1",
+     "n": 45,
+     "words": 39,
+     "path": "readable/english1/words-19.json"
+    },
+    {
+     "id": "words-20",
+     "title": "20-初高中衔接基础（上）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/20-初高中衔接基础（上）.md",
+     "sha": "cc6b6707",
+     "n": 174,
+     "words": 168,
+     "path": "readable/english1/words-20.json"
+    },
+    {
+     "id": "words-21",
+     "title": "21-初高中衔接基础（中）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/21-初高中衔接基础（中）.md",
+     "sha": "137fcead",
+     "n": 60,
+     "words": 54,
+     "path": "readable/english1/words-21.json"
+    },
+    {
+     "id": "words-22",
+     "title": "22-初高中衔接基础（下）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/22-初高中衔接基础（下）.md",
+     "sha": "4408d618",
+     "n": 45,
+     "words": 39,
+     "path": "readable/english1/words-22.json"
+    },
+    {
+     "id": "words-23",
+     "title": "23-考研大纲补充（上）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/23-考研大纲补充（上）.md",
+     "sha": "4217617f",
+     "n": 46,
+     "words": 40,
+     "path": "readable/english1/words-23.json"
+    },
+    {
+     "id": "words-24",
+     "title": "24-考研大纲补充（下）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/24-考研大纲补充（下）.md",
+     "sha": "ae8ae177",
+     "n": 131,
+     "words": 125,
+     "path": "readable/english1/words-24.json"
+    },
+    {
+     "id": "words-25",
+     "title": "25-超纲与低频学术词",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/25-超纲与低频学术词.md",
+     "sha": "56b412d9",
+     "n": 146,
+     "words": 140,
+     "path": "readable/english1/words-25.json"
+    },
+    {
+     "id": "words-26",
+     "title": "26-写作高频替换词",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/26-写作高频替换词.md",
+     "sha": "886656af",
+     "n": 129,
+     "words": 123,
+     "path": "readable/english1/words-26.json"
+    },
+    {
+     "id": "words-27",
+     "title": "27-学术与研究",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/27-学术与研究.md",
+     "sha": "d1ad8011",
+     "n": 152,
+     "words": 146,
+     "path": "readable/english1/words-27.json"
+    },
+    {
+     "id": "words-28",
+     "title": "28-论证与推理",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/28-论证与推理.md",
+     "sha": "eefac956",
+     "n": 48,
+     "words": 42,
+     "path": "readable/english1/words-28.json"
+    },
+    {
+     "id": "words-29",
+     "title": "29-数量与趋势",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/29-数量与趋势.md",
+     "sha": "bd879bdb",
+     "n": 87,
+     "words": 81,
+     "path": "readable/english1/words-29.json"
+    },
+    {
+     "id": "words-30",
+     "title": "30-时间、空间与顺序",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/30-时间、空间与顺序.md",
+     "sha": "a7bb1c68",
+     "n": 158,
+     "words": 152,
+     "path": "readable/english1/words-30.json"
+    },
+    {
+     "id": "words-97",
+     "title": "97-大纲补全（按词频）",
+     "group": "英语单词",
+     "source": "notebook/kaoyan/english1/words/97-大纲补全（按词频）.md",
+     "sha": "d5840ff8",
+     "n": 1,
+     "words": 0,
+     "path": "readable/english1/words-97.json"
+    },
+    {
+     "id": "wr-01",
+     "title": "01-完形填空",
+     "group": "英语作文",
+     "source": "notebook/kaoyan/english1/01-完形填空.md",
+     "sha": "95bea4bf",
+     "n": 59,
+     "problems": [],
+     "path": "readable/english1/wr-01.json"
+    },
+    {
+     "id": "wr-02",
+     "title": "02-阅读理解",
+     "group": "英语作文",
+     "source": "notebook/kaoyan/english1/02-阅读理解.md",
+     "sha": "bf6256a8",
+     "n": 106,
+     "problems": [],
+     "path": "readable/english1/wr-02.json"
+    },
+    {
+     "id": "wr-03",
+     "title": "03-新题型",
+     "group": "英语作文",
+     "source": "notebook/kaoyan/english1/03-新题型.md",
+     "sha": "f554be29",
+     "n": 98,
+     "problems": [],
+     "path": "readable/english1/wr-03.json"
+    },
+    {
+     "id": "wr-04",
+     "title": "04-翻译",
+     "group": "英语作文",
+     "source": "notebook/kaoyan/english1/04-翻译.md",
+     "sha": "9ea7321b",
+     "n": 159,
+     "problems": [],
+     "path": "readable/english1/wr-04.json"
+    },
+    {
+     "id": "wr-05",
+     "title": "05-小作文",
+     "group": "英语作文",
+     "source": "notebook/kaoyan/english1/05-小作文.md",
+     "sha": "116fd7ec",
+     "n": 169,
+     "problems": [],
+     "path": "readable/english1/wr-05.json"
+    },
+    {
+     "id": "wr-06",
+     "title": "06-大作文",
+     "group": "英语作文",
+     "source": "notebook/kaoyan/english1/06-大作文.md",
+     "sha": "429284d6",
+     "n": 198,
+     "problems": [],
+     "path": "readable/english1/wr-06.json"
+    }
+   ]
+  }
+ ]
+}

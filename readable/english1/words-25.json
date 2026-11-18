@@ -1,0 +1,595 @@
+{
+ "version": "reading/v1",
+ "id": "words-25",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "25-超纲与低频学术词",
+ "source": "notebook/kaoyan/english1/words/25-超纲与低频学术词.md",
+ "sourceSha": "56b412d9",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "25 超纲与低频学术词"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "heuristic。heuristic。启发式的。"
+  },
+  {
+   "t": "li",
+   "x": "quantitative。quantitative。定量的。"
+  },
+  {
+   "t": "li",
+   "x": "qualitative。qualitative。定性的。"
+  },
+  {
+   "t": "li",
+   "x": "correlation。correlation。相关性。"
+  },
+  {
+   "t": "li",
+   "x": "parameter。parameter。参数。"
+  },
+  {
+   "t": "li",
+   "x": "coefficient。coefficient。系数。"
+  },
+  {
+   "t": "li",
+   "x": "variance。variance。方差。"
+  },
+  {
+   "t": "li",
+   "x": "deviation。deviation。偏差。"
+  },
+  {
+   "t": "li",
+   "x": "taxonomy。taxonomy。分类学。"
+  },
+  {
+   "t": "li",
+   "x": "synthesis。synthesis。综合。"
+  },
+  {
+   "t": "li",
+   "x": "analytic。analytic。分析的。"
+  },
+  {
+   "t": "li",
+   "x": "syllogism。syllogism。三段论。"
+  },
+  {
+   "t": "li",
+   "x": "axiom。axiom。公理。"
+  },
+  {
+   "t": "li",
+   "x": "theorem。theorem。定理。"
+  },
+  {
+   "t": "li",
+   "x": "lemma。lemma。引理。"
+  },
+  {
+   "t": "li",
+   "x": "corollary。corollary。推论。"
+  },
+  {
+   "t": "li",
+   "x": "calculus。calculus。微积分。"
+  },
+  {
+   "t": "li",
+   "x": "matrix。matrix。矩阵。"
+  },
+  {
+   "t": "li",
+   "x": "vector。vector。向量。"
+  },
+  {
+   "t": "li",
+   "x": "scalar。scalar。标量。"
+  },
+  {
+   "t": "li",
+   "x": "tensor。tensor。张量。"
+  },
+  {
+   "t": "li",
+   "x": "topology。topology。拓扑学。"
+  },
+  {
+   "t": "li",
+   "x": "geometry。geometry。几何学。"
+  },
+  {
+   "t": "li",
+   "x": "derivative。derivative。导数。"
+  },
+  {
+   "t": "li",
+   "x": "asymptote。asymptote。渐近线。"
+  },
+  {
+   "t": "li",
+   "x": "convergence。convergence。收敛。"
+  },
+  {
+   "t": "li",
+   "x": "divergence。divergence。发散。"
+  },
+  {
+   "t": "li",
+   "x": "equilibrium。equilibrium。均衡。"
+  },
+  {
+   "t": "li",
+   "x": "entropy。entropy。熵。"
+  },
+  {
+   "t": "li",
+   "x": "enthalpy。enthalpy。焓。"
+  },
+  {
+   "t": "li",
+   "x": "catalyst。catalyst。催化剂。"
+  },
+  {
+   "t": "li",
+   "x": "polymer。polymer。聚合物。"
+  },
+  {
+   "t": "li",
+   "x": "molecule。molecule。分子。"
+  },
+  {
+   "t": "li",
+   "x": "genome。genome。基因组。"
+  },
+  {
+   "t": "li",
+   "x": "chromosome。chromosome。染色体。"
+  },
+  {
+   "t": "li",
+   "x": "synapse。synapse。突触。"
+  },
+  {
+   "t": "li",
+   "x": "cortex n."
+  },
+  {
+   "t": "li",
+   "x": "abatement。abatement。减弱。"
+  },
+  {
+   "t": "li",
+   "x": "abiotic。abiotic。非生物的。"
+  },
+  {
+   "t": "li",
+   "x": "absorbance。absorbance。吸光度。"
+  },
+  {
+   "t": "li",
+   "x": "abstraction。abstraction。抽象。"
+  },
+  {
+   "t": "li",
+   "x": "accretion。accretion。积聚。"
+  },
+  {
+   "t": "li",
+   "x": "acumen。acumen。敏锐。"
+  },
+  {
+   "t": "li",
+   "x": "adiabatic。adiabatic。绝热的。"
+  },
+  {
+   "t": "li",
+   "x": "affinity。affinity。亲和力。"
+  },
+  {
+   "t": "li",
+   "x": "allele。allele。等位基因。"
+  },
+  {
+   "t": "li",
+   "x": "allometric。allometric。异速生长的。"
+  },
+  {
+   "t": "li",
+   "x": "allosteric。allosteric。变构的。"
+  },
+  {
+   "t": "li",
+   "x": "amalgam。amalgam。混合物。"
+  },
+  {
+   "t": "li",
+   "x": "amortization。amortization。摊销。"
+  },
+  {
+   "t": "li",
+   "x": "amplitude。amplitude。振幅。"
+  },
+  {
+   "t": "li",
+   "x": "anisotropy。anisotropy。各向异性。"
+  },
+  {
+   "t": "li",
+   "x": "antecedent。antecedent。前件。"
+  },
+  {
+   "t": "li",
+   "x": "antigen。antigen。抗原。"
+  },
+  {
+   "t": "li",
+   "x": "apoptosis。apoptosis。细胞凋亡。"
+  },
+  {
+   "t": "li",
+   "x": "archetype。archetype。原型。"
+  },
+  {
+   "t": "li",
+   "x": "assay。assay。测定。"
+  },
+  {
+   "t": "li",
+   "x": "associative。associative。联想的。"
+  },
+  {
+   "t": "li",
+   "x": "attenuation。attenuation。衰减。"
+  },
+  {
+   "t": "li",
+   "x": "axiomatic。axiomatic。公理的。"
+  },
+  {
+   "t": "li",
+   "x": "bifurcation。bifurcation。分叉。"
+  },
+  {
+   "t": "li",
+   "x": "binomial。binomial。二项式。"
+  },
+  {
+   "t": "li",
+   "x": "bioassay。bioassay。生物测定。"
+  },
+  {
+   "t": "li",
+   "x": "biomarker。biomarker。生物标志物。"
+  },
+  {
+   "t": "li",
+   "x": "biosphere。biosphere。生物圈。"
+  },
+  {
+   "t": "li",
+   "x": "bivariate。bivariate。双变量的。"
+  },
+  {
+   "t": "li",
+   "x": "capacitance。capacitance。电容。"
+  },
+  {
+   "t": "li",
+   "x": "cardinality。cardinality。基数。"
+  },
+  {
+   "t": "li",
+   "x": "catalysis。catalysis。催化作用。"
+  },
+  {
+   "t": "li",
+   "x": "categorical。categorical。分类的。"
+  },
+  {
+   "t": "li",
+   "x": "causality。causality。因果关系。"
+  },
+  {
+   "t": "li",
+   "x": "cellular。cellular。细胞的。"
+  },
+  {
+   "t": "li",
+   "x": "centrality。centrality。中心性。"
+  },
+  {
+   "t": "li",
+   "x": "chronology。chronology。年代学。"
+  },
+  {
+   "t": "li",
+   "x": "cladistics。cladistics。支序分类学。"
+  },
+  {
+   "t": "li",
+   "x": "coherence。coherence。连贯性。"
+  },
+  {
+   "t": "li",
+   "x": "collinear。collinear。共线的。"
+  },
+  {
+   "t": "li",
+   "x": "commensurable。commensurable。可通约的。"
+  },
+  {
+   "t": "li",
+   "x": "commutative。commutative。交换的。"
+  },
+  {
+   "t": "li",
+   "x": "comparative。comparative。比较的。"
+  },
+  {
+   "t": "li",
+   "x": "compensatory。compensatory。补偿性的。"
+  },
+  {
+   "t": "li",
+   "x": "complementary。complementary。互补的。"
+  },
+  {
+   "t": "li",
+   "x": "composite。composite。复合的。"
+  },
+  {
+   "t": "li",
+   "x": "computational。computational。计算的。"
+  },
+  {
+   "t": "li",
+   "x": "concatenation。concatenation。连接。"
+  },
+  {
+   "t": "li",
+   "x": "concentric。concentric。同心的。"
+  },
+  {
+   "t": "li",
+   "x": "conceptual。conceptual。概念的。"
+  },
+  {
+   "t": "li",
+   "x": "concomitant。concomitant。伴随的。"
+  },
+  {
+   "t": "li",
+   "x": "conditional。conditional。有条件的。"
+  },
+  {
+   "t": "li",
+   "x": "conflation。conflation。合并。"
+  },
+  {
+   "t": "li",
+   "x": "consistency。consistency。一致性。"
+  },
+  {
+   "t": "li",
+   "x": "contingent。contingent。偶然的。"
+  },
+  {
+   "t": "li",
+   "x": "continuum。continuum。连续体。"
+  },
+  {
+   "t": "li",
+   "x": "contractual。contractual。合同的。"
+  },
+  {
+   "t": "li",
+   "x": "contraposition。contraposition。换质位。"
+  },
+  {
+   "t": "li",
+   "x": "covariance。covariance。协方差。"
+  },
+  {
+   "t": "li",
+   "x": "cytoplasm。cytoplasm。细胞质。"
+  },
+  {
+   "t": "li",
+   "x": "demarcation。demarcation。划界。"
+  },
+  {
+   "t": "li",
+   "x": "denotation。denotation。本义。"
+  },
+  {
+   "t": "li",
+   "x": "derivation。derivation。推导。"
+  },
+  {
+   "t": "li",
+   "x": "deterministic。deterministic。决定论的。"
+  },
+  {
+   "t": "li",
+   "x": "dichotomy。dichotomy。二分法。"
+  },
+  {
+   "t": "li",
+   "x": "diffusion。diffusion。扩散。"
+  },
+  {
+   "t": "li",
+   "x": "dimensionality。dimensionality。维度。"
+  },
+  {
+   "t": "li",
+   "x": "discriminant。discriminant。判别式。"
+  },
+  {
+   "t": "li",
+   "x": "disjunction。disjunction。析取。"
+  },
+  {
+   "t": "li",
+   "x": "dissipation。dissipation。耗散。"
+  },
+  {
+   "t": "li",
+   "x": "dissociation。dissociation。解离。"
+  },
+  {
+   "t": "li",
+   "x": "distribution。distribution。分布。"
+  },
+  {
+   "t": "li",
+   "x": "distributive。distributive。分配的。"
+  },
+  {
+   "t": "li",
+   "x": "domain。domain。领域。"
+  },
+  {
+   "t": "li",
+   "x": "dominant。dominant。占优势的。"
+  },
+  {
+   "t": "li",
+   "x": "eigenvalue。eigenvalue。特征值。"
+  },
+  {
+   "t": "li",
+   "x": "electrolyte。electrolyte。电解质。"
+  },
+  {
+   "t": "li",
+   "x": "electromagnetic。electromagnetic。电磁的。"
+  },
+  {
+   "t": "li",
+   "x": "underlying。underlying。潜在的。"
+  },
+  {
+   "t": "li",
+   "x": "mitigate。mitigate。减轻。"
+  },
+  {
+   "t": "li",
+   "x": "exacerbate。exacerbate。加剧。"
+  },
+  {
+   "t": "li",
+   "x": "tangible。tangible。有形的。"
+  },
+  {
+   "t": "li",
+   "x": "threshold。threshold。阈值。"
+  },
+  {
+   "t": "li",
+   "x": "elucidate。elucidate。阐明。"
+  },
+  {
+   "t": "li",
+   "x": "enumerate。enumerate。列举。"
+  },
+  {
+   "t": "li",
+   "x": "extrapolate。extrapolate。推断。"
+  },
+  {
+   "t": "li",
+   "x": "latent。latent。潜在的。"
+  },
+  {
+   "t": "li",
+   "x": "magnitude。magnitude。重要性。"
+  },
+  {
+   "t": "li",
+   "x": "normative。normative。规范的。"
+  },
+  {
+   "t": "li",
+   "x": "nuance。nuance。细微差别。"
+  },
+  {
+   "t": "li",
+   "x": "preclude。preclude。排除。"
+  },
+  {
+   "t": "li",
+   "x": "predominant。predominant。主要的。"
+  },
+  {
+   "t": "li",
+   "x": "proliferate。proliferate。激增。"
+  },
+  {
+   "t": "li",
+   "x": "reciprocal。reciprocal。互惠的。"
+  },
+  {
+   "t": "li",
+   "x": "salient。salient。显著的。"
+  },
+  {
+   "t": "li",
+   "x": "stipulate。stipulate。规定。"
+  },
+  {
+   "t": "li",
+   "x": "tacit。tacit。心照不宣的。"
+  },
+  {
+   "t": "li",
+   "x": "transcend。transcend。超越。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "变成 现在完成时 + that 引导同位语从句（说明 paradigm 的内容）变成 写作中可用“claim/idea/paradigm + that...”把抽象名词具体化。"
+  },
+  {
+   "t": "li",
+   "x": "变成 treat + 宾语 + as + 名词（宾语补足语）变成 用于给某事物重新定性，如 regard/view/describe...as..."
+  },
+  {
+   "t": "li",
+   "x": "变成 三个过去分词并列的被动结构 变成 描述研究流程时用并列被动，保持主语一致、动作递进。"
+  },
+  {
+   "t": "li",
+   "x": "变成 albeit + 形容词/名词短语，表让步 变成 比 although 更书面，常插在句中作补充，如 The method, albeit costly, remains..."
+  },
+  {
+   "t": "li",
+   "x": "变成 make + 宾语 + 形容词补足语（复合宾语），其中宾语含 between...and... 介词短语 变成 用于表达“使某判断/界限变得……”，适合学术评价句。"
+  }
+ ]
+}

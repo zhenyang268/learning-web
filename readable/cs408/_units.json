@@ -1,0 +1,38 @@
+[
+ {
+  "id": "cs408-01",
+  "title": "一、数据结构（45 分 · DS）",
+  "group": "408 考纲",
+  "source": "notebook/kaoyan/syllabus/408.md",
+  "sha": "b28fd949",
+  "n": 95,
+  "problems": []
+ },
+ {
+  "id": "cs408-02",
+  "title": "二、计算机组成原理（45 分 · CO）",
+  "group": "408 考纲",
+  "source": "notebook/kaoyan/syllabus/408.md",
+  "sha": "b28fd949",
+  "n": 109,
+  "problems": []
+ },
+ {
+  "id": "cs408-03",
+  "title": "三、操作系统（35 分 · OS）",
+  "group": "408 考纲",
+  "source": "notebook/kaoyan/syllabus/408.md",
+  "sha": "b28fd949",
+  "n": 69,
+  "problems": []
+ },
+ {
+  "id": "cs408-04",
+  "title": "四、计算机网络（25 分 · NET）",
+  "group": "408 考纲",
+  "source": "notebook/kaoyan/syllabus/408.md",
+  "sha": "b28fd949",
+  "n": 79,
+  "problems": []
+ }
+]

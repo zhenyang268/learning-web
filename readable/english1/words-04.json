@@ -1,0 +1,863 @@
+{
+ "version": "reading/v1",
+ "id": "words-04",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "04-逻辑连接与态度词",
+ "source": "notebook/kaoyan/english1/words/04-逻辑连接与态度词.md",
+ "sourceSha": "f44cc22d",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "04 逻辑连接与态度词"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "however。however。然而。"
+  },
+  {
+   "t": "li",
+   "x": "nevertheless。nevertheless。然而。"
+  },
+  {
+   "t": "li",
+   "x": "nonetheless。nonetheless。尽管如此。"
+  },
+  {
+   "t": "li",
+   "x": "whereas。whereas。然而。"
+  },
+  {
+   "t": "li",
+   "x": "conversely。conversely。相反地。"
+  },
+  {
+   "t": "li",
+   "x": "accordingly。accordingly。因此。"
+  },
+  {
+   "t": "li",
+   "x": "consequently。consequently。因此。"
+  },
+  {
+   "t": "li",
+   "x": "therefore。therefore。因此。"
+  },
+  {
+   "t": "li",
+   "x": "thus。thus。因此。"
+  },
+  {
+   "t": "li",
+   "x": "hence。hence。因此。"
+  },
+  {
+   "t": "li",
+   "x": "thereby。thereby。从而。"
+  },
+  {
+   "t": "li",
+   "x": "moreover。moreover。此外。"
+  },
+  {
+   "t": "li",
+   "x": "furthermore。furthermore。此外。"
+  },
+  {
+   "t": "li",
+   "x": "besides。besides。此外。"
+  },
+  {
+   "t": "li",
+   "x": "likewise。likewise。同样地。"
+  },
+  {
+   "t": "li",
+   "x": "similarly。similarly。同样地。"
+  },
+  {
+   "t": "li",
+   "x": "admittedly。admittedly。诚然。"
+  },
+  {
+   "t": "li",
+   "x": "arguably。arguably。可以说。"
+  },
+  {
+   "t": "li",
+   "x": "presumably。presumably。大概。"
+  },
+  {
+   "t": "li",
+   "x": "supposedly。supposedly。据说。"
+  },
+  {
+   "t": "li",
+   "x": "allegedly。allegedly。据称。"
+  },
+  {
+   "t": "li",
+   "x": "ostensibly。ostensibly。表面上。"
+  },
+  {
+   "t": "li",
+   "x": "seemingly。seemingly。表面上。"
+  },
+  {
+   "t": "li",
+   "x": "apparently。apparently。显然。"
+  },
+  {
+   "t": "li",
+   "x": "evidently。evidently。显然。"
+  },
+  {
+   "t": "li",
+   "x": "undoubtedly。undoubtedly。无疑。"
+  },
+  {
+   "t": "li",
+   "x": "decidedly。decidedly。显然。"
+  },
+  {
+   "t": "li",
+   "x": "emphatically。emphatically。强调地。"
+  },
+  {
+   "t": "li",
+   "x": "explicitly。explicitly。明确地。"
+  },
+  {
+   "t": "li",
+   "x": "implicitly。implicitly。含蓄地。"
+  },
+  {
+   "t": "li",
+   "x": "virtually。virtually。几乎。"
+  },
+  {
+   "t": "li",
+   "x": "practically。practically。几乎。"
+  },
+  {
+   "t": "li",
+   "x": "literally。literally。字面上。"
+  },
+  {
+   "t": "li",
+   "x": "barely。barely。几乎不。"
+  },
+  {
+   "t": "li",
+   "x": "hardly。hardly。几乎不。"
+  },
+  {
+   "t": "li",
+   "x": "scarcely。scarcely。几乎不。"
+  },
+  {
+   "t": "li",
+   "x": "merely。merely。仅仅。"
+  },
+  {
+   "t": "li",
+   "x": "solely。solely。仅仅。"
+  },
+  {
+   "t": "li",
+   "x": "exclusively。exclusively。仅仅。"
+  },
+  {
+   "t": "li",
+   "x": "chiefly。chiefly。主要地。"
+  },
+  {
+   "t": "li",
+   "x": "primarily。primarily。主要地。"
+  },
+  {
+   "t": "li",
+   "x": "predominantly。predominantly。主要地。"
+  },
+  {
+   "t": "li",
+   "x": "largely。largely。主要地。"
+  },
+  {
+   "t": "li",
+   "x": "mostly。mostly。主要地。"
+  },
+  {
+   "t": "li",
+   "x": "partly。partly。部分地。"
+  },
+  {
+   "t": "li",
+   "x": "partially。partially。部分地。"
+  },
+  {
+   "t": "li",
+   "x": "wholly。wholly。完全地。"
+  },
+  {
+   "t": "li",
+   "x": "utterly。utterly。完全地。"
+  },
+  {
+   "t": "li",
+   "x": "entirely。entirely。完全地。"
+  },
+  {
+   "t": "li",
+   "x": "thoroughly。thoroughly。彻底地。"
+  },
+  {
+   "t": "li",
+   "x": "increasingly。increasingly。越来越。"
+  },
+  {
+   "t": "li",
+   "x": "gradually。gradually。逐渐地。"
+  },
+  {
+   "t": "li",
+   "x": "eventually。eventually。最终。"
+  },
+  {
+   "t": "li",
+   "x": "ultimately。ultimately。最终。"
+  },
+  {
+   "t": "li",
+   "x": "initially。initially。最初。"
+  },
+  {
+   "t": "li",
+   "x": "originally。originally。最初。"
+  },
+  {
+   "t": "li",
+   "x": "subsequently。subsequently。随后。"
+  },
+  {
+   "t": "li",
+   "x": "simultaneously。simultaneously。同时地。"
+  },
+  {
+   "t": "li",
+   "x": "previously。previously。先前。"
+  },
+  {
+   "t": "li",
+   "x": "currently。currently。目前。"
+  },
+  {
+   "t": "li",
+   "x": "presently。presently。目前。"
+  },
+  {
+   "t": "li",
+   "x": "forthcoming。forthcoming。即将到来的。"
+  },
+  {
+   "t": "li",
+   "x": "imminent。imminent。即将来临的。"
+  },
+  {
+   "t": "li",
+   "x": "pending。pending。待定的。"
+  },
+  {
+   "t": "li",
+   "x": "prevalent。prevalent。普遍的。"
+  },
+  {
+   "t": "li",
+   "x": "pervasive。pervasive。普遍存在的。"
+  },
+  {
+   "t": "li",
+   "x": "widespread。widespread。广泛的。"
+  },
+  {
+   "t": "li",
+   "x": "ubiquitous。ubiquitous。无处不在的。"
+  },
+  {
+   "t": "li",
+   "x": "rampant。rampant。猖獗的。"
+  },
+  {
+   "t": "li",
+   "x": "endemic。endemic。地方性的。"
+  },
+  {
+   "t": "li",
+   "x": "inherent。inherent。固有的。"
+  },
+  {
+   "t": "li",
+   "x": "intrinsic。intrinsic。内在的。"
+  },
+  {
+   "t": "li",
+   "x": "extrinsic。extrinsic。外在的。"
+  },
+  {
+   "t": "li",
+   "x": "innate。innate。天生的。"
+  },
+  {
+   "t": "li",
+   "x": "inevitable。inevitable。不可避免的。"
+  },
+  {
+   "t": "li",
+   "x": "indispensable。indispensable。不可或缺的。"
+  },
+  {
+   "t": "li",
+   "x": "imperative。imperative。迫切的。"
+  },
+  {
+   "t": "li",
+   "x": "compelling。compelling。令人信服的。"
+  },
+  {
+   "t": "li",
+   "x": "convincing。convincing。令人信服的。"
+  },
+  {
+   "t": "li",
+   "x": "plausible。plausible。似乎合理的。"
+  },
+  {
+   "t": "li",
+   "x": "credible。credible。可信的。"
+  },
+  {
+   "t": "li",
+   "x": "questionable。questionable。可疑的。"
+  },
+  {
+   "t": "li",
+   "x": "dubious。dubious。可疑的。"
+  },
+  {
+   "t": "li",
+   "x": "skeptical。skeptical。怀疑的。"
+  },
+  {
+   "t": "li",
+   "x": "cynical。cynical。愤世嫉俗的。"
+  },
+  {
+   "t": "li",
+   "x": "suspicious。suspicious。怀疑的。"
+  },
+  {
+   "t": "li",
+   "x": "ambiguous。ambiguous。模棱两可的。"
+  },
+  {
+   "t": "li",
+   "x": "vague。vague。模糊的。"
+  },
+  {
+   "t": "li",
+   "x": "obscure。obscure。晦涩的。"
+  },
+  {
+   "t": "li",
+   "x": "explicit。explicit。明确的。"
+  },
+  {
+   "t": "li",
+   "x": "implicit。implicit。含蓄的。"
+  },
+  {
+   "t": "li",
+   "x": "objective。objective。客观的。"
+  },
+  {
+   "t": "li",
+   "x": "subjective。subjective。主观的。"
+  },
+  {
+   "t": "li",
+   "x": "neutral。neutral。中立的。"
+  },
+  {
+   "t": "li",
+   "x": "indifferent。indifferent。冷漠的。"
+  },
+  {
+   "t": "li",
+   "x": "impartial。impartial。公正的。"
+  },
+  {
+   "t": "li",
+   "x": "biased。biased。有偏见的。"
+  },
+  {
+   "t": "li",
+   "x": "prejudiced。prejudiced。有偏见的。"
+  },
+  {
+   "t": "li",
+   "x": "tolerant。tolerant。容忍的。"
+  },
+  {
+   "t": "li",
+   "x": "sympathetic。sympathetic。同情的。"
+  },
+  {
+   "t": "li",
+   "x": "compassionate。compassionate。富有同情心的。"
+  },
+  {
+   "t": "li",
+   "x": "hostile。hostile。敌对的。"
+  },
+  {
+   "t": "li",
+   "x": "adverse。adverse。不利的。"
+  },
+  {
+   "t": "li",
+   "x": "averse。averse。反对的。"
+  },
+  {
+   "t": "li",
+   "x": "reluctant。reluctant。不情愿的。"
+  },
+  {
+   "t": "li",
+   "x": "hesitant。hesitant。犹豫的。"
+  },
+  {
+   "t": "li",
+   "x": "wary。wary。谨慎的。"
+  },
+  {
+   "t": "li",
+   "x": "cautious。cautious。谨慎的。"
+  },
+  {
+   "t": "li",
+   "x": "prudent。prudent。审慎的。"
+  },
+  {
+   "t": "li",
+   "x": "vigilant。vigilant。警惕的。"
+  },
+  {
+   "t": "li",
+   "x": "optimistic。optimistic。乐观的。"
+  },
+  {
+   "t": "li",
+   "x": "pessimistic。pessimistic。悲观的。"
+  },
+  {
+   "t": "li",
+   "x": "sanguine。sanguine。乐观的。"
+  },
+  {
+   "t": "li",
+   "x": "desperate。desperate。绝望的。"
+  },
+  {
+   "t": "li",
+   "x": "frustrated。frustrated。沮丧的。"
+  },
+  {
+   "t": "li",
+   "x": "resentful。resentful。怨恨的。"
+  },
+  {
+   "t": "li",
+   "x": "indignant。indignant。愤怒的。"
+  },
+  {
+   "t": "li",
+   "x": "outraged。outraged。愤慨的。"
+  },
+  {
+   "t": "li",
+   "x": "appalled。appalled。惊骇的。"
+  },
+  {
+   "t": "li",
+   "x": "bewildered。bewildered。困惑的。"
+  },
+  {
+   "t": "li",
+   "x": "perplexed。perplexed。困惑的。"
+  },
+  {
+   "t": "li",
+   "x": "controversial。controversial。有争议的。"
+  },
+  {
+   "t": "li",
+   "x": "contentious。contentious。有争议的。"
+  },
+  {
+   "t": "li",
+   "x": "notorious。notorious。臭名昭著的。"
+  },
+  {
+   "t": "li",
+   "x": "renowned。renowned。著名的。"
+  },
+  {
+   "t": "li",
+   "x": "prestigious。prestigious。有声望的。"
+  },
+  {
+   "t": "li",
+   "x": "prominent。prominent。著名的。"
+  },
+  {
+   "t": "li",
+   "x": "eminent。eminent。杰出的。"
+  },
+  {
+   "t": "li",
+   "x": "conspicuous。conspicuous。显眼的。"
+  },
+  {
+   "t": "li",
+   "x": "notable。notable。值得注意的。"
+  },
+  {
+   "t": "li",
+   "x": "remarkable。remarkable。非凡的。"
+  },
+  {
+   "t": "li",
+   "x": "striking。striking。显著的。"
+  },
+  {
+   "t": "li",
+   "x": "stagnant。stagnant。停滞的。"
+  },
+  {
+   "t": "li",
+   "x": "sluggish。sluggish。萧条的。"
+  },
+  {
+   "t": "li",
+   "x": "robust。robust。强劲的。"
+  },
+  {
+   "t": "li",
+   "x": "sound。sound。合理的。"
+  },
+  {
+   "t": "li",
+   "x": "valid。valid。有效的。"
+  },
+  {
+   "t": "li",
+   "x": "feasible。feasible。可行的。"
+  },
+  {
+   "t": "li",
+   "x": "viable。viable。可行的。"
+  },
+  {
+   "t": "li",
+   "x": "pragmatic。pragmatic。务实的。"
+  },
+  {
+   "t": "li",
+   "x": "realistic。realistic。现实的。"
+  },
+  {
+   "t": "li",
+   "x": "radical。radical。激进的。"
+  },
+  {
+   "t": "li",
+   "x": "moderate。moderate。温和的。"
+  },
+  {
+   "t": "li",
+   "x": "conservative。conservative。保守的。"
+  },
+  {
+   "t": "li",
+   "x": "orthodox。orthodox。正统的。"
+  },
+  {
+   "t": "li",
+   "x": "conventional。conventional。传统的。"
+  },
+  {
+   "t": "li",
+   "x": "unprecedented。unprecedented。前所未有的。"
+  },
+  {
+   "t": "li",
+   "x": "marginal。marginal。边缘的。"
+  },
+  {
+   "t": "li",
+   "x": "negligible。negligible。微不足道的。"
+  },
+  {
+   "t": "li",
+   "x": "trivial。trivial。琐碎的。"
+  },
+  {
+   "t": "li",
+   "x": "superficial。superficial。肤浅的。"
+  },
+  {
+   "t": "li",
+   "x": "profound。profound。深刻的。"
+  },
+  {
+   "t": "li",
+   "x": "substantial。substantial。大量的。"
+  },
+  {
+   "t": "li",
+   "x": "substantive。substantive。实质性的。"
+  },
+  {
+   "t": "li",
+   "x": "tentative。tentative。试探性的。"
+  },
+  {
+   "t": "li",
+   "x": "arbitrary。arbitrary。武断的。"
+  },
+  {
+   "t": "li",
+   "x": "deliberate。deliberate。故意的。"
+  },
+  {
+   "t": "li",
+   "x": "inevitably。inevitably。不可避免地。"
+  },
+  {
+   "t": "li",
+   "x": "notwithstanding。notwithstanding。尽管。"
+  },
+  {
+   "t": "li",
+   "x": "albeit。albeit。尽管。"
+  },
+  {
+   "t": "li",
+   "x": "lest。lest。以免。"
+  },
+  {
+   "t": "li",
+   "x": "unless。unless。除非。"
+  },
+  {
+   "t": "li",
+   "x": "provided。provided。假如。"
+  },
+  {
+   "t": "li",
+   "x": "whereby。whereby。凭借。"
+  },
+  {
+   "t": "li",
+   "x": "wherein。wherein。在其中。"
+  },
+  {
+   "t": "li",
+   "x": "hereby。hereby。特此。"
+  },
+  {
+   "t": "li",
+   "x": "thereafter。thereafter。此后。"
+  },
+  {
+   "t": "li",
+   "x": "henceforth。henceforth。从此以后。"
+  },
+  {
+   "t": "li",
+   "x": "meanwhile。meanwhile。同时。"
+  },
+  {
+   "t": "li",
+   "x": "according。according。相符的。"
+  },
+  {
+   "t": "li",
+   "x": "regardless。regardless。不管。"
+  },
+  {
+   "t": "li",
+   "x": "irrespective。irrespective。不考虑的。"
+  },
+  {
+   "t": "li",
+   "x": "alternatively。alternatively。或者。"
+  },
+  {
+   "t": "li",
+   "x": "otherwise。otherwise。否则。"
+  },
+  {
+   "t": "li",
+   "x": "instead。instead。反而。"
+  },
+  {
+   "t": "li",
+   "x": "rather。rather。相当。"
+  },
+  {
+   "t": "li",
+   "x": "somewhat。somewhat。有点。"
+  },
+  {
+   "t": "li",
+   "x": "altogether。altogether。完全地。"
+  },
+  {
+   "t": "li",
+   "x": "overall。overall。总体上。"
+  },
+  {
+   "t": "li",
+   "x": "thereof。thereof。由此。"
+  },
+  {
+   "t": "li",
+   "x": "therein。therein。在其中。"
+  },
+  {
+   "t": "li",
+   "x": "thereupon。thereupon。随即。"
+  },
+  {
+   "t": "li",
+   "x": "inversely。inversely。相反地。"
+  },
+  {
+   "t": "li",
+   "x": "mutually。mutually。相互地。"
+  },
+  {
+   "t": "li",
+   "x": "reciprocally。reciprocally。相互地。"
+  },
+  {
+   "t": "li",
+   "x": "respectively。respectively。分别地。"
+  },
+  {
+   "t": "li",
+   "x": "individually。individually。个别地。"
+  },
+  {
+   "t": "li",
+   "x": "collectively。collectively。集体地。"
+  },
+  {
+   "t": "li",
+   "x": "unanimously。unanimously。一致地。"
+  },
+  {
+   "t": "li",
+   "x": "unanimous。unanimous。一致同意的。"
+  },
+  {
+   "t": "li",
+   "x": "disparity。disparity。差异。"
+  },
+  {
+   "t": "li",
+   "x": "predicament。predicament。困境。"
+  },
+  {
+   "t": "li",
+   "x": "plight。plight。困境。"
+  },
+  {
+   "t": "li",
+   "x": "warrant。warrant。使有必要。"
+  },
+  {
+   "t": "li",
+   "x": "entail。entail。需要。"
+  },
+  {
+   "t": "li",
+   "x": "ascribe。ascribe。归因于。"
+  },
+  {
+   "t": "li",
+   "x": "stem。stem。源于。"
+  },
+  {
+   "t": "li",
+   "x": "render。render。使成为。"
+  },
+  {
+   "t": "li",
+   "x": "underline。underline。强调。"
+  },
+  {
+   "t": "li",
+   "x": "highlight。highlight。强调。"
+  },
+  {
+   "t": "li",
+   "x": "emphasize。emphasize。强调。"
+  },
+  {
+   "t": "li",
+   "x": "stress。stress。强调。"
+  },
+  {
+   "t": "li",
+   "x": "downplay。downplay。淡化。"
+  },
+  {
+   "t": "li",
+   "x": "underlie。underlie。构成…的基础。"
+  },
+  {
+   "t": "li",
+   "x": "overshadow。overshadow。使逊色。"
+  },
+  {
+   "t": "li",
+   "x": "outweigh。outweigh。超过。"
+  },
+  {
+   "t": "li",
+   "x": "offset。offset。抵消。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

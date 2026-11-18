@@ -1,0 +1,359 @@
+{
+ "version": "reading/v1",
+ "id": "words-29",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "29-数量与趋势",
+ "source": "notebook/kaoyan/english1/words/29-数量与趋势.md",
+ "sourceSha": "bd879bdb",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "29 数量与趋势"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "surge n./v. 激增；涌动"
+  },
+  {
+   "t": "li",
+   "x": "skyrocket。skyrocket。猛涨。"
+  },
+  {
+   "t": "li",
+   "x": "slump n./v. 暴跌；衰退"
+  },
+  {
+   "t": "li",
+   "x": "plunge。plunge。骤降。"
+  },
+  {
+   "t": "li",
+   "x": "tumble。tumble。暴跌。"
+  },
+  {
+   "t": "li",
+   "x": "spiral。spiral。急剧上升。"
+  },
+  {
+   "t": "li",
+   "x": "accrue。accrue。积累。"
+  },
+  {
+   "t": "li",
+   "x": "amass。amass。积聚。"
+  },
+  {
+   "t": "li",
+   "x": "wane。wane。减弱。"
+  },
+  {
+   "t": "li",
+   "x": "ebb。ebb。衰退。"
+  },
+  {
+   "t": "li",
+   "x": "subside。subside。减弱。"
+  },
+  {
+   "t": "li",
+   "x": "taper。taper。逐渐减少。"
+  },
+  {
+   "t": "li",
+   "x": "oscillate。oscillate。振荡。"
+  },
+  {
+   "t": "li",
+   "x": "vacillate。vacillate。摇摆。"
+  },
+  {
+   "t": "li",
+   "x": "diverge。diverge。分化。"
+  },
+  {
+   "t": "li",
+   "x": "volatility。volatility。波动性。"
+  },
+  {
+   "t": "li",
+   "x": "oscillation。oscillation。振荡。"
+  },
+  {
+   "t": "li",
+   "x": "fraction。fraction。小部分。"
+  },
+  {
+   "t": "li",
+   "x": "extent。extent。程度。"
+  },
+  {
+   "t": "li",
+   "x": "scope。scope。范围。"
+  },
+  {
+   "t": "li",
+   "x": "dimension。dimension。维度。"
+  },
+  {
+   "t": "li",
+   "x": "margin。margin。差额。"
+  },
+  {
+   "t": "li",
+   "x": "imbalance。imbalance。失衡。"
+  },
+  {
+   "t": "li",
+   "x": "parity。parity。平价。"
+  },
+  {
+   "t": "li",
+   "x": "trajectory。trajectory。轨迹。"
+  },
+  {
+   "t": "li",
+   "x": "momentum。momentum。势头。"
+  },
+  {
+   "t": "li",
+   "x": "tendency。tendency。趋势。"
+  },
+  {
+   "t": "li",
+   "x": "propensity。propensity。倾向。"
+  },
+  {
+   "t": "li",
+   "x": "inclination。inclination。倾向。"
+  },
+  {
+   "t": "li",
+   "x": "drift n./v. 趋势；漂移"
+  },
+  {
+   "t": "li",
+   "x": "swing n./v. 波动；摆动"
+  },
+  {
+   "t": "li",
+   "x": "upturn。upturn。好转。"
+  },
+  {
+   "t": "li",
+   "x": "downturn。downturn。下降。"
+  },
+  {
+   "t": "li",
+   "x": "upsurge。upsurge。激增。"
+  },
+  {
+   "t": "li",
+   "x": "peak。peak。峰值。"
+  },
+  {
+   "t": "li",
+   "x": "trough。trough。低谷。"
+  },
+  {
+   "t": "li",
+   "x": "ceiling。ceiling。上限。"
+  },
+  {
+   "t": "li",
+   "x": "boom。boom。繁荣。"
+  },
+  {
+   "t": "li",
+   "x": "bust。bust。萧条。"
+  },
+  {
+   "t": "li",
+   "x": "stagnation。stagnation。停滞。"
+  },
+  {
+   "t": "li",
+   "x": "slash。slash。大幅削减。"
+  },
+  {
+   "t": "li",
+   "x": "trim。trim。削减。"
+  },
+  {
+   "t": "li",
+   "x": "rebound。rebound。反弹。"
+  },
+  {
+   "t": "li",
+   "x": "rally。rally。回升。"
+  },
+  {
+   "t": "li",
+   "x": "volatile。volatile。波动的。"
+  },
+  {
+   "t": "li",
+   "x": "stabilize。stabilize。稳定。"
+  },
+  {
+   "t": "li",
+   "x": "disproportionate。disproportionate。不成比例的。"
+  },
+  {
+   "t": "li",
+   "x": "proportional。proportional。成比例的。"
+  },
+  {
+   "t": "li",
+   "x": "scatter。scatter。散布。"
+  },
+  {
+   "t": "li",
+   "x": "sparse。sparse。稀疏的。"
+  },
+  {
+   "t": "li",
+   "x": "steep。steep。急剧的。"
+  },
+  {
+   "t": "li",
+   "x": "abrupt。abrupt。突然的。"
+  },
+  {
+   "t": "li",
+   "x": "minimal。minimal。最小的。"
+  },
+  {
+   "t": "li",
+   "x": "shortage。shortage。短缺。"
+  },
+  {
+   "t": "li",
+   "x": "scarcity。scarcity。稀缺。"
+  },
+  {
+   "t": "li",
+   "x": "abundance。abundance。丰富。"
+  },
+  {
+   "t": "li",
+   "x": "excess。excess。过量。"
+  },
+  {
+   "t": "li",
+   "x": "excessive。excessive。过度的。"
+  },
+  {
+   "t": "li",
+   "x": "surpass。surpass。超过。"
+  },
+  {
+   "t": "li",
+   "x": "outnumber。outnumber。数量上超过。"
+  },
+  {
+   "t": "li",
+   "x": "lag。lag。落后。"
+  },
+  {
+   "t": "li",
+   "x": "trail。trail。落后于。"
+  },
+  {
+   "t": "li",
+   "x": "tier。tier。层级。"
+  },
+  {
+   "t": "li",
+   "x": "stake。stake。份额。"
+  },
+  {
+   "t": "li",
+   "x": "portion。portion。部分。"
+  },
+  {
+   "t": "li",
+   "x": "cap。cap。上限。"
+  },
+  {
+   "t": "li",
+   "x": "baseline。baseline。基线。"
+  },
+  {
+   "t": "li",
+   "x": "demographics。demographics。人口统计数据。"
+  },
+  {
+   "t": "li",
+   "x": "tally。tally。与…相符。"
+  },
+  {
+   "t": "li",
+   "x": "diffuse。diffuse。扩散。"
+  },
+  {
+   "t": "li",
+   "x": "permeate。permeate。渗透。"
+  },
+  {
+   "t": "li",
+   "x": "spread。spread。传播。"
+  },
+  {
+   "t": "li",
+   "x": "mushroom。mushroom。迅速增长。"
+  },
+  {
+   "t": "li",
+   "x": "swell。swell。膨胀。"
+  },
+  {
+   "t": "li",
+   "x": "counteract。counteract。抵消。"
+  },
+  {
+   "t": "li",
+   "x": "stagnate。stagnate。停滞。"
+  },
+  {
+   "t": "li",
+   "x": "trend。trend。趋势。"
+  },
+  {
+   "t": "li",
+   "x": "staggering。staggering。惊人的。"
+  },
+  {
+   "t": "li",
+   "x": "gradual。gradual。逐渐的。"
+  },
+  {
+   "t": "li",
+   "x": "decelerate。decelerate。减速。"
+  },
+  {
+   "t": "li",
+   "x": "polarize。polarize。使两极分化。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

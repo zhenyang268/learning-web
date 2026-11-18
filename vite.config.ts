@@ -116,9 +116,31 @@ function kbJson(): Plugin {
   };
 }
 
+/**
+ * 朗读稿数据根（`readable/`）：
+ *
+ * dev 下 Vite 直接伺服根目录里的静态文件，不需要中间件；
+ * build 时必须整份拷进 `dist/readable/`，否则 `reading.html` 的 fetch 全 404。
+ *
+ * 它与 `SUBJECTS` 完全无关（朗读稿没有代号、没有语义边），所以不并进 `kbJson()`。
+ */
+function readingData(): Plugin {
+  return {
+    name: 'reading-data',
+    closeBundle() {
+      const src = path.join(ROOT, 'readable');
+      if (!fs.existsSync(src)) {
+        console.warn('readable/ 不存在：先跑 build/reading/build_index.py');
+        return;
+      }
+      fs.cpSync(src, path.join(OUT, 'readable'), { recursive: true });
+    },
+  };
+}
+
 export default defineConfig({
   base: './',
-  plugins: [kbJson()],
+  plugins: [kbJson(), readingData()],
   server: { port: 5173, host: '127.0.0.1' },
   build: {
     outDir: 'dist',
@@ -126,6 +148,7 @@ export default defineConfig({
     target: 'es2022',
     rollupOptions: {
       // 多入口：六个站点各一个入口脚本（共用一套外壳与渲染器，数据根各自独立）
+      // `reading` 是第七个入口，独立轻入口 —— 不复用 Subject 体系，理由见 src/reading/main.ts
       input: {
         main: path.join(ROOT, 'index.html'),
         emath: path.join(ROOT, 'emath.html'),
@@ -133,6 +156,7 @@ export default defineConfig({
         math1: path.join(ROOT, 'math1.html'),
         projects: path.join(ROOT, 'projects.html'),
         english1: path.join(ROOT, 'english1.html'),
+        reading: path.join(ROOT, 'reading.html'),
       },
     },
   },

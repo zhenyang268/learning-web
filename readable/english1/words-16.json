@@ -1,0 +1,267 @@
+{
+ "version": "reading/v1",
+ "id": "words-16",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "16-熟词僻义",
+ "source": "notebook/kaoyan/english1/words/16-熟词僻义.md",
+ "sourceSha": "138321d1",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "16 熟词僻义"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "balance。balance。权衡。"
+  },
+  {
+   "t": "li",
+   "x": "bear。bear。承担。"
+  },
+  {
+   "t": "li",
+   "x": "bill。bill。法案。"
+  },
+  {
+   "t": "li",
+   "x": "book。book。预订。"
+  },
+  {
+   "t": "li",
+   "x": "coin。coin。创造。"
+  },
+  {
+   "t": "li",
+   "x": "cover。cover。涵盖。"
+  },
+  {
+   "t": "li",
+   "x": "cry。cry。呼声。"
+  },
+  {
+   "t": "li",
+   "x": "deliver。deliver。发表。"
+  },
+  {
+   "t": "li",
+   "x": "digest。digest。理解。"
+  },
+  {
+   "t": "li",
+   "x": "draw。draw。得出。"
+  },
+  {
+   "t": "li",
+   "x": "engage。engage。参与。"
+  },
+  {
+   "t": "li",
+   "x": "entertain。entertain。考虑。"
+  },
+  {
+   "t": "li",
+   "x": "exercise。exercise。行使。"
+  },
+  {
+   "t": "li",
+   "x": "fix。fix。确定。"
+  },
+  {
+   "t": "li",
+   "x": "frame。frame。构建。"
+  },
+  {
+   "t": "li",
+   "x": "free。free。释放。"
+  },
+  {
+   "t": "li",
+   "x": "game。game。猎物。"
+  },
+  {
+   "t": "li",
+   "x": "host。host。主办。"
+  },
+  {
+   "t": "li",
+   "x": "last。last。持续。"
+  },
+  {
+   "t": "li",
+   "x": "lean。lean。倾向于。"
+  },
+  {
+   "t": "li",
+   "x": "leave。leave。许可。"
+  },
+  {
+   "t": "li",
+   "x": "lie。lie。位于。"
+  },
+  {
+   "t": "li",
+   "x": "make。make。成为。"
+  },
+  {
+   "t": "li",
+   "x": "mean。mean。吝啬的。"
+  },
+  {
+   "t": "li",
+   "x": "meet。meet。满足。"
+  },
+  {
+   "t": "li",
+   "x": "mint。mint。铸造。"
+  },
+  {
+   "t": "li",
+   "x": "moving。moving。感人的。"
+  },
+  {
+   "t": "li",
+   "x": "order。order。秩序。"
+  },
+  {
+   "t": "li",
+   "x": "plant。plant。工厂。"
+  },
+  {
+   "t": "li",
+   "x": "present。present。呈现。"
+  },
+  {
+   "t": "li",
+   "x": "pretty。pretty。相当。"
+  },
+  {
+   "t": "li",
+   "x": "prize。prize。珍视。"
+  },
+  {
+   "t": "li",
+   "x": "promise。promise。前途。"
+  },
+  {
+   "t": "li",
+   "x": "proper。proper。固有的。"
+  },
+  {
+   "t": "li",
+   "x": "race。race。种族。"
+  },
+  {
+   "t": "li",
+   "x": "relieve。relieve。缓解。"
+  },
+  {
+   "t": "li",
+   "x": "remote。remote。渺茫的。"
+  },
+  {
+   "t": "li",
+   "x": "resolve。resolve。解决。"
+  },
+  {
+   "t": "li",
+   "x": "respect。respect。方面。"
+  },
+  {
+   "t": "li",
+   "x": "save。save。除…之外。"
+  },
+  {
+   "t": "li",
+   "x": "second。second。赞成。"
+  },
+  {
+   "t": "li",
+   "x": "spell。spell。意味着。"
+  },
+  {
+   "t": "li",
+   "x": "stand。stand。忍受。"
+  },
+  {
+   "t": "li",
+   "x": "strike。strike。打动。"
+  },
+  {
+   "t": "li",
+   "x": "tell。tell。区分。"
+  },
+  {
+   "t": "li",
+   "x": "breed。breed。导致，引起。"
+  },
+  {
+   "t": "li",
+   "x": "draft。draft。起草。"
+  },
+  {
+   "t": "li",
+   "x": "fashion。fashion。塑造，影响。"
+  },
+  {
+   "t": "li",
+   "x": "handle。handle。处理，应对。"
+  },
+  {
+   "t": "li",
+   "x": "key。key。关键的。"
+  },
+  {
+   "t": "li",
+   "x": "lot。lot。一块地。"
+  },
+  {
+   "t": "li",
+   "x": "marked。marked。显著的。"
+  },
+  {
+   "t": "li",
+   "x": "odd。odd。奇数的，单的。"
+  },
+  {
+   "t": "li",
+   "x": "passage。passage。通过。"
+  },
+  {
+   "t": "li",
+   "x": "rest。rest。其余部分。"
+  },
+  {
+   "t": "li",
+   "x": "run。run。经营，管理。"
+  },
+  {
+   "t": "li",
+   "x": "spare。spare。抽出，腾出。"
+  },
+  {
+   "t": "li",
+   "x": "tip。tip。建议，诀窍。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

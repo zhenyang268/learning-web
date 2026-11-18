@@ -1,0 +1,431 @@
+{
+ "version": "reading/v1",
+ "id": "words-15",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "15-高频副词与介词短语",
+ "source": "notebook/kaoyan/english1/words/15-高频副词与介词短语.md",
+ "sourceSha": "6cb63b07",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "15 高频副词与介词短语"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "meantime。meantime。同时。"
+  },
+  {
+   "t": "li",
+   "x": "afterwards。afterwards。后来。"
+  },
+  {
+   "t": "li",
+   "x": "finally。finally。最后。"
+  },
+  {
+   "t": "li",
+   "x": "recently。recently。最近。"
+  },
+  {
+   "t": "li",
+   "x": "lately。lately。最近。"
+  },
+  {
+   "t": "li",
+   "x": "shortly。shortly。不久。"
+  },
+  {
+   "t": "li",
+   "x": "immediately。immediately。立即。"
+  },
+  {
+   "t": "li",
+   "x": "instantly。instantly。立即。"
+  },
+  {
+   "t": "li",
+   "x": "suddenly。suddenly。突然。"
+  },
+  {
+   "t": "li",
+   "x": "steadily。steadily。稳步地。"
+  },
+  {
+   "t": "li",
+   "x": "rapidly。rapidly。迅速地。"
+  },
+  {
+   "t": "li",
+   "x": "swiftly。swiftly。迅速地。"
+  },
+  {
+   "t": "li",
+   "x": "quickly。quickly。迅速地。"
+  },
+  {
+   "t": "li",
+   "x": "slowly。slowly。缓慢地。"
+  },
+  {
+   "t": "li",
+   "x": "constantly。constantly。不断地。"
+  },
+  {
+   "t": "li",
+   "x": "continually。continually。不断地。"
+  },
+  {
+   "t": "li",
+   "x": "continuously。continuously。连续地。"
+  },
+  {
+   "t": "li",
+   "x": "repeatedly。repeatedly。反复地。"
+  },
+  {
+   "t": "li",
+   "x": "frequently。frequently。频繁地。"
+  },
+  {
+   "t": "li",
+   "x": "often。often。经常。"
+  },
+  {
+   "t": "li",
+   "x": "sometimes。sometimes。有时。"
+  },
+  {
+   "t": "li",
+   "x": "occasionally。occasionally。偶尔。"
+  },
+  {
+   "t": "li",
+   "x": "seldom。seldom。很少。"
+  },
+  {
+   "t": "li",
+   "x": "rarely。rarely。很少。"
+  },
+  {
+   "t": "li",
+   "x": "never。never。从不。"
+  },
+  {
+   "t": "li",
+   "x": "always。always。总是。"
+  },
+  {
+   "t": "li",
+   "x": "usually。usually。通常。"
+  },
+  {
+   "t": "li",
+   "x": "commonly。commonly。通常。"
+  },
+  {
+   "t": "li",
+   "x": "normally。normally。正常地。"
+  },
+  {
+   "t": "li",
+   "x": "ordinarily。ordinarily。通常。"
+  },
+  {
+   "t": "li",
+   "x": "generally。generally。通常。"
+  },
+  {
+   "t": "li",
+   "x": "particularly。particularly。特别。"
+  },
+  {
+   "t": "li",
+   "x": "especially。especially。尤其。"
+  },
+  {
+   "t": "li",
+   "x": "specially。specially。专门地。"
+  },
+  {
+   "t": "li",
+   "x": "specifically。specifically。具体地。"
+  },
+  {
+   "t": "li",
+   "x": "mainly。mainly。主要地。"
+  },
+  {
+   "t": "li",
+   "x": "completely。completely。完全地。"
+  },
+  {
+   "t": "li",
+   "x": "totally。totally。完全地。"
+  },
+  {
+   "t": "li",
+   "x": "absolutely。absolutely。绝对地。"
+  },
+  {
+   "t": "li",
+   "x": "perfectly。perfectly。完全地。"
+  },
+  {
+   "t": "li",
+   "x": "exactly。exactly。确切地。"
+  },
+  {
+   "t": "li",
+   "x": "precisely。precisely。精确地。"
+  },
+  {
+   "t": "li",
+   "x": "approximately。approximately。大约。"
+  },
+  {
+   "t": "li",
+   "x": "roughly。roughly。大约。"
+  },
+  {
+   "t": "li",
+   "x": "about。about。大约。"
+  },
+  {
+   "t": "li",
+   "x": "around。around。大约。"
+  },
+  {
+   "t": "li",
+   "x": "nearly。nearly。几乎。"
+  },
+  {
+   "t": "li",
+   "x": "almost。almost。几乎。"
+  },
+  {
+   "t": "li",
+   "x": "simply。simply。仅仅。"
+  },
+  {
+   "t": "li",
+   "x": "only。only。仅仅。"
+  },
+  {
+   "t": "li",
+   "x": "even。even。甚至。"
+  },
+  {
+   "t": "li",
+   "x": "still。still。仍然。"
+  },
+  {
+   "t": "li",
+   "x": "yet。yet。还。"
+  },
+  {
+   "t": "li",
+   "x": "already。already。已经。"
+  },
+  {
+   "t": "li",
+   "x": "ever。ever。曾经。"
+  },
+  {
+   "t": "li",
+   "x": "quite。quite。相当。"
+  },
+  {
+   "t": "li",
+   "x": "fairly。fairly。相当。"
+  },
+  {
+   "t": "li",
+   "x": "very。very。非常。"
+  },
+  {
+   "t": "li",
+   "x": "too。too。太。"
+  },
+  {
+   "t": "li",
+   "x": "so。so。如此。"
+  },
+  {
+   "t": "li",
+   "x": "enough。enough。足够。"
+  },
+  {
+   "t": "li",
+   "x": "slightly。slightly。稍微。"
+  },
+  {
+   "t": "li",
+   "x": "considerably。considerably。相当大地。"
+  },
+  {
+   "t": "li",
+   "x": "significantly。significantly。显著地。"
+  },
+  {
+   "t": "li",
+   "x": "substantially。substantially。大体上。"
+  },
+  {
+   "t": "li",
+   "x": "enormously。enormously。极大地。"
+  },
+  {
+   "t": "li",
+   "x": "immensely。immensely。极大地。"
+  },
+  {
+   "t": "li",
+   "x": "highly。highly。高度地。"
+  },
+  {
+   "t": "li",
+   "x": "deeply。deeply。深深地。"
+  },
+  {
+   "t": "li",
+   "x": "greatly。greatly。大大地。"
+  },
+  {
+   "t": "li",
+   "x": "much。much。很。"
+  },
+  {
+   "t": "li",
+   "x": "more。more。更。"
+  },
+  {
+   "t": "li",
+   "x": "most。most。最。"
+  },
+  {
+   "t": "li",
+   "x": "less。less。更少。"
+  },
+  {
+   "t": "li",
+   "x": "least。least。最少。"
+  },
+  {
+   "t": "li",
+   "x": "well。well。很好地。"
+  },
+  {
+   "t": "li",
+   "x": "better。better。更好地。"
+  },
+  {
+   "t": "li",
+   "x": "best。best。最好地。"
+  },
+  {
+   "t": "li",
+   "x": "ahead。ahead。提前。"
+  },
+  {
+   "t": "li",
+   "x": "apart。apart。分开。"
+  },
+  {
+   "t": "li",
+   "x": "aside。aside。在旁边。"
+  },
+  {
+   "t": "li",
+   "x": "away。away。离开。"
+  },
+  {
+   "t": "li",
+   "x": "forward。forward。向前。"
+  },
+  {
+   "t": "li",
+   "x": "abroad。abroad。在国外。"
+  },
+  {
+   "t": "li",
+   "x": "overseas。overseas。在海外。"
+  },
+  {
+   "t": "li",
+   "x": "namely。namely。即。"
+  },
+  {
+   "t": "li",
+   "x": "actually。actually。实际上。"
+  },
+  {
+   "t": "li",
+   "x": "certainly。certainly。当然。"
+  },
+  {
+   "t": "li",
+   "x": "probably。probably。很可能。"
+  },
+  {
+   "t": "li",
+   "x": "possibly。possibly。可能地。"
+  },
+  {
+   "t": "li",
+   "x": "perhaps。perhaps。也许。"
+  },
+  {
+   "t": "li",
+   "x": "obviously。obviously。显然。"
+  },
+  {
+   "t": "li",
+   "x": "clearly。clearly。清楚地。"
+  },
+  {
+   "t": "li",
+   "x": "directly。directly。直接地。"
+  },
+  {
+   "t": "li",
+   "x": "indirectly。indirectly。间接地。"
+  },
+  {
+   "t": "li",
+   "x": "relatively。relatively。相对地。"
+  },
+  {
+   "t": "li",
+   "x": "definitely。definitely。明确地。"
+  },
+  {
+   "t": "li",
+   "x": "basically。basically。基本上。"
+  },
+  {
+   "t": "li",
+   "x": "essentially。essentially。本质上。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+[
+ {
+  "id": "english1-wr-01",
+  "title": "完形填的不是单词，是一篇语篇里被挖掉的那些位置还能不能被上下文的证据接住",
+  "group": "英语题型讲解",
+  "source": "build/reading/talk/english1-wr-01.md",
+  "sha": "0b3555af",
+  "n": 36,
+  "problems": []
+ },
+ {
+  "id": "english1-wr-02",
+  "title": "阅读不是把文章读懂，是把题干这支查询语在原文里定位到唯一一句，再验它有没有被换掉方向",
+  "group": "英语题型讲解",
+  "source": "build/reading/talk/english1-wr-02.md",
+  "sha": "f809e3e3",
+  "n": 31,
+  "problems": []
+ },
+ {
+  "id": "english1-wr-03",
+  "title": "新题型的答案不在「读着顺」里，在两个相邻语言单位的接缝上",
+  "group": "英语题型讲解",
+  "source": "build/reading/talk/english1-wr-03.md",
+  "sha": "ebdef651",
+  "n": 33,
+  "problems": []
+ },
+ {
+  "id": "english1-wr-04",
+  "title": "翻译的得分点设在句子的骨架上，不在一个个词上",
+  "group": "英语题型讲解",
+  "source": "build/reading/talk/english1-wr-04.md",
+  "sha": "b6e85f15",
+  "n": 33,
+  "problems": []
+ },
+ {
+  "id": "english1-wr-05",
+  "title": "小作文只在约一百词的预算里，把一句目的、几下要点、一句期待塞进去",
+  "group": "英语题型讲解",
+  "source": "build/reading/talk/english1-wr-05.md",
+  "sha": "6d257964",
+  "n": 35,
+  "problems": []
+ },
+ {
+  "id": "english1-wr-06",
+  "title": "大作文是三次转译：画面写成句子，句子抽象成命题，命题配上理由",
+  "group": "英语题型讲解",
+  "source": "build/reading/talk/english1-wr-06.md",
+  "sha": "d0605d85",
+  "n": 36,
+  "problems": []
+ }
+]

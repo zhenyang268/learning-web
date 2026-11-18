@@ -1,0 +1,619 @@
+{
+ "version": "reading/v1",
+ "id": "words-27",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "27-学术与研究",
+ "source": "notebook/kaoyan/english1/words/27-学术与研究.md",
+ "sourceSha": "d1ad8011",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "27 学术与研究"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "replicate。replicate。重复。"
+  },
+  {
+   "t": "li",
+   "x": "substantiate。substantiate。证实。"
+  },
+  {
+   "t": "li",
+   "x": "surmise。surmise。猜测。"
+  },
+  {
+   "t": "li",
+   "x": "fluctuation。fluctuation。波动。"
+  },
+  {
+   "t": "li",
+   "x": "outlier。outlier。异常值。"
+  },
+  {
+   "t": "li",
+   "x": "median。median。中位数。"
+  },
+  {
+   "t": "li",
+   "x": "incremental。incremental。递增的。"
+  },
+  {
+   "t": "li",
+   "x": "meticulous。meticulous。一丝不苟的。"
+  },
+  {
+   "t": "li",
+   "x": "scrupulous。scrupulous。严谨的。"
+  },
+  {
+   "t": "li",
+   "x": "systematic。systematic。系统的。"
+  },
+  {
+   "t": "li",
+   "x": "exhaustive。exhaustive。详尽的。"
+  },
+  {
+   "t": "li",
+   "x": "provisional。provisional。临时的。"
+  },
+  {
+   "t": "li",
+   "x": "preliminary。preliminary。初步的。"
+  },
+  {
+   "t": "li",
+   "x": "tenable。tenable。站得住脚的。"
+  },
+  {
+   "t": "li",
+   "x": "untenable。untenable。站不住脚的。"
+  },
+  {
+   "t": "li",
+   "x": "congruent。congruent。一致的。"
+  },
+  {
+   "t": "li",
+   "x": "calibration。calibration。校准。"
+  },
+  {
+   "t": "li",
+   "x": "calibrate。calibrate。校准。"
+  },
+  {
+   "t": "li",
+   "x": "quantify。quantify。量化。"
+  },
+  {
+   "t": "li",
+   "x": "metric。metric。指标。"
+  },
+  {
+   "t": "li",
+   "x": "prevalence。prevalence。普遍性。"
+  },
+  {
+   "t": "li",
+   "x": "incidence。incidence。发生率。"
+  },
+  {
+   "t": "li",
+   "x": "placebo。placebo。安慰剂。"
+  },
+  {
+   "t": "li",
+   "x": "diagnostic。diagnostic。诊断的。"
+  },
+  {
+   "t": "li",
+   "x": "reproducibility。reproducibility。可重复性。"
+  },
+  {
+   "t": "li",
+   "x": "scrutiny。scrutiny。仔细审查。"
+  },
+  {
+   "t": "li",
+   "x": "plagiarism。plagiarism。剽窃。"
+  },
+  {
+   "t": "li",
+   "x": "treatise。treatise。专著。"
+  },
+  {
+   "t": "li",
+   "x": "monograph。monograph。专著。"
+  },
+  {
+   "t": "li",
+   "x": "anthology。anthology。文集。"
+  },
+  {
+   "t": "li",
+   "x": "conceptualize。conceptualize。使概念化。"
+  },
+  {
+   "t": "li",
+   "x": "expound。expound。详细阐述。"
+  },
+  {
+   "t": "li",
+   "x": "explicate。explicate。解释。"
+  },
+  {
+   "t": "li",
+   "x": "posit。posit。假定。"
+  },
+  {
+   "t": "li",
+   "x": "purport。purport。声称。"
+  },
+  {
+   "t": "li",
+   "x": "ascertain。ascertain。查明。"
+  },
+  {
+   "t": "li",
+   "x": "demarcate。demarcate。划定。"
+  },
+  {
+   "t": "li",
+   "x": "approximation。approximation。近似。"
+  },
+  {
+   "t": "li",
+   "x": "aberration。aberration。偏差。"
+  },
+  {
+   "t": "li",
+   "x": "dispersion。dispersion。分散。"
+  },
+  {
+   "t": "li",
+   "x": "skew。skew。使偏斜。"
+  },
+  {
+   "t": "li",
+   "x": "observational。observational。观察的。"
+  },
+  {
+   "t": "li",
+   "x": "longitudinal。longitudinal。纵向的。"
+  },
+  {
+   "t": "li",
+   "x": "cohort。cohort。队列。"
+  },
+  {
+   "t": "li",
+   "x": "confounding。confounding。混杂的。"
+  },
+  {
+   "t": "li",
+   "x": "theoretical。theoretical。理论的。"
+  },
+  {
+   "t": "li",
+   "x": "statistical。statistical。统计的。"
+  },
+  {
+   "t": "li",
+   "x": "regression。regression。回归。"
+  },
+  {
+   "t": "li",
+   "x": "heterogeneity。heterogeneity。异质性。"
+  },
+  {
+   "t": "li",
+   "x": "endogeneity。endogeneity。内生性。"
+  },
+  {
+   "t": "li",
+   "x": "dataset。dataset。数据集。"
+  },
+  {
+   "t": "li",
+   "x": "cross-sectional。cross-sectional。横断面的。"
+  },
+  {
+   "t": "li",
+   "x": "retrospective。retrospective。回顾性的。"
+  },
+  {
+   "t": "li",
+   "x": "prospective。prospective。前瞻性的。"
+  },
+  {
+   "t": "li",
+   "x": "randomize。randomize。随机化。"
+  },
+  {
+   "t": "li",
+   "x": "confound。confound。使混杂。"
+  },
+  {
+   "t": "li",
+   "x": "generalizability。generalizability。可推广性。"
+  },
+  {
+   "t": "li",
+   "x": "operationalize。operationalize。操作化。"
+  },
+  {
+   "t": "li",
+   "x": "anecdotal。anecdotal。轶事的。"
+  },
+  {
+   "t": "li",
+   "x": "respondent。respondent。受访者。"
+  },
+  {
+   "t": "li",
+   "x": "participant。participant。参与者。"
+  },
+  {
+   "t": "li",
+   "x": "modeling。modeling。建模。"
+  },
+  {
+   "t": "li",
+   "x": "predictor。predictor。预测变量。"
+  },
+  {
+   "t": "li",
+   "x": "determinant。determinant。决定因素。"
+  },
+  {
+   "t": "li",
+   "x": "meta-analysis。meta-analysis。元分析。"
+  },
+  {
+   "t": "li",
+   "x": "plagiarize。plagiarize。剽窃。"
+  },
+  {
+   "t": "li",
+   "x": "acknowledgment。acknowledgment。致谢。"
+  },
+  {
+   "t": "li",
+   "x": "paraphrase。paraphrase。改写。"
+  },
+  {
+   "t": "li",
+   "x": "quotation。quotation。引文。"
+  },
+  {
+   "t": "li",
+   "x": "excerpt。excerpt。摘录。"
+  },
+  {
+   "t": "li",
+   "x": "revision。revision。修订。"
+  },
+  {
+   "t": "li",
+   "x": "preprint。preprint。预印本。"
+  },
+  {
+   "t": "li",
+   "x": "submission。submission。投稿。"
+  },
+  {
+   "t": "li",
+   "x": "referee。referee。审稿人。"
+  },
+  {
+   "t": "li",
+   "x": "editor。editor。编辑。"
+  },
+  {
+   "t": "li",
+   "x": "keyword。keyword。关键词。"
+  },
+  {
+   "t": "li",
+   "x": "appendix。appendix。附录。"
+  },
+  {
+   "t": "li",
+   "x": "footnote。footnote。脚注。"
+  },
+  {
+   "t": "li",
+   "x": "endnote。endnote。尾注。"
+  },
+  {
+   "t": "li",
+   "x": "correspondence。correspondence。通信。"
+  },
+  {
+   "t": "li",
+   "x": "authorship。authorship。作者身份。"
+  },
+  {
+   "t": "li",
+   "x": "coauthor。coauthor。合著者。"
+  },
+  {
+   "t": "li",
+   "x": "erratum。erratum。勘误表。"
+  },
+  {
+   "t": "li",
+   "x": "retraction。retraction。撤稿。"
+  },
+  {
+   "t": "li",
+   "x": "retract。retract。撤回。"
+  },
+  {
+   "t": "li",
+   "x": "license。license。许可。"
+  },
+  {
+   "t": "li",
+   "x": "permission。permission。许可。"
+  },
+  {
+   "t": "li",
+   "x": "archive。archive。档案。"
+  },
+  {
+   "t": "li",
+   "x": "repository。repository。存储库。"
+  },
+  {
+   "t": "li",
+   "x": "index。index。索引。"
+  },
+  {
+   "t": "li",
+   "x": "annotate。annotate。注释。"
+  },
+  {
+   "t": "li",
+   "x": "annotation。annotation。注释。"
+  },
+  {
+   "t": "li",
+   "x": "transcribe。transcribe。转录。"
+  },
+  {
+   "t": "li",
+   "x": "coding。coding。编码。"
+  },
+  {
+   "t": "li",
+   "x": "specification。specification。规范。"
+  },
+  {
+   "t": "li",
+   "x": "sensitivity。sensitivity。敏感性。"
+  },
+  {
+   "t": "li",
+   "x": "specificity。specificity。特异性。"
+  },
+  {
+   "t": "li",
+   "x": "probabilistic。probabilistic。概率性的。"
+  },
+  {
+   "t": "li",
+   "x": "fieldwork。fieldwork。实地调查。"
+  },
+  {
+   "t": "li",
+   "x": "sampling。sampling。抽样。"
+  },
+  {
+   "t": "li",
+   "x": "subset。subset。子集。"
+  },
+  {
+   "t": "li",
+   "x": "panel。panel。专门小组。"
+  },
+  {
+   "t": "li",
+   "x": "attrition。attrition。流失。"
+  },
+  {
+   "t": "li",
+   "x": "demography。demography。人口统计学。"
+  },
+  {
+   "t": "li",
+   "x": "epidemiology。epidemiology。流行病学。"
+  },
+  {
+   "t": "li",
+   "x": "randomized。randomized。随机的。"
+  },
+  {
+   "t": "li",
+   "x": "causation。causation。因果关系。"
+  },
+  {
+   "t": "li",
+   "x": "proportion。proportion。比例。"
+  },
+  {
+   "t": "li",
+   "x": "ratio。ratio。比率。"
+  },
+  {
+   "t": "li",
+   "x": "percentage。percentage。百分比。"
+  },
+  {
+   "t": "li",
+   "x": "gradient。gradient。梯度。"
+  },
+  {
+   "t": "li",
+   "x": "curve。curve。曲线。"
+  },
+  {
+   "t": "li",
+   "x": "linear。linear。线性的。"
+  },
+  {
+   "t": "li",
+   "x": "nonlinear。nonlinear。非线性的。"
+  },
+  {
+   "t": "li",
+   "x": "exponential。exponential。指数的。"
+  },
+  {
+   "t": "li",
+   "x": "cluster。cluster。聚类。"
+  },
+  {
+   "t": "li",
+   "x": "stratification。stratification。分层。"
+  },
+  {
+   "t": "li",
+   "x": "probability。probability。概率。"
+  },
+  {
+   "t": "li",
+   "x": "likelihood。likelihood。可能性。"
+  },
+  {
+   "t": "li",
+   "x": "inductive。inductive。归纳的。"
+  },
+  {
+   "t": "li",
+   "x": "contradictory。contradictory。矛盾的。"
+  },
+  {
+   "t": "li",
+   "x": "hypothesize。hypothesize。假设。"
+  },
+  {
+   "t": "li",
+   "x": "conclusive。conclusive。决定性的。"
+  },
+  {
+   "t": "li",
+   "x": "inconclusive。inconclusive。无定论的。"
+  },
+  {
+   "t": "li",
+   "x": "definitive。definitive。确定的。"
+  },
+  {
+   "t": "li",
+   "x": "causal。causal。因果的。"
+  },
+  {
+   "t": "li",
+   "x": "replication。replication。重复实验。"
+  },
+  {
+   "t": "li",
+   "x": "reproducible。reproducible。可重复的。"
+  },
+  {
+   "t": "li",
+   "x": "misconduct。misconduct。不端行为。"
+  },
+  {
+   "t": "li",
+   "x": "fabricate。fabricate。捏造。"
+  },
+  {
+   "t": "li",
+   "x": "peer。peer。同行。"
+  },
+  {
+   "t": "li",
+   "x": "corpus。corpus。语料库。"
+  },
+  {
+   "t": "li",
+   "x": "paucity。paucity。缺乏。"
+  },
+  {
+   "t": "li",
+   "x": "plethora。plethora。过多。"
+  },
+  {
+   "t": "li",
+   "x": "nuanced。nuanced。细致入微的。"
+  },
+  {
+   "t": "li",
+   "x": "elusive。elusive。难以捉摸的。"
+  },
+  {
+   "t": "li",
+   "x": "pertinent。pertinent。相关的。"
+  },
+  {
+   "t": "li",
+   "x": "generalization。generalization。概括。"
+  },
+  {
+   "t": "li",
+   "x": "ethnography。ethnography。民族志。"
+  },
+  {
+   "t": "li",
+   "x": "archival。archival。档案的。"
+  },
+  {
+   "t": "li",
+   "x": "triangulation。triangulation。三角验证。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "变成 过去分词短语作后置定语 变成 修饰 hypothesis，相当于 ；学术写作中常用于压缩定语从句，表被动或来源。"
+  },
+  {
+   "t": "li",
+   "x": "变成 形容词短语作后置定语 变成 修饰 methodology；说明名词的能力或用途。"
+  },
+  {
+   "t": "li",
+   "x": "变成 how 引导宾语从句 变成 作 reveal 的宾语，从句用陈述语序；用于说明方式或运作机制。"
+  },
+  {
+   "t": "li",
+   "x": "变成 Before 引导时间状语从句 + 主句情态动词 变成 before 从句用一般现在时表将来，主句 must 表必要性；findings 复数作主语，enter 用原形。"
+  },
+  {
+   "t": "li",
+   "x": "变成 并列名词性从句 变成 what/how/whether 三个宾语从句并列作 ask 的宾语；从句均用陈述语序，whether 引导一般疑问意义。"
+  }
+ ]
+}

@@ -1,0 +1,251 @@
+{
+ "version": "reading/v1",
+ "id": "words-21",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "21-初高中衔接基础（中）",
+ "source": "notebook/kaoyan/english1/words/21-初高中衔接基础（中）.md",
+ "sourceSha": "137fcead",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "21 初高中衔接基础（中）"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "afford。afford。负担得起。"
+  },
+  {
+   "t": "li",
+   "x": "belong。belong。属于。"
+  },
+  {
+   "t": "li",
+   "x": "condition。condition。条件。"
+  },
+  {
+   "t": "li",
+   "x": "cross。cross。穿过。"
+  },
+  {
+   "t": "li",
+   "x": "depend。depend。依靠。"
+  },
+  {
+   "t": "li",
+   "x": "divide。divide。划分。"
+  },
+  {
+   "t": "li",
+   "x": "earn。earn。赚得。"
+  },
+  {
+   "t": "li",
+   "x": "escape。escape。逃避。"
+  },
+  {
+   "t": "li",
+   "x": "experience。experience。经验。"
+  },
+  {
+   "t": "li",
+   "x": "fail。fail。未能。"
+  },
+  {
+   "t": "li",
+   "x": "fit。fit。适合。"
+  },
+  {
+   "t": "li",
+   "x": "gain。gain。获得。"
+  },
+  {
+   "t": "li",
+   "x": "gather。gather。收集。"
+  },
+  {
+   "t": "li",
+   "x": "guess。guess。猜测。"
+  },
+  {
+   "t": "li",
+   "x": "hang。hang。悬挂。"
+  },
+  {
+   "t": "li",
+   "x": "happen。happen。发生。"
+  },
+  {
+   "t": "li",
+   "x": "hurt。hurt。损害。"
+  },
+  {
+   "t": "li",
+   "x": "involve。involve。涉及。"
+  },
+  {
+   "t": "li",
+   "x": "join。join。加入。"
+  },
+  {
+   "t": "li",
+   "x": "keep。keep。保持。"
+  },
+  {
+   "t": "li",
+   "x": "kill。kill。扼杀。"
+  },
+  {
+   "t": "li",
+   "x": "land。land。土地。"
+  },
+  {
+   "t": "li",
+   "x": "lend。lend。提供。"
+  },
+  {
+   "t": "li",
+   "x": "let。let。让。"
+  },
+  {
+   "t": "li",
+   "x": "lift。lift。解除。"
+  },
+  {
+   "t": "li",
+   "x": "light。light。光。"
+  },
+  {
+   "t": "li",
+   "x": "live。live。现场的。"
+  },
+  {
+   "t": "li",
+   "x": "look。look。显得。"
+  },
+  {
+   "t": "li",
+   "x": "miss。miss。错过。"
+  },
+  {
+   "t": "li",
+   "x": "move。move。促使。"
+  },
+  {
+   "t": "li",
+   "x": "name。name。命名。"
+  },
+  {
+   "t": "li",
+   "x": "need。need。需要。"
+  },
+  {
+   "t": "li",
+   "x": "notice。notice。注意到。"
+  },
+  {
+   "t": "li",
+   "x": "own。own。拥有。"
+  },
+  {
+   "t": "li",
+   "x": "pass。pass。通过。"
+  },
+  {
+   "t": "li",
+   "x": "pay。pay。值得。"
+  },
+  {
+   "t": "li",
+   "x": "pick。pick。挑选。"
+  },
+  {
+   "t": "li",
+   "x": "place。place。放置。"
+  },
+  {
+   "t": "li",
+   "x": "plan。plan。计划。"
+  },
+  {
+   "t": "li",
+   "x": "play。play。起作用。"
+  },
+  {
+   "t": "li",
+   "x": "provide。provide。提供。"
+  },
+  {
+   "t": "li",
+   "x": "pull。pull。拉。"
+  },
+  {
+   "t": "li",
+   "x": "put。put。表达。"
+  },
+  {
+   "t": "li",
+   "x": "reach。reach。达到。"
+  },
+  {
+   "t": "li",
+   "x": "record。record。记录。"
+  },
+  {
+   "t": "li",
+   "x": "repeat。repeat。重复。"
+  },
+  {
+   "t": "li",
+   "x": "return。return。返回。"
+  },
+  {
+   "t": "li",
+   "x": "rise。rise。上升。"
+  },
+  {
+   "t": "li",
+   "x": "risk。risk。冒…的危险。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "变成 it 作形式主语，不定式短语 作真正主语 变成 用于避免主语过长，常见句型为 。"
+  },
+  {
+   "t": "li",
+   "x": "变成 although 引导让步状语从句 变成 表示“虽然”，主句不能再用 but；考研阅读中常用于引出让步转折。"
+  },
+  {
+   "t": "li",
+   "x": "变成 because 引导原因状语从句；that 引导宾语从句 变成 because 说明主句原因，believe 后的 that 从句作宾语。"
+  },
+  {
+   "t": "li",
+   "x": "变成 if 引导条件状语从句；；what 引导宾语从句 变成 表示条件与“花时间做某事”，what 在从句中作 learned 的宾语。"
+  },
+  {
+   "t": "li",
+   "x": "变成 ；变成 it 作形式宾语，真正宾语是不定式；connect...with... 表示“把A与B联系起来”。"
+  }
+ ]
+}

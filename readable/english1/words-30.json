@@ -1,0 +1,643 @@
+{
+ "version": "reading/v1",
+ "id": "words-30",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "30-时间、空间与顺序",
+ "source": "notebook/kaoyan/english1/words/30-时间、空间与顺序.md",
+ "sourceSha": "a7bb1c68",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "30 时间、空间与顺序"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "chronological。chronological。按时间顺序的。"
+  },
+  {
+   "t": "li",
+   "x": "preceding。preceding。在前的。"
+  },
+  {
+   "t": "li",
+   "x": "phase。phase。阶段。"
+  },
+  {
+   "t": "li",
+   "x": "epoch。epoch。时代。"
+  },
+  {
+   "t": "li",
+   "x": "era。era。时代。"
+  },
+  {
+   "t": "li",
+   "x": "span。span。一段时间。"
+  },
+  {
+   "t": "li",
+   "x": "interim。interim。过渡期。"
+  },
+  {
+   "t": "li",
+   "x": "transition。transition。过渡。"
+  },
+  {
+   "t": "li",
+   "x": "sequence。sequence。顺序。"
+  },
+  {
+   "t": "li",
+   "x": "succession。succession。连续。"
+  },
+  {
+   "t": "li",
+   "x": "sequential。sequential。按顺序的。"
+  },
+  {
+   "t": "li",
+   "x": "prior。prior。先前的。"
+  },
+  {
+   "t": "li",
+   "x": "outset。outset。开端。"
+  },
+  {
+   "t": "li",
+   "x": "onset。onset。开始。"
+  },
+  {
+   "t": "li",
+   "x": "commencement。commencement。开始。"
+  },
+  {
+   "t": "li",
+   "x": "inaugurate。inaugurate。开创。"
+  },
+  {
+   "t": "li",
+   "x": "culminate。culminate。达到顶点。"
+  },
+  {
+   "t": "li",
+   "x": "zenith。zenith。顶点。"
+  },
+  {
+   "t": "li",
+   "x": "terminate。terminate。终止。"
+  },
+  {
+   "t": "li",
+   "x": "expire。expire。到期。"
+  },
+  {
+   "t": "li",
+   "x": "lapse。lapse。流逝。"
+  },
+  {
+   "t": "li",
+   "x": "elapse。elapse。流逝。"
+  },
+  {
+   "t": "li",
+   "x": "decay。decay。衰败。"
+  },
+  {
+   "t": "li",
+   "x": "degenerate。degenerate。退化。"
+  },
+  {
+   "t": "li",
+   "x": "outmoded。outmoded。过时的。"
+  },
+  {
+   "t": "li",
+   "x": "prehistoric。prehistoric。史前的。"
+  },
+  {
+   "t": "li",
+   "x": "medieval。medieval。中世纪的。"
+  },
+  {
+   "t": "li",
+   "x": "concurrent。concurrent。同时发生的。"
+  },
+  {
+   "t": "li",
+   "x": "overlap。overlap。重叠。"
+  },
+  {
+   "t": "li",
+   "x": "episode。episode。一段情节。"
+  },
+  {
+   "t": "li",
+   "x": "fragment。fragment。碎片。"
+  },
+  {
+   "t": "li",
+   "x": "transitory。transitory。短暂的。"
+  },
+  {
+   "t": "li",
+   "x": "ephemeral。ephemeral。短暂的。"
+  },
+  {
+   "t": "li",
+   "x": "fleeting。fleeting。飞逝的。"
+  },
+  {
+   "t": "li",
+   "x": "momentary。momentary。瞬间的。"
+  },
+  {
+   "t": "li",
+   "x": "instantaneous。instantaneous。瞬间的。"
+  },
+  {
+   "t": "li",
+   "x": "enduring。enduring。持久的。"
+  },
+  {
+   "t": "li",
+   "x": "durable。durable。耐久的。"
+  },
+  {
+   "t": "li",
+   "x": "prolonged。prolonged。延长的。"
+  },
+  {
+   "t": "li",
+   "x": "protracted。protracted。拖延的。"
+  },
+  {
+   "t": "li",
+   "x": "deadline。deadline。截止日期。"
+  },
+  {
+   "t": "li",
+   "x": "schedule。schedule。日程。"
+  },
+  {
+   "t": "li",
+   "x": "biennial。biennial。两年一次的。"
+  },
+  {
+   "t": "li",
+   "x": "quarterly。quarterly。季度的。"
+  },
+  {
+   "t": "li",
+   "x": "decade。decade。十年。"
+  },
+  {
+   "t": "li",
+   "x": "millennium。millennium。一千年。"
+  },
+  {
+   "t": "li",
+   "x": "fortnight。fortnight。两星期。"
+  },
+  {
+   "t": "li",
+   "x": "session。session。一段时间。"
+  },
+  {
+   "t": "li",
+   "x": "tenure。tenure。任期。"
+  },
+  {
+   "t": "li",
+   "x": "stint。stint。一段时间。"
+  },
+  {
+   "t": "li",
+   "x": "hiatus。hiatus。间断。"
+  },
+  {
+   "t": "li",
+   "x": "suspension。suspension。暂停。"
+  },
+  {
+   "t": "li",
+   "x": "cessation。cessation。停止。"
+  },
+  {
+   "t": "li",
+   "x": "resume。resume。恢复。"
+  },
+  {
+   "t": "li",
+   "x": "resurgence。resurgence。复苏。"
+  },
+  {
+   "t": "li",
+   "x": "renaissance。renaissance。复兴。"
+  },
+  {
+   "t": "li",
+   "x": "revival。revival。复兴。"
+  },
+  {
+   "t": "li",
+   "x": "recurrence。recurrence。复发。"
+  },
+  {
+   "t": "li",
+   "x": "intermittent。intermittent。间歇的。"
+  },
+  {
+   "t": "li",
+   "x": "sporadic。sporadic。零星的。"
+  },
+  {
+   "t": "li",
+   "x": "periodic。periodic。周期性的。"
+  },
+  {
+   "t": "li",
+   "x": "cyclical。cyclical。循环的。"
+  },
+  {
+   "t": "li",
+   "x": "tempo。tempo。节奏。"
+  },
+  {
+   "t": "li",
+   "x": "pace。pace。速度。"
+  },
+  {
+   "t": "li",
+   "x": "temporal。temporal。时间的。"
+  },
+  {
+   "t": "li",
+   "x": "synchronous。synchronous。同步的。"
+  },
+  {
+   "t": "li",
+   "x": "juncture。juncture。时刻。"
+  },
+  {
+   "t": "li",
+   "x": "transitional。transitional。过渡的。"
+  },
+  {
+   "t": "li",
+   "x": "terminal。terminal。末端的。"
+  },
+  {
+   "t": "li",
+   "x": "termination。termination。终止。"
+  },
+  {
+   "t": "li",
+   "x": "culmination。culmination。顶点。"
+  },
+  {
+   "t": "li",
+   "x": "eventual。eventual。最终的。"
+  },
+  {
+   "t": "li",
+   "x": "posterior。posterior。后来的。"
+  },
+  {
+   "t": "li",
+   "x": "impending。impending。即将发生的。"
+  },
+  {
+   "t": "li",
+   "x": "expiry。expiry。到期。"
+  },
+  {
+   "t": "li",
+   "x": "protract。protract。延长。"
+  },
+  {
+   "t": "li",
+   "x": "prolong。prolong。延长。"
+  },
+  {
+   "t": "li",
+   "x": "repetitive。repetitive。重复的。"
+  },
+  {
+   "t": "li",
+   "x": "cyclic。cyclic。循环的。"
+  },
+  {
+   "t": "li",
+   "x": "punctuate。punctuate。不时打断。"
+  },
+  {
+   "t": "li",
+   "x": "hitherto。hitherto。迄今。"
+  },
+  {
+   "t": "li",
+   "x": "heretofore。heretofore。迄今为止。"
+  },
+  {
+   "t": "li",
+   "x": "beforehand。beforehand。事先。"
+  },
+  {
+   "t": "li",
+   "x": "afterward。afterward。之后。"
+  },
+  {
+   "t": "li",
+   "x": "contemporaneous。contemporaneous。同时代的。"
+  },
+  {
+   "t": "li",
+   "x": "anachronism。anachronism。时代错误。"
+  },
+  {
+   "t": "li",
+   "x": "spatial adj."
+  },
+  {
+   "t": "li",
+   "x": "nostalgia。nostalgia。怀旧。"
+  },
+  {
+   "t": "li",
+   "x": "perennial。perennial。长期的。"
+  },
+  {
+   "t": "li",
+   "x": "punctual。punctual。准时的。"
+  },
+  {
+   "t": "li",
+   "x": "proximity。proximity。接近。"
+  },
+  {
+   "t": "li",
+   "x": "contiguous。contiguous。相接的。"
+  },
+  {
+   "t": "li",
+   "x": "vicinity。vicinity。附近。"
+  },
+  {
+   "t": "li",
+   "x": "periphery。periphery。外围。"
+  },
+  {
+   "t": "li",
+   "x": "peripheral。peripheral。外围的。"
+  },
+  {
+   "t": "li",
+   "x": "lateral。lateral。侧面的。"
+  },
+  {
+   "t": "li",
+   "x": "vertical。vertical。垂直的。"
+  },
+  {
+   "t": "li",
+   "x": "horizontal。horizontal。水平的。"
+  },
+  {
+   "t": "li",
+   "x": "perpendicular。perpendicular。垂直的。"
+  },
+  {
+   "t": "li",
+   "x": "intersect。intersect。相交。"
+  },
+  {
+   "t": "li",
+   "x": "expanse。expanse。广阔区域。"
+  },
+  {
+   "t": "li",
+   "x": "spacious。spacious。宽敞的。"
+  },
+  {
+   "t": "li",
+   "x": "confinement。confinement。限制。"
+  },
+  {
+   "t": "li",
+   "x": "orientation。orientation。方向。"
+  },
+  {
+   "t": "li",
+   "x": "displacement。displacement。取代。"
+  },
+  {
+   "t": "li",
+   "x": "locality。locality。地点。"
+  },
+  {
+   "t": "li",
+   "x": "alignment。alignment。排列。"
+  },
+  {
+   "t": "li",
+   "x": "juxtapose。juxtapose。并置。"
+  },
+  {
+   "t": "li",
+   "x": "superimpose。superimpose。叠加。"
+  },
+  {
+   "t": "li",
+   "x": "interweave。interweave。交织。"
+  },
+  {
+   "t": "li",
+   "x": "rotation。rotation。旋转。"
+  },
+  {
+   "t": "li",
+   "x": "recur。recur。再发生。"
+  },
+  {
+   "t": "li",
+   "x": "reiterate。reiterate。重申。"
+  },
+  {
+   "t": "li",
+   "x": "repetition。repetition。重复。"
+  },
+  {
+   "t": "li",
+   "x": "precedence。precedence。优先。"
+  },
+  {
+   "t": "li",
+   "x": "inversion。inversion。倒置。"
+  },
+  {
+   "t": "li",
+   "x": "reversal。reversal。逆转。"
+  },
+  {
+   "t": "li",
+   "x": "transpose。transpose。调换位置。"
+  },
+  {
+   "t": "li",
+   "x": "deterioration。deterioration。恶化。"
+  },
+  {
+   "t": "li",
+   "x": "corrode。corrode。腐蚀。"
+  },
+  {
+   "t": "li",
+   "x": "condense。condense。凝结。"
+  },
+  {
+   "t": "li",
+   "x": "solidify。solidify。凝固。"
+  },
+  {
+   "t": "li",
+   "x": "harden。harden。硬化。"
+  },
+  {
+   "t": "li",
+   "x": "warp。warp。扭曲。"
+  },
+  {
+   "t": "li",
+   "x": "deform。deform。使变形。"
+  },
+  {
+   "t": "li",
+   "x": "mutation。mutation。突变。"
+  },
+  {
+   "t": "li",
+   "x": "conversion。conversion。转变。"
+  },
+  {
+   "t": "li",
+   "x": "devolve。devolve。移交。"
+  },
+  {
+   "t": "li",
+   "x": "nascent。nascent。新生的。"
+  },
+  {
+   "t": "li",
+   "x": "embryonic。embryonic。萌芽期的。"
+  },
+  {
+   "t": "li",
+   "x": "fledgling。fledgling。初出茅庐的。"
+  },
+  {
+   "t": "li",
+   "x": "maturity。maturity。成熟。"
+  },
+  {
+   "t": "li",
+   "x": "ripen。ripen。成熟。"
+  },
+  {
+   "t": "li",
+   "x": "wither。wither。枯萎。"
+  },
+  {
+   "t": "li",
+   "x": "flourish。flourish。繁荣。"
+  },
+  {
+   "t": "li",
+   "x": "thrive。thrive。兴旺。"
+  },
+  {
+   "t": "li",
+   "x": "expedite。expedite。加快。"
+  },
+  {
+   "t": "li",
+   "x": "hasten。hasten。加速。"
+  },
+  {
+   "t": "li",
+   "x": "retard。retard。延缓。"
+  },
+  {
+   "t": "li",
+   "x": "linger。linger。逗留。"
+  },
+  {
+   "t": "li",
+   "x": "persist。persist。坚持。"
+  },
+  {
+   "t": "li",
+   "x": "concurrence。concurrence。同时发生。"
+  },
+  {
+   "t": "li",
+   "x": "asynchronous。asynchronous。异步的。"
+  },
+  {
+   "t": "li",
+   "x": "anterior。anterior。前面的。"
+  },
+  {
+   "t": "li",
+   "x": "former。former。以前的。"
+  },
+  {
+   "t": "li",
+   "x": "thence。thence。从那里。"
+  },
+  {
+   "t": "li",
+   "x": "whence。whence。从何处。"
+  },
+  {
+   "t": "li",
+   "x": "anniversary。anniversary。周年纪念日。"
+  },
+  {
+   "t": "li",
+   "x": "instant。instant。瞬间。"
+  },
+  {
+   "t": "li",
+   "x": "extension。extension。延长。"
+  },
+  {
+   "t": "li",
+   "x": "expiration。expiration。到期。"
+  },
+  {
+   "t": "li",
+   "x": "resumption。resumption。重新开始。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

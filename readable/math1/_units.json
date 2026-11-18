@@ -1,0 +1,650 @@
+[
+ {
+  "id": "m1-hs-0101",
+  "title": "M1-HS-0101 函数与初等性质",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0101-函数与初等性质.md",
+  "sha": "63743aa6",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0102",
+  "title": "M1-HS-0102 数列极限",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0102-数列极限.md",
+  "sha": "e87dd627",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0103",
+  "title": "M1-HS-0103 函数极限与无穷小",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0103-函数极限与无穷小.md",
+  "sha": "38263310",
+  "n": 37,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0104",
+  "title": "M1-HS-0104 连续与间断",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0104-连续与间断.md",
+  "sha": "70ee3569",
+  "n": 34,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0201",
+  "title": "M1-HS-0201 导数与微分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0201-导数与微分.md",
+  "sha": "ac4da94d",
+  "n": 21,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0202",
+  "title": "M1-HS-0202 微分中值定理",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0202-微分中值定理.md",
+  "sha": "df6e661d",
+  "n": 21,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0203",
+  "title": "M1-HS-0203 洛必达与泰勒展开",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0203-洛必达与泰勒展开.md",
+  "sha": "bf5b29c4",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0204",
+  "title": "M1-HS-0204 单调、极值、凹凸与曲率",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0204-单调、极值、凹凸与曲率.md",
+  "sha": "f1561f6f",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0205",
+  "title": "M1-HS-0205 不等式与方程根",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0205-不等式与方程根.md",
+  "sha": "79c2d5b5",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0301",
+  "title": "M1-HS-0301 不定积分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0301-不定积分.md",
+  "sha": "c360c998",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0302",
+  "title": "M1-HS-0302 定积分与性质",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0302-定积分与性质.md",
+  "sha": "2270b688",
+  "n": 14,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0303",
+  "title": "M1-HS-0303 反常积分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0303-反常积分.md",
+  "sha": "7e3b2b83",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0304",
+  "title": "M1-HS-0304 定积分应用",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0304-定积分应用.md",
+  "sha": "16636bae",
+  "n": 24,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0401",
+  "title": "M1-HS-0401 向量运算",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0401-向量运算.md",
+  "sha": "f3104db3",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0402",
+  "title": "M1-HS-0402 平面与直线",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0402-平面与直线.md",
+  "sha": "8a49cad0",
+  "n": 25,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0403",
+  "title": "M1-HS-0403 曲面与曲线",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0403-曲面与曲线.md",
+  "sha": "073e4b8c",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0501",
+  "title": "M1-HS-0501 偏导与全微分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0501-偏导与全微分.md",
+  "sha": "929a8aea",
+  "n": 30,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0502",
+  "title": "M1-HS-0502 复合与隐函数",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0502-复合与隐函数.md",
+  "sha": "49c0d7e6",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0503",
+  "title": "M1-HS-0503 方向导数与梯度",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0503-方向导数与梯度.md",
+  "sha": "d4edc9ab",
+  "n": 24,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0504",
+  "title": "M1-HS-0504 极值与拉格朗日",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0504-极值与拉格朗日.md",
+  "sha": "7971e6b9",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0601",
+  "title": "M1-HS-0601 二重积分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0601-二重积分.md",
+  "sha": "c84f8d34",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0602",
+  "title": "M1-HS-0602 三重积分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0602-三重积分.md",
+  "sha": "05a0b35c",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0603",
+  "title": "M1-HS-0603 曲线积分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0603-曲线积分.md",
+  "sha": "e3476fc3",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0604",
+  "title": "M1-HS-0604 曲面积分",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0604-曲面积分.md",
+  "sha": "12a6aeae",
+  "n": 30,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0605",
+  "title": "M1-HS-0605 三大公式与场论",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0605-三大公式与场论.md",
+  "sha": "b980ae65",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0701",
+  "title": "M1-HS-0701 数项级数判敛",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0701-数项级数判敛.md",
+  "sha": "18aafb58",
+  "n": 21,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0702",
+  "title": "M1-HS-0702 幂级数",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0702-幂级数.md",
+  "sha": "f170a235",
+  "n": 18,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0703",
+  "title": "M1-HS-0703 傅里叶级数",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0703-傅里叶级数.md",
+  "sha": "de75db86",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0801",
+  "title": "M1-HS-0801 一阶方程",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0801-一阶方程.md",
+  "sha": "cd80af7a",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0802",
+  "title": "M1-HS-0802 可降阶的高阶方程",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0802-可降阶的高阶方程.md",
+  "sha": "e5c4c316",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0803",
+  "title": "M1-HS-0803 常系数线性方程",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0803-常系数线性方程.md",
+  "sha": "08d77f88",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-hs-0804",
+  "title": "M1-HS-0804 欧拉方程与应用",
+  "group": "高等数学",
+  "source": "notebook/kaoyan/note/math1/hs/M1-HS-0804-欧拉方程与应用.md",
+  "sha": "392cc458",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0101",
+  "title": "M1-LA-0101 定义与性质",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0101-定义与性质.md",
+  "sha": "e7a91bd6",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0102",
+  "title": "M1-LA-0102 计算技巧",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0102-计算技巧.md",
+  "sha": "a324dea9",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0201",
+  "title": "M1-LA-0201 运算与转置",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0201-运算与转置.md",
+  "sha": "d841189e",
+  "n": 21,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0202",
+  "title": "M1-LA-0202 逆与伴随",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0202-逆与伴随.md",
+  "sha": "c0eb84fe",
+  "n": 21,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0203",
+  "title": "M1-LA-0203 秩",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0203-秩.md",
+  "sha": "a6e32978",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0204",
+  "title": "M1-LA-0204 初等变换与分块",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0204-初等变换与分块.md",
+  "sha": "93f8958c",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0301",
+  "title": "M1-LA-0301 线性相关与秩",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0301-线性相关与秩.md",
+  "sha": "c5fa62c3",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0302",
+  "title": "M1-LA-0302 极大无关组与向量空间",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0302-极大无关组与向量空间.md",
+  "sha": "01cf9e9f",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0303",
+  "title": "M1-LA-0303 内积与正交",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0303-内积与正交.md",
+  "sha": "56c48efc",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0401",
+  "title": "M1-LA-0401 齐次方程组",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0401-齐次方程组.md",
+  "sha": "f0802df1",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0402",
+  "title": "M1-LA-0402 非齐次方程组",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0402-非齐次方程组.md",
+  "sha": "7bc59f34",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0403",
+  "title": "M1-LA-0403 同解与公共解",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0403-同解与公共解.md",
+  "sha": "33e20576",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0501",
+  "title": "M1-LA-0501 特征值与特征向量",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0501-特征值与特征向量.md",
+  "sha": "40c71ade",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0502",
+  "title": "M1-LA-0502 相似对角化",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0502-相似对角化.md",
+  "sha": "fdb70aca",
+  "n": 22,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0503",
+  "title": "M1-LA-0503 实对称矩阵",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0503-实对称矩阵.md",
+  "sha": "b7be3264",
+  "n": 22,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0601",
+  "title": "M1-LA-0601 标准形与惯性定理",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0601-标准形与惯性定理.md",
+  "sha": "55204a5a",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0602",
+  "title": "M1-LA-0602 正定判定",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0602-正定判定.md",
+  "sha": "6192bc4e",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-la-0603",
+  "title": "M1-LA-0603 合同变换",
+  "group": "线性代数",
+  "source": "notebook/kaoyan/note/math1/la/M1-LA-0603-合同变换.md",
+  "sha": "af21c8ed",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0101",
+  "title": "M1-PS-0101 事件与运算",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0101-事件与运算.md",
+  "sha": "58656e0c",
+  "n": 19,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0102",
+  "title": "M1-PS-0102 古典与几何概型",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0102-古典与几何概型.md",
+  "sha": "4d0e3611",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0103",
+  "title": "M1-PS-0103 条件概率与贝叶斯",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0103-条件概率与贝叶斯.md",
+  "sha": "fce352e3",
+  "n": 25,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0104",
+  "title": "M1-PS-0104 独立性",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0104-独立性.md",
+  "sha": "a8ae5ed1",
+  "n": 22,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0201",
+  "title": "M1-PS-0201 分布函数与密度",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0201-分布函数与密度.md",
+  "sha": "d2c295fd",
+  "n": 17,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0202",
+  "title": "M1-PS-0202 常见分布",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0202-常见分布.md",
+  "sha": "0905eafd",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0203",
+  "title": "M1-PS-0203 随机变量函数的分布",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0203-随机变量函数的分布.md",
+  "sha": "f5c2e6dd",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0301",
+  "title": "M1-PS-0301 联合与边缘",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0301-联合与边缘.md",
+  "sha": "4b477278",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0302",
+  "title": "M1-PS-0302 条件分布与独立性",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0302-条件分布与独立性.md",
+  "sha": "9998084b",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0303",
+  "title": "M1-PS-0303 二维函数的分布",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0303-二维函数的分布.md",
+  "sha": "8a5eacc8",
+  "n": 24,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0401",
+  "title": "M1-PS-0401 数学期望",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0401-数学期望.md",
+  "sha": "7b71a24a",
+  "n": 14,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0402",
+  "title": "M1-PS-0402 方差与协方差",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0402-方差与协方差.md",
+  "sha": "1646b2d1",
+  "n": 14,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0403",
+  "title": "M1-PS-0403 矩与常用数字特征",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0403-矩与常用数字特征.md",
+  "sha": "7f875908",
+  "n": 14,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0501",
+  "title": "M1-PS-0501 切比雪夫与大数定律",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0501-切比雪夫与大数定律.md",
+  "sha": "b715e2db",
+  "n": 14,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0502",
+  "title": "M1-PS-0502 中心极限定理",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0502-中心极限定理.md",
+  "sha": "3fe2532d",
+  "n": 14,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0601",
+  "title": "M1-PS-0601 总体、样本、统计量",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0601-总体、样本、统计量.md",
+  "sha": "70cea9fe",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0602",
+  "title": "M1-PS-0602 三大抽样分布",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0602-三大抽样分布.md",
+  "sha": "87dd9110",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0701",
+  "title": "M1-PS-0701 矩估计与最大似然",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0701-矩估计与最大似然.md",
+  "sha": "f1d2febd",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0702",
+  "title": "M1-PS-0702 估计量的评价",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0702-估计量的评价.md",
+  "sha": "9db9b567",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0703",
+  "title": "M1-PS-0703 区间估计",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0703-区间估计.md",
+  "sha": "4fe05860",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0801",
+  "title": "M1-PS-0801 两类错误与流程",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0801-两类错误与流程.md",
+  "sha": "73112c56",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "m1-ps-0802",
+  "title": "M1-PS-0802 正态总体的检验",
+  "group": "概率统计",
+  "source": "notebook/kaoyan/note/math1/ps/M1-PS-0802-正态总体的检验.md",
+  "sha": "92a12c6e",
+  "n": 20,
+  "problems": []
+ }
+]

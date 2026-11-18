@@ -1,0 +1,650 @@
+[
+ {
+  "id": "math1-HS-0101",
+  "title": "奇偶、周期、有界：三条性质，各自省掉哪一半计算",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0101.md",
+  "sha": "928c95cd",
+  "n": 28,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0102",
+  "title": "数列极限只问「后面怎么走」，不问「前面怎么来」",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0102.md",
+  "sha": "0eb15c88",
+  "n": 41,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0103",
+  "title": "无穷小比较，本质是给「趋于零的快慢」排出一套等级",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0103.md",
+  "sha": "7442549f",
+  "n": 43,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0104",
+  "title": "连续的判定只有一句话：极限值能不能按回函数值上",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0104.md",
+  "sha": "bf7d246d",
+  "n": 39,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0201",
+  "title": "导数为什么离不开「先连续」这一步：可导必连续，反过来的缺口全在尖点上",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0201.md",
+  "sha": "9f386972",
+  "n": 31,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0202",
+  "title": "三个中值定理其实是同一句话：条件松一格，结论就换一个说法",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0202.md",
+  "sha": "20041cca",
+  "n": 32,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0203",
+  "title": "洛必达替你把比换成导数之比，泰勒替你把函数摊成阶数；失效的那一类只有泰勒接得住",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0203.md",
+  "sha": "0ed081df",
+  "n": 31,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0204",
+  "title": "一阶导给单调和极值，二阶导给凹凸和拐点；订正曲率圆的圆心只差一个方向",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0204.md",
+  "sha": "3b255ed1",
+  "n": 33,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0205",
+  "title": "不等式挪到一边就是一个新函数，根的个数靠异号加单调两件事夹出来",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0205.md",
+  "sha": "868b6dc0",
+  "n": 36,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0301",
+  "title": "不定积分只剩两件事：认出哪块能塞进微分，认出哪一个因子该拿去求导",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0301.md",
+  "sha": "ce0d6212",
+  "n": 39,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0302",
+  "title": "对称、倒过来、按周期平移：定积分省下的都是同一段重复劳动",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0302.md",
+  "sha": "148f2c74",
+  "n": 35,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0303",
+  "title": "反常积分：先找危险点，再用尺子比阶，判收敛这一步根本不用算",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0303.md",
+  "sha": "d404aa16",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0304",
+  "title": "定积分应用：所有量都是「这一小块有多少」，差别只在半径量到谁",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0304.md",
+  "sha": "67d1ee29",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0401",
+  "title": "向量运算：点积只在方向上帮你省力，叉积只在面积和垂直方向上帮你省力",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0401.md",
+  "sha": "28e6e9b8",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0402",
+  "title": "平面与直线：平面靠一根垂直于它的向量，直线靠一根沿着它的向量，夹角和距离都是这两个向量的一次运算",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0402.md",
+  "sha": "9b7dda09",
+  "n": 28,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0403",
+  "title": "曲面与曲线：同一串平方项，缺谁、齐不齐次、几个负号，形状就换人",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0403.md",
+  "sha": "1f0e9d2b",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0501",
+  "title": "把导数拆成「偏」的、再拼回「全」的，是两次不同的让步",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0501.md",
+  "sha": "cf3db0f2",
+  "n": 28,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0502",
+  "title": "多元求导的全部难点是「这个位置里还藏着谁」，链式法则就是把这层藏着的变量逐层揪出来",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0502.md",
+  "sha": "0aa2a1e5",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0503",
+  "title": "方向导数把「沿轴走」放开成「沿任意方向走」，梯度是这件事的唯一答案",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0503.md",
+  "sha": "135be77f",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0504",
+  "title": "极值这一块，找到驻点只是开头，分数几乎全在「还有哪些点没查」",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0504.md",
+  "sha": "de1f7326",
+  "n": 31,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0601",
+  "title": "二重积分的全部技巧只有一件事：把区域换成另一种说法，让积分限变简单",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0601.md",
+  "sha": "cd811e2b",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0602",
+  "title": "三重积分：投影法省的是穿线方向，截面法省的是内层那一重，坐标变换省的只是上下界的写法",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0602.md",
+  "sha": "4f255765",
+  "n": 32,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0603",
+  "title": "曲线积分：弧长元替你把曲线量成数，位移元把方向带进符号，格林公式替你把一圈换成一块",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0603.md",
+  "sha": "e4fe5f20",
+  "n": 32,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0604",
+  "title": "曲面积分：面积元替你把斜的曲面摊平，侧决定了通量的符号，高斯公式替你把一张网换成它围住的空间",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0604.md",
+  "sha": "c5eb6ad5",
+  "n": 30,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0605",
+  "title": "三大公式：把边界上的累加换成内部的累加，用之前那三关是同一套，散度配面、旋度配线",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0605.md",
+  "sha": "6a8eaa4c",
+  "n": 30,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0701",
+  "title": "数项级数判敛：先给通项分个类，再看它衰减多快，拿一把刚好量得出的尺子去比",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0701.md",
+  "sha": "a2d5f38f",
+  "n": 29,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0702",
+  "title": "幂级数：它只替你把「无穷多项求和」换成二次的乘法、减法和开方",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0702.md",
+  "sha": "3212e9d6",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0703",
+  "title": "傅里叶级数：它把一张周期里的函数图，换成一串角度的正弦和余弦",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0703.md",
+  "sha": "159316d9",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0801",
+  "title": "一阶方程：五种类型不是五套公式，是五次退让，认类型那一眼就是全部",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0801.md",
+  "sha": "a4f10ed2",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0802",
+  "title": "降阶：方程缺了谁，就说明谁可以被冒充成新变量",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0802.md",
+  "sha": "605fa3ec",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0803",
+  "title": "常系数线性方程：一道微分方程被换成一道二次方程，解的形状只由那两根落在哪儿决定",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0803.md",
+  "sha": "bc62234f",
+  "n": 29,
+  "problems": []
+ },
+ {
+  "id": "math1-HS-0804",
+  "title": "欧拉方程：系数里那个自变量的幂次看着碍事，换成对数之后它正好被导数吃掉",
+  "group": "数一 · 高等数学",
+  "source": "build/reading/talk/math1-HS-0804.md",
+  "sha": "5252ece8",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0101",
+  "title": "行列式：几乎所有行列式变形都在问同一件事——你这一手到底动没动它的值",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0101.md",
+  "sha": "4b91da8c",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0102",
+  "title": "行列式计算：算得动的路只有一条，其余都是你认出了形状才敢走的近道",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0102.md",
+  "sha": "385efafb",
+  "n": 22,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0201",
+  "title": "矩阵运算：所有符号错都来自左右次序，所有展开错都来自忘了乘法不交换",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0201.md",
+  "sha": "0f0a6c13",
+  "n": 24,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0202",
+  "title": "逆与伴随：伴随不是另一个矩阵，是「行列式乘逆」这一句被写成了矩阵",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0202.md",
+  "sha": "0e1f1f1b",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0203",
+  "title": "秩：它只回答「这几条里到底有几条在干活」，三个判断都从这一句读出来",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0203.md",
+  "sha": "2e434645",
+  "n": 49,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0204",
+  "title": "初等变换：它唯一被允许做的事，就是换一套说法而不换答案",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0204.md",
+  "sha": "480eb72b",
+  "n": 43,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0301",
+  "title": "线性相关：三个说法其实是同一句，省掉的是「该先算哪一个」",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0301.md",
+  "sha": "fc201a68",
+  "n": 44,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0302",
+  "title": "极大无关组：它数出来的个数就是秩，过渡矩阵一次行变换就能读出来",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0302.md",
+  "sha": "1f197d08",
+  "n": 46,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0303",
+  "title": "内积与正交：一个数判垂直，一串减法造正交",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0303.md",
+  "sha": "f5913443",
+  "n": 48,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0401",
+  "title": "齐次方程组：判据只比一次，那一比就把答案的个数报出来了",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0401.md",
+  "sha": "fa1c4251",
+  "n": 40,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0402",
+  "title": "非齐次方程组：多出来的那个判断，只多比一次秩",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0402.md",
+  "sha": "691f8650",
+  "n": 42,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0403",
+  "title": "同解与公共解：一个是问两片是不是同一片，一个是问两片叠起来还剩什么",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0403.md",
+  "sha": "d26e259d",
+  "n": 42,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0501",
+  "title": "特征值与特征向量：总和与乘积这两个数，替你把展开整段省掉",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0501.md",
+  "sha": "e35b446a",
+  "n": 45,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0502",
+  "title": "相似对角化：能不能换成只剩伸缩的样子，只取决于方向够不够数",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0502.md",
+  "sha": "c9c73e97",
+  "n": 45,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0503",
+  "title": "实对称矩阵：对称这一条，把对角化从「要碰运气」变成「照流程走」",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0503.md",
+  "sha": "cb6e0cf5",
+  "n": 36,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0601",
+  "title": "标准形与惯性定理：标准形可以变来变去，真正锁住的只有正负号各几个",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0601.md",
+  "sha": "c71f6f77",
+  "n": 34,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0602",
+  "title": "正定判定：五种说法等价，但只有一种是一列不等式，所以它最先动手",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0602.md",
+  "sha": "43cfa2c0",
+  "n": 34,
+  "problems": []
+ },
+ {
+  "id": "math1-LA-0603",
+  "title": "合同变换：两个判据量的不是同一批数，所以同秩同阶也能一个合同一个不合同",
+  "group": "数一 · 线性代数",
+  "source": "build/reading/talk/math1-LA-0603.md",
+  "sha": "8b1a048b",
+  "n": 37,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0101",
+  "title": "事件与运算：一句话先翻成并、交、补，就不用把结果一个个列出来数",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0101.md",
+  "sha": "5de7cded",
+  "n": 36,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0102",
+  "title": "古典与几何概型：会数就数样本点，数不动就量面积，判据只有一条——样本点是不是等可能",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0102.md",
+  "sha": "50d776db",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0103",
+  "title": "条件概率、全概率与贝叶斯：样本空间先被剪小，再被切开，最后被倒推",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0103.md",
+  "sha": "1c62a9e1",
+  "n": 20,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0104",
+  "title": "独立性：给乘法公式发的一张许可证，判据只有等式，没有直觉",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0104.md",
+  "sha": "a8e615d3",
+  "n": 22,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0201",
+  "title": "分布函数与密度：求区间概率只减两个端点，分段积分这一步被省掉了",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0201.md",
+  "sha": "eff34519",
+  "n": 23,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0202",
+  "title": "常见分布：认出场景就等于认出分布，期望方差记熟就省掉积分",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0202.md",
+  "sha": "700bebb1",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0203",
+  "title": "换一个变量看同一批结果，能省的计算全看你有没有把区间反解干净",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0203.md",
+  "sha": "8f8527f4",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0301",
+  "title": "联合分布里多出来的那个变量，边缘化一次就积掉了，积分限全靠支撑说话",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0301.md",
+  "sha": "6dca0caf",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0302",
+  "title": "条件密度是一次除法，判断独立看能不能拆成两截各自管各自",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0302.md",
+  "sha": "a06bc137",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0303",
+  "title": "两个变量合成一个，卷积省掉整层积分的前提只有一条：独立",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0303.md",
+  "sha": "ae87d510",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0401",
+  "title": "期望最省的那一步是拆开，它连独立都不要",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0401.md",
+  "sha": "8f4aa1f5",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0402",
+  "title": "方差记账：常数平移不花钱，耦合只从协方差那一项冒出来",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0402.md",
+  "sha": "7b875047",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0403",
+  "title": "二阶那一格最有用的地方，是让方差不用积分",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0403.md",
+  "sha": "888b63fa",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0501",
+  "title": "不知道分布的时候，方差加距离平方就能换出一个概率",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0501.md",
+  "sha": "f68c160a",
+  "n": 27,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0502",
+  "title": "一堆不管从哪来的量加起来，形状都会收敛到正态",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0502.md",
+  "sha": "f56d1135",
+  "n": 26,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0601",
+  "title": "统计量这一关只看一件事：式子里有没有未知参数",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0601.md",
+  "sha": "d467e8ae",
+  "n": 28,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0602",
+  "title": "三个分布其实只有一条构造链，拼出来的量叫卡方、t 还是 F",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0602.md",
+  "sha": "969c7429",
+  "n": 30,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0701",
+  "title": "参数看不见，数据看得见，于是有了两条把数据倒推成参数的路",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0701.md",
+  "sha": "0542b330",
+  "n": 29,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0702",
+  "title": "都能吐出一个数，于是要靠期望、方差、极限这三笔账分出高下",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0702.md",
+  "sha": "2299f696",
+  "n": 28,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0703",
+  "title": "报一个点交代不了误差，于是造一个分布已知的式子把参数夹到中间",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0703.md",
+  "sha": "a463863f",
+  "n": 34,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0801",
+  "title": "判一个说法站不站得住，先得说清两种判错各要付多少",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0801.md",
+  "sha": "78c42f07",
+  "n": 34,
+  "problems": []
+ },
+ {
+  "id": "math1-PS-0802",
+  "title": "正态总体只有位置和宽窄两件事，于是四个统计量刚好各管一格",
+  "group": "数一 · 概率统计",
+  "source": "build/reading/talk/math1-PS-0802.md",
+  "sha": "61211107",
+  "n": 35,
+  "problems": []
+ }
+]

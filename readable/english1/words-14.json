@@ -1,0 +1,607 @@
+{
+ "version": "reading/v1",
+ "id": "words-14",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "14-高频形容词",
+ "source": "notebook/kaoyan/english1/words/14-高频形容词.md",
+ "sourceSha": "c5856359",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "14 高频形容词"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "significant。significant。重要的。"
+  },
+  {
+   "t": "li",
+   "x": "essential。essential。本质的。"
+  },
+  {
+   "t": "li",
+   "x": "crucial。crucial。决定性的。"
+  },
+  {
+   "t": "li",
+   "x": "vital。vital。至关重要的。"
+  },
+  {
+   "t": "li",
+   "x": "fundamental。fundamental。根本的。"
+  },
+  {
+   "t": "li",
+   "x": "considerable。considerable。相当大的。"
+  },
+  {
+   "t": "li",
+   "x": "enormous。enormous。巨大的。"
+  },
+  {
+   "t": "li",
+   "x": "tremendous。tremendous。巨大的。"
+  },
+  {
+   "t": "li",
+   "x": "immense。immense。巨大的。"
+  },
+  {
+   "t": "li",
+   "x": "severe。severe。严重的。"
+  },
+  {
+   "t": "li",
+   "x": "serious。serious。严重的。"
+  },
+  {
+   "t": "li",
+   "x": "rigorous。rigorous。严格的。"
+  },
+  {
+   "t": "li",
+   "x": "rigid。rigid。死板的。"
+  },
+  {
+   "t": "li",
+   "x": "flexible。flexible。灵活的。"
+  },
+  {
+   "t": "li",
+   "x": "elastic。elastic。有弹性的。"
+  },
+  {
+   "t": "li",
+   "x": "comprehensive。comprehensive。综合的。"
+  },
+  {
+   "t": "li",
+   "x": "extensive。extensive。广泛的。"
+  },
+  {
+   "t": "li",
+   "x": "intensive。intensive。密集的。"
+  },
+  {
+   "t": "li",
+   "x": "general。general。普遍的。"
+  },
+  {
+   "t": "li",
+   "x": "specific。specific。具体的。"
+  },
+  {
+   "t": "li",
+   "x": "particular。particular。特定的。"
+  },
+  {
+   "t": "li",
+   "x": "peculiar。peculiar。特有的。"
+  },
+  {
+   "t": "li",
+   "x": "unique。unique。独特的。"
+  },
+  {
+   "t": "li",
+   "x": "distinct。distinct。明显的。"
+  },
+  {
+   "t": "li",
+   "x": "distinctive。distinctive。独特的。"
+  },
+  {
+   "t": "li",
+   "x": "various。various。各种各样的。"
+  },
+  {
+   "t": "li",
+   "x": "variable。variable。变化的。"
+  },
+  {
+   "t": "li",
+   "x": "consistent。consistent。一致的。"
+  },
+  {
+   "t": "li",
+   "x": "persistent。persistent。持续的。"
+  },
+  {
+   "t": "li",
+   "x": "permanent。permanent。永久的。"
+  },
+  {
+   "t": "li",
+   "x": "temporary。temporary。暂时的。"
+  },
+  {
+   "t": "li",
+   "x": "transient。transient。短暂的。"
+  },
+  {
+   "t": "li",
+   "x": "eternal。eternal。永恒的。"
+  },
+  {
+   "t": "li",
+   "x": "perpetual。perpetual。永久的。"
+  },
+  {
+   "t": "li",
+   "x": "unavoidable。unavoidable。不可避免的。"
+  },
+  {
+   "t": "li",
+   "x": "necessary。necessary。必要的。"
+  },
+  {
+   "t": "li",
+   "x": "adequate。adequate。足够的。"
+  },
+  {
+   "t": "li",
+   "x": "sufficient。sufficient。充足的。"
+  },
+  {
+   "t": "li",
+   "x": "deficient。deficient。缺乏的。"
+  },
+  {
+   "t": "li",
+   "x": "abundant。abundant。丰富的。"
+  },
+  {
+   "t": "li",
+   "x": "plentiful。plentiful。丰富的。"
+  },
+  {
+   "t": "li",
+   "x": "scarce。scarce。稀少的。"
+  },
+  {
+   "t": "li",
+   "x": "rare。rare。稀有的。"
+  },
+  {
+   "t": "li",
+   "x": "occasional。occasional。偶尔的。"
+  },
+  {
+   "t": "li",
+   "x": "frequent。frequent。频繁的。"
+  },
+  {
+   "t": "li",
+   "x": "recurrent。recurrent。反复出现的。"
+  },
+  {
+   "t": "li",
+   "x": "constant。constant。不断的。"
+  },
+  {
+   "t": "li",
+   "x": "continuous。continuous。连续的。"
+  },
+  {
+   "t": "li",
+   "x": "continual。continual。反复的。"
+  },
+  {
+   "t": "li",
+   "x": "successive。successive。连续的。"
+  },
+  {
+   "t": "li",
+   "x": "consecutive。consecutive。连续的。"
+  },
+  {
+   "t": "li",
+   "x": "simultaneous。simultaneous。同时发生的。"
+  },
+  {
+   "t": "li",
+   "x": "spontaneous。spontaneous。自发的。"
+  },
+  {
+   "t": "li",
+   "x": "intentional。intentional。有意的。"
+  },
+  {
+   "t": "li",
+   "x": "accidental。accidental。意外的。"
+  },
+  {
+   "t": "li",
+   "x": "casual。casual。随意的。"
+  },
+  {
+   "t": "li",
+   "x": "random。random。随机的。"
+  },
+  {
+   "t": "li",
+   "x": "rational。rational。理性的。"
+  },
+  {
+   "t": "li",
+   "x": "reasonable。reasonable。合理的。"
+  },
+  {
+   "t": "li",
+   "x": "sensible。sensible。明智的。"
+  },
+  {
+   "t": "li",
+   "x": "sensitive。sensitive。敏感的。"
+  },
+  {
+   "t": "li",
+   "x": "vulnerable。vulnerable。易受伤害的。"
+  },
+  {
+   "t": "li",
+   "x": "fragile。fragile。脆弱的。"
+  },
+  {
+   "t": "li",
+   "x": "delicate。delicate。微妙的。"
+  },
+  {
+   "t": "li",
+   "x": "subtle。subtle。微妙的。"
+  },
+  {
+   "t": "li",
+   "x": "obvious。obvious。明显的。"
+  },
+  {
+   "t": "li",
+   "x": "apparent。apparent。表面的。"
+  },
+  {
+   "t": "li",
+   "x": "evident。evident。明显的。"
+  },
+  {
+   "t": "li",
+   "x": "transparent。transparent。透明的。"
+  },
+  {
+   "t": "li",
+   "x": "opaque。opaque。不透明的。"
+  },
+  {
+   "t": "li",
+   "x": "complicated。complicated。复杂的。"
+  },
+  {
+   "t": "li",
+   "x": "intricate。intricate。错综复杂的。"
+  },
+  {
+   "t": "li",
+   "x": "sophisticated。sophisticated。复杂精密的。"
+  },
+  {
+   "t": "li",
+   "x": "crude。crude。粗糙的。"
+  },
+  {
+   "t": "li",
+   "x": "rough。rough。粗略的。"
+  },
+  {
+   "t": "li",
+   "x": "shallow。shallow。肤浅的。"
+  },
+  {
+   "t": "li",
+   "x": "intense。intense。强烈的。"
+  },
+  {
+   "t": "li",
+   "x": "fierce。fierce。激烈的。"
+  },
+  {
+   "t": "li",
+   "x": "violent。violent。暴力的。"
+  },
+  {
+   "t": "li",
+   "x": "drastic。drastic。激烈的。"
+  },
+  {
+   "t": "li",
+   "x": "extreme。extreme。极端的。"
+  },
+  {
+   "t": "li",
+   "x": "mild。mild。轻微的。"
+  },
+  {
+   "t": "li",
+   "x": "slight。slight。轻微的。"
+  },
+  {
+   "t": "li",
+   "x": "decisive。decisive。决定性的。"
+  },
+  {
+   "t": "li",
+   "x": "urgent。urgent。紧急的。"
+  },
+  {
+   "t": "li",
+   "x": "pressing。pressing。紧迫的。"
+  },
+  {
+   "t": "li",
+   "x": "beneficial。beneficial。有益的。"
+  },
+  {
+   "t": "li",
+   "x": "advantageous。advantageous。有利的。"
+  },
+  {
+   "t": "li",
+   "x": "favorable。favorable。有利的。"
+  },
+  {
+   "t": "li",
+   "x": "detrimental。detrimental。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "harmful。harmful。有害的。"
+  },
+  {
+   "t": "li",
+   "x": "positive。positive。积极的。"
+  },
+  {
+   "t": "li",
+   "x": "negative。negative。消极的。"
+  },
+  {
+   "t": "li",
+   "x": "fair。fair。公平的。"
+  },
+  {
+   "t": "li",
+   "x": "just。just。公正的。"
+  },
+  {
+   "t": "li",
+   "x": "invalid。invalid。无效的。"
+  },
+  {
+   "t": "li",
+   "x": "genuine。genuine。真正的。"
+  },
+  {
+   "t": "li",
+   "x": "synthetic。synthetic。合成的。"
+  },
+  {
+   "t": "li",
+   "x": "false。false。错误的。"
+  },
+  {
+   "t": "li",
+   "x": "fake。fake。假的。"
+  },
+  {
+   "t": "li",
+   "x": "reliable。reliable。可靠的。"
+  },
+  {
+   "t": "li",
+   "x": "trustworthy。trustworthy。可信的。"
+  },
+  {
+   "t": "li",
+   "x": "absurd。absurd。荒谬的。"
+  },
+  {
+   "t": "li",
+   "x": "ridiculous。ridiculous。荒谬的。"
+  },
+  {
+   "t": "li",
+   "x": "fantastic。fantastic。极好的。"
+  },
+  {
+   "t": "li",
+   "x": "incredible。incredible。难以置信的。"
+  },
+  {
+   "t": "li",
+   "x": "extraordinary。extraordinary。非凡的。"
+  },
+  {
+   "t": "li",
+   "x": "exceptional。exceptional。杰出的。"
+  },
+  {
+   "t": "li",
+   "x": "outstanding。outstanding。杰出的。"
+  },
+  {
+   "t": "li",
+   "x": "distinguished。distinguished。杰出的。"
+  },
+  {
+   "t": "li",
+   "x": "reputable。reputable。声誉好的。"
+  },
+  {
+   "t": "li",
+   "x": "respectable。respectable。可敬的。"
+  },
+  {
+   "t": "li",
+   "x": "generous adj."
+  },
+  {
+   "t": "li",
+   "x": "accurate。accurate。精确的。"
+  },
+  {
+   "t": "li",
+   "x": "appropriate。appropriate。合适的。"
+  },
+  {
+   "t": "li",
+   "x": "relevant。relevant。相关的。"
+  },
+  {
+   "t": "li",
+   "x": "capable。capable。有能力的。"
+  },
+  {
+   "t": "li",
+   "x": "dependent。dependent。依赖的。"
+  },
+  {
+   "t": "li",
+   "x": "independent。independent。独立的。"
+  },
+  {
+   "t": "li",
+   "x": "identical。identical。完全相同的。"
+  },
+  {
+   "t": "li",
+   "x": "equivalent。equivalent。相等的。"
+  },
+  {
+   "t": "li",
+   "x": "initial。initial。最初的。"
+  },
+  {
+   "t": "li",
+   "x": "subsequent。subsequent。随后的。"
+  },
+  {
+   "t": "li",
+   "x": "previous。previous。先前的。"
+  },
+  {
+   "t": "li",
+   "x": "contemporary。contemporary。当代的。"
+  },
+  {
+   "t": "li",
+   "x": "typical。typical。典型的。"
+  },
+  {
+   "t": "li",
+   "x": "common。common。常见的。"
+  },
+  {
+   "t": "li",
+   "x": "normal。normal。正常的。"
+  },
+  {
+   "t": "li",
+   "x": "ordinary。ordinary。普通的。"
+  },
+  {
+   "t": "li",
+   "x": "average。average。平均的。"
+  },
+  {
+   "t": "li",
+   "x": "entire。entire。整个的。"
+  },
+  {
+   "t": "li",
+   "x": "total。total。总的。"
+  },
+  {
+   "t": "li",
+   "x": "complete。complete。完全的。"
+  },
+  {
+   "t": "li",
+   "x": "absolute。absolute。绝对的。"
+  },
+  {
+   "t": "li",
+   "x": "relative。relative。相对的。"
+  },
+  {
+   "t": "li",
+   "x": "mutual。mutual。相互的。"
+  },
+  {
+   "t": "li",
+   "x": "individual。individual。个人的。"
+  },
+  {
+   "t": "li",
+   "x": "personal。personal。个人的。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "变成 it作形式主语，不定式短语作真正主语；distinguish between A and B 变成 评价类形容词常用“It is + adj. + to do”结构；between...and...连接并列宾语，表示区分两者。"
+  },
+  {
+   "t": "li",
+   "x": "变成 whether...or...引导宾语从句，or连接两个并列谓语has offered与has repeated 变成 用于表达两种可能或选择；并列谓语保持时态一致。"
+  },
+  {
+   "t": "li",
+   "x": "变成 助动词does not + 动词原形；treat...as...复合结构 变成 否定一般现在时；treat A as B表示“把A当作B”。"
+  },
+  {
+   "t": "li",
+   "x": "变成 but连接两个并列分句；can be learned为情态动词被动语态 变成 用but表转折对比；被动语态强调习惯可以被习得。"
+  },
+  {
+   "t": "li",
+   "x": "变成 where引导非限制性定语从句；result from表示原因；rather than连接两个from短语 变成 非限制性定语从句补充说明情境；rather than连接平行成分，表达取舍对比。"
+  }
+ ]
+}

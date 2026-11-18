@@ -1,0 +1,631 @@
+{
+ "version": "reading/v1",
+ "id": "words-07",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "07-环境、地理与气候",
+ "source": "notebook/kaoyan/english1/words/07-环境、地理与气候.md",
+ "sourceSha": "b4e7d942",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "07 环境、地理与气候"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "environment。environment。环境。"
+  },
+  {
+   "t": "li",
+   "x": "environmental。environmental。环境的。"
+  },
+  {
+   "t": "li",
+   "x": "ecology。ecology。生态学。"
+  },
+  {
+   "t": "li",
+   "x": "ecological。ecological。生态的。"
+  },
+  {
+   "t": "li",
+   "x": "ecosystem。ecosystem。生态系统。"
+  },
+  {
+   "t": "li",
+   "x": "habitat。habitat。栖息地。"
+  },
+  {
+   "t": "li",
+   "x": "biodiversity。biodiversity。生物多样性。"
+  },
+  {
+   "t": "li",
+   "x": "species。species。物种。"
+  },
+  {
+   "t": "li",
+   "x": "extinction。extinction。灭绝。"
+  },
+  {
+   "t": "li",
+   "x": "endangered。endangered。濒危的。"
+  },
+  {
+   "t": "li",
+   "x": "conservation。conservation。保护。"
+  },
+  {
+   "t": "li",
+   "x": "reserve。reserve。保护区。"
+  },
+  {
+   "t": "li",
+   "x": "sustainable。sustainable。可持续的。"
+  },
+  {
+   "t": "li",
+   "x": "sustainability。sustainability。可持续性。"
+  },
+  {
+   "t": "li",
+   "x": "pollution。pollution。污染。"
+  },
+  {
+   "t": "li",
+   "x": "pollutant。pollutant。污染物。"
+  },
+  {
+   "t": "li",
+   "x": "contaminate。contaminate。污染。"
+  },
+  {
+   "t": "li",
+   "x": "emission。emission。排放。"
+  },
+  {
+   "t": "li",
+   "x": "carbon。carbon。碳。"
+  },
+  {
+   "t": "li",
+   "x": "dioxide。dioxide。二氧化物。"
+  },
+  {
+   "t": "li",
+   "x": "greenhouse。greenhouse。温室。"
+  },
+  {
+   "t": "li",
+   "x": "warming。warming。变暖。"
+  },
+  {
+   "t": "li",
+   "x": "climate。climate。气候。"
+  },
+  {
+   "t": "li",
+   "x": "weather。weather。天气。"
+  },
+  {
+   "t": "li",
+   "x": "temperature。temperature。温度。"
+  },
+  {
+   "t": "li",
+   "x": "atmosphere。atmosphere。大气。"
+  },
+  {
+   "t": "li",
+   "x": "ozone。ozone。臭氧。"
+  },
+  {
+   "t": "li",
+   "x": "gas。gas。气体。"
+  },
+  {
+   "t": "li",
+   "x": "fossil。fossil。化石。"
+  },
+  {
+   "t": "li",
+   "x": "fuel。fuel。燃料。"
+  },
+  {
+   "t": "li",
+   "x": "coal。coal。煤。"
+  },
+  {
+   "t": "li",
+   "x": "oil。oil。石油。"
+  },
+  {
+   "t": "li",
+   "x": "petroleum。petroleum。石油。"
+  },
+  {
+   "t": "li",
+   "x": "gasoline。gasoline。汽油。"
+  },
+  {
+   "t": "li",
+   "x": "wind。wind。风。"
+  },
+  {
+   "t": "li",
+   "x": "hydropower。hydropower。水力发电。"
+  },
+  {
+   "t": "li",
+   "x": "geothermal。geothermal。地热的。"
+  },
+  {
+   "t": "li",
+   "x": "biomass。biomass。生物质。"
+  },
+  {
+   "t": "li",
+   "x": "energy。energy。能源。"
+  },
+  {
+   "t": "li",
+   "x": "depletion。depletion。枯竭。"
+  },
+  {
+   "t": "li",
+   "x": "recycle。recycle。回收利用。"
+  },
+  {
+   "t": "li",
+   "x": "recycling。recycling。回收利用。"
+  },
+  {
+   "t": "li",
+   "x": "landfill。landfill。垃圾填埋场。"
+  },
+  {
+   "t": "li",
+   "x": "disposal。disposal。处理。"
+  },
+  {
+   "t": "li",
+   "x": "sewage。sewage。污水。"
+  },
+  {
+   "t": "li",
+   "x": "toxic。toxic。有毒的。"
+  },
+  {
+   "t": "li",
+   "x": "hazard。hazard。危险。"
+  },
+  {
+   "t": "li",
+   "x": "pesticide。pesticide。杀虫剂。"
+  },
+  {
+   "t": "li",
+   "x": "fertilizer。fertilizer。肥料。"
+  },
+  {
+   "t": "li",
+   "x": "chemical。chemical。化学品。"
+  },
+  {
+   "t": "li",
+   "x": "exhaust。exhaust。耗尽。"
+  },
+  {
+   "t": "li",
+   "x": "smog。smog。烟雾。"
+  },
+  {
+   "t": "li",
+   "x": "acid。acid。酸的。"
+  },
+  {
+   "t": "li",
+   "x": "deforestation。deforestation。森林砍伐。"
+  },
+  {
+   "t": "li",
+   "x": "desertification。desertification。荒漠化。"
+  },
+  {
+   "t": "li",
+   "x": "erosion。erosion。侵蚀。"
+  },
+  {
+   "t": "li",
+   "x": "soil。soil。土壤。"
+  },
+  {
+   "t": "li",
+   "x": "drought。drought。干旱。"
+  },
+  {
+   "t": "li",
+   "x": "flood。flood。洪水。"
+  },
+  {
+   "t": "li",
+   "x": "hurricane。hurricane。飓风。"
+  },
+  {
+   "t": "li",
+   "x": "typhoon。typhoon。台风。"
+  },
+  {
+   "t": "li",
+   "x": "earthquake。earthquake。地震。"
+  },
+  {
+   "t": "li",
+   "x": "volcano。volcano。火山。"
+  },
+  {
+   "t": "li",
+   "x": "eruption。eruption。喷发。"
+  },
+  {
+   "t": "li",
+   "x": "tsunami。tsunami。海啸。"
+  },
+  {
+   "t": "li",
+   "x": "landslide。landslide。山崩。"
+  },
+  {
+   "t": "li",
+   "x": "avalanche。avalanche。雪崩。"
+  },
+  {
+   "t": "li",
+   "x": "wildfire。wildfire。野火。"
+  },
+  {
+   "t": "li",
+   "x": "catastrophe。catastrophe。大灾难。"
+  },
+  {
+   "t": "li",
+   "x": "disaster。disaster。灾难。"
+  },
+  {
+   "t": "li",
+   "x": "rescue。rescue。营救。"
+  },
+  {
+   "t": "li",
+   "x": "relief。relief。救济。"
+  },
+  {
+   "t": "li",
+   "x": "evacuate。evacuate。疏散。"
+  },
+  {
+   "t": "li",
+   "x": "victim。victim。受害者。"
+  },
+  {
+   "t": "li",
+   "x": "casualty。casualty。伤亡人员。"
+  },
+  {
+   "t": "li",
+   "x": "geography。geography。地理。"
+  },
+  {
+   "t": "li",
+   "x": "geographical。geographical。地理的。"
+  },
+  {
+   "t": "li",
+   "x": "region。region。地区。"
+  },
+  {
+   "t": "li",
+   "x": "zone。zone。地带。"
+  },
+  {
+   "t": "li",
+   "x": "terrain。terrain。地形。"
+  },
+  {
+   "t": "li",
+   "x": "landscape。landscape。风景。"
+  },
+  {
+   "t": "li",
+   "x": "mountain。mountain。山。"
+  },
+  {
+   "t": "li",
+   "x": "valley。valley。山谷。"
+  },
+  {
+   "t": "li",
+   "x": "plateau。plateau。高原。"
+  },
+  {
+   "t": "li",
+   "x": "plain。plain。平原。"
+  },
+  {
+   "t": "li",
+   "x": "basin。basin。盆地。"
+  },
+  {
+   "t": "li",
+   "x": "coast。coast。海岸。"
+  },
+  {
+   "t": "li",
+   "x": "coastal。coastal。沿海的。"
+  },
+  {
+   "t": "li",
+   "x": "shore。shore。岸。"
+  },
+  {
+   "t": "li",
+   "x": "beach。beach。海滩。"
+  },
+  {
+   "t": "li",
+   "x": "island。island。岛。"
+  },
+  {
+   "t": "li",
+   "x": "peninsula。peninsula。半岛。"
+  },
+  {
+   "t": "li",
+   "x": "gulf。gulf。海湾。"
+  },
+  {
+   "t": "li",
+   "x": "bay。bay。海湾。"
+  },
+  {
+   "t": "li",
+   "x": "strait。strait。海峡。"
+  },
+  {
+   "t": "li",
+   "x": "channel。channel。海峡。"
+  },
+  {
+   "t": "li",
+   "x": "ocean。ocean。海洋。"
+  },
+  {
+   "t": "li",
+   "x": "sea。sea。海。"
+  },
+  {
+   "t": "li",
+   "x": "marine。marine。海洋的。"
+  },
+  {
+   "t": "li",
+   "x": "degradation。degradation。退化。"
+  },
+  {
+   "t": "li",
+   "x": "geology。geology。地质学。"
+  },
+  {
+   "t": "li",
+   "x": "contamination。contamination。污染。"
+  },
+  {
+   "t": "li",
+   "x": "dispose。dispose。处理。"
+  },
+  {
+   "t": "li",
+   "x": "emitter。emitter。排放者。"
+  },
+  {
+   "t": "li",
+   "x": "absorption。absorption。吸收。"
+  },
+  {
+   "t": "li",
+   "x": "turbine。turbine。涡轮机。"
+  },
+  {
+   "t": "li",
+   "x": "hydroelectric。hydroelectric。水力发电的。"
+  },
+  {
+   "t": "li",
+   "x": "biofuel。biofuel。生物燃料。"
+  },
+  {
+   "t": "li",
+   "x": "refinery。refinery。炼油厂。"
+  },
+  {
+   "t": "li",
+   "x": "deposit。deposit。矿藏。"
+  },
+  {
+   "t": "li",
+   "x": "mineral。mineral。矿物 adj. 矿物的。"
+  },
+  {
+   "t": "li",
+   "x": "ore。ore。矿石。"
+  },
+  {
+   "t": "li",
+   "x": "extract。extract。提取。"
+  },
+  {
+   "t": "li",
+   "x": "extraction。extraction。提取。"
+  },
+  {
+   "t": "li",
+   "x": "forestry。forestry。林业。"
+  },
+  {
+   "t": "li",
+   "x": "vegetation。vegetation。植被。"
+  },
+  {
+   "t": "li",
+   "x": "delta。delta。三角洲。"
+  },
+  {
+   "t": "li",
+   "x": "erupt。erupt。爆发。"
+  },
+  {
+   "t": "li",
+   "x": "seismic。seismic。地震的。"
+  },
+  {
+   "t": "li",
+   "x": "glacier。glacier。冰川。"
+  },
+  {
+   "t": "li",
+   "x": "polar。polar。极地的。"
+  },
+  {
+   "t": "li",
+   "x": "tropical。tropical。热带的。"
+  },
+  {
+   "t": "li",
+   "x": "temperate。temperate。温带的。"
+  },
+  {
+   "t": "li",
+   "x": "humidity。humidity。湿度。"
+  },
+  {
+   "t": "li",
+   "x": "moisture。moisture。水分。"
+  },
+  {
+   "t": "li",
+   "x": "evaporate。evaporate。蒸发。"
+  },
+  {
+   "t": "li",
+   "x": "precipitation。precipitation。降水。"
+  },
+  {
+   "t": "li",
+   "x": "rainfall。rainfall。降雨量。"
+  },
+  {
+   "t": "li",
+   "x": "monsoon。monsoon。季风。"
+  },
+  {
+   "t": "li",
+   "x": "current。current。水流。"
+  },
+  {
+   "t": "li",
+   "x": "tide。tide。潮汐。"
+  },
+  {
+   "t": "li",
+   "x": "aquatic。aquatic。水生的。"
+  },
+  {
+   "t": "li",
+   "x": "wetland。wetland。湿地。"
+  },
+  {
+   "t": "li",
+   "x": "reservoir。reservoir。水库。"
+  },
+  {
+   "t": "li",
+   "x": "irrigation。irrigation。灌溉。"
+  },
+  {
+   "t": "li",
+   "x": "cultivate。cultivate。耕作。"
+  },
+  {
+   "t": "li",
+   "x": "fertile。fertile。肥沃的。"
+  },
+  {
+   "t": "li",
+   "x": "fertility。fertility。肥力。"
+  },
+  {
+   "t": "li",
+   "x": "arid。arid。干旱的。"
+  },
+  {
+   "t": "li",
+   "x": "barren。barren。贫瘠的。"
+  },
+  {
+   "t": "li",
+   "x": "desert。desert。沙漠 v. 抛弃。"
+  },
+  {
+   "t": "li",
+   "x": "urban。urban。城市的。"
+  },
+  {
+   "t": "li",
+   "x": "density。density。密度。"
+  },
+  {
+   "t": "li",
+   "x": "dense。dense。稠密的。"
+  },
+  {
+   "t": "li",
+   "x": "sprawl。sprawl。蔓延。"
+  },
+  {
+   "t": "li",
+   "x": "settlement。settlement。定居点。"
+  },
+  {
+   "t": "li",
+   "x": "migrate。migrate。迁徙。"
+  },
+  {
+   "t": "li",
+   "x": "inhabit。inhabit。栖息于。"
+  },
+  {
+   "t": "li",
+   "x": "indigenous。indigenous。本土的。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

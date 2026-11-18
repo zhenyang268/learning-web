@@ -1,0 +1,699 @@
+{
+ "version": "reading/v1",
+ "id": "words-06",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "06-科技、工程与创新",
+ "source": "notebook/kaoyan/english1/words/06-科技、工程与创新.md",
+ "sourceSha": "6b52bffc",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "06 科技、工程与创新"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "technology。technology。技术。"
+  },
+  {
+   "t": "li",
+   "x": "digital。digital。数字的。"
+  },
+  {
+   "t": "li",
+   "x": "engineer。engineer。工程师。"
+  },
+  {
+   "t": "li",
+   "x": "engineering。engineering。工程学。"
+  },
+  {
+   "t": "li",
+   "x": "develop。develop。开发。"
+  },
+  {
+   "t": "li",
+   "x": "development。development。开发。"
+  },
+  {
+   "t": "li",
+   "x": "device。device。装置。"
+  },
+  {
+   "t": "li",
+   "x": "artificial。artificial。人工的。"
+  },
+  {
+   "t": "li",
+   "x": "intelligence。intelligence。智能。"
+  },
+  {
+   "t": "li",
+   "x": "algorithm。algorithm。算法。"
+  },
+  {
+   "t": "li",
+   "x": "network。network。网络。"
+  },
+  {
+   "t": "li",
+   "x": "software。software。软件。"
+  },
+  {
+   "t": "li",
+   "x": "hardware。hardware。硬件。"
+  },
+  {
+   "t": "li",
+   "x": "program。program。程序。"
+  },
+  {
+   "t": "li",
+   "x": "code。code。代码。"
+  },
+  {
+   "t": "li",
+   "x": "computer。computer。计算机。"
+  },
+  {
+   "t": "li",
+   "x": "digitalize。digitalize。数字化。"
+  },
+  {
+   "t": "li",
+   "x": "automate。automate。自动化。"
+  },
+  {
+   "t": "li",
+   "x": "automation。automation。自动化。"
+  },
+  {
+   "t": "li",
+   "x": "robot。robot。机器人。"
+  },
+  {
+   "t": "li",
+   "x": "robotic。robotic。机器人的。"
+  },
+  {
+   "t": "li",
+   "x": "machine。machine。机器。"
+  },
+  {
+   "t": "li",
+   "x": "mechanical。mechanical。机械的。"
+  },
+  {
+   "t": "li",
+   "x": "electronic。electronic。电子的。"
+  },
+  {
+   "t": "li",
+   "x": "electricity。electricity。电。"
+  },
+  {
+   "t": "li",
+   "x": "electric。electric。电的。"
+  },
+  {
+   "t": "li",
+   "x": "circuit。circuit。电路。"
+  },
+  {
+   "t": "li",
+   "x": "chip。chip。芯片。"
+  },
+  {
+   "t": "li",
+   "x": "semiconductor。semiconductor。半导体。"
+  },
+  {
+   "t": "li",
+   "x": "transistor。transistor。晶体管。"
+  },
+  {
+   "t": "li",
+   "x": "processor。processor。处理器。"
+  },
+  {
+   "t": "li",
+   "x": "sensor。sensor。传感器。"
+  },
+  {
+   "t": "li",
+   "x": "laser。laser。激光。"
+  },
+  {
+   "t": "li",
+   "x": "satellite。satellite。卫星。"
+  },
+  {
+   "t": "li",
+   "x": "aerospace。aerospace。航空航天。"
+  },
+  {
+   "t": "li",
+   "x": "aviation。aviation。航空。"
+  },
+  {
+   "t": "li",
+   "x": "rocket。rocket。火箭。"
+  },
+  {
+   "t": "li",
+   "x": "spacecraft。spacecraft。航天器。"
+  },
+  {
+   "t": "li",
+   "x": "orbit。orbit。轨道。"
+  },
+  {
+   "t": "li",
+   "x": "launch。launch。发射。"
+  },
+  {
+   "t": "li",
+   "x": "innovate。innovate。创新。"
+  },
+  {
+   "t": "li",
+   "x": "inventive。inventive。发明的。"
+  },
+  {
+   "t": "li",
+   "x": "invention。invention。发明。"
+  },
+  {
+   "t": "li",
+   "x": "invent。invent。发明。"
+  },
+  {
+   "t": "li",
+   "x": "prototype。prototype。原型。"
+  },
+  {
+   "t": "li",
+   "x": "design。design。设计。"
+  },
+  {
+   "t": "li",
+   "x": "blueprint。blueprint。蓝图。"
+  },
+  {
+   "t": "li",
+   "x": "sketch。sketch。草图。"
+  },
+  {
+   "t": "li",
+   "x": "simulate。simulate。模拟。"
+  },
+  {
+   "t": "li",
+   "x": "simulation。simulation。模拟。"
+  },
+  {
+   "t": "li",
+   "x": "virtual。virtual。虚拟的。"
+  },
+  {
+   "t": "li",
+   "x": "reality。reality。现实。"
+  },
+  {
+   "t": "li",
+   "x": "augmented。augmented。增强的。"
+  },
+  {
+   "t": "li",
+   "x": "cyberspace。cyberspace。网络空间。"
+  },
+  {
+   "t": "li",
+   "x": "internet。internet。互联网。"
+  },
+  {
+   "t": "li",
+   "x": "online。online。在线的。"
+  },
+  {
+   "t": "li",
+   "x": "offline。offline。离线的。"
+  },
+  {
+   "t": "li",
+   "x": "website。website。网站。"
+  },
+  {
+   "t": "li",
+   "x": "browser。browser。浏览器。"
+  },
+  {
+   "t": "li",
+   "x": "server。server。服务器。"
+  },
+  {
+   "t": "li",
+   "x": "database。database。数据库。"
+  },
+  {
+   "t": "li",
+   "x": "cloud。cloud。云计算。"
+  },
+  {
+   "t": "li",
+   "x": "platform。platform。平台。"
+  },
+  {
+   "t": "li",
+   "x": "application。application。应用。"
+  },
+  {
+   "t": "li",
+   "x": "app。app。应用程序。"
+  },
+  {
+   "t": "li",
+   "x": "interface。interface。界面。"
+  },
+  {
+   "t": "li",
+   "x": "user。user。用户。"
+  },
+  {
+   "t": "li",
+   "x": "interact。interact。互动。"
+  },
+  {
+   "t": "li",
+   "x": "interactive。interactive。交互式的。"
+  },
+  {
+   "t": "li",
+   "x": "access。access。通道。"
+  },
+  {
+   "t": "li",
+   "x": "connect。connect。连接。"
+  },
+  {
+   "t": "li",
+   "x": "connectivity。connectivity。连通性。"
+  },
+  {
+   "t": "li",
+   "x": "wireless。wireless。无线的。"
+  },
+  {
+   "t": "li",
+   "x": "signal。signal。信号。"
+  },
+  {
+   "t": "li",
+   "x": "frequency。frequency。频率。"
+  },
+  {
+   "t": "li",
+   "x": "bandwidth。bandwidth。带宽。"
+  },
+  {
+   "t": "li",
+   "x": "transmit v."
+  },
+  {
+   "t": "li",
+   "x": "advance。advance。推进。"
+  },
+  {
+   "t": "li",
+   "x": "breakthrough。breakthrough。突破。"
+  },
+  {
+   "t": "li",
+   "x": "calculation。calculation。计算。"
+  },
+  {
+   "t": "li",
+   "x": "capacity。capacity。容量。"
+  },
+  {
+   "t": "li",
+   "x": "component。component。部件。"
+  },
+  {
+   "t": "li",
+   "x": "construct。construct。构建。"
+  },
+  {
+   "t": "li",
+   "x": "construction。construction。建造。"
+  },
+  {
+   "t": "li",
+   "x": "creation。creation。创造。"
+  },
+  {
+   "t": "li",
+   "x": "creative。creative。创造性的。"
+  },
+  {
+   "t": "li",
+   "x": "discovery。discovery。发现。"
+  },
+  {
+   "t": "li",
+   "x": "efficient。efficient。高效的。"
+  },
+  {
+   "t": "li",
+   "x": "experimental。experimental。实验的。"
+  },
+  {
+   "t": "li",
+   "x": "exploration。exploration。探索。"
+  },
+  {
+   "t": "li",
+   "x": "facility。facility。设施。"
+  },
+  {
+   "t": "li",
+   "x": "generate。generate。产生。"
+  },
+  {
+   "t": "li",
+   "x": "generation。generation。产生。"
+  },
+  {
+   "t": "li",
+   "x": "generator。generator。发电机。"
+  },
+  {
+   "t": "li",
+   "x": "grid。grid。电网。"
+  },
+  {
+   "t": "li",
+   "x": "information。information。信息。"
+  },
+  {
+   "t": "li",
+   "x": "install。install。安装。"
+  },
+  {
+   "t": "li",
+   "x": "installation。installation。安装。"
+  },
+  {
+   "t": "li",
+   "x": "instrument。instrument。仪器。"
+  },
+  {
+   "t": "li",
+   "x": "integrate。integrate。整合。"
+  },
+  {
+   "t": "li",
+   "x": "integration。integration。整合。"
+  },
+  {
+   "t": "li",
+   "x": "laboratory。laboratory。实验室。"
+  },
+  {
+   "t": "li",
+   "x": "maintenance。maintenance。维护。"
+  },
+  {
+   "t": "li",
+   "x": "manufacture。manufacture。制造。"
+  },
+  {
+   "t": "li",
+   "x": "manufacturing。manufacturing。制造业。"
+  },
+  {
+   "t": "li",
+   "x": "material。material。材料。"
+  },
+  {
+   "t": "li",
+   "x": "measurement。measurement。测量。"
+  },
+  {
+   "t": "li",
+   "x": "method。method。方法。"
+  },
+  {
+   "t": "li",
+   "x": "mobile。mobile。移动的。"
+  },
+  {
+   "t": "li",
+   "x": "modern。modern。现代的。"
+  },
+  {
+   "t": "li",
+   "x": "module。module。模块。"
+  },
+  {
+   "t": "li",
+   "x": "nuclear。nuclear。核的。"
+  },
+  {
+   "t": "li",
+   "x": "physics。physics。物理学。"
+  },
+  {
+   "t": "li",
+   "x": "physical。physical。物理的。"
+  },
+  {
+   "t": "li",
+   "x": "produce。produce。生产。"
+  },
+  {
+   "t": "li",
+   "x": "progress。progress。进步。"
+  },
+  {
+   "t": "li",
+   "x": "radar。radar。雷达。"
+  },
+  {
+   "t": "li",
+   "x": "radiation。radiation。辐射。"
+  },
+  {
+   "t": "li",
+   "x": "reactor。reactor。反应堆。"
+  },
+  {
+   "t": "li",
+   "x": "refine。refine。提炼。"
+  },
+  {
+   "t": "li",
+   "x": "renewable。renewable。可再生的。"
+  },
+  {
+   "t": "li",
+   "x": "repair。repair。修理。"
+  },
+  {
+   "t": "li",
+   "x": "replace。replace。替换。"
+  },
+  {
+   "t": "li",
+   "x": "resource。resource。资源。"
+  },
+  {
+   "t": "li",
+   "x": "science。science。科学。"
+  },
+  {
+   "t": "li",
+   "x": "scientific。scientific。科学的。"
+  },
+  {
+   "t": "li",
+   "x": "scientist。scientist。科学家。"
+  },
+  {
+   "t": "li",
+   "x": "solar。solar。太阳的。"
+  },
+  {
+   "t": "li",
+   "x": "solve。solve。解决。"
+  },
+  {
+   "t": "li",
+   "x": "solution。solution。解决方案。"
+  },
+  {
+   "t": "li",
+   "x": "source。source。来源。"
+  },
+  {
+   "t": "li",
+   "x": "storage。storage。存储。"
+  },
+  {
+   "t": "li",
+   "x": "store。store。储存。"
+  },
+  {
+   "t": "li",
+   "x": "technical。technical。技术的。"
+  },
+  {
+   "t": "li",
+   "x": "technique。technique。技术。"
+  },
+  {
+   "t": "li",
+   "x": "technological。technological。技术的。"
+  },
+  {
+   "t": "li",
+   "x": "tool。tool。工具。"
+  },
+  {
+   "t": "li",
+   "x": "transformation。transformation。转变。"
+  },
+  {
+   "t": "li",
+   "x": "transport。transport。运输。"
+  },
+  {
+   "t": "li",
+   "x": "transportation。transportation。运输。"
+  },
+  {
+   "t": "li",
+   "x": "update。update。更新。"
+  },
+  {
+   "t": "li",
+   "x": "vehicle。vehicle。车辆。"
+  },
+  {
+   "t": "li",
+   "x": "version。version。版本。"
+  },
+  {
+   "t": "li",
+   "x": "waste。waste。废物。"
+  },
+  {
+   "t": "li",
+   "x": "engine。engine。发动机。"
+  },
+  {
+   "t": "li",
+   "x": "apparatus。apparatus。仪器。"
+  },
+  {
+   "t": "li",
+   "x": "gadget。gadget。小装置。"
+  },
+  {
+   "t": "li",
+   "x": "analyze。analyze。分析。"
+  },
+  {
+   "t": "li",
+   "x": "automatic。automatic。自动的。"
+  },
+  {
+   "t": "li",
+   "x": "automatically。automatically。自动地。"
+  },
+  {
+   "t": "li",
+   "x": "capability。capability。能力。"
+  },
+  {
+   "t": "li",
+   "x": "communicate。communicate。交流。"
+  },
+  {
+   "t": "li",
+   "x": "communication。communication。交流。"
+  },
+  {
+   "t": "li",
+   "x": "complex。complex。复杂的。"
+  },
+  {
+   "t": "li",
+   "x": "complexity。complexity。复杂性。"
+  },
+  {
+   "t": "li",
+   "x": "evolution。evolution。进化。"
+  },
+  {
+   "t": "li",
+   "x": "expert。expert。专家。"
+  },
+  {
+   "t": "li",
+   "x": "expertise。expertise。专业知识。"
+  },
+  {
+   "t": "li",
+   "x": "implement。implement。实施。"
+  },
+  {
+   "t": "li",
+   "x": "advanced。advanced。先进的。"
+  },
+  {
+   "t": "li",
+   "x": "intelligent。intelligent。智能的。"
+  },
+  {
+   "t": "li",
+   "x": "equipment。equipment。设备。"
+  },
+  {
+   "t": "li",
+   "x": "operate。operate。操作。"
+  },
+  {
+   "t": "li",
+   "x": "operation。operation。运行。"
+  },
+  {
+   "t": "li",
+   "x": "compatible。compatible。兼容的。"
+  },
+  {
+   "t": "li",
+   "x": "transmission。transmission。传输。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

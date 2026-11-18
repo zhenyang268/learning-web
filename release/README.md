@@ -10,6 +10,32 @@
 | `knowledge-cs408.html` | 408 考研 | 159 |
 | `knowledge-math1.html` | 数一考研 | 105 |
 | `knowledge-projects.html` | 工程线（OUTLINE + NOTES） | 81 |
+| `reading.html` | **朗读版**：190 篇讲解稿 + 笔记清理稿 + 词表，共 303 单元 | 303 |
+
+`reading.html` 的三层结构（2026-11-18 完成）：
+
+| 层 | 内容 | 单元数 |
+|---|---|---|
+| 讲解稿（主力） | 408 四科导读 + 应试分层 + 107 个考点；数一高数/线代/概率 72 篇；英语六题型 | **190** |
+| 笔记清理稿 | 数一 72 篇原笔记的公式口语化版本（未改写成讲解） | 72 |
+| 词表与作文 | 英语 31 个主题词表（3996 词条）+ 6 篇原作文讲义 | 37 |
+
+`reading.html` 与上面五份的形态差别（2026-11-18 落地，生成链见 `build/reading/`）：
+
+- **它是给耳朵的**，上面五份是给眼睛的。正文在构建期就把公式、缩写、下划线转成了
+  可朗读的口语文字（`$Q^{T}AQ$` → `Q 转置 A Q`、`epoll_wait` → `epoll wait`）。
+- **没有 tab、没有 KaTeX、没有交互**：朗读只读已在 DOM 里的文本，tab 懒渲染会让
+  未展开面板读不到，KaTeX 的双份 DOM 会读成重复或乱码。
+- **不登记进 `SUBJECTS`**：朗读稿没有代号、没有语义边、不记掌握度，是独立轻入口。
+
+重新生成：
+
+```bash
+for g in gen_math1 gen_408 gen_words gen_writing; do uv run python build/reading/$g.py; done
+uv run python build/reading/build_index.py
+node tools/build-reading-standalone.mjs
+node tools/check-reading.mjs     # 闸门：残留符号必须 0
+```
 
 ## 怎么用
 

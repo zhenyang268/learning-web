@@ -1,0 +1,707 @@
+{
+ "version": "reading/v1",
+ "id": "words-20",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "20-初高中衔接基础（上）",
+ "source": "notebook/kaoyan/english1/words/20-初高中衔接基础（上）.md",
+ "sourceSha": "cc6b6707",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "20 初高中衔接基础（上）"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "able。able。能够的。"
+  },
+  {
+   "t": "li",
+   "x": "above。above。在……之上。"
+  },
+  {
+   "t": "li",
+   "x": "across。across。穿过。"
+  },
+  {
+   "t": "li",
+   "x": "act。act。行动。"
+  },
+  {
+   "t": "li",
+   "x": "add。add。增加。"
+  },
+  {
+   "t": "li",
+   "x": "afraid。afraid。害怕的。"
+  },
+  {
+   "t": "li",
+   "x": "after。after。在……之后。"
+  },
+  {
+   "t": "li",
+   "x": "again。again。再一次。"
+  },
+  {
+   "t": "li",
+   "x": "against。against。反对。"
+  },
+  {
+   "t": "li",
+   "x": "age。age。年龄。"
+  },
+  {
+   "t": "li",
+   "x": "ago。ago。以前。"
+  },
+  {
+   "t": "li",
+   "x": "agree。agree。同意。"
+  },
+  {
+   "t": "li",
+   "x": "air。air。空气。"
+  },
+  {
+   "t": "li",
+   "x": "all。all。全部的。"
+  },
+  {
+   "t": "li",
+   "x": "allow。allow。允许。"
+  },
+  {
+   "t": "li",
+   "x": "alone。alone。独自的。"
+  },
+  {
+   "t": "li",
+   "x": "along。along。沿着。"
+  },
+  {
+   "t": "li",
+   "x": "also。also。也。"
+  },
+  {
+   "t": "li",
+   "x": "among。among。在……之中。"
+  },
+  {
+   "t": "li",
+   "x": "animal。animal。动物。"
+  },
+  {
+   "t": "li",
+   "x": "another。another。另一个的。"
+  },
+  {
+   "t": "li",
+   "x": "answer。answer。答案。"
+  },
+  {
+   "t": "li",
+   "x": "any。any。任何的。"
+  },
+  {
+   "t": "li",
+   "x": "area。area。地区。"
+  },
+  {
+   "t": "li",
+   "x": "arm。arm。手臂。"
+  },
+  {
+   "t": "li",
+   "x": "arrive。arrive。到达。"
+  },
+  {
+   "t": "li",
+   "x": "ask。ask。问。"
+  },
+  {
+   "t": "li",
+   "x": "at。at。在。"
+  },
+  {
+   "t": "li",
+   "x": "bad。bad。坏的。"
+  },
+  {
+   "t": "li",
+   "x": "bag。bag。包。"
+  },
+  {
+   "t": "li",
+   "x": "ball。ball。球。"
+  },
+  {
+   "t": "li",
+   "x": "base。base。基础。"
+  },
+  {
+   "t": "li",
+   "x": "be。be。是。"
+  },
+  {
+   "t": "li",
+   "x": "beat。beat。打败。"
+  },
+  {
+   "t": "li",
+   "x": "because。because。因为。"
+  },
+  {
+   "t": "li",
+   "x": "become。become。变成。"
+  },
+  {
+   "t": "li",
+   "x": "bed。bed。床。"
+  },
+  {
+   "t": "li",
+   "x": "before。before。在……之前。"
+  },
+  {
+   "t": "li",
+   "x": "begin。begin。开始。"
+  },
+  {
+   "t": "li",
+   "x": "behind。behind。在……后面。"
+  },
+  {
+   "t": "li",
+   "x": "below。below。在……下面。"
+  },
+  {
+   "t": "li",
+   "x": "between。between。在……之间。"
+  },
+  {
+   "t": "li",
+   "x": "big。big。大的。"
+  },
+  {
+   "t": "li",
+   "x": "bird。bird。鸟。"
+  },
+  {
+   "t": "li",
+   "x": "black。black。黑色的。"
+  },
+  {
+   "t": "li",
+   "x": "blue。blue。蓝色的。"
+  },
+  {
+   "t": "li",
+   "x": "boat。boat。船。"
+  },
+  {
+   "t": "li",
+   "x": "body。body。身体。"
+  },
+  {
+   "t": "li",
+   "x": "born。born。出生的。"
+  },
+  {
+   "t": "li",
+   "x": "both。both。两者的。"
+  },
+  {
+   "t": "li",
+   "x": "bottom。bottom。底部。"
+  },
+  {
+   "t": "li",
+   "x": "box。box。盒子。"
+  },
+  {
+   "t": "li",
+   "x": "boy。boy。男孩。"
+  },
+  {
+   "t": "li",
+   "x": "bread。bread。面包。"
+  },
+  {
+   "t": "li",
+   "x": "break。break。打破。"
+  },
+  {
+   "t": "li",
+   "x": "bring。bring。带来。"
+  },
+  {
+   "t": "li",
+   "x": "brother。brother。兄弟。"
+  },
+  {
+   "t": "li",
+   "x": "build。build。建造。"
+  },
+  {
+   "t": "li",
+   "x": "burn。burn。燃烧。"
+  },
+  {
+   "t": "li",
+   "x": "busy。busy。忙的。"
+  },
+  {
+   "t": "li",
+   "x": "but。but。但是。"
+  },
+  {
+   "t": "li",
+   "x": "buy。buy。买。"
+  },
+  {
+   "t": "li",
+   "x": "by。by。通过。"
+  },
+  {
+   "t": "li",
+   "x": "call。call。叫。"
+  },
+  {
+   "t": "li",
+   "x": "can。can。能。"
+  },
+  {
+   "t": "li",
+   "x": "car。car。汽车。"
+  },
+  {
+   "t": "li",
+   "x": "care。care。关心。"
+  },
+  {
+   "t": "li",
+   "x": "carry。carry。携带。"
+  },
+  {
+   "t": "li",
+   "x": "catch。catch。抓住。"
+  },
+  {
+   "t": "li",
+   "x": "center。center。中心。"
+  },
+  {
+   "t": "li",
+   "x": "certain。certain。确定的。"
+  },
+  {
+   "t": "li",
+   "x": "chair。chair。椅子。"
+  },
+  {
+   "t": "li",
+   "x": "chance。chance。机会。"
+  },
+  {
+   "t": "li",
+   "x": "child。child。孩子。"
+  },
+  {
+   "t": "li",
+   "x": "choose。choose。选择。"
+  },
+  {
+   "t": "li",
+   "x": "city。city。城市。"
+  },
+  {
+   "t": "li",
+   "x": "clean。clean。干净的。"
+  },
+  {
+   "t": "li",
+   "x": "clear。clear。清楚的。"
+  },
+  {
+   "t": "li",
+   "x": "climb。climb。攀登。"
+  },
+  {
+   "t": "li",
+   "x": "close。close。关闭。"
+  },
+  {
+   "t": "li",
+   "x": "cold。cold。冷的。"
+  },
+  {
+   "t": "li",
+   "x": "color。color。颜色。"
+  },
+  {
+   "t": "li",
+   "x": "come。come。来。"
+  },
+  {
+   "t": "li",
+   "x": "continue。continue。继续。"
+  },
+  {
+   "t": "li",
+   "x": "cook。cook。烹饪。"
+  },
+  {
+   "t": "li",
+   "x": "cool。cool。凉爽的。"
+  },
+  {
+   "t": "li",
+   "x": "copy。copy。副本。"
+  },
+  {
+   "t": "li",
+   "x": "corner。corner。角落。"
+  },
+  {
+   "t": "li",
+   "x": "could。could。能够。"
+  },
+  {
+   "t": "li",
+   "x": "country。country。国家。"
+  },
+  {
+   "t": "li",
+   "x": "cup。cup。杯子。"
+  },
+  {
+   "t": "li",
+   "x": "cut。cut。切。"
+  },
+  {
+   "t": "li",
+   "x": "dark。dark。黑暗的。"
+  },
+  {
+   "t": "li",
+   "x": "day。day。天。"
+  },
+  {
+   "t": "li",
+   "x": "dead。dead。死的。"
+  },
+  {
+   "t": "li",
+   "x": "deep。deep。深的。"
+  },
+  {
+   "t": "li",
+   "x": "different。different。不同的。"
+  },
+  {
+   "t": "li",
+   "x": "difficult。difficult。困难的。"
+  },
+  {
+   "t": "li",
+   "x": "do。do。做。"
+  },
+  {
+   "t": "li",
+   "x": "dog。dog。狗。"
+  },
+  {
+   "t": "li",
+   "x": "door。door。门。"
+  },
+  {
+   "t": "li",
+   "x": "down。down。向下。"
+  },
+  {
+   "t": "li",
+   "x": "dream。dream。梦。"
+  },
+  {
+   "t": "li",
+   "x": "drink。drink。喝。"
+  },
+  {
+   "t": "li",
+   "x": "drop。drop。落下。"
+  },
+  {
+   "t": "li",
+   "x": "dry。dry。干的。"
+  },
+  {
+   "t": "li",
+   "x": "during。during。在……期间。"
+  },
+  {
+   "t": "li",
+   "x": "each。each。每个的。"
+  },
+  {
+   "t": "li",
+   "x": "ear。ear。耳朵。"
+  },
+  {
+   "t": "li",
+   "x": "early。early。早的。"
+  },
+  {
+   "t": "li",
+   "x": "earth。earth。地球。"
+  },
+  {
+   "t": "li",
+   "x": "east。east。东方。"
+  },
+  {
+   "t": "li",
+   "x": "easy。easy。容易的。"
+  },
+  {
+   "t": "li",
+   "x": "eat。eat。吃。"
+  },
+  {
+   "t": "li",
+   "x": "egg。egg。蛋。"
+  },
+  {
+   "t": "li",
+   "x": "eight。eight。八。"
+  },
+  {
+   "t": "li",
+   "x": "either。either。两者之一的。"
+  },
+  {
+   "t": "li",
+   "x": "else。else。其他。"
+  },
+  {
+   "t": "li",
+   "x": "end。end。结束。"
+  },
+  {
+   "t": "li",
+   "x": "enter。enter。进入。"
+  },
+  {
+   "t": "li",
+   "x": "every。every。每个的。"
+  },
+  {
+   "t": "li",
+   "x": "eye。eye。眼睛。"
+  },
+  {
+   "t": "li",
+   "x": "face。face。脸。"
+  },
+  {
+   "t": "li",
+   "x": "fall。fall。落下。"
+  },
+  {
+   "t": "li",
+   "x": "family。family。家庭。"
+  },
+  {
+   "t": "li",
+   "x": "far。far。远的。"
+  },
+  {
+   "t": "li",
+   "x": "farm。farm。农场。"
+  },
+  {
+   "t": "li",
+   "x": "fast。fast。快的。"
+  },
+  {
+   "t": "li",
+   "x": "father。father。父亲。"
+  },
+  {
+   "t": "li",
+   "x": "feel。feel。感觉。"
+  },
+  {
+   "t": "li",
+   "x": "few。few。很少的。"
+  },
+  {
+   "t": "li",
+   "x": "field。field。田地。"
+  },
+  {
+   "t": "li",
+   "x": "fight。fight。战斗。"
+  },
+  {
+   "t": "li",
+   "x": "fill。fill。填满。"
+  },
+  {
+   "t": "li",
+   "x": "fire。fire。火。"
+  },
+  {
+   "t": "li",
+   "x": "first。first。第一的。"
+  },
+  {
+   "t": "li",
+   "x": "fish。fish。鱼。"
+  },
+  {
+   "t": "li",
+   "x": "five。five。五。"
+  },
+  {
+   "t": "li",
+   "x": "fly。fly。飞。"
+  },
+  {
+   "t": "li",
+   "x": "food。food。食物。"
+  },
+  {
+   "t": "li",
+   "x": "foot。foot。脚。"
+  },
+  {
+   "t": "li",
+   "x": "for。for。为了。"
+  },
+  {
+   "t": "li",
+   "x": "form。form。形式。"
+  },
+  {
+   "t": "li",
+   "x": "four。four。四。"
+  },
+  {
+   "t": "li",
+   "x": "friend。friend。朋友。"
+  },
+  {
+   "t": "li",
+   "x": "from。from。从。"
+  },
+  {
+   "t": "li",
+   "x": "front。front。前面。"
+  },
+  {
+   "t": "li",
+   "x": "full。full。满的。"
+  },
+  {
+   "t": "li",
+   "x": "garden。garden。花园。"
+  },
+  {
+   "t": "li",
+   "x": "get。get。得到。"
+  },
+  {
+   "t": "li",
+   "x": "girl。girl。女孩。"
+  },
+  {
+   "t": "li",
+   "x": "give。give。给。"
+  },
+  {
+   "t": "li",
+   "x": "glad。glad。高兴的。"
+  },
+  {
+   "t": "li",
+   "x": "glass。glass。玻璃。"
+  },
+  {
+   "t": "li",
+   "x": "go。go。去。"
+  },
+  {
+   "t": "li",
+   "x": "good。good。好的。"
+  },
+  {
+   "t": "li",
+   "x": "great。great。伟大的。"
+  },
+  {
+   "t": "li",
+   "x": "green。green。绿色的。"
+  },
+  {
+   "t": "li",
+   "x": "grow。grow。生长。"
+  },
+  {
+   "t": "li",
+   "x": "hand。hand。手。"
+  },
+  {
+   "t": "li",
+   "x": "happy。happy。快乐的。"
+  },
+  {
+   "t": "li",
+   "x": "hard。hard。困难的。"
+  },
+  {
+   "t": "li",
+   "x": "have。have。有。"
+  },
+  {
+   "t": "li",
+   "x": "he。he。他。"
+  },
+  {
+   "t": "li",
+   "x": "head。head。头。"
+  },
+  {
+   "t": "li",
+   "x": "high。high。高的。"
+  },
+  {
+   "t": "li",
+   "x": "home。home。家。"
+  },
+  {
+   "t": "li",
+   "x": "horse。horse。马。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

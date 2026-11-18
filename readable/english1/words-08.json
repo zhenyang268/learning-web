@@ -1,0 +1,515 @@
+{
+ "version": "reading/v1",
+ "id": "words-08",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "08-生物、医学与健康",
+ "source": "notebook/kaoyan/english1/words/08-生物、医学与健康.md",
+ "sourceSha": "8d6d4a30",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "08 生物、医学与健康"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "health。health。健康。"
+  },
+  {
+   "t": "li",
+   "x": "disease。disease。疾病。"
+  },
+  {
+   "t": "li",
+   "x": "medical。medical。医学的。"
+  },
+  {
+   "t": "li",
+   "x": "medicine。medicine。医学。"
+  },
+  {
+   "t": "li",
+   "x": "patient。patient。病人。"
+  },
+  {
+   "t": "li",
+   "x": "treatment。treatment。治疗。"
+  },
+  {
+   "t": "li",
+   "x": "gene。gene。基因。"
+  },
+  {
+   "t": "li",
+   "x": "genetic。genetic。基因的。"
+  },
+  {
+   "t": "li",
+   "x": "cell。cell。细胞。"
+  },
+  {
+   "t": "li",
+   "x": "brain。brain。大脑。"
+  },
+  {
+   "t": "li",
+   "x": "immune。immune。免疫的。"
+  },
+  {
+   "t": "li",
+   "x": "immunity。immunity。免疫力。"
+  },
+  {
+   "t": "li",
+   "x": "infection。infection。感染。"
+  },
+  {
+   "t": "li",
+   "x": "infect。infect。感染。"
+  },
+  {
+   "t": "li",
+   "x": "infectious。infectious。传染性的。"
+  },
+  {
+   "t": "li",
+   "x": "virus。virus。病毒。"
+  },
+  {
+   "t": "li",
+   "x": "viral。viral。病毒的。"
+  },
+  {
+   "t": "li",
+   "x": "bacteria。bacteria。细菌。"
+  },
+  {
+   "t": "li",
+   "x": "bacterial。bacterial。细菌的。"
+  },
+  {
+   "t": "li",
+   "x": "drug。drug。药物。"
+  },
+  {
+   "t": "li",
+   "x": "vaccine。vaccine。疫苗。"
+  },
+  {
+   "t": "li",
+   "x": "vaccinate。vaccinate。接种疫苗。"
+  },
+  {
+   "t": "li",
+   "x": "symptom。symptom。症状。"
+  },
+  {
+   "t": "li",
+   "x": "syndrome。syndrome。综合征。"
+  },
+  {
+   "t": "li",
+   "x": "diagnosis。diagnosis。诊断。"
+  },
+  {
+   "t": "li",
+   "x": "diagnose。diagnose。诊断。"
+  },
+  {
+   "t": "li",
+   "x": "therapy。therapy。治疗。"
+  },
+  {
+   "t": "li",
+   "x": "therapeutic。therapeutic。治疗的。"
+  },
+  {
+   "t": "li",
+   "x": "clinical。clinical。临床的。"
+  },
+  {
+   "t": "li",
+   "x": "clinic。clinic。诊所。"
+  },
+  {
+   "t": "li",
+   "x": "hospital。hospital。医院。"
+  },
+  {
+   "t": "li",
+   "x": "physician。physician。内科医生。"
+  },
+  {
+   "t": "li",
+   "x": "surgeon。surgeon。外科医生。"
+  },
+  {
+   "t": "li",
+   "x": "surgery。surgery。外科手术。"
+  },
+  {
+   "t": "li",
+   "x": "nurse。nurse。护士。"
+  },
+  {
+   "t": "li",
+   "x": "chronic。chronic。慢性的。"
+  },
+  {
+   "t": "li",
+   "x": "acute。acute。急性的。"
+  },
+  {
+   "t": "li",
+   "x": "mental。mental。精神的。"
+  },
+  {
+   "t": "li",
+   "x": "psychological。psychological。心理的。"
+  },
+  {
+   "t": "li",
+   "x": "anxiety。anxiety。焦虑。"
+  },
+  {
+   "t": "li",
+   "x": "depressed。depressed。抑郁的。"
+  },
+  {
+   "t": "li",
+   "x": "disorder。disorder。失调。"
+  },
+  {
+   "t": "li",
+   "x": "illness。illness。疾病。"
+  },
+  {
+   "t": "li",
+   "x": "healthy。healthy。健康的。"
+  },
+  {
+   "t": "li",
+   "x": "nutrition。nutrition。营养。"
+  },
+  {
+   "t": "li",
+   "x": "nutrient。nutrient。营养物质。"
+  },
+  {
+   "t": "li",
+   "x": "diet。diet。饮食。"
+  },
+  {
+   "t": "li",
+   "x": "dietary。dietary。饮食的。"
+  },
+  {
+   "t": "li",
+   "x": "vitamin。vitamin。维生素。"
+  },
+  {
+   "t": "li",
+   "x": "protein。protein。蛋白质。"
+  },
+  {
+   "t": "li",
+   "x": "enzyme。enzyme。酶。"
+  },
+  {
+   "t": "li",
+   "x": "hormone。hormone。激素。"
+  },
+  {
+   "t": "li",
+   "x": "metabolism。metabolism。新陈代谢。"
+  },
+  {
+   "t": "li",
+   "x": "metabolic。metabolic。新陈代谢的。"
+  },
+  {
+   "t": "li",
+   "x": "blood。blood。血。"
+  },
+  {
+   "t": "li",
+   "x": "heart。heart。心脏。"
+  },
+  {
+   "t": "li",
+   "x": "cardiac。cardiac。心脏的。"
+  },
+  {
+   "t": "li",
+   "x": "lung。lung。肺。"
+  },
+  {
+   "t": "li",
+   "x": "respiratory。respiratory。呼吸的。"
+  },
+  {
+   "t": "li",
+   "x": "breathe。breathe。呼吸。"
+  },
+  {
+   "t": "li",
+   "x": "muscle。muscle。肌肉。"
+  },
+  {
+   "t": "li",
+   "x": "muscular。muscular。肌肉的。"
+  },
+  {
+   "t": "li",
+   "x": "bone。bone。骨。"
+  },
+  {
+   "t": "li",
+   "x": "skeletal。skeletal。骨骼的。"
+  },
+  {
+   "t": "li",
+   "x": "nerve。nerve。神经。"
+  },
+  {
+   "t": "li",
+   "x": "nervous。nervous。神经的。"
+  },
+  {
+   "t": "li",
+   "x": "neuron。neuron。神经元。"
+  },
+  {
+   "t": "li",
+   "x": "tissue。tissue。组织。"
+  },
+  {
+   "t": "li",
+   "x": "organ。organ。器官。"
+  },
+  {
+   "t": "li",
+   "x": "organism。organism。生物。"
+  },
+  {
+   "t": "li",
+   "x": "evolutionary。evolutionary。进化的。"
+  },
+  {
+   "t": "li",
+   "x": "biology。biology。生物学。"
+  },
+  {
+   "t": "li",
+   "x": "biological。biological。生物学的。"
+  },
+  {
+   "t": "li",
+   "x": "reproduction。reproduction。繁殖。"
+  },
+  {
+   "t": "li",
+   "x": "pregnancy。pregnancy。怀孕。"
+  },
+  {
+   "t": "li",
+   "x": "embryo。embryo。胚胎。"
+  },
+  {
+   "t": "li",
+   "x": "fetus。fetus。胎儿。"
+  },
+  {
+   "t": "li",
+   "x": "birth。birth。出生。"
+  },
+  {
+   "t": "li",
+   "x": "cancer。cancer。癌症。"
+  },
+  {
+   "t": "li",
+   "x": "tumor。tumor。肿瘤。"
+  },
+  {
+   "t": "li",
+   "x": "malignant。malignant。恶性的。"
+  },
+  {
+   "t": "li",
+   "x": "benign。benign。良性的。"
+  },
+  {
+   "t": "li",
+   "x": "cardiovascular。cardiovascular。心血管的。"
+  },
+  {
+   "t": "li",
+   "x": "diabetes。diabetes。糖尿病。"
+  },
+  {
+   "t": "li",
+   "x": "asthma。asthma。哮喘。"
+  },
+  {
+   "t": "li",
+   "x": "allergy。allergy。过敏。"
+  },
+  {
+   "t": "li",
+   "x": "allergic。allergic。过敏的。"
+  },
+  {
+   "t": "li",
+   "x": "inflammation。inflammation。炎症。"
+  },
+  {
+   "t": "li",
+   "x": "inflammatory。inflammatory。炎症的。"
+  },
+  {
+   "t": "li",
+   "x": "wound。wound。伤口。"
+  },
+  {
+   "t": "li",
+   "x": "injury。injury。伤害。"
+  },
+  {
+   "t": "li",
+   "x": "trauma。trauma。创伤。"
+  },
+  {
+   "t": "li",
+   "x": "heal。heal。治愈。"
+  },
+  {
+   "t": "li",
+   "x": "recovery。recovery。康复。"
+  },
+  {
+   "t": "li",
+   "x": "recover。recover。康复。"
+  },
+  {
+   "t": "li",
+   "x": "rehabilitation。rehabilitation。康复。"
+  },
+  {
+   "t": "li",
+   "x": "disability。disability。残疾。"
+  },
+  {
+   "t": "li",
+   "x": "impair。impair。损害。"
+  },
+  {
+   "t": "li",
+   "x": "impairment。impairment。损伤。"
+  },
+  {
+   "t": "li",
+   "x": "complication。complication。并发症。"
+  },
+  {
+   "t": "li",
+   "x": "epidemic。epidemic。流行病。"
+  },
+  {
+   "t": "li",
+   "x": "pandemic。pandemic。大流行病。"
+  },
+  {
+   "t": "li",
+   "x": "outbreak。outbreak。爆发。"
+  },
+  {
+   "t": "li",
+   "x": "mortality。mortality。死亡率。"
+  },
+  {
+   "t": "li",
+   "x": "antibiotic。antibiotic。抗生素。"
+  },
+  {
+   "t": "li",
+   "x": "antibody。antibody。抗体。"
+  },
+  {
+   "t": "li",
+   "x": "obesity。obesity。肥胖。"
+  },
+  {
+   "t": "li",
+   "x": "contagious。contagious。传染性的。"
+  },
+  {
+   "t": "li",
+   "x": "hygiene。hygiene。卫生。"
+  },
+  {
+   "t": "li",
+   "x": "sanitation。sanitation。环境卫生。"
+  },
+  {
+   "t": "li",
+   "x": "insomnia。insomnia。失眠。"
+  },
+  {
+   "t": "li",
+   "x": "addiction。addiction。成瘾。"
+  },
+  {
+   "t": "li",
+   "x": "morbidity。morbidity。发病率。"
+  },
+  {
+   "t": "li",
+   "x": "lifespan。lifespan。寿命。"
+  },
+  {
+   "t": "li",
+   "x": "longevity。longevity。长寿。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "“suggests that chronic stress can weaken immunity and make the body more vulnerable to infection” 变成 that 引导宾语从句，从句中 can weaken 与 (can) make 并列，make 后接“宾语+形容词补语” 变成 用于表达研究、证据表明某结论，注意宾语从句用陈述语序，并列谓语可共享情态动词。"
+  },
+  {
+   "t": "li",
+   "x": "“When a patient reports persistent symptoms..., doctors should not dismiss them...” 变成 When 引导时间状语从句，主句用“should not + 动词原形” 变成 用于描述经常性情形下的建议或规范，从句常用一般现在时，主句用情态动词表达能力、义务或建议。"
+  },
+  {
+   "t": "li",
+   "x": "“a hereditary disorder that has remained unnoticed for years” 变成 that 引导限制性定语从句，从句谓语 has remained 为现在完成时，unnoticed 作表语 变成 用于修饰名词并说明某状态持续至今，注意 remain 为系动词，后接形容词。"
+  },
+  {
+   "t": "li",
+   "x": "“Although medication can relieve acute discomfort, it is often less effective than a therapy that combines...” 变成 Although 引导让步状语从句，主句含 less effective than 比较结构，therapy 后接 that 引导定语从句 变成 用于先让步后对比，比较级前可用 less 表示“不如”，定语从句修饰比较对象。"
+  },
+  {
+   "t": "li",
+   "x": "“This does not mean that individual effort alone determines health outcomes.” 变成 主句为否定结构，that 引导宾语从句，从句用一般现在时陈述观点 变成 用于否定某一简单化看法，mean that 后接完整从句，从句保持陈述语序。"
+  }
+ ]
+}

@@ -1,0 +1,895 @@
+{
+ "version": "reading/v1",
+ "id": "words-01",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "01-核心动词（上）",
+ "source": "notebook/kaoyan/english1/words/01-核心动词（上）.md",
+ "sourceSha": "40b4697c",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "01 核心动词（上）"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "know。know。知道。"
+  },
+  {
+   "t": "li",
+   "x": "understand。understand。理解。"
+  },
+  {
+   "t": "li",
+   "x": "comprehend。comprehend。理解。"
+  },
+  {
+   "t": "li",
+   "x": "grasp。grasp。理解。"
+  },
+  {
+   "t": "li",
+   "x": "perceive。perceive。察觉。"
+  },
+  {
+   "t": "li",
+   "x": "conceive。conceive。构想。"
+  },
+  {
+   "t": "li",
+   "x": "realize。realize。意识到。"
+  },
+  {
+   "t": "li",
+   "x": "recognize。recognize。认出。"
+  },
+  {
+   "t": "li",
+   "x": "appreciate。appreciate。理解。"
+  },
+  {
+   "t": "li",
+   "x": "discern。discern。辨别。"
+  },
+  {
+   "t": "li",
+   "x": "distinguish。distinguish。区分。"
+  },
+  {
+   "t": "li",
+   "x": "differentiate。differentiate。区分。"
+  },
+  {
+   "t": "li",
+   "x": "discriminate。discriminate。区别。"
+  },
+  {
+   "t": "li",
+   "x": "identify。identify。识别。"
+  },
+  {
+   "t": "li",
+   "x": "confuse。confuse。使混淆。"
+  },
+  {
+   "t": "li",
+   "x": "misunderstand。misunderstand。误解。"
+  },
+  {
+   "t": "li",
+   "x": "interpret。interpret。解释。"
+  },
+  {
+   "t": "li",
+   "x": "think。think。认为。"
+  },
+  {
+   "t": "li",
+   "x": "consider。consider。认为。"
+  },
+  {
+   "t": "li",
+   "x": "contemplate。contemplate。沉思。"
+  },
+  {
+   "t": "li",
+   "x": "ponder。ponder。深思。"
+  },
+  {
+   "t": "li",
+   "x": "meditate。meditate。沉思。"
+  },
+  {
+   "t": "li",
+   "x": "reflect。reflect。反映。"
+  },
+  {
+   "t": "li",
+   "x": "speculate。speculate。推测。"
+  },
+  {
+   "t": "li",
+   "x": "reason。reason。推理。"
+  },
+  {
+   "t": "li",
+   "x": "deduce。deduce。推断。"
+  },
+  {
+   "t": "li",
+   "x": "infer。infer。推断。"
+  },
+  {
+   "t": "li",
+   "x": "conclude。conclude。断定。"
+  },
+  {
+   "t": "li",
+   "x": "judge。judge。判断。"
+  },
+  {
+   "t": "li",
+   "x": "assess。assess。评估。"
+  },
+  {
+   "t": "li",
+   "x": "evaluate。evaluate。评价。"
+  },
+  {
+   "t": "li",
+   "x": "appraise。appraise。评估。"
+  },
+  {
+   "t": "li",
+   "x": "estimate。estimate。估计。"
+  },
+  {
+   "t": "li",
+   "x": "reckon。reckon。认为。"
+  },
+  {
+   "t": "li",
+   "x": "deem。deem。认为。"
+  },
+  {
+   "t": "li",
+   "x": "regard。regard。认为。"
+  },
+  {
+   "t": "li",
+   "x": "view。view。看待。"
+  },
+  {
+   "t": "li",
+   "x": "count。count。认为。"
+  },
+  {
+   "t": "li",
+   "x": "hold。hold。认为。"
+  },
+  {
+   "t": "li",
+   "x": "maintain。maintain。主张。"
+  },
+  {
+   "t": "li",
+   "x": "contend。contend。主张。"
+  },
+  {
+   "t": "li",
+   "x": "argue。argue。论证。"
+  },
+  {
+   "t": "li",
+   "x": "assert。assert。断言。"
+  },
+  {
+   "t": "li",
+   "x": "affirm。affirm。断言。"
+  },
+  {
+   "t": "li",
+   "x": "allege。allege。断言。"
+  },
+  {
+   "t": "li",
+   "x": "claim。claim。声称。"
+  },
+  {
+   "t": "li",
+   "x": "state。state。陈述。"
+  },
+  {
+   "t": "li",
+   "x": "declare。declare。宣布。"
+  },
+  {
+   "t": "li",
+   "x": "pronounce。pronounce。宣称。"
+  },
+  {
+   "t": "li",
+   "x": "announce。announce。宣布。"
+  },
+  {
+   "t": "li",
+   "x": "proclaim。proclaim。宣告。"
+  },
+  {
+   "t": "li",
+   "x": "testify。testify。证明。"
+  },
+  {
+   "t": "li",
+   "x": "witness。witness。目睹。"
+  },
+  {
+   "t": "li",
+   "x": "assume。assume。假定。"
+  },
+  {
+   "t": "li",
+   "x": "presume。presume。推测。"
+  },
+  {
+   "t": "li",
+   "x": "presuppose。presuppose。预设。"
+  },
+  {
+   "t": "li",
+   "x": "postulate。postulate。假定。"
+  },
+  {
+   "t": "li",
+   "x": "suppose。suppose。假设。"
+  },
+  {
+   "t": "li",
+   "x": "suspect。suspect。怀疑。"
+  },
+  {
+   "t": "li",
+   "x": "doubt。doubt。怀疑。"
+  },
+  {
+   "t": "li",
+   "x": "question。question。质疑。"
+  },
+  {
+   "t": "li",
+   "x": "challenge。challenge。质疑。"
+  },
+  {
+   "t": "li",
+   "x": "learn。learn。得知。"
+  },
+  {
+   "t": "li",
+   "x": "study。study。研究。"
+  },
+  {
+   "t": "li",
+   "x": "research。research。研究。"
+  },
+  {
+   "t": "li",
+   "x": "investigate。investigate。调查。"
+  },
+  {
+   "t": "li",
+   "x": "explore。explore。探究。"
+  },
+  {
+   "t": "li",
+   "x": "probe。probe。探究。"
+  },
+  {
+   "t": "li",
+   "x": "examine。examine。审查。"
+  },
+  {
+   "t": "li",
+   "x": "inspect。inspect。检查。"
+  },
+  {
+   "t": "li",
+   "x": "scrutinize。scrutinize。细查。"
+  },
+  {
+   "t": "li",
+   "x": "survey。survey。调查。"
+  },
+  {
+   "t": "li",
+   "x": "review。review。审查。"
+  },
+  {
+   "t": "li",
+   "x": "revise。revise。修订。"
+  },
+  {
+   "t": "li",
+   "x": "memorize。memorize。记住。"
+  },
+  {
+   "t": "li",
+   "x": "recall。recall。回想。"
+  },
+  {
+   "t": "li",
+   "x": "recollect。recollect。回忆。"
+  },
+  {
+   "t": "li",
+   "x": "remember。remember。记得。"
+  },
+  {
+   "t": "li",
+   "x": "remind。remind。提醒。"
+  },
+  {
+   "t": "li",
+   "x": "forget。forget。忘记。"
+  },
+  {
+   "t": "li",
+   "x": "acquire。acquire。获得。"
+  },
+  {
+   "t": "li",
+   "x": "absorb。absorb。吸收。"
+  },
+  {
+   "t": "li",
+   "x": "assimilate。assimilate。吸收。"
+  },
+  {
+   "t": "li",
+   "x": "master。master。掌握。"
+  },
+  {
+   "t": "li",
+   "x": "drill。drill。训练。"
+  },
+  {
+   "t": "li",
+   "x": "practise。practise。练习。"
+  },
+  {
+   "t": "li",
+   "x": "train。train。训练。"
+  },
+  {
+   "t": "li",
+   "x": "teach。teach。教。"
+  },
+  {
+   "t": "li",
+   "x": "instruct。instruct。指导。"
+  },
+  {
+   "t": "li",
+   "x": "educate。educate。教育。"
+  },
+  {
+   "t": "li",
+   "x": "enlighten。enlighten。启发。"
+  },
+  {
+   "t": "li",
+   "x": "inform。inform。告知。"
+  },
+  {
+   "t": "li",
+   "x": "notify。notify。通知。"
+  },
+  {
+   "t": "li",
+   "x": "acquaint。acquaint。使熟悉。"
+  },
+  {
+   "t": "li",
+   "x": "find。find。发现。"
+  },
+  {
+   "t": "li",
+   "x": "discover。discover。发现。"
+  },
+  {
+   "t": "li",
+   "x": "detect。detect。察觉。"
+  },
+  {
+   "t": "li",
+   "x": "uncover。uncover。揭露。"
+  },
+  {
+   "t": "li",
+   "x": "reveal。reveal。揭示。"
+  },
+  {
+   "t": "li",
+   "x": "disclose。disclose。披露。"
+  },
+  {
+   "t": "li",
+   "x": "expose。expose。揭露。"
+  },
+  {
+   "t": "li",
+   "x": "demonstrate。demonstrate。证明。"
+  },
+  {
+   "t": "li",
+   "x": "prove。prove。证明。"
+  },
+  {
+   "t": "li",
+   "x": "verify。verify。核实。"
+  },
+  {
+   "t": "li",
+   "x": "confirm。confirm。证实。"
+  },
+  {
+   "t": "li",
+   "x": "validate。validate。证实。"
+  },
+  {
+   "t": "li",
+   "x": "establish。establish。证实。"
+  },
+  {
+   "t": "li",
+   "x": "indicate。indicate。表明。"
+  },
+  {
+   "t": "li",
+   "x": "suggest。suggest。表明。"
+  },
+  {
+   "t": "li",
+   "x": "imply。imply。暗示。"
+  },
+  {
+   "t": "li",
+   "x": "denote。denote。表示。"
+  },
+  {
+   "t": "li",
+   "x": "signify。signify。表示。"
+  },
+  {
+   "t": "li",
+   "x": "manifest。manifest。表明。"
+  },
+  {
+   "t": "li",
+   "x": "predict。predict。预测。"
+  },
+  {
+   "t": "li",
+   "x": "forecast。forecast。预报。"
+  },
+  {
+   "t": "li",
+   "x": "foresee。foresee。预见。"
+  },
+  {
+   "t": "li",
+   "x": "anticipate。anticipate。预料。"
+  },
+  {
+   "t": "li",
+   "x": "expect。expect。预期。"
+  },
+  {
+   "t": "li",
+   "x": "calculate。calculate。计算。"
+  },
+  {
+   "t": "li",
+   "x": "compute。compute。计算。"
+  },
+  {
+   "t": "li",
+   "x": "measure。measure。衡量。"
+  },
+  {
+   "t": "li",
+   "x": "weigh。weigh。权衡。"
+  },
+  {
+   "t": "li",
+   "x": "gauge。gauge。估计。"
+  },
+  {
+   "t": "li",
+   "x": "compare。compare。比较。"
+  },
+  {
+   "t": "li",
+   "x": "contrast。contrast。对比。"
+  },
+  {
+   "t": "li",
+   "x": "classify。classify。分类。"
+  },
+  {
+   "t": "li",
+   "x": "categorize。categorize。归类。"
+  },
+  {
+   "t": "li",
+   "x": "sort。sort。分类。"
+  },
+  {
+   "t": "li",
+   "x": "rank。rank。排名。"
+  },
+  {
+   "t": "li",
+   "x": "match。match。匹配。"
+  },
+  {
+   "t": "li",
+   "x": "correlate。correlate。相关。"
+  },
+  {
+   "t": "li",
+   "x": "relate。relate。联系。"
+  },
+  {
+   "t": "li",
+   "x": "equate。equate。等同。"
+  },
+  {
+   "t": "li",
+   "x": "describe。describe。描述。"
+  },
+  {
+   "t": "li",
+   "x": "depict。depict。描绘。"
+  },
+  {
+   "t": "li",
+   "x": "portray。portray。刻画。"
+  },
+  {
+   "t": "li",
+   "x": "define。define。界定。"
+  },
+  {
+   "t": "li",
+   "x": "illustrate。illustrate。说明。"
+  },
+  {
+   "t": "li",
+   "x": "exemplify。exemplify。例证。"
+  },
+  {
+   "t": "li",
+   "x": "cite。cite。引用。"
+  },
+  {
+   "t": "li",
+   "x": "quote。quote。引用。"
+  },
+  {
+   "t": "li",
+   "x": "mention。mention。提及。"
+  },
+  {
+   "t": "li",
+   "x": "note。note。指出。"
+  },
+  {
+   "t": "li",
+   "x": "remark。remark。评论。"
+  },
+  {
+   "t": "li",
+   "x": "comment。comment。评论。"
+  },
+  {
+   "t": "li",
+   "x": "observe。observe。观察到。"
+  },
+  {
+   "t": "li",
+   "x": "refer。refer。提及。"
+  },
+  {
+   "t": "li",
+   "x": "account。account。解释。"
+  },
+  {
+   "t": "li",
+   "x": "analyse。analyse。分析。"
+  },
+  {
+   "t": "li",
+   "x": "synthesize。synthesize。综合。"
+  },
+  {
+   "t": "li",
+   "x": "generalize。generalize。概括。"
+  },
+  {
+   "t": "li",
+   "x": "summarize。summarize。概括。"
+  },
+  {
+   "t": "li",
+   "x": "outline。outline。概述。"
+  },
+  {
+   "t": "li",
+   "x": "abstract。abstract。提取。"
+  },
+  {
+   "t": "li",
+   "x": "specify。specify。具体说明。"
+  },
+  {
+   "t": "li",
+   "x": "clarify。clarify。澄清。"
+  },
+  {
+   "t": "li",
+   "x": "elaborate。elaborate。详述。"
+  },
+  {
+   "t": "li",
+   "x": "explain。explain。解释。"
+  },
+  {
+   "t": "li",
+   "x": "illuminate。illuminate。阐明。"
+  },
+  {
+   "t": "li",
+   "x": "convince。convince。使信服。"
+  },
+  {
+   "t": "li",
+   "x": "persuade。persuade。说服。"
+  },
+  {
+   "t": "li",
+   "x": "assure。assure。使确信。"
+  },
+  {
+   "t": "li",
+   "x": "reassure。reassure。使安心。"
+  },
+  {
+   "t": "li",
+   "x": "believe。believe。相信。"
+  },
+  {
+   "t": "li",
+   "x": "trust。trust。信任。"
+  },
+  {
+   "t": "li",
+   "x": "credit。credit。归功于。"
+  },
+  {
+   "t": "li",
+   "x": "accept。accept。接受。"
+  },
+  {
+   "t": "li",
+   "x": "reject。reject。拒绝。"
+  },
+  {
+   "t": "li",
+   "x": "deny。deny。否认。"
+  },
+  {
+   "t": "li",
+   "x": "refute。refute。驳斥。"
+  },
+  {
+   "t": "li",
+   "x": "contradict。contradict。反驳。"
+  },
+  {
+   "t": "li",
+   "x": "object。object。反对。"
+  },
+  {
+   "t": "li",
+   "x": "oppose。oppose。反对。"
+  },
+  {
+   "t": "li",
+   "x": "approve。approve。赞成。"
+  },
+  {
+   "t": "li",
+   "x": "endorse。endorse。赞同。"
+  },
+  {
+   "t": "li",
+   "x": "advocate。advocate。主张。"
+  },
+  {
+   "t": "li",
+   "x": "uphold。uphold。支持。"
+  },
+  {
+   "t": "li",
+   "x": "abandon。abandon。放弃。"
+  },
+  {
+   "t": "li",
+   "x": "abolish。abolish。废除。"
+  },
+  {
+   "t": "li",
+   "x": "accelerate。accelerate。加速。"
+  },
+  {
+   "t": "li",
+   "x": "accommodate。accommodate。容纳。"
+  },
+  {
+   "t": "li",
+   "x": "accomplish。accomplish。完成。"
+  },
+  {
+   "t": "li",
+   "x": "accumulate。accumulate。积累。"
+  },
+  {
+   "t": "li",
+   "x": "achieve。achieve。实现。"
+  },
+  {
+   "t": "li",
+   "x": "acknowledge。acknowledge。承认。"
+  },
+  {
+   "t": "li",
+   "x": "adapt。adapt。适应。"
+  },
+  {
+   "t": "li",
+   "x": "address。address。处理。"
+  },
+  {
+   "t": "li",
+   "x": "adjust。adjust。调整。"
+  },
+  {
+   "t": "li",
+   "x": "adopt。adopt。采用。"
+  },
+  {
+   "t": "li",
+   "x": "affect。affect。影响。"
+  },
+  {
+   "t": "li",
+   "x": "alter。alter。改变。"
+  },
+  {
+   "t": "li",
+   "x": "apply。apply。应用。"
+  },
+  {
+   "t": "li",
+   "x": "approach。approach。接近。"
+  },
+  {
+   "t": "li",
+   "x": "arise。arise。出现。"
+  },
+  {
+   "t": "li",
+   "x": "assign。assign。分配。"
+  },
+  {
+   "t": "li",
+   "x": "attain。attain。达到。"
+  },
+  {
+   "t": "li",
+   "x": "attribute。attribute。把……归因于。"
+  },
+  {
+   "t": "li",
+   "x": "avoid。avoid。避免。"
+  },
+  {
+   "t": "li",
+   "x": "boost。boost。促进。"
+  },
+  {
+   "t": "li",
+   "x": "cause。cause。导致。"
+  },
+  {
+   "t": "li",
+   "x": "commit。commit。承诺。"
+  },
+  {
+   "t": "li",
+   "x": "compensate。compensate。补偿。"
+  },
+  {
+   "t": "li",
+   "x": "compete。compete。竞争。"
+  },
+  {
+   "t": "li",
+   "x": "comprise。comprise。包括。"
+  },
+  {
+   "t": "li",
+   "x": "concentrate。concentrate。集中。"
+  },
+  {
+   "t": "li",
+   "x": "conduct。conduct。进行。"
+  },
+  {
+   "t": "li",
+   "x": "confront。confront。面对。"
+  },
+  {
+   "t": "li",
+   "x": "constitute。constitute。构成。"
+  },
+  {
+   "t": "li",
+   "x": "consume。consume。消耗。"
+  },
+  {
+   "t": "li",
+   "x": "contribute。contribute。贡献。"
+  },
+  {
+   "t": "li",
+   "x": "convey。convey。传达。"
+  },
+  {
+   "t": "li",
+   "x": "cope。cope。应对。"
+  },
+  {
+   "t": "li",
+   "x": "create。create。创造。"
+  },
+  {
+   "t": "li",
+   "x": "decline。decline。下降。"
+  },
+  {
+   "t": "li",
+   "x": "derive。derive。获得。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

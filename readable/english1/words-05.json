@@ -1,0 +1,847 @@
+{
+ "version": "reading/v1",
+ "id": "words-05",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "05-经济、商业与管理",
+ "source": "notebook/kaoyan/english1/words/05-经济、商业与管理.md",
+ "sourceSha": "e4d044e4",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "05 经济、商业与管理"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "economy。economy。经济。"
+  },
+  {
+   "t": "li",
+   "x": "economic。economic。经济的。"
+  },
+  {
+   "t": "li",
+   "x": "economics。economics。经济学。"
+  },
+  {
+   "t": "li",
+   "x": "market。market。市场。"
+  },
+  {
+   "t": "li",
+   "x": "demand。demand。需求。"
+  },
+  {
+   "t": "li",
+   "x": "supply。supply。供给。"
+  },
+  {
+   "t": "li",
+   "x": "price。price。价格。"
+  },
+  {
+   "t": "li",
+   "x": "cost。cost。成本。"
+  },
+  {
+   "t": "li",
+   "x": "profit。profit。利润。"
+  },
+  {
+   "t": "li",
+   "x": "revenue。revenue。收入。"
+  },
+  {
+   "t": "li",
+   "x": "income。income。收入。"
+  },
+  {
+   "t": "li",
+   "x": "wage。wage。工资。"
+  },
+  {
+   "t": "li",
+   "x": "salary。salary。薪水。"
+  },
+  {
+   "t": "li",
+   "x": "labor。labor。劳动。"
+  },
+  {
+   "t": "li",
+   "x": "capital。capital。资本。"
+  },
+  {
+   "t": "li",
+   "x": "investment。investment。投资。"
+  },
+  {
+   "t": "li",
+   "x": "financial。financial。金融的。"
+  },
+  {
+   "t": "li",
+   "x": "business。business。商业。"
+  },
+  {
+   "t": "li",
+   "x": "company。company。公司。"
+  },
+  {
+   "t": "li",
+   "x": "firm。firm。公司。"
+  },
+  {
+   "t": "li",
+   "x": "enterprise。enterprise。企业。"
+  },
+  {
+   "t": "li",
+   "x": "industry。industry。工业。"
+  },
+  {
+   "t": "li",
+   "x": "industrial。industrial。工业的。"
+  },
+  {
+   "t": "li",
+   "x": "production。production。生产。"
+  },
+  {
+   "t": "li",
+   "x": "product。product。产品。"
+  },
+  {
+   "t": "li",
+   "x": "productivity。productivity。生产率。"
+  },
+  {
+   "t": "li",
+   "x": "consumption。consumption。消费。"
+  },
+  {
+   "t": "li",
+   "x": "consumer。consumer。消费者。"
+  },
+  {
+   "t": "li",
+   "x": "customer。customer。顾客。"
+  },
+  {
+   "t": "li",
+   "x": "client。client。客户。"
+  },
+  {
+   "t": "li",
+   "x": "trade。trade。贸易。"
+  },
+  {
+   "t": "li",
+   "x": "commerce。commerce。商业。"
+  },
+  {
+   "t": "li",
+   "x": "commercial。commercial。商业的。"
+  },
+  {
+   "t": "li",
+   "x": "export。export。出口。"
+  },
+  {
+   "t": "li",
+   "x": "import。import。进口。"
+  },
+  {
+   "t": "li",
+   "x": "tariff。tariff。关税。"
+  },
+  {
+   "t": "li",
+   "x": "tax。tax。税。"
+  },
+  {
+   "t": "li",
+   "x": "taxation。taxation。征税。"
+  },
+  {
+   "t": "li",
+   "x": "budget。budget。预算。"
+  },
+  {
+   "t": "li",
+   "x": "debt。debt。债务。"
+  },
+  {
+   "t": "li",
+   "x": "loan。loan。贷款。"
+  },
+  {
+   "t": "li",
+   "x": "interest。interest。利息。"
+  },
+  {
+   "t": "li",
+   "x": "bank。bank。银行。"
+  },
+  {
+   "t": "li",
+   "x": "banking。banking。银行业。"
+  },
+  {
+   "t": "li",
+   "x": "currency。currency。货币。"
+  },
+  {
+   "t": "li",
+   "x": "money。money。货币。"
+  },
+  {
+   "t": "li",
+   "x": "monetary。monetary。货币的。"
+  },
+  {
+   "t": "li",
+   "x": "fiscal。fiscal。财政的。"
+  },
+  {
+   "t": "li",
+   "x": "inflation。inflation。通货膨胀。"
+  },
+  {
+   "t": "li",
+   "x": "deflation。deflation。通货紧缩。"
+  },
+  {
+   "t": "li",
+   "x": "recession。recession。经济衰退。"
+  },
+  {
+   "t": "li",
+   "x": "depression。depression。经济萧条。"
+  },
+  {
+   "t": "li",
+   "x": "growth。growth。增长。"
+  },
+  {
+   "t": "li",
+   "x": "output。output。产量。"
+  },
+  {
+   "t": "li",
+   "x": "input。input。投入。"
+  },
+  {
+   "t": "li",
+   "x": "employment。employment。就业。"
+  },
+  {
+   "t": "li",
+   "x": "unemployment。unemployment。失业。"
+  },
+  {
+   "t": "li",
+   "x": "employee。employee。雇员。"
+  },
+  {
+   "t": "li",
+   "x": "employer。employer。雇主。"
+  },
+  {
+   "t": "li",
+   "x": "employ。employ。雇用。"
+  },
+  {
+   "t": "li",
+   "x": "recruit。recruit。招聘。"
+  },
+  {
+   "t": "li",
+   "x": "recruitment。recruitment。招聘。"
+  },
+  {
+   "t": "li",
+   "x": "hire。hire。雇用。"
+  },
+  {
+   "t": "li",
+   "x": "dismiss。dismiss。解雇。"
+  },
+  {
+   "t": "li",
+   "x": "dismissal。dismissal。解雇。"
+  },
+  {
+   "t": "li",
+   "x": "layoff。layoff。裁员。"
+  },
+  {
+   "t": "li",
+   "x": "workforce。workforce。劳动力。"
+  },
+  {
+   "t": "li",
+   "x": "personnel。personnel。人员。"
+  },
+  {
+   "t": "li",
+   "x": "staff。staff。员工。"
+  },
+  {
+   "t": "li",
+   "x": "manager。manager。经理。"
+  },
+  {
+   "t": "li",
+   "x": "management。management。管理。"
+  },
+  {
+   "t": "li",
+   "x": "administration。administration。管理。"
+  },
+  {
+   "t": "li",
+   "x": "administrative。administrative。管理的。"
+  },
+  {
+   "t": "li",
+   "x": "executive。executive。主管。"
+  },
+  {
+   "t": "li",
+   "x": "director。director。董事。"
+  },
+  {
+   "t": "li",
+   "x": "board。board。董事会。"
+  },
+  {
+   "t": "li",
+   "x": "shareholder。shareholder。股东。"
+  },
+  {
+   "t": "li",
+   "x": "stock。stock。股票。"
+  },
+  {
+   "t": "li",
+   "x": "share。share。股份。"
+  },
+  {
+   "t": "li",
+   "x": "equity。equity。股本。"
+  },
+  {
+   "t": "li",
+   "x": "bond。bond。债券。"
+  },
+  {
+   "t": "li",
+   "x": "security。security。证券。"
+  },
+  {
+   "t": "li",
+   "x": "dividend。dividend。股息。"
+  },
+  {
+   "t": "li",
+   "x": "asset。asset。资产。"
+  },
+  {
+   "t": "li",
+   "x": "liability。liability。负债。"
+  },
+  {
+   "t": "li",
+   "x": "accounting。accounting。会计。"
+  },
+  {
+   "t": "li",
+   "x": "accountant。accountant。会计师。"
+  },
+  {
+   "t": "li",
+   "x": "audit。audit。审计。"
+  },
+  {
+   "t": "li",
+   "x": "auditor。auditor。审计员。"
+  },
+  {
+   "t": "li",
+   "x": "corporation。corporation。公司。"
+  },
+  {
+   "t": "li",
+   "x": "corporate。corporate。公司的。"
+  },
+  {
+   "t": "li",
+   "x": "conglomerate。conglomerate。企业集团。"
+  },
+  {
+   "t": "li",
+   "x": "merger。merger。合并。"
+  },
+  {
+   "t": "li",
+   "x": "acquisition。acquisition。收购。"
+  },
+  {
+   "t": "li",
+   "x": "takeover。takeover。接管。"
+  },
+  {
+   "t": "li",
+   "x": "monopoly。monopoly。垄断。"
+  },
+  {
+   "t": "li",
+   "x": "competition。competition。竞争。"
+  },
+  {
+   "t": "li",
+   "x": "competitive。competitive。竞争的。"
+  },
+  {
+   "t": "li",
+   "x": "competitor。competitor。竞争者。"
+  },
+  {
+   "t": "li",
+   "x": "cooperation。cooperation。合作。"
+  },
+  {
+   "t": "li",
+   "x": "partnership。partnership。合伙。"
+  },
+  {
+   "t": "li",
+   "x": "venture。venture。风险投资。"
+  },
+  {
+   "t": "li",
+   "x": "entrepreneur。entrepreneur。企业家。"
+  },
+  {
+   "t": "li",
+   "x": "innovation。innovation。创新。"
+  },
+  {
+   "t": "li",
+   "x": "patent。patent。专利。"
+  },
+  {
+   "t": "li",
+   "x": "brand。brand。品牌。"
+  },
+  {
+   "t": "li",
+   "x": "advertising。advertising。广告业。"
+  },
+  {
+   "t": "li",
+   "x": "advertisement。advertisement。广告。"
+  },
+  {
+   "t": "li",
+   "x": "marketing。marketing。市场营销。"
+  },
+  {
+   "t": "li",
+   "x": "retail。retail。零售。"
+  },
+  {
+   "t": "li",
+   "x": "wholesale。wholesale。批发。"
+  },
+  {
+   "t": "li",
+   "x": "distributor。distributor。经销商。"
+  },
+  {
+   "t": "li",
+   "x": "logistics。logistics。物流。"
+  },
+  {
+   "t": "li",
+   "x": "warehouse。warehouse。仓库。"
+  },
+  {
+   "t": "li",
+   "x": "inventory。inventory。库存。"
+  },
+  {
+   "t": "li",
+   "x": "goods。goods。商品。"
+  },
+  {
+   "t": "li",
+   "x": "commodity。commodity。商品。"
+  },
+  {
+   "t": "li",
+   "x": "service。service。服务。"
+  },
+  {
+   "t": "li",
+   "x": "sector。sector。部门。"
+  },
+  {
+   "t": "li",
+   "x": "segment。segment。细分市场。"
+  },
+  {
+   "t": "li",
+   "x": "strategy。strategy。战略。"
+  },
+  {
+   "t": "li",
+   "x": "strategic。strategic。战略的。"
+  },
+  {
+   "t": "li",
+   "x": "planning。planning。规划。"
+  },
+  {
+   "t": "li",
+   "x": "projection。projection。预测。"
+  },
+  {
+   "t": "li",
+   "x": "target。target。目标。"
+  },
+  {
+   "t": "li",
+   "x": "quota。quota。配额。"
+  },
+  {
+   "t": "li",
+   "x": "negotiate。negotiate。谈判。"
+  },
+  {
+   "t": "li",
+   "x": "transaction。transaction。交易。"
+  },
+  {
+   "t": "li",
+   "x": "deal。deal。交易。"
+  },
+  {
+   "t": "li",
+   "x": "bargain。bargain。便宜货。"
+  },
+  {
+   "t": "li",
+   "x": "auction。auction。拍卖。"
+  },
+  {
+   "t": "li",
+   "x": "bid。bid。出价。"
+  },
+  {
+   "t": "li",
+   "x": "tender。tender。投标。"
+  },
+  {
+   "t": "li",
+   "x": "supplier。supplier。供应商。"
+  },
+  {
+   "t": "li",
+   "x": "chain。chain。连锁店。"
+  },
+  {
+   "t": "li",
+   "x": "franchise。franchise。特许经营。"
+  },
+  {
+   "t": "li",
+   "x": "subsidiary。subsidiary。子公司。"
+  },
+  {
+   "t": "li",
+   "x": "affiliate。affiliate。附属机构。"
+  },
+  {
+   "t": "li",
+   "x": "headquarters。headquarters。总部。"
+  },
+  {
+   "t": "li",
+   "x": "branch。branch。分支机构。"
+  },
+  {
+   "t": "li",
+   "x": "outlet。outlet。经销店。"
+  },
+  {
+   "t": "li",
+   "x": "merchant。merchant。商人。"
+  },
+  {
+   "t": "li",
+   "x": "retailer。retailer。零售商。"
+  },
+  {
+   "t": "li",
+   "x": "wholesaler。wholesaler。批发商。"
+  },
+  {
+   "t": "li",
+   "x": "oligopoly。oligopoly。寡头垄断。"
+  },
+  {
+   "t": "li",
+   "x": "stagflation。stagflation。滞胀。"
+  },
+  {
+   "t": "li",
+   "x": "subsidy。subsidy。补贴。"
+  },
+  {
+   "t": "li",
+   "x": "incentive。incentive。激励。"
+  },
+  {
+   "t": "li",
+   "x": "benefit。benefit。利益。"
+  },
+  {
+   "t": "li",
+   "x": "welfare。welfare。福利。"
+  },
+  {
+   "t": "li",
+   "x": "pension。pension。养老金。"
+  },
+  {
+   "t": "li",
+   "x": "insurance。insurance。保险。"
+  },
+  {
+   "t": "li",
+   "x": "premium。premium。保险费。"
+  },
+  {
+   "t": "li",
+   "x": "compensation。compensation。补偿。"
+  },
+  {
+   "t": "li",
+   "x": "remuneration。remuneration。报酬。"
+  },
+  {
+   "t": "li",
+   "x": "bonus。bonus。奖金。"
+  },
+  {
+   "t": "li",
+   "x": "allowance。allowance。津贴。"
+  },
+  {
+   "t": "li",
+   "x": "expense。expense。费用。"
+  },
+  {
+   "t": "li",
+   "x": "expenditure。expenditure。支出。"
+  },
+  {
+   "t": "li",
+   "x": "spending。spending。开支。"
+  },
+  {
+   "t": "li",
+   "x": "saving。saving。节省。"
+  },
+  {
+   "t": "li",
+   "x": "savings。savings。储蓄。"
+  },
+  {
+   "t": "li",
+   "x": "wealth。wealth。财富。"
+  },
+  {
+   "t": "li",
+   "x": "property。property。财产。"
+  },
+  {
+   "t": "li",
+   "x": "estate。estate。房地产。"
+  },
+  {
+   "t": "li",
+   "x": "mortgage。mortgage。抵押贷款。"
+  },
+  {
+   "t": "li",
+   "x": "rent。rent。租金。"
+  },
+  {
+   "t": "li",
+   "x": "lease。lease。租约。"
+  },
+  {
+   "t": "li",
+   "x": "tenant。tenant。租户。"
+  },
+  {
+   "t": "li",
+   "x": "landlord。landlord。房东。"
+  },
+  {
+   "t": "li",
+   "x": "ownership。ownership。所有权。"
+  },
+  {
+   "t": "li",
+   "x": "owner。owner。所有者。"
+  },
+  {
+   "t": "li",
+   "x": "macroeconomics。macroeconomics。宏观经济学。"
+  },
+  {
+   "t": "li",
+   "x": "microeconomics。microeconomics。微观经济学。"
+  },
+  {
+   "t": "li",
+   "x": "aggregate。aggregate。总量的。"
+  },
+  {
+   "t": "li",
+   "x": "indicator。indicator。指标。"
+  },
+  {
+   "t": "li",
+   "x": "statistic。statistic。统计数字。"
+  },
+  {
+   "t": "li",
+   "x": "census。census。人口普查。"
+  },
+  {
+   "t": "li",
+   "x": "population。population。人口。"
+  },
+  {
+   "t": "li",
+   "x": "demographic。demographic。人口的。"
+  },
+  {
+   "t": "li",
+   "x": "migration。migration。迁移。"
+  },
+  {
+   "t": "li",
+   "x": "urbanization。urbanization。城市化。"
+  },
+  {
+   "t": "li",
+   "x": "infrastructure。infrastructure。基础设施。"
+  },
+  {
+   "t": "li",
+   "x": "public。public。公共的。"
+  },
+  {
+   "t": "li",
+   "x": "private。private。私人的。"
+  },
+  {
+   "t": "li",
+   "x": "privatize。privatize。私有化。"
+  },
+  {
+   "t": "li",
+   "x": "nationalize。nationalize。国有化。"
+  },
+  {
+   "t": "li",
+   "x": "deregulation。deregulation。放松管制。"
+  },
+  {
+   "t": "li",
+   "x": "policy。policy。政策。"
+  },
+  {
+   "t": "li",
+   "x": "embargo。embargo。禁运。"
+  },
+  {
+   "t": "li",
+   "x": "sanction。sanction。制裁。"
+  },
+  {
+   "t": "li",
+   "x": "globalization。globalization。全球化。"
+  },
+  {
+   "t": "li",
+   "x": "global。global。全球的。"
+  },
+  {
+   "t": "li",
+   "x": "international。international。国际的。"
+  },
+  {
+   "t": "li",
+   "x": "domestic。domestic。国内的。"
+  },
+  {
+   "t": "li",
+   "x": "foreign。foreign。外国的。"
+  },
+  {
+   "t": "li",
+   "x": "exchange。exchange。交换。"
+  },
+  {
+   "t": "li",
+   "x": "rate。rate。比率。"
+  },
+  {
+   "t": "li",
+   "x": "deficit。deficit。赤字。"
+  },
+  {
+   "t": "li",
+   "x": "surplus。surplus。盈余。"
+  },
+  {
+   "t": "li",
+   "x": "efficiency。efficiency。效率。"
+  },
+  {
+   "t": "li",
+   "x": "effective。effective。有效的。"
+  },
+  {
+   "t": "li",
+   "x": "productive。productive。多产的。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

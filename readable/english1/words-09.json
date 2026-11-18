@@ -1,0 +1,583 @@
+{
+ "version": "reading/v1",
+ "id": "words-09",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "09-心理、认知与情绪",
+ "source": "notebook/kaoyan/english1/words/09-心理、认知与情绪.md",
+ "sourceSha": "55e18ab5",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "09 心理、认知与情绪"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "psychology。psychology。心理学。"
+  },
+  {
+   "t": "li",
+   "x": "cognition。cognition。认知。"
+  },
+  {
+   "t": "li",
+   "x": "cognitive。cognitive。认知的。"
+  },
+  {
+   "t": "li",
+   "x": "mind。mind。头脑。"
+  },
+  {
+   "t": "li",
+   "x": "behavior。behavior。行为。"
+  },
+  {
+   "t": "li",
+   "x": "behavioral。behavioral。行为的。"
+  },
+  {
+   "t": "li",
+   "x": "emotion。emotion。情绪。"
+  },
+  {
+   "t": "li",
+   "x": "emotional。emotional。情绪的。"
+  },
+  {
+   "t": "li",
+   "x": "feeling。feeling。感觉。"
+  },
+  {
+   "t": "li",
+   "x": "mood。mood。情绪。"
+  },
+  {
+   "t": "li",
+   "x": "passion。passion。激情。"
+  },
+  {
+   "t": "li",
+   "x": "consciousness。consciousness。意识。"
+  },
+  {
+   "t": "li",
+   "x": "conscious。conscious。有意识的。"
+  },
+  {
+   "t": "li",
+   "x": "unconscious。unconscious。无意识的。"
+  },
+  {
+   "t": "li",
+   "x": "subconscious。subconscious。下意识的。"
+  },
+  {
+   "t": "li",
+   "x": "awareness。awareness。意识。"
+  },
+  {
+   "t": "li",
+   "x": "aware。aware。意识到的。"
+  },
+  {
+   "t": "li",
+   "x": "attention。attention。注意。"
+  },
+  {
+   "t": "li",
+   "x": "attentive。attentive。专心的。"
+  },
+  {
+   "t": "li",
+   "x": "concentration。concentration。集中。"
+  },
+  {
+   "t": "li",
+   "x": "focus。focus。集中。"
+  },
+  {
+   "t": "li",
+   "x": "sensory。sensory。感觉的。"
+  },
+  {
+   "t": "li",
+   "x": "sense。sense。感觉。"
+  },
+  {
+   "t": "li",
+   "x": "sensation。sensation。感觉。"
+  },
+  {
+   "t": "li",
+   "x": "memory。memory。记忆。"
+  },
+  {
+   "t": "li",
+   "x": "learning。learning。学习。"
+  },
+  {
+   "t": "li",
+   "x": "knowledge。knowledge。知识。"
+  },
+  {
+   "t": "li",
+   "x": "understanding。understanding。理解。"
+  },
+  {
+   "t": "li",
+   "x": "comprehension。comprehension。理解。"
+  },
+  {
+   "t": "li",
+   "x": "logical。logical。逻辑的。"
+  },
+  {
+   "t": "li",
+   "x": "thought。thought。思想。"
+  },
+  {
+   "t": "li",
+   "x": "thinking。thinking。思考。"
+  },
+  {
+   "t": "li",
+   "x": "reflection。reflection。反思。"
+  },
+  {
+   "t": "li",
+   "x": "insight。insight。洞察力。"
+  },
+  {
+   "t": "li",
+   "x": "intuition。intuition。直觉。"
+  },
+  {
+   "t": "li",
+   "x": "instinct。instinct。本能。"
+  },
+  {
+   "t": "li",
+   "x": "impulse。impulse。冲动。"
+  },
+  {
+   "t": "li",
+   "x": "motive。motive。动机。"
+  },
+  {
+   "t": "li",
+   "x": "motivation。motivation。动机。"
+  },
+  {
+   "t": "li",
+   "x": "desire。desire。欲望。"
+  },
+  {
+   "t": "li",
+   "x": "intention。intention。意图。"
+  },
+  {
+   "t": "li",
+   "x": "intend。intend。打算。"
+  },
+  {
+   "t": "li",
+   "x": "purpose。purpose。目的。"
+  },
+  {
+   "t": "li",
+   "x": "goal。goal。目标。"
+  },
+  {
+   "t": "li",
+   "x": "decision。decision。决定。"
+  },
+  {
+   "t": "li",
+   "x": "decide。decide。决定。"
+  },
+  {
+   "t": "li",
+   "x": "attribution。attribution。归因。"
+  },
+  {
+   "t": "li",
+   "x": "value。value。价值。"
+  },
+  {
+   "t": "li",
+   "x": "expectation。expectation。期望。"
+  },
+  {
+   "t": "li",
+   "x": "anticipation。anticipation。预期。"
+  },
+  {
+   "t": "li",
+   "x": "anxious。anxious。焦虑的。"
+  },
+  {
+   "t": "li",
+   "x": "fear。fear。恐惧。"
+  },
+  {
+   "t": "li",
+   "x": "frighten。frighten。使惊恐。"
+  },
+  {
+   "t": "li",
+   "x": "scare。scare。使害怕。"
+  },
+  {
+   "t": "li",
+   "x": "terror。terror。恐怖。"
+  },
+  {
+   "t": "li",
+   "x": "horror。horror。恐怖。"
+  },
+  {
+   "t": "li",
+   "x": "panic。panic。恐慌。"
+  },
+  {
+   "t": "li",
+   "x": "phobia。phobia。恐惧症。"
+  },
+  {
+   "t": "li",
+   "x": "strain。strain。压力。"
+  },
+  {
+   "t": "li",
+   "x": "tension。tension。紧张。"
+  },
+  {
+   "t": "li",
+   "x": "tense。tense。紧张的。"
+  },
+  {
+   "t": "li",
+   "x": "pressure。pressure。压力。"
+  },
+  {
+   "t": "li",
+   "x": "adaptation。adaptation。适应。"
+  },
+  {
+   "t": "li",
+   "x": "aggressive。aggressive。好斗的。"
+  },
+  {
+   "t": "li",
+   "x": "aggression。aggression。侵略。"
+  },
+  {
+   "t": "li",
+   "x": "alarm。alarm。惊恐。"
+  },
+  {
+   "t": "li",
+   "x": "alienate。alienate。使疏远。"
+  },
+  {
+   "t": "li",
+   "x": "alienation。alienation。疏远。"
+  },
+  {
+   "t": "li",
+   "x": "ambition。ambition。雄心。"
+  },
+  {
+   "t": "li",
+   "x": "anger。anger。愤怒。"
+  },
+  {
+   "t": "li",
+   "x": "annoy。annoy。使恼怒。"
+  },
+  {
+   "t": "li",
+   "x": "apprehension。apprehension。忧虑。"
+  },
+  {
+   "t": "li",
+   "x": "aptitude。aptitude。天资。"
+  },
+  {
+   "t": "li",
+   "x": "arouse。arouse。引起。"
+  },
+  {
+   "t": "li",
+   "x": "aspiration。aspiration。渴望。"
+  },
+  {
+   "t": "li",
+   "x": "attachment。attachment。依恋。"
+  },
+  {
+   "t": "li",
+   "x": "avoidance。avoidance。回避。"
+  },
+  {
+   "t": "li",
+   "x": "awe。awe。敬畏。"
+  },
+  {
+   "t": "li",
+   "x": "bewilder。bewilder。使困惑。"
+  },
+  {
+   "t": "li",
+   "x": "boredom。boredom。无聊。"
+  },
+  {
+   "t": "li",
+   "x": "calm。calm。平静的。"
+  },
+  {
+   "t": "li",
+   "x": "cherish。cherish。珍爱。"
+  },
+  {
+   "t": "li",
+   "x": "compassion。compassion。同情。"
+  },
+  {
+   "t": "li",
+   "x": "compulsion。compulsion。强迫。"
+  },
+  {
+   "t": "li",
+   "x": "concern。concern。担忧。"
+  },
+  {
+   "t": "li",
+   "x": "confidence。confidence。信心。"
+  },
+  {
+   "t": "li",
+   "x": "confident。confident。自信的。"
+  },
+  {
+   "t": "li",
+   "x": "confusion。confusion。困惑。"
+  },
+  {
+   "t": "li",
+   "x": "conscience。conscience。良心。"
+  },
+  {
+   "t": "li",
+   "x": "consideration。consideration。考虑。"
+  },
+  {
+   "t": "li",
+   "x": "contempt。contempt。蔑视。"
+  },
+  {
+   "t": "li",
+   "x": "curiosity。curiosity。好奇心。"
+  },
+  {
+   "t": "li",
+   "x": "curious。curious。好奇的。"
+  },
+  {
+   "t": "li",
+   "x": "deceive。deceive。欺骗。"
+  },
+  {
+   "t": "li",
+   "x": "deception。deception。欺骗。"
+  },
+  {
+   "t": "li",
+   "x": "delight。delight。高兴。"
+  },
+  {
+   "t": "li",
+   "x": "delusion。delusion。妄想。"
+  },
+  {
+   "t": "li",
+   "x": "despair。despair。绝望。"
+  },
+  {
+   "t": "li",
+   "x": "despise。despise。鄙视。"
+  },
+  {
+   "t": "li",
+   "x": "determination。determination。决心。"
+  },
+  {
+   "t": "li",
+   "x": "disappoint。disappoint。使失望。"
+  },
+  {
+   "t": "li",
+   "x": "disappointment。disappointment。失望。"
+  },
+  {
+   "t": "li",
+   "x": "disgust。disgust。厌恶。"
+  },
+  {
+   "t": "li",
+   "x": "dislike。dislike。不喜欢。"
+  },
+  {
+   "t": "li",
+   "x": "dismay。dismay。沮丧。"
+  },
+  {
+   "t": "li",
+   "x": "distract。distract。分散注意力。"
+  },
+  {
+   "t": "li",
+   "x": "distraction。distraction。分心。"
+  },
+  {
+   "t": "li",
+   "x": "distress。distress。痛苦。"
+  },
+  {
+   "t": "li",
+   "x": "disturb。disturb。打扰。"
+  },
+  {
+   "t": "li",
+   "x": "disturbance。disturbance。干扰。"
+  },
+  {
+   "t": "li",
+   "x": "dread。dread。恐惧。"
+  },
+  {
+   "t": "li",
+   "x": "eager。eager。渴望的。"
+  },
+  {
+   "t": "li",
+   "x": "ego。ego。自我。"
+  },
+  {
+   "t": "li",
+   "x": "embarrass。embarrass。使尴尬。"
+  },
+  {
+   "t": "li",
+   "x": "embarrassment。embarrassment。尴尬。"
+  },
+  {
+   "t": "li",
+   "x": "empathy。empathy。共情。"
+  },
+  {
+   "t": "li",
+   "x": "enthusiasm。enthusiasm。热情。"
+  },
+  {
+   "t": "li",
+   "x": "envy。envy。嫉妒。"
+  },
+  {
+   "t": "li",
+   "x": "excite。excite。使兴奋。"
+  },
+  {
+   "t": "li",
+   "x": "excitement。excitement。兴奋。"
+  },
+  {
+   "t": "li",
+   "x": "fatigue。fatigue。疲劳。"
+  },
+  {
+   "t": "li",
+   "x": "frustration。frustration。挫折。"
+  },
+  {
+   "t": "li",
+   "x": "gratitude。gratitude。感激。"
+  },
+  {
+   "t": "li",
+   "x": "grief。grief。悲伤。"
+  },
+  {
+   "t": "li",
+   "x": "guilt。guilt。内疚。"
+  },
+  {
+   "t": "li",
+   "x": "hatred。hatred。仇恨。"
+  },
+  {
+   "t": "li",
+   "x": "hesitate。hesitate。犹豫。"
+  },
+  {
+   "t": "li",
+   "x": "hope。hope。希望。"
+  },
+  {
+   "t": "li",
+   "x": "hostility。hostility。敌意。"
+  },
+  {
+   "t": "li",
+   "x": "identity。identity。身份。"
+  },
+  {
+   "t": "li",
+   "x": "ignorance。ignorance。无知。"
+  },
+  {
+   "t": "li",
+   "x": "ignore。ignore。忽视。"
+  },
+  {
+   "t": "li",
+   "x": "illusion。illusion。错觉。"
+  },
+  {
+   "t": "li",
+   "x": "imagine。imagine。想象。"
+  },
+  {
+   "t": "li",
+   "x": "imagination。imagination。想象力。"
+  },
+  {
+   "t": "li",
+   "x": "imitate。imitate。模仿。"
+  },
+  {
+   "t": "li",
+   "x": "impression。impression。印象。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

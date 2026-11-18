@@ -1,0 +1,15 @@
+{
+ "version": "reading/v1",
+ "id": "words-97",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "97-大纲补全（按词频）",
+ "source": "notebook/kaoyan/english1/words/97-大纲补全（按词频）.md",
+ "sourceSha": "d5840ff8",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "97 大纲补全（按真题词频排序）"
+  }
+ ]
+}

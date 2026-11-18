@@ -1,0 +1,363 @@
+{
+ "version": "reading/v1",
+ "id": "words-18",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "18-词根词缀（上）",
+ "source": "notebook/kaoyan/english1/words/18-词根词缀（上）.md",
+ "sourceSha": "1953c963",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "18 词根词缀（上）"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "abuse。abuse。滥用。"
+  },
+  {
+   "t": "li",
+   "x": "abnormal。abnormal。异常的。"
+  },
+  {
+   "t": "li",
+   "x": "adjacent。adjacent。邻近的。"
+  },
+  {
+   "t": "li",
+   "x": "combine。combine。结合。"
+  },
+  {
+   "t": "li",
+   "x": "compile。compile。编写。"
+  },
+  {
+   "t": "li",
+   "x": "depress。depress。使沮丧。"
+  },
+  {
+   "t": "li",
+   "x": "destroy。destroy。破坏。"
+  },
+  {
+   "t": "li",
+   "x": "disagree。disagree。不同意。"
+  },
+  {
+   "t": "li",
+   "x": "disappear。disappear。消失。"
+  },
+  {
+   "t": "li",
+   "x": "discuss。discuss。讨论。"
+  },
+  {
+   "t": "li",
+   "x": "distribute。distribute。分配。"
+  },
+  {
+   "t": "li",
+   "x": "exceed。exceed。超过。"
+  },
+  {
+   "t": "li",
+   "x": "inability。inability。无能力。"
+  },
+  {
+   "t": "li",
+   "x": "inadequate。inadequate。不足的。"
+  },
+  {
+   "t": "li",
+   "x": "incapable。incapable。无能力的。"
+  },
+  {
+   "t": "li",
+   "x": "incline。incline。倾向。"
+  },
+  {
+   "t": "li",
+   "x": "include。include。包括。"
+  },
+  {
+   "t": "li",
+   "x": "invest。invest。投资。"
+  },
+  {
+   "t": "li",
+   "x": "interfere。interfere。干涉。"
+  },
+  {
+   "t": "li",
+   "x": "interrupt。interrupt。打断。"
+  },
+  {
+   "t": "li",
+   "x": "interval。interval。间隔。"
+  },
+  {
+   "t": "li",
+   "x": "prefer。prefer。更喜欢。"
+  },
+  {
+   "t": "li",
+   "x": "prepare。prepare。准备。"
+  },
+  {
+   "t": "li",
+   "x": "prescribe。prescribe。开处方。"
+  },
+  {
+   "t": "li",
+   "x": "proceed。proceed。继续进行。"
+  },
+  {
+   "t": "li",
+   "x": "react。react。反应。"
+  },
+  {
+   "t": "li",
+   "x": "remain。remain。保持。"
+  },
+  {
+   "t": "li",
+   "x": "substitute。substitute。代替。"
+  },
+  {
+   "t": "li",
+   "x": "succeed。succeed。成功。"
+  },
+  {
+   "t": "li",
+   "x": "transfer。transfer。转移。"
+  },
+  {
+   "t": "li",
+   "x": "translate。translate。翻译。"
+  },
+  {
+   "t": "li",
+   "x": "unable。unable。不能的。"
+  },
+  {
+   "t": "li",
+   "x": "uncertain。uncertain。不确定的。"
+  },
+  {
+   "t": "li",
+   "x": "undergo。undergo。经历。"
+  },
+  {
+   "t": "li",
+   "x": "introduce。introduce。介绍。"
+  },
+  {
+   "t": "li",
+   "x": "deduct。deduct。扣除。"
+  },
+  {
+   "t": "li",
+   "x": "reproduce。reproduce。繁殖。"
+  },
+  {
+   "t": "li",
+   "x": "seduce。seduce。引诱。"
+  },
+  {
+   "t": "li",
+   "x": "offer。offer。提供。"
+  },
+  {
+   "t": "li",
+   "x": "differ。differ。不同。"
+  },
+  {
+   "t": "li",
+   "x": "suffer。suffer。遭受。"
+  },
+  {
+   "t": "li",
+   "x": "confer。confer。授予。"
+  },
+  {
+   "t": "li",
+   "x": "ferry。ferry。渡船。"
+  },
+  {
+   "t": "li",
+   "x": "emit。emit。发出。"
+  },
+  {
+   "t": "li",
+   "x": "omit。omit。省略。"
+  },
+  {
+   "t": "li",
+   "x": "permit。permit。允许。"
+  },
+  {
+   "t": "li",
+   "x": "mission。mission。使命。"
+  },
+  {
+   "t": "li",
+   "x": "missile。missile。导弹。"
+  },
+  {
+   "t": "li",
+   "x": "portable。portable。便携的。"
+  },
+  {
+   "t": "li",
+   "x": "porter。porter。搬运工。"
+  },
+  {
+   "t": "li",
+   "x": "report。report。报告。"
+  },
+  {
+   "t": "li",
+   "x": "portfolio。portfolio。文件夹。"
+  },
+  {
+   "t": "li",
+   "x": "opportunity。opportunity。机会。"
+  },
+  {
+   "t": "li",
+   "x": "impose。impose。强加。"
+  },
+  {
+   "t": "li",
+   "x": "compound。compound。化合物。"
+  },
+  {
+   "t": "li",
+   "x": "subtract。subtract。减去。"
+  },
+  {
+   "t": "li",
+   "x": "tractor。tractor。拖拉机。"
+  },
+  {
+   "t": "li",
+   "x": "express。express。表达。"
+  },
+  {
+   "t": "li",
+   "x": "impress。impress。使印象深刻。"
+  },
+  {
+   "t": "li",
+   "x": "compress。compress。压缩。"
+  },
+  {
+   "t": "li",
+   "x": "contain。contain。包含。"
+  },
+  {
+   "t": "li",
+   "x": "retain。retain。保留。"
+  },
+  {
+   "t": "li",
+   "x": "receive。receive。收到。"
+  },
+  {
+   "t": "li",
+   "x": "visible。visible。可见的。"
+  },
+  {
+   "t": "li",
+   "x": "vision。vision。视力。"
+  },
+  {
+   "t": "li",
+   "x": "dictate。dictate。口述。"
+  },
+  {
+   "t": "li",
+   "x": "addict。addict。使上瘾。"
+  },
+  {
+   "t": "li",
+   "x": "description。description。描述。"
+  },
+  {
+   "t": "li",
+   "x": "prescription。prescription。处方。"
+  },
+  {
+   "t": "li",
+   "x": "precede。precede。先于。"
+  },
+  {
+   "t": "li",
+   "x": "recede。recede。后退。"
+  },
+  {
+   "t": "li",
+   "x": "deflect。deflect。使偏转。"
+  },
+  {
+   "t": "li",
+   "x": "inflexible。inflexible。不灵活的。"
+  },
+  {
+   "t": "li",
+   "x": "disrupt。disrupt。扰乱。"
+  },
+  {
+   "t": "li",
+   "x": "prospect。prospect。前景。"
+  },
+  {
+   "t": "li",
+   "x": "event。event。事件。"
+  },
+  {
+   "t": "li",
+   "x": "intervene。intervene。干预。"
+  },
+  {
+   "t": "li",
+   "x": "stable。stable。稳定的。"
+  },
+  {
+   "t": "li",
+   "x": "survive。survive。幸存。"
+  },
+  {
+   "t": "li",
+   "x": "revive。revive。复苏。"
+  },
+  {
+   "t": "li",
+   "x": "vivid。vivid。生动的。"
+  },
+  {
+   "t": "li",
+   "x": "sympathy n."
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

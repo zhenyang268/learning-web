@@ -1,0 +1,843 @@
+{
+ "version": "reading/v1",
+ "id": "words-03",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "03-抽象名词与论证用词",
+ "source": "notebook/kaoyan/english1/words/03-抽象名词与论证用词.md",
+ "sourceSha": "c9904ddc",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "03 抽象名词与论证用词"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "argument。argument。论点。"
+  },
+  {
+   "t": "li",
+   "x": "assertion。assertion。断言。"
+  },
+  {
+   "t": "li",
+   "x": "contention。contention。论点。"
+  },
+  {
+   "t": "li",
+   "x": "thesis。thesis。论点。"
+  },
+  {
+   "t": "li",
+   "x": "hypothesis。hypothesis。假设。"
+  },
+  {
+   "t": "li",
+   "x": "proposition。proposition。主张。"
+  },
+  {
+   "t": "li",
+   "x": "premise。premise。前提。"
+  },
+  {
+   "t": "li",
+   "x": "assumption。assumption。假设。"
+  },
+  {
+   "t": "li",
+   "x": "presumption。presumption。推测。"
+  },
+  {
+   "t": "li",
+   "x": "supposition。supposition。推测。"
+  },
+  {
+   "t": "li",
+   "x": "conjecture。conjecture。猜测。"
+  },
+  {
+   "t": "li",
+   "x": "speculation。speculation。推测。"
+  },
+  {
+   "t": "li",
+   "x": "inference。inference。推论。"
+  },
+  {
+   "t": "li",
+   "x": "deduction。deduction。推论。"
+  },
+  {
+   "t": "li",
+   "x": "induction。induction。归纳。"
+  },
+  {
+   "t": "li",
+   "x": "reasoning。reasoning。推理。"
+  },
+  {
+   "t": "li",
+   "x": "logic。logic。逻辑。"
+  },
+  {
+   "t": "li",
+   "x": "argumentation。argumentation。论证。"
+  },
+  {
+   "t": "li",
+   "x": "debate。debate。辩论。"
+  },
+  {
+   "t": "li",
+   "x": "controversy。controversy。争议。"
+  },
+  {
+   "t": "li",
+   "x": "disagreement。disagreement。分歧。"
+  },
+  {
+   "t": "li",
+   "x": "dissent。dissent。异议。"
+  },
+  {
+   "t": "li",
+   "x": "objection。objection。反对。"
+  },
+  {
+   "t": "li",
+   "x": "rebuttal。rebuttal。反驳。"
+  },
+  {
+   "t": "li",
+   "x": "refutation。refutation。反驳。"
+  },
+  {
+   "t": "li",
+   "x": "counterargument。counterargument。反论点。"
+  },
+  {
+   "t": "li",
+   "x": "concession。concession。让步。"
+  },
+  {
+   "t": "li",
+   "x": "persuasion。persuasion。说服。"
+  },
+  {
+   "t": "li",
+   "x": "conviction。conviction。信念。"
+  },
+  {
+   "t": "li",
+   "x": "belief。belief。信念。"
+  },
+  {
+   "t": "li",
+   "x": "opinion。opinion。观点。"
+  },
+  {
+   "t": "li",
+   "x": "viewpoint。viewpoint。观点。"
+  },
+  {
+   "t": "li",
+   "x": "standpoint。standpoint。立场。"
+  },
+  {
+   "t": "li",
+   "x": "perspective。perspective。视角。"
+  },
+  {
+   "t": "li",
+   "x": "stance。stance。立场。"
+  },
+  {
+   "t": "li",
+   "x": "position。position。立场。"
+  },
+  {
+   "t": "li",
+   "x": "outlook。outlook。观点。"
+  },
+  {
+   "t": "li",
+   "x": "attitude。attitude。态度。"
+  },
+  {
+   "t": "li",
+   "x": "sentiment。sentiment。观点。"
+  },
+  {
+   "t": "li",
+   "x": "judgment。judgment。判断。"
+  },
+  {
+   "t": "li",
+   "x": "assessment。assessment。评估。"
+  },
+  {
+   "t": "li",
+   "x": "evaluation。evaluation。评价。"
+  },
+  {
+   "t": "li",
+   "x": "appraisal。appraisal。评价。"
+  },
+  {
+   "t": "li",
+   "x": "estimation。estimation。估计。"
+  },
+  {
+   "t": "li",
+   "x": "interpretation。interpretation。解释。"
+  },
+  {
+   "t": "li",
+   "x": "explanation。explanation。解释。"
+  },
+  {
+   "t": "li",
+   "x": "clarification。clarification。澄清。"
+  },
+  {
+   "t": "li",
+   "x": "definition。definition。定义。"
+  },
+  {
+   "t": "li",
+   "x": "distinction。distinction。区别。"
+  },
+  {
+   "t": "li",
+   "x": "differentiation。differentiation。区分。"
+  },
+  {
+   "t": "li",
+   "x": "classification。classification。分类。"
+  },
+  {
+   "t": "li",
+   "x": "category。category。类别。"
+  },
+  {
+   "t": "li",
+   "x": "criterion。criterion。标准。"
+  },
+  {
+   "t": "li",
+   "x": "standard。standard。标准。"
+  },
+  {
+   "t": "li",
+   "x": "benchmark。benchmark。基准。"
+  },
+  {
+   "t": "li",
+   "x": "norm。norm。规范。"
+  },
+  {
+   "t": "li",
+   "x": "principle。principle。原则。"
+  },
+  {
+   "t": "li",
+   "x": "doctrine。doctrine。学说。"
+  },
+  {
+   "t": "li",
+   "x": "theory。theory。理论。"
+  },
+  {
+   "t": "li",
+   "x": "framework。framework。框架。"
+  },
+  {
+   "t": "li",
+   "x": "paradigm。paradigm。范式。"
+  },
+  {
+   "t": "li",
+   "x": "model。model。模型。"
+  },
+  {
+   "t": "li",
+   "x": "notion。notion。观念。"
+  },
+  {
+   "t": "li",
+   "x": "concept。concept。概念。"
+  },
+  {
+   "t": "li",
+   "x": "conception。conception。观念。"
+  },
+  {
+   "t": "li",
+   "x": "perception。perception。认识。"
+  },
+  {
+   "t": "li",
+   "x": "misconception。misconception。误解。"
+  },
+  {
+   "t": "li",
+   "x": "evidence。evidence。证据。"
+  },
+  {
+   "t": "li",
+   "x": "proof。proof。证据。"
+  },
+  {
+   "t": "li",
+   "x": "testimony。testimony。证词。"
+  },
+  {
+   "t": "li",
+   "x": "documentation。documentation。文件证据。"
+  },
+  {
+   "t": "li",
+   "x": "data。data。数据。"
+  },
+  {
+   "t": "li",
+   "x": "statistics。statistics。统计数据。"
+  },
+  {
+   "t": "li",
+   "x": "figure。figure。数字。"
+  },
+  {
+   "t": "li",
+   "x": "fact。fact。事实。"
+  },
+  {
+   "t": "li",
+   "x": "phenomenon。phenomenon。现象。"
+  },
+  {
+   "t": "li",
+   "x": "instance。instance。实例。"
+  },
+  {
+   "t": "li",
+   "x": "example。example。例子。"
+  },
+  {
+   "t": "li",
+   "x": "case。case。案例。"
+  },
+  {
+   "t": "li",
+   "x": "illustration。illustration。例证。"
+  },
+  {
+   "t": "li",
+   "x": "demonstration。demonstration。证明。"
+  },
+  {
+   "t": "li",
+   "x": "exemplification。exemplification。例证。"
+  },
+  {
+   "t": "li",
+   "x": "sample。sample。样本。"
+  },
+  {
+   "t": "li",
+   "x": "specimen。specimen。样本。"
+  },
+  {
+   "t": "li",
+   "x": "questionnaire。questionnaire。问卷。"
+  },
+  {
+   "t": "li",
+   "x": "experiment。experiment。实验。"
+  },
+  {
+   "t": "li",
+   "x": "trial。trial。试验。"
+  },
+  {
+   "t": "li",
+   "x": "test。test。测试。"
+  },
+  {
+   "t": "li",
+   "x": "observation。observation。观察。"
+  },
+  {
+   "t": "li",
+   "x": "analysis。analysis。分析。"
+  },
+  {
+   "t": "li",
+   "x": "examination。examination。检查。"
+  },
+  {
+   "t": "li",
+   "x": "investigation。investigation。调查。"
+  },
+  {
+   "t": "li",
+   "x": "inquiry。inquiry。询问。"
+  },
+  {
+   "t": "li",
+   "x": "finding。finding。研究结果。"
+  },
+  {
+   "t": "li",
+   "x": "result。result。结果。"
+  },
+  {
+   "t": "li",
+   "x": "outcome。outcome。结果。"
+  },
+  {
+   "t": "li",
+   "x": "consequence。consequence。结果。"
+  },
+  {
+   "t": "li",
+   "x": "conclusion。conclusion。结论。"
+  },
+  {
+   "t": "li",
+   "x": "summary。summary。总结。"
+  },
+  {
+   "t": "li",
+   "x": "synopsis。synopsis。概要。"
+  },
+  {
+   "t": "li",
+   "x": "overview。overview。概述。"
+  },
+  {
+   "t": "li",
+   "x": "gist。gist。主旨。"
+  },
+  {
+   "t": "li",
+   "x": "essence。essence。本质。"
+  },
+  {
+   "t": "li",
+   "x": "substance。substance。实质。"
+  },
+  {
+   "t": "li",
+   "x": "core。core。核心。"
+  },
+  {
+   "t": "li",
+   "x": "crux。crux。关键。"
+  },
+  {
+   "t": "li",
+   "x": "point。point。要点。"
+  },
+  {
+   "t": "li",
+   "x": "issue。issue。问题。"
+  },
+  {
+   "t": "li",
+   "x": "topic。topic。话题。"
+  },
+  {
+   "t": "li",
+   "x": "theme。theme。主题。"
+  },
+  {
+   "t": "li",
+   "x": "subject。subject。主题。"
+  },
+  {
+   "t": "li",
+   "x": "matter。matter。问题。"
+  },
+  {
+   "t": "li",
+   "x": "problem。problem。问题。"
+  },
+  {
+   "t": "li",
+   "x": "puzzle。puzzle。难题。"
+  },
+  {
+   "t": "li",
+   "x": "dilemma。dilemma。困境。"
+  },
+  {
+   "t": "li",
+   "x": "paradox。paradox。悖论。"
+  },
+  {
+   "t": "li",
+   "x": "contradiction。contradiction。矛盾。"
+  },
+  {
+   "t": "li",
+   "x": "inconsistency。inconsistency。不一致。"
+  },
+  {
+   "t": "li",
+   "x": "discrepancy。discrepancy。差异。"
+  },
+  {
+   "t": "li",
+   "x": "gap。gap。差距。"
+  },
+  {
+   "t": "li",
+   "x": "flaw。flaw。缺陷。"
+  },
+  {
+   "t": "li",
+   "x": "defect。defect。缺陷。"
+  },
+  {
+   "t": "li",
+   "x": "shortcoming。shortcoming。缺点。"
+  },
+  {
+   "t": "li",
+   "x": "limitation。limitation。局限。"
+  },
+  {
+   "t": "li",
+   "x": "weakness。weakness。弱点。"
+  },
+  {
+   "t": "li",
+   "x": "fallacy。fallacy。谬误。"
+  },
+  {
+   "t": "li",
+   "x": "error。error。错误。"
+  },
+  {
+   "t": "li",
+   "x": "mistake。mistake。错误。"
+  },
+  {
+   "t": "li",
+   "x": "bias。bias。偏见。"
+  },
+  {
+   "t": "li",
+   "x": "prejudice。prejudice。偏见。"
+  },
+  {
+   "t": "li",
+   "x": "stereotype。stereotype。刻板印象。"
+  },
+  {
+   "t": "li",
+   "x": "distortion。distortion。歪曲。"
+  },
+  {
+   "t": "li",
+   "x": "misrepresentation。misrepresentation。误传。"
+  },
+  {
+   "t": "li",
+   "x": "ambiguity。ambiguity。歧义。"
+  },
+  {
+   "t": "li",
+   "x": "vagueness。vagueness。模糊。"
+  },
+  {
+   "t": "li",
+   "x": "clarity。clarity。清晰。"
+  },
+  {
+   "t": "li",
+   "x": "precision。precision。精确。"
+  },
+  {
+   "t": "li",
+   "x": "accuracy。accuracy。准确性。"
+  },
+  {
+   "t": "li",
+   "x": "validity。validity。有效性。"
+  },
+  {
+   "t": "li",
+   "x": "reliability。reliability。可靠性。"
+  },
+  {
+   "t": "li",
+   "x": "credibility。credibility。可信度。"
+  },
+  {
+   "t": "li",
+   "x": "objectivity。objectivity。客观性。"
+  },
+  {
+   "t": "li",
+   "x": "subjectivity。subjectivity。主观性。"
+  },
+  {
+   "t": "li",
+   "x": "neutrality。neutrality。中立。"
+  },
+  {
+   "t": "li",
+   "x": "impartiality。impartiality。公正。"
+  },
+  {
+   "t": "li",
+   "x": "fairness。fairness。公平。"
+  },
+  {
+   "t": "li",
+   "x": "justice。justice。公正。"
+  },
+  {
+   "t": "li",
+   "x": "rationality。rationality。合理性。"
+  },
+  {
+   "t": "li",
+   "x": "rationale。rationale。理由。"
+  },
+  {
+   "t": "li",
+   "x": "justification。justification。正当理由。"
+  },
+  {
+   "t": "li",
+   "x": "excuse。excuse。借口。"
+  },
+  {
+   "t": "li",
+   "x": "ground。ground。理由。"
+  },
+  {
+   "t": "li",
+   "x": "basis。basis。基础。"
+  },
+  {
+   "t": "li",
+   "x": "foundation。foundation。基础。"
+  },
+  {
+   "t": "li",
+   "x": "backing。backing。支持。"
+  },
+  {
+   "t": "li",
+   "x": "corroboration。corroboration。证实。"
+  },
+  {
+   "t": "li",
+   "x": "confirmation。confirmation。证实。"
+  },
+  {
+   "t": "li",
+   "x": "verification。verification。验证。"
+  },
+  {
+   "t": "li",
+   "x": "criticism。criticism。批评。"
+  },
+  {
+   "t": "li",
+   "x": "critique。critique。评论。"
+  },
+  {
+   "t": "li",
+   "x": "censure。censure。谴责。"
+  },
+  {
+   "t": "li",
+   "x": "praise。praise。赞扬。"
+  },
+  {
+   "t": "li",
+   "x": "acclaim。acclaim。赞誉。"
+  },
+  {
+   "t": "li",
+   "x": "recognition。recognition。认可。"
+  },
+  {
+   "t": "li",
+   "x": "acknowledgement。acknowledgement。承认。"
+  },
+  {
+   "t": "li",
+   "x": "admission。admission。承认。"
+  },
+  {
+   "t": "li",
+   "x": "denial。denial。否认。"
+  },
+  {
+   "t": "li",
+   "x": "rejection。rejection。拒绝。"
+  },
+  {
+   "t": "li",
+   "x": "acceptance。acceptance。接受。"
+  },
+  {
+   "t": "li",
+   "x": "approval。approval。批准。"
+  },
+  {
+   "t": "li",
+   "x": "consent。consent。同意。"
+  },
+  {
+   "t": "li",
+   "x": "agreement。agreement。同意。"
+  },
+  {
+   "t": "li",
+   "x": "consensus。consensus。共识。"
+  },
+  {
+   "t": "li",
+   "x": "unanimity。unanimity。一致同意。"
+  },
+  {
+   "t": "li",
+   "x": "compromise。compromise。妥协。"
+  },
+  {
+   "t": "li",
+   "x": "negotiation。negotiation。谈判。"
+  },
+  {
+   "t": "li",
+   "x": "mediation。mediation。调解。"
+  },
+  {
+   "t": "li",
+   "x": "arbitration。arbitration。仲裁。"
+  },
+  {
+   "t": "li",
+   "x": "verdict。verdict。裁决。"
+  },
+  {
+   "t": "li",
+   "x": "ruling。ruling。裁定。"
+  },
+  {
+   "t": "li",
+   "x": "sentence。sentence。判决。"
+  },
+  {
+   "t": "li",
+   "x": "decree。decree。法令。"
+  },
+  {
+   "t": "li",
+   "x": "legislation。legislation。立法。"
+  },
+  {
+   "t": "li",
+   "x": "regulation。regulation。规章。"
+  },
+  {
+   "t": "li",
+   "x": "provision。provision。条款。"
+  },
+  {
+   "t": "li",
+   "x": "clause。clause。条款。"
+  },
+  {
+   "t": "li",
+   "x": "statute。statute。法规。"
+  },
+  {
+   "t": "li",
+   "x": "convention。convention。惯例。"
+  },
+  {
+   "t": "li",
+   "x": "custom。custom。习俗。"
+  },
+  {
+   "t": "li",
+   "x": "precedent。precedent。先例。"
+  },
+  {
+   "t": "li",
+   "x": "tradition。tradition。传统。"
+  },
+  {
+   "t": "li",
+   "x": "practice。practice。做法。"
+  },
+  {
+   "t": "li",
+   "x": "procedure。procedure。程序。"
+  },
+  {
+   "t": "li",
+   "x": "process。process。过程。"
+  },
+  {
+   "t": "li",
+   "x": "mechanism。mechanism。机制。"
+  },
+  {
+   "t": "li",
+   "x": "system。system。体系。"
+  },
+  {
+   "t": "li",
+   "x": "structure。structure。结构。"
+  },
+  {
+   "t": "li",
+   "x": "function。function。功能。"
+  },
+  {
+   "t": "li",
+   "x": "role。role。作用。"
+  },
+  {
+   "t": "li",
+   "x": "significance。significance。意义。"
+  },
+  {
+   "t": "li",
+   "x": "implication。implication。含义。"
+  },
+  {
+   "t": "li",
+   "x": "connotation。connotation。内涵。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

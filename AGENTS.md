@@ -328,6 +328,9 @@ node tools/remap-codes.mjs --apply
   `knowledge.html`（数学系）/`knowledge-emath.html`（工程数学）/`knowledge-cs408.html` /
   `knowledge-math1.html` /`knowledge-projects.html` /`knowledge-english1.html`，
   外加 `knowledge-index.html` 索引页（纯链接，file:// 也能开）；
+  以及 **`reading.html`**（朗读版：408 四科导读 + 107 考点 + 数一 72 篇 + 英语题型，
+  由 `build/reading/` 生成，见 `prompt/kp-guide.md`。它不是第六个学科站：不进 `SUBJECTS`、
+  没有代号与语义边，脚本 `node tools/build-reading-standalone.mjs` 单独产出）；
   `dist/index.html` / `emath.html` / `cs408.html` 是**开发形态**（`type="module"` + 运行时 `fetch json/`）⇒ **必须 HTTP**。
   报告「双击白屏」时先确认打开的是哪个文件 —— 开发形态双击必然白屏，不是产物损坏。
   `json/` 是**只读数据集**（由 `.tex` 生成的产物，`index.json` 是物化索引），

@@ -1,0 +1,451 @@
+{
+ "version": "reading/v1",
+ "id": "words-12",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "12-教育、学术与校园",
+ "source": "notebook/kaoyan/english1/words/12-教育、学术与校园.md",
+ "sourceSha": "bad40cd2",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "12 教育、学术与校园"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "academic。academic。学术的。"
+  },
+  {
+   "t": "li",
+   "x": "academy。academy。学院。"
+  },
+  {
+   "t": "li",
+   "x": "educational。educational。教育的。"
+  },
+  {
+   "t": "li",
+   "x": "educator。educator。教育工作者。"
+  },
+  {
+   "t": "li",
+   "x": "schooling。schooling。学校教育。"
+  },
+  {
+   "t": "li",
+   "x": "school。school。学校。"
+  },
+  {
+   "t": "li",
+   "x": "university。university。大学。"
+  },
+  {
+   "t": "li",
+   "x": "college。college。学院。"
+  },
+  {
+   "t": "li",
+   "x": "campus。campus。校园。"
+  },
+  {
+   "t": "li",
+   "x": "department。department。系。"
+  },
+  {
+   "t": "li",
+   "x": "faculty。faculty。系。"
+  },
+  {
+   "t": "li",
+   "x": "dean。dean。院长。"
+  },
+  {
+   "t": "li",
+   "x": "professor。professor。教授。"
+  },
+  {
+   "t": "li",
+   "x": "lecturer。lecturer。讲师。"
+  },
+  {
+   "t": "li",
+   "x": "instructor。instructor。讲师。"
+  },
+  {
+   "t": "li",
+   "x": "tutor。tutor。导师。"
+  },
+  {
+   "t": "li",
+   "x": "mentor。mentor。导师。"
+  },
+  {
+   "t": "li",
+   "x": "supervisor。supervisor。导师。"
+  },
+  {
+   "t": "li",
+   "x": "student。student。学生。"
+  },
+  {
+   "t": "li",
+   "x": "undergraduate。undergraduate。本科生。"
+  },
+  {
+   "t": "li",
+   "x": "postgraduate。postgraduate。研究生。"
+  },
+  {
+   "t": "li",
+   "x": "graduate。graduate。毕业生。"
+  },
+  {
+   "t": "li",
+   "x": "freshman。freshman。大一新生。"
+  },
+  {
+   "t": "li",
+   "x": "sophomore。sophomore。大二学生。"
+  },
+  {
+   "t": "li",
+   "x": "junior。junior。大三学生。"
+  },
+  {
+   "t": "li",
+   "x": "senior。senior。大四学生。"
+  },
+  {
+   "t": "li",
+   "x": "alumni。alumni。校友。"
+  },
+  {
+   "t": "li",
+   "x": "enrollment。enrollment。注册人数。"
+  },
+  {
+   "t": "li",
+   "x": "enroll。enroll。注册。"
+  },
+  {
+   "t": "li",
+   "x": "applicant。applicant。申请人。"
+  },
+  {
+   "t": "li",
+   "x": "scholarship。scholarship。奖学金。"
+  },
+  {
+   "t": "li",
+   "x": "fellowship。fellowship。研究员职位。"
+  },
+  {
+   "t": "li",
+   "x": "tuition。tuition。学费。"
+  },
+  {
+   "t": "li",
+   "x": "fee。fee。费用。"
+  },
+  {
+   "t": "li",
+   "x": "curriculum。curriculum。课程。"
+  },
+  {
+   "t": "li",
+   "x": "syllabus。syllabus。教学大纲。"
+  },
+  {
+   "t": "li",
+   "x": "course。course。课程。"
+  },
+  {
+   "t": "li",
+   "x": "discipline。discipline。学科。"
+  },
+  {
+   "t": "li",
+   "x": "major。major。专业。"
+  },
+  {
+   "t": "li",
+   "x": "minor。minor。辅修课程。"
+  },
+  {
+   "t": "li",
+   "x": "elective。elective。选修课。"
+  },
+  {
+   "t": "li",
+   "x": "semester。semester。学期。"
+  },
+  {
+   "t": "li",
+   "x": "term。term。学期。"
+  },
+  {
+   "t": "li",
+   "x": "grade。grade。成绩。"
+  },
+  {
+   "t": "li",
+   "x": "score。score。分数。"
+  },
+  {
+   "t": "li",
+   "x": "mark。mark。分数。"
+  },
+  {
+   "t": "li",
+   "x": "exam。exam。考试。"
+  },
+  {
+   "t": "li",
+   "x": "quiz。quiz。小测验。"
+  },
+  {
+   "t": "li",
+   "x": "assignment。assignment。作业。"
+  },
+  {
+   "t": "li",
+   "x": "homework。homework。家庭作业。"
+  },
+  {
+   "t": "li",
+   "x": "dissertation。dissertation。学位论文。"
+  },
+  {
+   "t": "li",
+   "x": "essay。essay。短文。"
+  },
+  {
+   "t": "li",
+   "x": "paper。paper。论文。"
+  },
+  {
+   "t": "li",
+   "x": "project。project。项目。"
+  },
+  {
+   "t": "li",
+   "x": "researcher。researcher。研究者。"
+  },
+  {
+   "t": "li",
+   "x": "seminar。seminar。研讨会。"
+  },
+  {
+   "t": "li",
+   "x": "workshop。workshop。研讨会。"
+  },
+  {
+   "t": "li",
+   "x": "lecture。lecture。讲座。"
+  },
+  {
+   "t": "li",
+   "x": "tutorial。tutorial。辅导课。"
+  },
+  {
+   "t": "li",
+   "x": "presentation。presentation。展示。"
+  },
+  {
+   "t": "li",
+   "x": "discussion。discussion。讨论。"
+  },
+  {
+   "t": "li",
+   "x": "conference。conference。会议。"
+  },
+  {
+   "t": "li",
+   "x": "symposium。symposium。研讨会。"
+  },
+  {
+   "t": "li",
+   "x": "journal。journal。期刊。"
+  },
+  {
+   "t": "li",
+   "x": "periodical。periodical。期刊。"
+  },
+  {
+   "t": "li",
+   "x": "publication。publication。出版物。"
+  },
+  {
+   "t": "li",
+   "x": "publish。publish。出版。"
+  },
+  {
+   "t": "li",
+   "x": "author。author。作者。"
+  },
+  {
+   "t": "li",
+   "x": "reference。reference。参考文献。"
+  },
+  {
+   "t": "li",
+   "x": "bibliography。bibliography。参考书目。"
+  },
+  {
+   "t": "li",
+   "x": "introduction。introduction。引言。"
+  },
+  {
+   "t": "li",
+   "x": "methodology。methodology。方法论。"
+  },
+  {
+   "t": "li",
+   "x": "teacher。teacher。教师。"
+  },
+  {
+   "t": "li",
+   "x": "classroom。classroom。教室。"
+  },
+  {
+   "t": "li",
+   "x": "lesson。lesson。课。"
+  },
+  {
+   "t": "li",
+   "x": "textbook。textbook。教科书。"
+  },
+  {
+   "t": "li",
+   "x": "library。library。图书馆。"
+  },
+  {
+   "t": "li",
+   "x": "librarian。librarian。图书管理员。"
+  },
+  {
+   "t": "li",
+   "x": "dormitory。dormitory。宿舍。"
+  },
+  {
+   "t": "li",
+   "x": "cafeteria。cafeteria。自助餐厅。"
+  },
+  {
+   "t": "li",
+   "x": "playground。playground。操场。"
+  },
+  {
+   "t": "li",
+   "x": "gymnasium。gymnasium。体育馆。"
+  },
+  {
+   "t": "li",
+   "x": "pupil。pupil。小学生。"
+  },
+  {
+   "t": "li",
+   "x": "learner。learner。学习者。"
+  },
+  {
+   "t": "li",
+   "x": "trainee。trainee。受训者。"
+  },
+  {
+   "t": "li",
+   "x": "training。training。训练。"
+  },
+  {
+   "t": "li",
+   "x": "institute。institute。学院。"
+  },
+  {
+   "t": "li",
+   "x": "kindergarten。kindergarten。幼儿园。"
+  },
+  {
+   "t": "li",
+   "x": "nursery。nursery。托儿所。"
+  },
+  {
+   "t": "li",
+   "x": "secondary。secondary。中学的。"
+  },
+  {
+   "t": "li",
+   "x": "elementary。elementary。初级的。"
+  },
+  {
+   "t": "li",
+   "x": "vocational。vocational。职业的。"
+  },
+  {
+   "t": "li",
+   "x": "qualification。qualification。资格。"
+  },
+  {
+   "t": "li",
+   "x": "degree。degree。学位。"
+  },
+  {
+   "t": "li",
+   "x": "diploma。diploma。文凭。"
+  },
+  {
+   "t": "li",
+   "x": "certificate。certificate。证书。"
+  },
+  {
+   "t": "li",
+   "x": "certification。certification。认证。"
+  },
+  {
+   "t": "li",
+   "x": "register。register。登记。"
+  },
+  {
+   "t": "li",
+   "x": "registration。registration。登记。"
+  },
+  {
+   "t": "li",
+   "x": "attendance。attendance。出勤。"
+  },
+  {
+   "t": "li",
+   "x": "attend。attend。出席。"
+  },
+  {
+   "t": "li",
+   "x": "absent。absent。缺席的。"
+  },
+  {
+   "t": "li",
+   "x": "absence。absence。缺席。"
+  },
+  {
+   "t": "li",
+   "x": "bachelor。bachelor。学士。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  }
+ ]
+}

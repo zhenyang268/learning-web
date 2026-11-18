@@ -1,0 +1,535 @@
+{
+ "version": "reading/v1",
+ "id": "words-24",
+ "line": "english1",
+ "group": "英语单词",
+ "title": "24-考研大纲补充（下）",
+ "source": "notebook/kaoyan/english1/words/24-考研大纲补充（下）.md",
+ "sourceSha": "ae8ae177",
+ "blocks": [
+  {
+   "t": "h2",
+   "x": "24 考研大纲补充（下）"
+  },
+  {
+   "t": "h2",
+   "x": "词表"
+  },
+  {
+   "t": "li",
+   "x": "degrade。degrade。降低。"
+  },
+  {
+   "t": "li",
+   "x": "disperse。disperse。驱散。"
+  },
+  {
+   "t": "li",
+   "x": "eclipse。eclipse。日食。"
+  },
+  {
+   "t": "li",
+   "x": "elevate。elevate。提升。"
+  },
+  {
+   "t": "li",
+   "x": "embark。embark。从事。"
+  },
+  {
+   "t": "li",
+   "x": "embed。embed。嵌入。"
+  },
+  {
+   "t": "li",
+   "x": "embody。embody。体现。"
+  },
+  {
+   "t": "li",
+   "x": "emulate。emulate。模仿。"
+  },
+  {
+   "t": "li",
+   "x": "encompass。encompass。包含。"
+  },
+  {
+   "t": "li",
+   "x": "erode。erode。侵蚀。"
+  },
+  {
+   "t": "li",
+   "x": "erratic。erratic。不规则的。"
+  },
+  {
+   "t": "li",
+   "x": "escalate。escalate。升级。"
+  },
+  {
+   "t": "li",
+   "x": "esteem。esteem。尊重。"
+  },
+  {
+   "t": "li",
+   "x": "ethical。ethical。伦理的。"
+  },
+  {
+   "t": "li",
+   "x": "exaggerate。exaggerate。夸大。"
+  },
+  {
+   "t": "li",
+   "x": "exempt。exempt。免除。"
+  },
+  {
+   "t": "li",
+   "x": "exert。exert。施加。"
+  },
+  {
+   "t": "li",
+   "x": "expel。expel。驱逐。"
+  },
+  {
+   "t": "li",
+   "x": "fluctuate。fluctuate。波动。"
+  },
+  {
+   "t": "li",
+   "x": "formulate。formulate。制定。"
+  },
+  {
+   "t": "li",
+   "x": "fulfill。fulfill。履行。"
+  },
+  {
+   "t": "li",
+   "x": "furnish。furnish。提供。"
+  },
+  {
+   "t": "li",
+   "x": "incur。incur。招致。"
+  },
+  {
+   "t": "li",
+   "x": "indulge。indulge。沉溺。"
+  },
+  {
+   "t": "li",
+   "x": "inferior。inferior。较差的。"
+  },
+  {
+   "t": "li",
+   "x": "initiate。initiate。发起。"
+  },
+  {
+   "t": "li",
+   "x": "integrity。integrity。正直。"
+  },
+  {
+   "t": "li",
+   "x": "intimate。intimate。亲密的。"
+  },
+  {
+   "t": "li",
+   "x": "intrigue。intrigue。激起兴趣。"
+  },
+  {
+   "t": "li",
+   "x": "invaluable。invaluable。无价的。"
+  },
+  {
+   "t": "li",
+   "x": "isolate。isolate。孤立。"
+  },
+  {
+   "t": "li",
+   "x": "liable。liable。有责任的。"
+  },
+  {
+   "t": "li",
+   "x": "mediate。mediate。调解。"
+  },
+  {
+   "t": "li",
+   "x": "merge。merge。合并。"
+  },
+  {
+   "t": "li",
+   "x": "minimize。minimize。使最小化。"
+  },
+  {
+   "t": "li",
+   "x": "mislead。mislead。误导。"
+  },
+  {
+   "t": "li",
+   "x": "neglect。neglect。忽视。"
+  },
+  {
+   "t": "li",
+   "x": "nurture。nurture。培育。"
+  },
+  {
+   "t": "li",
+   "x": "obsolete。obsolete。过时的。"
+  },
+  {
+   "t": "li",
+   "x": "obstacle。obstacle。障碍。"
+  },
+  {
+   "t": "li",
+   "x": "occupation。occupation。职业。"
+  },
+  {
+   "t": "li",
+   "x": "optimism。optimism。乐观。"
+  },
+  {
+   "t": "li",
+   "x": "orient。orient。使适应。"
+  },
+  {
+   "t": "li",
+   "x": "overlook。overlook。忽视。"
+  },
+  {
+   "t": "li",
+   "x": "overtake。overtake。超过。"
+  },
+  {
+   "t": "li",
+   "x": "foster。foster。培养。"
+  },
+  {
+   "t": "li",
+   "x": "execute。execute。执行。"
+  },
+  {
+   "t": "li",
+   "x": "extinct。extinct。灭绝的。"
+  },
+  {
+   "t": "li",
+   "x": "alleviate。alleviate。减轻。"
+  },
+  {
+   "t": "li",
+   "x": "converge。converge。汇聚。"
+  },
+  {
+   "t": "li",
+   "x": "counterpart。counterpart。对应物。"
+  },
+  {
+   "t": "li",
+   "x": "cripple。cripple。严重削弱。"
+  },
+  {
+   "t": "li",
+   "x": "cumulative。cumulative。累积的。"
+  },
+  {
+   "t": "li",
+   "x": "banish。banish。放逐。"
+  },
+  {
+   "t": "li",
+   "x": "belittle。belittle。贬低。"
+  },
+  {
+   "t": "li",
+   "x": "condone。condone。宽恕。"
+  },
+  {
+   "t": "li",
+   "x": "conducive。conducive。有助于的。"
+  },
+  {
+   "t": "li",
+   "x": "conscientious。conscientious。认真的。"
+  },
+  {
+   "t": "li",
+   "x": "curtail。curtail。削减。"
+  },
+  {
+   "t": "li",
+   "x": "denounce。denounce。谴责。"
+  },
+  {
+   "t": "li",
+   "x": "deplete。deplete。耗尽。"
+  },
+  {
+   "t": "li",
+   "x": "deplore。deplore。谴责。"
+  },
+  {
+   "t": "li",
+   "x": "deride。deride。嘲笑。"
+  },
+  {
+   "t": "li",
+   "x": "admonish。admonish。告诫。"
+  },
+  {
+   "t": "li",
+   "x": "appease。appease。平息。"
+  },
+  {
+   "t": "li",
+   "x": "apprehensive。apprehensive。忧虑的。"
+  },
+  {
+   "t": "li",
+   "x": "arduous。arduous。艰巨的。"
+  },
+  {
+   "t": "li",
+   "x": "astute。astute。精明的。"
+  },
+  {
+   "t": "li",
+   "x": "austere。austere。严峻的。"
+  },
+  {
+   "t": "li",
+   "x": "benevolent。benevolent。仁慈的。"
+  },
+  {
+   "t": "li",
+   "x": "blatant。blatant。公然的。"
+  },
+  {
+   "t": "li",
+   "x": "brittle。brittle。易碎的。"
+  },
+  {
+   "t": "li",
+   "x": "callous。callous。冷酷的。"
+  },
+  {
+   "t": "li",
+   "x": "capricious。capricious。反复无常的。"
+  },
+  {
+   "t": "li",
+   "x": "caustic。caustic。刻薄的。"
+  },
+  {
+   "t": "li",
+   "x": "chide。chide。责骂。"
+  },
+  {
+   "t": "li",
+   "x": "circumspect。circumspect。谨慎的。"
+  },
+  {
+   "t": "li",
+   "x": "clandestine。clandestine。秘密的。"
+  },
+  {
+   "t": "li",
+   "x": "coalesce。coalesce。联合。"
+  },
+  {
+   "t": "li",
+   "x": "cogent。cogent。有说服力的。"
+  },
+  {
+   "t": "li",
+   "x": "commensurate。commensurate。相称的。"
+  },
+  {
+   "t": "li",
+   "x": "complacent。complacent。自满的。"
+  },
+  {
+   "t": "li",
+   "x": "compliant。compliant。顺从的。"
+  },
+  {
+   "t": "li",
+   "x": "compunction。compunction。内疚。"
+  },
+  {
+   "t": "li",
+   "x": "conciliatory。conciliatory。安抚的。"
+  },
+  {
+   "t": "li",
+   "x": "congenial。congenial。意气相投的。"
+  },
+  {
+   "t": "li",
+   "x": "contemptuous。contemptuous。轻蔑的。"
+  },
+  {
+   "t": "li",
+   "x": "contrite。contrite。悔悟的。"
+  },
+  {
+   "t": "li",
+   "x": "contrive。contrive。设法做到。"
+  },
+  {
+   "t": "li",
+   "x": "copious。copious。大量的。"
+  },
+  {
+   "t": "li",
+   "x": "covert。covert。隐蔽的。"
+  },
+  {
+   "t": "li",
+   "x": "credulous。credulous。轻信的。"
+  },
+  {
+   "t": "li",
+   "x": "cursory。cursory。粗略的。"
+  },
+  {
+   "t": "li",
+   "x": "dearth。dearth。缺乏。"
+  },
+  {
+   "t": "li",
+   "x": "delineate。delineate。描绘。"
+  },
+  {
+   "t": "li",
+   "x": "deterrent。deterrent。威慑物。"
+  },
+  {
+   "t": "li",
+   "x": "abate。abate。减弱。"
+  },
+  {
+   "t": "li",
+   "x": "abstain。abstain。戒除。"
+  },
+  {
+   "t": "li",
+   "x": "acrimonious。acrimonious。尖刻的。"
+  },
+  {
+   "t": "li",
+   "x": "adamant。adamant。坚决的。"
+  },
+  {
+   "t": "li",
+   "x": "affable。affable。和蔼的。"
+  },
+  {
+   "t": "li",
+   "x": "aloof。aloof。冷淡的。"
+  },
+  {
+   "t": "li",
+   "x": "altruism。altruism。利他主义。"
+  },
+  {
+   "t": "li",
+   "x": "ambivalent。ambivalent。矛盾的。"
+  },
+  {
+   "t": "li",
+   "x": "ameliorate。ameliorate。改善。"
+  },
+  {
+   "t": "li",
+   "x": "amenable。amenable。顺从的。"
+  },
+  {
+   "t": "li",
+   "x": "animosity。animosity。敌意。"
+  },
+  {
+   "t": "li",
+   "x": "antipathy。antipathy。反感。"
+  },
+  {
+   "t": "li",
+   "x": "apathy。apathy。冷漠。"
+  },
+  {
+   "t": "li",
+   "x": "archaic。archaic。古老的。"
+  },
+  {
+   "t": "li",
+   "x": "ardent。ardent。热心的。"
+  },
+  {
+   "t": "li",
+   "x": "ascetic。ascetic。禁欲的。"
+  },
+  {
+   "t": "li",
+   "x": "audacious。audacious。大胆的。"
+  },
+  {
+   "t": "li",
+   "x": "auspicious。auspicious。吉利的。"
+  },
+  {
+   "t": "li",
+   "x": "banal。banal。陈腐的。"
+  },
+  {
+   "t": "li",
+   "x": "brevity。brevity。简短。"
+  },
+  {
+   "t": "li",
+   "x": "buoyant。buoyant。乐观的。"
+  },
+  {
+   "t": "li",
+   "x": "burgeon。burgeon。迅速成长。"
+  },
+  {
+   "t": "li",
+   "x": "coerce。coerce。强迫。"
+  },
+  {
+   "t": "li",
+   "x": "circumvent。circumvent。规避。"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "短文"
+  },
+  {
+   "t": "h2",
+   "x": "中译"
+  },
+  {
+   "t": "h2",
+   "x": "语法点"
+  },
+  {
+   "t": "li",
+   "x": "变成 引导结果状语从句，其中 为过去分词短语作后置定语，连接两个不带 to 的不定式 变成 写因果链长句时先用 so…that 搭骨架，中间塞分词定语，末尾用 rather than 制造对照，考场阅读中此类结构常被用来设\"因果倒置\"干扰项。"
+  },
+  {
+   "t": "li",
+   "x": "变成 albeit 引导的省略式让步，后接形容词、副词或介词短语，不接完整从句；此处 为双重否定表委婉肯定 变成 写作中替代 although 可使句子更紧凑；阅读时见 albeit 应立即判定\"前后语义相反\"，其后的内容是对前半句的退让性修正。"
+  },
+  {
+   "t": "li",
+   "x": "变成 变成 同类动词还有 consider / think / find / make；阅读中若 it 后紧跟形容词再跟不定式，不要误把 it 当作指代前文的名词。"
+  },
+  {
+   "t": "li",
+   "x": "变成 whose 引导定语从句修饰主语，主句谓语为 ，构成\"find sth done\" 变成 主谓之间被定语从句隔开是考研长句的典型拆分点，找谓语时先跳过 whose 从句；find sth done 表示\"发现某事已被（他人）做成\"，含被动意味。"
+  },
+  {
+   "t": "li",
+   "x": "变成 as 引导让步状语从句时表语提前构成倒装，即 ，相当于 though they are mundane 变成 该结构常作插入语割裂主谓，阅读时先删去插入成分再抓主干；写作中用它替代 although 可提升句式复杂度。"
+  }
+ ]
+}
