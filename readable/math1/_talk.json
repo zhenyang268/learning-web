@@ -4,8 +4,8 @@
   "title": "奇偶、周期、有界：三条性质，各自省掉哪一半计算",
   "group": "数一 · 高等数学",
   "source": "build/reading/talk/math1-HS-0101.md",
-  "sha": "928c95cd",
-  "n": 28,
+  "sha": "381154c4",
+  "n": 27,
   "problems": []
  },
  {
@@ -13,8 +13,8 @@
   "title": "数列极限只问「后面怎么走」，不问「前面怎么来」",
   "group": "数一 · 高等数学",
   "source": "build/reading/talk/math1-HS-0102.md",
-  "sha": "0eb15c88",
-  "n": 41,
+  "sha": "660862d2",
+  "n": 35,
   "problems": []
  },
  {
@@ -22,8 +22,8 @@
   "title": "无穷小比较，本质是给「趋于零的快慢」排出一套等级",
   "group": "数一 · 高等数学",
   "source": "build/reading/talk/math1-HS-0103.md",
-  "sha": "7442549f",
-  "n": 43,
+  "sha": "86a6b037",
+  "n": 39,
   "problems": []
  },
  {
@@ -31,8 +31,8 @@
   "title": "连续的判定只有一句话：极限值能不能按回函数值上",
   "group": "数一 · 高等数学",
   "source": "build/reading/talk/math1-HS-0104.md",
-  "sha": "bf7d246d",
-  "n": 39,
+  "sha": "a7aab093",
+  "n": 37,
   "problems": []
  },
  {
@@ -40,7 +40,7 @@
   "title": "导数为什么离不开「先连续」这一步：可导必连续，反过来的缺口全在尖点上",
   "group": "数一 · 高等数学",
   "source": "build/reading/talk/math1-HS-0201.md",
-  "sha": "9f386972",
+  "sha": "3a22e1f8",
   "n": 31,
   "problems": []
  },
@@ -292,7 +292,7 @@
   "title": "行列式：几乎所有行列式变形都在问同一件事——你这一手到底动没动它的值",
   "group": "数一 · 线性代数",
   "source": "build/reading/talk/math1-LA-0101.md",
-  "sha": "4b91da8c",
+  "sha": "78db25ba",
   "n": 23,
   "problems": []
  },
@@ -328,7 +328,7 @@
   "title": "秩：它只回答「这几条里到底有几条在干活」，三个判断都从这一句读出来",
   "group": "数一 · 线性代数",
   "source": "build/reading/talk/math1-LA-0203.md",
-  "sha": "2e434645",
+  "sha": "847bab41",
   "n": 49,
   "problems": []
  },
@@ -373,8 +373,8 @@
   "title": "齐次方程组：判据只比一次，那一比就把答案的个数报出来了",
   "group": "数一 · 线性代数",
   "source": "build/reading/talk/math1-LA-0401.md",
-  "sha": "fa1c4251",
-  "n": 40,
+  "sha": "fc71e2cc",
+  "n": 38,
   "problems": []
  },
  {
@@ -454,8 +454,8 @@
   "title": "事件与运算：一句话先翻成并、交、补，就不用把结果一个个列出来数",
   "group": "数一 · 概率统计",
   "source": "build/reading/talk/math1-PS-0101.md",
-  "sha": "5de7cded",
-  "n": 36,
+  "sha": "de81034f",
+  "n": 29,
   "problems": []
  },
  {
@@ -490,8 +490,8 @@
   "title": "分布函数与密度：求区间概率只减两个端点，分段积分这一步被省掉了",
   "group": "数一 · 概率统计",
   "source": "build/reading/talk/math1-PS-0201.md",
-  "sha": "eff34519",
-  "n": 23,
+  "sha": "b018e5d8",
+  "n": 19,
   "problems": []
  },
  {
@@ -508,8 +508,8 @@
   "title": "换一个变量看同一批结果，能省的计算全看你有没有把区间反解干净",
   "group": "数一 · 概率统计",
   "source": "build/reading/talk/math1-PS-0203.md",
-  "sha": "8f8527f4",
-  "n": 27,
+  "sha": "b50b666e",
+  "n": 24,
   "problems": []
  },
  {
@@ -535,8 +535,8 @@
   "title": "两个变量合成一个，卷积省掉整层积分的前提只有一条：独立",
   "group": "数一 · 概率统计",
   "source": "build/reading/talk/math1-PS-0303.md",
-  "sha": "ae87d510",
-  "n": 27,
+  "sha": "511e48b7",
+  "n": 24,
   "problems": []
  },
  {
@@ -598,8 +598,8 @@
   "title": "三个分布其实只有一条构造链，拼出来的量叫卡方、t 还是 F",
   "group": "数一 · 概率统计",
   "source": "build/reading/talk/math1-PS-0602.md",
-  "sha": "969c7429",
-  "n": 30,
+  "sha": "d057cc0e",
+  "n": 19,
   "problems": []
  },
  {
@@ -643,8 +643,8 @@
   "title": "正态总体只有位置和宽窄两件事，于是四个统计量刚好各管一格",
   "group": "数一 · 概率统计",
   "source": "build/reading/talk/math1-PS-0802.md",
-  "sha": "61211107",
-  "n": 35,
+  "sha": "4dc4f297",
+  "n": 30,
   "problems": []
  }
 ]
