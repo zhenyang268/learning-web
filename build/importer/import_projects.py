@@ -22,11 +22,14 @@ GROUP_DOMAIN = {
     "os": "SO",
     "raft": "DF",  # 2026-11-17 起 raft 成组（总纲 + go-lab + cpp）；旧 6824 单列归档，域沿用 DF
     "cpu": "CP",
-    "langs": "LG",
-    "algo": "AL",
+    "parallel": "LG",  # 2026-11-20 起 langs 只留 cuda；缩为并行的执行模型
+    "codedesign": "CD",  # 代码设计与实现：替补班底（原 langs/cpp-basics、langs/python-basics、algo）
     "eng": "EG",
     "cg": "GX",  # 与数学的 CG（图形学）区分：代号域全局唯一
 }
+
+# 代号一旦发布就固定：删叶子后组内序号会前移，这里给仍在用的章钉死旧号。
+CODE_OVERRIDE = {"parallel/cuda": "LG03"}
 SINGLES = [  # README §七 的单列，各自一个域
     ("csapp", "CS"),
     ("cs149", "PA"),
@@ -190,10 +193,11 @@ def main() -> int:
         rest = sorted(p for p in leaves if p.name not in named)
         missing_in_readme += [f"{group}/{p.name}" for p in rest]
         for i, leaf in enumerate(ordered + rest, start=1):
+            code = CODE_OVERRIDE.get(f"{group}/{leaf.name}", f"{dom}{i:02d}")
             units += emit_dir(
                 root,
                 leaf,
-                f"{dom}{i:02d}",
+                code,
                 leaf.name,
                 {"kind": "project", "group": group, "project": leaf.name},
                 commit,

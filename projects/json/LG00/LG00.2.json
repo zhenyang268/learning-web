@@ -2,12 +2,12 @@
   "schema": "doc-card/v1",
   "code": "LG00.2",
   "chapter": "LG00",
-  "title": "langs · 分组 · 导读",
+  "title": "parallel · 分组 · 导读",
   "src": {
-    "file": "notebook/projects/langs/NOTES.md",
-    "sha256": "sha256:8114d098dc603d8f75fd0297e834b4f972fad6fb2cd03cd3bafe5b42e8e2fa44"
+    "file": "notebook/projects/parallel/NOTES.md",
+    "sha256": "sha256:bcb3074b7a1f0af4a47b79beccd28b10ab24d51c6479d3f230521a1bbae58263"
   },
-  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
   "notebook_dirty": false,
   "entries": [
     {
@@ -15,16 +15,16 @@
       "type": "introduction",
       "title": "",
       "level": 0,
-      "content": "> 编排，不是教材：规定「读到哪、用哪个工具验证、判据是什么」。"
+      "content": "> 编排，不是教材：规定读哪几章、用哪个指标验证。"
     }
   ],
-  "source_h1": "langs/ · 路径手册",
+  "source_h1": "parallel/ · 路径手册",
   "meta": {
     "kind": "project-chapter",
-    "group": "langs",
+    "group": "parallel",
     "file": "NOTES.md",
     "part": 1,
-    "parts": 7,
+    "parts": 2,
     "section": "导读"
   }
 }

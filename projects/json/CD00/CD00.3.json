@@ -1,0 +1,29 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD00.3",
+  "chapter": "CD00",
+  "title": "怎么用这条线",
+  "src": {
+    "file": "notebook/projects/codedesign/NOTES.md",
+    "sha256": "sha256:3883c5fcff98a55135691494bb37126641f846c9b7e6ff473eacb27b873278b8"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD00.3:body.s01",
+      "type": "extension",
+      "title": "怎么用这条线",
+      "level": 2,
+      "content": "1. **先读 `metrics/`**：四种成本与 `O` 的失效条件。后面每章的取舍都用这套语言，跳过它只能背结论。\n2. **每章按五栏推进**：\n   - 契约：前置 P、后置 Q，写不出 Q 说明还没想清；\n   - 表示不变量：数据形状只有一条硬约束，且可检查；\n   - 成本表：每个操作的时间/空间/IO/并行代价；\n   - 失败模式：预条件违反、定义域外、做不到，三种不能混；\n   - 判据：不变量变成断言或独立对拍，注入必须变红。\n3. **每章至少一个动手产物**：不是\"看懂\"，是能跑、能对拍、能被注入打红。\n4. **收口在 `numeric/`**：用数值库当验收场——同一数学对象两种表示，成本表与判据都要能对上。\n\n**与其它线的关系**：机制（机器/OS/数据/性能）在各自块里，本线只引用。读到\"为什么 cache 是 64 字节\"就转 `machine/`；读到\"raft 怎么保证 log matching\"就转 `data/`。\n\n**一条硬规则**：任何结论必须能追到三样之一——源码行、实测数字、反例。三样都没有的段落删掉。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 2,
+    "section": "怎么用这条线"
+  }
+}

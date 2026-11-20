@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CD04.1:
+    prereq: [CD01.1, CD02.1] # 图算法依赖成本模型与队列/栈

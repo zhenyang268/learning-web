@@ -195,6 +195,8 @@ def check_project_notes_lossless() -> None:
         by_src.setdefault(d["src"]["file"], []).append(d)
 
     for p in sorted((NB / "projects").rglob("NOTES.md")):
+        if "_archive" in p.parts:
+            continue  # 归档区统一待删，不参与入库对账
         rel = "notebook/" + str(p.relative_to(NB))
         units = sorted(by_src.get(rel, []), key=lambda d: (d.get("meta") or {}).get("part", 0))
         if not units:
@@ -476,7 +478,7 @@ def check_coverage() -> None:
 
     # 工程线
     docs = load_docs(ROOTS["projects"])
-    leaves = [p for p in NB.glob("projects/*/*/OUTLINE.md")] + [
+    leaves = [p for p in NB.glob("projects/*/*/OUTLINE.md") if "_archive" not in p.parts] + [
         NB / "projects" / s / "OUTLINE.md" for s in ("csapp", "cs149", "database", "ai", "discrete-math")
     ]
     leaves = [p for p in leaves if p.exists()]
@@ -488,7 +490,11 @@ def check_coverage() -> None:
     if got_outline != len(leaves):
         crit(f"工程线: 叶子 OUTLINE 单元 {got_outline} ≠ 源 {len(leaves)}")
     groups = len(
-        [g for g in ("os", "raft", "cpu", "langs", "algo", "eng", "cg") if (NB / "projects" / g / "NOTES.md").exists()]
+        [
+            g
+            for g in ("os", "raft", "cpu", "parallel", "codedesign", "eng", "cg")
+            if (NB / "projects" / g / "NOTES.md").exists()
+        ]
     )
     got_group = sum(
         1

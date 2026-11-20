@@ -1,0 +1,63 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD03.1",
+  "chapter": "CD03",
+  "title": "associate · 总览",
+  "src": {
+    "file": "notebook/projects/codedesign/associate/OUTLINE.md",
+    "sha256": "sha256:f607cbda9e6369e95dde66860a9625f2da5d2b2277e1cb9ca4914f34af664b0e"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD03.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **判据**：给定查询模式（点查 / 范围 / 前缀 / 去重），能选出哈希或有序结构，并说出最坏退化条件。"
+    },
+    {
+      "id": "CD03.1:body.s01",
+      "type": "extension",
+      "title": "一、这章解决什么",
+      "level": 2,
+      "content": "关联容器的选择只看两件事：**查询形状**与**最坏情况能不能接受**。\n\n- 只要点查、能容忍最坏 → 哈希；\n- 要范围、要顺序、要稳定最坏 → 有序树；\n- 数据在磁盘上、要按页读 → B+ 树；\n- 要前缀 → Trie 族；\n- 要概率平衡、实现简单 → 跳表。\n\n这一章把每种结构的\"表示—查询—更新—退化\"讲清，不做 STL 目录。"
+    },
+    {
+      "id": "CD03.1:body.s02",
+      "type": "extension",
+      "title": "二、单元表",
+      "level": 2,
+      "content": "| # | 单元 | 要回答的问题 | 判据 |\n|---|---|---|---|\n| 1 | 哈希：冲突处理 | 链地址 / 开放寻址 / robin hood 的探测与删除；负载因子怎么定 | 能算出给定负载因子下的期望探测次数 |\n| 2 | 哈希：扩容与最坏 | rehash 的摊还；墓碑为什么不能直接置空；HashDoS 怎么构造 | 能说出最坏 `O(n)` 的触发条件与缓解 |\n| 3 | BST 与 AVL | 退化条件；四种旋转各自恢复哪条不变量 | 能写出旋转后的平衡因子断言 |\n| 4 | 红黑树 | **只展开旋转与删除**；插入只作对照；黑高为什么不变量 | 能逐步画出删除的三种情形并保持黑高 |\n| 5 | B / B+ 树 | 分裂与合并；为什么数据库按页读时选它；与红黑树的 IO 成本差 | 能算出一次查询的页访问次数 |\n| 6 | 跳表与索引结构 | 跳表的概率平衡与层数；Trie / AC 只讲适用面与空间代价 | 能比较跳表与红黑树的实现复杂度与最坏界 |\n| 7 | 数值库对照 | 稀疏索引与去重：为什么用 `colIdx` 严格递增；`FromDense` 为什么用精确零判断 | 能指出\"乱序/重复\"会破坏哪条不变量 |"
+    },
+    {
+      "id": "CD03.1:body.s03",
+      "type": "extension",
+      "title": "三、深度与取舍",
+      "level": 2,
+      "content": "- **展开**：红黑树的旋转与删除、B+ 树的分裂/合并、robin hood 的交换规则。\n- **了解即可**：AVL 的四种旋转细节（只保留\"哪条不变量\"）、Trie 的压缩变体、AC 自动机的 fail 树。\n- **不做**：数据库的页/缓冲池/WAL（`data/`）、哈希函数的密码学性质。"
+    },
+    {
+      "id": "CD03.1:body.s04",
+      "type": "extension",
+      "title": "四、边界",
+      "level": 2,
+      "content": "| 问题 | 去哪 |\n|---|---|\n| B+ 树在事务与缓冲池里的行为 | `data/` 的 `DB01` |\n| 哈希在最坏情况下的攻击面 | 本章只给结构与条件，安全场景归 `os/` |\n| 有序结构在排序算法里的用法 | `sequence/` |"
+    },
+    {
+      "id": "CD03.1:body.s05",
+      "type": "extension",
+      "title": "五、动手产物",
+      "level": 2,
+      "content": "1. 一个开放寻址哈希表，支持删除（墓碑）与 rehash，附负载因子-探测次数曲线；\n2. 红黑树删除的三种情形各一个最小用例，附黑高断言；\n3. 同一组 key 分别用哈希表、红黑树、跳表实现点查与范围查询，给出成本表。"
+    }
+  ],
+  "source_h1": "associate/ · 关联容器与索引算法",
+  "meta": {
+    "kind": "project",
+    "group": "codedesign",
+    "project": "associate",
+    "file": "OUTLINE.md"
+  }
+}

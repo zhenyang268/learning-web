@@ -1,4 +1,4 @@
 notebook_commit: "5439009"
 nodes:
   PA01.1:
-    prereq: [LG01.1, CP02.1] # 并行性能归因依赖 C++ 与微架构基础
+    prereq: [CD06.1, CP02.1] # 并行性能归因依赖 C++ 与微架构基础

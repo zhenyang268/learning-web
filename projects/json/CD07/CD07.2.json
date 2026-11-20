@@ -1,0 +1,31 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD07.2",
+  "chapter": "CD07",
+  "title": "数值容器只是换了名字的数据结构",
+  "src": {
+    "file": "notebook/projects/codedesign/numeric/NOTES.md",
+    "sha256": "sha256:8f42196109cf45c05c52e59d0068c34e3d2116f235eb358d3106adfdc2e4c883"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD07.2:body.s01",
+      "type": "extension",
+      "title": "数值容器只是换了名字的数据结构",
+      "level": 2,
+      "content": "数值库看起来特殊，其实每个决定都能还原成前面六章的语言。\n\n**稠密矩阵**是连续容器：行主序让一行连续，列访问跨步；blocking 把大矩阵切成能装进 cache 的小块，减少重复访存。它的问题是 `O(n^3)` 的运算量，优化空间在访存而不是算法。\n\n**张量**是\"带 strides 的视图\"：`slice` 与 `permute` 只改 shape 与 strides，不搬数据；代价是别名与生命周期——view 不能长于宿主，非连续 `reshape` 只能报错或显式拷贝。选\"报错\"而不是\"隐式拷贝\"，是为了让代价可见。\n\n**稀疏矩阵**是索引结构：CSR 用 `rowPtr` 与 `colIdx` 存非零元，SpMV 的访存模式由行长度决定；COO 适合构造、CSR 适合计算。格式选择由稀疏度与访问模式决定，不由\"哪个更高级\"决定。\n\n**分解**的前提是结构：LU 要选主元才稳定；Cholesky 要求正定，因此可以不选主元，代价是输入受限；QR 与 SVD 更稳但更贵。选哪个由矩阵性质与精度要求决定。\n\n**FFT** 是分治：把 `n` 点 DFT 拆成两个 `n/2` 点，蝶形合并；位反转只做一次，旋转因子直接建表以避免递推误差。\n\n**自动微分**是空间-时间的交换：dual 数把导数带在值上，前向一次得到所有输入方向的导数；tape 记录计算图，反向一次得到所有参数的梯度。选择由\"输入多还是输出多\"决定。\n\n**收口**：CSR + SpMV + CG 把表示、访存、迭代、收敛判据串起来，是本章的验收场。"
+    }
+  ],
+  "source_h1": "numeric/ · 本章主线",
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "numeric",
+    "file": "NOTES.md",
+    "part": 1,
+    "parts": 1,
+    "section": "数值容器只是换了名字的数据结构"
+  }
+}

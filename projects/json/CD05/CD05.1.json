@@ -1,0 +1,63 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD05.1",
+  "chapter": "CD05",
+  "title": "strategy · 总览",
+  "src": {
+    "file": "notebook/projects/codedesign/strategy/OUTLINE.md",
+    "sha256": "sha256:bb3848196c5d248e3b3d339954333db9669a0291a34d80979dad146c8cfd45fa"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD05.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **判据**：拿到一个新问题，能判断该用哪类策略，并给出至少一个反例说明另一类为什么不选。"
+    },
+    {
+      "id": "CD05.1:body.s01",
+      "type": "extension",
+      "title": "一、这章解决什么",
+      "level": 2,
+      "content": "策略选择不是\"背五大类\"，而是**先证伪**：\n\n- 分治的前提是子问题独立且规模按比例缩小；\n- DP 的前提是最优子结构与无后效性；\n- 贪心的前提是交换论证成立；\n- 回溯的前提是解空间可枚举且剪枝不丢解；\n- 随机化的前提是允许\"以高概率\"而不是\"必然\"；\n- 近似的前提是能接受近似比。\n\n每一类都先给**失效条件**，再给写法。"
+    },
+    {
+      "id": "CD05.1:body.s02",
+      "type": "extension",
+      "title": "二、单元表",
+      "level": 2,
+      "content": "| # | 单元 | 要回答的问题 | 判据 |\n|---|---|---|---|\n| 1 | 分治 | 主定理三种情形怎么用（不证）；什么时候分治反而慢 | 能写出递推式并判断属于哪种情形 |\n| 2 | 动态规划 | 状态怎么设计；滚动数组省的是哪一维；记忆化与递推的取舍 | 能证明状态满足无后效性，或给出反例 |\n| 3 | 贪心 | 交换论证怎么写；没有论证时为什么只能叫启发式 | 能给出一个\"贪心错\"的最小反例 |\n| 4 | 回溯与限界 | 剪枝为什么不能剪掉解；限界函数怎么定 | 能证明剪枝条件只排除非最优解 |\n| 5 | 随机化 | Las Vegas 与 Monte Carlo 的区别；期望与高概率界怎么表述 | 能说清单次结果与期望的关系 |\n| 6 | 近似与 NP 识别 | 什么时候该放弃最优；近似比怎么读 | 能识别一个问题是 NP 难并给出近似策略 |"
+    },
+    {
+      "id": "CD05.1:body.s03",
+      "type": "extension",
+      "title": "三、深度与取舍",
+      "level": 2,
+      "content": "- **展开**：DP 状态设计与滚动数组、贪心的交换论证、回溯的剪枝正确性。\n- **了解即可**：主定理的证明、拟阵、Chernoff 界的推导、NP 完全性的形式化归约。\n- **不做**：具体题型的题解（题目在动手产物里，不建题册）。"
+    },
+    {
+      "id": "CD05.1:body.s04",
+      "type": "extension",
+      "title": "四、边界",
+      "level": 2,
+      "content": "| 问题 | 去哪 |\n|---|---|\n| 分治在 FFT 里的实例 | `numeric/`（FFT 蝶形） |\n| DP 在图上的实例（最短路） | `graph/` |\n| 策略的数学前提（归纳、期望、偏序） | 块 1 `discrete-math/` |"
+    },
+    {
+      "id": "CD05.1:body.s05",
+      "type": "extension",
+      "title": "五、动手产物",
+      "level": 2,
+      "content": "1. 同一个问题用 DP 与贪心各写一版，给出贪心失效的最小反例；\n2. 一个回溯题，去掉一条剪枝后结果变化，证明该剪枝安全；\n3. 一个随机化算法，报告期望运行时间与单次结果的波动范围。"
+    }
+  ],
+  "source_h1": "strategy/ · 算法策略与取舍",
+  "meta": {
+    "kind": "project",
+    "group": "codedesign",
+    "project": "strategy",
+    "file": "OUTLINE.md"
+  }
+}

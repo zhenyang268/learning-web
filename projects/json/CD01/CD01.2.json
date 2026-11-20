@@ -1,0 +1,31 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD01.2",
+  "chapter": "CD01",
+  "title": "成本语言先于结构选型",
+  "src": {
+    "file": "notebook/projects/codedesign/metrics/NOTES.md",
+    "sha256": "sha256:38cb0f8f511eaa79130e33a09c1ecce8756f90e578053fecd5899e03319aa404"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD01.2:body.s01",
+      "type": "extension",
+      "title": "成本语言先于结构选型",
+      "level": 2,
+      "content": "选型的争论常常是两种语言在打架：一方说\"这个 `O` 更小\"，另一方说\"实测更慢\"。两边都没错，错在没把成本拆成四列。\n\n**第一层：四种成本不能互相替代。** 时间是 CPU 周期与内存等待之和；空间是常驻集与峰值；IO 是页/块/网络往返；并行是 work 与 span。一个结构可能时间最优、空间最差（哈希表），也可能空间最优、IO 最差（链表）。不写清哪一列，比较就没有意义。\n\n**第二层：三种\"平均\"不能混。** 最坏是保证，期望是对随机输入的加权，摊还是把一次性代价摊到一串操作上。`vector::push_back` 的单次最坏是 `O(n)`，摊还是 `O(1)`；哈希查找的期望是 `O(1)`，最坏是 `O(n)`。工程里能承诺哪一种，取决于输入是否受控。\n\n**第三层：`O` 只描述增长阶。** 常数、缓存局部性、分支预测和小 `n` 都会让阶数反转。这就是为什么排序在小数组上切插入排序，也是为什么链表在遍历负载下常输给 `vector`——节点的额外内存访问把\"理论更优\"吃掉了。\n\n**用法**：本章不产出结构，只产出**一张能并列比较的表**。后面每一章的取舍，都回到这张表的四列上填数；填不出来，说明还没资格选。"
+    }
+  ],
+  "source_h1": "metrics/ · 本章主线",
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "metrics",
+    "file": "NOTES.md",
+    "part": 1,
+    "parts": 1,
+    "section": "成本语言先于结构选型"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD04.1",
+  "chapter": "CD04",
+  "title": "graph · 总览",
+  "src": {
+    "file": "notebook/projects/codedesign/graph/OUTLINE.md",
+    "sha256": "sha256:fd6c3d2cc605792cabe8b3ef4ae449f3795d816ed1508ba50f5b5266215ae788"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD04.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **判据**：给定图的性质（稀疏/稠密、有向/无向、带权/无权、负权），能选出表示与算法，并给出复杂度与退化条件。"
+    },
+    {
+      "id": "CD04.1:body.s01",
+      "type": "extension",
+      "title": "一、这章解决什么",
+      "level": 2,
+      "content": "图算法的性能一半由**表示**决定，一半由**数据结构**决定：\n\n- 邻接矩阵点查 `O(1)`，遍历 `O(n^2)`；\n- 邻接表遍历 `O(n+m)`，点查 `O(deg)`；\n- CSR 是邻接表的紧凑版，适合大规模稀疏图与数值装配；\n- 边表只适合 Kruskal 这类按边处理的算法。\n\n同一套 BFS/DFS，在三种表示上写法不同、成本不同。"
+    },
+    {
+      "id": "CD04.1:body.s02",
+      "type": "extension",
+      "title": "二、单元表",
+      "level": 2,
+      "content": "| # | 单元 | 要回答的问题 | 判据 |\n|---|---|---|---|\n| 1 | 表示与转换 | 邻接表 / 矩阵 / CSR / 边表的成本；转换一次的代价 | 能对给定 `n,m` 选出表示并写出内存占用 |\n| 2 | BFS / DFS | 迭代实现为什么必须显式栈/队列；访问标记的三种状态 | 能写出\"每个点入队一次\"的不变量 |\n| 3 | 拓扑与 SCC | Kahn 与 DFS 的取舍；Tarjan 的 `low` 与栈 | 能对有环图给出正确的分量划分 |\n| 4 | 最短路 | Dijkstra 的堆选择（二叉/`d` 叉/索引堆）；Bellman-Ford 的负权检测；Floyd 的适用规模 | 能说出每种算法失效的输入 |\n| 5 | MST 与并查集 | Kruskal 的排序瓶颈；Prim 的堆；并查集路径压缩 + 按秩的摊还 | 能写出摊还界成立的两个条件 |\n| 6 | 数值库对照 | `grid` 的节点编号即自由度号；CSR 的图视角；`assemble` 的局部→全局映射 | 能指出编号方式改变会影响哪一步 |"
+    },
+    {
+      "id": "CD04.1:body.s03",
+      "type": "extension",
+      "title": "三、深度与取舍",
+      "level": 2,
+      "content": "- **展开**：BFS/DFS 迭代版、Dijkstra 的堆实现、并查集两种优化、CSR 的构造与遍历。\n- **了解即可**：最大流/最小割、二分图匹配、欧拉/哈密顿、平面图。\n- **不做**：数值库的装配公式（父仓 `01-numerics.md`）、图数据库与分布式图计算。"
+    },
+    {
+      "id": "CD04.1:body.s04",
+      "type": "extension",
+      "title": "四、边界",
+      "level": 2,
+      "content": "| 问题 | 去哪 |\n|---|---|\n| 图在 raft/分布式里的角色（成员变更、复制拓扑） | `data/` |\n| 图的表示在稀疏矩阵里的数值含义 | `numeric/` 与父仓 `sparse.hpp` |\n| 堆的实现细节 | `sequence/` |"
+    },
+    {
+      "id": "CD04.1:body.s05",
+      "type": "extension",
+      "title": "五、动手产物",
+      "level": 2,
+      "content": "1. 同一张随机稀疏图，分别用邻接表与 CSR 存，跑同一个 BFS，结果对拍、内存与耗时对比；\n2. Dijkstra 的两种堆实现，在 `m=O(n)` 与 `m=O(n^2)` 两种图上对比；\n3. 并查集加/不加路径压缩，构造一条退化链，给出实测差距。"
+    }
+  ],
+  "source_h1": "graph/ · 图与并查集",
+  "meta": {
+    "kind": "project",
+    "group": "codedesign",
+    "project": "graph",
+    "file": "OUTLINE.md"
+  }
+}

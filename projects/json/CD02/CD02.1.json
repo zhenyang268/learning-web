@@ -1,0 +1,63 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD02.1",
+  "chapter": "CD02",
+  "title": "sequence · 总览",
+  "src": {
+    "file": "notebook/projects/codedesign/sequence/OUTLINE.md",
+    "sha256": "sha256:2f56ef0a7c644846b9b7e6882ff750878519702e9dc28518da717e3ad09d5c20"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD02.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **判据**：给定负载（尾部追加 / 随机插入 / 遍历 / Top-K），能选出容器与配套算法，并给出退化条件。"
+    },
+    {
+      "id": "CD02.1:body.s01",
+      "type": "extension",
+      "title": "一、这章解决什么",
+      "level": 2,
+      "content": "序列容器是所有代码的底座，但选型常被简化成\"`vector` 快、`list` 慢\"。真正要回答的是三件事：\n\n1. **布局**：连续、链式、分段连续，各自的成本长什么样；\n2. **增长**：扩容策略如何决定摊还、峰值内存与迭代器失效；\n3. **配套算法**：排序、选择、二分、堆，在哪种布局上更快，退化在哪。"
+    },
+    {
+      "id": "CD02.1:body.s02",
+      "type": "extension",
+      "title": "二、单元表",
+      "level": 2,
+      "content": "| # | 单元 | 要回答的问题 | 判据 |\n|---|---|---|---|\n| 1 | 连续 vs 链式 | `vector` / `list` / `forward_list` 的内存布局；迭代器什么时候失效 | 能画出布局图并说出每类操作的成本 |\n| 2 | 增长与分段 | 1.5x 与 2x 的取舍；`deque` 的分块结构；环形缓冲的生产者-消费者语义 | 能算出扩容次数、峰值内存与拷贝总量 |\n| 3 | 堆与优先队列 | `sift_up/down`、建堆为什么 `O(n)`、`d` 叉堆与索引堆的取舍 | 能写出建堆的求和式，不背结论 |\n| 4 | 排序的四维取舍 | 稳定、原地、缓存友好、最坏界；introsort 与 TimSort 各修了哪个维度；外部多路归并 | 给定数据分布能选一种并说出退化条件 |\n| 5 | 选择与 Top-K | quickselect、堆、`partial_sort` 的适用面；`nth_element` 的期望与最坏 | 能比较三者在 `k` 与 `n` 不同关系下的成本 |\n| 6 | 二分与下界 | 半开区间 `[lo,hi)` 的不变量；`lower_bound` / `upper_bound` 的差别 | 能写出循环不变式并证明退出时正确 |\n| 7 | 数值库对照 | `Matrix` 为什么行主序连续；`Tensor` 为什么存 strides；视图与深拷贝的边界 | 能说出两种布局各让哪类操作变快/变慢 |"
+    },
+    {
+      "id": "CD02.1:body.s03",
+      "type": "extension",
+      "title": "三、深度与取舍",
+      "level": 2,
+      "content": "- **展开**：快排分区与归并合并、堆的 sift、`lower_bound` 的不变量、`deque` 的分块索引。\n- **了解即可**：`forward_list` 的接口细节、`list::sort` 的实现、`array` 的聚合初始化。\n- **不做**：红黑树（CD03）、图算法（CD04）、数值分解（CD07）。"
+    },
+    {
+      "id": "CD02.1:body.s04",
+      "type": "extension",
+      "title": "四、边界",
+      "level": 2,
+      "content": "| 问题 | 去哪 |\n|---|---|\n| 排序在磁盘上的 IO 成本模型 | 本章只给多路归并的结构，IO 预算归 `metrics/` 与块 5 |\n| 并行排序 / GPU 扫描 | 块 5 `cuda/`、`PA01` |\n| 堆在 Dijkstra 里的选择 | `graph/` 章引用本章，不重讲堆 |"
+    },
+    {
+      "id": "CD02.1:body.s05",
+      "type": "extension",
+      "title": "五、动手产物",
+      "level": 2,
+      "content": "1. 同一组随机数据，`vector` / `list` / `deque` 三种容器的尾部追加、随机插入、遍历三种负载的实测表；\n2. 一个手写 `lower_bound`，附循环不变式与边界用例（空区间、全部小于、全部大于）；\n3. 一个 Top-K 实现，分别用堆与 quickselect，给出 `k=1`、`k=n/2`、`k=n` 的成本对比。"
+    }
+  ],
+  "source_h1": "sequence/ · 序列容器与配套算法",
+  "meta": {
+    "kind": "project",
+    "group": "codedesign",
+    "project": "sequence",
+    "file": "OUTLINE.md"
+  }
+}

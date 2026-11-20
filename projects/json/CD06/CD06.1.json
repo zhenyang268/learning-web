@@ -1,0 +1,63 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD06.1",
+  "chapter": "CD06",
+  "title": "library · 总览",
+  "src": {
+    "file": "notebook/projects/codedesign/library/OUTLINE.md",
+    "sha256": "sha256:14584b88b989554ee9f14d51b1689ad6cda28a450dbd47da8124d1ca78073510"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD06.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **判据**：能给一个模块写出共享状态清单、失败路径清单与锁/原子选择，并用失败注入证明不泄漏。"
+    },
+    {
+      "id": "CD06.1:body.s01",
+      "type": "extension",
+      "title": "一、这章解决什么",
+      "level": 2,
+      "content": "算法写对只是第一步，库还要回答：\n\n- 谁分配、谁释放、异常中途抛出怎么办；\n- 值语义还是引用语义，拷贝/移动的代价；\n- 模板约束放在编译期还是运行期；\n- 哪些状态被多线程共享，靠什么保护；\n- 一致性的承诺是哪一档。\n\n这一章只讲**库作者需要的那部分 C++**，不教语法。"
+    },
+    {
+      "id": "CD06.1:body.s02",
+      "type": "extension",
+      "title": "二、单元表",
+      "level": 2,
+      "content": "| # | 单元 | 要回答的问题 | 判据 |\n|---|---|---|---|\n| 1 | 分配器与布局 | arena / pool / slab 各适合什么生命周期；对齐、padding、false sharing | 能算出结构体大小与缓存行占用 |\n| 2 | 构造、析构、RAII | 值语义与所有权；异常安全三等级（不抛 / 强保证 / 基本保证） | 能指出每条失败路径上的资源归属 |\n| 3 | 模板与泛型 | concepts / traits 怎么把约束前移到编译期；模板实例化的代价 | 能写出一个约束，让错误在编译期报出 |\n| 4 | 锁与进程 | mutex / 条件变量 / 读写锁；死锁的四个条件与粒度取舍 | 能画出加锁顺序图，指出环在哪 |\n| 5 | 原子与内存序 | happens-before 怎么建立；`relaxed/acquire/release/seq_cst` 各挡住什么重排 | 能写出一个只在弱序下错的例子 |\n| 6 | 无锁与一致性 | SPSC / MPMC 队列；ABA；线性一致 / 最终一致；raft log、事务隔离、futex 的横向对照 | 能列出共享状态并给出保护方式或\"单线程\"声明 |\n| 7 | 失败与资源回归 | 失败注入怎么打；不泄漏、不留半成品怎么验 | 每条失败路径都有一次注入记录 |"
+    },
+    {
+      "id": "CD06.1:body.s03",
+      "type": "extension",
+      "title": "三、深度与取舍",
+      "level": 2,
+      "content": "- **展开**：RAII 与异常安全、锁顺序与死锁、原子内存序、SPSC 队列。\n- **了解即可**：自定义 allocator 的完整接口、`pmr`、无锁 MPMC 的工程实现。\n- **不做**：OS 的调度与 futex 实现（`os/`）、raft 协议正确性（`data/`）、硬件一致性协议（`machine/`）。"
+    },
+    {
+      "id": "CD06.1:body.s04",
+      "type": "extension",
+      "title": "四、边界",
+      "level": 2,
+      "content": "| 问题 | 去哪 |\n|---|---|\n| 调度器、页表、系统调用 | `os/` |\n| raft 的选举与日志复制 | `data/` |\n| cache 一致性与内存屏障的硬件实现 | `machine/` |\n| 并发程序的 benchmark | 块 5 `EG03` / `EG05` |"
+    },
+    {
+      "id": "CD06.1:body.s05",
+      "type": "extension",
+      "title": "五、动手产物",
+      "level": 2,
+      "content": "1. 一个带异常安全的资源类：构造失败、拷贝失败、赋值失败三条路径各一次注入；\n2. 一个 SPSC 环形队列，附 happens-before 论证与压测；\n3. 一张共享状态表：模块 / 共享变量 / 保护方式 / 可见性来源 / 一致性承诺。"
+    }
+  ],
+  "source_h1": "library/ · 库工程：内存、资源、并发",
+  "meta": {
+    "kind": "project",
+    "group": "codedesign",
+    "project": "library",
+    "file": "OUTLINE.md"
+  }
+}

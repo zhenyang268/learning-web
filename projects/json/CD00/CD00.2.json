@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD00.2",
+  "chapter": "CD00",
+  "title": "codedesign · 分组 · 导读",
+  "src": {
+    "file": "notebook/projects/codedesign/NOTES.md",
+    "sha256": "sha256:3883c5fcff98a55135691494bb37126641f846c9b7e6ff473eacb27b873278b8"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD00.2:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> 这条线不是读物，是施工顺序：每章都要留下可对拍的东西。"
+    }
+  ],
+  "source_h1": "codedesign/ · 使用手册",
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "file": "NOTES.md",
+    "part": 1,
+    "parts": 2,
+    "section": "导读"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD00.1",
+  "chapter": "CD00",
+  "title": "codedesign · 分组 · 总览",
+  "src": {
+    "file": "notebook/projects/codedesign/OUTLINE.md",
+    "sha256": "sha256:95fdd88b4f56ece5ee521284f2569d384df72c1d330ad1b57c36f438e3622701"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD00.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **定位**：全仓唯一回答「怎么从算法想到能提交的代码」的一条线。\n> **不教语法**：C++ 只讲库设计需要的那部分（构造析构、值语义、异常安全、模板约束、锁）；Python 不设章。\n> **判据**：每一章都要能交出一个可对拍的实现 + 一张成本表 + 一条失效条件。"
+    },
+    {
+      "id": "CD00.1:body.s01",
+      "type": "extension",
+      "title": "一、这条线解决什么",
+      "level": 2,
+      "content": "读懂算法和写对代码之间缺三样东西：\n\n1. **选型**：同一需求有几种数据表示，凭什么选这一个；\n2. **成本**：时间、空间、IO、并行四种代价，以及 `O` 记号在什么时候失效；\n3. **正确性**：不靠脑内演算，靠契约、不变量、归纳与判据。\n\n这三样不是三个学科，是同一次设计里的三个动作。所以本组按**容器族 + 配套算法**组织，不按\"递归/循环\"或\"STL 逐个容器\"组织。"
+    },
+    {
+      "id": "CD00.1:body.s02",
+      "type": "extension",
+      "title": "二、七章",
+      "level": 2,
+      "content": "| 章 | 主题 | 单元 | 回答的问题 |\n|---|---|---|---|\n| `metrics/` | 度量与取舍 | 5 | 用什么语言谈\"贵不贵\"；`O` 什么时候骗人 |\n| `sequence/` | 序列容器与配套算法 | 7 | 连续还是链式；排序/选择/查找各自退化在哪 |\n| `associate/` | 关联容器与索引算法 | 7 | 哈希与有序树；红黑树只讲旋转与删除；B+ 为什么进数据库 |\n| `graph/` | 图与并查集 | 6 | 表示决定算法；最短路与 MST 的取舍；并查集摊还 |\n| `strategy/` | 算法策略与取舍 | 6 | 分治/DP/贪心/回溯/随机化/近似，各自的前提与反例 |\n| `library/` | 库工程：内存、资源、并发 | 7 | 分配器、RAII、异常安全、锁、内存序、一致性 |\n| `numeric/` | 数值容器与分解（收口） | 8 | 稠密/张量/稀疏/分解/FFT/AD 的结构取舍 |\n\n**每章固定五栏**：契约（前置/后置）、表示不变量、成本表、失败模式、判据。五栏不齐不算写完。"
+    },
+    {
+      "id": "CD00.1:body.s03",
+      "type": "extension",
+      "title": "三、顺序与依赖",
+      "level": 2,
+      "content": "```\nmetrics → sequence → associate → graph → strategy → library → numeric\n```\n\n- `metrics` 是全员前置：没有成本语言，后面只能背结论。\n- `sequence` 与 `associate` 可并行；`graph` 依赖 `metrics` 与 `sequence` 的队列/栈。\n- `library` 可以在 `sequence` 之后随时插入；`numeric` 最后，作为前面所有决策的收口。"
+    },
+    {
+      "id": "CD00.1:body.s04",
+      "type": "extension",
+      "title": "四、深度规则（哪些了解、哪些展开）",
+      "level": 2,
+      "content": "| 展开到实现 | 只讲用途与成本 |\n|---|---|\n| 红黑树的旋转与删除（插入作对照） | 静态链表、线索树、广义表 |\n| B/B+ 树的分裂与合并 | Trie / AC 自动机（只讲适用面与空间代价） |\n| 堆的 sift 与建堆 `O(n)` | 可并堆、斐波那契堆（只讲存在性与代价） |\n| 并查集路径压缩 + 按秩合并 | 后缀数组构造（只讲接口与用途） |\n| 快排/归并/堆排的分区与合并 | 基数排序的稳定性细节 |\n| FFT 蝶形与位反转 | 计算几何、van Emde Boas、NP 完全性的形式化归约 |"
+    },
+    {
+      "id": "CD00.1:body.s05",
+      "type": "extension",
+      "title": "五、与其它块的边界",
+      "level": 2,
+      "content": "| 内容 | 归哪 |\n|---|---|\n| cache 为什么是 64 字节、流水线怎么 stall | `machine/` |\n| futex 实现、调度器、页表 | `os/` |\n| raft 的 log matching、事务隔离级别 | `data/` |\n| benchmark 方法、火焰图、roofline | 块 5 的 `EG03` |\n| 测试体系与 CI 门禁 | `EG01` |\n| 数值契约（D 编号、容差、异常三分） | 父仓 `docs/standard/01-numerics.md`，本组只引用 |\n\n**一条铁律**：本组只写\"落到键盘上的决策\"。机制原理在别的块，正文不复制，只给指针。"
+    },
+    {
+      "id": "CD00.1:body.s06",
+      "type": "extension",
+      "title": "六、不做什么",
+      "level": 2,
+      "content": "- 不做题库（题目在 CD 各章的动手产物里，不另建题册）。\n- 不教语言语法。\n- 不复述 408 考点。\n- 不把数值库写成专题：数值只是\"数据容器\"的一个族，按同一套五栏处理。"
+    }
+  ],
+  "source_h1": "codedesign/ · 代码设计与实现",
+  "meta": {
+    "kind": "project-group",
+    "group": "codedesign",
+    "file": "OUTLINE.md"
+  }
+}

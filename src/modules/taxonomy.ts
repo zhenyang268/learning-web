@@ -63,7 +63,7 @@ export const GROUPS: Group[] = [
     blurb: '按题型分组：导览 / 阅读 / 写作 / 翻译 / 新题型 / 完形 / 词汇（顺序见 subjects.ts 的 chapterOrder）',
   },
   { id: 'examKit', label: '备考工具', blurb: '真题、拔高题线、速学稿、分层表' },
-  { id: 'project', label: '工程线', blurb: '按项目分组：系统 / 体系结构 / 语言 / 算法 / 工程方法 / 图形' },
+  { id: 'project', label: '工程线', blurb: '按能力线分组：代码设计 / 机器 / 系统 / 数据 / 性能 / 图形 / AI / 索引' },
 ];
 
 export interface Domain {
@@ -243,6 +243,13 @@ export const DOMAINS: Domain[] = [
     legacyChapters: [],
   },
   {
+    id: 'CD',
+    group: 'project',
+    label: '代码设计与实现',
+    blurb: '度量 / 序列 / 关联 / 图 / 策略 / 库工程 / 数值容器',
+    legacyChapters: [],
+  },
+  {
     id: 'SO',
     group: 'project',
     label: '操作系统项目',
@@ -259,15 +266,8 @@ export const DOMAINS: Domain[] = [
   {
     id: 'LG',
     group: 'project',
-    label: '语言与并行',
-    blurb: 'C++ / Python / CUDA',
-    legacyChapters: [],
-  },
-  {
-    id: 'AL',
-    group: 'project',
-    label: '算法',
-    blurb: '实现体检 / 面试题库',
+    label: '并行与 GPU',
+    blurb: 'CUDA kernel 从朴素到分块',
     legacyChapters: [],
   },
   {
@@ -322,8 +322,8 @@ export const DOMAINS: Domain[] = [
   {
     id: 'DX',
     group: 'project',
-    label: '离散数学',
-    blurb: '归纳与不变量、容斥、主定理、网络流、模运算',
+    label: '数学前提',
+    blurb: '算法依赖哪条数学事实、前提破了会怎样',
     legacyChapters: [],
   },
   {

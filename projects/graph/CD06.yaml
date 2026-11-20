@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CD06.1:
+    prereq: [CD02.1] # 库工程以序列/资源的成本为前提

@@ -1,0 +1,31 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD04.2",
+  "chapter": "CD04",
+  "title": "表示先于算法",
+  "src": {
+    "file": "notebook/projects/codedesign/graph/NOTES.md",
+    "sha256": "sha256:c8158206fcca2447cd4972052883d9bb848b541766e08e11f4f250388dcc7917"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD04.2:body.s01",
+      "type": "extension",
+      "title": "表示先于算法",
+      "level": 2,
+      "content": "图算法最常见的错误不是公式写错，是**用错了表示**。\n\n**邻接矩阵**把边存成 `n×n` 的位或权重，点查 `O(1)`，但遍历要扫整行，稀疏图上大部分是零。**邻接表**只存存在的边，遍历 `O(n+m)`，代价是每个点一个动态数组，内存碎片和额外一次寻址。**CSR** 把邻接表压成两个数组：`rowPtr` 给出行边界，`colIdx` 给邻居，遍历时连续访存；它就是稀疏矩阵的标准存储，也是数值库 SpMV 的基础。**边表**只适合按边排序的算法（Kruskal）。\n\n**表示决定算法写法**：BFS 在邻接表上是\"取邻居链表\"，在矩阵上是\"扫一行\"；DFS 的递归版在深图上会爆栈，迭代版要显式维护栈与访问状态；拓扑排序的 Kahn 版靠入度数组，DFS 版靠退出序。\n\n**最短路的分岔**在\"边权有没有负\"和\"图稠不稠\"：Dijkstra 要求非负，堆的选择影响 `O((n+m) log n)` 的常数；Bellman-Ford 能检测负环但 `O(nm)`；Floyd 是 `O(n^3)`，只在 `n` 小或需要全源时用。\n\n**并查集的摊还**来自两个优化同时成立：路径压缩把树压扁，按秩合并防止树长高。少一个，界就不成立。\n\n**本章的取舍**：先定表示（由稀疏度与访问模式决定），再定算法（由权值符号与全源/单源决定），最后才调常数。"
+    }
+  ],
+  "source_h1": "graph/ · 本章主线",
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "graph",
+    "file": "NOTES.md",
+    "part": 1,
+    "parts": 1,
+    "section": "表示先于算法"
+  }
+}

@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CD03.1:
+    prereq: [CD01.1] # 关联结构的选择同样先算成本

@@ -66,8 +66,8 @@ export const PROJECT_ROUTES: ProjectRoute[] = [
     overlap: '与 408 不直接重叠（能力迁移），但并发/调试/性能归因是复试与现岗面试的通用面。',
     steps: [
       {
-        code: 'LG01.1',
-        stage: '语言地基',
+        code: 'CD06.1',
+        stage: '库工程地基',
         cost: '中',
         outcome: 'C++ 对象生命周期与资源管理可解释',
         why: '测开的测试代码与故障注入脚本都写在 C++ 里；对象生命周期说不清，就分不清失败是测试错还是被测代码错。',
@@ -130,7 +130,7 @@ export const PROJECT_ROUTES: ProjectRoute[] = [
     overlap:
       '与 408 的具体重叠（只记重叠关系，不承诺分数）：CS01.1 = 数据的表示与运算、存储层次、指令与异常控制流；' +
       'SO02.1 = 进程与线程、内存管理（页表/换页）、系统调用；DB01.1 = 文件与磁盘、事务与日志（数据结构里的 B+ 树与索引）；' +
-      'SO01.1 = 进程、文件与 I/O；AL01.1 / AL02.1 = 408 数据结构与算法题的复杂度、正确性对拍；' +
+      'SO01.1 = 进程、文件与 I/O；CD01.1 = 复杂度口径与暴力对拍；CD02.1 = 数据结构选型；' +
       'DX01.1 只作数据结构基础（组合/图结构建模），不作为初试主线。',
     steps: [
       {
@@ -143,7 +143,7 @@ export const PROJECT_ROUTES: ProjectRoute[] = [
         exam: '直接提分',
       },
       {
-        code: 'AL01.1',
+        code: 'CD01.1',
         stage: '算法验证',
         cost: '中',
         outcome: '复杂度、正确性与暴力对拍分工明确',
@@ -152,7 +152,7 @@ export const PROJECT_ROUTES: ProjectRoute[] = [
         exam: '直接提分',
       },
       {
-        code: 'AL02.1',
+        code: 'CD02.1',
         stage: '面试迁移',
         cost: '中',
         outcome: '在约束变化时选择并验证数据结构',
@@ -258,8 +258,8 @@ export const PROJECT_ROUTES: ProjectRoute[] = [
     goal: '把程序从源代码一路跟到指令、流水线和微架构，再用 difftest 与性能模型验收。',
     steps: [
       {
-        code: 'LG01.1',
-        stage: '语言地基',
+        code: 'CD06.1',
+        stage: '库工程地基',
         cost: '中',
         outcome: 'C++ 对象生命周期与资源管理可解释',
         why: '语言地基是后面所有 C++ 实验（含测开核心路线）的前置。',
@@ -409,7 +409,7 @@ export const PROJECT_ROUTES: ProjectRoute[] = [
         exam: '直接提分',
       },
       {
-        code: 'AL01.1',
+        code: 'CD01.1',
         stage: '算法验证',
         cost: '中',
         outcome: '复杂度、正确性与暴力对拍分工明确',
@@ -418,7 +418,7 @@ export const PROJECT_ROUTES: ProjectRoute[] = [
         exam: '直接提分',
       },
       {
-        code: 'AL02.1',
+        code: 'CD02.1',
         stage: '面试迁移',
         cost: '中',
         outcome: '在约束变化时选择并验证数据结构',

@@ -4,10 +4,10 @@
   "chapter": "LG03",
   "title": "cuda · 总览",
   "src": {
-    "file": "notebook/projects/langs/cuda/OUTLINE.md",
+    "file": "notebook/projects/parallel/cuda/OUTLINE.md",
     "sha256": "sha256:e6db04ed15ea528eaf492b1c8dbd781b01cf9295598bb5491d0e18c706b04632"
   },
-  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
   "notebook_dirty": false,
   "entries": [
     {
@@ -48,7 +48,7 @@
   ],
   "meta": {
     "kind": "project",
-    "group": "langs",
+    "group": "parallel",
     "project": "cuda",
     "file": "OUTLINE.md"
   }

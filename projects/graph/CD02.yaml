@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CD02.1:
+    prereq: [CD01.1] # 序列容器的取舍要用成本语言

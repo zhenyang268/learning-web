@@ -1,0 +1,63 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD01.1",
+  "chapter": "CD01",
+  "title": "metrics · 总览",
+  "src": {
+    "file": "notebook/projects/codedesign/metrics/OUTLINE.md",
+    "sha256": "sha256:7046239d36f0cafcfceb1fcd01bdc4a7c07c60d7045fa6f68e7ed3389568d0c8"
+  },
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD01.1:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "> **判据**：给定一个需求，能写出三种候选的成本表，并说出这个模型在什么条件下失效。"
+    },
+    {
+      "id": "CD01.1:body.s01",
+      "type": "extension",
+      "title": "一、这章解决什么",
+      "level": 2,
+      "content": "大多数\"选错了\"不是不懂算法，是**没有统一的成本语言**：\n\n- 只说\"快\"：不知道快在时间、空间、IO 还是并行度；\n- 只背 `O(n log n)`：不知道常数、cache、小 `n` 什么时候把它推翻；\n- 只算最坏：不知道期望与摊还才是工程里常用的口径。\n\n这一章只建语言，不教具体结构。后面六章都复用这五条。"
+    },
+    {
+      "id": "CD01.1:body.s02",
+      "type": "extension",
+      "title": "二、单元表",
+      "level": 2,
+      "content": "| # | 单元 | 要回答的问题 | 判据 |\n|---|---|---|---|\n| 1 | 四种成本 | 时间、空间、IO、并行各由什么决定；什么时候空间换时间不划算 | 能对同一操作写出四列代价 |\n| 2 | 最坏 / 平均 / 期望 / 摊还 | `vector::push_back` 的摊还、哈希的期望、快排的最坏各自怎么表述 | 能说清一个操作属于哪一种，且不混用 |\n| 3 | `O` 的失效 | 常数项、cache 未命中、分支预测、小 `n`；为什么 `O(n^2)` 可能赢 `O(n log n)` | 能举一个实际数据规模下阶数反转的例子 |\n| 4 | 成本模型怎么建 | 指令数、内存访问次数、缓存行、页；粗到什么程度还有用 | 能给一段代码标出主项与忽略项 |\n| 5 | 取舍表与判据 | 同一需求的三个候选怎么并列；淘汰理由怎么写 | 交出一张三候选成本表 + 失效条件 |"
+    },
+    {
+      "id": "CD01.1:body.s03",
+      "type": "extension",
+      "title": "三、深度与取舍",
+      "level": 2,
+      "content": "- **展开**：摊还分析（聚合/记账/势能三种只讲能用的那一种）、`O` 与实测的偏差来源。\n- **了解即可**：主定理的证明、Ackermann 反函数细节、缓存一致性协议。\n- **不做**：benchmark 方法论（块 5 `EG03`）、硬件原理（`machine/`）。"
+    },
+    {
+      "id": "CD01.1:body.s04",
+      "type": "extension",
+      "title": "四、边界",
+      "level": 2,
+      "content": "| 问题 | 去哪 |\n|---|---|\n| cache 为什么是 64 字节、流水线怎么 stall | `machine/` |\n| 怎么测、怎么画火焰图、roofline 怎么读 | 块 5 `EG03` |\n| 数值误差与条件数 | 父仓 `01-numerics.md` |"
+    },
+    {
+      "id": "CD01.1:body.s05",
+      "type": "extension",
+      "title": "五、动手产物",
+      "level": 2,
+      "content": "选一个你写过的函数，交三样：\n\n1. 三种数据表示的成本表（时间/空间/IO/并行四列）；\n2. 一段实测曲线，标出阶数反转的规模；\n3. 一句失效条件：这套结论在什么输入/机器上不成立。"
+    }
+  ],
+  "source_h1": "metrics/ · 度量与取舍",
+  "meta": {
+    "kind": "project",
+    "group": "codedesign",
+    "project": "metrics",
+    "file": "OUTLINE.md"
+  }
+}

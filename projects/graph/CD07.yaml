@@ -1,0 +1,4 @@
+notebook_commit: "5439009"
+nodes:
+  CD07.1:
+    prereq: [CD02.1, CD03.1, CD06.1] # 数值容器是布局、索引与资源的收口

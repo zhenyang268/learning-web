@@ -4,10 +4,10 @@
   "chapter": "LG03",
   "title": "第 7 章 矩阵乘：从 naive 到 shared-memory tiling 再到寄存器分块",
   "src": {
-    "file": "notebook/projects/langs/cuda/NOTES.md",
+    "file": "notebook/projects/parallel/cuda/NOTES.md",
     "sha256": "sha256:d28750e42e41e2d9683a44653a40e2a9685b4209ef050c102a3c1599a73d9c81"
   },
-  "notebook_commit": "34a2a7761dcc854721b3110231155ef3522d3c33",
+  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
   "notebook_dirty": false,
   "entries": [
     {
@@ -20,7 +20,7 @@
   ],
   "meta": {
     "kind": "project-chapter",
-    "group": "langs",
+    "group": "parallel",
     "project": "cuda",
     "file": "NOTES.md",
     "part": 7,

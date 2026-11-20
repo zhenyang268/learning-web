@@ -1,6 +1,6 @@
 {
   "schema": "content-map/v1",
-  "updated": "2026-11-17",
+  "updated": "2026-11-20",
   "note": "整站内容总图的唯一真源：站点 / 组 / 线 / 章 / 数值库映射 / 路线页 / 修正项。规则与理由见 docs/content-map.md，本文件只写事实。",
   "sites": [
     {
@@ -230,7 +230,7 @@
     {
       "id": "project",
       "label": "工程线",
-      "blurb": "按能力线组织：工程实践 / 性能工程 / 语言与算法底座 / 图形与 AI / 索引",
+      "blurb": "按能力线组织：代码设计 / 机器 / 系统 / 数据与一致性 / 性能与并行 / 图形与 AI / 索引",
       "order": 7
     }
   ],
@@ -764,11 +764,51 @@
       "status": "present"
     },
     {
+      "id": "proj-code",
+      "label": "代码设计与实现",
+      "group": "project",
+      "domain": "EG",
+      "site": "projects",
+      "blurb": "从选结构到敲代码：度量、容器与配套算法、图、策略、库工程、数值容器",
+      "chapters": [
+        "EG00",
+        "EG01",
+        "DX01",
+        "CD00",
+        "CD01",
+        "CD02",
+        "CD03",
+        "CD04",
+        "CD05",
+        "CD06",
+        "CD07"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "proj-machine",
+      "label": "机器与体系结构",
+      "group": "project",
+      "domain": "CP",
+      "site": "projects",
+      "blurb": "代码跑在什么上：机器视角、汇编与链接、微架构、造核、编译器",
+      "chapters": [
+        "CS01",
+        "CP00",
+        "CP01",
+        "CP02",
+        "CP03",
+        "CP04"
+      ],
+      "status": "present"
+    },
+    {
       "id": "proj-os",
-      "label": "系统与内核",
+      "label": "操作系统",
       "group": "project",
       "domain": "SO",
-      "blurb": "工程实践主线：用户态接口 → 教学内核 → 对比 → 驱动 / 安全 / 虚拟化；判据是能定位、能改对、能说清边界",
+      "site": "projects",
+      "blurb": "资源、隔离与观测：接口、内核、驱动、安全、虚拟化、调试",
       "chapters": [
         "SO00",
         "SO01",
@@ -776,100 +816,41 @@
         "SO03",
         "SO04",
         "SO05",
-        "SO06"
+        "SO06",
+        "EG02"
       ],
-      "site": "projects",
-      "status": "present"
-    },
-    {
-      "id": "proj-quality",
-      "label": "测试、调试与工程方法",
-      "group": "project",
-      "domain": "EG",
-      "blurb": "工程实践主线：测试金字塔、core/sanitizer、故障注入、系统设计与横切陷阱；判据是条件 + 数字 + 失败模式",
-      "chapters": [
-        "EG00",
-        "EG01",
-        "EG02",
-        "EG04",
-        "EG05"
-      ],
-      "site": "projects",
       "status": "present"
     },
     {
       "id": "proj-data",
-      "label": "分布式与数据",
+      "label": "数据系统与一致性",
       "group": "project",
       "domain": "DF",
-      "blurb": "工程实践主线：Raft 两版 + 数据库索引/事务/MVCC；判据是故障注入后不变量仍成立、版本链能对上",
+      "site": "projects",
+      "blurb": "状态怎么持久、怎么一致：raft 两种实现、数据库、系统设计",
       "chapters": [
         "DF00",
         "DF01",
         "DF02",
-        "DB01"
+        "DB01",
+        "EG04"
       ],
-      "site": "projects",
       "status": "present"
     },
     {
-      "id": "proj-perf-cpu",
-      "label": "CPU 架构与编译器",
-      "group": "project",
-      "domain": "CP",
-      "blurb": "性能工程（对照）：汇编与链接 → 微架构 → 造核 → LLVM；判据是同条件基线、roofline、difftest 与时序",
-      "chapters": [
-        "CP00",
-        "CP01",
-        "CP02",
-        "CP03",
-        "CP04"
-      ],
-      "site": "projects",
-      "status": "present"
-    },
-    {
-      "id": "proj-perf-parallel",
-      "label": "并行、GPU 与性能方法",
+      "id": "proj-perf",
+      "label": "性能与并行",
       "group": "project",
       "domain": "LG",
-      "blurb": "性能工程（对照）：CUDA kernel、CS149 多核/GPU/roofline、perf 火焰图与扩展性；判据是加速比与瓶颈归因",
-      "chapters": [
-        "LG03",
-        "PA01",
-        "EG03"
-      ],
       "site": "projects",
-      "status": "present"
-    },
-    {
-      "id": "proj-lang",
-      "label": "语言与算法底座",
-      "group": "project",
-      "domain": "LG",
-      "blurb": "共同底座：C++ / Python 的对象与运行时、算法实现体检与面试题型；所有线都先过这一层",
+      "blurb": "怎么量、怎么归因：benchmark 方法、陷阱集、CPU 并行、CUDA",
       "chapters": [
         "LG00",
-        "LG01",
-        "LG02",
-        "AL00",
-        "AL01",
-        "AL02"
+        "LG03",
+        "PA01",
+        "EG03",
+        "EG05"
       ],
-      "site": "projects",
-      "status": "present"
-    },
-    {
-      "id": "proj-sysbase",
-      "label": "机器与离散基础",
-      "group": "project",
-      "domain": "CS",
-      "blurb": "共同底座：CSAPP 的位级/存储/链接/异常控制流 + 离散数学；与 408 的重叠最多",
-      "chapters": [
-        "CS01",
-        "DX01"
-      ],
-      "site": "projects",
       "status": "present"
     },
     {
@@ -906,7 +887,7 @@
       "label": "面试索引",
       "group": "project",
       "domain": "PX",
-      "blurb": "一页检索表：36 份 §五 的 30 秒版本首句 + 编号问法；只做索引，不改写",
+      "blurb": "一页检索表：各项目 §五 的 30 秒版本首句 + 编号问法；只做索引，不改写",
       "chapters": [
         "PX01"
       ],
