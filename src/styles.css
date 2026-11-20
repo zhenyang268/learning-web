@@ -655,6 +655,74 @@ nav .m {
   padding-bottom: 20px;
 }
 
+/* 导读层（guide-card/v1）：页头之后、正文之前的一段教师导语。
+   默认展开、不进 tab；左边框只用一条 cyan，避免和正文卡片抢层级。 */
+.guide {
+  border-left: 3px solid var(--cyan);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--cyan) 5%, transparent), transparent 42%);
+}
+
+.guidelead p {
+  font-size: 17px;
+  line-height: 1.68;
+  color: var(--tx);
+  margin: 0 0 10px;
+}
+
+.guidewhy h3 {
+  font-size: 13.5px;
+  letter-spacing: .02em;
+  color: var(--cyan);
+  margin: 16px 0 4px;
+}
+
+.guidewhy .guidewhyp p {
+  margin: 0 0 8px;
+  color: var(--tx2);
+  line-height: 1.78;
+}
+
+.guidepr {
+  border-left: 2px solid var(--violet);
+  padding: 2px 0 2px 12px;
+  margin: 14px 0 10px;
+}
+
+.guidepr p {
+  margin: 0;
+  color: var(--tx);
+}
+
+.guideconnect {
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+  margin-top: 14px;
+  color: var(--tx3);
+  font-size: 13.5px;
+}
+
+.guideconnect p {
+  margin: 0;
+}
+
+.guidesrc {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+}
+
+.guidesrc a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.guidesrc a:hover {
+  text-decoration: underline;
+}
+
+.site-guide-slot:empty {
+  display: none;
+}
+
 /* 溯源线索（DESIGN D26）：⌾ 上悬停才显示「笔记文件:行区间 · commit」。
    本站已与 .tex 解耦，这些信息不该占据版面，但要能查到。 */
 .trace {

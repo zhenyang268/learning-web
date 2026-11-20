@@ -1,0 +1,681 @@
+{
+  "version": 1,
+  "site": "cs408",
+  "units": {
+    "CO01.1": {
+      "talk": "build/reading/talk/408-kp-CO-0101.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0101"
+    },
+    "CO01.2": {
+      "talk": "build/reading/talk/408-kp-CO-0102.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0102"
+    },
+    "CO01.3": {
+      "talk": "build/reading/talk/408-kp-CO-0103.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0103"
+    },
+    "CO02.1": {
+      "talk": "build/reading/talk/408-kp-CO-0201.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0201"
+    },
+    "CO02.2": {
+      "talk": "build/reading/talk/408-kp-CO-0202.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0202"
+    },
+    "CO02.3": {
+      "talk": "build/reading/talk/408-kp-CO-0203.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0203"
+    },
+    "CO02.4": {
+      "talk": "build/reading/talk/408-kp-CO-0204.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0204"
+    },
+    "CO02.5": {
+      "talk": "build/reading/talk/408-kp-CO-0205.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0205"
+    },
+    "CO02.6": {
+      "talk": "build/reading/talk/408-kp-CO-0206.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0206"
+    },
+    "CO02.7": {
+      "talk": "build/reading/talk/408-kp-CO-0207.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0207"
+    },
+    "CO03.1": {
+      "talk": "build/reading/talk/408-kp-CO-0301.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0301"
+    },
+    "CO03.2": {
+      "talk": "build/reading/talk/408-kp-CO-0302.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0302"
+    },
+    "CO03.3": {
+      "talk": "build/reading/talk/408-kp-CO-0303.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0303"
+    },
+    "CO03.4": {
+      "talk": "build/reading/talk/408-kp-CO-0304.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0304"
+    },
+    "CO03.5": {
+      "talk": "build/reading/talk/408-kp-CO-0305.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0305"
+    },
+    "CO03.6": {
+      "talk": "build/reading/talk/408-kp-CO-0306.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0306"
+    },
+    "CO04.1": {
+      "talk": "build/reading/talk/408-kp-CO-0401.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0401"
+    },
+    "CO04.2": {
+      "talk": "build/reading/talk/408-kp-CO-0402.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0402"
+    },
+    "CO04.3": {
+      "talk": "build/reading/talk/408-kp-CO-0403.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0403"
+    },
+    "CO04.4": {
+      "talk": "build/reading/talk/408-kp-CO-0404.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0404"
+    },
+    "CO05.1": {
+      "talk": "build/reading/talk/408-kp-CO-0501.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0501"
+    },
+    "CO05.2": {
+      "talk": "build/reading/talk/408-kp-CO-0502.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0502"
+    },
+    "CO05.3": {
+      "talk": "build/reading/talk/408-kp-CO-0503.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0503"
+    },
+    "CO05.4": {
+      "talk": "build/reading/talk/408-kp-CO-0504.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0504"
+    },
+    "CO05.5": {
+      "talk": "build/reading/talk/408-kp-CO-0505.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0505"
+    },
+    "CO05.6": {
+      "talk": "build/reading/talk/408-kp-CO-0506.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0506"
+    },
+    "CO05.7": {
+      "talk": "build/reading/talk/408-kp-CO-0507.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0507"
+    },
+    "CO06.1": {
+      "talk": "build/reading/talk/408-kp-CO-0601.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0601"
+    },
+    "CO06.2": {
+      "talk": "build/reading/talk/408-kp-CO-0602.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0602"
+    },
+    "CO07.1": {
+      "talk": "build/reading/talk/408-kp-CO-0701.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0701"
+    },
+    "CO07.2": {
+      "talk": "build/reading/talk/408-kp-CO-0702.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0702"
+    },
+    "CO07.3": {
+      "talk": "build/reading/talk/408-kp-CO-0703.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0703"
+    },
+    "CO07.4": {
+      "talk": "build/reading/talk/408-kp-CO-0704.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-CO-0704"
+    },
+    "DS01.1": {
+      "talk": "build/reading/talk/408-kp-0101.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0101"
+    },
+    "DS01.2": {
+      "talk": "build/reading/talk/408-kp-0102.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0102"
+    },
+    "DS02.1": {
+      "talk": "build/reading/talk/408-kp-0201.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0201"
+    },
+    "DS02.2": {
+      "talk": "build/reading/talk/408-kp-0202.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0202"
+    },
+    "DS02.3": {
+      "talk": "build/reading/talk/408-kp-0203.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0203"
+    },
+    "DS02.4": {
+      "talk": "build/reading/talk/408-kp-0204.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0204"
+    },
+    "DS03.1": {
+      "talk": "build/reading/talk/408-kp-0301.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0301"
+    },
+    "DS03.2": {
+      "talk": "build/reading/talk/408-kp-0302.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0302"
+    },
+    "DS03.3": {
+      "talk": "build/reading/talk/408-kp-0303.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0303"
+    },
+    "DS04.1": {
+      "talk": "build/reading/talk/408-kp-0401.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0401"
+    },
+    "DS04.2": {
+      "talk": "build/reading/talk/408-kp-0402.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0402"
+    },
+    "DS04.3": {
+      "talk": "build/reading/talk/408-kp-0403.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0403"
+    },
+    "DS04.4": {
+      "talk": "build/reading/talk/408-kp-0404.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0404"
+    },
+    "DS04.5": {
+      "talk": "build/reading/talk/408-kp-0405.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0405"
+    },
+    "DS04.6": {
+      "talk": "build/reading/talk/408-kp-0406.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0406"
+    },
+    "DS05.1": {
+      "talk": "build/reading/talk/408-kp-0501.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0501"
+    },
+    "DS05.2": {
+      "talk": "build/reading/talk/408-kp-0502.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0502"
+    },
+    "DS05.3": {
+      "talk": "build/reading/talk/408-kp-0503.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0503"
+    },
+    "DS05.4": {
+      "talk": "build/reading/talk/408-kp-0504.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0504"
+    },
+    "DS05.5": {
+      "talk": "build/reading/talk/408-kp-0505.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0505"
+    },
+    "DS05.6": {
+      "talk": "build/reading/talk/408-kp-0506.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0506"
+    },
+    "DS05.7": {
+      "talk": "build/reading/talk/408-kp-0507.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0507"
+    },
+    "DS06.1": {
+      "talk": "build/reading/talk/408-kp-0601.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0601"
+    },
+    "DS06.2": {
+      "talk": "build/reading/talk/408-kp-0602.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0602"
+    },
+    "DS06.3": {
+      "talk": "build/reading/talk/408-kp-0603.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0603"
+    },
+    "DS06.4": {
+      "talk": "build/reading/talk/408-kp-0604.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0604"
+    },
+    "DS06.5": {
+      "talk": "build/reading/talk/408-kp-0605.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0605"
+    },
+    "DS06.6": {
+      "talk": "build/reading/talk/408-kp-0606.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0606"
+    },
+    "DS06.7": {
+      "talk": "build/reading/talk/408-kp-0607.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0607"
+    },
+    "DS06.99": {
+      "talk": "build/reading/talk/408-kp-0600.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0600"
+    },
+    "DS07.1": {
+      "talk": "build/reading/talk/408-kp-0701.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0701"
+    },
+    "DS07.2": {
+      "talk": "build/reading/talk/408-kp-0702.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0702"
+    },
+    "DS07.3": {
+      "talk": "build/reading/talk/408-kp-0703.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0703"
+    },
+    "DS07.4": {
+      "talk": "build/reading/talk/408-kp-0704.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0704"
+    },
+    "DS07.5": {
+      "talk": "build/reading/talk/408-kp-0705.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0705"
+    },
+    "DS07.6": {
+      "talk": "build/reading/talk/408-kp-0706.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0706"
+    },
+    "DS07.7": {
+      "talk": "build/reading/talk/408-kp-0707.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0707"
+    },
+    "DS07.8": {
+      "talk": "build/reading/talk/408-kp-0708.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-DS-0708"
+    },
+    "NT01.1": {
+      "talk": "build/reading/talk/408-kp-NET-0101.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0101"
+    },
+    "NT01.2": {
+      "talk": "build/reading/talk/408-kp-NET-0102.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0102"
+    },
+    "NT02.1": {
+      "talk": "build/reading/talk/408-kp-NET-0201.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0201"
+    },
+    "NT02.2": {
+      "talk": "build/reading/talk/408-kp-NET-0202.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0202"
+    },
+    "NT03.1": {
+      "talk": "build/reading/talk/408-kp-NET-0301.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0301"
+    },
+    "NT03.2": {
+      "talk": "build/reading/talk/408-kp-NET-0302.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0302"
+    },
+    "NT03.3": {
+      "talk": "build/reading/talk/408-kp-NET-0303.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0303"
+    },
+    "NT03.4": {
+      "talk": "build/reading/talk/408-kp-NET-0304.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0304"
+    },
+    "NT03.5": {
+      "talk": "build/reading/talk/408-kp-NET-0305.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0305"
+    },
+    "NT03.6": {
+      "talk": "build/reading/talk/408-kp-NET-0306.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0306"
+    },
+    "NT04.1": {
+      "talk": "build/reading/talk/408-kp-NET-0401.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0401"
+    },
+    "NT04.2": {
+      "talk": "build/reading/talk/408-kp-NET-0402.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0402"
+    },
+    "NT04.3": {
+      "talk": "build/reading/talk/408-kp-NET-0403.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0403"
+    },
+    "NT04.4": {
+      "talk": "build/reading/talk/408-kp-NET-0404.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0404"
+    },
+    "NT04.5": {
+      "talk": "build/reading/talk/408-kp-NET-0405.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0405"
+    },
+    "NT04.6": {
+      "talk": "build/reading/talk/408-kp-NET-0406.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0406"
+    },
+    "NT05.1": {
+      "talk": "build/reading/talk/408-kp-NET-0501.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0501"
+    },
+    "NT05.2": {
+      "talk": "build/reading/talk/408-kp-NET-0502.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0502"
+    },
+    "NT05.3": {
+      "talk": "build/reading/talk/408-kp-NET-0503.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0503"
+    },
+    "NT05.4": {
+      "talk": "build/reading/talk/408-kp-NET-0504.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0504"
+    },
+    "NT05.5": {
+      "talk": "build/reading/talk/408-kp-NET-0505.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0505"
+    },
+    "NT06.1": {
+      "talk": "build/reading/talk/408-kp-NET-0601.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0601"
+    },
+    "NT06.2": {
+      "talk": "build/reading/talk/408-kp-NET-0602.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0602"
+    },
+    "NT06.3": {
+      "talk": "build/reading/talk/408-kp-NET-0603.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0603"
+    },
+    "NT06.4": {
+      "talk": "build/reading/talk/408-kp-NET-0604.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-NET-0604"
+    },
+    "OS01.1": {
+      "talk": "build/reading/talk/408-kp-OS-0101.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0101"
+    },
+    "OS01.2": {
+      "talk": "build/reading/talk/408-kp-OS-0102.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0102"
+    },
+    "OS01.3": {
+      "talk": "build/reading/talk/408-kp-OS-0103.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0103"
+    },
+    "OS01.4": {
+      "talk": "build/reading/talk/408-kp-OS-0104.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0104"
+    },
+    "OS01.5": {
+      "talk": "build/reading/talk/408-kp-OS-0105.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0105"
+    },
+    "OS02.1": {
+      "talk": "build/reading/talk/408-kp-OS-0201.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0201"
+    },
+    "OS02.2": {
+      "talk": "build/reading/talk/408-kp-OS-0202.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0202"
+    },
+    "OS02.3": {
+      "talk": "build/reading/talk/408-kp-OS-0203.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0203"
+    },
+    "OS02.4": {
+      "talk": "build/reading/talk/408-kp-OS-0204.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0204"
+    },
+    "OS03.1": {
+      "talk": "build/reading/talk/408-kp-OS-0301.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0301"
+    },
+    "OS03.2": {
+      "talk": "build/reading/talk/408-kp-OS-0302.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0302"
+    },
+    "OS04.1": {
+      "talk": "build/reading/talk/408-kp-OS-0401.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0401"
+    },
+    "OS04.2": {
+      "talk": "build/reading/talk/408-kp-OS-0402.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0402"
+    },
+    "OS04.3": {
+      "talk": "build/reading/talk/408-kp-OS-0403.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0403"
+    },
+    "OS05.1": {
+      "talk": "build/reading/talk/408-kp-OS-0501.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0501"
+    },
+    "OS05.2": {
+      "talk": "build/reading/talk/408-kp-OS-0502.md",
+      "kind": "kaoyan-kp",
+      "mode": "T",
+      "kp": "408-OS-0502"
+    }
+  },
+  "skipped": [],
+  "unmapped": [],
+  "unused": []
+}

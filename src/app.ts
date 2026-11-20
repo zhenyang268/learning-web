@@ -1,7 +1,7 @@
 import 'katex/dist/katex.min.css';
 import './styles.css';
-import type { EntryFile, UnitMeta } from './types';
-import { loadIndex, loadUnit, type LoadIssue } from './modules/loader';
+import type { EntryFile, GuideCard, UnitMeta } from './types';
+import { loadGuide, loadIndex, loadUnit, type LoadIssue } from './modules/loader';
 import { buildGraphFromMeta, frontierOf, isLearnableUnit, letterOf, type FrontierPriority, type Graph } from './modules/graph';
 import {
   derivedLevel,
@@ -38,6 +38,7 @@ import type { VizHandle } from './viz';
 import { attrEscape } from './modules/attr';
 import { mountOverlay } from './renderers/overlay';
 import { renderContent, escapeHtml, renderInline } from './renderers/markdown';
+import { renderGuideEl } from './renderers/guide';
 import {
   answeredText,
   levelText,
@@ -109,6 +110,9 @@ const elOverlay = document.getElementById('overlay-root')!;
  */
 let units: UnitMeta[] = [];
 const loaded = new Map<string, EntryFile>();
+/** 侧车导语缓存：null = 明确没有/坏了，不再重拉 */
+const guides = new Map<string, GuideCard | null>();
+const siteGuides = new Map<string, GuideCard | null>();
 const inflight = new Set<string>();
 /** 拉取/校验失败的单元：记下来，避免 apply→ensure→apply 无限重试把页面挂死 */
 const failed = new Map<string, LoadIssue[]>();
@@ -735,6 +739,7 @@ function renderReader(
   file: EntryFile,
   groups: EntryGroup[],
   diffs: Array<{ level: 1 | 2 | 3; source: 'data' | 'derived' }>,
+  guide?: GuideCard | null,
 ): void {
   // 搬运来的文档走文档渲染（连续段落 + 标题层级），不套词条卡片：
   // 分页会把「考法 → 题」的上下文切断，也会把 4 万字的 NOTES 切碎。
@@ -750,6 +755,7 @@ function renderReader(
         threshold: 3,
       },
       childNavOf(file),
+      guide,
     );
     elReader.dataset.ready = '1';
     return;
@@ -780,6 +786,8 @@ function renderReader(
     </div>`;
   elReader.innerHTML = '';
   elReader.append(head);
+  // 导语是增强层：没有就不插，绝不占位
+  if (guide) elReader.append(renderGuideEl(guide));
 
   if (!groups.length) {
     elReader.dataset.ready = '1';
@@ -912,8 +920,18 @@ async function ensure(code: string): Promise<void> {
   const meta = metaOf(code);
   if (!meta || loaded.has(code) || inflight.has(code) || failed.has(code)) return;
   inflight.add(code);
-  const res = await loadUnit(meta.path);
+  const guidePath = meta.hasGuide ? `${current.guideRoot}${meta.chapter}/${code}.json` : null;
+  const [res, guide] = await Promise.all([
+    loadUnit(meta.path),
+    guidePath
+      ? loadGuide(guidePath, (issue) => {
+          // 导语坏了只报一条可忽略的 issue，不把正文判失败
+          issues.push(issue);
+        })
+      : Promise.resolve(null),
+  ]);
   inflight.delete(code);
+  if (guidePath) guides.set(code, guide);
   if (res.file) {
     loaded.set(code, res.file);
     failed.delete(code);
@@ -987,7 +1005,7 @@ function apply(): void {
   const isDoc = (file as unknown as { schema?: string }).schema === 'doc-card/v1';
   const groups = isDoc ? [] : groupEntries(file);
   const diffs = isDoc ? [] : groups.map((g) => difficultyOf(g));
-  renderReader(file, groups, diffs);
+  renderReader(file, groups, diffs, guides.get(code) ?? null);
   const difficulty = diffs.length ? Math.max(...diffs.map((d) => d.level)) : 1;
   // 右栏「难度」就地刷新（自测点击后）要复用同一个数，不重算分组
   asideDifficulty = difficulty;
@@ -1074,6 +1092,25 @@ function bridgeTrack(): string {
   </div>`;
 }
 
+/**
+ * 分组/总纲层的站点级导语（`guide/<site>/__site.json`，scope=site）。
+ *
+ * 为什么单独挂而不是塞进 `docView` 的字符串：`docView` 是同步渲染，
+ * 站点导语要 fetch；做成「先出页头，导语到了就替换占位」，
+ * 正文不用等，失败也只是少一块。
+ */
+async function mountSiteGuide(holder: HTMLElement): Promise<void> {
+  const path = `${current.guideRoot}__site.json`;
+  const cached = siteGuides.get(path);
+  let card = cached;
+  if (card === undefined) {
+    card = await loadGuide(path);
+    siteGuides.set(path, card);
+  }
+  if (!card || card.scope !== 'site' || !holder.isConnected) return;
+  holder.replaceWith(renderGuideEl(card));
+}
+
 function docView(kind: 'graph' | 'angles'): void {
   beginRender();
   elReader.dataset.ready = '1';
@@ -1100,6 +1137,14 @@ function docView(kind: 'graph' | 'angles'): void {
     <div class="card docview">${renderContent(doc.md)}</div>${routes}${
       kind === 'angles' ? bridgeTrack() : ''
     }`;
+  // 总纲/工程总纲：站点级导语占位（拿不到就留空，不阻塞本页）
+  if (kind === 'graph') {
+    const headEl = elReader.querySelector('.pagehead');
+    const holder = document.createElement('div');
+    holder.className = 'site-guide-slot';
+    headEl?.after(holder);
+    void mountSiteGuide(holder);
+  }
   elAside.innerHTML =
     kind === 'angles'
       ? `<div class="box">

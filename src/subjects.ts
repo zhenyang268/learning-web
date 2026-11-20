@@ -32,6 +32,8 @@ export interface Subject {
   dataRoot: string;
   /** 语义边真源根：'graph/' | 'cs408/graph/' */
   graphRoot: string;
+  /** 侧车导语根：'guide/math/' | 'guide/cs408/' */
+  guideRoot: string;
   /** 入口 HTML 名（互链用） */
   entryHtml: string;
   /**
@@ -94,6 +96,7 @@ export const MATH: Subject = {
   shortLabel: '数学',
   dataRoot: 'json/',
   graphRoot: 'graph/',
+  guideRoot: 'guide/math/',
   entryHtml: 'index.html',
   syllabus: { md: SYLLABUS_MD, title: SYLLABUS_TITLE, version: SYLLABUS_VERSION },
   angles: { md: ANGLES_MD, title: ANGLES_TITLE, version: ANGLES_VERSION },
@@ -162,6 +165,7 @@ export const ENGMATH: Subject = {
   shortLabel: '工数',
   dataRoot: 'emath/json/',
   graphRoot: 'emath/graph/',
+  guideRoot: 'guide/emath/',
   entryHtml: 'emath.html',
   domainTable: ENGMATH_DOMAINS,
   syllabus: null,
@@ -181,6 +185,7 @@ export const MATH1: Subject = {
   shortLabel: '数一',
   dataRoot: 'kaoyan/json/',
   graphRoot: 'kaoyan/graph/',
+  guideRoot: 'guide/kaoyan/',
   entryHtml: 'math1.html',
   syllabus: null,
   angles: null,
@@ -198,6 +203,7 @@ export const PROJECTS: Subject = {
   shortLabel: '工程',
   dataRoot: 'projects/json/',
   graphRoot: 'projects/graph/',
+  guideRoot: 'guide/projects/',
   entryHtml: 'projects.html',
   startRoute: 'graph',
   routesOnGraph: SYLLABUS_PROJECTS_HAS_ROUTES,
@@ -216,6 +222,7 @@ export const CS408: Subject = {
   shortLabel: '408',
   dataRoot: 'cs408/json/',
   graphRoot: 'cs408/graph/',
+  guideRoot: 'guide/cs408/',
   entryHtml: 'cs408.html',
   syllabus: { md: SYLLABUS_408_MD, title: SYLLABUS_408_TITLE, version: SYLLABUS_408_VERSION },
   angles: null, // 408 侧暂不提供「切入点」文档
@@ -274,6 +281,7 @@ export const ENGLISH1: Subject = {
   shortLabel: '英一',
   dataRoot: 'english1/json/',
   graphRoot: 'english1/graph/',
+  guideRoot: 'guide/english1/',
   entryHtml: 'english1.html',
   startCode: 'GE01.1',
   // 章序（前缀或完整章号；完整章号优先）。`WR02`（大作文）与 `WR01`（小作文）

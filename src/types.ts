@@ -150,6 +150,45 @@ export interface UnitMeta {
    * 覆盖组内的编号序派生 prereq 一律作废，以 yaml 为准（与 mergeGraph 同一规则）。
    */
   sem?: UnitSem;
+  /** 该单元是否有侧车导语（guide/<site>/<章>/<代号>.json）；索引构建期扫描得出 */
+  hasGuide?: boolean;
+}
+
+/* ---------------------------------------------------------------- guide-card/v1 */
+
+/** 导语里的一条「为什么」：h ≤20 字，p 80–180 字 */
+export interface GuideWhy {
+  h: string;
+  p: string;
+}
+
+/** 导语的事实来源（sha 为 sha256 前 12 位） */
+export interface GuideSource {
+  talk?: string;
+  talkSha?: string;
+  unit?: string;
+  unitSha?: string;
+}
+
+/**
+ * 单元页顶部的教师导语。
+ *
+ * 为什么是**侧车**而不是注入单元 json：doc-card/v1 的契约已冻结，导语是另一层
+ * 教学加工，写进 entries 会污染正文、也会让 importer/verify 的「拼回无损」判据失效。
+ * 侧车的代价是两处数据要对齐，所以 `source.talkSha/unitSha` 必须能对源头验漂移。
+ */
+export interface GuideCard {
+  schema: 'guide-card/v1';
+  code: string;
+  site: 'math' | 'emath' | 'cs408' | 'math1' | 'projects' | 'english1';
+  scope: 'unit' | 'site';
+  lead: string;
+  why: GuideWhy[];
+  principle?: string;
+  connect: string;
+  fixes?: string[];
+  source?: GuideSource;
+  generated?: GeneratedBy;
 }
 
 /** 四类语义边（DESIGN §8.2）；构建期从 graph/<L>.yaml 提取 */

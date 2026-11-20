@@ -61,6 +61,7 @@ const DATA_ROOT = ENTRY.root;
 const ENTRY_HTML = ENTRY.html;
 const ENTRY_TS = ENTRY.ts;
 const INDEX_URL = `${DATA_ROOT}index.json`;
+let GUIDE_ROOT = '';
 
 const JSON_DIR = process.env.HARNESS_JSON ?? path.join(ROOT, DATA_ROOT.replace(/\/$/, ''));
 
@@ -139,6 +140,10 @@ function buildPage(bundleJs) {
         const abs = window.__jsonDir + '/' + clean.slice(root.length);
         try { body = window.__fs.readFileSync(abs, 'utf8'); } catch (e) { body = null; }
         if (window.__mutate) body = window.__mutate(clean, body);
+      } else if (window.__guideRoot && clean.startsWith(window.__guideRoot)) {
+        // 导读侧车与单元 json 不在同一根下：单独一条分支，避免把 guide/ 当数据根
+        const abs = window.__guideDir + '/' + clean.slice(window.__guideRoot.length);
+        try { body = window.__fs.readFileSync(abs, 'utf8'); } catch (e) { body = null; }
       }
       if (body === null) {
         window.__miss.push(clean);
@@ -171,6 +176,8 @@ async function mount(bundleJs, opts = {}) {
   dom.window.__jsonDir = JSON_DIR;
   dom.window.__dataRoot = DATA_ROOT;
   dom.window.__indexJson = JSON.stringify({ units: INDEX.units });
+  dom.window.__guideRoot = GUIDE_ROOT;
+  dom.window.__guideDir = path.join(ROOT, GUIDE_ROOT);
   if (opts.mutate) dom.window.__mutate = opts.mutate;
   const t0 = Date.now();
   dom.window.eval(bundleJs);
@@ -249,18 +256,44 @@ async function runUnit(bundleJs, code) {
   //   与本断言的采样窗口存在时序竞争 —— 之前 <=2 的写法靠机器忙碌偶然变绿）。
   //   真不变式：**绝不全库拉取**（<=4 条）且索引第一。
   const afterBoot = reqs().slice();
-  p('请求总数有界（索引 + 当前 + ≤2 预取邻居，绝不拉全库）',
-    afterBoot.length <= 4,
+  // 有导语的单元会多一条 guide/ 请求；预取邻居若也有导语，最多再多 2 条。
+  p('请求总数有界（索引 + 当前单元 + 导语 + ≤2 预取邻居，绝不拉全库）',
+    afterBoot.length <= 8,
     `请求 ${afterBoot.length} 条：${afterBoot.join(', ')}`);
-  p('请求全在 json/ 下（零外部请求）', afterBoot.every((u) => u.startsWith(DATA_ROOT)),
-    afterBoot.filter((u) => !u.startsWith(DATA_ROOT)).join(', '));
+  p('请求全在数据根/导读根下（零外部请求）',
+    afterBoot.every((u) => u.startsWith(DATA_ROOT) || u.startsWith(GUIDE_ROOT)),
+    afterBoot.filter((u) => !u.startsWith(DATA_ROOT) && !u.startsWith(GUIDE_ROOT)).join(', '));
   p('首个请求就是索引', afterBoot[0] === INDEX_URL, afterBoot[0] ?? '(无)');
   p('第二个请求是当前单元', afterBoot[1] === meta.path, afterBoot.slice(1, 3).join(', '));
+  if (meta.hasGuide) {
+    const want = `${GUIDE_ROOT}${code.split('.')[0]}/${code}.json`;
+    p('有导语的单元会取第三份数据', afterBoot.includes(want), afterBoot.slice(0, 5).join(', '));
+  }
 
   // ── 基本渲染
   p('无致命错误浮层', !textOf(overlay).includes('数据索引读取失败'), textOf(overlay).slice(0, 120));
   p('阅读区非空（不白屏）', reader.children.length > 0);
   p('页面标题含代号', textOf(reader.querySelector('.pagehead h1')).includes(code));
+
+  // ── 导读层（guide-card/v1）：有 hasGuide 就必须渲染，且位置在页头之后、正文之前
+  const guideEl = reader.querySelector('.guide');
+  if (meta.hasGuide) {
+    p('导语已渲染', !!guideEl);
+    const head = reader.querySelector('.pagehead');
+    p('导语紧接在页头之后', !!head && head.nextElementSibling === guideEl);
+    const firstBody = [...reader.children].find(
+      (el) => el !== head && el !== guideEl && !el.classList.contains('guide'),
+    );
+    p('导语在正文之前', !!guideEl && !!firstBody &&
+      (guideEl.compareDocumentPosition(firstBody) & 4) !== 0);
+    const srcLink = guideEl?.querySelector('.guidesrc a');
+    p('朗读版链接可点（Mode T 才有）',
+      !srcLink || (srcLink.getAttribute('href') ?? '').startsWith('./reading.html#'));
+    p('导语公式无渲染错误', !!guideEl && !guideEl.querySelector('.katex-error') &&
+      !textOf(guideEl).includes('$'));
+  } else {
+    p('无导语时不渲染空块', !guideEl);
+  }
   // ── 显示码（src/modules/codes.ts）：单单元章（code 无 `.`）的子节必须显示为
   //    `<code>.1`（用户口径：子节要有子标号）；内部码（data-goto/路由）保持原样。
   const selfNode = d.querySelector('#sidebar .node.on');
@@ -641,7 +674,7 @@ async function runUnit(bundleJs, code) {
   }
 
   // ── 零外部请求
-  const external = reqs().filter((u) => !u.startsWith(DATA_ROOT));
+  const external = reqs().filter((u) => !u.startsWith(DATA_ROOT) && !u.startsWith(GUIDE_ROOT));
   p('零外部请求（断网可用）', external.length === 0, external.slice(0, 5).join(', '));
 
   // ── 掌握度 +1 只该动「目录那一行 + 顶栏那个字母块」，**不许**整树重建目录
@@ -933,6 +966,8 @@ async function runStandalone(subj) {
   check('快照能渲染出阅读区（file:// 双击可用）', reader.children.length > 0);
   check('快照无致命浮层',
     !textOf(d.getElementById('overlay-root')).includes('数据索引读取失败'));
+  check('快照登记 guideRoot', typeof dom.window.__kbStandalone?.guideRoot === 'string' &&
+    dom.window.__kbStandalone.guideRoot === subj.guideRoot, dom.window.__kbStandalone?.guideRoot ?? '(无)');
   check('快照顶栏字母块非空', d.querySelectorAll('#header .chapters b').length > 0);
   check('快照首屏不是空页',
     textOf(reader.querySelector('.pagehead h1')).length > 0,
@@ -1088,6 +1123,11 @@ async function runStandalone(subj) {
       !rd.querySelector('.pstepstep, .prouteprog, .prouteroute'));
     check('工程总纲路线卡有可点落点', rd.querySelectorAll('.proute [data-goto]').length > 0);
     check('工程总纲右栏不显示掌握度环', !d.getElementById('aside').querySelector('.ring'));
+    const tGuide = Date.now();
+    while (Date.now() - tGuide < 1500 && !rd.querySelector('.guide')) await sleep(20);
+    check('工程总纲顶部有站点级导语（scope=site）', !!rd.querySelector('.guide'));
+    check('站点导语不替代路线卡', rd.querySelectorAll('[data-route]').length === 7,
+      `got=${rd.querySelectorAll('[data-route]').length}`);
     dom.window.close();
     return;
   }
@@ -1594,9 +1634,16 @@ async function main() {
   const kbIndex = await requireTs('src/modules/kb-index.ts');
   const subjects = await requireTs('src/subjects.ts');
   const SUBJ = subjects.SUBJECTS.find((s) => s.id === SUBJECT_ID) ?? subjects.MATH;
+  GUIDE_ROOT = SUBJ.guideRoot;
   // 语义边根从学科配置取（锚定仓库根，不随 HARNESS_JSON 漂移）——语义边烘进索引后，
   // 右栏/frontier 的断言才是在验真源而不是编号序启发式。
-  INDEX = kbIndex.buildIndex(JSON_DIR, path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, '')), DATA_ROOT);
+  const guideRoot = SUBJ.guideRoot.endsWith('/') ? SUBJ.guideRoot.slice(0, -1) : SUBJ.guideRoot;
+  INDEX = kbIndex.buildIndex(
+    JSON_DIR,
+    path.join(ROOT, SUBJ.graphRoot.replace(/\/$/, '')),
+    DATA_ROOT,
+    path.join(ROOT, guideRoot),
+  );
   ALL_CODES = INDEX.units.map((u) => u.code);
   const indexKb = (JSON.stringify({ units: INDEX.units }).length / 1024).toFixed(1);
 

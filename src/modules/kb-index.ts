@@ -146,13 +146,40 @@ export function attachSem(units: UnitMeta[], graphDir: string): void {
 }
 
 /**
+ * 扫侧车导语：`guide/<site>/<章>/<代号>.json`，返回代号集合。
+ *
+ * 只认 `档/文件` 两层，且跳过 `_` 开头的文件（`_map.json` / `_progress.json`）——
+ * 索引里只需要一个布尔（有没有导语），导语正文仍按需 fetch。
+ */
+function scanGuideCodes(guideDir?: string): Set<string> {
+  const out = new Set<string>();
+  if (!guideDir || !fs.existsSync(guideDir)) return out;
+  for (const chapter of fs.readdirSync(guideDir).sort()) {
+    if (chapter.startsWith('_')) continue;
+    const dir = path.join(guideDir, chapter);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    for (const name of fs.readdirSync(dir).sort()) {
+      if (name.endsWith('.json') && !name.startsWith('_')) out.add(name.slice(0, -'.json'.length));
+    }
+  }
+  return out;
+}
+
+/**
  * @param jsonDir   json/ 绝对路径（dom-harness 可用 HARNESS_JSON 指向别处）
  * @param graphDir  graph/ 绝对路径。**显式传入**，不从 jsonDir 推：
  *                  原先写 `resolve(jsonDir, '..', 'graph')` 隐含「json 与 graph 是兄弟目录」，
  *                  一旦 HARNESS_JSON 指到别处就找不到 yaml → 语义边**静默全丢**（不报错，
  *                  界面悄悄退回编号序启发式）。调用方（vite/standalone/harness）都手里有仓库根。
+ * @param guideDir  侧车导语根（`guide/<site>/`）。缺省不扫 —— 老调用方不受影响；
+ *                  扫到就只给对应单元打 `hasGuide`，不把正文塞进索引。
  */
-export function buildIndex(jsonDir: string, graphDir: string, relPrefix = 'json/'): KbIndexPayload {
+export function buildIndex(
+  jsonDir: string,
+  graphDir: string,
+  relPrefix = 'json/',
+  guideDir?: string,
+): KbIndexPayload {
   const units: UnitMeta[] = [];
   for (const rel of scanUnitPaths(jsonDir, relPrefix)) {
     const file = readUnitFile(path.join(jsonDir, rel.slice(relPrefix.length)), rel);
@@ -160,6 +187,10 @@ export function buildIndex(jsonDir: string, graphDir: string, relPrefix = 'json/
   }
   units.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
   attachSem(units, graphDir);
+  const guided = scanGuideCodes(guideDir);
+  if (guided.size) {
+    for (const u of units) if (guided.has(u.code)) u.hasGuide = true;
+  }
   const payload: KbIndexPayload = {
     units,
     generated: new Date().toISOString(),

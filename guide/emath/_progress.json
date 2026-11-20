@@ -1,0 +1,1004 @@
+{
+  "version": 1,
+  "site": "emath",
+  "updated": "2026-11-20",
+  "units": {
+    "AN02.1": {
+      "status": "pending",
+      "unitSha": "3ced9a58cad9"
+    },
+    "AN02.2": {
+      "status": "pending",
+      "unitSha": "213f3b75f5dc"
+    },
+    "AN02.3": {
+      "status": "pending",
+      "unitSha": "c68872499caf"
+    },
+    "AN02.4": {
+      "status": "pending",
+      "unitSha": "1ddbb307f6fc"
+    },
+    "AN02.5": {
+      "status": "pending",
+      "unitSha": "a3f1cac1ee11"
+    },
+    "AN03.1": {
+      "status": "pending",
+      "unitSha": "fc25f68b6afa"
+    },
+    "AN04.1": {
+      "status": "pending",
+      "unitSha": "c52d9766fe0b"
+    },
+    "AN04.2": {
+      "status": "pending",
+      "unitSha": "566108a61f52"
+    },
+    "AN04.3": {
+      "status": "pending",
+      "unitSha": "c1cfc4807f98"
+    },
+    "AN04.4": {
+      "status": "pending",
+      "unitSha": "0c6ebd796576"
+    },
+    "AN04.5": {
+      "status": "pending",
+      "unitSha": "8764524135cd"
+    },
+    "AN04.6": {
+      "status": "pending",
+      "unitSha": "12b8e0d99efe"
+    },
+    "CG01.1": {
+      "status": "pending",
+      "unitSha": "b9aa902ee7ad"
+    },
+    "CG02.1": {
+      "status": "pending",
+      "unitSha": "44481477b76c"
+    },
+    "CG03.1": {
+      "status": "pending",
+      "unitSha": "0aee3414c8ae"
+    },
+    "CG04.1": {
+      "status": "pending",
+      "unitSha": "e2bda92b6def"
+    },
+    "CG05.1": {
+      "status": "pending",
+      "unitSha": "1b4af70b8fa9"
+    },
+    "CG06.1": {
+      "status": "pending",
+      "unitSha": "81f440a86417"
+    },
+    "CG06.2": {
+      "status": "pending",
+      "unitSha": "414e3a1b9586"
+    },
+    "CG07.1": {
+      "status": "pending",
+      "unitSha": "05edfc8c2862"
+    },
+    "CG08.1": {
+      "status": "pending",
+      "unitSha": "dacf8c65c59f"
+    },
+    "CG08.2": {
+      "status": "pending",
+      "unitSha": "969229f47a2d"
+    },
+    "CG08.3": {
+      "status": "pending",
+      "unitSha": "c8101b7a704e"
+    },
+    "CG09.1": {
+      "status": "pending",
+      "unitSha": "534d86c36b51"
+    },
+    "CG10.1": {
+      "status": "pending",
+      "unitSha": "49ebb6e1f5fe"
+    },
+    "CG11.1": {
+      "status": "pending",
+      "unitSha": "2286e0c5e8c7"
+    },
+    "CG12.1": {
+      "status": "pending",
+      "unitSha": "0ca5f6110c44"
+    },
+    "CG13.1": {
+      "status": "pending",
+      "unitSha": "50d3cf9cb788"
+    },
+    "CG14.1": {
+      "status": "pending",
+      "unitSha": "a7991fab6d66"
+    },
+    "CG15.1": {
+      "status": "pending",
+      "unitSha": "9d7034cce42f"
+    },
+    "CG16.1": {
+      "status": "pending",
+      "unitSha": "03f3df091eb0"
+    },
+    "CG17.1": {
+      "status": "pending",
+      "unitSha": "8a1be18950ba"
+    },
+    "CG17.2": {
+      "status": "pending",
+      "unitSha": "8a4c6a3937ad"
+    },
+    "CG17.3": {
+      "status": "pending",
+      "unitSha": "b5ab1f78ee35"
+    },
+    "CG17.4": {
+      "status": "pending",
+      "unitSha": "98ad48c2c72e"
+    },
+    "CG18.1": {
+      "status": "pending",
+      "unitSha": "00e693288f60"
+    },
+    "CG19.1": {
+      "status": "pending",
+      "unitSha": "c81862579d45"
+    },
+    "CG19.2": {
+      "status": "pending",
+      "unitSha": "4fe4d40e8910"
+    },
+    "CG20.1": {
+      "status": "pending",
+      "unitSha": "3373f437a61e"
+    },
+    "CG21.1": {
+      "status": "pending",
+      "unitSha": "86eb0bbb1a74"
+    },
+    "CG22.1": {
+      "status": "pending",
+      "unitSha": "5655051fbadc"
+    },
+    "CG23.1": {
+      "status": "pending",
+      "unitSha": "a7559f78ecf3"
+    },
+    "CG24.1": {
+      "status": "pending",
+      "unitSha": "440d09a98fb0"
+    },
+    "CG25.1": {
+      "status": "pending",
+      "unitSha": "62b07a3db83a"
+    },
+    "CG26.1": {
+      "status": "pending",
+      "unitSha": "9fb50492cace"
+    },
+    "EQ01.1": {
+      "status": "pending",
+      "unitSha": "231665b376bc"
+    },
+    "EQ01.10": {
+      "status": "pending",
+      "unitSha": "accc09ecd768"
+    },
+    "EQ01.11": {
+      "status": "pending",
+      "unitSha": "ef344c2014ab"
+    },
+    "EQ01.12": {
+      "status": "pending",
+      "unitSha": "fab1afff5748"
+    },
+    "EQ01.13": {
+      "status": "pending",
+      "unitSha": "736bf4c487e9"
+    },
+    "EQ01.14": {
+      "status": "pending",
+      "unitSha": "28c3eda5191b"
+    },
+    "EQ01.15": {
+      "status": "pending",
+      "unitSha": "4fda1bf01a9a"
+    },
+    "EQ01.16": {
+      "status": "pending",
+      "unitSha": "3a0e9e885b9d"
+    },
+    "EQ01.17": {
+      "status": "pending",
+      "unitSha": "7ddca40c7bdd"
+    },
+    "EQ01.18": {
+      "status": "pending",
+      "unitSha": "8b0fb9c8d990"
+    },
+    "EQ01.2": {
+      "status": "pending",
+      "unitSha": "0ed5f00b5b3c"
+    },
+    "EQ01.3": {
+      "status": "pending",
+      "unitSha": "3ec36cd53d32"
+    },
+    "EQ01.4": {
+      "status": "pending",
+      "unitSha": "6b335d403f9d"
+    },
+    "EQ01.5": {
+      "status": "pending",
+      "unitSha": "d2c88bd2c44e"
+    },
+    "EQ01.6": {
+      "status": "pending",
+      "unitSha": "da3ae1ab1dda"
+    },
+    "EQ01.7": {
+      "status": "pending",
+      "unitSha": "3788ff1ec366"
+    },
+    "EQ01.8": {
+      "status": "pending",
+      "unitSha": "53cc1351b38b"
+    },
+    "EQ01.9": {
+      "status": "pending",
+      "unitSha": "28798aaacf08"
+    },
+    "EQ02.1": {
+      "status": "pending",
+      "unitSha": "8ee5fd792e0c"
+    },
+    "EQ02.10": {
+      "status": "pending",
+      "unitSha": "47d98d23daf4"
+    },
+    "EQ02.11": {
+      "status": "pending",
+      "unitSha": "129a13658d3e"
+    },
+    "EQ02.12": {
+      "status": "pending",
+      "unitSha": "01c39c7c5363"
+    },
+    "EQ02.13": {
+      "status": "pending",
+      "unitSha": "208f2da4a91d"
+    },
+    "EQ02.14": {
+      "status": "pending",
+      "unitSha": "3672c0323912"
+    },
+    "EQ02.15": {
+      "status": "pending",
+      "unitSha": "f46c1b5fdf04"
+    },
+    "EQ02.2": {
+      "status": "pending",
+      "unitSha": "9d68e4c35d92"
+    },
+    "EQ02.3": {
+      "status": "pending",
+      "unitSha": "341be106288d"
+    },
+    "EQ02.4": {
+      "status": "pending",
+      "unitSha": "c86bd4572ce5"
+    },
+    "EQ02.5": {
+      "status": "pending",
+      "unitSha": "3705d5fe5963"
+    },
+    "EQ02.6": {
+      "status": "pending",
+      "unitSha": "c0dc060a0a8e"
+    },
+    "EQ02.7": {
+      "status": "pending",
+      "unitSha": "1b3fadff836c"
+    },
+    "EQ02.8": {
+      "status": "pending",
+      "unitSha": "78de888a02be"
+    },
+    "EQ02.9": {
+      "status": "pending",
+      "unitSha": "d5eb9117dbcb"
+    },
+    "EQ03.1": {
+      "status": "pending",
+      "unitSha": "ba1ef0258512"
+    },
+    "EQ03.10": {
+      "status": "pending",
+      "unitSha": "fc5dd0974c2d"
+    },
+    "EQ03.11": {
+      "status": "pending",
+      "unitSha": "46ed987f93b6"
+    },
+    "EQ03.12": {
+      "status": "pending",
+      "unitSha": "9ed7d963e46a"
+    },
+    "EQ03.13": {
+      "status": "pending",
+      "unitSha": "eda42f2930c6"
+    },
+    "EQ03.14": {
+      "status": "pending",
+      "unitSha": "07cba1e198c3"
+    },
+    "EQ03.15": {
+      "status": "pending",
+      "unitSha": "70cac22594bd"
+    },
+    "EQ03.2": {
+      "status": "pending",
+      "unitSha": "cd5cfa298d5f"
+    },
+    "EQ03.3": {
+      "status": "pending",
+      "unitSha": "4d5dd461c8b4"
+    },
+    "EQ03.4": {
+      "status": "pending",
+      "unitSha": "8c878c1a5142"
+    },
+    "EQ03.5": {
+      "status": "pending",
+      "unitSha": "bc28dc2b0e4e"
+    },
+    "EQ03.6": {
+      "status": "pending",
+      "unitSha": "556116bbbb24"
+    },
+    "EQ03.7": {
+      "status": "pending",
+      "unitSha": "69c1c18e3a60"
+    },
+    "EQ03.8": {
+      "status": "pending",
+      "unitSha": "d98fd33b07b0"
+    },
+    "EQ03.9": {
+      "status": "pending",
+      "unitSha": "ea1db0bbc0f0"
+    },
+    "EQ04.1": {
+      "status": "pending",
+      "unitSha": "7c18b440f9b1"
+    },
+    "EQ04.10": {
+      "status": "pending",
+      "unitSha": "c67666d85dc2"
+    },
+    "EQ04.11": {
+      "status": "pending",
+      "unitSha": "6b6312e9c52b"
+    },
+    "EQ04.12": {
+      "status": "pending",
+      "unitSha": "12f44524ddd2"
+    },
+    "EQ04.13": {
+      "status": "pending",
+      "unitSha": "ea378afc4cf6"
+    },
+    "EQ04.2": {
+      "status": "pending",
+      "unitSha": "8e29b9f4abcb"
+    },
+    "EQ04.3": {
+      "status": "pending",
+      "unitSha": "6938bd900afb"
+    },
+    "EQ04.4": {
+      "status": "pending",
+      "unitSha": "a96e591403f6"
+    },
+    "EQ04.5": {
+      "status": "pending",
+      "unitSha": "414f80fd7404"
+    },
+    "EQ04.6": {
+      "status": "pending",
+      "unitSha": "94274f6847c5"
+    },
+    "EQ04.7": {
+      "status": "pending",
+      "unitSha": "4b1a4d95aea7"
+    },
+    "EQ04.8": {
+      "status": "pending",
+      "unitSha": "f673b2909536"
+    },
+    "EQ04.9": {
+      "status": "pending",
+      "unitSha": "f59a81c95303"
+    },
+    "NL01.0": {
+      "status": "pending",
+      "unitSha": "8b04ee93af12"
+    },
+    "NL01.7": {
+      "status": "pending",
+      "unitSha": "fb0cf3b6811a"
+    },
+    "NL01.8": {
+      "status": "pending",
+      "unitSha": "94348520a5c1"
+    },
+    "NL14.1": {
+      "status": "pending",
+      "unitSha": "895557e4669b"
+    },
+    "NL14.2": {
+      "status": "pending",
+      "unitSha": "2eaf9471b44c"
+    },
+    "NL15.1": {
+      "status": "pending",
+      "unitSha": "da84b0fa8679"
+    },
+    "NL16.1": {
+      "status": "pending",
+      "unitSha": "6777784ff7fa"
+    },
+    "NL17.1": {
+      "status": "pending",
+      "unitSha": "8ca70c034541"
+    },
+    "NL18.1": {
+      "status": "pending",
+      "unitSha": "d433c26a2f89"
+    },
+    "NM01.1": {
+      "status": "pending",
+      "unitSha": "bf25fa008c5a"
+    },
+    "NM01.2": {
+      "status": "pending",
+      "unitSha": "56991b83a52f"
+    },
+    "NM02.1": {
+      "status": "pending",
+      "unitSha": "227b2cc30d9c"
+    },
+    "NM02.2": {
+      "status": "pending",
+      "unitSha": "d4b2282d6e52"
+    },
+    "NM02.3": {
+      "status": "pending",
+      "unitSha": "fd56a4825c8c"
+    },
+    "NM03.1": {
+      "status": "pending",
+      "unitSha": "200a9694457e"
+    },
+    "NM04.1": {
+      "status": "pending",
+      "unitSha": "40c706335196"
+    },
+    "NM04.2": {
+      "status": "pending",
+      "unitSha": "c26262123b27"
+    },
+    "NM05.1": {
+      "status": "pending",
+      "unitSha": "2bfe591398d7"
+    },
+    "NM06.1": {
+      "status": "pending",
+      "unitSha": "56ac3b03644c"
+    },
+    "NM07.1": {
+      "status": "pending",
+      "unitSha": "b94b437e1650"
+    },
+    "PR09.1": {
+      "status": "pending",
+      "unitSha": "cfd1702dac40"
+    },
+    "PR09.2": {
+      "status": "pending",
+      "unitSha": "58754bd72f39"
+    },
+    "NL01.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL01.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL01.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL01.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL01.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL01.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.10": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.7": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.8": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL02.9": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.10": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.11": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.12": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.13": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.7": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.8": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL03.9": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL04.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL04.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL04.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL04.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL04.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL04.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.10": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.11": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.7": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.8": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL05.9": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.10": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.7": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.8": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL06.9": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL07.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL07.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL07.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL07.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL07.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL08.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL08.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL08.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.10": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.7": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.8": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL09.9": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL10.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL10.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL10.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL10.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL10.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL10.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL11.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL11.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL11.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL12.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL12.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL12.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL12.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL12.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL12.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL12.7": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL13.1": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL13.2": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL13.3": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL13.4": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL13.5": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL13.6": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    },
+    "NL13.7": {
+      "status": "skip",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条",
+      "kind": "library-know"
+    }
+  }
+}

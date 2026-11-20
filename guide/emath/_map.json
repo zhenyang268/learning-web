@@ -1,0 +1,1136 @@
+{
+  "version": 1,
+  "site": "emath",
+  "mode": "S",
+  "units": {
+    "AN02.1": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN02.2": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN02.3": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN02.4": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN02.5": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN03.1": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN04.1": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN04.2": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN04.3": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN04.4": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN04.5": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN04.6": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "CG01.1": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG02.1": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG03.1": {
+      "kind": null,
+      "src": "H_cg.tex",
+      "mode": "S"
+    },
+    "CG04.1": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG05.1": {
+      "kind": null,
+      "src": "H_cg.tex",
+      "mode": "S"
+    },
+    "CG06.1": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG06.2": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG07.1": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG08.1": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG08.2": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG08.3": {
+      "kind": null,
+      "src": "notebook/math/H_cg.tex",
+      "mode": "S"
+    },
+    "CG09.1": {
+      "kind": null,
+      "src": "I_fluid.tex",
+      "mode": "S"
+    },
+    "CG10.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG11.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG12.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG13.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG14.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG15.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG16.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG17.1": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG17.2": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG17.3": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG17.4": {
+      "kind": null,
+      "src": "notebook/math/I_fluid.tex",
+      "mode": "S"
+    },
+    "CG18.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG19.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG19.2": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG20.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG21.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG22.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG23.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG24.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG25.1": {
+      "kind": null,
+      "src": "notebook/math/J_rtx.tex",
+      "mode": "S"
+    },
+    "CG26.1": {
+      "kind": null,
+      "src": "notebook/math/M_addition.tex",
+      "mode": "S"
+    },
+    "EQ01.1": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.10": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.11": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.12": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.13": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.14": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.15": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.16": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.17": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.18": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.2": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.3": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.4": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.5": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.6": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.7": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.8": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ01.9": {
+      "kind": null,
+      "src": "notebook/diffrential/de1.tex",
+      "mode": "S"
+    },
+    "EQ02.1": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.10": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.11": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.12": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.13": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.14": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.15": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.2": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.3": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.4": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.5": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.6": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.7": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.8": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ02.9": {
+      "kind": null,
+      "src": "notebook/diffrential/de2.tex",
+      "mode": "S"
+    },
+    "EQ03.1": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.10": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.11": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.12": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.13": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.14": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.15": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.2": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.3": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.4": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.5": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.6": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.7": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.8": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ03.9": {
+      "kind": null,
+      "src": "notebook/diffrential/de3.tex",
+      "mode": "S"
+    },
+    "EQ04.1": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.10": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.11": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.12": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.13": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.2": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.3": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.4": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.5": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.6": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.7": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.8": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "EQ04.9": {
+      "kind": null,
+      "src": "notebook/diffrential/de4.tex",
+      "mode": "S"
+    },
+    "NL01.0": {
+      "kind": "library-section",
+      "src": "notebook/math/survey/p1-overview.tex",
+      "mode": "S"
+    },
+    "NL01.7": {
+      "kind": "library-section",
+      "src": "notebook/math/survey/p12-axes.tex",
+      "mode": "S"
+    },
+    "NL01.8": {
+      "kind": "library-section",
+      "src": "notebook/math/survey/p11-audit.tex",
+      "mode": "S"
+    },
+    "NL14.1": {
+      "kind": "library-bridge",
+      "src": "notebook/math/bridges/br0_skeleton.tex",
+      "mode": "S"
+    },
+    "NL14.2": {
+      "kind": "library-bridge",
+      "src": "notebook/math/bridges/appendix_foundations.tex",
+      "mode": "S"
+    },
+    "NL15.1": {
+      "kind": "library-bridge",
+      "src": "notebook/math/bridges/br1_slerp_geodesic.tex",
+      "mode": "S"
+    },
+    "NL16.1": {
+      "kind": "library-bridge",
+      "src": "notebook/math/bridges/br2_fourier_gauss.tex",
+      "mode": "S"
+    },
+    "NL17.1": {
+      "kind": "library-bridge",
+      "src": "notebook/math/bridges/br3_ode_pde_tensor_lie.tex",
+      "mode": "S"
+    },
+    "NL18.1": {
+      "kind": "library-bridge",
+      "src": "notebook/math/bridges/br4_probability_map.tex",
+      "mode": "S"
+    },
+    "NM01.1": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM01.2": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM02.1": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM02.2": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM02.3": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM03.1": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM04.1": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM04.2": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM05.1": {
+      "kind": null,
+      "src": "notebook/math/G_numeric.tex",
+      "mode": "S"
+    },
+    "NM06.1": {
+      "kind": null,
+      "src": "notebook/math/M_addition.tex",
+      "mode": "S"
+    },
+    "NM07.1": {
+      "kind": null,
+      "src": "notebook/math/M_addition.tex",
+      "mode": "S"
+    },
+    "PR09.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR09.2": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    }
+  },
+  "skipped": [
+    {
+      "code": "NL01.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL01.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL01.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL01.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL01.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL01.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.10",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.7",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.8",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL02.9",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.10",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.11",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.12",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.13",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.7",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.8",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL03.9",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL04.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL04.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL04.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL04.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL04.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL04.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.10",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.11",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.7",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.8",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL05.9",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.10",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.7",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.8",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL06.9",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL07.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL07.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL07.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL07.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL07.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL08.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL08.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL08.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.10",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.7",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.8",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL09.9",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL10.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL10.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL10.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL10.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL10.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL10.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL11.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL11.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL11.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL12.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL12.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL12.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL12.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL12.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL12.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL12.7",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL13.1",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL13.2",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL13.3",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL13.4",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL13.5",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL13.6",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    },
+    {
+      "code": "NL13.7",
+      "kind": "library-know",
+      "reason": "逐词条单元；导学卡按章级写，落在 NL 章首而不是每条"
+    }
+  ],
+  "unmapped": [],
+  "unused": []
+}

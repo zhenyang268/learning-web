@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "site": "english1",
+  "units": {
+    "CZ01.1": {
+      "talk": "build/reading/talk/english1-wr-01.md",
+      "kind": "english1-lecture",
+      "mode": "T",
+      "kp": null
+    },
+    "NT01.1": {
+      "talk": "build/reading/talk/english1-wr-03.md",
+      "kind": "english1-lecture",
+      "mode": "T",
+      "kp": null
+    },
+    "RC01.1": {
+      "talk": "build/reading/talk/english1-wr-02.md",
+      "kind": "english1-lecture",
+      "mode": "T",
+      "kp": null
+    },
+    "TR01.1": {
+      "talk": "build/reading/talk/english1-wr-04.md",
+      "kind": "english1-lecture",
+      "mode": "T",
+      "kp": null
+    },
+    "WR01.1": {
+      "talk": "build/reading/talk/english1-wr-05.md",
+      "kind": "english1-lecture",
+      "mode": "T",
+      "kp": null
+    },
+    "WR02.1": {
+      "talk": "build/reading/talk/english1-wr-06.md",
+      "kind": "english1-lecture",
+      "mode": "T",
+      "kp": null
+    }
+  },
+  "skipped": [
+    {
+      "code": "VO00.1",
+      "kind": "english1-words-guide",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO01.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO02.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO03.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO04.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO05.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO06.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO07.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO08.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO09.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO10.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO11.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO12.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO13.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO14.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO15.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO16.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO17.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO18.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO19.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO20.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO21.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO22.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO23.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO24.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO25.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO26.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO27.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO28.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO29.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO30.1",
+      "kind": "english1-words",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO97.1",
+      "kind": "english1-supplement",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    },
+    {
+      "code": "VO97.2",
+      "kind": "english1-supplement",
+      "reason": "词表/补全表，不是讲解稿；没有可写的「为什么有它」"
+    }
+  ],
+  "unmapped": [],
+  "unused": []
+}

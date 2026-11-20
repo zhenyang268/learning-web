@@ -15,7 +15,9 @@ const abs = (rel: string): string => path.join(ROOT, rel.replace(/\/$/, ''));
  * 语义边真源（`<graphRoot>*.yaml`）构建期烘进索引：运行期零 yaml 请求。
  */
 function subjectIndex(subject: Subject): string {
-  return JSON.stringify(buildIndex(abs(subject.dataRoot), abs(subject.graphRoot), subject.dataRoot));
+  return JSON.stringify(
+    buildIndex(abs(subject.dataRoot), abs(subject.graphRoot), subject.dataRoot, abs(subject.guideRoot)),
+  );
 }
 
 /** 某个学科 dataRoot 下的 yaml 清单（前端按清单探测 + 降级） */

@@ -5,9 +5,9 @@
   "title": "numeric · 总览",
   "src": {
     "file": "notebook/projects/codedesign/numeric/OUTLINE.md",
-    "sha256": "sha256:2bdc673ab50e59208314bd7ac0b86bb84d41aa45bcdf14f5339e2b5acd0e24b8"
+    "sha256": "sha256:4ba3b75f056dad97ce0efc6df8a53e65cd2a574404d748eceb487bee79e805b5"
   },
-  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_commit": "b00906a9826a14b60de50c8c415b0ca62c0d67df",
   "notebook_dirty": false,
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "introduction",
       "title": "",
       "level": 0,
-      "content": "> **判据**：对同一数学对象，能给出两种表示的取舍表，并说清各自在什么规模/稀疏度下更优。"
+      "content": "> **状态（2026-11-20）**：骨架。本章只落总览与一条主线；「单元表」中的 8 个单元尚未展开。\n\n> **判据**：对同一数学对象，能给出两种表示的取舍表，并说清各自在什么规模/稀疏度下更优。"
     },
     {
       "id": "CD07.1:body.s01",

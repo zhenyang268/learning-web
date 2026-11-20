@@ -10,7 +10,7 @@
 | `knowledge-cs408.html` | 408 考研 | 159 |
 | `knowledge-math1.html` | 数一考研 | 105 |
 | `knowledge-projects.html` | 工程线（OUTLINE + NOTES） | 81 |
-| `reading.html` | **朗读版**：208 篇讲解稿 + 笔记清理稿 + 词表，共 321 单元 | 321 |
+| `reading.html` | **口述版（TTS）**：208 篇讲解稿 + 笔记清理稿 + 词表，共 321 单元 | 321 |
 
 `reading.html` 的三层结构（2026-11-18 完成）：
 
@@ -19,6 +19,9 @@
 | 讲解稿（主力） | 408 四科导读 + 应试分层 + 112 个考点；数一 72 篇；英语六题型；工程线 13 篇方向大纲 | **208** |
 | 笔记清理稿 | 数一 72 篇原笔记的公式口语化版本（未改写成讲解） | 72 |
 | 词表与作文 | 英语 31 个主题词表（3996 词条）+ 6 篇原作文讲义 | 37 |
+
+`reading.html` 是**口述版（TTS）**，也是主站导读层（guide-card/v1）Mode T 的脚手架；
+主站单元页显示的是屏幕版（KaTeX），两处共用同一批 talk，不互相搬运正文。
 
 `reading.html` 与上面五份的形态差别（2026-11-18 落地，生成链见 `build/reading/`）：
 
@@ -66,3 +69,9 @@ npm run release     # = npm run build + 把五份快照同步进 release/
 - 生成日期：2026-11-14
 - 数据 commit：`3488a59`（数值库 106 / 408 159 / 数一 105 / 工程线 81）
 - 源内容仓：`notebook` @ `718f85c7`
+
+## 当前已知缺口（2026-11-20）
+
+- **导读层覆盖未完成**：`math` 57/199、`emath` 0/128；`cs408` 112/112、`kaoyan` 72/72、`english1` 6/6、`projects` 43/43 已完成。未写单元在 `guide/<site>/_progress.json` 中为 `pending`，页面上不显示导语，不阻塞正文。
+- **代码设计七章是骨架**：`codedesign/` 七章的 `OUTLINE` 已列 46 个单元，`NOTES` 目前每章只有一条主线；各章 `OUTLINE.md` 顶部已标注「骨架」。
+- 因此本快照是**阶段性发布**，不是内容完整版；发布判据见 `build/guide/prompt/check-release.md`。

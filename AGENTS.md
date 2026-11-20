@@ -208,6 +208,8 @@ learning-web/
       prompts/ TASKBOOK.md
   graph/                 # 【Q1 已决】图谱语义边的真源（本仓）
     <chapter>.yaml
+  guide/                 # 导读侧车（guide-card/v1）：<site>/<章>/<代号>.json
+                         #   与单元 json 分离；闸门 tools/check-guide.mjs
   json/                  # 学习词条占位库（阶段一：只记关键词，DESIGN.md §16）
     <chapter>/
       <code>.json        # 一个小目一个文件，如 A1/A1.3.json
@@ -259,6 +261,7 @@ npm run check               # 类型 + content-map + graph + sem-sync + viz + �
 npm run check:content-map   # 内容总图闸门：章覆盖 / 组归属 / survey 编号全集 / 落点 / 站点唯一
 npm run import:docs         # notebook → json（408 / 数一 / 工程线 / 数值库），重跑幂等
 npm run verify:docs         # doc-card/v1 四类校验：结构 / 覆盖 / 源一致性 / 无损
+npm run check:guide         # 导读侧车（guide-card/v1）结构与覆盖闸门
 npm run check:cs408         # 408 子站复用同一套闸门（--subject cs408）
 npm run check:emath         # 工程数学站复用同一套闸门（--subject emath）
 npm run audit               # 前端全量体检（只读，产出 build/logs/health-frontend-*.md）
@@ -268,6 +271,9 @@ npm run build               # tsc → vite（多入口）→ 字体瘦身 → st
 # 改代号（先干跑核对，再 --apply；会重排 json/ 与 graph/）
 node tools/remap-codes.mjs
 node tools/remap-codes.mjs --apply
+
+# 导读映射（408：talk → 单元代号）
+uv run python build/guide/make_map.py --site cs408
 ```
 
 > **内容生成线已归档**（`build/archive/`，318/318 完工，不再维护）。
@@ -328,7 +334,7 @@ node tools/remap-codes.mjs --apply
   `knowledge.html`（数学系）/`knowledge-emath.html`（工程数学）/`knowledge-cs408.html` /
   `knowledge-math1.html` /`knowledge-projects.html` /`knowledge-english1.html`，
   外加 `knowledge-index.html` 索引页（纯链接，file:// 也能开）；
-  以及 **`reading.html`**（朗读版：408 四科导读 + 107 考点 + 数一 72 篇 + 英语题型，
+  以及 **`reading.html`**（口述版/TTS，也是主站导读层 Mode T 的源：408 四科导读 + 107 考点 + 数一 72 篇 + 英语题型，
   由 `build/reading/` 生成，见 `prompt/kp-guide.md`。它不是第六个学科站：不进 `SUBJECTS`、
   没有代号与语义边，脚本 `node tools/build-reading-standalone.mjs` 单独产出）；
   `dist/index.html` / `emath.html` / `cs408.html` 是**开发形态**（`type="module"` + 运行时 `fetch json/`）⇒ **必须 HTTP**。

@@ -1,4 +1,4 @@
-import type { Entry, EntryFile, UnitMeta, UnitSem } from '../types';
+import type { Entry, EntryFile, GuideCard, UnitMeta, UnitSem } from '../types';
 
 export interface LoadIssue {
   /** 哪个文件（json/A1/A1.3.json） */
@@ -55,6 +55,7 @@ export async function loadIndex(dataRoot = 'json/'): Promise<UnitMeta[]> {
       cards: Array.isArray(u.cards) ? u.cards.filter((c): c is string => typeof c === 'string') : [],
       links: Array.isArray(u.links) ? u.links.filter((c): c is string => typeof c === 'string') : [],
       kind: typeof u.kind === 'string' ? u.kind : undefined,
+      hasGuide: u.hasGuide === true,
       sem: parseSem(u.sem),
     });
   }
@@ -155,4 +156,55 @@ export async function loadUnit(path: string): Promise<UnitResult> {
     return { file: null, issues };
   }
   return { file: validateFile(raw, path, issues), issues };
+}
+
+/**
+ * 拉侧车导语。**坏文件不阻塞正文**：返回 null，把问题交给可选回调。
+ *
+ * 为什么把 issue 做成回调而不是返回值：导语是增强层，调用方在 `Promise.all`
+ * 里与正文并行取；如果为了附带 issue 改返回结构，正文渲染要跟着改一遍，
+ * 收益只有一条日志。回调让「正文优先、导语可缺」在类型上就是默认行为。
+ */
+export async function loadGuide(
+  path: string,
+  onIssue?: (issue: LoadIssue) => void,
+): Promise<GuideCard | null> {
+  let raw: unknown;
+  try {
+    raw = await fetchJson(path);
+  } catch (err) {
+    onIssue?.({ file: path, field: '<fetch>', message: (err as Error).message });
+    return null;
+  }
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
+    onIssue?.({ file: path, field: '<root>', message: '导语顶层不是对象' });
+    return null;
+  }
+  const o = raw as Record<string, unknown>;
+  const bad = (field: string, message: string): null => {
+    onIssue?.({ file: path, field, message });
+    return null;
+  };
+  if (o.schema !== 'guide-card/v1') return bad('schema', `未知 schema：${String(o.schema)}`);
+  for (const key of ['code', 'site', 'scope', 'lead', 'connect'] as const) {
+    if (typeof o[key] !== 'string' || (o[key] as string).trim() === '') {
+      return bad(key, `必填字段缺失或非字符串：${key}`);
+    }
+  }
+  if (!Array.isArray(o.why) || o.why.length < 1) return bad('why', 'why 缺失或不是数组');
+  o.why.forEach((w, i) => {
+    if (typeof w !== 'object' || w === null) return;
+    const item = w as Record<string, unknown>;
+    if (typeof item.h !== 'string' || typeof item.p !== 'string') {
+      bad(`why[${i}]`, 'why 条目缺 h/p 字符串');
+    }
+  });
+  // 坏条目会把 renderGuideHtml 打崩：这里统一判一次，缺 h/p 就当整份导语不可用
+  const whyOk = (o.why as unknown[]).every(
+    (w) => typeof w === 'object' && w !== null &&
+      typeof (w as Record<string, unknown>).h === 'string' &&
+      typeof (w as Record<string, unknown>).p === 'string',
+  );
+  if (!whyOk) return null;
+  return o as unknown as GuideCard;
 }

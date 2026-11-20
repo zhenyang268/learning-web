@@ -5,9 +5,9 @@
   "title": "strategy · 总览",
   "src": {
     "file": "notebook/projects/codedesign/strategy/OUTLINE.md",
-    "sha256": "sha256:bb3848196c5d248e3b3d339954333db9669a0291a34d80979dad146c8cfd45fa"
+    "sha256": "sha256:b0762749d92c58cf02eee07372062034c1a96447a8de89b769cb6a922e06d87a"
   },
-  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_commit": "b00906a9826a14b60de50c8c415b0ca62c0d67df",
   "notebook_dirty": false,
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "introduction",
       "title": "",
       "level": 0,
-      "content": "> **判据**：拿到一个新问题，能判断该用哪类策略，并给出至少一个反例说明另一类为什么不选。"
+      "content": "> **状态（2026-11-20）**：骨架。本章只落总览与一条主线；「单元表」中的 6 个单元尚未展开。\n\n> **判据**：拿到一个新问题，能判断该用哪类策略，并给出至少一个反例说明另一类为什么不选。"
     },
     {
       "id": "CD05.1:body.s01",

@@ -184,7 +184,7 @@ function outNameOf(id) {
   return id === 'math' ? 'knowledge.html' : `knowledge-${id}.html`;
 }
 
-function buildShim(payload, dataRoot, unitCount, presentNames) {
+function buildShim(payload, dataRoot, unitCount, presentNames, guideRoot) {
   // 单元路径在索引里已经带数据根前缀（`cs408/json/…`），所以 shim 只按原串匹配。
   const rootIndex = `${dataRoot}index.json`;
   return `
@@ -197,7 +197,7 @@ function buildShim(payload, dataRoot, unitCount, presentNames) {
        * 只把存在的渲染成链接，其余降级为不可点文字，file:// 下不留坏链接。
        */
       window.__kbSnapshots = ${JSON.stringify(presentNames)};
-      window.__kbStandalone = { units: ${unitCount}, gzip: true, dataRoot: "${dataRoot}" };
+      window.__kbStandalone = { units: ${unitCount}, gzip: true, dataRoot: "${dataRoot}", guideRoot: "${guideRoot}" };
       var missing = typeof DecompressionStream === 'undefined' || typeof Response === 'undefined' || typeof Blob === 'undefined';
       var PACK = null;
       function pack() {
@@ -255,10 +255,31 @@ async function buildSubject(subject, kbIndex, katexCss, appCss, presentNames) {
   const graphDir = path.join(ROOT, subject.graphRoot.replace(/\/$/, ''));
   const relPrefix = subject.dataRoot; // 索引里的 path 必须带数据根前缀，浏览器才 fetch 得到
 
-  const index = kbIndex.buildIndex(dataDir, graphDir, relPrefix);
+  const guideRoot = subject.guideRoot.endsWith('/') ? subject.guideRoot.slice(0, -1) : subject.guideRoot;
+  const guideDir = path.join(ROOT, guideRoot);
+  const index = kbIndex.buildIndex(dataDir, graphDir, relPrefix, guideDir);
   const units = index.units.map((u) => u.path);
   const data = {};
   for (const p of units) data[p] = JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
+  // 导语是侧车：索引只用 hasGuide 标位，正文按需取；单文件快照必须把 JSON 一起打进 data
+  if (fs.existsSync(guideDir)) {
+    // 站点级导语在 guide/<site>/__site.json（根下，不在章目录里）
+    for (const name of fs.readdirSync(guideDir).sort()) {
+      if (name !== '__site.json') continue;
+      const rel = `${subject.guideRoot}${name}`;
+      data[rel] = JSON.parse(fs.readFileSync(path.join(guideDir, name), 'utf8'));
+    }
+    for (const chapter of fs.readdirSync(guideDir).sort()) {
+      if (chapter.startsWith('_')) continue;
+      const dir = path.join(guideDir, chapter);
+      if (!fs.statSync(dir).isDirectory()) continue;
+      for (const name of fs.readdirSync(dir).sort()) {
+        if (!name.endsWith('.json') || name.startsWith('_')) continue;
+        const rel = `${subject.guideRoot}${chapter}/${name}`;
+        data[rel] = JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
+      }
+    }
+  }
 
   const semUnits = index.units.filter((u) => u.sem).length;
   const yamlCount = fs.existsSync(graphDir)
@@ -284,7 +305,7 @@ async function buildSubject(subject, kbIndex, katexCss, appCss, presentNames) {
     page(
       `${subject.title} · 知识库快照`,
       `${katexCss}\n${appCss}`,
-      buildShim(payload, relPrefix, index.units.length, presentNames),
+      buildShim(payload, relPrefix, index.units.length, presentNames, subject.guideRoot),
       app,
     ),
   );

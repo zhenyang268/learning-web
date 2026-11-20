@@ -1,0 +1,2076 @@
+{
+  "version": 1,
+  "site": "projects",
+  "mode": "S",
+  "units": {
+    "AI01.1": {
+      "kind": "project",
+      "src": "notebook/projects/ai/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD00.1": {
+      "kind": "project-group",
+      "src": "notebook/projects/codedesign/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD01.1": {
+      "kind": "project",
+      "src": "notebook/projects/codedesign/metrics/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD02.1": {
+      "kind": "project",
+      "src": "notebook/projects/codedesign/sequence/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD03.1": {
+      "kind": "project",
+      "src": "notebook/projects/codedesign/associate/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD04.1": {
+      "kind": "project",
+      "src": "notebook/projects/codedesign/graph/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD05.1": {
+      "kind": "project",
+      "src": "notebook/projects/codedesign/strategy/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD06.1": {
+      "kind": "project",
+      "src": "notebook/projects/codedesign/library/OUTLINE.md",
+      "mode": "S"
+    },
+    "CD07.1": {
+      "kind": "project",
+      "src": "notebook/projects/codedesign/numeric/OUTLINE.md",
+      "mode": "S"
+    },
+    "CP00.1": {
+      "kind": "project-group",
+      "src": "notebook/projects/cpu/OUTLINE.md",
+      "mode": "S"
+    },
+    "CP01.1": {
+      "kind": "project",
+      "src": "notebook/projects/cpu/asm-link-arch/OUTLINE.md",
+      "mode": "S"
+    },
+    "CP02.1": {
+      "kind": "project",
+      "src": "notebook/projects/cpu/cpu-microarchitecture/OUTLINE.md",
+      "mode": "S"
+    },
+    "CP03.1": {
+      "kind": "project",
+      "src": "notebook/projects/cpu/riscv-core/OUTLINE.md",
+      "mode": "S"
+    },
+    "CP04.1": {
+      "kind": "project",
+      "src": "notebook/projects/cpu/compiler/OUTLINE.md",
+      "mode": "S"
+    },
+    "CS01.1": {
+      "kind": "project",
+      "src": "notebook/projects/csapp/OUTLINE.md",
+      "mode": "S"
+    },
+    "DB01.1": {
+      "kind": "project",
+      "src": "notebook/projects/database/OUTLINE.md",
+      "mode": "S"
+    },
+    "DF00.1": {
+      "kind": "project-group",
+      "src": "notebook/projects/raft/OUTLINE.md",
+      "mode": "S"
+    },
+    "DF01.1": {
+      "kind": "project",
+      "src": "notebook/projects/raft/go-lab/OUTLINE.md",
+      "mode": "S"
+    },
+    "DF02.1": {
+      "kind": "project",
+      "src": "notebook/projects/raft/cpp/OUTLINE.md",
+      "mode": "S"
+    },
+    "DX01.1": {
+      "kind": "project",
+      "src": "notebook/projects/discrete-math/OUTLINE.md",
+      "mode": "S"
+    },
+    "EG00.1": {
+      "kind": "project-group",
+      "src": "notebook/projects/eng/OUTLINE.md",
+      "mode": "S"
+    },
+    "EG01.1": {
+      "kind": "project",
+      "src": "notebook/projects/eng/testing/OUTLINE.md",
+      "mode": "S"
+    },
+    "EG02.1": {
+      "kind": "project",
+      "src": "notebook/projects/eng/debug-toolchain/OUTLINE.md",
+      "mode": "S"
+    },
+    "EG03.1": {
+      "kind": "project",
+      "src": "notebook/projects/eng/perf-engineering/OUTLINE.md",
+      "mode": "S"
+    },
+    "EG04.1": {
+      "kind": "project",
+      "src": "notebook/projects/eng/system-design/OUTLINE.md",
+      "mode": "S"
+    },
+    "EG05.1": {
+      "kind": "project",
+      "src": "notebook/projects/eng/latent-issues/OUTLINE.md",
+      "mode": "S"
+    },
+    "GX00.1": {
+      "kind": "project-group",
+      "src": "notebook/projects/cg/OUTLINE.md",
+      "mode": "S"
+    },
+    "GX01.1": {
+      "kind": "project",
+      "src": "notebook/projects/cg/rasterizer/OUTLINE.md",
+      "mode": "S"
+    },
+    "GX02.1": {
+      "kind": "project",
+      "src": "notebook/projects/cg/raytrace/OUTLINE.md",
+      "mode": "S"
+    },
+    "GX03.1": {
+      "kind": "project",
+      "src": "notebook/projects/cg/geometry-anim/OUTLINE.md",
+      "mode": "S"
+    },
+    "GX04.1": {
+      "kind": "project",
+      "src": "notebook/projects/cg/engine/OUTLINE.md",
+      "mode": "S"
+    },
+    "GX05.1": {
+      "kind": "project",
+      "src": "notebook/projects/cg/game/OUTLINE.md",
+      "mode": "S"
+    },
+    "LG00.1": {
+      "kind": "project-group",
+      "src": "notebook/projects/parallel/OUTLINE.md",
+      "mode": "S"
+    },
+    "LG03.1": {
+      "kind": "project",
+      "src": "notebook/projects/parallel/cuda/OUTLINE.md",
+      "mode": "S"
+    },
+    "PA01.1": {
+      "kind": "project",
+      "src": "notebook/projects/cs149/OUTLINE.md",
+      "mode": "S"
+    },
+    "SO00.1": {
+      "kind": "project-group",
+      "src": "notebook/projects/os/OUTLINE.md",
+      "mode": "S"
+    },
+    "SO01.1": {
+      "kind": "project",
+      "src": "notebook/projects/os/linux-api/OUTLINE.md",
+      "mode": "S"
+    },
+    "SO02.1": {
+      "kind": "project",
+      "src": "notebook/projects/os/xv6/OUTLINE.md",
+      "mode": "S"
+    },
+    "SO03.1": {
+      "kind": "project",
+      "src": "notebook/projects/os/kernel-compare/OUTLINE.md",
+      "mode": "S"
+    },
+    "SO04.1": {
+      "kind": "project",
+      "src": "notebook/projects/os/drivers/OUTLINE.md",
+      "mode": "S"
+    },
+    "SO05.1": {
+      "kind": "project",
+      "src": "notebook/projects/os/security/OUTLINE.md",
+      "mode": "S"
+    },
+    "SO06.1": {
+      "kind": "project",
+      "src": "notebook/projects/os/virtualization/OUTLINE.md",
+      "mode": "S"
+    },
+    "__site": {
+      "kind": "site",
+      "src": "notebook/projects/README.md",
+      "mode": "S"
+    }
+  },
+  "skipped": [
+    {
+      "code": "AI01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "AI01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "AI01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "AI01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "AI01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "AI01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "AI01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "AI01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD00.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD00.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD03.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD04.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD05.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD06.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP00.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP02.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.14",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.15",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.16",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.17",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.18",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP03.91",
+      "kind": "project-extra",
+      "reason": "附加页（英文大纲/编译器路线），不是项目总览"
+    },
+    {
+      "code": "CP04.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CP04.92",
+      "kind": "project-extra",
+      "reason": "附加页（英文大纲/编译器路线），不是项目总览"
+    },
+    {
+      "code": "CS01.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.14",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.15",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.16",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.17",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.18",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.19",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.20",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.21",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CS01.91",
+      "kind": "project-extra",
+      "reason": "附加页（英文大纲/编译器路线），不是项目总览"
+    },
+    {
+      "code": "DB01.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DB01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF00.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF00.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF00.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF00.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF00.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF00.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DF02.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "DX01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG00.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG02.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG03.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG04.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "EG05.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX00.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX00.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX00.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX00.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX00.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX00.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX00.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX02.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX03.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX04.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "GX05.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG00.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG00.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "LG03.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.14",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.15",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.16",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.17",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.18",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.19",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "PA01.91",
+      "kind": "project-extra",
+      "reason": "附加页（英文大纲/编译器路线），不是项目总览"
+    },
+    {
+      "code": "PX01.1",
+      "kind": "project-index",
+      "reason": "检索表，不是教学单元"
+    },
+    {
+      "code": "SO00.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO00.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO00.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO00.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO00.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO00.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO00.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.14",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.15",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.16",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.17",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.18",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.19",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.20",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO01.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.14",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.15",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.16",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.17",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.18",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.19",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO02.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO03.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO04.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.13",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO05.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.11",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.12",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "SO06.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    }
+  ],
+  "unmapped": [],
+  "unused": []
+}

@@ -1,0 +1,1005 @@
+{
+  "version": 1,
+  "site": "math",
+  "mode": "S",
+  "units": {
+    "AG01.1": {
+      "kind": null,
+      "src": "notebook/math/B_algebra.tex",
+      "mode": "S"
+    },
+    "AG01.2": {
+      "kind": null,
+      "src": "notebook/math/B_algebra.tex",
+      "mode": "S"
+    },
+    "AG01.3": {
+      "kind": null,
+      "src": "notebook/math/B_algebra.tex",
+      "mode": "S"
+    },
+    "AG02.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG03.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG04.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG05.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG06.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG07.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG08.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG09.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG10.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG10.2": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG10.3": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG11.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG12.1": {
+      "kind": null,
+      "src": "notebook/math/Q_topology.tex",
+      "mode": "S"
+    },
+    "AG13.1": {
+      "kind": null,
+      "src": "notebook/math/B_algebra.tex",
+      "mode": "S"
+    },
+    "AG13.2": {
+      "kind": null,
+      "src": "notebook/math/B_algebra.tex",
+      "mode": "S"
+    },
+    "AG13.3": {
+      "kind": null,
+      "src": "notebook/math/B_algebra.tex",
+      "mode": "S"
+    },
+    "AG13.4": {
+      "kind": null,
+      "src": "notebook/math/B_algebra.tex",
+      "mode": "S"
+    },
+    "AG14.1": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.10": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.11": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.12": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.13": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.14": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.15": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.16": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.2": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.3": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.4": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.5": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.6": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.7": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.8": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG14.9": {
+      "kind": null,
+      "src": "notebook/math/lie1.tex",
+      "mode": "S"
+    },
+    "AG15.1": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.10": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.11": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.12": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.13": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.2": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.3": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.4": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.5": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.6": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.7": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.8": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG15.9": {
+      "kind": null,
+      "src": "notebook/math/lie2.tex",
+      "mode": "S"
+    },
+    "AG16.1": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.10": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.11": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.12": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.13": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.14": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.15": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.16": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.17": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.18": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.19": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.2": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.20": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.21": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.22": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.23": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.24": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.25": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.26": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.27": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.28": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.3": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.4": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.5": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.6": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.7": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.8": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AG16.9": {
+      "kind": null,
+      "src": "notebook/math/lie3.tex",
+      "mode": "S"
+    },
+    "AN01.1": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN01.2": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN01.3": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN01.4": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN01.5": {
+      "kind": null,
+      "src": "notebook/math/A_analysis.tex",
+      "mode": "S"
+    },
+    "AN05.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN06.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN06.2": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN06.3": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN06.4": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN07.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN08.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN08.2": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN08.3": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN09.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN10.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN11.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "AN12.1": {
+      "kind": null,
+      "src": "notebook/math/R_complex.tex",
+      "mode": "S"
+    },
+    "MP01.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP02.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP03.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP04.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP05.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP06.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP07.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP08.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP09.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP10.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP11.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP12.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP13.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP14.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "MP15.1": {
+      "kind": null,
+      "src": "notebook/math/partN.tex",
+      "mode": "S"
+    },
+    "PH01.1": {
+      "kind": null,
+      "src": "notebook/math/D_classic.tex",
+      "mode": "S"
+    },
+    "PH02.1": {
+      "kind": null,
+      "src": "notebook/math/D_classic.tex",
+      "mode": "S"
+    },
+    "PH03.1": {
+      "kind": null,
+      "src": "notebook/math/D_classic.tex",
+      "mode": "S"
+    },
+    "PH04.1": {
+      "kind": null,
+      "src": "notebook/math/D_classic.tex",
+      "mode": "S"
+    },
+    "PH05.1": {
+      "kind": null,
+      "src": "notebook/math/E_Field.tex",
+      "mode": "S"
+    },
+    "PH06.1": {
+      "kind": null,
+      "src": "notebook/math/E_Field.tex",
+      "mode": "S"
+    },
+    "PH07.1": {
+      "kind": null,
+      "src": "notebook/math/E_Field.tex",
+      "mode": "S"
+    },
+    "PH08.1": {
+      "kind": null,
+      "src": "notebook/math/E_Field.tex",
+      "mode": "S"
+    },
+    "PH09.1": {
+      "kind": null,
+      "src": "notebook/math/M_addition.tex",
+      "mode": "S"
+    },
+    "PH10.1": {
+      "kind": null,
+      "src": "notebook/math/M_addition.tex",
+      "mode": "S"
+    },
+    "PH11.1": {
+      "kind": null,
+      "src": "notebook/math/M_addition.tex",
+      "mode": "S"
+    },
+    "PH12.1": {
+      "kind": null,
+      "src": "notebook/math/M_addition.tex",
+      "mode": "S"
+    },
+    "PH13.1": {
+      "kind": null,
+      "src": "notebook/math/F_quantum.tex",
+      "mode": "S"
+    },
+    "PH14.1": {
+      "kind": null,
+      "src": "notebook/math/F_quantum.tex",
+      "mode": "S"
+    },
+    "PH15.1": {
+      "kind": null,
+      "src": "notebook/math/F_quantum.tex",
+      "mode": "S"
+    },
+    "PH16.1": {
+      "kind": null,
+      "src": "notebook/math/F_quantum.tex",
+      "mode": "S"
+    },
+    "PH17.1": {
+      "kind": null,
+      "src": "notebook/math/F_quantum.tex",
+      "mode": "S"
+    },
+    "PH18.1": {
+      "kind": null,
+      "src": "notebook/math/F_quantum.tex",
+      "mode": "S"
+    },
+    "PH19.1": {
+      "kind": null,
+      "src": "notebook/math/K_Feyman.tex",
+      "mode": "S"
+    },
+    "PH20.1": {
+      "kind": null,
+      "src": "notebook/math/K_Feyman.tex",
+      "mode": "S"
+    },
+    "PH21.1": {
+      "kind": null,
+      "src": "notebook/math/K_Feyman.tex",
+      "mode": "S"
+    },
+    "PH21.2": {
+      "kind": null,
+      "src": "notebook/math/K_Feyman.tex",
+      "mode": "S"
+    },
+    "PH22.1": {
+      "kind": null,
+      "src": "notebook/math/K_Feyman.tex",
+      "mode": "S"
+    },
+    "PH23.1": {
+      "kind": null,
+      "src": "notebook/math/K_Feyman.tex",
+      "mode": "S"
+    },
+    "PH24.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH25.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH26.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH27.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH28.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH29.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH30.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH31.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PH32.1": {
+      "kind": null,
+      "src": "notebook/math/L_Feyman.tex",
+      "mode": "S"
+    },
+    "PR01.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR02.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR03.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR04.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR05.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR06.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR06.2": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR06.3": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR06.4": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR06.5": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR07.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR07.2": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR07.3": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR08.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR08.2": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR08.3": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR10.1": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR10.2": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "PR10.3": {
+      "kind": null,
+      "src": "notebook/C_partial.tex",
+      "mode": "S"
+    },
+    "TL01.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL01.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL01.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL01.4": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL02.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL02.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL02.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL02.4": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL02.5": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL03.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL03.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL03.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL04.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL04.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL04.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL05.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL05.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL05.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL05.4": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL06.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL06.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL06.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL06.4": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL07.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL07.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL07.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL07.4": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL07.5": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL08.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL08.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL08.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL08.4": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL09.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL09.2": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL09.3": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL09.4": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    },
+    "TL10.1": {
+      "kind": null,
+      "src": "notebook/math/P_computation.tex",
+      "mode": "S"
+    }
+  },
+  "skipped": [],
+  "unmapped": [],
+  "unused": []
+}

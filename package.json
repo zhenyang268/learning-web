@@ -26,7 +26,8 @@
     "check": "tsc --noEmit && npm run check:content-map && npm run verify:docs && npm run check:katex && npm run check:graph && npm run check:sem-sync && npm run check:viz && node tools/dom-harness.mjs --all && npm run check:cs408 && npm run check:emath && npm run check:math1 && npm run check:projects && npm run check:english1",
     "audit": "node tools/dom-harness.mjs --audit",
     "audit:content": "uv run python build/verify_kb.py --dry-run --out build/logs/health-content.json",
-    "release": "npm run build && node tools/sync-release.mjs"
+    "release": "npm run build && node tools/sync-release.mjs",
+    "check:guide": "node tools/check-guide.mjs --site all"
   },
   "dependencies": {
     "yaml": "^2.9.1"

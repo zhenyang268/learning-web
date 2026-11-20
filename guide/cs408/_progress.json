@@ -1,0 +1,791 @@
+{
+  "version": 1,
+  "site": "cs408",
+  "updated": "2026-11-20",
+  "units": {
+    "CO01.1": {
+      "status": "done",
+      "talkSha": "49d04f16ae00",
+      "unitSha": "aabce544410a",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO01.2": {
+      "status": "done",
+      "talkSha": "c792c9342cef",
+      "unitSha": "9f06a917808d",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO01.3": {
+      "status": "done",
+      "talkSha": "fdc53b6dcde6",
+      "unitSha": "44fa3935be43",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO02.1": {
+      "status": "done",
+      "talkSha": "e79acc2a7899",
+      "unitSha": "e9c7ceff7fcd",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO02.2": {
+      "status": "done",
+      "talkSha": "6f832f15c34a",
+      "unitSha": "355bfe57b53e",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO02.3": {
+      "status": "done",
+      "talkSha": "5dc893b9e86b",
+      "unitSha": "e961def86b84",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO02.4": {
+      "status": "done",
+      "talkSha": "52a6ee3ca76a",
+      "unitSha": "7ba5e781e663",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO02.5": {
+      "status": "done",
+      "talkSha": "ac5113f0b3fd",
+      "unitSha": "e08892e281c6",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO02.6": {
+      "status": "done",
+      "talkSha": "04137ac063cd",
+      "unitSha": "04a1ec08f54d",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO02.7": {
+      "status": "done",
+      "talkSha": "c389ad09be97",
+      "unitSha": "21308966b90b",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO03.1": {
+      "status": "done",
+      "talkSha": "1ee308ac290a",
+      "unitSha": "95a7194cfd66",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO03.2": {
+      "status": "done",
+      "talkSha": "1aab3affe91d",
+      "unitSha": "d22e63c141db",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO03.3": {
+      "status": "done",
+      "talkSha": "a4128281b5e1",
+      "unitSha": "2091df98a2d5",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO03.4": {
+      "status": "done",
+      "talkSha": "0b50feab014d",
+      "unitSha": "80489b6c47dd",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO03.5": {
+      "status": "done",
+      "talkSha": "84c6c15b220e",
+      "unitSha": "f78a14366310",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO03.6": {
+      "status": "done",
+      "talkSha": "9387c5db4cd1",
+      "unitSha": "b33a3bb15aef",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO04.1": {
+      "status": "done",
+      "talkSha": "b6ecb74b572a",
+      "unitSha": "7daca6379017",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO04.2": {
+      "status": "done",
+      "talkSha": "0d8359d522c6",
+      "unitSha": "756170eed69d",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO04.3": {
+      "status": "done",
+      "talkSha": "ff9e989e8ecf",
+      "unitSha": "a8b30d284503",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO04.4": {
+      "status": "done",
+      "talkSha": "2add22104e8c",
+      "unitSha": "f1e7a62663b2",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO05.1": {
+      "status": "done",
+      "talkSha": "0e0e30b48cce",
+      "unitSha": "7307f98f7059",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO05.2": {
+      "status": "done",
+      "talkSha": "ba77bcfb5db4",
+      "unitSha": "4c86aef5ce07",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO05.3": {
+      "status": "done",
+      "talkSha": "039aa38b45c2",
+      "unitSha": "25d672bb8cbc",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO05.4": {
+      "status": "done",
+      "talkSha": "18bc36bdbaff",
+      "unitSha": "9e42d7422fb6",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO05.5": {
+      "status": "done",
+      "talkSha": "489d46a43b7d",
+      "unitSha": "c29e9cdf8e7e",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO05.6": {
+      "status": "done",
+      "talkSha": "7a5283f3ca6c",
+      "unitSha": "b87c60a07887",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO05.7": {
+      "status": "done",
+      "talkSha": "ad2ee9a4f292",
+      "unitSha": "c5f6e19985a3",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO06.1": {
+      "status": "done",
+      "talkSha": "93de42241d74",
+      "unitSha": "d04bf952fa56",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO06.2": {
+      "status": "done",
+      "talkSha": "4a7110be6412",
+      "unitSha": "c1d7ca017f61",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO07.1": {
+      "status": "done",
+      "talkSha": "9e1e26300e9c",
+      "unitSha": "38f12905e26f",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO07.2": {
+      "status": "done",
+      "talkSha": "060fc06a2ab0",
+      "unitSha": "bd71e7fcd9c0",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO07.3": {
+      "status": "done",
+      "talkSha": "61505e46b8f3",
+      "unitSha": "98502ca7c713",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "CO07.4": {
+      "status": "done",
+      "talkSha": "1985a95cb975",
+      "unitSha": "259a0ab97e70",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS01.1": {
+      "status": "done",
+      "talkSha": "4d2a2e976165",
+      "unitSha": "a2273f0871fe",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS01.2": {
+      "status": "done",
+      "talkSha": "b7a55b9b7117",
+      "unitSha": "508e34612c54",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS02.1": {
+      "status": "done",
+      "talkSha": "4b06f9b8d948",
+      "unitSha": "85f3fb60200c",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS02.2": {
+      "status": "done",
+      "talkSha": "838c8e5fa146",
+      "unitSha": "b944d5d625c2",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS02.3": {
+      "status": "done",
+      "talkSha": "2808eded745e",
+      "unitSha": "09ce7844fa5a",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS02.4": {
+      "status": "done",
+      "talkSha": "d98fdfd02eae",
+      "unitSha": "12914deb91b0",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS03.1": {
+      "status": "done",
+      "talkSha": "19df854fd8f2",
+      "unitSha": "939c285dd807",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS03.2": {
+      "status": "done",
+      "talkSha": "f396d5311551",
+      "unitSha": "6762d02067dc",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS03.3": {
+      "status": "done",
+      "talkSha": "7a359e2c5fc6",
+      "unitSha": "af01a309af10",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS04.1": {
+      "status": "done",
+      "talkSha": "ed679e41f546",
+      "unitSha": "25c3857fdad7",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS04.2": {
+      "status": "done",
+      "talkSha": "aa3013a1086c",
+      "unitSha": "3b4b38ab6b03",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS04.3": {
+      "status": "done",
+      "talkSha": "77f5c2b0781f",
+      "unitSha": "918503ab2f05",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS04.4": {
+      "status": "done",
+      "talkSha": "115e21f72480",
+      "unitSha": "8d6726745b51",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS04.5": {
+      "status": "done",
+      "talkSha": "54b85bfb3383",
+      "unitSha": "b6100a4f9cb4",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS04.6": {
+      "status": "done",
+      "talkSha": "f2e0cd296f36",
+      "unitSha": "e4b492c8f961",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS05.1": {
+      "status": "done",
+      "talkSha": "b56d50da6a90",
+      "unitSha": "e7f76563990b",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS05.2": {
+      "status": "done",
+      "talkSha": "aebee41d0dba",
+      "unitSha": "e79cd4d839ab",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS05.3": {
+      "status": "done",
+      "talkSha": "916ebf61a2f2",
+      "unitSha": "d0a2a5aa96f0",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS05.4": {
+      "status": "done",
+      "talkSha": "81ffaa045b16",
+      "unitSha": "c4c1c1d3a11c",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS05.5": {
+      "status": "done",
+      "talkSha": "ce6a403c6be3",
+      "unitSha": "1a3830b202ee",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS05.6": {
+      "status": "done",
+      "talkSha": "25200f0ec842",
+      "unitSha": "1f8e102cd342",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS05.7": {
+      "status": "done",
+      "talkSha": "e7552c53a73f",
+      "unitSha": "cfa91977c3bc",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.1": {
+      "status": "done",
+      "talkSha": "b10ca10e2059",
+      "unitSha": "0951f3246d59",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.2": {
+      "status": "done",
+      "talkSha": "878b6fce764a",
+      "unitSha": "bb362cb3b246",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.3": {
+      "status": "done",
+      "talkSha": "9e05e50c8827",
+      "unitSha": "4e89a5ca69f3",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.4": {
+      "status": "done",
+      "talkSha": "8a0b0611cb40",
+      "unitSha": "d03326a6aaf7",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.5": {
+      "status": "done",
+      "talkSha": "4414f7620168",
+      "unitSha": "888b4abb9bed",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.6": {
+      "status": "done",
+      "talkSha": "b2b695760b4a",
+      "unitSha": "8663cd6e2c79",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.7": {
+      "status": "done",
+      "talkSha": "f0d672acb775",
+      "unitSha": "1234b673d7f6",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS06.99": {
+      "status": "done",
+      "talkSha": "866681524edc",
+      "unitSha": "3697e9e04eca",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.1": {
+      "status": "done",
+      "talkSha": "d13934ad6548",
+      "unitSha": "10767d8d8437",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.2": {
+      "status": "done",
+      "talkSha": "4b3bc7e520e0",
+      "unitSha": "10ac5cc4465f",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.3": {
+      "status": "done",
+      "talkSha": "9e2629bca487",
+      "unitSha": "1bb4483940d9",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.4": {
+      "status": "done",
+      "talkSha": "d88bf6a6dd38",
+      "unitSha": "ed7b615ffbee",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.5": {
+      "status": "done",
+      "talkSha": "fb0c0c2acdef",
+      "unitSha": "979eb52ad812",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.6": {
+      "status": "done",
+      "talkSha": "2fcd9249b335",
+      "unitSha": "c7615ab2af25",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.7": {
+      "status": "done",
+      "talkSha": "f3c4c6f6b0ce",
+      "unitSha": "671e34db3cff",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "DS07.8": {
+      "status": "done",
+      "talkSha": "74212b01c1de",
+      "unitSha": "ca951aeb8d2d",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT01.1": {
+      "status": "done",
+      "talkSha": "ebc6b0f0baf1",
+      "unitSha": "1294cb37a796",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT01.2": {
+      "status": "done",
+      "talkSha": "9e9f439790b5",
+      "unitSha": "37dc681dbe45",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT02.1": {
+      "status": "done",
+      "talkSha": "60fa0930928e",
+      "unitSha": "eb4d00098d13",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT02.2": {
+      "status": "done",
+      "talkSha": "d52a599b98f1",
+      "unitSha": "da8c058a3d03",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT03.1": {
+      "status": "done",
+      "talkSha": "e4fe443ea47b",
+      "unitSha": "9be41e607a04",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT03.2": {
+      "status": "done",
+      "talkSha": "4d5f2efb0e57",
+      "unitSha": "18562f298d3e",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT03.3": {
+      "status": "done",
+      "talkSha": "8706f838e396",
+      "unitSha": "23b7e9404c50",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT03.4": {
+      "status": "done",
+      "talkSha": "49e5978863ef",
+      "unitSha": "00b58e00e34c",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT03.5": {
+      "status": "done",
+      "talkSha": "a95d2fef1bed",
+      "unitSha": "0343a3af455b",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT03.6": {
+      "status": "done",
+      "talkSha": "df2bdabe4f93",
+      "unitSha": "2dc4ba287d99",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT04.1": {
+      "status": "done",
+      "talkSha": "c449a5f85ee8",
+      "unitSha": "19f01a37396d",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT04.2": {
+      "status": "done",
+      "talkSha": "a395b56dd3e2",
+      "unitSha": "d2f660baa9f0",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT04.3": {
+      "status": "done",
+      "talkSha": "73355d4523fd",
+      "unitSha": "4160a0de8c0c",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT04.4": {
+      "status": "done",
+      "talkSha": "075fe7ea8159",
+      "unitSha": "26ba570b6842",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT04.5": {
+      "status": "done",
+      "talkSha": "c94b1b7e331a",
+      "unitSha": "1023d4bd7e9b",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT04.6": {
+      "status": "done",
+      "talkSha": "c72c8170e4d1",
+      "unitSha": "a22d944129cb",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT05.1": {
+      "status": "done",
+      "talkSha": "0d096cd3927b",
+      "unitSha": "be13ca630ee8",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT05.2": {
+      "status": "done",
+      "talkSha": "a1bbd9391ddc",
+      "unitSha": "6c29babc5d03",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT05.3": {
+      "status": "done",
+      "talkSha": "59e82a5d0b49",
+      "unitSha": "4b5b07dc36d1",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT05.4": {
+      "status": "done",
+      "talkSha": "873492d4e6e7",
+      "unitSha": "724aef0d1237",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT05.5": {
+      "status": "done",
+      "talkSha": "d6942ed817e9",
+      "unitSha": "6e9470168d7f",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT06.1": {
+      "status": "done",
+      "talkSha": "32d188ec4cff",
+      "unitSha": "f9d61388c6fc",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT06.2": {
+      "status": "done",
+      "talkSha": "fddeb32a68ab",
+      "unitSha": "0ec986eda1b3",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT06.3": {
+      "status": "done",
+      "talkSha": "bfd54b5cb106",
+      "unitSha": "78bc29d9bae1",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "NT06.4": {
+      "status": "done",
+      "talkSha": "970c88851fa5",
+      "unitSha": "45727f1b541c",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS01.1": {
+      "status": "done",
+      "talkSha": "da98c50ef62b",
+      "unitSha": "45bf7025830c",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS01.2": {
+      "status": "done",
+      "talkSha": "52814c8ff5b4",
+      "unitSha": "390fd663b7ef",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS01.3": {
+      "status": "done",
+      "talkSha": "7b44292b1475",
+      "unitSha": "b49612195536",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS01.4": {
+      "status": "done",
+      "talkSha": "1df6a5c6c367",
+      "unitSha": "78380dc4bda8",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS01.5": {
+      "status": "done",
+      "talkSha": "affe6bf218ea",
+      "unitSha": "298f7acfdcfd",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS02.1": {
+      "status": "done",
+      "talkSha": "d98476ff865d",
+      "unitSha": "cb7788c9b323",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS02.2": {
+      "status": "done",
+      "talkSha": "0c993d51f45c",
+      "unitSha": "c1c4f08103ae",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS02.3": {
+      "status": "done",
+      "talkSha": "93c9e454a3fa",
+      "unitSha": "aab7d824e472",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS02.4": {
+      "status": "done",
+      "talkSha": "05b96d6d69c1",
+      "unitSha": "c6e48b99479f",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS03.1": {
+      "status": "done",
+      "talkSha": "fb297d6bafe5",
+      "unitSha": "5c0fb9e2d571",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS03.2": {
+      "status": "done",
+      "talkSha": "08b5c78b257d",
+      "unitSha": "1be70b2c840b",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS04.1": {
+      "status": "done",
+      "talkSha": "b838354b8086",
+      "unitSha": "1488799cdb44",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS04.2": {
+      "status": "done",
+      "talkSha": "dabb2cca7e3e",
+      "unitSha": "e0cfd054f7d1",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS04.3": {
+      "status": "done",
+      "talkSha": "970119614e75",
+      "unitSha": "d894c8ae3fb7",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS05.1": {
+      "status": "done",
+      "talkSha": "6ced6cfebe55",
+      "unitSha": "3fe7cf038067",
+      "date": "2026-11-20",
+      "reviewed": true
+    },
+    "OS05.2": {
+      "status": "done",
+      "talkSha": "4221925c153a",
+      "unitSha": "5b5c4f86e067",
+      "date": "2026-11-20",
+      "reviewed": true
+    }
+  }
+}

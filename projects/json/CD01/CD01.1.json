@@ -5,9 +5,9 @@
   "title": "metrics · 总览",
   "src": {
     "file": "notebook/projects/codedesign/metrics/OUTLINE.md",
-    "sha256": "sha256:7046239d36f0cafcfceb1fcd01bdc4a7c07c60d7045fa6f68e7ed3389568d0c8"
+    "sha256": "sha256:06bc64e18798064807151209d9e0b43133754f4cba0e4f46cde6091b82aa20aa"
   },
-  "notebook_commit": "344f0fe28f9ab113ef0d8241272ec5829593269a",
+  "notebook_commit": "b00906a9826a14b60de50c8c415b0ca62c0d67df",
   "notebook_dirty": false,
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "introduction",
       "title": "",
       "level": 0,
-      "content": "> **判据**：给定一个需求，能写出三种候选的成本表，并说出这个模型在什么条件下失效。"
+      "content": "> **状态（2026-11-20）**：骨架。本章只落总览与一条主线；「单元表」中的 5 个单元尚未展开。\n\n> **判据**：给定一个需求，能写出三种候选的成本表，并说出这个模型在什么条件下失效。"
     },
     {
       "id": "CD01.1:body.s01",

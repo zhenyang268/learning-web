@@ -186,3 +186,28 @@
 `lines` 是**数据**。侧栏什么时候真正按「组 → 线 → 章 → 单元」渲染，是下一期的事；
 本期 `taxonomy.ts` 只把线表接进来并提供查表函数，`sidebar.ts` 不动。
 先定结构再改渲染，避免「结构还在改、断言已经写死」。
+
+---
+
+## 6. 导读侧车（`guide/`，guide-card/v1）
+
+**它不属于内容总图，也不进单元 json**：导读层是单元页顶部的一段教学导语，
+与 doc-card 的正文分成两份数据，避免 importer 的「拼回无损」判据被污染。
+
+| 事实 | 位置 |
+|---|---|
+| 规范 | `build/guide/prompt/guide-card.md` |
+| 映射（talk/单元 → 代号） | `guide/<site>/_map.json`（`build/guide/make_map.py` 生成） |
+| 施工状态 | `guide/<site>/_progress.json`（done / skip / pending + talkSha/unitSha） |
+| 正文 | `guide/<site>/<章>/<代号>.json` |
+| 站点级导语 | `guide/<site>/__site.json`（`scope: "site"`，只在总纲页挂） |
+| 闸门 | `node tools/check-guide.mjs --site <id>`（`npm run check:guide`） |
+
+**映射键**：`_map.json` 的 `units[code]`，`code` 与单元 json 的 `code` 同源；
+talk 按 `408-kp-<学科>-<四位>` 或 `408-kp-<四位>`（数据结构老命名）对齐 `meta.kp`。
+
+**覆盖判据**：每个 code 必须 `done` 或显式 `skip`；`--allow-incomplete` 只放宽 pending，
+不放宽任何结构判据。跳过必须写 `reason`。
+
+**Mode**：408 / 英一+数一是 `T`（有逐单元 talk）；工程线、数学系+工程数学是 `S`
+（无 talk，从 unit json + notebook 源合成）。两侧共用同一套 schema 与闸门。

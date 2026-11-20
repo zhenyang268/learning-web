@@ -1,4 +1,4 @@
-import type { Entry, EntryFile } from '../types';
+import type { Entry, EntryFile, GuideCard } from '../types';
 import { displayCode } from '../modules/codes';
 import { isProbeDone } from '../modules/state';
 import { selftestItems, selftestKey, selftestLevel, selftestProgress } from '../content/selftest';
@@ -10,6 +10,7 @@ import {
   type ProjectRoute,
 } from '../content/project-routes';
 import { escapeHtml, renderContent, renderInline } from './markdown';
+import { renderGuideHtml } from './guide';
 
 /**
  * `doc-card/v1` 的渲染：**照着文档读，不套词条卡片**。
@@ -94,6 +95,7 @@ export function renderDocHtml(
   file: EntryFile,
   route?: DocRouteState,
   childNav?: ReadonlyArray<{ code: string; title: string }>,
+  guide?: GuideCard | null,
 ): string {
   const code = file.code ?? '';
   const meta = docMeta(file);
@@ -111,6 +113,9 @@ export function renderDocHtml(
     <h1>${escapeHtml(displayCode(code))} <em>${renderInline(file.title ?? '')}</em></h1>
     <div class="meta">${meta.map((m) => `<span class="tag">${escapeHtml(m)}</span>`).join('')}${backToLecture}</div>
   </div>`);
+
+  // 导语插在页头之后、正文之前：先回答「为什么有它」，再进考法与真题。
+  if (guide) parts.push(renderGuideHtml(guide));
 
   for (const e of file.entries) {
     const level = typeof e.level === 'number' ? e.level : 2;
