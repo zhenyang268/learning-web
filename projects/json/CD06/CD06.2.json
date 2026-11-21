@@ -2,30 +2,30 @@
   "schema": "doc-card/v1",
   "code": "CD06.2",
   "chapter": "CD06",
-  "title": "库的边界是资源与并发",
+  "title": "library · 导读",
   "src": {
     "file": "notebook/projects/codedesign/library/NOTES.md",
-    "sha256": "sha256:8ce6256b77e092c7e664764e29f7d963dde2c9bc3b3992481eefda79b8901ec2"
+    "sha256": "sha256:8fca7b7555a423d0b9db30046d3405d675b44b91d3c074c54238a802fe6e48f3"
   },
-  "notebook_commit": "b00906a9826a14b60de50c8c415b0ca62c0d67df",
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
   "notebook_dirty": false,
   "entries": [
     {
-      "id": "CD06.2:body.s01",
-      "type": "extension",
-      "title": "库的边界是资源与并发",
-      "level": 2,
-      "content": "算法章节关心\"算得对不对\"，库章节关心\"出错时留下什么\"和\"多线程时谁能看见谁\"。\n\n**资源的第一原则是所有权唯一**：谁分配谁释放，转移用移动，共享用引用计数或借用。RAII 把释放绑在析构上，异常展开时析构仍会执行，这是它比 `goto cleanup` 强的地方。异常安全分三档：不抛、强保证（失败后状态不变）、基本保证（不泄漏但状态可能变）。写库要明确承诺哪一档，不能默认。\n\n**分配器的选择由生命周期决定**：短生命周期、批量释放用 arena；固定大小对象用 pool；长生命周期、少分配用默认堆。对齐与 padding 不是细节：一个跨缓存行的计数器会让多核性能掉一个数量级（false sharing）。\n\n**模板的作用是把约束前移**：concepts 让\"类型不满足\"在编译期报错，而不是在链接期或运行期炸。代价是编译时间与错误信息的可读性。\n\n**并发先问共享状态**：列出所有被多个线程访问的变量，逐个给保护方式；没有共享就声明单线程。锁的粒度与顺序决定死锁；原子操作只保证单个操作的原子性，不保证多个操作的顺序——顺序要靠 happens-before 建立。\n\n**一致性是一张谱**：线性一致最强、最难实现；最终一致最弱、最容易扩展。raft 的 log matching、数据库的隔离级别、OS 的 futex，都是同一张谱上的不同点。本章只做横向对照，协议正确性归 `data/`。"
+      "id": "CD06.2:intro.s01",
+      "type": "introduction",
+      "title": "",
+      "level": 0,
+      "content": "算法章节说\"算得对不对\"，本章说\"出错时留下什么\"和\"多线程时谁能看见谁\"。七个单元按生命周期、所有权、约束、互斥、内存序、一致性、失败注入逐级收紧，终点是一张共享状态表、一个带异常安全的资源类、一个 SPSC 队列。协议正确性不在本章（归 `data/`），futex 与调度不在本章（归 `os/`），硬件屏障实现在 `machine/`。判据只有一条：能给一个模块写出共享状态清单、失败路径清单与锁/原子选择，并用失败注入证明不泄漏。"
     }
   ],
-  "source_h1": "library/ · 本章主线",
+  "source_h1": "library/ · 本章正文",
   "meta": {
     "kind": "project-chapter",
     "group": "codedesign",
     "project": "library",
     "file": "NOTES.md",
     "part": 1,
-    "parts": 1,
-    "section": "库的边界是资源与并发"
+    "parts": 8,
+    "section": "导读"
   }
 }

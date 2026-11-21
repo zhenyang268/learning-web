@@ -22,7 +22,7 @@
   "connect": "往下接 associate：序列容器是点查与范围查询的底子（CD03.1）。图的遍历与最短路要靠堆与并查集，堆的实现细节留在本章（CD04.1）。策略层的 DP 与贪心示例也复用这些结构（CD05.1）。",
   "source": {
     "unit": "notebook/projects/codedesign/sequence/OUTLINE.md",
-    "unitSha": "22a589f0bb88"
+    "unitSha": "4f007c7078a0"
   },
   "generated": {
     "model": "coding-agent",

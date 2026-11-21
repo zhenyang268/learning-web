@@ -720,97 +720,97 @@
     },
     "PR01.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR02.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR03.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR04.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR05.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR06.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR06.2": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR06.3": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR06.4": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR06.5": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR07.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR07.2": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR07.3": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR08.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR08.2": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR08.3": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR10.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR10.2": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR10.3": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "TL01.1": {

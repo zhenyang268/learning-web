@@ -22,7 +22,7 @@
   "connect": "承 CD06.1 的资源与布局口径：那里管谁分配谁释放，这里管存成什么形状。向前是 CD03.1 的索引结构，稀疏存储的对拍同源；相邻的 CD05.1 给的是策略选择，用来决定迭代要不要换。再往外，CP02.1 的带宽受限判断解释了为什么访存模式一换就差几倍。",
   "source": {
     "unit": "notebook/projects/codedesign/numeric/OUTLINE.md",
-    "unitSha": "4ba3b75f056d"
+    "unitSha": "54ff2f966e15"
   },
   "generated": {
     "model": "coding-agent",

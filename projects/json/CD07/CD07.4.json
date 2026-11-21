@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD07.4",
+  "chapter": "CD07",
+  "title": "二、张量：strides、视图与别名的代价",
+  "src": {
+    "file": "notebook/projects/codedesign/numeric/NOTES.md",
+    "sha256": "sha256:9aee44d02e3d1b08b2d8c3e011e977ac990a3790c17fd9cfd6de90cbc44eed0d"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD07.4:body.s01",
+      "type": "extension",
+      "title": "二、张量：strides、视图与别名的代价",
+      "level": 2,
+      "content": "**判断句**：`strides` 必须存，因为它是\"同一份内存能被解释成多少种形状\"的唯一编码；一旦有了 strides，`slice` 与 `permute` 就是常数时间的指针运算，而代价从\"拷贝\"转移到了\"别名与生命周期\"，后者只能靠契约而不是靠检查来守。\n\n**结构机制：strides 编码了什么**\n\n行主序下 `strides[d] = prod(shape[d+1 ..])`。`core/tensor.hpp` 的算例：`shape {2,3,4}`、`strides {12,4,1}`，元素 `(i,j,k)` 的扁平下标是 `i*12 + j*4 + k`。若只存 shape 而每次现算 strides，就只能表达\"稠密行主序\"一种布局，视图立刻退化成拷贝。\n\n有了 strides：\n\n- `Slice(axis, b, e)`：只把指针偏移 `b*strides[axis]`，shape 该轴改成 `e-b`。零搬运。\n- `Permute(axes)`：只重排 shape 与 strides 两个数组。零搬运。\n- `Reshape`：只有在 `IsContiguous()` 时才可能不搬运，否则必须改变元素的空间关系。\n\n**两种 view 的 strides 手算表**\n\n设宿主 `a` 为 `shape {2,3,4}`、`strides {12,4,1}`、基址 0：\n\n| 操作 | 新 shape | 新 strides | 基址偏移 | 是否连续 |\n|---|---|---|---|---|\n| `a.Slice(0, 1, 2)` | `{1,3,4}` | `{12,4,1}` | 12 | 是 |\n| `a.Slice(1, 0, 2)` | `{2,2,4}` | `{12,4,1}` | 0 | 否（首维步长 12 而 extent 2 dim 只有 2） |\n| `a.Permute({2,0,1})` | `{4,2,3}` | `{1,12,4}` | 0 | 否 |\n| `a.Permute({1,0,2})` 后 `Slice(0,0,2)` | `{2,3,4}` | `{4,12,1}` | 0 | 否 |\n\n表格要能闭卷重画。判据不是\"记得 API\"，而是给出任意 shape/permute 组合后，能说出内层循环沿哪一维走、跨步是多少，以及\"这次访问是否连续\"。\n\n**非连续 `reshape` 为什么 throw 而不是隐式拷贝**\n\n`TensorView::Reshape` 在非连续时 throw。理由是让代价可见：numpy 的 `reshape` 需要时静默复制，于是 `a.T.reshape(...)` 与 `a.reshape(...)` 一个是视图一个是拷贝，二者的性能与别名语义完全不同却不报错，调用方无从归因。本项目的纪律是\"宁可明确报错，也不要静默算错\"，要拷贝就显式写 `Tensor<T>(view)`。\n\n这条规则把\"要不要拷贝\"从库的决定变成调用方的决定。它的成本也很具体：同一个表达式在连续输入上零拷贝、在非连续输入上必须显式加一行，否则编译期就停在这里。这是用\"写起来更啰嗦\"换\"读起来没有隐藏的 $O(n)$ 拷贝\"。\n\n**失效条件**\n\n- **生命周期**：view 不得长于宿主，且不做运行期检查（检查要引用计数，与\"单线程最简单\"冲突）。`auto v = MakeTensor().View();` 是悬空，文档写清、编译器不管。\n- **别名**：两个 view 覆盖同一段内存时，写一个会改另一个。容器按\"值语义 + 无复合赋值\"设计，但 view 的浅拷贝让 `a = a + b` 之外的写回路径重新出现别名问题——所以写入路径必须由调用方保证不重叠。\n- **单线程假设**：无并发读写、无 COW、无原子引用计数。把 view 传进多线程写入，是本层的契约违反，不是库的缺陷。\n\n**接法**\n\n张量的东西在本章不需要继续往下做（einsum、收缩都在运算层，且被红线挡在容器外）。它真正的用处是给下一节做铺垫：稀疏矩阵的 CSR 也是一种\"用两个偏移数组代替 stride 数组\"的索引结构，只是它的行长度不等长，所以 `rowPtr` 必须显式存。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "numeric",
+    "file": "NOTES.md",
+    "part": 3,
+    "parts": 9,
+    "section": "二、张量：strides、视图与别名的代价"
+  }
+}

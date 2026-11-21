@@ -21,7 +21,7 @@
   "connect": "顺着它往下读 sequence 与 associate，布局与索引的取舍都以这里的四列成本为语言（CD02.1、CD03.1）。再往后是策略层：分治与 DP 的前提能否成立，用的是同一套成本判断（CD05.1）。",
   "source": {
     "unit": "notebook/projects/codedesign/metrics/OUTLINE.md",
-    "unitSha": "06bc64e18798"
+    "unitSha": "6cb1ec4a7058"
   },
   "generated": {
     "model": "coding-agent",

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD07.5",
+  "chapter": "CD07",
+  "title": "三、稀疏：CSR / CSC / COO 与 SpMV 的访存",
+  "src": {
+    "file": "notebook/projects/codedesign/numeric/NOTES.md",
+    "sha256": "sha256:9aee44d02e3d1b08b2d8c3e011e977ac990a3790c17fd9cfd6de90cbc44eed0d"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD07.5:body.s01",
+      "type": "extension",
+      "title": "三、稀疏：CSR / CSC / COO 与 SpMV 的访存",
+      "level": 2,
+      "content": "**判断句**：稀疏格式的选择由\"非零元数 $nnz$ 与行的长度分布\"决定，不由抽象层次决定；CSR 之所以成为计算默认，是因为 SpMV 的内层天然是\"一行连续一段\"，而 COO 之所以适合构造，是因为它不要求事先知道行长度。\n\n**三种格式的语义差异**\n\n- **COO**：三元组 `(i, j, v)` 的列表。插入即追加，无序、可重复。构造期的天然形态（装配按图元／单元逐个吐三元组），但计算期每次取值都要判列是否匹配，且不能表达\"一行结束\"。\n- **CSR**：`values` + `colIdx` + `rowPtr`，第 $i$ 行的非零元是 $k \\in [rowPtr[i], rowPtr[i+1])$ 这一段。要一次随机访问才能定行边界，换来内层连续的段。\n- **CSC**：CSR 的转置视图。列连续的段。适合\"按列取\"的算法（列主元的消元、Cholesky 的列推进），以及在 SpMV 里按列累积的写法。\n\n三者的 `nnz` 相同、值相同，差别只在\"哪一维是连续段\"。这就是判据：**选的不是格式，选的是连续的是谁**。`graphics/src/linalg/sparse.hpp` 里 `CSR` 是纯字段结构（`rows`/`cols`/`values`/`colIdx`/`rowPtr`），没有成员函数——与 `Matrix`、`Tensor` 同款哑容器，因为容器不承担运算语义。\n\n**行长度决定 SpMV 的访存模式**\n\nSpMV 是\n$$\ny_i = \\sum_{k=rowPtr[i]}^{rowPtr[i+1]-1} values[k] \\cdot x_{colIdx[k]}, \\quad i = 0..rows-1\n$$\nflops 是 $2\\,nnz$，稠密是 $2 \\cdot rows \\cdot cols$。\n\n访存结构：`values[k]` 与 `colIdx[k]` 都是顺序流（同一段），但对 `x` 的访问是 `x[colIdx[k]]`，是**间接寻址**。于是：\n\n- 行很短（三对角、网格的 5 点／7 点模板）：`colIdx` 局部性极好，`x` 的访问落在少数几条 cache line 上，内层循环短、分支与向量化受限。\n- 行很长（少数稠密行混在稀疏结构里）：`x` 的访问几乎是随机跳，cache line 利用率按 4/8 或 8/8 元素摊薄，是 SpMV 的主要成本来源。\n\n由此产生的关键量化判据是**平均行长** $\\bar{len} = nnz/rows$：$\\bar{len}$ 只有个位数时，SpMV 的性能由行的调度开销与 `x` 的命中率共同决定，而不是由 `2 nnz` 这个 flop 数决定。benchmark 报耗时而不报 $\\bar{len}$ 与 $nnz$，等于没报。\n\n**成本表**\n\n| 格式 | 存储字节（$T$=8B, int=4B） | 构造难度 | 按行取值 | 按列取值 | 增删非零元 |\n|---|---|---|---|---|---|\n| COO | $nnz \\times 16$ | 追加即可 | 需扫描 | 需扫描 | 追加 $O(1)$ |\n| CSR | $nnz \\times 12 + (rows{+}1) \\times 4$ | 需要两次扫描（计数＋填充） | 连续段 | 需二分定行 | $O(nnz)$ 重排 |\n| CSC | $nnz \\times 12 + (cols{+}1) \\times 4$ | 同上，按列 | 需二分定列 | 连续段 | $O(nnz)$ 重排 |\n\n三对角 $n = 10^5$：`values + colIdx` 约 $3 \\times 10^5 \\times 12\\,\\text{B} \\approx 3.6$ MB，稠密 $8 \\times 10^{10}$ B。差四个数量级，此时任何格式选择都无所谓，\"稀疏\"本身已经赢了。\n\n**最小算例：三对角 $n=4$ 的 `rowPtr`**\n\n$A = \\text{tridiag}(-1, 2, -1)$ 时手算表的口径（`sparse.hpp` CS1）：\n\n| 项 | 值 |\n|---|---|\n| `rowPtr` | `{0, 2, 5, 8, 10}` |\n| `colIdx` | `{0,1, 0,1,2, 1,2,3, 2,3}` |\n| `nnz` | 10 |\n\n末项必须是 $nnz = 10$，长度必须是 $rows + 1$；写成 `{0,2,5,8,9}` 或长度 `rows` 都会越界。这类表必须逐项核对，不能\"遍历一遍看着像\"。\n\n**规范形式为什么值得强制**\n\n`sparse.hpp` 要求同一行内 `colIdx` 严格递增（无重复、无乱序）。理由不是洁癖：规范形式让行内求和顺序固定，于是同一份 $A$ 在两次运行里结果**逐位可复现**；乱序会让浮点求和顺序变化，\"两次差 1 ulp\"这种不可归因的抖动就会进入判据。装配直接产出规范形式，成本为零。\n\n**失效条件**\n\n- $nnz$ 接近 $rows \\times cols$（密度约 20% 以上）：`colIdx` 的 4 B 开销与间接寻址让 CSR 全面输给稠密，稀疏化只是把连续访存换成随机访存。\n- 需要频繁插入删除非零元（例如装配过程中按序发现新连接）：CSR 每次都 $O(nnz)$ 重排，必须退回 COO 再用一次转换定型。\n- 装配容忍数值噪声：`FromDense` 用的是**精确等于零**的判断，不做容差截断——容差是算法的参数，若存储层替调用方决定\"多小算零\"，同一份矩阵在两个容差下 $nnz$ 不同，性能对照就失去意义。要截断噪声，调用方先截断再 `FromDense`。\n- 每步都全结构校验：`Multiply` 是热路径，CG 每步调一次，重复扫描结构等于白花一倍时间。所以结构不变量由 `FromDense`/装配保证，`Multiply` 只查形状。\n\n**接法**\n\nCSR 与 SpMV 在第七节拼成 CG 求解器时是消费方：CG 只通过 `apply` 认识矩阵，不需要 CSR 的字段。本节给的是\"表示选型\"的判据，第四节给的是\"直接法什么时候能替代迭代\"的结构前提。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "numeric",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 9,
+    "section": "三、稀疏：CSR / CSC / COO 与 SpMV 的访存"
+  }
+}

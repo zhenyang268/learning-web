@@ -75,7 +75,7 @@
     },
     "CG03.1": {
       "kind": null,
-      "src": "H_cg.tex",
+      "src": "notebook/math/H_cg.tex",
       "mode": "S"
     },
     "CG04.1": {
@@ -85,7 +85,7 @@
     },
     "CG05.1": {
       "kind": null,
-      "src": "H_cg.tex",
+      "src": "notebook/math/H_cg.tex",
       "mode": "S"
     },
     "CG06.1": {
@@ -120,7 +120,7 @@
     },
     "CG09.1": {
       "kind": null,
-      "src": "I_fluid.tex",
+      "src": "notebook/math/I_fluid.tex",
       "mode": "S"
     },
     "CG10.1": {
@@ -230,307 +230,307 @@
     },
     "EQ01.1": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.10": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.11": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.12": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.13": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.14": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.15": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.16": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.17": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.18": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.2": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.3": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.4": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.5": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.6": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.7": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.8": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ01.9": {
       "kind": null,
-      "src": "notebook/diffrential/de1.tex",
+      "src": "notebook/math/ode1.tex",
       "mode": "S"
     },
     "EQ02.1": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.10": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.11": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.12": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.13": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.14": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.15": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.2": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.3": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.4": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.5": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.6": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.7": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.8": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ02.9": {
       "kind": null,
-      "src": "notebook/diffrential/de2.tex",
+      "src": "notebook/math/ode2.tex",
       "mode": "S"
     },
     "EQ03.1": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.10": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.11": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.12": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.13": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.14": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.15": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.2": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.3": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.4": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.5": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.6": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.7": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.8": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ03.9": {
       "kind": null,
-      "src": "notebook/diffrential/de3.tex",
+      "src": "notebook/math/ode3.tex",
       "mode": "S"
     },
     "EQ04.1": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.10": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.11": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.12": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.13": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.2": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.3": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.4": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.5": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.6": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.7": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.8": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "EQ04.9": {
       "kind": null,
-      "src": "notebook/diffrential/de4.tex",
+      "src": "notebook/math/ode4.tex",
       "mode": "S"
     },
     "NL01.0": {
@@ -635,12 +635,12 @@
     },
     "PR09.1": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     },
     "PR09.2": {
       "kind": null,
-      "src": "notebook/C_partial.tex",
+      "src": "notebook/math/C_prob.tex",
       "mode": "S"
     }
   },

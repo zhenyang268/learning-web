@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD01.3",
+  "chapter": "CD01",
+  "title": "一、四种成本：时间、空间、IO、并行分属四个决定因素",
+  "src": {
+    "file": "notebook/projects/codedesign/metrics/NOTES.md",
+    "sha256": "sha256:d8b24f8c6dad9fdb7bbfd0bdd24df2e50300ae3ff328a1f7b6612905cc9005aa"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD01.3:body.s01",
+      "type": "extension",
+      "title": "一、四种成本：时间、空间、IO、并行分属四个决定因素",
+      "level": 2,
+      "content": "**判断句：一个结构的成本不是一个数，是四列数，且这四列由不同机制决定、不可互相折算。**\n\n时间由\"指令条数\"与\"每条指令的等待\"共同决定。指令数由算法与数据结构决定，等待由访问模式决定。同一条加法，命中 L1 与未命中走到主存，时间差两个数量级以上。所以时间列要写成\"指令数 + 访问模式\"，只写指令数是只写了一半。\n\n空间要区分常驻集与峰值：一个结构可能常驻小、峰值高（需要临时缓冲），也可能常驻大、峰值平坦。填表时先写清楚报的是哪一个，否则两个\"空间 $O(n)$\"可以指完全不同的东西。\n\nIO 由页、块、网络往返决定，不是由字节数决定。读一个字节与读一个 4 KiB 页在 IO 列上常常是同一个代价单位，这也解释了为什么按页顺序读与随机读的差距远大于它们的字节数之比。\n\n并行由 work 与 span 决定：work 是总操作量，span 是最长依赖链。加速比的上限不是核数乘 work，而是卡在 span 上；work 巨大、span 同样巨大的结构，加核没有用。\n\n### 四列填满一次：`Matrix` 与 `CSR` 存同一个三对角系统\n\n`graphics/src/core/matrix.hpp` 的 `Matrix` 是行主序单 `vector`：元素 $(i,j)$ 位于 `data[i*n + j]`，`operator[](i)` 是**即时派生**的行指针（不缓存、不过期）。`graphics/src/linalg/sparse.hpp` 的 `CSR` 是三数组 `values`、`colIdx`、`rowPtr`，第 $i$ 行的非零元是 $k \\in [\\text{rowPtr}[i], \\text{rowPtr}[i+1])$ 这一段。对它做 SpMV（$y = Ax$）：\n\n$$y_i = \\sum_{k=\\text{rowPtr}[i]}^{\\text{rowPtr}[i+1]-1} \\text{values}[k] \\cdot x_{\\text{colIdx}[k]}$$\n\n三对角情形 $\\text{nnz} \\approx 3n$；稠密浮点乘加次数 $2n^2$，CSR 是 $2\\,\\text{nnz}$（每行 1 乘 1 加，见 `sparse.hpp` (CS2)）。\n\n| 列 | 稠密 `Matrix`（三对角） | `CSR`（三对角） |\n|---|---|---|\n| 时间 | $2n^2$ 次乘加；内层沿列连续，命中率高 | $2\\,\\text{nnz} \\approx 6n$ 次乘加；但每次要读 `colIdx[k]` 再**间接**取 `x` |\n| 空间 | $n^2 \\cdot \\text{sizeof}(T)$；常驻等于峰值 | $\\text{nnz}\\cdot(\\text{sizeof}(T)+4)$ 再加 $4(n+1)$ 字节的行指针 |\n| IO | 顺序扫过 $n^2$ 个元素，体量大到\"页友好\"已无意义 | 体量小，可整体驻留；`rowPtr` 与 `colIdx` 是两条额外流 |\n| 并行 | 每行独立，work $=2n^2$，span $=n$ | 每行独立，work $=2\\,\\text{nnz}$，span $=n$，行长不均导致**负载不均** |\n| 要维护的不变量 | `data.size() == rows*cols`；无结构标签 | `rowPtr.size() == rows+1`、`rowPtr[0] == 0`、行内列号严格递增 |\n\n量级上：$n = 10^{5}$ 时稠密约 $8 \\times 10^{10}$ 字节，`CSR` 约 $3 \\times 10^{5}$ 个非零元乘 $(8+4)$ 字节再加行指针，落在几个 MB——差四个数量级以上，不是\"快一点\"。反过来，时间列里 `CSR` 的间接寻址会把常数抬起来：`sparse.hpp` (CS3) 记录了两者**求和顺序不同**，误差在 $O(\\text{nnz} \\cdot \\varepsilon \\cdot \\max|A_{ij}| \\cdot \\max|x_j|)$ 量级，所以两列只能比量级，不能比逐位相等。\n\n### 「空间换时间」什么时候不划算\n\n划算的前提是：时间列的收益大于空间列的代价，且空间列没撞硬墙。硬墙三类：\n\n1. **常驻集被推过缓存层级。** 换来的空间把工作集从 L2 挤到 L3 之外，时间列会反向恶化——换了但没有换到。\n2. **空间变成峰值。** 一次 $O(n^2)$ 临时缓冲可能让分配直接失败，此时时间列的收益归零。\n3. **空间破坏了顺序性。** `CSR` 用 `colIdx` 换掉了零元素，代价是 `x` 的访问变间接；`matrix.hpp` 的 i-k-j 而不是 i-j-k 是同一笔账——i-k-j 让内层沿 $j$ 走时 `result[i]` 与 `B[k]` 都在行内连续。**这笔交易的实质是顺序性换指令数，不是空间换时间。**\n\n### 失效条件\n\n- **稳态假设。** 四列描述的是稳态单次代价；首次执行的冷缓存、缺页、动态加载不在任何一列里。\n- **列间耦合。** 缺页的等待会被记进时间列，让\"指令数没变而时间暴涨\"，此时必须把等待单列出来，否则两列同时失真。\n- **表示不可表示。** `CSR` 用 32 位 `int` 存列号，`cols` 超出该范围时整个模型先作废——先换表示，再谈四列。\n- **并行一列在单线程数据上无法验证。** 没有 span 的测量，并行列只能写估计，不能写结论。\n\n### 与相邻章的接法\n\n四列的语言在本章建立，各列的落地在别处：缓存行为与流水线的硬件原因归 `machine/`；怎么测、怎么画火焰图归块 5 `EG03`；数值误差与条件数归父仓 `01-numerics.md`。本章只负责让\"四列已填\"成为可以开始比较的前提。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "metrics",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 6,
+    "section": "一、四种成本：时间、空间、IO、并行分属四个决定因素"
+  }
+}

@@ -22,7 +22,7 @@
   "connect": "往回是关联容器里的堆与索引结构，选下一个点靠它们（CD03.1）。往前接策略层，最短路是动态规划在图上的一次实例（CD05.1）。数值与稀疏矩阵那边的装配视角，由数值线承接（CD07.1）。",
   "source": {
     "unit": "notebook/projects/codedesign/graph/OUTLINE.md",
-    "unitSha": "fa384c880ace"
+    "unitSha": "be4c2b38a520"
   },
   "generated": {
     "model": "coding-agent",

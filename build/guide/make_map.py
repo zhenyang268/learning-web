@@ -96,10 +96,17 @@ def resolve_src(src: str) -> str:
         return src
     if (PARENT / src).exists():
         return src
-    if src.startswith("notebook/"):
-        cand = "notebook/math/" + Path(src).name
+    # 已改名的源：PR 的 C_partial→C_prob；ODE 的 diffrential/deN→math/odeN
+    if Path(src).name == "C_partial.tex" and (PARENT / "notebook/math/C_prob.tex").exists():
+        return "notebook/math/C_prob.tex"
+    m = re.search(r"/diffrential/de(\d+)\.tex$", src)
+    if m:
+        cand = f"notebook/math/ode{m.group(1)}.tex"
         if (PARENT / cand).exists():
             return cand
+    cand = "notebook/math/" + Path(src).name
+    if (PARENT / cand).exists():
+        return cand
     return src
 
 

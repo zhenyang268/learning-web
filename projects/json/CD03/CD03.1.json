@@ -5,9 +5,9 @@
   "title": "associate · 总览",
   "src": {
     "file": "notebook/projects/codedesign/associate/OUTLINE.md",
-    "sha256": "sha256:0af08cc22c0194fb4032d71601d944927e5ba71649d34da982e3bd95adb02afd"
+    "sha256": "sha256:caf1e6a1da51db6449127e0d7d4c20e2c925ab6ba465ee1c88add4038ee33e92"
   },
-  "notebook_commit": "b00906a9826a14b60de50c8c415b0ca62c0d67df",
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
   "notebook_dirty": false,
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "introduction",
       "title": "",
       "level": 0,
-      "content": "> **状态（2026-11-20）**：骨架。本章只落总览与一条主线；「单元表」中的 7 个单元尚未展开。\n\n> **判据**：给定查询模式（点查 / 范围 / 前缀 / 去重），能选出哈希或有序结构，并说出最坏退化条件。"
+      "content": "> **判据**：给定查询模式（点查 / 范围 / 前缀 / 去重），能选出哈希或有序结构，并说出最坏退化条件。"
     },
     {
       "id": "CD03.1:body.s01",

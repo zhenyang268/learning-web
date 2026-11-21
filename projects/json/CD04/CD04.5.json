@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD04.5",
+  "chapter": "CD04",
+  "title": "3. 拓扑与 SCC：Kahn 的入度与 Tarjan 的 `low`",
+  "src": {
+    "file": "notebook/projects/codedesign/graph/NOTES.md",
+    "sha256": "sha256:46ed995c99a0363b46a295bd961ad93854bb4d7961afd8256d694bdf31231e54"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD04.5:body.s01",
+      "type": "extension",
+      "title": "3. 拓扑与 SCC：Kahn 的入度与 Tarjan 的 `low`",
+      "level": 2,
+      "content": "**判断句**：拓扑排序的两种实现不是\"同一算法的两种写法\"，而是分别回答不同问题——Kahn 回答\"是否存在全局推进顺序\"（顺带给出环的检测），DFS 回答\"点的完成时序\"；SCC 则是把\"有向环的等价类\"缩成 DAG，用一次 DFS 的 `low` 完成。\n\n### 3.1 Kahn：入度驱动\n\n机制：维护 `indeg` 数组与一个\"入度为 0 的点\"集合。每摘掉一个点，把它出边的端点入度减 1，减到 0 就放回集合。\n\n```cpp\nstd::vector<int> indeg(n); for (int k = 0; k < m; ++k) ++indeg[colIdx[k]];\nstd::queue<int> q; for (int u = 0; u < n; ++u) if (!indeg[u]) q.push(u);\nstd::vector<int> order;\nwhile (!q.empty()) { int u = q.front(); q.pop(); order.push_back(u);\n    for (int k = rowPtr[u]; k < rowPtr[u + 1]; ++k)\n        if (--indeg[colIdx[k]] == 0) q.push(colIdx[k]); }\n```\n\n成本：$O(n+m)$；若 `order.size() < n`，剩下的点都在环上（或由环支配）——**这是最便宜的环检测，比 DFS 三态更省一次颜色数组**。\n\n### 3.2 DFS 完成序\n\n机制：DFS 后序（点标 `BLACK` 的时刻）的逆序是拓扑序。正确性来自：对任意边 $u \\to v$，`finish[u] > finish[v]`。\n\n成本同样 $O(n+m)$，但依赖三态与递归/显式栈，且**在强连通的分量上无法给出任何序**（正确行为：它不报错，只是输出一个违反边约束的排列）。所以拿 DFS 序做拓扑必须配环检测。\n\n### 3.3 选哪个\n\n| 维度 | Kahn | DFS 完成序 |\n|---|---|---|\n| 复杂度 | $O(n+m)$ | $O(n+m)$ |\n| 环检测 | 免费（`order` 长度） | 需额外三态判定 |\n| 字典序最小拓扑序 | 把队列换成小顶堆，$O((n+m)\\log n)$ | 不自然 |\n| 增量维护 | 天然（删点/删边只改局部入度） | 全局重算 |\n| 深层图 | 无递归风险 | 有栈溢出风险 |\n| 复用价值 | 只解拓扑 | 完成序是 Tarjan/2-SAT/DP 的共同基础 |\n\n**判据**：需要\"边删边重算顺序\"或\"最小字典序\"，选 Kahn；已经在跑 DFS（例如同时要 SCC），用完成序。\n\n### 3.4 Tarjan 的 `low` 与栈\n\n定义：对点 $u$，$low[u]$ 是\"从 $u$ 的 DFS 子树出发、经至多一条回边能到达的最小 `dfn`\"。其中 `dfn` 是首次访问的时间戳。三条更新规则：\n\n- 树边 $u\\to v$：递归后 $low[u] = \\min(low[u], low[v])$；\n- 回边（$v$ 为 `GRAY`）：$low[u] = \\min(low[u], dfn[v])$；\n- 已完成的点（`BLACK`）：**不更新**（它不属于当前 SCC 的候选）。\n\n当 $low[u] = dfn[u]$ 时，`u` 是当前 SCC 的根：从 Tarjan 栈里一直弹出到 `u` 为止，弹出的点构成一个分量。\n\n```cpp\nvoid strong(int u) { dfn[u] = low[u] = ++timer; stk.push_back(u); inStk[u] = true;\n    for (int k = rowPtr[u]; k < rowPtr[u + 1]; ++k) { int v = colIdx[k];\n        if (!dfn[v]) { strong(v); low[u] = std::min(low[u], low[v]); }\n        else if (inStk[v]) low[u] = std::min(low[u], dfn[v]); }\n    if (low[u] == dfn[u]) { int v; do { v = stk.back(); stk.pop_back();\n        inStk[v] = false; comp[v] = cnt; } while (v != u); ++cnt; } }\n```\n\n注意**这里的栈与 DFS 递归栈不是同一个**：Tarjan 栈存\"尚未归属任何已输出分量的点\"，它的弹出是分量的定义，不是回退。\n\n最小算例：$0\\to1\\to2\\to0$、$2\\to3$、$3\\to1$。从 0 出发 `dfn = {1,2,3,4}`，$low[0]=1$、$low[1]=1$（经 $3\\to1$ 的回边与 $2$ 的传播）、$low[2]=1$、$low[3]=1$；只有 $low[0]=dfn[0]$，于是一次弹出 $\\{3,2,1,0\\}$——一个分量。若把 $3\\to1$ 改成 $1\\to3$，$low[3]=4=dfn[3]$，先弹 $\\{3\\}$，再弹 $\\{2,1,0\\}$，两个分量。手算必须能覆盖这种\"差一条边的方向\"的对照。\n\n### 3.5 失效条件\n\n- **Kahn 在有环图上\"失效\"是设计行为**：它不抛错，只是少输出点。下游若把 `order` 当完整排列用（例如做 DP），会读到默认值而不自知——所以返回值必须能表达\"不完整\"。\n- **DFS 完成序在环上给出错误排序且不报错**：这是本章最危险的一类失效——错误结果是一个看起来合法的排列。\n- **Tarjan 的 `low` 用 `low[v]` 替代 `dfn[v]` 会失败**：对 `BLACK` 点做 `low[u]=min(low[u], low[v])` 会把已完成的旧分量合并进来，SCC 数量偏少。\n- **Kosaraju 需两遍 + 反图**，成本 $2\\times$ 空间与时间；在内存受限时（$n,m$ 大且要保留反图）不划算，这是选 Tarjan 而非 Kosaraju 的主要理由，不是速度。\n- **递归 Tarjan 在长链上溢出**：与单元 2 同源，需显式栈版本，改写时最容易丢掉\"返回后回填 `low`\"这一步。\n\n### 3.6 接法\n\n- 缩点之后的 DAG 上做拓扑 DP（最长路、方案数）是单元 4\"负权最短路\"在 DAG 上的特例：DAG 上按拓扑序一次松弛即得最短路，不需要堆。\n- Tarjan 栈与 DFS 栈的区分，和 `sequence/` 里\"容器语义不同不能混用\"的口径一致：两个栈的生命周期与不变量完全不同。\n- 2-SAT、支配树、增量 SCC（分布式场景）超出本章边界，`data/` 只关心拓扑在复制与成员变更里的角色，见 `OUTLINE.md`「四、边界」。\n\n---"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "graph",
+    "file": "NOTES.md",
+    "part": 4,
+    "parts": 7,
+    "section": "3. 拓扑与 SCC：Kahn 的入度与 Tarjan 的 `low`"
+  }
+}

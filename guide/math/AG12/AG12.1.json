@@ -25,7 +25,7 @@
   "principle": "先问「这是存在、唯一、可构造，还是分类」，再看表里那一格指向哪个概念。",
   "connect": "往后，微分形式与外微分那条线落在分析一侧的复形上，离散版本则由离散外微分给出（AG11.1 之后的离散化）；几何一侧继续走流形与切空间，把商空间当构造流形的手段（AG13.1）。更远处，亏格与角度亏损进入网格修复与参数化（AG10.3）。",
   "source": {
-    "unit": "notebook/Q_topology.tex",
+    "unit": "notebook/math/Q_topology.tex",
     "unitSha": "ede6b229a475"
   },
   "generated": {

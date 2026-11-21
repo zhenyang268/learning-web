@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD07.3",
+  "chapter": "CD07",
+  "title": "一、稠密矩阵：布局、blocking 与访存账",
+  "src": {
+    "file": "notebook/projects/codedesign/numeric/NOTES.md",
+    "sha256": "sha256:9aee44d02e3d1b08b2d8c3e011e977ac990a3790c17fd9cfd6de90cbc44eed0d"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD07.3:body.s01",
+      "type": "extension",
+      "title": "一、稠密矩阵：布局、blocking 与访存账",
+      "level": 2,
+      "content": "**判断句**：稠密矩阵的运算量是 $O(n^3)$ 的硬约束，性能差异几乎全部来自访存，而不是来自少做几次乘加。所以\"优化稠密矩阵\"实际是\"优化缓存命中\"，任何不改变访存模式的改写都只是常数项抖动。\n\n**行主序为什么是默认**\n\n行主序把一行放成连续的一段：`data[i*cols + j]`。这个选择本身没有数学优势，它只是把\"内层循环沿哪一维走\"和\"内存连续\"对齐了一次，而后面所有算法都按\"内层走 j\"来写。\n\n`graphics/src/core/matrix.hpp` 里 `multiply_common` 是朴素 `i-k-j` 三重循环，注释给的理由正是这一点：内层沿 `j` 走时，`result[i][j]` 与 `B[k][j]` 都是行内连续；若写成 `i-j-k`，内层每步都要跨行跳一次，命中率立刻掉下来。同一个运算量，两种循环顺序的差别只在这。\n\n`Matrix::Transpose()` 的代价也在这里：它按 `result[j][i] = data[i*cols + j]` 逐元素搬，读连续、写跨行（步长 `rows`），所以转置不是\"零成本换视角\"，而是一次完整的 $O(n^2)$ 拷贝且写侧不连续。这是后面张量一节要单独处理的动机：能靠 strides 免掉的搬运，就不该用拷贝。\n\n**blocking 怎么提高命中率**\n\n朴素三重循环的问题不是乘加次数，而是 $O(n^2)$ 的中间结果要被反复从 L2/L3 拉回来。对 $n \\times n$ 乘 $n \\times n$，若 cache 只能装下 $B$ 的一列量级，则整个 $B$ 会被从头读约 $n$ 次。\n\nblocking 的做法是把三重大循环切成 $b \\times b$ 的小块，使得块级别的三份数据（A 块、B 块、C 块）能同时待在 cache 里：$\\text{每个 C 元素} = \\sum_{K=0}^{n/b-1} A[i,\\ K b{:}K b{+}b] \\cdot B[K b{:}K b{+}b,\\ j]$。每层 K 块只把 A 块与 B 块从下一层拉一次，于是主存的流量从 $O(n^3)$ 量级降到 $O(n^3/b)$ 量级。关键判据是：块大小由 cache 容量决定，不由矩阵维度决定；$b$ 选到\"三块加起来刚好超 L1\"时收益就饱和，再调大只会增加边界处理。\n\n**成本表（逐次乘法的访存口径）**\n\n| 形式 | 乘加次数 | 主存取数次数（无 cache 理想化） | 内层连续性 |\n|---|---|---|---|\n| `i-j-k` | $2n^3$ 次 flop 的一半 | 每步跨行走，最差 | 差 |\n| `i-k-j`（现行） | 同上 | $B$ 被读 $n$ 次、`result` 被读 $n$ 次 | 好 |\n| blocked `i-k-j` | 同上 | 按块摊到 $O(n^3/b)$ | 好 |\n\n注意三行的乘加次数完全相同。这就是本节的判据：如果一次改写改变了 flop 而没有改变访存，它不会带来量级收益。\n\n**最小算例：一次 matmul 的访存次数**\n\n$n = 1024$、`double`、每元素 8 B。矩阵本体 $1024^2 \\times 8 = 8$ MB。朴素 `i-k-j` 下 `result[i]` 与 `B[k]` 各被扫描 $n$ 次：\n\n$$\n\\text{主存流量} \\approx 2 \\times n \\times (n^2 \\times 8\\,\\text{B}) = 2 \\times 1024 \\times 8\\,\\text{MB} \\approx 16\\ \\text{GB}\n$$\n\n取 $b = 64$（三块各 $64^2 \\times 8 = 32$ KB，量级上正好压着 L1 的边界），同一份矩阵按块复用，主存流量掉到 $O(n^3/b)$ 口径的百分之一量级。这个算例要手算到\"次数\"这一层，而不是停在\"blocking 更快\"。\n\n**失效条件**\n\n- 矩阵小到三份数据本来就能全进 cache（$n$ 几十的规模），blocking 只增加边界分支，收益为零甚至为负。\n- 只做单次乘法、且调用方每次都重新分配输出：分配与清零的 $O(n^2)$ 会盖住访存收益。\n- 内层循环被编译器自动向量化后，块内边界（非 2 的幂的 $b$）引入的尾部处理可能吃掉收益：这时代价要用\"块内有效元素占比\"估，而不是拍 $b$。\n- 把一个 `Matrix` 的 `Transpose()` 当成\"免费换布局\"来绕开非连续访存：它本身是 $O(n^2)$ 拷贝，小 $n$ 时是纯亏损。\n\n**接法**\n\n这一节给的是\"布局决定访存\"的下界，下一节把布局从\"固定行主序\"放开成\"任意 strides\"，说明为什么视图能免掉拷贝、以及免掉拷贝要付什么代价（别名与生命周期）。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "numeric",
+    "file": "NOTES.md",
+    "part": 2,
+    "parts": 9,
+    "section": "一、稠密矩阵：布局、blocking 与访存账"
+  }
+}

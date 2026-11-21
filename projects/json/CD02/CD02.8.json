@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD02.8",
+  "chapter": "CD02",
+  "title": "6 二分与下界：不变量决定返回值，半开区间决定边界不用特判",
+  "src": {
+    "file": "notebook/projects/codedesign/sequence/NOTES.md",
+    "sha256": "sha256:b3e8a4794833e6b307a059e4d0de9fe8ea111cc9196974e8f4c864a1cb1ff559"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD02.8:body.s01",
+      "type": "extension",
+      "title": "6 二分与下界：不变量决定返回值，半开区间决定边界不用特判",
+      "level": 2,
+      "content": "**判断句：二分不是\"每次折半\"，是\"维护一个区间不变量，每次折半都不破坏它\"；`lower_bound` 与 `upper_bound` 的差别仅在于把\"小于\"改成\"小于等于\"，而正确性的证据是同一份循环不变式。**\n\n**前提。** 二分要求序列在比较器下**分区**（通常来自已排序）：存在唯一的 $p$ 使得 $i<p\\Rightarrow a[i]<x$，$i\\ge p\\Rightarrow a[i]\\ge x$。没有这个前提，二分返回的是任意值；这就是它必须挂在\"已排序\"或\"单调谓词\"之后的原因。\n\n**不变量与实现。** 取半开区间 $[lo,hi)$：候选位置集合是 $lo\\le i<hi$，区间外左半全部满足 $a[i]<x$，右半全部满足 $a[i]\\ge x$。收缩时保持这两条，退出条件 `lo == hi` 时 $lo$ 就是分界点。\n\n```cpp\n// 前置: [first,last) 在 comp 下已分区：先 !comp(a[i],x)，后 comp(a[i],x) 以外的部分\nstd::size_t LowerBound(const int* a, std::size_t lo, std::size_t hi, int x)\n{\n    while (lo < hi) {                 // 不变式：ans ∈ [lo,hi]\n        std::size_t mid = lo + (hi - lo) / 2;   // 不用 (lo+hi)/2：防溢出\n        if (a[mid] < x) lo = mid + 1; else hi = mid;\n    }\n    return lo;                        // lo==hi 即第一个 a[lo] >= x\n}\n```\n\n**证明骨架。** 归纳假设：每轮开始时答案在 $[lo,hi)$ 内，且 $hi\\le n$、$lo\\ge0$。取 `mid`，若 $a[mid]<x$，答案必 $>mid$，令 $lo=mid+1$，区间缩小且仍包含答案；否则答案 $\\le mid$，令 $hi=mid$，同理。每轮区间长度严格减小（`mid<hi` 保证 $lo$ 前进、`mid<hi` 保证 $hi$ 后退），故终止；终止时区间长度为 0，唯一候选位置是 $lo=hi$，由不变量即所求。**注意 `hi` 取 $mid$ 而不是 $mid-1$**：取 $mid-1$ 会把可能的答案排除，是二分最经典的一处 off-by-one。\n\n**`lower_bound` 与 `upper_bound` 的差别。** 前者找\"第一个不小于 $x$\"（写成 $a[i]<x$ 取反），后者找\"第一个大于 $x$\"（写成 `!(a[i] <= x)`，即用 `x < a[i]`）。两者都返回 $[0,n]$ 中的位置：元素全小于时 `lower_bound` 返回 $n$，这正是\"半开区间允许答案等于 $hi$\"的价值——不必为\"找不到\"单开一个分支，于是空区间、全部小于、全部大于三种边界用例自动落在同一套返回约定里。对应的库接口是 `lower_bound` / `upper_bound` / `equal_range`（后者是前两者的配对），对比较器为 `less` 的升序区间，`equal_range` 给出所有等于 $x$ 的连续段。\n\n**成本与一次算例。** 每次迭代一次比较、一次加法，迭代次数 $\\lceil\\log_2 (hi-lo)\\rceil$，于是时间 $O(\\log n)$；空间 $O(1)$；访存是\"每步跳到一个新位置\"，对 $n$ 大、`n` 远超缓存时每步一次缺失，这是二分不如\"分块 + 内层顺序扫\"的根本原因（Eytzinger 布局就是为此重排的）。最小算例：$n=2^{20}$ 的升序数组，$hi-lo$ 从 $2^{20}$ 起，最多 20 次比较；同一查询在 $B=64$ 的分块索引上，先用分块的最后一个元素做二分（$\\log_2(n/B)\\approx 14$ 步）再在块内顺序扫 64 个元素（一次或少数几次缺失），比较次数反而更多。**比较次数的减少不等于时间减少**——这一条是本节最容易被背漏的。\n\n**失效条件。** ① 序列不分区（未排序、或有相等元素但比较器不一致）：不变量不成立，返回值无意义，且不报错；② 在 `list` 或 `forward_list` 上做二分：随机访问是 $O(n)$，\"折半\"变成 $O(n)$ 的定位加 $O(n)$ 的跳转，总代价 $O(n)$ 且常数更差——链上要用跳表或直接线性扫；③ `mid = (lo+hi)/2` 在 `lo+hi` 溢出时得到负值，属未定义/错答；④ 浮点键上的二分：相等不可靠，需要改成\"谓词首次为真\"的写法并约定容差（容差口径在父仓 `01-numerics.md`）；⑤ 返回位置在 `hi` 侧时，调用方若直接解引用 `*it` 就越界，这是接口约定而非算法错误，必须写成断言。\n\n**接法。** 上游是第 4 节（有序性由排序产生，比较器必须是同一个严格弱序）；下游是 `associate/`（B+ 树内的分支查找与 `lower_bound` 同一不变式）、`metrics/`（缺失次数作为主项）、`graph/`（按坐标/按编号查找落在同一族）。判据是写出循环不变式、给出终止理由、并让空区间 / 全部小于 / 全部大于三个用例落在同一返回约定里。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "sequence",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 8,
+    "section": "6 二分与下界：不变量决定返回值，半开区间决定边界不用特判"
+  }
+}

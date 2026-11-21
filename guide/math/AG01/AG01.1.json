@@ -21,7 +21,7 @@
   "principle": "先问清对象满足哪几条公理，再决定哪些结论可以直接搬。",
   "connect": "往后先把群放到流形上，用指数映射把离散乘法换成切空间里的括号运算（AG01.2）；再把群作用到向量空间上，用不可约分解读出对称性的独立分量（AG01.3）。往后的同调与表示分类都默认这四条公理成立。",
   "source": {
-    "unit": "notebook/B_algebra.tex",
+    "unit": "notebook/math/B_algebra.tex",
     "unitSha": "3327710a3e0c"
   },
   "generated": {

@@ -21,7 +21,7 @@
   "connect": "它的上层是数据库那条线：页、缓冲池与事务行为在那里接力（DB01.1）。往下与图的最短路和最小生成树相接，堆与并查集在那边负责选下一个点（CD04.1）；序列容器里的二分与排序结构则由前章给出（CD02.1）。",
   "source": {
     "unit": "notebook/projects/codedesign/associate/OUTLINE.md",
-    "unitSha": "0af08cc22c01"
+    "unitSha": "caf1e6a1da51"
   },
   "generated": {
     "model": "coding-agent",

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD07.9",
+  "chapter": "CD07",
+  "title": "七、收口：CSR + SpMV + CG 的七段决策链",
+  "src": {
+    "file": "notebook/projects/codedesign/numeric/NOTES.md",
+    "sha256": "sha256:9aee44d02e3d1b08b2d8c3e011e977ac990a3790c17fd9cfd6de90cbc44eed0d"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD07.9:body.s01",
+      "type": "extension",
+      "title": "七、收口：CSR + SpMV + CG 的七段决策链",
+      "level": 2,
+      "content": "**判断句**：前六节各自是一个局部取舍，这一节要证明它们能拼成一条无隐藏拷贝、无隐藏假设的链：从偏微分方程的离散网格 → 稀疏结构 → CSR → SpMV → CG → 残差判据，每一段都只依赖上一段明确承诺的东西。\n\n**七段决策链**\n\n| 段 | 决策 | 依据 | 若不这样会怎样 |\n|---|---|---|---|\n| 1. 离散 | 得到 $A$ 与 $b$ 的数学对象 | 方程本身 | — |\n| 2. 稀疏选型 | 用 CSR，不 COO | 构造完成后只做\"按行乘\" | COO 每次取值判列匹配，$O(nnz)$ 内多一层分支 |\n| 3. 装配 | 直接产出规范形式三数组 | 行内 `colIdx` 严格递增 → 求和顺序固定 | 逐位不可复现，两次跑差 1 ulp |\n| 4. SpMV | 内层只遍历 `[rowPtr[i], rowPtr[i+1])` | 零已被存储层吃掉 | 内核里再判零 = 把稀疏的好处还回去 |\n| 5. 求解器接口 | `apply` 模板参数，不引入 `LinearOperator` | CG 只需\"乘一下\"，不需要伴随/复合/转置 | 建一层没有消费者的抽象 |\n| 6. 迭代 | 三个短递推，每步一次 matvec | $A$ SPD ⇒ 能量范数最小 ⇒ Galerkin ⇒ 短递推 | 一旦 $A$ 非对称，正交假设塌掉，短递推失效 |\n| 7. 判据 | 相对 2-范数残差 $\\le$ tol，`maxIter` 兜底 | 与内部 $r \\cdot r$ 同源，不需额外扫描 | 绝对残差随 $n$ 变；无上界时非 SPD 输入死循环 |\n\n链的关键性质是**每一段的成本都可加**：装配 $O(nnz)$，SpMV $2nnz$ flops，CG 每步 $O(nnz + n)$ 时间、$O(n)$ 内存（不含 $A$ 本身）。所以总时间是 $\\text{iters} \\times O(nnz + n)$，其中只有 $\\text{iters}$ 由数学决定（条件数），其余由表示决定。\n\n**为什么 $A$ 必须 SPD——确切原因**\n\n$x_k$ 是 Krylov 子空间 $K_k(A,b) = \\text{span}\\{b, Ab, \\dots, A^{k-1}b\\}$ 里使能量范数误差 $\\lVert x^* - x_k \\rVert_A = \\sqrt{(x^*-x_k)^T A (x^*-x_k)}$ 最小的点。$A$ 对称正定 ⇒ 该式是内积 ⇒ 最小化等价于残差与 $K_k$ 正交（Galerkin 条件）⇒ 只需保存上一步的 $p$。一旦 $A$ 非对称，内积不再是同一个范数诱导的，短递推的\"正交\"假设塌掉。这才是确切原因，不是\"看起来更稳\"。\n\n库**不检查**对称性／正定性（检查要额外 matvec，且没有可靠的容差口径），表现是残差停滞或上升，最后被 `maxIter` 截断抛 `runtime_error`，消息必须带 `iters` 与最终残差——否则现场无法区分\"收敛不了\"和\"根本没跑\"。\n\n**收敛速率只用来解释现象**\n\n$$\n\\lVert e_k \\rVert_A \\le 2 \\left( \\frac{\\sqrt{\\kappa}-1}{\\sqrt{\\kappa}+1} \\right)^k \\lVert e_0 \\rVert_A, \\qquad \\kappa = \\lambda_{\\max} / \\lambda_{\\min}\n$$\n\n1D Poisson（$h = 1/(n-1)$）的 $\\kappa \\sim O(n^2)$，所需迭代 $\\sim O(n)$。所以\"迭代数随 $n$ 线性增长\"是符合预期的，不能拿去当断言；判据只认\"残差 $\\le$ tol\"和最终值。\n\n**残差判据的三个口径**\n\n- 用**相对**不用绝对：绝对残差随 $n$ 与 $\\lVert b \\rVert$ 变，同一个 tol 在 $n=32$ 与 $n=128$ 上含义不同，\"残差 $\\le 10^{-10}$\"这类判据没法跨规模比较。\n- 用 2-范数不用 inf-范数：与内部 $r \\cdot r$ 同源，不需要额外一趟扫描。\n- $\\lVert b \\rVert = 0$（全零右端项）：$x=0$、`iters=0`、`residual=0`，正常返回。这是零右端项的唯一解，不是错误，也不要去算 $0/0$。\n\n另一个必须记的口径：CG 的 2-范数残差**可以非单调**（病态时尤其明显），能量范数误差才单调。拿\"残差单调下降\"当判据会把正确实现判红。\n\n**最小算例：1D Poisson 的规模账（估算口径）**\n\n$n$ 个内点、5 点或 3 点差分：$nnz \\approx 3n$。单步成本 $O(nnz + n) \\approx O(n)$，迭代数 $\\sim O(n)$，总成本 $\\sim O(n^2)$；对照稠密 Cholesky 的 $O(n^3)$ 与 $O(n^2)$ 内存。$n = 10^4$ 时稀疏侧单步约 $3 \\times 10^4$ 个非零元，稠密侧的矩阵本身就要 $8 \\times 10^8$ B（$10^4$ 阶双精度）——这就是\"CG 只在 $A$ 稀疏时赢\"的量化含义。这些是规模推算，不是实测耗时。\n\n**失效条件**\n\n- tol 设到舍入地板以下：$\\rho$ 相对差落到 eps 量级后 $\\beta$ 就是噪声，残差不再下降，表现为\"收敛到一半停滞\"甚至死循环。tol 不应设在 $\\sim\\sqrt{\\epsilon} \\cdot \\lVert b \\rVert$ 之下；要更准就换直接解（`solve`/`cholesky`），不是把 tol 往下压。\n- $A$ 非 SPD：残差停滞或上升，被 `maxIter` 截断。必须能报错，不许死循环。\n- 注入对照写成 $\\alpha = -\\rho/(p \\cdot Ap)$：残差立刻发散，用例必须变红；且发散时不能让 $Ap$ 出现 NaN 把循环挂住，依然由 `maxIter` 兜底。\n- 每步在 `Multiply` 里做全结构校验：CG 每步慢一倍。结构不变量靠装配保证。\n- `apply` 返回形状不查：`Dot` 会在下一步抛 \"dimension mismatch\"，归因成本高；而每步查 $n$ 是 $O(1)$，所以形状每步查、结构不查——这是两条相反的取舍，各按成本定。\n- 把 `iters` 当性能基线横向比较而不固定初值：初值固定 $x_0 = 0$（本仓没有时间推进，没有\"上一时间步\"这种好初值），否则对照多一个变量。\n\n**接法**\n\n第七节把前面所有单元收成一个可跑的验收场。第八节把这张链反过来问：同一对象若换一种表示，成本会怎么变，以及在什么规模下换表示是错的。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "numeric",
+    "file": "NOTES.md",
+    "part": 8,
+    "parts": 9,
+    "section": "七、收口：CSR + SpMV + CG 的七段决策链"
+  }
+}

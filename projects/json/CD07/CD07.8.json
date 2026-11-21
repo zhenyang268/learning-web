@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD07.8",
+  "chapter": "CD07",
+  "title": "六、自动微分：dual 与 tape 的取舍",
+  "src": {
+    "file": "notebook/projects/codedesign/numeric/NOTES.md",
+    "sha256": "sha256:9aee44d02e3d1b08b2d8c3e011e977ac990a3790c17fd9cfd6de90cbc44eed0d"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD07.8:body.s01",
+      "type": "extension",
+      "title": "六、自动微分：dual 与 tape 的取舍",
+      "level": 2,
+      "content": "**判断句**：前向模式（dual 数）把导数带在值上、沿一次求值传播，代价是\"每个输入方向一次遍历\"；反向模式（tape）记录计算图、一次遍历算全部梯度，代价是\"每个中间值都要留一份\"。选哪个由输入维度与输出维度的比例决定，不由哪个更现代决定。\n\n**dual 数的机制：为什么 $\\epsilon^2 = 0$ 就够了**\n\n`graphics/src/autodiff/dual.hpp` 的语义是 `Dual(v, d)` 表示 $v + d\\epsilon$，其中 $\\epsilon^2 = 0$。把 $f(x_0 + h)$ 按 $h$ 展开得 $f(x_0) + f'(x_0) h + O(h^2)$；规定 $h^2 = 0$（而不是取极限），二阶及以上自动消失，只剩精确的一阶项。于是链式法则变成代数恒等式，不需要任何\"求导\"的特殊代码——每个原函数只要按四则运算组合实现一次，导数就跟着走。\n\n几条工程口径：\n\n- 常数通道：字面量走 `ScalarTraits<T>::fromReal(r)`，derive 自动为 0。这是\"常数导数为零\"的机制化，不靠调用方记得。\n- 原函数是友元自由函数而非成员：泛型代码写 `sin(x)`，`double` 走 `std::sin`、`Dual` 走 ADL 找到的友元版，算法层零分支。\n- 没有复合赋值（与 `Matrix` 同口径）：值语义让每个表达式产生新对象，别名与写回时机的问题不出现。\n\n**`Dual<Dual<T>>` 为什么自动给二阶导**\n\n因为所有运算都是泛型的：`Dual<Dual<double>>` 的 value 与 derive 两个槽本身就是 `Dual<double>`，四则运算递归下去，ε 分量的 ε 分量就是二阶导。前提是每个原函数必须对**任意** $T$ 成立。典型反例是 `sqrt` 写成 `T(std::sqrt(double(x)))`：它把里层 Dual 拍平，二阶导静默变 0，值域与一阶导全对——这类 bug 只有 `Dual<Dual<T>>` 域的探针能抓到。这也是本单元判据的形状：二阶导不是\"多测一档精度\"，而是唯一能暴露泛型性缺陷的探针。\n\n同理 `conj(Dual)` 必须逐分量共轭：`Dual(conj(value), conj(derive))`。漏掉 derive 会得到正确的一阶值、错误的复数梯度。\n\n**空间与时间的成本表**\n\n设一次求值的中间量个数为 $m$、输入维度 $p$、输出维度 $q$：\n\n| 方案 | 时间（一次完整遍历） | 额外内存 | 何时最优 |\n|---|---|---|---|\n| dual，单方向 | $O(1)$ 倍求值成本 | $O(1)$ 个额外槽/中间量 | $p$ 小、$q$ 大 |\n| dual，$p$ 个方向 | $p$ 倍求值成本 | 同上（逐方向重跑） | $p$ 个位数且 $q \\gg p$ |\n| tape（反向） | $O(1)$ 倍求值 + 一次反向传播 | $O(m)$ 个中间值 | $q$ 小、$p$ 大 |\n| tape + checkpoint | 多一次（或数次）重算 | $O(\\sqrt{m})$ 量级 | $m$ 大到存不下 |\n\n判据是**比例**而不是绝对量：$p/q \\ll 1$ 时前向，$p/q \\gg 1$ 时反向。把\"梯度下降要 $p$ 个参数、损失是标量\"写进这张表，$q = 1$ 而 $p$ 成千，反向显然赢——这就是它成为默认的原因，但结论应由比例推出，而不是背下来。\n\n**最小算例：估算两种实现的额外内存**\n\n以 `graphics/src/autodiff/dual_matrix.hpp` 的 `SumAll`/`Apply` 这类矩阵级归约为场景，一个 $n \\times n$ 的中间量：\n\n- dual：每个中间元素多一个 derive 槽，额外内存约 $n^2 \\times \\text{sizeof}(T)$。$n = 512$、`double` 时约 2 MB，且不随输入维度增长。\n- tape：需要为每个中间节点存值（可能还要存 op 标签与父节点索引）。按\"值 + 索引/int 标签\"量级估，节点数 $m \\approx k n^2$ 时额外内存约 $k n^2 \\times 16$ B。同一 $n = 512$、$k \\approx 4$ 时约 16 MB——8 倍于 dual，且随计算图深度线性增长。\n\n表中数字是**估算**（按字段计），不是实测；要报实测必须真的跑，不得把估算写成测量结果。判据的动作是\"能列出乘数与项数\"，而不是给出一个数。\n\n**失效条件**\n\n- tape 记录所有中间量：图越深内存越线性涨，到某个规模直接 OOM。此时只能 checkpoint（重算换内存），而 checkpoint 的复杂度要单独论证，不在本单元的\"了解即可\"范围内。\n- dual 用于 $p$ 很大的场景：$p$ 次重跑让时间线性膨胀，与\"自动微分很便宜\"的直觉相反。\n- 原函数写成把 `T` 拍平成 `double`：值正确、二阶导为 0，且只在 `Dual<Dual<T>>` 探针下暴露。\n- 用 `abs2` 传播导数（见第四节）：只看 value 槽，ε 分量丢失，一阶导也可能静默错。\n- 在 tape 上的分支／数据相关控制流：记录的是实际走过的路径，导数就是该路径的导数——不是 bug，但把它当\"全局导数\"用会得到与解析解不一致的结果且无报错。\n\n**接法**\n\n自动微分在本章的位置是\"分解与迭代之上的梯度层\"：`cholesky` 的域是 `CommutativeScalar`，Dual 可用，所以\"分解里带导数\"是成立的——但前提正是第四节那条 `conj` 而不是 `abs2` 的口径。第六节之后回到数值主线，第七节把表示、访存、迭代串成一条能跑通的链。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "numeric",
+    "file": "NOTES.md",
+    "part": 7,
+    "parts": 9,
+    "section": "六、自动微分：dual 与 tape 的取舍"
+  }
+}

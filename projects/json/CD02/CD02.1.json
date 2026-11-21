@@ -5,9 +5,9 @@
   "title": "sequence · 总览",
   "src": {
     "file": "notebook/projects/codedesign/sequence/OUTLINE.md",
-    "sha256": "sha256:22a589f0bb8813371978045270f3638eb36458832f06880ae0b64e409eeaec46"
+    "sha256": "sha256:4f007c7078a01b00071115a388918f92eb67061c1fe3ab3a20d22bd128c7b95c"
   },
-  "notebook_commit": "b00906a9826a14b60de50c8c415b0ca62c0d67df",
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
   "notebook_dirty": false,
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "introduction",
       "title": "",
       "level": 0,
-      "content": "> **状态（2026-11-20）**：骨架。本章只落总览与一条主线；「单元表」中的 7 个单元尚未展开。\n\n> **判据**：给定负载（尾部追加 / 随机插入 / 遍历 / Top-K），能选出容器与配套算法，并给出退化条件。"
+      "content": "> **判据**：给定负载（尾部追加 / 随机插入 / 遍历 / Top-K），能选出容器与配套算法，并给出退化条件。"
     },
     {
       "id": "CD02.1:body.s01",

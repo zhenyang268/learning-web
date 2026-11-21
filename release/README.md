@@ -66,12 +66,13 @@ npm run release     # = npm run build + 把五份快照同步进 release/
 
 ## 版本
 
-- 生成日期：2026-11-14
-- 数据 commit：`3488a59`（数值库 106 / 408 159 / 数一 105 / 工程线 81）
-- 源内容仓：`notebook` @ `718f85c7`
+- 生成日期：2026-11-21
+- 六站快照：math 199 / emath 225 / cs408 160 / 数一 106 / 工程线 458 / 英一 40 单元
+- 导读侧车：560 个目标单元全部 done（cs408 112、数一 72、英一 6、工程线 43、数学系 199、工程数学 128）
+- 源内容仓：`notebook` @ `529acb5`
 
-## 当前已知缺口（2026-11-20）
+## 内容状态
 
-- **导读层覆盖未完成**：`math` 57/199、`emath` 0/128；`cs408` 112/112、`kaoyan` 72/72、`english1` 6/6、`projects` 43/43 已完成。未写单元在 `guide/<site>/_progress.json` 中为 `pending`，页面上不显示导语，不阻塞正文。
-- **代码设计七章是骨架**：`codedesign/` 七章的 `OUTLINE` 已列 46 个单元，`NOTES` 目前每章只有一条主线；各章 `OUTLINE.md` 顶部已标注「骨架」。
-- 因此本快照是**阶段性发布**，不是内容完整版；发布判据见 `build/guide/prompt/check-release.md`。
+- `codedesign/` 七章已从骨架扩成正文：46 个单元，`NOTES` 每章 5–8 节；
+- 导读层六站全部 done，`npm run check` 已包含 `check:guide`；
+- 本快照是内容完整版；发布判据见 `build/guide/prompt/check-release.md`。

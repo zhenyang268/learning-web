@@ -25,7 +25,7 @@
   "principle": "组合数一遍，几何量再累加一遍，两条路对上才算网格健康。",
   "connect": "往后，离散微分几何把角度亏损认成高斯曲率并给出余切权重，与这里的等式是同一个恒等式（AG10.3 之后接 CG 的离散部分）；切割图的刀数也由亏格决定，而亏格正是从这里反解出来的（AG08.1）。在线性代数一侧，特征等于同调群维数的带符号求和（AG10.2）。",
   "source": {
-    "unit": "notebook/Q_topology.tex",
+    "unit": "notebook/math/Q_topology.tex",
     "unitSha": "ede6b229a475"
   },
   "generated": {

@@ -1,0 +1,30 @@
+{
+  "schema": "doc-card/v1",
+  "code": "CD07.10",
+  "chapter": "CD07",
+  "title": "八、取舍表：同一对象的两种表示",
+  "src": {
+    "file": "notebook/projects/codedesign/numeric/NOTES.md",
+    "sha256": "sha256:9aee44d02e3d1b08b2d8c3e011e977ac990a3790c17fd9cfd6de90cbc44eed0d"
+  },
+  "notebook_commit": "529acb5dbd24b13df9a758635d66ebe212054e32",
+  "notebook_dirty": false,
+  "entries": [
+    {
+      "id": "CD07.10:body.s01",
+      "type": "extension",
+      "title": "八、取舍表：同一对象的两种表示",
+      "level": 2,
+      "content": "**判断句**：本章的判据只有一条，不是\"知道哪个格式更好\"，而是\"对同一个数学对象能写出两种表示的成本表、并给出切换的临界点与失效条件\"；没有临界点的对比只是偏好。\n\n**四张两表示表**\n\n*表 1：稠密 vs 稀疏（同一个 $A$）*\n\n| 项 | 稠密 `Matrix` | CSR | 临界点 |\n|---|---|---|---|\n| 存储 | $rows \\cdot cols \\cdot 8$ B | $nnz \\cdot 12 + (rows{+}1) \\cdot 4$ B | 密度约 12–20% 时同等 |\n| SpMV | $2\\,rows \\cdot cols$ flops，顺序流 | $2\\,nnz$ flops，`x` 间接寻址 | $\\bar{len}$ 小、密度低时稀疏赢 |\n| 分解 | LU/Cholesky 可用 | 不重写（需符号分解、填充控制、重排序） | 稀疏侧只保留 SpMV/CG/三对角 |\n| 失效 | 大 $n$ 时内存直接不可行 | 高密度时随机访存全面输 |\n\n*表 2：CSR vs COO vs CSC（同一个稀疏结构）*\n\n| 项 | CSR | COO | CSC |\n|---|---|---|---|\n| 连续的是 | 行 | 无（三元组列表） | 列 |\n| 构造 | 两次扫描 | 追加即 $O(1)$ | 两次扫描（按列） |\n| 按行取值 | 连续段 | 全扫 | 需二分 |\n| 插入非零元 | $O(nnz)$ 重排 | $O(1)$ | $O(nnz)$ 重排 |\n| 选它当 | 计算默认 | 装配期临时格式 | 列主元/列推进算法 |\n\n*表 3：占有 vs 视图（同一个张量）*\n\n| 项 | `Tensor`（占有） | `TensorView`（非占有） |\n|---|---|---|\n| 构造 | 分配 + 拷贝 | 指针 + shape + strides |\n| `slice`/`permute` | 需新分配 | 常数时间，零搬运 |\n| 别名风险 | 无 | 有，靠契约 |\n| 生命周期 | 自己管 | 不得长于宿主，无运行期检查 |\n| 非连续 `reshape` | 可以（新布局） | throw，除非显式 `Tensor<T>(view)` |\n\n*表 4：直接解 vs 迭代解（同一个 $Ax=b$）*\n\n| 项 | Cholesky/LU | CG |\n|---|---|---|\n| 前提 | 方阵；Cholesky 还要正定 | SPD（库不检查） |\n| 时间 | $O(n^3)$ | $O(\\text{iters} \\cdot (nnz + n))$ |\n| 内存 | $O(n^2)$ | $O(n)$（不含 $A$） |\n| 精度 | 由 $\\kappa$ 决定，可反复精化 | 受 $\\sqrt{\\epsilon}$ 失速地板限制 |\n| 何时必须换 | $A$ 稀疏且 $n$ 大 ⇒ CG | $A$ 病态到 CG 不收敛 ⇒ 直接法或加预条件 |\n\n**结构机制：为什么临界点能算出来**\n\n四张表的临界点都不是拍脑袋，来源是同一件事——**每次逻辑运算对应的实际访存量**。稠密侧是顺序流（一次 cache line 喂 8 个元素），稀疏侧是间接寻址（一次 cache line 只喂 1 个元素，且命中率由列号局部性决定）。于是\"快慢\"由密度与行长分布决定，而这两者都可以在装配后立刻算出来：$nnz$、$\\bar{len} = nnz/rows$、行长分布的最大值。\n\n由此得到本章最实用的一个判据形状：**任何表示对比的报表必须带 $nnz$ 与 $\\bar{len}$**。只报耗时的对比无法解释，也无法在新数据上预测。\n\n**最小算例：稠密 LU 与 CG 的规模交叉（估算）**\n\n同一 Poisson 型 $A$，$n = 1024$：\n\n- 稠密 LU：约 $\\tfrac{2}{3} n^3 \\approx 7 \\times 10^8$ flops，矩阵本体 $8 \\times 1024^2 \\approx 8$ MB。\n- CG：$nnz \\approx 3n = 3072$，单步约 $3 \\times 10^3$ flops 量级再加 $O(n)$ 的向量运算；迭代数 $\\sim O(n)$ 时总 flops 约 $3 \\times 10^6$ 量级。\n\n量级差两个数量级。但要说清这不是\"CG 更快\"：在 $n$ 很小、初值差、$\\kappa$ 大时，CG 的迭代数可能贴到 $n$，或直接停滞，此时直接法更省心。判据要的是这张表，不是一句结论。\n\n**失效条件**\n\n- 对比表里不写 $nnz$：任何稀疏格式的收益都无法归因，也无法在新规模上预测。\n- 用 `ToDense` 把稀疏矩阵转回来做对拍，然后把结果当生产路径的口径：`ToDense` **只给对拍用**，出现在生产路径上说明稀疏化没带来收益。\n- 对拍判据用相对误差判近零分量：误差量级是 $O(nnz \\cdot \\epsilon \\cdot \\max|A_{ij}| \\cdot \\max|x_j|)$，判据应用 $\\lVert y_{\\text{csr}} - y_{\\text{dense}} \\rVert_\\infty$ 配绝对阈值量级，不要拿相对误差去判近零分量。\n- 用 Cholesky 作 SPD 判据但把异常类型当细节：非方阵是 `invalid_argument`、非正定是 `runtime_error`，两类必须在 catch 分支上分开（且文件里已如实记录：非正定用 `runtime_error` 是历史遗留，新代码该用 `domain_error`）。\n- 把 `Dual` 路线与 tape 的额外内存对比写成实测数字：未经测量的一律写\"未知/估算\"，不把估算混进实测。\n\n**接法**\n\n八节到此闭合：第一、二节定\"布局与视图\"，第三节定\"索引表示\"，第四节定\"结构前提\"，第五、六节是两类\"复用/记录\"的取舍，第七节把一切拼成可跑的链，本节把链反过来做成一张可复用的取舍表。后续若要扩，正确的位置是在这张表里加\"预条件\"一列（Jacobi/ILU），而不是给某一格加实现细节——那是 `graphics/` 的事，不是本章的判据。"
+    }
+  ],
+  "meta": {
+    "kind": "project-chapter",
+    "group": "codedesign",
+    "project": "numeric",
+    "file": "NOTES.md",
+    "part": 9,
+    "parts": 9,
+    "section": "八、取舍表：同一对象的两种表示"
+  }
+}
