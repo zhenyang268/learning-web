@@ -21,8 +21,10 @@
   "principle": "卡住的那一步就是缺口所在，速查只回答「这一步默认我会什么」。",
   "connect": "往后是五条桥接主线：旋转插值的几何（NL15.1）、变换与正交基（NL16.1）、方程与对称的网（NL17.1）、概率地图（NL18.1），数值一侧的 RK4 与稳定性分析（NM01.1）也踩在其中的分析条目上。",
   "source": {
-    "unit": "notebook/math/bridges/appendix_foundations.tex",
-    "unitSha": "c2bea8e8860e"
+    "unit": "emath/json/NL14/NL14.2.json",
+    "unitSha": "2eaf9471b44c",
+    "note": "notebook/math/bridges/appendix_foundations.tex",
+    "noteSha": "c2bea8e8860e"
   },
   "generated": {
     "model": "coding-agent",

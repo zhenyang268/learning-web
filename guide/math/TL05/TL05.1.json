@@ -3,7 +3,7 @@
   "code": "TL05.1",
   "site": "math",
   "scope": "unit",
-  "lead": "三角公式没有成立条件可谈，能出错的地方全在把式子当成另一种运算这一步。",
+  "lead": "三角公式的成立条件只有弧度制与定义域，能出错的地方全在把式子当成另一种运算这一步。",
   "why": [
     {
       "h": "为什么要砍掉背表的量",
@@ -21,8 +21,10 @@
   "principle": "先分辨这一项在做相加还是做复合，再决定展开哪条公式。",
   "connect": "往前，配方与符号处理是同一套代数手法（TL02.2）。往后，和角的复合结构在复数乘法里重新出现（TL05.2），降幂形式直接支撑常用三角积分（TL05.4），正交性的证明则要借积化和差（TL05.3）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL05/TL05.1.json",
+    "unitSha": "7858a71447e3",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

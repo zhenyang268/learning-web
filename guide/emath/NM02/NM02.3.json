@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先看解光滑不光滑、区域规则不规则，两问都通过才谈指数收敛。",
-  "connect": "与 NM02.2 的对比是精度换灵活：那边局部基、稀疏矩阵、任意几何，这边全局基、稠密矩阵、只认规则或周期区域。非周期区间改用 NM04.1 的多项式与 NM04.2 的节点分布，含间断的问题转到有限体积线。",
+  "connect": "与 NM02.2 的对比是精度换灵活：那边局部基、稀疏矩阵、任意几何，这边全局基、稠密矩阵、只认规则或周期区域。非周期区间改用 NM04.2 的多项式与节点分布，",
   "source": {
-    "unit": "notebook/math/G_numeric.tex",
-    "unitSha": "63e2fa138564"
+    "unit": "emath/json/NM02/NM02.3.json",
+    "unitSha": "fd56a4825c8c",
+    "note": "notebook/math/G_numeric.tex",
+    "noteSha": "63e2fa138564"
   },
   "generated": {
     "model": "coding-agent",

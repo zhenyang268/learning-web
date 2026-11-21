@@ -21,8 +21,10 @@
   "principle": "先看量是乘积、绝对值、导数还是平均，再看前提满不满足，最后才对拍数值。",
   "connect": "往上，五件工具的陈述与证明分别在不等式那两处（TL03.1、TL03.3）；往下它只是导航，真正被导航的是能量法第几步该掏哪件（TL09.2）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL09/TL09.4.json",
+    "unitSha": "f3ea3a3de64b",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

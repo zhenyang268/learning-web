@@ -21,8 +21,10 @@
   "principle": "两端有限把指标方程筛成非负整数，族由此离散并正交。",
   "connect": "它与 EQ01.15 是同一角色的两种几何：一个在圆柱上，一个在球面上。两者的共同来历由 EQ01.14 的指标方程给出，统一描述见 EQ01.17，正交性的普遍证明在 EQ01.12。球面上真正用到的一步在 CG05.1。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.16.json",
+    "unitSha": "3a0e9e885b9d",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

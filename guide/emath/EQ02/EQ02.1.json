@@ -19,10 +19,12 @@
     }
   ],
   "principle": "箭头场只记原点处的一阶信息：先用它表达对称，再谈能否沿它还原整族。",
-  "connect": "往前是 EQ01.9 给的一阶系统的局部唯一性，沿箭头积分能还原整族正靠它。本节产出的向量场是 EQ02.2 写对称条件的输入，也决定 EQ02.4 降阶时用哪个方向作新坐标；两处的记号与这里的定义同一套。",
+  "connect": "往前是 EQ01.9 给的一阶系统的局部唯一性，沿箭头积分能还原整族正靠它。这里产出的向量场是 EQ02.2 写对称条件的输入，也决定 EQ02.4 降阶时用哪个方向作新坐标；两处的记号与这里的定义同一套。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.1.json",
+    "unitSha": "8ee5fd792e0c",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

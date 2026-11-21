@@ -21,8 +21,10 @@
   "principle": "先按连续变形把闭道路归类，再问这些类如何首尾相接成群。",
   "connect": "往下，基本群平凡的空间仍有更高维的洞，把闭链模去边界才能算出来（AG10.2）；分辨同伦类的方法也可换成用微分形式读拓扑（AG11.1）。再往前一步，绕洞的闭道路本身就是商空间粘合的一种（AG08.1）。",
   "source": {
-    "unit": "notebook/math/Q_topology.tex",
-    "unitSha": "ede6b229a475"
+    "unit": "json/AG09/AG09.1.json",
+    "unitSha": "c7ed35a3f5c8",
+    "note": "notebook/math/Q_topology.tex",
+    "noteSha": "ede6b229a475"
   },
   "generated": {
     "model": "coding-agent",

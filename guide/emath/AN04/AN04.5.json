@@ -21,8 +21,10 @@
   "principle": "先验有界与下方控制这两个不等式，比任何具体求解过程都更值钱。",
   "connect": "上游是 AN04.4：强制条件由零边界上的梯度范数等价一次性兑出；下游 NM02.2 把同一形式限制到有限维子空间，刚度矩阵就是它的离散装配。本章末的 AN04.6 接着把已经拿到的弱解升格为经典解，那里才是逐点方程的回归。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN04/AN04.5.json",
+    "unitSha": "8764524135cd",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

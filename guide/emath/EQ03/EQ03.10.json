@@ -21,8 +21,10 @@
   "principle": "分母的根给增长，离原点最近的根给可用半径，两件事用同一组根回答。",
   "connect": "同样的打包在连续侧是 EQ02.13 的变换，逐项对照见 EQ03.3 的基与对角化。分母根与特征根的倒数关系，与 EQ03.9 里重数不足时要补多项式因子是同一件事的两面。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.10.json",
+    "unitSha": "fc5dd0974c2d",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

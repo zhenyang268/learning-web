@@ -23,10 +23,12 @@
     }
   ],
   "principle": "度量的分量随坐标变，曲率张量不随坐标变；能当作几何的只有后者。",
-  "connect": "往下，联络拼出曲率张量，缩并得到 Ricci 与标量曲率，其中的测地线距离直接支撑形状匹配与黎曼优化（AG13.4 与计算机图形一侧的测地计算）。物理一侧，把正定换成不定号就是时空的度量，联络成为规范势的雏形（AG13.4）。",
+  "connect": "往下，联络拼出曲率张量，缩并得到 Ricci 与标量曲率，其中的测地线距离直接支撑形状匹配与黎曼优化。物理一侧，把正定换成不定号就是时空的度量，联络成为规范势的雏形。",
   "source": {
-    "unit": "notebook/math/B_algebra.tex",
-    "unitSha": "3327710a3e0c"
+    "unit": "json/AG13/AG13.3.json",
+    "unitSha": "82c541d0c832",
+    "note": "notebook/math/B_algebra.tex",
+    "noteSha": "3327710a3e0c"
   },
   "generated": {
     "model": "coding-agent",

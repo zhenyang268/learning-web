@@ -3,7 +3,7 @@
   "code": "EQ01.12",
   "site": "emath",
   "scope": "unit",
-  "lead": "这一节把一串正交函数从哪来交代清楚：它们是同一个算子在不同边界下的特征函数。",
+  "lead": "这里把一串正交函数从哪来交代清楚：它们是同一个算子在不同边界下的特征函数。",
   "why": [
     {
       "h": "为什么要有统一说法",
@@ -21,8 +21,10 @@
   "principle": "对称性给正交，权重与边界条件一并算在定义里。",
   "connect": "这些族往里是 EQ01.13 的常点展开与 EQ01.15、EQ01.16 的两种特殊方程的自然产物；往外送给 EQ01.17 的统一视角。分离变量把 PDE 拆成这种问题时，见 EQ02.10；球面上展开的工程版本在 CG05.1。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.12.json",
+    "unitSha": "fab1afff5748",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

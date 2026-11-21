@@ -21,8 +21,10 @@
   "principle": "先问生成元自不自伴，再问它的谱；演化的一切定性结论都从这两点读出。",
   "connect": "上游是可观测量的自伴性：能量只是其中最常用的一个（PH14.1）。往下，指数演化在位置表象里被写成时间切片与路径求和（PH17.1），切片法的完整推导发生在另一章（PH19.1）；角动量的量子化也靠这套对易与谱的语言（PH16.1）。",
   "source": {
-    "unit": "notebook/math/F_quantum.tex",
-    "unitSha": "3a8bb362cef9"
+    "unit": "json/PH15/PH15.1.json",
+    "unitSha": "eb08b959e19e",
+    "note": "notebook/math/F_quantum.tex",
+    "noteSha": "3a8bb362cef9"
   },
   "generated": {
     "model": "coding-agent",

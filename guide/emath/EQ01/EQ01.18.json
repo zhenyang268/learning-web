@@ -3,7 +3,7 @@
   "code": "EQ01.18",
   "site": "emath",
   "scope": "unit",
-  "lead": "右端不是四类形状时，这一节解决的是把它拆成点源再逐点积分。",
+  "lead": "右端不是四类形状时，这里要解决的是把它拆成点源再逐点积分。",
   "why": [
     {
       "h": "为什么需要点源响应",
@@ -20,8 +20,10 @@
   ],
   "connect": "四种求特解的路在这里排成一张分工表，前两种是 EQ01.7 与 EQ01.8。把响应按特征函数展开，就回到 EQ01.12 的谱语言，六族函数在那里被统一起来；偏微分方程的基本解与传播子是同一个构造的升级版。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.18.json",
+    "unitSha": "8b0fb9c8d990",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

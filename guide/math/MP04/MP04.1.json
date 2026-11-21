@@ -25,8 +25,10 @@
   "principle": "作用量只给驻定不给极小；拉格朗日量是动能减势能；守恒量与能量括号为零等价。",
   "connect": "往前是变分原理与哈密顿形式（PH01.1、PH03.1）。往后括号一路给守恒量（PH02.1），一路接回经典场的变分表述（PH04.1）。经典括号换成对易子的那条规则，接着下一章（MP05.1）；作用量作为相位权重的用法，则在后面的量子线里出现。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP04/MP04.1.json",
+    "unitSha": "6ea52c9c484e",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

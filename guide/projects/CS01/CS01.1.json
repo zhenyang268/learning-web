@@ -24,8 +24,10 @@
   ],
   "connect": "往前的数学与语言基础见 DX01.1，那里给出复杂度与归纳前提在原语层的用法。往后的运行时一侧接 SO01.1 的系统调用界面与 SO02.1 的内核实现，栈帧、页表与信号在那里从断言变成真实对象。",
   "source": {
-    "unit": "notebook/projects/csapp/OUTLINE.md",
-    "unitSha": "d65ec356bf47"
+    "unit": "projects/json/CS01/CS01.1.json",
+    "unitSha": "8435d8187a48",
+    "note": "notebook/projects/csapp/OUTLINE.md",
+    "noteSha": "d65ec356bf47"
   },
   "generated": {
     "model": "coding-agent",

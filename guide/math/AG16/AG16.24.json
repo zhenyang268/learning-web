@@ -23,10 +23,12 @@
     }
   ],
   "principle": "拓扑上说不清的「洞」，换成整数之后可以算、可以对账。",
-  "connect": "上游是链复形与 Euler 示性数，同调的维数与两种算法的一致在那里给出（AG15.12、AG15.13）。往下这一节并入全篇总结里的几何—拓扑一行，与 Lie 群—Lie 代数—拓扑的三条双向箭头相接（AG16.25、AG16.26）。",
+  "connect": "上游是链复形与 Euler 示性数，同调的维数与两种算法的一致在那里给出（AG15.12、AG15.13）。往下这一段并入全篇总结里的几何—拓扑一行，与 Lie 群—Lie 代数—拓扑的三条双向箭头相接（AG16.25、AG16.26）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.24.json",
+    "unitSha": "a2d31f8a5a5a",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

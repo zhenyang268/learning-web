@@ -21,8 +21,10 @@
   "principle": "信息越全收敛越快，代价也越大；先算条件数，再决定用哪一层。",
   "connect": "每步的线性系统由 NM03.1 提供，那边讨论的条件数在这里决定锯齿的严重程度。LCP 的互补条件正是只有不等式约束时的特例，见 NM06.1；辛积分器在离散层面把变分条件直接抄下来，见 NM07.1。",
   "source": {
-    "unit": "notebook/math/G_numeric.tex",
-    "unitSha": "63e2fa138564"
+    "unit": "emath/json/NM05/NM05.1.json",
+    "unitSha": "2bfe591398d7",
+    "note": "notebook/math/G_numeric.tex",
+    "noteSha": "63e2fa138564"
   },
   "generated": {
     "model": "coding-agent",

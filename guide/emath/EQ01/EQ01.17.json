@@ -3,7 +3,7 @@
   "code": "EQ01.17",
   "site": "emath",
   "scope": "unit",
-  "lead": "六族函数长得像，这一节解决的是把共同点归到一条自伴要求上。",
+  "lead": "六族函数长得像，这里要解决的是把共同点归到一条自伴要求上。",
   "why": [
     {
       "h": "为什么「所有」站不住",
@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先确认算子在给定区间上自伴且解取全，再谈那些共同性质。",
-  "connect": "这一节把 EQ01.12 的谱问题收成一张总表，两族的实例分别是 EQ01.14 的柱坐标径向与 EQ01.16 的球坐标角向。完整性的那条谱定理在下一节 EQ01.18 换成积分核再出现一次，非整数阶的系数则要借伽马函数才能写出来。",
+  "connect": "这里把 EQ01.12 的谱问题收成一张总表，两族的实例分别是 EQ01.15 的柱坐标径向与 EQ01.16 的球坐标角向。完整性的那条谱定理在下一节 EQ01.18 换成积分核再出现一次，非整数阶的系数则要借伽马函数才能写出来。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.17.json",
+    "unitSha": "7ddca40c7bdd",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "正交系只保证不漏能量外的部分；完整性才把不等式修成等式。",
   "connect": "往前，展开的合法性来自正交分解，部分和就是投影，最近点存在且唯一（AN02.2）；往前推导数一侧，同一套坐标让算子近似对角，谱分解与主增益随之可读（AN02.4）。往后，分布与弱导数会给不光滑对象一套更宽的登记方式（AN02.5）。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN02/AN02.3.json",
+    "unitSha": "c68872499caf",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

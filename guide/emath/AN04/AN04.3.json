@@ -21,8 +21,10 @@
   "principle": "先问函数和它的每一阶弱导数是否都留在同一可积档里，再问别的性质。",
   "connect": "往后接 AN04.4 的三件套：嵌入把这份导数余量兑成更好的可积性或连续性，紧嵌入给出取收敛子列的资格；本章末的 AN04.6 再用同一条路把弱解升格为经典解。上游是 AN04.2 的弱导数约定，工程的落点是 NM02.2 的分片线性试函数空间。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN04/AN04.3.json",
+    "unitSha": "c1cfc4807f98",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

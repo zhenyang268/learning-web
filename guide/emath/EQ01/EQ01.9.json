@@ -19,10 +19,12 @@
     }
   ],
   "principle": "定性结论要写清两件事：右端够不够光滑，保证的是哪个区间。",
-  "connect": "上一步取 EQ01.5 的线性方程与 EQ01.8 的通解，本节说明那些解为什么唯一。证明用的压缩映射来自 AN02.1，整理成算子语言后可接 EQ01.10 的线性系统与 EQ01.11 的稳定性；若只关心存在性，这条要求还能放宽。",
+  "connect": "上一步取 EQ01.5 的线性方程与 EQ01.8 的通解，这里说明那些解为什么唯一。证明用的压缩映射来自 AN02.1，整理成算子语言后可接 EQ01.10 的线性系统与 EQ01.11 的稳定性；若只关心存在性，这条要求还能放宽。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.9.json",
+    "unitSha": "28798aaacf08",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "带符号的等式成立，靠三件事同时就位：定向、可微、边界取诱导定向。",
   "connect": "往后，两层求导必定归零这件事把「恰当」与「闭」分开，缝隙正是拓扑不变量的入口，链与边界算子由此接上。往前，集中在一处的对象要先能被登记，才谈得上把它们写进积分（AN02.5）。工程侧则落到离散外微分与守恒律的精确保持上。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN03/AN03.1.json",
+    "unitSha": "fc25f68b6afa",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

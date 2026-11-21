@@ -21,8 +21,10 @@
   "principle": "表单产生的形态先认生产线；绝对值与定义域连着结果一起写。",
   "connect": "凑微分与分部两条线的操作细节回到 TL07.2，部分分式的分块依据在 TL02.4。往后 TL08.2 的递推、PH11.1 的熵公式都以这张表为基本粒子。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL07/TL07.3.json",
+    "unitSha": "989ea5726bc4",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

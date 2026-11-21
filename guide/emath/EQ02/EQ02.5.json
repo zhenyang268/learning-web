@@ -21,8 +21,10 @@
   "principle": "主部的符号类型就是方程的型，型决定信息怎么走与给几个条件。",
   "connect": "判型之后分三路：波的 d'Alembert 通解（EQ02.6）、热核与扩散（EQ02.7）、调和函数的极值原理（EQ02.8）；定解条件的个数由型决定（EQ02.9）。数值上再往后的显式与隐式格式取舍，也从这里的有限与无限传播速度分岔（EQ04.1）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.5.json",
+    "unitSha": "3705d5fe5963",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

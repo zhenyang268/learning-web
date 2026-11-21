@@ -21,8 +21,10 @@
   "principle": "先测离散对流项与速度的内积，再谈这个格式稳不稳。",
   "connect": "它的上游是把通量相消讲清楚的守恒框架，见 CG17.1；同一套配对算子还要撑住散度自由，见 CG17.3；时间侧另有自己的稳定性域，见 CG17.4。带约束力或激波的算例会让这条不等式失效，落点在 CG12.1。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG17/CG17.2.json",
+    "unitSha": "8a4c6a3937ad",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

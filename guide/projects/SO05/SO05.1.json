@@ -24,8 +24,10 @@
   ],
   "connect": "它把实现底座里讲过的页表权限位与陷入入口换到对抗视角再看一遍（SO02.1），内存边界那侧的分层解释在对比那篇（SO03.1）。设备驱动的错误路径与这里的所有权、越界讨论互相印证（SO04.1）；把一台机器切开后边界画在哪，是虚拟化那篇的问题（SO06.1）。",
   "source": {
-    "unit": "notebook/projects/os/security/OUTLINE.md",
-    "unitSha": "e931c5bc8125"
+    "unit": "projects/json/SO05/SO05.1.json",
+    "unitSha": "62ac16902f54",
+    "note": "notebook/projects/os/security/OUTLINE.md",
+    "noteSha": "e931c5bc8125"
   },
   "generated": {
     "model": "coding-agent",

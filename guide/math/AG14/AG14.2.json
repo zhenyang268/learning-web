@@ -21,8 +21,10 @@
   "principle": "先问保的是什么几何量，再数独立约束，最后分开读紧性。",
   "connect": "往下，每族取单位元处的切空间得到经典李代数系列（AG15.2）；保距与保复内积两支的括号结构由结构常数收拾（AG14.9）。低维实例接在 AG14.3 与 AG14.4，而作用于位置的旋转配平移给出 SE(3)，是刚体变换与螺旋运动的起点（AG16.16）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.2.json",
+    "unitSha": "9833170a21d6",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

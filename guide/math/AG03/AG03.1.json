@@ -21,8 +21,10 @@
   "principle": "先核对三条封闭性，再看这族开集相对于已有拓扑是加细还是加粗。",
   "connect": "往下，开集定了，连续性就是开集的原像仍开，公理里那个不对称直接决定了连续映射把紧集送到紧集（AG04.1）；同一条开集反过来又用最细的方式粘出新空间（AG08.1）。再往后，紧性作为唯一一条对任意并敏感的性质登场（AG06.1）。",
   "source": {
-    "unit": "notebook/math/Q_topology.tex",
-    "unitSha": "ede6b229a475"
+    "unit": "json/AG03/AG03.1.json",
+    "unitSha": "883dcd09ac4a",
+    "note": "notebook/math/Q_topology.tex",
+    "noteSha": "ede6b229a475"
   },
   "generated": {
     "model": "coding-agent",

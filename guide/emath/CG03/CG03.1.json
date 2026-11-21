@@ -21,8 +21,10 @@
   "principle": "公式只是被积函数的定义，遮挡与否留给估计器决定；两者分工清楚，才不至于把测量当定义。",
   "connect": "它的上游是 CG02.1 的自指等式，展开所依赖的收敛条件也在那里给出。往下 CG04.1 在这个积分上跑蒙特卡洛，CG24.1 的机会采样与多重重要性只替换抽样密度而不改被积函数，PR09.1 给出误差随样本数的量级。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG03/CG03.1.json",
+    "unitSha": "0aee3414c8ae",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

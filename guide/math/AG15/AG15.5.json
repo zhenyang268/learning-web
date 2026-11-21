@@ -23,10 +23,12 @@
     }
   ],
   "principle": "边数记长度比的绝对信息，箭头补上方向，其余全是冗余。",
-  "connect": "往下，图上每个节点与边写成一个整数矩阵，分类数据被完整编码（AG15.6）。往物理一侧，群的图样就是规范群的身份证，读数见 AG16.5。若把节点换成一般整数继续画下去，得到的不再是有限清单，这条推广在 AG16.4 的语境里被用到。",
+  "connect": "往下，图上每个节点与边写成一个整数矩阵，分类数据被完整编码（AG15.6）。往物理一侧，群的图样就是规范群的身份证，读数见 AG16.5。若把节点换成一般整数继续画下去，得到的不再是有限清单，这条推广在仿射李代数的语境里被用到。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.5.json",
+    "unitSha": "7308c78834c4",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

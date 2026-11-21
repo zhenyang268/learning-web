@@ -3,7 +3,7 @@
   "code": "EQ04.5",
   "site": "emath",
   "scope": "unit",
-  "lead": "这一节解决的是：让推进不再受步长限制，代价是把误差从稳定性换成了抹平。",
+  "lead": "这里要解决的是：让推进不再受步长限制，代价是把误差从稳定性换成了抹平。",
   "why": [
     {
       "h": "为什么先回溯再插值",
@@ -21,8 +21,10 @@
   "principle": "沿特征线倒走一步再插值，换来无条件稳定；付出去的代价是插值抹平的幅值。",
   "connect": "对流项这样处理之后，压力投影与不可压流体会在 EQ04.7 接上；推动力那一步的显式稳定限制见 EQ04.1，放大因子的分析框架来自 EQ04.2；特征线本身则回到 EQ02.11 的几何读法。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.5.json",
+    "unitSha": "414f80fd7404",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

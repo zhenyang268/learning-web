@@ -25,8 +25,10 @@
   "principle": "判据二分：改机器可见状态要有零分歧，只改结构的要有周期、面积、频率三数表。",
   "connect": "读侧的归因口径来自微架构那一篇（CP02.1），指令与调用边界的细节回到汇编那一篇（CP01.1）；生成什么指令序列由编译器那一头决定（CP04.1），进程与特权级留给内核那侧（SO02.1）。",
   "source": {
-    "unit": "notebook/projects/cpu/riscv-core/OUTLINE.md",
-    "unitSha": "b5417828cc22"
+    "unit": "projects/json/CP03/CP03.1.json",
+    "unitSha": "93efb8e42f49",
+    "note": "notebook/projects/cpu/riscv-core/OUTLINE.md",
+    "noteSha": "b5417828cc22"
   },
   "generated": {
     "model": "coding-agent",

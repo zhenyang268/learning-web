@@ -25,8 +25,10 @@
   "principle": "李代数只是单位元处的线性化，它记住局部乘法，不记得群整体是什么形状。",
   "connect": "往后一张乘法表就够描述整个代数，结构常数因此成为唯一判据（AG14.9）。再往后用指数映射把代数送回群，误差项由括号给出（AG14.10），半单性则靠 Killing 形式判定（AG15.1）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.8.json",
+    "unitSha": "cdfaa850ca67",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

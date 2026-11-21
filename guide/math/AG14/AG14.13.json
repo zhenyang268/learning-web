@@ -23,10 +23,12 @@
     }
   ],
   "principle": "实形式里六维代数不可分裂；复化后化为一对互相交换的三维修旋转代数。",
-  "connect": "往后，两对自旋标签直接给出旋量的分量数与场分类，相对论性渲染与粒子模拟都在那里用到（AG16.7）。同一套复合技巧在紧的情形下化成两个复代数的和，拓扑差别留在群层面（AG14.12、AG15.3）。",
+  "connect": "往后，两对自旋标签直接给出旋量的分量数与场分类，相对论性渲染与粒子模拟都在那里用到（AG16.7）。同一套复合技巧在紧的情形下化成两份三维修旋转代数的和，拓扑差别留在群层面（AG14.12）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.13.json",
+    "unitSha": "13a957045f18",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

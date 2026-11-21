@@ -21,8 +21,10 @@
   "principle": "同一个核换一种表示，代价换的是收敛速度，不是结果。",
   "connect": "核的定义与吸收边界条件的方式在 EQ02.14，谱从哪来见 EQ03.8，曲线坐标系下该用哪个基由 EQ03.12 给；维度一升，核的奇异性还会变强，EQ03.14 会接着讲这一点。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.13.json",
+    "unitSha": "eda42f2930c6",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

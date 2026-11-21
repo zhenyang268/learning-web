@@ -25,8 +25,10 @@
   "principle": "先把方程写到只含一阶导数，再选局部支撑的基把它切成稀疏系统。",
   "connect": "理论依据在 EQ02.15，那里给出双线性形式的连续与强制，保证离散系统可逆。同样一批节点值在差分里得到同一副模板（EQ04.1），再往后刚度矩阵与质量矩阵合成广义特征值问题（EQ03.8）。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.3.json",
+    "unitSha": "6938bd900afb",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

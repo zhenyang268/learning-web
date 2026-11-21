@@ -3,7 +3,7 @@
   "code": "EQ01.2",
   "site": "emath",
   "scope": "unit",
-  "lead": "恰当判据查不通时，这一节解决的是缩放因子怎么定。",
+  "lead": "恰当判据查不通时，这里要解决的是缩放因子怎么定。",
   "why": [
     {
       "h": "为什么不能随便乘一个因子",
@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先查混合偏导是否相等，再决定要不要找缩放因子。",
-  "connect": "缩放因子的两个特例在 EQ01.3 变成一阶线性方程的标准解法，那一节的因子只依赖自变量。同样的构造在 EQ01.8 换成让常数变动，用于任意右端；第三章的 Laplace 变换提供第三条化代数的路。更一般的因子理论回到 EQ02.15 的偏微分版本。",
+  "connect": "缩放因子的两个特例在 EQ01.3 变成一阶线性方程的标准解法，那一节的因子只依赖自变量。同样的构造在 EQ01.8 换成让常数变动，用于任意右端；第二章的 Laplace 变换提供第三条化代数的路（EQ02.13）。更一般的因子理论回到偏微分版本。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.2.json",
+    "unitSha": "0ed5f00b5b3c",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "结论必须能落到线程、帧、源码行与访问地址这四项。",
   "connect": "这份管证据怎么取，取到之后归因与优化在性能工程（EG03.1）；先算量级再定结构的取舍在系统设计（EG04.1）；偶发机制的观测口径在陷阱与边界（EG05.1），三处都回到这里取证据。",
   "source": {
-    "unit": "notebook/projects/eng/debug-toolchain/OUTLINE.md",
-    "unitSha": "9fe86e40b7e2"
+    "unit": "projects/json/EG02/EG02.1.json",
+    "unitSha": "974ae2cffcb0",
+    "note": "notebook/projects/eng/debug-toolchain/OUTLINE.md",
+    "noteSha": "9fe86e40b7e2"
   },
   "generated": {
     "model": "coding-agent",

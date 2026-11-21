@@ -24,8 +24,10 @@
   ],
   "connect": "往后十二项支撑层用「不能不读」的同一判据接续（MP13.1），再往后工具层换成触发条件（MP14.1）。教材版本的同一批章节见 MP11.1。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP12/MP12.1.json",
+    "unitSha": "e33133b3e3bc",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

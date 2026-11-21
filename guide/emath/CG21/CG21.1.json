@@ -21,8 +21,10 @@
   "principle": "光程差与相干长度之比先定，剩下的才轮到叠加方式。",
   "connect": "相位本身由确定性的波场给出，见 CG18.1；双缝那类干涉图案的分布落在 CG19.1；辐射传输方程默认不相关地累加强度，这一假设靠的就是相干长度远小于路径长度，依据见 CG22.1。",
   "source": {
-    "unit": "notebook/math/J_rtx.tex",
-    "unitSha": "03d34bf9e80c"
+    "unit": "emath/json/CG21/CG21.1.json",
+    "unitSha": "86eb0bbb1a74",
+    "note": "notebook/math/J_rtx.tex",
+    "noteSha": "03d34bf9e80c"
   },
   "generated": {
     "model": "coding-agent",

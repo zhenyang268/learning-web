@@ -25,8 +25,10 @@
   "principle": "把结构写进离散格式，长期行为自动跟上；把结构留给步长，它会累积成漂移。",
   "connect": "与 RK4 的对照是这一对的主线：那边追局部误差阶，这边守相空间结构（NM01.1）。偏微分方程离散后每一步的时间推进都要在这里二选一（NM02.1），更系统的变分视角则在变分积分器那一支延伸（NM07.1）。",
   "source": {
-    "unit": "notebook/math/G_numeric.tex",
-    "unitSha": "63e2fa138564"
+    "unit": "emath/json/NM01/NM01.2.json",
+    "unitSha": "56991b83a52f",
+    "note": "notebook/math/G_numeric.tex",
+    "noteSha": "63e2fa138564"
   },
   "generated": {
     "model": "coding-agent",

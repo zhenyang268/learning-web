@@ -21,8 +21,10 @@
   "principle": "要求最近点前，先确认子空间闭、空间完备、范数真来自内积。",
   "connect": "往后，投影系数逐项算出要靠正交基与完备正交系，能量账目由 Parseval 结清（AN02.3）；同一个内积几何在算子一侧变成自伴与谱分解，主方向与主增益随之出现（AN02.4）。下游的拟合与光照预计算都只是这条定理的算法外壳。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN02/AN02.2.json",
+    "unitSha": "213f3b75f5dc",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

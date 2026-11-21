@@ -25,8 +25,10 @@
   "principle": "回路能否缩成一点，决定的不是维数，而是一个空间的离散不变量。",
   "connect": "往下，这套回路分类被用来判定规范场的整体结构，丛与特征类接手全局信息（AG15.11），微分形式层面的读数见 AG15.12。物理一侧，绕数解释的干涉与涡旋落在 AG16.4，自旋与双层结构收在 AG16.2。回到代数，单连通与否正是半整数标号出现的理由（AG15.7）。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.9.json",
+    "unitSha": "8bfd9b135e2b",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

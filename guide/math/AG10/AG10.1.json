@@ -25,8 +25,10 @@
   "principle": "先剖分、再定系数、然后带符号取边界；三者一错，后面的商群不再有意义。",
   "connect": "往后一步是把核摸去像写成 $H_k$，秩给出 Betti 数与 Euler 特征，闭曲面上的离散 Gauss--Bonnet 就在那里对接（AG10.2）。同调与同伦比对的账记在 AG10.3，连续一侧的对应物是微分形式的 $d^2=0$（AG11.1）。",
   "source": {
-    "unit": "notebook/math/Q_topology.tex",
-    "unitSha": "ede6b229a475"
+    "unit": "json/AG10/AG10.1.json",
+    "unitSha": "62f305b0e733",
+    "note": "notebook/math/Q_topology.tex",
+    "noteSha": "ede6b229a475"
   },
   "generated": {
     "model": "coding-agent",

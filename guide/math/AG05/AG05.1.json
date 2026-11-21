@@ -21,8 +21,10 @@
   "principle": "分离公理给的是分辨能力，可数性给的是分辨所需的材料，两者互不代替。",
   "connect": "正规加第二可数就落回度量空间，这条线通向度量化定理与 Urysohn 引理。紧性在 Hausdorff 条件下才逼出闭与正规（AG06.1），商空间却可能把 Hausdorff 挤掉（AG08.1）。函数空间的弱拓扑要重新验证 Hausdorff，见分析册的弱收敛一节。",
   "source": {
-    "unit": "notebook/math/Q_topology.tex",
-    "unitSha": "ede6b229a475"
+    "unit": "json/AG05/AG05.1.json",
+    "unitSha": "a8b5502b6b64",
+    "note": "notebook/math/Q_topology.tex",
+    "noteSha": "ede6b229a475"
   },
   "generated": {
     "model": "coding-agent",

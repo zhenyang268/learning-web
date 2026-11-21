@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先求特征函数再叠加：分离变量不是技巧，而是在一组正交基上分项记账。",
-  "connect": "上游 EQ02.5 的三型判据决定这个问题该用什么手法，本节只负责有界区域。系数公式依赖 EQ01.12 的正交性结论；区域不是矩形时改走 EQ03.12 的坐标选择。往下与 EQ02.14 的核表达互为重生，同一份解两种写法。",
+  "connect": "上游 EQ02.5 的三型判据决定这个问题该用什么手法，这里只负责有界区域。系数公式依赖 EQ01.12 的正交性结论；区域不是矩形时改走 EQ03.12 的坐标选择。往下与 EQ02.14 的核表达互为重生，同一份解两种写法。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.10.json",
+    "unitSha": "47d98d23daf4",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

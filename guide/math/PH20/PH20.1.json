@@ -21,8 +21,10 @@
   "principle": "判断一条路径是否留下，看它附近的相位是否几乎不变，而不是看它的作用量是否最小。",
   "connect": "往后是两件精确可算的例子：自由粒子与谐振子的传播子（PH21.1、PH21.2）。再往后，同一套驻定思想在虚时间下变成配分函数（PH22.1），并与渲染里的镜面反射共用一条驻定原理（PH23.1）。",
   "source": {
-    "unit": "notebook/math/K_Feyman.tex",
-    "unitSha": "a4099cec8902"
+    "unit": "json/PH20/PH20.1.json",
+    "unitSha": "5882e14685ef",
+    "note": "notebook/math/K_Feyman.tex",
+    "noteSha": "a4099cec8902"
   },
   "generated": {
     "model": "coding-agent",

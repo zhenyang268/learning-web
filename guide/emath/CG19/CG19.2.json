@@ -21,8 +21,10 @@
   "principle": "先算带数判远近，再决定二次相位留不留。",
   "connect": "带数远小于一时退回远场那种变换，见 CG19.1；角谱传播是这条积分的频域写法，同一套核由格林函数给出，源头见 CG18.1；近场焦散与分步传播的落点在 CG25.1。",
   "source": {
-    "unit": "notebook/math/J_rtx.tex",
-    "unitSha": "03d34bf9e80c"
+    "unit": "emath/json/CG19/CG19.2.json",
+    "unitSha": "4fe4d40e8910",
+    "note": "notebook/math/J_rtx.tex",
+    "noteSha": "03d34bf9e80c"
   },
   "generated": {
     "model": "coding-agent",

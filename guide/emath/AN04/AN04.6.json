@@ -21,8 +21,10 @@
   "principle": "先验界只要求常数与数据和格式无关；这一条不成立，其余结论都不可迁移。",
   "connect": "上游是 AN04.5 给出的弱形式和存在唯一，本单元补上稳定性与质量两环；再接 AN04.4 的嵌入完成向经典解的最后一跳。工程侧的 CG16.1 与 NM02.2 面对的是同一条链：能量估计一致、紧性取极限，差别只在方程和空间怎么选。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN04/AN04.6.json",
+    "unitSha": "12b8e0d99efe",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

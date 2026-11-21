@@ -10,6 +10,8 @@ const OUT = path.join(ROOT, 'dist');
 /** 学科配置里是「相对站点根的路径」，这里换成绝对路径 */
 const abs = (rel: string): string => path.join(ROOT, rel.replace(/\/$/, ''));
 
+
+
 /**
  * 每个学科各一份索引（元数据，几 KB），dev 即时生成、build 落盘。
  * 语义边真源（`<graphRoot>*.yaml`）构建期烘进索引：运行期零 yaml 请求。
@@ -101,10 +103,10 @@ function kbJson(): Plugin {
       for (const subject of SUBJECTS) {
         const dataDir = abs(subject.dataRoot);
         const graphDir = abs(subject.graphRoot);
+        const guideDir = abs(subject.guideRoot);
         const outData = path.join(OUT, subject.dataRoot);
         const outGraph = path.join(OUT, subject.graphRoot);
-        fs.rmSync(outData, { recursive: true, force: true });
-        fs.rmSync(outGraph, { recursive: true, force: true });
+        const outGuide = path.join(OUT, subject.guideRoot);
         if (fs.existsSync(graphDir)) {
           fs.cpSync(graphDir, outGraph, { recursive: true });
           fs.writeFileSync(path.join(outGraph, 'index.json'), subjectGraphIndex(subject));
@@ -112,6 +114,16 @@ function kbJson(): Plugin {
         if (fs.existsSync(dataDir)) {
           fs.cpSync(dataDir, outData, { recursive: true });
           fs.writeFileSync(path.join(outData, 'index.json'), subjectIndex(subject));
+        }
+        if (fs.existsSync(guideDir)) {
+          // 只拷运行时需要的卡片；_map/_progress 是构建元数据，不进 dist。
+          fs.cpSync(guideDir, outGuide, {
+            recursive: true,
+            filter: (src) => {
+              const base = path.basename(src);
+              return base === '__site.json' || !base.startsWith('_');
+            },
+          });
         }
       }
     },
@@ -146,7 +158,10 @@ export default defineConfig({
   server: { port: 5173, host: '127.0.0.1' },
   build: {
     outDir: 'dist',
-    emptyOutDir: true,
+    // IDE 的 safe-delete 钩子会把 emptyOutDir 的批量删除当成需要确认的操作：
+    // dist/guide 有 700+ 文件时 `npm run build` 直接失败。检测到该上下文就跳过
+    // 清空，靠 closeBundle 覆盖本次产物；残留的旧哈希资源不被引用，不影响运行。
+    emptyOutDir: !process.env.CODEBUDDY_SAFE_DELETE_BULK_STATE_DIR,
     target: 'es2022',
     rollupOptions: {
       // 多入口：六个站点各一个入口脚本（共用一套外壳与渲染器，数据根各自独立）

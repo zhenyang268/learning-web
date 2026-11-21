@@ -25,8 +25,10 @@
   "principle": "先看伸缩率的几何含义，再用三种行变换把式子化到三角形。",
   "connect": "往前，配方与消元的代数手法在 TL02.2 出现过。往后，可逆与主元在消元那一节接着讲（TL06.2），特征值与主方向伸缩率是同一读法的细化（TL06.3）。度量的那一路在 AN01.4 有独立处理。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL06/TL06.1.json",
+    "unitSha": "113bf90c4039",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "非退化管拆分，符号管紧致，两条判据要分开读。",
   "connect": "往下，半单的代数的结构往根与 Dynkin 图展开（AG15.1、AG15.5），把它摆成负定的那一支称作紧实型。不变量一侧，它给出二次 Casimir 与量子数的记号（AG15.8）；物理上规范场的动能项与二次不变量都靠它定型（AG16.6）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.15.json",
+    "unitSha": "d92453c6b3d8",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

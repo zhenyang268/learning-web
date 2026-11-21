@@ -25,8 +25,10 @@
   "principle": "先看指标落在临界哪一侧，再决定能兑可积性、连续性，还是只能兑出子列收敛。",
   "connect": "往前依赖 AN04.3 的函数与弱导数账本和闭包定的零边界；往后 AN04.6 拿嵌入把弱解升格为经典解，本单元的反例标出这一步在临界处会断。数值一侧，NM02.2 的误差与收敛阶估计用的也是同一套兑换额度。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN04/AN04.4.json",
+    "unitSha": "0c6ebd796576",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

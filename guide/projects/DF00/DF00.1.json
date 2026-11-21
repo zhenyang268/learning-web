@@ -21,8 +21,10 @@
   "principle": "先写清失败模型的范围，再谈正确。",
   "connect": "组内两版按同一份判据表分工：课堂版走最短路径把共识骨架跑通（DF01.1），工程版在真约束下被故障打（DF02.1）。协议层的定义与失效点只在总纲出现，跨版引用必须重新验证。",
   "source": {
-    "unit": "notebook/projects/raft/OUTLINE.md",
-    "unitSha": "face6f55d114"
+    "unit": "projects/json/DF00/DF00.1.json",
+    "unitSha": "eaf97417ea54",
+    "note": "notebook/projects/raft/OUTLINE.md",
+    "noteSha": "face6f55d114"
   },
   "generated": {
     "model": "coding-agent",

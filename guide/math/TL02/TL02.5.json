@@ -21,8 +21,10 @@
   "principle": "换形之前先看条件：定义域、底的取值范围、角度制，任一条破掉就不换。",
   "connect": "往后，代数预处理服务于求根式差的极限（TL04.2）与 $n$ 的 $n$ 分之一次幂这类量级换算（TL04.3）。跨章落点在信息论：熵里的二进制对数全靠换底（PH11.1）；特殊函数的指数律则回到 TL08.1 与 TL08.2。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL02/TL02.5.json",
+    "unitSha": "caeb5ee96d71",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "任何一条性能结论都要绑上负载、口径、样本与环境，缺一项只能算线索。",
   "connect": "取证据的那条链在调试（EG02.1）；把测出来的数变成量级与结构取舍在系统设计（EG04.1）；锁竞争、排队与边界机制的成因在陷阱与边界（EG05.1），三处用的是同一套口径。",
   "source": {
-    "unit": "notebook/projects/eng/perf-engineering/OUTLINE.md",
-    "unitSha": "aee5dd6557a8"
+    "unit": "projects/json/EG03/EG03.1.json",
+    "unitSha": "ff79b7a00443",
+    "note": "notebook/projects/eng/perf-engineering/OUTLINE.md",
+    "noteSha": "aee5dd6557a8"
   },
   "generated": {
     "model": "coding-agent",

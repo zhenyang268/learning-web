@@ -1,257 +1,299 @@
 {
   "version": 1,
   "site": "projects",
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "units": {
     "AI01.1": {
       "status": "done",
-      "unitSha": "29a2047c3e1b",
+      "unitSha": "9bee011d928e",
+      "noteSha": "29a2047c3e1b",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD00.1": {
       "status": "done",
-      "unitSha": "95fdd88b4f56",
+      "unitSha": "eaa0b34992c7",
+      "noteSha": "95fdd88b4f56",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD01.1": {
       "status": "done",
-      "unitSha": "7046239d36f0",
+      "unitSha": "cde3b923a71d",
+      "noteSha": "6cb1ec4a7058",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD02.1": {
       "status": "done",
-      "unitSha": "2f56ef0a7c64",
+      "unitSha": "fc7aea533ae8",
+      "noteSha": "4f007c7078a0",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD03.1": {
       "status": "done",
-      "unitSha": "f607cbda9e63",
+      "unitSha": "74ebda2a3bcd",
+      "noteSha": "caf1e6a1da51",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD04.1": {
       "status": "done",
-      "unitSha": "fd6c3d2cc605",
+      "unitSha": "f3d66f794a37",
+      "noteSha": "be4c2b38a520",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD05.1": {
       "status": "done",
-      "unitSha": "bb3848196c5d",
+      "unitSha": "4d357214051e",
+      "noteSha": "b8b186a67514",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD06.1": {
       "status": "done",
-      "unitSha": "14584b88b989",
+      "unitSha": "decd9d896606",
+      "noteSha": "a8fd5d3f391a",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CD07.1": {
       "status": "done",
-      "unitSha": "2bdc673ab50e",
+      "unitSha": "2c217eb9e83f",
+      "noteSha": "54ff2f966e15",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CP00.1": {
       "status": "done",
-      "unitSha": "9d22e893fce0",
+      "unitSha": "27891f2f8254",
+      "noteSha": "9d22e893fce0",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CP01.1": {
       "status": "done",
-      "unitSha": "c2cb1f89d4ea",
+      "unitSha": "c5e16497c6f7",
+      "noteSha": "c2cb1f89d4ea",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CP02.1": {
       "status": "done",
-      "unitSha": "7f86c3bb2b5d",
+      "unitSha": "d7e39644c81e",
+      "noteSha": "7f86c3bb2b5d",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CP03.1": {
       "status": "done",
-      "unitSha": "b5417828cc22",
+      "unitSha": "93efb8e42f49",
+      "noteSha": "b5417828cc22",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CP04.1": {
       "status": "done",
-      "unitSha": "fb1c20598faa",
+      "unitSha": "3b119839fb0e",
+      "noteSha": "fb1c20598faa",
       "date": "2026-11-20",
       "reviewed": true
     },
     "CS01.1": {
       "status": "done",
-      "unitSha": "d65ec356bf47",
+      "unitSha": "8435d8187a48",
+      "noteSha": "d65ec356bf47",
       "date": "2026-11-20",
       "reviewed": true
     },
     "DB01.1": {
       "status": "done",
-      "unitSha": "8766a0122e6b",
+      "unitSha": "fd4196cc32e7",
+      "noteSha": "8766a0122e6b",
       "date": "2026-11-20",
       "reviewed": true
     },
     "DF00.1": {
       "status": "done",
-      "unitSha": "face6f55d114",
+      "unitSha": "eaf97417ea54",
+      "noteSha": "face6f55d114",
       "date": "2026-11-20",
       "reviewed": true
     },
     "DF01.1": {
       "status": "done",
-      "unitSha": "c1701ef6f079",
+      "unitSha": "c4bc92a4484e",
+      "noteSha": "c1701ef6f079",
       "date": "2026-11-20",
       "reviewed": true
     },
     "DF02.1": {
       "status": "done",
-      "unitSha": "12419a9950b4",
+      "unitSha": "4b746ddd2626",
+      "noteSha": "12419a9950b4",
       "date": "2026-11-20",
       "reviewed": true
     },
     "DX01.1": {
       "status": "done",
-      "unitSha": "fcdb31fa06ee",
+      "unitSha": "e728895506a1",
+      "noteSha": "fcdb31fa06ee",
       "date": "2026-11-20",
       "reviewed": true
     },
     "EG00.1": {
       "status": "done",
-      "unitSha": "7ab6be2fb94a",
+      "unitSha": "f8a2f61ed558",
+      "noteSha": "7ab6be2fb94a",
       "date": "2026-11-20",
       "reviewed": true
     },
     "EG01.1": {
       "status": "done",
-      "unitSha": "da170cae5eac",
+      "unitSha": "d68674b44f7c",
+      "noteSha": "da170cae5eac",
       "date": "2026-11-20",
       "reviewed": true
     },
     "EG02.1": {
       "status": "done",
-      "unitSha": "9fe86e40b7e2",
+      "unitSha": "974ae2cffcb0",
+      "noteSha": "9fe86e40b7e2",
       "date": "2026-11-20",
       "reviewed": true
     },
     "EG03.1": {
       "status": "done",
-      "unitSha": "aee5dd6557a8",
+      "unitSha": "ff79b7a00443",
+      "noteSha": "aee5dd6557a8",
       "date": "2026-11-20",
       "reviewed": true
     },
     "EG04.1": {
       "status": "done",
-      "unitSha": "647e1ea54280",
+      "unitSha": "cf8eb820f9d5",
+      "noteSha": "647e1ea54280",
       "date": "2026-11-20",
       "reviewed": true
     },
     "EG05.1": {
       "status": "done",
-      "unitSha": "bf52a03d1f92",
+      "unitSha": "a1c595e87a7a",
+      "noteSha": "bf52a03d1f92",
       "date": "2026-11-20",
       "reviewed": true
     },
     "GX00.1": {
       "status": "done",
-      "unitSha": "f659554a8a37",
+      "unitSha": "d8b33e515337",
+      "noteSha": "f659554a8a37",
       "date": "2026-11-20",
       "reviewed": true
     },
     "GX01.1": {
       "status": "done",
-      "unitSha": "7b2593bd190b",
+      "unitSha": "23f531d46cc8",
+      "noteSha": "7b2593bd190b",
       "date": "2026-11-20",
       "reviewed": true
     },
     "GX02.1": {
       "status": "done",
-      "unitSha": "3be04216527b",
+      "unitSha": "247c902e4667",
+      "noteSha": "3be04216527b",
       "date": "2026-11-20",
       "reviewed": true
     },
     "GX03.1": {
       "status": "done",
-      "unitSha": "c4154f83a436",
+      "unitSha": "5145ee030456",
+      "noteSha": "c4154f83a436",
       "date": "2026-11-20",
       "reviewed": true
     },
     "GX04.1": {
       "status": "done",
-      "unitSha": "00268fb608f2",
+      "unitSha": "eab936a3aa89",
+      "noteSha": "00268fb608f2",
       "date": "2026-11-20",
       "reviewed": true
     },
     "GX05.1": {
       "status": "done",
-      "unitSha": "2b6a8eaabbe1",
+      "unitSha": "25f56e475e3a",
+      "noteSha": "2b6a8eaabbe1",
       "date": "2026-11-20",
       "reviewed": true
     },
     "LG00.1": {
       "status": "done",
-      "unitSha": "41c39af65b04",
+      "unitSha": "6768e3dd0439",
+      "noteSha": "41c39af65b04",
       "date": "2026-11-20",
       "reviewed": true
     },
     "LG03.1": {
       "status": "done",
-      "unitSha": "e6db04ed15ea",
+      "unitSha": "4e63b19d27cd",
+      "noteSha": "e6db04ed15ea",
       "date": "2026-11-20",
       "reviewed": true
     },
     "PA01.1": {
       "status": "done",
-      "unitSha": "ef79499542e1",
+      "unitSha": "33d757c8abda",
+      "noteSha": "ef79499542e1",
       "date": "2026-11-20",
       "reviewed": true
     },
     "SO00.1": {
       "status": "done",
-      "unitSha": "260aabfaf136",
+      "unitSha": "a3b36d33342b",
+      "noteSha": "260aabfaf136",
       "date": "2026-11-20",
       "reviewed": true
     },
     "SO01.1": {
       "status": "done",
-      "unitSha": "10d93fa66d19",
+      "unitSha": "9e2964b1784b",
+      "noteSha": "10d93fa66d19",
       "date": "2026-11-20",
       "reviewed": true
     },
     "SO02.1": {
       "status": "done",
-      "unitSha": "d7cb3bdd6ac1",
+      "unitSha": "4be60a77063c",
+      "noteSha": "d7cb3bdd6ac1",
       "date": "2026-11-20",
       "reviewed": true
     },
     "SO03.1": {
       "status": "done",
-      "unitSha": "23ecfe56fa3f",
+      "unitSha": "4c0361b5454c",
+      "noteSha": "23ecfe56fa3f",
       "date": "2026-11-20",
       "reviewed": true
     },
     "SO04.1": {
       "status": "done",
-      "unitSha": "b7f4e0a24334",
+      "unitSha": "364ec80c5105",
+      "noteSha": "b7f4e0a24334",
       "date": "2026-11-20",
       "reviewed": true
     },
     "SO05.1": {
       "status": "done",
-      "unitSha": "e931c5bc8125",
+      "unitSha": "62ac16902f54",
+      "noteSha": "e931c5bc8125",
       "date": "2026-11-20",
       "reviewed": true
     },
     "SO06.1": {
       "status": "done",
-      "unitSha": "367b0c874e2b",
+      "unitSha": "25d14b42d88e",
+      "noteSha": "367b0c874e2b",
       "date": "2026-11-20",
       "reviewed": true
     },
@@ -316,7 +358,67 @@
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
       "kind": "project-chapter"
     },
+    "CD01.3": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD01.4": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD01.5": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD01.6": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD01.7": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
     "CD02.2": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD02.3": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD02.4": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD02.5": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD02.6": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD02.7": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD02.8": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD02.9": {
       "status": "skip",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
       "kind": "project-chapter"
@@ -326,7 +428,72 @@
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
       "kind": "project-chapter"
     },
+    "CD03.3": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD03.4": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD03.5": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD03.6": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD03.7": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD03.8": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD03.9": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
     "CD04.2": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD04.3": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD04.4": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD04.5": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD04.6": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD04.7": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD04.8": {
       "status": "skip",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
       "kind": "project-chapter"
@@ -336,12 +503,117 @@
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
       "kind": "project-chapter"
     },
+    "CD05.3": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD05.4": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD05.5": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD05.6": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD05.7": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD05.8": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
     "CD06.2": {
       "status": "skip",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
       "kind": "project-chapter"
     },
+    "CD06.3": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD06.4": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD06.5": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD06.6": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD06.7": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD06.8": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD06.9": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.10": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
     "CD07.2": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.3": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.4": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.5": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.6": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.7": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.8": {
+      "status": "skip",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
+      "kind": "project-chapter"
+    },
+    "CD07.9": {
       "status": "skip",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层",
       "kind": "project-chapter"

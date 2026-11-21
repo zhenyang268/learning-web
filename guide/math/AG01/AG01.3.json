@@ -21,8 +21,10 @@
   "principle": "先验保乘法，再找一个对所有群元素都不变的真子空间；找到就拆，拆不动才算最小单元。",
   "connect": "往下走，同样的拆分换到李代数上，无穷小元素作用到向量空间给出权与最高权（AG15.6）；代数侧的元素从哪里来要回到指数映射那一章（AG01.2）。再远一点，把连续对称换成流形上的作用，线性这一前提被丢掉，得到另一套语言（AG13.2）。",
   "source": {
-    "unit": "notebook/math/B_algebra.tex",
-    "unitSha": "3327710a3e0c"
+    "unit": "json/AG01/AG01.3.json",
+    "unitSha": "218fa8ee8957",
+    "note": "notebook/math/B_algebra.tex",
+    "noteSha": "3327710a3e0c"
   },
   "generated": {
     "model": "coding-agent",

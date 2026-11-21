@@ -21,8 +21,10 @@
   "principle": "散射密度的单位是每球面度，它必须配一个投影因子才能消掉；这是排查整类偏差的第一把尺。",
   "connect": "往后 CG03.1 把同一个等式展开成路径上的积分，CG04.1 提供求值的蒙特卡洛机器，CG07.1 补齐各个量的单位体系。上游的谱半径语言见 AN02.4：迭代算子压缩到什么程度，直接决定需要多少阶反弹才够。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG02/CG02.1.json",
+    "unitSha": "44481477b76c",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

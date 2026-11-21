@@ -21,8 +21,10 @@
   "principle": "先数顶点定幂次、数内线定分母、算圈数定重数，最后核对对称因子。",
   "connect": "规则的来源是上一章的逐阶展开与收缩配对（PH25.1、PH28.1）。往后这份规则在电磁相互作用里写成具体形状（PH27.1），振幅由它直接算出（PH29.1），而内线数目的增长正是高动量处失控的起点（PH30.1）。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH26/PH26.1.json",
+    "unitSha": "048fe256599e",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

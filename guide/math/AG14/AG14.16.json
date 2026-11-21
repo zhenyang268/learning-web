@@ -21,8 +21,10 @@
   "principle": "在伴随表示里看不见的元素，正是中心；看不清的那部分交给覆盖去补。",
   "connect": "往下，伴随表示是 Killing 形式的原料，取它的复合迹就得到内在度量（AG14.15）。表示分类上，伴随表示与基础表示的差别决定物质场与力载体的分工（AG15.8）；物理侧，规范场本身按伴随表示变换（AG16.6），工程侧则落脚于空间速度与微分运动学（AG16.16）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.16.json",
+    "unitSha": "826d5ee5a4fe",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

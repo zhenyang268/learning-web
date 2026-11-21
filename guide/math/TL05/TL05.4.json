@@ -21,8 +21,10 @@
   "principle": "遇到三角函数的高次幂，先降幂拆成一次项，再逐项积。",
   "connect": "往前，降幂用的就是倍角公式，它是和角的特例（TL05.1）。往后，整圈上只剩常数的现象与正交性互为两面（TL05.3），系数计算因此退化为逐项积分，最小二乘的加权求和也照同一路子做（TL06.4）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL05/TL05.4.json",
+    "unitSha": "e9da26a557b6",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

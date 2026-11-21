@@ -6,996 +6,1195 @@
     "AG01.1": {
       "kind": null,
       "src": "notebook/math/B_algebra.tex",
+      "path": "json/AG01/AG01.1.json",
       "mode": "S"
     },
     "AG01.2": {
       "kind": null,
       "src": "notebook/math/B_algebra.tex",
+      "path": "json/AG01/AG01.2.json",
       "mode": "S"
     },
     "AG01.3": {
       "kind": null,
       "src": "notebook/math/B_algebra.tex",
+      "path": "json/AG01/AG01.3.json",
       "mode": "S"
     },
     "AG02.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG02/AG02.1.json",
       "mode": "S"
     },
     "AG03.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG03/AG03.1.json",
       "mode": "S"
     },
     "AG04.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG04/AG04.1.json",
       "mode": "S"
     },
     "AG05.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG05/AG05.1.json",
       "mode": "S"
     },
     "AG06.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG06/AG06.1.json",
       "mode": "S"
     },
     "AG07.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG07/AG07.1.json",
       "mode": "S"
     },
     "AG08.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG08/AG08.1.json",
       "mode": "S"
     },
     "AG09.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG09/AG09.1.json",
       "mode": "S"
     },
     "AG10.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG10/AG10.1.json",
       "mode": "S"
     },
     "AG10.2": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG10/AG10.2.json",
       "mode": "S"
     },
     "AG10.3": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG10/AG10.3.json",
       "mode": "S"
     },
     "AG11.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG11/AG11.1.json",
       "mode": "S"
     },
     "AG12.1": {
       "kind": null,
       "src": "notebook/math/Q_topology.tex",
+      "path": "json/AG12/AG12.1.json",
       "mode": "S"
     },
     "AG13.1": {
       "kind": null,
       "src": "notebook/math/B_algebra.tex",
+      "path": "json/AG13/AG13.1.json",
       "mode": "S"
     },
     "AG13.2": {
       "kind": null,
       "src": "notebook/math/B_algebra.tex",
+      "path": "json/AG13/AG13.2.json",
       "mode": "S"
     },
     "AG13.3": {
       "kind": null,
       "src": "notebook/math/B_algebra.tex",
+      "path": "json/AG13/AG13.3.json",
       "mode": "S"
     },
     "AG13.4": {
       "kind": null,
       "src": "notebook/math/B_algebra.tex",
+      "path": "json/AG13/AG13.4.json",
       "mode": "S"
     },
     "AG14.1": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.1.json",
       "mode": "S"
     },
     "AG14.10": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.10.json",
       "mode": "S"
     },
     "AG14.11": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.11.json",
       "mode": "S"
     },
     "AG14.12": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.12.json",
       "mode": "S"
     },
     "AG14.13": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.13.json",
       "mode": "S"
     },
     "AG14.14": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.14.json",
       "mode": "S"
     },
     "AG14.15": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.15.json",
       "mode": "S"
     },
     "AG14.16": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.16.json",
       "mode": "S"
     },
     "AG14.2": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.2.json",
       "mode": "S"
     },
     "AG14.3": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.3.json",
       "mode": "S"
     },
     "AG14.4": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.4.json",
       "mode": "S"
     },
     "AG14.5": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.5.json",
       "mode": "S"
     },
     "AG14.6": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.6.json",
       "mode": "S"
     },
     "AG14.7": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.7.json",
       "mode": "S"
     },
     "AG14.8": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.8.json",
       "mode": "S"
     },
     "AG14.9": {
       "kind": null,
       "src": "notebook/math/lie1.tex",
+      "path": "json/AG14/AG14.9.json",
       "mode": "S"
     },
     "AG15.1": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.1.json",
       "mode": "S"
     },
     "AG15.10": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.10.json",
       "mode": "S"
     },
     "AG15.11": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.11.json",
       "mode": "S"
     },
     "AG15.12": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.12.json",
       "mode": "S"
     },
     "AG15.13": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.13.json",
       "mode": "S"
     },
     "AG15.2": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.2.json",
       "mode": "S"
     },
     "AG15.3": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.3.json",
       "mode": "S"
     },
     "AG15.4": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.4.json",
       "mode": "S"
     },
     "AG15.5": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.5.json",
       "mode": "S"
     },
     "AG15.6": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.6.json",
       "mode": "S"
     },
     "AG15.7": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.7.json",
       "mode": "S"
     },
     "AG15.8": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.8.json",
       "mode": "S"
     },
     "AG15.9": {
       "kind": null,
       "src": "notebook/math/lie2.tex",
+      "path": "json/AG15/AG15.9.json",
       "mode": "S"
     },
     "AG16.1": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.1.json",
       "mode": "S"
     },
     "AG16.10": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.10.json",
       "mode": "S"
     },
     "AG16.11": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.11.json",
       "mode": "S"
     },
     "AG16.12": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.12.json",
       "mode": "S"
     },
     "AG16.13": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.13.json",
       "mode": "S"
     },
     "AG16.14": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.14.json",
       "mode": "S"
     },
     "AG16.15": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.15.json",
       "mode": "S"
     },
     "AG16.16": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.16.json",
       "mode": "S"
     },
     "AG16.17": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.17.json",
       "mode": "S"
     },
     "AG16.18": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.18.json",
       "mode": "S"
     },
     "AG16.19": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.19.json",
       "mode": "S"
     },
     "AG16.2": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.2.json",
       "mode": "S"
     },
     "AG16.20": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.20.json",
       "mode": "S"
     },
     "AG16.21": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.21.json",
       "mode": "S"
     },
     "AG16.22": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.22.json",
       "mode": "S"
     },
     "AG16.23": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.23.json",
       "mode": "S"
     },
     "AG16.24": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.24.json",
       "mode": "S"
     },
     "AG16.25": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.25.json",
       "mode": "S"
     },
     "AG16.26": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.26.json",
       "mode": "S"
     },
     "AG16.27": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.27.json",
       "mode": "S"
     },
     "AG16.28": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.28.json",
       "mode": "S"
     },
     "AG16.3": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.3.json",
       "mode": "S"
     },
     "AG16.4": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.4.json",
       "mode": "S"
     },
     "AG16.5": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.5.json",
       "mode": "S"
     },
     "AG16.6": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.6.json",
       "mode": "S"
     },
     "AG16.7": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.7.json",
       "mode": "S"
     },
     "AG16.8": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.8.json",
       "mode": "S"
     },
     "AG16.9": {
       "kind": null,
       "src": "notebook/math/lie3.tex",
+      "path": "json/AG16/AG16.9.json",
       "mode": "S"
     },
     "AN01.1": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "json/AN01/AN01.1.json",
       "mode": "S"
     },
     "AN01.2": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "json/AN01/AN01.2.json",
       "mode": "S"
     },
     "AN01.3": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "json/AN01/AN01.3.json",
       "mode": "S"
     },
     "AN01.4": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "json/AN01/AN01.4.json",
       "mode": "S"
     },
     "AN01.5": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "json/AN01/AN01.5.json",
       "mode": "S"
     },
     "AN05.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN05/AN05.1.json",
       "mode": "S"
     },
     "AN06.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN06/AN06.1.json",
       "mode": "S"
     },
     "AN06.2": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN06/AN06.2.json",
       "mode": "S"
     },
     "AN06.3": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN06/AN06.3.json",
       "mode": "S"
     },
     "AN06.4": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN06/AN06.4.json",
       "mode": "S"
     },
     "AN07.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN07/AN07.1.json",
       "mode": "S"
     },
     "AN08.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN08/AN08.1.json",
       "mode": "S"
     },
     "AN08.2": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN08/AN08.2.json",
       "mode": "S"
     },
     "AN08.3": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN08/AN08.3.json",
       "mode": "S"
     },
     "AN09.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN09/AN09.1.json",
       "mode": "S"
     },
     "AN10.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN10/AN10.1.json",
       "mode": "S"
     },
     "AN11.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN11/AN11.1.json",
       "mode": "S"
     },
     "AN12.1": {
       "kind": null,
       "src": "notebook/math/R_complex.tex",
+      "path": "json/AN12/AN12.1.json",
       "mode": "S"
     },
     "MP01.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP01/MP01.1.json",
       "mode": "S"
     },
     "MP02.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP02/MP02.1.json",
       "mode": "S"
     },
     "MP03.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP03/MP03.1.json",
       "mode": "S"
     },
     "MP04.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP04/MP04.1.json",
       "mode": "S"
     },
     "MP05.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP05/MP05.1.json",
       "mode": "S"
     },
     "MP06.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP06/MP06.1.json",
       "mode": "S"
     },
     "MP07.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP07/MP07.1.json",
       "mode": "S"
     },
     "MP08.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP08/MP08.1.json",
       "mode": "S"
     },
     "MP09.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP09/MP09.1.json",
       "mode": "S"
     },
     "MP10.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP10/MP10.1.json",
       "mode": "S"
     },
     "MP11.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP11/MP11.1.json",
       "mode": "S"
     },
     "MP12.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP12/MP12.1.json",
       "mode": "S"
     },
     "MP13.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP13/MP13.1.json",
       "mode": "S"
     },
     "MP14.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP14/MP14.1.json",
       "mode": "S"
     },
     "MP15.1": {
       "kind": null,
       "src": "notebook/math/partN.tex",
+      "path": "json/MP15/MP15.1.json",
       "mode": "S"
     },
     "PH01.1": {
       "kind": null,
       "src": "notebook/math/D_classic.tex",
+      "path": "json/PH01/PH01.1.json",
       "mode": "S"
     },
     "PH02.1": {
       "kind": null,
       "src": "notebook/math/D_classic.tex",
+      "path": "json/PH02/PH02.1.json",
       "mode": "S"
     },
     "PH03.1": {
       "kind": null,
       "src": "notebook/math/D_classic.tex",
+      "path": "json/PH03/PH03.1.json",
       "mode": "S"
     },
     "PH04.1": {
       "kind": null,
       "src": "notebook/math/D_classic.tex",
+      "path": "json/PH04/PH04.1.json",
       "mode": "S"
     },
     "PH05.1": {
       "kind": null,
       "src": "notebook/math/E_Field.tex",
+      "path": "json/PH05/PH05.1.json",
       "mode": "S"
     },
     "PH06.1": {
       "kind": null,
       "src": "notebook/math/E_Field.tex",
+      "path": "json/PH06/PH06.1.json",
       "mode": "S"
     },
     "PH07.1": {
       "kind": null,
       "src": "notebook/math/E_Field.tex",
+      "path": "json/PH07/PH07.1.json",
       "mode": "S"
     },
     "PH08.1": {
       "kind": null,
       "src": "notebook/math/E_Field.tex",
+      "path": "json/PH08/PH08.1.json",
       "mode": "S"
     },
     "PH09.1": {
       "kind": null,
       "src": "notebook/math/M_addition.tex",
+      "path": "json/PH09/PH09.1.json",
       "mode": "S"
     },
     "PH10.1": {
       "kind": null,
       "src": "notebook/math/M_addition.tex",
+      "path": "json/PH10/PH10.1.json",
       "mode": "S"
     },
     "PH11.1": {
       "kind": null,
       "src": "notebook/math/M_addition.tex",
+      "path": "json/PH11/PH11.1.json",
       "mode": "S"
     },
     "PH12.1": {
       "kind": null,
       "src": "notebook/math/M_addition.tex",
+      "path": "json/PH12/PH12.1.json",
       "mode": "S"
     },
     "PH13.1": {
       "kind": null,
       "src": "notebook/math/F_quantum.tex",
+      "path": "json/PH13/PH13.1.json",
       "mode": "S"
     },
     "PH14.1": {
       "kind": null,
       "src": "notebook/math/F_quantum.tex",
+      "path": "json/PH14/PH14.1.json",
       "mode": "S"
     },
     "PH15.1": {
       "kind": null,
       "src": "notebook/math/F_quantum.tex",
+      "path": "json/PH15/PH15.1.json",
       "mode": "S"
     },
     "PH16.1": {
       "kind": null,
       "src": "notebook/math/F_quantum.tex",
+      "path": "json/PH16/PH16.1.json",
       "mode": "S"
     },
     "PH17.1": {
       "kind": null,
       "src": "notebook/math/F_quantum.tex",
+      "path": "json/PH17/PH17.1.json",
       "mode": "S"
     },
     "PH18.1": {
       "kind": null,
       "src": "notebook/math/F_quantum.tex",
+      "path": "json/PH18/PH18.1.json",
       "mode": "S"
     },
     "PH19.1": {
       "kind": null,
       "src": "notebook/math/K_Feyman.tex",
+      "path": "json/PH19/PH19.1.json",
       "mode": "S"
     },
     "PH20.1": {
       "kind": null,
       "src": "notebook/math/K_Feyman.tex",
+      "path": "json/PH20/PH20.1.json",
       "mode": "S"
     },
     "PH21.1": {
       "kind": null,
       "src": "notebook/math/K_Feyman.tex",
+      "path": "json/PH21/PH21.1.json",
       "mode": "S"
     },
     "PH21.2": {
       "kind": null,
       "src": "notebook/math/K_Feyman.tex",
+      "path": "json/PH21/PH21.2.json",
       "mode": "S"
     },
     "PH22.1": {
       "kind": null,
       "src": "notebook/math/K_Feyman.tex",
+      "path": "json/PH22/PH22.1.json",
       "mode": "S"
     },
     "PH23.1": {
       "kind": null,
       "src": "notebook/math/K_Feyman.tex",
+      "path": "json/PH23/PH23.1.json",
       "mode": "S"
     },
     "PH24.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH24/PH24.1.json",
       "mode": "S"
     },
     "PH25.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH25/PH25.1.json",
       "mode": "S"
     },
     "PH26.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH26/PH26.1.json",
       "mode": "S"
     },
     "PH27.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH27/PH27.1.json",
       "mode": "S"
     },
     "PH28.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH28/PH28.1.json",
       "mode": "S"
     },
     "PH29.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH29/PH29.1.json",
       "mode": "S"
     },
     "PH30.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH30/PH30.1.json",
       "mode": "S"
     },
     "PH31.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH31/PH31.1.json",
       "mode": "S"
     },
     "PH32.1": {
       "kind": null,
       "src": "notebook/math/L_Feyman.tex",
+      "path": "json/PH32/PH32.1.json",
       "mode": "S"
     },
     "PR01.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR01/PR01.1.json",
       "mode": "S"
     },
     "PR02.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR02/PR02.1.json",
       "mode": "S"
     },
     "PR03.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR03/PR03.1.json",
       "mode": "S"
     },
     "PR04.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR04/PR04.1.json",
       "mode": "S"
     },
     "PR05.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR05/PR05.1.json",
       "mode": "S"
     },
     "PR06.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR06/PR06.1.json",
       "mode": "S"
     },
     "PR06.2": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR06/PR06.2.json",
       "mode": "S"
     },
     "PR06.3": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR06/PR06.3.json",
       "mode": "S"
     },
     "PR06.4": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR06/PR06.4.json",
       "mode": "S"
     },
     "PR06.5": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR06/PR06.5.json",
       "mode": "S"
     },
     "PR07.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR07/PR07.1.json",
       "mode": "S"
     },
     "PR07.2": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR07/PR07.2.json",
       "mode": "S"
     },
     "PR07.3": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR07/PR07.3.json",
       "mode": "S"
     },
     "PR08.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR08/PR08.1.json",
       "mode": "S"
     },
     "PR08.2": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR08/PR08.2.json",
       "mode": "S"
     },
     "PR08.3": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR08/PR08.3.json",
       "mode": "S"
     },
     "PR10.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR10/PR10.1.json",
       "mode": "S"
     },
     "PR10.2": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR10/PR10.2.json",
       "mode": "S"
     },
     "PR10.3": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "json/PR10/PR10.3.json",
       "mode": "S"
     },
     "TL01.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL01/TL01.1.json",
       "mode": "S"
     },
     "TL01.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL01/TL01.2.json",
       "mode": "S"
     },
     "TL01.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL01/TL01.3.json",
       "mode": "S"
     },
     "TL01.4": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL01/TL01.4.json",
       "mode": "S"
     },
     "TL02.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL02/TL02.1.json",
       "mode": "S"
     },
     "TL02.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL02/TL02.2.json",
       "mode": "S"
     },
     "TL02.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL02/TL02.3.json",
       "mode": "S"
     },
     "TL02.4": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL02/TL02.4.json",
       "mode": "S"
     },
     "TL02.5": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL02/TL02.5.json",
       "mode": "S"
     },
     "TL03.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL03/TL03.1.json",
       "mode": "S"
     },
     "TL03.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL03/TL03.2.json",
       "mode": "S"
     },
     "TL03.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL03/TL03.3.json",
       "mode": "S"
     },
     "TL04.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL04/TL04.1.json",
       "mode": "S"
     },
     "TL04.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL04/TL04.2.json",
       "mode": "S"
     },
     "TL04.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL04/TL04.3.json",
       "mode": "S"
     },
     "TL05.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL05/TL05.1.json",
       "mode": "S"
     },
     "TL05.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL05/TL05.2.json",
       "mode": "S"
     },
     "TL05.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL05/TL05.3.json",
       "mode": "S"
     },
     "TL05.4": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL05/TL05.4.json",
       "mode": "S"
     },
     "TL06.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL06/TL06.1.json",
       "mode": "S"
     },
     "TL06.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL06/TL06.2.json",
       "mode": "S"
     },
     "TL06.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL06/TL06.3.json",
       "mode": "S"
     },
     "TL06.4": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL06/TL06.4.json",
       "mode": "S"
     },
     "TL07.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL07/TL07.1.json",
       "mode": "S"
     },
     "TL07.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL07/TL07.2.json",
       "mode": "S"
     },
     "TL07.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL07/TL07.3.json",
       "mode": "S"
     },
     "TL07.4": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL07/TL07.4.json",
       "mode": "S"
     },
     "TL07.5": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL07/TL07.5.json",
       "mode": "S"
     },
     "TL08.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL08/TL08.1.json",
       "mode": "S"
     },
     "TL08.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL08/TL08.2.json",
       "mode": "S"
     },
     "TL08.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL08/TL08.3.json",
       "mode": "S"
     },
     "TL08.4": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL08/TL08.4.json",
       "mode": "S"
     },
     "TL09.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL09/TL09.1.json",
       "mode": "S"
     },
     "TL09.2": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL09/TL09.2.json",
       "mode": "S"
     },
     "TL09.3": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL09/TL09.3.json",
       "mode": "S"
     },
     "TL09.4": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL09/TL09.4.json",
       "mode": "S"
     },
     "TL10.1": {
       "kind": null,
       "src": "notebook/math/P_computation.tex",
+      "path": "json/TL10/TL10.1.json",
       "mode": "S"
     }
   },

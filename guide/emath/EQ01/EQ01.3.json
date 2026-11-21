@@ -3,7 +3,7 @@
   "code": "EQ01.3",
   "site": "emath",
   "scope": "unit",
-  "lead": "标准形式一旦写定，这一节解决的是左端能不能压成单一导数。",
+  "lead": "标准形式一旦写定，这里要解决的是左端能不能压成单一导数。",
   "why": [
     {
       "h": "为什么合成要付出一个积分",
@@ -21,8 +21,10 @@
   "principle": "因子由合成条件解出，不由公式背出。",
   "connect": "把常数换成待定函数的做法在 EQ01.8 推到任意阶，二阶情形需要两个齐次解做底。齐次部分单独成题就是 EQ01.5 的常系数特征方程，再往下的稳定性只看根的实部，在 EQ01.11。这条套路移植到二阶方程时还常与 EQ01.7 的待定系数法并用。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.3.json",
+    "unitSha": "3ec36cd53d32",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

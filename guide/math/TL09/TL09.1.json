@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先写下边界项再判断它是否为零，别把别人的前提当成公式的一部分。",
-  "connect": "往下，把导数搬给无限光滑的测试函数，就是弱导数的定义方式（AN06.2）；能量法拿它当引擎，把二阶导数换成梯度平方（TL09.2）。多维时同一条公式改叫散度定理（PH05.1）。",
+  "connect": "往下，把导数搬给无限光滑的测试函数，就是弱导数的定义方式；能量法拿它当引擎，把二阶导数换成梯度平方（TL09.2）。多维时同一条公式改叫散度定理（PH05.1）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL09/TL09.1.json",
+    "unitSha": "f8f97cbd35cf",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

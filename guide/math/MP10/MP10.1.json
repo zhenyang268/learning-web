@@ -23,10 +23,12 @@
     }
   ],
   "principle": "凡要写成程序的结论，都走公式、实现、自检三步；自检（如白炉测试）比读数更可信。",
-  "connect": "往前是前三阶段的教材与框架（MP07.1、MP09.1）。往后它本身就是承重墙里数值、渲染与流体三块的实现场（MP12.1），判据也从「读完」换成「跑通」：解题器要收敛（TL01.1），流体要守恒（PH04.1 的连续方程同源）。",
+  "connect": "往前是前三阶段的教材与框架（MP07.1、MP09.1）。往后它本身就是承重墙里数值、渲染与流体三块的实现场（MP12.1），判据也从「读完」换成「跑通」：解题器要收敛，流体要守恒（AN11.1 的 PDE 接口）。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP10/MP10.1.json",
+    "unitSha": "0d05a11824a1",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

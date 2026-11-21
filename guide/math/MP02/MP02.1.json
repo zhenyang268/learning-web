@@ -25,8 +25,10 @@
   "principle": "原点附近的指数叠加是局部同构，离开原点就要用括号修正并与群本身的拓扑一起看。",
   "connect": "往下的落点是旋转与对称性方法：无穷小生成元积成有限变换，旋转的复合要用矩阵而不是参数相加（AN09.1 的旋转部分与 MP01.1 的通道一起构成几何侧的骨架）。再往外，绕一整圈的差异在多值那里同型（AN10.1），而分裂成两种极点与两种幅度的记账方式（AN12.1）在此换成括号语言。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP02/MP02.1.json",
+    "unitSha": "cf031efcd2c6",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

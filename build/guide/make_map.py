@@ -152,7 +152,12 @@ def load_units(site: str) -> tuple[dict[str, dict], list[dict]]:
         if site == "projects":
             if kind in ("project-group", "project"):
                 if code.endswith(".1"):
-                    units[code] = {"kp": None, "kind": kind, "src": src, "path": src}
+                    units[code] = {
+                        "kp": None,
+                        "kind": kind,
+                        "src": src,
+                        "path": str(path.relative_to(ROOT)),
+                    }
                 else:
                     skipped.append({"code": code, "kind": kind, "reason": "不是项目/分组总览"})
             elif kind == "project-chapter":
@@ -212,7 +217,7 @@ def main() -> int:
     if site in ("projects", "math", "emath"):
         # Mode S：没有逐单元 talk；43 个目标直接由 kind 选出，13 篇 projects-*.md 不作 scaffold
         mapped = {
-            code: {"kind": u["kind"], "src": u["src"], "mode": "S"}
+            code: {"kind": u["kind"], "src": u["src"], "path": u["path"], "mode": "S"}
             for code, u in units.items()
         }
         unused = sorted(set(units) - set(mapped))
@@ -290,13 +295,20 @@ def main() -> int:
             old = {}
     progress: dict[str, dict] = {}
     for code in sorted(mapped):
-        unit = (PARENT if site == "projects" else ROOT) / units[code]["path"]
+        if code == "__site":
+            unit = PARENT / units[code]["path"]
+            note = None
+        else:
+            unit = ROOT / units[code]["path"]
+            note = PARENT / units[code]["src"] if site in ("projects", "math", "emath") else None
         prev = old.get(code) or {}
         if site in ("projects", "math", "emath"):
             progress[code] = {
                 "status": prev.get("status", "pending"),
                 "unitSha": sha12(unit),
             }
+            if note is not None:
+                progress[code]["noteSha"] = sha12(note)
         else:
             talk = ROOT / mapped[code]["talk"]
             progress[code] = {

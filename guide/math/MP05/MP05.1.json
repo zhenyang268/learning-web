@@ -25,8 +25,10 @@
   "principle": "对易关系是公设而非定理；酉性担着概率守恒；宽度必须按标准差严格算，取等只发生在高斯态。",
   "connect": "往前是态与自伴算子（PH13.1、PH14.1），对易关系还能回看经典括号的对应（MP04.1）。往后是演化与酉性（PH15.1）、角动量与自旋（PH16.1），以及把演化改写成路径和的传播子（PH19.1）。同一条不等式在光学里以衍射极限现身。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP05/MP05.1.json",
+    "unitSha": "3a754576cb91",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

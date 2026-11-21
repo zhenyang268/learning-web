@@ -21,8 +21,10 @@
   "principle": "轨道标签加单位速度时间，换元后方程不再显含时间。",
   "connect": "上游靠对称性判据保证生成元为真（EQ02.2），四条标准解法是本流程的特例（EQ02.3）。往后同一动作在偏微分方程里给出自相似解，把多变量问题化成常微分方程；线性化后求生成元又落到算子视角（EQ03.1）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.4.json",
+    "unitSha": "c86bd4572ce5",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

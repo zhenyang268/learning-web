@@ -23,10 +23,12 @@
     }
   ],
   "principle": "先问清楚「在哪个 $L^p$ 里算」，尺寸与收敛才有意义。",
-  "connect": "往后是赋范空间与巴拿赫空间的公理化处理（AG01.1），本章只给实例、那边给公理；二维与三维位势问题里取 $L^2$ 与 Sobolev 型空间（AN05.1）。同章 $L^2$ 的完备性靠可数并的极限操作补上。",
+  "connect": "往后是赋范空间与巴拿赫空间的公理化处理，本章只给 $L^p$ 这个实例；二维与三维位势问题里取 $L^2$ 与 Sobolev 型空间（AN11.1）。同章 $L^2$ 的完备性靠可数并的极限操作补上。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "json/AN01/AN01.5.json",
+    "unitSha": "8349f04b0e97",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

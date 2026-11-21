@@ -21,8 +21,10 @@
   "principle": "对象本身可以不存在，只要它对探针的读数线性且稳定，就算登记成功。",
   "connect": "往后，弱导数正是「导数恰好仍是函数」的那一层，界于经典导数与分布之间（AN04.2）；同一手分部积分在微分形式一侧变成外微分与边界积分（AN03.1）。下游工程里，点光源与镜面反射分量都是这类集中对象，必须单独登记。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN02/AN02.5.json",
+    "unitSha": "a3f1cac1ee11",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

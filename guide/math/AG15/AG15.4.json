@@ -21,8 +21,10 @@
   "principle": "选了多大的交换子代数，根就只到那个大小为止。",
   "connect": "往下，根的对偶空间里那些向量之间的夹角决定图样，只留单根就得到骨架（AG15.5）。同一套根被拿去给表示贴标签，权是根向表示方向推一步的结果（AG15.6）。物理一侧，两个可交换的对角生成元正是同位旋第三分量与超荷，读法见 AG16.5。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.4.json",
+    "unitSha": "7efa3cfde8af",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

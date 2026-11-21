@@ -24,8 +24,10 @@
   ],
   "connect": "驱动赖的页表、陷入与中断入口都在实现底座那篇里（SO02.1），三家设备接法的差异在对比那篇（SO03.1）；把设备接进虚拟机而不是接进内核，是虚拟化那篇的问题（SO06.1）。性能归因的口径不重复，见性能工程那篇（EG03.1）。",
   "source": {
-    "unit": "notebook/projects/os/drivers/OUTLINE.md",
-    "unitSha": "b7f4e0a24334"
+    "unit": "projects/json/SO04/SO04.1.json",
+    "unitSha": "364ec80c5105",
+    "note": "notebook/projects/os/drivers/OUTLINE.md",
+    "noteSha": "b7f4e0a24334"
   },
   "generated": {
     "model": "coding-agent",

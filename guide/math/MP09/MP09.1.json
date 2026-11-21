@@ -23,10 +23,12 @@
     }
   ],
   "principle": "量子先机制后形式；场论走电磁到几何化，目标是看懂结构，不是把散射截面算到底。",
-  "connect": "往前是第二阶段的流形与切空间（AG13.2）和泛函工具（MP08.1）。往后规范场接纤维丛专题（AG15.1）与电磁的协变形式（PH06.1），量子接角动量与自旋（PH16.1）与薛定谔方程（MP05.1），两条线在路径积分处并成一处。",
+  "connect": "往前是第二阶段的流形与切空间（AG13.2）和泛函工具（MP08.1）。往后规范场接纤维丛专题（AG13.4）与电磁的协变形式（PH06.1），量子接角动量与自旋（PH16.1）与薛定谔方程（PH15.1），两条线在路径积分处并成一处。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP09/MP09.1.json",
+    "unitSha": "1a85a9b61cba",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

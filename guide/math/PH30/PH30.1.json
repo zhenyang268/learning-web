@@ -21,8 +21,10 @@
   "principle": "发散不是错误，是可观测的差被忽略；参数按能标定义，式子才给出数。",
   "connect": "往上是 QED 的顶点与耦合（PH27.1）以及算圈图所用的传播子（PH26.1），积分里的参数都来自那里。往下，规范场传播子的定义依赖规范固定与鬼场（PH31.1）；跑动的耦合则换来一个可量化的差别：量子侧随能标变，渲染侧的反射率是常数（PH32.1）。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH30/PH30.1.json",
+    "unitSha": "e3bbe96295c6",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

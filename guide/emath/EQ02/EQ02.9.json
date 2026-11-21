@@ -25,8 +25,10 @@
   "principle": "给定解条件前先数两遍：每处恰好一个，纯通量还要核总量为零。",
   "connect": "三型分类与初值个数的配合在 EQ02.5，边界值齐次化之后才能进入 EQ02.10 的级数解法；Green 函数把条件吸进核里（EQ02.14），弱形式则把给值当成本质条件、把给通量当成自然条件（EQ02.15）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.9.json",
+    "unitSha": "d5eb9117dbcb",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

@@ -1,6 +1,7 @@
 {
   "version": 1,
   "site": "cs408",
+  "mode": "T",
   "units": {
     "CO01.1": {
       "talk": "build/reading/talk/408-kp-CO-0101.md",

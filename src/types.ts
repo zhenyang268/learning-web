@@ -162,12 +162,19 @@ export interface GuideWhy {
   p: string;
 }
 
-/** 导语的事实来源（sha 为 sha256 前 12 位） */
+/**
+ * 导语的事实来源（sha 为 sha256 前 12 位）。
+ *
+ * unit 永远指向知识单元 json；note 是 Mode S 的 notebook 内容源；
+ * talk 是 Mode T 的口述稿。三者分开，漂移才能按单元判。
+ */
 export interface GuideSource {
   talk?: string;
   talkSha?: string;
   unit?: string;
   unitSha?: string;
+  note?: string;
+  noteSha?: string;
 }
 
 /**

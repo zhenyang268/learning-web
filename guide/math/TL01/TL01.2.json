@@ -21,8 +21,10 @@
   "principle": "记公式不如记它的差分：差分对了，端点与量级都跟着对。",
   "connect": "往前接 TL01.1 的恒等式，三条公式只是它的三个实例；往后 TL01.3 用同一套路把任意幂次的求和都造出来。上游 TL04.3 的级数估值要用主项作标尺，TL09.3 的渐近则把「主项加修正」写成正式语言。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL01/TL01.2.json",
+    "unitSha": "54636983435d",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

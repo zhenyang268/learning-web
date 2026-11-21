@@ -21,8 +21,10 @@
   "principle": "双重覆盖多出来的那一层不是冗余，半整数标记就住在这层里。",
   "connect": "往后，两个群的本源差别落在李代数上，$\\mathfrak{su}(2)$ 与 $\\mathfrak{so}(3)$ 同构而复群多出可用的表示（AG14.12、AG15.7）。不忠实这点在伴随表示里被讲清（AG14.16）；工程上它是四元数成对使用的由来（AG16.13）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.5.json",
+    "unitSha": "b9381f252ae1",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

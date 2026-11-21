@@ -25,8 +25,10 @@
   "principle": "指数在单位元邻域内是微分同胚；离开这片区域，满射与单射都要另外检查。",
   "connect": "往下，三个经典代数各自的指数都通向具体算法：旋转的罗德里格斯公式、四元数的单位球、刚体变换的螺旋坐标（AG14.11、AG16.15）。工程一侧，姿态更新与量子演化都直接用左乘指数（AG16.2、AG16.12）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.10.json",
+    "unitSha": "ae65a4d38a64",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

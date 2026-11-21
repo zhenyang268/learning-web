@@ -19,10 +19,12 @@
     }
   ],
   "principle": "每一步只负责一件事：乘什么决定得到什么，移导数决定符号，几何决定速率。",
-  "connect": "往下，椭圆与抛物方程的既有能量估计就是同一条流水线加了截断函数（AN06.3）；变分框架里的强制性也靠这里第几步的组合（AN05.1）。选型时回到不等式对照（TL09.4）。",
+  "connect": "往下，椭圆与抛物方程的既有能量估计就是同一条流水线加了截断函数（AN11.1）；变分框架里的强制性也靠这里第几步的组合（AN11.1）。选型时回到不等式对照（TL09.4）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL09/TL09.2.json",
+    "unitSha": "c1fe2779acb9",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

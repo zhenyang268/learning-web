@@ -21,8 +21,10 @@
   "principle": "取等条件先查：共线、全相等、$a^p=b^q$，三者互不相同。",
   "connect": "往前走一步是整条依赖链的源头：凸性经条件期望给出这些不等式（TL03.3）。零散的单函数放缩归入 TL03.2 那一盒。往后，能量估计要把交叉项吸收进等式左边，靠的正是带小参数的版本（TL09.2），最后再由 Gronwall 收尾。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL03/TL03.1.json",
+    "unitSha": "62b31fd55ac2",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "先给量级与阈值，再谈结构与组件。",
   "connect": "量级算完要落到实测，归因方法在性能工程（EG03.1）；证据取自调试（EG02.1）；超卖、连接上限、端口与队列这类边界在陷阱与边界（EG05.1）。四份合起来才闭环。",
   "source": {
-    "unit": "notebook/projects/eng/system-design/OUTLINE.md",
-    "unitSha": "647e1ea54280"
+    "unit": "projects/json/EG04/EG04.1.json",
+    "unitSha": "cf8eb820f9d5",
+    "note": "notebook/projects/eng/system-design/OUTLINE.md",
+    "noteSha": "647e1ea54280"
   },
   "generated": {
     "model": "coding-agent",

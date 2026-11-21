@@ -21,8 +21,10 @@
   "principle": "界面处理先保证两偏振、两方向四笔账加起来等于入射能量。",
   "connect": "它的推导靠界面上切向场连续，这一层从 CG18.1 的边界匹配来；与介质内的界面一起构成同一物理量的两处写法，落点在 CG16.1；焦散附近的偏振修正见 CG25.1。",
   "source": {
-    "unit": "notebook/math/J_rtx.tex",
-    "unitSha": "03d34bf9e80c"
+    "unit": "emath/json/CG20/CG20.1.json",
+    "unitSha": "3373f437a61e",
+    "note": "notebook/math/J_rtx.tex",
+    "noteSha": "03d34bf9e80c"
   },
   "generated": {
     "model": "coding-agent",

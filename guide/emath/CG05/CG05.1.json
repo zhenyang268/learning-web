@@ -25,8 +25,10 @@
   "principle": "先在系数域算完所有线性环节，非线性的那一步留到重建之后。",
   "connect": "往下，预计算辐射传输把这张增益表从一次滤波升级成整套架构，见 CG02.1；再往后的采样与噪声整形在 CG04.1 与 CG06.1。频域里同一套「基带截断丢常见」的机制，可对照 AN02.3。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG05/CG05.1.json",
+    "unitSha": "1b4af70b8fa9",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

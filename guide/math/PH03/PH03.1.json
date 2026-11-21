@@ -23,10 +23,12 @@
     }
   ],
   "principle": "先做变量替换并验证正则条件，再用括号统一表达运动与守恒。",
-  "connect": "往前广义动量是拉格朗日形式的产出（PH01.1），守恒量那一步也从对称性来（PH02.1）。再往后括号换成对易子，就接上了量子化（PH04.1）。",
+  "connect": "往前广义动量是拉格朗日形式的产出（PH01.1），守恒量那一步也从对称性来（PH02.1）。再往后括号换成对易子，就接上了量子化（PH15.1）。",
   "source": {
-    "unit": "notebook/math/D_classic.tex",
-    "unitSha": "6d505194aaa1"
+    "unit": "json/PH03/PH03.1.json",
+    "unitSha": "0c817f62c164",
+    "note": "notebook/math/D_classic.tex",
+    "noteSha": "6d505194aaa1"
   },
   "generated": {
     "model": "coding-agent",

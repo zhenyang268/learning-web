@@ -3,7 +3,7 @@
   "code": "EQ03.7",
   "site": "emath",
   "scope": "unit",
-  "lead": "这一节解决的是：怎样把方程整条搬进系数空间，使它只剩一条可逐行读取的递推。",
+  "lead": "这里要解决的是：怎样把方程整条搬进系数空间，使它只剩一条可逐行读取的递推。",
   "why": [
     {
       "h": "为什么系数能一格格定下来",
@@ -19,10 +19,12 @@
     }
   ],
   "principle": "方程在系数空间里就是一个矩阵，稀疏的形态对应方程的结构，逐行可解对应删掉一个前提。",
-  "connect": "承接 EQ03.5 的移位矩阵，这一节把方程整条放上去；EQ03.10 把这条递推收成生成函数，EQ03.8 处理同一条路上剩下的特征值问题，EQ03.14 再把同样的做法搬到偏微分一侧。",
+  "connect": "承接 EQ03.5 的移位矩阵，这里把方程整条放上去；EQ03.10 把这条递推收成生成函数，EQ03.8 处理同一条路上剩下的特征值问题，EQ03.14 再把同样的做法搬到偏微分一侧。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.7.json",
+    "unitSha": "69c1c18e3a60",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

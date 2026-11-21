@@ -21,8 +21,10 @@
   "principle": "先看能不能拆成积，再查两个偏导是否相等。",
   "connect": "两种动作的实例从 EQ01.2 的积分因子与 EQ01.3 的一阶线性方程展开；二阶方程先经 EQ01.4 降回一阶，再重复这两个动作。整体并入一个全微分的想法，在 EQ02.5 变成 PDE 按主部分类。存在唯一性由 EQ01.9 保证。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.1.json",
+    "unitSha": "231665b376bc",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

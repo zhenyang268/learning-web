@@ -19,10 +19,12 @@
     }
   ],
   "principle": "任何一条结论都要落到一次测量或一次复现。",
-  "connect": "按用得上排序：出事时的定位链路与写代码时的测试、变慢时的归因依次必做，系统设计随后，陷阱案例集当索引反复翻（EG01.1 到 EG05.1）。各子项目仍各自守自己的判据，本组只做路由。",
+  "connect": "按用得上排序：出事时的定位链路与写代码时的测试、变慢时的归因依次必做，系统设计随后，陷阱案例集当索引反复翻（EG01.1、EG02.1、EG03.1、EG04.1、EG05.1）。各子项目仍各自守自己的判据，本组只做路由。",
   "source": {
-    "unit": "notebook/projects/eng/OUTLINE.md",
-    "unitSha": "7ab6be2fb94a"
+    "unit": "projects/json/EG00/EG00.1.json",
+    "unitSha": "f8a2f61ed558",
+    "note": "notebook/projects/eng/OUTLINE.md",
+    "noteSha": "7ab6be2fb94a"
   },
   "generated": {
     "model": "coding-agent",

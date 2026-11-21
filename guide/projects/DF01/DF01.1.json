@@ -23,10 +23,12 @@
     }
   ],
   "principle": "每个分支先问一句：它删掉会破哪条不变量，回执的每个字段是否都对。",
-  "connect": "同组的工程实践线见 DF02.1，那里把假磁盘换成真文件系统，判据从可重放升级到崩溃点注入。上游的协议定义与必要性论证见 PA01.1，系统侧的对齐对照见 SO02.1。",
+  "connect": "同组的工程实践线见 DF02.1，那里把假磁盘换成真文件系统，判据从可重放升级到崩溃点注入。上游的协议定义与必要性论证见 DF00.1，系统侧的对齐对照见 SO02.1。",
   "source": {
-    "unit": "notebook/projects/raft/go-lab/OUTLINE.md",
-    "unitSha": "c1701ef6f079"
+    "unit": "projects/json/DF01/DF01.1.json",
+    "unitSha": "c4bc92a4484e",
+    "note": "notebook/projects/raft/go-lab/OUTLINE.md",
+    "noteSha": "c1701ef6f079"
   },
   "generated": {
     "model": "coding-agent",

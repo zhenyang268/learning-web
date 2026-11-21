@@ -3,7 +3,7 @@
   "code": "NL01.7",
   "site": "emath",
   "scope": "unit",
-  "lead": "两条轴这一节解决的是：把「这个算法对不对」换成「它在这两条轴上各掉了多少」。",
+  "lead": "两条轴要解决的是：把「这个算法对不对」换成「它在这两条轴上各掉了多少」。",
   "why": [
     {
       "h": "为什么阶要用三个点测",
@@ -25,8 +25,10 @@
   "principle": "定理、实现、浮点判据、失效点四列齐全才算验证过，缺一列就只是教材或代码。",
   "connect": "轴一的阶与轴二的容差在 NL14.1 的离散节点里合成同一条判据，源头是 NL01.0 依赖网顶端的机器精度与误差累积两条。矩阵一侧的具体判据在 NL02.1，正交性阈值落在 NL05.1 之后那一组，形状与步长的实现面见 NL13.1。",
   "source": {
-    "unit": "notebook/math/survey/p12-axes.tex",
-    "unitSha": "6ae8059c4743"
+    "unit": "emath/json/NL01/NL01.7.json",
+    "unitSha": "fb0cf3b6811a",
+    "note": "notebook/math/survey/p12-axes.tex",
+    "noteSha": "6ae8059c4743"
   },
   "generated": {
     "model": "coding-agent",

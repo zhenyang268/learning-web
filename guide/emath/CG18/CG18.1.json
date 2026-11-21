@@ -21,8 +21,10 @@
   "principle": "先用尺度比挑层级，再用边界匹配补层级之间的缺口。",
   "connect": "它是后面几节的源头：远场衍射来自同一个自由空间格林函数，见 CG19.1；两个偏振的反射系数由边界场连续推出，见 CG20.1；焦散处的有限峰值要靠波场算，见 CG25.1；统计意义上的相位关系见 CG21.1。",
   "source": {
-    "unit": "notebook/math/J_rtx.tex",
-    "unitSha": "03d34bf9e80c"
+    "unit": "emath/json/CG18/CG18.1.json",
+    "unitSha": "00e693288f60",
+    "note": "notebook/math/J_rtx.tex",
+    "noteSha": "03d34bf9e80c"
   },
   "generated": {
     "model": "coding-agent",

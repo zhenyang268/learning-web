@@ -19,10 +19,12 @@
     }
   ],
   "principle": "精确的交拓扑，近似只准留在体积比里；出问题先看几何层。",
-  "connect": "往前，外微分的离散对应物建立在边界算子与对偶形式之上，见 AN03.1。往后，几何层里的体积比正是余切权重的来源，见 CG01.1；网格上出现的棋盘式伪振荡可以由内积失真的角度重看，见 CG17.3；而数值格式的分层误差也按同样的思路拆账，见 NM06.1。",
+  "connect": "往前，外微分的离散对应物建立在边界算子与对偶形式之上，见 AN03.1。往后，几何层里的体积比正是余切权重的来源，见 CG01.1；网格上出现的棋盘式伪振荡可以由内积失真的角度重看，见 CG17.3；",
   "source": {
-    "unit": "notebook/math/M_addition.tex",
-    "unitSha": "44aa083ef0df"
+    "unit": "emath/json/CG26/CG26.1.json",
+    "unitSha": "9fb50492cace",
+    "note": "notebook/math/M_addition.tex",
+    "noteSha": "44aa083ef0df"
   },
   "generated": {
     "model": "coding-agent",

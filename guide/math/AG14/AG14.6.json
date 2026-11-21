@@ -20,8 +20,10 @@
   ],
   "connect": "往下，螺旋视角把六维动作收束成一条轴加一个螺距，这正好是 $\\mathfrak{se}(3)$ 的内容（AG16.16）；齐次矩阵的乘法是把群结构装进矩阵的手段，刚体变换一节给它的工程读法（AG16.15）。再往后，等变网络要对位置上的动作保持法则是同一结构（AG16.19）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.6.json",
+    "unitSha": "3b514bd8e676",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

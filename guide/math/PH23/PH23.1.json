@@ -19,10 +19,12 @@
     }
   ],
   "principle": "每次借用对方的方法之前先问一句：这一步涉及相位吗？涉及就不能等同。",
-  "connect": "量子这一侧的来源是路径求和与虚时间权重（PH20.1、PH22.1）；渲染这一侧在路径追踪与重要性采样里落地（PH23.1）。往后进入量子场论时，同一套级数展开变成逐阶图形（PH25.1、PH26.1）。",
+  "connect": "量子这一侧的来源是路径求和与虚时间权重（PH20.1、PH22.1）；渲染这一侧在路径追踪与重要性采样里落地。往后进入量子场论时，同一套级数展开变成逐阶图形（PH25.1、PH26.1）。",
   "source": {
-    "unit": "notebook/math/K_Feyman.tex",
-    "unitSha": "a4099cec8902"
+    "unit": "json/PH23/PH23.1.json",
+    "unitSha": "dc5e51326e60",
+    "note": "notebook/math/K_Feyman.tex",
+    "noteSha": "a4099cec8902"
   },
   "generated": {
     "model": "coding-agent",

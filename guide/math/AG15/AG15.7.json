@@ -20,8 +20,10 @@
   ],
   "connect": "往下，这个「转一圈变号还是不变号」的判据会反复出现，到高秩时共轭与分解各有一套记法（AG15.8）。同一现象换个角度就是拓扑问题，回路能否收缩成一个点决定了双层从哪来（AG15.9）。物理一侧，自旋与角动量耦合直接接在 AG16.2 与 AG16.5 上。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.7.json",
+    "unitSha": "1120f51f00a5",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

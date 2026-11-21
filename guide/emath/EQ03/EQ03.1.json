@@ -21,8 +21,10 @@
   "principle": "先定用哪种代数动作，再把收敛范围写进第一行。",
   "connect": "同一条思路在 EQ03.3 会升到算子对角化的高度，离散版本的对应物则在 EQ03.10 展开。解常点初值问题用级数这一支，走 EQ01.13；半轴初值问题用变换这一支，见 EQ02.13。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.1.json",
+    "unitSha": "ba1ef0258512",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "截断的正当性来自展开参数的大小，不来自类比本身。",
   "connect": "往上是逐阶展开的级数（PH25.1）与费曼规则给出的图（PH26.1），量子侧的项都从那里来。往下，耦合随能标跑动这一条在重整化里给出（PH30.1）；渲染侧的多重弹射与路径积分对照见 PH23.1，两条线在此处交接。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH32/PH32.1.json",
+    "unitSha": "c4092bb6fa3b",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

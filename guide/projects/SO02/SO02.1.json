@@ -21,8 +21,10 @@
   "principle": "讲一块之前，先能说出删掉它的哪一条会立刻崩。",
   "connect": "这一篇是组内的实现底座，往下的横向对比要把这里的块逐格对上（SO03.1）；设备与虚拟化两篇会把它用过的页表、陷入、描述符环反向再走一遍（SO04.1、SO06.1）。内存边界与越权路径那侧另有一篇（SO05.1），观测手段可回到系统编程那篇（CS01.1）。",
   "source": {
-    "unit": "notebook/projects/os/xv6/OUTLINE.md",
-    "unitSha": "d7cb3bdd6ac1"
+    "unit": "projects/json/SO02/SO02.1.json",
+    "unitSha": "4be60a77063c",
+    "note": "notebook/projects/os/xv6/OUTLINE.md",
+    "noteSha": "d7cb3bdd6ac1"
   },
   "generated": {
     "model": "coding-agent",

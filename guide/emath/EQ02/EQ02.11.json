@@ -21,8 +21,10 @@
   "principle": "沿着信息走的方向看：曲线族一旦撞车，光滑解就到头了。",
   "connect": "前提是 EQ02.5 判出双曲型，只有那里才有两族实特征线可走。与 EQ02.6 的达朗贝尔通解是同一件事的两种写法，有界区域上的对照见 EQ02.10。到达撞车时刻之后要换弱解，这一步属于后续的守恒律内容。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.11.json",
+    "unitSha": "129a13658d3e",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

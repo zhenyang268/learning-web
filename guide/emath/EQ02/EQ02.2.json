@@ -21,8 +21,10 @@
   "principle": "先延拓到方程阶数，再在解流形上求值，两个动作都不许省。",
   "connect": "上游是单参数李群与无穷小生成元的定义（EQ02.1）；下游拿着决定方程组解出的生成元去查标准解法（EQ02.3），再走降阶流程（EQ02.4）。谱系上它是常微分方程降阶思路的推广，与一阶方程的积分因子同源（EQ01.3）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.2.json",
+    "unitSha": "9d68e4c35d92",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

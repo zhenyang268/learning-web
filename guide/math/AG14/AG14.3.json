@@ -21,8 +21,10 @@
   "principle": "周期群的参数只在局部单值，全局行为由绕行整圈的次数记账。",
   "connect": "往下，同一个群的三维版本是 AG14.4，那里的旋转不再交换，绕圈次数也从整数缩成两个元素。再往外，圆上按频率展开的做法通向旋转的多种表示（AG16.12）与球谐（AG16.17），相位作为可测量的经典量则在角动量分量里直接现身（AG16.1）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.3.json",
+    "unitSha": "9b54c4fd063c",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

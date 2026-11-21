@@ -25,8 +25,10 @@
   "principle": "局部信息在连通域上有唯一的续法；走出连通范围时，代价落在割线与分支的选择上。",
   "connect": "往前的奇点分类与按阶数取系数的做法（AN08.2）在这里给出一串极点的强度；再往前是共形映射与单连通域的规整化（AN09.1）。往下二维边值问题里多值的速度势正是这条线的产物（AN11.1），极点与指数的对应也在此收口（AN12.1）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN10/AN10.1.json",
+    "unitSha": "b76bb57e1cfe",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

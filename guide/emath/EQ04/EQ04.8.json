@@ -3,7 +3,7 @@
   "code": "EQ04.8",
   "site": "emath",
   "scope": "unit",
-  "lead": "几何处理这一节解决的是：把平直空间里的算子搬到曲面上，并接受网格质量改写算子性质这件事。",
+  "lead": "几何处理要解决的是：把平直空间里的算子搬到曲面上，并接受网格质量改写算子性质这件事。",
   "why": [
     {
       "h": "为什么钝角会把平滑变成放大",
@@ -25,8 +25,10 @@
   "principle": "算子阶数决定离散单元的光滑性，网格与度量的质量决定算子还是不是原来那个算子。",
   "connect": "阶数与空间的那套判据来自 EQ02.15 的变分口径，离散单元的组织方式与 EQ04.3 同源。谱一侧接 EQ03.8 的广义特征值问题，球面那组特征值在 EQ03.12 的坐标系里落地，曲率流与传输方程对照看 EQ02.6。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.8.json",
+    "unitSha": "f673b2909536",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

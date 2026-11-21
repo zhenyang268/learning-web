@@ -23,10 +23,12 @@
     }
   ],
   "principle": "声称正确之前，先指出它由哪一块保证、改坏哪一步会先破。",
-  "connect": "同组的课堂版见 DF01.1，两边的不变量一致，差别只在替身被换成真网络与真介质。上游的协议定义见 PA01.1，操作系统侧的调用界面见 SO01.1，并发正确性的对照见 EG01.1。",
+  "connect": "同组的课堂版见 DF01.1，两边的不变量一致，差别只在替身被换成真网络与真介质。上游的协议定义见 DF00.1，操作系统侧的调用界面见 SO01.1，并发正确性的对照见 EG01.1。",
   "source": {
-    "unit": "notebook/projects/raft/cpp/OUTLINE.md",
-    "unitSha": "12419a9950b4"
+    "unit": "projects/json/DF02/DF02.1.json",
+    "unitSha": "4b746ddd2626",
+    "note": "notebook/projects/raft/cpp/OUTLINE.md",
+    "noteSha": "12419a9950b4"
   },
   "generated": {
     "model": "coding-agent",

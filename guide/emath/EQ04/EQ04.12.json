@@ -3,7 +3,7 @@
   "code": "EQ04.12",
   "site": "emath",
   "scope": "unit",
-  "lead": "三角关系这一节要说的是：微分方程、矩阵、群不是三个主题，而是同一对象的三种语言。",
+  "lead": "三角关系要说的是：微分方程、矩阵、群不是三个主题，而是同一对象的三种语言。",
   "why": [
     {
       "h": "为什么这三边能互相翻译",
@@ -21,8 +21,10 @@
   "principle": "三条边都是分解：谱分解、不变量分解、不可约分解，前提都是结构良好。",
   "connect": "矩阵视角的来处在 EQ03.5 与 EQ03.8，对称性一边接 EQ02.1 的生成元。球谐这个例子在 EQ03.12 的坐标系里展开过，而 EQ04.10 的箭头会合点正是这三条边在经验层面的影子。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.12.json",
+    "unitSha": "12f44524ddd2",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

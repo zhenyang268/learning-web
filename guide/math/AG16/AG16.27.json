@@ -23,10 +23,12 @@
     }
   ],
   "principle": "路径按依赖排，跳过的层级会在出错那一刻把账讨回来。",
-  "connect": "路径中每一级的内容都在前文有对应：旋转入门在角动量与自旋（AG16.1、AG16.2），抽象一级落在纤维丛与特征类（AG16.6）。整条路是核心对应表的依赖顺序的直接结果，读法与取向见 AG16.26。",
+  "connect": "路径中每一级的内容都在前文有对应：旋转入门在角动量与自旋（AG16.1、AG16.2），抽象一级落在纤维丛与特征类（AG15.11）。整条路是核心对应表的依赖顺序的直接结果，读法与取向见 AG16.26。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.27.json",
+    "unitSha": "f15969b49755",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

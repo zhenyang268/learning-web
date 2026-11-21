@@ -3,7 +3,7 @@
   "code": "EQ04.10",
   "site": "emath",
   "scope": "unit",
-  "lead": "知识网络这一节把五条方法线摆成一张图，给的是索引而不是推导链。",
+  "lead": "知识网络把五条方法线摆成一张图，给的是索引而不是推导链。",
   "why": [
     {
       "h": "为什么要按产出反向查",
@@ -21,8 +21,10 @@
   "principle": "边看方向，也要看前提；图用来找路，不用来推结论。",
   "connect": "五个出发点在正文里各有出处：对称性接 EQ02.1 与 EQ02.4，分离变量接 EQ02.10，弱形式接 EQ02.15，点源叠加接 EQ01.18。同一批箭头在 EQ04.13 里换成按算子结构选策略。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.10.json",
+    "unitSha": "c67666d85dc2",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "把一维结论推广前，先核三件事：条件形态、核的奇异性、奇性会不会聚焦。",
   "connect": "一维到多维换了什么，对照 EQ03.1 里局部与全局的区分；核变奇异之后的构造见 EQ03.13。积分形式的重新表述在 EQ03.15，数值一侧的分岔则要看 EQ04.3 的选择。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.14.json",
+    "unitSha": "07cba1e198c3",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

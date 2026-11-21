@@ -3,7 +3,7 @@
   "code": "EQ01.13",
   "site": "emath",
   "scope": "unit",
-  "lead": "系数在展开点解析时，这一节把方程求解转成系数序列的递推。",
+  "lead": "系数在展开点解析时，这里把方程求解转成系数序列的递推。",
   "why": [
     {
       "h": "为什么从系数着手",
@@ -21,8 +21,10 @@
   "principle": "展开点解析时，方程等价于一组逐次求解的系数递推。",
   "connect": "若展开点让最高阶系数取零，方法要换成 EQ01.14 的带幂次形式，那里还会多出指标方程。递推解出的族最终要在 EQ01.12 的框架里配对权重与边界。数值侧可按 EQ04.1 的格式做替代验证。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.13.json",
+    "unitSha": "736bf4c487e9",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

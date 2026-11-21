@@ -79,6 +79,7 @@ function validateCard(card, ctx) {
     card.why.forEach((w, i) => {
       if (!w || typeof w !== 'object') return add(`why[${i}] 不是对象`);
       if (typeof w.h !== 'string' || !w.h.trim()) add(`why[${i}].h 缺失`);
+      else if (!/^为什么/.test(w.h.trim())) add(`why[${i}].h 必须以「为什么」开头：${w.h}`);
       else if (plainLen(w.h) > 20) add(`why[${i}].h 超长：${plainLen(w.h)} > 20`);
       if (typeof w.p !== 'string' || !w.p.trim()) add(`why[${i}].p 缺失`);
       else {
@@ -134,16 +135,24 @@ function validateCard(card, ctx) {
     : ctx.site === 'projects' ? [400, 700] : [350, 700];
   if (total < lo || total > hi) add(`总长 ${total} 不在 ${lo}–${hi}`);
 
-  // 源 sha 漂移
+  // 源：unit 永远是「单元 json」，note 是 Mode S 的内容源，talk 是 Mode T 的口述稿。
   const src = card.source;
   if (!src || typeof src !== 'object') add('source 缺失');
   else {
+    if (!src.unit) add('source.unit 缺失（应指向单元 json）');
+    else if (src.unit !== ctx.unitPath) add(`source.unit 路径不符：${src.unit} ≠ ${ctx.unitPath}`);
+    if (src.unitSha !== ctx.unitSha) add(`unit sha 漂移：${String(src.unitSha)} ≠ ${ctx.unitSha}`);
+
     if (!ctx.isSite && !ctx.modeS) {
       if (!src.talk) add('source.talk 缺失');
-      else if (src.talkSha !== ctx.talkSha) add(`talk sha 漂移：${String(src.talkSha)} ≠ ${ctx.talkSha}`);
+      else if (src.talk !== ctx.talkPath) add(`source.talk 路径不符：${src.talk} ≠ ${ctx.talkPath}`);
+      if (src.talkSha !== ctx.talkSha) add(`talk sha 漂移：${String(src.talkSha)} ≠ ${ctx.talkSha}`);
     }
-    if (!src.unit) add('source.unit 缺失');
-    else if (src.unitSha !== ctx.unitSha) add(`unit sha 漂移：${String(src.unitSha)} ≠ ${ctx.unitSha}`);
+    if (!ctx.isSite && ctx.modeS) {
+      if (!src.note) add('source.note 缺失（Mode S 应指向 notebook 内容源）');
+      else if (src.note !== ctx.notePath) add(`source.note 路径不符：${src.note} ≠ ${ctx.notePath}`);
+      if (src.noteSha !== ctx.noteSha) add(`note sha 漂移：${String(src.noteSha)} ≠ ${ctx.noteSha}`);
+    }
   }
 
   // 重复 lead（同一站点内）
@@ -224,23 +233,32 @@ function runSite(site, opts) {
       crit += 1;
       continue;
     }
-    // Mode S 的 source.unit 指向 notebook 源（相对父仓）；Mode T 指向单元 json
-    const srcAbs = item.talk
-      ? unitJsonPath
-      : path.resolve(NB_ROOT, item.src ?? '');
-    if (!fs.existsSync(srcAbs)) {
-      console.log(`✗ ${code} source.unit 不存在：${item.src}`);
+    // unit 永远是单元 json；__site 没有单元 json，沿用 README。
+    const unitAbs = isSite ? path.resolve(NB_ROOT, item.src ?? '') : unitJsonPath;
+    if (!fs.existsSync(unitAbs)) {
+      console.log(`✗ ${code} unit 源不存在：${isSite ? item.src : path.relative(ROOT, unitAbs)}`);
       crit += 1;
       continue;
     }
+    const noteAbs = !isSite && !item.talk ? path.resolve(NB_ROOT, item.src ?? '') : null;
+    if (noteAbs && !fs.existsSync(noteAbs)) {
+      console.log(`✗ ${code} note 源不存在：${item.src}`);
+      crit += 1;
+      continue;
+    }
+    const talkAbs = item.talk ? path.join(ROOT, item.talk) : null;
     const errs = validateCard(card, {
       code,
       site,
       isSite,
-      modeS: !item.talk,
+      modeS: !item.talk && !isSite,
       unitCodes,
-      talkSha: item.talk ? sha12(path.join(ROOT, item.talk)) : '',
-      unitSha: sha12(srcAbs),
+      unitPath: isSite ? String(item.src) : path.relative(ROOT, unitAbs).split(path.sep).join('/'),
+      unitSha: sha12(unitAbs),
+      talkPath: item.talk ?? '',
+      talkSha: talkAbs ? sha12(talkAbs) : '',
+      notePath: noteAbs ? String(item.src) : '',
+      noteSha: noteAbs ? sha12(noteAbs) : '',
       seenLeads,
     });
     if (errs.length) {
@@ -277,8 +295,13 @@ function selfTest() {
     code: 'DS02.3',
     site: 'cs408',
     unitCodes: new Set(['DS02.3', 'DS04.1', 'DS05.1']),
-    talkSha: 'aaaaaaaaaaaa',
+    unitPath: 'cs408/json/DS02/DS02.3.json',
     unitSha: 'bbbbbbbbbbbb',
+    talkPath: 'build/reading/talk/408-kp-0203.md',
+    talkSha: 'aaaaaaaaaaaa',
+    notePath: '',
+    noteSha: '',
+    modeS: false,
     seenLeads: new Set(),
   });
   const cases = [
@@ -287,6 +310,8 @@ function selfTest() {
     ['坏代号', (c) => { c.connect = '往后见 ZZ99.1。' + '补充'.repeat(30); }],
     ['口语残留', (c) => { c.lead = '非常重要：链表的所有差异都来自有没有前驱边。'; }],
     ['why 只有 1 条', (c) => { c.why = [c.why[0]]; }],
+    ['why 标题不是为什么', (c) => { c.why[0].h = '链表的代价'; }],
+    ['source.unit 路径不符', (c) => { c.source.unit = 'cs408/json/DS02/DS02.2.json'; }],
   ];
   let bad = 0;
   for (const [name, mutate] of cases) {
@@ -305,7 +330,8 @@ function selfTest() {
   const dupOk = errs2.some((e) => e.includes('重复'));
   console.log(`${dupOk ? '✓' : '✗'} self-test：重复 lead${dupOk ? '' : ' 未被抓住'}`);
   if (!dupOk) bad += 1;
-  console.log(`[check-guide] self-test：${bad ? `FAIL ${bad}` : 'PASS 6/6'}`);
+  const total = cases.length + 1;
+  console.log(`[check-guide] self-test：${bad ? `FAIL ${bad}/${total}` : `PASS ${total}/${total}`}`);
   return bad ? 1 : 0;
 }
 

@@ -21,8 +21,10 @@
   "principle": "同一个阶数下，先选节点分布，再谈多项式次数。",
   "connect": "与 NM02.3 一脉相承：那边给出全局展开的收敛依据，这边决定展开在区间上靠什么节点落地。函数有极点、区间逼近不划算时退回 NM04.1，它按极点位置判断有理结构是否值得；基函数病态时的替代思路见 NM03.1。",
   "source": {
-    "unit": "notebook/math/G_numeric.tex",
-    "unitSha": "63e2fa138564"
+    "unit": "emath/json/NM04/NM04.2.json",
+    "unitSha": "c26262123b27",
+    "note": "notebook/math/G_numeric.tex",
+    "noteSha": "63e2fa138564"
   },
   "generated": {
     "model": "coding-agent",

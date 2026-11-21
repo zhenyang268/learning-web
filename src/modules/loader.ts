@@ -191,6 +191,11 @@ export async function loadGuide(
       return bad(key, `必填字段缺失或非字符串：${key}`);
     }
   }
+  if (!o.source || typeof o.source !== 'object'
+    || typeof (o.source as Record<string, unknown>).unit !== 'string'
+    || typeof (o.source as Record<string, unknown>).unitSha !== 'string') {
+    return bad('source', 'source.unit / unitSha 缺失');
+  }
   if (!Array.isArray(o.why) || o.why.length < 1) return bad('why', 'why 缺失或不是数组');
   o.why.forEach((w, i) => {
     if (typeof w !== 'object' || w === null) return;

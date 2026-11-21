@@ -21,8 +21,10 @@
   "principle": "维数公式各自独立，同维数不推同构，低秩的巧合只在小秩处有效。",
   "connect": "往下，四族的分野要靠根系统的图样分辨，同构与不同构在图上一层就看得出（AG15.5）。秩 n 这个共同的小数字在 AG15.4 里变成可同时对角化的方向数。往物理方向接，无迹族就是 su(n)，规范群的结构落在 AG15.5 与 AG16.5。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.2.json",
+    "unitSha": "b3fac007bcd9",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

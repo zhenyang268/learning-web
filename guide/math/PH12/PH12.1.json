@@ -22,10 +22,12 @@
       "p": "白噪声没有记忆，把方程对时间积分一次，位移就是噪声的加权累积，其均方只随观测时长线性增长，斜率正是两倍扩散系数。于是跨尺度的结论只剩一条标度：$\\langle x^2\\rangle=2Dt$。想谈一次轨迹的具体形状，这个方程不提供，要改用轨迹的概率密度方程。"
     }
   ],
-  "connect": "上游是配分函数与 Boltzmann 分布：平衡分布由它给出，噪声强度也由它配平（PH09.1）。下游同一张表要分两处用：扩散系数进入连续介质的输运计算（PR06.1），欧拉‑丸山的单步更新与路径样本的方差估计接在时间积分那一章（TL08.1）。",
+  "connect": "上游是配分函数与 Boltzmann 分布：平衡分布由它给出，噪声强度也由它配平（PH09.1）。下游同一张表要分两处用：扩散系数进入连续介质的输运计算（PR10.3），欧拉‑丸山的单步更新与路径样本的方差估计接在时间积分那一章（PR10.3）。",
   "source": {
-    "unit": "notebook/math/M_addition.tex",
-    "unitSha": "44aa083ef0df"
+    "unit": "json/PH12/PH12.1.json",
+    "unitSha": "b7fb06134563",
+    "note": "notebook/math/M_addition.tex",
+    "noteSha": "44aa083ef0df"
   },
   "generated": {
     "model": "coding-agent",

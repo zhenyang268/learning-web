@@ -25,8 +25,10 @@
   "principle": "可数可加是唯一既撑得起极限、又不排除连续世界的强度。",
   "connect": "测度的集合列连续性直接推出单调收敛定理，再逐级得到单侧不等式与控制定理（AN01.3）。无长度可给的病态集合是积分只认可测函数的原因，见上一节构造（AN01.2）。可积函数的空间与范数在后面（AN01.5），密度与条件期望靠这里的分解定理，见条件期望（PR04.1）。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "json/AN01/AN01.4.json",
+    "unitSha": "ab431fa33572",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

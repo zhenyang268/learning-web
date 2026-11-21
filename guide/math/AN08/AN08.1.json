@@ -21,8 +21,10 @@
   "principle": "闭围道的积分由内部奇点逐个记账，不在内部的奇点与路径形状都不作数。",
   "connect": "往前是圆环上的展开与奇点分类（AN07.1），系数如何读决定这里怎么算。往下三条实积分套路都靠它收口（AN08.3）；变换那一侧的反演公式同样由它给出，极点对应指数型解的关系由此说清。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN08/AN08.1.json",
+    "unitSha": "b0a7aa1686ee",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

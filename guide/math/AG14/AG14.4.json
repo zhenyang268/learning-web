@@ -21,8 +21,10 @@
   "principle": "用球粘对径点来读姿态，走一圈那两类的差别要留到覆盖群去分辨。",
   "connect": "往下，两个元素绕行次数正是下一单元二重覆盖的入口（AG14.5）；它的切空间与括号由李代数接手（AG14.11）。工程侧，绕行次数决定了姿态有几种表示与四元数是否需要双倍（AG16.12），而角动量的量子化也从这里起步（AG16.1）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.4.json",
+    "unitSha": "5f454b9f4835",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

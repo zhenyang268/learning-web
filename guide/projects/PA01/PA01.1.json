@@ -23,10 +23,12 @@
     }
   ],
   "principle": "没有基线、规模与误差棒的加速比，不写成结论。",
-  "connect": "并行执行模型与分组总览在（LG00.1），把同一套账算到 kernel 层是（LG03.1）。缓存层次与一致性归体系结构（CP02.1），测量口径与方法论归性能工程（EG03.1）。",
+  "connect": "并行执行模型与分组总览见（LG00.1），把同一套账算到 kernel 层是（LG03.1）。缓存层次与一致性归体系结构（CP02.1），测量口径与方法论归性能工程（EG03.1）。",
   "source": {
-    "unit": "notebook/projects/cs149/OUTLINE.md",
-    "unitSha": "ef79499542e1"
+    "unit": "projects/json/PA01/PA01.1.json",
+    "unitSha": "33d757c8abda",
+    "note": "notebook/projects/cs149/OUTLINE.md",
+    "noteSha": "ef79499542e1"
   },
   "generated": {
     "model": "coding-agent",

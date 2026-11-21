@@ -24,8 +24,10 @@
   ],
   "connect": "约束弹簧的精确解原型是 EQ01.5 的阻尼振子；显式与保结构格式的稳定域对比见 NM01.2。软体与刚体的力矩接口在 CG08.2，与流体双向耦合的边界在 CG08.1。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG08/CG08.3.json",
+    "unitSha": "c8101b7a704e",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

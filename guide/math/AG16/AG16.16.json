@@ -25,8 +25,10 @@
   "principle": "增量算在平坦的切空间，位移算完再用指数送回群。",
   "connect": "这一支的对数映射要靠旋转部分的处理打底（AG16.14 与 AG16.13）；它给出的是刚体变换群的内部结构，外层记号见位姿单元（AG16.15）。把增量优化写成统一流程，还要回到表示分工的取舍（AG16.12）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.16.json",
+    "unitSha": "4ef359f7340e",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

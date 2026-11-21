@@ -25,8 +25,10 @@
   "principle": "先定阶数，再选公式；公式给出无穷或除零，说明阶数判断错了。",
   "connect": "往前是奇点分类与圆环上的展开（AN07.1），阶数的读法在那里已经定好；再往前是负一次幂为何唯独不被积分消掉的说明（AN08.1）。往下三类实积分每一条都要落到这一步（AN08.3）；变换反演里极点对应的指数型解，幅度同样是留数（AN12.1）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN08/AN08.2.json",
+    "unitSha": "c76d03e4c6d5",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

@@ -3,7 +3,7 @@
   "code": "EQ04.7",
   "site": "emath",
   "scope": "unit",
-  "lead": "动力学模拟这一节解决的是：先认出方程的物理结构，再挑一个能把该结构离散保住的格式。",
+  "lead": "动力学模拟要解决的是：先认出方程的物理结构，再挑一个能把该结构离散保住的格式。",
   "why": [
     {
       "h": "为什么压力要解方程算出来",
@@ -25,8 +25,10 @@
   "principle": "看方程的守恒量、耗散与约束结构，再决定用通量形式、隐式还是投影。",
   "connect": "结构判据的数值一侧在 EQ04.2：耗散与对流项合成刚度与稳定条件，正是这里说的隐式与步长限制。上游 EQ04.5 给出对流的离散，下游 EQ04.6 换成传输侧的同一条链，EQ02.5 提供三类方程的分类口径。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.7.json",
+    "unitSha": "4b1a4d95aea7",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

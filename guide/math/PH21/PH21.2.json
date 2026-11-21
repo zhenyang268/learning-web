@@ -21,8 +21,10 @@
   "principle": "先写出经典解，再把涨落当成零端点的二次积分；大小与形状由此各归一处。",
   "connect": "往后这份传播子在虚时间下给出谐振子的配分函数（PH22.1），并与升降算子那一套量子化互为校验（PH16.1）。半周期处的焦点与光的焦散是同一个数学结构，绕开奇点的手法在两边通用，后者归到路径追踪那一支（PH23.1）。",
   "source": {
-    "unit": "notebook/math/K_Feyman.tex",
-    "unitSha": "a4099cec8902"
+    "unit": "json/PH21/PH21.2.json",
+    "unitSha": "75f30ee729ac",
+    "note": "notebook/math/K_Feyman.tex",
+    "noteSha": "a4099cec8902"
   },
   "generated": {
     "model": "coding-agent",

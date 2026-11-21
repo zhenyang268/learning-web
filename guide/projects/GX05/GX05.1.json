@@ -25,8 +25,10 @@
   "principle": "联网的判据是可复现的帧序列，不是插值之后看着很顺。",
   "connect": "预算是引擎那边给的（GX04.1），判定盒与蒙皮的顶点来源在几何（GX03.1）。帧计时与延迟口径沿用性能工程（EG03.1），协议字段的字节布局回到系统编程（CS01.1）。",
   "source": {
-    "unit": "notebook/projects/cg/game/OUTLINE.md",
-    "unitSha": "2b6a8eaabbe1"
+    "unit": "projects/json/GX05/GX05.1.json",
+    "unitSha": "25f56e475e3a",
+    "note": "notebook/projects/cg/game/OUTLINE.md",
+    "noteSha": "2b6a8eaabbe1"
   },
   "generated": {
     "model": "coding-agent",

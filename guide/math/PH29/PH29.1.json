@@ -21,8 +21,10 @@
   "principle": "整体动量守恒只是允许，振幅才是内容；分出恒等项，概率守恒才有落点。",
   "connect": "往上是逐阶展开的级数和费曼规则（PH25.1、PH26.1），矩阵元由那里的图算出；恒等项之外的散射项依赖 QED 的顶点（PH27.1）。往下，截面与相空间因子进入散射计算，而幺正性给出的前向虚部关系把总截面与前向振幅绑在一起。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH29/PH29.1.json",
+    "unitSha": "5a1c5864dfce",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

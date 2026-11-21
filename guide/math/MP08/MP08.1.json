@@ -23,10 +23,12 @@
     }
   ],
   "principle": "几何先具体后抽象，力学给守恒的一般框架，泛函压住无穷维的门槛；三者的汇合处是弱解。",
-  "connect": "往前是第一阶段的线与序（MP07.1），教材口径见对照清单（MP11.1）。往后几何接流形与曲率（AG13.2、AG13.3），力学接辛结构（PH03.1），泛函接谱定理（PH07.1 之前的抽象层），三者汇合到偏微分方程的弱形式。",
+  "connect": "往前是第一阶段的线与序（MP07.1），教材口径见对照清单（MP11.1）。往后几何接流形与曲率（AG13.2、AG13.3），力学接辛结构（PH03.1），泛函接谱定理（见分析册的算子谱理论），三者汇合到偏微分方程的弱形式。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP08/MP08.1.json",
+    "unitSha": "76996279915d",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "看见涡量先问两件事：几维，有没有粘。",
   "connect": "涡量方程里的拉伸项是三维能量级联的引擎，往后直接进 CG13.1；涡量由壁面剪切产生，与无滑移条件相接的是 CG14.1；在网格上把涡量写成散度形式再离散，见 CG17.1。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG12/CG12.1.json",
+    "unitSha": "0ca5f6110c44",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

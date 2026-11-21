@@ -21,8 +21,10 @@
   "principle": "写下高阶项之前先确认每一步的先后已定；顺序没定，积分域就会自动多算一次。",
   "connect": "前一章已经把波函数升格为算子，这里才有可展开的相互作用项（PH24.1）。往后这些逐阶项被翻译成图形与计数规则（PH26.1），收缩与期望值的计算交给另一支（PH28.1），散射矩阵则是它的直接产物（PH29.1）。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH25/PH25.1.json",
+    "unitSha": "d950bd966e27",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

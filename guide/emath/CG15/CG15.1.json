@@ -21,8 +21,10 @@
   "principle": "先算当地声速定马赫数，再验压强比是否大于一。",
   "connect": "激波处导数不存在，只能在面上写通量，因此必须回到有限体积，见 CG17.1；激波打在壁面边界层上会造成分离，与 CG14.1 相接；超音速下游的脉动放大与流动结构，接 CG13.1。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG15/CG15.1.json",
+    "unitSha": "9d7034cce42f",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

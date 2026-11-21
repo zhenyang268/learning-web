@@ -25,8 +25,10 @@
   "principle": "代数同构只保证括号一致，群是否同构还要看覆盖关系。",
   "connect": "往后，二阶复矩阵的对易关系换成泡利矩阵的写法，量子门与自旋都以此为基础（AG16.2、AG16.13）。同一套换基用到相对论情形，就会分裂成两个这样的代数，旋量按两对自旋标签分类（AG14.13、AG16.7）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.12.json",
+    "unitSha": "6287077ab953",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

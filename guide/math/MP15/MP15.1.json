@@ -25,8 +25,10 @@
   "principle": "配比定时间，依赖定顺序，例外定不可跳过的那几项。",
   "connect": "往前三层分别给判据（MP12.1）、边界（MP13.1）与触发条件（MP14.1）。同一批章的教材查法在 MP11.1，按阶段的读法在 MP07.1。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP15/MP15.1.json",
+    "unitSha": "a74477e1bb53",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

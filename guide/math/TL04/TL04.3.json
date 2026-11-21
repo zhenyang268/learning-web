@@ -21,8 +21,10 @@
   "principle": "先把幂写成自然底的指数，再看指数位置上那个乘积趋于什么。",
   "connect": "往前，两个收敛性判据分别来自单调有界与对数放缩（TL04.1、TL03.2），最后那一版的等价替换来自 TL04.2。往后，指数函数在 TL07.1 被重新定义，一阶数值格式的收敛性则还原成同一个极限（TL09.2），二项分布取极限时出现的衰减常数也走这条路。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL04/TL04.3.json",
+    "unitSha": "12eeff84c6f0",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

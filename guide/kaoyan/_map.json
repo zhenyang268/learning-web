@@ -1,6 +1,7 @@
 {
   "version": 1,
   "site": "kaoyan",
+  "mode": "T",
   "units": {
     "HS01.1": {
       "talk": "build/reading/talk/math1-HS-0101.md",

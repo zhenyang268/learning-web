@@ -21,8 +21,10 @@
   "principle": "先声明口径，再算形状、参数与峰值显存；三项不同口径的对比不成立。",
   "connect": "它的估算链是推理工程与并行那两条线的入口：算力与访存的取舍在这里定下基线（EG03.1），显存与算子排布在设备侧展开（LG03.1）；稀疏与稀疏化之后，参数效率回到数值结构那里复核（CD07.1）。",
   "source": {
-    "unit": "notebook/projects/ai/OUTLINE.md",
-    "unitSha": "29a2047c3e1b"
+    "unit": "projects/json/AI01/AI01.1.json",
+    "unitSha": "9bee011d928e",
+    "note": "notebook/projects/ai/OUTLINE.md",
+    "noteSha": "29a2047c3e1b"
   },
   "generated": {
     "model": "coding-agent",

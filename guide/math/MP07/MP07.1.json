@@ -25,8 +25,10 @@
   "principle": "本阶段只认一种毕业方式：能独立推出收敛定理，能说清可数可加为什么必需。",
   "connect": "往后是几何、力学与泛函的第二阶段（MP08.1），以及必须自己推一遍的清单（MP11.1）。分析线接测度与收敛（AN01.1、AN01.3），概率线接空间与收敛模式（PR01.1、PR06.1），三条线第一次汇合处是同一套误差估计。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP07/MP07.1.json",
+    "unitSha": "fc91c55ccb29",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

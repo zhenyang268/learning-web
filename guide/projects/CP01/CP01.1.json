@@ -21,8 +21,10 @@
   "principle": "结论要落到一条能重跑的命令和一段输出上，落不到的就不算结论。",
   "connect": "它给出的读法在后面几处复用：判断慢在哪一级结构时读的是同一条指令（CP02.1），自己写核时看编译器生成了什么（CP03.1），代码生成后指令序列怎么来的（CP04.1）。进程如何进了地址空间由 SO02.1 接续。",
   "source": {
-    "unit": "notebook/projects/cpu/asm-link-arch/OUTLINE.md",
-    "unitSha": "c2cb1f89d4ea"
+    "unit": "projects/json/CP01/CP01.1.json",
+    "unitSha": "c5e16497c6f7",
+    "note": "notebook/projects/cpu/asm-link-arch/OUTLINE.md",
+    "noteSha": "c2cb1f89d4ea"
   },
   "generated": {
     "model": "coding-agent",

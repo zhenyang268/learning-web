@@ -21,8 +21,10 @@
   "principle": "先在空间上核验强制与连续，再谈弱解的存在唯一。",
   "connect": "上接三型判型（EQ02.5）与 Laplace 方程的极值原理（EQ02.8）；能量极小这一条与 Green 函数互为对偶（EQ02.14）。再往后 Sobolev 空间的完备性给强制常数提供地基（AN04.3），有限元把它离散成矩阵求解（EQ04.3）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.15.json",
+    "unitSha": "f46c1b5fdf04",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

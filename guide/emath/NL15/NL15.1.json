@@ -21,8 +21,10 @@
   "principle": "插值写成指数映射在等速参数下的像，方向与速率都由几何给出。",
   "connect": "往后，同一件事换到旋转矩阵上演化，会落到李群指数与其切空间的对应（NL17.1）；再往后，物理里保持相空间结构的积分器也是把「流」当对象而不是把状态当数的延拓（NM01.2）。落点仍是 NL14.2 那份前置清单所覆盖的内积与范数。",
   "source": {
-    "unit": "notebook/math/bridges/br1_slerp_geodesic.tex",
-    "unitSha": "308917fa32a4"
+    "unit": "emath/json/NL15/NL15.1.json",
+    "unitSha": "da84b0fa8679",
+    "note": "notebook/math/bridges/br1_slerp_geodesic.tex",
+    "noteSha": "308917fa32a4"
   },
   "generated": {
     "model": "coding-agent",

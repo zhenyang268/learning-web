@@ -25,8 +25,10 @@
   "principle": "先写出拉格朗日量，再让作用量驻定；剩下的方程由变分自己给。",
   "connect": "往后拉格朗日量的不变性导出守恒量（PH02.1）。把速度换成广义动量就得到哈密顿形式（PH03.1），而路积分正拿同一个作用量作权重（PH17.1）。",
   "source": {
-    "unit": "notebook/math/D_classic.tex",
-    "unitSha": "6d505194aaa1"
+    "unit": "json/PH01/PH01.1.json",
+    "unitSha": "5114a9358121",
+    "note": "notebook/math/D_classic.tex",
+    "noteSha": "6d505194aaa1"
   },
   "generated": {
     "model": "coding-agent",

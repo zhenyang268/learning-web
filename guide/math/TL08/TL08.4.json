@@ -21,8 +21,10 @@
   "principle": "拿 Stirling 之前先问要的是量级还是差值：比值可以换，差值不能换。",
   "connect": "往后，渐近记号的写法在这里有了标准样板，锁定比值才敢做等价替换（TL09.3）；概率一侧的局部估计要的就是这条公式给出的速率（PR06.5）。上游是 Gamma 的递推与半整数取值（TL08.2）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL08/TL08.4.json",
+    "unitSha": "f7f27625ddc7",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

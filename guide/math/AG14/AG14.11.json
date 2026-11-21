@@ -25,8 +25,10 @@
   "principle": "反对称矩阵、轴向量、厄米角动量是同一份三维修代数的三种写法。",
   "connect": "往后，指数把它送回旋转群，得到罗德里格斯公式与四元数的单位球表示，姿态积分都在那里落地（AG14.10、AG16.12）。再往后同一份代数在复数域上与两阶特殊酉代数同构，群的层面却不同（AG14.12）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.11.json",
+    "unitSha": "be19726541e7",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

@@ -25,8 +25,10 @@
   "principle": "分层看几何，查核看代数：覆盖的层数就是核的元素个数。",
   "connect": "往后绕开群拓扑，改在单位元处取线性化，得到李代数（AG14.8）。再往后分类单李代数，用 Killing 形式替代路径提升与核计数（AG15.1），拓扑一侧则并入基本群与高阶同伦群的表格（AG15.10）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.7.json",
+    "unitSha": "f748e37764d9",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

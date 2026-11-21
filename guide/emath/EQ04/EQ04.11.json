@@ -21,8 +21,10 @@
   "principle": "系数增长与奇点位置互相编码，延拓能走多远由最近的奇点决定。",
   "connect": "系数定位奇点这一手在 EQ03.10 里已经用过，Laplace 的算子视角见 EQ03.3，横标的判据接 EQ02.12 的 Fourier 变换。生成函数那一端把离散指标换成变量，正是 EQ04.10 里幂级数那条箭头的机制。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.11.json",
+    "unitSha": "6b6312e9c52b",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

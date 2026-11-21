@@ -3,7 +3,7 @@
   "code": "EQ01.10",
   "site": "emath",
   "scope": "unit",
-  "lead": "多分量耦合之后，这一节把逐个方程求解换成对系数矩阵取指数。",
+  "lead": "多分量耦合之后，这里把逐个方程求解换成对系数矩阵取指数。",
   "why": [
     {
       "h": "为什么必须整块处理",
@@ -21,8 +21,10 @@
   "principle": "耦合只藏在矩阵里，解的形式由它的特征结构决定。",
   "connect": "矩阵指数在这里是一族算子族，它的无穷维推广在 EQ03.7 与 EQ03.9。特征值的位置直接给出平衡点的类型，见 EQ01.11；齐次部分逐分量拆分仍是 EQ01.5 的特征方程。数值实现落在 NM03.1 与 NM04.1。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.10.json",
+    "unitSha": "accc09ecd768",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

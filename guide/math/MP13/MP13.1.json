@@ -21,8 +21,10 @@
   "principle": "标签给整体印象，例外决定实际取舍；越界的条目单独记，不靠改章名。",
   "connect": "往前是承重墙八项用同一条判据的收紧版（MP12.1），往后工具层换成「什么时候翻它」（MP14.1）。时间配比与依赖顺序在延伸层一并收口（MP15.1）。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP13/MP13.1.json",
+    "unitSha": "f43feb5d9479",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

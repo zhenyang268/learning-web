@@ -21,8 +21,10 @@
   "principle": "先定位到节，再决定深度；两张表正交，缺一张就只剩一半信息。",
   "connect": "往后四层导读是同一批章节按承重程度切出的另一种视图（MP12.1）。再往后是按阶段的读法（MP07.1），一处按篇，一处按阶段，两处互补。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP11/MP11.1.json",
+    "unitSha": "4387c1a0d88b",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

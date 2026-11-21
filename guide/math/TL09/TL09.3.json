@@ -21,8 +21,10 @@
   "principle": "写出 $f=O(g)$ 时把极限过程、区间、常数三样补齐，缺一样就等于没写。",
   "connect": "往下，这套写法是极限计算里等价替换的合法依据（TL04.2）；展开表里每条余项都用带界形式写（TL07.1）。样板就是阶乘那条近似（TL08.4），能量法的收尾也靠它表述（TL09.2）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL09/TL09.3.json",
+    "unitSha": "6aafb06c1cce",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

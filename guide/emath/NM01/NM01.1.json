@@ -21,8 +21,10 @@
   "principle": "选格式先问误差降得多快，再问步长能取多大，最后问它守着哪条结构。",
   "connect": "往后，辛积分器把第三条单独拿出来，用有界能量换来长期可信（NM01.2）；偏微分方程离散之后每一步都要调这类积分器（NM02.1）。线性系统那一层的分解与迭代，是这套误差分析的另一个落点（NM03.1）。",
   "source": {
-    "unit": "notebook/math/G_numeric.tex",
-    "unitSha": "63e2fa138564"
+    "unit": "emath/json/NM01/NM01.1.json",
+    "unitSha": "bf25fa008c5a",
+    "note": "notebook/math/G_numeric.tex",
+    "noteSha": "63e2fa138564"
   },
   "generated": {
     "model": "coding-agent",

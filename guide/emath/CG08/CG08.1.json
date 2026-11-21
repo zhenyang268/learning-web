@@ -25,8 +25,10 @@
   "principle": "先算尽已知项，再把无散当成方程解，而不是当成事后修正。",
   "connect": "约束的物理出处是质量守恒，见 CG09.1，本构在 CG10.1；对流与扩散谁主导由 CG11.1 的雷诺数决定。离散层如何真正保持守恒，接 CG17.1 与 CG12.1 的涡量视角。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG08/CG08.1.json",
+    "unitSha": "dacf8c65c59f",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

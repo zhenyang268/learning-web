@@ -21,8 +21,10 @@
   "principle": "把清单当依赖图读：下面没到闭卷，上面必然卡住；先补齐，再往上走。",
   "connect": "往下，这张图上的每一行都能落到具体代号，最上层的一条要同时调用符号搬移（TL09.1）与能量法（TL09.2）。导航性质的选型则另有一处（TL09.4）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL10/TL10.1.json",
+    "unitSha": "556d1c2086b9",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

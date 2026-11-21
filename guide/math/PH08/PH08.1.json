@@ -26,7 +26,9 @@
     "reviewed": true
   },
   "source": {
-    "unit": "notebook/math/E_Field.tex",
-    "unitSha": "15537df14f06"
+    "unit": "json/PH08/PH08.1.json",
+    "unitSha": "44c1afa799aa",
+    "note": "notebook/math/E_Field.tex",
+    "noteSha": "15537df14f06"
   }
 }

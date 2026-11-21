@@ -21,8 +21,10 @@
   "principle": "把互补条件写成每个分量二选一，先验矩阵是否满足全部主子式为正，再谈算法。",
   "connect": "这个问题是 NM05.1 的约束最优性条件的特例，只是约束全为不等式、目标为二次。矩阵性质与条件数回到 NM03.1 的讨论；接触约束接着进入 NM07.1 的离散变分框架，与作用量的驻点条件并列。",
   "source": {
-    "unit": "notebook/math/M_addition.tex",
-    "unitSha": "44aa083ef0df"
+    "unit": "emath/json/NM06/NM06.1.json",
+    "unitSha": "56ac3b03644c",
+    "note": "notebook/math/M_addition.tex",
+    "noteSha": "44aa083ef0df"
   },
   "generated": {
     "model": "coding-agent",

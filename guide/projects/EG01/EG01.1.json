@@ -25,8 +25,10 @@
   "principle": "先写清指标名、分母与阈值来源，再谈测试是否充分。",
   "connect": "往下的调试与性能两章接在这里：失败定位见 EG02.1，耗时与分位口径见 EG03.1。共识与并发侧的同类判据可对照 DF02.1，不变量检查与契约反向验证是同一套做法。",
   "source": {
-    "unit": "notebook/projects/eng/testing/OUTLINE.md",
-    "unitSha": "da170cae5eac"
+    "unit": "projects/json/EG01/EG01.1.json",
+    "unitSha": "d68674b44f7c",
+    "note": "notebook/projects/eng/testing/OUTLINE.md",
+    "noteSha": "da170cae5eac"
   },
   "generated": {
     "model": "coding-agent",

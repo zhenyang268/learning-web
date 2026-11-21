@@ -21,8 +21,10 @@
   "principle": "先看输入是平均、乘积还是导数，再看凹凸与共轭是否配得上。",
   "connect": "往前，幂放缩与内积界是这一句的两个特例（TL03.1），单函数的一次式近似则是它的单点形态（TL03.2）。往后，能量估计把交叉项吸收完就交给收尾工具（TL09.2），线性方程的唯一性与解对初值的连续依赖也在这里落地。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL03/TL03.3.json",
+    "unitSha": "9cfca25b1f63",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

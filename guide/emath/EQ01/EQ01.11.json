@@ -3,7 +3,7 @@
   "code": "EQ01.11",
   "site": "emath",
   "scope": "unit",
-  "lead": "不必解出轨道，这一节只看扰动随时间被压回还是被放大。",
+  "lead": "不必解出轨道，这里只看扰动随时间被压回还是被放大。",
   "why": [
     {
       "h": "为什么要绕开求解",
@@ -21,8 +21,10 @@
   "principle": "实部全在左半平面才算衰减，有零实部时一次项不足以定论。",
   "connect": "实部的来源就是 EQ01.10 的矩阵指数展开后的指数因子。构造能量函数的思路与 EQ02.5 里椭圆型的极值原理同源；线性系统若求不出指数，可回到 NM01.1 做逐步积分来观察趋势。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.11.json",
+    "unitSha": "ef344c2014ab",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

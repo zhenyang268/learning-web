@@ -25,8 +25,10 @@
   "principle": "李代数的一切结构信息都在结构常数这张表里，判同构就是判两张表能否基变换互化。",
   "connect": "往后靠结构常数造 Killing 形式，半单性由它的行列式是否为零决定（AG15.1），Cartan 判据正是这样把表翻译成性质。再往后进入根系与 Dynkin 图，分类只保留表里筛选后的不变量（AG15.2）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.9.json",
+    "unitSha": "c5c29b28ff39",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

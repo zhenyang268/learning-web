@@ -23,10 +23,12 @@
     }
   ],
   "principle": "闭曲面上的曲率总量被 Euler 示性数钉死，几何怎么变都只能改变曲率怎样分布。",
-  "connect": "上溯一层，这个整数的分层来源是上同调的维数（AG15.12）。再往上，特征类的整数与 Euler 类共用同一套判定手法（AG15.11），工程侧则由网格拓扑分析与参数化直接取用（AG15.10）。",
+  "connect": "上溯一层，这个整数的分层来源是上同调的维数（AG15.12）。再往上，特征类的整数与 Euler 类共用同一套判定手法（AG15.11），工程侧则由网格拓扑分析与参数化直接取用（AG16.22）。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.13.json",
+    "unitSha": "7323c5df1147",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

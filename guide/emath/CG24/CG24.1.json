@@ -21,8 +21,10 @@
   "principle": "难链路在哪一端，采样就从哪一端起；拼接多策略时按密度分配信任度。",
   "connect": "往前，要积分的路径空间来自辐射传输的解，见 CG22.1。往后，焦散的亮线正是这种难链路的极端形态，需要光源侧手段收拾，见 CG25.1；几何光学本身在焦散处失效，见 CG18.1；而镜面与漫反射的分工决定了哪一段算难，见 CG07.1。",
   "source": {
-    "unit": "notebook/math/J_rtx.tex",
-    "unitSha": "03d34bf9e80c"
+    "unit": "emath/json/CG24/CG24.1.json",
+    "unitSha": "440d09a98fb0",
+    "note": "notebook/math/J_rtx.tex",
+    "noteSha": "03d34bf9e80c"
   },
   "generated": {
     "model": "coding-agent",

@@ -25,8 +25,10 @@
   "principle": "先在球面上挑出短弧，再让参数沿着弧长线性推进。",
   "connect": "球面上的两点正是上一单元的四元数（AG16.13），姿态与位置合并后插值要分两块处理（AG16.15）；小角度处的近似与位姿指数映射中的系数兜底是同一类处理（AG16.16）。表示间的取舍仍回到上一层的对照（AG16.12）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.14.json",
+    "unitSha": "bc36ce4d7d72",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

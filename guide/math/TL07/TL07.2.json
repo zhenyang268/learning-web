@@ -21,8 +21,10 @@
   "principle": "动手之前先验证前提：导数在场、区间对称、单射不跨断点。",
   "connect": "部分分式的分块依据在 TL02.4，凑微分的产物靠 TL07.3 的小表回收，三角幂次与换元则接 TL08.3。往后 TL09.1 的能量法就是分部积分搬导数的高维版。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL07/TL07.2.json",
+    "unitSha": "a908da125e7e",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

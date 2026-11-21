@@ -3,7 +3,7 @@
   "code": "EQ04.6",
   "site": "emath",
   "scope": "unit",
-  "lead": "渲染这一节解决的是：把光传输的五个方程按近似程度排成一条链，判断哪个能用在当前尺度。",
+  "lead": "渲染要解决的是：把光传输的五个方程按近似程度排成一条链，判断哪个能用在当前尺度。",
   "why": [
     {
       "h": "为什么单色是硬前提",
@@ -25,8 +25,10 @@
   "principle": "先看波长比、光学厚度、反照率这三个无量纲数落在哪段，再决定用链上哪个方程。",
   "connect": "链的上游在两处：EQ04.5 的离散化给出算这些方程的网格与时间步，EQ03.15 的算子视角给出级数收敛的语言。往下 EQ04.7 换成动力学一侧的方程，EQ02.9 的边值条件决定这些方程能不能定解。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.6.json",
+    "unitSha": "94274f6847c5",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

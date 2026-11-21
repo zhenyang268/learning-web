@@ -21,8 +21,10 @@
   "principle": "先数清尺度的约定，再谈这个数落在哪一档。",
   "connect": "分母里的运动粘度来自 CG10.1 的本构；区间表后两行在 CG13.1 展开成湍流模型的分工；高雷诺数把粘性压进薄层，这是 CG14.1 的出发点；数值上对流占优带来的步长约束见 CG17.4。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG11/CG11.1.json",
+    "unitSha": "2286e0c5e8c7",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

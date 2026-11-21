@@ -21,8 +21,10 @@
   "principle": "例外不从保形式条件复制而来，它止于除法代数的终点。",
   "connect": "往下，例外五型的辨认收在一张图里，五个特殊图样之外再没有别的连通图能通过检验（AG15.5）。字符串与凝聚态里 E 型对称的出现，被 AG15.11 与 AG16.8 接手。若关心最小表示为何下不去，AG15.6 的最高权给出一致的读法。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.3.json",
+    "unitSha": "4cd80a76e26d",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

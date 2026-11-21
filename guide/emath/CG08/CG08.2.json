@@ -24,8 +24,10 @@
   ],
   "connect": "与流体耦合时浮力与阻力进入力与力矩，见 CG08.1；约束求解器回传的反作用力要拆成力与力矩两路，见 CG08.3。姿态推进的通用做法与保能量的格式，分别在 NM01.1 与 NM01.2 展开。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG08/CG08.2.json",
+    "unitSha": "969229f47a2d",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

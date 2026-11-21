@@ -21,8 +21,10 @@
   "principle": "收益与代价必须绑到具体一次变换、具体一条指令上，并带可复现的对照。",
   "connect": "它的产物紧接着要看汇编（CP01.1）与运行时计数（CP02.1），取舍约束来自自己写核那一侧（CP03.1）；跨语言的调用边界在系统编程那一篇有对应实验（CS01.1）。",
   "source": {
-    "unit": "notebook/projects/cpu/compiler/OUTLINE.md",
-    "unitSha": "fb1c20598faa"
+    "unit": "projects/json/CP04/CP04.1.json",
+    "unitSha": "3b119839fb0e",
+    "note": "notebook/projects/cpu/compiler/OUTLINE.md",
+    "noteSha": "fb1c20598faa"
   },
   "generated": {
     "model": "coding-agent",

@@ -25,8 +25,10 @@
   "principle": "先用 von Neumann 分析扫遍波数取放大因子上界，再定时间步。",
   "connect": "上承 EQ02.11 的依赖区域：条件说的就是数值依赖区要盖住解析依赖区。往前推，空间格式与时间格式都进了 EQ04.3 的刚度矩阵，而特征值范围更宽的谱离散会把这条限制勒得更紧（EQ04.4）。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.2.json",
+    "unitSha": "8e29b9f4abcb",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

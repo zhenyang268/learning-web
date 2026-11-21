@@ -21,8 +21,10 @@
   "principle": "先算欧拉数，再安排零点；零点位置可以选，总量不能改。",
   "connect": "零点的预算来自亏格与欧拉公式的计数（AG16.22），而顶点上的角亏损正是同一总量的局部版本（AG16.21）。参数化里「缝」与「奇点」的取舍，用的就是这条定理给出的两难（AG16.20）。要避开向量场，可以退到球面上的标量展开，那条线在球谐处（AG16.17）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.23.json",
+    "unitSha": "ba627dd61340",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

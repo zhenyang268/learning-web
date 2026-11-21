@@ -21,8 +21,10 @@
   "principle": "动手前先把符号约定写在纸上，再算间隔定因果类型，缩并之前先把指标降下来。",
   "connect": "往后这一层地基直接供两处使用：场强借助度规取对偶、写升降指标（PH06.1）；规范场把作用量对四维体积求积、把普通导数换成协变导数（PH08.1）。洛伦兹变换作为保间隔的变换，其群结构还要在角动量与自旋那边再出现一次（PH16.1）。",
   "source": {
-    "unit": "notebook/math/E_Field.tex",
-    "unitSha": "15537df14f06"
+    "unit": "json/PH07/PH07.1.json",
+    "unitSha": "4f6ea63f817b",
+    "note": "notebook/math/E_Field.tex",
+    "noteSha": "15537df14f06"
   },
   "generated": {
     "model": "coding-agent",

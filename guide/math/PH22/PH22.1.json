@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先在欧氏空间把可正的权重算完，再决定要不要延拓回实时间；形式对应不等于物理等价。",
-  "connect": "前一章已备好两个精确传播子，虚时间下谐振子直接给出配分函数（PH21.2）。往后这套权重是格点与非微扰计算的入口（PH19.1），也与渲染那侧非负权重的处境形成对照（PH23.1）。",
+  "connect": "前一章已备好两个精确传播子，虚时间下谐振子直接给出配分函数（PH21.2）。往后这套权重是格点与非微扰计算的入口，也与渲染那侧非负权重的处境形成对照（PH23.1）。",
   "source": {
-    "unit": "notebook/math/K_Feyman.tex",
-    "unitSha": "a4099cec8902"
+    "unit": "json/PH22/PH22.1.json",
+    "unitSha": "6917e0189994",
+    "note": "notebook/math/K_Feyman.tex",
+    "noteSha": "a4099cec8902"
   },
   "generated": {
     "model": "coding-agent",

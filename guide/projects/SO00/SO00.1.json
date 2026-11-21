@@ -25,8 +25,10 @@
   "principle": "任何结论都要落到一条命令加一段输出、一次断点，或一条所有权时间线。",
   "connect": "组内按接口、实现、对比、设备、边界、虚拟化依次展开（SO01.1、SO02.1、SO03.1、SO04.1、SO05.1、SO06.1）。涉及进程与地址空间的观测可回到系统编程那一篇（CS01.1），性能侧归因在微架构那一篇（CP02.1）。",
   "source": {
-    "unit": "notebook/projects/os/OUTLINE.md",
-    "unitSha": "260aabfaf136"
+    "unit": "projects/json/SO00/SO00.1.json",
+    "unitSha": "a3b36d33342b",
+    "note": "notebook/projects/os/OUTLINE.md",
+    "noteSha": "260aabfaf136"
   },
   "generated": {
     "model": "coding-agent",

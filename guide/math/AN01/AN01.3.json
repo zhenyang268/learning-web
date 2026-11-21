@@ -25,8 +25,10 @@
   "principle": "单调锁住质量的堆积方向，可积的盖子锁住质量的高度与位置。",
   "connect": "推导次序是测度的集合列连续性给出单调定理，再降级为单侧不等式，最后用两次不等式夹出控制定理（AN01.4）。可积函数的完备性要用级数形式的单调定理（AN01.5），一致可积把这个盖子抽象化（PR06.3）。概率里的依测度收敛与这里的收敛模式对应，见概率基础（PR06.1）。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "json/AN01/AN01.3.json",
+    "unitSha": "8175680f6034",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

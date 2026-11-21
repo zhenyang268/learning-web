@@ -21,8 +21,10 @@
   "principle": "真空期望值只留完全收缩；n 个场有 $(n-1)!!$ 种配法。",
   "connect": "往上是二次量子化的产生湮灭算子（PH24.1）与逐阶展开的级数（PH25.1），对易关系与正规序都在那里备好。往下，收缩出的两两配对照图就是费曼图的线（PH26.1）；散射振幅先按这套配对算，再进入 S 矩阵的矩阵元（PH29.1）。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH28/PH28.1.json",
+    "unitSha": "86fea1670d11",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

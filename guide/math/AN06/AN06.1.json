@@ -21,8 +21,10 @@
   "principle": "复积分只保留沿曲线累计不抵消的那一部分，其余全靠估计压小。",
   "connect": "往下是 Cauchy 定理：全纯加上单连通，整条围道的积分直接归零（AN06.2）。再往后，沿圆环逐圈积分留下的常数就是留数（AN08.1），级数的系数也由同一套积分给出（AN07.1）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN06/AN06.1.json",
+    "unitSha": "255f42094e6d",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

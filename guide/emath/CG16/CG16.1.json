@@ -21,8 +21,10 @@
   "principle": "要守恒用体积分数，要曲率用符号距离，要飞溅用粒子。",
   "connect": "界面两侧要用同一套守恒写法，通量相消的机制见 CG17.1；界面处法向速度与散度条件耦合，见 CG17.3；表面张力与对流把时间步上限压得更紧，见 CG17.4；粘性本构来自 CG10.1。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG16/CG16.1.json",
+    "unitSha": "03f3df091eb0",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

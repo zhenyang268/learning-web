@@ -198,7 +198,7 @@
 |---|---|
 | 规范 | `build/guide/prompt/guide-card.md` |
 | 映射（talk/单元 → 代号） | `guide/<site>/_map.json`（`build/guide/make_map.py` 生成） |
-| 施工状态 | `guide/<site>/_progress.json`（done / skip / pending + talkSha/unitSha） |
+| 施工状态 | `guide/<site>/_progress.json`（done / skip / pending + talkSha/unitSha/noteSha） |
 | 正文 | `guide/<site>/<章>/<代号>.json` |
 | 站点级导语 | `guide/<site>/__site.json`（`scope: "site"`，只在总纲页挂） |
 | 闸门 | `node tools/check-guide.mjs --site <id>`（`npm run check:guide`） |
@@ -211,3 +211,7 @@ talk 按 `408-kp-<学科>-<四位>` 或 `408-kp-<四位>`（数据结构老命�
 
 **Mode**：408 / 英一+数一是 `T`（有逐单元 talk）；工程线、数学系+工程数学是 `S`
 （无 talk，从 unit json + notebook 源合成）。两侧共用同一套 schema 与闸门。
+
+**source 三层**：`unit` 永远指向知识单元 json；`note` 是 Mode S 的 notebook 内容源
+（`.tex` / `OUTLINE.md`）；`talk` 是 Mode T 的口述稿。`__site` 没有单元 json，
+`unit` 沿用 `notebook/projects/README.md`。三层各自记 sha，漂移按单元判。

@@ -21,8 +21,10 @@
   "principle": "先问旋转会不会把两个方向混起来，再决定基怎么取。",
   "connect": "下一步是把这条块状结构换成算力：截断到低阶后系数只有九个，光照与传输都能压进九个数字（AG16.18）；阶数标签本身来自旋转群的不可约表示，其代数来源在前一章（AG16.1）。球面之外，离散网格上同样的「不混合」会变成顶点角亏损（AG16.21）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.17.json",
+    "unitSha": "c327854051e8",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

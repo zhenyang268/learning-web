@@ -20,8 +20,10 @@
   ],
   "connect": "它的实例分别落在前后两处：分治的蝶形出现在数值线的变换里（CD07.1），最短路的动态规划出现在图章（CD04.1）。底层前提来自离散数学那边的归纳与偏序（DX01.1），成本判断沿用度量章的四列语言（CD01.1）。",
   "source": {
-    "unit": "notebook/projects/codedesign/strategy/OUTLINE.md",
-    "unitSha": "b8b186a67514"
+    "unit": "projects/json/CD05/CD05.1.json",
+    "unitSha": "4d357214051e",
+    "note": "notebook/projects/codedesign/strategy/OUTLINE.md",
+    "noteSha": "b8b186a67514"
   },
   "generated": {
     "model": "coding-agent",

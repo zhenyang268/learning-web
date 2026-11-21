@@ -21,8 +21,10 @@
   "principle": "分解是否写对，先看两边维数是否相等。",
   "connect": "往下，味与色是同一个代数的两种用法，一个近似破缺、一个是精确规范，规范群的这一侧接在 AG16.5。共轭不等价这件事的根源在拓扑，双层结构与回路分类在 AG15.9 收尾。若要回到一般秩的标签体系，AG15.6 的最高权是同一套读法。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.8.json",
+    "unitSha": "f33baa5cf3f3",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

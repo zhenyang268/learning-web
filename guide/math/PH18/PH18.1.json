@@ -21,8 +21,10 @@
   "principle": "先认权重是相位还是份额，再决定能不能谈叠加相消；框架可以借，物理不能跟着借。",
   "connect": "上游是路径求和：那边的每条路径带一个模长恒为一的相位（PH17.1）。展开所用的正交基与球谐在角动量那一章已经出现过，这里只是换了用途（PH16.1）；同一套对易关系给出的下界构成这里时频权衡的形式来源（PH14.1）。",
   "source": {
-    "unit": "notebook/math/F_quantum.tex",
-    "unitSha": "3a8bb362cef9"
+    "unit": "json/PH18/PH18.1.json",
+    "unitSha": "641f4e578835",
+    "note": "notebook/math/F_quantum.tex",
+    "noteSha": "3a8bb362cef9"
   },
   "generated": {
     "model": "coding-agent",

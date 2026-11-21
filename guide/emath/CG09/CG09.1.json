@@ -24,8 +24,10 @@
   ],
   "connect": "动量方程的应力需要本构才能封闭，见 CG10.1；不可压条件下它退化为 CG08.1 里维护约束的那条方程。间断处的跳跃条件与守恒格式的离散实现，分别在 CG15.1 与 CG17.1 展开。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG09/CG09.1.json",
+    "unitSha": "534d86c36b51",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

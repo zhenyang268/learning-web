@@ -23,10 +23,12 @@
     }
   ],
   "principle": "只保留角度这一个不变量，其余交给一个随位置变化的缩放因子。",
-  "connect": "往前是复可微与 C-R 方程给出的导数几何含义（AN10.1）。往下调和函数在复合后仍然调和，这条恒定性正是二维边值问题靠复分析的根据（AN11.1）；旋转与度量的连续对应关系则在解析延拓与多值那里继续用（AN12.1）。",
+  "connect": "往前是复可微与 C-R 方程给出的导数几何含义（AN05.1）。往下调和函数在复合后仍然调和，这条恒定性正是二维边值问题靠复分析的根据（AN11.1）；旋转与度量的连续对应关系则在解析延拓与多值那里继续用（AN12.1）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN09/AN09.1.json",
+    "unitSha": "311925f62a1c",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

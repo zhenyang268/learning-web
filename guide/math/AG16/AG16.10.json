@@ -25,8 +25,10 @@
   "principle": "先找方程看不见哪些联合变换，再把找到的那个不变量当成新自变量。",
   "connect": "上一层是常微分方程的同一套做法，只是缺少尺度这一支（AG16.9）；对称带来的守恒量在守恒律单元给出一般框架（AG16.11），热核本身的推导则归入方程篇的热方程单元。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.10.json",
+    "unitSha": "851aa1807725",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

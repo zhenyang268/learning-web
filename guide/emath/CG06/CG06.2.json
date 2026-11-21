@@ -24,8 +24,10 @@
   ],
   "connect": "上游是蒙特卡洛估计的方差结构与屏空间抖动，见 CG04.1；序列侧的最坏偏差视角与它互补，见 CG06.1。把样本排序用于路径采样在 CG24.1，误差频谱进入体积与介质估计的落点在 CG22.1。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG06/CG06.2.json",
+    "unitSha": "414e3a1b9586",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

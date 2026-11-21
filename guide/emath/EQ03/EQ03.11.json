@@ -21,8 +21,10 @@
   "principle": "记住每种写法的失效条件，比记住它的步骤更省时间。",
   "connect": "判型要先回到 EQ02.5 的判别式，有界规则几何那一行交给 EQ02.10，替换坐标系的扩展见 EQ03.12，把点源核算出来是 EQ03.13 的技术，维度提升后写法会改写见 EQ03.14。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.11.json",
+    "unitSha": "46ed987f93b6",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

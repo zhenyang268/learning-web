@@ -3,7 +3,7 @@
   "code": "NL01.8",
   "site": "emath",
   "scope": "unit",
-  "lead": "自查这一节解决的是：分清「读过」与「做过」，把清单里已经验收的和只是写下来的分开。",
+  "lead": "自查要解决的是：分清「读过」与「做过」，把清单里已经验收的和只是写下来的分开。",
   "why": [
     {
       "h": "为什么状态分布本身是结论",
@@ -21,8 +21,10 @@
   "principle": "清单能保证对象找到了位置并写清成立条件，不能保证这些条件的数值已验证过。",
   "connect": "这份自查的对象是 NL01.0 那张依赖网上的节点，缺口里最明显的一处是 NL02.1 所用的范数路线之外、条件数没有成文。往下 NL14.1 用六个动作重新登记位置，桥接篇 NL14.2 给出速查，离散一侧的实现空缺见 NL13.1 那组。",
   "source": {
-    "unit": "notebook/math/survey/p11-audit.tex",
-    "unitSha": "fd5026202e9f"
+    "unit": "emath/json/NL01/NL01.8.json",
+    "unitSha": "94348520a5c1",
+    "note": "notebook/math/survey/p11-audit.tex",
+    "noteSha": "fd5026202e9f"
   },
   "generated": {
     "model": "coding-agent",

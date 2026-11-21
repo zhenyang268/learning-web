@@ -25,8 +25,10 @@
   "principle": "先用有限个值的函数把面积算清，再用上确界把它推向无穷。",
   "connect": "三条收敛定理全部搭在这里的构造上，单调极限正是把有限推向无穷所用的工具（AN01.3）。分层累加与 $L^p$ 范数在后面接上（AN01.5），可测集与测度由前一节的地基供给（AN01.4）。同一公式在概率里就是期望，见概率入门（PR01.1）。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "json/AN01/AN01.2.json",
+    "unitSha": "6875e5878a54",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

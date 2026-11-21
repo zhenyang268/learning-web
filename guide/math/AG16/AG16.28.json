@@ -23,10 +23,12 @@
     }
   ],
   "principle": "选书先看缺口，跨书先对约定，最后回到手上试一遍。",
-  "connect": "读哪一本取决于站在路径的哪一级，顺序与验收标准在 AG16.27，跨领域记号的统一靠核心对应表（AG16.26）。抽象一层的书涉及覆盖与特征类，落点在纤维丛那一节（AG16.6），回头再读时不会觉得是另一门课。",
+  "connect": "读哪一本取决于站在路径的哪一级，顺序与验收标准在 AG16.27，跨领域记号的统一靠核心对应表（AG16.26）。抽象一层的书涉及覆盖与特征类，落点在纤维丛那一节（AG15.11），回头再读时不会觉得是另一门课。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.28.json",
+    "unitSha": "ea9e45c4fdd7",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

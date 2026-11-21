@@ -21,8 +21,10 @@
   "principle": "先定统计与单粒子态个数，粒子数超出时费米计数必须精确归零，不得近似。",
   "connect": "往后是把演化算子逐阶展开成散射次数的那一步（PH25.1），再往下一步把这些项画成可数的图（PH26.1）。占据规则的另一头直接连到量子统计的两种分布（PH09.1），升降算子的语言与角动量的那套同型（PH16.1）。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH24/PH24.1.json",
+    "unitSha": "2dcb66d7cf5d",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

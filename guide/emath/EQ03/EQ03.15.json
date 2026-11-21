@@ -21,8 +21,10 @@
   "principle": "微分形式好写条件，积分形式好做理论；中间那座桥是一个核。",
   "connect": "核的定义与边界条件如何被吸收在 EQ02.14，怎么算出来看 EQ03.13；级数何时收敛与 EQ01.9 的迭代同源。这一套写法直接对上 CG03.1 里逐次累加的那种积分方程。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.15.json",
+    "unitSha": "70cac22594bd",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

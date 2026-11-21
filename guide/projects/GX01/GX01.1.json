@@ -21,8 +21,10 @@
   "principle": "凡是让图形管线替着处理的约定，自己写就得逐条写死。",
   "connect": "同一场景的第二条路径逐像素发射光线，与本份互证（GX02.1）；顶点从哪来交给几何（GX03.1）；一帧怎么分配预算在引擎（GX04.1）；通用工程素养留在 EG01.1。",
   "source": {
-    "unit": "notebook/projects/cg/rasterizer/OUTLINE.md",
-    "unitSha": "7b2593bd190b"
+    "unit": "projects/json/GX01/GX01.1.json",
+    "unitSha": "23f531d46cc8",
+    "note": "notebook/projects/cg/rasterizer/OUTLINE.md",
+    "noteSha": "7b2593bd190b"
   },
   "generated": {
     "model": "coding-agent",

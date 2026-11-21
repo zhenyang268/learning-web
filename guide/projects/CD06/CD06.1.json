@@ -21,8 +21,10 @@
   "principle": "先列共享状态与失败路径，再决定用什么保护、归谁释放。",
   "connect": "数值容器的收口在 CD07.1，那里把内存布局与视图生命周期当主线，正好用上这里的分配与所有权口径。往上回到 CD00.1 的分组层看序列、关联、图三章怎么选结构；再往上，CP02.1 读核时的 cache line 与误共享归因，和本章的对齐口径同源。",
   "source": {
-    "unit": "notebook/projects/codedesign/library/OUTLINE.md",
-    "unitSha": "a8fd5d3f391a"
+    "unit": "projects/json/CD06/CD06.1.json",
+    "unitSha": "decd9d896606",
+    "note": "notebook/projects/codedesign/library/OUTLINE.md",
+    "noteSha": "a8fd5d3f391a"
   },
   "generated": {
     "model": "coding-agent",

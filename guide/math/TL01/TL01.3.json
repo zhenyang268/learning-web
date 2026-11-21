@@ -19,10 +19,12 @@
     }
   ],
   "principle": "想要的幂在右边，就在左边放高一次的差。",
-  "connect": "往前是 TL01.1 的恒等式与 TL01.2 的三条实例，这一节把「找原差分」从查表变成构造。往后接 TL09.3 的渐近：推出来的闭式只管主项与次项，更高阶的修正交给渐近记号去收拾，不必在推导里一次写尽。",
+  "connect": "往前是 TL01.1 的恒等式与 TL01.2 的三条实例，这里把「找原差分」从查表变成构造。往后接 TL09.3 的渐近：推出来的闭式只管主项与次项，更高阶的修正交给渐近记号去收拾，不必在推导里一次写尽。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL01/TL01.3.json",
+    "unitSha": "efc3048cd349",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

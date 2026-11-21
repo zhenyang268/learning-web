@@ -21,8 +21,10 @@
   "principle": "先分别数清两组的次数：只用外微分的那组是恒等式，含对偶的那组才带源。",
   "connect": "往后要求空间有对偶，就必须先给度规与间隔，闵可夫斯基时空那一步正是在补这块地基（PH07.1）。把势里的相位换成矩阵，场强的线性形式要加对易项，就是规范场（PH08.1）。对偶带出的二阶方程给出波动行为，那一步在波动光学里才展开。",
   "source": {
-    "unit": "notebook/math/E_Field.tex",
-    "unitSha": "15537df14f06"
+    "unit": "json/PH06/PH06.1.json",
+    "unitSha": "a5a79e6e6a7b",
+    "note": "notebook/math/E_Field.tex",
+    "noteSha": "15537df14f06"
   },
   "generated": {
     "model": "coding-agent",

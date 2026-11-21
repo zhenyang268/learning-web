@@ -21,8 +21,10 @@
   "principle": "一个保持条件对应一条独立约束，先数清约束再去数生成元。",
   "connect": "往下，对角那批生成元张成的部分与其余方向构成整个根系统（AG15.4），表示的分类也由此展开（AG15.7）。它中心的阶数在伴随表示里决定了核的大小（AG14.16）；物理一侧，规范玻色子按这个代数的维数计数，标准模型的群结构就搭在这里（AG16.5）。",
   "source": {
-    "unit": "notebook/math/lie1.tex",
-    "unitSha": "a312906cc05d"
+    "unit": "json/AG14/AG14.14.json",
+    "unitSha": "815d1cdbebd7",
+    "note": "notebook/math/lie1.tex",
+    "noteSha": "a312906cc05d"
   },
   "generated": {
     "model": "coding-agent",

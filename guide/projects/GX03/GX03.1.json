@@ -25,8 +25,10 @@
   "principle": "先在纸上算得出的最小例子上定住容差，再放大规模。",
   "connect": "顶点与曲线往上接引擎（GX04.1）。渲染侧对拍光栅化（GX01.1）与光线求交（GX02.1）。误差量级与收敛口径沿用性能工程（EG03.1），缓存层次归体系结构（CP02.1）。",
   "source": {
-    "unit": "notebook/projects/cg/geometry-anim/OUTLINE.md",
-    "unitSha": "c4154f83a436"
+    "unit": "projects/json/GX03/GX03.1.json",
+    "unitSha": "5145ee030456",
+    "note": "notebook/projects/cg/geometry-anim/OUTLINE.md",
+    "noteSha": "c4154f83a436"
   },
   "generated": {
     "model": "coding-agent",

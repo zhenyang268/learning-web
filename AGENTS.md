@@ -272,8 +272,14 @@ npm run build               # tsc → vite（多入口）→ 字体瘦身 → st
 node tools/remap-codes.mjs
 node tools/remap-codes.mjs --apply
 
-# 导读映射（408：talk → 单元代号）
+# 导读映射（六站：talk/unit → 代号）
 uv run python build/guide/make_map.py --site cs408
+# 导读 source 迁移（unit/note/talk 三层；先 --dry-run，再 --apply）
+uv run python build/guide/migrate_source.py --dry-run
+# 导读闸门（已在 npm run check 里）
+npm run check:guide
+# 导读内容审计（只读；重复/口语/元叙述/重合/链接候选 → build/logs/）
+npm run audit:guide
 ```
 
 > **内容生成线已归档**（`build/archive/`，318/318 完工，不再维护）。

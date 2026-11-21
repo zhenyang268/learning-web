@@ -6,216 +6,259 @@
     "AI01.1": {
       "kind": "project",
       "src": "notebook/projects/ai/OUTLINE.md",
+      "path": "projects/json/AI01/AI01.1.json",
       "mode": "S"
     },
     "CD00.1": {
       "kind": "project-group",
       "src": "notebook/projects/codedesign/OUTLINE.md",
+      "path": "projects/json/CD00/CD00.1.json",
       "mode": "S"
     },
     "CD01.1": {
       "kind": "project",
       "src": "notebook/projects/codedesign/metrics/OUTLINE.md",
+      "path": "projects/json/CD01/CD01.1.json",
       "mode": "S"
     },
     "CD02.1": {
       "kind": "project",
       "src": "notebook/projects/codedesign/sequence/OUTLINE.md",
+      "path": "projects/json/CD02/CD02.1.json",
       "mode": "S"
     },
     "CD03.1": {
       "kind": "project",
       "src": "notebook/projects/codedesign/associate/OUTLINE.md",
+      "path": "projects/json/CD03/CD03.1.json",
       "mode": "S"
     },
     "CD04.1": {
       "kind": "project",
       "src": "notebook/projects/codedesign/graph/OUTLINE.md",
+      "path": "projects/json/CD04/CD04.1.json",
       "mode": "S"
     },
     "CD05.1": {
       "kind": "project",
       "src": "notebook/projects/codedesign/strategy/OUTLINE.md",
+      "path": "projects/json/CD05/CD05.1.json",
       "mode": "S"
     },
     "CD06.1": {
       "kind": "project",
       "src": "notebook/projects/codedesign/library/OUTLINE.md",
+      "path": "projects/json/CD06/CD06.1.json",
       "mode": "S"
     },
     "CD07.1": {
       "kind": "project",
       "src": "notebook/projects/codedesign/numeric/OUTLINE.md",
+      "path": "projects/json/CD07/CD07.1.json",
       "mode": "S"
     },
     "CP00.1": {
       "kind": "project-group",
       "src": "notebook/projects/cpu/OUTLINE.md",
+      "path": "projects/json/CP00/CP00.1.json",
       "mode": "S"
     },
     "CP01.1": {
       "kind": "project",
       "src": "notebook/projects/cpu/asm-link-arch/OUTLINE.md",
+      "path": "projects/json/CP01/CP01.1.json",
       "mode": "S"
     },
     "CP02.1": {
       "kind": "project",
       "src": "notebook/projects/cpu/cpu-microarchitecture/OUTLINE.md",
+      "path": "projects/json/CP02/CP02.1.json",
       "mode": "S"
     },
     "CP03.1": {
       "kind": "project",
       "src": "notebook/projects/cpu/riscv-core/OUTLINE.md",
+      "path": "projects/json/CP03/CP03.1.json",
       "mode": "S"
     },
     "CP04.1": {
       "kind": "project",
       "src": "notebook/projects/cpu/compiler/OUTLINE.md",
+      "path": "projects/json/CP04/CP04.1.json",
       "mode": "S"
     },
     "CS01.1": {
       "kind": "project",
       "src": "notebook/projects/csapp/OUTLINE.md",
+      "path": "projects/json/CS01/CS01.1.json",
       "mode": "S"
     },
     "DB01.1": {
       "kind": "project",
       "src": "notebook/projects/database/OUTLINE.md",
+      "path": "projects/json/DB01/DB01.1.json",
       "mode": "S"
     },
     "DF00.1": {
       "kind": "project-group",
       "src": "notebook/projects/raft/OUTLINE.md",
+      "path": "projects/json/DF00/DF00.1.json",
       "mode": "S"
     },
     "DF01.1": {
       "kind": "project",
       "src": "notebook/projects/raft/go-lab/OUTLINE.md",
+      "path": "projects/json/DF01/DF01.1.json",
       "mode": "S"
     },
     "DF02.1": {
       "kind": "project",
       "src": "notebook/projects/raft/cpp/OUTLINE.md",
+      "path": "projects/json/DF02/DF02.1.json",
       "mode": "S"
     },
     "DX01.1": {
       "kind": "project",
       "src": "notebook/projects/discrete-math/OUTLINE.md",
+      "path": "projects/json/DX01/DX01.1.json",
       "mode": "S"
     },
     "EG00.1": {
       "kind": "project-group",
       "src": "notebook/projects/eng/OUTLINE.md",
+      "path": "projects/json/EG00/EG00.1.json",
       "mode": "S"
     },
     "EG01.1": {
       "kind": "project",
       "src": "notebook/projects/eng/testing/OUTLINE.md",
+      "path": "projects/json/EG01/EG01.1.json",
       "mode": "S"
     },
     "EG02.1": {
       "kind": "project",
       "src": "notebook/projects/eng/debug-toolchain/OUTLINE.md",
+      "path": "projects/json/EG02/EG02.1.json",
       "mode": "S"
     },
     "EG03.1": {
       "kind": "project",
       "src": "notebook/projects/eng/perf-engineering/OUTLINE.md",
+      "path": "projects/json/EG03/EG03.1.json",
       "mode": "S"
     },
     "EG04.1": {
       "kind": "project",
       "src": "notebook/projects/eng/system-design/OUTLINE.md",
+      "path": "projects/json/EG04/EG04.1.json",
       "mode": "S"
     },
     "EG05.1": {
       "kind": "project",
       "src": "notebook/projects/eng/latent-issues/OUTLINE.md",
+      "path": "projects/json/EG05/EG05.1.json",
       "mode": "S"
     },
     "GX00.1": {
       "kind": "project-group",
       "src": "notebook/projects/cg/OUTLINE.md",
+      "path": "projects/json/GX00/GX00.1.json",
       "mode": "S"
     },
     "GX01.1": {
       "kind": "project",
       "src": "notebook/projects/cg/rasterizer/OUTLINE.md",
+      "path": "projects/json/GX01/GX01.1.json",
       "mode": "S"
     },
     "GX02.1": {
       "kind": "project",
       "src": "notebook/projects/cg/raytrace/OUTLINE.md",
+      "path": "projects/json/GX02/GX02.1.json",
       "mode": "S"
     },
     "GX03.1": {
       "kind": "project",
       "src": "notebook/projects/cg/geometry-anim/OUTLINE.md",
+      "path": "projects/json/GX03/GX03.1.json",
       "mode": "S"
     },
     "GX04.1": {
       "kind": "project",
       "src": "notebook/projects/cg/engine/OUTLINE.md",
+      "path": "projects/json/GX04/GX04.1.json",
       "mode": "S"
     },
     "GX05.1": {
       "kind": "project",
       "src": "notebook/projects/cg/game/OUTLINE.md",
+      "path": "projects/json/GX05/GX05.1.json",
       "mode": "S"
     },
     "LG00.1": {
       "kind": "project-group",
       "src": "notebook/projects/parallel/OUTLINE.md",
+      "path": "projects/json/LG00/LG00.1.json",
       "mode": "S"
     },
     "LG03.1": {
       "kind": "project",
       "src": "notebook/projects/parallel/cuda/OUTLINE.md",
+      "path": "projects/json/LG03/LG03.1.json",
       "mode": "S"
     },
     "PA01.1": {
       "kind": "project",
       "src": "notebook/projects/cs149/OUTLINE.md",
+      "path": "projects/json/PA01/PA01.1.json",
       "mode": "S"
     },
     "SO00.1": {
       "kind": "project-group",
       "src": "notebook/projects/os/OUTLINE.md",
+      "path": "projects/json/SO00/SO00.1.json",
       "mode": "S"
     },
     "SO01.1": {
       "kind": "project",
       "src": "notebook/projects/os/linux-api/OUTLINE.md",
+      "path": "projects/json/SO01/SO01.1.json",
       "mode": "S"
     },
     "SO02.1": {
       "kind": "project",
       "src": "notebook/projects/os/xv6/OUTLINE.md",
+      "path": "projects/json/SO02/SO02.1.json",
       "mode": "S"
     },
     "SO03.1": {
       "kind": "project",
       "src": "notebook/projects/os/kernel-compare/OUTLINE.md",
+      "path": "projects/json/SO03/SO03.1.json",
       "mode": "S"
     },
     "SO04.1": {
       "kind": "project",
       "src": "notebook/projects/os/drivers/OUTLINE.md",
+      "path": "projects/json/SO04/SO04.1.json",
       "mode": "S"
     },
     "SO05.1": {
       "kind": "project",
       "src": "notebook/projects/os/security/OUTLINE.md",
+      "path": "projects/json/SO05/SO05.1.json",
       "mode": "S"
     },
     "SO06.1": {
       "kind": "project",
       "src": "notebook/projects/os/virtualization/OUTLINE.md",
+      "path": "projects/json/SO06/SO06.1.json",
       "mode": "S"
     },
     "__site": {
       "kind": "site",
       "src": "notebook/projects/README.md",
+      "path": "notebook/projects/README.md",
       "mode": "S"
     }
   },
@@ -276,7 +319,67 @@
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
     },
     {
+      "code": "CD01.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD01.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD01.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD01.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD01.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
       "code": "CD02.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD02.9",
       "kind": "project-chapter",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
     },
@@ -286,7 +389,72 @@
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
     },
     {
+      "code": "CD03.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD03.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD03.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD03.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD03.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD03.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD03.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
       "code": "CD04.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD04.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD04.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD04.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD04.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD04.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD04.8",
       "kind": "project-chapter",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
     },
@@ -296,12 +464,117 @@
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
     },
     {
+      "code": "CD05.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD05.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD05.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD05.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD05.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD05.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
       "code": "CD06.2",
       "kind": "project-chapter",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
     },
     {
+      "code": "CD06.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD06.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD06.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD06.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD06.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD06.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD06.9",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.10",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
       "code": "CD07.2",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.3",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.4",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.5",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.6",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.7",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.8",
+      "kind": "project-chapter",
+      "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
+    },
+    {
+      "code": "CD07.9",
       "kind": "project-chapter",
       "reason": "正文是逐节教材，已有自己的导语；导学卡在项目/分组层"
     },

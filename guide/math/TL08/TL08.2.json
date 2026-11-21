@@ -21,8 +21,10 @@
   "principle": "先看参数落在哪一档：正半平面用积分，其余全靠递推挪过去。",
   "connect": "半整数值靠 TL08.1 的换算得到，比值形式的搭档是 TL08.3 的 Beta，阶乘连续化之后还接上 TL08.4 的渐近。往后 PR02.1 的分布密度归一化里，前面那个常数基本就是它。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL08/TL08.2.json",
+    "unitSha": "4215be007405",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

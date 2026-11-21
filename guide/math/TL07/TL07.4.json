@@ -25,8 +25,10 @@
   "principle": "换元三件套同时改：变量、区域、缩放因子；交换次序先验符号。",
   "connect": "缩放因子就是 TL06.1 的行列式；交换次序的合法性归 AN01.3。往后 TL08.1 的高斯积分靠极坐标一步落地，TL08.2 的球体积与 TL08.3 的三角幂次都回到这里。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL07/TL07.4.json",
+    "unitSha": "72c406e4456e",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

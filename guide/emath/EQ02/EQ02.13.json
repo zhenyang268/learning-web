@@ -21,8 +21,10 @@
   "principle": "像函数只在使用域内有效：极点的位置与阶数一起读，才读出解的形状。",
   "connect": "与 EQ02.12 分工：那边作用在空间、无初值项，这里作用在时间、初值是主角，两者常叠加。同一类初值问题还能用 EQ01.7 与 EQ01.8 求解，正好互为验算。极点实部定稳定性，这条判据接 EQ01.11 的稳定性讨论。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.13.json",
+    "unitSha": "208f2da4a91d",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

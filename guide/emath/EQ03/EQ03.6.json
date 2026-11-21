@@ -3,7 +3,7 @@
   "code": "EQ03.6",
   "site": "emath",
   "scope": "unit",
-  "lead": "这一节把平移写成求导的指数，代价是级数要重排、因子不能随便合并。",
+  "lead": "这里把平移写成求导的指数，代价是级数要重排、因子不能随便合并。",
   "why": [
     {
       "h": "为什么因子不能直接合并",
@@ -21,8 +21,10 @@
   "principle": "平移是求导的指数；指数能不能合并，取决于两个因子是否可交换。",
   "connect": "向前是 EQ03.2 的级数形式与 EQ03.5 的移位矩阵，往后指数因子在 EQ03.7 用来逐行解递推，在 EQ03.9 借幂零块被算成有限和；数值一侧的落地见 EQ04.2，指数积分器直接取自这里。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.6.json",
+    "unitSha": "556116bbbb24",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

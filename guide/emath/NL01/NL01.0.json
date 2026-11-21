@@ -3,7 +3,7 @@
   "code": "NL01.0",
   "site": "emath",
   "scope": "unit",
-  "lead": "总图这一节解决的是：给每条数学一个可核对的位置，而不是再讲一遍它是什么。",
+  "lead": "总图要解决的是：给每条数学一个可核对的位置，而不是再讲一遍它是什么。",
   "why": [
     {
       "h": "为什么每条都要挂状态词",
@@ -21,8 +21,10 @@
   "principle": "查的是这条数学落在哪个函数、哪个判据上，不是它是什么。",
   "connect": "依赖网里每个箭头都对应一条真实上游：绝对误差累积推到条件数与主元选择（NL02.1），正交性与重正交的阈值接在 NL05.1 那一组条目之后。往下 NL14.1 把这些条目收成六个动作，NL01.8 再核对哪些位置还是空的。",
   "source": {
-    "unit": "notebook/math/survey/p1-overview.tex",
-    "unitSha": "a0eb1f276268"
+    "unit": "emath/json/NL01/NL01.0.json",
+    "unitSha": "8b04ee93af12",
+    "note": "notebook/math/survey/p1-overview.tex",
+    "noteSha": "a0eb1f276268"
   },
   "generated": {
     "model": "coding-agent",

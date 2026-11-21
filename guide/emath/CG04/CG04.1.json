@@ -21,8 +21,10 @@
   "principle": "先查抽样密度有没有覆盖被积函数的支撑，再谈方差；覆盖不住时，加样本只会更快地收敛到错的地方。",
   "connect": "它的被积函数来自 CG03.1，抽样密度的设计围绕 CG02.1 的散射峰形展开；CG24.1 把这些策略工程化，CG06.1 用低差异序列把速率再推一档。误差与方差的抽象理论见 PR09.1，方差缩减的系统手法见 PR09.2。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG04/CG04.1.json",
+    "unitSha": "e2bda92b6def",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

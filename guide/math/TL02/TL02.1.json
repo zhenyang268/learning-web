@@ -21,8 +21,10 @@
   "principle": "展开就是逐项配对，先把配对点数清，再合并同类。",
   "connect": "往前接 TL01.4 的裂项：拆分母用的正是平方差与立方差。往后 TL02.2 的配方把平方公式反过来用，TL02.3 的因式分解是同一族公式的逆向走法，TL06.3 的行列式性质也借重平方差的结构。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL02/TL02.1.json",
+    "unitSha": "623ab888fc72",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

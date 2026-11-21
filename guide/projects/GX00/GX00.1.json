@@ -21,8 +21,10 @@
   "principle": "指到链上某一层说这是谁的责任，这一段才算走通。",
   "connect": "组内先出图与交叉验证，两条渲染路径互证（GX01.1、GX02.1），再补顶点来源（GX03.1），然后压到帧预算上成帧（GX04.1），最后拿案例做到联机（GX05.1）。通用工程素养留在 EG01.1。",
   "source": {
-    "unit": "notebook/projects/cg/OUTLINE.md",
-    "unitSha": "f659554a8a37"
+    "unit": "projects/json/GX00/GX00.1.json",
+    "unitSha": "d8b33e515337",
+    "note": "notebook/projects/cg/OUTLINE.md",
+    "noteSha": "f659554a8a37"
   },
   "generated": {
     "model": "coding-agent",

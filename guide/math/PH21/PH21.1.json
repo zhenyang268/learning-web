@@ -21,8 +21,10 @@
   "principle": "先问指数里的作用量是不是二次型：是就能配方积完，不是就只能近似。",
   "connect": "往后先补上唯一另一类可解情形：二次势下的谐振子（PH21.2）。同一支模长平方在虚时间下变成扩散核，接上配分函数（PH22.1）；在路径追踪一侧，它对应渲染里反复叠加的传播权重（PH23.1）。",
   "source": {
-    "unit": "notebook/math/K_Feyman.tex",
-    "unitSha": "a4099cec8902"
+    "unit": "json/PH21/PH21.1.json",
+    "unitSha": "58689b32c883",
+    "note": "notebook/math/K_Feyman.tex",
+    "noteSha": "a4099cec8902"
   },
   "generated": {
     "model": "coding-agent",

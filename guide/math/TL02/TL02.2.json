@@ -21,8 +21,10 @@
   "principle": "把一次项消进平方里，剩下的常数块就直接给出最值与判别式。",
   "connect": "往前接 TL02.1 的平方公式，配方正是它反着用。往后 TL02.4 的部分分式要先看分母能否配方，TL06.3 的二次型正定性是它在多维的放大版，TL07.2 的积分技巧则靠配方后的标准形式把二次分母落到反正切与对数上。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL02/TL02.2.json",
+    "unitSha": "bb8daa38ceb1",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

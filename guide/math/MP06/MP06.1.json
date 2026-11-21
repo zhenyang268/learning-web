@@ -23,10 +23,12 @@
     }
   ],
   "principle": "亮度非负、只相加；三因子缺一即能量错；合并权重按采样次数乘密度归一。",
-  "connect": "这个单元与量子线是一条对照关系：一边的权重非负只相加，另一边带相位可以相消（PH23.1）。往前是测度与积分的语言（AN01.1）。往后方程被投影到球谐基上做环境光照（PH09.1），同一套权重也回到作用量作权重的语境里。",
+  "connect": "这个单元与量子线是一条对照关系：一边的权重非负只相加，另一边带相位可以相消（PH23.1）。往前是测度与积分的语言（AN01.1）。往后方程被投影到球谐基上做环境光照（AG16.18），同一套权重也回到作用量作权重的语境里。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP06/MP06.1.json",
+    "unitSha": "3bcbbec6dc46",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

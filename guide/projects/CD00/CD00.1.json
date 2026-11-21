@@ -19,10 +19,12 @@
     }
   ],
   "principle": "每个容器只认一件事：它在什么代价下被换掉。",
-  "connect": "往前先立度量，没有成本口径后面只能背结论。读法上序列与关联两族可并行，图依赖前者的队列与栈。往后交给库工程与数值章（CD01.1、CD02.1、CD06.1）。",
+  "connect": "往前先立度量，没有成本口径后面只能背结论。读法上序列与关联两族可并行（CD02.1、CD03.1），图依赖前者的队列与栈（CD04.1）。往后交给库工程与数值章（CD06.1、CD07.1）。",
   "source": {
-    "unit": "notebook/projects/codedesign/OUTLINE.md",
-    "unitSha": "95fdd88b4f56"
+    "unit": "projects/json/CD00/CD00.1.json",
+    "unitSha": "eaa0b34992c7",
+    "note": "notebook/projects/codedesign/OUTLINE.md",
+    "noteSha": "95fdd88b4f56"
   },
   "generated": {
     "model": "coding-agent",

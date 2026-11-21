@@ -21,8 +21,10 @@
   "principle": "四个对象分工：测度管世界、随机变量管翻译、分布函数管读数、密度只是可微时的附属。",
   "connect": "往上是测度论的基本构件（AN01.4），σ-代数与可数可加直接借自那里。往下，分布族是本单元各对象的具体实例（PR02.1），收敛模式讨论的正是随机变量序列（PR06.1）；到了采样一侧，积分与极限互换所依赖的正是可数可加。",
   "source": {
-    "unit": "notebook/math/C_prob.tex",
-    "unitSha": "3b88280c8a2e"
+    "unit": "json/PR01/PR01.1.json",
+    "unitSha": "35363b65077f",
+    "note": "notebook/math/C_prob.tex",
+    "noteSha": "3b88280c8a2e"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "离散在前、变分在后；要评保面积，先由同一个离散作用量定义动量。",
   "connect": "与 NM01.2 的辛格式是同一件事的两条入口：那边从保面积的映射出发，这边从变分原理出发，结论收在同一个动量定义上。接触约束接 NM06.1 的互补条件，约束最优性的来源见 NM05.1 的乘子法，两边共用乘子。",
   "source": {
-    "unit": "notebook/math/M_addition.tex",
-    "unitSha": "44aa083ef0df"
+    "unit": "emath/json/NM07/NM07.1.json",
+    "unitSha": "b94b437e1650",
+    "note": "notebook/math/M_addition.tex",
+    "noteSha": "44aa083ef0df"
   },
   "generated": {
     "model": "coding-agent",

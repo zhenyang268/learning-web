@@ -21,8 +21,10 @@
   "principle": "行波形状不变是恒等式，有边界时先问缺的那段初值从哪来。",
   "connect": "前提是方程已判为双曲（EQ02.5）；边界条件的类型与延拓的奇偶一一对应（EQ02.9）。往后同一方程在有界区间上改用级数解法，两者靠延拓相接（EQ02.10）；特征线法的变系数推广是它的下一步（EQ02.11）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.6.json",
+    "unitSha": "c0dc060a0a8e",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

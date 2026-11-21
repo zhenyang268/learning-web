@@ -20,8 +20,10 @@
   ],
   "connect": "这一篇的每一格都要落回实现底座才有画面（SO02.1）；设备层细节不在这里展开，另有一篇专讲（SO04.1）。用户态可观测与症状归系统编程那篇（CS01.1），把内核切成多台的讨论在虚拟化那篇（SO06.1）。",
   "source": {
-    "unit": "notebook/projects/os/kernel-compare/OUTLINE.md",
-    "unitSha": "23ecfe56fa3f"
+    "unit": "projects/json/SO03/SO03.1.json",
+    "unitSha": "4c0361b5454c",
+    "note": "notebook/projects/os/kernel-compare/OUTLINE.md",
+    "noteSha": "23ecfe56fa3f"
   },
   "generated": {
     "model": "coding-agent",

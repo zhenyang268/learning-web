@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先认对称性，再由它读出耦合项；近似只按展开参数的大小截断。",
-  "connect": "往上是规范场论给出的局部对称性要求（PH08.1）与狄拉克方程的旋量语言（PH15.1）。往后本单元的三块在接力：QED 顶点与传播子写成规则（PH26.1），圈图发散靠重整化吸收（PH30.1），传播子的规范依赖由鬼场处理（PH31.1）。",
+  "connect": "往上是规范场论给出的局部对称性要求（PH08.1）与狄拉克方程的旋量语言。往后本单元的三块在接力：QED 顶点与传播子写成规则（PH26.1），圈图发散靠重整化吸收（PH30.1），传播子的规范依赖由鬼场处理（PH31.1）。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH27/PH27.1.json",
+    "unitSha": "7e1117a41d67",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

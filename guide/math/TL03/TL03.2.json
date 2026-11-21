@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先问横坐标离替换点多远：近处用一次式，远处换阶或换常数界。",
-  "connect": "往后，这些一次式直接决定两条常用极限的证法：一边是二项式展开配单调有界（TL04.1），另一边取对数后用对数放缩（TL04.3）。再往后，小量求和要成套地小，靠几何尾那份预算（TL03.1）；信息论里散度非负也溯源到同一条对数界。",
+  "connect": "往后，这些一次式直接决定两条常用极限的证法：一边是二项式展开配单调有界（TL04.1），另一边取对数后用对数放缩（TL04.3）。再往后，小量求和要成套地小，靠几何尾那份预算；信息论里散度非负也溯源到同一条对数界。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL03/TL03.2.json",
+    "unitSha": "746018bba062",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

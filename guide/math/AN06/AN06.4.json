@@ -21,8 +21,10 @@
   "principle": "边界决定内部推到极致，就是有界即常数、模的最值只上边界。",
   "connect": "往前接 Cauchy 积分公式的高阶导数版（AN06.3），三条推论全部由它立得。往后调和函数的平均值性质与二维位势问题里最大最小的位置（AN05.1）出自同一机制，整函数的增长估计也由此起步。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN06/AN06.4.json",
+    "unitSha": "7c6b33c609d1",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

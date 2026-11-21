@@ -25,8 +25,10 @@
   "principle": "同一份输入、同一时钟，必须回落成同一份输出集合。",
   "connect": "几何与蒙皮的连续量在顶点来源那一份（GX03.1）。光照与阴影接两条渲染路径（GX01.1、GX02.1）。手感到判定窗口在游戏那一份（GX05.1）。帧预算口径沿用性能工程（EG03.1）。",
   "source": {
-    "unit": "notebook/projects/cg/engine/OUTLINE.md",
-    "unitSha": "00268fb608f2"
+    "unit": "projects/json/GX04/GX04.1.json",
+    "unitSha": "eab936a3aa89",
+    "note": "notebook/projects/cg/engine/OUTLINE.md",
+    "noteSha": "00268fb608f2"
   },
   "generated": {
     "model": "coding-agent",

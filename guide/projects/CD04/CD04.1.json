@@ -21,8 +21,10 @@
   "principle": "先定表示，再谈算法；代价公式里的每一项都要能指到一次真实的内存访问。",
   "connect": "往回是关联容器里的堆与索引结构，选下一个点靠它们（CD03.1）。往前接策略层，最短路是动态规划在图上的一次实例（CD05.1）。数值与稀疏矩阵那边的装配视角，由数值线承接（CD07.1）。",
   "source": {
-    "unit": "notebook/projects/codedesign/graph/OUTLINE.md",
-    "unitSha": "be4c2b38a520"
+    "unit": "projects/json/CD04/CD04.1.json",
+    "unitSha": "f3d66f794a37",
+    "note": "notebook/projects/codedesign/graph/OUTLINE.md",
+    "noteSha": "be4c2b38a520"
   },
   "generated": {
     "model": "coding-agent",

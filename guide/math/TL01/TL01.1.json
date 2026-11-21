@@ -21,8 +21,10 @@
   "principle": "先问「谁的差分是它」，再问「上端要不要多一格」。",
   "connect": "往前是 TL01.2 的三条幂和，各自对应一个具体的原差分；再往前 TL01.3 把升一阶的差凑成想求的幂。往后接 TL01.4 的技巧族与 TL04.1 的级数换算：闭式那一头靠这条恒等式，放缩那一头靠它的连续对应物。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL01/TL01.1.json",
+    "unitSha": "d8a95b7bacc5",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

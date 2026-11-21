@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先看被加项的形状选入口，再核对边界条件，最后才动笔算。",
-  "connect": "往前接 TL01.1 的相消机制与 TL01.3 的构造函数，这一节给出六种具体入口。往后接 TL02.1 的乘法公式族用于拆分母，TL09.3 的渐近用于把夹逼结果写成正式量级，TL04.2 的级数收敛判准则接着用和与积分的对照。",
+  "connect": "往前接 TL01.1 的相消机制与 TL01.3 的构造函数，这里给出六种具体入口。往后接 TL02.1 的乘法公式族用于拆分母，TL09.3 的渐近用于把夹逼结果写成正式量级，TL04.2 的级数收敛判准则接着用和与积分的对照。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL01/TL01.4.json",
+    "unitSha": "a04652307c39",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

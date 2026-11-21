@@ -21,8 +21,10 @@
   "principle": "最高权是顶点，根是往下走的楼梯，其余重数全由下降规则逼出。",
   "connect": "往下，这套标签在秩小的情形变成一串等间距的态，标号与态数一一对上（AG15.7）。到更高秩时标签成对出现，共轭与分解都要重新记账（AG15.8）。物理一侧，这些标签就是量子数组合，粒子谱按它们排队，接在 AG16.5 与 AG16.3 的自旋读法之后。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.6.json",
+    "unitSha": "87e7b0dce446",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

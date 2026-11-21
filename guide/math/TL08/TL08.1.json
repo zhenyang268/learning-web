@@ -25,8 +25,10 @@
   "principle": "原函数不存在时，改换积分域的形状，而不是换被积函数。",
   "connect": "升维要非负性保证次序可换，依据在 AN01.3；极坐标的缩放因子与区域改写回到 TL07.4。往后 TL08.2 的半整数值与 PR02.1 的密度归一化都是这颗种子的结果。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL08/TL08.1.json",
+    "unitSha": "1b536fefafdc",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

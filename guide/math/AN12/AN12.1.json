@@ -25,8 +25,10 @@
   "principle": "从复可微出发一切都由局部定整体；落到应用，只需记住每个概念在哪条线上承担什么角色。",
   "connect": "往前整条线依次是全纯与共形（AN09.1）、延拓与多值（AN10.1）、二维流场的接口（AN11.1）。往下极点与指数型解的对应在此收口（AN08.3），解析延拓那一侧的合法性则由唯一性保证（AN10.1），取系数的老办法仍在给幅度（AN08.2）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN12/AN12.1.json",
+    "unitSha": "54cdaae86fc2",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

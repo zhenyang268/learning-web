@@ -25,8 +25,10 @@
   "principle": "算一下绕回路的积分：为零说明是某个函数的微分，不为零说明探到了洞。",
   "connect": "往前后都接得很紧：往外，微分形式与外微分构成复形这件事在分析一侧已经铺垫好，同调与上同调用的是同一个套路（AG10.2）；往内，离散情形把微分换成关联矩阵，那条核心恒等式在离散层面精确成立，这一支通向离散外微分与 Hodge 分解。",
   "source": {
-    "unit": "notebook/math/Q_topology.tex",
-    "unitSha": "ede6b229a475"
+    "unit": "json/AG11/AG11.1.json",
+    "unitSha": "d42f2fc47b81",
+    "note": "notebook/math/Q_topology.tex",
+    "noteSha": "ede6b229a475"
   },
   "generated": {
     "model": "coding-agent",

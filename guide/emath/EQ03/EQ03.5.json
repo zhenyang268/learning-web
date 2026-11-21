@@ -3,7 +3,7 @@
   "code": "EQ03.5",
   "site": "emath",
   "scope": "unit",
-  "lead": "这一节解决的是：把求导写成矩阵之前，先挑一套让矩阵最简的基。",
+  "lead": "这里要解决的是：把求导写成矩阵之前，先挑一套让矩阵最简的基。",
   "why": [
     {
       "h": "为什么基要带阶乘",
@@ -21,8 +21,10 @@
   "principle": "基决定矩阵形态：阶乘基给移位，指数基给乘法，选错基只是同一件事写得更长。",
   "connect": "这一层把 EQ03.1 里那句话落到具体基上；EQ03.8 用同样的基去做特征值问题，EQ03.7 则把方程写成这条斜线阵的逐行求解，EQ03.10 处理截断之后剩下的递推。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.5.json",
+    "unitSha": "bc28dc2b0e4e",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

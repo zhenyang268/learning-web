@@ -25,8 +25,10 @@
   "principle": "先确认可微，再用公式；凸性判定要在整片区域上处处成立。",
   "connect": "曲率与二次型的判据用 TL06.3，全微分与梯度在 TL09.4 里被当作变分的基本动作。往后 TL09.2 的能量法、TL07.4 的换元矩阵都靠这条线性近似接出去。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL07/TL07.5.json",
+    "unitSha": "18b2587bd295",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

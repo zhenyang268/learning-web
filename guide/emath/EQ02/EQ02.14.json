@@ -21,8 +21,10 @@
   "principle": "核要同时满足方程与边界；边界条件一旦进核，表示式里就只剩已知数据。",
   "connect": "求修正式依赖 EQ02.8 给出的存在唯一性与极值原理，边界条件的分类照 EQ02.9。与 EQ01.18 的一维版本结构相同：基本解减掉修正项。往下接 EQ02.15 的变分刻画，核也可由能量最小定出。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.14.json",
+    "unitSha": "3672c0323912",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

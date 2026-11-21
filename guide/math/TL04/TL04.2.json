@@ -21,8 +21,10 @@
   "principle": "看到相减先问是几阶相消，展开到第一个系数非零的阶为止。",
   "connect": "往前，对数与根式的一次替换就是这里最常用的两条（TL02.5），其余的一次式界归入 TL03.2 那一盒。往后，逐步展开的表要查 TL07.1，余项与误差界走 TL09.3；两条常用极限的证明都以此为最后一步（TL04.3）。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL04/TL04.2.json",
+    "unitSha": "814b88e4fe08",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

@@ -3,7 +3,7 @@
   "code": "EQ01.5",
   "site": "emath",
   "scope": "unit",
-  "lead": "系数取常值时，这一节解决的是把解方程换成解一个二次方程。",
+  "lead": "系数取常值时，这里要解决的是把解方程换成解一个二次方程。",
   "why": [
     {
       "h": "为什么只有常系数才换得动",
@@ -21,8 +21,10 @@
   "principle": "阶数决定解族要几个独立成员，特征根的代数结构与它一一对应。",
   "connect": "齐次解定出之后再补一个特解，就是 EQ01.7 与 EQ01.8 的分工；把系数换成自变量幂次，同一结构在 EQ01.6 变成指标方程。特征根实部的符号决定长时间行为，这条读到 EQ01.11 的稳定性；算子语言的版本在 EQ03.5，数值侧则由 EQ04.1 接手。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.5.json",
+    "unitSha": "d2c88bd2c44e",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

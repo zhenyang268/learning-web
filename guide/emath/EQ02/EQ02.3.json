@@ -21,8 +21,10 @@
   "principle": "看生成元，不看字面；换元之后要能一阶化才算认对。",
   "connect": "上游依靠对称性判据确认生成元为真（EQ02.2），开篇给无穷小生成元的定义（EQ02.1）。本单元是词典，通用流程在不变量与时间坐标那里（EQ02.4）；往前它解释可降阶方程与 Euler 方程换元的几何来源（EQ01.4）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.3.json",
+    "unitSha": "341be106288d",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

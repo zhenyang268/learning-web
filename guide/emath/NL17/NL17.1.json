@@ -24,8 +24,10 @@
   ],
   "connect": "往后，概率地图里几何那一层同样靠曲率搭桥（NL18.1）；数值一侧，保持相空间结构的积分器就是「流」这个对象的离散版（NM01.2），而三维旋转插值的群结构正是这条链上最短的一段（NL15.1）。",
   "source": {
-    "unit": "notebook/math/bridges/br3_ode_pde_tensor_lie.tex",
-    "unitSha": "567f844587b7"
+    "unit": "emath/json/NL17/NL17.1.json",
+    "unitSha": "8ca70c034541",
+    "note": "notebook/math/bridges/br3_ode_pde_tensor_lie.tex",
+    "noteSha": "567f844587b7"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "散度、梯度、旋度三个算子要成套配对，缺一条就冒出一个看不见的模态。",
   "connect": "投影法每步要解的全局方程最贵，时间侧的误差与这里的投影分裂有关，见 CG17.4；上游是同一框架里按面记通量的守恒说法，见 CG17.1；压力修正不改变涡量，这条接力在 CG12.1。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG17/CG17.3.json",
+    "unitSha": "b5ab1f78ee35",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

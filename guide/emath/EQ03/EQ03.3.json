@@ -3,7 +3,7 @@
   "code": "EQ03.3",
   "site": "emath",
   "scope": "unit",
-  "lead": "这一节解决的是换元之前的一步：先确认那个「乘一个数」的动作在哪个前提下才成立。",
+  "lead": "这里要解决的是换元之前的一步：先确认那个「乘一个数」的动作在哪个前提下才成立。",
   "why": [
     {
       "h": "为什么乘 s 要先清零初值",
@@ -21,8 +21,10 @@
   "principle": "所谓对角化，是三件事一起成立：零初值、收敛域包住竖线、用反演而不是投影。",
   "connect": "这条动作的教科书形态在 EQ02.13 的 Laplace 变换，离散一侧的对应物是幂级数基，见 EQ03.10；把 s 的位置读到解的形态，是紧接着的 EQ03.4；矩阵版本则在 EQ03.6 与 EQ03.9 中给出。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.3.json",
+    "unitSha": "4d5dd461c8b4",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

@@ -1,6 +1,7 @@
 {
   "version": 1,
   "site": "english1",
+  "mode": "T",
   "units": {
     "CZ01.1": {
       "talk": "build/reading/talk/english1-wr-01.md",

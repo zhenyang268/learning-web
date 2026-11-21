@@ -21,8 +21,10 @@
   "principle": "每点概率的量级与格点数量的乘积决定一切：相加收敛则常返，发散则暂留。",
   "connect": "往前它是马尔可夫链那套对象的朴素实例（PR08.1），往后采样算法正是往这条游走上加一层接受拒绝，把它从零常返升级成正常返（PR08.2）。它的连续对应物是布朗运动（PR05.1），而平方根尺度来自中心极限定理（PR07.3）。",
   "source": {
-    "unit": "notebook/math/C_prob.tex",
-    "unitSha": "3b88280c8a2e"
+    "unit": "json/PR08/PR08.3.json",
+    "unitSha": "3f9d9e56cdc5",
+    "note": "notebook/math/C_prob.tex",
+    "noteSha": "3b88280c8a2e"
   },
   "generated": {
     "model": "coding-agent",

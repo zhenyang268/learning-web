@@ -25,8 +25,10 @@
   "principle": "先确认边界的边界为零，再谈洞的个数；秩与群不是一回事。",
   "connect": "往下走，Euler 特征把三个 Betti 数压成一个交替和，并与剖分的顶点减边加面相互印证（AG10.3）；绕洞的圈与绕洞变化的函数在通量积分上配对，上同调的维数因此与这里的 Betti 数相同（AG11.1）。更远处，圈与边界的差别在基本群那里变成同伦类（AG09.1）。",
   "source": {
-    "unit": "notebook/math/Q_topology.tex",
-    "unitSha": "ede6b229a475"
+    "unit": "json/AG10/AG10.2.json",
+    "unitSha": "08ed366cc6ca",
+    "note": "notebook/math/Q_topology.tex",
+    "noteSha": "ede6b229a475"
   },
   "generated": {
     "model": "coding-agent",

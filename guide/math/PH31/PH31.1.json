@@ -19,10 +19,12 @@
     }
   ],
   "principle": "换掉重复计数时要一并换掉 Jacobian；它退化成常数时才有阿贝尔与非阿贝尔之分。",
-  "connect": "往上是规范原理给出的场强与协变导数（PH08.1），权重函数的行列式本身来自线性代数的行列式定义（AG10.1）。往下，光子传播子在这里才被定义清楚，QED 的顶点与规则接得住（PH27.1、PH26.1）；重复计数的消除也是重整化算圈图的前提（PH30.1）。",
+  "connect": "往上是规范原理给出的场强与协变导数（PH08.1），权重函数的行列式本身来自线性代数的行列式定义（TL06.1）。往下，光子传播子在这里才被定义清楚，QED 的顶点与规则接得住（PH27.1、PH26.1）；重复计数的消除也是重整化算圈图的前提（PH30.1）。",
   "source": {
-    "unit": "notebook/math/L_Feyman.tex",
-    "unitSha": "f85248ddefe1"
+    "unit": "json/PH31/PH31.1.json",
+    "unitSha": "931cf0116fd7",
+    "note": "notebook/math/L_Feyman.tex",
+    "noteSha": "f85248ddefe1"
   },
   "generated": {
     "model": "coding-agent",

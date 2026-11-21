@@ -20,8 +20,10 @@
   ],
   "connect": "往后，特征函数那一层与傅里叶变换同源（NL16.1）；几何层的桥靠曲率与生成元，与方程那张网共用一套张量语言（NL17.1）。前置缺口仍回到那份清单里查（NL14.2）。",
   "source": {
-    "unit": "notebook/math/bridges/br4_probability_map.tex",
-    "unitSha": "364cb80766c9"
+    "unit": "emath/json/NL18/NL18.1.json",
+    "unitSha": "d433c26a2f89",
+    "note": "notebook/math/bridges/br4_probability_map.tex",
+    "noteSha": "364cb80766c9"
   },
   "generated": {
     "model": "coding-agent",

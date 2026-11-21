@@ -21,8 +21,10 @@
   "principle": "扩散的指纹是频率域里的负平方指数：振荡快的先被抹平，核处处为正。",
   "connect": "型上与波动方程相对照（EQ02.6），判型依据仍在主部符号（EQ02.5）。有界区间上同一条方程改用级数与边界条件处理（EQ02.10），方向反号的不适定性与反问题相连（EQ02.15）。数值侧的隐式格式无条件稳定源自这里的频域行为（EQ04.2）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.7.json",
+    "unitSha": "1b3fadff836c",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

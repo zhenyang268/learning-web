@@ -3,7 +3,7 @@
   "code": "EQ04.13",
   "site": "emath",
   "scope": "unit",
-  "lead": "五条策略这一节把 $Lu=f$ 的解法收成一套：先看 $L$ 的结构，再挑走哪条路。",
+  "lead": "五条策略把 $Lu=f$ 的解法收成一套：先看 $L$ 的结构，再挑走哪条路。",
   "why": [
     {
       "h": "为什么解方程要先降维",
@@ -21,8 +21,10 @@
   "principle": "先判 $L$ 自伴否、零是否在谱中、有没有连续对称，再定用哪条策略。",
   "connect": "第④条策略在 EQ04.3 里铺开成五步流程，第③条接 EQ02.4 的降阶步骤，第②条回到 EQ01.18 的核写法。整个 EQ 篇的算式与技巧在这里收束，往上由 EQ03.15 的算子视角统一。",
   "source": {
-    "unit": "notebook/math/ode4.tex",
-    "unitSha": "332dc622d1b0"
+    "unit": "emath/json/EQ04/EQ04.13.json",
+    "unitSha": "ea378afc4cf6",
+    "note": "notebook/math/ode4.tex",
+    "noteSha": "332dc622d1b0"
   },
   "generated": {
     "model": "coding-agent",

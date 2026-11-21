@@ -21,8 +21,10 @@
   "principle": "全纯函数在内部没有自由度，边界数据一旦给定，内部全部随之确定。",
   "connect": "往前是 Cauchy 定理归零那一半（AN06.2），加上围道积分的参数化（AN06.1）。往后由导数公式立得三个经典推论（AN06.4），局部可展成幂级数与解析延拓也由此起步（AN07.1）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN06/AN06.3.json",
+    "unitSha": "52192f53766e",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

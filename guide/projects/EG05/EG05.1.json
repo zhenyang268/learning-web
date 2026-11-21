@@ -21,8 +21,10 @@
   "principle": "先拿证据再命名问题，顺序反了就是背诵。",
   "connect": "定位完要归因与量化，方法在性能工程（EG03.1）；取证链路与符号化在调试（EG02.1）；这些边界如何折算成容量与阈值在系统设计（EG04.1）。",
   "source": {
-    "unit": "notebook/projects/eng/latent-issues/OUTLINE.md",
-    "unitSha": "bf52a03d1f92"
+    "unit": "projects/json/EG05/EG05.1.json",
+    "unitSha": "a1c595e87a7a",
+    "note": "notebook/projects/eng/latent-issues/OUTLINE.md",
+    "noteSha": "bf52a03d1f92"
   },
   "generated": {
     "model": "coding-agent",

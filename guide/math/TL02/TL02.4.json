@@ -21,8 +21,10 @@
   "principle": "权重只能靠通分乘回去核对，代点算出的数本身不构成证据。",
   "connect": "往前，把分母彻底拆成线性与不可约二次因子是 TL02.3 的活；二次块的内部处理走配方，见 TL02.2。往后，这一拆是有理函数积分的标准一刀（TL07.2），也是逆变换把极点摊成模态的工序（AN06.4）：每拆出一块，就对应一个指数型模态或一条衰减通道。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL02/TL02.4.json",
+    "unitSha": "d79e2f260ae5",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

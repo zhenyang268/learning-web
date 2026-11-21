@@ -19,10 +19,12 @@
     }
   ],
   "principle": "要求对称式的值，就别去求根；要比对系数，就先顾好符号。",
-  "connect": "往前接 TL02.1 的正向展开，因式分解是它反着走；TL02.2 的配方给出顶点与判别式，那是另一种读系数的办法。往后 TL06.1 的特征多项式沿用的是同一套比较系数的写法，根与迹、行列式的关系也由此而来。",
+  "connect": "往前接 TL02.1 的正向展开，因式分解是它反着走；TL02.2 的配方给出顶点与判别式，那是另一种读系数的办法。往后 TL06.3 的特征多项式沿用的是同一套比较系数的写法，根与迹、行列式的关系也由此而来。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL02/TL02.3.json",
+    "unitSha": "ea220a2fb6dd",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

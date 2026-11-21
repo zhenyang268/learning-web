@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先求齐次的两个独立解，再补约束、解导数组、逐个积分；顺序一乱，W 的分母就白算了。",
-  "connect": "往上是 EQ01.5 与 EQ01.6 提供的齐次解，本节的输入全部由它们给出；判据上与 EQ01.7 分工，形状受限的右端用待定系数，其余交给这里。往下接 EQ01.12 的特征函数展开与 EQ02.14 的核，两者都是这一步的连续化版本。",
+  "connect": "往上是 EQ01.5 与 EQ01.6 提供的齐次解，这里的输入全部由它们给出；判据上与 EQ01.7 分工，形状受限的右端用待定系数，其余交给这里。往下接 EQ01.12 的特征函数展开与 EQ02.14 的核，两者都是这一步的连续化版本。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.8.json",
+    "unitSha": "53cc1351b38b",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

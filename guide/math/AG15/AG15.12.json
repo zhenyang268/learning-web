@@ -25,8 +25,10 @@
   "principle": "上同调测量的是闭形式离恰当形式差多远，差多少就是洞的个数。",
   "connect": "往后把这些层的维数交错相加，便得到 Euler 示性数，与曲率积分对上（AG15.13）。上溯一层，这些整数就是丛的特征类所在的位置（AG15.11），物理里磁单极与相位效应都从这里读出。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.12.json",
+    "unitSha": "ddbf41c09a03",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

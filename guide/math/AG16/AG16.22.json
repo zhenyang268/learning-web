@@ -21,8 +21,10 @@
   "principle": "动手改连接关系之前，先把拓扑量算出来记下。",
   "connect": "亏格与欧拉数的关系会继续给出向量场的零点预算，这是下一单元定理的来源（AG16.23）；顶点上的角度求和正是欧拉公式的微分版本（AG16.21）。参数化要剪几刀、留几条缝，由这里的亏格决定（AG16.20）。更细的洞与连通分量的分类，留待同调那一层（AG16.24）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.22.json",
+    "unitSha": "34919020c703",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

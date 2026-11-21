@@ -21,8 +21,10 @@
   "principle": "每步断言总量变化等于边界通量差，这一条与精度无关。",
   "connect": "激波处导数不存在，只能在这个框架里按面写通量，见 CG15.1；界面输运要严格守恒，落点见 CG16.1；把通量相消的结构搬到能量上，就得到离散能量不等式，见 CG17.2。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG17/CG17.1.json",
+    "unitSha": "8a1be18950ba",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

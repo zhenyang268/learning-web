@@ -21,8 +21,10 @@
   "principle": "两个端点各验一次；要算值就先换成另一个函数之比。",
   "connect": "两个参数的乘积之比这一关系靠 TL08.2 的递推求值，换元与缩放因子回到 TL07.4。往后 PR02.1 的分布归一化、AN01.3 的次序可换判据都与它配套使用。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL08/TL08.3.json",
+    "unitSha": "42b912d8749d",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

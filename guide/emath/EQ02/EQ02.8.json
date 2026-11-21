@@ -21,8 +21,10 @@
   "principle": "调和就是无源无汇，边界唯一决定内部，极值只落在边界上。",
   "connect": "作为椭圆型的标准例，它与波、热并列（EQ02.5）。边界条件的三种类型主要服务这一类问题（EQ02.9）；再往后能量极小化给出同一个解的变分刻画（EQ02.15），基本解与镜像法构成 Green 函数的二维推广（EQ02.14）。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.8.json",
+    "unitSha": "78de888a02be",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

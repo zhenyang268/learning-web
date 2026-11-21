@@ -21,8 +21,10 @@
   "principle": "先定弱形式与基函数，矩阵的稀疏与对称是装配出来的，不是硬塞的。",
   "connect": "与 NM02.1 的差分法对照：那边逐点近似导数，这边从积分形式出发，几何限制被拆掉。装配好的系统接 NM03.1 的分解或迭代；光滑解追求更高精度时，局部基的极限就是 NM02.3 的全局基。",
   "source": {
-    "unit": "notebook/math/G_numeric.tex",
-    "unitSha": "63e2fa138564"
+    "unit": "emath/json/NM02/NM02.2.json",
+    "unitSha": "d4b2282d6e52",
+    "note": "notebook/math/G_numeric.tex",
+    "noteSha": "63e2fa138564"
   },
   "generated": {
     "model": "coding-agent",

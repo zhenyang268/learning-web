@@ -25,8 +25,10 @@
   "principle": "先问这条结论挂在哪个可观测对象上，再谈优化与调参。",
   "connect": "往前的原语层见 CS01.1，内存序与落盘顺序在那里是先决条件。同组的分布式一侧见 DF00.1，多数派日志在副本间重复了同一套问题；并发控制的系统侧对照见 SO01.1。",
   "source": {
-    "unit": "notebook/projects/database/OUTLINE.md",
-    "unitSha": "8766a0122e6b"
+    "unit": "projects/json/DB01/DB01.1.json",
+    "unitSha": "fd4196cc32e7",
+    "note": "notebook/projects/database/OUTLINE.md",
+    "noteSha": "8766a0122e6b"
   },
   "generated": {
     "model": "coding-agent",

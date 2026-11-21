@@ -3,7 +3,7 @@
   "code": "EQ01.6",
   "site": "emath",
   "scope": "unit",
-  "lead": "系数随自变量成幂的同次方时，这一节解决的是换成对数坐标来解。",
+  "lead": "系数随自变量成幂的同次方时，这里要解决的是换成对数坐标来解。",
   "why": [
     {
       "h": "为什么试幂函数而不是指数",
@@ -21,8 +21,10 @@
   "principle": "设替代入时，首项来自两次求导，不是幂次本身的平方。",
   "connect": "这条代换的常系数版本就是 EQ01.5，两者在对数坐标下是同一件事；Legendre 方程在换角变量后落回这个型，读到 EQ01.16。径向方程里的幂结构还在 EQ01.17 的统一表里出现，重根带来的对数因子与 EQ03.9 的若尔当块同源。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.6.json",
+    "unitSha": "da3ae1ab1dda",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

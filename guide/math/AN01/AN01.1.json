@@ -25,8 +25,10 @@
   "principle": "有界封住坏点的高度，测度零封住坏点的总长，两个封条缺一不可。",
   "connect": "换一个切法就得到新的积分，构造在下一单元（AN01.2）。逐点收敛下的修复要等三条收敛定理（AN01.3），坏点的长度由测度论给（AN01.4），可积函数的空间与范数在后面（AN01.5）。数值计算里的网格求和仍是这套做法的工程版，失效只在理论一侧。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "json/AN01/AN01.1.json",
+    "unitSha": "8750306d7967",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

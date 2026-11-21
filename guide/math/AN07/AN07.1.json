@@ -21,8 +21,10 @@
   "principle": "展开前先看清圆环夹在哪两个奇点之间，系数与适用范围同一问解决。",
   "connect": "往前依赖 Cauchy 积分公式给出的系数积分（AN06.3）。往后留数只看负一次幂那一项，奇点分类直接决定留数的算法（AN08.1）；解析延拓与多值函数的处理也以环上的展开为工具。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN07/AN07.1.json",
+    "unitSha": "3d881a1d03ff",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "近似的可靠性挂在反照率上：越接近纯散射越准，越接近纯吸收越不可信。",
   "connect": "往前，扩散是辐射传输在高反照率下的极限，见 CG22.1；边界处内外反射的强弱由菲涅耳决定，见 CG20.1。往后，完整解仍要靠介质内部的路径采样，见 CG24.1；而高光与漫反射的分工被这条位置分离再次拉开，见 CG07.1。",
   "source": {
-    "unit": "notebook/math/J_rtx.tex",
-    "unitSha": "03d34bf9e80c"
+    "unit": "emath/json/CG23/CG23.1.json",
+    "unitSha": "a7559f78ecf3",
+    "note": "notebook/math/J_rtx.tex",
+    "noteSha": "03d34bf9e80c"
   },
   "generated": {
     "model": "coding-agent",

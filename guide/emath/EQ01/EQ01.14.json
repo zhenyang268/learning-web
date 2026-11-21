@@ -3,7 +3,7 @@
   "code": "EQ01.14",
   "site": "emath",
   "scope": "unit",
-  "lead": "展开点让最高阶系数取零时，这一节换成带非整数幂次的形式，用最低次项定出指数。",
+  "lead": "展开点让最高阶系数取零时，这里换成带非整数幂次的形式，用最低次项定出指数。",
   "why": [
     {
       "h": "为什么幂级数在这里失效",
@@ -21,8 +21,10 @@
   "principle": "先看奇点的强弱，再由最低次项解指数，两根之差定第二解形状。",
   "connect": "Bessel 方程在原点正属于这一类，指数方程给出两根，见 EQ01.15；Legendre 方程在端点的情形是 EQ01.16。常点的对应做法在 EQ01.13。这样得到的族随后进入 EQ01.12 的正交框架。",
   "source": {
-    "unit": "notebook/math/ode1.tex",
-    "unitSha": "1aa2fff6a1cc"
+    "unit": "emath/json/EQ01/EQ01.14.json",
+    "unitSha": "28c3eda5191b",
+    "note": "notebook/math/ode1.tex",
+    "noteSha": "1aa2fff6a1cc"
   },
   "generated": {
     "model": "coding-agent",

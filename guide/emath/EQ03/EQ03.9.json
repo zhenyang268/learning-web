@@ -3,7 +3,7 @@
   "code": "EQ03.9",
   "site": "emath",
   "scope": "unit",
-  "lead": "这一节解决的是：特征向量不够用时，补一条链把重根缺的解补齐。",
+  "lead": "这里要解决的是：特征向量不够用时，补一条链把重根缺的解补齐。",
   "why": [
     {
       "h": "为什么重根要补解",
@@ -21,8 +21,10 @@
   "principle": "重根缺的那几个解，由链补齐；链长决定乘幂，幂零让指数提前截断。",
   "connect": "重根现象在别的语言里有同样的外观：Laplace 一侧见 EQ03.4 的极点重数，矩阵一侧正是有限维的若尔当形，指数展开回到 EQ03.6；递推里出现重根时，生成函数的处理在 EQ03.10 收尾。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.9.json",
+    "unitSha": "ea1db0bbc0f0",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

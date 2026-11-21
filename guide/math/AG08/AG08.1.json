@@ -21,8 +21,10 @@
   "principle": "先写清等价关系，再用泛性质把映射挪回原空间验证，最后用不变量给粘出来的结果定性。",
   "connect": "往下，粘合会改变连通性，把几块粘成一块的情形与分支数要对着看（AG07.1）；而同伦与基本群正是为分辨「局部相同、整体不同」的粘合结果而生（AG09.1）。再往后，粘合出的亏格直接决定网格能否一笔切开展平（AG10.3）。",
   "source": {
-    "unit": "notebook/math/Q_topology.tex",
-    "unitSha": "ede6b229a475"
+    "unit": "json/AG08/AG08.1.json",
+    "unitSha": "eacb4571aa7c",
+    "note": "notebook/math/Q_topology.tex",
+    "noteSha": "ede6b229a475"
   },
   "generated": {
     "model": "coding-agent",

@@ -27,7 +27,8 @@
     "audit": "node tools/dom-harness.mjs --audit",
     "audit:content": "uv run python build/verify_kb.py --dry-run --out build/logs/health-content.json",
     "release": "npm run build && node tools/sync-release.mjs",
-    "check:guide": "node tools/check-guide.mjs --site all"
+    "check:guide": "node tools/check-guide.mjs --site all",
+    "audit:guide": "node tools/audit-guide-content.mjs"
   },
   "dependencies": {
     "yaml": "^2.9.1"

@@ -21,8 +21,10 @@
   "principle": "在频率里各模独立衰减，回到空间就是卷积磨平，两种说法是同一件事。",
   "connect": "与 EQ02.10 构成有界与无界的二分，同一份热方程解在 EQ02.7 里以核的形式出现。换一个变量方向，就是作用于时间的 EQ02.13，两者可叠加使用。往下接 EQ01.12 的谱观点，频率衰减的快慢等价于解有多光滑。",
   "source": {
-    "unit": "notebook/math/ode2.tex",
-    "unitSha": "b71c71b169ad"
+    "unit": "emath/json/EQ02/EQ02.12.json",
+    "unitSha": "01c39c7c5363",
+    "note": "notebook/math/ode2.tex",
+    "noteSha": "b71c71b169ad"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "衰减只认总消光，能量去向才分吸收与散射；上界宁松勿紧，宁慢勿偏。",
   "connect": "往后，扩散近似在高反照率下抹掉逐次散射，见 CG23.1；体内部路径的采样与密度估计，见 CG24.1；焦散这类强聚焦的亮度结构需要统计方法扛住，见 CG25.1；而方向相关的相干性一旦被计入，强度叠加的出发点就要改写，见 CG21.1。",
   "source": {
-    "unit": "notebook/math/J_rtx.tex",
-    "unitSha": "03d34bf9e80c"
+    "unit": "emath/json/CG22/CG22.1.json",
+    "unitSha": "5655051fbadc",
+    "note": "notebook/math/J_rtx.tex",
+    "noteSha": "03d34bf9e80c"
   },
   "generated": {
     "model": "coding-agent",

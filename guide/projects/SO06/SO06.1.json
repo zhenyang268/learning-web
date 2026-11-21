@@ -25,8 +25,10 @@
   "principle": "先问这次跨界要不要发生，再问它搬了多少活。",
   "connect": "它把实现底座里的页表、特权级与陷入入口换成「两个世界之间」再走一遍（SO02.1），把设备接进虚拟机所需的那条通知路径接在设备驱动那篇之后（SO04.1）；边界由谁强制的问题与安全那篇同一套判据（SO05.1）。性能口径的通用方法归性能工程那篇（EG03.1）。",
   "source": {
-    "unit": "notebook/projects/os/virtualization/OUTLINE.md",
-    "unitSha": "367b0c874e2b"
+    "unit": "projects/json/SO06/SO06.1.json",
+    "unitSha": "25d14b42d88e",
+    "note": "notebook/projects/os/virtualization/OUTLINE.md",
+    "noteSha": "367b0c874e2b"
   },
   "generated": {
     "model": "coding-agent",

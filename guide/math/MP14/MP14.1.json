@@ -20,8 +20,10 @@
   ],
   "connect": "往前支撑层的读法是建立能力（MP13.1），这里换成取用结论，两层的分界落在时间点上。工具与延伸共用一成时间，配比由延伸层统一交代（MP15.1）；同一批章按篇的查法见 MP11.1。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP14/MP14.1.json",
+    "unitSha": "14ac238888c1",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "写相位只到作用量为止，写振幅则每片都要带系数；相位动得快的地方自己会抵消。",
   "connect": "上游是薛定谔方程的形式解：路径求和只把那个指数演化换到位置表象里展开（PH15.1）。往下，切片如何逐片积出闭式、自由粒子与谐振子为何能精确算，发生在推导那一章（PH19.1）；量子–渲染的对应表就靠相位与实数权重的差别立住（PH18.1）。",
   "source": {
-    "unit": "notebook/math/F_quantum.tex",
-    "unitSha": "3a8bb362cef9"
+    "unit": "json/PH17/PH17.1.json",
+    "unitSha": "99ecc672d4d2",
+    "note": "notebook/math/F_quantum.tex",
+    "noteSha": "3a8bb362cef9"
   },
   "generated": {
     "model": "coding-agent",

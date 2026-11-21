@@ -21,8 +21,10 @@
   "principle": "先问倍数是否有界，再问是否自伴：前者管解存在，后者管解的形状。",
   "connect": "往前，有界的判据本身用范数写出，算子自己也构成赋范空间（AN02.1）；谱分解的求和形式用的正是正交投影（AN02.2）。往后，微分的无界性把理论推向弱形式：导数搬走后 Sobolev 空间才成为住址，存在唯一性才可证（AN04.2、AN04.3）。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN02/AN02.4.json",
+    "unitSha": "1ddbb307f6fc",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

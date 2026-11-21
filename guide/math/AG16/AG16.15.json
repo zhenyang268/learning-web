@@ -25,8 +25,10 @@
   "principle": "群里的量不要直接加减，先把差分搬到切空间再送回来。",
   "connect": "支撑旋转那一半的是四元数与大圆插值（AG16.13、AG16.14）；把六个切空间坐标真正用起来，需要位姿的李代数与指数映射（AG16.16）。表示之间的分工在旋转表示单元已经铺开（AG16.12）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.15.json",
+    "unitSha": "8acf2d1795ce",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

@@ -21,8 +21,10 @@
   "principle": "判据要让步，不是物理让步：先承认物理解合法，再修改「导数」的凭据。",
   "connect": "往后，答案是把分部积分从技巧升格为定义，用积分账目代替逐点斜率（AN04.2）；往前，取极限需要空间对极限封闭，这正是完备性的用处（AN02.1）。再往后，离散侧的同类现象是分片线性函数在单元边界一阶导数断开，弱形式语言天然兼容。",
   "source": {
-    "unit": "notebook/math/A_analysis.tex",
-    "unitSha": "514939e36b8e"
+    "unit": "emath/json/AN04/AN04.1.json",
+    "unitSha": "c52d9766fe0b",
+    "note": "notebook/math/A_analysis.tex",
+    "noteSha": "514939e36b8e"
   },
   "generated": {
     "model": "coding-agent",

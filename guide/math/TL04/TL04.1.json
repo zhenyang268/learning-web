@@ -19,10 +19,12 @@
     }
   ],
   "principle": "先证单调，再补配套方向的界，最后才解不动点并从多个根里挑。",
-  "connect": "往前，级数与混合求和的估值是同一组常数在离散侧的用法（TL03.2）。往后，两条常用极限的收敛性正是这条判据的第一个实战对象（TL04.3）；再往后，迭代法是否收敛要读主导特征值的模（TL09.2），不动点的吸引与排斥也在这里定性。",
+  "connect": "往前，级数与混合求和的估值是同一组常数在离散侧的用法（TL03.2）。往后，两条常用极限的收敛性正是这条判据的第一个实战对象（TL04.3）；再往后，迭代法是否收敛要读主导特征值的模，不动点的吸引与排斥也在这里定性。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL04/TL04.1.json",
+    "unitSha": "79d13e023e06",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

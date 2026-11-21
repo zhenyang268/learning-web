@@ -25,8 +25,10 @@
   "principle": "局部数据给出联络与曲率，整体障碍只能由特征类这类不变量的整数值来记录。",
   "connect": "往后用微分形式把特征类的整数重算成闭形式与恰当形式之比，这就是 de Rham 上同调（AG15.12）。往下游走，丛上的联络正是规范场，瞬子数落在同伦群的整数值上（AG15.10）。",
   "source": {
-    "unit": "notebook/math/lie2.tex",
-    "unitSha": "af4d9fe82efb"
+    "unit": "json/AG15/AG15.11.json",
+    "unitSha": "ff277523ad32",
+    "note": "notebook/math/lie2.tex",
+    "noteSha": "af4d9fe82efb"
   },
   "generated": {
     "model": "coding-agent",

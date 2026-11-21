@@ -703,7 +703,9 @@ n 个限定词，每个限定词配「去掉后的具体反例 + 结论如何失
 关键约束：
 
 - `lead` 是判断句，≤60 字；`why` 2–4 条，每条 80–180 字；`connect` 60–160 字且代号必须存在；
-- `source.talkSha` / `unitSha` 为源头 sha256 前 12 位，用来抓「talk 改了、导语没改」；
+- `source.unit` 永远指向**知识单元 json**（`json/...`、`cs408/json/...` 等），`unitSha` 是它的 sha256 前 12 位；
+- Mode S（数学/工程数学/工程线）另有 `source.note` + `noteSha` 指向 notebook 内容源（`.tex` / `OUTLINE.md`）；
+- Mode T 另有 `source.talk` + `talkSha` 指向口述稿；`__site` 没有单元 json，`unit` 沿用 `notebook/projects/README.md`；
 - `generated.reviewed` 必须为 `true` 才算 done；
 - 公式只允许 KaTeX `$...$`，禁止 Unicode 上标与裸 `_`。
 
@@ -722,11 +724,11 @@ talk 的主体是「分类 × 功能」的矩阵与「哪几格不一样」；�
 
 ### 17.6 sha 漂移与闸门
 
-- `tools/check-guide.mjs` 检查结构、长度、公式、禁词、代号、sha 与覆盖；
+- `tools/check-guide.mjs` 检查结构、长度、公式、禁词、代号、`why.h` 前缀、`source.unit/note/talk` 路径与 sha、覆盖；
 - `--allow-incomplete` 只允许 pending，不允许不合格的 done；
-- `--self-test` 用 6 个注入用例证明闸门真的会红（缺字段/错 sha/坏代号/口语残留/重复 lead/why 只有 1 条）；
+- `--self-test` 用 8 个注入用例证明闸门真的会红（缺字段/错 sha/坏代号/口语残留/重复 lead/why 只有 1 条/why 标题不是为什么/source.unit 路径不符）；
 - `--draft` 是施工期模式：卡片文件在就验，不看 `_progress.json` 是否已标 done；正式验收仍要求全部 done/skip；
-- 本批**不接进** `npm run check`，收口时再接，避免内容施工期把主闸门长期打红。
+- 已接进 `npm run check`；六站 560 个目标单元全部 done 或显式 skip。
 
 ### 17.7 风险
 
@@ -735,4 +737,4 @@ talk 的主体是「分类 × 功能」的矩阵与「哪几格不一样」；�
 | 与正文重复 | 导语说了考法里已经有的步骤 | 审稿时抽查 3 句；重复就删，不靠闸门 |
 | 与 talk 冲突 | talk 的口语结论与 unit/源不一致 | 以 unit/源为准，写 `fixes` |
 | 漂移 | talk 或 unit 改了，导语没改 | sha 比对；`_progress.json` 记 talkSha/unitSha |
-| 规模 | 112 篇 × 350–700 字，审稿成本高 | 先做 408；英一/数一/工程线与数学站按同一契约增量补 |
+| 规模 | 560 篇 × 350–900 字，审稿成本高 | 六站已按同一契约补齐；后续改内容仍以「回源 + 审稿清单」为准 |

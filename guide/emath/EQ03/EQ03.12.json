@@ -21,8 +21,10 @@
   "principle": "换坐标的唯一目的是让边界成为坐标面，代价是方程变系数、多出有界与周期两条附加要求。",
   "connect": "这套特殊函数从哪来，往回看 EQ01.17 的统一视角；球、柱坐标下的边值问题本身在 EQ02.8。选完基之后，Green 函数展开也要用同一套，见 EQ03.13。",
   "source": {
-    "unit": "notebook/math/ode3.tex",
-    "unitSha": "dc67f60afdf6"
+    "unit": "emath/json/EQ03/EQ03.12.json",
+    "unitSha": "9ed7d963e46a",
+    "note": "notebook/math/ode3.tex",
+    "noteSha": "dc67f60afdf6"
   },
   "generated": {
     "model": "coding-agent",

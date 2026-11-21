@@ -20,8 +20,10 @@
   ],
   "connect": "往前的原语层见 CS01.1，浮点位级与溢出在那里是同一批边界事实。往后是设计线的各章：分治与动态规划见 CD05.1，索引与哈希前提见 CD03.1，图与摊还结论见 CD04.1。",
   "source": {
-    "unit": "notebook/projects/discrete-math/OUTLINE.md",
-    "unitSha": "fcdb31fa06ee"
+    "unit": "projects/json/DX01/DX01.1.json",
+    "unitSha": "e728895506a1",
+    "note": "notebook/projects/discrete-math/OUTLINE.md",
+    "noteSha": "fcdb31fa06ee"
   },
   "generated": {
     "model": "coding-agent",

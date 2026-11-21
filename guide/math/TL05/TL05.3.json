@@ -21,8 +21,10 @@
   "principle": "要一个频率的系数，就用它乘过去在整圈上积分，其余频率自动抵消。",
   "connect": "往前，积化和差是唯一要用的工具，它从和角两式相减而来（TL05.1）。往后，降幂后的整圈积分只剩常数项（TL05.4），系数的整套读法由它给出（TL06.4）。复数版的母体在 TL05.2 的单位根处埋好。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL05/TL05.3.json",
+    "unitSha": "a08f20fc3690",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

@@ -25,8 +25,10 @@
   "principle": "先证明瓶颈在哪，再改代码；改完只看那一个计数有没有动。",
   "connect": "加速比的测量口径回到并行课（PA01.1），方法层面归测量与性能工程（EG03.1）。GPU 内存层次与 CPU 缓存层次对照看体系结构（CP02.1），执行模型在分组总览（LG00.1）。",
   "source": {
-    "unit": "notebook/projects/parallel/cuda/OUTLINE.md",
-    "unitSha": "e6db04ed15ea"
+    "unit": "projects/json/LG03/LG03.1.json",
+    "unitSha": "4e63b19d27cd",
+    "note": "notebook/projects/parallel/cuda/OUTLINE.md",
+    "noteSha": "e6db04ed15ea"
   },
   "generated": {
     "model": "coding-agent",

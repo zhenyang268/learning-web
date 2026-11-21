@@ -25,8 +25,10 @@
   "principle": "先问半径，再问阶数；端点与误差都要单独算。",
   "connect": "公式本身靠 TL05.2 的指数展开拆出实虚部，逐项积分与求导的合法性来自 AN07.1 的幂级数理论。往后 TL04.2 的展开法和 TL04.3 的常见极限都以这些系数为原料。",
   "source": {
-    "unit": "notebook/math/P_computation.tex",
-    "unitSha": "eb5a5d840b8b"
+    "unit": "json/TL07/TL07.1.json",
+    "unitSha": "f4eb4b88dd72",
+    "note": "notebook/math/P_computation.tex",
+    "noteSha": "eb5a5d840b8b"
   },
   "generated": {
     "model": "coding-agent",

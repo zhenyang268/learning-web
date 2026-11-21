@@ -25,8 +25,10 @@
   "principle": "要判断全纯，验偏导关系在某个开集上处处成立，而不是看函数有多光滑。",
   "connect": "往后围道积分要先有全纯这个前提（AN06.1），Cauchy 定理要求域单连通（AN06.2），留数展开在圆环内做（AN07.1）。调和共轭配不出单值函数的障碍，正是上同调那一侧记的洞（AG11.1）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN05/AN05.1.json",
+    "unitSha": "77d023052ff1",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

@@ -19,7 +19,7 @@
   "principle": "≤80 字，可省略",
   "connect": "60–160 字，指向真实代号",
   "fixes": ["talk 的 X 改成 Y，依据 …"],
-  "source": {"talk": "…", "talkSha": "…", "unit": "…", "unitSha": "…"},
+  "source": {"talk": "…", "talkSha": "…", "unit": "…", "unitSha": "…", "note": "…", "noteSha": "…"},
   "generated": {"model": "coding-agent", "date": "YYYY-MM-DD", "reviewed": true}
 }
 
@@ -42,6 +42,9 @@
 - 工程线只写项目/分组层：project-chapter（NOTES 分节）默认 skip，理由写「正文是逐节教材，导学卡在项目/分组层」。
 - 数学系/工程数学写章级导语，公式只留 1–2 个「why 的关键公式」，不写推导。
 - source 里不要填 talk；talkSha 省略。
+- `source.unit` 永远指向**知识单元 json**（相对 learning-web），`unitSha` 是它的 sha12；
+  `source.note` 指向 notebook 内容源（相对父仓，`.tex` / `OUTLINE.md`），`noteSha` 是它的 sha12。
+- 旧卡的 `source.unit` 若指向 notebook 源，按上面两行拆开；`__site` 没有单元 json，`unit` 沿用 `notebook/projects/README.md`。
 
 ## 审稿（第二遍逐条打勾）
 - lead 是判断句

@@ -25,8 +25,10 @@
   "principle": "许可一个逐点对称性，就必须付出一组规范场作为补偿。",
   "connect": "往下是标准模型：三个因子分别管色、左手同位旋与超荷，破缺只发生在电弱那一段（AG16.5）。往上是规范场的数学结构，联络与曲率落在纤维丛语言里（AG16.6）；守常量的来路仍回到对称变换的生成元（AG16.11）。",
   "source": {
-    "unit": "notebook/math/lie3.tex",
-    "unitSha": "478b1312f884"
+    "unit": "json/AG16/AG16.4.json",
+    "unitSha": "baa32db1bb05",
+    "note": "notebook/math/lie3.tex",
+    "noteSha": "478b1312f884"
   },
   "generated": {
     "model": "coding-agent",

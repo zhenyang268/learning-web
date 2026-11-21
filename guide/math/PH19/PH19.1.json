@@ -21,8 +21,10 @@
   "principle": "先把测度换成有限多重的普通积分，再让切片数取极限；收敛靠每片的系数与积分的幂次互相抵消。",
   "connect": "上游是路径积分的紧凑写法：这里只负责把它展开成可以计算的连乘（PH17.1）。算出闭式以后，作用量的指数可以按虚时间改写，路径求和就变成配分函数那种加权求和，与统计力学那一章的形式接上（PH09.1）；权重由相位换成实数，对应的正是渲染一侧的估计式（PH18.1）。",
   "source": {
-    "unit": "notebook/math/K_Feyman.tex",
-    "unitSha": "a4099cec8902"
+    "unit": "json/PH19/PH19.1.json",
+    "unitSha": "408e1dde598f",
+    "note": "notebook/math/K_Feyman.tex",
+    "noteSha": "a4099cec8902"
   },
   "generated": {
     "model": "coding-agent",

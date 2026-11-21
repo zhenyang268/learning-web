@@ -3,7 +3,7 @@
   "code": "NL14.1",
   "site": "emath",
   "scope": "unit",
-  "lead": "骨架这一节解决的是：把各领域的数学收成六个结构动作，让新问题落到已有节点而不是新增一篇。",
+  "lead": "骨架要解决的是：把各领域的数学收成六个结构动作，让新问题落到已有节点而不是新增一篇。",
   "why": [
     {
       "h": "为什么按动作分而不按话题分",
@@ -25,8 +25,10 @@
   "principle": "换坐标、线性化、对角化、沿流、投影、取极限：六个动作各配一条可算的等式或比值。",
   "connect": "投影那一节的具体算法在 NL02.1 的线性映射视角之后铺开，正交化与重正交的阈值见 NL05.1 那一组。往下 NL14.2 给出条目速查，离散实现落在 NL13.1 的形状与分量存放上，而 NL01.7 的两条轴正是这六个动作共用的度量。",
   "source": {
-    "unit": "notebook/math/bridges/br0_skeleton.tex",
-    "unitSha": "9da1c2f907ce"
+    "unit": "emath/json/NL14/NL14.1.json",
+    "unitSha": "895557e4669b",
+    "note": "notebook/math/bridges/br0_skeleton.tex",
+    "noteSha": "9da1c2f907ce"
   },
   "generated": {
     "model": "coding-agent",

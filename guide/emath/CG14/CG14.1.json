@@ -21,8 +21,10 @@
   "principle": "报厚度先问三件事：层流还是湍流、哪个位置、哪个约定。",
   "connect": "无滑移与粘性来自 CG10.1 的本构；厚度律里的雷诺数按局部位置计算，见 CG11.1；边界层是涡量的唯一来源，见 CG12.1；壁面加密后步长约束变紧，见 CG17.4。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG14/CG14.1.json",
+    "unitSha": "a7991fab6d66",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",

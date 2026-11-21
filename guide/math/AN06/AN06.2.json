@@ -25,8 +25,10 @@
   "principle": "先看域有没有洞，再决定这条闭围道的积分是不是零。",
   "connect": "往前是围道积分的参数化（AN06.1）。紧接着由定理推出积分公式，内部值被边界完全决定（AN06.3）；再往后有界整函数必为常数这类推论全从这里长出来（AN06.4）。闭形式与洞的关系登记在上同调那边（AG11.1）。",
   "source": {
-    "unit": "notebook/math/R_complex.tex",
-    "unitSha": "e5a5263cec60"
+    "unit": "json/AN06/AN06.2.json",
+    "unitSha": "f0e432b68da2",
+    "note": "notebook/math/R_complex.tex",
+    "noteSha": "e5a5263cec60"
   },
   "generated": {
     "model": "coding-agent",

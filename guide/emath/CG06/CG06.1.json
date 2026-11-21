@@ -25,8 +25,10 @@
   "principle": "选点先看函数的变差，再看维数，最后才比生成速度。",
   "connect": "上游是蒙特的积分框架与方差分析，见 CG04.1；下游路径追踪的样本排序与抖动在 CG24.1。同一问题的频域视角，即把误差按频率整形，接 CG06.2。",
   "source": {
-    "unit": "notebook/math/H_cg.tex",
-    "unitSha": "529e5ab57f95"
+    "unit": "emath/json/CG06/CG06.1.json",
+    "unitSha": "81f440a86417",
+    "note": "notebook/math/H_cg.tex",
+    "noteSha": "529e5ab57f95"
   },
   "generated": {
     "model": "coding-agent",

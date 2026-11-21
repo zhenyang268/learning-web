@@ -6,641 +6,769 @@
     "AN02.1": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN02/AN02.1.json",
       "mode": "S"
     },
     "AN02.2": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN02/AN02.2.json",
       "mode": "S"
     },
     "AN02.3": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN02/AN02.3.json",
       "mode": "S"
     },
     "AN02.4": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN02/AN02.4.json",
       "mode": "S"
     },
     "AN02.5": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN02/AN02.5.json",
       "mode": "S"
     },
     "AN03.1": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN03/AN03.1.json",
       "mode": "S"
     },
     "AN04.1": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN04/AN04.1.json",
       "mode": "S"
     },
     "AN04.2": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN04/AN04.2.json",
       "mode": "S"
     },
     "AN04.3": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN04/AN04.3.json",
       "mode": "S"
     },
     "AN04.4": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN04/AN04.4.json",
       "mode": "S"
     },
     "AN04.5": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN04/AN04.5.json",
       "mode": "S"
     },
     "AN04.6": {
       "kind": null,
       "src": "notebook/math/A_analysis.tex",
+      "path": "emath/json/AN04/AN04.6.json",
       "mode": "S"
     },
     "CG01.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG01/CG01.1.json",
       "mode": "S"
     },
     "CG02.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG02/CG02.1.json",
       "mode": "S"
     },
     "CG03.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG03/CG03.1.json",
       "mode": "S"
     },
     "CG04.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG04/CG04.1.json",
       "mode": "S"
     },
     "CG05.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG05/CG05.1.json",
       "mode": "S"
     },
     "CG06.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG06/CG06.1.json",
       "mode": "S"
     },
     "CG06.2": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG06/CG06.2.json",
       "mode": "S"
     },
     "CG07.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG07/CG07.1.json",
       "mode": "S"
     },
     "CG08.1": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG08/CG08.1.json",
       "mode": "S"
     },
     "CG08.2": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG08/CG08.2.json",
       "mode": "S"
     },
     "CG08.3": {
       "kind": null,
       "src": "notebook/math/H_cg.tex",
+      "path": "emath/json/CG08/CG08.3.json",
       "mode": "S"
     },
     "CG09.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG09/CG09.1.json",
       "mode": "S"
     },
     "CG10.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG10/CG10.1.json",
       "mode": "S"
     },
     "CG11.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG11/CG11.1.json",
       "mode": "S"
     },
     "CG12.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG12/CG12.1.json",
       "mode": "S"
     },
     "CG13.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG13/CG13.1.json",
       "mode": "S"
     },
     "CG14.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG14/CG14.1.json",
       "mode": "S"
     },
     "CG15.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG15/CG15.1.json",
       "mode": "S"
     },
     "CG16.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG16/CG16.1.json",
       "mode": "S"
     },
     "CG17.1": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG17/CG17.1.json",
       "mode": "S"
     },
     "CG17.2": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG17/CG17.2.json",
       "mode": "S"
     },
     "CG17.3": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG17/CG17.3.json",
       "mode": "S"
     },
     "CG17.4": {
       "kind": null,
       "src": "notebook/math/I_fluid.tex",
+      "path": "emath/json/CG17/CG17.4.json",
       "mode": "S"
     },
     "CG18.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG18/CG18.1.json",
       "mode": "S"
     },
     "CG19.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG19/CG19.1.json",
       "mode": "S"
     },
     "CG19.2": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG19/CG19.2.json",
       "mode": "S"
     },
     "CG20.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG20/CG20.1.json",
       "mode": "S"
     },
     "CG21.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG21/CG21.1.json",
       "mode": "S"
     },
     "CG22.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG22/CG22.1.json",
       "mode": "S"
     },
     "CG23.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG23/CG23.1.json",
       "mode": "S"
     },
     "CG24.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG24/CG24.1.json",
       "mode": "S"
     },
     "CG25.1": {
       "kind": null,
       "src": "notebook/math/J_rtx.tex",
+      "path": "emath/json/CG25/CG25.1.json",
       "mode": "S"
     },
     "CG26.1": {
       "kind": null,
       "src": "notebook/math/M_addition.tex",
+      "path": "emath/json/CG26/CG26.1.json",
       "mode": "S"
     },
     "EQ01.1": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.1.json",
       "mode": "S"
     },
     "EQ01.10": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.10.json",
       "mode": "S"
     },
     "EQ01.11": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.11.json",
       "mode": "S"
     },
     "EQ01.12": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.12.json",
       "mode": "S"
     },
     "EQ01.13": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.13.json",
       "mode": "S"
     },
     "EQ01.14": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.14.json",
       "mode": "S"
     },
     "EQ01.15": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.15.json",
       "mode": "S"
     },
     "EQ01.16": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.16.json",
       "mode": "S"
     },
     "EQ01.17": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.17.json",
       "mode": "S"
     },
     "EQ01.18": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.18.json",
       "mode": "S"
     },
     "EQ01.2": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.2.json",
       "mode": "S"
     },
     "EQ01.3": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.3.json",
       "mode": "S"
     },
     "EQ01.4": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.4.json",
       "mode": "S"
     },
     "EQ01.5": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.5.json",
       "mode": "S"
     },
     "EQ01.6": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.6.json",
       "mode": "S"
     },
     "EQ01.7": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.7.json",
       "mode": "S"
     },
     "EQ01.8": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.8.json",
       "mode": "S"
     },
     "EQ01.9": {
       "kind": null,
       "src": "notebook/math/ode1.tex",
+      "path": "emath/json/EQ01/EQ01.9.json",
       "mode": "S"
     },
     "EQ02.1": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.1.json",
       "mode": "S"
     },
     "EQ02.10": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.10.json",
       "mode": "S"
     },
     "EQ02.11": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.11.json",
       "mode": "S"
     },
     "EQ02.12": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.12.json",
       "mode": "S"
     },
     "EQ02.13": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.13.json",
       "mode": "S"
     },
     "EQ02.14": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.14.json",
       "mode": "S"
     },
     "EQ02.15": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.15.json",
       "mode": "S"
     },
     "EQ02.2": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.2.json",
       "mode": "S"
     },
     "EQ02.3": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.3.json",
       "mode": "S"
     },
     "EQ02.4": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.4.json",
       "mode": "S"
     },
     "EQ02.5": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.5.json",
       "mode": "S"
     },
     "EQ02.6": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.6.json",
       "mode": "S"
     },
     "EQ02.7": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.7.json",
       "mode": "S"
     },
     "EQ02.8": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.8.json",
       "mode": "S"
     },
     "EQ02.9": {
       "kind": null,
       "src": "notebook/math/ode2.tex",
+      "path": "emath/json/EQ02/EQ02.9.json",
       "mode": "S"
     },
     "EQ03.1": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.1.json",
       "mode": "S"
     },
     "EQ03.10": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.10.json",
       "mode": "S"
     },
     "EQ03.11": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.11.json",
       "mode": "S"
     },
     "EQ03.12": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.12.json",
       "mode": "S"
     },
     "EQ03.13": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.13.json",
       "mode": "S"
     },
     "EQ03.14": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.14.json",
       "mode": "S"
     },
     "EQ03.15": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.15.json",
       "mode": "S"
     },
     "EQ03.2": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.2.json",
       "mode": "S"
     },
     "EQ03.3": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.3.json",
       "mode": "S"
     },
     "EQ03.4": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.4.json",
       "mode": "S"
     },
     "EQ03.5": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.5.json",
       "mode": "S"
     },
     "EQ03.6": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.6.json",
       "mode": "S"
     },
     "EQ03.7": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.7.json",
       "mode": "S"
     },
     "EQ03.8": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.8.json",
       "mode": "S"
     },
     "EQ03.9": {
       "kind": null,
       "src": "notebook/math/ode3.tex",
+      "path": "emath/json/EQ03/EQ03.9.json",
       "mode": "S"
     },
     "EQ04.1": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.1.json",
       "mode": "S"
     },
     "EQ04.10": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.10.json",
       "mode": "S"
     },
     "EQ04.11": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.11.json",
       "mode": "S"
     },
     "EQ04.12": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.12.json",
       "mode": "S"
     },
     "EQ04.13": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.13.json",
       "mode": "S"
     },
     "EQ04.2": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.2.json",
       "mode": "S"
     },
     "EQ04.3": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.3.json",
       "mode": "S"
     },
     "EQ04.4": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.4.json",
       "mode": "S"
     },
     "EQ04.5": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.5.json",
       "mode": "S"
     },
     "EQ04.6": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.6.json",
       "mode": "S"
     },
     "EQ04.7": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.7.json",
       "mode": "S"
     },
     "EQ04.8": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.8.json",
       "mode": "S"
     },
     "EQ04.9": {
       "kind": null,
       "src": "notebook/math/ode4.tex",
+      "path": "emath/json/EQ04/EQ04.9.json",
       "mode": "S"
     },
     "NL01.0": {
       "kind": "library-section",
       "src": "notebook/math/survey/p1-overview.tex",
+      "path": "emath/json/NL01/NL01.0.json",
       "mode": "S"
     },
     "NL01.7": {
       "kind": "library-section",
       "src": "notebook/math/survey/p12-axes.tex",
+      "path": "emath/json/NL01/NL01.7.json",
       "mode": "S"
     },
     "NL01.8": {
       "kind": "library-section",
       "src": "notebook/math/survey/p11-audit.tex",
+      "path": "emath/json/NL01/NL01.8.json",
       "mode": "S"
     },
     "NL14.1": {
       "kind": "library-bridge",
       "src": "notebook/math/bridges/br0_skeleton.tex",
+      "path": "emath/json/NL14/NL14.1.json",
       "mode": "S"
     },
     "NL14.2": {
       "kind": "library-bridge",
       "src": "notebook/math/bridges/appendix_foundations.tex",
+      "path": "emath/json/NL14/NL14.2.json",
       "mode": "S"
     },
     "NL15.1": {
       "kind": "library-bridge",
       "src": "notebook/math/bridges/br1_slerp_geodesic.tex",
+      "path": "emath/json/NL15/NL15.1.json",
       "mode": "S"
     },
     "NL16.1": {
       "kind": "library-bridge",
       "src": "notebook/math/bridges/br2_fourier_gauss.tex",
+      "path": "emath/json/NL16/NL16.1.json",
       "mode": "S"
     },
     "NL17.1": {
       "kind": "library-bridge",
       "src": "notebook/math/bridges/br3_ode_pde_tensor_lie.tex",
+      "path": "emath/json/NL17/NL17.1.json",
       "mode": "S"
     },
     "NL18.1": {
       "kind": "library-bridge",
       "src": "notebook/math/bridges/br4_probability_map.tex",
+      "path": "emath/json/NL18/NL18.1.json",
       "mode": "S"
     },
     "NM01.1": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM01/NM01.1.json",
       "mode": "S"
     },
     "NM01.2": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM01/NM01.2.json",
       "mode": "S"
     },
     "NM02.1": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM02/NM02.1.json",
       "mode": "S"
     },
     "NM02.2": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM02/NM02.2.json",
       "mode": "S"
     },
     "NM02.3": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM02/NM02.3.json",
       "mode": "S"
     },
     "NM03.1": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM03/NM03.1.json",
       "mode": "S"
     },
     "NM04.1": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM04/NM04.1.json",
       "mode": "S"
     },
     "NM04.2": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM04/NM04.2.json",
       "mode": "S"
     },
     "NM05.1": {
       "kind": null,
       "src": "notebook/math/G_numeric.tex",
+      "path": "emath/json/NM05/NM05.1.json",
       "mode": "S"
     },
     "NM06.1": {
       "kind": null,
       "src": "notebook/math/M_addition.tex",
+      "path": "emath/json/NM06/NM06.1.json",
       "mode": "S"
     },
     "NM07.1": {
       "kind": null,
       "src": "notebook/math/M_addition.tex",
+      "path": "emath/json/NM07/NM07.1.json",
       "mode": "S"
     },
     "PR09.1": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "emath/json/PR09/PR09.1.json",
       "mode": "S"
     },
     "PR09.2": {
       "kind": null,
       "src": "notebook/math/C_prob.tex",
+      "path": "emath/json/PR09/PR09.2.json",
       "mode": "S"
     }
   },

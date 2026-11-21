@@ -25,8 +25,10 @@
   "principle": "先确认密度归一且支撑够、估计量无偏，再谈样本量；方差永远属于估计量，不属于单个样本。",
   "connect": "往前是测度的地基：概率空间与分布函数（PR01.1、PR02.1）。往后分两路，一路是收敛模式与鞅（PR06.1、PR04.1），另一路是样本相关时的修正（PR08.1）。同一个方差公式再用于误差估计（TL03.1），标度不改。",
   "source": {
-    "unit": "notebook/math/partN.tex",
-    "unitSha": "9782f4d884bc"
+    "unit": "json/MP03/MP03.1.json",
+    "unitSha": "8de2e2727668",
+    "note": "notebook/math/partN.tex",
+    "noteSha": "9782f4d884bc"
   },
   "generated": {
     "model": "coding-agent",

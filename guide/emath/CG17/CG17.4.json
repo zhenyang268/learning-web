@@ -21,8 +21,10 @@
   "principle": "报时间步时同时报支配约束、格式与安全常数，三者缺一数字就不可比。",
   "connect": "空间侧另有独立要求，通量要按面记，见 CG17.1；能量稳定是另一侧的条件，见 CG17.2；多相界面会同时收紧表面张力与对流两条上限，落点见 CG16.1；声速那条常靠预处理解耦，见 CG15.1。",
   "source": {
-    "unit": "notebook/math/I_fluid.tex",
-    "unitSha": "d99e28833f42"
+    "unit": "emath/json/CG17/CG17.4.json",
+    "unitSha": "98ad48c2c72e",
+    "note": "notebook/math/I_fluid.tex",
+    "noteSha": "d99e28833f42"
   },
   "generated": {
     "model": "coding-agent",
